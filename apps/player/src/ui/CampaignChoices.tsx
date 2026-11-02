@@ -19,7 +19,7 @@ export function CampaignChoices({ campaigns, levels, disabled, reasonId, onOpen 
         aria-describedby={[descriptionId, ...(reasonId ? [reasonId] : [])].join(" ")} disabled={disabled} onClick={() => onOpen(campaign.campaignId)}>
         <span className="cloud-clinic-info"><strong className="cloud-clinic-name">{campaign.name}</strong>
           <span className="cloud-clinic-meta" id={descriptionId}>
-            {level === undefined ? "Checking level…" : level === null ? "Level unavailable" : `Level ${level}`} · {validDate ?
+            {level === undefined || level === null ? null : <>Level {level} · </>}{validDate ?
               <time dateTime={saved.toISOString()} title={saved.toLocaleString()}>{campaignSavedTime(campaign.acceptedAtMs)}</time> : campaignSavedTime(NaN)}
             {campaign.status === "archived" ? " · Archived" : ""}{campaign.writerActive ? " · Open elsewhere" : ""}
           </span>

@@ -30,6 +30,12 @@ export interface LocalCloudInspection { sources: LocalCloudSource[]; problems: s
 export const optionalLocalCloudStorage: Pick<Storage, "getItem"> = {
   getItem(key) { try { return window.localStorage.getItem(key); } catch { return null; } },
 };
+/** Already-minted Beta 1 receipts only. The completed migration can still
+ * promote its small outbox without deserializing every saved campaign. */
+export function readExistingLocalUsage(accountId: string, storage: Pick<Storage, "getItem">): QuestionUsageReceipt[] {
+  try { return parseQuestionUsageReceipts(JSON.parse(storage.getItem(accountStorageKey(PROTOTYPE_PROFILE_KEY, accountId)) ?? "null")?.pendingUsageQuestions); }
+  catch { return []; }
+}
 function metadata(raw: Record<string, any>, campaign: Record<string, any>, facilityLevel = 0): CloudCampaignMetadata {
   const id = campaign.campaignId;
   return readCloudCampaignMetadata(JSON.parse(JSON.stringify({ campaignId: id, name: campaign.name, status: campaign.status,
@@ -242,6 +248,17 @@ export interface AutomaticCampaignEnrollment {
   freeSlots: number;
 }
 const enrollmentJobs = new WeakMap<CloudEntryStore, Promise<unknown>>();
+/** Ordinary re-entry needs only the completed journal and any deliberately
+ * created, unfinished import. Do not read/rehydrate every retained save. */
+export async function completedAutomaticEnrollment(store: CloudEntryStore): Promise<AutomaticCampaignEnrollment | null> {
+  const prior = await store.read<AutomaticCampaignEnrollment>(AUTOMATIC_ENROLLMENT_KEY);
+  if (!prior || prior.version !== 1 || prior.phase !== "complete") return null;
+  for (const { value } of await store.entries("created:")) {
+    const source = value as LocalCloudSource, id = source.campaign?.campaignId;
+    if (!id || !await store.read(`enrolled:${id}`) && !await store.read(`retired:${id}`)) return null;
+  }
+  return prior;
+}
 function enrollmentJob<T>(store: CloudEntryStore, run: () => Promise<T>): Promise<T> {
   const result = cloudCheckDeadline((enrollmentJobs.get(store) ?? Promise.resolve()).catch(() => {}).then(run));
   enrollmentJobs.set(store, result);

@@ -11,6 +11,8 @@ import { CloudGameSession } from "./gameSession";
 import { CLOUD_SYNC_PROTOCOL, CloudSyncError, type CloudConfirmed } from "./transport";
 import { CloudCacheError } from "./codecCache";
 import { cloudScopeData } from "./scopeData";
+import { rememberCampaignPreview } from "./campaignPreview";
+import { timeCloudEntry } from "./entryTimings";
 // Opening runs under the loading screen; multi-second worker tasks on large
 // campaigns must finish inside the 180 s opening budget (App.tsx).
 const AUTOMATIC_RESOLUTION_TIMEOUT_MS = 150_000;
@@ -74,10 +76,12 @@ export async function openAutomaticCloudCampaign(options: AutomaticOpenOptions):
     catch { /* Fresh admission permits online play; an unreadable gate denies offline fallback. */ }
   };
   const load = async (id: string) => {
-    const head = await transport.head(id), copy = await transport.load(id, head.revision);
-    const inspection = await codec.run({ kind: "inspectCopy", input: copy });
+    const head = await timeCloudEntry("head", () => transport.head(id)), copy = await timeCloudEntry("load", () => transport.load(id, head.revision));
+    const inspection = await timeCloudEntry("copy-inspect", () => codec.run({ kind: "inspectCopy", input: copy }));
     if (copy.revision !== head.revision || copy.campaignId !== id) throw new CloudSyncError("corrupt");
     if (head.name !== undefined && inspection.campaign.name !== head.name || head.status !== undefined && inspection.campaign.status !== head.status) throw new CloudSyncError("corrupt");
+    // Tiny optional UI metadata; a failed write cannot block opening/play.
+    void rememberCampaignPreview(runtime.entryStore, copy, inspection).catch(() => {});
     return copy;
   };
   const open = async (id: string, verifyRemoteHead = false) => {
@@ -161,7 +165,7 @@ export async function openAutomaticCloudCampaign(options: AutomaticOpenOptions):
   let result: CloudSyncCoordinator | null = null;
   try {
     result = await cloudCheckDeadline((async () => {
-      const initialEntries = await runtime.cache.accountEntries?.(runtime) ?? [];
+      const initialEntries = await timeCloudEntry("copies-cache", async () => await runtime.cache.accountEntries?.(runtime) ?? []);
       const parents = await retainedCopyParents(runtime, runtime.entryStore, initialEntries);
       const family = await cloudCopyFamily(options.campaignId, parents);
       let requested = options.campaignId;
@@ -182,7 +186,7 @@ export async function openAutomaticCloudCampaign(options: AutomaticOpenOptions):
       for (let attempt = 0; attempt < 3; attempt++) {
         try {
           await check();
-          const summaries = await transport.list();
+          const summaries = await timeCloudEntry("list", () => transport.list());
           const related = [];
           for (const row of summaries) if (await cloudCopyFamily(row.campaignId, parents) === family) related.push(row);
           // Never resurrect a deleted campaign from its old local cache. A
@@ -204,9 +208,9 @@ export async function openAutomaticCloudCampaign(options: AutomaticOpenOptions):
               throw error;
             }
           }
-          const entries = await runtime.cache.accountEntries?.(runtime) ?? [];
-          const copies = await discoverClinicCopies({ scope: cloudScopeData(runtime, requested), family, codec,
-            store: runtime.entryStore, entries, account, storage: options.storage, parents });
+          const entries = await timeCloudEntry("copies-cache", async () => await runtime.cache.accountEntries?.(runtime) ?? []);
+          const copies = await timeCloudEntry("copies-discover", () => discoverClinicCopies({ scope: cloudScopeData(runtime, requested), family, codec,
+            store: runtime.entryStore, entries, account, storage: options.storage, parents }));
           let winner = copies[0]; if (!winner) throw new CloudSyncError("corrupt");
           const equivalentHead = copies.find(row => row.source === "account" && row.inspection.digest === winner!.inspection.digest && row.copy.campaignId !== winner!.copy.campaignId);
           if (equivalentHead) winner = equivalentHead;

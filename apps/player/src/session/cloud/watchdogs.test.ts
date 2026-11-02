@@ -25,8 +25,8 @@ describe("responsive commands and self-healing technical boundaries", () => {
       expect(first?.simulationSpeed).toBe(2); expect(session.canExecute).toBe(true);
       expect(await session.durable()).toBe(true);
       const preparing = session.prepareRecoveryCopy();
-      await vi.waitFor(() => expect(codec.health.inFlight[0]?.[0]).toBe("journalWarm"));
-      vi.useFakeTimers(); worker.reply({ ready: true });
+      await vi.waitFor(() => expect(codec.health.inFlight[0]?.[0]).toBe("queued:journalWarm"));
+      vi.useFakeTimers(); worker.reply({ ready: true }); worker.reply({ id: worker.messages[0]!.id, started: true });
       expect(session.execute({ type: "SET_SIMULATION_SPEED", speed: 4, operationId: "watchdog.second" }, PROTOTYPE_DOMAIN_CONTEXT)?.simulationSpeed).toBe(4);
       expect(problemDiagnostics.report().current.health.gameSession).toMatchObject({ preparing: true, canExecute: true });
       if (fault === "hung") await vi.advanceTimersByTimeAsync(CLOUD_WORKER_TASK_TIMEOUT_MS);

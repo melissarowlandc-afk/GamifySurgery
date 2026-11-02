@@ -2,9 +2,8 @@ import { useEffect, useId, useRef, useState } from "react";
 import { useCloudAccount } from "../session/cloud/CloudAccount";
 import { cloudCheckDeadline, CLOUD_CHECK_TIMEOUT_MS, CLOUD_READ_TIMEOUT_MS } from "../session/cloud/checkDeadline";
 import { problemDiagnostics, technicalError } from "../diagnostics/problemDiagnostics";
-import { loadCloudEvidenceCheckpoint } from "../session/cloud/codecEvidence";
-import { chooseAutomaticCampaignEnrollment, finishAutomaticCampaignEnrollment, inspectLocalCloudSources,
-  optionalLocalCloudStorage, prepareAutomaticCampaignEnrollment, promoteExistingLocalQuestions, type AutomaticCampaignEnrollment } from "../session/cloud/importCampaigns";
+import { chooseAutomaticCampaignEnrollment, completedAutomaticEnrollment, finishAutomaticCampaignEnrollment, inspectLocalCloudSources,
+  optionalLocalCloudStorage, prepareAutomaticCampaignEnrollment, promoteExistingLocalQuestions, readExistingLocalUsage, type AutomaticCampaignEnrollment } from "../session/cloud/importCampaigns";
 import { CloudSyncError, type CloudCampaignSummary } from "../session/cloud/transport";
 import { useUsageTracking } from "../playtime/UsageProvider";
 import type { QuestionUsageReceipt } from "../playtime/usageTypes";
@@ -19,6 +18,8 @@ import { WelcomeArtwork, welcomeSurfaceStyle } from "./WelcomeArtwork";
 import { ProblemReportButton } from "../feedback/TesterFeedback";
 import "./cloudSaves.css";
 import "./CloudCampaignEntry.css";
+import { readCampaignPreview } from "../session/cloud/campaignPreview";
+import { timeCloudEntry } from "../session/cloud/entryTimings";
 
 function ClinicTime({ value }: { value: number }) {
   const date = new Date(value);
@@ -39,15 +40,18 @@ export function CloudCampaignEntry({ onOpen, onCreate, notice = "", preparing = 
   const [problems, setProblems] = useState<string[]>([]), [enrollment, setEnrollment] = useState<AutomaticCampaignEnrollment | null>(null);
   const [selected, setSelected] = useState<string[]>([]), [enrollmentError, setEnrollmentError] = useState("");
   const [busy, setBusy] = useState(false), [error, setError] = useState("");
+  const [enrollmentBusy, setEnrollmentBusy] = useState(false);
   const [replace, setReplace] = useState(false), [target, setTarget] = useState<CloudCampaignSummary | null>(null);
   const [levels, setLevels] = useState<Record<string, number | null>>({});
   const levelRequests = useRef(new Map<string, Promise<number | null>>());
   const mounted = useRef(true), working = useRef(false), opened = useRef(false), started = useRef(false);
+  const enrolling = useRef(false);
   const latest = useRef(cloud); latest.current = cloud;
-  const progress = useRef({ stage: "idle", started: 0, failure: null as string | null });
+  const progress = useRef({ stage: "idle", started: 0, elapsed: 0, failure: null as string | null });
   useEffect(() => problemDiagnostics.source("entry", () => ({ stage: progress.current.stage,
-    elapsedMs: progress.current.started ? Date.now() - progress.current.started : 0, failure: progress.current.failure,
-    busy: working.current, preparing })), [preparing]);
+    elapsedMs: progress.current.stage === "complete" || progress.current.failure ? progress.current.elapsed :
+      progress.current.started ? Date.now() - progress.current.started : 0, failure: progress.current.failure,
+    busy: working.current || enrolling.current, preparing })), [preparing]);
   const replacement = useRef<HTMLElement | null>(null);
   useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
   useEffect(() => {
@@ -55,40 +59,45 @@ export function CloudCampaignEntry({ onOpen, onCreate, notice = "", preparing = 
       if (["deleted", "deletion-requested"].includes(latest.current.phase)) return;
       void latest.current.refresh().catch(() => { /* The account provider reports unavailable saves. */ });
     };
-    if (!opened.current) { opened.current = true; update(); }
+    if (!opened.current) { opened.current = true; if (latest.current.phase !== "checking") update(); }
     window.addEventListener("focus", update);
     return () => window.removeEventListener("focus", update);
   }, []);
   useEffect(() => { if (replace) replacement.current?.focus(); }, [replace, target]);
   const runEnrollment = async (choice?: readonly string[]) => {
-    if (working.current) return;
-    working.current = true; setBusy(true); setEnrollmentError("");
+    if (enrolling.current) return;
+    enrolling.current = true; setEnrollmentBusy(true); setEnrollmentError("");
+    progress.current = { stage: "enrollment", started: Date.now(), elapsed: 0, failure: null };
     let expired = false;
     const current = () => mounted.current && !expired;
-    const step = <T,>(stage: string, work: Promise<T>) => {
-      progress.current = { stage, started: Date.now(), failure: null }; return work;
+    const step = <T,>(stage: string, work: () => Promise<T>) => {
+      progress.current.stage = stage; return timeCloudEntry(stage, work);
     };
     try {
       await cloudCheckDeadline((async () => {
       let next: AutomaticCampaignEnrollment;
       if (choice) {
-        const summaries = await step("enrollment-list", runtime.transport.list());
+        const summaries = await step("enrollment-list", () => runtime.transport.list());
         if (!current()) return;
-        next = await step("enrollment-choice", chooseAutomaticCampaignEnrollment(choice, Math.max(0, 2 - summaries.length), runtime.entryStore));
+        next = await step("enrollment-choice", () => chooseAutomaticCampaignEnrollment(choice, Math.max(0, 2 - summaries.length), runtime.entryStore));
       } else {
-        const inspection = await step("enrollment-inspect", inspectLocalCloudSources(runtime.accountId, optionalLocalCloudStorage, runtime.entryStore));
+        const completed = await step("enrollment-marker", () => completedAutomaticEnrollment(runtime.entryStore));
+        if (completed) { if (current()) {
+          setEnrollment(completed); setPendingQuestions(readExistingLocalUsage(runtime.accountId, optionalLocalCloudStorage)); progress.current.stage = "complete";
+        } return; }
+        const inspection = await step("enrollment-inspect", () => inspectLocalCloudSources(runtime.accountId, optionalLocalCloudStorage, runtime.entryStore));
         if (!current()) return;
         setProblems([...inspection.problems, ...inspection.sources.filter(source => source.error).map(source => `${source.campaign.name} could not be saved to your account. Its original copy is kept on this device.`)]);
         setPendingQuestions(inspection.pendingUsageQuestions);
         if (inspection.journalUnavailable) throw new CloudSyncError("storage");
-        next = await step("enrollment-prepare", prepareAutomaticCampaignEnrollment(inspection.sources, latest.current.summaries, runtime.entryStore));
+        next = await step("enrollment-prepare", () => prepareAutomaticCampaignEnrollment(inspection.sources, latest.current.summaries, runtime.entryStore));
       }
       if (!current()) return;
       setEnrollment(next);
-      if (next.phase === "saving") next = await step("enrollment-import", finishAutomaticCampaignEnrollment(runtime.transport, runtime.entryStore));
+      if (next.phase === "saving") next = await step("enrollment-import", () => finishAutomaticCampaignEnrollment(runtime.transport, runtime.entryStore));
       if (!current()) return;
       // Update the shared account list before enabling Resume or new creation.
-      if (next.phase === "complete" && next.selectedIds.length) await step("enrollment-refresh", latest.current.refresh());
+      if (next.phase === "complete" && next.selectedIds.length) await step("enrollment-refresh", () => latest.current.refresh());
       if (current()) { setEnrollment(next); progress.current.stage = "complete"; }
       })(), CLOUD_CHECK_TIMEOUT_MS, () => { expired = true; });
     } catch (failure) {
@@ -101,10 +110,10 @@ export function CloudCampaignEntry({ onOpen, onCreate, notice = "", preparing = 
         void cloudCheckDeadline(latest.current.refresh(), CLOUD_READ_TIMEOUT_MS).catch(() => {});
       }
     }
-    finally { working.current = false; if (mounted.current) setBusy(false); }
+    finally { progress.current.elapsed = Date.now() - progress.current.started; enrolling.current = false; if (mounted.current) setEnrollmentBusy(false); }
   };
   useEffect(() => {
-    if (started.current || busy || working.current || cloud.phase !== "available" || !cloud.access?.enabled || cloud.access.writesEnabled === false || !cloud.access.noticeAccepted) return;
+    if (started.current || busy || enrolling.current || cloud.phase !== "available" || !cloud.access?.enabled || cloud.access.writesEnabled === false || !cloud.access.noticeAccepted) return;
     started.current = true; void runEnrollment();
   }, [runtime, cloud.phase, cloud.access?.enabled, cloud.access?.writesEnabled, cloud.access?.noticeAccepted, busy]);
   useEffect(() => {
@@ -117,8 +126,8 @@ export function CloudCampaignEntry({ onOpen, onCreate, notice = "", preparing = 
     const unsubscribe = usage.subscribe(promote); promote();
     return () => { active = false; unsubscribe(); };
   }, [usage, pendingQuestions, runtime]);
-  // List metadata has no level field. These verified reads never acquire a
-  // writer. The real Resume path retains its explicit continuation/takeover.
+  // Level is optional display metadata. Never decode a multi-MB save or warm a
+  // journal just to draw a row. Opening verifies every candidate before play.
   const listedRevisions = JSON.stringify(cloud.summaries.map(campaign => [campaign.campaignId, campaign.revision]));
   useEffect(() => {
     if (cloud.phase !== "available" || !cloud.access?.enabled || !cloud.access.noticeAccepted || busy) return;
@@ -127,14 +136,8 @@ export function CloudCampaignEntry({ onOpen, onCreate, notice = "", preparing = 
       const key = JSON.stringify([campaignId, revision]);
       let request = levelRequests.current.get(key);
       if (!request) {
-        request = cloudCheckDeadline((async () => {
-          const cached = await runtime.cache.read({ backendId: runtime.backendId, accountId: runtime.accountId, campaignId }).catch(() => null);
-          const enrolled = await runtime.entryStore.read<{ revision: string; facilityLevel?: number }>(`enrolled:${campaignId}`).catch(() => null);
-          if (enrolled?.revision === revision && Number.isInteger(enrolled.facilityLevel)) return enrolled.facilityLevel!;
-          const loaded = cached?.entry.confirmed.revision === revision ? cached.entry.confirmed : await runtime.transport.load(campaignId, revision);
-          const verified = await loadCloudEvidenceCheckpoint({ ...loaded, expectedCampaignId: campaignId, expectedRevision: revision, expectedBaselineId: loaded.baselineId });
-          return verified.state.facilityLevel;
-        })()).catch(() => { levelRequests.current.delete(key); return null; });
+        request = timeCloudEntry("row-metadata", () => cloudCheckDeadline(readCampaignPreview(runtime.entryStore, campaignId, revision), CLOUD_READ_TIMEOUT_MS))
+          .catch(() => { levelRequests.current.delete(key); return null; });
         levelRequests.current.set(key, request);
       }
       void request.then(level => { if (current) setLevels(previous => ({ ...previous, [key]: level })); });
@@ -175,7 +178,7 @@ export function CloudCampaignEntry({ onOpen, onCreate, notice = "", preparing = 
   const exceptional = Boolean(needsNotice || notice || accountReason || enrollmentError || error || replace || preparationFailure ||
     enrollment?.phase === "choose" || cloud.access?.quotaWarning || cloud.access?.enrollmentsEnabled === false);
   return <main className="welcome-surface welcome-entrance cloud-campaign-screen" style={welcomeSurfaceStyle}
-    data-entry-state={!migrationReady || busy || preparing ? "preparing" : exceptional ? "notice" : "ready"}>
+    data-entry-state={!migrationReady || busy || enrollmentBusy || preparing ? "preparing" : exceptional ? "notice" : "ready"}>
     <WelcomeArtwork className="welcome-entrance-art" entrance />
     <div className={`cloud-entry cloud-entry--${layout} cloud-entry--compact welcome-entrance-panel`}>
     <header><OpeningBrand /><h1>Your campaigns</h1><ClinicalContentNotice /></header>
@@ -196,10 +199,10 @@ export function CloudCampaignEntry({ onOpen, onCreate, notice = "", preparing = 
     </div> : null}
     {cloud.phase === "deletion-requested" || cloud.phase === "deleted" ? <p role="alert">{cloud.phase === "deleted" ? "Account data deletion is confirmed. Play and uploads have stopped." : "Account deletion is not confirmed. Play and uploads are stopped here; retry from Account & privacy."}</p> : null}
     {cloud.access?.quotaWarning ? <p role="status">Account storage is nearly full. Contact the owner before adding more progress.</p> : null}
-    <LoadingScreen active={preparing || preparationFailure || cloud.phase === "checking" || Boolean(busy && !replace && !enrollmentError && !migrationReady)}
+    <LoadingScreen active={preparing || preparationFailure || cloud.phase === "checking" || Boolean(enrollmentBusy && !cloud.summaries.length && !replace && !enrollmentError && !migrationReady)}
       status="Getting your campaigns ready…" stage="checking"
       failure={preparationFailure ? "Clinic preparation could not finish. Your saved copies are safe." : null}
-      onRetry={() => { if (preparing || preparationFailure) onRetryPreparation?.(); else if (busy) void runEnrollment(); else void action(cloud.refresh); }} />
+      onRetry={() => { if (preparing || preparationFailure) onRetryPreparation?.(); else if (enrollmentBusy) void runEnrollment(); else void action(cloud.refresh); }} />
     {enrollmentError ? <div role="alert"><p>{enrollmentError}</p><button type="button" disabled={busy || !canUseCloud && cloud.phase !== "error"} onClick={() => void runEnrollment()}>Try saving my campaigns again</button><ProblemReportButton shell={layout} /></div> : null}
     {enrollment?.phase === "choose" ? <section className="cloud-entry-chooser" aria-label="Choose account campaigns">
       <h2>Your account holds two campaigns. Choose which to keep in your account.</h2>
@@ -211,7 +214,7 @@ export function CloudCampaignEntry({ onOpen, onCreate, notice = "", preparing = 
       <button type="button" className="button button-primary" disabled={busy || !canUseCloud} onClick={() => void runEnrollment(selected)}>Keep selected campaigns</button>
     </section> : null}
     <CampaignChoices campaigns={cloud.summaries} levels={levels}
-      disabled={preparing || busy || !canUseCloud || !migrationReady && !enrollmentError}
+      disabled={preparing || busy || !canUseCloud}
       reasonId={accountReason ? `${id}-account-reason` : undefined} onOpen={campaignId => void action(() => onOpen(campaignId))} />
     {replace ? <section className="cloud-entry-replace" aria-label="Replace an account campaign" tabIndex={-1} ref={replacement}>
       {target ? <><h2>Delete {target.name} permanently?</h2><p>The account campaign will be deleted before you start a new one. This cannot be undone.</p>
@@ -226,7 +229,7 @@ export function CloudCampaignEntry({ onOpen, onCreate, notice = "", preparing = 
     {cloud.access?.enrollmentsEnabled === false ? <p role="status">Starting a new campaign is currently unavailable. Try again later.</p> : null}
     <footer className="cloud-entry-footer">
       <div className="cloud-entry-actions">
-        <button type="button" className="button button-primary" disabled={preparing || busy || !canUseCloud || !migrationReady || cloud.access?.enrollmentsEnabled === false}
+        <button type="button" className="button button-primary" disabled={preparing || busy || enrollmentBusy || !canUseCloud || !migrationReady || cloud.access?.enrollmentsEnabled === false}
           aria-describedby={accountReason ? `${id}-account-reason` : undefined}
           onClick={() => { setError(""); if (full) { setTarget(null); setReplace(true); } else onCreate(); }}>Start a new campaign</button>
       </div>

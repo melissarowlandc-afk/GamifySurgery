@@ -62,11 +62,26 @@ function refreshAccount(f: ReturnType<typeof account>) {
 async function accountCampaigns(f: ReturnType<typeof account>, count: number) {
   for (let index = 0; index < count; index++) {
     const fixture = await syncFixture(`account.${index}`); f.server.seed("account-a", fixture.confirmed);
+    await f.store.write(`preview:${fixture.confirmed.campaignId}`, { revision: fixture.confirmed.revision, facilityLevel: 0 });
     f.server.account("account-a").campaigns.get(fixture.confirmed.campaignId)!.summary = { name: `Account ${index + 1}`, status: index ? "archived" : "resumable" };
   }
   f.cloud.summaries = await f.cloud.runtime.transport.list(); refreshAccount(f);
 }
 describe("automatic account campaign entry shared by both layouts", () => {
+  it.each(["phone", "desktop"])("%s: listed Resume is independent of optional enrollment scanning and full level decoding", async layout => {
+    const env = phoneTestDom(), f = account(), open = vi.fn(async () => {}), held = deferred();
+    env.browser.location.search = `?layout=${layout}`; await accountCampaigns(f, 1);
+    const scan = vi.spyOn(f.store, "entries").mockImplementation(async () => { await held.promise; return []; });
+    const cached = vi.spyOn(f.cloud.runtime.cache, "read").mockImplementation(async () => { await held.promise; return null; });
+    try {
+      await env.render(wrap(entry({ onOpen: open }), f));
+      await settle(() => expect(env.button("Resume Account 1").attributes.disabled).toBeUndefined());
+      await env.click("Resume Account 1");
+      expect(open).toHaveBeenCalledExactlyOnceWith(f.cloud.summaries[0]!.campaignId);
+      expect(cached).not.toHaveBeenCalled();
+      expect(env.element.textContent).not.toContain("Checking level");
+    } finally { held.resolve(); scan.mockRestore(); cached.mockRestore(); }
+  });
   it.each([0, 1, 2].flatMap(count => [[390, 844], [375, 667], [1440, 1000], [1280, 720]].map(([width, height]) => ({ count, width: width!, height: height! }))))(
     "keeps a bounded, unclipped normal structure for $count campaigns at $width x $height", async ({ count, width, height }) => {
       const env = phoneTestDom(), f = account(); Object.assign(env.browser, { innerWidth: width, innerHeight: height });
@@ -138,15 +153,15 @@ describe("automatic account campaign entry shared by both layouts", () => {
   it.each(["phone", "desktop"])("%s: a level preview has a deadline and cannot block Resume or replace the timeout with a late result", async layout => {
     const env = phoneTestDom(), f = account(), open = vi.fn(async () => {}); env.browser.location.search = `?layout=${layout}`;
     await accountCampaigns(f, 1);
-    const held = deferred(), started = deferred(), load = f.cloud.runtime.transport.load.bind(f.cloud.runtime.transport);
-    vi.spyOn(f.cloud.runtime.transport, "load").mockImplementation(async (...args) => { started.resolve(); await held.promise; return load(...args); });
+    const held = deferred(), started = deferred(), read = f.store.read.bind(f.store);
+    vi.spyOn(f.store, "read").mockImplementation(async key => { if (key.startsWith("preview:")) { started.resolve(); await held.promise; } return read(key); });
     vi.useFakeTimers(); await env.render(wrap(entry({ onOpen: open }), f)); await started.promise;
-    expect(env.element.textContent).toContain("Checking level");
+    expect(env.element.textContent).not.toContain("Checking level");
     expect(env.button("Resume Account 1").attributes.disabled).toBeUndefined();
     await act(async () => { await vi.advanceTimersByTimeAsync(CLOUD_CHECK_TIMEOUT_MS); });
-    expect(env.element.textContent).toContain("Level unavailable");
+    expect(env.button("Resume Account 1").textContent).not.toContain("Level 0");
     vi.useRealTimers(); await act(async () => { held.resolve(); await held.promise; });
-    expect(env.element.textContent).toContain("Level unavailable"); await env.click("Resume Account 1");
+    expect(env.button("Resume Account 1").textContent).not.toContain("Level 0"); await env.click("Resume Account 1");
     expect(open).toHaveBeenCalledExactlyOnceWith("account.0");
     expect(f.server.calls.some(call => ["acquire", "commit"].includes(call.method))).toBe(false);
   });
@@ -339,7 +354,9 @@ describe("automatic account campaign entry shared by both layouts", () => {
   it("keeps a corrupt account save available for the existing Resume recovery path", async () => {
     const env = phoneTestDom(), f = account(), open = vi.fn(async () => {}); await accountCampaigns(f, 1);
     const row = f.server.account("account-a").campaigns.get("account.0")!; row.confirmed.snapshot = { ...row.confirmed.snapshot, uncompressedSha256: "0".repeat(64) };
-    await env.render(wrap(entry({ onOpen: open }), f)); await settle(() => expect(env.element.textContent).toContain("Level unavailable"));
+    const load = vi.spyOn(f.cloud.runtime.transport, "load");
+    await env.render(wrap(entry({ onOpen: open }), f)); await settle(() => expect(env.button("Resume Account 1").attributes.disabled).toBeUndefined());
+    expect(load).not.toHaveBeenCalled(); // Verification belongs to actual opening, never the optional row label.
     await env.click("Resume Account 1"); expect(open).toHaveBeenCalledExactlyOnceWith("account.0");
   });
   it("refreshes automatically and removes its focus listener on close", async () => {

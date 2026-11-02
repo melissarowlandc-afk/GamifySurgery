@@ -8,6 +8,9 @@ import type { CloudConfirmed } from "./transport";
 export async function inspectVerifiedCopy(copy: CloudConfirmed) {
   const loaded = await loadCloudEvidenceCheckpoint({ ...copy, expectedRevision: copy.revision,
     expectedCampaignId: copy.campaignId, expectedBaselineId: copy.baselineId });
+  return inspectLoadedCopy(loaded);
+}
+export async function inspectLoadedCopy(loaded: Awaited<ReturnType<typeof loadCloudEvidenceCheckpoint>>) {
   const { snapshot, evidence } = loaded.checkpoint;
   const identity = "copy-comparison";
   const normalized = { snapshot: { ...snapshot, campaignId: identity,

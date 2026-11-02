@@ -5,7 +5,8 @@ import { handleCloudCodecMessage, unpackCodecFailure, type CloudCodecExecutor, t
 // Vite development loads the workspace graph as individual modules. Release
 // builds load a bundled worker; neither startup nor processing waits forever.
 export const CLOUD_WORKER_STARTUP_TIMEOUT_MS = import.meta.env.MODE === "development" ? 60_000 : 10_000;
-// Measured from posting, so queued work counts: keep generous so legitimate long tasks (3+ s inspections on desktop, slower on phones) are never killed.
+// Active processing only, measured from the worker's dequeue/start message.
+// Keep the released generous cap; queued work never spends another task's budget.
 export const CLOUD_WORKER_TASK_TIMEOUT_MS = 60_000;
 
 export interface CloudCodecWorkerPort {
@@ -21,12 +22,13 @@ export class CloudCodecWorker implements CloudCodecExecutor {
   private worker: CloudCodecWorkerPort | null = null;
   private ready = false;
   private startupTimer: ReturnType<typeof setTimeout> | null = null;
+  private dequeueTimer: ReturnType<typeof setTimeout> | null = null;
   private sequence = 0;
   private lastResponse: number | null = null;
   private lastError: string | null = null;
   private restarts = 0;
   private unregister: (() => void) | null = null;
-  private readonly pending = new Map<number, { task: CloudCodecTask; started: number; retries: number;
+  private readonly pending = new Map<number, { task: CloudCodecTask; posted: number; started: number | null; retries: number;
     resolve(value: unknown): void; reject(error: unknown): void; timer: ReturnType<typeof setTimeout> | null }>();
   constructor(private readonly createWorker: (() => CloudCodecWorkerPort) | null = typeof Worker === "undefined" ?
     (typeof window === "undefined" ? null : () => { throw new CloudCodecError("worker_unavailable", "Save processing is unavailable. Retry the account save."); }) :
@@ -36,7 +38,8 @@ export class CloudCodecWorker implements CloudCodecExecutor {
 
   get health() { return { alive: this.worker !== null, ready: this.ready, restarts: this.restarts, lastError: this.lastError,
     responseAge: this.lastResponse === null ? null : Date.now() - this.lastResponse,
-    inFlight: [...this.pending.values()].slice(0, 12).map(p => [p.task.kind, Date.now() - p.started, p.retries]) }; }
+    inFlight: [...this.pending.values()].slice(0, 12).map(p => [p.started === null ? `queued:${p.task.kind}` : p.task.kind,
+      Date.now() - (p.started ?? p.posted), p.retries]) }; }
   run<T extends CloudCodecTask>(task: T): Promise<CloudCodecResults[T["kind"]]> {
     const createWorker = this.createWorker;
     if (import.meta.env.DEV || import.meta.env.MODE === "test" || !createWorker) {
@@ -51,7 +54,7 @@ export class CloudCodecWorker implements CloudCodecExecutor {
     this.unregister ??= problemDiagnostics.source("codec", () => this.health);
     return new Promise((resolve, reject) => {
       const id = ++this.sequence;
-      this.pending.set(id, { task, started: Date.now(), retries: 0, resolve: value => resolve(value as CloudCodecResults[T["kind"]]), reject, timer: null });
+      this.pending.set(id, { task, posted: Date.now(), started: null, retries: 0, resolve: value => resolve(value as CloudCodecResults[T["kind"]]), reject, timer: null });
       try { this.ensureWorker(); this.post(id); }
       catch (error) { this.fail(error); }
     });
@@ -67,19 +70,26 @@ export class CloudCodecWorker implements CloudCodecExecutor {
         this.ready = true;
         if (this.startupTimer !== null) clearTimeout(this.startupTimer);
         this.startupTimer = null;
-        for (const [id, waiting] of this.pending) {
-          if (waiting.timer !== null) clearTimeout(waiting.timer);
-          waiting.timer = setTimeout(() => this.fail(), this.taskTimeoutMs);
-        }
+        this.watchDequeue();
       }
       const reply = event.data;
       if ("ready" in reply) return;
       const waiting = this.pending.get(reply.id);
       if (!waiting) return;
+      if ("started" in reply) {
+        if (waiting.started === null) {
+          waiting.started = Date.now();
+          waiting.timer = setTimeout(() => this.fail(), this.taskTimeoutMs);
+        }
+        this.watchDequeue(); return;
+      }
+      // Heartbeats show health without extending the active hung-task cap.
+      if ("heartbeat" in reply) return;
       if ("error" in reply && reply.error.kind === "codec" && ["worker", "worker_unavailable"].includes(reply.error.code)) {
         this.fail(new CloudCodecError("worker_unavailable", "Save processing restarted.")); return;
       }
       this.pending.delete(reply.id); if (waiting.timer !== null) clearTimeout(waiting.timer);
+      this.watchDequeue();
       if ("error" in reply) {
         const error = unpackCodecFailure(reply.error); this.lastError = technicalError(error);
         problemDiagnostics.error("codec-task", error); waiting.reject(error);
@@ -91,13 +101,20 @@ export class CloudCodecWorker implements CloudCodecExecutor {
   private post(id: number): void {
     const waiting = this.pending.get(id);
     if (!waiting || !this.worker) return;
-    waiting.timer = this.ready ? setTimeout(() => this.fail(), this.taskTimeoutMs) : null;
     try { this.worker.postMessage({ id, task: waiting.task }); }
     catch (error) {
       if (!(error instanceof Error) || error.name !== "DataCloneError") throw error;
       this.pending.delete(id); if (waiting.timer !== null) clearTimeout(waiting.timer);
       waiting.reject(this.payloadFailure(error));
     }
+    this.watchDequeue();
+  }
+  private watchDequeue(): void {
+    // Detect a silently killed ready worker that never starts the next task.
+    // No queue deadline runs while another task is actually executing.
+    const idle = this.ready && this.pending.size && ![...this.pending.values()].some(p => p.started !== null);
+    if (idle && this.dequeueTimer === null) this.dequeueTimer = setTimeout(() => this.fail(), this.taskTimeoutMs);
+    else if (!idle && this.dequeueTimer !== null) { clearTimeout(this.dequeueTimer); this.dequeueTimer = null; }
   }
   private payloadFailure(error: unknown): CloudCodecError {
     return new CloudCodecError(error instanceof Error && error.name === "DataCloneError" ? "worker_data_clone" : "worker_payload",
@@ -112,8 +129,11 @@ export class CloudCodecWorker implements CloudCodecExecutor {
     this.worker = null; this.ready = false;
     if (this.startupTimer !== null) clearTimeout(this.startupTimer);
     this.startupTimer = null;
+    if (this.dequeueTimer !== null) clearTimeout(this.dequeueTimer);
+    this.dequeueTimer = null;
     for (const [id, waiting] of this.pending) {
       if (waiting.timer !== null) clearTimeout(waiting.timer); waiting.timer = null;
+      waiting.started = null; waiting.posted = Date.now();
       // Codec tasks are pure or idempotent journal CAS/derived-cache writes.
       // No RPC runs here. Retry the SAME payload once, never mint operation IDs.
       if (retry && waiting.retries < 1) { waiting.retries++; }

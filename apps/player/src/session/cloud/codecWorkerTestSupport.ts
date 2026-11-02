@@ -1,4 +1,4 @@
-import { dispatchCloudCodecMessage, type CloudCodecMessage, type CloudCodecReply } from "./codecTasks";
+import { createCloudCodecDispatcher, type CloudCodecMessage, type CloudCodecReply } from "./codecTasks";
 import type { CloudCodecWorkerPort } from "./codecWorker";
 
 /** Tests hold real codec work behind a controllable fake message boundary. */
@@ -9,6 +9,7 @@ export class FakeCloudCodecWorker implements CloudCodecWorkerPort {
   readonly messages: CloudCodecMessage[] = [];
   private readonly waiting: CloudCodecMessage[] = [];
   private held = true;
+  private readonly dispatch = createCloudCodecDispatcher(reply => this.reply(reply));
   terminated = false;
   postMessage(message: CloudCodecMessage): void {
     const frozen = structuredClone(message);
@@ -16,7 +17,7 @@ export class FakeCloudCodecWorker implements CloudCodecWorkerPort {
     if (this.held) this.waiting.push(frozen); else void this.deliver(frozen);
   }
   reply(reply: CloudCodecReply): void { this.onmessage?.({ data: structuredClone(reply) } as MessageEvent<CloudCodecReply>); }
-  private async deliver(message: CloudCodecMessage): Promise<void> { await dispatchCloudCodecMessage(message, reply => this.reply(reply)); }
+  private async deliver(message: CloudCodecMessage): Promise<void> { await this.dispatch(message); }
   release(): void { this.held = false; for (const message of this.waiting.splice(0)) void this.deliver(message); }
   terminate(): void { this.terminated = true; }
 }

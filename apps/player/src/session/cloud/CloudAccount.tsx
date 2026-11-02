@@ -15,6 +15,7 @@ import { SupabaseCloudTransport } from "./supabaseTransport";
 import { CloudSyncError, type CloudCapabilities, type CloudCampaignSummary, type CloudTransport } from "./transport";
 import type { CloudOpeningDiagnostic } from "./openingDiagnostic";
 import { IndexedDbJournalStorage } from "../localJournal";
+import { timeCloudEntry } from "./entryTimings";
 export type { CloudOpeningDiagnostic } from "./openingDiagnostic";
 
 export const CLOUD_NOTICE_VERSION = "beta2.cloud.v1";
@@ -115,7 +116,7 @@ function BoundCloudAccount({ runtime, children }: { runtime: CloudAccountRuntime
         if (deletion.current) { setPhase("deletion-requested"); return; }
         // Do not mount either session until the initial cohort check settles:
         // even the Beta 1 opening screen can initialize a local profile.
-        const next = await (accessRequest ?? cloudCheckDeadline(runtime.transport.capabilities(), CLOUD_READ_TIMEOUT_MS));
+        const next = await (accessRequest ?? timeCloudEntry("account-access", () => cloudCheckDeadline(runtime.transport.capabilities(), CLOUD_READ_TIMEOUT_MS)));
         if (!current()) return;
         if (next.accountId !== runtime.accountId || !next.admitted || next.deletionRequested) {
           await runtime.entryStore.write("account-command-block", { failure: next.deletionRequested ? "deleted" : "revoked" }).catch(() => {});
@@ -134,7 +135,7 @@ function BoundCloudAccount({ runtime, children }: { runtime: CloudAccountRuntime
           if (current()) { deletion.current = true; setPhase("deletion-requested"); } return;
         }
         if (!current()) return;
-        const list = next.noticeAccepted ? await cloudCheckDeadline(runtime.transport.list(), CLOUD_READ_TIMEOUT_MS) : [];
+        const list = next.noticeAccepted ? await timeCloudEntry("account-list", () => cloudCheckDeadline(runtime.transport.list(), CLOUD_READ_TIMEOUT_MS)) : [];
         if (!current()) return;
         setSummaries(list); setPhase("available");
       })(), undefined, () => { cancelled = true; });
@@ -157,7 +158,7 @@ function BoundCloudAccount({ runtime, children }: { runtime: CloudAccountRuntime
     // StrictMode effect replay shares the initial request, including a failure;
     // disabled accounts never acquire a retry loop, timer or focus listener.
     if (initialAccess.current?.runtime !== runtime) initialAccess.current = {
-      runtime, request: Promise.resolve().then(() => cloudCheckDeadline(runtime.transport.capabilities(), CLOUD_READ_TIMEOUT_MS)),
+      runtime, request: Promise.resolve().then(() => timeCloudEntry("account-access", () => cloudCheckDeadline(runtime.transport.capabilities(), CLOUD_READ_TIMEOUT_MS))),
     };
     void refresh(initialAccess.current.request);
     return () => { live.current = false; stopped.current = true; generation.current++; activeRef.current?.coordinator.pause(); };

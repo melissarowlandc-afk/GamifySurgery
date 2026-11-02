@@ -36,6 +36,7 @@ import { AccountMenu } from "./ui/AccountMenu";
 import { cloudCodec } from "./session/cloud/codecWorker";
 import { cloudCheckDeadline, CLOUD_CHECK_TIMEOUT_MS, CLOUD_OPENING_TIMEOUT_MS, CLOUD_READ_TIMEOUT_MS } from "./session/cloud/checkDeadline";
 import { rememberCampaignToReopen, selectCampaignToReopen, type CampaignReopenDecision } from "./session/cloud/reopenSelection";
+import { timeCloudEntry } from "./session/cloud/entryTimings";
 import { openAutomaticCloudCampaign } from "./session/cloud/automaticResolution";
 import { CloudSyncError } from "./session/cloud/transport";
 import { CloudCacheError } from "./session/cloud/codecCache";
@@ -488,7 +489,10 @@ function CloudCampaignRouter() {
     // Start the selected presentation and save worker during account entry.
     // The empty hash warms processing without reading a campaign or acquiring
     // a writer. Opening the chosen campaign reconnects its checked session.
-    void cloudCheckDeadline(Promise.all([preloadPrototypeShell(layout), cloudCodec.run({ kind: "hash", input: "" })]),
+    // Warm processing in the background. A queued codec task is not a reason to
+    // lock an already listed Resume row; the actual open owns verification.
+    void timeCloudEntry("worker-warm", () => cloudCheckDeadline(cloudCodec.run({ kind: "hash", input: "" }))).catch(error => problemDiagnostics.error("codec-warm", error));
+    void cloudCheckDeadline(timeCloudEntry("shell-prepare", () => preloadPrototypeShell(layout)),
       CLOUD_CHECK_TIMEOUT_MS).then(() => {
       if (current) setPreparingEntry(false);
     }, () => {
@@ -561,21 +565,21 @@ function CloudCampaignRouter() {
     try {
       const session = await cloudCheckDeadline((async () => {
         for (let attempt = 0; attempt < 3; attempt++) {
-        coordinator = await openAutomaticCloudCampaign({ runtime, campaignId, storage: optionalLocalCloudStorage,
-          cancelled: () => openingCancelled || !live.current || epoch !== generation.current });
+        coordinator = await timeCloudEntry("open-copies", () => openAutomaticCloudCampaign({ runtime, campaignId, storage: optionalLocalCloudStorage,
+          cancelled: () => openingCancelled || !live.current || epoch !== generation.current }));
         if (!live.current || epoch !== generation.current) throw new Error("Opening cancelled");
         opening.current = coordinator;
         openingStage = "hydrate";
         if (live.current && epoch === generation.current) setLoadingStage("opening");
         const selectedId = coordinator.scope.campaignId;
         let created: CloudGameSession;
-        try { created = await CloudGameSession.create(coordinator, async id => { await openCampaign(id); }, async checked => {
+        try { created = await timeCloudEntry("open-hydrate", () => CloudGameSession.create(coordinator!, async id => { await openCampaign(id); }, async checked => {
           if (entryRequested.current) return false;
           // Checked same-head authority does not need another scan of retained
           // copies. Full selection remains at open/reopen or changed authority.
           if (checked) return true;
           await openCampaign(selectedId); return true;
-        }); } catch (error) {
+        })); } catch (error) {
           coordinator.dispose();
           if (error instanceof CloudCacheError && error.reason === "conflict" && attempt < 2) continue;
           throw error;
@@ -587,7 +591,7 @@ function CloudCampaignRouter() {
       })(), CLOUD_OPENING_TIMEOUT_MS, () => { openingCancelled = true; coordinator?.dispose(); });
       if (!live.current || epoch !== generation.current) { session.dispose(); return; }
       openingStage = "selection";
-      await rememberCampaignToReopen(runtime, session.coordinator.scope.campaignId);
+      await timeCloudEntry("active-marker", () => rememberCampaignToReopen(runtime, session.coordinator.scope.campaignId));
       if (!live.current || epoch !== generation.current) { session.dispose(); return; }
       opening.current = null;
       const metadata = session.metadata;
@@ -638,7 +642,7 @@ function CloudCampaignRouter() {
     void (async () => {
       try {
         if (!automaticSelection.current) {
-          const request = selectCampaignToReopen(runtime, offline);
+          const request = timeCloudEntry("reopen-select", () => selectCampaignToReopen(runtime, offline));
           automaticSelection.current = request;
           void request.finally(() => { if (automaticSelection.current === request) automaticSelection.current = null; }).catch(() => {});
         }

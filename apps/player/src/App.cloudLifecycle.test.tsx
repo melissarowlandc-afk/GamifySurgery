@@ -174,10 +174,12 @@ describe.each(["phone", "desktop"] as const)("%s account campaign reopen", layou
       <CloudAccountContext.Provider value={account}><AccountCampaignRouter /></CloudAccountContext.Provider>
     </CompetitionClientContext.Provider></AuthAccountContext.Provider></StrictMode>);
     if (marker === "warmup") {
-      expect(active).toBeNull(); expect(env.doc.body.textContent).not.toContain("Getting your campaigns ready"); // Under the no-flash delay.
-      expect(env.button(`Resume ${h.prepared.envelope.campaign.name}`).attributes.disabled).toBeDefined();
-      expect(h.server.operationCount(h.scope.accountId)).toBe(0);
+      // Optional worker warming may stay queued without delaying the actual
+      // verified automatic reopen or its single immutable pending upload.
+      await vi.waitFor(async () => { await act(async () => {}); expect(active?.canExecute).toBe(true); }, { timeout: 5_000 });
+      const opened = active;
       await act(async () => { preparation.resolve(); await preparation.promise; });
+      expect(active).toBe(opened);
     }
     if (marker === "manual") {
       await vi.waitFor(() => expect(selectionReads).toBeGreaterThan(0));

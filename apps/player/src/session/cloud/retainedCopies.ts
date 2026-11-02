@@ -88,17 +88,15 @@ export async function discoverClinicCopies(options: {
 }): Promise<VerifiedClinicCopy[]> {
   const { scope, family, codec, store } = options;
   const copies: VerifiedClinicCopy[] = [];
-  const verified = new Map<string, VerifiedCopyInspection>();
   const rawSources = new Set<string>();
   const parents = options.parents ?? await retainedCopyParents(scope, store, options.entries);
   const belongs = async (id: string) => typeof id === "string" && await cloudCopyFamily(id, parents) === family;
   const add = async (copy: CloudConfirmed, source: string, usageQuestions: CloudCandidate["usageQuestions"] = []) => {
     if (!copy || !await belongs(copy.campaignId)) return;
     try {
-      const key = await sha256Utf8(canonical({ campaignId: copy.campaignId, snapshot: copy.snapshot, evidence: copy.evidence,
-        revision: copy.revision, baselineId: copy.baselineId, priorRecovery: copy.priorRecovery ?? null }));
-      let inspection = verified.get(key);
-      if (!inspection) { inspection = await codec.run({ kind: "inspectCopy", input: copy }); verified.set(key, inspection); }
+      // The shared worker keys verified summaries by actual packed bytes. Do
+      // not canonicalize/hash multi-MB copies again on the UI thread here.
+      const inspection = await codec.run({ kind: "inspectCopy", input: copy });
       copies.push({ copy, inspection, source, usageQuestions });
     } catch (error) {
       // An unavailable worker/storage is a real failure, not permission to use an

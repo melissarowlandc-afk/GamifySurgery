@@ -5,11 +5,11 @@ import { CloudCacheError, packCloudCache, unpackCloudCache, type StoredCache } f
 import { prepareCloudImportWire, prepareCloudWire } from "./codecWire";
 import type { CloudCacheEntry, CloudCacheRead } from "./cache";
 import { CloudSyncError, type CloudCandidate, type CloudCommitRequest, type CloudConfirmed, type CloudImportRequest, type CloudScope } from "./transport";
-import { cloudProgress, type CloudProgressSummary } from "./progress";
-import { inspectVerifiedCopy, type VerifiedCopyInspection } from "./copySelection";
+import type { CloudProgressSummary } from "./progress";
+import type { VerifiedCopyInspection } from "./copySelection";
+import { VerifiedCopyCache } from "./verifiedCopyCache";
 import { bindJournalInWorker, prepareJournalInWorker } from "./journalCodec";
 import { warmJournalInWorker } from "./journalWarm";
-import { serializeGameState } from "@gamify-surgery/game-domain";
 
 export type CloudCodecTask =
   | { kind: "journalWarm"; input: Parameters<typeof warmJournalInWorker>[0] }
@@ -44,11 +44,12 @@ export interface CloudCodecExecutor {
   run<T extends CloudCodecTask>(task: T): Promise<CloudCodecResults[T["kind"]]>;
 }
 
+const verifiedCopies = new VerifiedCopyCache();
 async function verify(input: Parameters<typeof loadCloudEvidenceCheckpoint>[0]): Promise<CloudCodecResults["verify"]> {
-  const loaded = await loadCloudEvidenceCheckpoint(input);
-  if (utf8Bytes(serializeGameState(loaded.state)) > CLOUD_CAPACITY_LIMITS.snapshotCeilingBytes) throw new CloudSyncError("capacity");
-  if (loaded.checkpoint.evidence.records.length !== input.evidence.records.length) throw new CloudSyncError("corrupt");
-  return { campaign: loaded.campaign, evidenceRecords: loaded.checkpoint.evidence.records.length, progress: cloudProgress(loaded.state) };
+  const loaded = await verifiedCopies.read(input);
+  if (loaded.decodedGameBytes > CLOUD_CAPACITY_LIMITS.snapshotCeilingBytes) throw new CloudSyncError("capacity");
+  if (loaded.evidenceRecords !== input.evidence.records.length) throw new CloudSyncError("corrupt");
+  return { campaign: loaded.inspection.campaign, evidenceRecords: loaded.evidenceRecords, progress: loaded.inspection.progress };
 }
 
 /** Codec and idempotent journal work shared by the worker/test boundary. No RPCs. */
@@ -68,7 +69,8 @@ export async function runCloudCodecTask<T extends CloudCodecTask>(task: T): Prom
       break;
     }
     case "verify": result = await verify(task.input); break;
-    case "inspectCopy": result = await inspectVerifiedCopy(task.input); break;
+    case "inspectCopy": result = (await verifiedCopies.read({ ...task.input, expectedRevision: task.input.revision,
+      expectedCampaignId: task.input.campaignId, expectedBaselineId: task.input.baselineId })).inspection; break;
     case "candidate": {
       const { candidate, confirmed, scope } = task.input, delta = candidate.evidence, accepted = confirmed.evidence;
       if (candidate.campaign.campaignId !== scope.campaignId || delta.headerSha256 !== accepted.header.uncompressedSha256 ||
@@ -116,7 +118,8 @@ export function unpackCodecFailure(error: CloudCodecFailure): Error {
   return new CloudCodecError(error.code, error.message);
 }
 export interface CloudCodecMessage { id: number; task: CloudCodecTask }
-export type CloudCodecReply = { ready: true } | { id: number; result: unknown } | { id: number; error: CloudCodecFailure };
+export type CloudCodecReply = { ready: true } | { id: number; started: true } | { id: number; heartbeat: true } |
+  { id: number; result: unknown } | { id: number; error: CloudCodecFailure };
 
 export async function handleCloudCodecMessage(message: CloudCodecMessage): Promise<CloudCodecReply> {
   try {
@@ -133,4 +136,21 @@ export async function dispatchCloudCodecMessage(message: CloudCodecMessage, post
   const reply = await handleCloudCodecMessage(message);
   try { post(reply); }
   catch (error) { post({ id: message.id, error: packCodecFailure(error) }); }
+}
+
+/** Serialize expensive tasks inside the worker. The active deadline begins only
+ * after this dequeue/start acknowledgement, never during another task's work. */
+export function createCloudCodecDispatcher(post: (reply: CloudCodecReply) => void,
+  run = dispatchCloudCodecMessage): (message: CloudCodecMessage) => Promise<void> {
+  let queue = Promise.resolve();
+  return message => {
+    const next = queue.then(async () => {
+      post({ id: message.id, started: true });
+      const heartbeat = setInterval(() => post({ id: message.id, heartbeat: true }), 5_000);
+      try { await run(message, post); }
+      finally { clearInterval(heartbeat); }
+    });
+    queue = next.catch(() => {});
+    return next;
+  };
 }

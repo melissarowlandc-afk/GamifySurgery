@@ -1,4 +1,4 @@
-import { dispatchCloudCodecMessage, type CloudCodecMessage } from "./codecTasks";
+import { createCloudCodecDispatcher, type CloudCodecMessage } from "./codecTasks";
 import type { CloudCodecWorkerPort } from "./codecWorker";
 
 /** Real queued, structured-cloned messages in both directions, with the same
@@ -9,7 +9,8 @@ export class MessageChannelCloudCodecWorker implements CloudCodecWorkerPort {
   onmessageerror: CloudCodecWorkerPort["onmessageerror"] = null;
   private readonly channel = new MessageChannel();
   constructor() {
-    this.channel.port1.onmessage = event => { void dispatchCloudCodecMessage(event.data as CloudCodecMessage, reply => this.channel.port1.postMessage(reply)); };
+    const dispatch = createCloudCodecDispatcher(reply => this.channel.port1.postMessage(reply));
+    this.channel.port1.onmessage = event => { void dispatch(event.data as CloudCodecMessage); };
     this.channel.port2.onmessage = event => this.onmessage?.(event);
     this.channel.port2.onmessageerror = event => this.onmessageerror?.(event);
     this.channel.port1.postMessage({ ready: true });

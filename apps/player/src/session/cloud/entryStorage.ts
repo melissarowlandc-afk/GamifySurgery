@@ -10,7 +10,7 @@ export interface CloudEntryStore {
   write<T>(key: string, value: T): Promise<T>;
   create<T>(key: string, value: T): Promise<T>;
   compareAndSet<T>(key: string, expected: T, value: T): Promise<T>;
-  entries(): Promise<{ key: string; value: unknown }[]>;
+  entries(prefix?: string): Promise<{ key: string; value: unknown }[]>;
   clear(): Promise<void>;
 }
 interface Stored { key: string; text: string; sha256: string }
@@ -105,9 +105,10 @@ export class IndexedDbCloudEntryStore implements CloudEntryStore {
       throw error instanceof CloudSyncError ? error : new CloudSyncError("storage");
     }
   }
-  async entries(): Promise<{ key: string; value: unknown }[]> {
+  async entries(prefix = ""): Promise<{ key: string; value: unknown }[]> {
     const db = await this.open(), tx = db.transaction(STORE, "readonly"), done = completion(tx);
-    const rows = await request(tx.objectStore(STORE).getAll(IDBKeyRange.bound(this.prefix, this.prefix + "\uffff"))) as Stored[];
+    const selected = this.prefix + prefix;
+    const rows = await request(tx.objectStore(STORE).getAll(IDBKeyRange.bound(selected, selected + "\uffff"))) as Stored[];
     if (!await done) throw new CloudSyncError("storage");
     return Promise.all(rows.filter(row => row.key.startsWith(this.prefix)).map(async row => ({ key: row.key.slice(this.prefix.length), value: await this.unpack(row) })));
   }
@@ -127,6 +128,6 @@ export class MemoryCloudEntryStore implements CloudEntryStore {
     if (!this.records.has(key)) throw new CloudSyncError("storage");
     return clone(this.records.get(key) as T);
   }
-  async entries(): Promise<{ key: string; value: unknown }[]> { return [...this.records].map(([key, value]) => ({ key, value: clone(value) })); }
+  async entries(prefix = ""): Promise<{ key: string; value: unknown }[]> { return [...this.records].filter(([key]) => key.startsWith(prefix)).map(([key, value]) => ({ key, value: clone(value) })); }
   async clear(): Promise<void> { this.records.clear(); }
 }

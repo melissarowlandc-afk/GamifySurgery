@@ -6,6 +6,7 @@ import { cloudScopeData } from "./scopeData";
 import { IndexedDbJournalStorage, MemoryJournalStorage, type JournalStorage } from "../localJournal";
 import { prepareJournal } from "./journalCodec";
 import { CloudCacheError, type StoredCache } from "./codecCache";
+import { timeCloudEntry } from "./entryTimings";
 export { CloudCacheError, cloudRecoveryBytes } from "./codecCache";
 import { type CloudCandidate, type CloudConfirmed, type CloudFrozenOperation, type CloudScope } from "./transport";
 
@@ -29,14 +30,28 @@ export interface CloudCache {
   read(scope: CloudScope): Promise<CloudCacheRead | null>;
   write(entry: CloudCacheEntry, expectedCacheRevision: number | null): Promise<CloudCacheRead>;
   accountEntries?(scope: Pick<CloudScope, "backendId" | "accountId">): Promise<CloudCacheEntry[]>;
+  /** IDs only; entry selection must not hydrate/encode every campaign journal. */
+  accountInventory?(scope: Pick<CloudScope, "backendId" | "accountId">): Promise<{ campaignId: string }[]>;
   clearAccount?(scope: Pick<CloudScope, "backendId" | "accountId">): Promise<void>;
 }
 /** Only open/recovery paths hydrate the append journal. Ordinary cache readback
  * verifies the exact legacy cache bytes without scanning or encoding it. */
-async function withJournal(entry: CloudCacheEntry, journal: JournalStorage): Promise<CloudCacheEntry> {
+const journalReads = new WeakMap<JournalStorage, Map<string, { version: string; result: ReturnType<typeof prepareJournal> }>>();
+async function withJournal(entry: CloudCacheEntry, journal: JournalStorage, rawHash: string): Promise<CloudCacheEntry> {
   const key = cloudCampaignStorageKey(entry.scope);
-  if (!await journal.head(key)) return entry;
-  const prepared = await prepareJournal(journal, key, cloudCodec, { base: entry.confirmed });
+  const head = await journal.head(key); if (!head) return entry;
+  let reads = journalReads.get(journal); if (!reads) { reads = new Map(); journalReads.set(journal, reads); }
+  // The packed cache checksum is verified before this call. A new cache byte,
+  // owner, commit, compaction or acknowledgement invalidates preparation.
+  const version = rawHash + JSON.stringify(head);
+  let preparedRead = reads.get(key);
+  if (preparedRead?.version !== version) {
+    const result = timeCloudEntry("journal-recovery", () => prepareJournal(journal, key, cloudCodec, { base: entry.confirmed }));
+    preparedRead = { version, result }; reads.set(key, preparedRead);
+    if (reads.size > 2) reads.delete(reads.keys().next().value!);
+    void result.catch(() => { if (reads!.get(key)?.result === result) reads!.delete(key); });
+  }
+  const prepared = await preparedRead.result;
   if (!prepared?.candidate || !prepared.base) return entry;
   const candidate = prepared.candidate;
   const represented = entry.recovery?.following ?? (entry.recovery?.inFlight ? JSON.parse(entry.recovery.inFlight.requestText) as CloudCandidate : null);
@@ -106,22 +121,24 @@ export class IndexedDbCloudCache implements CloudCache {
   }
   read(scope: CloudScope, expectedText?: string): Promise<CloudCacheRead | null> {
     return observeStorage("cache.read", async () => {
-      const value = await this.readChecked(scope, expectedText);
-      return value && expectedText === undefined ? { ...value, entry: await withJournal(value.entry, this.journal) } : value;
+      const checked = await this.readChecked(scope, expectedText);
+      if (!checked) return null;
+      return expectedText === undefined ? { ...checked.value, entry: await withJournal(checked.value.entry, this.journal, checked.rawHash) } : checked.value;
     });
   }
-  private async readChecked(scope: CloudScope, expectedText?: string): Promise<CloudCacheRead | null> {
+  private async readChecked(scope: CloudScope, expectedText?: string): Promise<{ value: CloudCacheRead; rawHash: string } | null> {
     const db = await this.open();
+    let raw: StoredCache | undefined;
     try {
       const tx = db.transaction(STORE, "readonly"), done = completion(tx);
-      const raw = await request(tx.objectStore(STORE).get(cloudCampaignStorageKey(scope))) as StoredCache | undefined;
+      raw = await request(tx.objectStore(STORE).get(cloudCampaignStorageKey(scope))) as StoredCache | undefined;
       if (!await done) throw new CloudCacheError("transaction");
       if (expectedText !== undefined && raw?.text !== expectedText) throw new CloudCacheError("conflict");
-      return raw ? unpack(raw, scope) : null;
     } catch (error) {
       if (error instanceof CloudCacheError) throw error;
       throw new CloudCacheError("transaction");
     }
+    return raw ? { value: await unpack(raw, scope), rawHash: raw.sha256 } : null;
   }
   write(entry: CloudCacheEntry, expected: number | null): Promise<CloudCacheRead> {
     return observeStorage("cache.write", () => this.writeChecked(entry, expected));
@@ -162,7 +179,7 @@ export class IndexedDbCloudCache implements CloudCache {
     const entries: CloudCacheEntry[] = [];
     for (const raw of records.filter(row => row.key.startsWith(prefix))) {
       const campaignId = decodeURIComponent(raw.key.slice(prefix.length));
-      entries.push(await withJournal((await unpack(raw, cloudScopeData(scope, campaignId))).entry, this.journal));
+      entries.push(await withJournal((await unpack(raw, cloudScopeData(scope, campaignId))).entry, this.journal, raw.sha256));
     }
     return entries;
   }
@@ -173,6 +190,14 @@ export class IndexedDbCloudCache implements CloudCache {
     for (const key of keys) if (typeof key === "string" && key.startsWith(prefix)) await request(store.delete(key));
     if (!await done) throw new CloudCacheError("transaction");
     await this.journal.clear(prefix);
+  }
+  async accountInventory(scope: Pick<CloudScope, "backendId" | "accountId">): Promise<{ campaignId: string }[]> {
+    const prefix = cloudCampaignStorageKey(cloudScopeData(scope, "_")).slice(0, -1);
+    const db = await this.open(), tx = db.transaction(STORE, "readonly"), done = completion(tx);
+    const keys = await request(tx.objectStore(STORE).getAllKeys(IDBKeyRange.bound(prefix, prefix + "\uffff")));
+    if (!await done) throw new CloudCacheError("transaction");
+    return keys.filter((key): key is string => typeof key === "string" && key.startsWith(prefix))
+      .map(key => ({ campaignId: decodeURIComponent(key.slice(prefix.length)) }));
   }
 }
 
@@ -185,7 +210,7 @@ export class MemoryCloudCache implements CloudCache {
     const raw = this.records.get(cloudCampaignStorageKey(scope));
     if (!raw) return null;
     const value = await unpack(copy(raw), scope);
-    return rawOnly ? value : { ...value, entry: await withJournal(value.entry, this.journal) };
+    return rawOnly ? value : { ...value, entry: await withJournal(value.entry, this.journal, raw.sha256) };
   }
   async write(entry: CloudCacheEntry, expected: number | null): Promise<CloudCacheRead> {
     const stored = await pack(entry, expected);
@@ -201,7 +226,7 @@ export class MemoryCloudCache implements CloudCache {
     const prefix = cloudCampaignStorageKey(cloudScopeData(scope, "_")).slice(0, -1);
     const result: CloudCacheEntry[] = [];
     for (const row of this.records.values()) if (row.key.startsWith(prefix)) {
-      result.push(await withJournal((await unpack(row, cloudScopeData(scope, decodeURIComponent(row.key.slice(prefix.length))))).entry, this.journal));
+      result.push(await withJournal((await unpack(row, cloudScopeData(scope, decodeURIComponent(row.key.slice(prefix.length))))).entry, this.journal, row.sha256));
     }
     return result;
   }
@@ -209,5 +234,9 @@ export class MemoryCloudCache implements CloudCache {
     const prefix = cloudCampaignStorageKey(cloudScopeData(scope, "_")).slice(0, -1);
     for (const key of this.records.keys()) if (key.startsWith(prefix)) this.records.delete(key);
     await this.journal.clear(prefix);
+  }
+  async accountInventory(scope: Pick<CloudScope, "backendId" | "accountId">): Promise<{ campaignId: string }[]> {
+    const prefix = cloudCampaignStorageKey(cloudScopeData(scope, "_")).slice(0, -1);
+    return [...this.records.keys()].filter(key => key.startsWith(prefix)).map(key => ({ campaignId: decodeURIComponent(key.slice(prefix.length)) }));
   }
 }

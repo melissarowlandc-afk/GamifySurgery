@@ -50,7 +50,7 @@ async function renderOtherDevice(layout: "phone" | "desktop", h: Awaited<ReturnT
 }
 
 describe.each(["phone", "desktop"] as const)("%s bounded account opening", layout => {
-  it("keeps a failed warmup visible and retries before automatically fencing the other writer", async () => {
+  it("does not gate Resume on a failed optional warmup; verified opening still fences the other writer", async () => {
     const h = await otherDevice(), run = cloudCodec.run.bind(cloudCodec);
     let fail = true;
     vi.spyOn(cloudCodec, "run").mockImplementation(async task => {
@@ -58,9 +58,9 @@ describe.each(["phone", "desktop"] as const)("%s bounded account opening", layou
       return run(task);
     });
     const f = await renderOtherDevice(layout, h);
-    await vi.waitFor(() => expect(f.env.doc.body.textContent).toContain("Clinic preparation could not finish"));
-    expect(f.env.button(f.resume).attributes.disabled).toBeDefined(); expect(f.active).toBeNull();
-    fail = false; await f.env.clickElement(allElements(f.env.doc.body, node => node.tagName === "BUTTON" && node.textContent === "Try again")[0]!); await f.ready();
+    await f.ready(); expect(f.env.doc.body.textContent).not.toContain("Clinic preparation could not finish");
+    expect(f.active).toBeNull(); expect(h.server.calls.filter(call => call.method === "acquire")).toHaveLength(1);
+    fail = false;
     await f.env.click(f.resume); await f.choice();
     expect(f.active!.canExecute).toBe(true); expect(f.active!.coordinator.view.failure).toBeNull();
     expect(f.env.element.textContent).not.toContain("Continue on this device?");
@@ -68,7 +68,7 @@ describe.each(["phone", "desktop"] as const)("%s bounded account opening", layou
     expect(await h.coordinator.focus()).toBe(false); expect(h.coordinator.view.canExecute).toBe(false);
   });
 
-  it("bounds a preparation that never settles and offers Retry without opening a writer", async () => {
+  it("keeps listed Resume enabled while an optional warmup never settles, without acquiring a writer", async () => {
     const h = await otherDevice(), held = deferred(), started = deferred(), run = cloudCodec.run.bind(cloudCodec);
     vi.spyOn(cloudCodec, "run").mockImplementation(async task => {
       if (task.kind === "hash" && task.input === "") { started.resolve(); await held.promise; }
@@ -78,15 +78,15 @@ describe.each(["phone", "desktop"] as const)("%s bounded account opening", layou
     const f = await renderOtherDevice(layout, h); await started.promise;
     await act(async () => { await vi.advanceTimersByTimeAsync(CLOUD_CHECK_TIMEOUT_MS - 1); });
     expect(f.env.doc.body.textContent).not.toContain("Clinic preparation could not finish");
-    expect(f.env.button(f.resume).attributes.disabled).toBeDefined();
+    expect(f.env.button(f.resume).attributes.disabled).toBeUndefined();
     await act(async () => { await vi.advanceTimersByTimeAsync(1); });
-    expect(f.env.doc.body.textContent).toContain("Clinic preparation could not finish");
-    expect(allElements(f.env.doc.body, node => node.tagName === "BUTTON" && node.textContent === "Try again")).toHaveLength(1);
-    expect(f.env.button(f.resume).attributes.disabled).toBeDefined();
+    expect(f.env.doc.body.textContent).not.toContain("Clinic preparation could not finish");
+    expect(allElements(f.env.doc.body, node => node.tagName === "BUTTON" && node.textContent === "Try again")).toHaveLength(0);
+    expect(f.env.button(f.resume).attributes.disabled).toBeUndefined();
     vi.useRealTimers();
     await act(async () => { held.resolve(); });
-    expect(f.env.doc.body.textContent).toContain("Clinic preparation could not finish");
-    await f.env.clickElement(allElements(f.env.doc.body, node => node.tagName === "BUTTON" && node.textContent === "Try again")[0]!); await f.ready(); expect(f.active).toBeNull();
+    expect(f.env.doc.body.textContent).not.toContain("Clinic preparation could not finish");
+    await f.ready(); expect(f.active).toBeNull();
     expect(h.server.calls.filter(call => call.method === "acquire")).toHaveLength(1);
   });
 

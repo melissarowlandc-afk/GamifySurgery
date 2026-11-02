@@ -39,9 +39,9 @@ describe("compact whole-row campaign choices", () => {
     await env.render(<CampaignChoices campaigns={campaigns} levels={{}} disabled reasonId="account-reason" onOpen={open} />);
     const row = env.button("Resume Clinic 1"); expect(row.attributes.disabled).toBeDefined();
     expect(row.attributes["aria-describedby"]?.split(" ")).toContain("account-reason");
-    expect(row.textContent).toContain("Checking level…"); expect(open).not.toHaveBeenCalled();
+    expect(row.textContent).toContain("Saved just now"); expect(row.textContent).not.toContain("Checking level"); expect(open).not.toHaveBeenCalled();
     await env.render(<CampaignChoices campaigns={campaigns} levels={{ '["clinic.0","2"]': null }} disabled={false} onOpen={open} />);
-    expect(row.textContent).toContain("Level unavailable"); await env.clickElement(row);
+    expect(row.textContent).toContain("Saved just now"); expect(row.textContent).not.toContain("Level unavailable"); await env.clickElement(row);
     expect(open).toHaveBeenCalledExactlyOnceWith("clinic.0");
   });
   it("keeps archived/active-writer information and the full accessible clinic name", async () => {

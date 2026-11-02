@@ -18,7 +18,9 @@ describe("fresh asynchronous last-campaign selection", () => {
   });
   it("uses fresh account metadata to upgrade one retained family without replaying or writing", async () => {
     const f = await fixture();
+    const heavyRead = vi.spyOn(f.runtime.cache, "accountEntries");
     expect(await selectCampaignToReopen(f.runtime, false)).toEqual({ kind: "open", campaignId: f.scope.campaignId });
+    expect(heavyRead).not.toHaveBeenCalled();
     expect(f.server.calls.map(call => call.method)).toEqual(["list"]);
     expect(f.server.operationCount(f.scope.accountId)).toBe(0);
   });

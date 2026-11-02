@@ -12,8 +12,9 @@ export interface TechnicalSnapshot {
 const HEALTH_KEYS: Record<string, readonly string[]> = {
   layout: ["layout"],
   entry: ["stage", "elapsedMs", "failure", "busy", "preparing"],
+  entryWork: ["pending", "lastMs", "operations", "timings"],
   coordinator: ["phase", "failure", "canExecute", "localDurable", "pending", "leaseExpiresAt", "leaseRemainingMs", "resumeAuthorized", "stopped", "closing", "checking", "uploading", "renewing", "offlineLocal"],
-  gameSession: ["reloadRequired", "closing", "stopped", "dirty", "encoding", "canExecute", "reconnecting", "lastCommandMs", "commandAge"],
+  gameSession: ["reloadRequired", "closing", "stopped", "dirty", "encoding", "canExecute", "reconnecting", "preparing", "lastCommandMs", "commandAge"],
   facility: ["tick", "paused", "speed", "lastTickAt", "tickAge", "finishReportOpen"],
   clock: ["tick", "paused", "speed", "visible", "allowed", "lastTickAt", "tickAge", "timerAge", "rafAge", "rafPendingAge", "restarts"],
   render: ["frameAge", "restarts", "paused", "running"], codec: ["alive", "ready", "restarts", "lastError", "responseAge", "inFlight"],
@@ -27,7 +28,7 @@ function storedSnapshot(value: unknown): value is TechnicalSnapshot {
     typeof v === "string" && v.length <= 128 && !/[\\/@<>\r\n]/.test(v);
   const rows = (v: unknown, limit: number) => Array.isArray(v) && v.length <= limit && v.every(r =>
     Array.isArray(r) && r.length === 3 && typeof r[0] === "number" && Number.isFinite(r[0]) && typeof r[1] === "string" &&
-    /^[a-z-]{1,30}$/.test(r[1]) && scalar(r[2]));
+    /^[a-z][a-z0-9:_-]{0,29}$/.test(r[1]) && scalar(r[2]));
   return row.version === 1 && Object.keys(row).every(key => ["version", "build", "release", "at", "started", "environment", "health", "lifecycle", "events", "errors"].includes(key)) &&
     typeof row.build === "string" && /^[\w.+-]{1,80}$/.test(row.build) && typeof row.release === "string" && /^[\w.+-]{1,80}$/.test(row.release) &&
     typeof row.at === "number" && Number.isFinite(row.at) && typeof row.started === "number" && Number.isFinite(row.started) &&
@@ -36,7 +37,7 @@ function storedSnapshot(value: unknown): value is TechnicalSnapshot {
       (scalar(v) || key === "origin" && typeof v === "string" && /^https?:\/\/[a-zA-Z0-9.:[\]-]{1,100}$/.test(v)))) &&
     Boolean(row.health && Object.entries(row.health).every(([name, health]) => HEALTH_KEYS[name] && health && typeof health === "object" &&
       Object.entries(health).every(([key, v]) => HEALTH_KEYS[name]!.includes(key) && (scalar(v) ||
-        ["inFlight", "operations"].includes(key) && Array.isArray(v) && v.length <= 12 && v.every(r => Array.isArray(r) && r.length <= 3 && r.every(scalar)))))) &&
+        ["inFlight", "operations", "timings"].includes(key) && Array.isArray(v) && v.length <= 12 && v.every(r => Array.isArray(r) && r.length <= 3 && r.every(scalar)))))) &&
     rows(row.lifecycle ?? [], 16) && rows(row.events, 16) && rows(row.errors, 20);
 }
 
