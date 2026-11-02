@@ -5,7 +5,8 @@ import { handleCloudCodecMessage, unpackCodecFailure, type CloudCodecExecutor, t
 // Vite development loads the workspace graph as individual modules. Release
 // builds load a bundled worker; neither startup nor processing waits forever.
 export const CLOUD_WORKER_STARTUP_TIMEOUT_MS = import.meta.env.MODE === "development" ? 60_000 : 10_000;
-export const CLOUD_WORKER_TASK_TIMEOUT_MS = 5_000;
+// Measured from posting, so queued work counts: keep generous so legitimate long tasks (3+ s inspections on desktop, slower on phones) are never killed.
+export const CLOUD_WORKER_TASK_TIMEOUT_MS = 60_000;
 
 export interface CloudCodecWorkerPort {
   onmessage: ((event: MessageEvent<CloudCodecReply>) => void) | null;

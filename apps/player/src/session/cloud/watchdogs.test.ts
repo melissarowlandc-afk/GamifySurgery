@@ -3,7 +3,7 @@ import { PROTOTYPE_DOMAIN_CONTEXT } from "@gamify-surgery/game-domain";
 import { observeStorage, problemDiagnostics } from "../../diagnostics/problemDiagnostics";
 import { CloudCacheError, IndexedDbCloudCache } from "./cache";
 import { IndexedDbCloudEntryStore } from "./entryStorage";
-import { CloudCodecWorker, cloudCodec } from "./codecWorker";
+import { CloudCodecWorker, cloudCodec, CLOUD_WORKER_TASK_TIMEOUT_MS } from "./codecWorker";
 import { FakeCloudCodecWorker } from "./codecWorkerTestSupport";
 import { CloudSyncCoordinator } from "./coordinator";
 import { CloudGameSession } from "./gameSession";
@@ -29,7 +29,7 @@ describe("responsive commands and self-healing technical boundaries", () => {
       vi.useFakeTimers(); worker.reply({ ready: true });
       expect(session.execute({ type: "SET_SIMULATION_SPEED", speed: 4, operationId: "watchdog.second" }, PROTOTYPE_DOMAIN_CONTEXT)?.simulationSpeed).toBe(4);
       expect(problemDiagnostics.report().current.health.gameSession).toMatchObject({ preparing: true, canExecute: true });
-      if (fault === "hung") await vi.advanceTimersByTimeAsync(5_000);
+      if (fault === "hung") await vi.advanceTimersByTimeAsync(CLOUD_WORKER_TASK_TIMEOUT_MS);
       else if (fault === "killed") worker.onerror?.({ preventDefault() {} } as ErrorEvent);
       else worker.reply({ id: worker.messages[0]!.id, error: { kind: "codec", code: "worker", message: "Unexpected error" } });
       expect(worker.terminated).toBe(true);
