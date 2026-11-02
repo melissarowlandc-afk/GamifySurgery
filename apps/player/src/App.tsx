@@ -19,6 +19,7 @@ import {
   usePrototypeSession,
 } from "./session";
 import { OpeningSequence } from "./ui";
+import { LoadingCovered, LoadingScreen, type LoadingStage } from "./ui/LoadingScreen";
 import { AuthGate } from "./auth/AuthGate";
 import { useAuthAccountId } from "./auth/AuthAccountContext";
 import { usePresentationLayout } from "./shellPresentation";
@@ -43,6 +44,7 @@ import { cloudOpeningDiagnostic } from "./session/cloud/openingDiagnostic";
 const MobileEntryPresentation = lazy(() => import("./mobile/MobileEntryPresentation"));
 
 interface ActivePrototypeGameProps {
+  openingCovered?: boolean;
   cloudSession?: CloudGameSession;
   onCloudReload?: () => Promise<void>;
   onCloudOpen?: (campaignId: string) => Promise<void>;
@@ -56,6 +58,7 @@ interface ActivePrototypeGameProps {
 }
 
 export function ActivePrototypeGame({
+  openingCovered = false,
   cloudSession,
   onCloudReload,
   onCloudOpen,
@@ -64,7 +67,7 @@ export function ActivePrototypeGame({
   onRequestNewCampaign,
   onRequestRestart,
 }: ActivePrototypeGameProps) {
-  const session = usePrototypeSession(loadedProfile, cloudSession);
+  const session = usePrototypeSession(loadedProfile, cloudSession, openingCovered);
   const cloudAccount = useCloudAccount();
   const casualMode = useCasualMode();
   useEffect(() => {
@@ -101,6 +104,9 @@ export function ActivePrototypeGame({
 
   return (
     <>
+    <LoadingScreen active={session.localPreparation !== "ready"} status="Getting your device save ready…" stage="opening"
+      failure={session.localPreparation === "failed" ? "Device saving could not start. Your saved copies are safe." : null} />
+    <LoadingCovered active={session.localPreparation !== "ready"}>
     <PrototypeShell
       cloudSave={cloudSession && session.cloudSyncView ? {
         campaignName: cloudSession.metadata.name, view: session.cloudSyncView, writerElsewhere: Boolean(session.cloudSyncView.writerElsewhere),
@@ -259,6 +265,7 @@ export function ActivePrototypeGame({
         onRequestRestart(session.profile, session.state.campaignSeed)
       }
     />
+    </LoadingCovered>
     </>
   );
 }
@@ -347,8 +354,9 @@ export function AuthenticatedPrototype({ initialCampaignId }: { initialCampaignI
     });
   };
 
-  if (localRecovery !== "ready") return <main><p role="status">{localRecovery === "checking" ? "Opening your device save…" : "Your device save could not be read. Your copies have been kept."}</p>
-    {localRecovery === "failed" && <button type="button" onClick={() => setLocalRecoveryAttempt(n => n + 1)}>Retry</button>}</main>;
+  if (localRecovery !== "ready") return <LoadingScreen status="Opening your device save…" stage="checking"
+    failure={localRecovery === "failed" ? "Your device save could not be read. Your copies are safe." : null}
+    onRetry={() => setLocalRecoveryAttempt(n => n + 1)} />;
   if (launch.mode === "opening") {
     return (
       <OpeningSequence
@@ -491,6 +499,8 @@ function CloudCampaignRouter() {
   const [route, setRoute] = useState<"entry" | "checking" | "cloud" | "founder">("entry");
   const [active, setActive] = useState<{ session: CloudGameSession; profile: LoadedPrototypeProfile; sequence: number } | null>(null);
   const [notice, setNotice] = useState("");
+  const [openingFailure, setOpeningFailure] = useState<string | null>(null);
+  const [loadingStage, setLoadingStage] = useState<LoadingStage>("checking");
   const live = useRef(true), generation = useRef(0), current = useRef(active);
   const opening = useRef<CloudSyncCoordinator | null>(null);
   const failedOpening = useRef<string | null>(null), currentRoute = useRef(route);
@@ -518,18 +528,26 @@ function CloudCampaignRouter() {
     stopAutomaticOpen();
     entryRequested.current = false;
     const epoch = ++generation.current;
-    failedOpening.current = null;
+    failedOpening.current = null; setOpeningFailure(null); setLoadingStage("checking");
     try { runtime.onOpeningDiagnostic?.(null); } catch { /* QA observation cannot affect play. */ }
     const previous = current.current?.session;
     previous?.coordinator.pause();
+    setRoute("checking");
     if (previous) {
       try {
         if (!await cloudCheckDeadline(previous.durable())) {
-          if (live.current && epoch === generation.current) setNotice("This browser could not save your progress. Retry after freeing storage.");
+          if (live.current && epoch === generation.current) {
+            failedOpening.current = campaignId;
+            setOpeningFailure("This browser could not save your progress. Your saved copies are safe.");
+          }
           return;
         }
       } catch {
-        if (live.current && epoch === generation.current) previous.coordinator.reportLocalFailure(new CloudSyncError(previous.coordinator.journal ? "storage" : "processing"));
+        if (live.current && epoch === generation.current) {
+          failedOpening.current = campaignId;
+          previous.coordinator.reportLocalFailure(new CloudSyncError(previous.coordinator.journal ? "storage" : "processing"));
+          setOpeningFailure("Your clinic could not finish opening. Your saved copies are safe.");
+        }
         // Keep the still-mounted owner and its accepted bytes. Unmounting it
         // while encoding is stalled would dispose the only in-memory copy.
         return;
@@ -548,6 +566,7 @@ function CloudCampaignRouter() {
         if (!live.current || epoch !== generation.current) throw new Error("Opening cancelled");
         opening.current = coordinator;
         openingStage = "hydrate";
+        if (live.current && epoch === generation.current) setLoadingStage("opening");
         const selectedId = coordinator.scope.campaignId;
         let created: CloudGameSession;
         try { created = await CloudGameSession.create(coordinator, async id => { await openCampaign(id); }, async checked => {
@@ -584,13 +603,15 @@ function CloudCampaignRouter() {
         try { runtime.onOpeningDiagnostic?.(cloudOpeningDiagnostic(openingStage, error)); }
         catch { /* Classification-only QA diagnostics cannot replace recovery UI. */ }
         failedOpening.current = campaignId;
-        setNotice("This clinic could not be opened. Your saved copies have been kept. Try again or contact the owner."); setRoute("entry");
+        setNotice("This clinic could not be opened. Your saved copies have been kept. Try again or contact the owner.");
+        setOpeningFailure("This clinic could not be opened. Your saved copies are safe.");
       }
     } finally { if (opening.current === coordinator) opening.current = null; }
   };
   useEffect(() => {
     const online = () => {
-      if (!live.current || currentRoute.current !== "entry" || entryRequested.current) return;
+      const failedCheck = currentRoute.current === "checking" && failedOpening.current !== null;
+      if (!live.current || (currentRoute.current !== "entry" && !failedCheck) || entryRequested.current) return;
       if (failedOpening.current) void openCampaign(failedOpening.current);
       else if (attemptedAutomaticOpen.current) { attemptedAutomaticOpen.current = false; setAutomaticRetry(value => value + 1); }
     };
@@ -659,16 +680,25 @@ function CloudCampaignRouter() {
     setActive(null); setRoute("entry"); await cloud.refresh();
   };
   if (cloud.phase === "deletion-requested" || cloud.phase === "deleted") return <CloudCampaignEntry onOpen={async () => {}} onCreate={() => {}} />;
-  if (route === "checking") return <main className="cloud-entry"><h1>Checking account save…</h1><p role="status">Verifying campaign data and session status before play.</p>
-    <button type="button" className="button button-secondary" onClick={() => { void (async () => {
-      stopAutomaticOpen(); entryRequested.current = true; const epoch = ++generation.current; opening.current?.dispose(); opening.current = null;
-      await rememberCampaignToReopen(runtime, null);
-      if (live.current && generation.current === epoch) setRoute("entry");
-    })(); }}>Back to your clinics</button><AccountMenu /></main>;
-  if (route === "cloud" && active) return <ActivePrototypeGame key={`${active.session.coordinator.scope.campaignId}:${active.sequence}`}
-    loadedProfile={active.profile} cloudSession={active.session}
-    onCloudReload={() => openCampaign(active.session.coordinator.scope.campaignId)} onCloudOpen={openCampaign} onCloudCampaigns={() => { void enterCampaignScreen(); }}
-    onRequestNewCampaign={() => { void enterCampaignScreen(); }} onRequestRestart={() => { void restart(); }} />;
+  if (route === "checking" || route === "cloud") return <>
+    <LoadingCovered active={route === "checking"}>
+      {active ? <ActivePrototypeGame key={`${active.session.coordinator.scope.campaignId}:${active.sequence}`}
+        openingCovered={route === "checking"}
+        loadedProfile={active.profile} cloudSession={active.session}
+        onCloudReload={() => openCampaign(active.session.coordinator.scope.campaignId)} onCloudOpen={openCampaign} onCloudCampaigns={() => { void enterCampaignScreen(); }}
+        onRequestNewCampaign={() => { void enterCampaignScreen(); }} onRequestRestart={() => { void restart(); }} /> : null}
+    </LoadingCovered>
+    <LoadingScreen active={route === "checking"} status={loadingStage === "opening" ? "Opening your clinic…" : "Checking your account save…"}
+      stage={loadingStage} failure={openingFailure} actionLabel={active ? "Return to your clinic" : "Back to your clinics"} onRetry={() => { void (async () => {
+        stopAutomaticOpen(); const epoch = ++generation.current; opening.current?.dispose(); opening.current = null;
+        // A previous owner may still hold uncommitted bytes. Returning to that
+        // mounted clinic exposes its recovery controls without releasing it.
+        if (current.current) { entryRequested.current = false; setOpeningFailure(null); setRoute("cloud"); return; }
+        entryRequested.current = true;
+        await rememberCampaignToReopen(runtime, null);
+        if (live.current && generation.current === epoch) { setOpeningFailure(null); setRoute("entry"); }
+      })(); }} />
+  </>;
   if (route === "founder") return <><button type="button" className="button button-secondary" onClick={() => { void enterCampaignScreen(); }}>Back to your clinics</button><OpeningSequence profile={createFreshProfile()} initialStep="founder" onResumeCampaign={() => { setRoute("entry"); }} onRestoreCampaign={() => { setRoute("entry"); }}
     onBeginClinic={(founder, name, seed, guidance) => { void (async () => {
       const epoch = ++generation.current;
@@ -682,11 +712,9 @@ function CloudCampaignRouter() {
         if (live.current && epoch === generation.current) { await cloud.refresh(); if (live.current && epoch === generation.current) await openCampaign(campaign.campaignId); }
       } catch (failure) { if (live.current && epoch === generation.current) { setNotice(cloudEntryError(failure)); setRoute("entry"); } }
     })(); }} /></>;
-  return <>{preparationError ? <div role="alert" className="cloud-entry">
-    <p>Clinic preparation could not finish. Your saved copies have been kept. Check your connection and retry.</p>
-    <button type="button" className="button button-primary" onClick={() => setPreparationAttempt(value => value + 1)}>Retry clinic preparation</button>
-    <button type="button" className="button button-secondary" onClick={() => window.location.reload()}>Reload app</button>
-  </div> : null}<CloudCampaignEntry key={notice} notice={notice} preparing={preparingEntry || preparationError} onOpen={openCampaign} onCreate={() => { stopAutomaticOpen(); entryRequested.current = true; generation.current++; setRoute("founder"); }} /></>;
+  return <CloudCampaignEntry key={notice} notice={notice} preparing={preparingEntry || preparationError} preparationFailure={preparationError}
+    onRetryPreparation={() => setPreparationAttempt(value => value + 1)} onOpen={openCampaign}
+    onCreate={() => { stopAutomaticOpen(); entryRequested.current = true; generation.current++; setRoute("founder"); }} />;
 }
 
 export function App() {

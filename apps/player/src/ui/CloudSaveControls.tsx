@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { ProblemReportButton } from "../feedback/TesterFeedback";
 import type { CloudSyncView } from "../session/cloud/coordinator";
+import { LoadingScreen, useLoadingCovered } from "./LoadingScreen";
 import "./cloudSaves.css";
 
 export interface CloudShellSave {
@@ -35,6 +36,10 @@ export function cloudStatusText(view: CloudSyncView): string | null {
 }
 export function cloudCommandBlockText(view: CloudSyncView): string {
   return cloudStatusText(view) ?? "This clinic is closed.";
+}
+/** A live check can retain a previous lease failure until its result arrives. */
+export function cloudCheckNeedsLoading(view: CloudSyncView): boolean {
+  return !view.canExecute && Boolean(view.checking || view.phase === "checking");
 }
 function CloudCommandBlockNotice({ view, busy, error, onRetry, placement }: {
   view: CloudSyncView; busy: boolean; error: string; onRetry(): void; placement: "overlay" | "inline";
@@ -73,6 +78,7 @@ export function CloudSaveControls({ save, closeRequest = 0, showCloseButton = tr
   blockedNoticePlacement?: "overlay" | "inline";
 }) {
   const { view } = save;
+  const covered = useLoadingCovered();
   const [open, setOpen] = useState(false), [busy, setBusy] = useState(false);
   const [closed, setClosed] = useState(false), [error, setError] = useState("");
   // The counter is an edge from a mounted shell, not a durable close command.
@@ -99,18 +105,23 @@ export function CloudSaveControls({ save, closeRequest = 0, showCloseButton = tr
   }, [closeRequest]);
   const status = cloudStatusText(view);
   const showClosed = closed && view.phase === "closed";
+  const checking = cloudCheckNeedsLoading(view) || busy && !view.canExecute;
   const controls = <>
-    {!view.canExecute && !open ? <CloudCommandBlockNotice key={view.failure ?? view.phase}
+    {!covered && !view.canExecute && !open && !checking ? <CloudCommandBlockNotice key={view.failure ?? view.phase}
       view={view} busy={busy} error={error} onRetry={() => void action(save.onRetry)} placement={blockedNoticePlacement} /> : null}
+    <LoadingScreen active={!open && checking} status="Checking your clinic’s saved progress…" stage="checking"
+      onRetry={busy ? undefined : () => void action(save.onRetry)} />
     {view.canExecute && status ? <button type="button" className="cloud-sync-status" disabled={busy}
       onClick={() => void action(save.onRetry)} aria-label={`Account save status: ${status}`}>
       <span role="status">{status}</span>
     </button> : null}
     {showCloseButton ? <button type="button" className="button button-secondary save-close-button" disabled={busy} onClick={close}>Save &amp; Close</button> : null}
-    {open ? <CloudDialog title={showClosed ? "Safe to close this tab" : "Saving your clinic"} onClose={() => setOpen(false)}>
-      <p>{showClosed ? "Your clinic is saved to your account and paused. You may close this tab." : error || (busy ? "Waiting for account confirmation..." : cloudCommandBlockText(view))}</p>
-      {!busy && !showClosed ? <button type="button" className="button button-primary" onClick={() => void action(save.onSaveAndClose, true)}>Retry</button> : null}
-      {showClosed ? <button type="button" className="button button-primary" onClick={save.onCampaigns}>Choose a campaign</button> : null}
+    <LoadingScreen active={open && !showClosed} status="Saving your clinic…"
+      failure={!busy ? error || "Account save is not confirmed. Keep this app open and try again." : null}
+      actionLabel="Return to your clinic" onRetry={busy ? undefined : () => setOpen(false)} />
+    {open && showClosed ? <CloudDialog title="Safe to close this tab" onClose={() => setOpen(false)}>
+      <p>Your clinic is saved to your account and paused. You may close this tab.</p>
+      <button type="button" className="button button-primary" onClick={save.onCampaigns}>Choose a campaign</button>
     </CloudDialog> : null}
   </>;
   return showCloseButton ? <div className="cloud-save-controls">{controls}</div> : controls;

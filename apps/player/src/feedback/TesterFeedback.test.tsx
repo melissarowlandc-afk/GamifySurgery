@@ -8,6 +8,7 @@ import { cleanupPhoneTests, phoneFixture, phoneTestDom } from "../mobile/screenT
 import { testElementProps } from "../mobile/testDom";
 import { ProblemReportButton, TesterFeedbackForm } from "./TesterFeedback";
 import { APP_BUILD_VERSION, APP_VERSION } from "../appVersion";
+import { LoadingScreen } from "../ui/LoadingScreen";
 
 const mock = vi.hoisted(() => ({ configured: true, account: "account-a", getClient: vi.fn(), getSession: vi.fn(),
   rpc: vi.fn(), header: vi.fn(), network: vi.fn(), usage: null as PlaytimeTracker | null }));
@@ -50,6 +51,19 @@ beforeEach(() => {
   mock.network.mockImplementation(() => { throw new Error("Unexpected real fetch in feedback test"); });
 });
 afterEach(async () => { expect(mock.network).not.toHaveBeenCalled(); await cleanupPhoneTests(); });
+
+it("keeps the existing consent-based problem report reachable from a loading failure without sending automatically", async () => {
+  const env = phoneTestDom(), retry = vi.fn();
+  await env.render(<AuthAccountContext.Provider value="account-a">
+    <LoadingScreen status="Checking your clinic…" failure="The check failed. Your copies are safe." onRetry={retry} />
+  </AuthAccountContext.Provider>);
+  expect(env.button("Try again")).toBeDefined(); expect(env.button("Send a problem report")).toBeDefined();
+  expect(mock.rpc).not.toHaveBeenCalled();
+  await env.click("Send a problem report");
+  expect(env.element.textContent).toContain("I agree to send these technical details");
+  expect(env.button("Send problem report").attributes.disabled).toBeDefined();
+  expect(mock.rpc).not.toHaveBeenCalled(); expect(retry).not.toHaveBeenCalled();
+});
 
 describe("feedback in both game menus", () => {
   it.each(["desktop", "phone"] as const)("sends a %s comment with automatic context and shows confirmation without game commands", async layout => {

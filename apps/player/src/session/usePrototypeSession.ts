@@ -116,6 +116,7 @@ interface ExecuteOptions {
 }
 
 export interface PrototypeSession {
+  localPreparation: "checking" | "ready" | "failed";
   /** Explicit B2.4 binding only; existing callers stay entirely local. */
   cloudSession: CloudGameSession | null;
   cloudSyncView: CloudSyncView | null;
@@ -306,11 +307,17 @@ function alertDefinition(definitionId: string) {
 export function usePrototypeSession(
   initialLoadedProfile?: LoadedPrototypeProfile,
   cloudSession?: CloudGameSession,
+  cloudPresentationCovered = false,
 ): PrototypeSession {
   // Captured for this mounted session; old cleanup/autosave writers can never
   // start saving under another account when AuthGate remounts its provider.
   const accountId = useRef(useAuthAccountId()).current;
   const cloud = useRef(cloudSession ?? null).current;
+  // A router-owned open keeps the old projection mounted for recovery. Its
+  // timers/events must not start a second reopen or upload against that check.
+  // Keep the subscription and durability owner; do not dispose accepted bytes.
+  const cloudPresentationCoveredRef = useRef(cloudPresentationCovered);
+  cloudPresentationCoveredRef.current = cloudPresentationCovered;
   const cloudAccount = useCloudAccount();
   if (cloud && (!initialLoadedProfile || accountId === null || cloud.coordinator.scope.accountId !== accountId ||
     cloud.coordinator.scope.campaignId !== initialLoadedProfile.profile.activeCampaignId)) {
@@ -340,6 +347,7 @@ export function usePrototypeSession(
   const localJournalGenerationRef = useRef(0);
   const localJournalBindingRef = useRef(0);
   const localJournalRequired = !cloud && typeof indexedDB !== "undefined";
+  const [localPreparation, setLocalPreparation] = useState<"checking" | "ready" | "failed">(localJournalRequired ? "checking" : "ready");
   const guidanceContextRef = useRef<{ blockedTopicIds: readonly string[]; attentionBlocked: boolean }>({blockedTopicIds: [], attentionBlocked: false});
   const [
     selectedRoomDefinitionId,
@@ -616,12 +624,13 @@ export function usePrototypeSession(
     }), [accountId, promoteCommittedQuestions]);
   useEffect(() => {
     if (!localJournalRequired) return;
+    setLocalPreparation("checking");
     const generation = ++localJournalGenerationRef.current, binding = ++localJournalBindingRef.current;
     localJournalOpeningRef.current ??= makeLocalJournal(profileRef.current);
     void localJournalOpeningRef.current.then(journal => {
       if (localJournalGenerationRef.current !== generation) return;
-      localJournalRef.current = journal; journal.record(profileRef.current); showCommandProblem(null);
-    }).catch(error => { problemDiagnostics.error("local-journal-open", error); showCommandProblem("Device saving could not start. Keep the app open and send a problem report."); });
+      localJournalRef.current = journal; journal.record(profileRef.current); showCommandProblem(null); setLocalPreparation("ready");
+    }).catch(error => { if (localJournalGenerationRef.current !== generation) return; setLocalPreparation("failed"); problemDiagnostics.error("local-journal-open", error); showCommandProblem("Device saving could not start. Keep the app open and send a problem report."); });
     const timer = window.setInterval(() => {
       if (document.visibilityState !== "hidden") void localJournalRef.current?.compact();
     }, 1_000);
@@ -684,14 +693,14 @@ export function usePrototypeSession(
       cloudUsageRef.current?.setGame({ campaignId: next.campaignId, paused: next.paused || !cloud.canExecute, finishReportOpen: finishReportOpenRef.current });
     };
     const unsubscribe = cloud.subscribe(sync);
-    const timer = window.setInterval(() => { if (document.visibilityState !== "hidden") void cloud.pulse(); }, 1_000);
+    const timer = window.setInterval(() => { if (!cloudPresentationCoveredRef.current && document.visibilityState !== "hidden") void cloud.pulse(); }, 1_000);
     const focus = () => {
       const visible = document.visibilityState !== "hidden"; setDocumentVisible(visible);
-      if (visible) void cloud.foreground();
+      if (visible && !cloudPresentationCoveredRef.current) void cloud.foreground();
     };
     const online = () => {
       const visible = document.visibilityState !== "hidden"; setDocumentVisible(visible);
-      if (visible) void cloud.foreground(true);
+      if (visible && !cloudPresentationCoveredRef.current) void cloud.foreground(true);
     };
     const offline = () => { cloud.coordinator.markOffline(); };
     window.addEventListener("focus", focus);
@@ -1002,8 +1011,12 @@ export function usePrototypeSession(
     const handleVisibilityChange = (event?: Event) => {
       const visible = document.visibilityState === "visible";
       setDocumentVisible(visible);
-      if (cloud && visible && event) void cloud.foreground();
-      if (cloud && !visible) { cloud.coordinator.markBackground(); void cloud.checkpointNow("hidden"); return; }
+      if (cloud && visible && event && !cloudPresentationCoveredRef.current) void cloud.foreground();
+      if (cloud && !visible) {
+        cloud.coordinator.markBackground();
+        if (cloudPresentationCoveredRef.current) void cloud.durable(); else void cloud.checkpointNow("hidden");
+        return;
+      }
       if (!visible && !stateRef.current.paused) {
         execute(
           {
@@ -1024,7 +1037,11 @@ export function usePrototypeSession(
     };
 
     const handlePageHide = () => {
-      if (cloud) { cloud.coordinator.markBackground(); void cloud.checkpointNow("pagehide"); return; }
+      if (cloud) {
+        cloud.coordinator.markBackground();
+        if (cloudPresentationCoveredRef.current) void cloud.durable(); else void cloud.checkpointNow("pagehide");
+        return;
+      }
       if (localJournalRef.current) { void localJournalRef.current.durable(); return; }
       // Idle autosaves optimize live animation, but a refresh or navigation
       // must still synchronously commit the latest staged tick before the old
@@ -2139,14 +2156,14 @@ export function usePrototypeSession(
     setSummaryVisible(false);
     if (localJournalRequired) {
       const previous = localJournalOpeningRef.current, generation = ++localJournalGenerationRef.current;
-      localJournalRef.current = null;
+      localJournalRef.current = null; setLocalPreparation("checking");
       const opening = (async () => {
         if (previous) { const journal = await previous; if (!await journal.durable()) throw new Error("Device commit failed"); journal.stop(); }
         return makeLocalJournal(nextProfile);
       })();
       localJournalOpeningRef.current = opening;
-      void opening.then(journal => { if (generation === localJournalGenerationRef.current) { localJournalRef.current = journal; journal.record(profileRef.current); showCommandProblem(null); setAnnouncement(`${selectedCampaign.name} opened. Its learning history is unchanged.`); } })
-        .catch(error => { problemDiagnostics.error("local-journal-switch", error); showCommandProblem("Device saving could not open this clinic. Send a problem report."); });
+      void opening.then(journal => { if (generation === localJournalGenerationRef.current) { localJournalRef.current = journal; journal.record(profileRef.current); showCommandProblem(null); setLocalPreparation("ready"); setAnnouncement(`${selectedCampaign.name} opened. Its learning history is unchanged.`); } })
+        .catch(error => { if (generation !== localJournalGenerationRef.current) return; setLocalPreparation("failed"); problemDiagnostics.error("local-journal-switch", error); showCommandProblem("Device saving could not open this clinic. Send a problem report."); });
       setAnnouncement(`Opening ${selectedCampaign.name}…`); return;
     }
     const saveResult = attemptSaveProfile(nextProfile);
@@ -2468,6 +2485,7 @@ export function usePrototypeSession(
     );
 
   return {
+    localPreparation,
     cloudSession: cloud,
     cloudSyncView: cloud?.syncView ?? null,
     saveCloudAndClose: cloud ? () => cloud.saveAndClose(PROTOTYPE_DOMAIN_CONTEXT) : null,

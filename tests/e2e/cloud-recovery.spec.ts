@@ -42,6 +42,28 @@ async function importAndOpen(page: Page) {
 }
 
 for (const layout of ["desktop", "phone"] as const) {
+  test(`${layout}: a slow opening has one full-screen loading bar, no healthy Retry, and dismisses automatically`, async ({ browser, baseURL }) => {
+    const f = await rig(browser, baseURL!, layout);
+    let release!: () => void;
+    const held = new Promise<void>(resolve => { release = resolve; });
+    try {
+      const page = await f.page(1); await expectResumeReady(page, "Synthetic clinic 1");
+      const reads = f.server.calls.filter(call => call.method === "head").length;
+      f.server.faults.push({ method: "head", at: "before", wait: held });
+      await page.getByRole("button", { name: "Resume Synthetic clinic 1", exact: true }).click();
+      await expect.poll(() => f.server.calls.filter(call => call.method === "head").length).toBeGreaterThan(reads);
+      const loading = page.getByRole("region", { name: "Loading clinic", exact: true });
+      await expect(loading).toBeVisible({ timeout: CLOUD_QA_WAIT_MS });
+      await expect(loading).toHaveCount(1);
+      await expect(loading.getByRole("heading", { name: "Stitchin’ Time", exact: true })).toBeVisible();
+      await expect(loading.getByRole("progressbar", { name: "Opening progress", exact: true })).toHaveAttribute("aria-valuenow", "2");
+      await expect(loading.getByRole("button")).toHaveCount(0);
+      await expect(page.getByRole("dialog")).toHaveCount(0);
+      release(); await expectPlaying(page);
+      await expect(loading).toHaveCount(0);
+    } finally { release(); await f.close(); }
+  });
+
   test(`${layout}: same-device reopen after hidden/pagehide resumes pending progress automatically and uploads it`, async ({ browser, baseURL }) => {
     const f = await rig(browser, baseURL!, layout);
     try {

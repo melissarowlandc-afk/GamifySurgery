@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { AuthGate } from "./AuthGate";
 import { useAuthAccountId } from "./AuthAccountContext";
 import { createLocalPrototypeSession } from "./prototypeAuth";
-import { cleanupPhoneTests, phoneTestDom } from "../mobile/screenTestUtils";
+import { allElements, cleanupPhoneTests, phoneTestDom } from "../mobile/screenTestUtils";
 import { testElementProps } from "../mobile/testDom";
 import { CLOUD_CHECK_TIMEOUT_MS } from "../session/cloud/checkDeadline";
 
@@ -252,13 +252,13 @@ describe("invite-only shared auth gate", () => {
     mock.getUser.mockRejectedValueOnce(new TypeError("Synthetic failed fetch"))
       .mockResolvedValueOnce({ data: { user: null }, error: { name: "AuthRetryableFetchError", status: 0 } });
     const env = await setup("", layout);
-    expect(env.element.textContent).toContain("Checking your sign-in…");
+    expect(env.doc.body.textContent).toContain("Your sign-in could not be verified");
     expect(mock.mounts).not.toHaveBeenCalled(); expect(mock.signOut).not.toHaveBeenCalled();
     await act(async () => { await vi.advanceTimersByTimeAsync(999); });
     expect(mock.getUser).toHaveBeenCalledTimes(1);
     await act(async () => { await vi.advanceTimersByTimeAsync(1); });
     expect(mock.getUser).toHaveBeenCalledTimes(2);
-    expect(env.element.textContent).toContain("Checking your sign-in…");
+    expect(env.doc.body.textContent).toContain("Your sign-in could not be verified");
     await act(async () => { await vi.advanceTimersByTimeAsync(1999); });
     expect(mock.getUser).toHaveBeenCalledTimes(2);
     await act(async () => { await vi.advanceTimersByTimeAsync(1); });
@@ -280,7 +280,7 @@ describe("invite-only shared auth gate", () => {
       await act(async () => { await vi.advanceTimersByTimeAsync(1); });
       expect(mock.getUser).toHaveBeenCalledTimes(++calls);
     }
-    expect(env.element.textContent).toContain("Checking your sign-in…");
+    expect(env.doc.body.textContent).toContain("Your sign-in could not be verified");
     expect(mock.signOut).not.toHaveBeenCalled(); expect(mock.mounts).not.toHaveBeenCalled();
   });
 
@@ -360,7 +360,7 @@ describe("invite-only shared auth gate", () => {
   it("bounds a missing remembered session and ignores its late reply", async () => {
     vi.useFakeTimers(); let resolve!: (value: unknown) => void;
     mock.getSession.mockImplementation(() => new Promise(done => { resolve = done; }));
-    const env = await setup(); expect(env.element.textContent).toContain("Checking your sign-in");
+    const env = await setup(); expect(env.doc.body.textContent).toBe("");
     await act(async () => { await vi.advanceTimersByTimeAsync(CLOUD_CHECK_TIMEOUT_MS); });
     expect(env.element.textContent).toContain("Sign In"); expect(mock.mounts).not.toHaveBeenCalled();
     await act(async () => { resolve({ data: { session: session() }, error: null }); });
@@ -374,7 +374,8 @@ describe("invite-only shared auth gate", () => {
     mock.getUser.mockImplementationOnce(() => new Promise(done => { resolve = done; }));
     const env = await setup();
     await act(async () => { await vi.advanceTimersByTimeAsync(CLOUD_CHECK_TIMEOUT_MS); });
-    expect(env.element.textContent).toContain("Your sign-in could not be verified"); expect(env.button("Reload app")).toBeDefined();
+    expect(env.doc.body.textContent).toContain("Your sign-in could not be verified");
+    expect(allElements(env.doc.body, node => node.tagName === "BUTTON" && node.textContent === "Try again")).toHaveLength(1);
     expect(mock.mounts).not.toHaveBeenCalled(); expect(mock.signOut).not.toHaveBeenCalled();
     await act(async () => { env.browser.dispatchEvent(new Event("online")); });
     expect(env.element.textContent).toContain("Clinic account-a");

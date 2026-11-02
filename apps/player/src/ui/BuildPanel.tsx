@@ -7,7 +7,7 @@ import type {
   RoomBuildCategoryId,
   RoomBuildOptionView,
 } from "./types";
-import { PixelIcon } from "./PixelIcon";
+import { RoomCatalogThumbnail } from "./RoomCatalogThumbnail";
 import type { PixelIconName } from "../art/iconArt";
 import { getApprovedPlacementOrientations } from "../facility/roomVisualLayout";
 import {
@@ -279,7 +279,7 @@ export function BuildPanel({
       title={room.blockedReason}
       aria-pressed={room.selected}
     >
-      <PixelIcon name={roomIconName(room.id)} className="pixel-room-icon" />
+      <RoomCatalogThumbnail definitionId={room.id} fallbackIcon={roomIconName(room.id)} className="pixel-room-icon" />
       <span>
         <strong>{room.displayName}</strong>
         {room.purpose ? <small className="build-card-purpose">{room.purpose}</small> : null}
@@ -318,7 +318,7 @@ export function BuildPanel({
           <div className="build-option-list">
             {lockedRoomOptions.map((room) => (
               <div className="build-card is-locked" key={room.id} aria-disabled="true">
-                <PixelIcon name={roomIconName(room.id)} className="pixel-room-icon" />
+                <RoomCatalogThumbnail definitionId={room.id} fallbackIcon={roomIconName(room.id)} className="pixel-room-icon" />
                 <span>
                   <strong>{room.displayName}</strong>
                   {room.purpose ? <small className="build-card-purpose">{room.purpose}</small> : null}

@@ -1,4 +1,5 @@
 import { lazy, Suspense } from "react";
+import { LoadingScreen } from "./ui/LoadingScreen";
 import { AppShell } from "./AppShell";
 import type { PrototypeShellProps } from "./shellContract";
 import { usePresentationLayout } from "./shellPresentation";
@@ -16,7 +17,7 @@ export function PrototypeShell(props: PrototypeShellProps) {
   const layout = usePresentationLayout();
   if (layout === "desktop") return <AppShell {...props} />;
   return (
-    <Suspense fallback={<p role="status">Loading phone layout…</p>}>
+    <Suspense fallback={<LoadingScreen status="Opening your clinic…" stage="opening" />}>
       <MobileShell {...props} />
     </Suspense>
   );

@@ -122,6 +122,7 @@ describe.each(["phone", "desktop"] as const)("%s actual disposable QA entry", la
     const gate = deferred(); f.hold("head", gate.promise);
     let checked = false, checking!: Promise<boolean>;
     clock.wall += expired ? 65_000 : 10_000;
+    vi.useFakeTimers({ toFake: ["setTimeout", "clearTimeout"] });
     await act(async () => {
       Object.assign(f.env.doc, { visibilityState: "visible" }); f.env.browser.dispatchEvent(new Event("focus"));
       checking = qa().foreground().then(ok => { checked = true; return ok; });
@@ -131,8 +132,12 @@ describe.each(["phone", "desktop"] as const)("%s actual disposable QA entry", la
       expect(checked).toBe(false);
       if (expired) {
         expect(qa().status().canExecute).toBe(false); expect(qa().snapshot().state!.paused).toBe(true);
-        expect(notices()).toHaveLength(1); expect(notices()[0]!.textContent).toContain("Your clinic needs a connection check to continue.");
-        expect(allElements(notices()[0]!, node => node.tagName === "BUTTON").map(node => node.textContent)).toEqual(["Retry"]);
+        expect(notices()).toHaveLength(0);
+        await act(async () => { await vi.advanceTimersByTimeAsync(400); });
+        const loading = allElements(f.env.doc.body, node => node.attributes["aria-label"] === "Loading clinic");
+        expect(loading).toHaveLength(1);
+        expect(loading[0]!.textContent).toContain("Checking your clinic’s saved progress");
+        expect(allElements(loading[0]!, node => node.tagName === "BUTTON")).toHaveLength(0);
       } else {
         expect(qa().status().canExecute).toBe(true); expect(qa().snapshot().state!.paused).toBe(false); expect(notices()).toHaveLength(0);
       }
@@ -148,6 +153,8 @@ describe.each(["phone", "desktop"] as const)("%s actual disposable QA entry", la
     } finally { gate.resolve(); }
     await act(async () => { expect(await checking).toBe(true); });
     await f.playing(); expect(notices()).toHaveLength(0);
+    expect(allElements(f.env.doc.body, node => node.attributes["aria-label"] === "Loading clinic")).toHaveLength(0);
+    vi.useRealTimers();
   });
 
   it("uploads offline progress once and keeps its unsubmitted frozen ancestor locally without an account archive", async () => {
@@ -243,13 +250,14 @@ describe.each(["phone", "desktop"] as const)("%s actual disposable QA entry", la
       expect(f.browser.__cloudQa?.status().openingFailure).toEqual({ stage: "copies", kind, code });
     });
     expect(f.browser.__cloudQa!.status().hasState).toBe(false);
-    expect(f.env.element.textContent).toContain("Your saved copies have been kept");
+    expect(f.env.doc.body.textContent).toContain("Your saved copies are safe");
+    await f.env.clickElement(allElements(f.env.doc.body, node => node.tagName === "BUTTON" && node.textContent === "Back to your clinics")[0]!);
     entries.mockRestore();
     await vi.waitFor(async () => { await act(async () => {}); expect(f.env.button("Resume Synthetic clinic 1").attributes.disabled).toBeUndefined(); });
     await f.env.click("Resume Synthetic clinic 1"); await f.playing();
     expect(f.browser.__cloudQa!.status().openingFailure).toBeNull();
   });
-  it("classifies a failed automatic open without exposing saved bytes and clears the diagnostic on successful manual retry", async () => {
+  it("classifies a failed automatic open without exposing saved bytes and retries automatically when connectivity returns", async () => {
     const f = await fixture(layout);
     f.server.faults.push({ method: "load", at: "before", error: new CloudSyncError("protocol") });
     await f.env.render(null); await f.env.render(<QaApp />);
@@ -257,8 +265,8 @@ describe.each(["phone", "desktop"] as const)("%s actual disposable QA entry", la
       expect(f.browser.__cloudQa?.status().openingFailure).toEqual({ stage: "copies", kind: "sync", code: "protocol" });
     });
     expect(f.browser.__cloudQa!.status().hasState).toBe(false);
-    await vi.waitFor(async () => { await act(async () => {}); expect(f.env.button("Resume Synthetic clinic 1").attributes.disabled).toBeUndefined(); });
-    await f.env.click("Resume Synthetic clinic 1"); await f.playing();
+    await act(async () => { f.env.browser.dispatchEvent(new Event("online")); });
+    await f.playing();
     expect(f.browser.__cloudQa!.status().openingFailure).toBeNull();
   });
 

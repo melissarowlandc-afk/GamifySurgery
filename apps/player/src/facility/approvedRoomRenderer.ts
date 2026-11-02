@@ -7,13 +7,56 @@ import type {
 } from "./approvedRoomPresentation";
 
 export interface ApprovedPaintPrimitive {
-  readonly shape: "rect" | "line" | "ellipse";
+  readonly shape: "rect" | "line" | "ellipse" | "polygon";
   readonly x: number;
   readonly y: number;
   readonly width: number;
   readonly height: number;
   readonly color: string;
   readonly alpha?: number;
+  /** Floor-clipped ellipse vertices, with the same 32-segment outline Phaser uses. */
+  readonly points?: readonly Readonly<{ x: number; y: number }>[];
+}
+
+/**
+ * Proof canvases clip floor textures to the footprint. Keep the same ellipse
+ * outline inside the floor without allocating masks/layers or painting its
+ * off-floor portion over neighboring rooms and terrain.
+ */
+export function clipApprovedFloorEllipses(
+  primitives: readonly ApprovedPaintPrimitive[], width: number, height: number,
+): readonly ApprovedPaintPrimitive[] {
+  type Point = Readonly<{ x: number; y: number }>;
+  return primitives.flatMap(primitive => {
+    if (primitive.shape !== "ellipse" || (primitive.x - primitive.width / 2 >= 0 &&
+        primitive.y - primitive.height / 2 >= 0 && primitive.x + primitive.width / 2 <= width &&
+        primitive.y + primitive.height / 2 <= height)) return [primitive];
+    let points: Point[] = Array.from({ length: 32 }, (_, index) => ({
+      x: primitive.x + Math.cos(index / 32 * Math.PI * 2) * primitive.width / 2,
+      y: primitive.y + Math.sin(index / 32 * Math.PI * 2) * primitive.height / 2,
+    }));
+    for (const [axis, boundary, minimum] of [["x", 0, true], ["x", width, false], ["y", 0, true], ["y", height, false]] as const) {
+      const input = points; points = [];
+      if (!input.length) break;
+      let previous = input.at(-1)!;
+      let previousInside = minimum ? previous[axis] >= boundary : previous[axis] <= boundary;
+      for (const point of input) {
+        const inside = minimum ? point[axis] >= boundary : point[axis] <= boundary;
+        if (inside !== previousInside) {
+          const ratio = (boundary - previous[axis]) / (point[axis] - previous[axis]);
+          points.push({ x: previous.x + (point.x - previous.x) * ratio,
+            y: previous.y + (point.y - previous.y) * ratio, [axis]: boundary });
+        }
+        if (inside) points.push(point);
+        previous = point; previousInside = inside;
+      }
+    }
+    if (points.length < 3) return [];
+    const left = Math.min(...points.map(point => point.x)), top = Math.min(...points.map(point => point.y));
+    const right = Math.max(...points.map(point => point.x)), bottom = Math.max(...points.map(point => point.y));
+    if (right <= left || bottom <= top) return [];
+    return [{ ...primitive, shape: "polygon" as const, x: left, y: top, width: right - left, height: bottom - top, points }];
+  });
 }
 
 const rect = (
@@ -266,7 +309,7 @@ export function getApprovedFloorPrimitives(
       break;
     }
   }
-  return output;
+  return clipApprovedFloorEllipses(output, width, height);
 }
 
 export function getApprovedProceduralScreenRect(

@@ -9,7 +9,7 @@ export const status = (page: Page) => page.evaluate(() => window.__cloudQa?.stat
   openingFailure: null,
 });
 
-// Cold module/worker startup and the 15-second ordinary checkpoint can exceed
+// Cold module/worker startup and explicit checkpoint preparation can exceed
 // Playwright's default five-second expectation. Poll real authority and save
 // state separately; a pending background upload does not mean play is blocked.
 export const CLOUD_QA_WAIT_MS = 20_000;
@@ -32,6 +32,7 @@ export async function expectPlaying(page: Page) {
   await expect(page.getByRole("heading", { name: "Continue on this device?", exact: true })).toHaveCount(0);
   await expect(page.getByRole("heading", { name: "Safe to close this tab", exact: true })).toHaveCount(0);
   await expect(page.getByRole("button", { name: /Account save status:/ })).toHaveCount(0);
+  await expect(page.getByRole("region", { name: "Loading clinic", exact: true })).toHaveCount(0);
 }
 
 export async function expectAccountSaved(page: Page) {

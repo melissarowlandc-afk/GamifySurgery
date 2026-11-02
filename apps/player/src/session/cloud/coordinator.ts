@@ -26,6 +26,8 @@ export type CloudSyncPhase = "off" | "checking" | "readonly" | "ready" | "saving
 export interface CloudSyncView {
   phase: CloudSyncPhase;
   canExecute: boolean;
+  /** Presentation only; authority continues to use allowed(). */
+  checking?: boolean;
   pending: boolean;
   localDurable: boolean;
   revision: string | null;
@@ -191,7 +193,7 @@ export class CloudSyncCoordinator {
   }
   get view(): CloudSyncView {
     this.checkTime();
-    return { phase: this.phase, canExecute: this.allowed(), pending: this.offlineBase || this.recovery() !== null || Boolean(this.record?.entry.recovery),
+    return { phase: this.phase, canExecute: this.allowed(), checking: Boolean(this.foregrounding || this.reconnecting) || this.phase === "checking", pending: this.offlineBase || this.recovery() !== null || Boolean(this.record?.entry.recovery),
       localDurable: this.localDurable, revision: this.record?.entry.confirmed.revision ?? null,
       confirmedAtMs: this.record?.entry.confirmed.acceptedAtMs ?? null, failure: this.failure,
       ...(this.record?.entry.confirmed.priorRecovery ? { priorRecovery: { verifiedRevision: this.record.entry.confirmed.revision,
@@ -854,7 +856,8 @@ export class CloudSyncCoordinator {
       if (!timedOut) { cancelled = true; this.fail(error); }
       if (this.allowed()) return true;
       return ["auth", "revoked", "deleted", "disabled", "protocol", "notice"].includes(this.failure ?? "") ? false : null;
-    }).finally(() => { this.foregrounding = null; });
+    }).finally(() => { this.foregrounding = null; this.emit(); });
+    this.emit();
     return this.foregrounding;
   }
   focus(): Promise<boolean> {
@@ -868,7 +871,8 @@ export class CloudSyncCoordinator {
         const copy = this.deviceCopy(), usage = this.pendingCandidate?.usageQuestions ?? [];
         if (copy) await this.restoreVerifiedOffline(copy, usage);
         return false;
-      })().finally(() => { this.reconnecting = null; });
+      })().finally(() => { this.reconnecting = null; this.emit(); });
+      this.emit();
       return this.reconnecting;
     }
     if (this.offlineLocal) return Promise.resolve(false);
@@ -883,7 +887,8 @@ export class CloudSyncCoordinator {
       // and lease ownership before it permits any new commands.
       if (!this.record && !await this.open()) return false;
       return await this.retry(true) && this.resume();
-    }).finally(() => { this.reconnecting = null; });
+    }).finally(() => { this.reconnecting = null; this.emit(); });
+    this.emit();
     return this.reconnecting;
   }
   reportLocalFailure(error: unknown): void {

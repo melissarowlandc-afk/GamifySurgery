@@ -45,8 +45,10 @@ describe("account entry lifetime and privacy", () => {
     vi.useFakeTimers();
     await env.render(<AuthAccountContext.Provider value="account-a"><CloudAccountProvider runtime={runtime}><Probe /></CloudAccountProvider></AuthAccountContext.Provider>);
     await started.promise;
-    expect(env.element.textContent).toContain("Checking your sign-in");
-    await act(async () => { await vi.advanceTimersByTimeAsync(CLOUD_CHECK_TIMEOUT_MS + 1_500); });
+    expect(env.doc.body.textContent).toBe("");
+    await act(async () => { await vi.advanceTimersByTimeAsync(400); });
+    expect(env.doc.body.textContent).toContain("Connecting to your account");
+    await act(async () => { await vi.advanceTimersByTimeAsync(CLOUD_CHECK_TIMEOUT_MS + 1_100); });
     expect(env.element.textContent).toBe("error"); expect((current as CloudAccountValue | null)?.error).toBe("network");
     vi.useRealTimers(); vi.restoreAllMocks();
     await act(async () => { await current!.refresh(); });

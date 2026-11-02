@@ -4,7 +4,7 @@ import { PROTOTYPE_DOMAIN_CONTEXT } from "@gamify-surgery/game-domain";
 import { AccountCampaignRouter } from "../../App";
 import { AuthAccountContext } from "../../auth/AuthAccountContext";
 import { CompetitionClientContext } from "../../competition/useCompetition";
-import { cleanupPhoneTests, phoneTestDom } from "../../mobile/screenTestUtils";
+import { allElements, cleanupPhoneTests, phoneTestDom } from "../../mobile/screenTestUtils";
 import { CloudAccountContext, type CloudAccountValue } from "./CloudAccount";
 import { MemoryCloudCache } from "./cache";
 import { CLOUD_CHECK_TIMEOUT_MS, CLOUD_READ_TIMEOUT_MS } from "./checkDeadline";
@@ -58,9 +58,9 @@ describe.each(["phone", "desktop"] as const)("%s bounded account opening", layou
       return run(task);
     });
     const f = await renderOtherDevice(layout, h);
-    await vi.waitFor(() => expect(f.env.element.textContent).toContain("Clinic preparation could not finish"));
+    await vi.waitFor(() => expect(f.env.doc.body.textContent).toContain("Clinic preparation could not finish"));
     expect(f.env.button(f.resume).attributes.disabled).toBeDefined(); expect(f.active).toBeNull();
-    fail = false; await f.env.click("Retry clinic preparation"); await f.ready();
+    fail = false; await f.env.clickElement(allElements(f.env.doc.body, node => node.tagName === "BUTTON" && node.textContent === "Try again")[0]!); await f.ready();
     await f.env.click(f.resume); await f.choice();
     expect(f.active!.canExecute).toBe(true); expect(f.active!.coordinator.view.failure).toBeNull();
     expect(f.env.element.textContent).not.toContain("Continue on this device?");
@@ -77,20 +77,20 @@ describe.each(["phone", "desktop"] as const)("%s bounded account opening", layou
     vi.useFakeTimers();
     const f = await renderOtherDevice(layout, h); await started.promise;
     await act(async () => { await vi.advanceTimersByTimeAsync(CLOUD_CHECK_TIMEOUT_MS - 1); });
-    expect(f.env.element.textContent).not.toContain("Clinic preparation could not finish");
+    expect(f.env.doc.body.textContent).not.toContain("Clinic preparation could not finish");
     expect(f.env.button(f.resume).attributes.disabled).toBeDefined();
     await act(async () => { await vi.advanceTimersByTimeAsync(1); });
-    expect(f.env.element.textContent).toContain("Clinic preparation could not finish");
-    expect(f.env.button("Retry clinic preparation").attributes.disabled).toBeUndefined();
+    expect(f.env.doc.body.textContent).toContain("Clinic preparation could not finish");
+    expect(allElements(f.env.doc.body, node => node.tagName === "BUTTON" && node.textContent === "Try again")).toHaveLength(1);
     expect(f.env.button(f.resume).attributes.disabled).toBeDefined();
     vi.useRealTimers();
     await act(async () => { held.resolve(); });
-    expect(f.env.element.textContent).toContain("Clinic preparation could not finish");
-    await f.env.click("Retry clinic preparation"); await f.ready(); expect(f.active).toBeNull();
+    expect(f.env.doc.body.textContent).toContain("Clinic preparation could not finish");
+    await f.env.clickElement(allElements(f.env.doc.body, node => node.tagName === "BUTTON" && node.textContent === "Try again")[0]!); await f.ready(); expect(f.active).toBeNull();
     expect(h.server.calls.filter(call => call.method === "acquire")).toHaveLength(1);
   });
 
-  it.each(["deadline", "back"] as const)("fences an uncompleted opening on %s and a later reply cannot replace the automatically checked session", async exit => {
+  it.each(["deadline", "deadline-action"] as const)("fences an uncompleted opening on %s and a later reply cannot replace the automatically checked session", async exit => {
     const h = await otherDevice(), f = await renderOtherDevice(layout, h); await f.ready();
     const held = deferred(), started = deferred(), head = h.transport.head.bind(h.transport); let first = true;
     vi.spyOn(h.transport, "head").mockImplementation(async id => {
@@ -98,17 +98,22 @@ describe.each(["phone", "desktop"] as const)("%s bounded account opening", layou
       return head(id);
     });
     vi.useFakeTimers(); await f.env.click(f.resume); await started.promise;
-    expect(f.env.element.textContent).toContain("Checking account save");
-    expect(f.env.button("Back to your clinics").attributes.disabled).toBeUndefined();
-    // The router bounds the whole open, including the checked-session read,
-    // independently of when the coordinator starts its own 30 second check.
-    if (exit === "deadline") await act(async () => { await vi.advanceTimersByTimeAsync(CLOUD_CHECK_TIMEOUT_MS + CLOUD_READ_TIMEOUT_MS); });
-    else await f.env.click("Back to your clinics");
+    expect(f.env.doc.body.textContent).toBe(""); // Short checks do not flash.
+    await act(async () => { await vi.advanceTimersByTimeAsync(400); });
+    expect(f.env.doc.body.textContent).toContain("Checking your account save");
+    expect(allElements(f.env.doc.body, node => node.tagName === "BUTTON")).toHaveLength(0);
+    // Normal loading has no Back/Retry. A deadline exposes one way back to the
+    // preserved clinic list; neither that action nor a late reply grants play.
+    const deadline = CLOUD_CHECK_TIMEOUT_MS + (exit === "deadline" ? CLOUD_READ_TIMEOUT_MS : 0);
+    await act(async () => { await vi.advanceTimersByTimeAsync(deadline - 400); });
+    expect(f.active).toBeNull();
+    const back = allElements(f.env.doc.body, node => node.tagName === "BUTTON" && node.textContent === "Back to your clinics");
+    expect(back).toHaveLength(1);
+    vi.useRealTimers();
+    await f.env.clickElement(back[0]!);
     expect(f.env.element.textContent).toContain("Your campaigns");
     if (exit === "deadline") expect(f.env.element.textContent).toContain("Your saved copies have been kept");
-    vi.useRealTimers(); await f.ready();
-    if (exit === "deadline") await act(async () => { f.env.browser.dispatchEvent(new Event("online")); });
-    else await f.env.click(f.resume);
+    await f.ready(); await f.env.click(f.resume);
     await f.choice();
     const opened = f.active; expect(opened!.canExecute).toBe(true);
     await act(async () => { held.resolve(); await held.promise; });

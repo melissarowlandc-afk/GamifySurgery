@@ -117,7 +117,7 @@ export class CloudGameSession {
   get needsReload(): boolean { return this.reloadRequired; }
   get syncView(): CloudSyncView {
     const view = this.coordinator.view, preparing = this.dirty || this.encoding;
-    return { ...view, canExecute: this.canExecute, pending: view.pending || preparing,
+    return { ...view, checking: Boolean(view.checking || this.foregrounding || this.reconnecting), canExecute: this.canExecute, pending: view.pending || preparing,
       localDurable: view.localDurable && (this.journalDrain ? !this.journalDrain.dirty : !preparing) };
   }
   get canExecute(): boolean { return !this.stopped && !this.reloadRequired && !this.closing && this.coordinator.view.canExecute; }
@@ -283,11 +283,13 @@ export class CloudGameSession {
     if (this.journalDrain?.dirty === false) void this.warmPrepared();
     if (this.foregrounding) return this.foregrounding;
     if (this.stopped || this.closing || this.coordinator.hasPriorRecovery) return Promise.resolve(false);
+    const notify = !this.canExecute;
     this.foregrounding = (async () => {
       const checked = await this.coordinator.foreground(online);
       if (this.stopped) return false;
       return checked === null || this.needsReload ? this.reconnect() : checked;
-    })().finally(() => { this.foregrounding = null; });
+    })().finally(() => { this.foregrounding = null; if (notify || !this.canExecute) this.emit(); });
+    if (notify) this.emit();
     return this.foregrounding;
   }
   reconnect(): Promise<boolean> {
@@ -297,7 +299,9 @@ export class CloudGameSession {
     if (this.stopped || this.closing || this.coordinator.view.phase === "closed" && !this.automaticReconnect ||
       this.coordinator.hasPriorRecovery) return Promise.resolve(false);
     if (this.reconnecting) return this.reconnecting;
-    this.reconnecting = this.reconnectChecked().finally(() => { this.reconnecting = null; });
+    const notify = !this.canExecute;
+    this.reconnecting = this.reconnectChecked().finally(() => { this.reconnecting = null; if (notify || !this.canExecute) this.emit(); });
+    if (notify) this.emit();
     return this.reconnecting;
   }
   private async reconnectChecked(): Promise<boolean> {

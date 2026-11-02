@@ -1,3 +1,4 @@
+import { LoadingScreen } from "./LoadingScreen";
 import { useEffect, useRef, useState } from "react";
 import type { PrototypeSaveResult } from "../session/prototypeStorage";
 
@@ -55,6 +56,7 @@ export function SaveCloseDialog({
 
   return (
     <>
+      <LoadingScreen active={saving} status="Saving your clinic…" />
       <button
         ref={triggerRef}
         className="button button-secondary save-close-button"

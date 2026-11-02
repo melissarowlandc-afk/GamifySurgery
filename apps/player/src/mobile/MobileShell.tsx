@@ -19,6 +19,7 @@ import { HELP_TOPICS } from "../ui/HelpDialog";
 import { MobileHelpTopic } from "./MobileHelpTopic";
 import { MobileManage } from "./manage/MobileManage";
 import { QuestionReviewQueueDialog } from "../ui/QuestionReviewQueueDialog";
+import { LoadingScreen } from "../ui/LoadingScreen";
 import { SaveFailureRecovery } from "../ui/SaveCloseDialog";
 import { CloudSaveControls, cloudStatusText } from "../ui/CloudSaveControls";
 import type { ClinicAlertAction, MessageBoardTargetType, NeedsYouItemView, ProcedureSetupRequirementView } from "../ui/types";
@@ -99,6 +100,7 @@ export default function MobileShell(props: PrototypeShellProps) {
   const [helpOpen, setHelpOpen] = useState(false);
   const [reviewOpen, setReviewOpen] = useState(false);
   const [restartOpen, setRestartOpen] = useState(false);
+  const [localSaving, setLocalSaving] = useState(false);
   const [saveResult, setSaveResult] = useState<PrototypeSaveResult | null>(null);
   const [cloudCloseRequest, setCloudCloseRequest] = useState(0);
   const [cloudSaveBusy, setCloudSaveBusy] = useState(false);
@@ -351,7 +353,10 @@ export default function MobileShell(props: PrototypeShellProps) {
   };
   const showSave = async () => {
     if (props.cloudSave) { navigator.dismiss("more"); setCloudCloseRequest(value => value + 1); return; }
-    setSaveResult(await props.onSaveAndPause()); setConfirmClear(false); navigator.replaceTop("save");
+    if (localSaving) return;
+    setLocalSaving(true);
+    try { setSaveResult(await props.onSaveAndPause()); setConfirmClear(false); navigator.replaceTop("save"); }
+    finally { setLocalSaving(false); }
   };
   const panel = (id: MobileSheetId): { title: string; kind?: "bottom"; content: ReactNode } | null => {
     switch (id) {
@@ -449,6 +454,7 @@ export default function MobileShell(props: PrototypeShellProps) {
   const mapFocus = top === undefined || top === "inspector" ? tutorialTarget?.mapFocus ?? alertFocus : null;
 
   return <div className="mobile-shell" ref={shellRef}>
+    <LoadingScreen active={localSaving} status="Saving your clinic…" />
     <MobileTopBar {...props} referenceLocked={helpOpen || reviewOpen || restartOpen || props.finishReportOpen || Boolean(props.cloudSave && !props.cloudSave.view.canExecute)} onCash={() => navigator.open("cash")} onMore={() => navigator.open("more")}
       referenceLockReason={props.cloudSave && !props.cloudSave.view.canExecute ? cloudStatusText(props.cloudSave.view) ?? "Check your account save before resuming." : undefined}
       cloudStatus={props.cloudSave ? <CloudSaveControls save={props.cloudSave} closeRequest={cloudCloseRequest}

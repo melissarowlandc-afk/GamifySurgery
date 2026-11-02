@@ -1,3 +1,4 @@
+import { LoadingScreen } from "./LoadingScreen";
 import { AccountMenu } from "./AccountMenu";
 import { ClinicalContentNotice } from "./ClinicalContentNotice";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -228,6 +229,7 @@ export function OpeningSequence({
 
   return (
     <main className="opening-screen founder-creator-screen">
+      <LoadingScreen active={initializing} status="Opening your clinic…" stage="opening" />
       <form className="founder-creator" aria-labelledby="founder-title" onSubmit={(event) => { event.preventDefault(); beginClinic(); }}>
         <div className="opening-beta-info"><ClinicalContentNotice /><AccountMenu /></div>
         <h1 id="founder-title">Open Your Clinic</h1>

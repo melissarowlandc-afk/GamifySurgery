@@ -19,6 +19,67 @@ vi.mock("./mobile/map/MobileFacilityMap", () => ({ MobileFacilityMap: () => <div
 afterEach(async () => { vi.restoreAllMocks(); await cleanupPhoneTests(); });
 
 describe.each(["phone", "desktop"] as const)("%s account campaign reopen", layout => {
+  it.each([false, true])("keeps the current clinic mounted under a full opening cover (check fails=%s)", async fails => {
+    const h = await syncHarness(), entryStore = new MemoryCloudEntryStore(), transport = h.server.transport(h.scope.accountId);
+    const prepared = new CloudSyncCoordinator({ scope: h.scope, transport, cache: h.cache, entryStore, enabled: true, clock: h.clock });
+    await prepared.open(); await prepared.startWriter(); prepared.resume();
+    const seed = await CloudGameSession.create(prepared);
+    seed.updateMetadata({ ...seed.metadata, tutorial: { guidance: { version: 2, mode: "off", exposedTopicIds: [] },
+      introDismissed: true, dailyRoutineTipAcknowledgments: [], dailyRoutinePause: null } });
+    await seed.checkpointNow("purchase"); seed.dispose();
+    await entryStore.write("last-active-campaign", { campaignId: h.scope.campaignId });
+    const env = phoneTestDom(); env.browser.location.search = `?layout=${layout}`;
+    const timers = new Map<number, () => void>(); let timerId = 0;
+    Object.assign(env.doc, { visibilityState: "visible" }); Object.assign(env.browser, {
+      setInterval: (callback: () => void) => { timers.set(++timerId, callback); return timerId; }, clearInterval: (id: number) => timers.delete(id),
+    });
+    let active: CloudGameSession | null = null, open: ((id: string) => Promise<void>) | null = null;
+    const attach = vi.fn((session: CloudGameSession | null) => { active = session; });
+    const account: CloudAccountValue = {
+      runtime: { ...h.scope, region: "Synthetic", transport, cache: h.cache, entryStore }, access: await transport.capabilities(),
+      summaries: await transport.list(), phase: "available", error: null, active: null, refresh: vi.fn(async () => {}),
+      acceptNotice: vi.fn(async () => {}), attach, stop: vi.fn(async () => {}), requestDeletion: vi.fn(async () => {}),
+      exportDeviceRecovery: vi.fn(async () => ""), clearDevice: vi.fn(async () => {}), showCampaigns: vi.fn(), setCampaignNavigation: vi.fn(),
+      setCampaignOpening: callback => { open = callback; },
+    };
+    await env.render(<AuthAccountContext.Provider value={h.scope.accountId}><CompetitionClientContext.Provider value={null}>
+      <CloudAccountContext.Provider value={account}><AccountCampaignRouter /></CloudAccountContext.Provider>
+    </CompetitionClientContext.Provider></AuthAccountContext.Provider>);
+    await vi.waitFor(async () => { await act(async () => {}); expect(active?.canExecute).toBe(true); }, { timeout: 5_000 });
+    const original = active!, tick = original.state.facilityTick, attached = attach.mock.calls.length;
+    const pulse = vi.spyOn(original, "pulse"), foreground = vi.spyOn(original, "foreground"), checkpoint = vi.spyOn(original, "checkpointNow");
+    const map = env.find(node => node.tagName === "DIV" && node.textContent === "Fixture map");
+    const held = deferred(), started = deferred(), head = transport.head.bind(transport);
+    vi.spyOn(transport, "head").mockImplementationOnce(async id => { started.resolve(); await held.promise;
+      if (fails) throw new TypeError("Synthetic opening failure"); return head(id); });
+    vi.useFakeTimers({ toFake: ["setTimeout", "clearTimeout"] });
+    let checking!: Promise<void>;
+    await act(async () => { checking = open!(h.scope.campaignId); await started.promise; });
+    await act(async () => { await vi.advanceTimersByTimeAsync(400); });
+    expect(active).toBe(original); expect(attach.mock.calls).toHaveLength(attached);
+    expect(env.doc.body.contains(map)).toBe(true);
+    const cover = allElements(env.doc.body, node => node.attributes["aria-label"] === "Loading clinic");
+    expect(cover).toHaveLength(1); expect(allElements(cover[0]!, node => node.tagName === "BUTTON")).toHaveLength(0);
+    expect(original.canExecute).toBe(false);
+    await act(async () => {
+      for (const callback of [...timers.values()]) callback();
+      env.browser.dispatchEvent(new Event("focus")); env.browser.dispatchEvent(new Event("pageshow")); env.doc.dispatchEvent(new Event("resume"));
+      Object.assign(env.doc, { visibilityState: "hidden" }); env.doc.dispatchEvent(new Event("visibilitychange")); env.browser.dispatchEvent(new Event("pagehide"));
+      Object.assign(env.doc, { visibilityState: "visible" }); env.doc.dispatchEvent(new Event("visibilitychange"));
+    });
+    expect(pulse).not.toHaveBeenCalled(); expect(foreground).not.toHaveBeenCalled(); expect(checkpoint).not.toHaveBeenCalled();
+    vi.useRealTimers();
+    await act(async () => { held.resolve(); await checking; });
+    if (fails) {
+      expect(active).toBe(original); expect(env.doc.body.contains(map)).toBe(true);
+      await env.clickElement(allElements(env.doc.body, node => node.tagName === "BUTTON" && node.textContent === "Return to your clinic")[0]!);
+      expect(active).toBe(original); expect(env.doc.body.contains(map)).toBe(true);
+    } else {
+      expect(active!.canExecute).toBe(true); expect(active!.state.facilityTick).toBe(tick);
+      expect(allElements(env.doc.body, node => node.attributes["aria-label"] === "Loading clinic")).toHaveLength(0);
+    }
+  });
+
   it.each([true, false])("keeps both divergent copies with an available account slot=%s", async freeSlot => {
     const h = await syncHarness(), entryStore = new MemoryCloudEntryStore(), transport = h.server.transport(h.scope.accountId);
     const first = new CloudSyncCoordinator({ scope: h.scope, transport, cache: h.cache, entryStore, enabled: true, clock: h.clock });
@@ -113,7 +174,7 @@ describe.each(["phone", "desktop"] as const)("%s account campaign reopen", layou
       <CloudAccountContext.Provider value={account}><AccountCampaignRouter /></CloudAccountContext.Provider>
     </CompetitionClientContext.Provider></AuthAccountContext.Provider></StrictMode>);
     if (marker === "warmup") {
-      expect(active).toBeNull(); expect(env.element.textContent).toContain("Getting your campaigns ready");
+      expect(active).toBeNull(); expect(env.doc.body.textContent).not.toContain("Getting your campaigns ready"); // Under the no-flash delay.
       expect(env.button(`Resume ${h.prepared.envelope.campaign.name}`).attributes.disabled).toBeDefined();
       expect(h.server.operationCount(h.scope.accountId)).toBe(0);
       await act(async () => { preparation.resolve(); await preparation.promise; });

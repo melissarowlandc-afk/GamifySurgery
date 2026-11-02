@@ -111,9 +111,12 @@ describe("desktop footer session links", () => {
     const header = env.find(node => node.attributes["aria-label"] === "Clinic resources");
     expect(allElements(header, node => node.tagName === "BUTTON" && node.attributes["aria-label"]?.startsWith("Account save status:") === true)).toHaveLength(1);
     await env.click("Save & Close");
-    expect(env.element.textContent).toContain("Account save is not confirmed");
+    expect(env.doc.body.textContent).toContain("Account save is not confirmed");
     expect(env.element.textContent).not.toContain("Safe to close this tab");
-    await env.click("Retry"); expect(control.onSaveAndClose).toHaveBeenCalledTimes(2);
+    await env.clickElement(allElements(env.doc.body, node => node.tagName === "BUTTON" && node.textContent === "Return to your clinic")[0]!);
+    expect(allElements(env.doc.body, node => node.attributes["aria-label"] === "Loading clinic")).toHaveLength(0);
+    await env.click("Save & Close");
+    expect(control.onSaveAndClose).toHaveBeenCalledTimes(2);
     expect(env.element.textContent).not.toContain("Use the account save");
     expect(control.onKeepRecovery).not.toHaveBeenCalled();
   });

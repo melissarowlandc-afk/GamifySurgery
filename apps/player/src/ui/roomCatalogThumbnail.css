@@ -1,0 +1,32 @@
+.room-thumbnail {
+  position: relative;
+  display: block;
+  flex: none;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 35% 20%, #faf7e8, #e4dfce);
+  border: 1px solid var(--ink, #4c5449);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px #2327201c;
+}
+.room-thumbnail > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+.room-thumbnail > .room-thumbnail-fallback {
+  position: absolute;
+  inset: 15%;
+  width: 70%;
+  height: 70%;
+}
+.room-thumbnail > .room-thumbnail-fallback.is-hidden { visibility: hidden; }
+/* Keep the desktop catalog's existing responsive icon dimensions. */
+.build-mode-panel .build-room-catalog .room-thumbnail {
+  background: radial-gradient(ellipse at 35% 20%, #faf7e8, #e4dfce);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px #2327201c;
+}

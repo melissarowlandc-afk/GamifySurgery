@@ -6,6 +6,7 @@ import {
   type FormEvent,
   type ReactNode,
 } from "react";
+import { LoadingScreen } from "../ui/LoadingScreen";
 import type { Session } from "@supabase/supabase-js";
 import {
   createLocalPrototypeSession,
@@ -279,18 +280,11 @@ function HostedAuthGate({ children, setupLink, clearSetupLink }: AuthGateProps &
   };
 
   if (checkingSession && !linkErrorBlocking) {
-    return (
-      <main className="opening-screen auth-gate-screen">
-        <section className="founder-creator auth-gate-card" role="status">
-          <span className="opening-wordmark">Stitchin&apos; Time</span><h1>Checking your sign-in…</h1>
-          {sessionCheckUnavailable ? <>
-            <p role="alert">Your sign-in could not be verified. Check your connection. This app will retry automatically.</p>
-            <button type="button" className="button button-secondary" onClick={() => window.location.reload()}>Reload app</button>
-          </> : null}
-          <ClinicalContentNotice />
-        </section>
-      </main>
-    );
+    return <AuthAccountContext.Provider value={candidateSession?.user.id ?? null}>
+      <LoadingScreen status="Connecting to your account…" stage="connecting"
+        failure={sessionCheckUnavailable ? "Your sign-in could not be verified. Check your connection and try again." : null}
+        onRetry={() => window.location.reload()} />
+    </AuthAccountContext.Provider>;
   }
 
   return (

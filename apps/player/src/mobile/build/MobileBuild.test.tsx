@@ -17,6 +17,7 @@ import { FacilityScene, type FacilitySceneBridge } from "../../facility/Facility
 import type { FacilityRoomView } from "../../facility/types";
 import type { DoorInteractionGeometry } from "../../facility/doorInteractionGeometry";
 import { installMobileCanvasResolution } from "../performance/canvasResolution";
+import { roomThumbnailAsset } from "../../art/roomThumbnailManifest";
 
 const capture = vi.hoisted(() => ({ map: null as FacilityCanvasProps | null }));
 vi.mock("../../facility", () => ({ FacilityCanvas: (props: FacilityCanvasProps) => { capture.map = props; return <div data-testid="facility-canvas">Map</div>; } }));
@@ -160,12 +161,15 @@ describe("native phone Build through the real shared session", () => {
     expect(env.session.state.doors).toHaveLength(1); expect(env.element.textContent).toContain("Door removed · Undo");
     expect(env.session.buildUndoCount).toBe(3); await env.click("Undo door removal"); expect(env.session.state).toBe(added);
   });
-  it("catalog has existing art, room size/price/upkeep/limits/unlock/reasons and My Rooms", async () => {
+  it("catalog has mapped game-rendered art, room size/price/upkeep/limits/unlock/reasons and My Rooms", async () => {
     const env = await mount(); await env.click("Build");
     expect(env.session.buildMode).toBe(true); expect(env.session.state.paused).toBe(true);
     expect(env.element.textContent).toContain("New Rooms"); expect(env.element.textContent).toContain("Unlock Level");
     expect(env.element.textContent).toContain("upkeep / hr"); expect(env.element.textContent).toContain("built");
-    const art = env.find(node => node.tagName === "CANVAS" && node.attributes.role === "img"); expect(art.attributes["aria-label"]).toContain("art");
+    const art = env.find(node => node.attributes["data-room-thumbnail"] === "room.waiting");
+    expect(art.attributes["aria-label"]).toContain("Waiting Room");
+    const image = env.find(node => node.tagName === "IMG" && node.attributes.src === roomThumbnailAsset("room.waiting")!.src);
+    expect(image.attributes.alt).toContain("freshly built room preview");
     await env.click("My Rooms"); expect(env.element.textContent).toContain("Open Front Desk");
     expect(env.element.textContent).toContain("construction"); expect(env.element.textContent).toContain("Unlock Level");
     await env.click("Close Build"); expect(env.session.buildMode).toBe(true); // Close the catalog; Done owns guarded exit.

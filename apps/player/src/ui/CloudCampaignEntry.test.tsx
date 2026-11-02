@@ -128,7 +128,7 @@ describe("automatic account campaign entry shared by both layouts", () => {
     const env = phoneTestDom(), f = account(), open = vi.fn(async () => {}); await accountCampaigns(f, 1);
     await env.render(wrap(entry({ onOpen: open, preparing: true }), f));
     await settle(() => expect(env.element.textContent).toContain("Level 0"));
-    expect(env.element.textContent).toContain("Getting your campaigns ready…");
+    await vi.waitFor(() => expect(env.doc.body.textContent).toContain("Getting your campaigns ready…"));
     expect(env.button("Resume Account 1").attributes.disabled).toBeDefined();
     expect(env.button("Start a new campaign").attributes.disabled).toBeDefined();
     expect(open).not.toHaveBeenCalled();

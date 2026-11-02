@@ -4,7 +4,7 @@ import { accountStorageKey } from "../accountStorageKey";
 import { clearArchivedReviewFlags, readArchivedReviewFlags } from "../storagePressure";
 import { hostedAuthConfiguration } from "../../auth/prototypeAuth";
 import { getSupabaseAuthClient } from "../../auth/supabaseAuth";
-import { ClinicalContentNotice } from "../../ui/ClinicalContentNotice";
+import { LoadingScreen } from "../../ui/LoadingScreen";
 import type { CloudCache } from "./cache";
 import { IndexedDbCloudCache } from "./cache";
 import { cloudCheckDeadline, CLOUD_READ_TIMEOUT_MS } from "./checkDeadline";
@@ -256,11 +256,6 @@ function BoundCloudAccount({ runtime, children }: { runtime: CloudAccountRuntime
     async openCampaign(id) { await campaignOpening.current?.(id); },
     setCampaignOpening(callback) { campaignOpening.current = callback; },
   };
-  if (entry === "checking") return <main className="opening-screen auth-gate-screen">
-    <section className="founder-creator auth-gate-card" role="status">
-      <span className="opening-wordmark">Stitchin&apos; Time</span><h1>Checking your sign-in…</h1>
-      <ClinicalContentNotice />
-    </section>
-  </main>;
+  if (entry === "checking") return <LoadingScreen status="Connecting to your account…" stage="connecting" />;
   return <CloudAccountContext.Provider value={entry === "cloud" ? value : null}>{children}</CloudAccountContext.Provider>;
 }

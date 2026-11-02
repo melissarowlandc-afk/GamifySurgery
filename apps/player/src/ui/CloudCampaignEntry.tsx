@@ -12,6 +12,8 @@ import { usePresentationLayout } from "../shellPresentation";
 import { cloudEntryError } from "./cloudEntryError";
 import { AccountMenu, CloudNoticeDetails } from "./AccountMenu";
 import { ClinicalContentNotice } from "./ClinicalContentNotice";
+import { LoadingScreen } from "./LoadingScreen";
+import { ProblemReportButton } from "../feedback/TesterFeedback";
 import "./cloudSaves.css";
 
 function ClinicTime({ value }: { value: number }) {
@@ -19,11 +21,13 @@ function ClinicTime({ value }: { value: number }) {
   return Number.isFinite(date.getTime()) ? <time dateTime={date.toISOString()}>{date.toLocaleString()}</time> : <>Time unavailable</>;
 }
 
-export function CloudCampaignEntry({ onOpen, onCreate, notice = "", preparing = false }: {
+export function CloudCampaignEntry({ onOpen, onCreate, notice = "", preparing = false, preparationFailure = false, onRetryPreparation }: {
   onOpen(campaignId: string): Promise<void>;
   onCreate(): void;
   notice?: string;
   preparing?: boolean;
+  preparationFailure?: boolean;
+  onRetryPreparation?(): void;
 }) {
   const cloud = useCloudAccount()!, { runtime } = cloud;
   const usage = useUsageTracking(), layout = usePresentationLayout(), id = useId();
@@ -138,7 +142,7 @@ export function CloudCampaignEntry({ onOpen, onCreate, notice = "", preparing = 
   const migrationReady = enrollment?.phase === "complete", full = cloud.summaries.length >= 2;
   const accountReason = cloud.phase === "checking" ? "Checking your account…" :
     cloud.phase === "deletion-requested" || cloud.phase === "deleted" ? "Account play has stopped." :
-    cloud.phase === "error" ? "Your account campaigns are unavailable. Check your connection and return to this page to try again." :
+    cloud.phase === "error" ? "Your campaigns could not be checked. Your saved copies are safe." :
     !cloud.access?.enabled || cloud.access.writesEnabled === false ? "Account saving is currently unavailable. Try again later." :
     !cloud.access.noticeAccepted ? "Accept the notice above to resume or start a campaign." : "";
   const action = async (run: () => Promise<void>) => {
@@ -177,10 +181,17 @@ export function CloudCampaignEntry({ onOpen, onCreate, notice = "", preparing = 
     </section> : null}
     {notice ? <p role="status">{notice}</p> : null}
     {accountReason ? <p id={`${id}-account-reason`} role={cloud.phase === "error" ? "alert" : "status"}>{accountReason}</p> : null}
+    {cloud.phase === "error" && !enrollmentError && !preparationFailure ? <div className="beta-actions">
+      <button type="button" disabled={busy} onClick={() => void action(cloud.refresh)}>Try again</button>
+      <ProblemReportButton shell={layout} />
+    </div> : null}
     {cloud.phase === "deletion-requested" || cloud.phase === "deleted" ? <p role="alert">{cloud.phase === "deleted" ? "Account data deletion is confirmed. Play and uploads have stopped." : "Account deletion is not confirmed. Play and uploads are stopped here; retry from Account & privacy."}</p> : null}
     {cloud.access?.quotaWarning ? <p role="status">Account storage is nearly full. Contact the owner before adding more progress.</p> : null}
-    {preparing || busy && !replace && !enrollmentError && !migrationReady ? <p role="status">Getting your campaigns ready…</p> : null}
-    {enrollmentError ? <div role="alert"><p>{enrollmentError}</p><button type="button" disabled={busy || !canUseCloud && cloud.phase !== "error"} onClick={() => void runEnrollment()}>Try saving my campaigns again</button></div> : null}
+    <LoadingScreen active={preparing || preparationFailure || cloud.phase === "checking" || Boolean(busy && !replace && !enrollmentError && !migrationReady)}
+      status="Getting your campaigns ready…" stage="checking"
+      failure={preparationFailure ? "Clinic preparation could not finish. Your saved copies are safe." : null}
+      onRetry={() => { if (preparing || preparationFailure) onRetryPreparation?.(); else if (busy) void runEnrollment(); else void action(cloud.refresh); }} />
+    {enrollmentError ? <div role="alert"><p>{enrollmentError}</p><button type="button" disabled={busy || !canUseCloud && cloud.phase !== "error"} onClick={() => void runEnrollment()}>Try saving my campaigns again</button><ProblemReportButton shell={layout} /></div> : null}
     {enrollment?.phase === "choose" ? <section className="cloud-entry-chooser" aria-label="Choose account campaigns">
       <h2>Your account holds two campaigns. Choose which to keep in your account.</h2>
       <p>{enrollment.freeSlots ? `Choose up to ${Math.min(enrollment.freeSlots, Math.max(0, 2 - cloud.summaries.length))} from this device. The others stay safely on this device and will be hidden.` : "Both places are already in use. Your current account campaigns will stay. The other copies stay safely on this device and will be hidden."}</p>

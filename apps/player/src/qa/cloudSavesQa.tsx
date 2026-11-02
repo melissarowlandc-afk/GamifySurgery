@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { PROTOTYPE_DOMAIN_CONTEXT, type GameCommand, type GameState } from "@gamify-surgery/game-domain";
+import { LoadingScreen } from "../ui/LoadingScreen";
 import { AccountCampaignRouter } from "../App";
 import { AuthAccountActionsContext, AuthAccountContext } from "../auth/AuthAccountContext";
 import { createQaDeviceCampaign, seedQaDeviceCampaigns } from "./cloudSavesQaSeed";
@@ -91,7 +92,7 @@ export function QaApp() {
     await signOutGuard.current?.(); await window.__cloudQaAuthenticate!(next);
     currentAccount.current = next; setAccountId(next); setEntryKey(value => value + 1); return true;
   };
-  if (!authenticated) return <p role="status">Connecting disposable QA account…</p>;
+  if (!authenticated) return <LoadingScreen status="Connecting to your account…" stage="connecting" />;
   if (!accountId || !runtime) return <main><h1>Signed out of disposable QA</h1><button onClick={() => void authenticate(QA_ACCOUNTS[0])}>Sign in synthetic account A</button></main>;
   return <AuthAccountContext.Provider key={accountId} value={accountId}><AuthAccountActionsContext.Provider value={{ email: `${accountId}@example.invalid`, signOut: () => authenticate(null), signOutGuard, pending: false, message: null }}>
     <CloudAccountProvider runtime={runtime}>

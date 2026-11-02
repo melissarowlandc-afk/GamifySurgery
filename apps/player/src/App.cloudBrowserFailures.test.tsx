@@ -99,13 +99,26 @@ describe.each(["phone", "desktop"] as const)("%s real account provider and autom
     void session.durable();
     await started.promise;
     const revision = session.coordinator.confirmedRevision, operations = f.server.operationCount(f.scope.accountId);
+    // A reconnect may be waiting for local durability before the coordinator's
+    // own network check begins. This gated outer wait needs the same cover.
+    if (trigger === "foreground") await act(async () => session.coordinator.pause());
     vi.useFakeTimers(); let checking!: Promise<unknown>;
     await act(async () => { checking = trigger === "opening" ? f.cloud.openCampaign!(session.state.campaignId) : session.reconnect(); });
-    await act(async () => { await vi.advanceTimersByTimeAsync(CLOUD_CHECK_TIMEOUT_MS); });
+    await act(async () => { await vi.advanceTimersByTimeAsync(400); });
+    const waiting = allElements(f.env.doc.body, node => node.attributes["aria-label"] === "Loading clinic");
+    expect(waiting).toHaveLength(1); expect(allElements(waiting[0]!, node => node.tagName === "BUTTON")).toHaveLength(0);
+    expect(session.canExecute).toBe(false); expect(f.cloud.active).toBe(session);
+    await act(async () => { await vi.advanceTimersByTimeAsync(CLOUD_CHECK_TIMEOUT_MS - 400); });
     await checking;
     expect(session.coordinator.view).toMatchObject({ canExecute: false, failure: "storage" });
     expect(f.cloud.active).toBe(session);
     expect(f.server.operationCount(f.scope.accountId)).toBe(operations);
+    if (trigger === "opening") {
+      const cover = allElements(f.env.doc.body, node => node.attributes["aria-label"] === "Loading clinic");
+      expect(cover).toHaveLength(1);
+      await f.env.clickElement(allElements(cover[0]!, node => node.tagName === "BUTTON" && node.textContent === "Return to your clinic")[0]!);
+      expect(f.cloud.active).toBe(session);
+    }
     const notices = allElements(f.env.doc.body, node => node.attributes["aria-label"] === "Clinic status");
     expect(notices).toHaveLength(1); expect(notices[0]!.textContent).toContain("storage");
     vi.useRealTimers(); hold = false;

@@ -80,7 +80,7 @@ async function mount(layout: "desktop" | "phone", outcome: Outcome, raw?: string
   return { env, stored, original, storageCalls, localStorage, guard, unexpectedFetch, async settle() { await act(async () => { wait.resolve(); await wait.promise; }); } };
 }
 function expectPending(f: Awaited<ReturnType<typeof mount>>) {
-  expect(f.env.element.textContent).toContain("Checking your sign-in…");
+  expect(f.env.doc.body.textContent).toBe(""); // No loading flash before 400 ms.
   expect(screen(f.env).controls).toEqual([]);
   expect(f.stored.get(profileKey) ?? null).toBe(f.original);
   expect(f.localStorage.setItem).not.toHaveBeenCalled(); expect(f.localStorage.removeItem).not.toHaveBeenCalled();

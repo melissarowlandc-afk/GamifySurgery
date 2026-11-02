@@ -228,6 +228,14 @@ describe("Build Mode panel", () => {
     }
   });
 
+  it("uses the shared offline preview for desktop new and locked room cards", () => {
+    const markup = renderBuildPanel();
+    expect(markup).toContain('data-room-thumbnail="room.examination"');
+    expect(markup).toContain('data-room-thumbnail="room.ultrasound"');
+    expect(markup).toContain('data-thumbnail-tier="1"');
+    expect(markup).not.toContain("<canvas");
+  });
+
   it("shows money, a named Undo, the problem count and Done / Save in the top bar", () => {
     const markup = renderBuildPanel({
       undoLabel: "Upgrade Waiting Room A (+$170 back)",

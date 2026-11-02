@@ -84,7 +84,10 @@ describe("identical account save states in desktop and phone shells", () => {
     const env = phoneTestDom(), waiting = deferred(), control = save();
     control.onSaveAndClose = vi.fn(async () => { await waiting.promise; return true; });
     await env.render(<CloudSaveControls save={control} />); await env.click("Save & Close");
-    expect(env.element.textContent).toContain("Waiting for account confirmation"); expect(env.element.textContent).not.toContain("Safe to close this tab");
+    expect(env.doc.body.textContent).not.toContain("Safe to close this tab");
+    await vi.waitFor(() => expect(env.doc.body.textContent).toContain("Saving your clinic"));
+    const loading = allElements(env.doc.body, node => node.attributes["aria-label"] === "Loading clinic")[0]!;
+    expect(allElements(loading, node => node.tagName === "BUTTON")).toHaveLength(0);
     // The coordinator reports the closed session before the close promise settles.
     control.view = { ...control.view, phase: "closed", pending: false, failure: null };
     await act(async () => { waiting.resolve(); await waiting.promise; });
@@ -95,10 +98,13 @@ describe("identical account save states in desktop and phone shells", () => {
     control.onSaveAndClose = vi.fn(async () => false);
     await env.render(<CloudSaveControls save={control} />); await env.click("Save & Close");
     expect(env.element.textContent).not.toContain("Safe to close this tab");
-    expect(env.element.textContent).toContain("Account save is not confirmed");
+    expect(env.doc.body.textContent).toContain("Account save is not confirmed");
     expect(env.element.textContent).not.toContain("Clear local campaigns");
     expect(env.element.textContent).not.toContain("Use the account save");
-    await env.click("Retry"); expect(control.onSaveAndClose).toHaveBeenCalledTimes(2);
+    await env.clickElement(allElements(env.doc.body, node => node.tagName === "BUTTON" && node.textContent === "Return to your clinic")[0]!);
+    expect(allElements(env.doc.body, node => node.attributes["aria-label"] === "Loading clinic")).toHaveLength(0);
+    expect((env.element as unknown as HTMLElement).inert).not.toBe(true);
+    await env.click("Save & Close"); expect(control.onSaveAndClose).toHaveBeenCalledTimes(2);
   });
   it("does not close a newly mounted playing control by replaying the previous shell request", async () => {
     const env = phoneTestDom(), first = save(), reopened = save();

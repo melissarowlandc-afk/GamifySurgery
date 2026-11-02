@@ -1,0 +1,38 @@
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  min-height: 100dvh;
+  overflow: auto;
+  display: grid;
+  place-items: center;
+  padding: max(1.5rem, env(safe-area-inset-top)) max(1.5rem, env(safe-area-inset-right)) max(1.5rem, env(safe-area-inset-bottom)) max(1.5rem, env(safe-area-inset-left));
+  background: var(--paper, #faf7e8);
+  color: var(--ink, #25291f);
+  font-family: var(--font-read, sans-serif);
+  text-align: center;
+  isolation: isolate;
+}
+.loading-screen:focus { outline: none; }
+.loading-screen-content { display: grid; justify-items: center; gap: 1.25rem; width: min(100%, 34rem); margin: auto; }
+.loading-screen-art { display: block; width: min(58vw, 32dvh, 17rem); aspect-ratio: 1; }
+.loading-screen-art img { display: block; width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated; }
+.loading-screen h1 { margin: 0; font-family: var(--font-pixel, var(--font-read, sans-serif)); font-size: clamp(1.65rem, 6vw, 2.65rem); line-height: 1.35; }
+.loading-screen p { margin: 0; max-width: 30rem; min-height: 3em; font-size: clamp(1rem, 3vw, 1.2rem); line-height: 1.5; text-wrap: balance; }
+.loading-screen-bar { width: min(100%, 23rem); height: 1rem; overflow: hidden; border: 2px solid var(--ink, #25291f); border-radius: 0.3rem; padding: 3px; background: #e4e2d2; }
+.loading-screen-bar span { display: block; height: 100%; background: #7e9568; border-radius: 0.1rem; }
+.loading-screen-bar.is-indeterminate span { width: 38%; animation: clinic-loading 1.6s ease-in-out infinite alternate; }
+.loading-screen.has-error .loading-screen-bar span { animation-play-state: paused; }
+.loading-screen-actions { display: grid; justify-items: center; gap: 1rem; }
+.loading-screen-actions button { min-height: 44px; }
+.loading-screen-actions .text-button { text-decoration: underline; }
+@keyframes clinic-loading { from { transform: translateX(0); } to { transform: translateX(162%); } }
+@media (orientation: landscape) and (max-height: 540px) {
+  .loading-screen-content { gap: 0.65rem; }
+  .loading-screen-art { width: min(24dvh, 7rem); }
+  .loading-screen h1 { font-size: 1.5rem; }
+}
+@media (prefers-reduced-motion: reduce) { .loading-screen-bar.is-indeterminate span { animation: none; width: 60%; } }

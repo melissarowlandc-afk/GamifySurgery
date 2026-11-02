@@ -1,4 +1,6 @@
 import Phaser from "phaser";
+import { roomThumbnailStage } from "./roomThumbnailCapture";
+import { initializeCanvasRoomLighting } from "./canvasRoomLighting";
 import { isInspectorBitmapAsset, loadMobileInspectorBitmap } from "../mobile/performance/inspectorAssets";
 import { getRoomUpgradeDefinition } from "@gamify-surgery/balance-config";
 import type {
@@ -681,6 +683,57 @@ export class FacilityScene extends Phaser.Scene {
   }
 
   /**
+   * Offline QA hook: draw one save-free room through the exact live room path.
+   * The dedicated thumbnail entry preloads and verifies every source first.
+   * Pausing stops normal layout/actors from overwriting this isolated render;
+   * Phaser continues rendering the paused scene for the browser capture.
+   */
+  public renderRoomThumbnail(): ReturnType<typeof roomThumbnailStage> {
+    if (!import.meta.env.DEV) throw new Error("Room thumbnail capture is development-only");
+    const model = this.bridge.viewModel;
+    const room = model.rooms[0];
+    if (!room || model.rooms.length !== 1 || model.doors?.length || model.staff.length || model.patients?.length ||
+        model.placement || model.buildMode || room.tileX !== 0 || room.tileY !== 0 || room.orientation !== 0) {
+      throw new Error("Thumbnail capture requires one isolated, empty, north-up room");
+    }
+    const stage = roomThumbnailStage(room.width, room.height);
+    if (!this.sys.isPaused()) this.sys.pause();
+    this.scale.resize(stage.width, stage.height);
+    this.cameras.main.setViewport(0, 0, stage.width, stage.height)
+      .setScroll(0, 0).setZoom(1).setBackgroundColor("rgba(0,0,0,0)");
+    this.children.each(child => {
+      (child as Phaser.GameObjects.GameObject & Partial<Phaser.GameObjects.Components.Visible>).setVisible?.(false);
+    });
+    for (const graphics of [this.terrainGraphics, this.worldGraphics, this.architectureGraphics,
+      this.landscapeGraphics, this.locatorGraphics, this.ghostGraphics]) graphics?.clear();
+    this.worldGraphics!.setVisible(true);
+    this.architectureGraphics!.setVisible(true);
+    this.activeFixtureGraphics = new Set();
+    this.activeRoomFixtureGraphics = new Set();
+    this.activeWallDecorGraphics = new Set();
+    this.activeEnvironmentSprites = new Set();
+    this.activeFixtureBitmapImages = new Set();
+    this.activeLandscapingBitmapImages = new Set();
+    this.fixtureStableOrder = 0;
+    this.layout = { originX: stage.originX, originY: stage.originY, tileSize: stage.tileSize,
+      width: room.width * stage.tileSize, height: room.height * stage.tileSize,
+      sidewalkTop: stage.height, sidewalkHeight: 0, setbackTop: stage.height, setbackHeight: 0, worldBottom: stage.height };
+    this.drawRoom(this.worldGraphics!, room, 0);
+    this.reconcileApprovedSideChairLayers();
+    this.removeInactiveGraphics(this.fixtureGraphics, this.activeFixtureGraphics);
+    this.removeInactiveGraphics(this.roomFixtureGraphics, this.activeRoomFixtureGraphics);
+    this.removeInactiveGraphics(this.wallDecorGraphics, this.activeWallDecorGraphics);
+    this.removeInactiveEnvironmentSprites();
+    this.removeInactiveFixtureBitmapImages();
+    this.removeInactiveLandscapingBitmapImages();
+    // The game smooths large downscaled textures. Offline catalog captures
+    // explicitly retain crisp pixels, including derivative chair/tint textures.
+    for (const key of this.textures.getTextureKeys()) this.textures.get(key).setFilter(Phaser.Textures.FilterMode.NEAREST);
+    this.children.depthSort();
+    return stage;
+  }
+
+  /**
    * Test-only readback from the live Phaser actor objects. This intentionally
    * observes the scene after `drawPixelPerson` chose its texture/frame/flip;
    * it does not call the pure bitmap resolver independently.
@@ -733,6 +786,7 @@ export class FacilityScene extends Phaser.Scene {
   }
 
   public create(): void {
+    initializeCanvasRoomLighting(this.game.renderer);
     this.cameras.main.setBackgroundColor("#7e8476");
     this.cameras.main.setRoundPixels(true);
     this.useSmoothDownscaledTextures();
@@ -3379,7 +3433,16 @@ export class FacilityScene extends Phaser.Scene {
     for (const primitive of primitives) {
       const parsed = parseApprovedCssColor(primitive.color);
       const alpha = parsed.alpha * (primitive.alpha ?? 1);
-      if (primitive.shape === "line") {
+      if (primitive.shape === "polygon") {
+        const points = primitive.points ?? [];
+        if (points.length < 3) continue;
+        graphics.fillStyle(parsed.color, alpha);
+        graphics.beginPath();
+        graphics.moveTo(originX + points[0]!.x * scale, originY + points[0]!.y * scale);
+        for (const point of points.slice(1)) graphics.lineTo(originX + point.x * scale, originY + point.y * scale);
+        graphics.closePath();
+        graphics.fillPath();
+      } else if (primitive.shape === "line") {
         graphics.lineStyle(Math.max(.35, scale), parsed.color, alpha);
         graphics.lineBetween(
           originX + primitive.x * scale,
