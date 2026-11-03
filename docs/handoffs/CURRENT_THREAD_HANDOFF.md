@@ -8797,3 +8797,215 @@ Additional fixes: clone-check worker replies in dev/tests, classify native resul
 Final validation: focused **185/185, 12 files, 57.82 s**; full player **3,150/3,150, 305 files, 392.45 s, native exit 0**, documented preload/threads/maxWorkers=2; **seven workspace typechecks PASS; e2e/QA tsc PASS; 12-module e2e import guard PASS**. First full player run was 3,148/3,150: two preparation tests still advanced the old test worker's 15-second bound. They now check just-before/exactly-at the new 30-second entry bound, late-result fencing, Retry and no new writer; both layouts pass focused and full. All **1,011 monitored player/domain/e2e source inputs** stayed unchanged through the final run. No safety assertions or browser timeouts were weakened. No domain test rerun was needed for this player-only correction; domain runtime/hash and the previously reported domain M9 binding limitation from the B handoff above remain unchanged.
 
 Plan and root evidence: [save-policy-20261030.md](../execplans/save-policy-20261030.md), “Browser rejection”. Scoped sources/diff/baseline, native probes and validation reports: `.local-dev/save-policy-20261030/enrollment-boundary/`. Manager must rerun the **108 cloud browser cases against a fresh QA server**, then supported-iPhone canaries before accepting/releasing B. No browser or live-device claim is made by this worker. No Git/install/network/agents/deployments; all changes remain local, unbacked-up. Origins, profiles and launcher pathways are unchanged.
+
+
+## 2026-11-02 - Service-queue waiting port: release evidence gate
+
+Bounded worker port and requested validation complete in GS-release. Manager
+review/rebind is pending. Routing alone reproduces the manager-supplied live M9
+totals: **28,804 commands / 6,010,006 closing cents**, versus the independently
+verified release-before **26,710 / 5,818,501**. Delta **+2,094 / +191,505**.
+The unchanged official CHECK runner stops at its command assertion (native exit
+2); retained evidence/results/bindings were not rewritten. No Git process,
+install, network, agent, browser, commit, push or deployment action.
+
+Plan: [service-queue-waiting-20261102.md](../execplans/service-queue-waiting-20261102.md).
+Receipts: `.local-dev/service-queue-waiting-release-20261102/`.
+
+### Exact file scope and routing
+
+Applied accepted unified hunks, with exact old-context validation, to shared
+release files. Eleven non-scene files match accepted normalized content. Release
+LF was preserved for reducer and the new module; use release hashes below.
+FacilityScene has only the two scene-owned hunks. Every workspace package link
+resolves to GS-release. All 356 monitored clinical-content files, test-choice
+orders, question files, save/cloud/entry sources, character code outside those
+two support hunks, art metadata and all other monitored inputs remain unchanged.
+
+| File | Hunk summary |
+| --- | --- |
+| `packages/game-domain/src/reducer.ts` | Extract shared waiting selection; select service policy; repair legacy pending-resource queues on failed dispatch (6 hunks). |
+| `packages/game-domain/src/service-operations.ts` | Shared actor waiting routing, queued visitor travel/re-dispatch, pediatric check-in integration and sale-transfer wait handling (6 hunks). |
+| `packages/game-domain/src/pediatric-family.ts` | Optional service-queue policy excludes front-desk fallback; existing pediatric preference remains (1 hunk). |
+| `packages/game-domain/tests/service-operations.test.ts` | Assert a busy visitor leaves check-in; preserve the 60-minute deadline (1 hunk). |
+| `packages/game-domain/tests/diagnostic-service-operations.test.ts` | Complete the reducer-owned wait arrival in the operation-only harness; preserve remaining service duration (1 hunk). |
+| `apps/player/src/facility/FacilityScene.ts` | Only serviceVisitorWaitingSupport import and visitor support-display call (2 scene-owned hunks). |
+| `packages/game-domain/src/waiting-destinations.ts` | New generic reservation/occupancy policy, Waiting Room chairs/standing, public overflow and sidewalk fallback. |
+| `packages/game-domain/tests/service-queue-waiting.fixture.ts` | New synthetic contention fixture shared by domain and presentation regressions. |
+| `packages/game-domain/tests/service-queue-waiting.test.ts` | 39 cases: 15 service-room definitions for both actors, reservations, overflow, legacy saves, check-in and pediatric preference. |
+| `apps/player/src/facility/serviceVisitorWaitingPresentation.ts` | New stationary visitor chair-support projection from actual domain position. |
+| `apps/player/src/facility/serviceVisitorWaitingPresentation.test.ts` | Three actual-domain presentation regressions for both actor kinds and excluded poses. |
+| `packages/game-domain/tests/employee-training-benefits.test.ts` | Use service wait policy; restore real public Hallway semantics in the synthetic fixture; retain training/forecast assertions (2 hunks). |
+
+Coordination changes: this appended handoff and the new release ExecPlan. Local
+diagnostics/receipts are separate from project evidence. Scope/diff authority:
+`port-receipt.json`, `file-changes.json`, `release-port.diff`, `final-scope-audit.json`.
+
+Root cause: before `service-operations.ts:2697` kept the checked-in visitor's
+single desk endpoint; `:2871-2875` called waiting selection only for encounters.
+Before `reducer.ts:8202` simply continued when a legacy queued route was busy.
+Exact before sources are retained under the scratch `before/` directory. The
+player displayed those actual positions; this was a domain destination bug.
+
+Release evidence: `service-operations.ts:1255` assigns both physical actor kinds;
+`:2840` advances queued visitor travel and `:2885` routes failed dispatches.
+`reducer.ts:1092` selects service policy; `:7963`, `:8009`, `:8079` repair legacy
+queues. `waiting-destinations.ts:56` shares occupancy/reservations, `:100` selects
+waiting seats, `:259` prioritizes Waiting Room standing, `:287` uses reachable
+sidewalk overflow at least two tiles from the entrance. Configured staff posts,
+doorways and front-desk waiting are excluded for services. Pediatric families
+prefer their existing paired pediatric waiting seats (`pediatric-family.ts:273`).
+Held clinical/perioperative resources and remote work keep their existing flow.
+Arrivals still check in first. Visitors reuse persisted path endpoints; encounters
+reuse waitingDestination/movement. No save schema or save/cloud code changed;
+legacy desk queues acquire waiting routes on the next tick. Presentation helper
+`:4` and FacilityScene `:7353` show stationary visitors on their actual chairs.
+
+### Validation and failure classification
+
+PowerShell `npm.cmd`, CI=true, Vitest `--pool=threads`; full suites and player
+focus use `--maxWorkers=2`. Exact commands and report paths are in the plan.
+Process-local preload handles only Vite's optional net-use EPERM and blocks Git
+before spawn; it changes no application source or test assertions.
+
+| Check | Result |
+| --- | --- |
+| Focused domain | 138/138, 6 files, 10.47 s, exit 0 |
+| Focused player | 26/26, 4 files, 8.24 s, exit 0 |
+| Full domain | 4,370 pass / 1 fail / 1 optional skip, 166 files, 916.29 s, exit 1 |
+| Full player | 3,304/3,304, 324 files, 447.18 s, exit 0 |
+| Workspace typechecks | all seven pass, exit 0 |
+| test:boundaries | exit 1 solely because its internal git ls-files is prohibited; blocked before spawn |
+| Dependency/source boundary checks | no violations reported before the tracked-path gate |
+| Independent launcher contract | pass, exit 0 |
+| Release-before official integration CHECK | pass, exit 0, 2,619.18 s; all nine retained checkpoint bytes match |
+| Routing official integration CHECK | expected numerical gate, exit 2, 2,723.49 s; 28,804 versus 26,710 commands |
+
+The sole domain failure is the retained input binding at
+`tests/level-five-integration.test.ts:47`: pediatric-family expected 66e551d9...
+versus ported 73701aa5.... This lane deliberately changes that source. No functional
+assertion failed. The existing optional full evidence-oracle replay remains
+skipped by its normal opt-in condition; this task separately runs both complete
+official integration journeys. Type-stripping warnings and React act warnings
+are informational; native exits/JSON reports determine results. No timeout or
+assertion was weakened. Root boundaries' tracked-file portion remains unverified
+under the explicit no-Git constraint; manager may run it during normal review.
+
+### Isolated Level 5 outcomes
+
+The before journey overlays only the three saved pre-port domain sources while
+Node loads them; every other release source/context/clinical input is identical.
+It matches all nine retained checkpoints, reports, commands and cents exactly.
+The after journey uses the ported sources. Observers only read state. The official
+CHECK guard intercepts progress/artifact writes. Lower-repeat after-state capture
+uses the genuine third-result state, without running an evidence rewrite.
+
+| Metric | Before | Routing | Delta |
+| --- | ---: | ---: | ---: |
+| Commands | 26,710 | 28,804 | +2,094 |
+| Closing cents | 5,818,501 | 6,010,006 | +191,505 |
+| Final facility tick | 24,865 | 26,920 | +2,055 |
+| Scored patient completions | 414 | 449 | +35 |
+| Scored walkouts | 0 | 0 | 0 |
+| Service-operation completions | 979 | 1,055 | +76 |
+| Service-operation cancellations | 0 | 0 | 0 |
+| First answers (all / Level 5) | 543 / 454 | 549 / 460 | +6 / +6 |
+| XP goal tick | 15,025 | 15,382 | +357 |
+| Frozen earned unlock tick | 15,094 | 17,148 | +2,054 |
+| Booking checkpoint tick | 15,094 | 17,149 | +2,055 |
+
+Waiting assignment **events**, including the existing pediatric check-in journey:
+
+| Assignment | Before | Routing |
+| --- | ---: | ---: |
+| Visitor general Waiting Room chair | 0 | 23 |
+| Visitor pediatric waiting chair | 278 | 300 |
+| Total visitor waiting-seat assignments | 278 | 323 |
+| Distinct visitors assigned waiting places | 276 | 321 |
+| Encounter general waiting chair | 503 | 507 |
+| Encounter pediatric waiting chair | 5 | 11 |
+| Total encounter waiting-seat assignments | 508 | 518 |
+| Encounter service-queue new reservations | 0 | 0 |
+
+The M9 journey does not trigger an encounter service-queue reseat or standing
+fallback; the 39-case domain suite covers both actors and each service-room
+family, no-room/seat overflow, legacy transitions and pediatric preference.
+Visitor path changes at initial desk check-in are counted separately (592/639)
+and are not waiting-room assignments. Fractional pediatric chair endpoints were
+audited against unchanged approved support coordinates: all 278/300 visitor and
+5/11 encounter points match real pediatric chairs; no unmatched points. Raw
+integer navigation counters are preserved, with corrected interpretation in
+`replay-comparison.json`.
+
+Every after checkpoint differs in bytes. Walkouts are zero at every checkpoint.
+Before bytes match retained evidence at every checkpoint. Full hashes, changed
+root fields and numeric-leaf differences are in `replay-comparison.json` and
+each `after-*-summary.json`.
+
+| Checkpoint | Tick before -> after | XP before -> after | Closing cents before -> after (delta) | Completed before -> after |
+| --- | ---: | ---: | ---: | ---: |
+| l4 | 3,965 -> 3,965 | 754 -> 754 | 2,656,300 -> 2,657,500 (+1,200) | 63 -> 63 |
+| build | 3,965 -> 3,965 | 0 -> 0 | 1,608,300 -> 1,609,500 (+1,200) | 63 -> 63 |
+| preparing | 15,094 -> 17,149 | 2,014 -> 2,298 | 3,926,777 -> 4,273,477 (+346,700) | 251 -> 285 |
+| running | 15,231 -> 17,286 | 2,026 -> 2,330 | 3,925,358 -> 4,338,245 (+412,887) | 251 -> 289 |
+| final | 18,150 -> 20,205 | 2,572 -> 2,814 | 4,566,714 -> 4,910,784 (+344,070) | 304 -> 338 |
+| finish | 18,151 -> 20,206 | 2,572 -> 2,814 | 4,566,714 -> 4,910,784 (+344,070) | 304 -> 338 |
+| repeat-final | 21,807 -> 23,862 | 3,378 -> 3,488 | 5,450,363 -> 5,721,659 (+271,296) | 365 -> 399 |
+| repeat | 21,808 -> 23,863 | 3,378 -> 3,488 | 5,450,363 -> 5,721,659 (+271,296) | 365 -> 399 |
+| lower-repeat | 24,865 -> 26,920 | 3,508 -> 3,600 | 5,818,501 -> 6,010,006 (+191,505) | 414 -> 449 |
+
+| Inspection | Score before -> after | Qualifying patients before -> after |
+| --- | ---: | ---: |
+| 1 | 62.56467630107139 -> 62.4360414271396 | 53 -> 51 |
+| 2 | 66.81366326970975 -> 67.07404667363238 | 51 -> 50 |
+| 3 | 45.2608970823534 -> 45.73839869490067 | 49 -> 49 |
+
+### Attribution and manager gate
+
+Controlled 2,000-tick same-journey prefixes locate the first observed changed
+visitor route at tick 220: ostomy visitor service-operation.4 leaves check-in
+(35,31) for chair (24,27), a 20-point wait route. Its drink purchase posts at 248
+instead of 245; final care approach is 22 points instead of 17; service starts
+275 instead of 266 and completes 305 instead of 296. This directly demonstrates
+walking/retail/service timing causality. Both prefixes execute 2,131 commands;
+cash at tick 2,000 is 2,167,150 versus 2,167,950 cents. See prefix-comparison.json.
+
+Positions/reservations change walking and shared service/retail schedules and the
+patient experience trajectory, changing when simultaneous Level 5 goals hold.
+Both frozen unlocks have satisfaction 91, staff morale 100, and nine employees;
+the thresholds and content were not edited. The driver's pump-then-tick loop
+advances once after the routing run's mid-pump unlock at 17,148, so booking and
+later snapshots are 2,055 ticks later. The extra operating time yields 35 more
+completed patients and 76 more services. **2,055 ticks + six additional daily
+pause/resume commands + 33 chart actions = 2,094 commands.**
+
+Cash reconciles exactly in cents: **+1,062,700 gross -33,247 stock -837,948 paid
+operating = +191,505**; opening cash and 1,048,000 capital cents are unchanged.
+Baseline gross/stock/paid are 14,994,000 / 271,344 / 9,641,655; routing values are
+16,056,700 / 304,591 / 10,479,603. This is a routing-only numerical change, already
+reproducing the supplied live totals without porting its question rewrite.
+No balance, clinical, question, test-choice-order, inspection or evidence source
+was adjusted to compensate. These findings concern this seeded M9 journey.
+
+Exactly **three previously bound inputs changed**, plus **one new runtime input**:
+
+| Binding status | Path | Release SHA-256 |
+| --- | --- | --- |
+| changed | `packages/game-domain/src/pediatric-family.ts` | `73701aa504372382272c0dc8dd6f265a43fb294ac37d4ec4d204346cac3880de` |
+| changed | `packages/game-domain/src/reducer.ts` | `8bcc7a5990e8d3aa025edbee5dde54bcda83294fb30c0636a6679a57a0f1b474` |
+| changed | `packages/game-domain/src/service-operations.ts` | `dd9cb06cf2fb06708594a9267db10e951a1ac9a6a7970fab6b49388a99bfa549` |
+| new runtime input to bind | `packages/game-domain/src/waiting-destinations.ts` | `cfac0f00fee09602e959575dfb561d000ccb14c6f4468e12a03cee2a1e3cc8c0` |
+
+All other 377 retained inputs (including the lower artifact driver) match their
+before/retained hashes. Before hashes and the exact complete list are in
+`bound-input-diff.json`. Tests/presentation are not M9-bound runtime inputs.
+
+**Stop at this evidence gate for manager acceptance.** The outcome/progression
+change is material and legitimate domain behavior; manager decides acceptance
+and performs any release rebind. The source-binding test and numerical gate stay
+failing until that review/rebind. No functional test failures or save-format
+migration remain for this worker. Browser/live-owner acceptance was not part of
+these native checks. Local work only; no backup was created. After acceptance,
+the manager owns the audited checkpoint reminder (owner may say "push to GitHub").
+Canonical launch/origin/profile pathways and existing saves are unchanged.
+

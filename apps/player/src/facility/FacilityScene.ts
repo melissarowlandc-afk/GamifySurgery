@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import { roomThumbnailStage } from "./roomThumbnailCapture";
 import { initializeCanvasRoomLighting } from "./canvasRoomLighting";
+import { serviceVisitorWaitingSupport } from "./serviceVisitorWaitingPresentation";
 import { isInspectorBitmapAsset, loadMobileInspectorBitmap } from "../mobile/performance/inspectorAssets";
 import { getRoomUpgradeDefinition } from "@gamify-surgery/balance-config";
 import type {
@@ -7349,7 +7350,9 @@ export class FacilityScene extends Phaser.Scene {
     const graphics = this.getCharacterGraphics(key);
     const moving = Boolean(visitor.moving);
     const direction = visitor.direction ?? "front";
-    const supportDisplay = this.getApprovedActorSupportDisplayPosition(location, moving, visitor.supportRole, visitor.supportId, visitor.supportRoomInstanceId);
+    const waitingSupport = serviceVisitorWaitingSupport(this.bridge.viewModel, visitor);
+    const supportDisplay = this.getApprovedActorSupportDisplayPosition(location, moving, visitor.supportRole ?? waitingSupport?.supportRole,
+      visitor.supportId, visitor.supportRoomInstanceId ?? waitingSupport?.supportRoomInstanceId);
     const centerX = supportDisplay?.centerX ?? this.layout.originX + (location.x + 0.5) * this.layout.tileSize;
     const pose = supportDisplay?.pose ?? this.characterPose(moving, direction, this.characterGaitOffset(key, 300 + index));
     const renderedDirection = supportDisplay?.direction ?? stationaryFloorDirection(moving, direction, false);

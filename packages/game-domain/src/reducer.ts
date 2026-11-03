@@ -1,3 +1,4 @@
+import { chooseWaitingAreaDestination, serviceWaitingPointKind, waitingOccupiedPointKeys } from "./waiting-destinations";
 import { captureBeforeGameRetirement, captureGameEvent, captureGameReceipt } from "./game-evidence-capture";
 import { advanceFacilityInspection, bookFacilityInspection, cancelFacilityInspection, observeInspectionQuestions, observeInspectionFirstAnswer, observeInspectionPatientEnd, observeInspectionReceipt, observeInspectionSettlement, observeInspectionExpensePosting } from "./facility-inspection";
 import { advanceInspectionPresentation } from "./inspection-presentation";
@@ -1059,46 +1060,6 @@ function getEncounterExaminationRoomId(
   ) ?? null;
 }
 
-/** Tiles a waiting patient may not claim: other patients, the founder and staff. */
-function waitingOccupiedPointKeys(
-  state: GameState,
-  excludedEncounterId: string | null,
-): Set<string> {
-  const occupiedPoints = new Set(
-    Object.values(state.encounters)
-      .filter(
-        (candidate) =>
-          candidate.id !== excludedEncounterId &&
-          (candidate.lifecycle !== "resolved" ||
-            encounterHasActiveServiceOperation(state, candidate.id)),
-      )
-      .flatMap((candidate) => [
-        ...(candidate.patientLocation
-          ? [candidate.patientLocation]
-          : []),
-        ...(candidate.patientMovement?.path.at(-1)
-          ? [candidate.patientMovement.path.at(-1)!]
-          : []),
-        ...(candidate.waitingDestination
-          ? [candidate.waitingDestination.location]
-          : []),
-      ])
-      .map((point) => `${point.x},${point.y}`),
-  );
-  const reservedActors = [
-    state.environment.founderLocation,
-    ...(state.environment.founderActivity?.path.at(-1)
-      ? [state.environment.founderActivity.path.at(-1)!]
-      : []),
-    ...state.employees.flatMap((employee) => [
-      employee.location,
-      ...(employee.path.at(-1) ? [employee.path.at(-1)!] : []),
-    ]),
-  ];
-  for (const point of reservedActors) occupiedPoints.add(`${point.x},${point.y}`);
-  return occupiedPoints;
-}
-
 /**
  * Cheap pre-check for re-seating: mirrors the chair tiers of
  * chooseWaitingDestination (Waiting Room chairs, Front Desk chairs, other
@@ -1128,179 +1089,12 @@ function hasFreeWaitingChair(state: GameState, context: DomainContext): boolean 
   });
 }
 
-function chooseWaitingDestination(
-  state: GameState,
-  context: DomainContext,
-  encounter: EncounterState,
-): {
-  roomId: string | null;
-  path: GridPoint[];
-  reservation: EncounterState["waitingDestination"];
-} {
-  const family = pediatricFamilyForActor(state, "encounter", encounter.id);
-  if (family) {
-    const plan = planPediatricWaiting(state, context, family);
-    if (!plan?.reservation) return { roomId: null, path: [], reservation: null };
-    const path = commitPediatricPairPlan(family, plan);
-    return { roomId: plan.reservation.roomInstanceId, path, reservation: { roomInstanceId: plan.reservation.roomInstanceId,
-      location: { ...plan.reservation.childLocation }, kind: plan.reservation.childSeatId ? "chair" : "standing" } };
-  }
-  const start = encounter.patientLocation;
-  const entrance = getPublicEntrance(state, context);
-  if (!start || !entrance) {
-    return { roomId: null, path: [], reservation: null };
-  }
-
-  const waitingPathTo = (target: GridPoint): GridPoint[] => {
-    const path = pathFromLocationToFacilityPoint(state, context, start, target, new Set());
-    // The street prefix alone is nonempty even when no public indoor route
-    // exists. Never reserve a chair unless the route reaches that exact spot.
-    return path.length > 0 && samePoint(path.at(-1)!, target) ? path : [];
-  };
-  const occupiedPoints = waitingOccupiedPointKeys(state, encounter.id);
-
-  const waitingRooms = state.rooms
-    .filter((room) => room.roomDefinitionId === "room.waiting" &&
-      isRoomOperationalForFacilityWork(state, room.id, context))
-    .sort((left, right) => left.id.localeCompare(right.id))
-    .flatMap((room) => {
-      const definition = getRoomDefinition(
-        room.roomDefinitionId,
-        context,
-      );
-      if (!definition) {
-        return [];
-      }
-      const doorTileKeys = new Set(
-        state.doors
-          .filter((door) => door.roomId === room.id)
-          .flatMap((door) => {
-            const cells = getDoorCells(door, room, definition);
-            return cells
-              ? [`${cells.inside.x},${cells.inside.y}`]
-              : [];
-          }),
-      );
-      return [{ room, definition, doorTileKeys }];
-    });
-
-  // Every authored Waiting Room anchor corresponds to a chair that is visible
-  // in the room art. Fill those seats across every Waiting Room before using
-  // the non-room overflow hierarchy.
-  for (const {
-    room: waitingRoom,
-    definition,
-    doorTileKeys,
-  } of waitingRooms) {
-    for (const anchor of getRoomWaitingAnchors(
-      waitingRoom,
-      definition,
-    )) {
-      const key = `${anchor.x},${anchor.y}`;
-      if (
-        doorTileKeys.has(key) ||
-        occupiedPoints.has(key)
-      ) {
-        continue;
-      }
-      const path = waitingPathTo(anchor);
-      if (path.length > 0) {
-        return {
-          roomId: waitingRoom.id,
-          path,
-          reservation: { roomInstanceId: waitingRoom.id, location: anchor, kind: "chair" },
-        };
-      }
-    }
-  }
-
-  const frontDefinition = getRoomDefinition(entrance.room.roomDefinitionId, context);
-  if (frontDefinition) {
-    const standingKeys = new Set(
-      getRoomStandingWaitingAnchors(entrance.room, frontDefinition).map(pointKey),
-    );
-    for (const anchor of getRoomWaitingAnchors(entrance.room, frontDefinition)) {
-      if (occupiedPoints.has(`${anchor.x},${anchor.y}`)) {
-        continue;
-      }
-      const path = waitingPathTo(anchor);
-      if (path.length > 0) {
-        return {
-          roomId: entrance.room.id,
-          path,
-          reservation: {
-            roomInstanceId: entrance.room.id,
-            location: anchor,
-            kind: standingKeys.has(pointKey(anchor)) ? "standing" : "chair",
-          },
-        };
-      }
-    }
-  }
-
-  const doorKeysFor = (room: PlacedRoom, definition: NonNullable<ReturnType<typeof getRoomDefinition>>) =>
-    new Set(state.doors.filter((door) => door.roomId === room.id).flatMap((door) => {
-      const cells = getDoorCells(door, room, definition);
-      return cells ? [`${cells.inside.x},${cells.inside.y}`] : [];
-    }));
-  const findStanding = (
-    rooms: readonly PlacedRoom[],
-    kind: "standing" | "public_wander",
-  ) => {
-    for (const room of rooms) {
-      const definition = getRoomDefinition(room.roomDefinitionId, context);
-      if (!definition || !isRoomOperationalForFacilityWork(state, room.id, context)) continue;
-      const doorKeys = doorKeysFor(room, definition);
-      const excluded = new Set([
-        ...doorKeys,
-        ...getRoomWaitingAnchors(room, definition).map((point) => `${point.x},${point.y}`),
-      ]);
-      // A configured staff post is not a patient waiting point.  Do not use
-      // the generic navigation-anchor fallback here: a 1x1 hallway's primary
-      // tile is its only legitimate public standing point.
-      if (definition.navigation?.staffAnchor) {
-        const staffAnchor = getRoomNavigationAnchor(room, definition, "staff");
-        excluded.add(`${staffAnchor.x},${staffAnchor.y}`);
-      }
-      for (const point of getRoomNavigableTiles(room, definition, state.doors).sort((a, b) => a.y - b.y || a.x - b.x)) {
-        const key = `${point.x},${point.y}`;
-        if (occupiedPoints.has(key) || excluded.has(key)) continue;
-        const path = waitingPathTo(point);
-        if (path.length > 0) return { roomId: room.id, path, reservation: { roomInstanceId: room.id, location: point, kind } };
-      }
-    }
-    return null;
-  };
-  const otherChairRooms = state.rooms
-    .filter((room) =>
-      room.roomDefinitionId !== "room.waiting" &&
-      room.id !== entrance.room.id &&
-      !isProtectedCareRoom(room) &&
-      isRoomOperationalForFacilityWork(state, room.id, context),
-    )
-    .sort((a, b) => a.id.localeCompare(b.id));
-  for (const room of otherChairRooms) {
-    const definition = getRoomDefinition(room.roomDefinitionId, context);
-    if (!definition) continue;
-    for (const anchor of getRoomWaitingAnchors(room, definition)) {
-      if (occupiedPoints.has(`${anchor.x},${anchor.y}`)) continue;
-      const path = waitingPathTo(anchor);
-      if (path.length > 0) return { roomId: room.id, path, reservation: { roomInstanceId: room.id, location: anchor, kind: "chair" } };
-    }
-  }
-  const waitingStanding = findStanding(waitingRooms.map(({ room }) => room), "standing");
-  if (waitingStanding) return waitingStanding;
-  const publicStanding = findStanding(
-    state.rooms.filter((room) => room.roomDefinitionId !== "room.waiting" && getRoomDefinition(room.roomDefinitionId, context)?.navigation?.publicWaitingArea === true).sort((a, b) => a.id.localeCompare(b.id)),
-    "public_wander",
-  );
-  if (publicStanding) return publicStanding;
-  const fallbackPath = pathFromLocationToFacilityPoint(state, context, start, entrance.inside, new Set());
-  return {
-    roomId: entrance.room.id,
-    path: fallbackPath,
-    reservation: { roomInstanceId: entrance.room.id, location: entrance.inside, kind: "public_wander" },
-  };
+function chooseWaitingDestination(state: GameState, context: DomainContext, encounter: EncounterState) {
+  const serviceQueue = encounter.pendingResult?.resourceQueue?.status === "waiting_for_resources" ||
+    state.serviceOperations.some((operation) => operation.actorKind === "encounter" && operation.actorId === encounter.id &&
+      operation.status === "waiting_for_resources" && operation.reservedRoomInstanceIds.length === 0 && !operation.periopBedReservation);
+  return chooseWaitingAreaDestination(state, context, { kind: "encounter", id: encounter.id, location: encounter.patientLocation }, serviceQueue,
+    (target) => encounter.patientLocation ? pathFromLocationToFacilityPoint(state, context, encounter.patientLocation, target, new Set()) : []);
 }
 
 /** Narrow deterministic seam for routing acceptance coverage. */
@@ -8166,6 +7960,18 @@ function reseatStandingWaitingPatients(
   }
 }
 
+function routePendingResultQueueToWaiting(state: GameState, context: DomainContext, encounterId: string): void {
+  const encounter = state.encounters[encounterId];
+  if (!encounter || encounter.patientMovement || !encounter.patientLocation) return;
+  const currentKind = serviceWaitingPointKind(state, context, encounter.waitingDestination?.location);
+  if (currentKind === "chair") return;
+  const destination = chooseWaitingDestination(state, context, encounter);
+  if (!destination.reservation || !destination.path.length || (currentKind && destination.reservation.kind !== "chair")) return;
+  releaseEncounterCareReservation(encounter);
+  encounter.waitingDestination = destination.reservation;
+  startPatientMovement(state, context, encounter, "walking_to_waiting", destination.path, destination.roomId);
+}
+
 function dispatchQueuedPendingResults(
   state: GameState,
   context: DomainContext,
@@ -8199,7 +8005,10 @@ function dispatchQueuedPendingResults(
       context,
       encounter.id,
     );
-    if (!selected || selected.route.id !== queue.routeId) continue;
+    if (!selected || selected.route.id !== queue.routeId) {
+      routePendingResultQueueToWaiting(state, context, encounterId);
+      continue;
+    }
 
     pending.routeDisplayName = selected.route.displayName;
     pending.pendingLabel = `${selected.route.displayName} pending`;
@@ -8267,6 +8076,7 @@ function dispatchQueuedPendingResults(
         originPlan.origin,
       )
     ) {
+      routePendingResultQueueToWaiting(state, context, encounterId);
       continue;
     }
     delete pending.resourceQueue;

@@ -270,8 +270,9 @@ export function planPediatricExam(state: GameState, context: DomainContext, fami
     parentLocation: parent.location, childSeatId: child.seatId, parentSeatId: parent.seatId }) : null;
 }
 
-export function planPediatricWaiting(state: GameState, context: DomainContext, family: PediatricFamilyState, excludedRoomId?: string): PediatricPairPlan | null {
-  const rooms = state.rooms.filter(room => room.id !== excludedRoomId && roomOrder.includes(room.roomDefinitionId) && isRoomOperationalForFacilityWork(state, room.id, context))
+export function planPediatricWaiting(state: GameState, context: DomainContext, family: PediatricFamilyState, excludedRoomId?: string, serviceQueue = false): PediatricPairPlan | null {
+  const rooms = state.rooms.filter(room => room.id !== excludedRoomId && roomOrder.includes(room.roomDefinitionId) &&
+    (!serviceQueue || room.roomDefinitionId !== "room.front_desk") && isRoomOperationalForFacilityWork(state, room.id, context))
     .sort((a, b) => roomOrder.indexOf(a.roomDefinitionId) - roomOrder.indexOf(b.roomDefinitionId) || a.id.localeCompare(b.id));
   // Exhaust reachable seated pairs before using standing overflow.
   for (const room of rooms) for (const child of roomPlaces(state, context, room, family, false)) for (const parent of roomPlaces(state, context, room, family, true)) {

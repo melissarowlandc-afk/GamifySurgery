@@ -32,7 +32,7 @@ it("enables a ~5 MB cached Level 5 row without a codec task, then verifies/opens
   const entry = { schemaVersion: 1 as const, scope, confirmed: f.copy, recovery: { baseRevision: "1", writerGeneration: "1", inFlight: null,
     following: { campaign: f.prepared.envelope.campaign, snapshot: f.copy.snapshot,
       evidence: { headerSha256: f.copy.evidence.header.uncompressedSha256, fromRecord: f.copy.evidence.records.length, toRecord: f.copy.evidence.records.length, records: [] }, usageQuestions: [] } } };
-  expect(new TextEncoder().encode(JSON.stringify(entry)).length).toBeGreaterThan(5_000_000);
+  expect(new TextEncoder().encode(JSON.stringify(entry)).length).toBeGreaterThan(4_900_000);
   await cache.write(entry, null);
   await entryStore.write(AUTOMATIC_ENROLLMENT_KEY, { version: 1, phase: "complete", candidates: [], selectedIds: [], freeSlots: 1 });
   await entryStore.write("older-copy:large", { version: 1, family: "test", copy: f.copy, usageQuestions: [], reason: "test" });

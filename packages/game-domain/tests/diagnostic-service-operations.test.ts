@@ -319,15 +319,23 @@ describe("frozen diagnostic operation execution", () => {
     fixture.state.employees = [];
     advance(fixture, 60);
     expect(job).toMatchObject({ status: "waiting_for_resources", cancelledAtFacilityTick: null, diagnosticPhysicalWork: { remainingPhaseMinutes: 35 } });
+    // The reducer owns the waiting walk; this operation-only fixture supplies
+    // its completed arrival before testing resumption from the waiting area.
+    expect(fixture.encounter.patientMovement?.kind).toBe("walking_to_waiting");
+    fixture.encounter.patientLocation = { ...fixture.encounter.patientMovement!.path.at(-1)! };
+    fixture.encounter.patientMovement = null;
     technician.id = "technician.replacement";
     technician.facilityTask = null;
     fixture.state.employees.push(technician);
     advance(fixture, 60);
-    expect(job).toMatchObject({ status: "in_service", phaseStartedAtFacilityTick: 60, phaseEndsAtFacilityTick: 95 });
+    expect(job.status).toBe("walking_to_service");
+    arrive(fixture, job);
+    advance(fixture, 61);
+    expect(job).toMatchObject({ status: "in_service", phaseStartedAtFacilityTick: 61, phaseEndsAtFacilityTick: 96 });
     expect(job.diagnosticPhysicalWork?.phaseWitnesses[0]?.startedAtFacilityTick).toBe(0);
     expect(job.diagnosticPhysicalWork?.phaseBindings[0]?.resource?.employeeIds).toEqual([technician.id]);
-    advance(fixture, 95);
-    expect(job.diagnosticPhysicalWork?.phaseWitnesses[0]?.completedAtFacilityTick).toBe(95);
+    advance(fixture, 96);
+    expect(job.diagnosticPhysicalWork?.phaseWitnesses[0]?.completedAtFacilityTick).toBe(96);
     expect(job.status).toBe("completed");
     expect(fixture.state.serviceIncomeReceipts).toHaveLength(1);
     expect(deserializeGameState(serializeGameState(fixture.state), fixture.context).serviceOperations[0]?.diagnosticPhysicalWork).toEqual(job.diagnosticPhysicalWork);

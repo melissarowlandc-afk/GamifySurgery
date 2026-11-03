@@ -46,6 +46,7 @@ import { bindServiceOperationRoomRevenue, cloneRoomUpgradeRevenueQuote, createRo
 import { bindServiceOperationRecoveryExperience, cloneRoomUpgradeRecoveryQuote, completeServiceOperationRecoveryExperience, completeWaitingRoomExperience, createRoomUpgradeRecoveryQuote } from "./room-upgrade-experience";
 import { getProcedureStaffStandingSpots, getProceduralSpecialistReadyAt, isProceduralSpecialistRole, usesApprovedProcedureStaffSpots } from "./procedural-staffing";
 import { compareStaffHomePreference, hasQueuedHomeRoomWork } from "./staff-dispatch";
+import { chooseWaitingAreaDestination, serviceWaitingPointKind } from "./waiting-destinations";
 import { APP_APPOINTMENT_INCOME_LINE_ID, APP_APPOINTMENT_INCOME_LINE_IDS, PEDIATRIC_APPOINTMENT_INCOME_LINE_ID,
   appAppointmentKind, appAppointmentRoomDefinitionId, bindAppAppointmentRevenue, getAppAppointmentHomes, getScoredExaminationRoomIds,
   isAppAppointment, pendingAppClinicService, recordWoundOstomyVisitCompletion, scoredPatientNeedsExamRoom } from "./app-appointments";
@@ -1248,6 +1249,40 @@ function routeResolvedEncounterToWaiting(
         destinationRoomInstanceId: destination.roomId,
       }
     : null;
+}
+
+/** Waiting paths reserve visitor seats just as waitingDestination does for encounters. */
+function routeQueuedServiceActorToWaiting(state: GameState, operation: ServiceOperationState, context: DomainContext): void {
+  if (operation.actorKind === "remote" || operation.reservedRoomInstanceIds.length > 0 || operation.periopBedReservation) return;
+  const encounter = operation.actorKind === "encounter" ? state.encounters[operation.actorId] : undefined;
+  if (operation.actorKind === "encounter" && (!encounter || encounter.patientMovement !== null)) return;
+  const kind = encounter ? "encounter" : "service_visitor";
+  const id = encounter?.id ?? operation.id;
+  const family = pediatricFamilyForActor(state, kind, id);
+  const familyWaiting = family?.reservation && ["room.pediatric_waiting", "room.waiting"].includes(
+    state.rooms.find((room) => room.id === family.reservation!.roomInstanceId)?.roomDefinitionId ?? "");
+  const endpoint = encounter?.waitingDestination?.location ?? operation.path.at(-1);
+  const currentKind = familyWaiting ? family.reservation!.childSeatId ? "chair" : "standing"
+    : serviceWaitingPointKind(state, context, endpoint);
+  if (currentKind === "chair") return;
+  // Selection may commit a pediatric pair plan. Keep a speculative standing
+  // alternative from replacing the family's current in-flight reservation.
+  const plannedFamily = family ? { ...family } : undefined;
+  const planningState = plannedFamily ? { ...state, pediatricFamilies: { ...state.pediatricFamilies, [plannedFamily.id]: plannedFamily } } : state;
+  const destination = chooseWaitingAreaDestination(planningState, context, { kind, id, location: encounter?.patientLocation ?? operation.location }, true);
+  if (!destination.reservation || destination.path.length === 0 || (currentKind && destination.reservation.kind !== "chair")) return;
+  if (family && plannedFamily) { family.reservation = plannedFamily.reservation; family.movement = plannedFamily.movement; }
+  if (encounter) {
+    encounter.waitingDestination = destination.reservation;
+    encounter.assignedRoomInstanceId = destination.path.length === 1 ? destination.roomId : null;
+    encounter.queuedCareRoomInstanceId = null;
+    encounter.patientMovement = destination.path.length > 1 ? {
+      kind: "walking_to_waiting", path: destination.path, pathIndex: 0,
+      lastMovedAtFacilityTick: state.facilityTick, destinationRoomInstanceId: destination.roomId,
+    } : null;
+  } else {
+    setOperationPath(state, operation, destination.path, "waiting_for_resources");
+  }
 }
 
 function startResolvedEncounterDeparture(
@@ -2697,9 +2732,9 @@ export function advanceServiceOperations(
         operation.path = operation.location ? [{ ...operation.location }] : [];
         operation.pathIndex = 0;
         operation.lastMovedAtFacilityTick = state.facilityTick;
-        const family = pediatricFamilyForActor(state, "service_visitor", operation.id);
-        const waiting = family && planPediatricWaiting(state, context, family);
-        if (family && waiting) operation.path = commitPediatricPairPlan(family, waiting);
+        // Pediatric appointments already wait together after check-in; retain
+        // that two-lane journey before admitting the family to its exam room.
+        if (pediatricFamilyForActor(state, "service_visitor", operation.id)) routeQueuedServiceActorToWaiting(state, operation, context);
       }
       continue;
     }
@@ -2803,21 +2838,17 @@ export function advanceServiceOperations(
       continue;
     }
     if (operation.status === "waiting_for_resources") {
+      if (operation.actorKind === "visitor" && state.retailOperations.some((trip) =>
+        trip.actorKind === "service_visitor" && trip.actorId === operation.id &&
+        trip.status !== "completed" && trip.status !== "cancelled" && trip.status !== "abandoned")) continue;
+      // Legacy saves and new queues both acquire a public waiting endpoint on
+      // the first failed dispatch. Advance that walk without changing queue state.
+      const walkingToWaiting = operation.pathIndex < operation.path.length - 1;
+      if (operation.actorKind === "visitor") advanceActorMovement(state, operation, context);
       const waitingPhase = operationPhases(operation, line)[operation.phaseIndex];
       if (isAppAppointment(operation)) {
         const pediatric = operation.clinicVisit?.kind === "pediatric_consult";
-        const family = pediatricFamilyForActor(state, "service_visitor", operation.id);
         const roomDefinitionId = appAppointmentRoomDefinitionId(operation.incomeLineId);
-        const waitingLocation = operation.location;
-        if (!pediatric && operation.saleTransfer && operation.pathIndex >= operation.path.length - 1 && waitingLocation &&
-          state.rooms.some(room => room.roomDefinitionId === roomDefinitionId && pointInsideRoom(state, waitingLocation, room.id, context))) {
-          const entrance = getEntrance(state, context);
-          const path = entrance ? findRouteFromDisplacedLocationToPoint(state, context, waitingLocation, entrance.inside) : [];
-          if (path.length > 1) {
-            operation.path = path; operation.pathIndex = 0; operation.lastMovedAtFacilityTick = state.facilityTick;
-            operation.resourceWaitReason = "Returning to the public area while waiting for an APP";
-          }
-        }
         const hasProvider = state.employees.some(employee => employee.staffRoleDefinitionId === "staff.app" &&
           state.rooms.some(room => room.id === employee.homeRoomInstanceId));
         if (!hasProvider || !state.rooms.some(room => room.roomDefinitionId === roomDefinitionId &&
@@ -2827,33 +2858,16 @@ export function advanceServiceOperations(
             : "Clinic appointments need an APP and a reachable Examination Room.", context, departurePlanner);
           continue;
         }
-        if (operation.pathIndex < operation.path.length - 1) {
-          advanceActorMovement(state, operation, context);
-          continue;
-        }
-        if (family && (operation.saleTransfer && family.reservation &&
-          state.rooms.find(room => room.id === family.reservation!.roomInstanceId)?.roomDefinitionId === roomDefinitionId ||
-          !family.reservation)) {
-          const waiting = planPediatricWaiting(state, context, family);
-          if (waiting) {
-            operation.path = commitPediatricPairPlan(family, waiting);
-            operation.pathIndex = 0; operation.lastMovedAtFacilityTick = state.facilityTick;
-            if (operation.path.length > 1) continue;
-          }
-        }
+        if (pediatric && walkingToWaiting) continue;
       }
       operation.resourceWaitReason = null;
       if (!isAppAppointment(operation) && !operation.diagnosticTiming && (operation.actorKind !== "encounter" || operation.resourceQueueVersion !== 1) && state.facilityTick >= operation.waitDeadlineFacilityTick) { cancel(state, operation, "The visitor could not start within 60 minutes.", context, departurePlanner); continue; }
-      if (operation.actorKind === "visitor" && state.retailOperations.some((trip) =>
-        trip.actorKind === "service_visitor" && trip.actorId === operation.id &&
-        trip.status !== "completed" && trip.status !== "cancelled" && trip.status !== "abandoned",
-      )) continue;
       if (operation.actorKind === "visitor" && operation.phaseFlowVersion !== 1 && state.serviceOperations.some((candidate) =>
         candidate.id !== operation.id &&
         candidate.actorKind === "visitor" &&
         candidate.incomeLineId === operation.incomeLineId &&
         (candidate.status === "walking_to_service" || candidate.status === "walking_between_phases" || candidate.status === "in_service"),
-      )) continue;
+      )) { routeQueuedServiceActorToWaiting(state, operation, context); continue; }
       if (
         operation.actorKind === "encounter" &&
         state.encounters[operation.actorId]?.patientMovement !== null
@@ -2868,12 +2882,7 @@ export function advanceServiceOperations(
         operation.resourceWaitReason = "Waiting for equipment repair.";
         operation.waitDeadlineFacilityTick = state.facilityTick + WAIT_TIMEOUT_MINUTES;
       }
-      if (!reserved && operation.actorKind === "encounter" && waitingPlanner) {
-        const encounter = state.encounters[operation.actorId];
-        if (encounter && encounter.patientMovement === null && !encounter.waitingDestination) {
-          routeResolvedEncounterToWaiting(state, encounter, waitingPlanner);
-        }
-      }
+      if (!reserved) routeQueuedServiceActorToWaiting(state, operation, context);
       continue;
     }
     if (operation.status === "waiting_for_next_phase") {

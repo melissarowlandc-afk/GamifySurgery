@@ -616,10 +616,12 @@ describe("service-only operations", () => {
     expect(operation.visitorTravel!.arrivedAtFacilityTick).toBe(state.facilityTick);
     expect(operation.waitDeadlineFacilityTick).toBe(state.facilityTick + 60);
     expect(operation.waitDeadlineFacilityTick).toBeGreaterThan(createdDeadline);
-    const waitingLocation = { ...operation.location! };
+    const checkInLocation = { ...operation.location! };
     state = deserializeGameState(serializeGameState(state));
     state = advance(state, 59);
-    expect(state.serviceOperations[0]).toMatchObject({ status: "waiting_for_resources", location: waitingLocation });
+    expect(state.serviceOperations[0]).toMatchObject({ status: "waiting_for_resources" });
+    expect(state.serviceOperations[0]!.location).not.toEqual(checkInLocation);
+    expect(state.serviceOperations[0]!.location).toEqual(state.serviceOperations[0]!.path.at(-1));
     state = advance(state, 1);
     expect(state.serviceOperations[0]).toMatchObject({ status: "leaving", cancelledAtFacilityTick: state.facilityTick });
     expect(state.serviceOperations[0]!.path.at(-1)).toEqual(state.serviceOperations[0]!.visitorTravel!.offscreenEndpoint);

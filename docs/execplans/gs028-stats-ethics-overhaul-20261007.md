@@ -6168,3 +6168,33 @@ EXIT_CODE=1
 Final results SHA-256: `a5378fa715b49d80f068b2aee8c6172639ecd34064682e0080c0bd2087a2e4eb`. Checkpoint fixture SHA-256: `8a5df5958d85d1a9271ceaf35215793aa4e31318f0afe744a4e7c9f1f9384e73`. Inputs, helper, guard, accepted refactor files and workspace resolutions were rechecked. Results, regenerated checkpoints and this append use UTF-8 without BOM, LF and a trailing newline.
 
 Backups, full prior inputs/history, comparison receipts, exact native output and audit helpers are under `.local-dev/l5-evidence-rebind11-release-20261030/`. The native journey also regenerated `.local-dev/level5-m9/progress-state.json` inside GS-release. npm cache/log output was scoped to this private release diagnostics directory. No file was written in the main worktree. The manager owns acceptance, global handoff integration and the GitHub backup reminder to say **"push to GitHub"**. **LOCAL ONLY:** no Git commands, installs, network, agents, external messages, source/content edits, deployment or publication. No browser, owner campaign, persistent browser save, launcher, profile or playtest origin was accessed or changed.
+
+### Level 5 evidence rebind 12 (release worktree, service-queue waiting) (2026-11-02)
+
+Manager-accepted, owner-requested routing (busy service queues wait in waiting rooms, not at check-in; `docs/execplans/service-queue-waiting-20261102.md`) was ported alone into GS-release. The unchanged native journey and lower helper were rerun there by the bounded Sol worker (thread 01a140a9) into private staging. `verify-staged.mjs` confirmed the accepted targets before any canonical write. The manager ran `publish-verified.mjs` after the worker was interrupted three times by model-capacity errors.
+
+- Targets: 28804 commands (was 26,710); closing 6010006 cents (was 5,818,501); 449 completions (was 414); 0 walkouts. Unlock tick 15,094 → 17,148.
+- Clinical inputs: 261, all hashes unchanged. Input history now has 13 entries; the earlier 12 are preserved. Only the established liveCap 4 → 5 metadata correction was applied.
+- Results `a5378fa715b49d80f068b2aee8c6172639ecd34064682e0080c0bd2087a2e4eb` → `4b3b377ba239511bfc3dba59aedc15400ec569023e78eb5c6002c615b4954194`.
+- Checkpoints `8a5df5958d85d1a9271ceaf35215793aa4e31318f0afe744a4e7c9f1f9384e73` → `ecd74aaba7afbb9dbfcf9eb3645dc5999306263d44099bbb481aafcdf5995225`.
+
+| Changed bound input | Recorded | Current |
+| --- | --- | --- |
+| packages/game-domain/src/pediatric-family.ts | `66e551d9bd3a665a…` | `73701aa504372382…` |
+| packages/game-domain/src/reducer.ts | `ef966d7a3dc5f8fd…` | `8bcc7a5990e8d3aa…` |
+| packages/game-domain/src/service-operations.ts | `8c264588a14c7084…` | `dd9cb06cf2fb0670…` |
+| packages/game-domain/src/waiting-destinations.ts | new input | `cfac0f00fee09602…` |
+
+| Report | Qualifying patients | Raw score |
+| --- | --- | --- |
+| 1 | 53 → 51 | 62.56467630107139 → 62.4360414271396 |
+| 2 | 51 → 50 | 66.81366326970975 → 67.07404667363238 |
+| 3 | 49 → 49 | 45.2608970823534 → 45.73839869490067 |
+
+`tests/level-five-launch.test.ts` derives `launch-final` from the rebound `integration-final` checkpoint. The manager updated its pinned first report to the verified run-1 values (51 patients, 62.4360414271396). Validation in GS-release:
+
+- full domain CI=true (threads, one worker): 4,370 passed, 1 skipped, and the single failure was that stale launch pin;
+- after the update, the launch and integration files passed 44/44;
+- all seven typechecks passed.
+
+Receipts are in `.local-dev/l5-evidence-rebind12-release-20261102/`.
