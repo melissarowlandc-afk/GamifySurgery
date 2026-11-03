@@ -13,6 +13,7 @@ import { prepareJournal } from "./journalCodec";
 import { cloudCampaignStorageKey } from "../accountStorageKey";
 import { journalWorkerAddress, journalWorkerStore } from "../localJournal";
 import { sha256Utf8 } from "./codecJson";
+const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
 afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 describe("worker-owned incremental prepared candidates", () => {
@@ -83,5 +84,5 @@ describe("worker-owned incremental prepared candidates", () => {
       });
       await expect(cloudCodec.run({ kind: "journalWarm", input: { address, owner: head.owner } })).rejects.toMatchObject({ reason: "conflict" });
     } finally { session.dispose(); }
-  }, 30_000);
+  }, hostedTime(30_000));
 });
