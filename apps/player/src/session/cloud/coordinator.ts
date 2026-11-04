@@ -1,4 +1,5 @@
 import { problemDiagnostics } from "../../diagnostics/problemDiagnostics";
+import { GameEvidenceError } from "@gamify-surgery/game-domain";
 import { assertCloudRevision, CLOUD_CAPACITY_LIMITS } from "./codec";
 import { isStorageQuotaError, reclaimAuxiliaryStorage } from "../storagePressure";
 import { isCloudCodecProcessingError, utf8Bytes } from "./codecJson";
@@ -988,7 +989,10 @@ export class CloudSyncCoordinator {
     return this.reconnecting;
   }
   reportLocalFailure(error: unknown): void {
-    this.fail(error instanceof CloudSyncError ? error : new CloudSyncError(isCloudCodecProcessingError(error) ? "processing" : "corrupt"));
+    // Catalog drift is a recoverable session-baseline mismatch, not evidence of
+    // damaged saved bytes. Do not weaken any other evidence/integrity check.
+    const catalogChanged = error instanceof GameEvidenceError && error.code === "concept-set-change";
+    this.fail(error instanceof CloudSyncError ? error : new CloudSyncError(isCloudCodecProcessingError(error) || catalogChanged ? "processing" : "corrupt"));
   }
   async pulse(): Promise<void> {
     if (!this.enabled || this.stopped || this.closingRequested || this.phase === "closed") return;

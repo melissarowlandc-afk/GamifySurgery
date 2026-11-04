@@ -14,6 +14,7 @@ import type { CloudCompressedText } from "./codecCompression";
 import { LocalJournalDrain, LOCAL_COMPACTION_MS, freezeJournalCheckpoint, journalWorkerAddress } from "../localJournal";
 import { bindJournal, prepareJournal } from "./journalCodec";
 import { cloudCampaignStorageKey } from "../accountStorageKey";
+import { completeSnapshotLearning } from "./snapshotLearning";
 
 export function cloudCampaignMetadata(profile: LocalPrototypeProfile): CloudCampaignMetadata {
   const campaign = profile.campaigns.find(row => row.campaignId === profile.activeCampaignId);
@@ -109,12 +110,20 @@ export class CloudGameSession {
       evidence: pending ? { header: confirmed.evidence.header, records: [...confirmed.evidence.records, ...pending.evidence.records] } : confirmed.evidence,
       revision: confirmed.revision, expectedRevision: confirmed.revision, expectedCampaignId: coordinator.scope.campaignId,
       expectedBaselineId: pending?.saveFormat === 3 ? SNAPSHOT_BASELINE : confirmed.baselineId });
-    const session = new CloudGameSession(coordinator, loaded, [openedSnapshot.uncompressedSha256, confirmed.snapshot.uncompressedSha256], switchTo, automaticReconnect);
+    // Hydrate the selected snapshot + committed journal first. Apply the same
+    // additive concept defaults as local loading only at this playable boundary;
+    // raw copies, checksums, lineage and every supplied review stay exact.
+    const playable = loaded.snapshotLineage && coordinator.view.canExecute && !coordinator.hasPriorRecovery
+      ? completeSnapshotLearning(loaded.state) : loaded.state;
+    const adapted = playable !== loaded.state;
+    const session = new CloudGameSession(coordinator, adapted ? { ...loaded, state: playable,
+      checkpoint: createGameEvidenceCheckpoint(playable) } : loaded,
+      [openedSnapshot.uncompressedSha256, confirmed.snapshot.uncompressedSha256], switchTo, automaticReconnect);
     const journal = coordinator.journal;
     if (journal && options.journal !== false && !coordinator.hasPriorRecovery && coordinator.view.canExecute) {
       try {
         const key = cloudCampaignStorageKey(coordinator.scope), owner = crypto.randomUUID();
-        const head = await bindJournal(journal, key, owner, { checkpoint: loaded.checkpoint, campaign: loaded.campaign,
+        const head = await bindJournal(journal, key, owner, { checkpoint: session.checkpoint, campaign: loaded.campaign,
           ...(session.snapshotLineage ? { snapshotPolicy: { lineage: session.snapshotLineage, legacyBaseSnapshot: session.legacyBaseSnapshot } } : {}),
           source: loaded.source, confirmed, usageQuestions: [...session.questions.values()], writerGeneration: coordinator.journalWriterGeneration }, coordinator.codec);
         session.journalStart = head.highWater;
@@ -125,6 +134,12 @@ export class CloudGameSession {
           if (!session.backgrounded && (typeof document === "undefined" || document.visibilityState !== "hidden")) void session.warmPrepared();
         };
       } catch (error) { session.detach(); coordinator.reportLocalFailure(new CloudSyncError("storage")); throw error; }
+    }
+    if (adapted) {
+      // A small marker makes the durable adapted baseline eligible for the next
+      // normal backup, without inventing a game command or a learning review.
+      session.changeVersion++; session.dirty = true; session.queueLocal(); coordinator.noteLocalChange();
+      problemDiagnostics.event("gameSession", "learning-catalog-adapted");
     }
     return session;
   }
