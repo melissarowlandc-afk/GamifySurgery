@@ -1,11 +1,14 @@
 import { describe, expect, it } from "vitest";
-import { VARIETY3_ADULT_CONTEXTS as adults, VARIETY3_CASES as cases, VARIETY3_TIMING_ENTRIES as timings } from "@gamify-surgery/clinical-content";
+import { VARIETY3_ADULT_CONTEXTS as adults, VARIETY3_CASES as cases, ANSWER_CHOICE_TIMING_REGISTRY as timings, SYNTHETIC_CLINICAL_RELEASE } from "@gamify-surgery/clinical-content";
 import { getAnswerChoiceServicePreview } from "@gamify-surgery/game-domain";
 import { createVariety3ChartsQaState, VARIETY3_CHARTS_QA_ENCOUNTER_ID as encounterId } from "../../../../tests/fixtures/variety3-charts";
 import { createPrototypePlayerView } from "./viewModels";
 
 describe("Variety-3 admitted chart presentation", () => {
-  it.each(cases.map(clinicalCase => [clinicalCase.id, clinicalCase] as const))
+  // Fresh QA encounters use current versioned content; historical Variety-3
+  // source objects remain available for frozen saves. B29 intentionally adds
+  // reversal/recovery findings and a revised transport/support option set.
+  it.each(cases.map(clinicalCase => [clinicalCase.id, SYNTHETIC_CLINICAL_RELEASE.cases.find(c=>c.id===clinicalCase.id)!] as const))
     ("shows the exact named adult, complete task, shuffled choices and every test estimate for %s", (_id, clinicalCase) => {
       const state = createVariety3ChartsQaState(undefined, clinicalCase.id);
       const encounter = state.encounters[encounterId]!;
@@ -23,7 +26,8 @@ describe("Variety-3 admitted chart presentation", () => {
       expect(chart.decisionSteps![0]!.questionPrompt).toBe(clinicalCase.decisionNodes[0]!.stem);
       expect(chart.answerChoices.map(choice => choice.label))
         .toEqual(encounter.frozenCase.decisionNodes[0]!.answerChoices.map(choice => choice.label));
-      const classification = timings.find(item => item.caseId === clinicalCase.id)!.classification;
+      const first=clinicalCase.decisionNodes[0]!;
+      const classification = timings.find(item => item.caseId === clinicalCase.id && item.nodeId===first.id && item.questionVariantId===first.questionVariantId)!.classification;
       for (const choice of chart.decisionSteps![0]!.answerChoices) {
         const preview = getAnswerChoiceServicePreview(state, encounterId, choice.id);
         if (classification.kind === "no_test") {

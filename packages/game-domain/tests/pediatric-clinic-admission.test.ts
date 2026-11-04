@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { PEDIATRIC_CLINIC_CASES, PEDIATRIC_CLINIC_FAMILY_CONTEXTS, SYNTHETIC_CLINICAL_RELEASE,
+import { PEDIATRIC_CLINIC_CASES as authoredCases, PEDIATRIC_CLINIC_FAMILY_CONTEXTS, SYNTHETIC_CLINICAL_RELEASE,
   type SyntheticClinicalCase } from "@gamify-surgery/clinical-content";
 import { createLevelFourRoomsQaContext } from "../../../tests/fixtures/level-four-rooms";
 import { createPediatricChartsQaState, PEDIATRIC_CHARTS_QA_ENCOUNTER_ID as encounterId } from "../../../tests/fixtures/pediatric-charts";
@@ -9,6 +9,7 @@ import { applyFsrsReview, characterStillCatalogEntryById, clinicalCaseHasSupport
   pediatricStillEligibleEntries, PROTOTYPE_DOMAIN_CONTEXT, reconcilePediatricFamilies, recordPediatricVisitCompletion,
   selectRoutineClinicalCase, serializeGameState, type DomainContext, type GameCommand, type GameState } from "../src";
 
+const PEDIATRIC_CLINIC_CASES = authoredCases.map(original => SYNTHETIC_CLINICAL_RELEASE.cases.find(candidate => candidate.id === original.id)! as typeof original);
 const context = createLevelFourRoomsQaContext();
 const NOW = 1_000_000;
 let sequence = 0;

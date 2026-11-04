@@ -3,8 +3,8 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import { SYNTHETIC_CLINICAL_RELEASE as releaseWithLevel3 } from "../../synthetic-content";
-// Keep this historical batch's inventory proof scoped to its original bank.
+import { QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE as releaseWithLevel3 } from "../../synthetic-content";
+// Keep this historical batch's inventory proof before the additive clinical-objective versions.
 // Later-batch admission/protected-intake checks live in their own tests.
 const SYNTHETIC_CLINICAL_RELEASE = { ...releaseWithLevel3,
   concepts: releaseWithLevel3.concepts.filter(c=>!c.id.startsWith("concept.gs028g.")&&!c.id.startsWith("concept.pediatric-clinic.")&&!c.id.startsWith("concept.variety3.")),

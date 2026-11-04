@@ -1,8 +1,9 @@
+// Historical batch proof uses the pre-2026-10-28 assembly. Live pilot isolation/versioning is checked in question-quality-pilot.test.ts.
 /// <reference types="node" />
 import { createHash } from "node:crypto";
 import { describe, expect, it } from "vitest";
 import { ANSWER_CHOICE_TIMING_REGISTRY } from "../../answer-choice-timing";
-import { SYNTHETIC_CLINICAL_RELEASE as releaseWithLevel3 } from "../../synthetic-content";
+import { QUESTION_QUALITY_SOURCE_RELEASE as releaseWithLevel3 } from "../../synthetic-content";
 // Keep this historical batch's inventory proof scoped to its original bank.
 // Later-batch admission/protected-intake checks live in their own tests.
 const release = { ...releaseWithLevel3,

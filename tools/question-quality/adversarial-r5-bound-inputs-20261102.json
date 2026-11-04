@@ -1,0 +1,355 @@
+{
+  "checkedOn": "2026-11-02",
+  "scope": "Fifth author revision only. Read-only input hashes; no evidence/checkpoint/driver edit, queue routing or save change.",
+  "recordedInputCount": 378,
+  "currentInputCount": 403,
+  "changedBoundInputsThisRound": [
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "entry": "60159bf70ccb1e2ccc5cd3a47824e54e018237772e21224c110ab269c9388567",
+      "current": "90de101e49472466f26753b4680a83662001aa9f4a6ea2f38ec6b0f88bca7b92",
+      "recorded": "ad821c697ca2c8f6553ea03affd0cb868db65b56418c29e1c000307e771358eb"
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "entry": "4413b7530a0f5c9bf13ae7d67a4ca9a0a4a886cccd1d7d51fe9209bbb02d90b2",
+      "current": "aa420859fada61eb7bb97e5918996260eff5e0d905f33b174b96944cde12a5d2",
+      "recorded": "dbb342121a1e49279c8977f2fcdb1106a9b4a228894fbc54b2b2cd27546a5223"
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "entry": "45f6dc72cc4932d439fcc9b9f2cdccd30b70bb2521c30feae793101f1559824c",
+      "current": "51930081cb31aa4f1c30d808fac3a86924f83544db6bea23cbf5159417506d28",
+      "recorded": "09d9797f7c659d6f3e7bd4ac5e0f4b72d79fff83f2bc64ed3ccf996ae7f2bc16"
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-20261102.ts",
+      "entry": "d3a2324a27b2901e95b41d2668bec482c256e56e47915e58f616fb66406b825a",
+      "current": "e1961918567674d4e9591ce2e07f8a514157228ee087ab23a7f958174dd6b789",
+      "recorded": null
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "entry": "d5b6a5b99b5bc075dcb3fbf9b9cef17b2e0d87b189126d7e3c028dfa36e8e31e",
+      "current": "522c3fbd3b3503f4b6d74f38e7dbd994b98727a3037b0374f86e58dbf5a41639",
+      "recorded": "c7ddaea75d35c7f8da695d1c9e2f9a84027530563a61d8b227d3bd45a9338b00"
+    }
+  ],
+  "newBoundInputsThisRound": [
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r5-20261102.ts",
+      "current": "025c33fc3ab8a24178179c5757c67279d4bea4c664dc26ac7313682f610c6d5b"
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r5-20261102-data.ts",
+      "current": "077ce04e45f26182367101dfa8e412dc91344731c6b8a720c6b28fc41789f984"
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r5-evidence-20261102.ts",
+      "current": "4ad644d08c5a6440d49598aa84c60393f6ab543583784d9ecbe22708fed2d142"
+    }
+  ],
+  "allRecordedDifferences": [
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "recorded": "ad821c697ca2c8f6553ea03affd0cb868db65b56418c29e1c000307e771358eb",
+      "current": "90de101e49472466f26753b4680a83662001aa9f4a6ea2f38ec6b0f88bca7b92",
+      "ownership": "this round"
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "recorded": "dbb342121a1e49279c8977f2fcdb1106a9b4a228894fbc54b2b2cd27546a5223",
+      "current": "aa420859fada61eb7bb97e5918996260eff5e0d905f33b174b96944cde12a5d2",
+      "ownership": "this round"
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "recorded": "09d9797f7c659d6f3e7bd4ac5e0f4b72d79fff83f2bc64ed3ccf996ae7f2bc16",
+      "current": "51930081cb31aa4f1c30d808fac3a86924f83544db6bea23cbf5159417506d28",
+      "ownership": "this round"
+    },
+    {
+      "path": "packages/game-domain/src/game-evidence-json.ts",
+      "recorded": "c123e617124936a4b846369dc68592c810503b0779ae33a3ef5c4bd82a8a1650",
+      "current": "a315c9ea917975dc9f324e95645568fb1647db556154c0184fa06ba208d54b04",
+      "ownership": "prior/shared-tree input; not edited by this round"
+    },
+    {
+      "path": "packages/game-domain/src/game-evidence.ts",
+      "recorded": "82b9af0c1e70bf6d6bfd7b10dd2075093ebce2294b76a3a211839912ec8568e0",
+      "current": "13debcdfe16a9505d60a0a42f42997406cf97e250ca61a783106e2bd4f06dc58",
+      "ownership": "prior/shared-tree input; not edited by this round"
+    },
+    {
+      "path": "packages/game-domain/src/pediatric-family.ts",
+      "recorded": "66e551d9bd3a665acfe2c879ecc7a8f6ddcf63f91baed86b85f62f98d5d34790",
+      "current": "73701aa504372382272c0dc8dd6f265a43fb294ac37d4ec4d204346cac3880de",
+      "ownership": "prior/shared-tree input; not edited by this round"
+    },
+    {
+      "path": "packages/game-domain/src/reducer.ts",
+      "recorded": "ef966d7a3dc5f8fdbf2e27110a764fb0804c4041766a1024cf55dd3a591f5e9d",
+      "current": "9ef61e771a6355875a7de9a528944e97104e5a6582eaa214f0bcfe23e5e422d6",
+      "ownership": "prior/shared-tree input; not edited by this round"
+    },
+    {
+      "path": "packages/game-domain/src/service-operations.ts",
+      "recorded": "8c264588a14c70845ca06a5cec3322a7ec7239727e3581c678f7291c4a3770c4",
+      "current": "dd9cb06cf2fb06708594a9267db10e951a1ac9a6a7970fab6b49388a99bfa549",
+      "ownership": "prior/shared-tree input; not edited by this round"
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "recorded": "c7ddaea75d35c7f8da695d1c9e2f9a84027530563a61d8b227d3bd45a9338b00",
+      "current": "522c3fbd3b3503f4b6d74f38e7dbd994b98727a3037b0374f86e58dbf5a41639",
+      "ownership": "this round"
+    }
+  ],
+  "allNewSinceEvidenceManifest": [
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-20261102-data.ts",
+      "current": "04abd031b224ea0eff55626cc983443493549517057e3a93760bcb40d1c6ab17",
+      "ownership": "prior/shared-tree addition; not edited by this round"
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-20261102.ts",
+      "current": "e1961918567674d4e9591ce2e07f8a514157228ee087ab23a7f958174dd6b789",
+      "ownership": "this round"
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-evidence-20261102.ts",
+      "current": "a2488c689ed8e2e4859487b59064d156c37fa8cdd345a39eab039b9ce3216b05",
+      "ownership": "prior/shared-tree addition; not edited by this round"
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r3-20261102-data.ts",
+      "current": "c39f1bb565dba8eb5cbb32dbe0fc9dcad3c27beeb49c3af782fe2c90ccbf1b00",
+      "ownership": "prior/shared-tree addition; not edited by this round"
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r3-20261102.ts",
+      "current": "6f2251f33b190470131c683cf6e565fd0b13f2b104574b2e753dacc4de3ec4be",
+      "ownership": "prior/shared-tree addition; not edited by this round"
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r3-evidence-20261102.ts",
+      "current": "3ce79432a9bc392eabdac641d54e7da0d5c37dc716ff0ef57a36f2972ef1689a",
+      "ownership": "prior/shared-tree addition; not edited by this round"
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r4-20261102-data.ts",
+      "current": "d80fb06aee3e2e540114c1a065e988e3e303ff2ac86c3718f2b10c1a2b942574",
+      "ownership": "prior/shared-tree addition; not edited by this round"
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r4-20261102.ts",
+      "current": "6ae2cfd4932c20ee946d545da7370983c21c1484f28c882d02b03989bbbc2969",
+      "ownership": "prior/shared-tree addition; not edited by this round"
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r4-evidence-20261102.ts",
+      "current": "15dea8b054de92f116687b76c84090e49247aa4c15d7b79abe2a553d5724b2df",
+      "ownership": "prior/shared-tree addition; not edited by this round"
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r5-20261102-data.ts",
+      "current": "077ce04e45f26182367101dfa8e412dc91344731c6b8a720c6b28fc41789f984",
+      "ownership": "this round"
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r5-20261102.ts",
+      "current": "025c33fc3ab8a24178179c5757c67279d4bea4c664dc26ac7313682f610c6d5b",
+      "ownership": "this round"
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r5-evidence-20261102.ts",
+      "current": "4ad644d08c5a6440d49598aa84c60393f6ab543583784d9ecbe22708fed2d142",
+      "ownership": "this round"
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-batch1-20261102-data.ts",
+      "current": "5b49c457b95974d55858476c148ec23d5c37a88ba39d430fe67b48eb33547c85",
+      "ownership": "prior/shared-tree addition; not edited by this round"
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-batch1-20261102.ts",
+      "current": "1aac74fec55e37bdd1463eb88e111590953bcd69e53467efc7c867d4f8d37928",
+      "ownership": "prior/shared-tree addition; not edited by this round"
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-clinical-approvals-20261102.ts",
+      "current": "13702a09fec2af7580a2f7194285244bdd89b322ffcd098b875e099c903ca045",
+      "ownership": "prior/shared-tree addition; not edited by this round"
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-pilot-20261028-data.ts",
+      "current": "9424e4ebb86c1d89bbbc88138b3938dbe102651ccce56ebe92abf679bea54f18",
+      "ownership": "prior/shared-tree addition; not edited by this round"
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-pilot-20261028-r2.ts",
+      "current": "539f5cc86cb4e24fc2923bff7f8929c7a456918c4c66d003eae76cc1519153ea",
+      "ownership": "prior/shared-tree addition; not edited by this round"
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-pilot-20261028.ts",
+      "current": "eeab1985ffa0fdcd145e0035716d216924af8372c1cdaa982dfcea77dc41219f",
+      "ownership": "prior/shared-tree addition; not edited by this round"
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-pilot-20261029-round1.ts",
+      "current": "6b2dc53219de4bc4a016da65a2bb3b49e797d2fc8808215761c557f4e7997c46",
+      "ownership": "prior/shared-tree addition; not edited by this round"
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-pilot-20261102-round2.ts",
+      "current": "784474a2b93ad8cca728a39bc4745d16b6ad510ac198fbdec2a65e76b2912335",
+      "ownership": "prior/shared-tree addition; not edited by this round"
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-pilot-evidence-20261028.ts",
+      "current": "3197bf248b802fa129feafcb81a83bc1921a2504d3948fc37ab532405aaad2dd",
+      "ownership": "prior/shared-tree addition; not edited by this round"
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-pilot-round2-evidence-20261029.ts",
+      "current": "03ca239ab0e79f8bc1613e0114199a46a4724912e0b480b2eee1384fa2c2425d",
+      "ownership": "prior/shared-tree addition; not edited by this round"
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-round3-batch1-evidence-20261102.ts",
+      "current": "d824533bf4b7d6ebea37d08d9780da5fa8009c7081fc9379bcb2d585b72f521b",
+      "ownership": "prior/shared-tree addition; not edited by this round"
+    },
+    {
+      "path": "packages/game-domain/src/game-evidence-index.ts",
+      "current": "0db6ed99a24e93d88fcb14234e276ad658fe0cc565fdb41b9b0e5594ec205bba",
+      "ownership": "prior/shared-tree addition; not edited by this round"
+    },
+    {
+      "path": "packages/game-domain/src/waiting-destinations.ts",
+      "current": "50ea90e5fc64e829604252ccc893ffffec900cc8fb3ea115b6c9ec6ca509bb46",
+      "ownership": "prior/shared-tree addition; not edited by this round"
+    }
+  ],
+  "protected": [
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r4-20261102.ts",
+      "entry": "6ae2cfd4932c20ee946d545da7370983c21c1484f28c882d02b03989bbbc2969",
+      "current": "6ae2cfd4932c20ee946d545da7370983c21c1484f28c882d02b03989bbbc2969",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r4-20261102-data.ts",
+      "entry": "d80fb06aee3e2e540114c1a065e988e3e303ff2ac86c3718f2b10c1a2b942574",
+      "current": "d80fb06aee3e2e540114c1a065e988e3e303ff2ac86c3718f2b10c1a2b942574",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r4-evidence-20261102.ts",
+      "entry": "15dea8b054de92f116687b76c84090e49247aa4c15d7b79abe2a553d5724b2df",
+      "current": "15dea8b054de92f116687b76c84090e49247aa4c15d7b79abe2a553d5724b2df",
+      "unchanged": true
+    },
+    {
+      "path": "tests/fixtures/level-five-legacy-behavior-20261012.json",
+      "entry": "c5080dec0f4d429b3697cd2068955e043613023d8b698828e862f732c3229097",
+      "current": "c5080dec0f4d429b3697cd2068955e043613023d8b698828e862f732c3229097",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r3-20261102-data.ts",
+      "entry": "c39f1bb565dba8eb5cbb32dbe0fc9dcad3c27beeb49c3af782fe2c90ccbf1b00",
+      "current": "c39f1bb565dba8eb5cbb32dbe0fc9dcad3c27beeb49c3af782fe2c90ccbf1b00",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r3-evidence-20261102.ts",
+      "entry": "3ce79432a9bc392eabdac641d54e7da0d5c37dc716ff0ef57a36f2972ef1689a",
+      "current": "3ce79432a9bc392eabdac641d54e7da0d5c37dc716ff0ef57a36f2972ef1689a",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-clinical-approvals-20261102.ts",
+      "entry": "13702a09fec2af7580a2f7194285244bdd89b322ffcd098b875e099c903ca045",
+      "current": "13702a09fec2af7580a2f7194285244bdd89b322ffcd098b875e099c903ca045",
+      "unchanged": true
+    },
+    {
+      "path": "packages/game-domain/src/spatial.ts",
+      "entry": "978cbbedc761f9e039eb3931eef166a3ba623cbc9928d38084a167524fee5da7",
+      "current": "978cbbedc761f9e039eb3931eef166a3ba623cbc9928d38084a167524fee5da7",
+      "unchanged": true
+    },
+    {
+      "path": "packages/game-domain/src/game-evidence-json.ts",
+      "entry": "a315c9ea917975dc9f324e95645568fb1647db556154c0184fa06ba208d54b04",
+      "current": "a315c9ea917975dc9f324e95645568fb1647db556154c0184fa06ba208d54b04",
+      "unchanged": true
+    },
+    {
+      "path": "packages/game-domain/src/game-evidence.ts",
+      "entry": "13debcdfe16a9505d60a0a42f42997406cf97e250ca61a783106e2bd4f06dc58",
+      "current": "13debcdfe16a9505d60a0a42f42997406cf97e250ca61a783106e2bd4f06dc58",
+      "unchanged": true
+    },
+    {
+      "path": "packages/game-domain/src/game-evidence-index.ts",
+      "entry": "0db6ed99a24e93d88fcb14234e276ad658fe0cc565fdb41b9b0e5594ec205bba",
+      "current": "0db6ed99a24e93d88fcb14234e276ad658fe0cc565fdb41b9b0e5594ec205bba",
+      "unchanged": true
+    },
+    {
+      "path": "packages/game-domain/tests/level-five-integration.test.ts",
+      "entry": "812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909",
+      "current": "812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909",
+      "unchanged": true
+    },
+    {
+      "path": "packages/game-domain/tests/level-five-latent-bugs.test.ts",
+      "entry": "1ef25d8aa966d3349edc2188cd0b2d930aaee47048f6366e84dd43475b63ae1f",
+      "current": "1ef25d8aa966d3349edc2188cd0b2d930aaee47048f6366e84dd43475b63ae1f",
+      "unchanged": true
+    },
+    {
+      "path": "tools/qa/level-five-integration-results-20261012.json",
+      "entry": "b15667c42aafefa26a9ad919ff6f9d9e7f61ec8899b7cd98ce0539ae8d61246d",
+      "current": "b15667c42aafefa26a9ad919ff6f9d9e7f61ec8899b7cd98ce0539ae8d61246d",
+      "unchanged": true
+    },
+    {
+      "path": "tests/fixtures/level-five-integration-checkpoints-20261012.json",
+      "entry": "8a5df5958d85d1a9271ceaf35215793aa4e31318f0afe744a4e7c9f1f9384e73",
+      "current": "8a5df5958d85d1a9271ceaf35215793aa4e31318f0afe744a4e7c9f1f9384e73",
+      "unchanged": true
+    },
+    {
+      "path": "tools/perf/evidence-incremental.mjs",
+      "entry": "d8b5e228dba45af0a439499c2d8b4bac1cd9517c50d4501aaa3ef4f3c39a6e85",
+      "current": "d8b5e228dba45af0a439499c2d8b4bac1cd9517c50d4501aaa3ef4f3c39a6e85",
+      "unchanged": true
+    }
+  ],
+  "artifactInputs": [
+    {
+      "path": "tools/qa/level-five-integration-lower.mjs",
+      "recorded": "bd87fe974857f60b2b9643310c2a9ce5a3de3847195db56c6536a22b94b6d7fc",
+      "current": "bd87fe974857f60b2b9643310c2a9ce5a3de3847195db56c6536a22b94b6d7fc",
+      "unchanged": true
+    }
+  ],
+  "excludedTests": [
+    "packages/clinical-content/src/question-quality-adversarial-r5.test.ts",
+    "packages/clinical-content/src/question-quality-adversarial-r3.test.ts",
+    "packages/clinical-content/src/approved-data/colonic-lipoma.test.ts",
+    "packages/clinical-content/src/development-batch/2026-09-11/board-expansion-admission.test.ts",
+    "packages/clinical-content/src/development-batch/2026-09-12/board-expansion-admission.test.ts",
+    "packages/clinical-content/src/development-batch/2026-09-13/early-levels-admission.test.ts",
+    "packages/clinical-content/src/development-batch/2026-09-17/brief-early-levels-admission.test.ts",
+    "packages/clinical-content/src/development-batch/2026-09-17-bread-and-butter/bread-butter-admission.test.ts",
+    "packages/clinical-content/src/answer-choice-timing.test.ts",
+    "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+    "packages/game-domain/tests/gs028-20261007-level3-batch.test.ts"
+  ],
+  "rebind": "Manager must run the actual Level 5 rebind after acceptance in the release lane; copying hashes or suppressing the assertion is not a rebind."
+}

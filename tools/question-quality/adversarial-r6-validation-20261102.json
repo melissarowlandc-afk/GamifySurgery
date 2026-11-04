@@ -1,0 +1,482 @@
+{
+  "checkedOn": "2026-11-03",
+  "scope": "Full run on unchanged final clinical inputs, but overlapping two external evidence/checkpoint writes at 21:29:43 UTC, before three literal expectation repairs; subsequent normal targeted runs are reported separately, never arithmetically merged or claimed as a new full green run. No relaxed assertion, extended deadline, evidence rebind or clinical approval.",
+  "clinical": {
+    "path": "tools/question-quality/adversarial-r6-clinical-20261102.log",
+    "passed": 755,
+    "failed": 0,
+    "skipped": 0,
+    "total": 755,
+    "files": "96 passed (96)",
+    "durationSeconds": 44.98,
+    "failureHeaders": []
+  },
+  "player": {
+    "path": "tools/question-quality/adversarial-r6-player-20261102.log",
+    "passed": 43,
+    "failed": 0,
+    "skipped": 0,
+    "total": 43,
+    "files": "4 passed (4)",
+    "durationSeconds": 5.83,
+    "failureHeaders": []
+  },
+  "focused": {
+    "path": "tools/question-quality/adversarial-r6-domain-focused-20261102.log",
+    "passed": 20,
+    "failed": 0,
+    "skipped": 0,
+    "total": 20,
+    "files": "4 passed (4)",
+    "durationSeconds": 27.02,
+    "failureHeaders": []
+  },
+  "domain": {
+    "path": "tools/question-quality/adversarial-r6-domain-20261102.log",
+    "passed": 4333,
+    "failed": 40,
+    "skipped": 1,
+    "total": 4374,
+    "files": "10 failed | 156 passed (166)",
+    "durationSeconds": 2834.48,
+    "failureHeaders": [
+      "tests/gs028-20261007-batch.test.ts > GS-028 October 7 real gameplay admission > measures the real ordinary pools before and after admission",
+      "tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > measures the actual early ordinary pool delta of seventy-eight cases and twenty concepts",
+      "tests/level-five-executive.test.ts > M4 daily Executive lifecycle > trains through all four paid tiers, without repricing the accepted daily terms",
+      "tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > binds the actual run to its current game, balance, clinical and driver inputs and reconciles cash",
+      "tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after save/reload at integration-running",
+      "tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after save/reload at integration-final",
+      "tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after save/reload at integration-finish",
+      "tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > continues normal operations, completes a genuinely lower retry and retains the higher best and first finish",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 5",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 6",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 7",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 8",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 9",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 5",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 6",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 7",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 8",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 9",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 5",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 6",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 7",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 8",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 9",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 5",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 6",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 7",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 8",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 9",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 5",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 6",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 7",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 8",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 9",
+      "tests/level-five-latent-bugs.test.ts > Level 5 garden and diagnostic movement ownership > finishes the garden return before starting offsite movement after live",
+      "tests/level-five-latent-bugs.test.ts > Level 5 garden and diagnostic movement ownership > finishes the garden return before starting offsite movement after legacy reload",
+      "tests/level-five-launch.test.ts > M10 ordinary Level 5 launch > finishes the first ordinary low-score report and durably keeps playing without a reward",
+      "tests/level-four-integration.test.ts > Level 4 M9 integrated launch > preserves scored case identities and arrival count/times for 24 hours with APPs on/off",
+      "tests/periop-nurse-owner-feedback.test.ts > Owner periop nurse flow reproduction > covers mixed endoscopy/surgery pre-op and recovery at Level 3, including patients outside a nurse's home room",
+      "tests/periop-nurse-real-visit.test.ts > Peri-op nurses through the real chart UI command pipeline > holds real pre-op and recovery beyond their timers when both nurses are away training, including reload",
+      "tests/surgery-center-batch.test.ts > September 10 surgery-center production flows > runs all forty two-node encounters and all thirty-two gated services through reducer actions"
+    ]
+  },
+  "latePoolAndFlowFollowup": {
+    "path": "tools/question-quality/adversarial-r6-late-pool-flow-tests-20261102.log",
+    "passed": 703,
+    "failed": 0,
+    "skipped": 0,
+    "total": 703,
+    "files": "3 passed (3)",
+    "durationSeconds": 70.23,
+    "failureHeaders": []
+  },
+  "unchangedLaunchFollowup": {
+    "path": "tools/question-quality/adversarial-r6-launch-tests-20261102.log",
+    "passed": 8,
+    "failed": 0,
+    "skipped": 0,
+    "total": 8,
+    "files": "1 passed (1)",
+    "durationSeconds": 6.48,
+    "failureHeaders": []
+  },
+  "externalInputChange": {
+    "checkedOn": "2026-11-03",
+    "scope": "Observed shared-worktree changes outside this milestone. Preserve, do not revert. Full validation overlapped protected evidence changes; previous 19-file proof predates them.",
+    "fullRunLog": "tools/question-quality/adversarial-r6-domain-before-expectation-repair-20261102.log",
+    "fullRunLogCreatedAt": "2026-11-03T20:48:41.385Z",
+    "fullRunLogLastWrittenAt": "2026-11-03T21:35:56.605Z",
+    "protectedFiles": [
+      {
+        "path": "packages/clinical-content/src/question-quality-adversarial-r5-20261102.ts",
+        "entry": "025c33fc3ab8a24178179c5757c67279d4bea4c664dc26ac7313682f610c6d5b",
+        "current": "025c33fc3ab8a24178179c5757c67279d4bea4c664dc26ac7313682f610c6d5b",
+        "unchanged": true,
+        "modifiedAt": "2026-11-03T01:14:26.120Z",
+        "ownedByRoundSix": false
+      },
+      {
+        "path": "packages/clinical-content/src/question-quality-adversarial-r5-20261102-data.ts",
+        "entry": "077ce04e45f26182367101dfa8e412dc91344731c6b8a720c6b28fc41789f984",
+        "current": "077ce04e45f26182367101dfa8e412dc91344731c6b8a720c6b28fc41789f984",
+        "unchanged": true,
+        "modifiedAt": "2026-11-03T02:11:44.384Z",
+        "ownedByRoundSix": false
+      },
+      {
+        "path": "packages/clinical-content/src/question-quality-adversarial-r5-evidence-20261102.ts",
+        "entry": "4ad644d08c5a6440d49598aa84c60393f6ab543583784d9ecbe22708fed2d142",
+        "current": "4ad644d08c5a6440d49598aa84c60393f6ab543583784d9ecbe22708fed2d142",
+        "unchanged": true,
+        "modifiedAt": "2026-11-03T01:32:22.798Z",
+        "ownedByRoundSix": false
+      },
+      {
+        "path": "packages/clinical-content/src/question-quality-adversarial-r4-20261102.ts",
+        "entry": "6ae2cfd4932c20ee946d545da7370983c21c1484f28c882d02b03989bbbc2969",
+        "current": "6ae2cfd4932c20ee946d545da7370983c21c1484f28c882d02b03989bbbc2969",
+        "unchanged": true,
+        "modifiedAt": "2026-11-02T22:18:28.457Z",
+        "ownedByRoundSix": false
+      },
+      {
+        "path": "packages/clinical-content/src/question-quality-adversarial-r4-20261102-data.ts",
+        "entry": "d80fb06aee3e2e540114c1a065e988e3e303ff2ac86c3718f2b10c1a2b942574",
+        "current": "d80fb06aee3e2e540114c1a065e988e3e303ff2ac86c3718f2b10c1a2b942574",
+        "unchanged": true,
+        "modifiedAt": "2026-11-02T23:45:59.114Z",
+        "ownedByRoundSix": false
+      },
+      {
+        "path": "packages/clinical-content/src/question-quality-adversarial-r4-evidence-20261102.ts",
+        "entry": "15dea8b054de92f116687b76c84090e49247aa4c15d7b79abe2a553d5724b2df",
+        "current": "15dea8b054de92f116687b76c84090e49247aa4c15d7b79abe2a553d5724b2df",
+        "unchanged": true,
+        "modifiedAt": "2026-11-02T23:45:59.014Z",
+        "ownedByRoundSix": false
+      },
+      {
+        "path": "tests/fixtures/level-five-legacy-behavior-20261012.json",
+        "entry": "c5080dec0f4d429b3697cd2068955e043613023d8b698828e862f732c3229097",
+        "current": "c5080dec0f4d429b3697cd2068955e043613023d8b698828e862f732c3229097",
+        "unchanged": true,
+        "modifiedAt": "2026-10-26T00:42:23.257Z",
+        "ownedByRoundSix": false
+      },
+      {
+        "path": "packages/clinical-content/src/question-quality-adversarial-r3-20261102-data.ts",
+        "entry": "c39f1bb565dba8eb5cbb32dbe0fc9dcad3c27beeb49c3af782fe2c90ccbf1b00",
+        "current": "c39f1bb565dba8eb5cbb32dbe0fc9dcad3c27beeb49c3af782fe2c90ccbf1b00",
+        "unchanged": true,
+        "modifiedAt": "2026-11-02T20:58:10.313Z",
+        "ownedByRoundSix": false
+      },
+      {
+        "path": "packages/clinical-content/src/question-quality-adversarial-r3-evidence-20261102.ts",
+        "entry": "3ce79432a9bc392eabdac641d54e7da0d5c37dc716ff0ef57a36f2972ef1689a",
+        "current": "3ce79432a9bc392eabdac641d54e7da0d5c37dc716ff0ef57a36f2972ef1689a",
+        "unchanged": true,
+        "modifiedAt": "2026-11-02T20:58:10.226Z",
+        "ownedByRoundSix": false
+      },
+      {
+        "path": "packages/clinical-content/src/question-quality-clinical-approvals-20261102.ts",
+        "entry": "13702a09fec2af7580a2f7194285244bdd89b322ffcd098b875e099c903ca045",
+        "current": "13702a09fec2af7580a2f7194285244bdd89b322ffcd098b875e099c903ca045",
+        "unchanged": true,
+        "modifiedAt": "2026-11-02T18:44:20.954Z",
+        "ownedByRoundSix": false
+      },
+      {
+        "path": "packages/game-domain/src/spatial.ts",
+        "entry": "978cbbedc761f9e039eb3931eef166a3ba623cbc9928d38084a167524fee5da7",
+        "current": "978cbbedc761f9e039eb3931eef166a3ba623cbc9928d38084a167524fee5da7",
+        "unchanged": true,
+        "modifiedAt": "2026-10-08T13:17:07.400Z",
+        "ownedByRoundSix": false
+      },
+      {
+        "path": "packages/game-domain/src/game-evidence-json.ts",
+        "entry": "a315c9ea917975dc9f324e95645568fb1647db556154c0184fa06ba208d54b04",
+        "current": "a315c9ea917975dc9f324e95645568fb1647db556154c0184fa06ba208d54b04",
+        "unchanged": true,
+        "modifiedAt": "2026-10-30T10:33:33.148Z",
+        "ownedByRoundSix": false
+      },
+      {
+        "path": "packages/game-domain/src/game-evidence.ts",
+        "entry": "13debcdfe16a9505d60a0a42f42997406cf97e250ca61a783106e2bd4f06dc58",
+        "current": "13debcdfe16a9505d60a0a42f42997406cf97e250ca61a783106e2bd4f06dc58",
+        "unchanged": true,
+        "modifiedAt": "2026-10-30T17:43:53.628Z",
+        "ownedByRoundSix": false
+      },
+      {
+        "path": "packages/game-domain/src/game-evidence-index.ts",
+        "entry": "0db6ed99a24e93d88fcb14234e276ad658fe0cc565fdb41b9b0e5594ec205bba",
+        "current": "0db6ed99a24e93d88fcb14234e276ad658fe0cc565fdb41b9b0e5594ec205bba",
+        "unchanged": true,
+        "modifiedAt": "2026-10-30T10:03:10.815Z",
+        "ownedByRoundSix": false
+      },
+      {
+        "path": "packages/game-domain/tests/level-five-integration.test.ts",
+        "entry": "812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909",
+        "current": "812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909",
+        "unchanged": true,
+        "modifiedAt": "2026-10-16T21:03:14.285Z",
+        "ownedByRoundSix": false
+      },
+      {
+        "path": "packages/game-domain/tests/level-five-latent-bugs.test.ts",
+        "entry": "1ef25d8aa966d3349edc2188cd0b2d930aaee47048f6366e84dd43475b63ae1f",
+        "current": "1ef25d8aa966d3349edc2188cd0b2d930aaee47048f6366e84dd43475b63ae1f",
+        "unchanged": true,
+        "modifiedAt": "2026-10-17T14:37:11.474Z",
+        "ownedByRoundSix": false
+      },
+      {
+        "path": "tools/qa/level-five-integration-results-20261012.json",
+        "entry": "b15667c42aafefa26a9ad919ff6f9d9e7f61ec8899b7cd98ce0539ae8d61246d",
+        "current": "4b3b377ba239511bfc3dba59aedc15400ec569023e78eb5c6002c615b4954194",
+        "unchanged": false,
+        "modifiedAt": "2026-11-03T21:29:43.290Z",
+        "ownedByRoundSix": false
+      },
+      {
+        "path": "tests/fixtures/level-five-integration-checkpoints-20261012.json",
+        "entry": "8a5df5958d85d1a9271ceaf35215793aa4e31318f0afe744a4e7c9f1f9384e73",
+        "current": "ecd74aaba7afbb9dbfcf9eb3645dc5999306263d44099bbb481aafcdf5995225",
+        "unchanged": false,
+        "modifiedAt": "2026-11-03T21:29:43.384Z",
+        "ownedByRoundSix": false
+      },
+      {
+        "path": "tools/perf/evidence-incremental.mjs",
+        "entry": "d8b5e228dba45af0a439499c2d8b4bac1cd9517c50d4501aaa3ef4f3c39a6e85",
+        "current": "d8b5e228dba45af0a439499c2d8b4bac1cd9517c50d4501aaa3ef4f3c39a6e85",
+        "unchanged": true,
+        "modifiedAt": "2026-10-30T10:06:39.510Z",
+        "ownedByRoundSix": false
+      }
+    ],
+    "otherObservedRuntimeFiles": [
+      {
+        "path": "packages/game-domain/src/reducer.ts",
+        "current": "9ef61e771a6355875a7de9a528944e97104e5a6582eaa214f0bcfe23e5e422d6",
+        "modifiedAt": "2026-11-02T18:30:45.354Z",
+        "ownedByRoundSix": false
+      },
+      {
+        "path": "packages/game-domain/src/waiting-destinations.ts",
+        "current": "50ea90e5fc64e829604252ccc893ffffec900cc8fb3ea115b6c9ec6ca509bb46",
+        "modifiedAt": "2026-11-02T18:30:13.828Z",
+        "ownedByRoundSix": false
+      }
+    ],
+    "sourceFreeze": "All seven owned bound inputs have had no edits since the final-content run began. Three late test-only expectation repairs do not change runtime inputs.",
+    "fullRunOriginalLog": "tools/question-quality/adversarial-r6-domain-20261102.log",
+    "fullRunLogIsArchivedCopy": true
+  },
+  "integrationBlocker": {
+    "test": "Level 4 APP on/off arrival-identity invariant",
+    "entryReleasePasses": true,
+    "currentReleaseFails": true,
+    "assertionUnchanged": true
+  },
+  "lintTests": {
+    "passed": 21,
+    "failed": 0
+  },
+  "typecheck": {
+    "passed": 7,
+    "workspaces": [
+      "@gamify-surgery/clinical-context-workbench",
+      "@gamify-surgery/player",
+      "@gamify-surgery/balance-config",
+      "@gamify-surgery/clinical-authoring",
+      "@gamify-surgery/clinical-content",
+      "@gamify-surgery/clinical-research",
+      "@gamify-surgery/game-domain"
+    ]
+  },
+  "reportQA": {
+    "checkedOn": "2026-11-03",
+    "status": "content_checked_external_evidence_changed",
+    "mainItems": 43,
+    "contextItems": 30,
+    "independentPassVersionsUnchanged": 57,
+    "acceptedBasicVersionsUnchanged": 3,
+    "B29": "exact independent PASS and accepted basic version frozen",
+    "returnedRevisions": 16,
+    "newConceptVersions": 3,
+    "indexedFifthReviewResponses": 227,
+    "indexedReturnedResponses": 117,
+    "exactClinicalApprovalsUnchanged": 11,
+    "retainedTimingRows": 1740,
+    "currentTimingRows": 1756,
+    "newExactRecords": 0,
+    "newClaims": 3,
+    "sourceRecords": 4,
+    "sourceSpans": 33745,
+    "postAnswerSpans": 191,
+    "mathematicalItems": 6,
+    "protectedFilesUnchanged": 17,
+    "externalProtectedChanges": [
+      {
+        "path": "tools/qa/level-five-integration-results-20261012.json",
+        "entry": "b15667c42aafefa26a9ad919ff6f9d9e7f61ec8899b7cd98ce0539ae8d61246d",
+        "current": "4b3b377ba239511bfc3dba59aedc15400ec569023e78eb5c6002c615b4954194",
+        "ownedByRoundSix": false
+      },
+      {
+        "path": "tests/fixtures/level-five-integration-checkpoints-20261012.json",
+        "entry": "8a5df5958d85d1a9271ceaf35215793aa4e31318f0afe744a4e7c9f1f9384e73",
+        "current": "ecd74aaba7afbb9dbfcf9eb3645dc5999306263d44099bbb481aafcdf5995225",
+        "ownedByRoundSix": false
+      }
+    ],
+    "integrationAccepted": false,
+    "beforeTotals": {
+      "cases": 1110,
+      "nodeOccurrences": 1423,
+      "uniqueVariants": 1418,
+      "concepts": 381,
+      "profileContexts": 6039,
+      "variantsWithFindings": 904,
+      "findings": 1793,
+      "tutorialSequenceVariants": 3,
+      "missingAuthoredVersion": 0,
+      "missingEducationalTier": 154,
+      "approvalRecordOnlyMetadata": 40,
+      "variantsWithCompleteRationales": 239,
+      "variantsWithMultipleDefinitions": 0,
+      "byPriorityStage": {
+        "0": 687,
+        "1": 464,
+        "2": 163,
+        "3": 84,
+        "4": 20
+      },
+      "byOptionCount": {
+        "3": 124,
+        "4": 1294
+      },
+      "variantsByRule": {
+        "case-detail-decision-cue": 9,
+        "case-detail-key-rationale-overlap": 36,
+        "convergence": 83,
+        "heterogeneous-option-category": 85,
+        "key-length-disparity": 56,
+        "key-only-phrase-overlap": 50,
+        "key-only-word-overlap": 326,
+        "key-test-name-in-context": 10,
+        "lead-in-decision-principle": 16,
+        "near-duplicate-options": 41,
+        "negative-aligned-to-distractor": 107,
+        "option-absolute": 95,
+        "option-explanation": 37,
+        "option-length-disparity": 302,
+        "option-scope-mismatch": 2,
+        "option-specificity-disparity": 22,
+        "unique-key-abbreviation": 132,
+        "unique-key-test-name": 14
+      }
+    },
+    "afterTotals": {
+      "cases": 1110,
+      "nodeOccurrences": 1423,
+      "uniqueVariants": 1418,
+      "concepts": 383,
+      "profileContexts": 6039,
+      "variantsWithFindings": 906,
+      "findings": 1792,
+      "tutorialSequenceVariants": 3,
+      "missingAuthoredVersion": 0,
+      "missingEducationalTier": 154,
+      "approvalRecordOnlyMetadata": 40,
+      "variantsWithCompleteRationales": 239,
+      "variantsWithMultipleDefinitions": 0,
+      "byPriorityStage": {
+        "0": 687,
+        "1": 464,
+        "2": 163,
+        "3": 84,
+        "4": 20
+      },
+      "byOptionCount": {
+        "3": 119,
+        "4": 1299
+      },
+      "variantsByRule": {
+        "case-detail-decision-cue": 9,
+        "case-detail-key-rationale-overlap": 36,
+        "convergence": 89,
+        "heterogeneous-option-category": 87,
+        "key-length-disparity": 52,
+        "key-only-phrase-overlap": 50,
+        "key-only-word-overlap": 327,
+        "key-test-name-in-context": 8,
+        "lead-in-decision-principle": 16,
+        "near-duplicate-options": 41,
+        "negative-aligned-to-distractor": 105,
+        "option-absolute": 95,
+        "option-explanation": 37,
+        "option-length-disparity": 298,
+        "option-scope-mismatch": 2,
+        "option-specificity-disparity": 22,
+        "unique-key-abbreviation": 132,
+        "unique-key-test-name": 14
+      }
+    },
+    "scope": "Authoring/report integrity only. No new independent PASS, clinical approval, measured difficulty, correctness analytics or player data."
+  },
+  "hashOnlyFailureHeaders": [
+    "tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > binds the actual run to its current game, balance, clinical and driver inputs and reconciles cash"
+  ],
+  "legacyBehaviorFailureHeaders": [
+    "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 5",
+    "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 6",
+    "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 7",
+    "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 8",
+    "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 9",
+    "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 5",
+    "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 6",
+    "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 7",
+    "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 8",
+    "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 9",
+    "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 5",
+    "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 6",
+    "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 7",
+    "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 8",
+    "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 9",
+    "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 5",
+    "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 6",
+    "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 7",
+    "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 8",
+    "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 9",
+    "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 5",
+    "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 6",
+    "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 7",
+    "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 8",
+    "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 9"
+  ],
+  "otherFailureHeaders": [
+    "tests/gs028-20261007-batch.test.ts > GS-028 October 7 real gameplay admission > measures the real ordinary pools before and after admission",
+    "tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > measures the actual early ordinary pool delta of seventy-eight cases and twenty concepts",
+    "tests/level-five-executive.test.ts > M4 daily Executive lifecycle > trains through all four paid tiers, without repricing the accepted daily terms",
+    "tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after save/reload at integration-running",
+    "tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after save/reload at integration-final",
+    "tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after save/reload at integration-finish",
+    "tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > continues normal operations, completes a genuinely lower retry and retains the higher best and first finish",
+    "tests/level-five-latent-bugs.test.ts > Level 5 garden and diagnostic movement ownership > finishes the garden return before starting offsite movement after live",
+    "tests/level-five-latent-bugs.test.ts > Level 5 garden and diagnostic movement ownership > finishes the garden return before starting offsite movement after legacy reload",
+    "tests/level-five-launch.test.ts > M10 ordinary Level 5 launch > finishes the first ordinary low-score report and durably keeps playing without a reward",
+    "tests/level-four-integration.test.ts > Level 4 M9 integrated launch > preserves scored case identities and arrival count/times for 24 hours with APPs on/off",
+    "tests/periop-nurse-owner-feedback.test.ts > Owner periop nurse flow reproduction > covers mixed endoscopy/surgery pre-op and recovery at Level 3, including patients outside a nurse's home room",
+    "tests/periop-nurse-real-visit.test.ts > Peri-op nurses through the real chart UI command pipeline > holds real pre-op and recovery beyond their timers when both nurses are away training, including reload",
+    "tests/surgery-center-batch.test.ts > September 10 surgery-center production flows > runs all forty two-node encounters and all thirty-two gated services through reducer actions"
+  ]
+}

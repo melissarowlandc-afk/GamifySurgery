@@ -1,4 +1,12 @@
 import { validateSyntheticClinicalRelease } from "./schema";
+import { applyQuestionQualityRevisions } from "./question-quality-pilot-20261028";
+import { applyQuestionQualityBatch1Revisions } from "./question-quality-batch1-20261102";
+import { applyQuestionQualityAdversarialRevisions } from "./question-quality-adversarial-20261102";
+import { applyQuestionQualityAdversarialR3Revisions } from "./question-quality-adversarial-r3-20261102";
+import { applyQuestionQualityAdversarialR4Revisions, QUESTION_QUALITY_ADVERSARIAL_R4_TESTED_CONCEPTS } from "./question-quality-adversarial-r4-20261102";
+import { applyQuestionQualityAdversarialR5Revisions, QUESTION_QUALITY_ADVERSARIAL_R5_TESTED_CONCEPTS } from "./question-quality-adversarial-r5-20261102";
+import { applyQuestionQualityAdversarialR6Revisions, QUESTION_QUALITY_ADVERSARIAL_R6_TESTED_CONCEPTS } from "./question-quality-adversarial-r6-20261102";
+import { applyQuestionQualityAdversarialR7Revisions, QUESTION_QUALITY_ADVERSARIAL_R7_TESTED_CONCEPTS } from "./question-quality-adversarial-r7-20261102";
 import { applyPendingPatientPresentationRevisions } from "./patient-presentation-revisions";
 import { applyPatientLibraryWordingRepair } from "./patient-library-wording-repair";
 import {
@@ -1233,7 +1241,8 @@ export const PATIENT_LIBRARY_WORDING_REPAIR_SOURCE_CASES = [
   ...BOARD_EXPANSION_20260912_CASES,
 ];
 
-export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
+/** Historical assembly before the explicitly versioned question-quality pilot. */
+export const QUESTION_QUALITY_SOURCE_RELEASE = validateSyntheticClinicalRelease({
   id: LEGACY_PROTOTYPE_CLINICAL_RELEASE.id,
   schemaVersion: LEGACY_PROTOTYPE_CLINICAL_RELEASE.schemaVersion,
   publicationStatus: "synthetic_unapproved_prototype",
@@ -1318,6 +1327,50 @@ export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
     ...PEDIATRIC_CLINIC_CASES,
     ...VARIETY3_CASES,
   ],
+});
+
+export const QUESTION_QUALITY_PRE_BATCH1_RELEASE = validateSyntheticClinicalRelease({
+  ...QUESTION_QUALITY_SOURCE_RELEASE,
+  cases: applyQuestionQualityRevisions(QUESTION_QUALITY_SOURCE_RELEASE.cases),
+});
+
+export const QUESTION_QUALITY_PRE_ADVERSARIAL_RELEASE = validateSyntheticClinicalRelease({
+  ...QUESTION_QUALITY_PRE_BATCH1_RELEASE,
+  cases: applyQuestionQualityBatch1Revisions(QUESTION_QUALITY_PRE_BATCH1_RELEASE.cases),
+});
+
+export const QUESTION_QUALITY_PRE_ADVERSARIAL_R3_RELEASE = validateSyntheticClinicalRelease({
+  ...QUESTION_QUALITY_PRE_ADVERSARIAL_RELEASE,
+  cases: applyQuestionQualityAdversarialRevisions(QUESTION_QUALITY_PRE_ADVERSARIAL_RELEASE.cases),
+});
+
+export const QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE = validateSyntheticClinicalRelease({
+  ...QUESTION_QUALITY_PRE_ADVERSARIAL_R3_RELEASE,
+  cases: applyQuestionQualityAdversarialR3Revisions(QUESTION_QUALITY_PRE_ADVERSARIAL_R3_RELEASE.cases),
+});
+
+export const QUESTION_QUALITY_PRE_ADVERSARIAL_R5_RELEASE = validateSyntheticClinicalRelease({
+  ...QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE,
+  concepts: [...QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE.concepts, ...QUESTION_QUALITY_ADVERSARIAL_R4_TESTED_CONCEPTS],
+  cases: applyQuestionQualityAdversarialR4Revisions(QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE.cases),
+});
+
+export const QUESTION_QUALITY_PRE_ADVERSARIAL_R6_RELEASE = validateSyntheticClinicalRelease({
+  ...QUESTION_QUALITY_PRE_ADVERSARIAL_R5_RELEASE,
+  concepts: [...QUESTION_QUALITY_PRE_ADVERSARIAL_R5_RELEASE.concepts, ...QUESTION_QUALITY_ADVERSARIAL_R5_TESTED_CONCEPTS],
+  cases: applyQuestionQualityAdversarialR5Revisions(QUESTION_QUALITY_PRE_ADVERSARIAL_R5_RELEASE.cases),
+});
+
+export const QUESTION_QUALITY_PRE_ADVERSARIAL_R7_RELEASE = validateSyntheticClinicalRelease({
+  ...QUESTION_QUALITY_PRE_ADVERSARIAL_R6_RELEASE,
+  concepts: [...QUESTION_QUALITY_PRE_ADVERSARIAL_R6_RELEASE.concepts, ...QUESTION_QUALITY_ADVERSARIAL_R6_TESTED_CONCEPTS],
+  cases: applyQuestionQualityAdversarialR6Revisions(QUESTION_QUALITY_PRE_ADVERSARIAL_R6_RELEASE.cases),
+});
+
+export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
+  ...QUESTION_QUALITY_PRE_ADVERSARIAL_R7_RELEASE,
+  concepts: [...QUESTION_QUALITY_PRE_ADVERSARIAL_R7_RELEASE.concepts, ...QUESTION_QUALITY_ADVERSARIAL_R7_TESTED_CONCEPTS],
+  cases: applyQuestionQualityAdversarialR7Revisions(QUESTION_QUALITY_PRE_ADVERSARIAL_R7_RELEASE.cases),
 });
 
 /**

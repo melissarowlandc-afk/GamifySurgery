@@ -44,6 +44,7 @@ describe("Variety-3 real prototype admission and availability", () => {
   it.each(cases.map(clinicalCase => [clinicalCase.id, clinicalCase] as const))
     ("freezes the authored adult/profile/still, shuffled answers and reload for %s", (_id, clinicalCase) => {
       const adult = adults.find(item => item.caseId === clinicalCase.id)!;
+      const authored = context.clinicalRelease.cases.find(item => item.id === clinicalCase.id)!;
       const before = vacant(clinicalCase.earliestFacilityStage);
       const histories = structuredClone(before.learningHistories);
       const command: GameCommand = { type: "ADMIT_PATIENT", operationId: "variety3.identity", encounterId,
@@ -55,11 +56,11 @@ describe("Variety-3 real prototype admission and availability", () => {
       expect(encounter.patientAppearance.stillId).toBe(adult.patientStillId);
       expect(encounter.frozenCase).toMatchObject({ patientDisplayName: adult.patientName,
         prototypeDemographics: adult.prototypeDemographics, selectedInstantiationProfileId: adult.profileId,
-        chiefComplaint: clinicalCase.chiefComplaint, presentation: clinicalCase.presentation,
+        chiefComplaint: authored.chiefComplaint, presentation: authored.presentation,
         earliestFacilityStage: clinicalCase.earliestFacilityStage, releasePointId: clinicalCase.releasePointId,
         requiredClinicalSetting: "clinic", requiredCapabilityIds: [] });
-      expect(encounter.frozenCase.decisionNodes[0]!.stem).toBe(clinicalCase.decisionNodes[0]!.stem);
-      expect(sortedChoices(encounter.frozenCase)).toEqual(sortedChoices(clinicalCase));
+      expect(encounter.frozenCase.decisionNodes[0]!.stem).toBe(authored.decisionNodes[0]!.stem);
+      expect(sortedChoices(encounter.frozenCase)).toEqual(sortedChoices(authored));
       expect(state.learningHistories).toEqual(histories);
       expect(state.serviceOperations).toEqual([]);
       const restored = deserializeGameState(serializeGameState(state), context);

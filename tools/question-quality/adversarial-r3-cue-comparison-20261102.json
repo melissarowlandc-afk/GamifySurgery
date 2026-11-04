@@ -1,0 +1,980 @@
+{
+  "checkedOn": "2026-11-02",
+  "linterVersion": "question-cue-lint.2026-11-02.v5",
+  "scope": "Same linter on both sides. Before: exact second-review v5 drafts. After: 17 retained PASS versions and 56 v6 versions; 35 explicitly basic, 21 application. No observed difficulty/correctness data.",
+  "wholeBank": {
+    "before": {
+      "cases": 1110,
+      "nodeOccurrences": 1423,
+      "uniqueVariants": 1418,
+      "concepts": 370,
+      "profileContexts": 6039,
+      "variantsWithFindings": 886,
+      "findings": 1724,
+      "tutorialSequenceVariants": 3,
+      "missingAuthoredVersion": 0,
+      "missingEducationalTier": 162,
+      "approvalRecordOnlyMetadata": 40,
+      "variantsWithCompleteRationales": 239,
+      "variantsWithMultipleDefinitions": 0,
+      "byPriorityStage": {
+        "0": 687,
+        "1": 464,
+        "2": 163,
+        "3": 84,
+        "4": 20
+      },
+      "byOptionCount": {
+        "3": 127,
+        "4": 1291
+      },
+      "variantsByRule": {
+        "case-detail-decision-cue": 9,
+        "case-detail-key-rationale-overlap": 34,
+        "convergence": 80,
+        "heterogeneous-option-category": 84,
+        "key-length-disparity": 51,
+        "key-only-phrase-overlap": 49,
+        "key-only-word-overlap": 312,
+        "key-test-name-in-context": 5,
+        "lead-in-decision-principle": 16,
+        "near-duplicate-options": 41,
+        "negative-aligned-to-distractor": 106,
+        "option-absolute": 95,
+        "option-explanation": 37,
+        "option-length-disparity": 299,
+        "option-scope-mismatch": 2,
+        "option-specificity-disparity": 21,
+        "unique-key-abbreviation": 125,
+        "unique-key-test-name": 12
+      }
+    },
+    "after": {
+      "cases": 1110,
+      "nodeOccurrences": 1423,
+      "uniqueVariants": 1418,
+      "concepts": 370,
+      "profileContexts": 6039,
+      "variantsWithFindings": 890,
+      "findings": 1741,
+      "tutorialSequenceVariants": 3,
+      "missingAuthoredVersion": 0,
+      "missingEducationalTier": 162,
+      "approvalRecordOnlyMetadata": 40,
+      "variantsWithCompleteRationales": 239,
+      "variantsWithMultipleDefinitions": 0,
+      "byPriorityStage": {
+        "0": 687,
+        "1": 464,
+        "2": 163,
+        "3": 84,
+        "4": 20
+      },
+      "byOptionCount": {
+        "3": 121,
+        "4": 1297
+      },
+      "variantsByRule": {
+        "case-detail-decision-cue": 9,
+        "case-detail-key-rationale-overlap": 34,
+        "convergence": 81,
+        "heterogeneous-option-category": 85,
+        "key-length-disparity": 51,
+        "key-only-phrase-overlap": 49,
+        "key-only-word-overlap": 313,
+        "key-test-name-in-context": 6,
+        "lead-in-decision-principle": 16,
+        "near-duplicate-options": 44,
+        "negative-aligned-to-distractor": 105,
+        "option-absolute": 95,
+        "option-explanation": 37,
+        "option-length-disparity": 296,
+        "option-scope-mismatch": 2,
+        "option-specificity-disparity": 21,
+        "unique-key-abbreviation": 128,
+        "unique-key-test-name": 12
+      }
+    }
+  },
+  "selected": {
+    "before": {
+      "variants": 73,
+      "variantsWithFindings": 34,
+      "findings": 45
+    },
+    "after": {
+      "variants": 73,
+      "variantsWithFindings": 38,
+      "findings": 62
+    }
+  },
+  "passIds": [
+    "A02",
+    "B13",
+    "B14",
+    "B16",
+    "B21",
+    "B22",
+    "B23",
+    "B25",
+    "B28",
+    "B30-context",
+    "B31",
+    "B32",
+    "B33",
+    "B34",
+    "B35",
+    "B37-context",
+    "B38"
+  ],
+  "basicIds": [
+    "B01",
+    "B01-context",
+    "B02-context",
+    "B03-context",
+    "B04-context",
+    "B05",
+    "B05-context",
+    "B06",
+    "B06-context",
+    "B07",
+    "B07-context",
+    "B08",
+    "B08-context",
+    "B09",
+    "B10",
+    "B12",
+    "B18",
+    "B11-context",
+    "B12-context",
+    "B17-context",
+    "B18-context",
+    "B19-context",
+    "B20-context",
+    "B21-context",
+    "B22-context",
+    "B25-context",
+    "B29",
+    "B30",
+    "B32-context",
+    "B33-context",
+    "B34-context",
+    "B35-context",
+    "B37",
+    "B40",
+    "B40-context"
+  ],
+  "perItem": [
+    {
+      "id": "A02",
+      "pipelinePassed": true,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.cholecystitis.hida-after-equivocal-ultrasound.v2.r6",
+      "afterVariantId": "question.cholecystitis.hida-after-equivocal-ultrasound.v2.r6",
+      "beforeFindings": 1,
+      "afterFindings": 1,
+      "remainingRules": [
+        "convergence"
+      ]
+    },
+    {
+      "id": "A06",
+      "pipelinePassed": false,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.pathologic-nipple-discharge.pathologic-vs-physiologic-recognition.v1.r5",
+      "afterVariantId": "question.pathologic-nipple-discharge.pathologic-vs-physiologic-recognition.v1.r6",
+      "beforeFindings": 0,
+      "afterFindings": 2,
+      "remainingRules": [
+        "convergence",
+        "near-duplicate-options"
+      ]
+    },
+    {
+      "id": "A06-context",
+      "pipelinePassed": false,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.pathologic-nipple-discharge.diagnostic-imaging.v1.r6",
+      "afterVariantId": "question.pathologic-nipple-discharge.diagnostic-imaging.v1.r7",
+      "beforeFindings": 1,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "A25",
+      "pipelinePassed": false,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.gs028g.hiv-perioperative.art-continuity.v1.r6",
+      "afterVariantId": "question.gs028g.hiv-perioperative.art-continuity.v1.r7",
+      "beforeFindings": 2,
+      "afterFindings": 5,
+      "remainingRules": [
+        "convergence",
+        "near-duplicate-options"
+      ]
+    },
+    {
+      "id": "A25-context",
+      "pipelinePassed": false,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.gs028g.hiv-perioperative.booster-midazolam-interaction.v1.r6",
+      "afterVariantId": "question.gs028g.hiv-perioperative.booster-midazolam-interaction.v1.r7",
+      "beforeFindings": 0,
+      "afterFindings": 1,
+      "remainingRules": [
+        "convergence"
+      ]
+    },
+    {
+      "id": "B01",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.achalasia.manometric-recognition.v1.r3",
+      "afterVariantId": "question.achalasia.manometric-recognition.v1.r4",
+      "beforeFindings": 1,
+      "afterFindings": 1,
+      "remainingRules": [
+        "option-length-disparity"
+      ]
+    },
+    {
+      "id": "B01-context",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.achalasia.high-resolution-manometry.v1.r3",
+      "afterVariantId": "question.achalasia.high-resolution-manometry.v1.r4",
+      "beforeFindings": 1,
+      "afterFindings": 1,
+      "remainingRules": [
+        "heterogeneous-option-category"
+      ]
+    },
+    {
+      "id": "B02",
+      "pipelinePassed": false,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.achalasia.manometric-recognition.v2.r3",
+      "afterVariantId": "question.achalasia.manometric-recognition.v2.r4",
+      "beforeFindings": 1,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B02-context",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.achalasia.high-resolution-manometry.v2.r3",
+      "afterVariantId": "question.achalasia.high-resolution-manometry.v2.r4",
+      "beforeFindings": 1,
+      "afterFindings": 1,
+      "remainingRules": [
+        "heterogeneous-option-category"
+      ]
+    },
+    {
+      "id": "B03",
+      "pipelinePassed": false,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.achalasia.manometric-recognition.v3.r3",
+      "afterVariantId": "question.achalasia.manometric-recognition.v3.r4",
+      "beforeFindings": 2,
+      "afterFindings": 1,
+      "remainingRules": [
+        "convergence"
+      ]
+    },
+    {
+      "id": "B03-context",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.achalasia.high-resolution-manometry.v3.r3",
+      "afterVariantId": "question.achalasia.high-resolution-manometry.v3.r4",
+      "beforeFindings": 1,
+      "afterFindings": 1,
+      "remainingRules": [
+        "heterogeneous-option-category"
+      ]
+    },
+    {
+      "id": "B04",
+      "pipelinePassed": false,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.achalasia.manometric-recognition.v4.r3",
+      "afterVariantId": "question.achalasia.manometric-recognition.v4.r4",
+      "beforeFindings": 1,
+      "afterFindings": 3,
+      "remainingRules": [
+        "convergence",
+        "near-duplicate-options"
+      ]
+    },
+    {
+      "id": "B04-context",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.achalasia.high-resolution-manometry.v4.r3",
+      "afterVariantId": "question.achalasia.high-resolution-manometry.v4.r4",
+      "beforeFindings": 1,
+      "afterFindings": 1,
+      "remainingRules": [
+        "heterogeneous-option-category"
+      ]
+    },
+    {
+      "id": "B05",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.inguinal-hernia.equivocal-exam-ultrasound.v4.r3",
+      "afterVariantId": "question.inguinal-hernia.equivocal-exam-ultrasound.v4.r4",
+      "beforeFindings": 0,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B05-context",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v4.r3",
+      "afterVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v4.r4",
+      "beforeFindings": 0,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B06",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.inguinal-hernia.equivocal-exam-ultrasound.v2.r3",
+      "afterVariantId": "question.inguinal-hernia.equivocal-exam-ultrasound.v2.r4",
+      "beforeFindings": 0,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B06-context",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v2.r3",
+      "afterVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v2.r4",
+      "beforeFindings": 0,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B07",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.inguinal-hernia.equivocal-exam-ultrasound.v3.r3",
+      "afterVariantId": "question.inguinal-hernia.equivocal-exam-ultrasound.v3.r4",
+      "beforeFindings": 0,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B07-context",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v3.r3",
+      "afterVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v3.r4",
+      "beforeFindings": 0,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B08",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.inguinal-hernia.equivocal-exam-ultrasound.v1.r3",
+      "afterVariantId": "question.inguinal-hernia.equivocal-exam-ultrasound.v1.r4",
+      "beforeFindings": 0,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B08-context",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v1.r3",
+      "afterVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v1.r4",
+      "beforeFindings": 0,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B09",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.differentiated-thyroid-cancer.preoperative-nodal-ultrasound.v3.r3",
+      "afterVariantId": "question.differentiated-thyroid-cancer.preoperative-nodal-ultrasound.v3.r4",
+      "beforeFindings": 0,
+      "afterFindings": 1,
+      "remainingRules": [
+        "near-duplicate-options"
+      ]
+    },
+    {
+      "id": "B10",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.stoma-prolapse.urgent-surgical-escalation.v4.r3",
+      "afterVariantId": "question.stoma-prolapse.urgent-surgical-escalation.v4.r4",
+      "beforeFindings": 0,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B11",
+      "pipelinePassed": false,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.melanoma.sentinel-node-staging.v2.r3",
+      "afterVariantId": "question.melanoma.sentinel-node-staging.v2.r4",
+      "beforeFindings": 0,
+      "afterFindings": 1,
+      "remainingRules": [
+        "convergence"
+      ]
+    },
+    {
+      "id": "B11-context",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v2.r3",
+      "afterVariantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v2.r4",
+      "beforeFindings": 1,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B12",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.melanoma.sentinel-node-staging.v4.r3",
+      "afterVariantId": "question.melanoma.sentinel-node-staging.v4.r4",
+      "beforeFindings": 0,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B12-context",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v4.r3",
+      "afterVariantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v4.r4",
+      "beforeFindings": 1,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B13",
+      "pipelinePassed": true,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.colon-cancer.oncologic-regional-resection.v1.r3",
+      "afterVariantId": "question.colon-cancer.oncologic-regional-resection.v1.r3",
+      "beforeFindings": 1,
+      "afterFindings": 1,
+      "remainingRules": [
+        "key-only-word-overlap"
+      ]
+    },
+    {
+      "id": "B13-context",
+      "pipelinePassed": false,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.colon-cancer.preoperative-cross-sectional-staging.v1.r3",
+      "afterVariantId": "question.colon-cancer.preoperative-cross-sectional-staging.v1.r4",
+      "beforeFindings": 1,
+      "afterFindings": 2,
+      "remainingRules": [
+        "key-test-name-in-context",
+        "unique-key-abbreviation"
+      ]
+    },
+    {
+      "id": "B14",
+      "pipelinePassed": true,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.colon-cancer.oncologic-regional-resection.v2.r3",
+      "afterVariantId": "question.colon-cancer.oncologic-regional-resection.v2.r3",
+      "beforeFindings": 1,
+      "afterFindings": 1,
+      "remainingRules": [
+        "key-only-word-overlap"
+      ]
+    },
+    {
+      "id": "B14-context",
+      "pipelinePassed": false,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.colon-cancer.preoperative-cross-sectional-staging.v2.r3",
+      "afterVariantId": "question.colon-cancer.preoperative-cross-sectional-staging.v2.r4",
+      "beforeFindings": 1,
+      "afterFindings": 1,
+      "remainingRules": [
+        "unique-key-abbreviation"
+      ]
+    },
+    {
+      "id": "B15",
+      "pipelinePassed": false,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.colon-cancer.oncologic-regional-resection.v3.r3",
+      "afterVariantId": "question.colon-cancer.oncologic-regional-resection.v3.r4",
+      "beforeFindings": 1,
+      "afterFindings": 2,
+      "remainingRules": [
+        "key-only-word-overlap"
+      ]
+    },
+    {
+      "id": "B15-context",
+      "pipelinePassed": false,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.colon-cancer.preoperative-cross-sectional-staging.v3.r3",
+      "afterVariantId": "question.colon-cancer.preoperative-cross-sectional-staging.v3.r4",
+      "beforeFindings": 1,
+      "afterFindings": 1,
+      "remainingRules": [
+        "unique-key-abbreviation"
+      ]
+    },
+    {
+      "id": "B16",
+      "pipelinePassed": true,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.colon-cancer.oncologic-regional-resection.v4.r3",
+      "afterVariantId": "question.colon-cancer.oncologic-regional-resection.v4.r3",
+      "beforeFindings": 1,
+      "afterFindings": 1,
+      "remainingRules": [
+        "key-only-word-overlap"
+      ]
+    },
+    {
+      "id": "B16-context",
+      "pipelinePassed": false,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.colon-cancer.preoperative-cross-sectional-staging.v4.r3",
+      "afterVariantId": "question.colon-cancer.preoperative-cross-sectional-staging.v4.r4",
+      "beforeFindings": 1,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B17",
+      "pipelinePassed": false,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.melanoma.sentinel-node-staging.v1.r3",
+      "afterVariantId": "question.melanoma.sentinel-node-staging.v1.r4",
+      "beforeFindings": 0,
+      "afterFindings": 1,
+      "remainingRules": [
+        "convergence"
+      ]
+    },
+    {
+      "id": "B17-context",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v1.r3",
+      "afterVariantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v1.r4",
+      "beforeFindings": 1,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B18",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.melanoma.sentinel-node-staging.v3.r3",
+      "afterVariantId": "question.melanoma.sentinel-node-staging.v3.r4",
+      "beforeFindings": 0,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B18-context",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v3.r3",
+      "afterVariantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v3.r4",
+      "beforeFindings": 1,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B19",
+      "pipelinePassed": false,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.soft-tissue-mass.specialist-planned-biopsy.v1.r3",
+      "afterVariantId": "question.soft-tissue-mass.specialist-planned-biopsy.v1.r4",
+      "beforeFindings": 0,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B19-context",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.soft-tissue-mass.extremity-mri.v1.r3",
+      "afterVariantId": "question.soft-tissue-mass.extremity-mri.v1.r4",
+      "beforeFindings": 1,
+      "afterFindings": 1,
+      "remainingRules": [
+        "unique-key-abbreviation"
+      ]
+    },
+    {
+      "id": "B20",
+      "pipelinePassed": false,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.soft-tissue-mass.specialist-planned-biopsy.v2.r3",
+      "afterVariantId": "question.soft-tissue-mass.specialist-planned-biopsy.v2.r4",
+      "beforeFindings": 0,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B20-context",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.soft-tissue-mass.extremity-mri.v2.r3",
+      "afterVariantId": "question.soft-tissue-mass.extremity-mri.v2.r4",
+      "beforeFindings": 1,
+      "afterFindings": 1,
+      "remainingRules": [
+        "unique-key-abbreviation"
+      ]
+    },
+    {
+      "id": "B21",
+      "pipelinePassed": true,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.colonic-lipoma.management.patient-to-plan.v1.r3",
+      "afterVariantId": "question.colonic-lipoma.management.patient-to-plan.v1.r3",
+      "beforeFindings": 0,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B21-context",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.colonic-lipoma.recognition.patient-to-diagnosis.v1.r3",
+      "afterVariantId": "question.colonic-lipoma.recognition.patient-to-diagnosis.v1.r4",
+      "beforeFindings": 0,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B22",
+      "pipelinePassed": true,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.colonic-lipoma.management.patient-to-plan.v2.r3",
+      "afterVariantId": "question.colonic-lipoma.management.patient-to-plan.v2.r3",
+      "beforeFindings": 0,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B22-context",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.colonic-lipoma.recognition.patient-to-diagnosis.v2.r3",
+      "afterVariantId": "question.colonic-lipoma.recognition.patient-to-diagnosis.v2.r4",
+      "beforeFindings": 0,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B23",
+      "pipelinePassed": true,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.gastric-adenocarcinoma.post-endoscopy-splenic-referral.v1.r3",
+      "afterVariantId": "question.gastric-adenocarcinoma.post-endoscopy-splenic-referral.v1.r3",
+      "beforeFindings": 0,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B24",
+      "pipelinePassed": false,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.gastric-malt.cd20-alone-boundary.v1.r3",
+      "afterVariantId": "question.gastric-malt.cd20-alone-boundary.v1.r4",
+      "beforeFindings": 0,
+      "afterFindings": 1,
+      "remainingRules": [
+        "key-only-word-overlap"
+      ]
+    },
+    {
+      "id": "B25",
+      "pipelinePassed": true,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.gastric-malt.eradication-response-reassessment.v1.r3",
+      "afterVariantId": "question.gastric-malt.eradication-response-reassessment.v1.r3",
+      "beforeFindings": 1,
+      "afterFindings": 1,
+      "remainingRules": [
+        "convergence"
+      ]
+    },
+    {
+      "id": "B25-context",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.gastric-malt.pathology-profile-selection.v1.r3",
+      "afterVariantId": "question.gastric-malt.pathology-profile-selection.v1.r4",
+      "beforeFindings": 0,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B26",
+      "pipelinePassed": false,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.statistics-ethics.p-value.v2.r3",
+      "afterVariantId": "question.statistics-ethics.p-value.v2.r4",
+      "beforeFindings": 2,
+      "afterFindings": 2,
+      "remainingRules": [
+        "near-duplicate-options"
+      ]
+    },
+    {
+      "id": "B27",
+      "pipelinePassed": false,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.statistics-ethics.p-value.v1.r3",
+      "afterVariantId": "question.statistics-ethics.p-value.v1.r4",
+      "beforeFindings": 2,
+      "afterFindings": 2,
+      "remainingRules": [
+        "near-duplicate-options"
+      ]
+    },
+    {
+      "id": "B28",
+      "pipelinePassed": true,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.statistics-ethics.risk-ratio-odds-ratio.v3.r3",
+      "afterVariantId": "question.statistics-ethics.risk-ratio-odds-ratio.v3.r3",
+      "beforeFindings": 1,
+      "afterFindings": 1,
+      "remainingRules": [
+        "case-detail-key-rationale-overlap"
+      ]
+    },
+    {
+      "id": "B29",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.variety3.sedation-discharge-ride.v1.r3",
+      "afterVariantId": "question.variety3.sedation-discharge-ride.v1.r4",
+      "beforeFindings": 3,
+      "afterFindings": 3,
+      "remainingRules": [
+        "convergence",
+        "option-absolute"
+      ]
+    },
+    {
+      "id": "B30",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.gastric-malt.integrated-pathology-diagnosis.v1.r3",
+      "afterVariantId": "question.gastric-malt.integrated-pathology-diagnosis.v1.r4",
+      "beforeFindings": 0,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B30-context",
+      "pipelinePassed": true,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.gastric-malt.localized-hpylori-positive-initial-treatment.v1.r3",
+      "afterVariantId": "question.gastric-malt.localized-hpylori-positive-initial-treatment.v1.r3",
+      "beforeFindings": 1,
+      "afterFindings": 1,
+      "remainingRules": [
+        "convergence"
+      ]
+    },
+    {
+      "id": "B31",
+      "pipelinePassed": true,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.statistics-ethics.p-value.v4.r3",
+      "afterVariantId": "question.statistics-ethics.p-value.v4.r3",
+      "beforeFindings": 1,
+      "afterFindings": 1,
+      "remainingRules": [
+        "near-duplicate-options"
+      ]
+    },
+    {
+      "id": "B32",
+      "pipelinePassed": true,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.pseudocyst.symptomatic-endoscopic-drainage.v1.r3",
+      "afterVariantId": "question.pseudocyst.symptomatic-endoscopic-drainage.v1.r3",
+      "beforeFindings": 0,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B32-context",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.pseudocyst.contrast-ct-characterization.v1.r3",
+      "afterVariantId": "question.pseudocyst.contrast-ct-characterization.v1.r4",
+      "beforeFindings": 0,
+      "afterFindings": 3,
+      "remainingRules": [
+        "near-duplicate-options"
+      ]
+    },
+    {
+      "id": "B33",
+      "pipelinePassed": true,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.pseudocyst.symptomatic-endoscopic-drainage.v2.r3",
+      "afterVariantId": "question.pseudocyst.symptomatic-endoscopic-drainage.v2.r3",
+      "beforeFindings": 0,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B33-context",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.pseudocyst.contrast-ct-characterization.v2.r3",
+      "afterVariantId": "question.pseudocyst.contrast-ct-characterization.v2.r4",
+      "beforeFindings": 0,
+      "afterFindings": 3,
+      "remainingRules": [
+        "near-duplicate-options"
+      ]
+    },
+    {
+      "id": "B34",
+      "pipelinePassed": true,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.pseudocyst.symptomatic-endoscopic-drainage.v3.r3",
+      "afterVariantId": "question.pseudocyst.symptomatic-endoscopic-drainage.v3.r3",
+      "beforeFindings": 0,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B34-context",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.pseudocyst.contrast-ct-characterization.v3.r3",
+      "afterVariantId": "question.pseudocyst.contrast-ct-characterization.v3.r4",
+      "beforeFindings": 0,
+      "afterFindings": 3,
+      "remainingRules": [
+        "near-duplicate-options"
+      ]
+    },
+    {
+      "id": "B35",
+      "pipelinePassed": true,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.pseudocyst.symptomatic-endoscopic-drainage.v4.r3",
+      "afterVariantId": "question.pseudocyst.symptomatic-endoscopic-drainage.v4.r3",
+      "beforeFindings": 0,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B35-context",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.pseudocyst.contrast-ct-characterization.v4.r3",
+      "afterVariantId": "question.pseudocyst.contrast-ct-characterization.v4.r4",
+      "beforeFindings": 0,
+      "afterFindings": 3,
+      "remainingRules": [
+        "near-duplicate-options"
+      ]
+    },
+    {
+      "id": "B36",
+      "pipelinePassed": false,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.quality-improvement.pdsa-act-and-iterate.v3.r3",
+      "afterVariantId": "question.quality-improvement.pdsa-act-and-iterate.v3.r4",
+      "beforeFindings": 0,
+      "afterFindings": 1,
+      "remainingRules": [
+        "heterogeneous-option-category"
+      ]
+    },
+    {
+      "id": "B37",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.inflammatory-breast-cancer.core-biopsy-confirmation.v4.r3",
+      "afterVariantId": "question.inflammatory-breast-cancer.core-biopsy-confirmation.v4.r4",
+      "beforeFindings": 0,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B37-context",
+      "pipelinePassed": true,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.inflammatory-breast-cancer.neoadjuvant-sequence.v4.r3",
+      "afterVariantId": "question.inflammatory-breast-cancer.neoadjuvant-sequence.v4.r3",
+      "beforeFindings": 1,
+      "afterFindings": 1,
+      "remainingRules": [
+        "convergence"
+      ]
+    },
+    {
+      "id": "B38",
+      "pipelinePassed": true,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.statistics-ethics.confidence-interval.v1.r3",
+      "afterVariantId": "question.statistics-ethics.confidence-interval.v1.r3",
+      "beforeFindings": 0,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B39",
+      "pipelinePassed": false,
+      "basicRecallIntentional": false,
+      "beforeVariantId": "question.statistics-ethics.p-value.v3.r3",
+      "afterVariantId": "question.statistics-ethics.p-value.v3.r4",
+      "beforeFindings": 6,
+      "afterFindings": 4,
+      "remainingRules": [
+        "near-duplicate-options"
+      ]
+    },
+    {
+      "id": "B40",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.peptic-ulcer-bleeding.visible-vessel-treat.v1.r3",
+      "afterVariantId": "question.peptic-ulcer-bleeding.visible-vessel-treat.v1.r4",
+      "beforeFindings": 0,
+      "afterFindings": 0,
+      "remainingRules": []
+    },
+    {
+      "id": "B40-context",
+      "pipelinePassed": false,
+      "basicRecallIntentional": true,
+      "beforeVariantId": "question.peptic-ulcer-bleeding.visible-vessel-inadequate-monotherapy.v1.r3",
+      "afterVariantId": "question.peptic-ulcer-bleeding.visible-vessel-inadequate-monotherapy.v1.r4",
+      "beforeFindings": 0,
+      "afterFindings": 0,
+      "remainingRules": []
+    }
+  ]
+}

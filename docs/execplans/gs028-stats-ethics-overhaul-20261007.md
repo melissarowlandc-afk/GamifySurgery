@@ -6198,3 +6198,933 @@ Manager-accepted, owner-requested routing (busy service queues wait in waiting r
 - all seven typechecks passed.
 
 Receipts are in `.local-dev/l5-evidence-rebind12-release-20261102/`.
+
+### Level 5 evidence rebind 13 (release worktree, question batch 1) (2026-11-03)
+
+Completed in GS-release from release baseline 5a688e2774851bc1f8d118bd4ecf816a43ee38d9. The live GamifySurgery tree was read-only. Ported 513 exact question-batch-1/APP paths (468 new, 45 existing); clinical wording was copied without authoring changes. Every latest code ownership hash matches the captured source; shared runtime/package/test diffs contain only the requested lane. Full path/SHA inventory: [question-batch1-release-port-20261103.json](../research/question-batch1-release-port-20261103.json).
+
+Independent review seven remains 68 PASS / five REVISE / zero FAIL. B05-context, B07-context, B08-context, B12-context and B36 ship as their exact current .r8 drafts, flagged for owner review. Eleven exact owner-approved question versions and all approval metadata are unchanged; all other current revision questions and all 26 new authoring concepts remain needs_clinician_review. The original release data is retained exactly; all 105 frozen encounters in nine prior saves load identically. The 62 previously passed versions/profiles/nodes, all 1,423 original timing rows and all 269 original service bindings are exact. Current timing rows: 1,767.
+
+The initial full domain run reproduced exactly one input-binding failure plus 25 legacy-load failures, with no timeout or other failure. An independent control substituted the actual captured release clinical data into the unchanged domain runtime and reproduced all 25 prior load hashes and all 25 prior 120-minute continuations. Removing only the 26 new empty histories restores every old loaded-state byte. The established legacy-capture 25-schema/120-tick loop was adapted to retain the five original serialized inputs and all prior metadata; it generated the replacement hashes and after-states, without hand-editing evidence. Continued changes outside those histories occur only in these newly admitted encounters (identical for schemas 5-9):
+
+| Level | Changed continued paths excluding added histories | Newly admitted encounter |
+| --- | ---: | --- |
+| 0 | 0 | none |
+| 1 | 84 | encounter.auto.1.0 |
+| 2 | 0 | none |
+| 3 | 61 | encounter.auto.3.0 |
+| 4 | 60 | encounter.auto.4.0 |
+
+All previously frozen encounters remain exact. Full changed-path and before/after hash evidence is in [the release legacy diagnosis](../research/question-batch1-release-legacy-diagnosis-20261103.json).
+
+Both unchanged native Level 5 generators ran to completion in private staging with seed level-five-m9.integration.01 and the original funded Level 4 opening. All native report ordering, best/latest/first, three 3,000-minute reports, qualifying-patient, management, retirement, >20,000-command and cash assertions passed. Stop gates verified zero walkouts, exact frozen/approved preservation, stable source hashes and no assertion weakening before canonical evidence writes. Results metadata changes are limited to liveCap 4 -> 5 and appending the complete previous inputs/artifactInputs to inputHistory; all thirteen earlier entries remain, for fourteen total. The raw generated checkpoint and legacy fixture bytes were published unchanged.
+
+Commands: 28804 -> 26362. Closing cents: 6010006 -> 6056335. Completed: 449 -> 410; walkouts: 0 -> 0. Unlock tick: 17148 -> 14709. The question/concept pool and exact variant/timing/service bindings changed; the reducer, selector, waiting-room routing, balance and native drivers did not. The actual cash delta reconciles through the following native ledger totals:
+
+| Cash field | Before | After | Delta |
+| --- | ---: | ---: | ---: |
+| openingCashCents | 1785500 | 1785500 | 0 |
+| grossCents | 16056700 | 15111900 | -944800 |
+| stockCents | 304591 | 271860 | -32731 |
+| paidOperatingCents | 10479603 | 9521205 | -958398 |
+| capitalCents | 1048000 | 1048000 | 0 |
+| closingCashCents | 6010006 | 6056335 | 46329 |
+
+| Report | Qualifying patients | Raw score |
+| --- | --- | --- |
+| 1 | 51 -> 54 | 62.4360414271396 -> 62.4813653779166 |
+| 2 | 50 -> 48 | 67.07404667363238 -> 66.64761689485275 |
+| 3 | 49 -> 52 | 45.73839869490067 -> 45.299819146370375 |
+
+| Checkpoint | Tick | Cash cents | Serialized state |
+| --- | --- | --- | --- |
+| integration-l4 | 3965 -> 3704 | 2657500 -> 2635200 | changed |
+| integration-build | 3965 -> 3704 | 1609500 -> 1587200 | changed |
+| integration-preparing | 17149 -> 14710 | 4273477 -> 4148331 | changed |
+| integration-running | 17286 -> 14847 | 4338245 -> 4196706 | changed |
+| integration-final | 20205 -> 17766 | 4910784 -> 4838179 | changed |
+| integration-finish | 20206 -> 17767 | 4910784 -> 4838179 | changed |
+| integration-repeat-final | 23862 -> 21423 | 5721659 -> 5656213 | changed |
+| integration-repeat | 23863 -> 21424 | 5721659 -> 5656213 | changed |
+| integration-lower-repeat | 26920 -> 24481 | 6010006 -> 6056335 | changed |
+
+All changed saves are consumed by the existing Level 5 QA/e2e fixtures. No e2e spec was edited. The launch test’s two exact first-report expected literals were refreshed from the native report; every comparator and behavioral assertion remains strict. Its exact delta is recorded in the audit JSON.
+
+Bound inputs: 380 -> 409; clinical inputs: 261 -> 290 (258 retained hashes, three updated assembly/timing/export hashes, 29 added inputs, none removed). The complete prior 380-input map is retained in history.
+
+| Bound input | Before SHA-256 | After SHA-256 |
+| --- | --- | --- |
+| packages/clinical-content/src/answer-choice-timing.ts | ad821c697ca2c8f6553ea03affd0cb868db65b56418c29e1c000307e771358eb | 7db1b1253c7d3064adb0602360925c0739bb65c719603507c3fa09a6732ba245 |
+| packages/clinical-content/src/index.ts | dbb342121a1e49279c8977f2fcdb1106a9b4a228894fbc54b2b2cd27546a5223 | a57ffcec34d75e2e337790f1ac0d71e4bfdc8f79d53cdb28596e00ead60413e4 |
+| packages/clinical-content/src/synthetic-content.ts | 09d9797f7c659d6f3e7bd4ac5e0f4b72d79fff83f2bc64ed3ccf996ae7f2bc16 | 6d9870d53383af7da6ee7547ba702410a2545882876faa1696c0e1217fae311c |
+| packages/game-domain/src/test-choice-orders.ts | c7ddaea75d35c7f8da695d1c9e2f9a84027530563a61d8b227d3bd45a9338b00 | 522c3fbd3b3503f4b6d74f38e7dbd994b98727a3037b0374f86e58dbf5a41639 |
+| packages/clinical-content/src/question-quality-adversarial-20261102-data.ts | new input | 04abd031b224ea0eff55626cc983443493549517057e3a93760bcb40d1c6ab17 |
+| packages/clinical-content/src/question-quality-adversarial-20261102.ts | new input | 7da11630a357e1ed7c36c4579aa99d46e6cd14d5a5f014a8dcb9ec63df2c7a2d |
+| packages/clinical-content/src/question-quality-adversarial-evidence-20261102.ts | new input | a2488c689ed8e2e4859487b59064d156c37fa8cdd345a39eab039b9ce3216b05 |
+| packages/clinical-content/src/question-quality-adversarial-r3-20261102-data.ts | new input | c39f1bb565dba8eb5cbb32dbe0fc9dcad3c27beeb49c3af782fe2c90ccbf1b00 |
+| packages/clinical-content/src/question-quality-adversarial-r3-20261102.ts | new input | 6f2251f33b190470131c683cf6e565fd0b13f2b104574b2e753dacc4de3ec4be |
+| packages/clinical-content/src/question-quality-adversarial-r3-evidence-20261102.ts | new input | 3ce79432a9bc392eabdac641d54e7da0d5c37dc716ff0ef57a36f2972ef1689a |
+| packages/clinical-content/src/question-quality-adversarial-r4-20261102-data.ts | new input | d80fb06aee3e2e540114c1a065e988e3e303ff2ac86c3718f2b10c1a2b942574 |
+| packages/clinical-content/src/question-quality-adversarial-r4-20261102.ts | new input | 6ae2cfd4932c20ee946d545da7370983c21c1484f28c882d02b03989bbbc2969 |
+| packages/clinical-content/src/question-quality-adversarial-r4-evidence-20261102.ts | new input | 15dea8b054de92f116687b76c84090e49247aa4c15d7b79abe2a553d5724b2df |
+| packages/clinical-content/src/question-quality-adversarial-r5-20261102-data.ts | new input | 077ce04e45f26182367101dfa8e412dc91344731c6b8a720c6b28fc41789f984 |
+| packages/clinical-content/src/question-quality-adversarial-r5-20261102.ts | new input | 025c33fc3ab8a24178179c5757c67279d4bea4c664dc26ac7313682f610c6d5b |
+| packages/clinical-content/src/question-quality-adversarial-r5-evidence-20261102.ts | new input | 4ad644d08c5a6440d49598aa84c60393f6ab543583784d9ecbe22708fed2d142 |
+| packages/clinical-content/src/question-quality-adversarial-r6-20261102-data.ts | new input | 32061f2ee39840a2d34e3b81606602dc46be78f78dbef814af69bfb08728c2d3 |
+| packages/clinical-content/src/question-quality-adversarial-r6-20261102.ts | new input | dab740ca3574fe26d5786034de8d018325e628efeb475f1e66be87e49bfcd3f2 |
+| packages/clinical-content/src/question-quality-adversarial-r6-evidence-20261102.ts | new input | 32d8395638b73c74d42d26c5e7fb2aa6a306001501776cb23854b424d910172b |
+| packages/clinical-content/src/question-quality-adversarial-r7-20261102-data.ts | new input | 2b426b840a97cc1ceb3ae9cdff920cee228c3deffc8e30432b294441c8d9cf03 |
+| packages/clinical-content/src/question-quality-adversarial-r7-20261102.ts | new input | 387cc1ee2d92839c9a3f3c787ab2a8f427d0e0b3bf8264fb3e5aa048ba056582 |
+| packages/clinical-content/src/question-quality-adversarial-r7-evidence-20261102.ts | new input | c754c13b071f08a53518623ede17765f21d6e9eaeb612d14b7d9d60ba3862d4d |
+| packages/clinical-content/src/question-quality-batch1-20261102-data.ts | new input | 5b49c457b95974d55858476c148ec23d5c37a88ba39d430fe67b48eb33547c85 |
+| packages/clinical-content/src/question-quality-batch1-20261102.ts | new input | 1aac74fec55e37bdd1463eb88e111590953bcd69e53467efc7c867d4f8d37928 |
+| packages/clinical-content/src/question-quality-clinical-approvals-20261102.ts | new input | 13702a09fec2af7580a2f7194285244bdd89b322ffcd098b875e099c903ca045 |
+| packages/clinical-content/src/question-quality-pilot-20261028-data.ts | new input | 9424e4ebb86c1d89bbbc88138b3938dbe102651ccce56ebe92abf679bea54f18 |
+| packages/clinical-content/src/question-quality-pilot-20261028-r2.ts | new input | 539f5cc86cb4e24fc2923bff7f8929c7a456918c4c66d003eae76cc1519153ea |
+| packages/clinical-content/src/question-quality-pilot-20261028.ts | new input | eeab1985ffa0fdcd145e0035716d216924af8372c1cdaa982dfcea77dc41219f |
+| packages/clinical-content/src/question-quality-pilot-20261029-round1.ts | new input | 6b2dc53219de4bc4a016da65a2bb3b49e797d2fc8808215761c557f4e7997c46 |
+| packages/clinical-content/src/question-quality-pilot-20261102-round2.ts | new input | 784474a2b93ad8cca728a39bc4745d16b6ad510ac198fbdec2a65e76b2912335 |
+| packages/clinical-content/src/question-quality-pilot-evidence-20261028.ts | new input | 3197bf248b802fa129feafcb81a83bc1921a2504d3948fc37ab532405aaad2dd |
+| packages/clinical-content/src/question-quality-pilot-round2-evidence-20261029.ts | new input | 03ca239ab0e79f8bc1613e0114199a46a4724912e0b480b2eee1384fa2c2425d |
+| packages/clinical-content/src/question-quality-round3-batch1-evidence-20261102.ts | new input | d824533bf4b7d6ebea37d08d9780da5fa8009c7081fc9379bcb2d585b72f521b |
+
+| Evidence artifact | Before SHA-256 | After SHA-256 |
+| --- | --- | --- |
+| tools/qa/level-five-integration-results-20261012.json | 4b3b377ba239511bfc3dba59aedc15400ec569023e78eb5c6002c615b4954194 | dead50020355be0bc328ff4557cd40199763097a8aa01baa3f8944d22492a8d5 |
+| tests/fixtures/level-five-integration-checkpoints-20261012.json | ecd74aaba7afbb9dbfcf9eb3645dc5999306263d44099bbb481aafcdf5995225 | 10322f2f3d58be7c211cdd3efd25915f01832f5af0f03a8e32a09397469b0346 |
+| tests/fixtures/level-five-legacy-behavior-20261012.json | c5080dec0f4d429b3697cd2068955e043613023d8b698828e862f732c3229097 | 421e564f86cb502cb3dda02c84c5a19352c575ab89a4236654ef7d0cb249491e |
+
+Cash explanation: the last checkpoint moved from tick 26920 to 24481, 2439 ticks earlier, matching the earlier unlock and unchanged inspection windows. Gross decreased 944800 cents; stock spending decreased 32731; operating spending decreased 958398. Opening cash and capital spending are identical. Therefore -944800 - (-32731) - (-958398) = +46329 closing cents. This is the actual native ledger reconciliation, without a balancing adjustment.
+
+Exact supplemental changed paths:
+
+- tools/qa/level-five-integration-results-20261012.json
+- tests/fixtures/level-five-integration-checkpoints-20261012.json
+- tests/fixtures/level-five-legacy-behavior-20261012.json
+- packages/game-domain/tests/level-five-launch.test.ts
+- apps/player/src/session/levelFiveLaunch.test.tsx
+- docs/research/question-batch1-release-port-20261103.json
+- docs/research/question-batch1-release-legacy-diagnosis-20261103.json
+- docs/research/question-batch1-release-rebind13-20261103.json
+- docs/execplans/question-batch1-release-rebind13-20261103.md
+- docs/execplans/gs028-stats-ethics-overhaul-20261007.md
+
+<details>
+<summary>Every ported path (513; complete hashes are in the port manifest)</summary>
+
+- apps/player/src/session/briefEarlyLevelsPresentation.test.ts
+- apps/player/src/session/earlyLevelsPresentation.test.ts
+- apps/player/src/session/pediatricChartsViewModels.test.ts
+- apps/player/src/session/variety3ChartsViewModels.test.ts
+- clinical-data/templates/README.md
+- docs/clinical-workbench/PILOT_FIELD_GUIDE.md
+- docs/clinical-workbench/README.md
+- docs/clinical/question-authoring-standard.md
+- docs/execplans/app-arrival-selector-20261103.md
+- docs/execplans/question-bank-rewrite-20261102.md
+- docs/execplans/question-batch1-adversarial-fixes-20261102.md
+- docs/execplans/question-batch1-adversarial-round3-20261102.md
+- docs/execplans/question-batch1-adversarial-round4-20261102.md
+- docs/execplans/question-batch1-adversarial-round5-20261102.md
+- docs/execplans/question-batch1-adversarial-round6-20261102.md
+- docs/execplans/question-batch1-adversarial-round7-20261102.md
+- docs/execplans/question-quality-phase1-20261028.md
+- docs/execplans/question-round3-batch1-20261102.md
+- docs/handoffs/app-arrival-selector-20261103.md
+- docs/research/question-adversarial-response-20261102.md
+- docs/research/question-adversarial-round3-response-20261102.md
+- docs/research/question-adversarial-round4-response-20261102.md
+- docs/research/question-adversarial-round5-response-20261102.md
+- docs/research/question-adversarial-round6-response-20261102.md
+- docs/research/question-adversarial-round7-response-20261102.md
+- docs/research/question-batch1-20261102.json
+- docs/research/question-batch1-adversarial-handoff-20261102.md
+- docs/research/question-batch1-adversarial-review-20261102.json
+- docs/research/question-batch1-adversarial-review2-20261102.json
+- docs/research/question-batch1-adversarial-review3-20261102.json
+- docs/research/question-batch1-adversarial-review4-20261102.json
+- docs/research/question-batch1-adversarial-review5-20261102.json
+- docs/research/question-batch1-adversarial-review6-20261102.json
+- docs/research/question-batch1-adversarial-review7-20261102.json
+- docs/research/question-batch1-adversarial-round3-handoff-20261102.md
+- docs/research/question-batch1-adversarial-round4-handoff-20261102.md
+- docs/research/question-batch1-adversarial-round5-handoff-20261102.md
+- docs/research/question-batch1-adversarial-round6-handoff-20261102.md
+- docs/research/question-batch1-adversarial-round7-handoff-20261102.md
+- docs/research/question-batch1-round7-fallbacks-20261102.json
+- docs/research/question-cue-audit-20261028.md
+- docs/research/question-inventory-20261028.md
+- docs/research/question-pilot-review-20261028.md
+- docs/research/question-pilot-round2-20261029.json
+- docs/research/question-pilot-round2-handoff-20261029.md
+- docs/research/question-quality-phase1-handoff-20261028.md
+- docs/research/question-rewrite-batch1-proposal-20261029.json
+- docs/research/question-rewrite-batch1-proposal-20261029.md
+- docs/research/question-round3-20261102.json
+- docs/research/question-round3-batch1-handoff-20261102.md
+- docs/research/question-writing-strategy-20261028.md
+- docs/research/sources-question-adversarial-20261102.md
+- docs/research/sources-question-adversarial-r3-20261102.md
+- docs/research/sources-question-adversarial-r4-20261102.md
+- docs/research/sources-question-adversarial-r5-20261102.md
+- docs/research/sources-question-adversarial-r6-20261102.md
+- docs/research/sources-question-adversarial-r7-20261102.md
+- docs/research/sources-question-round3-batch1-20261102.md
+- docs/research/sources-question-writing-20261028.md
+- package.json
+- packages/clinical-content/src/answer-choice-timing.test.ts
+- packages/clinical-content/src/answer-choice-timing.ts
+- packages/clinical-content/src/approved-data/colonic-lipoma.test.ts
+- packages/clinical-content/src/development-batch/2026-09-11/board-expansion-admission.test.ts
+- packages/clinical-content/src/development-batch/2026-09-12/board-expansion-admission.test.ts
+- packages/clinical-content/src/development-batch/2026-09-13/early-levels-admission.test.ts
+- packages/clinical-content/src/development-batch/2026-09-17-bread-and-butter/bread-butter-admission.test.ts
+- packages/clinical-content/src/development-batch/2026-09-17/brief-early-levels-admission.test.ts
+- packages/clinical-content/src/development-batch/2026-10-07-level3/level3-content.test.ts
+- packages/clinical-content/src/development-batch/2026-10-07-variety-2/variety-admission.test.ts
+- packages/clinical-content/src/development-batch/2026-10-07-variety/variety-admission.test.ts
+- packages/clinical-content/src/development-batch/2026-10-08-pediatric-clinic/pediatric-admission.test.ts
+- packages/clinical-content/src/development-batch/2026-10-10-variety-3/batch-content.test.ts
+- packages/clinical-content/src/development-batch/2026-10-10-variety-3/variety3-admission.test.ts
+- packages/clinical-content/src/index.ts
+- packages/clinical-content/src/patient-library-wording-repair.test.ts
+- packages/clinical-content/src/question-quality-adversarial-20261102-data.ts
+- packages/clinical-content/src/question-quality-adversarial-20261102.ts
+- packages/clinical-content/src/question-quality-adversarial-evidence-20261102.ts
+- packages/clinical-content/src/question-quality-adversarial-r3-20261102-data.ts
+- packages/clinical-content/src/question-quality-adversarial-r3-20261102.ts
+- packages/clinical-content/src/question-quality-adversarial-r3-evidence-20261102.ts
+- packages/clinical-content/src/question-quality-adversarial-r3.test.ts
+- packages/clinical-content/src/question-quality-adversarial-r4-20261102-data.ts
+- packages/clinical-content/src/question-quality-adversarial-r4-20261102.ts
+- packages/clinical-content/src/question-quality-adversarial-r4-evidence-20261102.ts
+- packages/clinical-content/src/question-quality-adversarial-r4.test.ts
+- packages/clinical-content/src/question-quality-adversarial-r5-20261102-data.ts
+- packages/clinical-content/src/question-quality-adversarial-r5-20261102.ts
+- packages/clinical-content/src/question-quality-adversarial-r5-evidence-20261102.ts
+- packages/clinical-content/src/question-quality-adversarial-r5.test.ts
+- packages/clinical-content/src/question-quality-adversarial-r6-20261102-data.ts
+- packages/clinical-content/src/question-quality-adversarial-r6-20261102.ts
+- packages/clinical-content/src/question-quality-adversarial-r6-evidence-20261102.ts
+- packages/clinical-content/src/question-quality-adversarial-r6.test.ts
+- packages/clinical-content/src/question-quality-adversarial-r7-20261102-data.ts
+- packages/clinical-content/src/question-quality-adversarial-r7-20261102.ts
+- packages/clinical-content/src/question-quality-adversarial-r7-evidence-20261102.ts
+- packages/clinical-content/src/question-quality-adversarial-r7.test.ts
+- packages/clinical-content/src/question-quality-adversarial.test.ts
+- packages/clinical-content/src/question-quality-batch1-20261102-data.ts
+- packages/clinical-content/src/question-quality-batch1-20261102.ts
+- packages/clinical-content/src/question-quality-batch1.test.ts
+- packages/clinical-content/src/question-quality-clinical-approvals-20261102.ts
+- packages/clinical-content/src/question-quality-pilot-20261028-data.ts
+- packages/clinical-content/src/question-quality-pilot-20261028-r2.ts
+- packages/clinical-content/src/question-quality-pilot-20261028.ts
+- packages/clinical-content/src/question-quality-pilot-20261029-round1.ts
+- packages/clinical-content/src/question-quality-pilot-20261102-round2.ts
+- packages/clinical-content/src/question-quality-pilot-evidence-20261028.ts
+- packages/clinical-content/src/question-quality-pilot-round2-evidence-20261029.ts
+- packages/clinical-content/src/question-quality-pilot.test.ts
+- packages/clinical-content/src/question-quality-review.test.helpers.ts
+- packages/clinical-content/src/question-quality-round3-batch1-evidence-20261102.ts
+- packages/clinical-content/src/synthetic-content.ts
+- packages/game-domain/src/test-choice-orders.ts
+- packages/game-domain/tests/answer-choice-timing.test.ts
+- packages/game-domain/tests/approved-clinical-admission.test.ts
+- packages/game-domain/tests/board-expansion-batch.test.ts
+- packages/game-domain/tests/diagnostics/patient-supply.test.ts
+- packages/game-domain/tests/early-levels-20260913-batch.test.ts
+- packages/game-domain/tests/gs028-20261002-batch.test.ts
+- packages/game-domain/tests/gs028-20261003-batch.test.ts
+- packages/game-domain/tests/gs028-20261007-batch.test.ts
+- packages/game-domain/tests/gs028-20261007-level3-batch.test.ts
+- packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts
+- packages/game-domain/tests/gs028-second-pre-endoscopy-batch.test.ts
+- packages/game-domain/tests/gs028-statistics-ethics-batch.test.ts
+- packages/game-domain/tests/level-four-integration.test.ts
+- packages/game-domain/tests/patient-supply.test.ts
+- packages/game-domain/tests/pediatric-clinic-admission.test.ts
+- packages/game-domain/tests/service-procedure-operations.test.ts
+- packages/game-domain/tests/surgery-center-batch.test.ts
+- packages/game-domain/tests/test-choice-order-inventory.test.ts
+- packages/game-domain/tests/ultrasound-first-imaging.test.ts
+- packages/game-domain/tests/variety3-admission.test.ts
+- tools/question-quality/additional-timeouts-comparison-20261102.json
+- tools/question-quality/additional-timeouts-comparison-20261102.log
+- tools/question-quality/additional-timeouts-comparison-exit-20261102.json
+- tools/question-quality/additional-timeouts-exit-20261102.json
+- tools/question-quality/additional-timeouts-targeted-exit-20261102.json
+- tools/question-quality/additional-timeouts-targeted-final-20261102.log
+- tools/question-quality/adversarial-bound-inputs-20261102.json
+- tools/question-quality/adversarial-bound-inputs-20261102.mjs
+- tools/question-quality/adversarial-clinical-final-20261102.log
+- tools/question-quality/adversarial-clinical-first-20261102.log
+- tools/question-quality/adversarial-clinical-second-20261102.log
+- tools/question-quality/adversarial-clinical-verified-20261102.log
+- tools/question-quality/adversarial-cue-after-20261102.json
+- tools/question-quality/adversarial-cue-before-20261102.json
+- tools/question-quality/adversarial-cue-comparison-20261102.json
+- tools/question-quality/adversarial-domain-full-20261102.log
+- tools/question-quality/adversarial-domain-inventory-20261102.log
+- tools/question-quality/adversarial-domain-inventory-final-20261102.log
+- tools/question-quality/adversarial-domain-post-repairs-20261102.log
+- tools/question-quality/adversarial-domain-repairs-20261102.log
+- tools/question-quality/adversarial-evidence-20261102.mjs
+- tools/question-quality/adversarial-lint-tests-20261102.log
+- tools/question-quality/adversarial-lint-tests-final-20261102.log
+- tools/question-quality/adversarial-owned-files-20261102.json
+- tools/question-quality/adversarial-player-final-20261102.log
+- tools/question-quality/adversarial-player-first-20261102.log
+- tools/question-quality/adversarial-player-full-20261102.log
+- tools/question-quality/adversarial-player-verified-20261102.log
+- tools/question-quality/adversarial-r3-bound-inputs-20261102.json
+- tools/question-quality/adversarial-r3-bound-inputs-20261102.mjs
+- tools/question-quality/adversarial-r3-capture-20261102.mjs
+- tools/question-quality/adversarial-r3-clinical-final-20261102.log
+- tools/question-quality/adversarial-r3-clinical-first-20261102.log
+- tools/question-quality/adversarial-r3-clinical-repairs-20261102.log
+- tools/question-quality/adversarial-r3-cue-after-20261102.json
+- tools/question-quality/adversarial-r3-cue-before-20261102.json
+- tools/question-quality/adversarial-r3-cue-comparison-20261102.json
+- tools/question-quality/adversarial-r3-docs-20261102.log
+- tools/question-quality/adversarial-r3-domain-focused-first-20261102.log
+- tools/question-quality/adversarial-r3-domain-full-20261102.log
+- tools/question-quality/adversarial-r3-evidence-20261102.mjs
+- tools/question-quality/adversarial-r3-exact-records-20261102.json
+- tools/question-quality/adversarial-r3-lint-tests-20261102.log
+- tools/question-quality/adversarial-r3-owned-files-20261102.json
+- tools/question-quality/adversarial-r3-player-20261102.log
+- tools/question-quality/adversarial-r3-qa-20261102.log
+- tools/question-quality/adversarial-r3-report-qa-20261102.json
+- tools/question-quality/adversarial-r3-report-qa-20261102.log
+- tools/question-quality/adversarial-r3-review-generation-20261102.log
+- tools/question-quality/adversarial-r3-specs-20261102.mjs
+- tools/question-quality/adversarial-r3-typecheck-final-20261102.log
+- tools/question-quality/adversarial-r3-typecheck-first-20261102.log
+- tools/question-quality/adversarial-r3-validation-20261102.json
+- tools/question-quality/adversarial-r3-whole-bank-20261102.json
+- tools/question-quality/adversarial-r3-whole-bank-20261102.log
+- tools/question-quality/adversarial-r4-author-check-20261102.log
+- tools/question-quality/adversarial-r4-bound-inputs-20261102.json
+- tools/question-quality/adversarial-r4-bound-inputs-20261102.log
+- tools/question-quality/adversarial-r4-bound-inputs-20261102.mjs
+- tools/question-quality/adversarial-r4-capture-20261102.mjs
+- tools/question-quality/adversarial-r4-clinical-20261102.log
+- tools/question-quality/adversarial-r4-content-expectations-20261102.log
+- tools/question-quality/adversarial-r4-cue-after-20261102.json
+- tools/question-quality/adversarial-r4-cue-before-20261102.json
+- tools/question-quality/adversarial-r4-cue-comparison-20261102.json
+- tools/question-quality/adversarial-r4-docs-20261102.log
+- tools/question-quality/adversarial-r4-domain-20261102.log
+- tools/question-quality/adversarial-r4-domain-diagnostic-20261102.log
+- tools/question-quality/adversarial-r4-domain-focused-20261102.log
+- tools/question-quality/adversarial-r4-domain-native-crash-20261102.log
+- tools/question-quality/adversarial-r4-domain-regression-20261102.log
+- tools/question-quality/adversarial-r4-evidence-20261102.mjs
+- tools/question-quality/adversarial-r4-evidence-check-20261102.log
+- tools/question-quality/adversarial-r4-exact-records-20261102.json
+- tools/question-quality/adversarial-r4-generation-20261102.log
+- tools/question-quality/adversarial-r4-handoff-generation-20261102.log
+- tools/question-quality/adversarial-r4-legacy-load-diagnosis-20261102.json
+- tools/question-quality/adversarial-r4-legacy-load-diagnosis-20261102.log
+- tools/question-quality/adversarial-r4-lint-tests-20261102.log
+- tools/question-quality/adversarial-r4-owned-files-20261102.json
+- tools/question-quality/adversarial-r4-player-20261102.log
+- tools/question-quality/adversarial-r4-pool-probe-20261102.log
+- tools/question-quality/adversarial-r4-report-qa-20261102.json
+- tools/question-quality/adversarial-r4-report-qa-20261102.log
+- tools/question-quality/adversarial-r4-snapshot-change-review-20261102.json
+- tools/question-quality/adversarial-r4-snapshot-change-review-20261102.log
+- tools/question-quality/adversarial-r4-specification-check-20261102.json
+- tools/question-quality/adversarial-r4-specs-20261102.mjs
+- tools/question-quality/adversarial-r4-supply-control-20261102.json
+- tools/question-quality/adversarial-r4-supply-control-20261102.log
+- tools/question-quality/adversarial-r4-supply-snapshot-review-20261102.log
+- tools/question-quality/adversarial-r4-supply-snapshot-update-20261102.log
+- tools/question-quality/adversarial-r4-typecheck-20261102.log
+- tools/question-quality/adversarial-r4-validation-20261102.json
+- tools/question-quality/adversarial-r4-whole-bank-20261102.json
+- tools/question-quality/adversarial-r4-whole-bank-20261102.log
+- tools/question-quality/adversarial-r5-author-check-20261102.log
+- tools/question-quality/adversarial-r5-before-cue-cleanup-20261102.json
+- tools/question-quality/adversarial-r5-bound-inputs-20261102.json
+- tools/question-quality/adversarial-r5-bound-inputs-20261102.log
+- tools/question-quality/adversarial-r5-bound-inputs-20261102.mjs
+- tools/question-quality/adversarial-r5-bound-inputs-before-cue-cleanup-20261102.json
+- tools/question-quality/adversarial-r5-capture-20261102.mjs
+- tools/question-quality/adversarial-r5-clinical-20261102.log
+- tools/question-quality/adversarial-r5-cue-after-20261102.json
+- tools/question-quality/adversarial-r5-cue-before-20261102.json
+- tools/question-quality/adversarial-r5-cue-cleanup-check-20261102.json
+- tools/question-quality/adversarial-r5-cue-comparison-20261102.json
+- tools/question-quality/adversarial-r5-docs-20261102.log
+- tools/question-quality/adversarial-r5-domain-20261102.log
+- tools/question-quality/adversarial-r5-domain-before-cue-cleanup-20261102.log
+- tools/question-quality/adversarial-r5-domain-focused-20261102.log
+- tools/question-quality/adversarial-r5-evidence-20261102.mjs
+- tools/question-quality/adversarial-r5-evidence-check-20261102.log
+- tools/question-quality/adversarial-r5-exact-records-20261102.json
+- tools/question-quality/adversarial-r5-generation-20261102.log
+- tools/question-quality/adversarial-r5-legacy-load-diagnosis-20261102.json
+- tools/question-quality/adversarial-r5-legacy-load-diagnosis-20261102.log
+- tools/question-quality/adversarial-r5-lint-tests-20261102.log
+- tools/question-quality/adversarial-r5-owned-files-20261102.json
+- tools/question-quality/adversarial-r5-player-20261102.log
+- tools/question-quality/adversarial-r5-player-preload-20261102.cjs
+- tools/question-quality/adversarial-r5-report-qa-20261102.json
+- tools/question-quality/adversarial-r5-report-qa-20261102.log
+- tools/question-quality/adversarial-r5-snapshot-change-review-20261102.json
+- tools/question-quality/adversarial-r5-snapshot-change-review-20261102.log
+- tools/question-quality/adversarial-r5-source-record-check-20261102.json
+- tools/question-quality/adversarial-r5-source-record-check-20261102.mjs
+- tools/question-quality/adversarial-r5-specs-20261102.mjs
+- tools/question-quality/adversarial-r5-supply-control-20261102.json
+- tools/question-quality/adversarial-r5-supply-control-20261102.log
+- tools/question-quality/adversarial-r5-supply-snapshot-update-20261102.log
+- tools/question-quality/adversarial-r5-timing-delta-20261102.json
+- tools/question-quality/adversarial-r5-timing-delta-20261102.log
+- tools/question-quality/adversarial-r5-timing-delta-20261102.mjs
+- tools/question-quality/adversarial-r5-typecheck-20261102.log
+- tools/question-quality/adversarial-r5-validation-20261102.json
+- tools/question-quality/adversarial-r5-whole-bank-20261102.json
+- tools/question-quality/adversarial-r5-whole-bank-20261102.log
+- tools/question-quality/adversarial-r6-bound-inputs-20261102.json
+- tools/question-quality/adversarial-r6-bound-inputs-20261102.mjs
+- tools/question-quality/adversarial-r6-capture-20261102.mjs
+- tools/question-quality/adversarial-r6-clinical-20261102.log
+- tools/question-quality/adversarial-r6-concurrent-input-change-20261102.json
+- tools/question-quality/adversarial-r6-cue-after-20261102.json
+- tools/question-quality/adversarial-r6-cue-before-20261102.json
+- tools/question-quality/adversarial-r6-cue-comparison-20261102.json
+- tools/question-quality/adversarial-r6-domain-20261102.log
+- tools/question-quality/adversarial-r6-domain-before-expectation-repair-20261102.log
+- tools/question-quality/adversarial-r6-domain-focused-20261102.log
+- tools/question-quality/adversarial-r6-evidence-20261102.mjs
+- tools/question-quality/adversarial-r6-exact-records-20261102.json
+- tools/question-quality/adversarial-r6-l4-fairness-diagnosis-20261102.json
+- tools/question-quality/adversarial-r6-l4-fairness-diagnosis-20261102.log
+- tools/question-quality/adversarial-r6-late-expectation-review-20261102.json
+- tools/question-quality/adversarial-r6-late-pool-flow-tests-20261102.log
+- tools/question-quality/adversarial-r6-launch-current-20261102.json
+- tools/question-quality/adversarial-r6-launch-entry-20261102.json
+- tools/question-quality/adversarial-r6-launch-tests-20261102.log
+- tools/question-quality/adversarial-r6-legacy-load-diagnosis-20261102.json
+- tools/question-quality/adversarial-r6-legacy-load-diagnosis-20261102.log
+- tools/question-quality/adversarial-r6-lint-tests-20261102.log
+- tools/question-quality/adversarial-r6-main-snapshot-serialization-20261102.log
+- tools/question-quality/adversarial-r6-owned-files-20261102.json
+- tools/question-quality/adversarial-r6-packet-generation-20261102.log
+- tools/question-quality/adversarial-r6-player-20261102.log
+- tools/question-quality/adversarial-r6-report-qa-20261102.json
+- tools/question-quality/adversarial-r6-report-qa-20261102.log
+- tools/question-quality/adversarial-r6-scoped-diff-20261102.json
+- tools/question-quality/adversarial-r6-snapshot-change-review-20261102.json
+- tools/question-quality/adversarial-r6-snapshot-change-review-20261102.log
+- tools/question-quality/adversarial-r6-snapshot-serialization-20261102.log
+- tools/question-quality/adversarial-r6-source-record-check-20261102.json
+- tools/question-quality/adversarial-r6-source-record-check-20261102.mjs
+- tools/question-quality/adversarial-r6-specs-20261102.mjs
+- tools/question-quality/adversarial-r6-supply-candidate-20261102.json
+- tools/question-quality/adversarial-r6-supply-candidate-20261102.log
+- tools/question-quality/adversarial-r6-supply-control-20261102.json
+- tools/question-quality/adversarial-r6-supply-control-20261102.log
+- tools/question-quality/adversarial-r6-timing-delta-20261102.json
+- tools/question-quality/adversarial-r6-timing-delta-20261102.mjs
+- tools/question-quality/adversarial-r6-typecheck-20261102.log
+- tools/question-quality/adversarial-r6-validation-20261102.json
+- tools/question-quality/adversarial-r6-whole-bank-20261102.log
+- tools/question-quality/adversarial-r7-bound-inputs-20261102.json
+- tools/question-quality/adversarial-r7-bound-inputs-20261102.mjs
+- tools/question-quality/adversarial-r7-capture-20261102.mjs
+- tools/question-quality/adversarial-r7-clinical-20261102.log
+- tools/question-quality/adversarial-r7-clinical-before-option-parity-20261102.log
+- tools/question-quality/adversarial-r7-cue-after-20261102.json
+- tools/question-quality/adversarial-r7-cue-before-20261102.json
+- tools/question-quality/adversarial-r7-cue-comparison-20261102.json
+- tools/question-quality/adversarial-r7-domain-20261102.log
+- tools/question-quality/adversarial-r7-domain-before-protocol-clarification-20261102.log
+- tools/question-quality/adversarial-r7-domain-focused-20261102.log
+- tools/question-quality/adversarial-r7-domain-focused-before-expectations-20261102.log
+- tools/question-quality/adversarial-r7-domain-focused-parallel-timeout-20261102.log
+- tools/question-quality/adversarial-r7-evidence-20261102.mjs
+- tools/question-quality/adversarial-r7-exact-records-20261102.json
+- tools/question-quality/adversarial-r7-fallbacks-20261102.mjs
+- tools/question-quality/adversarial-r7-legacy-load-diagnosis-20261102.json
+- tools/question-quality/adversarial-r7-legacy-load-diagnosis-20261102.log
+- tools/question-quality/adversarial-r7-lint-tests-20261102.log
+- tools/question-quality/adversarial-r7-owned-files-20261102.json
+- tools/question-quality/adversarial-r7-packet-generation-20261102.log
+- tools/question-quality/adversarial-r7-player-20261102.log
+- tools/question-quality/adversarial-r7-report-qa-20261102.json
+- tools/question-quality/adversarial-r7-report-qa-20261102.log
+- tools/question-quality/adversarial-r7-scoped-diff-20261102.json
+- tools/question-quality/adversarial-r7-sequence-audit-20261102.json
+- tools/question-quality/adversarial-r7-sequence-audit-20261102.mjs
+- tools/question-quality/adversarial-r7-snapshot-change-review-20261102.json
+- tools/question-quality/adversarial-r7-snapshot-change-review-20261102.log
+- tools/question-quality/adversarial-r7-snapshot-serialization-20261102.log
+- tools/question-quality/adversarial-r7-source-record-check-20261102.json
+- tools/question-quality/adversarial-r7-source-record-check-20261102.mjs
+- tools/question-quality/adversarial-r7-specs-20261102.mjs
+- tools/question-quality/adversarial-r7-supply-candidate-20261102.json
+- tools/question-quality/adversarial-r7-supply-candidate-20261102.log
+- tools/question-quality/adversarial-r7-supply-control-20261102.json
+- tools/question-quality/adversarial-r7-supply-control-20261102.log
+- tools/question-quality/adversarial-r7-timing-delta-20261102.json
+- tools/question-quality/adversarial-r7-timing-delta-20261102.mjs
+- tools/question-quality/adversarial-r7-typecheck-20261102.log
+- tools/question-quality/adversarial-r7-validation-20261102.json
+- tools/question-quality/adversarial-r7-validation-window-20261102.json
+- tools/question-quality/adversarial-r7-validation-window-20261102.mjs
+- tools/question-quality/adversarial-r7-whole-bank-20261102.log
+- tools/question-quality/adversarial-report-final-20261102.log
+- tools/question-quality/adversarial-report-generation-20261102.log
+- tools/question-quality/adversarial-report-qa-20261102.json
+- tools/question-quality/adversarial-report-qa-20261102.log
+- tools/question-quality/adversarial-report-qa-final-20261102.log
+- tools/question-quality/adversarial-report-verified-20261102.log
+- tools/question-quality/adversarial-specs-20261102.mjs
+- tools/question-quality/adversarial-typecheck-final-20261102.log
+- tools/question-quality/adversarial-typecheck-verified-20261102.log
+- tools/question-quality/adversarial-validation-20261102.json
+- tools/question-quality/adversarial-whole-bank-20261102.json
+- tools/question-quality/adversarial-whole-bank-final-20261102.log
+- tools/question-quality/apply-adversarial-r5-cue-cleanup-20261102.mjs
+- tools/question-quality/author-adversarial-20261102.mjs
+- tools/question-quality/author-adversarial-r3-20261102.mjs
+- tools/question-quality/author-adversarial-r4-20261102.mjs
+- tools/question-quality/author-adversarial-r5-20261102.mjs
+- tools/question-quality/author-adversarial-r6-20261102.mjs
+- tools/question-quality/author-adversarial-r7-20261102.mjs
+- tools/question-quality/bank.mjs
+- tools/question-quality/before-lint-20261102.log
+- tools/question-quality/bound-inputs-20261102.json
+- tools/question-quality/build-adversarial-choice-records-20261102.mjs
+- tools/question-quality/build-adversarial-r3-choice-records-20261102.mjs
+- tools/question-quality/build-adversarial-r4-choice-records-20261102.mjs
+- tools/question-quality/build-adversarial-r5-choice-records-20261102.mjs
+- tools/question-quality/build-adversarial-r6-choice-records-20261102.mjs
+- tools/question-quality/build-revision-choice-records-20261102.mjs
+- tools/question-quality/clinical-review-validation-20261029.log
+- tools/question-quality/clinical-validation-20261029.log
+- tools/question-quality/compare-adversarial-r4-supply-20261102.mjs
+- tools/question-quality/compare-adversarial-r5-supply-20261102.mjs
+- tools/question-quality/compare-adversarial-r6-supply-20261102.mjs
+- tools/question-quality/compare-adversarial-r7-supply-20261102.mjs
+- tools/question-quality/compare-batch1-timeouts-20261102.mjs
+- tools/question-quality/compare-level-five-journeys.mjs
+- tools/question-quality/cue-comparison-20261102.json
+- tools/question-quality/diagnose-adversarial-r4-legacy-load-20261102.mjs
+- tools/question-quality/diagnose-adversarial-r5-legacy-load-20261102.mjs
+- tools/question-quality/diagnose-adversarial-r6-l4-fairness-20261102.mjs
+- tools/question-quality/diagnose-adversarial-r6-launch-20261102.mjs
+- tools/question-quality/diagnose-adversarial-r6-legacy-load-20261102.mjs
+- tools/question-quality/diagnose-adversarial-r7-legacy-load-20261102.mjs
+- tools/question-quality/domain-additional-timeouts-isolated-20261102.log
+- tools/question-quality/domain-garden-readonly-rerun-20261029.log
+- tools/question-quality/domain-review-validation-20261029.log
+- tools/question-quality/domain-validation-20261029.log
+- tools/question-quality/draft-lint-20261102.log
+- tools/question-quality/exact-revision-records-20261102.json
+- tools/question-quality/final-domain-exit-20261102.json
+- tools/question-quality/final-quick-exits-20261102.json
+- tools/question-quality/final-validation-exits-20261102.json
+- tools/question-quality/fixtures/adversarial-before-20261102.json
+- tools/question-quality/fixtures/adversarial-extra-before-20261102.json
+- tools/question-quality/fixtures/adversarial-r3-before-20261102.json
+- tools/question-quality/fixtures/adversarial-r4-before-20261102.json
+- tools/question-quality/fixtures/adversarial-r4-domain-admission-original-tests-20261102.json
+- tools/question-quality/fixtures/adversarial-r4-domain-original-tests-20261102.json
+- tools/question-quality/fixtures/adversarial-r5-before-20261102.json
+- tools/question-quality/fixtures/adversarial-r5-domain-original-tests-20261102.json
+- tools/question-quality/fixtures/adversarial-r6-before-20261102.json
+- tools/question-quality/fixtures/adversarial-r6-late-tests-20261102.json
+- tools/question-quality/fixtures/adversarial-r7-before-20261102.json
+- tools/question-quality/fixtures/integration-before-20261029.json
+- tools/question-quality/fixtures/manager-review-before-20261029.json
+- tools/question-quality/fixtures/owner-round1-before-20261029.json
+- tools/question-quality/fixtures/pilot-before-20261028.json
+- tools/question-quality/fixtures/pilot-drafts-20261028.json
+- tools/question-quality/fixtures/round3-batch1-before-20261102.json
+- tools/question-quality/fixtures/source-before-20261028.json
+- tools/question-quality/garden-baseline-live-review-20261029.log
+- tools/question-quality/handoff-adversarial-r4-20261102.mjs
+- tools/question-quality/handoff-adversarial-r5-20261102.mjs
+- tools/question-quality/handoff-adversarial-r6-20261102.mjs
+- tools/question-quality/handoff-adversarial-r7-20261102.mjs
+- tools/question-quality/level-five-bound-inputs-20261029.json
+- tools/question-quality/level-five-garden-20261029.cpuprofile
+- tools/question-quality/lint-review-validation-20261029.log
+- tools/question-quality/lint.mjs
+- tools/question-quality/lint.test.mjs
+- tools/question-quality/owned-files-20261102.json
+- tools/question-quality/owner-round2-review.mjs
+- tools/question-quality/pilot-review-totals-20261029.log
+- tools/question-quality/pilot-review.mjs
+- tools/question-quality/player-cloud-readonly-rerun-20261029.log
+- tools/question-quality/player-review-validation-20261029.log
+- tools/question-quality/player-touched-review-validation-20261029.log
+- tools/question-quality/player-validation-20261029.log
+- tools/question-quality/question-cue-after-20261102.json
+- tools/question-quality/question-cue-before-20261102.json
+- tools/question-quality/question-cue-before-v4-20261102.json
+- tools/question-quality/question-cue-draft-20261102.json
+- tools/question-quality/question-cue-report-20261029.json
+- tools/question-quality/README.md
+- tools/question-quality/report-qa-20261102.json
+- tools/question-quality/report-qa-20261102.log
+- tools/question-quality/report-review-qa-20261029.json
+- tools/question-quality/report.mjs
+- tools/question-quality/review-adversarial-20261102.mjs
+- tools/question-quality/review-adversarial-r3-20261102.mjs
+- tools/question-quality/review-adversarial-r4-20261102.mjs
+- tools/question-quality/review-adversarial-r4-snapshots-20261102.mjs
+- tools/question-quality/review-adversarial-r5-20261102.mjs
+- tools/question-quality/review-adversarial-r5-snapshots-20261102.mjs
+- tools/question-quality/review-adversarial-r6-20261102.mjs
+- tools/question-quality/review-adversarial-r6-late-expectations-20261102.mjs
+- tools/question-quality/review-adversarial-r6-snapshots-20261102.mjs
+- tools/question-quality/review-adversarial-r7-20261102.mjs
+- tools/question-quality/review-adversarial-r7-snapshots-20261102.mjs
+- tools/question-quality/review-generation-20261102.log
+- tools/question-quality/review-round3-batch1-20261102.mjs
+- tools/question-quality/review-validation-exits-20261029.json
+- tools/question-quality/round3-batch1-author.mjs
+- tools/question-quality/round3-clinical-first-20261102.log
+- tools/question-quality/round3-clinical-second-20261102.log
+- tools/question-quality/round3-clinical-typecheck-20261102.log
+- tools/question-quality/round3-clinical-validation-20261102.log
+- tools/question-quality/round3-domain-current-flows-20261102.log
+- tools/question-quality/round3-domain-final-20261102.log
+- tools/question-quality/round3-domain-final-source-20261102.log
+- tools/question-quality/round3-domain-focused-20261102.log
+- tools/question-quality/round3-domain-validation-20261102.log
+- tools/question-quality/round3-domain-verified-20261102.log
+- tools/question-quality/round3-lint-final-20261102.log
+- tools/question-quality/round3-lint-validation-20261102.log
+- tools/question-quality/round3-player-touched-20261102.log
+- tools/question-quality/round3-typecheck-20261102.log
+- tools/question-quality/round3-typecheck-final-20261102.log
+- tools/question-quality/spatial-performance-candidate-20261029.mjs
+- tools/question-quality/typecheck-review-validation-20261029.log
+- tools/question-quality/typecheck-validation-20261029.log
+- tools/question-quality/validation-summary-20261102.json
+- tools/question-quality/verify-adversarial-20261102.mjs
+- tools/question-quality/verify-adversarial-r3-20261102.mjs
+- tools/question-quality/verify-adversarial-r4-20261102.mjs
+- tools/question-quality/verify-adversarial-r5-20261102.mjs
+- tools/question-quality/verify-adversarial-r6-20261102.mjs
+- tools/question-quality/verify-adversarial-r6-scope-20261102.mjs
+- tools/question-quality/verify-adversarial-r7-20261102.mjs
+- tools/question-quality/verify-adversarial-r7-scope-20261102.mjs
+- tools/question-quality/verify-review-20261102.mjs
+- tools/question-quality/whole-bank-lint-20261102.log
+- tools/question-quality/whole-bank-lint-final-20261102.log
+- tools/question-quality/write-adversarial-docs-20261102.mjs
+- tools/question-quality/write-adversarial-r3-docs-20261102.mjs
+- tools/question-quality/write-adversarial-r4-docs-20261102.mjs
+- tools/question-quality/write-adversarial-r5-docs-20261102.mjs
+- tools/question-quality/write-adversarial-r6-docs-20261102.mjs
+- tools/question-quality/write-adversarial-r7-docs-20261102.mjs
+
+</details>
+
+<details>
+<summary>Initial full domain: expected 26 failures, exit 1</summary>
+
+```text
+npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=1 --reporter=default --reporter=json --outputFile=C:/Users/rowla/Projects/GS-release/.local-dev/question-batch1-release-rebind13-20261103/domain-initial.json
+
+ Test Files  1 failed | 165 passed (166)
+      Tests  26 failed | 4347 passed | 1 skipped (4374)
+   Start at  19:14:23
+   Duration  1884.51s (transform 6.19s, setup 0ms, import 171.81s, tests 1696.41s, environment 10ms)
+
+JSON report written to C:/Users/rowla/Projects/GS-release/.local-dev/question-batch1-release-rebind13-20261103/domain-initial.json
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path C:\Users\rowla\Projects\GS-release\packages\game-domain
+npm error workspace @gamify-surgery/game-domain@0.0.1
+npm error location C:\Users\rowla\Projects\GS-release\packages\game-domain
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c vitest run --pool=threads --maxWorkers=1 --reporter=default 
+--reporter=json --outputFile=C:/Users/rowla/Projects/GS-release/.local-dev/question-batch1-release-rebind13-20261103/do
+main-initial.json
+
+EXIT_CODE=1
+```
+
+</details>
+
+The first full player run after rebinding had 3,302 passing tests and two failures, both layout instances of the exact displayed-score expectation 62.43. The unchanged inspectionScoreLabel formatter produces 62.48 for the verified native first score. Only that expected literal was regenerated, preserving .toBe and all rendering/category/action checks; the subsequent complete player rerun is recorded below. No timeout or player runtime failure occurred.
+
+<details>
+<summary>Full player before the displayed-score pin refresh: exit 1</summary>
+
+```text
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=C:/Users/rowla/Projects/GS-release/.local-dev/question-batch1-release-rebind13-20261103/player-final.json
+
+ Test Files  1 failed | 323 passed (324)
+      Tests  2 failed | 3302 passed (3304)
+   Start at  20:01:35
+   Duration  423.40s (transform 11.59s, setup 0ms, import 269.26s, tests 547.47s, environment 22ms)
+
+JSON report written to C:/Users/rowla/Projects/GS-release/.local-dev/question-batch1-release-rebind13-20261103/player-final.json
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path C:\Users\rowla\Projects\GS-release\apps\player
+npm error workspace @gamify-surgery/player@0.0.1
+npm error location C:\Users\rowla\Projects\GS-release\apps\player
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c vitest run --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=C:/Users/rowla/Projects/GS-release/.local-dev/question-batch1-release-rebind13-20261103/player-final.json
+```
+
+</details>
+
+<details>
+<summary>Unchanged native journey and lower helper: exit 0 each</summary>
+
+```text
+node --disable-warning=ExperimentalWarning .local-dev/question-batch1-release-rebind13-20261103/stage-generator.mjs journey
+L4 10h, 104 XP
+L4 20h, 220 XP
+L4 30h, 336 XP
+L4 40h, 460 XP
+L4 50h, 588 XP
+L4 60h, 712 XP
+L5 70h, 94 XP
+L5 80h, 220 XP
+L5 90h, 356 XP
+L5 100h, 460 XP
+L5 110h, 566 XP
+L5 120h, 660 XP
+L5 130h, 756 XP
+L5 140h, 882 XP
+L5 150h, 976 XP
+L5 160h, 1102 XP
+L5 170h, 1216 XP
+L5 180h, 1332 XP
+L5 190h, 1458 XP
+L5 200h, 1564 XP
+L5 210h, 1680 XP
+L5 220h, 1816 XP
+L5 230h, 1932 XP
+L5 240h, 2036 XP
+Inspection 1: 62.4813653779166, 54/20
+Inspection 2: 66.64761689485275, 48/20
+Inspection 3: 45.299819146370375, 52/20
+{
+  "commands": 26362,
+  "closingCashCents": 6056335,
+  "xpGoalTick": 14217,
+  "unlock": {
+    "version": "level-five-inspection-unlock.v1",
+    "earnedAtFacilityTick": 14709,
+    "clinicalXp": 2088,
+    "displayedSatisfaction": 91,
+    "averageStaffMorale": 100,
+    "employedStaffCount": 9
+  },
+  "snapshots": {
+    "integration-l4": {
+      "tick": 3704,
+      "xp": 754,
+      "phase": null
+    },
+    "integration-build": {
+      "tick": 3704,
+      "xp": 0,
+      "phase": "locked"
+    },
+    "integration-preparing": {
+      "tick": 14710,
+      "xp": 2088,
+      "phase": "preparing"
+    },
+    "integration-running": {
+      "tick": 14847,
+      "xp": 2110,
+      "phase": "running"
+    },
+    "integration-final": {
+      "tick": 17766,
+      "xp": 2644,
+      "phase": "running"
+    },
+    "integration-finish": {
+      "tick": 17767,
+      "xp": 2644,
+      "phase": "completed"
+    },
+    "integration-repeat-final": {
+      "tick": 21423,
+      "xp": 3410,
+      "phase": "running"
+    },
+    "integration-repeat": {
+      "tick": 21424,
+      "xp": 3410,
+      "phase": "completed"
+    }
+  },
+  "reports": [
+    {
+      "score": 62.4813653779166,
+      "patients": 54
+    },
+    {
+      "score": 66.64761689485275,
+      "patients": 48
+    },
+    {
+      "score": 45.299819146370375,
+      "patients": 52
+    }
+  ]
+}
+{"staging":"PASS","mode":"journey","driver":"tools/qa/level-five-integration-run.mjs","writes":29,"canonicalFilesWritten":0}
+
+node --disable-warning=ExperimentalWarning .local-dev/question-batch1-release-rebind13-20261103/stage-generator.mjs lower
+M9 lower retry checkpoint PASS: latest 45.299819146370375, best 66.64761689485275, immutable first 62.4813653779166.
+{"staging":"PASS","mode":"lower","driver":"tools/qa/level-five-integration-lower.mjs","writes":2,"canonicalFilesWritten":0}
+```
+
+</details>
+
+<details>
+<summary>Full domain: exit 0</summary>
+
+```text
+npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=1 --reporter=default --reporter=json --outputFile=C:/Users/rowla/Projects/GS-release/.local-dev/question-batch1-release-rebind13-20261103/domain-final.json
+CI=true; sandbox threads; command-local net-use EPERM preload
+
+ Test Files  166 passed (166)
+      Tests  4373 passed | 1 skipped (4374)
+   Start at  20:01:16
+   Duration  1420.65s (transform 5.24s, setup 0ms, import 127.83s, tests 1280.24s, environment 9ms)
+
+JSON report written to C:/Users/rowla/Projects/GS-release/.local-dev/question-batch1-release-rebind13-20261103/domain-final.json
+```
+
+</details>
+
+<details>
+<summary>Full player: exit 0</summary>
+
+```text
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=C:/Users/rowla/Projects/GS-release/.local-dev/question-batch1-release-rebind13-20261103/player-final-retry.json
+CI=true; sandbox threads; command-local net-use EPERM preload
+
+ Test Files  324 passed (324)
+      Tests  3304 passed (3304)
+   Start at  20:10:19
+   Duration  414.68s (transform 11.41s, setup 0ms, import 268.73s, tests 530.07s, environment 24ms)
+
+JSON report written to C:/Users/rowla/Projects/GS-release/.local-dev/question-batch1-release-rebind13-20261103/player-final-retry.json
+```
+
+</details>
+
+<details>
+<summary>Full clinical-content: exit 0</summary>
+
+```text
+npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=C:/Users/rowla/Projects/GS-release/.local-dev/question-batch1-release-rebind13-20261103/clinical-final.json
+CI=true; sandbox threads; command-local net-use EPERM preload
+
+ Test Files  97 passed (97)
+      Tests  764 passed (764)
+   Start at  20:02:19
+   Duration  40.88s (transform 3.94s, setup 0ms, import 63.13s, tests 8.12s, environment 9ms)
+
+JSON report written to C:/Users/rowla/Projects/GS-release/.local-dev/question-batch1-release-rebind13-20261103/clinical-final.json
+```
+
+</details>
+
+<details>
+<summary>Seven workspace typechecks: exit 0</summary>
+
+```text
+npm.cmd run typecheck
+
+
+> gamify-surgery@0.0.1 typecheck
+> npm run typecheck --workspaces --if-present
+
+
+> @gamify-surgery/clinical-context-workbench@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.client.json && tsc --noEmit -p tsconfig.server.json
+
+
+> @gamify-surgery/player@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/balance-config@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-authoring@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-content@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-research@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/game-domain@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+```
+
+</details>
+
+<details>
+<summary>Lint tests: exit 0</summary>
+
+```text
+npm.cmd run clinical:lint:test
+
+
+> gamify-surgery@0.0.1 clinical:lint:test
+> node --test --test-isolation=none tools/question-quality/lint.test.mjs
+
+✔ reports key-only phrases and exact reconstructable spans (10.4451ms)
+✔ detects length and qualifier disparity without requiring a long key (0.4681ms)
+✔ reports abbreviation, named-test aliases, explanatory clauses and absolutes (0.6167ms)
+✔ compares abbreviation tokens consistently and does not invent a B-cell abbreviation (0.3748ms)
+✔ heterogeneous categories and subtotal scope are advisory (0.4015ms)
+✔ convergence and near duplicate report the competing option evidence (0.6279ms)
+✔ diagnosis disclosure is conditional on task and metadata (0.4163ms)
+✔ negative match requires exactly one distractor and stops at contrast (0.3823ms)
+✔ three and four balanced options both accepted; malformed keys rejected (0.3847ms)
+✔ visible history includes prior feedback but excludes future/current feedback (0.2043ms)
+✔ census deduplicates variant identity while preserving cases and profile-specific cues (1.0727ms)
+✔ legacy approval metadata applies only to explicitly named old identities (0.1044ms)
+✔ flags the reviewed A17 principle cue without pretending its rationale match is key-exclusive (3.1784ms)
+✔ reports an alias-matched principle only when every explicit rationale is available and the key is unique (0.3171ms)
+✔ reviews named comparison principles without banning ordinary timing or leaking rationale words into context (0.669ms)
+✔ uses explicit authoring rationale metadata and refuses missing or conflicting key reasons (0.5762ms)
+✔ flags the owner's actual round-one preference, availability and mechanism cues outside the task (7.2132ms)
+✔ rationale overlap requires complete explicit reasons and reports separate exact metadata spans (0.4783ms)
+✔ retains raw observations without inventing semantic paraphrase detection or treating prior feedback as a new case detail (0.1582ms)
+✔ flags an explicit cross-field ulcer-site conflict and returns exact spans (0.3409ms)
+✔ flags repeated complete case findings but excludes legitimate returned-result history (0.2206ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 44.7664
+```
+
+</details>
+
+The advisory lint census reproduces 1,798 findings (21 linter tests pass); it does not confer clinical approval. Complete commands, numeric deltas, all checkpoint/report hashes, approval/frozen projections, legacy changed paths and file lists are in [the release rebind audit](../research/question-batch1-release-rebind13-20261103.json). Exact unabridged validation/native logs, backups, staged payloads and guarded scripts are under .local-dev/question-batch1-release-rebind13-20261103/. The binding guard SHA-256 is unchanged: 812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909. No Git command, install, network, browser, owner save, cloud/Supabase/backup lane, character implementation, main-tree write or external publication occurred. The manager owns acceptance, global handoff integration and the GitHub checkpoint reminder.
+
+Ignored native progress artifact .local-dev/level5-m9/progress-state.json was synchronized with the exact complete-run bytes (46e9fe9eedda21141327875839fbe96c57f34da166670a59ecf7bf95aa6b7cd9 -> da679ed3caf937b4039c0effc3ef6082eca0ee506d9ffac04c4c7d4ffb410257); the prior native progress file is backed up under the private rebind directory. This keeps the established lower-helper input consistent with the regenerated canonical results and checkpoints.

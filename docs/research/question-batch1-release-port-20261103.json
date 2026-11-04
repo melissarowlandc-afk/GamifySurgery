@@ -1,0 +1,3106 @@
+{
+  "version": "question-batch1-release-port.v1",
+  "portedOn": "2026-11-03",
+  "releaseRoot": "C:/Users/rowla/Projects/GS-release",
+  "releaseBaseline": "5a688e2774851bc1f8d118bd4ecf816a43ee38d9",
+  "sourceReadOnly": "C:/Users/rowla/Projects/GamifySurgery",
+  "sourceScope": "Question batch 1 through round seven plus APP assertion scoping; captured source bytes, no clinical authoring",
+  "acceptedReview": {
+    "path": "docs/research/question-batch1-adversarial-review7-20261102.json",
+    "sha256": "e7ec82cfb216ee71986918209e39754173044b1349f916e839f781ac8036b4c9",
+    "pass": 68,
+    "revise": 5,
+    "fail": 0,
+    "ownerReviewDrafts": [
+      "B05-context",
+      "B07-context",
+      "B08-context",
+      "B12-context",
+      "B36"
+    ]
+  },
+  "count": 513,
+  "newFiles": 468,
+  "changedExisting": 45,
+  "sourceBytesPreserved": true,
+  "files": [
+    {
+      "path": "apps/player/src/session/briefEarlyLevelsPresentation.test.ts",
+      "oldSha256": "ec9c2c6f869bd641c359238e3bd49f86b0c4fac5b212de044d8c84d12be4ad26",
+      "newSha256": "97344e3a4b8db3d79d488f66486f02f6663fa610d8e1dcb5a5171ee1d78e12ac",
+      "bytes": 3805
+    },
+    {
+      "path": "apps/player/src/session/earlyLevelsPresentation.test.ts",
+      "oldSha256": "1499c953b76e2a3adbf2f641ccc467df47c43bfe48962b6ef0a8a5ccaff70f6f",
+      "newSha256": "72201ab768b12b406796cd99bb45bcbdfe762542c1c0b4bf9206892ffc3ca0f4",
+      "bytes": 3940
+    },
+    {
+      "path": "apps/player/src/session/pediatricChartsViewModels.test.ts",
+      "oldSha256": "7e1a62d8af326beda73d95d1d53a1b52c70600bafb187e4957d67694398ec4d2",
+      "newSha256": "4d4d2d6ebf1b7babc74e6a8cf88d863193abeb92741dccc6f1489d9175ad0ee7",
+      "bytes": 4634
+    },
+    {
+      "path": "apps/player/src/session/variety3ChartsViewModels.test.ts",
+      "oldSha256": "8ac606603ca7b8d181e46f30b7d44788b3bcc9e4468e17ae370ff25d5c66b004",
+      "newSha256": "e96f1943c2d458068ed0353c19ace02802ff666c6f38823ad6975dcb6d606b50",
+      "bytes": 3087
+    },
+    {
+      "path": "clinical-data/templates/README.md",
+      "oldSha256": null,
+      "newSha256": "f14e75e9954816d1218993a5f9c5fa190109f06d3e4ef4ff35cc28d1e11be1d9",
+      "bytes": 523
+    },
+    {
+      "path": "docs/clinical-workbench/PILOT_FIELD_GUIDE.md",
+      "oldSha256": "fd01065e721a5a35a2a901f4f006cd034436eb5478a9fe0c4532e4dab665abf0",
+      "newSha256": "241b9acada4c9d6eb38fa8649617390aa1ddaa730f31d22abfccf356c4b0d3de",
+      "bytes": 12014
+    },
+    {
+      "path": "docs/clinical-workbench/README.md",
+      "oldSha256": "ed28345581e3e4b13b14fe61d0fee7893e8bdb4aeb8e3be08092e218098b4828",
+      "newSha256": "ceec068babea4132c75ccbb752cd972cfadc8cb988d9176f1c8eeee1d716b37d",
+      "bytes": 10148
+    },
+    {
+      "path": "docs/clinical/question-authoring-standard.md",
+      "oldSha256": null,
+      "newSha256": "4362d0c0b9578a1f9e7229790ce34d0b6e28d65cb89d34349ccbb14abb6962d8",
+      "bytes": 34015
+    },
+    {
+      "path": "docs/execplans/app-arrival-selector-20261103.md",
+      "oldSha256": null,
+      "newSha256": "5b17cf3ee208dfe39ab9efccf2b218fc63e3f626ba7dfd6e1962bb8bf165d6c6",
+      "bytes": 15873
+    },
+    {
+      "path": "docs/execplans/question-bank-rewrite-20261102.md",
+      "oldSha256": null,
+      "newSha256": "a4f7b1f2c57d9254be143d13b07bacaf044b84e039dde0d9c3bfb26faa507519",
+      "bytes": 10727
+    },
+    {
+      "path": "docs/execplans/question-batch1-adversarial-fixes-20261102.md",
+      "oldSha256": null,
+      "newSha256": "809d3212d9625be6e244dd099f6164225683d6e8a76abe254fe107597343f73a",
+      "bytes": 5434
+    },
+    {
+      "path": "docs/execplans/question-batch1-adversarial-round3-20261102.md",
+      "oldSha256": null,
+      "newSha256": "38f98f20b7bc15d1ce2caab842f61f14c800f25740387eea1e8c7e3388babe72",
+      "bytes": 5014
+    },
+    {
+      "path": "docs/execplans/question-batch1-adversarial-round4-20261102.md",
+      "oldSha256": null,
+      "newSha256": "e405cdd06e217947ae683708229620c97014814ef5538a6777a4080025345af4",
+      "bytes": 6074
+    },
+    {
+      "path": "docs/execplans/question-batch1-adversarial-round5-20261102.md",
+      "oldSha256": null,
+      "newSha256": "49375b3a443b720c7ef8a1890b51ea1f4d42ac10a65cc34ea69bda996cf1d16d",
+      "bytes": 6432
+    },
+    {
+      "path": "docs/execplans/question-batch1-adversarial-round6-20261102.md",
+      "oldSha256": null,
+      "newSha256": "e20f02a184436ba360a2c77074b6db3ce78cc49f25d0d63775b168c2155eabc0",
+      "bytes": 7198
+    },
+    {
+      "path": "docs/execplans/question-batch1-adversarial-round7-20261102.md",
+      "oldSha256": null,
+      "newSha256": "17d13c3ec66a0e27860efab0e1321e0cde7e9cc09ecae1124181538241eac5a0",
+      "bytes": 7086
+    },
+    {
+      "path": "docs/execplans/question-quality-phase1-20261028.md",
+      "oldSha256": null,
+      "newSha256": "0bda550a0503007fa5baf4e02f38c6e200d3abba4ee5a4db9b2e3afa14f9e22c",
+      "bytes": 12682
+    },
+    {
+      "path": "docs/execplans/question-round3-batch1-20261102.md",
+      "oldSha256": null,
+      "newSha256": "e50fe67ce760536e91c9d1e1cb54075347cbd56fbe8116198e836fb9caa128ef",
+      "bytes": 7474
+    },
+    {
+      "path": "docs/handoffs/app-arrival-selector-20261103.md",
+      "oldSha256": null,
+      "newSha256": "5bd0e13b8d6042d5361b2d83c899e3dedd0f369ac09cde6074b86493b065e350",
+      "bytes": 13818
+    },
+    {
+      "path": "docs/research/question-adversarial-response-20261102.md",
+      "oldSha256": null,
+      "newSha256": "6f88c6be92b0de240ddc2896289388800a43f1c1621be34cf5acdbc70a3abb9c",
+      "bytes": 37475
+    },
+    {
+      "path": "docs/research/question-adversarial-round3-response-20261102.md",
+      "oldSha256": null,
+      "newSha256": "a2b3759c735ad06464ae2f0940d2865a2d9e8a1df4d71fe0e404609cef31190f",
+      "bytes": 44928
+    },
+    {
+      "path": "docs/research/question-adversarial-round4-response-20261102.md",
+      "oldSha256": null,
+      "newSha256": "349a79db04aa8779c9e77c36b9f213820c49e7f5ab2a38986471bacb98b79a6c",
+      "bytes": 60331
+    },
+    {
+      "path": "docs/research/question-adversarial-round5-response-20261102.md",
+      "oldSha256": null,
+      "newSha256": "e58085f50d3e2557c57f691b77b0fa2a4a299244bd7599cbd6e611123910478f",
+      "bytes": 65764
+    },
+    {
+      "path": "docs/research/question-adversarial-round6-response-20261102.md",
+      "oldSha256": null,
+      "newSha256": "fc7f118b89020e1f713ae2a4e19e30d910b12ce0f1d8b79c192e8d2eb0195243",
+      "bytes": 47047
+    },
+    {
+      "path": "docs/research/question-adversarial-round7-response-20261102.md",
+      "oldSha256": null,
+      "newSha256": "fd644c8644179e0f88bce0e5f3dc4f27d0ba551bc71192222cf39b1b7190f116",
+      "bytes": 73067
+    },
+    {
+      "path": "docs/research/question-batch1-20261102.json",
+      "oldSha256": null,
+      "newSha256": "d1ce138dc8379ff8b5ce55ab56bfb29a42a5b50b72a2a93c0e08e48d4405c169",
+      "bytes": 2050424
+    },
+    {
+      "path": "docs/research/question-batch1-adversarial-handoff-20261102.md",
+      "oldSha256": null,
+      "newSha256": "951ed712542f01593b3742ba7384b616e0cf05ff8e002ed59872fefb85b9815a",
+      "bytes": 14817
+    },
+    {
+      "path": "docs/research/question-batch1-adversarial-review-20261102.json",
+      "oldSha256": null,
+      "newSha256": "fcfa3213d978d2c933e5ec2cafd324159cc3eb1ea6e7036d94d55365ef652a5a",
+      "bytes": 122740
+    },
+    {
+      "path": "docs/research/question-batch1-adversarial-review2-20261102.json",
+      "oldSha256": null,
+      "newSha256": "aa82032ec2f8e86e042790ec8d6eb0e4026dc99a84f2a76cb633c53f2f8a1893",
+      "bytes": 168640
+    },
+    {
+      "path": "docs/research/question-batch1-adversarial-review3-20261102.json",
+      "oldSha256": null,
+      "newSha256": "628181fa832a93a7ecf3a0c2a0d05afcab247603913db247893962881814994b",
+      "bytes": 103892
+    },
+    {
+      "path": "docs/research/question-batch1-adversarial-review4-20261102.json",
+      "oldSha256": null,
+      "newSha256": "221e52c2af61dc85a533a5250c2a51068e742c577cafa7628a0a5905006d636b",
+      "bytes": 91547
+    },
+    {
+      "path": "docs/research/question-batch1-adversarial-review5-20261102.json",
+      "oldSha256": null,
+      "newSha256": "397ab30889308025771b0a6ec898a77b5be665a81cb8f52f76a445ce5dfa8f93",
+      "bytes": 88645
+    },
+    {
+      "path": "docs/research/question-batch1-adversarial-review6-20261102.json",
+      "oldSha256": null,
+      "newSha256": "ba505dc3875bf4e389f9ce07b8a1f646346bd1d8cc2eacc30cc5a49cb16f3940",
+      "bytes": 98436
+    },
+    {
+      "path": "docs/research/question-batch1-adversarial-review7-20261102.json",
+      "oldSha256": null,
+      "newSha256": "e7ec82cfb216ee71986918209e39754173044b1349f916e839f781ac8036b4c9",
+      "bytes": 109467
+    },
+    {
+      "path": "docs/research/question-batch1-adversarial-round3-handoff-20261102.md",
+      "oldSha256": null,
+      "newSha256": "9f667d602b371c542c0226c79e1e31c22f99c788b8cf3df659024c01483df94d",
+      "bytes": 15777
+    },
+    {
+      "path": "docs/research/question-batch1-adversarial-round4-handoff-20261102.md",
+      "oldSha256": null,
+      "newSha256": "efaf48d4f6bf684d7d0cfa4eeda8826e1a3fff963d4ce18266697f4122dc8f27",
+      "bytes": 22877
+    },
+    {
+      "path": "docs/research/question-batch1-adversarial-round5-handoff-20261102.md",
+      "oldSha256": null,
+      "newSha256": "7d17fb50793e98cf12eef9c3e47c68746e67abb2e1fdff5f92de606c1711551b",
+      "bytes": 21332
+    },
+    {
+      "path": "docs/research/question-batch1-adversarial-round6-handoff-20261102.md",
+      "oldSha256": null,
+      "newSha256": "444d8cfd2f896864e21f5c02aa2f4382905f93b17db790e475b2133a7c760108",
+      "bytes": 32870
+    },
+    {
+      "path": "docs/research/question-batch1-adversarial-round7-handoff-20261102.md",
+      "oldSha256": null,
+      "newSha256": "240a14435960bc4008f3e361385eb2fbd3459822f0c47f01f79d1ebfc32f4e5e",
+      "bytes": 27897
+    },
+    {
+      "path": "docs/research/question-batch1-round7-fallbacks-20261102.json",
+      "oldSha256": null,
+      "newSha256": "2d9a9e9a26f3673c0f67f53541bf45390829e6d3e0ae6c04645fa21fd583eaef",
+      "bytes": 157697
+    },
+    {
+      "path": "docs/research/question-cue-audit-20261028.md",
+      "oldSha256": null,
+      "newSha256": "9099b11ee09cccdf8a4ddaab8f7d697a1b756d2bd4b66634185d3d776075966c",
+      "bytes": 27390
+    },
+    {
+      "path": "docs/research/question-inventory-20261028.md",
+      "oldSha256": null,
+      "newSha256": "5586ed610a2f8a4c43bd2173fdade63db7aa5e33147e7684774cb53f284aca61",
+      "bytes": 621362
+    },
+    {
+      "path": "docs/research/question-pilot-review-20261028.md",
+      "oldSha256": null,
+      "newSha256": "53e39e81524bf98d5faa335ceea29aa664b3ddb2dcaac3b5a3639eda09f5413e",
+      "bytes": 89440
+    },
+    {
+      "path": "docs/research/question-pilot-round2-20261029.json",
+      "oldSha256": null,
+      "newSha256": "a5fcb8a4c91612eb917dbbc5b8da1be66161d0aa6c06f7b884d6962c250cb61d",
+      "bytes": 28297
+    },
+    {
+      "path": "docs/research/question-pilot-round2-handoff-20261029.md",
+      "oldSha256": null,
+      "newSha256": "d9bae7c555b7802897247b03792621ccf3ac5c1d7987c7a5fbcbcef8c390e368",
+      "bytes": 17891
+    },
+    {
+      "path": "docs/research/question-quality-phase1-handoff-20261028.md",
+      "oldSha256": null,
+      "newSha256": "6caf71a8e85c62b73c6470307424900e526cb41f954ccee6cb6c20ac88015dfe",
+      "bytes": 28323
+    },
+    {
+      "path": "docs/research/question-rewrite-batch1-proposal-20261029.json",
+      "oldSha256": null,
+      "newSha256": "9b42c35d6e51140dca8297acddd86bb4e8d2116998b5a57e90c5e0b55e34a57b",
+      "bytes": 99013
+    },
+    {
+      "path": "docs/research/question-rewrite-batch1-proposal-20261029.md",
+      "oldSha256": null,
+      "newSha256": "d11f5ff6ae45673cf6807531dd2977a6f7b15990329930f5f32b083c584f5584",
+      "bytes": 30616
+    },
+    {
+      "path": "docs/research/question-round3-20261102.json",
+      "oldSha256": null,
+      "newSha256": "4e8dd237b41d254d14d8bf57a6441b57240f72f449c07a2ef790a11003e99edf",
+      "bytes": 166169
+    },
+    {
+      "path": "docs/research/question-round3-batch1-handoff-20261102.md",
+      "oldSha256": null,
+      "newSha256": "9e99fe8d5f8dcbf527304a1706d7189366430815fd3f1bc334f708bf6f4128c8",
+      "bytes": 29080
+    },
+    {
+      "path": "docs/research/question-writing-strategy-20261028.md",
+      "oldSha256": null,
+      "newSha256": "46cb01d466abc15dbe975bc190a75c70c4068a097e374ec6fef20f8573739dfa",
+      "bytes": 39113
+    },
+    {
+      "path": "docs/research/sources-question-adversarial-20261102.md",
+      "oldSha256": null,
+      "newSha256": "99618021d6060874e6f391f5e1314a70d976e0ea0b9b10c71c20a9efc0e7cf80",
+      "bytes": 78975
+    },
+    {
+      "path": "docs/research/sources-question-adversarial-r3-20261102.md",
+      "oldSha256": null,
+      "newSha256": "6c24e936eab7ee13cdaf88c2ffa0296594de4a9717eb4020aa1a698447b9c115",
+      "bytes": 38526
+    },
+    {
+      "path": "docs/research/sources-question-adversarial-r4-20261102.md",
+      "oldSha256": null,
+      "newSha256": "743c49ba5309807b5e4a856c201e7ea90f1c5425f1187e4561301777c8911040",
+      "bytes": 57816
+    },
+    {
+      "path": "docs/research/sources-question-adversarial-r5-20261102.md",
+      "oldSha256": null,
+      "newSha256": "94a982c667a7337aca6172f618d38cce5f0510c99e12c1fc2cc9e76b15ec0706",
+      "bytes": 143531
+    },
+    {
+      "path": "docs/research/sources-question-adversarial-r6-20261102.md",
+      "oldSha256": null,
+      "newSha256": "27d548805a5f8f9579eda5996c92f001396db4857fcdbf148d85d1efb8b4187b",
+      "bytes": 100618
+    },
+    {
+      "path": "docs/research/sources-question-adversarial-r7-20261102.md",
+      "oldSha256": null,
+      "newSha256": "430328462bc18a0a471a012380af2560f762db966b472c358f68b476f2072f78",
+      "bytes": 95549
+    },
+    {
+      "path": "docs/research/sources-question-round3-batch1-20261102.md",
+      "oldSha256": null,
+      "newSha256": "d859d68e7507f2ea4a96eb1cd46c929750c61dcdb22f136ce4c13dd2813cf996",
+      "bytes": 25878
+    },
+    {
+      "path": "docs/research/sources-question-writing-20261028.md",
+      "oldSha256": null,
+      "newSha256": "bc23255ea8f8d88fc176c6ce8f218499b910700b28f22f6954abb11199f3b85d",
+      "bytes": 88226
+    },
+    {
+      "path": "package.json",
+      "oldSha256": "194978d6c1c6e0f4cb385db704a38107b727ea5e364b964529d8ec114e0b3a53",
+      "newSha256": "f353fc582d484286bcf05ad216d9f0ebf49fa68137a5a6451fbb8f5145eda456",
+      "bytes": 3177
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+      "oldSha256": "193c9ad9aab9ed3e8f98be7a37f5443e2cfdc7fac1e42bb159685b99861f7131",
+      "newSha256": "ec810470e79d80b757ee86ab41d517e798b2f3c153fe24961bdf4661caf3e685",
+      "bytes": 3269
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "oldSha256": "ad821c697ca2c8f6553ea03affd0cb868db65b56418c29e1c000307e771358eb",
+      "newSha256": "7db1b1253c7d3064adb0602360925c0739bb65c719603507c3fa09a6732ba245",
+      "bytes": 188822
+    },
+    {
+      "path": "packages/clinical-content/src/approved-data/colonic-lipoma.test.ts",
+      "oldSha256": "e1b82e6d11375b6b88c2197cb19b1edadf1de6f249fb1197173e2c1dfbe71067",
+      "newSha256": "b0948fd1e1d3663dd9760f1b81eb330e00600fc2582d27868150ffc4f93fa81d",
+      "bytes": 8955
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-09-11/board-expansion-admission.test.ts",
+      "oldSha256": "cda4c760bdcb4bd39659c2e520a0764735fa9c3b9822825a8db6268c6692d7ab",
+      "newSha256": "aa2500aab7ad265ff5f23b8d96c914c584d9ccb04318b177893880a5e3606c20",
+      "bytes": 7143
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-09-12/board-expansion-admission.test.ts",
+      "oldSha256": "a898c4020c5b79c4ffa0ad2e0c74eca73d819dea9330b3f64b7a6a435e39f35c",
+      "newSha256": "aab767f90df3ad221dd50173727985136a23cfa97b99f3edd60b654f1b1be5bf",
+      "bytes": 7712
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-09-13/early-levels-admission.test.ts",
+      "oldSha256": "526301ad020721245901594c383620ae64eba7f82651c2c875b6351cc67b7b6b",
+      "newSha256": "61a3637c891728cb7d58b4fa69f39d67b26947f81e22dbc613883785320016c7",
+      "bytes": 6809
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-09-17-bread-and-butter/bread-butter-admission.test.ts",
+      "oldSha256": "331df8451eba045564b93f639186e64b69747ca0fec8c52ad6a61940f1c1ff7d",
+      "newSha256": "a44baf048a1363c74ac29aac9c33347145e07d461f14b3417b1d761de9d9da61",
+      "bytes": 7291
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-09-17/brief-early-levels-admission.test.ts",
+      "oldSha256": "438ab36b40d4b97f2cdeede4a9aa299ff4a33228dcbab9f53b35263a5312f1f7",
+      "newSha256": "7911616cd8f5cbfb47972469ff146bfb0fec182c56bdd5b3f59bfea1b4762e47",
+      "bytes": 5644
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-10-07-level3/level3-content.test.ts",
+      "oldSha256": "4bf87d739c708ef283944b7e69405d4d3aadeca56335790ad1d51032f4aae3c0",
+      "newSha256": "e7e395d9ff08a8423a48df1df62d4825878674dd97d2c1e377d68236dde25b4a",
+      "bytes": 8766
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-10-07-variety-2/variety-admission.test.ts",
+      "oldSha256": "d68f10059ed8550057fc9ffb63dac14ca79a4a0f7e3d3327e7769f67e679e6f7",
+      "newSha256": "e130aff2108b0037ffdd4f0ce6adb2c726492e4133e905573ab376c0d4b76f65",
+      "bytes": 3992
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-10-07-variety/variety-admission.test.ts",
+      "oldSha256": "bfcfe1589cb75ba17ce7ee4339a8e50de16283d73ddb89ad373a7012afa5d35e",
+      "newSha256": "e9241cde82a02602b601b9bf9e26dedc8717a7f807ad88aec09424acfb210837",
+      "bytes": 6209
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-10-08-pediatric-clinic/pediatric-admission.test.ts",
+      "oldSha256": "c0f2fcf0cd375036d556a4c8f545f5556a6a470d87b1605f2e4f23c2fad62d3d",
+      "newSha256": "7883a1cfa33256a17e76289d0b16d9d4997ef3f3d848819f980783235de11c67",
+      "bytes": 18183
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-10-10-variety-3/batch-content.test.ts",
+      "oldSha256": "dd9544310c8634b330eddea0835f729dd48a69604f24add03e2e40250711fd2a",
+      "newSha256": "194ea628d97449ab1f6eedfbef00e30c33283132fb56a78680baa7939634fa03",
+      "bytes": 16609
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-10-10-variety-3/variety3-admission.test.ts",
+      "oldSha256": "b3545e30c21dddde3b1b712f7d3cb1e0517a322db8c717603a6c9df5e2589263",
+      "newSha256": "b0da041dbb33d72c9b4e2a56126a8f23310578da2519a8227766d1d71858569f",
+      "bytes": 5176
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "oldSha256": "dbb342121a1e49279c8977f2fcdb1106a9b4a228894fbc54b2b2cd27546a5223",
+      "newSha256": "a57ffcec34d75e2e337790f1ac0d71e4bfdc8f79d53cdb28596e00ead60413e4",
+      "bytes": 4718
+    },
+    {
+      "path": "packages/clinical-content/src/patient-library-wording-repair.test.ts",
+      "oldSha256": "e5ef077050cfa703295671e59c3a21045ff3b2f9960490fadb07d9d6284c6d9d",
+      "newSha256": "55cd605baf24572db21d4556afd9208eac9360e395a906cf248e84c49ad83475",
+      "bytes": 8232
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-20261102-data.ts",
+      "oldSha256": null,
+      "newSha256": "04abd031b224ea0eff55626cc983443493549517057e3a93760bcb40d1c6ab17",
+      "bytes": 815924
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-20261102.ts",
+      "oldSha256": null,
+      "newSha256": "7da11630a357e1ed7c36c4579aa99d46e6cd14d5a5f014a8dcb9ec63df2c7a2d",
+      "bytes": 2692
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-evidence-20261102.ts",
+      "oldSha256": null,
+      "newSha256": "a2488c689ed8e2e4859487b59064d156c37fa8cdd345a39eab039b9ce3216b05",
+      "bytes": 101325
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r3-20261102-data.ts",
+      "oldSha256": null,
+      "newSha256": "c39f1bb565dba8eb5cbb32dbe0fc9dcad3c27beeb49c3af782fe2c90ccbf1b00",
+      "bytes": 640322
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r3-20261102.ts",
+      "oldSha256": null,
+      "newSha256": "6f2251f33b190470131c683cf6e565fd0b13f2b104574b2e753dacc4de3ec4be",
+      "bytes": 998
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r3-evidence-20261102.ts",
+      "oldSha256": null,
+      "newSha256": "3ce79432a9bc392eabdac641d54e7da0d5c37dc716ff0ef57a36f2972ef1689a",
+      "bytes": 52530
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r3.test.ts",
+      "oldSha256": null,
+      "newSha256": "b70e09c06482958ed616dc260e3f21f28e658b7dcf1b2c816f72ac0c011ef49c",
+      "bytes": 7487
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r4-20261102-data.ts",
+      "oldSha256": null,
+      "newSha256": "d80fb06aee3e2e540114c1a065e988e3e303ff2ac86c3718f2b10c1a2b942574",
+      "bytes": 614607
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r4-20261102.ts",
+      "oldSha256": null,
+      "newSha256": "6ae2cfd4932c20ee946d545da7370983c21c1484f28c882d02b03989bbbc2969",
+      "bytes": 3778
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r4-evidence-20261102.ts",
+      "oldSha256": null,
+      "newSha256": "15dea8b054de92f116687b76c84090e49247aa4c15d7b79abe2a553d5724b2df",
+      "bytes": 81780
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r4.test.ts",
+      "oldSha256": null,
+      "newSha256": "85159e36d204de6395226b3405f7eee193db5275f1f474cce619b0929b6cdee8",
+      "bytes": 9227
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r5-20261102-data.ts",
+      "oldSha256": null,
+      "newSha256": "077ce04e45f26182367101dfa8e412dc91344731c6b8a720c6b28fc41789f984",
+      "bytes": 246157
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r5-20261102.ts",
+      "oldSha256": null,
+      "newSha256": "025c33fc3ab8a24178179c5757c67279d4bea4c664dc26ac7313682f610c6d5b",
+      "bytes": 3782
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r5-evidence-20261102.ts",
+      "oldSha256": null,
+      "newSha256": "4ad644d08c5a6440d49598aa84c60393f6ab543583784d9ecbe22708fed2d142",
+      "bytes": 14466
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r5.test.ts",
+      "oldSha256": null,
+      "newSha256": "6f42aa5b3b51eae99815a8f64d3a6a809c5ede23d1b1a4283916f3a87956c125",
+      "bytes": 8772
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r6-20261102-data.ts",
+      "oldSha256": null,
+      "newSha256": "32061f2ee39840a2d34e3b81606602dc46be78f78dbef814af69bfb08728c2d3",
+      "bytes": 170106
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r6-20261102.ts",
+      "oldSha256": null,
+      "newSha256": "dab740ca3574fe26d5786034de8d018325e628efeb475f1e66be87e49bfcd3f2",
+      "bytes": 3782
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r6-evidence-20261102.ts",
+      "oldSha256": null,
+      "newSha256": "32d8395638b73c74d42d26c5e7fb2aa6a306001501776cb23854b424d910172b",
+      "bytes": 11942
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r6.test.ts",
+      "oldSha256": null,
+      "newSha256": "11c83b7a9a1a4654cab6a9956a653310d8dd3949dd4149272b6d7e2971fe333b",
+      "bytes": 8266
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r7-20261102-data.ts",
+      "oldSha256": null,
+      "newSha256": "2b426b840a97cc1ceb3ae9cdff920cee228c3deffc8e30432b294441c8d9cf03",
+      "bytes": 129297
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r7-20261102.ts",
+      "oldSha256": null,
+      "newSha256": "387cc1ee2d92839c9a3f3c787ab2a8f427d0e0b3bf8264fb3e5aa048ba056582",
+      "bytes": 3782
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r7-evidence-20261102.ts",
+      "oldSha256": null,
+      "newSha256": "c754c13b071f08a53518623ede17765f21d6e9eaeb612d14b7d9d60ba3862d4d",
+      "bytes": 9786
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r7.test.ts",
+      "oldSha256": null,
+      "newSha256": "4536d865b92a3f213a10b0a068da0d448e988446508ac4ece706bf26886455aa",
+      "bytes": 8618
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial.test.ts",
+      "oldSha256": null,
+      "newSha256": "8a06cbfd757c97dc3d9b29044864404fd907e14db43ddc189eb8e2e52c8b88ea",
+      "bytes": 10863
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-batch1-20261102-data.ts",
+      "oldSha256": null,
+      "newSha256": "5b49c457b95974d55858476c148ec23d5c37a88ba39d430fe67b48eb33547c85",
+      "bytes": 353231
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-batch1-20261102.ts",
+      "oldSha256": null,
+      "newSha256": "1aac74fec55e37bdd1463eb88e111590953bcd69e53467efc7c867d4f8d37928",
+      "bytes": 858
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-batch1.test.ts",
+      "oldSha256": null,
+      "newSha256": "bd5f93b8621463e4162337db99fc5e698e2ef1001e9d8964273fcf884a801fe1",
+      "bytes": 12417
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-clinical-approvals-20261102.ts",
+      "oldSha256": null,
+      "newSha256": "13702a09fec2af7580a2f7194285244bdd89b322ffcd098b875e099c903ca045",
+      "bytes": 4360
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-pilot-20261028-data.ts",
+      "oldSha256": null,
+      "newSha256": "9424e4ebb86c1d89bbbc88138b3938dbe102651ccce56ebe92abf679bea54f18",
+      "bytes": 117083
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-pilot-20261028-r2.ts",
+      "oldSha256": null,
+      "newSha256": "539f5cc86cb4e24fc2923bff7f8929c7a456918c4c66d003eae76cc1519153ea",
+      "bytes": 94758
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-pilot-20261028.ts",
+      "oldSha256": null,
+      "newSha256": "eeab1985ffa0fdcd145e0035716d216924af8372c1cdaa982dfcea77dc41219f",
+      "bytes": 16556
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-pilot-20261029-round1.ts",
+      "oldSha256": null,
+      "newSha256": "6b2dc53219de4bc4a016da65a2bb3b49e797d2fc8808215761c557f4e7997c46",
+      "bytes": 105128
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-pilot-20261102-round2.ts",
+      "oldSha256": null,
+      "newSha256": "784474a2b93ad8cca728a39bc4745d16b6ad510ac198fbdec2a65e76b2912335",
+      "bytes": 115036
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-pilot-evidence-20261028.ts",
+      "oldSha256": null,
+      "newSha256": "3197bf248b802fa129feafcb81a83bc1921a2504d3948fc37ab532405aaad2dd",
+      "bytes": 12404
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-pilot-round2-evidence-20261029.ts",
+      "oldSha256": null,
+      "newSha256": "03ca239ab0e79f8bc1613e0114199a46a4724912e0b480b2eee1384fa2c2425d",
+      "bytes": 10320
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-pilot.test.ts",
+      "oldSha256": null,
+      "newSha256": "a14030961abd83d3ebc0867328c76c7858715e7e6a5bc647be7d343164fd25c6",
+      "bytes": 15124
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-review.test.helpers.ts",
+      "oldSha256": null,
+      "newSha256": "6dfc800c5868ccc553d6503dc4ae6ec2116435e9f83f15198c10c10d9b33e4e3",
+      "bytes": 1301
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-round3-batch1-evidence-20261102.ts",
+      "oldSha256": null,
+      "newSha256": "d824533bf4b7d6ebea37d08d9780da5fa8009c7081fc9379bcb2d585b72f521b",
+      "bytes": 15220
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "oldSha256": "09d9797f7c659d6f3e7bd4ac5e0f4b72d79fff83f2bc64ed3ccf996ae7f2bc16",
+      "newSha256": "6d9870d53383af7da6ee7547ba702410a2545882876faa1696c0e1217fae311c",
+      "bytes": 59515
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "oldSha256": "c7ddaea75d35c7f8da695d1c9e2f9a84027530563a61d8b227d3bd45a9338b00",
+      "newSha256": "522c3fbd3b3503f4b6d74f38e7dbd994b98727a3037b0374f86e58dbf5a41639",
+      "bytes": 71410
+    },
+    {
+      "path": "packages/game-domain/tests/answer-choice-timing.test.ts",
+      "oldSha256": "ae5c5462eec374e714dd508e16007b7a03e85df057872c2c033d547ccd6b2960",
+      "newSha256": "fdc5661fb5201eb02386314affb7789d77a69e1987c1e9aa69e3be815c249deb",
+      "bytes": 10602
+    },
+    {
+      "path": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+      "oldSha256": "3ec439977b7e31b67c90ba83d8e92846629668669f9d76203597ba066ab9f5dd",
+      "newSha256": "074e903b80fdae7c539205b0d4218e02043699848a28d4173d5358c7d26748af",
+      "bytes": 15468
+    },
+    {
+      "path": "packages/game-domain/tests/board-expansion-batch.test.ts",
+      "oldSha256": "a968d8c5f4f11e1ca6ede0e33325642e3e3f2d9ba533493e1b0a0eaaee5f57d5",
+      "newSha256": "34da7d250a606131f81f279c792b1d346ea1ac1bff32e0777ed0f3f3ef735354",
+      "bytes": 7136
+    },
+    {
+      "path": "packages/game-domain/tests/diagnostics/patient-supply.test.ts",
+      "oldSha256": "be74717a14317ea5d0707ee3fecf42335fecc2e9a4cdd087f0ea9dfc25e43908",
+      "newSha256": "8301ca6cfea442f0e2b3ec847b88b852f3ecf17df0d8a3df0d90b4e43a66f574",
+      "bytes": 20497
+    },
+    {
+      "path": "packages/game-domain/tests/early-levels-20260913-batch.test.ts",
+      "oldSha256": "792f74a45bbe457f89c592ccff87978d89220be46b049eb9ad70fbcf9c74de02",
+      "newSha256": "9cb43da2933861e90fafb043724dddda7c7c9b66bcdc546e791172d6e47ff631",
+      "bytes": 7971
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261002-batch.test.ts",
+      "oldSha256": "b307fb755a7eaadf86b2a7fe492b2e40892539272ec00959912c4961aebf6235",
+      "newSha256": "9d220eeca8108fe8fffda32b4943b99e8c30217aacf828daf95f69ea48e11d0d",
+      "bytes": 31425
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261003-batch.test.ts",
+      "oldSha256": "e709d838cf70c1666aca156428b4da0c3e442bd6fd1f47baf89f0430ce744d64",
+      "newSha256": "fb302bddd5cc89a10613ccb7561ef089135eff85fa437de69d29272878caf05e",
+      "bytes": 34112
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261007-batch.test.ts",
+      "oldSha256": "e9331ecaf18ca9d9dbb631c35d4233d2488d5f4394e270124af95e277f4d863d",
+      "newSha256": "ae4b85098cb242d5fbe544d097a2c367b26cfcbebd607144fd66f32563849b97",
+      "bytes": 31351
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261007-level3-batch.test.ts",
+      "oldSha256": "a55ccebde4ce37d75a13c6ed0822955fd1008717923b0a5942d2f9a3b9586022",
+      "newSha256": "e380c40f8e220d9b4f0dc378af2ca19d6b9ee8e1becf654959876e94acd20cde",
+      "bytes": 23801
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+      "oldSha256": "f23fa221ce12a413281c2af6900637e4e9c31df2ecb8c69e00c3dff40e9f9aaf",
+      "newSha256": "3c0be9e86b13ed5aafc41e98a61da1bdaefa20532867e30a87b50605136ce05e",
+      "bytes": 45854
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-second-pre-endoscopy-batch.test.ts",
+      "oldSha256": "c8e5a219cb0ab1af4c387e1ae7f1f9d6b826d038d8757e22c04e11245fb31bc0",
+      "newSha256": "fc1804343a1ed69ed52bc7f70556435b88c1ef4f709b0e1fd2f4807d3eacd220",
+      "bytes": 31068
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-statistics-ethics-batch.test.ts",
+      "oldSha256": "50241bc52f015f30b26b169a238f02f98ebc3b0de7b1794302cb03705ca90ded",
+      "newSha256": "d934207998c74ff7c896778e27344e2618bfb13603f339a8ea8b652e8d6ecee3",
+      "bytes": 11260
+    },
+    {
+      "path": "packages/game-domain/tests/level-four-integration.test.ts",
+      "oldSha256": "af39ee02cbb1f2d0c1a76b744e78e7d63d82a689bf1062f9679b48f8fd51ff65",
+      "newSha256": "a59559d3c34ea6957da6f2a13c5b80c03d8da935aa8554873c78c0e8da791122",
+      "bytes": 35280
+    },
+    {
+      "path": "packages/game-domain/tests/patient-supply.test.ts",
+      "oldSha256": "c696fc35d632dcfa0cf4d5f88f261e90571545a6ba6ea415c477d866b570b3fb",
+      "newSha256": "2376cbdcb151b55fea84af9cfac8ebb40507069d9c8ee313d730fba131f80ef4",
+      "bytes": 22228
+    },
+    {
+      "path": "packages/game-domain/tests/pediatric-clinic-admission.test.ts",
+      "oldSha256": "7fe11ea72459e8f76e9afbe4f735450832284c312a14b91f508b657a1e6eb4f3",
+      "newSha256": "38522df0e40cdc5c92fa10e0484d8be07fa7f57e92d110c009280d0d59fdc270",
+      "bytes": 18819
+    },
+    {
+      "path": "packages/game-domain/tests/service-procedure-operations.test.ts",
+      "oldSha256": "5132241ff267d16394fbafc2c97873d868abe2f50d69e5575baa2cd20d8d15ff",
+      "newSha256": "b24bf51b2058ab29bfc59d6fbfe00a394fc2bfd00715071f50226e05e900326c",
+      "bytes": 90023
+    },
+    {
+      "path": "packages/game-domain/tests/surgery-center-batch.test.ts",
+      "oldSha256": "8b910a36a88e4c5381ab90479526af25fcd117082896c94d0d21b8304902d65d",
+      "newSha256": "4b151e91e6a6ab29ef1742ff46bbfdd5558bc54ec509fe7769da3bf6e8481c59",
+      "bytes": 17148
+    },
+    {
+      "path": "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+      "oldSha256": "d84b3b533429603398028aa6ebdefea8617a9052aaa0035e3888ee98b992bbea",
+      "newSha256": "4823d9200ae407a85e1c8533e38e3a4184eec2dac384b81314780c0c3db52493",
+      "bytes": 19941
+    },
+    {
+      "path": "packages/game-domain/tests/ultrasound-first-imaging.test.ts",
+      "oldSha256": "a608b263df16106090982f4f9cdacba83fb0666717196b00838a4404f68ed735",
+      "newSha256": "d54cea3b91ef28e9e0cb5c5ba948f16fd17eec3da6277a119c09ad4f3a887582",
+      "bytes": 49479
+    },
+    {
+      "path": "packages/game-domain/tests/variety3-admission.test.ts",
+      "oldSha256": "c8dee25e5f261f310f0e70ffb29d8e881df604300a84376223b1a08e7a981e09",
+      "newSha256": "e56d79235049eb6e4052b9ac8349c25af65743de2510c9d8e94049154dd008e4",
+      "bytes": 14493
+    },
+    {
+      "path": "tools/question-quality/additional-timeouts-comparison-20261102.json",
+      "oldSha256": null,
+      "newSha256": "0f0c2979a380b521101e8a7fcc52d2fb77c7acaf012bdeca839a39911faee3a1",
+      "bytes": 1869
+    },
+    {
+      "path": "tools/question-quality/additional-timeouts-comparison-20261102.log",
+      "oldSha256": null,
+      "newSha256": "e658d12c5258d6ed568fb8c5ac0754659b952175a5deb15942e4af68f9bba5c9",
+      "bytes": 3824
+    },
+    {
+      "path": "tools/question-quality/additional-timeouts-comparison-exit-20261102.json",
+      "oldSha256": null,
+      "newSha256": "30626b69ebc32b9cb61209dbb4f19b3ee21ccdc7eebc69ec539cb72a928344ed",
+      "bytes": 40
+    },
+    {
+      "path": "tools/question-quality/additional-timeouts-exit-20261102.json",
+      "oldSha256": null,
+      "newSha256": "496268ddff9e575379770690b63b30fab2b2ecbeff25ae94fe73edfd84f83467",
+      "bytes": 43
+    },
+    {
+      "path": "tools/question-quality/additional-timeouts-targeted-exit-20261102.json",
+      "oldSha256": null,
+      "newSha256": "e85597749b5d5245fb5ff83a7416344225f6d8c88679ab353789ac52c707894e",
+      "bytes": 47
+    },
+    {
+      "path": "tools/question-quality/additional-timeouts-targeted-final-20261102.log",
+      "oldSha256": null,
+      "newSha256": "2f0dd7bd19c929a27dae98d5fea33643f5c268b482b8a7409b59b1552469903d",
+      "bytes": 1212
+    },
+    {
+      "path": "tools/question-quality/adversarial-bound-inputs-20261102.json",
+      "oldSha256": null,
+      "newSha256": "4a55be57a79d175c89fa2e17981b2ff893d31e9943cb1a77e2a12581c9dce27c",
+      "bytes": 13529
+    },
+    {
+      "path": "tools/question-quality/adversarial-bound-inputs-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "6479778fa3c1c9f4dcc8521759e08c1e1bda6992f0ff7240112f1dc0fe6f85f4",
+      "bytes": 4602
+    },
+    {
+      "path": "tools/question-quality/adversarial-clinical-final-20261102.log",
+      "oldSha256": null,
+      "newSha256": "6d3a172ec11833a802c36226b7c3e1e71fcfdb10c41f7410fc83d368e5e17748",
+      "bytes": 2208
+    },
+    {
+      "path": "tools/question-quality/adversarial-clinical-first-20261102.log",
+      "oldSha256": null,
+      "newSha256": "ae96196e36c165643abce540b2c9259103e7bf355b522a44545fd1d70e21f996",
+      "bytes": 34786
+    },
+    {
+      "path": "tools/question-quality/adversarial-clinical-second-20261102.log",
+      "oldSha256": null,
+      "newSha256": "21db0a766126d116cfe083ba3d7c1607d2c497116def7e9f79207b5e2db5f4e9",
+      "bytes": 5760
+    },
+    {
+      "path": "tools/question-quality/adversarial-clinical-verified-20261102.log",
+      "oldSha256": null,
+      "newSha256": "098d342dda55c162b90110a781d64bc0c07b65e0fb7aea102301239e8375ec3e",
+      "bytes": 2206
+    },
+    {
+      "path": "tools/question-quality/adversarial-cue-after-20261102.json",
+      "oldSha256": null,
+      "newSha256": "2a6305704e4caeaaa19cddd00c8219a26cf8766e61acdf32cafaaa665cb57704",
+      "bytes": 5872533
+    },
+    {
+      "path": "tools/question-quality/adversarial-cue-before-20261102.json",
+      "oldSha256": null,
+      "newSha256": "036b01050113f83820605fef72e8e992a51fa234ea2cc1d5ed172fbfaf9a85af",
+      "bytes": 5944361
+    },
+    {
+      "path": "tools/question-quality/adversarial-cue-comparison-20261102.json",
+      "oldSha256": null,
+      "newSha256": "b26f7b4001628614159b3b4f309c0b343eb8a499e1fb00377ae88385d1130237",
+      "bytes": 25897
+    },
+    {
+      "path": "tools/question-quality/adversarial-domain-full-20261102.log",
+      "oldSha256": null,
+      "newSha256": "9beaeda7aaec845f50f4306fde12b29bcefedae80658260eedcb58511ae3f4b5",
+      "bytes": 34864
+    },
+    {
+      "path": "tools/question-quality/adversarial-domain-inventory-20261102.log",
+      "oldSha256": null,
+      "newSha256": "7b1feb9e46e420e91045a5e49c5386e0a9110f67bbdfb5f9009cd4ea62266517",
+      "bytes": 4392
+    },
+    {
+      "path": "tools/question-quality/adversarial-domain-inventory-final-20261102.log",
+      "oldSha256": null,
+      "newSha256": "5f95fe0da0153c9f11fc22176843f852f878af32d23df3d10b88ac73a5b32099",
+      "bytes": 818
+    },
+    {
+      "path": "tools/question-quality/adversarial-domain-post-repairs-20261102.log",
+      "oldSha256": null,
+      "newSha256": "5e9f54ce733de8483e9edc6565974d61f6401c2a27bddc8bb8371fd5d35e2f5f",
+      "bytes": 9630
+    },
+    {
+      "path": "tools/question-quality/adversarial-domain-repairs-20261102.log",
+      "oldSha256": null,
+      "newSha256": "7791e599c7704f685ef5bf9a4fa6ca586e1aa5867cd3e138223d0604e4b9983f",
+      "bytes": 4054
+    },
+    {
+      "path": "tools/question-quality/adversarial-evidence-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "4ef20ccc564359ddc25118e550295cf7c2495f1e8788c5cc594304ce70dbd836",
+      "bytes": 38067
+    },
+    {
+      "path": "tools/question-quality/adversarial-lint-tests-20261102.log",
+      "oldSha256": null,
+      "newSha256": "c140c4db559cc82332812f671596648ecc287ad01f092f5df43aeb637b0a0970",
+      "bytes": 4468
+    },
+    {
+      "path": "tools/question-quality/adversarial-lint-tests-final-20261102.log",
+      "oldSha256": null,
+      "newSha256": "97ce42148253fda568b19e592ab5db9f232798f9d4355da81df5d7365ecb5580",
+      "bytes": 4464
+    },
+    {
+      "path": "tools/question-quality/adversarial-owned-files-20261102.json",
+      "oldSha256": null,
+      "newSha256": "183adf932c5aaf53cb56cb89e8ea0bdfdfd7e17762000866b6a4701d0765865e",
+      "bytes": 17382
+    },
+    {
+      "path": "tools/question-quality/adversarial-player-final-20261102.log",
+      "oldSha256": null,
+      "newSha256": "a4820568af71bbf06ca958ded0435ad5e95ac2e672e570490f9df6ca7be5f341",
+      "bytes": 1150
+    },
+    {
+      "path": "tools/question-quality/adversarial-player-first-20261102.log",
+      "oldSha256": null,
+      "newSha256": "c209dca11c0735c1cb715b6234b7513cc1affde24d4ef3b58b599130de35e9fb",
+      "bytes": 6432
+    },
+    {
+      "path": "tools/question-quality/adversarial-player-full-20261102.log",
+      "oldSha256": null,
+      "newSha256": "308395e3c1a35a531916ce70a666bf17dc289a20752816dd61b4c7b2e61f7d89",
+      "bytes": 3576760
+    },
+    {
+      "path": "tools/question-quality/adversarial-player-verified-20261102.log",
+      "oldSha256": null,
+      "newSha256": "74391dde5615f587eb6245208952460089ba759d1c92c2f548c87934f43692cb",
+      "bytes": 1060
+    },
+    {
+      "path": "tools/question-quality/adversarial-r3-bound-inputs-20261102.json",
+      "oldSha256": null,
+      "newSha256": "7d12aae95abe4e947cf69adba84b614a1cb24ce9bb5e83bab1b54d73ef7268ca",
+      "bytes": 13581
+    },
+    {
+      "path": "tools/question-quality/adversarial-r3-bound-inputs-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "422f27894bf736b4e5023d9b9c89a8e3dec191101b08cdc5c440b4a50973c9b9",
+      "bytes": 3771
+    },
+    {
+      "path": "tools/question-quality/adversarial-r3-capture-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "50952e4466058f16eb5cc4be2ee644cefa57b77cd5df05fe9c13a210a04848ab",
+      "bytes": 3838
+    },
+    {
+      "path": "tools/question-quality/adversarial-r3-clinical-final-20261102.log",
+      "oldSha256": null,
+      "newSha256": "55102ad55c7cccb4787b1d07c313cb19d6ff5c31a744fede3fba1931d7abe556",
+      "bytes": 2218
+    },
+    {
+      "path": "tools/question-quality/adversarial-r3-clinical-first-20261102.log",
+      "oldSha256": null,
+      "newSha256": "07e57ce43beb28b05e82f030c705211e4d43de349378c621dec3f99b7d246b89",
+      "bytes": 12650
+    },
+    {
+      "path": "tools/question-quality/adversarial-r3-clinical-repairs-20261102.log",
+      "oldSha256": null,
+      "newSha256": "8b03b4ae34beba4b9ea58df8ccf86f97b5e4c14b234912baa6722a43f95b3404",
+      "bytes": 1076
+    },
+    {
+      "path": "tools/question-quality/adversarial-r3-cue-after-20261102.json",
+      "oldSha256": null,
+      "newSha256": "0485164fb07dc3854df176261116461d60839b66e092aad5422c4efc54a15c93",
+      "bytes": 5919423
+    },
+    {
+      "path": "tools/question-quality/adversarial-r3-cue-before-20261102.json",
+      "oldSha256": null,
+      "newSha256": "2a6305704e4caeaaa19cddd00c8219a26cf8766e61acdf32cafaaa665cb57704",
+      "bytes": 5872533
+    },
+    {
+      "path": "tools/question-quality/adversarial-r3-cue-comparison-20261102.json",
+      "oldSha256": null,
+      "newSha256": "ea087255499e8311aa454c8f5ee56f974dee954468b8a1034f003097d764d18a",
+      "bytes": 31523
+    },
+    {
+      "path": "tools/question-quality/adversarial-r3-docs-20261102.log",
+      "oldSha256": null,
+      "newSha256": "c031ceb202549200536928f51a51f585fad6010527c741d565be4896638cf9cf",
+      "bytes": 1252
+    },
+    {
+      "path": "tools/question-quality/adversarial-r3-domain-focused-first-20261102.log",
+      "oldSha256": null,
+      "newSha256": "753c030815c66181e67457b27493175861389dfb218c266b4ad7f9a5a89e4b39",
+      "bytes": 4014
+    },
+    {
+      "path": "tools/question-quality/adversarial-r3-domain-full-20261102.log",
+      "oldSha256": null,
+      "newSha256": "9f44f7d02e9a437d41362ad6d624681d2f2c04c26c500bd2370f0161b1514d90",
+      "bytes": 17818
+    },
+    {
+      "path": "tools/question-quality/adversarial-r3-evidence-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "cdcaa0f128417518c482b813504e9095b0b8512c025465cdfb644b98b9aa4735",
+      "bytes": 21120
+    },
+    {
+      "path": "tools/question-quality/adversarial-r3-exact-records-20261102.json",
+      "oldSha256": null,
+      "newSha256": "bb257d661433e43690fdd6bd367cfd9436bf69bc578f43de61fbe4f222c78173",
+      "bytes": 4532
+    },
+    {
+      "path": "tools/question-quality/adversarial-r3-lint-tests-20261102.log",
+      "oldSha256": null,
+      "newSha256": "0f3edb655e76dd9b0a3c25bb12c56981780124b1c8b92fc24133219bbed5033c",
+      "bytes": 4466
+    },
+    {
+      "path": "tools/question-quality/adversarial-r3-owned-files-20261102.json",
+      "oldSha256": null,
+      "newSha256": "56352197374740e783ef11ca278a4fa58fd99cc1c05872e9a9f9e7972289095d",
+      "bytes": 18814
+    },
+    {
+      "path": "tools/question-quality/adversarial-r3-player-20261102.log",
+      "oldSha256": null,
+      "newSha256": "6036d5fca7e81ff3b72583b8a276682f31dafd80f3fcf14ab147a6f047237955",
+      "bytes": 1150
+    },
+    {
+      "path": "tools/question-quality/adversarial-r3-qa-20261102.log",
+      "oldSha256": null,
+      "newSha256": "0b12ba1ff14f411a5c67aebf628bd8590e45d7e4bba908dfb011cff6c416affd",
+      "bytes": 6864
+    },
+    {
+      "path": "tools/question-quality/adversarial-r3-report-qa-20261102.json",
+      "oldSha256": null,
+      "newSha256": "15e2bc8c79d07a0a8e2ccd463fa83636055a45d020aa2a12ac672b4957e9e07f",
+      "bytes": 3316
+    },
+    {
+      "path": "tools/question-quality/adversarial-r3-report-qa-20261102.log",
+      "oldSha256": null,
+      "newSha256": "cb7017e83fac4790db751c60587c883eba387b71066aaa77f1652ea3a5c70f4f",
+      "bytes": 7906
+    },
+    {
+      "path": "tools/question-quality/adversarial-r3-review-generation-20261102.log",
+      "oldSha256": null,
+      "newSha256": "176c7648363872f0b47245a1d1f9d924fb0645818c300ce970e9da877dc82d67",
+      "bytes": 6426
+    },
+    {
+      "path": "tools/question-quality/adversarial-r3-specs-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "bd9ddcb0462b40b91bbc5053d9b517c5a6e13666d372c20aaba37b5eedc75dbc",
+      "bytes": 73629
+    },
+    {
+      "path": "tools/question-quality/adversarial-r3-typecheck-final-20261102.log",
+      "oldSha256": null,
+      "newSha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "bytes": 1504
+    },
+    {
+      "path": "tools/question-quality/adversarial-r3-typecheck-first-20261102.log",
+      "oldSha256": null,
+      "newSha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "bytes": 1504
+    },
+    {
+      "path": "tools/question-quality/adversarial-r3-validation-20261102.json",
+      "oldSha256": null,
+      "newSha256": "01f47c25b7360b7441e0fde51705b0c29686f9abcbbb28ef8b09fb37ce15674e",
+      "bytes": 7727
+    },
+    {
+      "path": "tools/question-quality/adversarial-r3-whole-bank-20261102.json",
+      "oldSha256": null,
+      "newSha256": "0485164fb07dc3854df176261116461d60839b66e092aad5422c4efc54a15c93",
+      "bytes": 5919423
+    },
+    {
+      "path": "tools/question-quality/adversarial-r3-whole-bank-20261102.log",
+      "oldSha256": null,
+      "newSha256": "7a285caf2c7f78855677eeb18680a7538c60f429a72b7638c79c8882922a7c5f",
+      "bytes": 3280
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-author-check-20261102.log",
+      "oldSha256": null,
+      "newSha256": "aafa15bc91452ab2e1e98ffb6e8f692126d455f680f1d57a703be1cd19141e3d",
+      "bytes": 198
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-bound-inputs-20261102.json",
+      "oldSha256": null,
+      "newSha256": "b43ee146ddee3f5c085afc2eaccbb6a9df23724c7affe054e2d4084d478e0156",
+      "bytes": 15638
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-bound-inputs-20261102.log",
+      "oldSha256": null,
+      "newSha256": "d8072d7dd4d2206135f9770f97a6977bdf47d7e79ea482b0694fd62a3ae85f4a",
+      "bytes": 252
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-bound-inputs-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "c8cd6a3135a2fca35201b62de78530bb80f484298eaa2f9eba2ee1e2219d064f",
+      "bytes": 4263
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-capture-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "1e602ff53cd43be53e46323ac688189a9b29a899698ab1ea2555bd81f31190c8",
+      "bytes": 4078
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-clinical-20261102.log",
+      "oldSha256": null,
+      "newSha256": "b68ee69fde27c2db975f5ecc98e2a033ab93fdecc9b4ad45a8502911f35aa15f",
+      "bytes": 2234
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-content-expectations-20261102.log",
+      "oldSha256": null,
+      "newSha256": "e2dd3c6dcac5a72ff98be5a7ce647fea53a8fef33bdd08343186b14166696803",
+      "bytes": 8706
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-cue-after-20261102.json",
+      "oldSha256": null,
+      "newSha256": "d57f7b0a1c483a143fe3998ca719bfb540d2b9be3ad293b649b1f8c65491da6e",
+      "bytes": 6043170
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-cue-before-20261102.json",
+      "oldSha256": null,
+      "newSha256": "0485164fb07dc3854df176261116461d60839b66e092aad5422c4efc54a15c93",
+      "bytes": 5919423
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-cue-comparison-20261102.json",
+      "oldSha256": null,
+      "newSha256": "73f87f122e3d6ffebb10264534b5f31655a63309cb5ef4a4bed2c1d49276566d",
+      "bytes": 32376
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-docs-20261102.log",
+      "oldSha256": null,
+      "newSha256": "63d2f04787c1aba0283b98aa0e808bde59211f47d16556f882956858b178b760",
+      "bytes": 1320
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-domain-20261102.log",
+      "oldSha256": null,
+      "newSha256": "b3223a2ede012b052a513729df724a2336de91b9ee4fabfe7cea3ca8182e0c03",
+      "bytes": 5787212
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-domain-diagnostic-20261102.log",
+      "oldSha256": null,
+      "newSha256": "377c76886d440996bbab7b10ad9ccc103e1388a2fb734544e7da9fb95c8b527e",
+      "bytes": 5796776
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-domain-focused-20261102.log",
+      "oldSha256": null,
+      "newSha256": "851bd89ee97cd1afae5b8d1c646896945ab2779c79335a33c2fbf44a023c36c8",
+      "bytes": 1434
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-domain-native-crash-20261102.log",
+      "oldSha256": null,
+      "newSha256": "404b7fae2c3b051465e7c60c295a3cbcd4edee518b0c71c6c78d2472eb3fefde",
+      "bytes": 9130
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-domain-regression-20261102.log",
+      "oldSha256": null,
+      "newSha256": "6a1126330d6dfcc37ff8329289ab84015d4489261079611e5f34ee521231b1a8",
+      "bytes": 2256
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-evidence-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "2ef138d0213050a969f7524f393e10d58e01e02864d527ba38cef050a1749f9d",
+      "bytes": 32495
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-evidence-check-20261102.log",
+      "oldSha256": null,
+      "newSha256": "799b7678289a709e80be62b7cde166079e6285adedb403bcafa2b8962765d9db",
+      "bytes": 58
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-exact-records-20261102.json",
+      "oldSha256": null,
+      "newSha256": "606cdae277c9076b90dabcf32082d82f3516c375a0450f5dbff95a06a5fc07de",
+      "bytes": 3013
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-generation-20261102.log",
+      "oldSha256": null,
+      "newSha256": "94af2b10b017972528a77840c76d5a2196947adfb5f1955bccb74c0276cdffe3",
+      "bytes": 7620
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-handoff-generation-20261102.log",
+      "oldSha256": null,
+      "newSha256": "a1a0d23cf4520ef7cf400a5256f4bba18abdc290c7c4499bbfe9977b65304f1f",
+      "bytes": 10476
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-legacy-load-diagnosis-20261102.json",
+      "oldSha256": null,
+      "newSha256": "b50e2e3a2f7ec897ce889a0f8847cf5c1abcc8a856a91d2db2fd833f1374d784",
+      "bytes": 79600
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-legacy-load-diagnosis-20261102.log",
+      "oldSha256": null,
+      "newSha256": "7cd4062528883d523b434b5e0256afe4a55594189b3d44e13d0d9a0cad8275bc",
+      "bytes": 2046
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-lint-tests-20261102.log",
+      "oldSha256": null,
+      "newSha256": "44fcfc83ca24c501b72a0bec16066b141747a176e78b4226a7d2e5b5bcaea58f",
+      "bytes": 4460
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-owned-files-20261102.json",
+      "oldSha256": null,
+      "newSha256": "71c9eaa557b44ef56635390ef0f288029410a727be6133b7063a3021a4f2bd77",
+      "bytes": 20003
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-player-20261102.log",
+      "oldSha256": null,
+      "newSha256": "76c276848664911ea65c45c5f2f32f3442d2b448d94649ad29532b867a91c758",
+      "bytes": 1150
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-pool-probe-20261102.log",
+      "oldSha256": null,
+      "newSha256": "5f7a5095459eda306492f77d9d67cffef81ec986d7715ffe176bfc02c4a17592",
+      "bytes": 1700
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-report-qa-20261102.json",
+      "oldSha256": null,
+      "newSha256": "413b94b87029a99a185ec93f6c0cb94c6ca03c8db9d0a681a02396805ed9ab5a",
+      "bytes": 3383
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-report-qa-20261102.log",
+      "oldSha256": null,
+      "newSha256": "29d3fe5e551b246a7d33ecbe1d72cd481b6b5740d43acb0007efe0e5b7ecb23f",
+      "bytes": 8040
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-snapshot-change-review-20261102.json",
+      "oldSha256": null,
+      "newSha256": "cc2d9e38269a86a9eaa7214637e275b49ee9b2671cd896159c1c83d8ba377380",
+      "bytes": 52463
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-snapshot-change-review-20261102.log",
+      "oldSha256": null,
+      "newSha256": "83f1df7f19275c5e1f0bd9e5705eb77a58ef3cecb38df7a8536d1489db1ed948",
+      "bytes": 33444
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-specification-check-20261102.json",
+      "oldSha256": null,
+      "newSha256": "a9c9480f9e807ac931f209c0200f207c0744d5188601b7e29143d99cd2adbcc1",
+      "bytes": 902
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-specs-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "ec33e24e43e77e6581b426cf586f49632bb1a913a06777665882b740ff050d5d",
+      "bytes": 192936
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-supply-control-20261102.json",
+      "oldSha256": null,
+      "newSha256": "1e4facb4c7080337b0da2637c5327a31290581cf9a54c776af450c3246ce417e",
+      "bytes": 37956
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-supply-control-20261102.log",
+      "oldSha256": null,
+      "newSha256": "a510cf262e29b862042dc14be9cf86e7626a99329f3a5a21614641e54ea8bcf0",
+      "bytes": 2596
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-supply-snapshot-review-20261102.log",
+      "oldSha256": null,
+      "newSha256": "01d1d491109951fc3a61761b8db308b155865707ef927638f5ece4543cdbb094",
+      "bytes": 50268
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-supply-snapshot-update-20261102.log",
+      "oldSha256": null,
+      "newSha256": "0e600d7474d6f5a8121b8b7d89d1a2d0a4d1f223bccc1af0d26799aa63f303e9",
+      "bytes": 1200
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-typecheck-20261102.log",
+      "oldSha256": null,
+      "newSha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "bytes": 1504
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-validation-20261102.json",
+      "oldSha256": null,
+      "newSha256": "ab9cc76d2e37fe5f0eb2b45a72ccce9a130bf38edabdfece7939852b40073bd0",
+      "bytes": 97438
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-whole-bank-20261102.json",
+      "oldSha256": null,
+      "newSha256": "d57f7b0a1c483a143fe3998ca719bfb540d2b9be3ad293b649b1f8c65491da6e",
+      "bytes": 6043170
+    },
+    {
+      "path": "tools/question-quality/adversarial-r4-whole-bank-20261102.log",
+      "oldSha256": null,
+      "newSha256": "1a58d896926f646b13eb181946da92de5ab6a78cf0bb567e5ba6396a029f4920",
+      "bytes": 3280
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-author-check-20261102.log",
+      "oldSha256": null,
+      "newSha256": "ae921ba5dd250cff6f3e09cf7b34c26c3675680c63d75c4be524dd92ebe9d6a6",
+      "bytes": 186
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-before-cue-cleanup-20261102.json",
+      "oldSha256": null,
+      "newSha256": "7a122e2dac02eeb645fe8af329ea27817873d3e37a83db96b5be782ab0c9e4d9",
+      "bytes": 272951
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-bound-inputs-20261102.json",
+      "oldSha256": null,
+      "newSha256": "7d313488053cf7851baf9f3351ff2c6915ab6d542ecd5b43808a24be2cadf203",
+      "bytes": 17620
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-bound-inputs-20261102.log",
+      "oldSha256": null,
+      "newSha256": "706a5e1c3eb421e8f6ce36a16eb13d68deeaf7f8a94a6af171968c83115d351f",
+      "bytes": 252
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-bound-inputs-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "93a61355752988c5f99f8caa132d4623f66f1b03daccef41e088dbc3ff4e8d75",
+      "bytes": 4262
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-bound-inputs-before-cue-cleanup-20261102.json",
+      "oldSha256": null,
+      "newSha256": "dfd95514605b89034c49ca62b88cccf1f04d2e826eb1abe8ba36a6b1d2c8d8cd",
+      "bytes": 17620
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-capture-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "e6d5f18e0fbfa84643757dfbfe29414144f5cb18969835f340b863cffc7aa2b1",
+      "bytes": 4586
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-clinical-20261102.log",
+      "oldSha256": null,
+      "newSha256": "4e969932c9c95180924927878c89b6d42bb3f9dd9cf91542d416f05e617ea9e2",
+      "bytes": 2250
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-cue-after-20261102.json",
+      "oldSha256": null,
+      "newSha256": "d26e2f072dbeb858ad03fe32733e62e073a3f5e20ce4b3ff52b5aa461d3aae10",
+      "bytes": 6050231
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-cue-before-20261102.json",
+      "oldSha256": null,
+      "newSha256": "d57f7b0a1c483a143fe3998ca719bfb540d2b9be3ad293b649b1f8c65491da6e",
+      "bytes": 6043170
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-cue-cleanup-check-20261102.json",
+      "oldSha256": null,
+      "newSha256": "4c282ee577311e88cb4590af43fd174792e6fa7c4eff91a235a22568f0ff72d9",
+      "bytes": 243
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-cue-comparison-20261102.json",
+      "oldSha256": null,
+      "newSha256": "7573bef3d59fa4a12978974a1c49bb0d5530a6f4bf408d0d7808602011f4d49a",
+      "bytes": 32930
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-docs-20261102.log",
+      "oldSha256": null,
+      "newSha256": "5b346ac0236289fee2852878045cd942980ab1994b6dc7077c172323f57409f9",
+      "bytes": 1302
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-domain-20261102.log",
+      "oldSha256": null,
+      "newSha256": "dc4efb6032f04ec511adc3fb1faa34d60cb85f229a19a0b7666e1ebe1df165ef",
+      "bytes": 35556
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-domain-before-cue-cleanup-20261102.log",
+      "oldSha256": null,
+      "newSha256": "18d28ba468e948b4b903de8f762a3b499e94bd3da6777c41289bef82ac496dc6",
+      "bytes": 5789804
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-domain-focused-20261102.log",
+      "oldSha256": null,
+      "newSha256": "8a365696e4b7f434ec11cf087e475a942d913ed3b8019cd5a3ee18f84b684dd7",
+      "bytes": 990
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-evidence-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "218da6a47b3c188e6f075030fa13bc898b3c1d9efbf85deb1555d7445f50dea6",
+      "bytes": 4807
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-evidence-check-20261102.log",
+      "oldSha256": null,
+      "newSha256": "ccea9f0f5cdc0801e21af5819dc290f835d1e4cd7e40e76bc93c6833605d8806",
+      "bytes": 120
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-exact-records-20261102.json",
+      "oldSha256": null,
+      "newSha256": "47c4b19e1503baadce9cc58e191c8af3b5f0ecd3a91a03b521d77904c25f7aa8",
+      "bytes": 1138
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-generation-20261102.log",
+      "oldSha256": null,
+      "newSha256": "d5f2ed51fbca9b848de4e63a7783a05f70134dca8dc08e819c1280001a399ada",
+      "bytes": 7664
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-legacy-load-diagnosis-20261102.json",
+      "oldSha256": null,
+      "newSha256": "1fbda057ae24d8169e15fe1d370308a7b2716456997b573d50831a95e0a978ea",
+      "bytes": 86947
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-legacy-load-diagnosis-20261102.log",
+      "oldSha256": null,
+      "newSha256": "269dcc665f93c86de5858bbf9a9d00f19099653ee2fe8ea463dbf54f3ab5407e",
+      "bytes": 2048
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-lint-tests-20261102.log",
+      "oldSha256": null,
+      "newSha256": "373c05e9fbf1f8c561e61cba6b2eca9bde485a83cae7ca1f3e03ac5cb67de97f",
+      "bytes": 4462
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-owned-files-20261102.json",
+      "oldSha256": null,
+      "newSha256": "68a2072ef1fa1b32db4aaa98155d1ba0f1b846b0c5b83a5580d223e26466696e",
+      "bytes": 17325
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-player-20261102.log",
+      "oldSha256": null,
+      "newSha256": "1578cc0302e136b99d5ad459d970b81621ba829bfd16d6fbef84cbde5fad6429",
+      "bytes": 1150
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-player-preload-20261102.cjs",
+      "oldSha256": null,
+      "newSha256": "0a4b03e814a414e7ac5aae44e22b095828cbe11236931b092341f11b8c46ced1",
+      "bytes": 930
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-report-qa-20261102.json",
+      "oldSha256": null,
+      "newSha256": "6deca23c79cbcfd53266f20d5545940fd6fb5298eeee0ba19b1f4e4a0eaa936c",
+      "bytes": 3427
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-report-qa-20261102.log",
+      "oldSha256": null,
+      "newSha256": "56078e4f23cc38c3c7203bd0f3fc90202a0eaa199593cfdab9e67ea03056c69e",
+      "bytes": 8132
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-snapshot-change-review-20261102.json",
+      "oldSha256": null,
+      "newSha256": "d3742684627a5674fbc461a9e18d98245aa72a5ba9750ae24226c35ddbb435af",
+      "bytes": 38409
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-snapshot-change-review-20261102.log",
+      "oldSha256": null,
+      "newSha256": "cc10e4e104b4c3377476f942dcf40034aa982a3c207554eb2af6a402bf6fc921",
+      "bytes": 698
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-source-record-check-20261102.json",
+      "oldSha256": null,
+      "newSha256": "fff68cb5f8fc077d91e8caa9ed11aab3eb06f2f38644fc59764952f4d889d922",
+      "bytes": 3545
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-source-record-check-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "2aecd8f4716a46c41457e00a627c1e40e0776ed47227bd9387e0dbeca6694eca",
+      "bytes": 2712
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-specs-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "209928521c5f3735ea71d18862093d885746ba5c37e41ba821affe6534c41435",
+      "bytes": 119621
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-supply-control-20261102.json",
+      "oldSha256": null,
+      "newSha256": "15e41a5dee2829c5904cb8bb2f741a1dc7e7e5ffd8abfca3b5b3db055cf21768",
+      "bytes": 39754
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-supply-control-20261102.log",
+      "oldSha256": null,
+      "newSha256": "4d62e19a88cb091def6cc453b048d24095b0b4e07e58ff954dd1c4ee4a6b9679",
+      "bytes": 2592
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-supply-snapshot-update-20261102.log",
+      "oldSha256": null,
+      "newSha256": "04d7b6887689de46d464728991c1a7b03340854ea99b3df7a14d8be4804b8c82",
+      "bytes": 1050
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-timing-delta-20261102.json",
+      "oldSha256": null,
+      "newSha256": "94be85ff9ee1b8c53cc8c59b9a70f868ed168646c0e708723dbc5c3510542a89",
+      "bytes": 32339
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-timing-delta-20261102.log",
+      "oldSha256": null,
+      "newSha256": "48fbd5e30d0447983b497b7a663f0f1f53b3aed9cab0939d70ee59a88a11d19d",
+      "bytes": 2114
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-timing-delta-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "817f3aefd76b44988551d36e6165424832b7706a803507fb2a865a4de4d3857c",
+      "bytes": 2242
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-typecheck-20261102.log",
+      "oldSha256": null,
+      "newSha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "bytes": 1504
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-validation-20261102.json",
+      "oldSha256": null,
+      "newSha256": "c30ea36a23c961acbb35d1c8495eefd2ab395b7da7c00fda85eb9bf0c4e02048",
+      "bytes": 16364
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-whole-bank-20261102.json",
+      "oldSha256": null,
+      "newSha256": "d26e2f072dbeb858ad03fe32733e62e073a3f5e20ce4b3ff52b5aa461d3aae10",
+      "bytes": 6050231
+    },
+    {
+      "path": "tools/question-quality/adversarial-r5-whole-bank-20261102.log",
+      "oldSha256": null,
+      "newSha256": "446c414e9ff70ace077d4e0c0ab91185f2141d46018ebeb81f6cc13511578dcc",
+      "bytes": 3396
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-bound-inputs-20261102.json",
+      "oldSha256": null,
+      "newSha256": "91e533a774fd40f68bf694cb2781798b5b114cfa94853ef222bf044f936a306e",
+      "bytes": 17349
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-bound-inputs-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "5f682e6fb2d577acf46e36801a4b9da00dd98f8be18a7dfc5840e4734d373c61",
+      "bytes": 3951
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-capture-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "9297b6846e523f3700086ea740dd906304c4247e5b2017895f5b4dd203420069",
+      "bytes": 5052
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-clinical-20261102.log",
+      "oldSha256": null,
+      "newSha256": "b89768b2a22b00802fb7e712f59ca9efb3580c62550173bd80d3ca032c38e2be",
+      "bytes": 2266
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-concurrent-input-change-20261102.json",
+      "oldSha256": null,
+      "newSha256": "b829952d8c02cc65c0561921b0731c355039ce4c6b0567f9767ef13710b9bcc6",
+      "bytes": 8216
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-cue-after-20261102.json",
+      "oldSha256": null,
+      "newSha256": "fd2127fd4a0ba0a3178f12e93191c84e40e43a797d6919dd373fe07840a83620",
+      "bytes": 6062157
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-cue-before-20261102.json",
+      "oldSha256": null,
+      "newSha256": "d26e2f072dbeb858ad03fe32733e62e073a3f5e20ce4b3ff52b5aa461d3aae10",
+      "bytes": 6050231
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-cue-comparison-20261102.json",
+      "oldSha256": null,
+      "newSha256": "90e46d8d8077f77cbc6bb8c13185f87f5ea0966cedf17e2d16658501f39290d0",
+      "bytes": 32905
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-domain-20261102.log",
+      "oldSha256": null,
+      "newSha256": "6dcceb7255aefa18bd6110162fe645dde9d887e2ed059efeb0527d398d14f87a",
+      "bytes": 51692
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-domain-before-expectation-repair-20261102.log",
+      "oldSha256": null,
+      "newSha256": "6dcceb7255aefa18bd6110162fe645dde9d887e2ed059efeb0527d398d14f87a",
+      "bytes": 51692
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-domain-focused-20261102.log",
+      "oldSha256": null,
+      "newSha256": "87c8c6202dbec2127591cd75338381eba1448f85b4823d0f9cc7519a53324826",
+      "bytes": 1076
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-evidence-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "f130c53e4fe1e5ad2c3dba617583a6314f69837e89df2a8d2c752190ed726d16",
+      "bytes": 3956
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-exact-records-20261102.json",
+      "oldSha256": null,
+      "newSha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "bytes": 3
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-l4-fairness-diagnosis-20261102.json",
+      "oldSha256": null,
+      "newSha256": "5dab25514cb4e7b715f3f3560c76b37c3cfe5232ec0b48e7e89a5fbfb5624cca",
+      "bytes": 28551
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-l4-fairness-diagnosis-20261102.log",
+      "oldSha256": null,
+      "newSha256": "0c48218f7ddb60e5477b3e3ba2dd5648327e94512e6a2bbe36f1d88dbb483e02",
+      "bytes": 346
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-late-expectation-review-20261102.json",
+      "oldSha256": null,
+      "newSha256": "e8e2be0b2bbe62cd4f314dcd66a62a15105e57ce5f985c7757b72370a9ddcde9",
+      "bytes": 2300
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-late-pool-flow-tests-20261102.log",
+      "oldSha256": null,
+      "newSha256": "2faa75efe080ebeea55241edeb47789f1dad5dc2fd98aafd76d2e9612e00b000",
+      "bytes": 2368
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-launch-current-20261102.json",
+      "oldSha256": null,
+      "newSha256": "d7ae0e5ea1b82fb446b182467076055504fc74800cbac0546fee278b2ca5a217",
+      "bytes": 382
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-launch-entry-20261102.json",
+      "oldSha256": null,
+      "newSha256": "b04173e0729f45a6185c2c5c57ddcfabb14ad258b80b13d69048c810f22ee6b4",
+      "bytes": 380
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-launch-tests-20261102.log",
+      "oldSha256": null,
+      "newSha256": "20af83765f41d0a2bff31876e778d294378d6f18b91277c089f1f3fb4d3f0b7e",
+      "bytes": 800
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-legacy-load-diagnosis-20261102.json",
+      "oldSha256": null,
+      "newSha256": "5297474e98db141101d310efa975cbdc83c37ec504138d4dabcf5f5aedc756a3",
+      "bytes": 87812
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-legacy-load-diagnosis-20261102.log",
+      "oldSha256": null,
+      "newSha256": "4bec9a811d8441fe067a3537bac0f015915029e92de924800b4e96af2fac31fb",
+      "bytes": 1000
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-lint-tests-20261102.log",
+      "oldSha256": null,
+      "newSha256": "0afc2c7a425c7aa56cadade7292cf825f41c327ae827ff445be68f439de90c24",
+      "bytes": 4466
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-main-snapshot-serialization-20261102.log",
+      "oldSha256": null,
+      "newSha256": "344add30da68b4f596a4642b4fbb9b83ac228da6aa5bb37e69e5fd367313f137",
+      "bytes": 864
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-owned-files-20261102.json",
+      "oldSha256": null,
+      "newSha256": "cfd7c20767935f5f16fd02aa582a026edab623779474cc8a836657ecde47d8f2",
+      "bytes": 18866
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-packet-generation-20261102.log",
+      "oldSha256": null,
+      "newSha256": "d905510b3bd3b3b88962106b2624c5e627f70ab8b48aeae0f916e063cc4cf5c3",
+      "bytes": 6620
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-player-20261102.log",
+      "oldSha256": null,
+      "newSha256": "c7cce542446fc64e937c3d8ebd6798af911a89bdd2dbc4f02697c49fc0c661ff",
+      "bytes": 1150
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-report-qa-20261102.json",
+      "oldSha256": null,
+      "newSha256": "0ab8f17b88f37e1b622ff505d10f9b2eeae63143be895f58620064799d7bae56",
+      "bytes": 4066
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-report-qa-20261102.log",
+      "oldSha256": null,
+      "newSha256": "2732481c259d50a12d08f561cf80d81c36e6cfe9f4491b0b3d60229c5a7fe3df",
+      "bytes": 8396
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-scoped-diff-20261102.json",
+      "oldSha256": null,
+      "newSha256": "66a7cbdc9c61c465d0826600e9b00af1736b72d135c55aa146301b49c06ff85f",
+      "bytes": 2974
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-snapshot-change-review-20261102.json",
+      "oldSha256": null,
+      "newSha256": "0ec6cd412875377e53bfa4afd27bbb2f48495910cc64ff3f2bafc0e1ee80610c",
+      "bytes": 53265
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-snapshot-change-review-20261102.log",
+      "oldSha256": null,
+      "newSha256": "48eaa09d2a92fe446eaeb78ef83cdc9ab3684bac65e2a79fda3c3f0edb4c5f6d",
+      "bytes": 29006
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-snapshot-serialization-20261102.log",
+      "oldSha256": null,
+      "newSha256": "0f7fccafabf90bf6ffaf8dc2e29a16880342df2c7e754a73407694c83a07d2a9",
+      "bytes": 934
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-source-record-check-20261102.json",
+      "oldSha256": null,
+      "newSha256": "69bc46efc77905b8bf5e4ab1ea17900df19f3f293ba99e75d4e7cb102cd2b9d1",
+      "bytes": 1981
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-source-record-check-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "e4d8bbabfebadfc96852e2a25cdd68b31fd77c8f993c2f179a264d62e87fb842",
+      "bytes": 2712
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-specs-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "75bad616d18e0117217d1d2bd44c04a985ee1194aa9f11fd4030241ee08541fe",
+      "bytes": 67600
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-supply-candidate-20261102.json",
+      "oldSha256": null,
+      "newSha256": "b530b8cafa019d73b6f5adaca44d122b49deb44334c62250a2ac8d13187270f7",
+      "bytes": 61443
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-supply-candidate-20261102.log",
+      "oldSha256": null,
+      "newSha256": "6e3473c48858ea9ac78fcc1f99b35bfd130bc7612a99f15cd941d867d5cee2a9",
+      "bytes": 1554
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-supply-control-20261102.json",
+      "oldSha256": null,
+      "newSha256": "04356b200f05abf7aac75ffd475b842845cf3a451c0c599b50fb8045fedf07a3",
+      "bytes": 61365
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-supply-control-20261102.log",
+      "oldSha256": null,
+      "newSha256": "1143d7b6b8b05dc7c339386ff10aa27e3bbfa3fe7aed6a9eda2ace21e68c8e42",
+      "bytes": 1554
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-timing-delta-20261102.json",
+      "oldSha256": null,
+      "newSha256": "06c9c7e8afb4ea49d722b42a8a2f99176c8689d3f4e9ed36a6e996c63c49ca60",
+      "bytes": 21374
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-timing-delta-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "4d56f2704f7ce5cbbccda28f78041433663847403a23e3f3ead350930c7f2ee1",
+      "bytes": 2242
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-typecheck-20261102.log",
+      "oldSha256": null,
+      "newSha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "bytes": 1504
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-validation-20261102.json",
+      "oldSha256": null,
+      "newSha256": "8e61779d26d80ab23496f1a1be9b8230c0b0e977c8b6df0e62e07260594c10be",
+      "bytes": 29944
+    },
+    {
+      "path": "tools/question-quality/adversarial-r6-whole-bank-20261102.log",
+      "oldSha256": null,
+      "newSha256": "1df019887a102fe2ceba3ffc9d3fe05c4455c1dd7a25e164c3f100f0d5fd43a7",
+      "bytes": 3160
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-bound-inputs-20261102.json",
+      "oldSha256": null,
+      "newSha256": "423f3493214e830b3103827f0a32add5bbb684deca74afd49a5b35cf54c52d73",
+      "bytes": 19496
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-bound-inputs-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "ffd7cd012653d21c28373c02c3d78d8a245abd5d23cd9d773d88a6ddf81b9506",
+      "bytes": 3838
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-capture-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "8f70eb10d5b572ba1260b987faa219c52225de448607129b30cd03fcceb6fe1c",
+      "bytes": 5714
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-clinical-20261102.log",
+      "oldSha256": null,
+      "newSha256": "1f009457654e0fe93ab02f80ad5b03d154b51dc800c68c2efb4f89c24f804f4e",
+      "bytes": 2286
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-clinical-before-option-parity-20261102.log",
+      "oldSha256": null,
+      "newSha256": "d46b746df7cae46f9fd301969b68d4c2102c7e44434d961ce2d9b6e6bf11fe85",
+      "bytes": 5956
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-cue-after-20261102.json",
+      "oldSha256": null,
+      "newSha256": "98fb87f7996b97756d03ea0bbe525a20380172889c05640705151c035131fa06",
+      "bytes": 6074140
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-cue-before-20261102.json",
+      "oldSha256": null,
+      "newSha256": "fd2127fd4a0ba0a3178f12e93191c84e40e43a797d6919dd373fe07840a83620",
+      "bytes": 6062157
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-cue-comparison-20261102.json",
+      "oldSha256": null,
+      "newSha256": "31520db2d7fbaa35bc5bdb09fcf2cde132fcedcec7fb2578f6da588562ddd023",
+      "bytes": 33082
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-domain-20261102.log",
+      "oldSha256": null,
+      "newSha256": "3543a280fb66871479e342ccd1a40fdabcc3d75f9647a848edef47e3ea21e13c",
+      "bytes": 30770
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-domain-before-protocol-clarification-20261102.log",
+      "oldSha256": null,
+      "newSha256": "e04fd5ab0ec33f32f5f0f16b56ef69c6566d42d555bdb8ca7a6169facec0cae5",
+      "bytes": 368
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-domain-focused-20261102.log",
+      "oldSha256": null,
+      "newSha256": "53a5c9ba7c49776b68be774781c37eaa305d351efe75160a398eacfad0b7668f",
+      "bytes": 2718
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-domain-focused-before-expectations-20261102.log",
+      "oldSha256": null,
+      "newSha256": "a8d0ca1c84579b3be447eb8dfe83880ee25fc5b007a2dd2d0f8f3652af1cb35e",
+      "bytes": 19718
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-domain-focused-parallel-timeout-20261102.log",
+      "oldSha256": null,
+      "newSha256": "cc883cf1239202d9a5953e71e1401e40cf9fddc90a1874cc79593ee6d25845c5",
+      "bytes": 6360
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-evidence-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "a439457aeb27eb5f600dd8e0794692248f3d4b96a6ac3c31abf8524b93af2c81",
+      "bytes": 3824
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-exact-records-20261102.json",
+      "oldSha256": null,
+      "newSha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "bytes": 3
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-fallbacks-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "d48fd0d2a98dae51ccc2a43d385c4dd1fae00943d90d1ecd88e99807e5a38a16",
+      "bytes": 3154
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-legacy-load-diagnosis-20261102.json",
+      "oldSha256": null,
+      "newSha256": "d86559bb6d93bafc4cb9a81582d9d59b6ca407bdb866f6cadf3f6049d47cd252",
+      "bytes": 96660
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-legacy-load-diagnosis-20261102.log",
+      "oldSha256": null,
+      "newSha256": "ce2bfb945f0f225c6f3d887c391fa05671e8b1e20482c909832681aba0e4c6ef",
+      "bytes": 1000
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-lint-tests-20261102.log",
+      "oldSha256": null,
+      "newSha256": "4ec1474bd997e790613fd3986dceed89ea6a0583e064c112051f9c3306aa72a1",
+      "bytes": 4460
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-owned-files-20261102.json",
+      "oldSha256": null,
+      "newSha256": "e19da1620262164ae91d4611e81af66387518e50d3fe4faf28a3e6bb49141269",
+      "bytes": 17402
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-packet-generation-20261102.log",
+      "oldSha256": null,
+      "newSha256": "67960f22335162547e42056811672c55bc3eddcd1c711d062958aa68e98f1c11",
+      "bytes": 6618
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-player-20261102.log",
+      "oldSha256": null,
+      "newSha256": "ac8a3622c28f37676e56b6e957f32dfc1601a87ae61dd24db8cf145a627fd8e8",
+      "bytes": 1150
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-report-qa-20261102.json",
+      "oldSha256": null,
+      "newSha256": "ace9b7b85eb1d1f49d1455b7ff9cf1e54f2af5e575dbeec187340a02c9eec225",
+      "bytes": 3898
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-report-qa-20261102.log",
+      "oldSha256": null,
+      "newSha256": "f1581c2c9e5188c67354412af9fe35effe153ddb62937d25f7469bcbb0edd645",
+      "bytes": 8060
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-scoped-diff-20261102.json",
+      "oldSha256": null,
+      "newSha256": "68b45842d2e256507752d2f2e15d058a04815dc5aa7a8467b0d038e9adc7e109",
+      "bytes": 3268
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-sequence-audit-20261102.json",
+      "oldSha256": null,
+      "newSha256": "39cba5344810a488b89f31bc786baa31b198189b8ae935fb0bed2c4584f3a8bf",
+      "bytes": 25818
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-sequence-audit-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "b14c929cfb1d1572513f45358512de586785669c5fd41207ba72a9966e6380f1",
+      "bytes": 3997
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-snapshot-change-review-20261102.json",
+      "oldSha256": null,
+      "newSha256": "a09472fa6184ac44403ced767fac38ff11700e918d9593a9fec13cc7cca0936c",
+      "bytes": 42780
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-snapshot-change-review-20261102.log",
+      "oldSha256": null,
+      "newSha256": "8a03fa2d2b05a6bf5bb54c8650ae9a4cb71e1789e5b1982d0b8467fc24c6ea2b",
+      "bytes": 6114
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-snapshot-serialization-20261102.log",
+      "oldSha256": null,
+      "newSha256": "65f7544105e1368806c05c1a71eda628442c0e105f11ee4f6fdddcf116f8dce1",
+      "bytes": 950
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-source-record-check-20261102.json",
+      "oldSha256": null,
+      "newSha256": "915976d9dbb2cf78215fadf449b9ffafcbcff0a58015abad1ff11823d1786820",
+      "bytes": 1981
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-source-record-check-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "fd84a9cc446a401c45f0b987d3b1a24b51d8ed292376d27d708b4accb4eed3b5",
+      "bytes": 2712
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-specs-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "22f0b1a883823600be8693c44d45ce866d86cfdcc4e4b29ea6f663f6490b9914",
+      "bytes": 56942
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-supply-candidate-20261102.json",
+      "oldSha256": null,
+      "newSha256": "9d9ed6c9acc66a3ca4870dc5c912013b37f8d9ec638176aef2d296388d0ca995",
+      "bytes": 63451
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-supply-candidate-20261102.log",
+      "oldSha256": null,
+      "newSha256": "6a47417db5f58acdd7c21f2d6e6e330753ec1010e1b48b63ca69d00bd2e2f420",
+      "bytes": 1552
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-supply-control-20261102.json",
+      "oldSha256": null,
+      "newSha256": "969eb458b63c1bc9cd4462e9575ed29e5ef313613293a4e9603241da2368ba94",
+      "bytes": 63370
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-supply-control-20261102.log",
+      "oldSha256": null,
+      "newSha256": "96ed5365f003f9321cedd330237f675b356fdb7a6c3c5fa4d669c44a70efaa36",
+      "bytes": 1546
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-timing-delta-20261102.json",
+      "oldSha256": null,
+      "newSha256": "c4035051ecbb859e346a350c2d1bc7cab5dfc1537412a1c6f645fcf47afeda33",
+      "bytes": 14552
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-timing-delta-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "ed09cc8b72c1a61063299b55c0774b7dc91c30c89f7fa6ef139e77cece5cae87",
+      "bytes": 2242
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-typecheck-20261102.log",
+      "oldSha256": null,
+      "newSha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "bytes": 1504
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-validation-20261102.json",
+      "oldSha256": null,
+      "newSha256": "562a7849423e270ce742eeb05cd8c6c9eedcc632b28a46f9bb4eaee96f99d742",
+      "bytes": 15746
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-validation-window-20261102.json",
+      "oldSha256": null,
+      "newSha256": "9e7fc92ed1f37d2de39e1063e36d1e808bcf09855a7c962daaf9c6d0d156d24f",
+      "bytes": 426022
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-validation-window-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "0f300baa70c09466b86b1a6c43eef196c9027db5665839325bdfe199d2bf6bbc",
+      "bytes": 2272
+    },
+    {
+      "path": "tools/question-quality/adversarial-r7-whole-bank-20261102.log",
+      "oldSha256": null,
+      "newSha256": "5d686b4b49c3ecb719d0d605c8b3621e8513ece5b69b20f3d208c901cda44902",
+      "bytes": 3160
+    },
+    {
+      "path": "tools/question-quality/adversarial-report-final-20261102.log",
+      "oldSha256": null,
+      "newSha256": "c3612a8c504527c0f70dc915b62bc7231361e2aab409b08f5069fe8298f1126c",
+      "bytes": 7558
+    },
+    {
+      "path": "tools/question-quality/adversarial-report-generation-20261102.log",
+      "oldSha256": null,
+      "newSha256": "200240b3b2e49b4ecc32ffc561305907a1e76d674ec058d3dc1210a6d86a73d0",
+      "bytes": 7558
+    },
+    {
+      "path": "tools/question-quality/adversarial-report-qa-20261102.json",
+      "oldSha256": null,
+      "newSha256": "b5359b04dfb0df77ae4220a056fbd2a13a794502916f8872029c215dec30fe86",
+      "bytes": 3221
+    },
+    {
+      "path": "tools/question-quality/adversarial-report-qa-20261102.log",
+      "oldSha256": null,
+      "newSha256": "23d5aca6293b910010a0278c70e333772c755255835a826126be7f8421d26732",
+      "bytes": 6668
+    },
+    {
+      "path": "tools/question-quality/adversarial-report-qa-final-20261102.log",
+      "oldSha256": null,
+      "newSha256": "23d5aca6293b910010a0278c70e333772c755255835a826126be7f8421d26732",
+      "bytes": 6668
+    },
+    {
+      "path": "tools/question-quality/adversarial-report-verified-20261102.log",
+      "oldSha256": null,
+      "newSha256": "9fbada17460400175dd455359f7b53c299f8cbdc79ff18f774463420cd21fb51",
+      "bytes": 7558
+    },
+    {
+      "path": "tools/question-quality/adversarial-specs-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "ba30ecc0b45b688f3dc645c4f6dd4310265af907e6dc15b04216ac235be8fafb",
+      "bytes": 96726
+    },
+    {
+      "path": "tools/question-quality/adversarial-typecheck-final-20261102.log",
+      "oldSha256": null,
+      "newSha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "bytes": 1504
+    },
+    {
+      "path": "tools/question-quality/adversarial-typecheck-verified-20261102.log",
+      "oldSha256": null,
+      "newSha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "bytes": 1504
+    },
+    {
+      "path": "tools/question-quality/adversarial-validation-20261102.json",
+      "oldSha256": null,
+      "newSha256": "a4b667d248c6a3098cf120c5d72dc3751ca4489cf4731a8ffe892ebb160b0ef8",
+      "bytes": 7204
+    },
+    {
+      "path": "tools/question-quality/adversarial-whole-bank-20261102.json",
+      "oldSha256": null,
+      "newSha256": "2a6305704e4caeaaa19cddd00c8219a26cf8766e61acdf32cafaaa665cb57704",
+      "bytes": 5872533
+    },
+    {
+      "path": "tools/question-quality/adversarial-whole-bank-final-20261102.log",
+      "oldSha256": null,
+      "newSha256": "ae50c480c725bf779ee91e65366c869667be91212b24c3f81a8a7b15f2d53a93",
+      "bytes": 3294
+    },
+    {
+      "path": "tools/question-quality/apply-adversarial-r5-cue-cleanup-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "a9fd485a043ef6bd19f10e37fc0a2f8f70f333d6bc3bc4c47cee698ef745c6ab",
+      "bytes": 3747
+    },
+    {
+      "path": "tools/question-quality/author-adversarial-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "45eb17def77538ffc222fad57e45b8a11a7e829faa9d248c7bb935361e1693de",
+      "bytes": 8259
+    },
+    {
+      "path": "tools/question-quality/author-adversarial-r3-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "9b4457b6a4b55ceb858b7ebdb9ff36688fd8bf6b24a0f4b932c7b8de4570e8c2",
+      "bytes": 8101
+    },
+    {
+      "path": "tools/question-quality/author-adversarial-r4-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "5aea907cb36e89d98ea1554a4db0d752a0a875a4e355341a8de3b8c2b1dbaf68",
+      "bytes": 9762
+    },
+    {
+      "path": "tools/question-quality/author-adversarial-r5-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "926462d18d4a461d558d8eb3e2e64f9e11ee7994eb628be9e568059595310631",
+      "bytes": 7585
+    },
+    {
+      "path": "tools/question-quality/author-adversarial-r6-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "53d00be46a92fa4df8506adb095d0b9dc5162ae9ae993d1c31e09dece0537698",
+      "bytes": 7585
+    },
+    {
+      "path": "tools/question-quality/author-adversarial-r7-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "3f15b9a05d0f9391565ea2353941a8ece299cd4082614489d667ecdad541ec67",
+      "bytes": 7648
+    },
+    {
+      "path": "tools/question-quality/bank.mjs",
+      "oldSha256": null,
+      "newSha256": "db8cf9a49dde442f932e817de65582d53ea194bb3a027f1cb81a31374cc7c3e1",
+      "bytes": 10274
+    },
+    {
+      "path": "tools/question-quality/before-lint-20261102.log",
+      "oldSha256": null,
+      "newSha256": "03770d305d590a6fb8a992eb0d6a2488474d9b042f13a3435dc99ed04db91932",
+      "bytes": 3354
+    },
+    {
+      "path": "tools/question-quality/bound-inputs-20261102.json",
+      "oldSha256": null,
+      "newSha256": "0312cac2c8f4adc2dba89e7b7fb9192dd2b11f93bfd54a648b0d249792180e32",
+      "bytes": 13680
+    },
+    {
+      "path": "tools/question-quality/build-adversarial-choice-records-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "39091aa64711dcab4639f133d76a5e901b2ac9a125107ee41eab0660e8689bca",
+      "bytes": 3051
+    },
+    {
+      "path": "tools/question-quality/build-adversarial-r3-choice-records-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "ad57f3d4b142f7db349aa1758157016399284d7b96395998d350eacb4720e44a",
+      "bytes": 2533
+    },
+    {
+      "path": "tools/question-quality/build-adversarial-r4-choice-records-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "e0123079f132972d2ea6ece45402d1ef308f19ee03acbffd2354b99409ddcc0a",
+      "bytes": 3007
+    },
+    {
+      "path": "tools/question-quality/build-adversarial-r5-choice-records-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "17a8c54831c80a264934b139948c639ac1e0b5098577e1795087049f7f432076",
+      "bytes": 2849
+    },
+    {
+      "path": "tools/question-quality/build-adversarial-r6-choice-records-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "5637414b67891d77e976b6992043728b47f8e1c257f20ca12e940ad381241a3c",
+      "bytes": 3174
+    },
+    {
+      "path": "tools/question-quality/build-revision-choice-records-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "3cb5b094debbd021d9535760a4e06e11ccedeff1a700005291ac4c25b7809316",
+      "bytes": 2836
+    },
+    {
+      "path": "tools/question-quality/clinical-review-validation-20261029.log",
+      "oldSha256": null,
+      "newSha256": "d5ca9a39fe3faa6e981e24054d9b9b3756bc29530f81923a8e4c252fb29c56cc",
+      "bytes": 2176
+    },
+    {
+      "path": "tools/question-quality/clinical-validation-20261029.log",
+      "oldSha256": null,
+      "newSha256": "6f1503123b04c304bc0b5092110cde72c609962cf41a1ab76061c62cb7d745a8",
+      "bytes": 2172
+    },
+    {
+      "path": "tools/question-quality/compare-adversarial-r4-supply-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "c9c4f99db82526a587be9123986614d505ed6ffd5f3104bf753053ef13e21fc4",
+      "bytes": 5195
+    },
+    {
+      "path": "tools/question-quality/compare-adversarial-r5-supply-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "c4dff7263f24dda4823441de7e712be9126bb4092fb33e8db66a90b5db674785",
+      "bytes": 5195
+    },
+    {
+      "path": "tools/question-quality/compare-adversarial-r6-supply-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "aa7bc83a8a4d89871ed138105cab3178ca683fe570d809795bda0bdff6f1aef3",
+      "bytes": 5773
+    },
+    {
+      "path": "tools/question-quality/compare-adversarial-r7-supply-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "1148540f9659583911e4a3150fde2234757a6a690ed37ebce0f8d97e220e6b4b",
+      "bytes": 5805
+    },
+    {
+      "path": "tools/question-quality/compare-batch1-timeouts-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "1be295c8ffef8f7976caafcfdff4f5eea18ab18a5fcb65a9cf75e51f75aa219c",
+      "bytes": 4926
+    },
+    {
+      "path": "tools/question-quality/compare-level-five-journeys.mjs",
+      "oldSha256": null,
+      "newSha256": "c05ce48f90abe58ac155c31429bf59263752f10cd8f04f92a4bc9c5192171f87",
+      "bytes": 8165
+    },
+    {
+      "path": "tools/question-quality/cue-comparison-20261102.json",
+      "oldSha256": null,
+      "newSha256": "710b0736763a02a95962181cb4dfd902e2b69ec300af3275274815db71f082a4",
+      "bytes": 16151
+    },
+    {
+      "path": "tools/question-quality/diagnose-adversarial-r4-legacy-load-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "c309df3a082600394ed5791c5845a0ea82206756f5c94b67c5b825fa30dc017a",
+      "bytes": 5570
+    },
+    {
+      "path": "tools/question-quality/diagnose-adversarial-r5-legacy-load-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "2fba1eec6a8dec1c6083ce4722598931bff7d654db67fe0afd98e99491f4b1c3",
+      "bytes": 6331
+    },
+    {
+      "path": "tools/question-quality/diagnose-adversarial-r6-l4-fairness-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "3ec0c8c18819d959cade34adf1803cf2b9a4286b65233d7d9cd1a2497e012c7b",
+      "bytes": 3273
+    },
+    {
+      "path": "tools/question-quality/diagnose-adversarial-r6-launch-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "242b3e1bd7b405fc4c509e8c33c2a099db01b945c4565cc546e670a02a1d348c",
+      "bytes": 1800
+    },
+    {
+      "path": "tools/question-quality/diagnose-adversarial-r6-legacy-load-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "97698400937ef0445f1a0e44064ba11793483d4f901c936beaef4edf9089376b",
+      "bytes": 6333
+    },
+    {
+      "path": "tools/question-quality/diagnose-adversarial-r7-legacy-load-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "c8b406281524b8a5348c3d90a45b3bc47bac3164ade32b365e11d00c151fdcf3",
+      "bytes": 6384
+    },
+    {
+      "path": "tools/question-quality/domain-additional-timeouts-isolated-20261102.log",
+      "oldSha256": null,
+      "newSha256": "6a3442d73138d13ff2829ac3f120081429b8e6587babe96caff91cdfeb502f4e",
+      "bytes": 5544
+    },
+    {
+      "path": "tools/question-quality/domain-garden-readonly-rerun-20261029.log",
+      "oldSha256": null,
+      "newSha256": "5eee1e6b9576fb22f33eff2e3d4275c3a4b57847ed58167bd1b799f9767202c7",
+      "bytes": 890
+    },
+    {
+      "path": "tools/question-quality/domain-review-validation-20261029.log",
+      "oldSha256": null,
+      "newSha256": "394e04e26570f42e5c2157cbca74aef7795b95b4e116b0fb5ed1adb2e6208433",
+      "bytes": 17674
+    },
+    {
+      "path": "tools/question-quality/domain-validation-20261029.log",
+      "oldSha256": null,
+      "newSha256": "d1fb9671eb491a5c4f41569e63bb12703d4a098278ef3aca00cd5aaf4c3a50ac",
+      "bytes": 17310
+    },
+    {
+      "path": "tools/question-quality/draft-lint-20261102.log",
+      "oldSha256": null,
+      "newSha256": "4a4497cc0bb7f3b3f0964e6273b5061e804bde7fca4a0c005c25d8a9685cd8fc",
+      "bytes": 3286
+    },
+    {
+      "path": "tools/question-quality/exact-revision-records-20261102.json",
+      "oldSha256": null,
+      "newSha256": "19dd774df7bbb343c40f7591eaec1211190d2a28a856578a31722410e2a23893",
+      "bytes": 6224
+    },
+    {
+      "path": "tools/question-quality/final-domain-exit-20261102.json",
+      "oldSha256": null,
+      "newSha256": "b1a83c5bfd16b23230cef7c9e8e5e24df46977cfcebea547880f2aac12780de7",
+      "bytes": 31
+    },
+    {
+      "path": "tools/question-quality/final-quick-exits-20261102.json",
+      "oldSha256": null,
+      "newSha256": "71cd919cdc181f78057f2c0e1de9d76eb6d8a27bce6e8a586669b8af9cf13de8",
+      "bytes": 73
+    },
+    {
+      "path": "tools/question-quality/final-validation-exits-20261102.json",
+      "oldSha256": null,
+      "newSha256": "c4a950db37b07ac808b1c7fb2abd0bd0cde365dfed733a7e38d60193a65b0475",
+      "bytes": 304
+    },
+    {
+      "path": "tools/question-quality/fixtures/adversarial-before-20261102.json",
+      "oldSha256": null,
+      "newSha256": "7575448fb589b4ff72b2f269439934fe664b9b61d7b99a9ea18b10dbfd4519e3",
+      "bytes": 20456461
+    },
+    {
+      "path": "tools/question-quality/fixtures/adversarial-extra-before-20261102.json",
+      "oldSha256": null,
+      "newSha256": "68b0b8c99798c996b4f15ffc9e24541902cc661d6158e0c324c94dd8d66cd188",
+      "bytes": 80247
+    },
+    {
+      "path": "tools/question-quality/fixtures/adversarial-r3-before-20261102.json",
+      "oldSha256": null,
+      "newSha256": "08e480f1a591407a34391e3669c8671b76a402287388d8140356e535fa5a019d",
+      "bytes": 14388895
+    },
+    {
+      "path": "tools/question-quality/fixtures/adversarial-r4-before-20261102.json",
+      "oldSha256": null,
+      "newSha256": "32b6d1bdde75e0511522cd08b65670e89c5d84db411db2058165275e6a654a54",
+      "bytes": 16826925
+    },
+    {
+      "path": "tools/question-quality/fixtures/adversarial-r4-domain-admission-original-tests-20261102.json",
+      "oldSha256": null,
+      "newSha256": "7ec3932b041e3be4f7529a0a2d1270c6f744577ffaf406f982b12da5d7bcea3b",
+      "bytes": 78034
+    },
+    {
+      "path": "tools/question-quality/fixtures/adversarial-r4-domain-original-tests-20261102.json",
+      "oldSha256": null,
+      "newSha256": "6fa7d4be649c76044dadfab3836f1d5ab03955a6e2a06ef7d17243e6f9d4574a",
+      "bytes": 217808
+    },
+    {
+      "path": "tools/question-quality/fixtures/adversarial-r5-before-20261102.json",
+      "oldSha256": null,
+      "newSha256": "77db5a7ba9be12e8bcab5fd7f545d275dbec6d1b000ef4236213394d71339b64",
+      "bytes": 17678229
+    },
+    {
+      "path": "tools/question-quality/fixtures/adversarial-r5-domain-original-tests-20261102.json",
+      "oldSha256": null,
+      "newSha256": "4005c4c5c23839f0ff7cc3d27ac5e1ecffe84df1ab5af56fe1d08a6db34c7662",
+      "bytes": 79461
+    },
+    {
+      "path": "tools/question-quality/fixtures/adversarial-r6-before-20261102.json",
+      "oldSha256": null,
+      "newSha256": "8dc775c5f9559a2cff2db3b0834b1bdea1c95fe2ef9a827fc3dc02c5f27bbe5d",
+      "bytes": 17748534
+    },
+    {
+      "path": "tools/question-quality/fixtures/adversarial-r6-late-tests-20261102.json",
+      "oldSha256": null,
+      "newSha256": "b4bb9a34d185d59f6b6502a5a2b8ebc41b242115b3099df9df94b45cf95e5210",
+      "bytes": 130609
+    },
+    {
+      "path": "tools/question-quality/fixtures/adversarial-r7-before-20261102.json",
+      "oldSha256": null,
+      "newSha256": "501125cb6f208ca72cc00e11f3ef4470a39a00f2ab78537747273302437102ea",
+      "bytes": 17880143
+    },
+    {
+      "path": "tools/question-quality/fixtures/integration-before-20261029.json",
+      "oldSha256": null,
+      "newSha256": "c6816c9f18e6a7bfda8d230914338d3e657992e088e4b7dd1f4318d269d722dc",
+      "bytes": 217650
+    },
+    {
+      "path": "tools/question-quality/fixtures/manager-review-before-20261029.json",
+      "oldSha256": null,
+      "newSha256": "b4decb2361464858b8dec1d2b0851f9ddb25dc87fef83536f476d3c8d25775e5",
+      "bytes": 735293
+    },
+    {
+      "path": "tools/question-quality/fixtures/owner-round1-before-20261029.json",
+      "oldSha256": null,
+      "newSha256": "aaaa6af7426dc29d95e5cfa808e2786f2374c3be1c38969a775ffbf6f9dea3fd",
+      "bytes": 783838
+    },
+    {
+      "path": "tools/question-quality/fixtures/pilot-before-20261028.json",
+      "oldSha256": null,
+      "newSha256": "e8d0ca468cc15e6f093b40278c47bc950db4d642e1f7eb97fc6a32df4475f452",
+      "bytes": 387235
+    },
+    {
+      "path": "tools/question-quality/fixtures/pilot-drafts-20261028.json",
+      "oldSha256": null,
+      "newSha256": "6f932cf9be3e4c000eff0ec4bd35ef406afc9fcab2cec676ba4e5674d8805d17",
+      "bytes": 26814
+    },
+    {
+      "path": "tools/question-quality/fixtures/round3-batch1-before-20261102.json",
+      "oldSha256": null,
+      "newSha256": "083e84baa57bc16517d698b23ba7fa48b52d1971a9f0a6c2981c536127d1c862",
+      "bytes": 3124879
+    },
+    {
+      "path": "tools/question-quality/fixtures/source-before-20261028.json",
+      "oldSha256": null,
+      "newSha256": "43451fbe4174d7ae9b73bf85ad8e4b59500a853253202e21d4e5e1065535f449",
+      "bytes": 272919
+    },
+    {
+      "path": "tools/question-quality/garden-baseline-live-review-20261029.log",
+      "oldSha256": null,
+      "newSha256": "f3b2be314520441622e1f4899a4116c830ac33b179bd0e6a7f1f59559586bd99",
+      "bytes": 2000
+    },
+    {
+      "path": "tools/question-quality/handoff-adversarial-r4-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "fc46a9da6a77013ca7dea74bfe4e35137a70614b07c8530589dd4366ed9b6e60",
+      "bytes": 20082
+    },
+    {
+      "path": "tools/question-quality/handoff-adversarial-r5-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "fd6c38b87748c0408764f4cf3e67fb1a8666685bf76ec5909cb959171f076a86",
+      "bytes": 18239
+    },
+    {
+      "path": "tools/question-quality/handoff-adversarial-r6-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "429856127a8ad9ffa3feee7a662b6952486b17e3647358223fe269040fb2bc91",
+      "bytes": 25953
+    },
+    {
+      "path": "tools/question-quality/handoff-adversarial-r7-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "a4c14110009f1246ad78f3ccafe07189ae8e00045142952d6e7e314e738f4c07",
+      "bytes": 22491
+    },
+    {
+      "path": "tools/question-quality/level-five-bound-inputs-20261029.json",
+      "oldSha256": null,
+      "newSha256": "b2f1c400a1b54ef91a427060a5463cc0a4cdb73ec574dc206e1274d718e0a704",
+      "bytes": 2911
+    },
+    {
+      "path": "tools/question-quality/level-five-garden-20261029.cpuprofile",
+      "oldSha256": null,
+      "newSha256": "fee2eb79075c54ad85d64738c32c9f6af89a501b1cb367a8b69cd1ff14fe6a41",
+      "bytes": 1480049
+    },
+    {
+      "path": "tools/question-quality/lint-review-validation-20261029.log",
+      "oldSha256": null,
+      "newSha256": "59a9734efe8b9db250c4c2a13f25256b83cd1a2a426295019cd83deca85e97b5",
+      "bytes": 6456
+    },
+    {
+      "path": "tools/question-quality/lint.mjs",
+      "oldSha256": null,
+      "newSha256": "a3161fd50dcf81153dc1c839fc179724813fa34b33cbf9b4c5aa39b81fd1eb3d",
+      "bytes": 20721
+    },
+    {
+      "path": "tools/question-quality/lint.test.mjs",
+      "oldSha256": null,
+      "newSha256": "0065834f9c5ed809c7d18266af399c35a6b7a0ad6bb6c6417ab02589a8736f95",
+      "bytes": 15572
+    },
+    {
+      "path": "tools/question-quality/owned-files-20261102.json",
+      "oldSha256": null,
+      "newSha256": "0f50b02ea5898fef733424dade78ff48ba1b3243a1daa5dbf8bcd8a7feedd6a7",
+      "bytes": 5605
+    },
+    {
+      "path": "tools/question-quality/owner-round2-review.mjs",
+      "oldSha256": null,
+      "newSha256": "b4091311ba536d808f192679c53bf21c7649de65bdaeca634838aa741515cdc6",
+      "bytes": 10457
+    },
+    {
+      "path": "tools/question-quality/pilot-review-totals-20261029.log",
+      "oldSha256": null,
+      "newSha256": "2d1ef76f2536f941837706c7ed4fae5bd17effd030b8ad8ff9c4d5d278ed198d",
+      "bytes": 5370
+    },
+    {
+      "path": "tools/question-quality/pilot-review.mjs",
+      "oldSha256": null,
+      "newSha256": "ea97ebdef3b16b380b0851500f67561c37fa8033e5b699b59620698165c02970",
+      "bytes": 10577
+    },
+    {
+      "path": "tools/question-quality/player-cloud-readonly-rerun-20261029.log",
+      "oldSha256": null,
+      "newSha256": "badf1d8b362b056d032abe06e45ae8c04b9ab093f3c26c112d5809eb86ef1758",
+      "bytes": 52006
+    },
+    {
+      "path": "tools/question-quality/player-review-validation-20261029.log",
+      "oldSha256": null,
+      "newSha256": "9ca1c1de0e541a846f769f8e7dca9fa8f6b6e98800e586c38cd2ec2888bc9bb1",
+      "bytes": 476040
+    },
+    {
+      "path": "tools/question-quality/player-touched-review-validation-20261029.log",
+      "oldSha256": null,
+      "newSha256": "6751059b6d183253a10d9860094c48a8a8d06b2a94c1d04dba1dde624494077d",
+      "bytes": 930
+    },
+    {
+      "path": "tools/question-quality/player-validation-20261029.log",
+      "oldSha256": null,
+      "newSha256": "5b30d4ef64726b653812cd96b82072d7a060869646b366a6f28f4a85f96cae89",
+      "bytes": 495042
+    },
+    {
+      "path": "tools/question-quality/question-cue-after-20261102.json",
+      "oldSha256": null,
+      "newSha256": "ea40d8ff4b777a2ef13f98c8396ef87491462a237f7f4f097790aa4bc5e86595",
+      "bytes": 5932584
+    },
+    {
+      "path": "tools/question-quality/question-cue-before-20261102.json",
+      "oldSha256": null,
+      "newSha256": "525acae06d3711db7e92d2cd02c0d724843a0c4756f9a75da0d81b93b75a601b",
+      "bytes": 6123106
+    },
+    {
+      "path": "tools/question-quality/question-cue-before-v4-20261102.json",
+      "oldSha256": null,
+      "newSha256": "93a66694f39cc6bc7bb7dd9036e8d0ae3cd7a810cd04f5d13999bc01f3da0b61",
+      "bytes": 6098301
+    },
+    {
+      "path": "tools/question-quality/question-cue-draft-20261102.json",
+      "oldSha256": null,
+      "newSha256": "3c2f2dedf967022082cff3c1bd29a9c4ec49a759aaf07a2ffeb0582ac48d2a66",
+      "bytes": 5942145
+    },
+    {
+      "path": "tools/question-quality/question-cue-report-20261029.json",
+      "oldSha256": null,
+      "newSha256": "75757f1c73cb59f94abacbc02109a5d514ee4ef617a5c66128e075153933846b",
+      "bytes": 6032098
+    },
+    {
+      "path": "tools/question-quality/README.md",
+      "oldSha256": null,
+      "newSha256": "cdd1f433806a0fc57917798d66e03d3a2be00b94405f142754cd7f5badc1eece",
+      "bytes": 21017
+    },
+    {
+      "path": "tools/question-quality/report-qa-20261102.json",
+      "oldSha256": null,
+      "newSha256": "3ef4459d536ebacedad31377f9298008c7770ada54c17cd31dc1af4c4781490f",
+      "bytes": 3549
+    },
+    {
+      "path": "tools/question-quality/report-qa-20261102.log",
+      "oldSha256": null,
+      "newSha256": "1d80f8d97bf1f09732511266649aa09915beef65ce8f160ed87454cd28ef3e09",
+      "bytes": 7346
+    },
+    {
+      "path": "tools/question-quality/report-review-qa-20261029.json",
+      "oldSha256": null,
+      "newSha256": "010ba78139409adcdae4bf60463040f0c15f0a30543c5e3d2b2b5f2028f35b50",
+      "bytes": 3538
+    },
+    {
+      "path": "tools/question-quality/report.mjs",
+      "oldSha256": null,
+      "newSha256": "bf8dd69f836bbd115b67ea9a54ee4fa92a71bb017acfea14ae898d3b684b14e6",
+      "bytes": 6558
+    },
+    {
+      "path": "tools/question-quality/review-adversarial-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "bd2a428d771b56bf017d906e0768047ea0ccd62c0f5c797f0c5c5c2fa10ace76",
+      "bytes": 11464
+    },
+    {
+      "path": "tools/question-quality/review-adversarial-r3-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "011cd70879731c314d969f7fd3611ae7454188d81bc78d16aa9598a51bbf6c5b",
+      "bytes": 11931
+    },
+    {
+      "path": "tools/question-quality/review-adversarial-r4-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "e7725b45052a885b9cc0963bf1c6465c5ad6be7b7d568a7ca7f58add94b685cf",
+      "bytes": 14652
+    },
+    {
+      "path": "tools/question-quality/review-adversarial-r4-snapshots-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "a42499e40344774350bc5bcba23178c0adceb35a5f506c5fac75ecbbf3a8100c",
+      "bytes": 2955
+    },
+    {
+      "path": "tools/question-quality/review-adversarial-r5-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "59e1eb14cdda7c5aff2e9d58158da633a05d0a327aae8222466241dae85aec5b",
+      "bytes": 13665
+    },
+    {
+      "path": "tools/question-quality/review-adversarial-r5-snapshots-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "58e630ec754f5d55440a7e12139aa6dc24e9c701c93ab12ab7d48cc32ce087da",
+      "bytes": 2964
+    },
+    {
+      "path": "tools/question-quality/review-adversarial-r6-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "85c910ac6a81b3b1dc074bdfcee9463c11ae4a45b0c376d0a53012b9433cde87",
+      "bytes": 13815
+    },
+    {
+      "path": "tools/question-quality/review-adversarial-r6-late-expectations-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "af57f7b9f690c6e9f245a7e48968eeeaa8135717c7bf3d1d5339034b815196aa",
+      "bytes": 2718
+    },
+    {
+      "path": "tools/question-quality/review-adversarial-r6-snapshots-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "a5df0ce051b0e1b781e7d8819e7a1795f9347e44e7d9eaa043b1d780079a840a",
+      "bytes": 3085
+    },
+    {
+      "path": "tools/question-quality/review-adversarial-r7-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "6b779748337436a08f4f3875e7ac950c5e8d71417e9b57512e3081c9429e7d56",
+      "bytes": 14209
+    },
+    {
+      "path": "tools/question-quality/review-adversarial-r7-snapshots-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "f24f08e20cdfe5f02656fc41f856a81a93ef101d6176eda99e2f68387fce1d0e",
+      "bytes": 2986
+    },
+    {
+      "path": "tools/question-quality/review-generation-20261102.log",
+      "oldSha256": null,
+      "newSha256": "bd004eaf8aaf3a664b8e73e275b9fbe5b18281c0971a1789a484769f67761e65",
+      "bytes": 35538
+    },
+    {
+      "path": "tools/question-quality/review-round3-batch1-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "7c1343d233d0fc1c2672b77763761fb8854dc4a70bf1579dcecf2e177c92ca9b",
+      "bytes": 408
+    },
+    {
+      "path": "tools/question-quality/review-validation-exits-20261029.json",
+      "oldSha256": null,
+      "newSha256": "7d799e85dea5b86b102021d74410bb38562c8651af8b43a9602023d2bb0e59c0",
+      "bytes": 231
+    },
+    {
+      "path": "tools/question-quality/round3-batch1-author.mjs",
+      "oldSha256": null,
+      "newSha256": "68f7c2ba8f6ad84e80a78555ec9c5d3fdee72feac8d18e47e91a6a16252823ef",
+      "bytes": 54941
+    },
+    {
+      "path": "tools/question-quality/round3-clinical-first-20261102.log",
+      "oldSha256": null,
+      "newSha256": "128cb90b871b19d9d12f277e17aee204e1e52a83ba7cf4cfe003ed1c437fa595",
+      "bytes": 73552
+    },
+    {
+      "path": "tools/question-quality/round3-clinical-second-20261102.log",
+      "oldSha256": null,
+      "newSha256": "844be81f17e04e6f0160be44f7e982c9c25f736018fbd91fb3324e6c06d31bc4",
+      "bytes": 2194
+    },
+    {
+      "path": "tools/question-quality/round3-clinical-typecheck-20261102.log",
+      "oldSha256": null,
+      "newSha256": "62d923fcc05655837b745a1e42c91ffada9f27a82c422de1fb3dead69d30f126",
+      "bytes": 180
+    },
+    {
+      "path": "tools/question-quality/round3-clinical-validation-20261102.log",
+      "oldSha256": null,
+      "newSha256": "cc9f45da2da2b234ff927a2538a52b12a0ed1fdde97f340ba5adec7b1123933a",
+      "bytes": 2194
+    },
+    {
+      "path": "tools/question-quality/round3-domain-current-flows-20261102.log",
+      "oldSha256": null,
+      "newSha256": "b22dcc8a7b0872653ec4501b34a1843f13efcb99e44c3ae66dc9cab23fd38f20",
+      "bytes": 1432
+    },
+    {
+      "path": "tools/question-quality/round3-domain-final-20261102.log",
+      "oldSha256": null,
+      "newSha256": "e831bed4719e8236004ed0b338d78e03295b2aaef924eadf15bae4a110719dcb",
+      "bytes": 26826
+    },
+    {
+      "path": "tools/question-quality/round3-domain-final-source-20261102.log",
+      "oldSha256": null,
+      "newSha256": "c152e9ca396047baf429f89d801a6112506004081f31618fc39bbdfeeb2b275d",
+      "bytes": 21916
+    },
+    {
+      "path": "tools/question-quality/round3-domain-focused-20261102.log",
+      "oldSha256": null,
+      "newSha256": "cbfdcb1c0aded769969c049a5691c30cc041b2005545b60104f69416f841c968",
+      "bytes": 818
+    },
+    {
+      "path": "tools/question-quality/round3-domain-validation-20261102.log",
+      "oldSha256": null,
+      "newSha256": "d6f58a386217bd388e06ec0260f1c2a4ffbe6a28f706204eb53eb8f49da443b6",
+      "bytes": 26524
+    },
+    {
+      "path": "tools/question-quality/round3-domain-verified-20261102.log",
+      "oldSha256": null,
+      "newSha256": "7326f6c9085900e90bfe5221a365b83d4d17973ae34d96c8b882b8b2c13a0789",
+      "bytes": 17740
+    },
+    {
+      "path": "tools/question-quality/round3-lint-final-20261102.log",
+      "oldSha256": null,
+      "newSha256": "0e486e37e194e5e003576aa2115962cba76816861b9433aa1d2f99eef7838d20",
+      "bytes": 4084
+    },
+    {
+      "path": "tools/question-quality/round3-lint-validation-20261102.log",
+      "oldSha256": null,
+      "newSha256": "b2db109f43e9626c0c9b79d02ddf83bc5c51d1d4ed098b854e2422839d52b343",
+      "bytes": 4084
+    },
+    {
+      "path": "tools/question-quality/round3-player-touched-20261102.log",
+      "oldSha256": null,
+      "newSha256": "962376dbd5a38d32c950c3deafdd35fef49f1da190774be36426c433f67e0065",
+      "bytes": 930
+    },
+    {
+      "path": "tools/question-quality/round3-typecheck-20261102.log",
+      "oldSha256": null,
+      "newSha256": "0402528e1225df03412ed8f9c0c99f30d6522a5a9375d006f777ecf78e18c928",
+      "bytes": 3290
+    },
+    {
+      "path": "tools/question-quality/round3-typecheck-final-20261102.log",
+      "oldSha256": null,
+      "newSha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "bytes": 1504
+    },
+    {
+      "path": "tools/question-quality/spatial-performance-candidate-20261029.mjs",
+      "oldSha256": null,
+      "newSha256": "22639b5c6e3822a6e386026ae354f8e8dcab945648cd76c9ffc86c4b8e11505c",
+      "bytes": 3736
+    },
+    {
+      "path": "tools/question-quality/typecheck-review-validation-20261029.log",
+      "oldSha256": null,
+      "newSha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "bytes": 1504
+    },
+    {
+      "path": "tools/question-quality/typecheck-validation-20261029.log",
+      "oldSha256": null,
+      "newSha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "bytes": 1504
+    },
+    {
+      "path": "tools/question-quality/validation-summary-20261102.json",
+      "oldSha256": null,
+      "newSha256": "ac6ae71e74e3d8de0a2505fa2fad6df5e89a6ad583a7c4426eef815ccd0bb7eb",
+      "bytes": 7316
+    },
+    {
+      "path": "tools/question-quality/verify-adversarial-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "e3527b0b9e303a0d3102017c1792ecd895690ddf1c938e444c8a0be28c67fefa",
+      "bytes": 9085
+    },
+    {
+      "path": "tools/question-quality/verify-adversarial-r3-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "e25ba601b4faed359172c6908081bca94c16e6a0abc5ab50587b9f81bf897676",
+      "bytes": 9471
+    },
+    {
+      "path": "tools/question-quality/verify-adversarial-r4-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "a79b9ddb0ef384e798f7a1b0c8a28dfaae4a20b513df211ac83bd1a25ed74c64",
+      "bytes": 10000
+    },
+    {
+      "path": "tools/question-quality/verify-adversarial-r5-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "f7e4ea8bc70a49d1f9bb768b4283f79f30a63845a95bb074b6807fa4a5bdc0a8",
+      "bytes": 10418
+    },
+    {
+      "path": "tools/question-quality/verify-adversarial-r6-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "5631fa0e39323d50c9f769415215159db3755be72990064d7b32b8b9e3eb6795",
+      "bytes": 10721
+    },
+    {
+      "path": "tools/question-quality/verify-adversarial-r6-scope-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "f2828d47be981e371fd105ebaf4d80eee2d49e2d32f6e733c69aa483c19561ff",
+      "bytes": 4636
+    },
+    {
+      "path": "tools/question-quality/verify-adversarial-r7-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "2de90c2fc83b6c439aeb99bb40c9e9759394b2c51e2bc4516667e24623c09e61",
+      "bytes": 11852
+    },
+    {
+      "path": "tools/question-quality/verify-adversarial-r7-scope-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "58da7af9ebb6eadfd3da10412cbc9ff469385ee171eb68b7d3313b679f1c34a4",
+      "bytes": 5131
+    },
+    {
+      "path": "tools/question-quality/verify-review-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "09a1bab82502076acc24b7bb59d23c31fae1d74abdaca9f813641a0ab24bcc3c",
+      "bytes": 142
+    },
+    {
+      "path": "tools/question-quality/whole-bank-lint-20261102.log",
+      "oldSha256": null,
+      "newSha256": "254715f360644c49380f64833994042a829c2d8daba59a21a4c5cc72cb21e48d",
+      "bytes": 3400
+    },
+    {
+      "path": "tools/question-quality/whole-bank-lint-final-20261102.log",
+      "oldSha256": null,
+      "newSha256": "6c8dc22f75d3ca58159d077ff96b5b9b38a45dcc43b82c0dcd2087fb5aca9d66",
+      "bytes": 3380
+    },
+    {
+      "path": "tools/question-quality/write-adversarial-docs-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "f5bb474db1a98a85c157f96224004836c3f0c56657ea23fa7a23692cb3cebe7c",
+      "bytes": 9677
+    },
+    {
+      "path": "tools/question-quality/write-adversarial-r3-docs-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "e2baedab07fd060ca69bfdd61cb80b480ff993d942899977685d07c25b3163ad",
+      "bytes": 8958
+    },
+    {
+      "path": "tools/question-quality/write-adversarial-r4-docs-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "bc7557704edc688d11b16bb83336ccc85e0740afdb55a611e8552ab1690e0a51",
+      "bytes": 14568
+    },
+    {
+      "path": "tools/question-quality/write-adversarial-r5-docs-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "cc1e8025b1393dc635d788cd50c1aaec2bf6aac52dcf7157a3dec8aae9597628",
+      "bytes": 8603
+    },
+    {
+      "path": "tools/question-quality/write-adversarial-r6-docs-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "af903d0f703700aa22f84f49cd00e7e2f7c5fefd25afe3d3905800de97a85211",
+      "bytes": 8434
+    },
+    {
+      "path": "tools/question-quality/write-adversarial-r7-docs-20261102.mjs",
+      "oldSha256": null,
+      "newSha256": "2e5d6933af93d2b4040de4d5316b8f7a0757443361d1684aca91a9df3626e704",
+      "bytes": 7484
+    }
+  ]
+}

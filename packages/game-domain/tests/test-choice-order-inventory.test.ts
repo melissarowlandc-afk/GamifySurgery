@@ -1,11 +1,14 @@
 import { PROTOTYPE_BALANCE_RELEASE, getServiceIncomeForRoute } from "@gamify-surgery/balance-config";
-import { ANSWER_CHOICE_TIMING_REGISTRY, SYNTHETIC_CLINICAL_RELEASE } from "@gamify-surgery/clinical-content";
+import { ANSWER_CHOICE_TIMING_REGISTRY, SYNTHETIC_CLINICAL_RELEASE, QUESTION_QUALITY_SOURCE_RELEASE, QUESTION_QUALITY_PRE_BATCH1_RELEASE, QUESTION_QUALITY_PRE_ADVERSARIAL_RELEASE, QUESTION_QUALITY_PRE_ADVERSARIAL_R3_RELEASE, QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE, QUESTION_QUALITY_PRE_ADVERSARIAL_R5_RELEASE, QUESTION_QUALITY_PRE_ADVERSARIAL_R7_RELEASE, QUESTION_QUALITY_PRE_ADVERSARIAL_R6_RELEASE, QUESTION_QUALITY_REVISIONS, QUESTION_QUALITY_CURRENT_REVISIONS, QUESTION_QUALITY_ADVERSARIAL_REVISIONS, QUESTION_QUALITY_ADVERSARIAL_R3_REVISIONS, QUESTION_QUALITY_ADVERSARIAL_R4_REVISIONS, QUESTION_QUALITY_ADVERSARIAL_R5_REVISIONS, QUESTION_QUALITY_ADVERSARIAL_R7_REVISIONS, QUESTION_QUALITY_ADVERSARIAL_R6_REVISIONS, QUESTION_QUALITY_PRIOR_REVISIONS, QUESTION_QUALITY_OWNER_ROUND1_REVISIONS, QUESTION_QUALITY_OWNER_ROUND2_REVISIONS, QUESTION_QUALITY_RETAINED_REVISIONS, QUESTION_QUALITY_BATCH1_REVISIONS, applyQuestionQualityRevisions } from "@gamify-surgery/clinical-content";
 import { describe, expect, it } from "vitest";
 import { EXACT_TEST_CHOICE_ORDER_RECORDS, getExactTestChoiceOrderRecord } from "../src/test-choice-orders";
 import type { EncounterState } from "../src/types";
 
 const keyOf = (caseId: string, nodeId: string, questionVariantId: string, choiceId: string) =>
   `${caseId}|${nodeId}|${questionVariantId}|${choiceId}`;
+const priorDraftCases = applyQuestionQualityRevisions(QUESTION_QUALITY_SOURCE_RELEASE.cases, QUESTION_QUALITY_PRIOR_REVISIONS);
+const ownerRoundOneCases = applyQuestionQualityRevisions(QUESTION_QUALITY_SOURCE_RELEASE.cases, QUESTION_QUALITY_OWNER_ROUND1_REVISIONS);
+const ownerRoundTwoCases = applyQuestionQualityRevisions(QUESTION_QUALITY_SOURCE_RELEASE.cases, QUESTION_QUALITY_OWNER_ROUND2_REVISIONS);
 
 const serviceRoutes = new Map(
   PROTOTYPE_BALANCE_RELEASE.services.map((service) => [service.id, new Map(service.routes.map((route) => [route.id, route]))]),
@@ -17,8 +20,11 @@ describe("active-release test-choice order inventory", () => {
       const entry = ANSWER_CHOICE_TIMING_REGISTRY.find((candidate) => candidate.caseId === clinicalCase.id && candidate.nodeId === node.id && candidate.questionVariantId === node.questionVariantId);
       return entry?.classification.kind === "test_choices" ? entry.classification.choices.map((choice) => ({ isTerminal: index === clinicalCase.decisionNodes.length - 1, isCorrect: node.answerChoices.find((candidate) => candidate.id === choice.choiceId)?.isCorrect === true, timing: choice.timing })) : [];
     })).filter((item) => item.timing.kind === "test");
-    expect(timed).toHaveLength(1480);
-    expect(timed.filter((item) => item.isTerminal && item.isCorrect)).toHaveLength(139);
+    // Round five adds 15 net testing-option previews to the current application sets.
+    // All earlier labels, timings and exact records remain bound to their frozen
+    // versions; no new duration or terminal execution rule is introduced.
+    expect(timed).toHaveLength(1467);
+    expect(timed.filter((item) => item.isTerminal && item.isCorrect)).toHaveLength(138);
   });
 
   it("classifies every timing.test choice and permits incorrect records only as explicit non-execution", () => {
@@ -68,9 +74,15 @@ describe("active-release test-choice order inventory", () => {
     expect(seenCorrectTestKeys.size).toBeGreaterThan(0);
   });
 
-  it("binds every exact record to an active choice, exact timing metadata, and valid routes", () => {
+  it("binds every exact record to an active or explicitly retained frozen choice, exact timing metadata, and valid routes", () => {
     const activeChoices = new Map<string, { label: string; correct: boolean; timingProfileId: string }>();
-    for (const clinicalCase of SYNTHETIC_CLINICAL_RELEASE.cases) {
+    const retained = new Set([...QUESTION_QUALITY_REVISIONS, ...QUESTION_QUALITY_BATCH1_REVISIONS, ...QUESTION_QUALITY_ADVERSARIAL_REVISIONS, ...QUESTION_QUALITY_ADVERSARIAL_R3_REVISIONS, ...QUESTION_QUALITY_ADVERSARIAL_R4_REVISIONS, ...QUESTION_QUALITY_ADVERSARIAL_R5_REVISIONS, ...QUESTION_QUALITY_ADVERSARIAL_R6_REVISIONS, ...QUESTION_QUALITY_ADVERSARIAL_R7_REVISIONS].map(r => keyOf(r.caseId, r.nodeId, r.previousQuestionVariantId, "")));
+    const legacyCases = QUESTION_QUALITY_SOURCE_RELEASE.cases.map(c => ({ ...c,
+      decisionNodes: c.decisionNodes.filter(n => retained.has(keyOf(c.id, n.id, n.questionVariantId, ""))),
+    })).filter(c => c.decisionNodes.length);
+    const retainedDraftIds = new Set(QUESTION_QUALITY_RETAINED_REVISIONS.map(r => r.questionVariantId));
+    const retainedDraftCases = [...priorDraftCases, ...ownerRoundOneCases, ...ownerRoundTwoCases].map(c => ({ ...c, decisionNodes: c.decisionNodes.filter(n => retainedDraftIds.has(n.questionVariantId)) })).filter(c => c.decisionNodes.length);
+    for (const clinicalCase of [...SYNTHETIC_CLINICAL_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R7_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R6_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R5_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R3_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_RELEASE.cases, ...QUESTION_QUALITY_PRE_BATCH1_RELEASE.cases, ...legacyCases, ...retainedDraftCases]) {
       for (const node of clinicalCase.decisionNodes) {
         const timingEntry = ANSWER_CHOICE_TIMING_REGISTRY.find((entry) => entry.caseId === clinicalCase.id && entry.nodeId === node.id && entry.questionVariantId === node.questionVariantId);
         if (timingEntry?.classification.kind !== "test_choices") continue;
@@ -98,6 +110,60 @@ describe("active-release test-choice order inventory", () => {
           }
         }
         if (record.disposition.kind === "test_only_continuation") expect(record.disposition.externalRemainder.length).toBeGreaterThan(0);
+      }
+    }
+  });
+
+  it("preserves the four original and prior-draft keyed contracts and binds their exact revised identities", () => {
+    const expected = [
+      ["A02", "not_executed", "external_only"],
+      ["A06-context", "terminal_service", "service.diagnostic_breast_imaging"],
+      ["A17", "terminal_service", "service.basic_labs"],
+      ["A28-context", "not_executed", "specialist_or_unsupported_service"],
+    ] as const;
+    for (const [auditId, kind, detail] of expected) {
+      const r = QUESTION_QUALITY_CURRENT_REVISIONS.find(r => r.auditId === auditId)!;
+      const priorCase = QUESTION_QUALITY_SOURCE_RELEASE.cases.find(c => c.id === r.caseId)!;
+      const liveCase = SYNTHETIC_CLINICAL_RELEASE.cases.find(c => c.id === r.caseId)!;
+      const priorCaseDraft = priorDraftCases.find(c => c.id === r.caseId)!;
+      const oldNode = priorCase.decisionNodes.find(n => n.id === r.nodeId)!;
+      const liveNode = liveCase.decisionNodes.find(n => n.id === r.nodeId)!;
+      const choiceId = liveNode.answerChoices.find(c => c.isCorrect)!.id;
+      const old = getExactTestChoiceOrderRecord({ frozenCase: priorCase } as EncounterState, oldNode, choiceId);
+      const current = getExactTestChoiceOrderRecord({ frozenCase: liveCase } as EncounterState, liveNode, choiceId);
+      const priorNode = priorCaseDraft.decisionNodes.find(n => n.id === r.nodeId)!;
+      const prior = getExactTestChoiceOrderRecord({ frozenCase: priorCaseDraft } as EncounterState, priorNode, choiceId);
+      expect(old, auditId + " frozen contract").not.toBeNull();
+      expect(current, auditId + " revised contract").not.toBeNull();
+      expect(prior, auditId + " prior draft frozen contract").not.toBeNull();
+      expect(current!.questionVariantId).toBe(r.questionVariantId);
+      expect(current!.choiceLabel).toBe(liveNode.answerChoices.find(c => c.id === choiceId)!.label);
+      expect(current!.timingProfileId).toBe(old!.timingProfileId);
+      expect(current!.disposition).toEqual(old!.disposition);
+      expect(prior!.disposition).toEqual(old!.disposition);
+      expect(prior!.timingProfileId).toBe(old!.timingProfileId);
+      expect(current!.disposition.kind).toBe(kind);
+      expect(current!.disposition.kind === "not_executed" ? current!.disposition.reason : "serviceId" in current!.disposition ? current!.disposition.serviceId : null).toBe(detail);
+      expect(liveNode.primaryConceptId).toBe(oldNode.primaryConceptId);
+    }
+  });
+
+  it("preserves every batch choice record disposition and binds new labels to exact identities", () => {
+    for (const r of QUESTION_QUALITY_BATCH1_REVISIONS) {
+      const frozen = QUESTION_QUALITY_SOURCE_RELEASE.cases.find(c => c.id === r.caseId)!;
+      const live = QUESTION_QUALITY_PRE_ADVERSARIAL_RELEASE.cases.find(c => c.id === r.caseId)!;
+      const oldNode = frozen.decisionNodes.find(n => n.id === r.nodeId)!;
+      const currentNode = live.decisionNodes.find(n => n.id === r.nodeId)!;
+      for (const choice of currentNode.answerChoices) {
+        const sourceId = r.choiceSourceIds?.[choice.id] ?? choice.id;
+        const old = getExactTestChoiceOrderRecord({ frozenCase: frozen } as EncounterState, oldNode, sourceId);
+        const current = getExactTestChoiceOrderRecord({ frozenCase: live } as EncounterState, currentNode, choice.id);
+        if (!old) { expect(current).toBeNull(); continue; } // The existing gate may classify the test.
+        expect(current, r.auditId + "/" + choice.id).not.toBeNull();
+        expect(current!.disposition).toEqual(old.disposition);
+        expect(current!.choiceLabel).toBe(choice.label);
+        expect(current!.questionVariantId).toBe(r.questionVariantId);
+        expect(current!.timingProfileId).toBe(r.timingProfileOverrides?.[choice.id] ?? old.timingProfileId);
       }
     }
   });

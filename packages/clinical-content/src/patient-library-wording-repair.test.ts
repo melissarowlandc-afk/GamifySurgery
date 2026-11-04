@@ -11,6 +11,7 @@ import {
 } from "./patient-library-wording-repair";
 import {
   PATIENT_LIBRARY_WORDING_REPAIR_SOURCE_CASES,
+  QUESTION_QUALITY_SOURCE_RELEASE,
   SYNTHETIC_CLINICAL_RELEASE,
 } from "./synthetic-content";
 
@@ -102,7 +103,9 @@ describe("full patient-library wording repair", () => {
 
   it("marks every repaired complaint and all changed narrative text for clinician review", () => {
     const historicalCaseIds = new Set(sourceCases.map((clinicalCase) => clinicalCase.id));
-    const historicalCases = SYNTHETIC_CLINICAL_RELEASE.cases.filter(
+    // Prove the original presentation-only receipt independently of later,
+    // explicitly versioned question revisions (covered by their own tests).
+    const historicalCases = QUESTION_QUALITY_SOURCE_RELEASE.cases.filter(
       (clinicalCase) => historicalCaseIds.has(clinicalCase.id),
     );
     expect(historicalCases).toHaveLength(298);

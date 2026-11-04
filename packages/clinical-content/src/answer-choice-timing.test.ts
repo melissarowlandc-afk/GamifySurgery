@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ANSWER_CHOICE_TIMING_REGISTRY } from "./answer-choice-timing";
+import { ANSWER_CHOICE_TIMING_REGISTRY, LEGACY_QUESTION_QUALITY_TIMING_ENTRIES, RETAINED_QUESTION_QUALITY_DRAFT_TIMING_ENTRIES, LEGACY_QUESTION_QUALITY_BATCH1_TIMING_ENTRIES, QUESTION_QUALITY_ADVERSARIAL_TIMING_ENTRIES, QUESTION_QUALITY_ADVERSARIAL_R3_TIMING_ENTRIES, QUESTION_QUALITY_ADVERSARIAL_R4_TIMING_ENTRIES, QUESTION_QUALITY_ADVERSARIAL_R5_TIMING_ENTRIES, QUESTION_QUALITY_ADVERSARIAL_R6_TIMING_ENTRIES, QUESTION_QUALITY_ADVERSARIAL_R7_TIMING_ENTRIES } from "./answer-choice-timing";
 import { SYNTHETIC_CLINICAL_RELEASE } from "./synthetic-content";
 
 describe("admitted answer-choice timing classification", () => {
@@ -7,7 +7,9 @@ describe("admitted answer-choice timing classification", () => {
     const nodes = SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((clinicalCase) =>
       clinicalCase.decisionNodes.map((node) => ({ clinicalCase, node })),
     );
-    expect(ANSWER_CHOICE_TIMING_REGISTRY).toHaveLength(nodes.length);
+    expect(ANSWER_CHOICE_TIMING_REGISTRY).toHaveLength(nodes.length + LEGACY_QUESTION_QUALITY_TIMING_ENTRIES.length + RETAINED_QUESTION_QUALITY_DRAFT_TIMING_ENTRIES.length + LEGACY_QUESTION_QUALITY_BATCH1_TIMING_ENTRIES.length + QUESTION_QUALITY_ADVERSARIAL_TIMING_ENTRIES.length + QUESTION_QUALITY_ADVERSARIAL_R3_TIMING_ENTRIES.length + QUESTION_QUALITY_ADVERSARIAL_R4_TIMING_ENTRIES.length + QUESTION_QUALITY_ADVERSARIAL_R5_TIMING_ENTRIES.length + QUESTION_QUALITY_ADVERSARIAL_R6_TIMING_ENTRIES.length + QUESTION_QUALITY_ADVERSARIAL_R7_TIMING_ENTRIES.length);
+    const identities = ANSWER_CHOICE_TIMING_REGISTRY.map(entry => JSON.stringify([entry.caseId, entry.nodeId, entry.questionVariantId]));
+    expect(new Set(identities).size).toBe(identities.length);
 
     for (const { clinicalCase, node } of nodes) {
       const matches = ANSWER_CHOICE_TIMING_REGISTRY.filter(

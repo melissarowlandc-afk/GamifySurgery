@@ -2,12 +2,14 @@
 import {writeFileSync} from "node:fs";
 import {resolve} from "node:path";
 import {afterAll,describe,expect,it} from "vitest";
-import {GS028_20261007_LEVEL3_CASES as cases,GS028_20261007_LEVEL3_TESTED_CONCEPTS as concepts,GS028_20261007_LEVEL3_TIMING_ENTRIES as timings,type SyntheticClinicalCase} from "@gamify-surgery/clinical-content";
+import {GS028_20261007_LEVEL3_CASES as authoredCases,GS028_20261007_LEVEL3_TESTED_CONCEPTS as concepts,SYNTHETIC_CLINICAL_RELEASE,ANSWER_CHOICE_TIMING_REGISTRY,type SyntheticClinicalCase} from "@gamify-surgery/clinical-content";
 import {PROTOTYPE_DOMAIN_CONTEXT,createInitialGameState,createPatientDisplayName,deserializeGameState,deterministicInteger,RANDOM_STREAMS,gameReducer,getAnswerChoiceServicePreview,getCurrentCapabilities,getCurrentQuestion,selectRoutineClinicalCase,serializeGameState,type ConceptReviewEvidence,type GameState} from "../src";
 import {EXACT_TEST_CHOICE_ORDER_RECORDS} from "../src/test-choice-orders";
+const cases = authoredCases.map(original => SYNTHETIC_CLINICAL_RELEASE.cases.find(candidate => candidate.id === original.id)! as typeof original);
+const timings = ANSWER_CHOICE_TIMING_REGISTRY.filter(t => cases.some(c => c.id === t.caseId && c.decisionNodes.some(n => n.id === t.nodeId && n.questionVariantId === t.questionVariantId)));
 const REAL_MS=1_800_000_000_000;
 const paired=cases.filter(c=>c.decisionNodes.length===2);
-const exact=EXACT_TEST_CHOICE_ORDER_RECORDS.filter(c=>c.caseId.startsWith("case.gs028g."));
+const exact=EXACT_TEST_CHOICE_ORDER_RECORDS.filter(r=>cases.some(c=>c.id===r.caseId&&c.decisionNodes.some(n=>n.id===r.nodeId&&n.questionVariantId===r.questionVariantId)));
 const coverage=new Map<string,Set<string>>();const frozenProfiles=new Set<string>();
 const choicePreviewEvidence=new Map<string,unknown>();const eligibilityEvidence:unknown[]=[];
 const clone=<T,>(v:T):T=>JSON.parse(JSON.stringify(v)) as T;
@@ -184,7 +186,8 @@ function complete(c:SyntheticClinicalCase,path:"correct"|0|1|2,index:number){
  for(let i=0;i<c.decisionNodes.length;i++){
   state=ready(state,id,`${id}.${i}.ready`);const node=c.decisionNodes[i]!;
   expect(getCurrentQuestion(state,id)?.node.id).toBe(node.id);assertPreviews(state,id,"level3");
-  const key=path==="correct"?node.answerChoices.find(a=>a.isCorrect)!:node.answerChoices.filter(a=>!a.isCorrect)[path]!;
+  const wrong=node.answerChoices.filter(a=>!a.isCorrect);
+  const key=path==="correct"?node.answerChoices.find(a=>a.isCorrect)!:wrong[path%wrong.length]!;
   const xp=state.clinicalXp;state=submit(state,id,key.id,`${id}.${i}.submit`,REAL_MS+index*100+i);
   expect(state.clinicalXp-xp).toBe(path==="correct"?PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.clinicalSettlement.clinicalXpPerCorrectFirstAnswer:PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.clinicalSettlement.clinicalXpPerIncorrectFirstAnswer);
   expect(state.learningHistories[node.primaryConceptId]?.reviews).toEqual([expect.objectContaining({answerChoiceId:key.id,correct:path==="correct",rating:path==="correct"?"Good":"Again"})]);
@@ -197,7 +200,7 @@ function complete(c:SyntheticClinicalCase,path:"correct"|0|1|2,index:number){
    expect(getCurrentQuestion(state,id)).toBeNull();
    state=acknowledge(state,id,`${id}.${i}.ack`);state=roundTrip(state,id);
    state=ready(state,id,`${id}.${i}.next`);
-   expect(getCurrentQuestion(state,id)?.node.currentUpdate).toBe(c.decisionNodes[i+1]!.currentUpdate);
+   expect(getCurrentQuestion(state,id)?.node.currentUpdate).toBe(c.decisionNodes[i+1]!.currentUpdate?.replaceAll("{patientName}",state.encounters[id]!.patientDisplayName));
    expect(state.encounters[id]?.deliveredResultNarratives).toEqual([]);
   }
  }
@@ -226,7 +229,35 @@ describe("GS028 level3 actual gameplay",()=>{
   const future=prepared("all.future");for(const c of PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts)markReviewed(future,c.id,REAL_MS+86_400_000);expect(selectRoutineClinicalCase(future,ordinaryPool(future),REAL_MS)).toBeNull();
  });
  it("blocks every unresolved pair sibling without reviewing the unreached second decision",()=>{
-  for(const c of paired){const state=admit(prepared(c.id),c,c.id);for(const n of c.decisionNodes){expect(selectRoutineClinicalCase(state,[standalone(n.primaryConceptId)],REAL_MS)).toBeNull();expect(state.learningHistories[n.primaryConceptId]?.reviews).toEqual([]);}}
+  for(const c of paired){const state=admit(prepared(c.id),c,c.id);for(const n of c.decisionNodes){
+   const versionedSeizureObjective=n.primaryConceptId==="concept.gs028g.hiv-perioperative.booster-midazolam-interaction.v2";
+   // The new antagonist objective exists only in this pair. Prove the actual
+   // pair is eligible when idle before asserting that its unresolved copy
+   // blocks selection; the historical twenty still use real singletons.
+   const candidate=versionedSeizureObjective?c:standalone(n.primaryConceptId);
+   expect(selectRoutineClinicalCase(prepared("eligible."+n.primaryConceptId),[candidate],REAL_MS)).not.toBeNull();
+   expect(selectRoutineClinicalCase(state,[candidate],REAL_MS)).toBeNull();expect(state.learningHistories[n.primaryConceptId]?.reviews).toEqual([]);
+  }}
+ });
+ it("keeps the new pair-only antagonist history separate under the existing all-concept eligibility rule",()=>{
+  const target="concept.gs028g.hiv-perioperative.booster-midazolam-interaction.v2";
+  const clinicalCase=cases.find(c=>c.decisionNodes.some(n=>n.primaryConceptId===target))!;
+  const first=clinicalCase.decisionNodes[0]!.primaryConceptId;
+  for(const kind of ["new_concept","due_review"] as const){const state=prepared(kind+".antagonist");const unseenFirst=clone(state.learningHistories[first]!);
+   for(const c of PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts)if(c.id!==target||kind==="due_review")markReviewed(state,c.id,c.id===target?REAL_MS-1:REAL_MS+86_400_000);
+   const oldParent=clone(state.learningHistories[target.replace(/\.v2$/,"")]);
+   const targetHistory=clone(state.learningHistories[target]);
+   // Every paired concept must be unseen or due. A future companion blocks
+   // either position; preserve that existing FSRS eligibility contract.
+   expect(selectRoutineClinicalCase(state,[clinicalCase],REAL_MS)).toBeNull();
+   markReviewed(state,first,REAL_MS-2);
+   expect(selectRoutineClinicalCase(state,[clinicalCase],REAL_MS)).toMatchObject({kind:"due_review",selectedConceptId:first});
+   state.learningHistories[first]=unseenFirst;
+   const eligible=selectRoutineClinicalCase(state,[clinicalCase],REAL_MS);expect(eligible).not.toBeNull();
+   if(kind==="due_review")expect(eligible).toMatchObject({kind,selectedConceptId:target});
+   expect(state.learningHistories[target]).toEqual(targetHistory);
+   expect(state.learningHistories[target.replace(/\.v2$/,"")]).toEqual(oldParent);
+  }
  });
  it("instantiates all 248 age/sex profiles with coherent names and shuffled choices",()=>{
   for(const c of cases){const orders=new Set<string>();for(const p of c.approvedInstantiationProfiles!){let matched=false;for(let seed=0;seed<64;seed++){
@@ -254,9 +285,11 @@ describe("GS028 level3 actual gameplay",()=>{
   expect(clone(state.encounters[id])).toEqual(frozen);for(const [key,value] of Object.entries(histories))expect(state.learningHistories[key]).toEqual(value);
   for(const key of ids)expect(state.learningHistories[key]).toMatchObject({conceptId:key,card:{reps:0,lastReviewAtMs:null},reviews:[]});
  });
- it("adds no early supply and exactly 62 cases/20 concepts to the ordinary level3 pool",()=>{
-  for(const p of pools.filter(p=>p.stage<3))expect(p.after).toEqual(p.before);const later=pools[3]!;expect(later.after.cases-later.before.cases).toBe(62);expect(later.after.concepts-later.before.concepts).toBe(20);
+ it("adds no early supply and exactly 62 cases/21 current concepts to the ordinary level3 pool",()=>{
+  for(const p of pools.filter(p=>p.stage<3))expect(p.after).toEqual(p.before);const later=pools[3]!;expect(later.after.cases-later.before.cases).toBe(62);expect(later.after.concepts-later.before.concepts).toBe(21);
  });
- it("covers all eighty nodes and all 320 distinct answer submissions",()=>{expect(coverage.size).toBe(80);for(const n of cases.flatMap(c=>c.decisionNodes))expect([...(coverage.get(n.id)??[])].sort()).toEqual(n.answerChoices.map(a=>a.id).sort());expect([...coverage.values()].reduce((s,v)=>s+v.size,0)).toBe(320);});
+ // A25-context now has three antagonist plans rather than the prior four
+ // independent sedation/ART combinations; all eighty nodes and paths remain.
+ it("covers all eighty nodes and all 318 current distinct choices",()=>{expect(coverage.size).toBe(80);for(const n of cases.flatMap(c=>c.decisionNodes))expect([...(coverage.get(n.id)??[])].sort()).toEqual(n.answerChoices.map(a=>a.id).sort());expect([...coverage.values()].reduce((s,v)=>s+v.size,0)).toBe(318);});
 });
 afterAll(()=>{const dir=process.env.GS028_LEVEL3_EVIDENCE_DIR;if(dir)writeFileSync(resolve(dir,"gameplay-evidence.json"),JSON.stringify({actualReducer:true,casePathCount:248,nodeCount:coverage.size,distinctChoiceSubmissions:[...coverage.values()].reduce((s,v)=>s+v.size,0),instantiatedProfileCount:frozenProfiles.size,pools,eligibilityEvidence,exactTestChoiceRecords:exact,previews:[...choicePreviewEvidence.values()]},null,2)+"\n");});

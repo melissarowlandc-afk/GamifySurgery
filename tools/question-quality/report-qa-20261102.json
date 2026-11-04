@@ -1,0 +1,123 @@
+{
+  "checkedOn": "2026-11-02",
+  "status": "passed",
+  "pilotTasks": 3,
+  "batchTasks": 40,
+  "pilotContext": 2,
+  "batchContext": 28,
+  "unchangedOwnerApprovals": 11,
+  "changedCases": 43,
+  "otherCasesUnchanged": 1056,
+  "originalTimingEntriesRetained": 1467,
+  "totalTimingEntries": 1540,
+  "sourceSpans": 34068,
+  "postAnswerSpans": 204,
+  "newClinicalDemographicBindings": 7,
+  "employeeKindsPreserved": 7,
+  "derivedIntervalPercentagesVerified": [
+    60,
+    20
+  ],
+  "localLinks": 10,
+  "returnedResultNarratives": 18,
+  "protectedHistoricalFiles": 7,
+  "protectedReleasedAuditBaselines": 3,
+  "playerFilesUnchanged": [
+    "apps/player/src/session/briefEarlyLevelsPresentation.test.ts",
+    "apps/player/src/session/pediatricChartsViewModels.test.ts"
+  ],
+  "beforeTotals": {
+    "cases": 1110,
+    "nodeOccurrences": 1423,
+    "uniqueVariants": 1418,
+    "concepts": 370,
+    "profileContexts": 6039,
+    "variantsWithFindings": 916,
+    "findings": 1878,
+    "tutorialSequenceVariants": 3,
+    "missingAuthoredVersion": 0,
+    "missingEducationalTier": 162,
+    "approvalRecordOnlyMetadata": 40,
+    "variantsWithCompleteRationales": 179,
+    "variantsWithMultipleDefinitions": 0,
+    "byPriorityStage": {
+      "0": 687,
+      "1": 464,
+      "2": 163,
+      "3": 84,
+      "4": 20
+    },
+    "byOptionCount": {
+      "3": 68,
+      "4": 1350
+    },
+    "variantsByRule": {
+      "case-detail-decision-cue": 9,
+      "case-detail-key-rationale-overlap": 38,
+      "convergence": 73,
+      "diagnosis-disclosed": 4,
+      "heterogeneous-option-category": 94,
+      "key-length-disparity": 55,
+      "key-only-phrase-overlap": 57,
+      "key-only-word-overlap": 337,
+      "key-test-name-in-context": 10,
+      "lead-in-decision-principle": 27,
+      "near-duplicate-options": 34,
+      "negative-aligned-to-distractor": 123,
+      "option-absolute": 97,
+      "option-explanation": 42,
+      "option-length-disparity": 316,
+      "option-scope-mismatch": 2,
+      "option-specificity-disparity": 21,
+      "unique-key-abbreviation": 139,
+      "unique-key-test-name": 12
+    }
+  },
+  "afterTotals": {
+    "cases": 1110,
+    "nodeOccurrences": 1423,
+    "uniqueVariants": 1418,
+    "concepts": 370,
+    "profileContexts": 6039,
+    "variantsWithFindings": 887,
+    "findings": 1745,
+    "tutorialSequenceVariants": 3,
+    "missingAuthoredVersion": 0,
+    "missingEducationalTier": 162,
+    "approvalRecordOnlyMetadata": 40,
+    "variantsWithCompleteRationales": 239,
+    "variantsWithMultipleDefinitions": 0,
+    "byPriorityStage": {
+      "0": 687,
+      "1": 464,
+      "2": 163,
+      "3": 84,
+      "4": 20
+    },
+    "byOptionCount": {
+      "3": 104,
+      "4": 1314
+    },
+    "variantsByRule": {
+      "case-detail-decision-cue": 9,
+      "case-detail-key-rationale-overlap": 37,
+      "convergence": 71,
+      "heterogeneous-option-category": 97,
+      "key-length-disparity": 51,
+      "key-only-phrase-overlap": 50,
+      "key-only-word-overlap": 312,
+      "key-test-name-in-context": 5,
+      "lead-in-decision-principle": 16,
+      "near-duplicate-options": 33,
+      "negative-aligned-to-distractor": 105,
+      "option-absolute": 94,
+      "option-explanation": 37,
+      "option-length-disparity": 305,
+      "option-scope-mismatch": 2,
+      "option-specificity-disparity": 21,
+      "unique-key-abbreviation": 134,
+      "unique-key-test-name": 12
+    }
+  },
+  "scope": "Synthetic authoring/report integrity only; no clinical approval, measured difficulty, play exposure, correctness analytics or player-data input."
+}

@@ -1,7 +1,8 @@
+// Historical batch proof uses the pre-2026-10-28 assembly. Live pilot isolation/versioning is checked in question-quality-pilot.test.ts.
 import { createHash } from "node:crypto";
 import { describe, expect, it } from "vitest";
 import { ANSWER_CHOICE_TIMING_REGISTRY } from "../../answer-choice-timing";
-import { SYNTHETIC_CLINICAL_RELEASE as release, VARIETY3_PROTOTYPE_ADMISSION_MANIFEST as admission } from "../../synthetic-content";
+import { QUESTION_QUALITY_SOURCE_RELEASE as release, VARIETY3_PROTOTYPE_ADMISSION_MANIFEST as admission } from "../../synthetic-content";
 import { VARIETY3_ADULT_CONTEXTS as adults, VARIETY3_BATCH_MANIFEST as draft,
   VARIETY3_CASES as cases, VARIETY3_TESTED_CONCEPTS as concepts, VARIETY3_TIMING_ENTRIES as timings } from "./variety3-batch";
 
@@ -52,7 +53,7 @@ describe("manager-selected Variety-3 prototype admission", () => {
     let timedChoices = 0;
     for (const clinicalCase of cases) {
       const node = clinicalCase.decisionNodes[0]!;
-      const entries = ANSWER_CHOICE_TIMING_REGISTRY.filter(item => item.caseId === clinicalCase.id);
+      const entries = ANSWER_CHOICE_TIMING_REGISTRY.filter(item => item.caseId === clinicalCase.id && item.questionVariantId === node.questionVariantId);
       expect(entries).toEqual(timings.filter(item => item.caseId === clinicalCase.id));
       expect(entries).toHaveLength(1);
       expect(entries[0]).toMatchObject({ nodeId: node.id, questionVariantId: node.questionVariantId });

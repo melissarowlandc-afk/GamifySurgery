@@ -21,6 +21,8 @@
     "test:watch": "npm run test:watch --workspace @gamify-surgery/game-domain",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "clinical:context": "npm run dev --workspace @gamify-surgery/clinical-context-workbench",
+    "clinical:lint": "node --disable-warning=ExperimentalWarning tools/question-quality/report.mjs",
+    "clinical:lint:test": "node --test --test-isolation=none tools/question-quality/lint.test.mjs",
     "clinical:context:test": "npm run test --workspace @gamify-surgery/clinical-context-workbench",
     "clinical:research:test": "npm run test --workspace @gamify-surgery/clinical-research",
     "clinical:validate": "npm run build --workspace @gamify-surgery/clinical-authoring && node packages/clinical-authoring/dist/cli.js",

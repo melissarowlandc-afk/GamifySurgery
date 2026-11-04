@@ -1,0 +1,579 @@
+{
+  "checkedOn": "2026-11-02",
+  "scope": "Authoring metadata only, not player answers or gameplay analytics. All old rows remain. Existing placeholder profiles only; no fixed wait is put in prose and no new duration/terminal execution rule is introduced.",
+  "before": {
+    "timedChoices": 1466,
+    "terminalTimedKeys": 138
+  },
+  "after": {
+    "timedChoices": 1469,
+    "terminalTimedKeys": 138
+  },
+  "changes": [
+    {
+      "id": "B03-context",
+      "before": {
+        "caseId": "case.achalasia.slow-meals",
+        "nodeId": "node.achalasia.slow-meals.1",
+        "variantId": "question.achalasia.high-resolution-manometry.v3.r6",
+        "timedChoices": [
+          {
+            "id": "manometry_3",
+            "label": "Pressure recording during a standardized solid test meal",
+            "profile": "timing.test.esophageal_manometry"
+          },
+          {
+            "id": "choice.qq20261102d.b03-context.d1",
+            "label": "Pressure recording during a multiple rapid-swallow sequence",
+            "profile": "timing.test.esophageal_manometry"
+          },
+          {
+            "id": "choice.qq20261102d.b03-context.d2",
+            "label": "Pressure recording during an upright rapid-drink challenge",
+            "profile": "timing.test.esophageal_manometry"
+          }
+        ],
+        "terminalTimedKeys": 0
+      },
+      "after": {
+        "caseId": "case.achalasia.slow-meals",
+        "nodeId": "node.achalasia.slow-meals.1",
+        "variantId": "question.achalasia.high-resolution-manometry.v3.r7",
+        "timedChoices": [
+          {
+            "id": "manometry_3",
+            "label": "Reduced contractile reserve; liquid-load outflow obstruction not demonstrated",
+            "profile": "timing.test.esophageal_manometry"
+          },
+          {
+            "id": "choice.qq20261102e.b03-context.d1",
+            "label": "Preserved contractile reserve; liquid-load outflow obstruction not demonstrated",
+            "profile": "timing.test.esophageal_manometry"
+          },
+          {
+            "id": "choice.qq20261102e.b03-context.d2",
+            "label": "Reduced contractile reserve; liquid-load outflow obstruction demonstrated",
+            "profile": "timing.test.esophageal_manometry"
+          },
+          {
+            "id": "choice.qq20261102e.b03-context.d3",
+            "label": "Preserved contractile reserve; liquid-load outflow obstruction demonstrated",
+            "profile": "timing.test.esophageal_manometry"
+          }
+        ],
+        "terminalTimedKeys": 0
+      }
+    },
+    {
+      "id": "B05",
+      "before": {
+        "caseId": "case.inguinal-hernia.standing-shift",
+        "nodeId": "node.inguinal-hernia.standing-shift.1",
+        "variantId": "question.inguinal-hernia.equivocal-exam-ultrasound.v4.r6",
+        "timedChoices": [
+          {
+            "id": "dynamic_ultrasound_4",
+            "label": "Standing dynamic ultrasound of the groin",
+            "profile": "timing.test.ultrasound"
+          },
+          {
+            "id": "choice.qq20261102d.b05.d1",
+            "label": "Routine supine MRI of the groin and hip",
+            "profile": "timing.test.mri"
+          },
+          {
+            "id": "choice.qq20261102d.b05.d2",
+            "label": "Contrast CT of the groin and pelvis at rest",
+            "profile": "timing.test.ct"
+          }
+        ],
+        "terminalTimedKeys": 0
+      },
+      "after": {
+        "caseId": "case.inguinal-hernia.standing-shift",
+        "nodeId": "node.inguinal-hernia.standing-shift.1",
+        "variantId": "question.inguinal-hernia.equivocal-exam-ultrasound.v4.r7",
+        "timedChoices": [
+          {
+            "id": "dynamic_ultrasound_4",
+            "label": "Pelvic MRI with strain and pubic-attachment sequences",
+            "profile": "timing.test.mri"
+          },
+          {
+            "id": "choice.qq20261102e.b05.d1",
+            "label": "Groin ultrasound with standing strain and cine loops",
+            "profile": "timing.test.ultrasound"
+          },
+          {
+            "id": "choice.qq20261102e.b05.d2",
+            "label": "Hip MR arthrography with labral and cartilage sequences",
+            "profile": "timing.test.mri"
+          }
+        ],
+        "terminalTimedKeys": 0
+      }
+    },
+    {
+      "id": "B05-context",
+      "before": {
+        "caseId": "case.inguinal-hernia.standing-shift",
+        "nodeId": "node.inguinal-hernia.standing-shift.2",
+        "variantId": "question.inguinal-hernia.symptomatic-elective-repair.v4.r6",
+        "timedChoices": [
+          {
+            "id": "choice.qq20261102d.b05-context.d2",
+            "label": "Pelvic MRI before hernia or rehabilitation planning",
+            "profile": "timing.test.mri"
+          }
+        ],
+        "terminalTimedKeys": 0
+      },
+      "after": {
+        "caseId": "case.inguinal-hernia.standing-shift",
+        "nodeId": "node.inguinal-hernia.standing-shift.2",
+        "variantId": "question.inguinal-hernia.symptomatic-elective-repair.v4.r7",
+        "timedChoices": [],
+        "terminalTimedKeys": 0
+      }
+    },
+    {
+      "id": "B06-context",
+      "before": {
+        "caseId": "case.inguinal-hernia.running-discomfort",
+        "nodeId": "node.inguinal-hernia.running-discomfort.2",
+        "variantId": "question.inguinal-hernia.symptomatic-elective-repair.v2.r6",
+        "timedChoices": [],
+        "terminalTimedKeys": 0
+      },
+      "after": {
+        "caseId": "case.inguinal-hernia.running-discomfort",
+        "nodeId": "node.inguinal-hernia.running-discomfort.2",
+        "variantId": "question.inguinal-hernia.symptomatic-elective-repair.v2.r7",
+        "timedChoices": [],
+        "terminalTimedKeys": 0
+      }
+    },
+    {
+      "id": "B07",
+      "before": {
+        "caseId": "case.inguinal-hernia.caregiving-strain",
+        "nodeId": "node.inguinal-hernia.caregiving-strain.1",
+        "variantId": "question.inguinal-hernia.equivocal-exam-ultrasound.v3.r6",
+        "timedChoices": [
+          {
+            "id": "dynamic_ultrasound_3",
+            "label": "Standing dynamic ultrasound of the groin",
+            "profile": "timing.test.ultrasound"
+          },
+          {
+            "id": "choice.qq20261102d.b07.d1",
+            "label": "Routine supine MRI of the groin and adductors",
+            "profile": "timing.test.mri"
+          },
+          {
+            "id": "choice.qq20261102d.b07.d2",
+            "label": "Contrast CT of the groin and pelvis at rest",
+            "profile": "timing.test.ct"
+          }
+        ],
+        "terminalTimedKeys": 0
+      },
+      "after": {
+        "caseId": "case.inguinal-hernia.caregiving-strain",
+        "nodeId": "node.inguinal-hernia.caregiving-strain.1",
+        "variantId": "question.inguinal-hernia.equivocal-exam-ultrasound.v3.r7",
+        "timedChoices": [
+          {
+            "id": "dynamic_ultrasound_3",
+            "label": "Groin ultrasound with standing strain and cine loops",
+            "profile": "timing.test.ultrasound"
+          },
+          {
+            "id": "choice.qq20261102e.b07.d1",
+            "label": "Pelvic MRI with strain and pubic-attachment sequences",
+            "profile": "timing.test.mri"
+          },
+          {
+            "id": "choice.qq20261102e.b07.d2",
+            "label": "Hip MR arthrography with labral and cartilage sequences",
+            "profile": "timing.test.mri"
+          }
+        ],
+        "terminalTimedKeys": 0
+      }
+    },
+    {
+      "id": "B07-context",
+      "before": {
+        "caseId": "case.inguinal-hernia.caregiving-strain",
+        "nodeId": "node.inguinal-hernia.caregiving-strain.2",
+        "variantId": "question.inguinal-hernia.symptomatic-elective-repair.v3.r6",
+        "timedChoices": [
+          {
+            "id": "choice.qq20261102d.b07-context.d2",
+            "label": "Pelvic MRI before hernia or rehabilitation planning",
+            "profile": "timing.test.mri"
+          }
+        ],
+        "terminalTimedKeys": 0
+      },
+      "after": {
+        "caseId": "case.inguinal-hernia.caregiving-strain",
+        "nodeId": "node.inguinal-hernia.caregiving-strain.2",
+        "variantId": "question.inguinal-hernia.symptomatic-elective-repair.v3.r7",
+        "timedChoices": [],
+        "terminalTimedKeys": 0
+      }
+    },
+    {
+      "id": "B08-context",
+      "before": {
+        "caseId": "case.inguinal-hernia.lifting-bulge",
+        "nodeId": "node.inguinal-hernia.lifting-bulge.2",
+        "variantId": "question.inguinal-hernia.symptomatic-elective-repair.v1.r6",
+        "timedChoices": [],
+        "terminalTimedKeys": 0
+      },
+      "after": {
+        "caseId": "case.inguinal-hernia.lifting-bulge",
+        "nodeId": "node.inguinal-hernia.lifting-bulge.2",
+        "variantId": "question.inguinal-hernia.symptomatic-elective-repair.v1.r7",
+        "timedChoices": [],
+        "terminalTimedKeys": 0
+      }
+    },
+    {
+      "id": "B11-context",
+      "before": {
+        "caseId": "case.pigmented-skin-lesion.shoulder-border",
+        "nodeId": "node.pigmented-skin-lesion.shoulder-border.1",
+        "variantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v2.r6",
+        "timedChoices": [
+          {
+            "id": "excisional_2",
+            "label": "Full-thickness excisional biopsy",
+            "profile": "timing.test.biopsy"
+          },
+          {
+            "id": "choice.qq20261102d.b11-context.d1",
+            "label": "Full-thickness incisional biopsy of the raised focus",
+            "profile": "timing.test.biopsy"
+          },
+          {
+            "id": "choice.qq20261102d.b11-context.d2",
+            "label": "Deeper sections and immunostains of the existing block",
+            "profile": "timing.test.pathology_review"
+          }
+        ],
+        "terminalTimedKeys": 0
+      },
+      "after": {
+        "caseId": "case.pigmented-skin-lesion.shoulder-border",
+        "nodeId": "node.pigmented-skin-lesion.shoulder-border.1",
+        "variantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v2.r7",
+        "timedChoices": [
+          {
+            "id": "excisional_2",
+            "label": "Melanocytic atypia demonstrated; residual-lesion invasion unassessed",
+            "profile": "timing.test.biopsy"
+          },
+          {
+            "id": "choice.qq20261102e.b11-context.d1",
+            "label": "Melanocytic atypia demonstrated; residual-lesion invasion excluded",
+            "profile": "timing.test.biopsy"
+          },
+          {
+            "id": "choice.qq20261102e.b11-context.d2",
+            "label": "Melanocytic atypia unconfirmed; residual-lesion invasion unassessed",
+            "profile": "timing.test.biopsy"
+          },
+          {
+            "id": "choice.qq20261102e.b11-context.d3",
+            "label": "Melanocytic atypia unconfirmed; residual-lesion invasion excluded",
+            "profile": "timing.test.biopsy"
+          }
+        ],
+        "terminalTimedKeys": 0
+      }
+    },
+    {
+      "id": "B12-context",
+      "before": {
+        "caseId": "case.pigmented-skin-lesion.forearm-change",
+        "nodeId": "node.pigmented-skin-lesion.forearm-change.1",
+        "variantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v4.r6",
+        "timedChoices": [
+          {
+            "id": "excisional_4",
+            "label": "Full-thickness excisional biopsy",
+            "profile": "timing.test.biopsy"
+          },
+          {
+            "id": "choice.qq20261102d.b12-context.d1",
+            "label": "Full-thickness incisional biopsy of the pigmented center",
+            "profile": "timing.test.biopsy"
+          },
+          {
+            "id": "choice.qq20261102d.b12-context.d2",
+            "label": "Deeper sections and immunostains of the existing block",
+            "profile": "timing.test.pathology_review"
+          }
+        ],
+        "terminalTimedKeys": 0
+      },
+      "after": {
+        "caseId": "case.pigmented-skin-lesion.forearm-change",
+        "nodeId": "node.pigmented-skin-lesion.forearm-change.1",
+        "variantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v4.r7",
+        "timedChoices": [
+          {
+            "id": "excisional_4",
+            "label": "Sampled edge explained; assess residual-lesion architecture",
+            "profile": "timing.test.biopsy"
+          },
+          {
+            "id": "choice.qq20261102e.b12-context.d1",
+            "label": "Sampled edge unexplained; assess residual-lesion architecture",
+            "profile": "timing.test.biopsy"
+          },
+          {
+            "id": "choice.qq20261102e.b12-context.d2",
+            "label": "Whole lesion explained; review the existing edge sections",
+            "profile": "timing.test.biopsy"
+          },
+          {
+            "id": "choice.qq20261102e.b12-context.d3",
+            "label": "Sampled edge unexplained; review the existing edge sections",
+            "profile": "timing.test.biopsy"
+          }
+        ],
+        "terminalTimedKeys": 0
+      }
+    },
+    {
+      "id": "B17-context",
+      "before": {
+        "caseId": "case.pigmented-skin-lesion.changing-back-lesion",
+        "nodeId": "node.pigmented-skin-lesion.changing-back-lesion.1",
+        "variantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v1.r6",
+        "timedChoices": [
+          {
+            "id": "excisional_1",
+            "label": "Full-thickness excisional biopsy",
+            "profile": "timing.test.biopsy"
+          },
+          {
+            "id": "choice.qq20261102d.b17-context.d1",
+            "label": "Full-thickness incisional biopsy of the raised focus",
+            "profile": "timing.test.biopsy"
+          },
+          {
+            "id": "choice.qq20261102d.b17-context.d2",
+            "label": "Deeper sections and immunostains of the existing block",
+            "profile": "timing.test.pathology_review"
+          }
+        ],
+        "terminalTimedKeys": 0
+      },
+      "after": {
+        "caseId": "case.pigmented-skin-lesion.changing-back-lesion",
+        "nodeId": "node.pigmented-skin-lesion.changing-back-lesion.1",
+        "variantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v1.r7",
+        "timedChoices": [
+          {
+            "id": "excisional_1",
+            "label": "Sampled sector in situ; residual-lesion invasion unassessed",
+            "profile": "timing.test.biopsy"
+          },
+          {
+            "id": "choice.qq20261102e.b17-context.d1",
+            "label": "Sampled sector in situ; residual-lesion invasion excluded",
+            "profile": "timing.test.biopsy"
+          },
+          {
+            "id": "choice.qq20261102e.b17-context.d2",
+            "label": "Sampled sector invasive; residual-lesion invasion unassessed",
+            "profile": "timing.test.biopsy"
+          },
+          {
+            "id": "choice.qq20261102e.b17-context.d3",
+            "label": "Sampled sector invasive; residual-lesion invasion excluded",
+            "profile": "timing.test.biopsy"
+          }
+        ],
+        "terminalTimedKeys": 0
+      }
+    },
+    {
+      "id": "B18-context",
+      "before": {
+        "caseId": "case.pigmented-skin-lesion.calf-growth",
+        "nodeId": "node.pigmented-skin-lesion.calf-growth.1",
+        "variantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v3.r6",
+        "timedChoices": [
+          {
+            "id": "excisional_3",
+            "label": "Full-thickness excisional biopsy",
+            "profile": "timing.test.biopsy"
+          },
+          {
+            "id": "choice.qq20261102d.b18-context.d1",
+            "label": "Full-thickness incisional biopsy of the firm focus",
+            "profile": "timing.test.biopsy"
+          },
+          {
+            "id": "choice.qq20261102d.b18-context.d2",
+            "label": "Deeper sections and immunostains of the existing block",
+            "profile": "timing.test.pathology_review"
+          }
+        ],
+        "terminalTimedKeys": 0
+      },
+      "after": {
+        "caseId": "case.pigmented-skin-lesion.calf-growth",
+        "nodeId": "node.pigmented-skin-lesion.calf-growth.1",
+        "variantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v3.r7",
+        "timedChoices": [
+          {
+            "id": "excisional_3",
+            "label": "Retain at least 0.6 mm; await the final maximum depth",
+            "profile": "timing.test.biopsy"
+          },
+          {
+            "id": "choice.qq20261102e.b18-context.d1",
+            "label": "Retain at most 0.6 mm; await the final maximum depth",
+            "profile": "timing.test.biopsy"
+          },
+          {
+            "id": "choice.qq20261102e.b18-context.d2",
+            "label": "Retain exactly 0.6 mm; use it as the maximum depth",
+            "profile": "timing.test.biopsy"
+          },
+          {
+            "id": "choice.qq20261102e.b18-context.d3",
+            "label": "Retain no measured depth; await the final maximum depth",
+            "profile": "timing.test.biopsy"
+          }
+        ],
+        "terminalTimedKeys": 0
+      }
+    },
+    {
+      "id": "B19-context",
+      "before": {
+        "caseId": "case.soft-tissue-mass.deep-thigh",
+        "nodeId": "node.soft-tissue-mass.deep-thigh.1",
+        "variantId": "question.soft-tissue-mass.extremity-mri.v1.r6",
+        "timedChoices": [
+          {
+            "id": "extremity_mri_1",
+            "label": "Local MRI encompassing the lesion and compartment relationships",
+            "profile": "timing.test.mri"
+          },
+          {
+            "id": "choice.qq20261102d.b19-context.d1",
+            "label": "Targeted ultrasound of the palpable region for core-biopsy planning",
+            "profile": "timing.test.ultrasound"
+          },
+          {
+            "id": "choice.qq20261102d.b19-context.d2",
+            "label": "FDG PET/CT with targeting of the most avid region",
+            "profile": "timing.test.pet_ct"
+          }
+        ],
+        "terminalTimedKeys": 0
+      },
+      "after": {
+        "caseId": "case.soft-tissue-mass.deep-thigh",
+        "nodeId": "node.soft-tissue-mass.deep-thigh.1",
+        "variantId": "question.soft-tissue-mass.extremity-mri.v1.r7",
+        "timedChoices": [
+          {
+            "id": "extremity_mri_1",
+            "label": "Region R through the anterior corridor",
+            "profile": "timing.test.mri"
+          },
+          {
+            "id": "choice.qq20261102e.b19-context.d1",
+            "label": "Region P through the anterior corridor",
+            "profile": "timing.test.mri"
+          },
+          {
+            "id": "choice.qq20261102e.b19-context.d2",
+            "label": "Region Q through the medial corridor",
+            "profile": "timing.test.mri"
+          }
+        ],
+        "terminalTimedKeys": 0
+      }
+    },
+    {
+      "id": "B21-context",
+      "before": {
+        "caseId": "case.l2.colonic-lipoma.direct.typical-a",
+        "nodeId": "node.colonic-lipoma.recognition.patient-to-diagnosis.v1",
+        "variantId": "question.colonic-lipoma.recognition.patient-to-diagnosis.v1.r6",
+        "timedChoices": [],
+        "terminalTimedKeys": 0
+      },
+      "after": {
+        "caseId": "case.l2.colonic-lipoma.direct.typical-a",
+        "nodeId": "node.colonic-lipoma.recognition.patient-to-diagnosis.v1",
+        "variantId": "question.colonic-lipoma.recognition.patient-to-diagnosis.v1.r7",
+        "timedChoices": [],
+        "terminalTimedKeys": 0
+      }
+    },
+    {
+      "id": "B22-context",
+      "before": {
+        "caseId": "case.l2.colonic-lipoma.direct.typical-b",
+        "nodeId": "node.colonic-lipoma.recognition.patient-to-diagnosis.v2",
+        "variantId": "question.colonic-lipoma.recognition.patient-to-diagnosis.v2.r6",
+        "timedChoices": [],
+        "terminalTimedKeys": 0
+      },
+      "after": {
+        "caseId": "case.l2.colonic-lipoma.direct.typical-b",
+        "nodeId": "node.colonic-lipoma.recognition.patient-to-diagnosis.v2",
+        "variantId": "question.colonic-lipoma.recognition.patient-to-diagnosis.v2.r7",
+        "timedChoices": [],
+        "terminalTimedKeys": 0
+      }
+    },
+    {
+      "id": "B24",
+      "before": {
+        "caseId": "case.l2.gastric-malt.cd20-boundary.v1",
+        "nodeId": "node.gastric-malt.cd20-alone-boundary.v1",
+        "variantId": "question.gastric-malt.cd20-alone-boundary.v1.r6",
+        "timedChoices": [],
+        "terminalTimedKeys": 0
+      },
+      "after": {
+        "caseId": "case.l2.gastric-malt.cd20-boundary.v1",
+        "nodeId": "node.gastric-malt.cd20-alone-boundary.v1",
+        "variantId": "question.gastric-malt.cd20-alone-boundary.v1.r7",
+        "timedChoices": [],
+        "terminalTimedKeys": 0
+      }
+    },
+    {
+      "id": "B36",
+      "before": {
+        "caseId": "case.gs028se.pdsa-act-qi-measures.a-abandon-harm",
+        "nodeId": "node.gs028se.pdsa-act-qi-measures.a-abandon-harm.1",
+        "variantId": "question.quality-improvement.pdsa-act-and-iterate.v3.r6",
+        "timedChoices": [],
+        "terminalTimedKeys": 0
+      },
+      "after": {
+        "caseId": "case.gs028se.pdsa-act-qi-measures.a-abandon-harm",
+        "nodeId": "node.gs028se.pdsa-act-qi-measures.a-abandon-harm.1",
+        "variantId": "question.quality-improvement.pdsa-act-and-iterate.v3.r7",
+        "timedChoices": [],
+        "terminalTimedKeys": 0
+      }
+    }
+  ]
+}

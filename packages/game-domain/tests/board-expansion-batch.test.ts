@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { BOARD_EXPANSION_CASES } from "@gamify-surgery/clinical-content";
+import { BOARD_EXPANSION_CASES, SYNTHETIC_CLINICAL_RELEASE } from "@gamify-surgery/clinical-content";
 import { createInitialGameState, createPatientPixelAppearance, deserializeGameState, gameReducer, getCurrentQuestion, serializeGameState, type GameState } from "../src";
 
 function prepared(seed: string): GameState {
@@ -31,8 +31,11 @@ function ack(state: GameState, encounterId: string, operationId: string): GameSt
   return gameReducer(state, { type: "ACKNOWLEDGE_DECISION_FEEDBACK", operationId, encounterId, decisionNodeId: encounter.steps[encounter.currentNodeIndex]!.decisionNodeId });
 }
 
+// Current admission uses revised result prose; historical definitions are
+// preserved separately. Keep the same concepts, due ticks and reducer checks.
+const liveCases = BOARD_EXPANSION_CASES.map(source => SYNTHETIC_CLINICAL_RELEASE.cases.find(c => c.id === source.id)!);
 describe("September 11 board-expansion production flows", () => {
-  it.each(BOARD_EXPANSION_CASES.map((clinicalCase, index) => [index, clinicalCase] as const))("runs case %s through its real gate with one review per concept", (index, clinicalCase) => {
+  it.each(liveCases.map((clinicalCase, index) => [index, clinicalCase] as const))("runs case %s through its real gate with one review per concept", (index, clinicalCase) => {
       const encounterId = `encounter.board.${index}`;
       let state = prepared(`all-${index}`);
       state = gameReducer(state, { type: "ADMIT_PATIENT", operationId: `board.${index}.admit`, encounterId, caseId: clinicalCase.id, patientDisplayName: `Board Patient ${index}`, arrivalClass: "routine" });

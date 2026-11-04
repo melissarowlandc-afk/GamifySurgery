@@ -1,5 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { PEDIATRIC_CLINIC_CASES, PEDIATRIC_CLINIC_FAMILY_CONTEXTS } from "@gamify-surgery/clinical-content";
+import { PEDIATRIC_CLINIC_CASES, PEDIATRIC_CLINIC_FAMILY_CONTEXTS, SYNTHETIC_CLINICAL_RELEASE } from "@gamify-surgery/clinical-content";
 import { gameReducer, getAnswerChoiceServicePreview, pediatricFamilyForActor, pediatricPairAtReservation,
   PROTOTYPE_DOMAIN_CONTEXT } from "@gamify-surgery/game-domain";
 import { createLevelFourRoomsQaContext } from "../../../../tests/fixtures/level-four-rooms";
@@ -7,12 +7,15 @@ import { createPediatricChartsQaState, PEDIATRIC_CHARTS_QA_ENCOUNTER_ID as encou
 import { createPrototypePlayerView } from "./viewModels";
 
 const context = createLevelFourRoomsQaContext();
+// Stable case identities now resolve to the intentional pilot wording. The
+// historical authored export remains available for frozen/pre-pilot checks.
+const cases = PEDIATRIC_CLINIC_CASES.map(original => SYNTHETIC_CLINICAL_RELEASE.cases.find(c => c.id === original.id)!);
 const originalBalance = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease;
 beforeAll(() => { PROTOTYPE_DOMAIN_CONTEXT.balanceRelease = context.balanceRelease; });
 afterAll(() => { PROTOTYPE_DOMAIN_CONTEXT.balanceRelease = originalBalance; });
 
 describe("M7 scored pediatric chart presentation", () => {
-  it.each(PEDIATRIC_CLINIC_CASES.map(clinicalCase => [clinicalCase.id, clinicalCase] as const))
+  it.each(cases.map(clinicalCase => [clinicalCase.id, clinicalCase] as const))
     ("projects the exact named family, age/sex, prose and no-test choices for %s", (_id, clinicalCase) => {
       const state = createPediatricChartsQaState(context, clinicalCase.id);
       const child = state.encounters[encounterId]!;

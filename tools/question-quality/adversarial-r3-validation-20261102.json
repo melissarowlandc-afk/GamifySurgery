@@ -1,0 +1,177 @@
+{
+  "checkedOn": "2026-11-02",
+  "status": "validation_complete_with_domain_failures",
+  "scope": "Third author revision; no shipping, Git, installs, network writes, answer analytics or player statistics. All 56 new versions need clinician review and independent re-review; 35 basic labels also require reviewer/manager acceptance.",
+  "commands": {
+    "clinical": {
+      "command": "npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads --maxWorkers=2 --reporter=dot",
+      "log": "tools/question-quality/adversarial-r3-clinical-final-20261102.log",
+      "exitCode": 0,
+      "filesPassed": 93,
+      "testsPassed": 731,
+      "testsFailed": 0,
+      "durationSeconds": 30.5
+    },
+    "lint": {
+      "command": "npm.cmd run clinical:lint:test",
+      "log": "tools/question-quality/adversarial-r3-lint-tests-20261102.log",
+      "exitCode": 0,
+      "testsPassed": 21,
+      "testsFailed": 0,
+      "durationMs": 46.6407
+    },
+    "wholeBank": {
+      "command": "npm.cmd run clinical:lint -- --json tools/question-quality/adversarial-r3-whole-bank-20261102.json",
+      "log": "tools/question-quality/adversarial-r3-whole-bank-20261102.log",
+      "exitCode": 0,
+      "linterVersion": "question-cue-lint.2026-11-02.v5",
+      "totals": {
+        "cases": 1110,
+        "nodeOccurrences": 1423,
+        "uniqueVariants": 1418,
+        "concepts": 370,
+        "profileContexts": 6039,
+        "variantsWithFindings": 890,
+        "findings": 1741,
+        "tutorialSequenceVariants": 3,
+        "missingAuthoredVersion": 0,
+        "missingEducationalTier": 162,
+        "approvalRecordOnlyMetadata": 40,
+        "variantsWithCompleteRationales": 239,
+        "variantsWithMultipleDefinitions": 0,
+        "byPriorityStage": {
+          "0": 687,
+          "1": 464,
+          "2": 163,
+          "3": 84,
+          "4": 20
+        },
+        "byOptionCount": {
+          "3": 121,
+          "4": 1297
+        },
+        "variantsByRule": {
+          "case-detail-decision-cue": 9,
+          "case-detail-key-rationale-overlap": 34,
+          "convergence": 81,
+          "heterogeneous-option-category": 85,
+          "key-length-disparity": 51,
+          "key-only-phrase-overlap": 49,
+          "key-only-word-overlap": 313,
+          "key-test-name-in-context": 6,
+          "lead-in-decision-principle": 16,
+          "near-duplicate-options": 44,
+          "negative-aligned-to-distractor": 105,
+          "option-absolute": 95,
+          "option-explanation": 37,
+          "option-length-disparity": 296,
+          "option-scope-mismatch": 2,
+          "option-specificity-disparity": 21,
+          "unique-key-abbreviation": 128,
+          "unique-key-test-name": 12
+        }
+      }
+    },
+    "player": {
+      "command": "npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 --reporter=dot src/session/variety3ChartsViewModels.test.ts src/session/briefEarlyLevelsPresentation.test.ts src/session/pediatricChartsViewModels.test.ts src/session/earlyLevelsPresentation.test.ts",
+      "nodeOptions": "--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs",
+      "preloadScope": "Command-local existing sandbox preload; prior NODE_OPTIONS restored; no preload edit.",
+      "log": "tools/question-quality/adversarial-r3-player-20261102.log",
+      "exitCode": 0,
+      "filesPassed": 4,
+      "testsPassed": 43,
+      "testsFailed": 0,
+      "durationSeconds": 6.06
+    },
+    "domain": {
+      "command": "npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=2 --reporter=dot",
+      "log": "tools/question-quality/adversarial-r3-domain-full-20261102.log",
+      "exitCode": 1,
+      "filesPassed": 164,
+      "filesFailed": 2,
+      "totalFiles": 166,
+      "testsPassed": 4367,
+      "testsFailed": 5,
+      "testsSkipped": 1,
+      "totalTests": 4373,
+      "durationSeconds": 846.86,
+      "failures": [
+        {
+          "kind": "input_binding_only",
+          "file": "packages/game-domain/tests/level-five-integration.test.ts",
+          "suite": "M9 connected Level 5 reducer journey",
+          "name": "binds the actual run to its current game, balance, clinical and driver inputs and reconciles cash"
+        },
+        {
+          "kind": "timeout",
+          "file": "packages/game-domain/tests/level-five-integration.test.ts",
+          "suite": "M9 connected Level 5 reducer journey",
+          "name": "matches continued play after save/reload at integration-running",
+          "deadlineMs": 30000
+        },
+        {
+          "kind": "timeout",
+          "file": "packages/game-domain/tests/level-five-integration.test.ts",
+          "suite": "M9 connected Level 5 reducer journey",
+          "name": "continues normal operations, completes a genuinely lower retry and retains the higher best and first finish",
+          "deadlineMs": 300000
+        },
+        {
+          "kind": "timeout",
+          "file": "packages/game-domain/tests/level-five-latent-bugs.test.ts",
+          "suite": "Level 5 garden and diagnostic movement ownership",
+          "name": "finishes the garden return before starting offsite movement after live",
+          "deadlineMs": 5000
+        },
+        {
+          "kind": "timeout",
+          "file": "packages/game-domain/tests/level-five-latent-bugs.test.ts",
+          "suite": "Level 5 garden and diagnostic movement ownership",
+          "name": "finishes the garden return before starting offsite movement after legacy reload",
+          "deadlineMs": 5000
+        }
+      ],
+      "interpretation": "Exactly one binding-only mismatch; four timeouts also seen in preceding v5 run. Manager previously confirmed three pre-pilot timeouts. No claim all checkpoint timeouts proved pre-existing. No deadlines, spatial or released evidence changed; rebind is not a timeout fix."
+    },
+    "typecheck": {
+      "command": "npm.cmd run typecheck",
+      "log": "tools/question-quality/adversarial-r3-typecheck-final-20261102.log",
+      "exitCode": 0,
+      "workspaces": [
+        "@gamify-surgery/clinical-context-workbench",
+        "@gamify-surgery/player",
+        "@gamify-surgery/balance-config",
+        "@gamify-surgery/clinical-authoring",
+        "@gamify-surgery/clinical-content",
+        "@gamify-surgery/clinical-research",
+        "@gamify-surgery/game-domain"
+      ]
+    },
+    "reportQa": {
+      "command": "node tools/question-quality/verify-review-20261102.mjs",
+      "log": "tools/question-quality/adversarial-r3-report-qa-20261102.log",
+      "exitCode": 0,
+      "resultFile": "tools/question-quality/adversarial-r3-report-qa-20261102.json",
+      "status": "passed",
+      "responses": 999,
+      "sourceSpans": 32599,
+      "postAnswerSpans": 182
+    }
+  },
+  "finalSourceSequencing": "Stems/options frozen before full domain. Later lowered two claim certainty fields and added four atomic anatomy claims / three source records and mappings. Final clinical, typecheck, lint and report QA include final metadata; no domain behavior changed. Player test content unchanged since passing run.",
+  "coverage": {
+    "main": 43,
+    "context": 30,
+    "independentPassExact": 17,
+    "returnedRevisions": 56,
+    "application": 21,
+    "basicRecallIntentional": 35,
+    "exactClinicalApprovalsUnchanged": 11
+  },
+  "references": {
+    "handoff": "docs/research/question-batch1-adversarial-round3-handoff-20261102.md",
+    "ownedFiles": "tools/question-quality/adversarial-r3-owned-files-20261102.json",
+    "binding": "tools/question-quality/adversarial-r3-bound-inputs-20261102.json",
+    "comparison": "tools/question-quality/adversarial-r3-cue-comparison-20261102.json"
+  }
+}

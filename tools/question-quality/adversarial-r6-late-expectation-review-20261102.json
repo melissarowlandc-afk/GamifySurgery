@@ -1,0 +1,65 @@
+{
+  "checkedOn": "2026-11-03",
+  "status": "passed",
+  "scope": "Exactly three stale expectation repairs from the full run. No expectation/driver/semantics change in the ordinary Level 5 launch or Level 4 APP invariance tests.",
+  "changes": [
+    {
+      "file": "packages/game-domain/tests/gs028-20261007-batch.test.ts",
+      "reason": "Three new scored constructs retire one live skin construct, adding two active concept IDs at stage 1/2. Case counts and the historical batch delta of 78 cases/20 concepts are unchanged.",
+      "changedCounts": [
+        [
+          244,
+          246
+        ],
+        [
+          261,
+          263
+        ],
+        [
+          264,
+          266
+        ],
+        [
+          281,
+          283
+        ]
+      ],
+      "entryHash": "249e277d270e69a7a849cbeeab2e98b5e8f5df187527cc03d804247b530bbe63",
+      "currentHash": "ae4b85098cb242d5fbe544d097a2c367b26cfcbebd607144fd66f32563849b97",
+      "allOtherSourceExactlyRetained": true
+    },
+    {
+      "file": "packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+      "reason": "Three new scored constructs retire one live skin construct, adding two active concept IDs at stage 1/2. Case counts and the historical batch delta of 78 cases/20 concepts are unchanged.",
+      "changedCounts": [
+        [
+          264,
+          266
+        ],
+        [
+          281,
+          283
+        ],
+        [
+          284,
+          286
+        ],
+        [
+          301,
+          303
+        ]
+      ],
+      "entryHash": "a2404d639aae66e8c3df18342be60a3bab4c677dfdde70ec2f0241331c8a028d",
+      "currentHash": "3c0be9e86b13ed5aafc41e98a61da1bdaefa20532867e30a87b50605136ce05e",
+      "allOtherSourceExactlyRetained": true
+    },
+    {
+      "file": "packages/game-domain/tests/surgery-center-batch.test.ts",
+      "reason": "The exact witnessed set retains HRM v2, adds HRM v3, and replaces live skin v2 with v3; all forty two-node encounters, thirty-two gated services, grading and execution assertions remain.",
+      "entryHash": "c96797769cc410e90548d37aba97f07c9fef45c56c7eec100409ff73acf6681a",
+      "currentHash": "0c69e7b720f18c6cdfabd1161e342cf1599cac6174344e3bcb3f5c1e768269cd",
+      "allOtherSourceExactlyRetained": true
+    }
+  ],
+  "launchAndL4AssertionsUnchanged": true
+}

@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { SYNTHETIC_CLINICAL_RELEASE } from "../synthetic-content";
+import { QUESTION_QUALITY_ADVERSARIAL_R4_AUTHORING_CONCEPTS as newConcepts } from "../question-quality-adversarial-r4-20261102";
+import { QUESTION_QUALITY_ADVERSARIAL_R5_AUTHORING_CONCEPTS as evidenceStatusConcepts } from "../question-quality-adversarial-r5-20261102";
+import { QUESTION_QUALITY_SOURCE_RELEASE as SYNTHETIC_CLINICAL_RELEASE, SYNTHETIC_CLINICAL_RELEASE as current } from "../synthetic-content";
 import {
   ROW_034_APPROVED_BACKLOG,
   ROW_034_APPROVED_ENCOUNTER_BLUEPRINTS,
@@ -188,7 +190,18 @@ describe("owner row 34 approved colonic-lipoma content", () => {
     );
   });
 
-  it("activates only the approved direct Level 2 blueprints", () => {
+  it("keeps the changed diagnostic objective in an explicit pending concept version",()=>{
+    const parent="concept.colonic-lipoma.endoscopic-recognition",version=newConcepts.find(c=>c.previousConceptId===parent)!;
+    expect(version).toMatchObject({id:parent+".v2",reviewStatus:"needs_clinician_review",lastClinicianReview:null});
+    expect(current.concepts.some(c=>c.id===parent)).toBe(true);
+    expect(current.concepts.some(c=>c.id===version.id)).toBe(true);
+    const next=evidenceStatusConcepts.find(c=>c.previousConceptId===version.id)!;
+    expect(next).toMatchObject({id:parent+".v3",reviewStatus:"needs_clinician_review",lastClinicianReview:null});
+    expect(current.cases.some(c=>c.decisionNodes.some(n=>n.primaryConceptId===next.id))).toBe(true);
+    expect(version.versioningReason).toBeTruthy();
+  });
+
+  it("retains the approved direct Level 2 blueprints in the frozen source release", () => {
     for (const concept of ROW_034_CONCEPTS) {
       expect(
         SYNTHETIC_CLINICAL_RELEASE.concepts.some(

@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { PROTOTYPE_BALANCE_RELEASE } from "../../../../balance-config/src/prototype-balance";
 import { answerChoiceTimingRegistryEntrySchema, testedConceptSchema } from "../../schema";
 import { ANSWER_CHOICE_TIMING_REGISTRY } from "../../answer-choice-timing";
-import { SYNTHETIC_CLINICAL_RELEASE, VARIETY3_PROTOTYPE_ADMISSION_MANIFEST } from "../../synthetic-content";
+import { QUESTION_QUALITY_SOURCE_RELEASE as SYNTHETIC_CLINICAL_RELEASE, VARIETY3_PROTOTYPE_ADMISSION_MANIFEST } from "../../synthetic-content";
 import { ADULT_ART_PROFILES, BATCH_CONTENT_VERSION, CHECKED_ON, adultDraftCaseSchema } from "./batch-helpers";
 import { C } from "./evidence-claims";
 import { renderVariety3Samples } from "./render-samples";
@@ -182,7 +182,8 @@ describe("standalone variety-3 batch content", () => {
     expect(SYNTHETIC_CLINICAL_RELEASE.publicationStatus).toBe("synthetic_unapproved_prototype");
     expect(SYNTHETIC_CLINICAL_RELEASE.concepts.filter(item => item.id.startsWith("concept.variety3."))).toEqual(tested);
     expect(SYNTHETIC_CLINICAL_RELEASE.cases.filter(item => item.id.startsWith("case.variety3."))).toEqual(cases);
-    expect(ANSWER_CHOICE_TIMING_REGISTRY.filter(item => item.caseId.startsWith("case.variety3."))).toEqual(timings);
+    const originalIds = new Set(timings.map(item => item.questionVariantId));
+    expect(ANSWER_CHOICE_TIMING_REGISTRY.filter(item => originalIds.has(item.questionVariantId))).toEqual(timings);
   });
 
   it("retains clinical boundaries and explicitly limited/withheld extensions", () => {

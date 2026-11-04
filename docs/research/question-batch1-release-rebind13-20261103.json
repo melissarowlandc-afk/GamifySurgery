@@ -1,0 +1,2051 @@
+{
+  "version": "question-batch1-release-rebind13.v1",
+  "completedOn": "2026-11-03",
+  "releaseRoot": "C:/Users/rowla/Projects/GS-release",
+  "baselineHead": "5a688e2774851bc1f8d118bd4ecf816a43ee38d9",
+  "sourceReadOnly": "C:/Users/rowla/Projects/GamifySurgery",
+  "portManifest": "docs/research/question-batch1-release-port-20261103.json",
+  "portedPaths": 513,
+  "acceptedIndependentReview": {
+    "path": "docs/research/question-batch1-adversarial-review7-20261102.json",
+    "sha256": "e7ec82cfb216ee71986918209e39754173044b1349f916e839f781ac8036b4c9",
+    "pass": 68,
+    "revise": 5,
+    "fail": 0,
+    "ownerReviewDrafts": [
+      "B05-context",
+      "B07-context",
+      "B08-context",
+      "B12-context",
+      "B36"
+    ]
+  },
+  "ownerReviewDrafts": [
+    {
+      "auditId": "B05-context",
+      "variantId": "question.inguinal-hernia.symptomatic-elective-repair.v4.r8",
+      "questionSha256": "ba2fd14c822cf5393f581c9d22b68f3bad73f2f0d0805cdcca3c52be9956e789",
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "auditId": "B07-context",
+      "variantId": "question.inguinal-hernia.symptomatic-elective-repair.v3.r8",
+      "questionSha256": "8e36feba8c31f1532043f9b2ad3005cfee8d2a27dc8ed7315617ece6934f4683",
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "auditId": "B08-context",
+      "variantId": "question.inguinal-hernia.symptomatic-elective-repair.v1.r8",
+      "questionSha256": "726abf95110bdc36e6f36e7b3158572f3f5ecc6d7c962579f724a37049147b1a",
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "auditId": "B12-context",
+      "variantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v4.r8",
+      "questionSha256": "f4f24dabaabd51ac6733faa2ad9e96dbbcbd5002ff7a5a971b6556487216e39f",
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "auditId": "B36",
+      "variantId": "question.quality-improvement.pdsa-act-and-iterate.v3.r8",
+      "questionSha256": "c916ed50046e23496e2db2405754c93b88acfa0647b78311e3a600aae562e799",
+      "reviewStatus": "needs_clinician_review"
+    }
+  ],
+  "publication": {
+    "publishedAt": "2026-11-04T01:01:03.761Z",
+    "scope": "Local canonical test evidence only; no Git, external publication or deployment",
+    "files": [
+      {
+        "path": "tools/qa/level-five-integration-results-20261012.json",
+        "oldSha256": "4b3b377ba239511bfc3dba59aedc15400ec569023e78eb5c6002c615b4954194",
+        "newSha256": "dead50020355be0bc328ff4557cd40199763097a8aa01baa3f8944d22492a8d5",
+        "bytes": 967829
+      },
+      {
+        "path": "tests/fixtures/level-five-integration-checkpoints-20261012.json",
+        "oldSha256": "ecd74aaba7afbb9dbfcf9eb3645dc5999306263d44099bbb481aafcdf5995225",
+        "newSha256": "10322f2f3d58be7c211cdd3efd25915f01832f5af0f03a8e32a09397469b0346",
+        "bytes": 12639739
+      },
+      {
+        "path": "tests/fixtures/level-five-legacy-behavior-20261012.json",
+        "oldSha256": "c5080dec0f4d429b3697cd2068955e043613023d8b698828e862f732c3229097",
+        "newSha256": "421e564f86cb502cb3dda02c84c5a19352c575ab89a4236654ef7d0cb249491e",
+        "bytes": 1506282
+      },
+      {
+        "path": "packages/game-domain/tests/level-five-launch.test.ts",
+        "oldSha256": "fe885a6f40528f43ef2f430d706c6130d05f076390802cd6abe9c7f19d55fd4d",
+        "newSha256": "615fe4f294fc8995d9a1a339766338ff94dd28a3b0ff7cc1614218a3b933f323",
+        "bytes": 6169
+      }
+    ],
+    "commands": 26362,
+    "closingCashCents": 6056335,
+    "completed": 410,
+    "walkouts": 0,
+    "inputHistoryEntries": 14,
+    "inputs": 409,
+    "clinicalInputs": 290,
+    "rawCheckpointBytesPreserved": true,
+    "rawLegacyGeneratorBytesPreserved": true,
+    "onlyRunMetadataCorrections": [
+      "liveCap 4 -> 5",
+      "append previous full inputs/artifactInputs to inputHistory"
+    ],
+    "guardModified": false
+  },
+  "nativeProgressSync": {
+    "path": ".local-dev/level5-m9/progress-state.json",
+    "oldSha256": "46e9fe9eedda21141327875839fbe96c57f34da166670a59ecf7bf95aa6b7cd9",
+    "newSha256": "da679ed3caf937b4039c0effc3ef6082eca0ee506d9ffac04c4c7d4ffb410257",
+    "bytes": 1732608,
+    "rawNativeProgressBytesPreserved": true,
+    "ignoredDiagnosticArtifact": true,
+    "syncedAt": "2026-11-04T01:19:46.818Z"
+  },
+  "runVerification": {
+    "checkedAt": "2026-11-04T01:01:03.562Z",
+    "status": "passed",
+    "publicationAuthorizedByTaskGates": true,
+    "rawResultsSha256": "6746fae128b8ae768847d5a403bd9782636d5ded2288662b8e10019939fa7af0",
+    "rawCheckpointsSha256": "10322f2f3d58be7c211cdd3efd25915f01832f5af0f03a8e32a09397469b0346",
+    "rawProgressSha256": "da679ed3caf937b4039c0effc3ef6082eca0ee506d9ffac04c4c7d4ffb410257",
+    "legacyStagedSha256": "421e564f86cb502cb3dda02c84c5a19352c575ab89a4236654ef7d0cb249491e",
+    "seed": "level-five-m9.integration.01",
+    "commands": {
+      "old": 28804,
+      "new": 26362
+    },
+    "closingCashCents": {
+      "old": 6010006,
+      "new": 6056335
+    },
+    "totals": {
+      "old": {
+        "completed": 449,
+        "walkouts": 0
+      },
+      "new": {
+        "completed": 410,
+        "walkouts": 0
+      }
+    },
+    "unlock": {
+      "old": {
+        "version": "level-five-inspection-unlock.v1",
+        "earnedAtFacilityTick": 17148,
+        "clinicalXp": 2298,
+        "displayedSatisfaction": 91,
+        "averageStaffMorale": 100,
+        "employedStaffCount": 9
+      },
+      "new": {
+        "version": "level-five-inspection-unlock.v1",
+        "earnedAtFacilityTick": 14709,
+        "clinicalXp": 2088,
+        "displayedSatisfaction": 91,
+        "averageStaffMorale": 100,
+        "employedStaffCount": 9
+      }
+    },
+    "cash": {
+      "openingCashCents": {
+        "old": 1785500,
+        "new": 1785500,
+        "delta": 0
+      },
+      "grossCents": {
+        "old": 16056700,
+        "new": 15111900,
+        "delta": -944800
+      },
+      "stockCents": {
+        "old": 304591,
+        "new": 271860,
+        "delta": -32731
+      },
+      "paidOperatingCents": {
+        "old": 10479603,
+        "new": 9521205,
+        "delta": -958398
+      },
+      "capitalCents": {
+        "old": 1048000,
+        "new": 1048000,
+        "delta": 0
+      },
+      "closingCashCents": {
+        "old": 6010006,
+        "new": 6056335,
+        "delta": 46329
+      }
+    },
+    "reports": [
+      {
+        "index": 1,
+        "oldSha256": "48a0142d3578c370a3d1ab0cf4168cdbc43f72b17e6d4d9bce14a0e9afd0bedd",
+        "newSha256": "5f87b746aa5117e3f68f334adb604773f5c25d09f96aa99d6ffcbb14b8dcc62f",
+        "oldScore": 62.4360414271396,
+        "newScore": 62.4813653779166,
+        "oldPatients": 51,
+        "newPatients": 54
+      },
+      {
+        "index": 2,
+        "oldSha256": "977e1a1ff53e5a1ffc551b0d2e223a5bdfed4ca397b5d5075dbb7d033bc3bdb6",
+        "newSha256": "b755397caca388420b75217b309388394788db3790a390e32ecafec37d932871",
+        "oldScore": 67.07404667363238,
+        "newScore": 66.64761689485275,
+        "oldPatients": 50,
+        "newPatients": 48
+      },
+      {
+        "index": 3,
+        "oldSha256": "d1280a78b0c2f8598874849edc363b73892940291df118d18983b90fe2192508",
+        "newSha256": "5988fa3d9f547a683a7a0e19e0ff29cc2b98a65c19eb356466dc7a6d4f629cc2",
+        "oldScore": 45.73839869490067,
+        "newScore": 45.299819146370375,
+        "oldPatients": 49,
+        "newPatients": 52
+      }
+    ],
+    "checkpoints": [
+      {
+        "name": "integration-l4",
+        "oldSha256": "8dfa12c8a810c094b465f2214bbfdf75d4f7c2c608bc4fd57cd6c5ec24b86b47",
+        "newSha256": "ce81a28c1383d5f30d716e887df036945d2de8c367fd874e8e2ecff96f4e533d",
+        "byteIdentical": false,
+        "oldTick": 3965,
+        "newTick": 3704,
+        "oldCashCents": 2657500,
+        "newCashCents": 2635200
+      },
+      {
+        "name": "integration-build",
+        "oldSha256": "e66e1f98e6a113fa8e6bdc84dba67aca67904a9a5726ee444871bd11f2968516",
+        "newSha256": "b2d3aafb4df43298bde97acdecc6d7d40f885193a84a552f8e55d751301eda70",
+        "byteIdentical": false,
+        "oldTick": 3965,
+        "newTick": 3704,
+        "oldCashCents": 1609500,
+        "newCashCents": 1587200
+      },
+      {
+        "name": "integration-preparing",
+        "oldSha256": "c5138906603d5c07a26e21367b2282858e46c5803aa81566e3a4e6b8c13679d6",
+        "newSha256": "afaeb0c68205e545dd3b60180b858a933ef08eba30c59cacc1103f60a23f64b6",
+        "byteIdentical": false,
+        "oldTick": 17149,
+        "newTick": 14710,
+        "oldCashCents": 4273477,
+        "newCashCents": 4148331
+      },
+      {
+        "name": "integration-running",
+        "oldSha256": "759282448612ad2477301bd10acbe6bf7b826d2fabd987e1af5b46385a0bc85d",
+        "newSha256": "08dc1124415152176e319e98720e8d57b5b7bcec0826cfe12c9d13c18587e43a",
+        "byteIdentical": false,
+        "oldTick": 17286,
+        "newTick": 14847,
+        "oldCashCents": 4338245,
+        "newCashCents": 4196706
+      },
+      {
+        "name": "integration-final",
+        "oldSha256": "ed4ec3c7c8e2a8aeb5fa59b2f79f1afb9f9e36caa19d035ff97c55fa50b4cdc9",
+        "newSha256": "dfc9c8abfb182cb5663f48e16abd5b47961dcb59674dd05de5699033ad9cf7c0",
+        "byteIdentical": false,
+        "oldTick": 20205,
+        "newTick": 17766,
+        "oldCashCents": 4910784,
+        "newCashCents": 4838179
+      },
+      {
+        "name": "integration-finish",
+        "oldSha256": "23c425d4102fb105efc7fe6d855b62d36607b2efee02f080419cbe7d0f746be3",
+        "newSha256": "4fb7020a7f585496afd985a143ff3bbb264696a3a7bfdd530b5659027ce03e13",
+        "byteIdentical": false,
+        "oldTick": 20206,
+        "newTick": 17767,
+        "oldCashCents": 4910784,
+        "newCashCents": 4838179
+      },
+      {
+        "name": "integration-repeat-final",
+        "oldSha256": "1bbcd244aae31efa365405811b48fb0e62320c9bb6a17735a7162a869d5358c4",
+        "newSha256": "1570346ff42b4e7adf7a60a0fd739b26de52b5b955761a8fedbc4dd96be89ea9",
+        "byteIdentical": false,
+        "oldTick": 23862,
+        "newTick": 21423,
+        "oldCashCents": 5721659,
+        "newCashCents": 5656213
+      },
+      {
+        "name": "integration-repeat",
+        "oldSha256": "ad97e1f7e04ac8ba3bf2586cf83114a27b8fd9fd136de4271eadc345fa59912a",
+        "newSha256": "75b86460a89f5380a8ec369e5ab9861022f2eeb27c800cfe5f93825864baad00",
+        "byteIdentical": false,
+        "oldTick": 23863,
+        "newTick": 21424,
+        "oldCashCents": 5721659,
+        "newCashCents": 5656213
+      },
+      {
+        "name": "integration-lower-repeat",
+        "oldSha256": "fba0965bdf882b434bee83e1a6d0555ab3541575cc01abe0ec76be991d1afe7c",
+        "newSha256": "66b76b76e5b5ae208a11ecf7ce16c710ce47cbce05f1126db518e0a3402a005c",
+        "byteIdentical": false,
+        "oldTick": 26920,
+        "newTick": 24481,
+        "oldCashCents": 6010006,
+        "newCashCents": 6056335
+      }
+    ],
+    "numericChanges": [
+      {
+        "path": "/liveCap",
+        "old": 5,
+        "new": 4,
+        "delta": -1
+      },
+      {
+        "path": "/commandsReconciled",
+        "old": 28804,
+        "new": 26362,
+        "delta": -2442
+      },
+      {
+        "path": "/grossCents",
+        "old": 16056700,
+        "new": 15111900,
+        "delta": -944800
+      },
+      {
+        "path": "/stockCents",
+        "old": 304591,
+        "new": 271860,
+        "delta": -32731
+      },
+      {
+        "path": "/paidOperatingCents",
+        "old": 10479603,
+        "new": 9521205,
+        "delta": -958398
+      },
+      {
+        "path": "/closingCashCents",
+        "old": 6010006,
+        "new": 6056335,
+        "delta": 46329
+      },
+      {
+        "path": "/levelFourAdvanceTick",
+        "old": 3965,
+        "new": 3704,
+        "delta": -261
+      },
+      {
+        "path": "/xpGoalTick",
+        "old": 15382,
+        "new": 14217,
+        "delta": -1165
+      },
+      {
+        "path": "/unlock/earnedAtFacilityTick",
+        "old": 17148,
+        "new": 14709,
+        "delta": -2439
+      },
+      {
+        "path": "/unlock/clinicalXp",
+        "old": 2298,
+        "new": 2088,
+        "delta": -210
+      },
+      {
+        "path": "/firstAnswers",
+        "old": 549,
+        "new": 553,
+        "delta": 4
+      },
+      {
+        "path": "/levelFiveFirstAnswers",
+        "old": 460,
+        "new": 464,
+        "delta": 4
+      },
+      {
+        "path": "/completedDailyRounds",
+        "old": 39,
+        "new": 35,
+        "delta": -4
+      },
+      {
+        "path": "/positiveComfortUses",
+        "old": 1075,
+        "new": 719,
+        "delta": -356
+      },
+      {
+        "path": "/supplierSavings/stockCents",
+        "old": 2209,
+        "new": 2140,
+        "delta": -69
+      },
+      {
+        "path": "/supplierSavings/upkeepSixtiethCents",
+        "old": 781320,
+        "new": 707700,
+        "delta": -73620
+      },
+      {
+        "path": "/reports/0/startedAtFacilityTick",
+        "old": 17206,
+        "new": 14767,
+        "delta": -2439
+      },
+      {
+        "path": "/reports/0/endedAtFacilityTick",
+        "old": 20206,
+        "new": 17767,
+        "delta": -2439
+      },
+      {
+        "path": "/reports/0/qualifyingScoredPatientCount",
+        "old": 51,
+        "new": 54,
+        "delta": 3
+      },
+      {
+        "path": "/reports/0/categories/0/score",
+        "old": 80.48007662835249,
+        "new": 77.01149425287356,
+        "delta": -3.468582375478931
+      },
+      {
+        "path": "/reports/0/categories/0/weightedPoints",
+        "old": 8.04800766283525,
+        "new": 7.701149425287356,
+        "delta": -0.34685823754789435
+      },
+      {
+        "path": "/reports/0/categories/0/rawValues/cleanRoomMinutes",
+        "old": 210053,
+        "new": 201000,
+        "delta": -9053
+      },
+      {
+        "path": "/reports/0/categories/0/rawValues/meanCleanliness",
+        "old": 82.64763601532567,
+        "new": 77.94967816091955,
+        "delta": -4.697957854406127
+      },
+      {
+        "path": "/reports/0/categories/6/score",
+        "old": 94.86274509803921,
+        "new": 95.55555555555556,
+        "delta": 0.6928104575163445
+      },
+      {
+        "path": "/reports/0/categories/6/weightedPoints",
+        "old": 9.486274509803922,
+        "new": 9.555555555555555,
+        "delta": 0.06928104575163374
+      },
+      {
+        "path": "/reports/0/categories/6/rawValues/satisfactionSum",
+        "old": 4838,
+        "new": 5160,
+        "delta": 322
+      },
+      {
+        "path": "/reports/0/categories/6/rawValues/patientCount",
+        "old": 51,
+        "new": 54,
+        "delta": 3
+      },
+      {
+        "path": "/reports/0/categories/7/rawValues/queueMinutes",
+        "old": 201,
+        "new": 143,
+        "delta": -58
+      },
+      {
+        "path": "/reports/0/categories/7/rawValues/completed",
+        "old": 51,
+        "new": 54,
+        "delta": 3
+      },
+      {
+        "path": "/reports/0/categories/8/rawValues/operatingGrossCents",
+        "old": 1850600,
+        "new": 1950900,
+        "delta": 100300
+      },
+      {
+        "path": "/reports/0/categories/8/rawValues/stockCostCents",
+        "old": 32442,
+        "new": 36201,
+        "delta": 3759
+      },
+      {
+        "path": "/reports/0/categories/8/rawValues/operatingNetCents",
+        "old": 594865,
+        "new": 691406,
+        "delta": 96541
+      },
+      {
+        "path": "/reports/0/categories/9/score",
+        "old": 78.68852459016394,
+        "new": 80.3030303030303,
+        "delta": 1.614505712866361
+      },
+      {
+        "path": "/reports/0/categories/9/weightedPoints",
+        "old": 15.737704918032787,
+        "new": 16.06060606060606,
+        "delta": 0.3229011425732722
+      },
+      {
+        "path": "/reports/0/categories/9/rawValues/correctFirstSubmissions",
+        "old": 48,
+        "new": 53,
+        "delta": 5
+      },
+      {
+        "path": "/reports/0/categories/9/rawValues/allFirstSubmissions",
+        "old": 60,
+        "new": 66,
+        "delta": 6
+      },
+      {
+        "path": "/reports/0/categories/9/rawValues/presentedButUnanswered",
+        "old": 1,
+        "new": 0,
+        "delta": -1
+      },
+      {
+        "path": "/reports/0/rawTotalScore",
+        "old": 62.4360414271396,
+        "new": 62.4813653779166,
+        "delta": 0.045323950777003574
+      },
+      {
+        "path": "/reports/1/startedAtFacilityTick",
+        "old": 20863,
+        "new": 18424,
+        "delta": -2439
+      },
+      {
+        "path": "/reports/1/endedAtFacilityTick",
+        "old": 23863,
+        "new": 21424,
+        "delta": -2439
+      },
+      {
+        "path": "/reports/1/qualifyingScoredPatientCount",
+        "old": 50,
+        "new": 48,
+        "delta": -2
+      },
+      {
+        "path": "/reports/1/categories/0/score",
+        "old": 81.3199233716475,
+        "new": 77.01149425287356,
+        "delta": -4.308429118773944
+      },
+      {
+        "path": "/reports/1/categories/0/weightedPoints",
+        "old": 8.131992337164752,
+        "new": 7.701149425287356,
+        "delta": -0.430842911877396
+      },
+      {
+        "path": "/reports/1/categories/0/rawValues/cleanRoomMinutes",
+        "old": 212245,
+        "new": 201000,
+        "delta": -11245
+      },
+      {
+        "path": "/reports/1/categories/0/rawValues/meanCleanliness",
+        "old": 82.83417624521073,
+        "new": 77.63037164750958,
+        "delta": -5.203804597701151
+      },
+      {
+        "path": "/reports/1/categories/6/score",
+        "old": 97.78,
+        "new": 98.35416666666667,
+        "delta": 0.5741666666666703
+      },
+      {
+        "path": "/reports/1/categories/6/weightedPoints",
+        "old": 9.777999999999999,
+        "new": 9.835416666666667,
+        "delta": 0.05741666666666845
+      },
+      {
+        "path": "/reports/1/categories/6/rawValues/satisfactionSum",
+        "old": 4889,
+        "new": 4721,
+        "delta": -168
+      },
+      {
+        "path": "/reports/1/categories/6/rawValues/patientCount",
+        "old": 50,
+        "new": 48,
+        "delta": -2
+      },
+      {
+        "path": "/reports/1/categories/7/score",
+        "old": 100,
+        "new": 98.9399293286219,
+        "delta": -1.0600706713780994
+      },
+      {
+        "path": "/reports/1/categories/7/weightedPoints",
+        "old": 5,
+        "new": 4.946996466431095,
+        "delta": -0.05300353356890497
+      },
+      {
+        "path": "/reports/1/categories/7/rawValues/queueMinutes",
+        "old": 247,
+        "new": 283,
+        "delta": 36
+      },
+      {
+        "path": "/reports/1/categories/7/rawValues/overdueQueueMinutes",
+        "old": 0,
+        "new": 6,
+        "delta": 6
+      },
+      {
+        "path": "/reports/1/categories/7/rawValues/completed",
+        "old": 50,
+        "new": 48,
+        "delta": -2
+      },
+      {
+        "path": "/reports/1/categories/8/rawValues/operatingGrossCents",
+        "old": 1895100,
+        "new": 1928100,
+        "delta": 33000
+      },
+      {
+        "path": "/reports/1/categories/8/rawValues/stockCostCents",
+        "old": 38205,
+        "new": 36200,
+        "delta": -2005
+      },
+      {
+        "path": "/reports/1/categories/8/rawValues/operatingNetCents",
+        "old": 633602,
+        "new": 668607,
+        "delta": 35005
+      },
+      {
+        "path": "/reports/1/categories/9/rawValues/correctFirstSubmissions",
+        "old": 57,
+        "new": 64,
+        "delta": 7
+      },
+      {
+        "path": "/reports/1/categories/9/rawValues/allFirstSubmissions",
+        "old": 57,
+        "new": 64,
+        "delta": 7
+      },
+      {
+        "path": "/reports/1/rawTotalScore",
+        "old": 67.07404667363238,
+        "new": 66.64761689485275,
+        "delta": -0.42642977877963517
+      },
+      {
+        "path": "/reports/2/startedAtFacilityTick",
+        "old": 23920,
+        "new": 21481,
+        "delta": -2439
+      },
+      {
+        "path": "/reports/2/endedAtFacilityTick",
+        "old": 26920,
+        "new": 24481,
+        "delta": -2439
+      },
+      {
+        "path": "/reports/2/qualifyingScoredPatientCount",
+        "old": 49,
+        "new": 52,
+        "delta": 3
+      },
+      {
+        "path": "/reports/2/categories/0/score",
+        "old": 80.55977011494252,
+        "new": 77.01149425287356,
+        "delta": -3.5482758620689623
+      },
+      {
+        "path": "/reports/2/categories/0/weightedPoints",
+        "old": 8.055977011494253,
+        "new": 7.701149425287356,
+        "delta": -0.35482758620689747
+      },
+      {
+        "path": "/reports/2/categories/0/rawValues/cleanRoomMinutes",
+        "old": 210261,
+        "new": 201000,
+        "delta": -9261
+      },
+      {
+        "path": "/reports/2/categories/0/rawValues/meanCleanliness",
+        "old": 82.63931417624521,
+        "new": 77.63938314176245,
+        "delta": -4.999931034482756
+      },
+      {
+        "path": "/reports/2/categories/6/score",
+        "old": 85.18367346938776,
+        "new": 84.34615384615384,
+        "delta": -0.8375196232339164
+      },
+      {
+        "path": "/reports/2/categories/6/weightedPoints",
+        "old": 8.518367346938776,
+        "new": 8.434615384615384,
+        "delta": -0.08375196232339199
+      },
+      {
+        "path": "/reports/2/categories/6/rawValues/satisfactionSum",
+        "old": 4174,
+        "new": 4386,
+        "delta": 212
+      },
+      {
+        "path": "/reports/2/categories/6/rawValues/patientCount",
+        "old": 49,
+        "new": 52,
+        "delta": 3
+      },
+      {
+        "path": "/reports/2/categories/7/rawValues/queueMinutes",
+        "old": 166,
+        "new": 235,
+        "delta": 69
+      },
+      {
+        "path": "/reports/2/categories/7/rawValues/completed",
+        "old": 49,
+        "new": 52,
+        "delta": 3
+      },
+      {
+        "path": "/reports/2/categories/8/rawValues/operatingGrossCents",
+        "old": 1527400,
+        "new": 1659800,
+        "delta": 132400
+      },
+      {
+        "path": "/reports/2/categories/8/rawValues/stockCostCents",
+        "old": 40197,
+        "new": 34921,
+        "delta": -5276
+      },
+      {
+        "path": "/reports/2/categories/8/rawValues/operatingNetCents",
+        "old": 263910,
+        "new": 401586,
+        "delta": 137676
+      },
+      {
+        "path": "/reports/2/categories/9/rawValues/allFirstSubmissions",
+        "old": 55,
+        "new": 70,
+        "delta": 15
+      },
+      {
+        "path": "/reports/2/rawTotalScore",
+        "old": 45.73839869490067,
+        "new": 45.299819146370375,
+        "delta": -0.43857954853029213
+      },
+      {
+        "path": "/retiredReceipts",
+        "old": 5931,
+        "new": 5431,
+        "delta": -500
+      },
+      {
+        "path": "/retiredEncounters",
+        "old": 439,
+        "new": 399,
+        "delta": -40
+      },
+      {
+        "path": "/snapshotPhases/integration-l4/tick",
+        "old": 3965,
+        "new": 3704,
+        "delta": -261
+      },
+      {
+        "path": "/snapshotPhases/integration-build/tick",
+        "old": 3965,
+        "new": 3704,
+        "delta": -261
+      },
+      {
+        "path": "/snapshotPhases/integration-preparing/tick",
+        "old": 17149,
+        "new": 14710,
+        "delta": -2439
+      },
+      {
+        "path": "/snapshotPhases/integration-preparing/xp",
+        "old": 2298,
+        "new": 2088,
+        "delta": -210
+      },
+      {
+        "path": "/snapshotPhases/integration-running/tick",
+        "old": 17286,
+        "new": 14847,
+        "delta": -2439
+      },
+      {
+        "path": "/snapshotPhases/integration-running/xp",
+        "old": 2330,
+        "new": 2110,
+        "delta": -220
+      },
+      {
+        "path": "/snapshotPhases/integration-final/tick",
+        "old": 20205,
+        "new": 17766,
+        "delta": -2439
+      },
+      {
+        "path": "/snapshotPhases/integration-final/xp",
+        "old": 2814,
+        "new": 2644,
+        "delta": -170
+      },
+      {
+        "path": "/snapshotPhases/integration-finish/tick",
+        "old": 20206,
+        "new": 17767,
+        "delta": -2439
+      },
+      {
+        "path": "/snapshotPhases/integration-finish/xp",
+        "old": 2814,
+        "new": 2644,
+        "delta": -170
+      },
+      {
+        "path": "/snapshotPhases/integration-repeat-final/tick",
+        "old": 23862,
+        "new": 21423,
+        "delta": -2439
+      },
+      {
+        "path": "/snapshotPhases/integration-repeat-final/xp",
+        "old": 3488,
+        "new": 3410,
+        "delta": -78
+      },
+      {
+        "path": "/snapshotPhases/integration-repeat/tick",
+        "old": 23863,
+        "new": 21424,
+        "delta": -2439
+      },
+      {
+        "path": "/snapshotPhases/integration-repeat/xp",
+        "old": 3488,
+        "new": 3410,
+        "delta": -78
+      },
+      {
+        "path": "/snapshotPhases/integration-lower-repeat/tick",
+        "old": 26920,
+        "new": 24481,
+        "delta": -2439
+      },
+      {
+        "path": "/snapshotPhases/integration-lower-repeat/xp",
+        "old": 3600,
+        "new": 3552,
+        "delta": -48
+      }
+    ],
+    "inputDelta": {
+      "beforeInputs": 380,
+      "afterInputs": 409,
+      "beforeClinical": 261,
+      "afterClinical": 290,
+      "added": [
+        {
+          "path": "packages/clinical-content/src/question-quality-adversarial-20261102-data.ts",
+          "newSha256": "04abd031b224ea0eff55626cc983443493549517057e3a93760bcb40d1c6ab17"
+        },
+        {
+          "path": "packages/clinical-content/src/question-quality-adversarial-20261102.ts",
+          "newSha256": "7da11630a357e1ed7c36c4579aa99d46e6cd14d5a5f014a8dcb9ec63df2c7a2d"
+        },
+        {
+          "path": "packages/clinical-content/src/question-quality-adversarial-evidence-20261102.ts",
+          "newSha256": "a2488c689ed8e2e4859487b59064d156c37fa8cdd345a39eab039b9ce3216b05"
+        },
+        {
+          "path": "packages/clinical-content/src/question-quality-adversarial-r3-20261102-data.ts",
+          "newSha256": "c39f1bb565dba8eb5cbb32dbe0fc9dcad3c27beeb49c3af782fe2c90ccbf1b00"
+        },
+        {
+          "path": "packages/clinical-content/src/question-quality-adversarial-r3-20261102.ts",
+          "newSha256": "6f2251f33b190470131c683cf6e565fd0b13f2b104574b2e753dacc4de3ec4be"
+        },
+        {
+          "path": "packages/clinical-content/src/question-quality-adversarial-r3-evidence-20261102.ts",
+          "newSha256": "3ce79432a9bc392eabdac641d54e7da0d5c37dc716ff0ef57a36f2972ef1689a"
+        },
+        {
+          "path": "packages/clinical-content/src/question-quality-adversarial-r4-20261102-data.ts",
+          "newSha256": "d80fb06aee3e2e540114c1a065e988e3e303ff2ac86c3718f2b10c1a2b942574"
+        },
+        {
+          "path": "packages/clinical-content/src/question-quality-adversarial-r4-20261102.ts",
+          "newSha256": "6ae2cfd4932c20ee946d545da7370983c21c1484f28c882d02b03989bbbc2969"
+        },
+        {
+          "path": "packages/clinical-content/src/question-quality-adversarial-r4-evidence-20261102.ts",
+          "newSha256": "15dea8b054de92f116687b76c84090e49247aa4c15d7b79abe2a553d5724b2df"
+        },
+        {
+          "path": "packages/clinical-content/src/question-quality-adversarial-r5-20261102-data.ts",
+          "newSha256": "077ce04e45f26182367101dfa8e412dc91344731c6b8a720c6b28fc41789f984"
+        },
+        {
+          "path": "packages/clinical-content/src/question-quality-adversarial-r5-20261102.ts",
+          "newSha256": "025c33fc3ab8a24178179c5757c67279d4bea4c664dc26ac7313682f610c6d5b"
+        },
+        {
+          "path": "packages/clinical-content/src/question-quality-adversarial-r5-evidence-20261102.ts",
+          "newSha256": "4ad644d08c5a6440d49598aa84c60393f6ab543583784d9ecbe22708fed2d142"
+        },
+        {
+          "path": "packages/clinical-content/src/question-quality-adversarial-r6-20261102-data.ts",
+          "newSha256": "32061f2ee39840a2d34e3b81606602dc46be78f78dbef814af69bfb08728c2d3"
+        },
+        {
+          "path": "packages/clinical-content/src/question-quality-adversarial-r6-20261102.ts",
+          "newSha256": "dab740ca3574fe26d5786034de8d018325e628efeb475f1e66be87e49bfcd3f2"
+        },
+        {
+          "path": "packages/clinical-content/src/question-quality-adversarial-r6-evidence-20261102.ts",
+          "newSha256": "32d8395638b73c74d42d26c5e7fb2aa6a306001501776cb23854b424d910172b"
+        },
+        {
+          "path": "packages/clinical-content/src/question-quality-adversarial-r7-20261102-data.ts",
+          "newSha256": "2b426b840a97cc1ceb3ae9cdff920cee228c3deffc8e30432b294441c8d9cf03"
+        },
+        {
+          "path": "packages/clinical-content/src/question-quality-adversarial-r7-20261102.ts",
+          "newSha256": "387cc1ee2d92839c9a3f3c787ab2a8f427d0e0b3bf8264fb3e5aa048ba056582"
+        },
+        {
+          "path": "packages/clinical-content/src/question-quality-adversarial-r7-evidence-20261102.ts",
+          "newSha256": "c754c13b071f08a53518623ede17765f21d6e9eaeb612d14b7d9d60ba3862d4d"
+        },
+        {
+          "path": "packages/clinical-content/src/question-quality-batch1-20261102-data.ts",
+          "newSha256": "5b49c457b95974d55858476c148ec23d5c37a88ba39d430fe67b48eb33547c85"
+        },
+        {
+          "path": "packages/clinical-content/src/question-quality-batch1-20261102.ts",
+          "newSha256": "1aac74fec55e37bdd1463eb88e111590953bcd69e53467efc7c867d4f8d37928"
+        },
+        {
+          "path": "packages/clinical-content/src/question-quality-clinical-approvals-20261102.ts",
+          "newSha256": "13702a09fec2af7580a2f7194285244bdd89b322ffcd098b875e099c903ca045"
+        },
+        {
+          "path": "packages/clinical-content/src/question-quality-pilot-20261028-data.ts",
+          "newSha256": "9424e4ebb86c1d89bbbc88138b3938dbe102651ccce56ebe92abf679bea54f18"
+        },
+        {
+          "path": "packages/clinical-content/src/question-quality-pilot-20261028-r2.ts",
+          "newSha256": "539f5cc86cb4e24fc2923bff7f8929c7a456918c4c66d003eae76cc1519153ea"
+        },
+        {
+          "path": "packages/clinical-content/src/question-quality-pilot-20261028.ts",
+          "newSha256": "eeab1985ffa0fdcd145e0035716d216924af8372c1cdaa982dfcea77dc41219f"
+        },
+        {
+          "path": "packages/clinical-content/src/question-quality-pilot-20261029-round1.ts",
+          "newSha256": "6b2dc53219de4bc4a016da65a2bb3b49e797d2fc8808215761c557f4e7997c46"
+        },
+        {
+          "path": "packages/clinical-content/src/question-quality-pilot-20261102-round2.ts",
+          "newSha256": "784474a2b93ad8cca728a39bc4745d16b6ad510ac198fbdec2a65e76b2912335"
+        },
+        {
+          "path": "packages/clinical-content/src/question-quality-pilot-evidence-20261028.ts",
+          "newSha256": "3197bf248b802fa129feafcb81a83bc1921a2504d3948fc37ab532405aaad2dd"
+        },
+        {
+          "path": "packages/clinical-content/src/question-quality-pilot-round2-evidence-20261029.ts",
+          "newSha256": "03ca239ab0e79f8bc1613e0114199a46a4724912e0b480b2eee1384fa2c2425d"
+        },
+        {
+          "path": "packages/clinical-content/src/question-quality-round3-batch1-evidence-20261102.ts",
+          "newSha256": "d824533bf4b7d6ebea37d08d9780da5fa8009c7081fc9379bcb2d585b72f521b"
+        }
+      ],
+      "changed": [
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.ts",
+          "oldSha256": "ad821c697ca2c8f6553ea03affd0cb868db65b56418c29e1c000307e771358eb",
+          "newSha256": "7db1b1253c7d3064adb0602360925c0739bb65c719603507c3fa09a6732ba245"
+        },
+        {
+          "path": "packages/clinical-content/src/index.ts",
+          "oldSha256": "dbb342121a1e49279c8977f2fcdb1106a9b4a228894fbc54b2b2cd27546a5223",
+          "newSha256": "a57ffcec34d75e2e337790f1ac0d71e4bfdc8f79d53cdb28596e00ead60413e4"
+        },
+        {
+          "path": "packages/clinical-content/src/synthetic-content.ts",
+          "oldSha256": "09d9797f7c659d6f3e7bd4ac5e0f4b72d79fff83f2bc64ed3ccf996ae7f2bc16",
+          "newSha256": "6d9870d53383af7da6ee7547ba702410a2545882876faa1696c0e1217fae311c"
+        },
+        {
+          "path": "packages/game-domain/src/test-choice-orders.ts",
+          "oldSha256": "c7ddaea75d35c7f8da695d1c9e2f9a84027530563a61d8b227d3bd45a9338b00",
+          "newSha256": "522c3fbd3b3503f4b6d74f38e7dbd994b98727a3037b0374f86e58dbf5a41639"
+        }
+      ],
+      "removed": []
+    },
+    "preservation": {
+      "exactOwnerApprovals": 11,
+      "frozenIndependentPass": 62,
+      "frozenSaves": 9,
+      "frozenEncounters": 105
+    },
+    "nativeDriverAssertionsModified": false,
+    "bindingGuardModified": false,
+    "assertionsWeakenedForRebind": false,
+    "canonicalWritten": false
+  },
+  "preservation": {
+    "checkedAt": "2026-11-04T01:06:17.479Z",
+    "status": "passed",
+    "originalClinicalReleaseUnchanged": true,
+    "conceptsBefore": 370,
+    "conceptsAfter": 396,
+    "newConceptIds": [
+      "concept.gs028g.hiv-perioperative.booster-midazolam-interaction.v2",
+      "concept.achalasia.high-resolution-manometry.v2",
+      "concept.inguinal-hernia.equivocal-exam-ultrasound.v2",
+      "concept.inguinal-hernia.symptomatic-elective-repair.v2",
+      "concept.differentiated-thyroid-cancer.preoperative-nodal-ultrasound.v2",
+      "concept.pigmented-skin-lesion.complete-diagnostic-biopsy.v2",
+      "concept.melanoma.sentinel-node-staging.v2",
+      "concept.colon-cancer.preoperative-cross-sectional-staging.v2",
+      "concept.soft-tissue-mass.extremity-mri.v2",
+      "concept.colonic-lipoma.endoscopic-recognition.v2",
+      "concept.gastric-malt-lymphoma.hpylori-eradication-first-line.v2",
+      "concept.gastric-malt-lymphoma.pathologic-recognition.v2",
+      "concept.statistics-ethics.p-value.v2",
+      "concept.pseudocyst.symptomatic-endoscopic-drainage.v2",
+      "concept.pseudocyst.contrast-ct-characterization.v2",
+      "concept.inflammatory-breast-cancer.core-biopsy-confirmation.v2",
+      "concept.peptic-ulcer-bleeding.high-risk-stigmata-endoscopic-hemostasis.v2",
+      "concept.peptic-ulcer-bleeding.endoscopic-hemostasis-modality.v2",
+      "concept.colonic-lipoma.endoscopic-recognition.v3",
+      "concept.achalasia.high-resolution-manometry.v3",
+      "concept.pigmented-skin-lesion.complete-diagnostic-biopsy.v3",
+      "concept.soft-tissue-mass.extremity-mri.v3",
+      "concept.inguinal-hernia.symptomatic-elective-repair.v3",
+      "concept.pigmented-skin-lesion.complete-diagnostic-biopsy.v4",
+      "concept.pigmented-skin-lesion.partial-depth-nodal-planning.v1",
+      "concept.soft-tissue-mass.extremity-mri.v4"
+    ],
+    "exactOwnerApprovals": [
+      {
+        "auditId": "A04",
+        "questionVariantId": "question.gs028f.nutrition.refeeding-insulin-phosphate-shift.v2.r2",
+        "contentVersion": "question-authoring.2026-10-28.v1",
+        "reviewer": "Melissa Rowland (clinical sign-off)",
+        "reviewedOn": "2026-10-29",
+        "questionSha256": "f9cf70cb55a7868e916b9339a10d2a08b60b4f8b88f7338996826ad86f80a3b7"
+      },
+      {
+        "auditId": "A08",
+        "questionVariantId": "question.wound.secondary-intention-healing.v1.r2",
+        "contentVersion": "question-authoring.2026-10-28.v1",
+        "reviewer": "Melissa Rowland (clinical sign-off)",
+        "reviewedOn": "2026-10-29",
+        "questionSha256": "27e218bce48e83f41985bbb8763bbf4af4a8d20274ce84cd6db46a2cb584d172"
+      },
+      {
+        "auditId": "A11",
+        "questionVariantId": "question.differentiated-thyroid-cancer.individualized-surgical-extent.v1.r4",
+        "contentVersion": "question-authoring.2026-10-29.v3",
+        "reviewer": "Melissa Rowland (clinical sign-off)",
+        "reviewedOn": "2026-11-02",
+        "questionSha256": "c33154f9e455028595b33c063c68174bcd642962a29bbfc4e1903a0cb3280c5a"
+      },
+      {
+        "auditId": "A17",
+        "questionVariantId": "question.adrenal-incidentaloma.pheochromocytoma-before-biopsy.v3.r3",
+        "contentVersion": "question-authoring.2026-10-28.v2",
+        "reviewer": "Melissa Rowland (clinical sign-off)",
+        "reviewedOn": "2026-10-29",
+        "questionSha256": "b1b91544ab22907c5d01ffdc1dbd6406e2adba6f80d55460295ea8c4d64c97d3"
+      },
+      {
+        "auditId": "A22",
+        "questionVariantId": "question.statistics-ethics.fisher-exact.v2.r3",
+        "contentVersion": "question-authoring.2026-10-28.v2",
+        "reviewer": "Melissa Rowland (clinical sign-off)",
+        "reviewedOn": "2026-10-29",
+        "questionSha256": "e1444f264e7ca4fd970f28a4ad414077355c287bc1c8d0e1d21f9548d5cffb78"
+      },
+      {
+        "auditId": "A23",
+        "questionVariantId": "question.statistics-ethics.risk-ratio-odds-ratio.v4.r3",
+        "contentVersion": "question-authoring.2026-10-28.v2",
+        "reviewer": "Melissa Rowland (clinical sign-off)",
+        "reviewedOn": "2026-10-29",
+        "questionSha256": "b6914c100542a8e3af98a11320c6b7b7db34dc95c782d2c2ac319bd550689acc"
+      },
+      {
+        "auditId": "A27",
+        "questionVariantId": "question.gs028g.laparoscopy-respiratory.co2-absorption.v2.r3",
+        "contentVersion": "question-authoring.2026-10-28.v2",
+        "reviewer": "Melissa Rowland (clinical sign-off)",
+        "reviewedOn": "2026-10-29",
+        "questionSha256": "90c13b79bf01fb937dfa7ed8144072533481a0505832e939ff85f668e04f08d2"
+      },
+      {
+        "auditId": "A28",
+        "questionVariantId": "question.gs028g.merkel-cell.integrated-diagnosis.v1.r3",
+        "contentVersion": "question-authoring.2026-10-28.v2",
+        "reviewer": "Melissa Rowland (clinical sign-off)",
+        "reviewedOn": "2026-10-29",
+        "questionSha256": "fc9c5c514117041b0d6bf34cb53c682ccec6b47a383dab6794b8a754bd2fe7ef"
+      },
+      {
+        "auditId": "A30",
+        "questionVariantId": "question.gs028g.peristomal-skin.restore-seal.v1.r4",
+        "contentVersion": "question-authoring.2026-10-29.v3",
+        "reviewer": "Melissa Rowland (clinical sign-off)",
+        "reviewedOn": "2026-11-02",
+        "questionSha256": "1c39281bd25f46566696a8e7001fd756e1181246046086887e62399494157b99"
+      },
+      {
+        "auditId": "A38",
+        "questionVariantId": "question.pediatric-clinic.shrinking-mobile-neck-nodes.v2.r3",
+        "contentVersion": "question-authoring.2026-10-28.v2",
+        "reviewer": "Melissa Rowland (clinical sign-off)",
+        "reviewedOn": "2026-10-29",
+        "questionSha256": "b1f1e2c52ddf2530e6b0c7196eabacbca519476652d929888fe4ff8276516c25"
+      },
+      {
+        "auditId": "A40",
+        "questionVariantId": "question.pediatric-clinic.upper-midline-lump.v1.r4",
+        "contentVersion": "question-authoring.2026-10-29.v3",
+        "reviewer": "Melissa Rowland (clinical sign-off)",
+        "reviewedOn": "2026-11-02",
+        "questionSha256": "45f7cb622bfdbae99b85b8685428cd7933c5d2f6bff7e252b4f21144ce5c79c3"
+      }
+    ],
+    "ownerReviewDrafts": [
+      {
+        "auditId": "B05-context",
+        "variantId": "question.inguinal-hernia.symptomatic-elective-repair.v4.r8",
+        "questionSha256": "ba2fd14c822cf5393f581c9d22b68f3bad73f2f0d0805cdcca3c52be9956e789",
+        "reviewStatus": "needs_clinician_review"
+      },
+      {
+        "auditId": "B07-context",
+        "variantId": "question.inguinal-hernia.symptomatic-elective-repair.v3.r8",
+        "questionSha256": "8e36feba8c31f1532043f9b2ad3005cfee8d2a27dc8ed7315617ece6934f4683",
+        "reviewStatus": "needs_clinician_review"
+      },
+      {
+        "auditId": "B08-context",
+        "variantId": "question.inguinal-hernia.symptomatic-elective-repair.v1.r8",
+        "questionSha256": "726abf95110bdc36e6f36e7b3158572f3f5ecc6d7c962579f724a37049147b1a",
+        "reviewStatus": "needs_clinician_review"
+      },
+      {
+        "auditId": "B12-context",
+        "variantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v4.r8",
+        "questionSha256": "f4f24dabaabd51ac6733faa2ad9e96dbbcbd5002ff7a5a971b6556487216e39f",
+        "reviewStatus": "needs_clinician_review"
+      },
+      {
+        "auditId": "B36",
+        "variantId": "question.quality-improvement.pdsa-act-and-iterate.v3.r8",
+        "questionSha256": "c916ed50046e23496e2db2405754c93b88acfa0647b78311e3a600aae562e799",
+        "reviewStatus": "needs_clinician_review"
+      }
+    ],
+    "revisionQuestions": 87,
+    "frozenIndependentPass": [
+      "A02",
+      "A06",
+      "A06-context",
+      "A25",
+      "A25-context",
+      "B01",
+      "B01-context",
+      "B02",
+      "B02-context",
+      "B03",
+      "B04",
+      "B04-context",
+      "B05",
+      "B06",
+      "B07",
+      "B08",
+      "B09",
+      "B10",
+      "B11",
+      "B11-context",
+      "B12",
+      "B13",
+      "B13-context",
+      "B14",
+      "B14-context",
+      "B15",
+      "B15-context",
+      "B16",
+      "B16-context",
+      "B17",
+      "B18",
+      "B19",
+      "B20",
+      "B20-context",
+      "B21",
+      "B21-context",
+      "B22",
+      "B22-context",
+      "B23",
+      "B25",
+      "B25-context",
+      "B26",
+      "B27",
+      "B28",
+      "B29",
+      "B30",
+      "B30-context",
+      "B31",
+      "B32",
+      "B32-context",
+      "B33",
+      "B33-context",
+      "B34",
+      "B34-context",
+      "B35",
+      "B35-context",
+      "B37",
+      "B37-context",
+      "B38",
+      "B39",
+      "B40",
+      "B40-context"
+    ],
+    "frozenProof": [
+      {
+        "checkpoint": "integration-l4",
+        "encounters": 11,
+        "beforeSha256": "ffc58ad72f82c619de4e8d0e601b38868d25d10f959ada7ceda8e165d85c6f5b",
+        "afterSha256": "ffc58ad72f82c619de4e8d0e601b38868d25d10f959ada7ceda8e165d85c6f5b"
+      },
+      {
+        "checkpoint": "integration-build",
+        "encounters": 11,
+        "beforeSha256": "938bc5e0109111cc6966170ee429bd23b451f96d50b5e7544d3fcd660787c597",
+        "afterSha256": "938bc5e0109111cc6966170ee429bd23b451f96d50b5e7544d3fcd660787c597"
+      },
+      {
+        "checkpoint": "integration-preparing",
+        "encounters": 13,
+        "beforeSha256": "834c0cef202d20c145a128c99c329a9eca86d7a2eda9ef8e4944ec3b7d30704e",
+        "afterSha256": "834c0cef202d20c145a128c99c329a9eca86d7a2eda9ef8e4944ec3b7d30704e"
+      },
+      {
+        "checkpoint": "integration-running",
+        "encounters": 13,
+        "beforeSha256": "c1c7a55b27c7ef63fa5c518e44e96fcc394b2e4e9e8fca96486baa3083faa86a",
+        "afterSha256": "c1c7a55b27c7ef63fa5c518e44e96fcc394b2e4e9e8fca96486baa3083faa86a"
+      },
+      {
+        "checkpoint": "integration-final",
+        "encounters": 11,
+        "beforeSha256": "9f06fda2bbd316e37218bdbeb3af468424f197ef28314337483dbb925e774583",
+        "afterSha256": "9f06fda2bbd316e37218bdbeb3af468424f197ef28314337483dbb925e774583"
+      },
+      {
+        "checkpoint": "integration-finish",
+        "encounters": 11,
+        "beforeSha256": "8c68739a7cf2e0f22249bad1e2621360a3e852bdd348bbe3b4f66bb59640e0ce",
+        "afterSha256": "8c68739a7cf2e0f22249bad1e2621360a3e852bdd348bbe3b4f66bb59640e0ce"
+      },
+      {
+        "checkpoint": "integration-repeat-final",
+        "encounters": 12,
+        "beforeSha256": "b33de34c6d63f6c45b23d4d3f30db3f09e16e59307b26ceea418988e2435e0b9",
+        "afterSha256": "b33de34c6d63f6c45b23d4d3f30db3f09e16e59307b26ceea418988e2435e0b9"
+      },
+      {
+        "checkpoint": "integration-repeat",
+        "encounters": 12,
+        "beforeSha256": "d855c5c2926930a4f432a5e5893f35365f762ae50d93477a1e97b44be6d7612f",
+        "afterSha256": "d855c5c2926930a4f432a5e5893f35365f762ae50d93477a1e97b44be6d7612f"
+      },
+      {
+        "checkpoint": "integration-lower-repeat",
+        "encounters": 11,
+        "beforeSha256": "8ec7fc61ed405a65bb55058af8ce3776cf392fcea2793ba6d3cf360bad6cec71",
+        "afterSha256": "8ec7fc61ed405a65bb55058af8ce3776cf392fcea2793ba6d3cf360bad6cec71"
+      }
+    ],
+    "retainedTimingRows": 1423,
+    "currentTimingRows": 1767,
+    "retainedOrderRows": 269,
+    "currentOrderRows": 323
+  },
+  "legacyDiagnosis": "docs/research/question-batch1-release-legacy-diagnosis-20261103.json",
+  "initialDomain": {
+    "passed": 4347,
+    "failed": 26,
+    "pending": 1,
+    "classifications": {
+      "input-binding": 1,
+      "legacy-load": 25,
+      "timeout": 0,
+      "unexpected": 0
+    }
+  },
+  "validation": {
+    "domain": {
+      "passed": 4373,
+      "failed": 0,
+      "pending": 1,
+      "total": 4374,
+      "fileCount": 166,
+      "success": true
+    },
+    "player": {
+      "passed": 3304,
+      "failed": 0,
+      "pending": 0,
+      "total": 3304,
+      "fileCount": 324,
+      "success": true
+    },
+    "clinical": {
+      "passed": 764,
+      "failed": 0,
+      "pending": 0,
+      "total": 764,
+      "fileCount": 97,
+      "success": true
+    },
+    "commands": {
+      "domainInitial": {
+        "exitCode": 1,
+        "command": "npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=1 --reporter=default --reporter=json --outputFile=C:/Users/rowla/Projects/GS-release/.local-dev/question-batch1-release-rebind13-20261103/domain-initial.json",
+        "log": ".local-dev/question-batch1-release-rebind13-20261103/domain-initial.log"
+      },
+      "typecheckBeforeEvidence": {
+        "exitCode": 0,
+        "command": "npm.cmd run typecheck"
+      },
+      "clinicalBeforeEvidence": {
+        "exitCode": 0,
+        "passed": 764
+      },
+      "playerBeforeEvidence": {
+        "exitCode": 0,
+        "passed": 3304
+      },
+      "lintBeforeEvidence": {
+        "exitCode": 0,
+        "passed": 21
+      },
+      "typecheckFinal": {
+        "exitCode": 0,
+        "command": "npm.cmd run typecheck",
+        "log": ".local-dev/question-batch1-release-rebind13-20261103/typecheck-final.log",
+        "ci": true,
+        "recordedAt": "2026-11-04T01:02:09.852Z"
+      },
+      "lintTestsFinal": {
+        "exitCode": 0,
+        "command": "npm.cmd run clinical:lint:test",
+        "log": ".local-dev/question-batch1-release-rebind13-20261103/lint-tests-final.log",
+        "ci": true,
+        "recordedAt": "2026-11-04T01:02:36.377Z"
+      },
+      "clinicalFinal": {
+        "exitCode": 0,
+        "command": "npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=C:/Users/rowla/Projects/GS-release/.local-dev/question-batch1-release-rebind13-20261103/clinical-final.json",
+        "log": ".local-dev/question-batch1-release-rebind13-20261103/clinical-final.log",
+        "ci": true,
+        "pool": "threads",
+        "maxWorkers": 2,
+        "nodeOptions": "--require=C:/Users/rowla/Projects/GS-release/tools/question-quality/adversarial-r5-player-preload-20261102.cjs",
+        "recordedAt": "2026-11-04T01:03:00.057Z"
+      },
+      "playerFinal": {
+        "exitCode": 1,
+        "command": "npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=C:/Users/rowla/Projects/GS-release/.local-dev/question-batch1-release-rebind13-20261103/player-final.json",
+        "log": ".local-dev/question-batch1-release-rebind13-20261103/player-final.log",
+        "ci": true,
+        "pool": "threads",
+        "maxWorkers": 2,
+        "nodeOptions": "--require=C:/Users/rowla/Projects/GS-release/tools/question-quality/adversarial-r5-player-preload-20261102.cjs",
+        "recordedAt": "2026-11-04T01:08:38.762Z"
+      },
+      "typecheckAfterPins": {
+        "exitCode": 0,
+        "command": "npm.cmd run typecheck",
+        "log": ".local-dev/question-batch1-release-rebind13-20261103/typecheck-after-pins.log",
+        "ci": true,
+        "recordedAt": "2026-11-04T01:10:43.674Z"
+      },
+      "playerFinalRetry": {
+        "exitCode": 0,
+        "command": "npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=C:/Users/rowla/Projects/GS-release/.local-dev/question-batch1-release-rebind13-20261103/player-final-retry.json",
+        "log": ".local-dev/question-batch1-release-rebind13-20261103/player-final-retry.log",
+        "ci": true,
+        "pool": "threads",
+        "maxWorkers": 2,
+        "nodeOptions": "--require=C:/Users/rowla/Projects/GS-release/tools/question-quality/adversarial-r5-player-preload-20261102.cjs",
+        "recordedAt": "2026-11-04T01:17:14.008Z"
+      },
+      "domainFinal": {
+        "exitCode": 0,
+        "command": "npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=1 --reporter=default --reporter=json --outputFile=C:/Users/rowla/Projects/GS-release/.local-dev/question-batch1-release-rebind13-20261103/domain-final.json",
+        "log": ".local-dev/question-batch1-release-rebind13-20261103/domain-final.log",
+        "ci": true,
+        "pool": "threads",
+        "maxWorkers": 1,
+        "nodeOptions": "--require=C:/Users/rowla/Projects/GS-release/tools/question-quality/adversarial-r5-player-preload-20261102.cjs",
+        "recordedAt": "2026-11-04T01:24:57.302Z"
+      }
+    }
+  },
+  "derivedLaunchPins": {
+    "domain": {
+      "path": "packages/game-domain/tests/level-five-launch.test.ts",
+      "oldSha256": "fe885a6f40528f43ef2f430d706c6130d05f076390802cd6abe9c7f19d55fd4d",
+      "newSha256": "615fe4f294fc8995d9a1a339766338ff94dd28a3b0ff7cc1614218a3b933f323",
+      "sourceReportSha256": "5f87b746aa5117e3f68f334adb604773f5c25d09f96aa99d6ffcbb14b8dcc62f",
+      "changes": [
+        {
+          "field": "qualifyingScoredPatientCount",
+          "oldValue": 51,
+          "newValue": 54,
+          "oldLine": "expect(report.qualifyingScoredPatientCount).toBe(51);",
+          "newLine": "expect(report.qualifyingScoredPatientCount).toBe(54);"
+        },
+        {
+          "field": "rawTotalScore",
+          "oldValue": 62.4360414271396,
+          "newValue": 62.4813653779166,
+          "oldLine": "expect(report.rawTotalScore).toBe(62.4360414271396);",
+          "newLine": "expect(report.rawTotalScore).toBe(62.4813653779166);"
+        }
+      ],
+      "assertionsAndComparatorsRetained": true,
+      "otherSourceBytesUnchanged": true,
+      "generatedFromActualReport": true
+    },
+    "player": {
+      "path": "apps/player/src/session/levelFiveLaunch.test.tsx",
+      "oldSha256": "6f55aada3976cc9e2846c0893a608fd812eca153e408ca057a82ae7324ad2326",
+      "newSha256": "c5d48818ccadeb07163b30a145aba70947b52e544dc9e6c1240b440a3409393a",
+      "oldLabel": "62.43",
+      "newLabel": "62.48",
+      "oldLine": "expect(inspection.finish!.report.scoreLabel).toBe(\"62.43\");",
+      "newLine": "expect(inspection.finish!.report.scoreLabel).toBe(\"62.48\");",
+      "formatter": "unchanged game-domain inspectionScoreLabel",
+      "rawReportScore": 62.4813653779166,
+      "reportSha256": "5f87b746aa5117e3f68f334adb604773f5c25d09f96aa99d6ffcbb14b8dcc62f",
+      "comparisonsAndOtherSourceBytesUnchanged": true,
+      "affectedLayouts": [
+        "desktop",
+        "phone"
+      ]
+    }
+  },
+  "playerBeforeScorePinRefresh": {
+    "passed": 3302,
+    "failed": 2,
+    "pending": 0,
+    "total": 3304,
+    "fileCount": 324,
+    "success": false
+  },
+  "guard": {
+    "path": "packages/game-domain/tests/level-five-integration.test.ts",
+    "sha256": "812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909",
+    "unchanged": true
+  },
+  "supplementalPaths": [
+    "tools/qa/level-five-integration-results-20261012.json",
+    "tests/fixtures/level-five-integration-checkpoints-20261012.json",
+    "tests/fixtures/level-five-legacy-behavior-20261012.json",
+    "packages/game-domain/tests/level-five-launch.test.ts",
+    "apps/player/src/session/levelFiveLaunch.test.tsx",
+    "docs/research/question-batch1-release-port-20261103.json",
+    "docs/research/question-batch1-release-legacy-diagnosis-20261103.json",
+    "docs/research/question-batch1-release-rebind13-20261103.json",
+    "docs/execplans/question-batch1-release-rebind13-20261103.md",
+    "docs/execplans/gs028-stats-ethics-overhaul-20261007.md"
+  ],
+  "exactChangedPaths": [
+    "apps/player/src/session/briefEarlyLevelsPresentation.test.ts",
+    "apps/player/src/session/earlyLevelsPresentation.test.ts",
+    "apps/player/src/session/levelFiveLaunch.test.tsx",
+    "apps/player/src/session/pediatricChartsViewModels.test.ts",
+    "apps/player/src/session/variety3ChartsViewModels.test.ts",
+    "clinical-data/templates/README.md",
+    "docs/clinical-workbench/PILOT_FIELD_GUIDE.md",
+    "docs/clinical-workbench/README.md",
+    "docs/clinical/question-authoring-standard.md",
+    "docs/execplans/app-arrival-selector-20261103.md",
+    "docs/execplans/gs028-stats-ethics-overhaul-20261007.md",
+    "docs/execplans/question-bank-rewrite-20261102.md",
+    "docs/execplans/question-batch1-adversarial-fixes-20261102.md",
+    "docs/execplans/question-batch1-adversarial-round3-20261102.md",
+    "docs/execplans/question-batch1-adversarial-round4-20261102.md",
+    "docs/execplans/question-batch1-adversarial-round5-20261102.md",
+    "docs/execplans/question-batch1-adversarial-round6-20261102.md",
+    "docs/execplans/question-batch1-adversarial-round7-20261102.md",
+    "docs/execplans/question-batch1-release-rebind13-20261103.md",
+    "docs/execplans/question-quality-phase1-20261028.md",
+    "docs/execplans/question-round3-batch1-20261102.md",
+    "docs/handoffs/app-arrival-selector-20261103.md",
+    "docs/research/question-adversarial-response-20261102.md",
+    "docs/research/question-adversarial-round3-response-20261102.md",
+    "docs/research/question-adversarial-round4-response-20261102.md",
+    "docs/research/question-adversarial-round5-response-20261102.md",
+    "docs/research/question-adversarial-round6-response-20261102.md",
+    "docs/research/question-adversarial-round7-response-20261102.md",
+    "docs/research/question-batch1-20261102.json",
+    "docs/research/question-batch1-adversarial-handoff-20261102.md",
+    "docs/research/question-batch1-adversarial-review-20261102.json",
+    "docs/research/question-batch1-adversarial-review2-20261102.json",
+    "docs/research/question-batch1-adversarial-review3-20261102.json",
+    "docs/research/question-batch1-adversarial-review4-20261102.json",
+    "docs/research/question-batch1-adversarial-review5-20261102.json",
+    "docs/research/question-batch1-adversarial-review6-20261102.json",
+    "docs/research/question-batch1-adversarial-review7-20261102.json",
+    "docs/research/question-batch1-adversarial-round3-handoff-20261102.md",
+    "docs/research/question-batch1-adversarial-round4-handoff-20261102.md",
+    "docs/research/question-batch1-adversarial-round5-handoff-20261102.md",
+    "docs/research/question-batch1-adversarial-round6-handoff-20261102.md",
+    "docs/research/question-batch1-adversarial-round7-handoff-20261102.md",
+    "docs/research/question-batch1-release-legacy-diagnosis-20261103.json",
+    "docs/research/question-batch1-release-port-20261103.json",
+    "docs/research/question-batch1-release-rebind13-20261103.json",
+    "docs/research/question-batch1-round7-fallbacks-20261102.json",
+    "docs/research/question-cue-audit-20261028.md",
+    "docs/research/question-inventory-20261028.md",
+    "docs/research/question-pilot-review-20261028.md",
+    "docs/research/question-pilot-round2-20261029.json",
+    "docs/research/question-pilot-round2-handoff-20261029.md",
+    "docs/research/question-quality-phase1-handoff-20261028.md",
+    "docs/research/question-rewrite-batch1-proposal-20261029.json",
+    "docs/research/question-rewrite-batch1-proposal-20261029.md",
+    "docs/research/question-round3-20261102.json",
+    "docs/research/question-round3-batch1-handoff-20261102.md",
+    "docs/research/question-writing-strategy-20261028.md",
+    "docs/research/sources-question-adversarial-20261102.md",
+    "docs/research/sources-question-adversarial-r3-20261102.md",
+    "docs/research/sources-question-adversarial-r4-20261102.md",
+    "docs/research/sources-question-adversarial-r5-20261102.md",
+    "docs/research/sources-question-adversarial-r6-20261102.md",
+    "docs/research/sources-question-adversarial-r7-20261102.md",
+    "docs/research/sources-question-round3-batch1-20261102.md",
+    "docs/research/sources-question-writing-20261028.md",
+    "package.json",
+    "packages/clinical-content/src/answer-choice-timing.test.ts",
+    "packages/clinical-content/src/answer-choice-timing.ts",
+    "packages/clinical-content/src/approved-data/colonic-lipoma.test.ts",
+    "packages/clinical-content/src/development-batch/2026-09-11/board-expansion-admission.test.ts",
+    "packages/clinical-content/src/development-batch/2026-09-12/board-expansion-admission.test.ts",
+    "packages/clinical-content/src/development-batch/2026-09-13/early-levels-admission.test.ts",
+    "packages/clinical-content/src/development-batch/2026-09-17-bread-and-butter/bread-butter-admission.test.ts",
+    "packages/clinical-content/src/development-batch/2026-09-17/brief-early-levels-admission.test.ts",
+    "packages/clinical-content/src/development-batch/2026-10-07-level3/level3-content.test.ts",
+    "packages/clinical-content/src/development-batch/2026-10-07-variety-2/variety-admission.test.ts",
+    "packages/clinical-content/src/development-batch/2026-10-07-variety/variety-admission.test.ts",
+    "packages/clinical-content/src/development-batch/2026-10-08-pediatric-clinic/pediatric-admission.test.ts",
+    "packages/clinical-content/src/development-batch/2026-10-10-variety-3/batch-content.test.ts",
+    "packages/clinical-content/src/development-batch/2026-10-10-variety-3/variety3-admission.test.ts",
+    "packages/clinical-content/src/index.ts",
+    "packages/clinical-content/src/patient-library-wording-repair.test.ts",
+    "packages/clinical-content/src/question-quality-adversarial-20261102-data.ts",
+    "packages/clinical-content/src/question-quality-adversarial-20261102.ts",
+    "packages/clinical-content/src/question-quality-adversarial-evidence-20261102.ts",
+    "packages/clinical-content/src/question-quality-adversarial-r3-20261102-data.ts",
+    "packages/clinical-content/src/question-quality-adversarial-r3-20261102.ts",
+    "packages/clinical-content/src/question-quality-adversarial-r3-evidence-20261102.ts",
+    "packages/clinical-content/src/question-quality-adversarial-r3.test.ts",
+    "packages/clinical-content/src/question-quality-adversarial-r4-20261102-data.ts",
+    "packages/clinical-content/src/question-quality-adversarial-r4-20261102.ts",
+    "packages/clinical-content/src/question-quality-adversarial-r4-evidence-20261102.ts",
+    "packages/clinical-content/src/question-quality-adversarial-r4.test.ts",
+    "packages/clinical-content/src/question-quality-adversarial-r5-20261102-data.ts",
+    "packages/clinical-content/src/question-quality-adversarial-r5-20261102.ts",
+    "packages/clinical-content/src/question-quality-adversarial-r5-evidence-20261102.ts",
+    "packages/clinical-content/src/question-quality-adversarial-r5.test.ts",
+    "packages/clinical-content/src/question-quality-adversarial-r6-20261102-data.ts",
+    "packages/clinical-content/src/question-quality-adversarial-r6-20261102.ts",
+    "packages/clinical-content/src/question-quality-adversarial-r6-evidence-20261102.ts",
+    "packages/clinical-content/src/question-quality-adversarial-r6.test.ts",
+    "packages/clinical-content/src/question-quality-adversarial-r7-20261102-data.ts",
+    "packages/clinical-content/src/question-quality-adversarial-r7-20261102.ts",
+    "packages/clinical-content/src/question-quality-adversarial-r7-evidence-20261102.ts",
+    "packages/clinical-content/src/question-quality-adversarial-r7.test.ts",
+    "packages/clinical-content/src/question-quality-adversarial.test.ts",
+    "packages/clinical-content/src/question-quality-batch1-20261102-data.ts",
+    "packages/clinical-content/src/question-quality-batch1-20261102.ts",
+    "packages/clinical-content/src/question-quality-batch1.test.ts",
+    "packages/clinical-content/src/question-quality-clinical-approvals-20261102.ts",
+    "packages/clinical-content/src/question-quality-pilot-20261028-data.ts",
+    "packages/clinical-content/src/question-quality-pilot-20261028-r2.ts",
+    "packages/clinical-content/src/question-quality-pilot-20261028.ts",
+    "packages/clinical-content/src/question-quality-pilot-20261029-round1.ts",
+    "packages/clinical-content/src/question-quality-pilot-20261102-round2.ts",
+    "packages/clinical-content/src/question-quality-pilot-evidence-20261028.ts",
+    "packages/clinical-content/src/question-quality-pilot-round2-evidence-20261029.ts",
+    "packages/clinical-content/src/question-quality-pilot.test.ts",
+    "packages/clinical-content/src/question-quality-review.test.helpers.ts",
+    "packages/clinical-content/src/question-quality-round3-batch1-evidence-20261102.ts",
+    "packages/clinical-content/src/synthetic-content.ts",
+    "packages/game-domain/src/test-choice-orders.ts",
+    "packages/game-domain/tests/answer-choice-timing.test.ts",
+    "packages/game-domain/tests/approved-clinical-admission.test.ts",
+    "packages/game-domain/tests/board-expansion-batch.test.ts",
+    "packages/game-domain/tests/diagnostics/patient-supply.test.ts",
+    "packages/game-domain/tests/early-levels-20260913-batch.test.ts",
+    "packages/game-domain/tests/gs028-20261002-batch.test.ts",
+    "packages/game-domain/tests/gs028-20261003-batch.test.ts",
+    "packages/game-domain/tests/gs028-20261007-batch.test.ts",
+    "packages/game-domain/tests/gs028-20261007-level3-batch.test.ts",
+    "packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+    "packages/game-domain/tests/gs028-second-pre-endoscopy-batch.test.ts",
+    "packages/game-domain/tests/gs028-statistics-ethics-batch.test.ts",
+    "packages/game-domain/tests/level-five-launch.test.ts",
+    "packages/game-domain/tests/level-four-integration.test.ts",
+    "packages/game-domain/tests/patient-supply.test.ts",
+    "packages/game-domain/tests/pediatric-clinic-admission.test.ts",
+    "packages/game-domain/tests/service-procedure-operations.test.ts",
+    "packages/game-domain/tests/surgery-center-batch.test.ts",
+    "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+    "packages/game-domain/tests/ultrasound-first-imaging.test.ts",
+    "packages/game-domain/tests/variety3-admission.test.ts",
+    "tests/fixtures/level-five-integration-checkpoints-20261012.json",
+    "tests/fixtures/level-five-legacy-behavior-20261012.json",
+    "tools/qa/level-five-integration-results-20261012.json",
+    "tools/question-quality/README.md",
+    "tools/question-quality/additional-timeouts-comparison-20261102.json",
+    "tools/question-quality/additional-timeouts-comparison-20261102.log",
+    "tools/question-quality/additional-timeouts-comparison-exit-20261102.json",
+    "tools/question-quality/additional-timeouts-exit-20261102.json",
+    "tools/question-quality/additional-timeouts-targeted-exit-20261102.json",
+    "tools/question-quality/additional-timeouts-targeted-final-20261102.log",
+    "tools/question-quality/adversarial-bound-inputs-20261102.json",
+    "tools/question-quality/adversarial-bound-inputs-20261102.mjs",
+    "tools/question-quality/adversarial-clinical-final-20261102.log",
+    "tools/question-quality/adversarial-clinical-first-20261102.log",
+    "tools/question-quality/adversarial-clinical-second-20261102.log",
+    "tools/question-quality/adversarial-clinical-verified-20261102.log",
+    "tools/question-quality/adversarial-cue-after-20261102.json",
+    "tools/question-quality/adversarial-cue-before-20261102.json",
+    "tools/question-quality/adversarial-cue-comparison-20261102.json",
+    "tools/question-quality/adversarial-domain-full-20261102.log",
+    "tools/question-quality/adversarial-domain-inventory-20261102.log",
+    "tools/question-quality/adversarial-domain-inventory-final-20261102.log",
+    "tools/question-quality/adversarial-domain-post-repairs-20261102.log",
+    "tools/question-quality/adversarial-domain-repairs-20261102.log",
+    "tools/question-quality/adversarial-evidence-20261102.mjs",
+    "tools/question-quality/adversarial-lint-tests-20261102.log",
+    "tools/question-quality/adversarial-lint-tests-final-20261102.log",
+    "tools/question-quality/adversarial-owned-files-20261102.json",
+    "tools/question-quality/adversarial-player-final-20261102.log",
+    "tools/question-quality/adversarial-player-first-20261102.log",
+    "tools/question-quality/adversarial-player-full-20261102.log",
+    "tools/question-quality/adversarial-player-verified-20261102.log",
+    "tools/question-quality/adversarial-r3-bound-inputs-20261102.json",
+    "tools/question-quality/adversarial-r3-bound-inputs-20261102.mjs",
+    "tools/question-quality/adversarial-r3-capture-20261102.mjs",
+    "tools/question-quality/adversarial-r3-clinical-final-20261102.log",
+    "tools/question-quality/adversarial-r3-clinical-first-20261102.log",
+    "tools/question-quality/adversarial-r3-clinical-repairs-20261102.log",
+    "tools/question-quality/adversarial-r3-cue-after-20261102.json",
+    "tools/question-quality/adversarial-r3-cue-before-20261102.json",
+    "tools/question-quality/adversarial-r3-cue-comparison-20261102.json",
+    "tools/question-quality/adversarial-r3-docs-20261102.log",
+    "tools/question-quality/adversarial-r3-domain-focused-first-20261102.log",
+    "tools/question-quality/adversarial-r3-domain-full-20261102.log",
+    "tools/question-quality/adversarial-r3-evidence-20261102.mjs",
+    "tools/question-quality/adversarial-r3-exact-records-20261102.json",
+    "tools/question-quality/adversarial-r3-lint-tests-20261102.log",
+    "tools/question-quality/adversarial-r3-owned-files-20261102.json",
+    "tools/question-quality/adversarial-r3-player-20261102.log",
+    "tools/question-quality/adversarial-r3-qa-20261102.log",
+    "tools/question-quality/adversarial-r3-report-qa-20261102.json",
+    "tools/question-quality/adversarial-r3-report-qa-20261102.log",
+    "tools/question-quality/adversarial-r3-review-generation-20261102.log",
+    "tools/question-quality/adversarial-r3-specs-20261102.mjs",
+    "tools/question-quality/adversarial-r3-typecheck-final-20261102.log",
+    "tools/question-quality/adversarial-r3-typecheck-first-20261102.log",
+    "tools/question-quality/adversarial-r3-validation-20261102.json",
+    "tools/question-quality/adversarial-r3-whole-bank-20261102.json",
+    "tools/question-quality/adversarial-r3-whole-bank-20261102.log",
+    "tools/question-quality/adversarial-r4-author-check-20261102.log",
+    "tools/question-quality/adversarial-r4-bound-inputs-20261102.json",
+    "tools/question-quality/adversarial-r4-bound-inputs-20261102.log",
+    "tools/question-quality/adversarial-r4-bound-inputs-20261102.mjs",
+    "tools/question-quality/adversarial-r4-capture-20261102.mjs",
+    "tools/question-quality/adversarial-r4-clinical-20261102.log",
+    "tools/question-quality/adversarial-r4-content-expectations-20261102.log",
+    "tools/question-quality/adversarial-r4-cue-after-20261102.json",
+    "tools/question-quality/adversarial-r4-cue-before-20261102.json",
+    "tools/question-quality/adversarial-r4-cue-comparison-20261102.json",
+    "tools/question-quality/adversarial-r4-docs-20261102.log",
+    "tools/question-quality/adversarial-r4-domain-20261102.log",
+    "tools/question-quality/adversarial-r4-domain-diagnostic-20261102.log",
+    "tools/question-quality/adversarial-r4-domain-focused-20261102.log",
+    "tools/question-quality/adversarial-r4-domain-native-crash-20261102.log",
+    "tools/question-quality/adversarial-r4-domain-regression-20261102.log",
+    "tools/question-quality/adversarial-r4-evidence-20261102.mjs",
+    "tools/question-quality/adversarial-r4-evidence-check-20261102.log",
+    "tools/question-quality/adversarial-r4-exact-records-20261102.json",
+    "tools/question-quality/adversarial-r4-generation-20261102.log",
+    "tools/question-quality/adversarial-r4-handoff-generation-20261102.log",
+    "tools/question-quality/adversarial-r4-legacy-load-diagnosis-20261102.json",
+    "tools/question-quality/adversarial-r4-legacy-load-diagnosis-20261102.log",
+    "tools/question-quality/adversarial-r4-lint-tests-20261102.log",
+    "tools/question-quality/adversarial-r4-owned-files-20261102.json",
+    "tools/question-quality/adversarial-r4-player-20261102.log",
+    "tools/question-quality/adversarial-r4-pool-probe-20261102.log",
+    "tools/question-quality/adversarial-r4-report-qa-20261102.json",
+    "tools/question-quality/adversarial-r4-report-qa-20261102.log",
+    "tools/question-quality/adversarial-r4-snapshot-change-review-20261102.json",
+    "tools/question-quality/adversarial-r4-snapshot-change-review-20261102.log",
+    "tools/question-quality/adversarial-r4-specification-check-20261102.json",
+    "tools/question-quality/adversarial-r4-specs-20261102.mjs",
+    "tools/question-quality/adversarial-r4-supply-control-20261102.json",
+    "tools/question-quality/adversarial-r4-supply-control-20261102.log",
+    "tools/question-quality/adversarial-r4-supply-snapshot-review-20261102.log",
+    "tools/question-quality/adversarial-r4-supply-snapshot-update-20261102.log",
+    "tools/question-quality/adversarial-r4-typecheck-20261102.log",
+    "tools/question-quality/adversarial-r4-validation-20261102.json",
+    "tools/question-quality/adversarial-r4-whole-bank-20261102.json",
+    "tools/question-quality/adversarial-r4-whole-bank-20261102.log",
+    "tools/question-quality/adversarial-r5-author-check-20261102.log",
+    "tools/question-quality/adversarial-r5-before-cue-cleanup-20261102.json",
+    "tools/question-quality/adversarial-r5-bound-inputs-20261102.json",
+    "tools/question-quality/adversarial-r5-bound-inputs-20261102.log",
+    "tools/question-quality/adversarial-r5-bound-inputs-20261102.mjs",
+    "tools/question-quality/adversarial-r5-bound-inputs-before-cue-cleanup-20261102.json",
+    "tools/question-quality/adversarial-r5-capture-20261102.mjs",
+    "tools/question-quality/adversarial-r5-clinical-20261102.log",
+    "tools/question-quality/adversarial-r5-cue-after-20261102.json",
+    "tools/question-quality/adversarial-r5-cue-before-20261102.json",
+    "tools/question-quality/adversarial-r5-cue-cleanup-check-20261102.json",
+    "tools/question-quality/adversarial-r5-cue-comparison-20261102.json",
+    "tools/question-quality/adversarial-r5-docs-20261102.log",
+    "tools/question-quality/adversarial-r5-domain-20261102.log",
+    "tools/question-quality/adversarial-r5-domain-before-cue-cleanup-20261102.log",
+    "tools/question-quality/adversarial-r5-domain-focused-20261102.log",
+    "tools/question-quality/adversarial-r5-evidence-20261102.mjs",
+    "tools/question-quality/adversarial-r5-evidence-check-20261102.log",
+    "tools/question-quality/adversarial-r5-exact-records-20261102.json",
+    "tools/question-quality/adversarial-r5-generation-20261102.log",
+    "tools/question-quality/adversarial-r5-legacy-load-diagnosis-20261102.json",
+    "tools/question-quality/adversarial-r5-legacy-load-diagnosis-20261102.log",
+    "tools/question-quality/adversarial-r5-lint-tests-20261102.log",
+    "tools/question-quality/adversarial-r5-owned-files-20261102.json",
+    "tools/question-quality/adversarial-r5-player-20261102.log",
+    "tools/question-quality/adversarial-r5-player-preload-20261102.cjs",
+    "tools/question-quality/adversarial-r5-report-qa-20261102.json",
+    "tools/question-quality/adversarial-r5-report-qa-20261102.log",
+    "tools/question-quality/adversarial-r5-snapshot-change-review-20261102.json",
+    "tools/question-quality/adversarial-r5-snapshot-change-review-20261102.log",
+    "tools/question-quality/adversarial-r5-source-record-check-20261102.json",
+    "tools/question-quality/adversarial-r5-source-record-check-20261102.mjs",
+    "tools/question-quality/adversarial-r5-specs-20261102.mjs",
+    "tools/question-quality/adversarial-r5-supply-control-20261102.json",
+    "tools/question-quality/adversarial-r5-supply-control-20261102.log",
+    "tools/question-quality/adversarial-r5-supply-snapshot-update-20261102.log",
+    "tools/question-quality/adversarial-r5-timing-delta-20261102.json",
+    "tools/question-quality/adversarial-r5-timing-delta-20261102.log",
+    "tools/question-quality/adversarial-r5-timing-delta-20261102.mjs",
+    "tools/question-quality/adversarial-r5-typecheck-20261102.log",
+    "tools/question-quality/adversarial-r5-validation-20261102.json",
+    "tools/question-quality/adversarial-r5-whole-bank-20261102.json",
+    "tools/question-quality/adversarial-r5-whole-bank-20261102.log",
+    "tools/question-quality/adversarial-r6-bound-inputs-20261102.json",
+    "tools/question-quality/adversarial-r6-bound-inputs-20261102.mjs",
+    "tools/question-quality/adversarial-r6-capture-20261102.mjs",
+    "tools/question-quality/adversarial-r6-clinical-20261102.log",
+    "tools/question-quality/adversarial-r6-concurrent-input-change-20261102.json",
+    "tools/question-quality/adversarial-r6-cue-after-20261102.json",
+    "tools/question-quality/adversarial-r6-cue-before-20261102.json",
+    "tools/question-quality/adversarial-r6-cue-comparison-20261102.json",
+    "tools/question-quality/adversarial-r6-domain-20261102.log",
+    "tools/question-quality/adversarial-r6-domain-before-expectation-repair-20261102.log",
+    "tools/question-quality/adversarial-r6-domain-focused-20261102.log",
+    "tools/question-quality/adversarial-r6-evidence-20261102.mjs",
+    "tools/question-quality/adversarial-r6-exact-records-20261102.json",
+    "tools/question-quality/adversarial-r6-l4-fairness-diagnosis-20261102.json",
+    "tools/question-quality/adversarial-r6-l4-fairness-diagnosis-20261102.log",
+    "tools/question-quality/adversarial-r6-late-expectation-review-20261102.json",
+    "tools/question-quality/adversarial-r6-late-pool-flow-tests-20261102.log",
+    "tools/question-quality/adversarial-r6-launch-current-20261102.json",
+    "tools/question-quality/adversarial-r6-launch-entry-20261102.json",
+    "tools/question-quality/adversarial-r6-launch-tests-20261102.log",
+    "tools/question-quality/adversarial-r6-legacy-load-diagnosis-20261102.json",
+    "tools/question-quality/adversarial-r6-legacy-load-diagnosis-20261102.log",
+    "tools/question-quality/adversarial-r6-lint-tests-20261102.log",
+    "tools/question-quality/adversarial-r6-main-snapshot-serialization-20261102.log",
+    "tools/question-quality/adversarial-r6-owned-files-20261102.json",
+    "tools/question-quality/adversarial-r6-packet-generation-20261102.log",
+    "tools/question-quality/adversarial-r6-player-20261102.log",
+    "tools/question-quality/adversarial-r6-report-qa-20261102.json",
+    "tools/question-quality/adversarial-r6-report-qa-20261102.log",
+    "tools/question-quality/adversarial-r6-scoped-diff-20261102.json",
+    "tools/question-quality/adversarial-r6-snapshot-change-review-20261102.json",
+    "tools/question-quality/adversarial-r6-snapshot-change-review-20261102.log",
+    "tools/question-quality/adversarial-r6-snapshot-serialization-20261102.log",
+    "tools/question-quality/adversarial-r6-source-record-check-20261102.json",
+    "tools/question-quality/adversarial-r6-source-record-check-20261102.mjs",
+    "tools/question-quality/adversarial-r6-specs-20261102.mjs",
+    "tools/question-quality/adversarial-r6-supply-candidate-20261102.json",
+    "tools/question-quality/adversarial-r6-supply-candidate-20261102.log",
+    "tools/question-quality/adversarial-r6-supply-control-20261102.json",
+    "tools/question-quality/adversarial-r6-supply-control-20261102.log",
+    "tools/question-quality/adversarial-r6-timing-delta-20261102.json",
+    "tools/question-quality/adversarial-r6-timing-delta-20261102.mjs",
+    "tools/question-quality/adversarial-r6-typecheck-20261102.log",
+    "tools/question-quality/adversarial-r6-validation-20261102.json",
+    "tools/question-quality/adversarial-r6-whole-bank-20261102.log",
+    "tools/question-quality/adversarial-r7-bound-inputs-20261102.json",
+    "tools/question-quality/adversarial-r7-bound-inputs-20261102.mjs",
+    "tools/question-quality/adversarial-r7-capture-20261102.mjs",
+    "tools/question-quality/adversarial-r7-clinical-20261102.log",
+    "tools/question-quality/adversarial-r7-clinical-before-option-parity-20261102.log",
+    "tools/question-quality/adversarial-r7-cue-after-20261102.json",
+    "tools/question-quality/adversarial-r7-cue-before-20261102.json",
+    "tools/question-quality/adversarial-r7-cue-comparison-20261102.json",
+    "tools/question-quality/adversarial-r7-domain-20261102.log",
+    "tools/question-quality/adversarial-r7-domain-before-protocol-clarification-20261102.log",
+    "tools/question-quality/adversarial-r7-domain-focused-20261102.log",
+    "tools/question-quality/adversarial-r7-domain-focused-before-expectations-20261102.log",
+    "tools/question-quality/adversarial-r7-domain-focused-parallel-timeout-20261102.log",
+    "tools/question-quality/adversarial-r7-evidence-20261102.mjs",
+    "tools/question-quality/adversarial-r7-exact-records-20261102.json",
+    "tools/question-quality/adversarial-r7-fallbacks-20261102.mjs",
+    "tools/question-quality/adversarial-r7-legacy-load-diagnosis-20261102.json",
+    "tools/question-quality/adversarial-r7-legacy-load-diagnosis-20261102.log",
+    "tools/question-quality/adversarial-r7-lint-tests-20261102.log",
+    "tools/question-quality/adversarial-r7-owned-files-20261102.json",
+    "tools/question-quality/adversarial-r7-packet-generation-20261102.log",
+    "tools/question-quality/adversarial-r7-player-20261102.log",
+    "tools/question-quality/adversarial-r7-report-qa-20261102.json",
+    "tools/question-quality/adversarial-r7-report-qa-20261102.log",
+    "tools/question-quality/adversarial-r7-scoped-diff-20261102.json",
+    "tools/question-quality/adversarial-r7-sequence-audit-20261102.json",
+    "tools/question-quality/adversarial-r7-sequence-audit-20261102.mjs",
+    "tools/question-quality/adversarial-r7-snapshot-change-review-20261102.json",
+    "tools/question-quality/adversarial-r7-snapshot-change-review-20261102.log",
+    "tools/question-quality/adversarial-r7-snapshot-serialization-20261102.log",
+    "tools/question-quality/adversarial-r7-source-record-check-20261102.json",
+    "tools/question-quality/adversarial-r7-source-record-check-20261102.mjs",
+    "tools/question-quality/adversarial-r7-specs-20261102.mjs",
+    "tools/question-quality/adversarial-r7-supply-candidate-20261102.json",
+    "tools/question-quality/adversarial-r7-supply-candidate-20261102.log",
+    "tools/question-quality/adversarial-r7-supply-control-20261102.json",
+    "tools/question-quality/adversarial-r7-supply-control-20261102.log",
+    "tools/question-quality/adversarial-r7-timing-delta-20261102.json",
+    "tools/question-quality/adversarial-r7-timing-delta-20261102.mjs",
+    "tools/question-quality/adversarial-r7-typecheck-20261102.log",
+    "tools/question-quality/adversarial-r7-validation-20261102.json",
+    "tools/question-quality/adversarial-r7-validation-window-20261102.json",
+    "tools/question-quality/adversarial-r7-validation-window-20261102.mjs",
+    "tools/question-quality/adversarial-r7-whole-bank-20261102.log",
+    "tools/question-quality/adversarial-report-final-20261102.log",
+    "tools/question-quality/adversarial-report-generation-20261102.log",
+    "tools/question-quality/adversarial-report-qa-20261102.json",
+    "tools/question-quality/adversarial-report-qa-20261102.log",
+    "tools/question-quality/adversarial-report-qa-final-20261102.log",
+    "tools/question-quality/adversarial-report-verified-20261102.log",
+    "tools/question-quality/adversarial-specs-20261102.mjs",
+    "tools/question-quality/adversarial-typecheck-final-20261102.log",
+    "tools/question-quality/adversarial-typecheck-verified-20261102.log",
+    "tools/question-quality/adversarial-validation-20261102.json",
+    "tools/question-quality/adversarial-whole-bank-20261102.json",
+    "tools/question-quality/adversarial-whole-bank-final-20261102.log",
+    "tools/question-quality/apply-adversarial-r5-cue-cleanup-20261102.mjs",
+    "tools/question-quality/author-adversarial-20261102.mjs",
+    "tools/question-quality/author-adversarial-r3-20261102.mjs",
+    "tools/question-quality/author-adversarial-r4-20261102.mjs",
+    "tools/question-quality/author-adversarial-r5-20261102.mjs",
+    "tools/question-quality/author-adversarial-r6-20261102.mjs",
+    "tools/question-quality/author-adversarial-r7-20261102.mjs",
+    "tools/question-quality/bank.mjs",
+    "tools/question-quality/before-lint-20261102.log",
+    "tools/question-quality/bound-inputs-20261102.json",
+    "tools/question-quality/build-adversarial-choice-records-20261102.mjs",
+    "tools/question-quality/build-adversarial-r3-choice-records-20261102.mjs",
+    "tools/question-quality/build-adversarial-r4-choice-records-20261102.mjs",
+    "tools/question-quality/build-adversarial-r5-choice-records-20261102.mjs",
+    "tools/question-quality/build-adversarial-r6-choice-records-20261102.mjs",
+    "tools/question-quality/build-revision-choice-records-20261102.mjs",
+    "tools/question-quality/clinical-review-validation-20261029.log",
+    "tools/question-quality/clinical-validation-20261029.log",
+    "tools/question-quality/compare-adversarial-r4-supply-20261102.mjs",
+    "tools/question-quality/compare-adversarial-r5-supply-20261102.mjs",
+    "tools/question-quality/compare-adversarial-r6-supply-20261102.mjs",
+    "tools/question-quality/compare-adversarial-r7-supply-20261102.mjs",
+    "tools/question-quality/compare-batch1-timeouts-20261102.mjs",
+    "tools/question-quality/compare-level-five-journeys.mjs",
+    "tools/question-quality/cue-comparison-20261102.json",
+    "tools/question-quality/diagnose-adversarial-r4-legacy-load-20261102.mjs",
+    "tools/question-quality/diagnose-adversarial-r5-legacy-load-20261102.mjs",
+    "tools/question-quality/diagnose-adversarial-r6-l4-fairness-20261102.mjs",
+    "tools/question-quality/diagnose-adversarial-r6-launch-20261102.mjs",
+    "tools/question-quality/diagnose-adversarial-r6-legacy-load-20261102.mjs",
+    "tools/question-quality/diagnose-adversarial-r7-legacy-load-20261102.mjs",
+    "tools/question-quality/domain-additional-timeouts-isolated-20261102.log",
+    "tools/question-quality/domain-garden-readonly-rerun-20261029.log",
+    "tools/question-quality/domain-review-validation-20261029.log",
+    "tools/question-quality/domain-validation-20261029.log",
+    "tools/question-quality/draft-lint-20261102.log",
+    "tools/question-quality/exact-revision-records-20261102.json",
+    "tools/question-quality/final-domain-exit-20261102.json",
+    "tools/question-quality/final-quick-exits-20261102.json",
+    "tools/question-quality/final-validation-exits-20261102.json",
+    "tools/question-quality/fixtures/adversarial-before-20261102.json",
+    "tools/question-quality/fixtures/adversarial-extra-before-20261102.json",
+    "tools/question-quality/fixtures/adversarial-r3-before-20261102.json",
+    "tools/question-quality/fixtures/adversarial-r4-before-20261102.json",
+    "tools/question-quality/fixtures/adversarial-r4-domain-admission-original-tests-20261102.json",
+    "tools/question-quality/fixtures/adversarial-r4-domain-original-tests-20261102.json",
+    "tools/question-quality/fixtures/adversarial-r5-before-20261102.json",
+    "tools/question-quality/fixtures/adversarial-r5-domain-original-tests-20261102.json",
+    "tools/question-quality/fixtures/adversarial-r6-before-20261102.json",
+    "tools/question-quality/fixtures/adversarial-r6-late-tests-20261102.json",
+    "tools/question-quality/fixtures/adversarial-r7-before-20261102.json",
+    "tools/question-quality/fixtures/integration-before-20261029.json",
+    "tools/question-quality/fixtures/manager-review-before-20261029.json",
+    "tools/question-quality/fixtures/owner-round1-before-20261029.json",
+    "tools/question-quality/fixtures/pilot-before-20261028.json",
+    "tools/question-quality/fixtures/pilot-drafts-20261028.json",
+    "tools/question-quality/fixtures/round3-batch1-before-20261102.json",
+    "tools/question-quality/fixtures/source-before-20261028.json",
+    "tools/question-quality/garden-baseline-live-review-20261029.log",
+    "tools/question-quality/handoff-adversarial-r4-20261102.mjs",
+    "tools/question-quality/handoff-adversarial-r5-20261102.mjs",
+    "tools/question-quality/handoff-adversarial-r6-20261102.mjs",
+    "tools/question-quality/handoff-adversarial-r7-20261102.mjs",
+    "tools/question-quality/level-five-bound-inputs-20261029.json",
+    "tools/question-quality/level-five-garden-20261029.cpuprofile",
+    "tools/question-quality/lint-review-validation-20261029.log",
+    "tools/question-quality/lint.mjs",
+    "tools/question-quality/lint.test.mjs",
+    "tools/question-quality/owned-files-20261102.json",
+    "tools/question-quality/owner-round2-review.mjs",
+    "tools/question-quality/pilot-review-totals-20261029.log",
+    "tools/question-quality/pilot-review.mjs",
+    "tools/question-quality/player-cloud-readonly-rerun-20261029.log",
+    "tools/question-quality/player-review-validation-20261029.log",
+    "tools/question-quality/player-touched-review-validation-20261029.log",
+    "tools/question-quality/player-validation-20261029.log",
+    "tools/question-quality/question-cue-after-20261102.json",
+    "tools/question-quality/question-cue-before-20261102.json",
+    "tools/question-quality/question-cue-before-v4-20261102.json",
+    "tools/question-quality/question-cue-draft-20261102.json",
+    "tools/question-quality/question-cue-report-20261029.json",
+    "tools/question-quality/report-qa-20261102.json",
+    "tools/question-quality/report-qa-20261102.log",
+    "tools/question-quality/report-review-qa-20261029.json",
+    "tools/question-quality/report.mjs",
+    "tools/question-quality/review-adversarial-20261102.mjs",
+    "tools/question-quality/review-adversarial-r3-20261102.mjs",
+    "tools/question-quality/review-adversarial-r4-20261102.mjs",
+    "tools/question-quality/review-adversarial-r4-snapshots-20261102.mjs",
+    "tools/question-quality/review-adversarial-r5-20261102.mjs",
+    "tools/question-quality/review-adversarial-r5-snapshots-20261102.mjs",
+    "tools/question-quality/review-adversarial-r6-20261102.mjs",
+    "tools/question-quality/review-adversarial-r6-late-expectations-20261102.mjs",
+    "tools/question-quality/review-adversarial-r6-snapshots-20261102.mjs",
+    "tools/question-quality/review-adversarial-r7-20261102.mjs",
+    "tools/question-quality/review-adversarial-r7-snapshots-20261102.mjs",
+    "tools/question-quality/review-generation-20261102.log",
+    "tools/question-quality/review-round3-batch1-20261102.mjs",
+    "tools/question-quality/review-validation-exits-20261029.json",
+    "tools/question-quality/round3-batch1-author.mjs",
+    "tools/question-quality/round3-clinical-first-20261102.log",
+    "tools/question-quality/round3-clinical-second-20261102.log",
+    "tools/question-quality/round3-clinical-typecheck-20261102.log",
+    "tools/question-quality/round3-clinical-validation-20261102.log",
+    "tools/question-quality/round3-domain-current-flows-20261102.log",
+    "tools/question-quality/round3-domain-final-20261102.log",
+    "tools/question-quality/round3-domain-final-source-20261102.log",
+    "tools/question-quality/round3-domain-focused-20261102.log",
+    "tools/question-quality/round3-domain-validation-20261102.log",
+    "tools/question-quality/round3-domain-verified-20261102.log",
+    "tools/question-quality/round3-lint-final-20261102.log",
+    "tools/question-quality/round3-lint-validation-20261102.log",
+    "tools/question-quality/round3-player-touched-20261102.log",
+    "tools/question-quality/round3-typecheck-20261102.log",
+    "tools/question-quality/round3-typecheck-final-20261102.log",
+    "tools/question-quality/spatial-performance-candidate-20261029.mjs",
+    "tools/question-quality/typecheck-review-validation-20261029.log",
+    "tools/question-quality/typecheck-validation-20261029.log",
+    "tools/question-quality/validation-summary-20261102.json",
+    "tools/question-quality/verify-adversarial-20261102.mjs",
+    "tools/question-quality/verify-adversarial-r3-20261102.mjs",
+    "tools/question-quality/verify-adversarial-r4-20261102.mjs",
+    "tools/question-quality/verify-adversarial-r5-20261102.mjs",
+    "tools/question-quality/verify-adversarial-r6-20261102.mjs",
+    "tools/question-quality/verify-adversarial-r6-scope-20261102.mjs",
+    "tools/question-quality/verify-adversarial-r7-20261102.mjs",
+    "tools/question-quality/verify-adversarial-r7-scope-20261102.mjs",
+    "tools/question-quality/verify-review-20261102.mjs",
+    "tools/question-quality/whole-bank-lint-20261102.log",
+    "tools/question-quality/whole-bank-lint-final-20261102.log",
+    "tools/question-quality/write-adversarial-docs-20261102.mjs",
+    "tools/question-quality/write-adversarial-r3-docs-20261102.mjs",
+    "tools/question-quality/write-adversarial-r4-docs-20261102.mjs",
+    "tools/question-quality/write-adversarial-r5-docs-20261102.mjs",
+    "tools/question-quality/write-adversarial-r6-docs-20261102.mjs",
+    "tools/question-quality/write-adversarial-r7-docs-20261102.mjs"
+  ],
+  "changedPathScope": "Repository source, fixtures, tools and documents; private diagnostics are separate",
+  "finalFileInventory": ".local-dev/question-batch1-release-rebind13-20261103/final-file-inventory.json",
+  "ignoredDiagnostics": [
+    ".local-dev/question-batch1-release-rebind13-20261103/",
+    ".local-dev/level5-m9/progress-state.json"
+  ],
+  "unrelatedBaselineFilesChanged": [],
+  "gitUsed": false,
+  "installedDependencies": false,
+  "networkUsed": false,
+  "mainTreeWritten": false
+}

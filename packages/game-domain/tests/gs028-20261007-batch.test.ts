@@ -2,7 +2,8 @@
 import { writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import {
-  GS028_20261007_CASES as cases,
+  GS028_20261007_CASES as authoredCases,
+  SYNTHETIC_CLINICAL_RELEASE,
   GS028_20261007_TESTED_CONCEPTS as concepts,
   GS028_20261007_VARIETY2_CASES,
   type SyntheticClinicalCase,
@@ -18,10 +19,12 @@ import {
 } from "../src";
 import { EXACT_TEST_CHOICE_ORDER_RECORDS } from "../src/test-choice-orders";
 
+// Exercise current revisions while keeping historical authored records available.
+const cases = authoredCases.map(original => SYNTHETIC_CLINICAL_RELEASE.cases.find(candidate => candidate.id === original.id)! as typeof original);
 const REAL_MS = 1_800_000_000_000;
 const OUTSIDE_ROUTE = "route.basic_labs.outsourced";
 const paired = cases.filter((item) => item.decisionNodes.length === 2);
-const exact = EXACT_TEST_CHOICE_ORDER_RECORDS.filter((item) => item.caseId.startsWith("case.gs028e."));
+const exact = EXACT_TEST_CHOICE_ORDER_RECORDS.filter(record => cases.some(c => c.id === record.caseId && c.decisionNodes.some(n => n.id === record.nodeId && n.questionVariantId === record.questionVariantId)));
 const coverage = new Map<string, Set<string>>();
 const frozenProfiles = new Set<string>();
 const routingEvidence: unknown[] = [];
@@ -175,7 +178,8 @@ function complete(clinicalCase: SyntheticClinicalCase, path: "correct" | 0 | 1 |
     const node = clinicalCase.decisionNodes[nodeIndex]!;
     state = ready(state, encounterId, `${encounterId}.${nodeIndex}.ready`);
     // Choose an authored ID, not an index in the shuffled runtime array.
-    const selected = path === "correct" ? node.answerChoices.find((item) => item.isCorrect)! : node.answerChoices.filter((item) => !item.isCorrect)[path]!;
+    const wrong = node.answerChoices.filter(item => !item.isCorrect);
+    const selected = path === "correct" ? node.answerChoices.find(item => item.isCorrect)! : wrong[path % wrong.length]!;
     const submitted = answer(state, encounterId, selected.id, `${encounterId}.${nodeIndex}.answer`, REAL_MS + index * 100 + nodeIndex);
     expect(submitted.question.node.id).toBe(node.id);
     expect(submitted.question.node.answerChoices.map((item) => item.id).sort()).toEqual(node.answerChoices.map((item) => item.id).sort());
@@ -273,7 +277,7 @@ describe("GS-028 October 7 real gameplay admission", () => {
   });
 
   it.each(cases.map((item, index) => [index, item] as const))("completes every node correctly, saves and departs in case %s", (index, item) => complete(item, "correct", index));
-  it.each(cases.flatMap((item, index) => ([0, 1, 2] as const).map((path) => [index, path, item] as const)))("completes authored wrong choice %s/%s with one FSRS review and corrected-forward", (index, path, item) => complete(item, path, index));
+  it.each(cases.flatMap((item, index) => Array.from({ length: Math.max(...item.decisionNodes.map(n => n.answerChoices.length - 1)) }, (_, path) => [index, path as 0 | 1 | 2, item] as const)))("completes authored wrong choice %s/%s with one FSRS review and corrected-forward", (index, path, item) => complete(item, path, index));
 
   it.each(paired.flatMap((item) => (["installed", "missing_staff", "busy", "missing_rooms", "lab_only"] as const).map((condition) => [item, condition] as const)))("keeps specialist mixing external in $id with %s clinic resources", (clinicalCase, condition) => {
     const encounterId = `encounter.gs028e.resources.${clinicalCase.id}.${condition}`;
@@ -402,15 +406,16 @@ describe("GS-028 October 7 real gameplay admission", () => {
   });
 
   it("measures the real ordinary pools before and after admission", () => {
-    // Three P2-E cases inherit level 1; this batch's additive delta stays 78/20.
-    expect(pools.map((item) => item.before)).toEqual([{ cases: 480, concepts: 135 }, { cases: 718, concepts: 241 }, { cases: 754, concepts: 257 }]);
-    expect(pools.map((item) => item.after)).toEqual([{ cases: 558, concepts: 155 }, { cases: 796, concepts: 261 }, { cases: 832, concepts: 277 }]);
+    // Round-four clinical-objective versions add three/four active constructs
+    // to the pre-existing stage-1/2 pool; this unchanged batch still adds 78/20.
+    expect(pools.map((item) => item.before)).toEqual([{ cases: 480, concepts: 135 }, { cases: 718, concepts: 246 }, { cases: 754, concepts: 263 }]);
+    expect(pools.map((item) => item.after)).toEqual([{ cases: 558, concepts: 155 }, { cases: 796, concepts: 266 }, { cases: 832, concepts: 283 }]);
   });
 
-  it("covers all eighty actual nodes and each of their four authored choices", () => {
+  it("covers all eighty actual nodes and every current authored choice", () => {
     expect(coverage.size).toBe(80);
     for (const node of cases.flatMap((item) => item.decisionNodes)) expect([...(coverage.get(node.id) ?? [])].sort()).toEqual(node.answerChoices.map((choice) => choice.id).sort());
-    expect([...coverage.values()].reduce((total, ids) => total + ids.size, 0)).toBe(320);
+    expect([...coverage.values()].reduce((total, ids) => total + ids.size, 0)).toBe(319); // One three-option wound-healing revision.
   });
 });
 

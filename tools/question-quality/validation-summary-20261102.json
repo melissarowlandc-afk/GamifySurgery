@@ -1,0 +1,206 @@
+{
+  "checkedOn": "2026-11-02",
+  "status": "completed_with_failures_retained",
+  "clinicalContent": {
+    "filesPassed": 91,
+    "passed": 719,
+    "failed": 0,
+    "durationSeconds": 25.37
+  },
+  "lintTests": {
+    "passed": 19,
+    "failed": 0
+  },
+  "playerTouched": {
+    "filesPassed": 2,
+    "passed": 22,
+    "failed": 0,
+    "durationSeconds": 2.77,
+    "filesUnchangedThisRound": true
+  },
+  "workspaceTypechecks": {
+    "passed": 7,
+    "failed": 0
+  },
+  "gameDomain": {
+    "filesFailed": 5,
+    "filesPassed": 160,
+    "filesTotal": 165,
+    "failed": 8,
+    "passed": 4325,
+    "skipped": 1,
+    "total": 4334,
+    "durationSeconds": 1022.37,
+    "log": "tools/question-quality/round3-domain-final-source-20261102.log",
+    "failures": [
+      {
+        "file": "tests/level-five-integration.test.ts",
+        "suite": "M9 connected Level 5 reducer journey",
+        "title": "binds the actual run to its current game, balance, clinical and driver inputs and reconciles cash",
+        "kind": "binding"
+      },
+      {
+        "file": "tests/level-five-integration.test.ts",
+        "suite": "M9 connected Level 5 reducer journey",
+        "title": "matches continued play after save/reload at integration-running",
+        "kind": "previously documented timeout"
+      },
+      {
+        "file": "tests/level-five-integration.test.ts",
+        "suite": "M9 connected Level 5 reducer journey",
+        "title": "continues normal operations, completes a genuinely lower retry and retains the higher best and first finish",
+        "kind": "previously documented timeout"
+      },
+      {
+        "file": "tests/level-five-latent-bugs.test.ts",
+        "suite": "Level 5 garden and diagnostic movement ownership",
+        "title": "finishes the garden return before starting offsite movement after live",
+        "kind": "previously documented timeout"
+      },
+      {
+        "file": "tests/level-five-latent-bugs.test.ts",
+        "suite": "Level 5 garden and diagnostic movement ownership",
+        "title": "finishes the garden return before starting offsite movement after legacy reload",
+        "kind": "previously documented paired timeout"
+      },
+      {
+        "file": "tests/patient-supply.test.ts",
+        "suite": "routine patient supply",
+        "title": "records the current clinical inventory and exact unseen-patient boundary by stage",
+        "kind": "additional timeout; subsequent targeted pass"
+      },
+      {
+        "file": "tests/periop-nurse-owner-feedback.test.ts",
+        "suite": "Owner periop nurse flow reproduction",
+        "title": "covers mixed endoscopy/surgery pre-op and recovery at Level 3, including patients outside a nurse's home room",
+        "kind": "additional timeout; subsequent targeted pass"
+      },
+      {
+        "file": "tests/periop-nurse-real-visit.test.ts",
+        "suite": "Peri-op nurses through the real chart UI command pipeline",
+        "title": "holds real pre-op and recovery beyond their timers when both nurses are away training, including reload",
+        "kind": "additional timeout; subsequent isolated-file pass"
+      }
+    ]
+  },
+  "earlierFocusedDomain": {
+    "filesPassed": 5,
+    "passed": 162,
+    "failed": 0
+  },
+  "additionalTimeoutFilesIsolated": {
+    "filesPassed": 1,
+    "filesFailed": 2,
+    "passed": 15,
+    "failed": 2,
+    "total": 17,
+    "durationSeconds": 68.11
+  },
+  "finalTargetedAdditionalTimeouts": {
+    "filesPassed": 2,
+    "passed": 2,
+    "failed": 0,
+    "unselected": 10,
+    "total": 12,
+    "durationSeconds": 16
+  },
+  "syntheticComparison": {
+    "checkedOn": "2026-11-02",
+    "results": [
+      {
+        "file": "packages/game-domain/tests/patient-supply.test.ts",
+        "title": "records the current clinical inventory and exact unseen-patient boundary by stage",
+        "sourceHash": "c696fc35d632dcfa0cf4d5f88f261e90571545a6ba6ea415c477d866b570b3fb",
+        "originalDeadlineMs": 10000,
+        "functionalAssertions": "passed in both contexts",
+        "identicalResult": true,
+        "runs": {
+          "before": {
+            "elapsedMs": 5562,
+            "sha256": "48215c69e7f2635c53aa7dc638e9a7bf4f513834965241ce849de6ebd7acf6ce"
+          },
+          "current": {
+            "elapsedMs": 7152,
+            "sha256": "48215c69e7f2635c53aa7dc638e9a7bf4f513834965241ce849de6ebd7acf6ce"
+          }
+        }
+      },
+      {
+        "file": "packages/game-domain/tests/periop-nurse-owner-feedback.test.ts",
+        "title": "covers mixed endoscopy/surgery pre-op and recovery at Level 3, including patients outside a nurse's home room",
+        "sourceHash": "9577e5ae0197809e505ccef24e7d2ce1cf8221c505577ab418381ef954d07df2",
+        "originalDeadlineMs": 5000,
+        "functionalAssertions": "passed in both contexts",
+        "identicalResult": true,
+        "runs": {
+          "before": {
+            "elapsedMs": 3529,
+            "sha256": "c3bb13676e7c64a8e3e58038ee8cbfb8b06c0b6c2a0c51cbca166868f4c3ee16"
+          },
+          "current": {
+            "elapsedMs": 3767,
+            "sha256": "c3bb13676e7c64a8e3e58038ee8cbfb8b06c0b6c2a0c51cbca166868f4c3ee16"
+          }
+        }
+      }
+    ],
+    "scope": "Captured pre-edit versus current clinical cases, same current runtime, exact original callback/functional assertions. Only a disposable process-local context reference changes and is restored. Diagnostic elapsed times are not benchmarks or passing Vitest results. No deadline, source test, runtime file, evidence, save or player data is changed."
+  },
+  "wholeBankLint": {
+    "cases": 1110,
+    "nodeOccurrences": 1423,
+    "uniqueVariants": 1418,
+    "concepts": 370,
+    "profileContexts": 6039,
+    "variantsWithFindings": 887,
+    "findings": 1745,
+    "tutorialSequenceVariants": 3,
+    "missingAuthoredVersion": 0,
+    "missingEducationalTier": 162,
+    "approvalRecordOnlyMetadata": 40,
+    "variantsWithCompleteRationales": 239,
+    "variantsWithMultipleDefinitions": 0,
+    "byPriorityStage": {
+      "0": 687,
+      "1": 464,
+      "2": 163,
+      "3": 84,
+      "4": 20
+    },
+    "byOptionCount": {
+      "3": 104,
+      "4": 1314
+    },
+    "variantsByRule": {
+      "case-detail-decision-cue": 9,
+      "case-detail-key-rationale-overlap": 37,
+      "convergence": 71,
+      "heterogeneous-option-category": 97,
+      "key-length-disparity": 51,
+      "key-only-phrase-overlap": 50,
+      "key-only-word-overlap": 312,
+      "key-test-name-in-context": 5,
+      "lead-in-decision-principle": 16,
+      "near-duplicate-options": 33,
+      "negative-aligned-to-distractor": 105,
+      "option-absolute": 94,
+      "option-explanation": 37,
+      "option-length-disparity": 305,
+      "option-scope-mismatch": 2,
+      "option-specificity-disparity": 21,
+      "unique-key-abbreviation": 134,
+      "unique-key-test-name": 12
+    }
+  },
+  "notes": "Final full-suite counts are retained. Targeted or diagnostic results do not replace full-suite failures. Existing evidence/spatial/test deadlines are unchanged. No clinical approval, measured difficulty, correctness analytics or shipment.",
+  "documentAudit": {
+    "sourceToolsDocs": 43,
+    "generatedArtifacts": 41,
+    "markdownFiles": 11,
+    "localLinks": 41,
+    "allPathsExist": true,
+    "exactBoundHashRows": true,
+    "sourceHashesFrozen": true,
+    "utf8": true
+  }
+}

@@ -601,9 +601,10 @@ describe("GS-028 second October 7 actual gameplay", () => {
   });
 
   it("measures the actual early ordinary pool delta of seventy-eight cases and twenty concepts", () => {
-    // Three P2-E cases inherit level 1; this batch's additive delta stays 78/20.
-    expect(pools.map((item) => item.before)).toEqual([{ cases: 558, concepts: 155 }, { cases: 796, concepts: 261 }, { cases: 832, concepts: 277 }]);
-    expect(pools.map((item) => item.after)).toEqual([{ cases: 636, concepts: 175 }, { cases: 874, concepts: 281 }, { cases: 910, concepts: 297 }]);
+    // Round-four clinical-objective versions add three/four active constructs
+    // to the pre-existing stage-1/2 pool; this unchanged batch still adds 78/20.
+    expect(pools.map((item) => item.before)).toEqual([{ cases: 558, concepts: 155 }, { cases: 796, concepts: 266 }, { cases: 832, concepts: 283 }]);
+    expect(pools.map((item) => item.after)).toEqual([{ cases: 636, concepts: 175 }, { cases: 874, concepts: 286 }, { cases: 910, concepts: 303 }]);
   });
 
   it("covers all eighty actual nodes and all three distractors plus the key in each", () => {

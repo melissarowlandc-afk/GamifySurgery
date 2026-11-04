@@ -1,0 +1,117 @@
+[
+  {
+    "caseId": "case.gs028b.nipple-discharge.paired-bloody-single-duct",
+    "nodeId": "node.gs028b.nipple-discharge.paired-bloody-single-duct.2",
+    "questionVariantId": "question.pathologic-nipple-discharge.diagnostic-imaging.v1.r7",
+    "choiceId": "correct_1",
+    "choiceLabel": "Diagnostic mammography and targeted retroareolar ultrasound",
+    "timingProfileId": "timing.test.breast_imaging_bundle",
+    "disposition": {
+      "kind": "terminal_service",
+      "serviceId": "service.diagnostic_breast_imaging",
+      "allowedRouteIds": [
+        "route.diagnostic_breast_imaging.outsourced"
+      ]
+    }
+  },
+  {
+    "caseId": "case.gs028b.differentiated-thyroid-cancer.a-palpable-node",
+    "nodeId": "node.gs028b.differentiated-thyroid-cancer.a-palpable-node.1",
+    "questionVariantId": "question.differentiated-thyroid-cancer.preoperative-nodal-ultrasound.v3.r4",
+    "choiceId": "correct_3",
+    "choiceLabel": "Neck ultrasound of central and lateral nodal compartments",
+    "timingProfileId": "timing.test.ultrasound",
+    "disposition": {
+      "kind": "terminal_service",
+      "serviceId": "service.ultrasound",
+      "allowedRouteIds": [
+        "route.ultrasound.in_house",
+        "route.ultrasound.outsourced"
+      ]
+    }
+  },
+  {
+    "caseId": "case.pigmented-skin-lesion.shoulder-border",
+    "nodeId": "node.pigmented-skin-lesion.shoulder-border.2",
+    "questionVariantId": "question.melanoma.sentinel-node-staging.v2.r4",
+    "choiceId": "sentinel_node_2",
+    "choiceLabel": "Sentinel-node biopsy with wide excision, before reconstructive closure",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.pigmented-skin-lesion.forearm-change",
+    "nodeId": "node.pigmented-skin-lesion.forearm-change.2",
+    "questionVariantId": "question.melanoma.sentinel-node-staging.v4.r4",
+    "choiceId": "sentinel_node_4",
+    "choiceLabel": "Sentinel lymph node mapping and biopsy",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.pigmented-skin-lesion.changing-back-lesion",
+    "nodeId": "node.pigmented-skin-lesion.changing-back-lesion.2",
+    "questionVariantId": "question.melanoma.sentinel-node-staging.v1.r4",
+    "choiceId": "sentinel_node_1",
+    "choiceLabel": "Sentinel-node biopsy with wide excision, before reconstructive closure",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.pigmented-skin-lesion.calf-growth",
+    "nodeId": "node.pigmented-skin-lesion.calf-growth.2",
+    "questionVariantId": "question.melanoma.sentinel-node-staging.v3.r4",
+    "choiceId": "sentinel_node_3",
+    "choiceLabel": "Sentinel lymph node mapping and biopsy",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.soft-tissue-mass.deep-thigh",
+    "nodeId": "node.soft-tissue-mass.deep-thigh.2",
+    "questionVariantId": "question.soft-tissue-mass.specialist-planned-biopsy.v1.r4",
+    "choiceId": "sarcoma_core_1",
+    "choiceLabel": "Image-guided core biopsy of region A along path A",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.soft-tissue-mass.upper-arm",
+    "nodeId": "node.soft-tissue-mass.upper-arm.2",
+    "questionVariantId": "question.soft-tissue-mass.specialist-planned-biopsy.v2.r4",
+    "choiceId": "sarcoma_core_2",
+    "choiceLabel": "Image-guided core biopsy of region B along path B",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.l2.gastric-malt.cd20-boundary.v1",
+    "nodeId": "node.gastric-malt.cd20-alone-boundary.v1",
+    "questionVariantId": "question.gastric-malt.cd20-alone-boundary.v1.r4",
+    "choiceId": "lineage_not_diagnosis",
+    "choiceLabel": "Repeat endoscopy with documented-site biopsies for histologic comparison",
+    "timingProfileId": "timing.test.upper_endoscopy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  }
+]

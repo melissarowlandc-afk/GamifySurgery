@@ -1,0 +1,254 @@
+{
+  "checkedOn": "2026-11-03",
+  "scope": "All eight changed-preceding-feedback flags from review six, inspected in actual node order. PASS clinical fields remain exact; residual frozen-feedback limits are explicit rather than silently repaired.",
+  "rows": [
+    {
+      "id": "B03",
+      "status": "revised_returned_precursor",
+      "response": "B03-context now corrects a limited reserve/outflow report. Its feedback names neither achalasia, distal spasm, opioids nor myotomy; the later classification/medication decision still needs its own record.",
+      "questionVersionUnchanged": "question.achalasia.manometric-recognition.v3.r5",
+      "beforeVisibleHistory": [
+        {
+          "variantId": "question.achalasia.high-resolution-manometry.v3.r7",
+          "result": "Medication reconciliation shows that Jamie Taylor takes oxycodone regularly for back pain and took it before the pressure study. The prescribing team can supervise a medication adjustment, and the patient can maintain oral intake during reassessment.",
+          "feedback": "The response during rapid swallows and the contraction afterward answer different questions. Suppression is present, but the post-sequence response does not augment baseline contractions, supporting reduced reserve. The supplied rapid-drink response does not demonstrate outflow obstruction. Specialist review must integrate technically adequate acquisition and the full clinical context; these observations do not independently diagnose achalasia or establish the cause of all symptoms.",
+          "teachingPoint": "The response during rapid swallows and the contraction afterward answer different questions. Suppression is present, but the post-sequence response does not augment baseline contractions, supporting reduced reserve. The supplied rapid-drink response does not demonstrate outflow obstruction. Specialist review must integrate technically adequate acquisition and the full clinical context; these observations do not independently diagnose achalasia or establish the cause of all symptoms."
+        }
+      ],
+      "afterVisibleHistory": [
+        {
+          "variantId": "question.achalasia.high-resolution-manometry.v3.r8",
+          "result": "Medication reconciliation shows that Jamie Taylor takes oxycodone regularly for back pain and took it before the pressure study. The prescribing team can supervise a medication adjustment, and the patient can maintain oral intake during reassessment.",
+          "feedback": "A provocative protocol has distinct acquisition phases. Appropriate inhibition while swallowing does not establish augmentation after the sequence; the repeated post-sequence finding warrants correction of the reserve statement. A familiar symptom during rapid drinking does not by itself establish impaired outflow. This report review does not assign a final motor diagnosis or a cause of all symptoms.",
+          "teachingPoint": "A provocative protocol has distinct acquisition phases. Appropriate inhibition while swallowing does not establish augmentation after the sequence; the repeated post-sequence finding warrants correction of the reserve statement. A familiar symptom during rapid drinking does not by itself establish impaired outflow. This report review does not assign a final motor diagnosis or a cause of all symptoms."
+        }
+      ],
+      "earlierItemIds": [
+        {
+          "id": "B03-context",
+          "returnedInThisRound": true,
+          "variantId": "question.achalasia.high-resolution-manometry.v3.r8"
+        }
+      ],
+      "clinicalApprovalConferred": false,
+      "freshDifficultyAssessment": false
+    },
+    {
+      "id": "B11",
+      "status": "frozen_pass_precursor",
+      "response": "B11-context is now PASS and must remain exact. Its mapped-specimen teaching remains visible. It does not supply the later sentinel-node/reconstruction sequence; no fresh sequence rating is inferred.",
+      "questionVersionUnchanged": "question.melanoma.sentinel-node-staging.v2.r4",
+      "beforeVisibleHistory": [
+        {
+          "variantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v2.r7",
+          "result": "The specimen contains atypical melanocytes extending into the dermis. Maximum vertical thickness from the epidermal granular layer to the deepest tumor is 1.6 mm. The regional examination finds no palpable node; ultrasound of the basin shows oval nodes with preserved central hilar echoes.",
+          "feedback": "Map the reported abnormal junctional population to the sector actually sampled. It is valid evidence of atypia there, not a whole-lesion microstage. The separate raised residual focus remains unassessed for invasion. Completion pathology is needed for subsequent lesion-wide planning; a limited specimen is neither wholly useless nor a basis for clearing unrepresented tissue.",
+          "teachingPoint": "Map the reported abnormal junctional population to the sector actually sampled. It is valid evidence of atypia there, not a whole-lesion microstage. The separate raised residual focus remains unassessed for invasion. Completion pathology is needed for subsequent lesion-wide planning; a limited specimen is neither wholly useless nor a basis for clearing unrepresented tissue."
+        }
+      ],
+      "afterVisibleHistory": [
+        {
+          "variantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v2.r7",
+          "result": "The specimen contains atypical melanocytes extending into the dermis. Maximum vertical thickness from the epidermal granular layer to the deepest tumor is 1.6 mm. The regional examination finds no palpable node; ultrasound of the basin shows oval nodes with preserved central hilar echoes.",
+          "feedback": "Map the reported abnormal junctional population to the sector actually sampled. It is valid evidence of atypia there, not a whole-lesion microstage. The separate raised residual focus remains unassessed for invasion. Completion pathology is needed for subsequent lesion-wide planning; a limited specimen is neither wholly useless nor a basis for clearing unrepresented tissue.",
+          "teachingPoint": "Map the reported abnormal junctional population to the sector actually sampled. It is valid evidence of atypia there, not a whole-lesion microstage. The separate raised residual focus remains unassessed for invasion. Completion pathology is needed for subsequent lesion-wide planning; a limited specimen is neither wholly useless nor a basis for clearing unrepresented tissue."
+        }
+      ],
+      "earlierItemIds": [
+        {
+          "id": "B11-context",
+          "returnedInThisRound": false,
+          "variantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v2.r7"
+        }
+      ],
+      "clinicalApprovalConferred": false,
+      "freshDifficultyAssessment": false
+    },
+    {
+      "id": "B12",
+      "status": "revised_returned_precursor",
+      "response": "B12-context now concerns specimen provenance and the appropriate pathology-review request. It does not discuss tissue-positive regional nodes, distant staging or multidisciplinary sequencing.",
+      "questionVersionUnchanged": "question.melanoma.sentinel-node-staging.v4.r5",
+      "beforeVisibleHistory": [
+        {
+          "variantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v4.r7",
+          "result": "The completed primary specimen measures 1.5 mm in maximum vertical thickness. A regional node is round with eccentric cortex and a replaced central hilum. Ultrasound-guided sampling of its solid cortex contains malignant melanocytes matching the skin primary. Distant staging has not yet been completed.",
+          "feedback": "A benign fragment and a concerning residual lesion are not automatically mutually contradictory. The map allows the nevus result to be locally concordant at the sampled edge while leaving the changing center uncharacterized. Completion pathology must examine the residual architecture rather than extend the fragment to the whole lesion or assume the original pathologist was necessarily wrong.",
+          "teachingPoint": "A benign fragment and a concerning residual lesion are not automatically mutually contradictory. The map allows the nevus result to be locally concordant at the sampled edge while leaving the changing center uncharacterized. Completion pathology must examine the residual architecture rather than extend the fragment to the whole lesion or assume the original pathologist was necessarily wrong."
+        }
+      ],
+      "afterVisibleHistory": [
+        {
+          "variantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v4.r8",
+          "result": "The completed primary specimen measures 1.5 mm in maximum vertical thickness. A regional node is round with eccentric cortex and a replaced central hilum. Ultrasound-guided sampling of its solid cortex contains malignant melanocytes matching the skin primary. Distant staging has not yet been completed.",
+          "feedback": "A benign fragment and a concerning clinical lesion can coexist without either record being inherently false. Here the first review question is which sector the submitted tissue represents: the request label and procedure photograph differ. Technical re-review of that fragment does not by itself resolve its clinical provenance. The completion specimen must still be interpreted with the lesion map.",
+          "teachingPoint": "A benign fragment and a concerning clinical lesion can coexist without either record being inherently false. Here the first review question is which sector the submitted tissue represents: the request label and procedure photograph differ. Technical re-review of that fragment does not by itself resolve its clinical provenance. The completion specimen must still be interpreted with the lesion map."
+        }
+      ],
+      "earlierItemIds": [
+        {
+          "id": "B12-context",
+          "returnedInThisRound": true,
+          "variantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v4.r8"
+        }
+      ],
+      "clinicalApprovalConferred": false,
+      "freshDifficultyAssessment": false
+    },
+    {
+      "id": "B17",
+      "status": "revised_returned_precursor",
+      "response": "B17-context supplies the missing dermal negative and selects primary diagnostic extent. Its feedback contains no sentinel-node/reconstruction timing instruction. The later completed invasion-depth/graft record remains necessary.",
+      "questionVersionUnchanged": "question.melanoma.sentinel-node-staging.v1.r4",
+      "beforeVisibleHistory": [
+        {
+          "variantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v1.r7",
+          "result": "The specimen contains atypical melanocytes extending into the dermis. Maximum vertical thickness from the epidermal granular layer to the deepest tumor is 1.4 mm. The regional examination finds no palpable node; ultrasound of the basin shows oval nodes with preserved central hilar echoes.",
+          "feedback": "Represented tissue and involved tissue are different. Melanoma confined to the sampled epidermis establishes an in-situ component there; the mere presence of underlying dermis does not make it invasive. The map leaves a separate raised focus unrepresented, so whole-lesion invasive status must await completion pathology before subsequent planning.",
+          "teachingPoint": "Represented tissue and involved tissue are different. Melanoma confined to the sampled epidermis establishes an in-situ component there; the mere presence of underlying dermis does not make it invasive. The map leaves a separate raised focus unrepresented, so whole-lesion invasive status must await completion pathology before subsequent planning."
+        }
+      ],
+      "afterVisibleHistory": [
+        {
+          "variantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v1.r8",
+          "result": "The specimen contains atypical melanocytes extending into the dermis. Maximum vertical thickness from the epidermal granular layer to the deepest tumor is 1.4 mm. The regional examination finds no palpable node; ultrasound of the basin shows oval nodes with preserved central hilar echoes.",
+          "feedback": "The represented dermis is explicitly free of the atypical melanoma cells, so the local epidermal diagnosis is supported. That does not classify a separate residual focus. When the whole suspicious lesion can be removed diagnostically, representative architecture and invasion assessment should precede selecting its treatment extent.",
+          "teachingPoint": "The represented dermis is explicitly free of the atypical melanoma cells, so the local epidermal diagnosis is supported. That does not classify a separate residual focus. When the whole suspicious lesion can be removed diagnostically, representative architecture and invasion assessment should precede selecting its treatment extent."
+        }
+      ],
+      "earlierItemIds": [
+        {
+          "id": "B17-context",
+          "returnedInThisRound": true,
+          "variantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v1.r8"
+        }
+      ],
+      "clinicalApprovalConferred": false,
+      "freshDifficultyAssessment": false
+    },
+    {
+      "id": "B18",
+      "status": "revised_returned_precursor_partial_topic_overlap",
+      "response": "B18-context concerns whether existing partial-depth evidence supports a discussion, not a nodal procedure. The later PASS question has an abnormal node and a nonrepresentative aspirate; those current findings still decide targeted core versus occult staging. Prior discussion eligibility is visible topic overlap and must not be called a fresh unscaffolded nodal-eligibility assessment.",
+      "questionVersionUnchanged": "question.melanoma.sentinel-node-staging.v3.r5",
+      "beforeVisibleHistory": [
+        {
+          "variantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v3.r7",
+          "result": "The completed primary specimen measures 1.8 mm in maximum vertical thickness. A regional node is round with eccentric cortex and a replaced central hilum. The aspiration report says no malignant cells, but the submitted material contains blood without lymphoid tissue. The saved needle image does not enter the abnormal cortex.",
+          "feedback": "The 0.6-mm observation reaches a cut surface containing invasive cells. Carry it forward as at least that depth, not as a whole-lesion maximum and not as no information. Completion pathology is required to determine the final maximum before any threshold-dependent subsequent plan. The constructed measurement is not itself a treatment or nodal-staging threshold.",
+          "teachingPoint": "The 0.6-mm observation reaches a cut surface containing invasive cells. Carry it forward as at least that depth, not as a whole-lesion maximum and not as no information. Completion pathology is required to determine the final maximum before any threshold-dependent subsequent plan. The constructed measurement is not itself a treatment or nodal-staging threshold."
+        }
+      ],
+      "afterVisibleHistory": [
+        {
+          "variantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v3.r8",
+          "result": "The completed primary specimen measures 1.8 mm in maximum vertical thickness. A regional node is round with eccentric cortex and a replaced central hilum. The aspiration report says no malignant cells, but the submitted material contains blood without lymphoid tissue. The saved needle image does not enter the abnormal cortex.",
+          "feedback": "Integrate the mapped specimens rather than replace one with the latest report. The 1.8-mm invasive measurement remains demonstrated; a 0.6-mm tumor-positive cut base cannot lower it. The whole-lesion maximum may still increase. The existing greater-than-1-mm guidance supports discussing sentinel-node staging in this clinically node-negative setting while primary assessment continues. It does not order a nodal procedure or determine how a later abnormal node should be assessed.",
+          "teachingPoint": "Integrate the mapped specimens rather than replace one with the latest report. The 1.8-mm invasive measurement remains demonstrated; a 0.6-mm tumor-positive cut base cannot lower it. The whole-lesion maximum may still increase. The existing greater-than-1-mm guidance supports discussing sentinel-node staging in this clinically node-negative setting while primary assessment continues. It does not order a nodal procedure or determine how a later abnormal node should be assessed."
+        }
+      ],
+      "earlierItemIds": [
+        {
+          "id": "B18-context",
+          "returnedInThisRound": true,
+          "variantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v3.r8"
+        }
+      ],
+      "clinicalApprovalConferred": false,
+      "freshDifficultyAssessment": false
+    },
+    {
+      "id": "B19",
+      "status": "scaffold_removed_in_returned_precursor",
+      "response": "B19-context now asks about acquisition comparability; all target/tract, rectus/adductor and core/open teaching is removed from its scored task, options and feedback. Later A/B labels first appear in the unchanged completed MRI report. The earlier question no longer rehearses the later tract rule.",
+      "questionVersionUnchanged": "question.soft-tissue-mass.specialist-planned-biopsy.v1.r4",
+      "beforeVisibleHistory": [
+        {
+          "variantId": "question.soft-tissue-mass.extremity-mri.v1.r7",
+          "result": "MRI places the mass within rectus femoris. Solid regions A and B both enhance; B enhances more intensely. Path A enters from the anterior skin through rectus femoris. The shorter path B enters from the medial skin, crosses adductor muscle and then reaches region B. Both regions can be sampled percutaneously.",
+          "feedback": "Compare precontrast with postcontrast signal rather than call every bright region enhancing. Then evaluate the corridor independently: a viable target does not justify contaminating a separate uninvolved compartment. Region R supplies both the supported enhancement information and a corridor through rectus femoris. This is a planning-report decision, not an additional biopsy order or proof of malignancy.",
+          "teachingPoint": "Compare precontrast with postcontrast signal rather than call every bright region enhancing. Then evaluate the corridor independently: a viable target does not justify contaminating a separate uninvolved compartment. Region R supplies both the supported enhancement information and a corridor through rectus femoris. This is a planning-report decision, not an additional biopsy order or proof of malignancy."
+        }
+      ],
+      "afterVisibleHistory": [
+        {
+          "variantId": "question.soft-tissue-mass.extremity-mri.v1.r8",
+          "result": "MRI places the mass within rectus femoris. Solid regions A and B both enhance; B enhances more intensely. Path A enters from the anterior skin through rectus femoris. The shorter path B enters from the medial skin, crosses adductor muscle and then reaches region B. Both regions can be sampled percutaneously.",
+          "feedback": "Signal differences must be interpreted against how the images were acquired. A bright native T1 region and a postcontrast image with a different suppression setting cannot simply be compared as if contrast were their only difference. Comparable before/after acquisitions can clarify enhancement for the later planning report.",
+          "teachingPoint": "Signal differences must be interpreted against how the images were acquired. A bright native T1 region and a postcontrast image with a different suppression setting cannot simply be compared as if contrast were their only difference. Comparable before/after acquisitions can clarify enhancement for the later planning report."
+        }
+      ],
+      "earlierItemIds": [
+        {
+          "id": "B19-context",
+          "returnedInThisRound": true,
+          "variantId": "question.soft-tissue-mass.extremity-mri.v1.r8"
+        }
+      ],
+      "clinicalApprovalConferred": false,
+      "freshDifficultyAssessment": false
+    },
+    {
+      "id": "B21",
+      "status": "frozen_pass_precursor_residual_caveat",
+      "response": "B21-context is PASS and is frozen by the round-seven instruction. Its existing authoring phrase 'passed management premise' remains a recorded learner-text defect. No returned item can remove that phrase without editing a PASS version; manager direction would be required for a later correction. Do not imply that this round fixed it.",
+      "questionVersionUnchanged": "question.colonic-lipoma.management.patient-to-plan.v1.r3",
+      "beforeVisibleHistory": [
+        {
+          "variantId": "question.colonic-lipoma.recognition.patient-to-diagnosis.v1.r7",
+          "result": null,
+          "feedback": "Identify what tissue the crypts and lamina propria represent, then judge concordance separately from confirmation. Overlying mucosa can be normal above the classic imaged third-layer lesion. It neither histologically confirms that mass nor contradicts its integrated characterization. This distinction does not create an indication for another biopsy or change the passed management premise.",
+          "teachingPoint": "Identify what tissue the crypts and lamina propria represent, then judge concordance separately from confirmation. Overlying mucosa can be normal above the classic imaged third-layer lesion. It neither histologically confirms that mass nor contradicts its integrated characterization. This distinction does not create an indication for another biopsy or change the passed management premise."
+        }
+      ],
+      "afterVisibleHistory": [
+        {
+          "variantId": "question.colonic-lipoma.recognition.patient-to-diagnosis.v1.r7",
+          "result": null,
+          "feedback": "Identify what tissue the crypts and lamina propria represent, then judge concordance separately from confirmation. Overlying mucosa can be normal above the classic imaged third-layer lesion. It neither histologically confirms that mass nor contradicts its integrated characterization. This distinction does not create an indication for another biopsy or change the passed management premise.",
+          "teachingPoint": "Identify what tissue the crypts and lamina propria represent, then judge concordance separately from confirmation. Overlying mucosa can be normal above the classic imaged third-layer lesion. It neither histologically confirms that mass nor contradicts its integrated characterization. This distinction does not create an indication for another biopsy or change the passed management premise."
+        }
+      ],
+      "earlierItemIds": [
+        {
+          "id": "B21-context",
+          "returnedInThisRound": false,
+          "variantId": "question.colonic-lipoma.recognition.patient-to-diagnosis.v1.r7"
+        }
+      ],
+      "clinicalApprovalConferred": false,
+      "freshDifficultyAssessment": false
+    },
+    {
+      "id": "B22",
+      "status": "frozen_pass_precursor_residual_scaffold",
+      "response": "B22-context is PASS and is frozen. Its existing caution against repeat sampling partially scaffolds B22's repeat-endoscopy alternative. Preserve it exactly and carry the reviewer's limitation; do not claim an independent repeat-biopsy assessment or new difficulty finding.",
+      "questionVersionUnchanged": "question.colonic-lipoma.management.patient-to-plan.v2.r3",
+      "beforeVisibleHistory": [
+        {
+          "variantId": "question.colonic-lipoma.recognition.patient-to-diagnosis.v2.r7",
+          "result": null,
+          "feedback": "The technique name does not establish the depth reached in this particular submitted specimen. The constituents represent surface mucosa. That can agree with the overlying surface of the classic imaged lesion while leaving lesional histology unconfirmed. This is neither a universal criticism of bite-on-bite biopsy nor a reason by itself to repeat sampling.",
+          "teachingPoint": "The technique name does not establish the depth reached in this particular submitted specimen. The constituents represent surface mucosa. That can agree with the overlying surface of the classic imaged lesion while leaving lesional histology unconfirmed. This is neither a universal criticism of bite-on-bite biopsy nor a reason by itself to repeat sampling."
+        }
+      ],
+      "afterVisibleHistory": [
+        {
+          "variantId": "question.colonic-lipoma.recognition.patient-to-diagnosis.v2.r7",
+          "result": null,
+          "feedback": "The technique name does not establish the depth reached in this particular submitted specimen. The constituents represent surface mucosa. That can agree with the overlying surface of the classic imaged lesion while leaving lesional histology unconfirmed. This is neither a universal criticism of bite-on-bite biopsy nor a reason by itself to repeat sampling.",
+          "teachingPoint": "The technique name does not establish the depth reached in this particular submitted specimen. The constituents represent surface mucosa. That can agree with the overlying surface of the classic imaged lesion while leaving lesional histology unconfirmed. This is neither a universal criticism of bite-on-bite biopsy nor a reason by itself to repeat sampling."
+        }
+      ],
+      "earlierItemIds": [
+        {
+          "id": "B22-context",
+          "returnedInThisRound": false,
+          "variantId": "question.colonic-lipoma.recognition.patient-to-diagnosis.v2.r7"
+        }
+      ],
+      "clinicalApprovalConferred": false,
+      "freshDifficultyAssessment": false
+    }
+  ]
+}

@@ -1,5 +1,13 @@
 # Clinical Workbench
 
+For question design and offline cue review, use the
+[question authoring standard](../clinical/question-authoring-standard.md).
+Owner approval covers predicted difficulty, credible option counts and no
+correctness analytics. Quality review uses the standard, advisory lint,
+owner/clinician review and voluntary tester flags. Clinical approval remains
+a separate exact-version clinician decision. The phase-1 pilot must not ship
+before owner review.
+
 Status: local beta authoring foundation plus an isolated, loopback-only
 evidence-review Workbench. This is not a hosted administrator application,
 clinical release publisher, clinical-approval service, or unrestricted AI

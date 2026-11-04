@@ -1,10 +1,11 @@
+// Historical batch proof uses the pre-2026-10-28 assembly. Live pilot isolation/versioning is checked in question-quality-pilot.test.ts.
 /// <reference types="node" />
 import {createHash} from "node:crypto";
 import {writeFileSync,mkdirSync} from "node:fs";
 import {resolve} from "node:path";
 import {describe,expect,it} from "vitest";
 import {syntheticClinicalCaseSchema,testedConceptSchema,answerChoiceTimingRegistryEntrySchema} from "../../schema";
-import {SYNTHETIC_CLINICAL_RELEASE as release,PEDIATRIC_CLINIC_PROTOTYPE_ADMISSION_MANIFEST as pediatricAdmission} from "../../synthetic-content";
+import {QUESTION_QUALITY_SOURCE_RELEASE as release,PEDIATRIC_CLINIC_PROTOTYPE_ADMISSION_MANIFEST as pediatricAdmission} from "../../synthetic-content";
 import {ANSWER_CHOICE_TIMING_REGISTRY} from "../../answer-choice-timing";
 import {
  GS028_20261007_LEVEL3_CASES as cases,GS028_20261007_LEVEL3_TESTED_CONCEPTS as concepts,

@@ -1,4 +1,4 @@
-import { GS028_20261002_CASES, GS028_20261002_TESTED_CONCEPTS } from "@gamify-surgery/clinical-content";
+import { GS028_20261002_CASES as authoredCases, SYNTHETIC_CLINICAL_RELEASE, GS028_20261002_TESTED_CONCEPTS } from "@gamify-surgery/clinical-content";
 import { describe, expect, it } from "vitest";
 import {
   PROTOTYPE_DOMAIN_CONTEXT, createInitialGameState, deserializeGameState,
@@ -8,6 +8,7 @@ import {
 } from "../src";
 import { EXACT_TEST_CHOICE_ORDER_RECORDS } from "../src/test-choice-orders";
 
+const GS028_20261002_CASES = authoredCases.map(original => SYNTHETIC_CLINICAL_RELEASE.cases.find(candidate => candidate.id === original.id)! as typeof original);
 const REAL_MS = 1_800_000_000_000;
 type BatchCase = (typeof GS028_20261002_CASES)[number];
 
@@ -240,7 +241,7 @@ describe("GS-028 October 2 batch admission", () => {
     expect(GS028_20261002_TESTED_CONCEPTS).toHaveLength(20);
     expect(GS028_20261002_CASES).toHaveLength(78);
     for (const item of GS028_20261002_CASES) expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter((candidate) => candidate.id === item.id)).toHaveLength(1);
-    const records = EXACT_TEST_CHOICE_ORDER_RECORDS.filter((record) => record.caseId.startsWith("case.gs028c."));
+    const records = EXACT_TEST_CHOICE_ORDER_RECORDS.filter(record => GS028_20261002_CASES.some(c => c.id === record.caseId && c.decisionNodes.some(n => n.id === record.nodeId && n.questionVariantId === record.questionVariantId)));
     expect(records).toHaveLength(27);
     expect(records.filter((record) => record.disposition.kind === "result_gate_route_override")).toHaveLength(2);
     expect(records.filter((record) => record.disposition.kind === "terminal_service")).toHaveLength(2);

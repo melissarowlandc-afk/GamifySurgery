@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import {QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE} from "@gamify-surgery/clinical-content";
 import {
   PROTOTYPE_DOMAIN_CONTEXT,
   advanceServiceOperations,
@@ -201,7 +202,7 @@ function endoscopyProcedureState(): GameState {
   return state;
 }
 
-function prepareQuestion(state: GameState, caseId: string, conceptId: string, markerless = true): GameState {
+function prepareQuestion(state: GameState, caseId: string, conceptId: string, markerless = true, context = PROTOTYPE_DOMAIN_CONTEXT): GameState {
   let next = gameReducer(state, {
     type: "ADMIT_PATIENT",
     operationId: `procedure.admit.${sequence++}`,
@@ -209,7 +210,7 @@ function prepareQuestion(state: GameState, caseId: string, conceptId: string, ma
     caseId,
     patientDisplayName: "Procedure Patient",
     arrivalClass: "routine",
-  });
+  }, context);
   expect(next.operationReceipts[Object.keys(next.operationReceipts).at(-1)!]?.status).toBe("applied");
   const encounter = next.encounters["procedure-patient"]!;
   // These scenarios exercise the saved, markerless operation contract. A
@@ -599,6 +600,9 @@ describe("mapped in-clinic procedure operations", () => {
       minorProcedureState(),
       "case.pigmented-skin-lesion.changing-back-lesion",
       "concept.pigmented-skin-lesion.complete-diagnostic-biopsy",
+      true,
+      // Admit an actual retained version for this saved pre-rewrite contract.
+      {...PROTOTYPE_DOMAIN_CONTEXT, clinicalRelease: QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE},
     );
     placePatientInTestExam(state);
     const encounter = state.encounters["procedure-patient"]!;

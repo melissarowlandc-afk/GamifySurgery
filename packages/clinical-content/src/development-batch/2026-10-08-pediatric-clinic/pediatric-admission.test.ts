@@ -1,8 +1,9 @@
+// Historical batch proof uses the pre-2026-10-28 assembly. Live pilot isolation/versioning is checked in question-quality-pilot.test.ts.
 import { readFileSync, readdirSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { answerChoiceTimingRegistryEntrySchema, testedConceptSchema } from "../../schema";
 import { ANSWER_CHOICE_TIMING_REGISTRY } from "../../answer-choice-timing";
-import { PEDIATRIC_CLINIC_PROTOTYPE_ADMISSION_MANIFEST, SYNTHETIC_CLINICAL_RELEASE } from "../../synthetic-content";
+import { PEDIATRIC_CLINIC_PROTOTYPE_ADMISSION_MANIFEST, QUESTION_QUALITY_SOURCE_RELEASE as SYNTHETIC_CLINICAL_RELEASE } from "../../synthetic-content";
 import { PRIMARY_MIDLINE_HERNIA_TESTED_CONCEPTS } from "../2026-09-28-pre-endoscopy/primary-midline-hernia";
 import { BATCH_CONTENT_VERSION, CHECKED_ON, PEDIATRIC_ART_PROFILES, pediatricDraftCaseSchema } from "./batch-helpers";
 import {
@@ -230,7 +231,7 @@ describe("standalone pediatric clinic batch admission", () => {
       expect(admission.variants.find(candidate => candidate.caseId === item.id)).toEqual({ caseId: item.id,
         questionVariantId: node.questionVariantId, conceptId: node.primaryConceptId,
         familyContextId: family.id, profileId: family.profileId });
-      expect(ANSWER_CHOICE_TIMING_REGISTRY.filter(candidate => candidate.caseId === item.id)).toEqual(timings.filter(candidate => candidate.caseId === item.id));
+      expect(ANSWER_CHOICE_TIMING_REGISTRY.filter(candidate => candidate.caseId === item.id && candidate.questionVariantId === node.questionVariantId)).toEqual(timings.filter(candidate => candidate.caseId === item.id));
     }
     for (const concept of tested) expect(SYNTHETIC_CLINICAL_RELEASE.concepts.filter(candidate => candidate.id === concept.id)).toEqual([concept]);
   });

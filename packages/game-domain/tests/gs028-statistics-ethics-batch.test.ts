@@ -1,5 +1,6 @@
 import type { SyntheticClinicalCase } from "@gamify-surgery/clinical-content";
 import {
+  QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE,
   GS028_STATS_ETHICS_20260929_CASES,
   GS028_STATS_ETHICS_20260929_TESTED_CONCEPTS,
 } from "@gamify-surgery/clinical-content";
@@ -199,7 +200,7 @@ describe("GS-028 statistics and ethics runtime admission", () => {
     expect(ordinaryCases.filter(item => item.earliestFacilityStage === 0)).toHaveLength(45);
     expect(ordinaryCases.filter(item => item.earliestFacilityStage <= 1)).toHaveLength(48);
     expect(ordinaryCases.every(item => item.requiredCapabilityIds.length === 0)).toBe(true);
-    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts.filter(c => !c.id.startsWith("concept.gs028g.") && !c.id.startsWith("concept.pediatric-clinic.") && !c.id.startsWith("concept.variety3."))).toHaveLength(331);
+    expect(QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE.concepts.filter(c => !c.id.startsWith("concept.gs028g.") && !c.id.startsWith("concept.pediatric-clinic.") && !c.id.startsWith("concept.variety3."))).toHaveLength(331);
     expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter(c => !c.id.startsWith("case.gs028g.") && !c.id.startsWith("case.pediatric-clinic.") && !c.id.startsWith("case.variety3."))).toHaveLength(1008);
     expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter(c => !c.id.startsWith("case.gs028g.") && !c.id.startsWith("case.pediatric-clinic.") && !c.id.startsWith("case.variety3.")).flatMap((item) => item.decisionNodes)).toHaveLength(1303);
     for (const concept of GS028_STATS_ETHICS_20260929_TESTED_CONCEPTS) {

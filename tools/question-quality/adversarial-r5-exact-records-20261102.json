@@ -1,0 +1,30 @@
+[
+  {
+    "caseId": "case.gs028b.differentiated-thyroid-cancer.a-palpable-node",
+    "nodeId": "node.gs028b.differentiated-thyroid-cancer.a-palpable-node.1",
+    "questionVariantId": "question.differentiated-thyroid-cancer.preoperative-nodal-ultrasound.v3.r6",
+    "choiceId": "correct_3",
+    "choiceLabel": "Solid-rim FNA for cytology; thyroglobulin in needle washout",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "terminal_service",
+      "serviceId": "service.thyroid_fna",
+      "allowedRouteIds": [
+        "route.thyroid_fna.in_house",
+        "route.thyroid_fna.outsourced"
+      ]
+    }
+  },
+  {
+    "caseId": "case.pancreatic-pseudocyst.early-satiety",
+    "nodeId": "node.pancreatic-pseudocyst.early-satiety.2",
+    "questionVariantId": "question.pseudocyst.symptomatic-endoscopic-drainage.v1.r5",
+    "choiceId": "drain_0",
+    "choiceLabel": "Arterial embolization, followed by reassessment for collection drainage",
+    "timingProfileId": "timing.test.clinical_procedure",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  }
+]

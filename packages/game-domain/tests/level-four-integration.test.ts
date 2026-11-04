@@ -1,5 +1,6 @@
 import { readFileSync, writeFileSync } from "node:fs";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+import * as clinicalSelection from "../src/clinical-selection";
 import { createPreLevelFiveLaunchContext } from "../../../tests/fixtures/level-five-launch";
 import {
   PROTOTYPE_DOMAIN_CONTEXT, createInitialGameState, deserializeGameState, gameReducer,
@@ -322,24 +323,142 @@ describe("Level 4 M9 integrated launch", () => {
     report("terminal", { completion, roomSold: M9_ROOMS.wound, reloads: 3, closingTick: state.facilityTick });
   }, hostedTime(30_000));
 
-  it("preserves scored case identities and arrival count/times for 24 hours with APPs on/off", () => {
+  it("preserves arrival count/times and flow-explained scored selections for 24 hours with APPs on/off", () => {
     let on = createLevelFourIntegrationState("level-four-m9-fairness");
     on.nextRoutineArrivalTick = 1;
     let off = m9DeferAppDemand(structuredClone(on));
-    const onArrivals = new Map<string, unknown>(), offArrivals = new Map<string, unknown>();
-    for (let minute = 0; minute < 1440; minute++) {
-      on = m9Minute(on); off = m9Minute(m9DeferAppDemand(off));
-      for (const [state, arrivals] of [[on, onArrivals], [off, offArrivals]] as const)
-        for (const encounter of Object.values(state.encounters)) if (!arrivals.has(encounter.id))
-          arrivals.set(encounter.id, [encounter.frozenCase.id, encounter.arrivalClass, encounter.waiting.arrivedAtTick]);
+    type SelectionCall = {
+      state: GameState; cases: Parameters<typeof clinicalSelection.selectRoutineClinicalCase>[1]; at: number;
+      selected: NonNullable<ReturnType<typeof clinicalSelection.selectRoutineClinicalCase>>;
+    };
+    const calls = { on: new Map<string, SelectionCall>(), off: new Map<string, SelectionCall>() };
+    const onArrivals = new Map<string, readonly [string, string, number]>(), offArrivals = new Map<string, readonly [string, string, number]>();
+    let side: "on" | "off" = "on";
+    const select = clinicalSelection.selectRoutineClinicalCase;
+    // Observe genuine pre-admission inputs, after tick-internal walking/decay.
+    // A previous-tick or post-admission approximation misses walkout commitment.
+    const observer = vi.spyOn(clinicalSelection, "selectRoutineClinicalCase").mockImplementation((state, cases, at) => {
+      const selected = select(state, cases, at);
+      if (selected && selected.clinicalCase.participant?.kind !== "employee_discussion") {
+        const id = `encounter.auto.${state.facilityLevel}.${state.routineArrivalSequence}`;
+        expect(calls[side].has(id), `duplicate selection for ${side}/${id}`).toBe(false);
+        calls[side].set(id, { state: structuredClone(state), cases, at, selected });
+      }
+      return selected;
+    });
+    try {
+      for (let minute = 0; minute < 1440; minute++) {
+        side = "on"; on = m9Minute(on);
+        side = "off"; off = m9Minute(m9DeferAppDemand(off));
+        for (const [state, arrivals, observed] of [[on, onArrivals, calls.on], [off, offArrivals, calls.off]] as const)
+          for (const encounter of Object.values(state.encounters)) if (!arrivals.has(encounter.id)) {
+            expect(observed.has(encounter.id), `unobserved arrival ${encounter.id}`).toBe(true);
+            arrivals.set(encounter.id, [encounter.frozenCase.id, encounter.arrivalClass, encounter.waiting.arrivedAtTick]);
+          }
+      }
+    } finally {
+      observer.mockRestore();
+    }
+    expect(onArrivals.size).toBeGreaterThan(1);
+    expect(onArrivals.size).toBe(offArrivals.size);
+    expect([...onArrivals].map(([id, tuple]) => [id, tuple[1], tuple[2]]))
+      .toEqual([...offArrivals].map(([id, tuple]) => [id, tuple[1], tuple[2]]));
+    expect([...calls.on.keys()]).toEqual([...onArrivals.keys()]);
+    expect([...calls.off.keys()]).toEqual([...offArrivals.keys()]);
+
+    const concepts = (clinicalCase: SelectionCall["cases"][number]) => [...new Set(clinicalCase.decisionNodes.map(node => node.primaryConceptId))];
+    const reserves = (encounter: GameState["encounters"][string]) => encounter.resolutionReason === null &&
+      encounter.patientMovement?.kind !== "leaving_after_walkout";
+    const reservation = (encounter: GameState["encounters"][string] | undefined) => encounter && reserves(encounter) ? concepts(encounter.frozenCase).sort() : [];
+    const pools = ({ state, cases, at }: SelectionCall) => {
+      const active = new Set(Object.values(state.encounters).flatMap(reservation));
+      const compatible = [...cases].sort((a, b) => a.id.localeCompare(b.id)).filter(clinicalCase => concepts(clinicalCase).every(id => {
+        const history = state.learningHistories[id];
+        return !active.has(id) && (!history?.reviews.length || history.card.dueAtMs <= at);
+      }));
+      const available = [...new Set(compatible.flatMap(concepts))].sort((a, b) => a.localeCompare(b));
+      const due = available.filter(id => state.learningHistories[id]?.reviews.length && state.learningHistories[id]!.card.dueAtMs <= at);
+      const earliest = Math.min(...due.map(id => state.learningHistories[id]!.card.dueAtMs));
+      return { active: [...active].sort(), cases: compatible.map(clinicalCase => clinicalCase.id),
+        kind: due.length ? "due_review" : "new_concept",
+        concepts: due.length ? due.filter(id => state.learningHistories[id]!.card.dueAtMs === earliest) :
+          available.filter(id => !state.learningHistories[id]?.reviews.length) };
+    };
+    const result = (selected: ReturnType<typeof select>) => selected && [selected.clinicalCase.id, selected.selectedConceptId, selected.kind];
+    const explainedIdentities = new Set<string>();
+    const flowDifferences: { id: string; tick: number; witnesses: { encounterId: string; cause: string }[] }[] = [];
+    let identicalInputs = 0, identicalIdentities = 0;
+    for (const [id, arrival] of onArrivals) {
+      const left = calls.on.get(id)!, right = calls.off.get(id)!;
+      const label = `${id} at tick ${arrival[2]}`;
+      // These are every non-flow input read by the selector. APP traffic cannot
+      // excuse changed RNG purposes, learning, case definitions or eligibility.
+      const common = (call: SelectionCall) => [call.state.campaignSeed, call.state.randomGeneratorVersion,
+        call.state.routineArrivalSequence, call.state.facilityTick, call.at, call.cases, call.state.learningHistories];
+      expect(common(left), label).toEqual(common(right));
+      expect(result(left.selected)?.[0], label).toBe(arrival[0]);
+      expect(result(right.selected)?.[0], label).toBe(offArrivals.get(id)![0]);
+      const leftPools = pools(left), rightPools = pools(right);
+      if (JSON.stringify(leftPools) === JSON.stringify(rightPools)) {
+        identicalInputs++;
+        expect(result(left.selected), `identical selection inputs: ${label}`).toEqual(result(right.selected));
+      } else {
+        const witnesses: { encounterId: string; cause: string }[] = [];
+        const leftCounterfactual = { ...left.state, encounters: { ...left.state.encounters } };
+        const rightCounterfactual = { ...right.state, encounters: { ...right.state.encounters } };
+        for (const encounterId of new Set([...Object.keys(left.state.encounters), ...Object.keys(right.state.encounters)])) {
+          const a = left.state.encounters[encounterId], b = right.state.encounters[encounterId];
+          // An archived terminal chart and a retained terminal chart both
+          // reserve nothing. Their retirement timing is not a selection input.
+          if (JSON.stringify(reservation(a)) === JSON.stringify(reservation(b))) continue;
+          if (!a || !b) throw new Error(`Unmatched live flow witness ${encounterId}: ${label}`);
+          for (const [encounter, captured] of [[a, calls.on.get(encounterId)], [b, calls.off.get(encounterId)]] as const) {
+            expect(captured, `unobserved flow witness ${encounterId}`).toBeDefined();
+            expect([encounter.frozenCase.id, concepts(encounter.frozenCase)], label)
+              .toEqual([captured!.selected.clinicalCase.id, concepts(captured!.selected.clinicalCase)]);
+          }
+          expect([a.arrivalClass, a.waiting.arrivedAtTick, a.walkoutThreshold], label)
+            .toEqual([b.arrivalClass, b.waiting.arrivedAtTick, b.walkoutThreshold]);
+          if (a.frozenCase.id !== b.frozenCase.id) {
+            // A prior, independently explained identity can reserve a different
+            // concept later. It cannot bootstrap its own explanation.
+            expect(explainedIdentities.has(encounterId), `unexplained prior identity ${encounterId}: ${label}`).toBe(true);
+            witnesses.push({ encounterId, cause: "prior flow-explained selection" });
+          } else {
+            expect(concepts(a.frozenCase), label).toEqual(concepts(b.frozenCase));
+            expect(reserves(a), `walkout reservation boundary: ${encounterId}`).not.toBe(reserves(b));
+            const live = reserves(a) ? a : b, leaving = reserves(a) ? b : a;
+            expect(leaving.resolutionReason === "walkout" || leaving.patientMovement?.kind === "leaving_after_walkout", label).toBe(true);
+            expect(leaving.patientSatisfaction, label).toBeLessThanOrEqual(leaving.walkoutThreshold);
+            expect(live.patientSatisfaction, label).toBeGreaterThan(live.walkoutThreshold);
+            witnesses.push({ encounterId, cause: "different walkout commitment" });
+          }
+          leftCounterfactual.encounters[encounterId] = b;
+          rightCounterfactual.encounters[encounterId] = a;
+        }
+        expect(witnesses.length, `missing patient-flow explanation: ${label}`).toBeGreaterThan(0);
+        // Swapping only witnessed encounters must account for the entire pool
+        // and the actual selector result, in both directions.
+        expect(pools({ ...left, state: leftCounterfactual }), label).toEqual(rightPools);
+        expect(pools({ ...right, state: rightCounterfactual }), label).toEqual(leftPools);
+        expect(result(select(leftCounterfactual, left.cases, left.at)), label).toEqual(result(right.selected));
+        expect(result(select(rightCounterfactual, right.cases, right.at)), label).toEqual(result(left.selected));
+        flowDifferences.push({ id, tick: arrival[2], witnesses });
+        if (left.selected.clinicalCase.id !== right.selected.clinicalCase.id) explainedIdentities.add(id);
+      }
+      if (left.selected.clinicalCase.id === right.selected.clinicalCase.id) identicalIdentities++;
+    }
+    expect(identicalInputs).toBeGreaterThan(0);
+    // The read-only released-content validation profile keeps the original
+    // 24/24 proof; it must never pass by admitting flow-dependent exceptions.
+    if (process.env.LEVEL_FOUR_M9_RELEASE_CONTROL === "1") {
+      expect([onArrivals.size, identicalInputs, identicalIdentities]).toEqual([24, 24, 24]);
+      expect(flowDifferences).toEqual([]);
     }
     report("arrival-fairness", { hours: 24, mode: "APP clocks deferred only; global/MRI demand stays on", on: [...onArrivals], off: [...offArrivals],
+      identicalInputs, identicalIdentities, flowDifferences,
       mriReceipts: { on: on.serviceIncomeReceipts.filter(receipt => receipt.incomeLineId === "income.mri").length,
         off: off.serviceIncomeReceipts.filter(receipt => receipt.incomeLineId === "income.mri").length } });
-    expect(onArrivals.size).toBeGreaterThan(1);
-    expect([...onArrivals]).toEqual([...offArrivals]);
-    expect([...onArrivals].map(([id, tuple]) => [id, (tuple as unknown[])[2]]))
-      .toEqual([...offArrivals].map(([id, tuple]) => [id, (tuple as unknown[])[2]]));
     expect(m9Learning(on)).toEqual(m9Learning(off));
     for (const line of ["income.app_consult", "income.pediatric_consult", "income.wound_care", "income.ostomy_support"])
       expect(on.serviceIncomeReceipts.some(receipt => receipt.incomeLineId === line), line).toBe(true);

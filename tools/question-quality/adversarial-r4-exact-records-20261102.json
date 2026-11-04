@@ -1,0 +1,78 @@
+[
+  {
+    "caseId": "case.gs028b.differentiated-thyroid-cancer.a-palpable-node",
+    "nodeId": "node.gs028b.differentiated-thyroid-cancer.a-palpable-node.1",
+    "questionVariantId": "question.differentiated-thyroid-cancer.preoperative-nodal-ultrasound.v3.r5",
+    "choiceId": "correct_3",
+    "choiceLabel": "Repeat node FNA with cytology and thyroglobulin washout",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "terminal_service",
+      "serviceId": "service.thyroid_fna",
+      "allowedRouteIds": [
+        "route.thyroid_fna.in_house",
+        "route.thyroid_fna.outsourced"
+      ]
+    }
+  },
+  {
+    "caseId": "case.pigmented-skin-lesion.calf-growth",
+    "nodeId": "node.pigmented-skin-lesion.calf-growth.2",
+    "questionVariantId": "question.melanoma.sentinel-node-staging.v3.r5",
+    "choiceId": "sentinel_node_3",
+    "choiceLabel": "Targeted core biopsy of the regional node",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.pancreatic-pseudocyst.early-satiety",
+    "nodeId": "node.pancreatic-pseudocyst.early-satiety.2",
+    "questionVariantId": "question.pseudocyst.symptomatic-endoscopic-drainage.v1.r4",
+    "choiceId": "drain_0",
+    "choiceLabel": "Arterial embolization, then collection drainage if required",
+    "timingProfileId": "timing.test.clinical_procedure",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.pancreatic-pseudocyst.postmeal-vomiting",
+    "nodeId": "node.pancreatic-pseudocyst.postmeal-vomiting.2",
+    "questionVariantId": "question.pseudocyst.symptomatic-endoscopic-drainage.v2.r4",
+    "choiceId": "drain_1",
+    "choiceLabel": "Transmural drainage with reassessment; add necrosectomy if required",
+    "timingProfileId": "timing.test.pseudocyst_drainage",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.pancreatic-pseudocyst.persistent-pain",
+    "nodeId": "node.pancreatic-pseudocyst.persistent-pain.2",
+    "questionVariantId": "question.pseudocyst.symptomatic-endoscopic-drainage.v3.r4",
+    "choiceId": "drain_2",
+    "choiceLabel": "Transpapillary pancreatic duct stenting",
+    "timingProfileId": "timing.test.ercp",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.pancreatic-pseudocyst.reduced-intake",
+    "nodeId": "node.pancreatic-pseudocyst.reduced-intake.2",
+    "questionVariantId": "question.pseudocyst.symptomatic-endoscopic-drainage.v4.r4",
+    "choiceId": "drain_3",
+    "choiceLabel": "Transmural drainage with planned long-term plastic-stent drainage",
+    "timingProfileId": "timing.test.pseudocyst_drainage",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  }
+]

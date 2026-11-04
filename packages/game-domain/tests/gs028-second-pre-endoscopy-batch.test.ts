@@ -1,14 +1,14 @@
 import { describe, expect, it } from "vitest";
-import { ANSWER_CHOICE_TIMING_REGISTRY, type SyntheticClinicalCase } from "@gamify-surgery/clinical-content";
+import { ANSWER_CHOICE_TIMING_REGISTRY, SYNTHETIC_CLINICAL_RELEASE, type SyntheticClinicalCase } from "@gamify-surgery/clinical-content";
 import {
   GS028_20260929_BATCH_MANIFEST,
-  GS028_20260929_CASES,
+  GS028_20260929_CASES as authoredCases,
   GS028_20260929_CLAIMS,
   GS028_20260929_QUESTIONS,
   GS028_20260929_SERVICE_CONTRACTS,
   GS028_20260929_SOURCES,
   GS028_20260929_TESTED_CONCEPTS,
-  GS028_20260929_TIMING_ENTRIES,
+  GS028_20260929_TIMING_ENTRIES as authoredTimings,
 } from "../../clinical-content/src/development-batch/2026-09-29-pre-endoscopy/pre-endoscopy-batch";
 import {
   PROTOTYPE_DOMAIN_CONTEXT,
@@ -25,6 +25,11 @@ import {
 } from "../src";
 import { EXACT_TEST_CHOICE_ORDER_RECORDS } from "../src/test-choice-orders";
 
+const GS028_20260929_CASES = authoredCases.map(original => SYNTHETIC_CLINICAL_RELEASE.cases.find(candidate => candidate.id === original.id)! as typeof original);
+const GS028_20260929_TIMING_ENTRIES = authoredTimings.map(old => {
+  const node = GS028_20260929_CASES.find(c => c.id === old.caseId)!.decisionNodes.find(n => n.id === old.nodeId)!;
+  return ANSWER_CHOICE_TIMING_REGISTRY.find(t => t.caseId === old.caseId && t.nodeId === old.nodeId && t.questionVariantId === node.questionVariantId)!;
+});
 const REAL_MS = 1_800_000_000_000;
 const BATCH_CONTEXT = validateDomainContext({
   ...PROTOTYPE_DOMAIN_CONTEXT,
@@ -329,7 +334,7 @@ describe("GS-028 September 29 pre-Endoscopy batch", () => {
   });
 
   const terminalRecords = EXACT_TEST_CHOICE_ORDER_RECORDS.filter((record) =>
-    record.caseId.startsWith("case.gs028b.") && record.disposition.kind === "terminal_service",
+    record.disposition.kind === "terminal_service" && GS028_20260929_CASES.some(c => c.id === record.caseId && c.decisionNodes.some(n => n.id === record.nodeId && n.questionVariantId === record.questionVariantId)),
   );
 
   it("binds every authored terminal test choice to an exact executable terminal-service order", () => {

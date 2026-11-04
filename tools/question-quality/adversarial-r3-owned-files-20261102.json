@@ -1,0 +1,399 @@
+{
+  "checkedOn": "2026-11-02",
+  "scope": "Third author revision owned paths only. No Git inspection, no player files edited, no forbidden-lane writes. Generated reports/logs listed separately; self hash intentionally excluded.",
+  "totalOwnedPaths": 38,
+  "existingModified": 20,
+  "newPaths": 18,
+  "paths": [
+    "docs/clinical/question-authoring-standard.md",
+    "docs/execplans/question-bank-rewrite-20261102.md",
+    "docs/execplans/question-batch1-adversarial-round3-20261102.md",
+    "docs/research/question-round3-20261102.json",
+    "docs/research/question-batch1-20261102.json",
+    "docs/research/question-inventory-20261028.md",
+    "docs/research/sources-question-adversarial-r3-20261102.md",
+    "docs/research/question-adversarial-round3-response-20261102.md",
+    "docs/research/question-batch1-adversarial-round3-handoff-20261102.md",
+    "docs/research/question-batch1-adversarial-handoff-20261102.md",
+    "packages/clinical-content/src/question-quality-pilot-20261028.ts",
+    "packages/clinical-content/src/question-quality-adversarial-20261102.ts",
+    "packages/clinical-content/src/index.ts",
+    "packages/clinical-content/src/synthetic-content.ts",
+    "packages/clinical-content/src/answer-choice-timing.ts",
+    "packages/clinical-content/src/answer-choice-timing.test.ts",
+    "packages/clinical-content/src/question-quality-adversarial.test.ts",
+    "packages/clinical-content/src/question-quality-adversarial-r3-20261102.ts",
+    "packages/clinical-content/src/question-quality-adversarial-r3-20261102-data.ts",
+    "packages/clinical-content/src/question-quality-adversarial-r3-evidence-20261102.ts",
+    "packages/clinical-content/src/question-quality-adversarial-r3.test.ts",
+    "packages/game-domain/src/test-choice-orders.ts",
+    "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+    "packages/game-domain/tests/gs028-20261007-level3-batch.test.ts",
+    "tools/question-quality/report.mjs",
+    "tools/question-quality/review-round3-batch1-20261102.mjs",
+    "tools/question-quality/verify-review-20261102.mjs",
+    "tools/question-quality/README.md",
+    "tools/question-quality/adversarial-r3-capture-20261102.mjs",
+    "tools/question-quality/adversarial-r3-specs-20261102.mjs",
+    "tools/question-quality/adversarial-r3-evidence-20261102.mjs",
+    "tools/question-quality/author-adversarial-r3-20261102.mjs",
+    "tools/question-quality/build-adversarial-r3-choice-records-20261102.mjs",
+    "tools/question-quality/review-adversarial-r3-20261102.mjs",
+    "tools/question-quality/write-adversarial-r3-docs-20261102.mjs",
+    "tools/question-quality/verify-adversarial-r3-20261102.mjs",
+    "tools/question-quality/adversarial-r3-bound-inputs-20261102.mjs",
+    "tools/question-quality/fixtures/adversarial-r3-before-20261102.json"
+  ],
+  "files": [
+    {
+      "path": "docs/clinical/question-authoring-standard.md",
+      "kind": "existing_modified",
+      "sha256": "03ae443c2a9a116df09e1f968ad036b258a18357c8e2c931cc778c3c32d79420",
+      "bytes": 23877,
+      "entrySha256": "37e606e9b4295c7a7185ff3b2f4641798bc6a7ba7b071fbe89c34b1a22875cf7",
+      "changedSinceEntry": true
+    },
+    {
+      "path": "docs/execplans/question-bank-rewrite-20261102.md",
+      "kind": "existing_modified",
+      "sha256": "ab7d83e61672901edd32ec4d44dfb6f3d1f146dbf06f9852a9bffc174df9cecf",
+      "bytes": 5527,
+      "entrySha256": "9a2fce7cf25996e7410a7bb6160dda98fd26fbd1d4c8fbdfd10f0e21c9c8ee8a",
+      "changedSinceEntry": true
+    },
+    {
+      "path": "docs/execplans/question-batch1-adversarial-round3-20261102.md",
+      "kind": "new",
+      "sha256": "38f98f20b7bc15d1ce2caab842f61f14c800f25740387eea1e8c7e3388babe72",
+      "bytes": 5014,
+      "baseline": "Not captured as a raw entry file; ownership is explicit in this list."
+    },
+    {
+      "path": "docs/research/question-round3-20261102.json",
+      "kind": "existing_modified",
+      "sha256": "cc7678ee85941d722895b3d76b76c522d0745475faa7556f031257ff747e51b4",
+      "bytes": 155091,
+      "baseline": "Not captured as a raw entry file; ownership is explicit in this list."
+    },
+    {
+      "path": "docs/research/question-batch1-20261102.json",
+      "kind": "existing_modified",
+      "sha256": "d06f53bfcd956b0332ecfec08804475faef16033d2ad7479089aecbe243bed41",
+      "bytes": 1726548,
+      "baseline": "Not captured as a raw entry file; ownership is explicit in this list."
+    },
+    {
+      "path": "docs/research/question-inventory-20261028.md",
+      "kind": "existing_modified",
+      "sha256": "360af6c3e38e0c583240424f5c5f66ceb932daa472e6fe54b29492cd38c73be3",
+      "bytes": 629515,
+      "baseline": "Not captured as a raw entry file; ownership is explicit in this list."
+    },
+    {
+      "path": "docs/research/sources-question-adversarial-r3-20261102.md",
+      "kind": "new",
+      "sha256": "6c24e936eab7ee13cdaf88c2ffa0296594de4a9717eb4020aa1a698447b9c115",
+      "bytes": 38526,
+      "baseline": "Not captured as a raw entry file; ownership is explicit in this list."
+    },
+    {
+      "path": "docs/research/question-adversarial-round3-response-20261102.md",
+      "kind": "new",
+      "sha256": "a2b3759c735ad06464ae2f0940d2865a2d9e8a1df4d71fe0e404609cef31190f",
+      "bytes": 44928,
+      "baseline": "Not captured as a raw entry file; ownership is explicit in this list."
+    },
+    {
+      "path": "docs/research/question-batch1-adversarial-round3-handoff-20261102.md",
+      "kind": "new",
+      "sha256": "9f667d602b371c542c0226c79e1e31c22f99c788b8cf3df659024c01483df94d",
+      "bytes": 15777,
+      "baseline": "Not captured as a raw entry file; ownership is explicit in this list."
+    },
+    {
+      "path": "docs/research/question-batch1-adversarial-handoff-20261102.md",
+      "kind": "existing_modified",
+      "sha256": "951ed712542f01593b3742ba7384b616e0cf05ff8e002ed59872fefb85b9815a",
+      "bytes": 14817,
+      "baseline": "Not captured as a raw entry file; ownership is explicit in this list."
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-pilot-20261028.ts",
+      "kind": "existing_modified",
+      "sha256": "eeab1985ffa0fdcd145e0035716d216924af8372c1cdaa982dfcea77dc41219f",
+      "bytes": 16556,
+      "entrySha256": "0f01c2bd39cb28fb33551314d1c1924547e91495cc58bdd37cb5454647da2658",
+      "changedSinceEntry": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-20261102.ts",
+      "kind": "existing_modified",
+      "sha256": "01f8d511275fade60bda36154d0e9a4e597ed12255fe146cf81b6ebba25506be",
+      "bytes": 1428,
+      "entrySha256": "4cb85240586699746cbe716f0fddffb37c6ed6748fa573f9b94ef62b19fa3007",
+      "changedSinceEntry": true
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "kind": "existing_modified",
+      "sha256": "806ec6e71d1d10e311955f2bdf042868cc05f491cdef594efa892aa37c9c3f2e",
+      "bytes": 4478,
+      "entrySha256": "b3f644ce90c618e1d56221429773125e1d56fbf4d88b25013fc06554cee304f0",
+      "changedSinceEntry": true
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "kind": "existing_modified",
+      "sha256": "c53df8a97f559ac7d0d5199ce0135e7c09e30db1266153392f7841f02845ecd0",
+      "bytes": 57395,
+      "entrySha256": "dabfdfb0a0181ef6aed4d37e8d105f3a3f970d24d6d1a7bd8aa4dc2af7ea565b",
+      "changedSinceEntry": true
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "kind": "existing_modified",
+      "sha256": "a296bdc8d62bc5ae11fe3943dbc75e9268a8cd5e50d59b83746a2750eaace7ff",
+      "bytes": 186954,
+      "entrySha256": "5c7066a7b5bdd69bcfb3866c24fd0f1a0df7d06c6474722a875affc28a46fcb6",
+      "changedSinceEntry": true
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+      "kind": "existing_modified",
+      "sha256": "83fc18696709bf114cc6eb4dbbb923e8db76aeef3a9b9995e1ef4be0dafbea24",
+      "bytes": 2853,
+      "entrySha256": "1fe309600b6a70db82ec0860587adccc739311b2bcb74b67969f9f1378f942fb",
+      "changedSinceEntry": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial.test.ts",
+      "kind": "existing_modified",
+      "sha256": "8a06cbfd757c97dc3d9b29044864404fd907e14db43ddc189eb8e2e52c8b88ea",
+      "bytes": 10863,
+      "entrySha256": "1892d332ee1f92ce4a5ed325bf8b985e5ac261259057d161ada80d765204355f",
+      "changedSinceEntry": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r3-20261102.ts",
+      "kind": "new",
+      "sha256": "6f2251f33b190470131c683cf6e565fd0b13f2b104574b2e753dacc4de3ec4be",
+      "bytes": 998,
+      "baseline": "Not captured as a raw entry file; ownership is explicit in this list."
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r3-20261102-data.ts",
+      "kind": "new",
+      "sha256": "c39f1bb565dba8eb5cbb32dbe0fc9dcad3c27beeb49c3af782fe2c90ccbf1b00",
+      "bytes": 640322,
+      "baseline": "Not captured as a raw entry file; ownership is explicit in this list."
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r3-evidence-20261102.ts",
+      "kind": "new",
+      "sha256": "3ce79432a9bc392eabdac641d54e7da0d5c37dc716ff0ef57a36f2972ef1689a",
+      "bytes": 52530,
+      "baseline": "Not captured as a raw entry file; ownership is explicit in this list."
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r3.test.ts",
+      "kind": "new",
+      "sha256": "2f716da6f5c9d62eeae1571aed549acbe87738d5dbf10acb5449aaf4f935f1a5",
+      "bytes": 7438,
+      "baseline": "Not captured as a raw entry file; ownership is explicit in this list."
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "kind": "existing_modified",
+      "sha256": "3212d80006d2ec5d9b1672a8380bca3e10b070153bfa593eeec6cf1f23177a7c",
+      "bytes": 66739,
+      "entrySha256": "8f39a765b6f7cdea594fa219674a77ecea02b27ea23e31fbb24153e17e61078f",
+      "changedSinceEntry": true
+    },
+    {
+      "path": "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+      "kind": "existing_modified",
+      "sha256": "d3d5c012c47eee92d194c34cb67ef9350f8fe726d990b9945648613cfa0da8d3",
+      "bytes": 19166,
+      "entrySha256": "ed923fcc8dc3e2ddffa693b5a1ff16c319d5ba8d1c423082c27093eecd60bd96",
+      "changedSinceEntry": true
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261007-level3-batch.test.ts",
+      "kind": "existing_modified",
+      "sha256": "dc91a68ca0d87cc98a4b234c5c717e9308781aba03905e03927ed9e5b1be462c",
+      "bytes": 21636,
+      "entrySha256": "1717053cd925c29d63ed5ff4ac573d7b8dee355abfc7959945cb7718ae89cbdb",
+      "changedSinceEntry": true
+    },
+    {
+      "path": "tools/question-quality/report.mjs",
+      "kind": "existing_modified",
+      "sha256": "749209ec22fec339241bd5748bfda8033c3958098474442e244ecfde1c4a6a15",
+      "bytes": 6389,
+      "entrySha256": "606f62db2eca19fdad69d91e2b2d9d8c9815c13f6ab3956c8482e5446684e122",
+      "changedSinceEntry": true
+    },
+    {
+      "path": "tools/question-quality/review-round3-batch1-20261102.mjs",
+      "kind": "existing_modified",
+      "sha256": "12ffd05e6f56a0f8498f80c3cdf14f5db294039df686fe57dc4a47afea2bba15",
+      "bytes": 408,
+      "entrySha256": "63db4b267b78793902c4d89dbaa6871da2958414fc9bd87f3a723cdf81cbd987",
+      "changedSinceEntry": true
+    },
+    {
+      "path": "tools/question-quality/verify-review-20261102.mjs",
+      "kind": "existing_modified",
+      "sha256": "1d559c9b6afddc35bc77f2a3a3b5eff644a13de77fb4bcfd77b0740e567bb8a4",
+      "bytes": 142,
+      "entrySha256": "dc1dc25e88809b9605d118f338796163663612cbb8515c7eb9f746a48d5fd6d3",
+      "changedSinceEntry": true
+    },
+    {
+      "path": "tools/question-quality/README.md",
+      "kind": "existing_modified",
+      "sha256": "c2570efab7c81c0d175a4a78cea5f4261c09b6c1fc866c39710ad44fe4a89e52",
+      "bytes": 11987,
+      "entrySha256": "21fe85b411e902f69ccc91f091ccb54cfa21ba19a88763271babbbd531af7104",
+      "changedSinceEntry": true
+    },
+    {
+      "path": "tools/question-quality/adversarial-r3-capture-20261102.mjs",
+      "kind": "new",
+      "sha256": "50952e4466058f16eb5cc4be2ee644cefa57b77cd5df05fe9c13a210a04848ab",
+      "bytes": 3838,
+      "baseline": "Not captured as a raw entry file; ownership is explicit in this list."
+    },
+    {
+      "path": "tools/question-quality/adversarial-r3-specs-20261102.mjs",
+      "kind": "new",
+      "sha256": "bd9ddcb0462b40b91bbc5053d9b517c5a6e13666d372c20aaba37b5eedc75dbc",
+      "bytes": 73629,
+      "baseline": "Not captured as a raw entry file; ownership is explicit in this list."
+    },
+    {
+      "path": "tools/question-quality/adversarial-r3-evidence-20261102.mjs",
+      "kind": "new",
+      "sha256": "cdcaa0f128417518c482b813504e9095b0b8512c025465cdfb644b98b9aa4735",
+      "bytes": 21120,
+      "baseline": "Not captured as a raw entry file; ownership is explicit in this list."
+    },
+    {
+      "path": "tools/question-quality/author-adversarial-r3-20261102.mjs",
+      "kind": "new",
+      "sha256": "9b4457b6a4b55ceb858b7ebdb9ff36688fd8bf6b24a0f4b932c7b8de4570e8c2",
+      "bytes": 8101,
+      "baseline": "Not captured as a raw entry file; ownership is explicit in this list."
+    },
+    {
+      "path": "tools/question-quality/build-adversarial-r3-choice-records-20261102.mjs",
+      "kind": "new",
+      "sha256": "ad57f3d4b142f7db349aa1758157016399284d7b96395998d350eacb4720e44a",
+      "bytes": 2533,
+      "baseline": "Not captured as a raw entry file; ownership is explicit in this list."
+    },
+    {
+      "path": "tools/question-quality/review-adversarial-r3-20261102.mjs",
+      "kind": "new",
+      "sha256": "011cd70879731c314d969f7fd3611ae7454188d81bc78d16aa9598a51bbf6c5b",
+      "bytes": 11931,
+      "baseline": "Not captured as a raw entry file; ownership is explicit in this list."
+    },
+    {
+      "path": "tools/question-quality/write-adversarial-r3-docs-20261102.mjs",
+      "kind": "new",
+      "sha256": "e2baedab07fd060ca69bfdd61cb80b480ff993d942899977685d07c25b3163ad",
+      "bytes": 8958,
+      "baseline": "Not captured as a raw entry file; ownership is explicit in this list."
+    },
+    {
+      "path": "tools/question-quality/verify-adversarial-r3-20261102.mjs",
+      "kind": "new",
+      "sha256": "e25ba601b4faed359172c6908081bca94c16e6a0abc5ab50587b9f81bf897676",
+      "bytes": 9471,
+      "baseline": "Not captured as a raw entry file; ownership is explicit in this list."
+    },
+    {
+      "path": "tools/question-quality/adversarial-r3-bound-inputs-20261102.mjs",
+      "kind": "new",
+      "sha256": "422f27894bf736b4e5023d9b9c89a8e3dec191101b08cdc5c440b4a50973c9b9",
+      "bytes": 3771,
+      "baseline": "Not captured as a raw entry file; ownership is explicit in this list."
+    },
+    {
+      "path": "tools/question-quality/fixtures/adversarial-r3-before-20261102.json",
+      "kind": "new",
+      "sha256": "08e480f1a591407a34391e3669c8671b76a402287388d8140356e535fa5a019d",
+      "bytes": 14388895,
+      "baseline": "Not captured as a raw entry file; ownership is explicit in this list."
+    }
+  ],
+  "retainedUnownedCapturedFiles": [
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-20261102-data.ts",
+      "entrySha256": "04abd031b224ea0eff55626cc983443493549517057e3a93760bcb40d1c6ab17",
+      "currentSha256": "04abd031b224ea0eff55626cc983443493549517057e3a93760bcb40d1c6ab17",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-evidence-20261102.ts",
+      "entrySha256": "a2488c689ed8e2e4859487b59064d156c37fa8cdd345a39eab039b9ce3216b05",
+      "currentSha256": "a2488c689ed8e2e4859487b59064d156c37fa8cdd345a39eab039b9ce3216b05",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-clinical-approvals-20261102.ts",
+      "entrySha256": "13702a09fec2af7580a2f7194285244bdd89b322ffcd098b875e099c903ca045",
+      "currentSha256": "13702a09fec2af7580a2f7194285244bdd89b322ffcd098b875e099c903ca045",
+      "unchanged": true
+    },
+    {
+      "path": "packages/game-domain/tests/answer-choice-timing.test.ts",
+      "entrySha256": "fdc5661fb5201eb02386314affb7789d77a69e1987c1e9aa69e3be815c249deb",
+      "currentSha256": "fdc5661fb5201eb02386314affb7789d77a69e1987c1e9aa69e3be815c249deb",
+      "unchanged": true
+    },
+    {
+      "path": "apps/player/src/session/variety3ChartsViewModels.test.ts",
+      "entrySha256": "e96f1943c2d458068ed0353c19ace02802ff666c6f38823ad6975dcb6d606b50",
+      "currentSha256": "e96f1943c2d458068ed0353c19ace02802ff666c6f38823ad6975dcb6d606b50",
+      "unchanged": true
+    },
+    {
+      "path": "apps/player/src/session/earlyLevelsPresentation.test.ts",
+      "entrySha256": "72201ab768b12b406796cd99bb45bcbdfe762542c1c0b4bf9206892ffc3ca0f4",
+      "currentSha256": "72201ab768b12b406796cd99bb45bcbdfe762542c1c0b4bf9206892ffc3ca0f4",
+      "unchanged": true
+    }
+  ],
+  "generatedArtifacts": [
+    "tools/question-quality/adversarial-r3-bound-inputs-20261102.json",
+    "tools/question-quality/adversarial-r3-clinical-final-20261102.log",
+    "tools/question-quality/adversarial-r3-clinical-first-20261102.log",
+    "tools/question-quality/adversarial-r3-clinical-repairs-20261102.log",
+    "tools/question-quality/adversarial-r3-cue-after-20261102.json",
+    "tools/question-quality/adversarial-r3-cue-before-20261102.json",
+    "tools/question-quality/adversarial-r3-cue-comparison-20261102.json",
+    "tools/question-quality/adversarial-r3-docs-20261102.log",
+    "tools/question-quality/adversarial-r3-domain-focused-first-20261102.log",
+    "tools/question-quality/adversarial-r3-domain-full-20261102.log",
+    "tools/question-quality/adversarial-r3-exact-records-20261102.json",
+    "tools/question-quality/adversarial-r3-lint-tests-20261102.log",
+    "tools/question-quality/adversarial-r3-owned-files-20261102.json",
+    "tools/question-quality/adversarial-r3-player-20261102.log",
+    "tools/question-quality/adversarial-r3-qa-20261102.log",
+    "tools/question-quality/adversarial-r3-report-qa-20261102.json",
+    "tools/question-quality/adversarial-r3-report-qa-20261102.log",
+    "tools/question-quality/adversarial-r3-review-generation-20261102.log",
+    "tools/question-quality/adversarial-r3-typecheck-final-20261102.log",
+    "tools/question-quality/adversarial-r3-typecheck-first-20261102.log",
+    "tools/question-quality/adversarial-r3-validation-20261102.json",
+    "tools/question-quality/adversarial-r3-whole-bank-20261102.json",
+    "tools/question-quality/adversarial-r3-whole-bank-20261102.log"
+  ],
+  "finalArtifactChecks": {
+    "ownedJsonParsed": 3,
+    "localMarkdownLinksResolved": 27,
+    "unownedEntryChanges": []
+  }
+}

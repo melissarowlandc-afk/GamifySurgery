@@ -1,0 +1,42 @@
+{
+  "checkedOn": "2026-11-02",
+  "results": [
+    {
+      "file": "packages/game-domain/tests/patient-supply.test.ts",
+      "title": "records the current clinical inventory and exact unseen-patient boundary by stage",
+      "sourceHash": "c696fc35d632dcfa0cf4d5f88f261e90571545a6ba6ea415c477d866b570b3fb",
+      "originalDeadlineMs": 10000,
+      "functionalAssertions": "passed in both contexts",
+      "identicalResult": true,
+      "runs": {
+        "before": {
+          "elapsedMs": 5562,
+          "sha256": "48215c69e7f2635c53aa7dc638e9a7bf4f513834965241ce849de6ebd7acf6ce"
+        },
+        "current": {
+          "elapsedMs": 7152,
+          "sha256": "48215c69e7f2635c53aa7dc638e9a7bf4f513834965241ce849de6ebd7acf6ce"
+        }
+      }
+    },
+    {
+      "file": "packages/game-domain/tests/periop-nurse-owner-feedback.test.ts",
+      "title": "covers mixed endoscopy/surgery pre-op and recovery at Level 3, including patients outside a nurse's home room",
+      "sourceHash": "9577e5ae0197809e505ccef24e7d2ce1cf8221c505577ab418381ef954d07df2",
+      "originalDeadlineMs": 5000,
+      "functionalAssertions": "passed in both contexts",
+      "identicalResult": true,
+      "runs": {
+        "before": {
+          "elapsedMs": 3529,
+          "sha256": "c3bb13676e7c64a8e3e58038ee8cbfb8b06c0b6c2a0c51cbca166868f4c3ee16"
+        },
+        "current": {
+          "elapsedMs": 3767,
+          "sha256": "c3bb13676e7c64a8e3e58038ee8cbfb8b06c0b6c2a0c51cbca166868f4c3ee16"
+        }
+      }
+    }
+  ],
+  "scope": "Captured pre-edit versus current clinical cases, same current runtime, exact original callback/functional assertions. Only a disposable process-local context reference changes and is restored. Diagnostic elapsed times are not benchmarks or passing Vitest results. No deadline, source test, runtime file, evidence, save or player data is changed."
+}

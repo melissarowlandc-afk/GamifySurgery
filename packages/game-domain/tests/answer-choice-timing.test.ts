@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ANSWER_CHOICE_TIMING_REGISTRY } from "@gamify-surgery/clinical-content";
+import { ANSWER_CHOICE_TIMING_REGISTRY, QUESTION_QUALITY_PRE_ADVERSARIAL_RELEASE } from "@gamify-surgery/clinical-content";
 import {
   PROTOTYPE_DOMAIN_CONTEXT,
   createInitialGameState,
@@ -128,6 +128,12 @@ describe("answer-choice test timing previews", () => {
       ),
     );
     const previewOnly = readyEncounter("case.achalasia.water-and-solids", "encounter.preview-egd");
+    // This assertion concerns the retained visual-EGD choice. The current
+    // variant instead offers a distensibility examination; keep the exact
+    // frozen EGD identity to verify its original inclusive timing contract.
+    previewOnly.encounters["encounter.preview-egd"]!.frozenCase = structuredClone(
+      QUESTION_QUALITY_PRE_ADVERSARIAL_RELEASE.cases.find(c=>c.id==="case.achalasia.water-and-solids")!,
+    );
     const biopsies = getAnswerChoiceServicePreview(implemented, "encounter.implemented-egd", "egd_1", context)!;
     const visual = getAnswerChoiceServicePreview(previewOnly, "encounter.preview-egd", "repeat_egd_1", context)!;
     for (const preview of [biopsies, visual]) {

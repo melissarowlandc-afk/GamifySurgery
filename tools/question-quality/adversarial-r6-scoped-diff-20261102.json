@@ -1,0 +1,62 @@
+{
+  "checkedOn": "2026-11-03",
+  "status": "passed",
+  "scope": "Read-only exact source restoration after removing only the listed round-six hooks/expectations, unchanged exact order registry, and per-case node-count preservation. No Git, revert, reset or source write.",
+  "results": [
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "entryHash": "aa420859fada61eb7bb97e5918996260eff5e0d905f33b174b96944cde12a5d2",
+      "currentHash": "c3816c3215e3b6a3e776a10b6c370854611c3663db752c7246ff9c2ed5010a88",
+      "restoredExactly": true
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "entryHash": "51930081cb31aa4f1c30d808fac3a86924f83544db6bea23cbf5159417506d28",
+      "currentHash": "dd8105b6e849c3d4b6ca1288124f94c511610547e8e734619bf76249f6ead840",
+      "restoredExactly": true
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "entryHash": "90de101e49472466f26753b4680a83662001aa9f4a6ea2f38ec6b0f88bca7b92",
+      "currentHash": "e5323306c9f5bdf0dc30408486ea293a229b690b2a1f0b0a5085c7564b6b7a6f",
+      "restoredExactly": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-20261102.ts",
+      "entryHash": "e1961918567674d4e9591ce2e07f8a514157228ee087ab23a7f958174dd6b789",
+      "currentHash": "5c0e14952bfd49e7efb2f918dc027b7d82d52fbda5bc356c9b813e17bfad0ca1",
+      "restoredExactly": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r5.test.ts",
+      "entryHash": "33ff218c90110c69722129138eec4fc7bb6bbf5d50413fd43782b53b996585a4",
+      "currentHash": "6f42aa5b3b51eae99815a8f64d3a6a809c5ede23d1b1a4283916f3a87956c125",
+      "restoredExactly": true
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+      "entryHash": "c393f6b0290e0e0e7a4c375acec33a23dd8fa692f3cd7cc29bccafbc0c5b9950",
+      "currentHash": "0cc629ccb9fa21d94ec187099ea8d5e91274d8ca2712b097520c377a2be6a320",
+      "restoredExactly": true
+    },
+    {
+      "path": "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+      "entryHash": "530f8de2670bf37616d3f09e112735cd3a967a70b01f1736e6d44ed5a8607eb9",
+      "currentHash": "8e7e98c7ce3a515e6472df167211f7e99de2c1de1ca47a794b6b5c927d59574e",
+      "restoredExactly": true
+    },
+    {
+      "path": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+      "entryHash": "744b8dfc568154f78174a36d2ae1a6585b1f7de03fa5cccbad7c06bf1d7df068",
+      "currentHash": "5ffe3ee7a88433a9d1042e18fa7b32f01530ae62d873cc4740722402449bc930",
+      "restoredExactly": true
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "entryHash": "522c3fbd3b3503f4b6d74f38e7dbd994b98727a3037b0374f86e58dbf5a41639",
+      "currentHash": "522c3fbd3b3503f4b6d74f38e7dbd994b98727a3037b0374f86e58dbf5a41639",
+      "restoredExactly": true
+    }
+  ],
+  "caseIdsAndNodeCountsPreserved": 1110
+}

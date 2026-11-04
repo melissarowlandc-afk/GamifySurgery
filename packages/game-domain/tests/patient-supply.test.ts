@@ -224,10 +224,14 @@ function admitAndCompleteAtDay(
   throw new Error(`Day ${dayNumber} patient did not complete within 2,000 operations.`);
 }
 
+// Round-four concept identities and keyed studies intentionally change the seeded
+// synthetic arrival/coverage trace. Keep every numeric/ID snapshot and all positive
+// arrival/completion/walkout checks; future paired companions remain ineligible.
 describe("routine patient supply", () => {
   it("records the current clinical inventory and exact unseen-patient boundary by stage", () => {
     const release = PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease;
-    expect(release.concepts).toHaveLength(370);
+    // Three round-six constructs retain all 389 entry definitions and histories.
+    expect(release.concepts).toHaveLength(396);
     // The current old bank includes the concurrent interpreter pairing:
     // 1,008 existing cases, 62 Level-3 cases, 20 L4 pediatric variants
     // and 20 Variety-3 adult clinic/outside-plan variants.
@@ -317,8 +321,12 @@ describe("routine patient supply", () => {
     }).toMatchInlineSnapshot(`
       {
         "conceptsWithoutRoutineCases": [
+          "concept.achalasia.high-resolution-manometry",
+          "concept.colonic-lipoma.endoscopic-recognition",
+          "concept.colonic-lipoma.endoscopic-recognition.v2",
           "concept.gs028g.hiv-perioperative.art-continuity",
           "concept.gs028g.hiv-perioperative.booster-midazolam-interaction",
+          "concept.gs028g.hiv-perioperative.booster-midazolam-interaction.v2",
           "concept.gs028g.incidental-gallbladder.completely-resected-t1a",
           "concept.gs028g.incidental-gallbladder.t1a-depth",
           "concept.gs028g.incisional-hernia.fascial-closure",
@@ -337,6 +345,9 @@ describe("routine patient supply", () => {
           "concept.gs028g.postoperative-scapula.spinal-accessory",
           "concept.gs028g.subtotal-cholecystectomy.remnant-classification",
           "concept.gs028g.subtotal-cholecystectomy.safe-bailout",
+          "concept.inguinal-hernia.equivocal-exam-ultrasound",
+          "concept.inguinal-hernia.symptomatic-elective-repair",
+          "concept.inguinal-hernia.symptomatic-elective-repair.v2",
           "concept.pediatric-clinic.acquired-testis-ascent-referral",
           "concept.pediatric-clinic.concerning-neck-node-referral",
           "concept.pediatric-clinic.developmental-assent-discussion",
@@ -346,7 +357,12 @@ describe("routine patient supply", () => {
           "concept.pediatric-clinic.reactive-neck-node-observation",
           "concept.pediatric-clinic.symptomatic-pectus-excavatum-evaluation",
           "concept.pediatric-clinic.true-retractile-testis-surveillance",
+          "concept.pigmented-skin-lesion.complete-diagnostic-biopsy",
+          "concept.pigmented-skin-lesion.complete-diagnostic-biopsy.v2",
+          "concept.pseudocyst.contrast-ct-characterization",
+          "concept.pseudocyst.symptomatic-endoscopic-drainage",
           "concept.quality-improvement.pdsa-act-and-iterate",
+          "concept.soft-tissue-mass.extremity-mri.v3",
           "concept.statistics-ethics.bias-confounding",
           "concept.statistics-ethics.chi-square",
           "concept.statistics-ethics.confidence-interval",
@@ -355,6 +371,7 @@ describe("routine patient supply", () => {
           "concept.statistics-ethics.independent-t",
           "concept.statistics-ethics.one-way-anova",
           "concept.statistics-ethics.p-value",
+          "concept.statistics-ethics.p-value.v2",
           "concept.statistics-ethics.paired-t",
           "concept.statistics-ethics.qi-measures",
           "concept.statistics-ethics.rank-sum",
@@ -366,42 +383,57 @@ describe("routine patient supply", () => {
         ],
         "duplicateConceptRecordIds": [],
         "stageOne": {
-          "availableConcepts": 285,
+          "availableConcepts": 290,
           "cases": 882,
           "introducedConcepts": 285,
           "patientBoundaryAcrossSeeds": {
-            "maximum": 227,
+            "maximum": 226,
             "minimum": 219,
           },
-          "seededPatientsUntilNotDue": 225,
-          "strandedConceptIds": [],
+          "seededPatientsUntilNotDue": 221,
+          "strandedConceptIds": [
+            "concept.achalasia.high-resolution-manometry.v2",
+            "concept.colon-cancer.preoperative-cross-sectional-staging.v2",
+            "concept.fhh.biochemical-evaluation",
+            "concept.soft-tissue-mass.extremity-mri.v2",
+            "concept.soft-tissue-mass.extremity-mri.v4",
+          ],
         },
         "stageTwoAllCapabilities": {
-          "availableConcepts": 324,
+          "availableConcepts": 337,
           "cases": 964,
-          "introducedConcepts": 322,
+          "introducedConcepts": 329,
           "patientBoundaryAcrossSeeds": {
-            "maximum": 252,
-            "minimum": 241,
+            "maximum": 255,
+            "minimum": 246,
           },
-          "seededPatientsUntilNotDue": 247,
+          "seededPatientsUntilNotDue": 252,
           "strandedConceptIds": [
-            "concept.breast-cyst.asymptomatic-simple-observation",
+            "concept.achalasia.high-resolution-manometry.v3",
+            "concept.breast-cyst.symptomatic-simple-aspiration",
+            "concept.colon-cancer.preoperative-cross-sectional-staging.v2",
             "concept.felty-syndrome.splenectomy-for-refractory-infections",
+            "concept.inflammatory-breast-cancer.core-biopsy-confirmation.v2",
+            "concept.pigmented-skin-lesion.complete-diagnostic-biopsy.v3",
+            "concept.soft-tissue-mass.extremity-mri.v2",
+            "concept.soft-tissue-mass.extremity-mri.v4",
           ],
         },
         "stageTwoExternal": {
-          "availableConcepts": 305,
+          "availableConcepts": 311,
           "cases": 926,
-          "introducedConcepts": 303,
+          "introducedConcepts": 306,
           "patientBoundaryAcrossSeeds": {
-            "maximum": 241,
-            "minimum": 232,
+            "maximum": 242,
+            "minimum": 231,
           },
-          "seededPatientsUntilNotDue": 238,
+          "seededPatientsUntilNotDue": 232,
           "strandedConceptIds": [
-            "concept.felty-syndrome.splenectomy-for-refractory-infections",
-            "concept.fhh.biochemical-evaluation",
+            "concept.achalasia.high-resolution-manometry.v3",
+            "concept.colon-cancer.preoperative-cross-sectional-staging.v2",
+            "concept.inflammatory-breast-cancer.core-biopsy-confirmation.v2",
+            "concept.soft-tissue-mass.extremity-mri",
+            "concept.soft-tissue-mass.extremity-mri.v4",
           ],
         },
         "stageZero": {

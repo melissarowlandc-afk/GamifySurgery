@@ -1,4 +1,5 @@
 import {
+  QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE,
   GS028_20261003_AUTHORING_CONCEPTS,
   GS028_20261003_CASES,
   GS028_20261003_CLAIMS,
@@ -238,7 +239,7 @@ describe("GS-028 October 3 batch admission", () => {
     expect(GS028_20261003_TESTED_CONCEPTS).toHaveLength(20);
     expect(GS028_20261003_CASES).toHaveLength(78);
     expect(GS028_20261003_CASES.flatMap((item) => item.decisionNodes)).toHaveLength(80);
-    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts.filter(c => !c.id.startsWith("concept.gs028g.") && !c.id.startsWith("concept.pediatric-clinic.") && !c.id.startsWith("concept.variety3."))).toHaveLength(331);
+    expect(QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE.concepts.filter(c => !c.id.startsWith("concept.gs028g.") && !c.id.startsWith("concept.pediatric-clinic.") && !c.id.startsWith("concept.variety3."))).toHaveLength(331);
     expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter(c => !c.id.startsWith("case.gs028g.") && !c.id.startsWith("case.pediatric-clinic.") && !c.id.startsWith("case.variety3."))).toHaveLength(1008);
     expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter(c => !c.id.startsWith("case.gs028g.") && !c.id.startsWith("case.pediatric-clinic.") && !c.id.startsWith("case.variety3.")).flatMap((item) => item.decisionNodes)).toHaveLength(1303);
     for (const item of GS028_20261003_CASES) expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter((candidate) => candidate.id === item.id)).toHaveLength(1);

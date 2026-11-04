@@ -1,0 +1,396 @@
+{
+  "notice": "Project-owned AI-assisted draft definitions. All clinical content needs_clinician_review. No measured difficulty claim. Key shown first for review only; runtime answers are shuffled.",
+  "A02": {
+    "presentation": "{patientName}, a {ageYears}-year-old {sexNoun}, comes to the clinic with sustained right-upper-quadrant pain, nausea and inflammatory laboratory findings. Ultrasound shows gallstones, but the gallbladder inflammatory findings are inconclusive. The patient is stable; further imaging can be arranged at the receiving hospital without an availability constraint.",
+    "stem": "Which additional study offers the greatest diagnostic sensitivity for suspected acute calculous cholecystitis after this equivocal ultrasound?",
+    "choices": [
+      [
+        "correct_2",
+        "Hepatobiliary scintigraphy",
+        "Uses the unresolved suspicion and comparative diagnostic performance, rather than a named available test in the presentation."
+      ],
+      [
+        "d2_2",
+        "Contrast-enhanced abdominal CT",
+        "A reasonable alternative abdominal study is tempting after inconclusive ultrasound; it is less well matched to the question's requested comparative sensitivity for cholecystitis."
+      ],
+      [
+        "d3_2",
+        "Biliary magnetic resonance imaging",
+        "Detailed biliary anatomy is attractive, but the requested discrimination is diagnostic sensitivity for acute cholecystitis rather than duct mapping."
+      ]
+    ],
+    "explanation": "Hepatobiliary scintigraphy is the best of these choices for diagnostic sensitivity when suspected acute calculous cholecystitis still needs clarification after equivocal ultrasound and resources permit. CT or MRI can have other roles; this item asks a defined comparative question rather than declaring one universal next test.",
+    "intendedInference": "Choose a clarifying study from the unresolved diagnostic goal and comparative performance, without being told which keyed test is available.",
+    "educationalIntent": "routine_resident_candidate",
+    "reviewerNotes": "One guideline supports this ranking; verify the comparative wording and the absence of competing clinical imaging goals. No new concept meaning intended."
+  },
+  "A04": {
+    "presentation": "{patientName}, a {ageYears}-year-old {sexNoun}, returns to the clinic after a completed hospital nutrition restart following prolonged poor intake. The record shows that carbohydrate intake increased, insulin rose and serum phosphate fell. The patient has recovered and asks about the earlier laboratory change.",
+    "stem": "Which phosphate movement best accounts for the fall in serum phosphate during this nutrition restart?",
+    "choices": [
+      [
+        "correct_2",
+        "From extracellular fluid into cells",
+        "Connects carbohydrate-driven insulin activity with cellular phosphate uptake."
+      ],
+      [
+        "d1_2",
+        "From cells into extracellular fluid",
+        "Reverses the compartment shift and would tend to raise the measured extracellular concentration."
+      ],
+      [
+        "d2_2",
+        "From circulating blood into urine",
+        "Mistakes an intracellular redistribution for renal loss after focusing on the falling serum result."
+      ],
+      [
+        "d3_2",
+        "From intestinal lumen into blood",
+        "Confuses the source of newly absorbed nutrients with the redistribution explaining the serum fall."
+      ]
+    ],
+    "explanation": "After prolonged undernutrition, carbohydrate-associated insulin activity can increase cellular phosphate uptake. The relevant movement is from extracellular fluid into cells; the serum result measures the extracellular compartment.",
+    "intendedInference": "Infer the insulin-associated intracellular shift from the nutrition sequence and laboratory direction, rather than repeat a supplied interpretation.",
+    "educationalIntent": "foundational_mechanism_application",
+    "reviewerNotes": "This remains a compartment/mechanism objective; it does not diagnose every cause of hypophosphatemia or teach a replacement regimen."
+  },
+  "A06": {
+    "presentation": "{patientName}, a {ageYears}-year-old {sexNoun}, visits the clinic after noticing intermittent small blood-stained spots inside the left side of the bra. Examination localizes the discharge to one duct. The discharge has appeared during ordinary activity as well as at the visit.",
+    "stem": "Which feature of this nipple discharge most strongly supports a pathologic rather than a physiologic pattern?",
+    "choices": [
+      [
+        "correct_1",
+        "Spontaneous single-duct discharge",
+        "Uses the pattern that warrants pathologic-discharge evaluation; it does not identify a specific underlying lesion."
+      ],
+      [
+        "d1_1",
+        "Intermittent episodes of discharge",
+        "Intermittent timing can seem reassuring or concerning, but does not classify the pattern as reliably as the origin and spontaneity."
+      ],
+      [
+        "d2_1",
+        "Small volume of discharge",
+        "The amount can distract from the more informative pattern; scant discharge can still warrant evaluation."
+      ]
+    ],
+    "explanation": "Spontaneous discharge from one duct, particularly when unilateral and blood-stained, supports a pathologic pattern requiring evaluation. Intermittent timing or small volume does not establish a physiologic pattern.",
+    "intendedInference": "Weight the observed features that distinguish pathologic from physiologic discharge; no infection or lactation alternatives are pre-excluded.",
+    "educationalIntent": "foundational_feature_selection",
+    "reviewerNotes": "The concept remains pattern recognition, not etiologic diagnosis. Confirm that the two competing observed features are credible novice errors; do not claim resident stretch difficulty."
+  },
+  "A08": {
+    "presentation": "{patientName}, a {ageYears}-year-old {sexNoun}, visits the clinic to review an outside dermatology record after removal of a small skin lesion. At follow-up, the wound edges remain apart and the defect is becoming smaller as it heals. The wound-care plan is dressings while healing proceeds.",
+    "stem": "Which healing strategy describes this skin-excision wound's documented course?",
+    "choices": [
+      [
+        "correct_1",
+        "Healing by secondary intention",
+        "Recognizes healing of the open defect rather than relying on a list excluding sutures, grafting and later closure."
+      ],
+      [
+        "d1_1",
+        "Healing by primary intention",
+        "Mistakes ordinary postoperative wound care for immediate edge approximation."
+      ],
+      [
+        "d2_1",
+        "Healing by delayed primary closure",
+        "Confuses continuing open-wound healing with an initial open interval followed by edge closure."
+      ]
+    ],
+    "explanation": "This course describes secondary-intention healing: the defect heals while the edges remain apart. Primary intention approximates the edges, while delayed primary closure includes later edge closure. This names the supplied course rather than recommending open healing for every excision.",
+    "intendedInference": "Recognize the healing strategy from the observed course instead of alternative-by-alternative exclusions.",
+    "educationalIntent": "foundational_terminology",
+    "reviewerNotes": "Keep the closing course sufficiently explicit to distinguish delayed closure; the simple concept cannot fairly be made a stretch item by deleting that distinction."
+  },
+  "A11": {
+    "currentUpdate": "Neck ultrasound shows a 2 cm papillary thyroid carcinoma confined to one lobe, with no gross extension beyond the thyroid, no suspicious cervical nodes and a normal-appearing contralateral lobe. Staging has not identified distant metastases. The patient has chosen surgery and asks to preserve uninvolved thyroid tissue when an appropriate operation allows it.",
+    "stem": "Which initial operation best matches this patient's disease extent and stated preference for preserving uninvolved thyroid tissue?",
+    "choices": [
+      [
+        "correct_1",
+        "Thyroid lobectomy",
+        "Applies the confined unilateral tumor findings and tissue-preservation goal to an eligible initial operation."
+      ],
+      [
+        "d1_1",
+        "Total thyroidectomy",
+        "A cancer diagnosis can prompt a more extensive operation, but that is less aligned with this eligible patient's stated tissue-preservation goal."
+      ],
+      [
+        "d2_1",
+        "Subtotal thyroidectomy",
+        "Attempts a compromise on tissue preservation but is not the guideline's lobectomy-based initial approach for this profile."
+      ]
+    ],
+    "explanation": "For this patient who has chosen surgery, the confined unilateral 2 cm disease and stated goal make lobectomy the best match among these operations. Extent remains an individualized discussion; the diagnosis alone does not require the same operation in every patient.",
+    "intendedInference": "Apply the size/extent eligibility and patient goal to surgical extent; retain the necessary node/extension negatives.",
+    "educationalIntent": "routine_resident_candidate",
+    "reviewerNotes": "Verify exact guideline eligibility and subtotal distractor. Total thyroidectomy can be defensible for other goals, so the explicit preference is decision-critical. Existing 2 cm value is retained, not invented."
+  },
+  "A17": {
+    "presentation": "{patientName}, a {ageYears}-year-old {sexNoun}, visits the clinic after treatment for renal cell carcinoma. Imaging shows a solitary adrenal mass measuring 28 HU. The oncology team is considering biopsy because tissue confirmation would change management.",
+    "stem": "Which biochemical study addresses the specific safety risk that must be assessed before biopsy of this adrenal mass?",
+    "choices": [
+      [
+        "metanephrines_3",
+        "Plasma free metanephrines",
+        "Recognizes the need to assess pheochromocytoma before a management-changing adrenal biopsy."
+      ],
+      [
+        "dst_3",
+        "Overnight dexamethasone suppression",
+        "Correctly recalls adrenal hormonal evaluation but substitutes cortisol assessment for the biopsy-specific catecholamine safety issue."
+      ],
+      [
+        "aldosterone_3",
+        "Plasma aldosterone-renin ratio",
+        "Confuses another adrenal endocrine workup pathway with the specific pre-biopsy safety assessment."
+      ]
+    ],
+    "explanation": "Pheochromocytoma must be assessed before a biopsy of an indeterminate adrenal mass when tissue would change management. Plasma free metanephrines address that risk; urinary fractionated metanephrines are another accepted approach, but are not offered here. Cortisol or aldosterone evaluation answers different questions.",
+    "intendedInference": "Distinguish the biopsy-specific endocrine safety problem from other legitimate adrenal studies.",
+    "educationalIntent": "routine_resident_candidate",
+    "reviewerNotes": "Retains the original illustrative 28 HU and clinical meaning. Removing the normal cortisol result keeps a real endocrine distractor alive."
+  },
+  "A22": {
+    "presentation": "{patientName}, the colorectal discussion lead, reviews a fictional pilot comparing recurrence after two approaches to rectal prolapse. Separate unmatched groups are assessed once at two years. The exhibit contains the observed patient counts; it does not report an efficacy conclusion.",
+    "stem": "Which test best compares recurrence between the two independent groups in the exhibit?",
+    "choices": [
+      [
+        "correct_tiny-pilot",
+        "Fisher exact test",
+        "Interprets the small observed categorical table and the inadequacy of the usual large-sample approximation."
+      ],
+      [
+        "d1_tiny-pilot",
+        "Pearson chi-square test",
+        "Recognizes independent categorical groups but overlooks the sparse expected-count problem."
+      ],
+      [
+        "d2_tiny-pilot",
+        "McNemar paired-proportions test",
+        "Recognizes a binary outcome but mistakes the two independent groups for paired observations."
+      ]
+    ],
+    "explanation": "Fisher exact testing fits this small two-by-two table from independent groups. Expected counts derived from the observed margins are too sparse for the usual Pearson approximation in this exercise. McNemar testing would require paired binary observations. The invented counts do not establish clinical efficacy.",
+    "exhibit": {
+      "kind": "table",
+      "caption": "Fictional practice data: recurrence status at two years, one observation per person in separate unmatched groups.",
+      "columnHeaders": [
+        "Recurrence",
+        "No recurrence"
+      ],
+      "rowHeaders": [
+        "Study intervention",
+        "Study comparator"
+      ],
+      "cells": [
+        [
+          "0",
+          "7"
+        ],
+        [
+          "3",
+          "4"
+        ]
+      ]
+    },
+    "intendedInference": "Derive the sparse expected-count issue and distinguish independent from paired binary data without a supplied reliability conclusion.",
+    "educationalIntent": "routine_resident_candidate",
+    "reviewerNotes": "Employee discussion, not a patient encounter. Counts and two-year endpoint are retained fictional exercise data, not clinical thresholds or efficacy evidence."
+  },
+  "A23": {
+    "presentation": "{patientName}, the bariatric journal-club lead, reviews a fictional study of ulcer recurrence after gastric bypass. The report supplies a comparison expression in the exhibit. The task is to identify the scale actually calculated before discussing the result.",
+    "stem": "Which measure is calculated by the expression in this ulcer-recurrence report?",
+    "choices": [
+      [
+        "correct_rare-not-identical",
+        "Odds ratio",
+        "Recognizes the ratio of two odds, rather than a direct comparison of probabilities."
+      ],
+      [
+        "d1_rare-not-identical",
+        "Risk ratio",
+        "Treats division of odds as though it were division of the probabilities themselves."
+      ],
+      [
+        "d3_rare-not-identical",
+        "Risk difference",
+        "Confuses a relative comparison with subtraction of the two probabilities."
+      ]
+    ],
+    "explanation": "Each p/(1-p) term is an odds. Dividing the two terms produces an odds ratio. A risk ratio divides the probabilities themselves, and a risk difference subtracts them. Similarity in selected settings does not make these measures interchangeable.",
+    "exhibit": {
+      "kind": "abstract",
+      "title": "Fictional comparison expression",
+      "body": "Let p_E denote recurrence probability in the exposed group and p_C recurrence probability in the comparator group. The reported expression is [p_E / (1 - p_E)] / [p_C / (1 - p_C)]. No numerical result or clinical efficacy claim is supplied."
+    },
+    "intendedInference": "Identify the measure from its probability expression without its name appearing in the pre-answer text.",
+    "educationalIntent": "foundational_quantitative_application",
+    "reviewerNotes": "Keeps the naming/interpretation objective; does not introduce adjusted logistic-model interpretation. Removes the unrelated H. pylori treatment mapping from this revision only."
+  },
+  "A25": {
+    "presentation": "{patientName}, a {ageYears}-year-old {sexNoun}, visits the clinic before elective hernia repair at an outside surgical service. HIV is well controlled on a prescribed antiretroviral regimen. The patient can swallow, and the complete prescribed oral regimen is available for perioperative administration.",
+    "stem": "Which perioperative antiretroviral medication plan is most appropriate for this elective operation?",
+    "choices": [
+      [
+        "correct_1",
+        "Continue the complete prescribed regimen",
+        "Recognizes feasible regimen continuity rather than repeating a stated permission to continue ART."
+      ],
+      [
+        "d1_1",
+        "Withhold the complete prescribed regimen",
+        "Overgeneralizes perioperative medication withholding to an effective regimen that can be administered."
+      ],
+      [
+        "d3_1",
+        "Continue the regimen's unboosted components",
+        "Attempts to avoid interaction concerns by removing part of a regimen without coordinated review."
+      ]
+    ],
+    "explanation": "Coordinate continuation of the complete prescribed antiretroviral regimen when it can be administered. Surgery itself does not justify interruption or uncoordinated removal of regimen components. If an interruption becomes unavoidable, involve the HIV clinician and perioperative team.",
+    "intendedInference": "Apply continuity guidance to administration feasibility without a stem that states the desired plan.",
+    "educationalIntent": "routine_resident_candidate",
+    "reviewerNotes": "The second node still addresses interaction review; the first does not declare all perioperative combinations safe."
+  },
+  "A27": {
+    "presentation": "{patientName}, a {ageYears}-year-old {sexNoun}, visits the clinic after a completed laparoscopic procedure. The anesthetic record shows that end-tidal CO2 rose gradually after abdominal insufflation while delivered minute ventilation stayed steady. The inspiratory CO2 tracing returned to zero on each breath, and body temperature stayed steady.",
+    "stem": "Which mechanism best explains the additional CO2 load during this documented insufflation period?",
+    "choices": [
+      [
+        "correct_2",
+        "Absorption from the insufflated cavity",
+        "Connects insufflation with a new systemic CO2 load requiring ventilatory clearance."
+      ],
+      [
+        "d1_2",
+        "Rebreathing from the anesthetic circuit",
+        "Interprets elevated expired CO2 as inspired-gas contamination despite the supplied inspiratory tracing."
+      ],
+      [
+        "d2_2",
+        "Production from increased metabolic activity",
+        "Attributes the change to endogenous production rather than the insufflated gas and temporal pattern."
+      ]
+    ],
+    "explanation": "CO2 from the insufflated cavity can be absorbed and add to the systemic load requiring ventilation. The temporal pattern and recorded observations favor that mechanism here. An unexpected or acute perioperative deterioration still requires assessment rather than automatic attribution to insufflation.",
+    "intendedInference": "Interpret recorded observations instead of accepting labels that the circuit, airway and metabolic course are normal.",
+    "educationalIntent": "routine_resident_candidate",
+    "reviewerNotes": "Requires clinician review of the raw capnography observation and its competing interpretation. One ventilation review supports absorption; a separate capnography source supports the tracing interpretation."
+  },
+  "A28": {
+    "presentation": "{patientName}, a {ageYears}-year-old {sexNoun}, visits the clinic with pathology from a growing forearm skin nodule. The biopsy shows small malignant cells in the dermis. The panel records CK20 with paranuclear dot-like staining, synaptophysin positivity and TTF1 negativity.",
+    "stem": "Which diagnosis is best supported by the skin-biopsy morphology and combined staining pattern?",
+    "choices": [
+      [
+        "correct_1",
+        "Merkel cell carcinoma",
+        "Integrates skin location, morphology and the panel; no single stain alone establishes the diagnosis."
+      ],
+      [
+        "d1_1",
+        "Metastatic pulmonary small-cell carcinoma",
+        "Shares small-cell neuroendocrine morphology, making the pattern across CK20 and TTF1 important rather than the word small-cell alone."
+      ],
+      [
+        "d2_1",
+        "Primary cutaneous malignant melanoma",
+        "A malignant skin nodule remains plausible initially, but the combined epithelial/neuroendocrine staining favors another lineage."
+      ],
+      [
+        "d3_1",
+        "Primary cutaneous malignant lymphoma",
+        "Small dermal malignant cells can suggest a lymphoid process before the integrated immunophenotype is considered."
+      ]
+    ],
+    "explanation": "The morphology and combined CK20, synaptophysin and TTF1 pattern favor Merkel cell carcinoma among these options. Staining patterns have exceptions; no single marker definitively excludes pulmonary small-cell carcinoma or establishes Merkel cell carcinoma. Integrate the panel with the clinical and pathologic assessment.",
+    "intendedInference": "Integrate raw morphology and immunostains rather than repeat an integrated primary-cutaneous-neuroendocrine label or an exclusion list.",
+    "educationalIntent": "routine_resident_candidate",
+    "reviewerNotes": "New panel claims use Harms et al. and ESMO sources, not NCI PDQ alone. Confirm panel sufficiency and close differential; no prevalence inference from the editorial patient age."
+  },
+  "A30": {
+    "presentation": "{patientName}, a {ageYears}-year-old {sexNoun}, visits the clinic with burning around an ileostomy. Moist erosions form a ring around the stoma where effluent has contacted the skin. Skin farther out under the adhesive is intact. The stoma is viable, and the patient is well.",
+    "currentUpdate": "With the pouch removed, the nurse sees that the cutout extends beyond the stoma base and leaves the eroded ring exposed to effluent.",
+    "stem": "Which initial appliance-care change best addresses the ongoing skin injury around this ileostomy?",
+    "choices": [
+      [
+        "correct_1",
+        "Resize the opening to the stoma",
+        "Targets continued effluent contact at the observed fit problem with ostomy-nurse guidance."
+      ],
+      [
+        "d1_1",
+        "Switch the adhesive to another product",
+        "Treats the injury as adhesive intolerance despite the intact more peripheral adhesive-contact skin and exposed-ring pattern."
+      ],
+      [
+        "d2_1",
+        "Apply antifungal powder under the pouch",
+        "Treats a competing cause of peristomal rash without correcting the demonstrated exposure pathway."
+      ],
+      [
+        "d3_1",
+        "Increase the frequency of pouch changes",
+        "Responds to wetness but leaves the opening-to-stoma mismatch in place."
+      ]
+    ],
+    "explanation": "Resize the opening and restore a compatible seal with ostomy-nurse guidance to limit continuing effluent contact. Clean, dry and protect the affected skin as appropriate. Product substitution, empiric antifungal treatment or more frequent changes does not by itself correct the demonstrated fit problem.",
+    "intendedInference": "Infer the mechanism from the distribution and fit observations, then choose the corrective appliance change.",
+    "educationalIntent": "routine_resident_candidate",
+    "reviewerNotes": "Prior diagnostic feedback is legitimate visible history and may scaffold this management item. Retain a realistic single best first appliance change; do not claim all coexisting infection is excluded."
+  },
+  "A38": {
+    "presentation": "Ethan Brooks, a {ageYears}-year-old boy, visits the clinic with his father, Paul Brooks, who remains in the same room throughout the visit. His father feels small neck nodes after a respiratory illness; they have become less noticeable. Ethan is active and feels well. The nodes are mobile and confined to the cervical region. He has no unexplained fever or weight loss.",
+    "stem": "Which initial clinic plan best fits Ethan Brooks's cervical-node course and current condition?",
+    "choices": [
+      [
+        "choice.shrinking-mobile-neck-nodes.observe",
+        "Observe with return advice and reassessment",
+        "Uses the improving post-illness course in a well child while retaining a safety net."
+      ],
+      [
+        "choice.shrinking-mobile-neck-nodes.routine-ent",
+        "Arrange routine pediatric ENT clinic assessment",
+        "Overweights persistence of palpable nodes while underweighting their improving course and the child's condition."
+      ],
+      [
+        "choice.shrinking-mobile-neck-nodes.urgent-referral",
+        "Arrange prompt pediatric oncology clinic assessment",
+        "Treats palpable cervical nodes as a malignancy pathway despite the low-concern course provided."
+      ]
+    ],
+    "explanation": "An improving course of small mobile cervical nodes in a well child supports initial observation with reassessment and return advice. Enlargement, new systemic symptoms or other concerning changes should prompt reassessment. Retain safety-netting rather than treating observation as dismissal.",
+    "intendedInference": "Weight trajectory and overall condition while preserving decision-critical safety information instead of a long checklist excluding every concern.",
+    "educationalIntent": "foundational_clinical_application",
+    "reviewerNotes": "One local pediatric referral guide; verify safety-critical negatives and that prompt oncology remains a credible competing error rather than filler. No follow-up interval or size cutoff invented."
+  },
+  "A40": {
+    "presentation": "Ella Morgan, a {ageYears}-year-old girl, visits the clinic with her mother, Rachel Morgan, who remains in the same room throughout the visit. Her mother points out a small focal lump in Ella's upper abdominal midline. Examination identifies a small abdominal-wall gap with protruding fat at that site, above the navel. Ella is comfortable.",
+    "stem": "Which hernia diagnosis best explains Ella Morgan's focal upper-midline abdominal-wall finding?",
+    "choices": [
+      [
+        "choice.upper-midline-lump.epigastric",
+        "Epigastric hernia",
+        "Uses the location and focal fat-containing wall defect rather than absence of bulges elsewhere."
+      ],
+      [
+        "choice.upper-midline-lump.umbilical",
+        "Umbilical hernia",
+        "Confuses a nearby midline location with the navel itself."
+      ],
+      [
+        "choice.upper-midline-lump.inguinal",
+        "Inguinal canal hernia",
+        "Overgeneralizes a common pediatric hernia category without using the examination site."
+      ]
+    ],
+    "explanation": "A focal fat-containing abdominal-wall defect in the upper midline above the navel supports epigastric hernia. Umbilical and inguinal hernias are defined by different anatomical sites. The positive finding distinguishes the offered diagnoses without listing absent bulges at each competing site.",
+    "intendedInference": "Use the necessary positive anatomical finding without explicit navel/groin exclusions.",
+    "educationalIntent": "foundational_anatomical_recognition",
+    "reviewerNotes": "Still a basic recognition item; do not remove its deciding anatomical finding to force difficulty. No new diagnosis or concept meaning."
+  }
+}

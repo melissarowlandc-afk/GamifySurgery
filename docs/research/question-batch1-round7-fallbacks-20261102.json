@@ -1,0 +1,2948 @@
+{
+  "recordedOn": "2026-11-03",
+  "notice": "Exact original fallback records for the final authoring round; not new approvals and not automatically applied. No verified later owner-reviewed/shipped version is assumed.",
+  "items": [
+    {
+      "id": "B03-context",
+      "caseId": "case.achalasia.slow-meals",
+      "nodeId": "node.achalasia.slow-meals.1",
+      "fallbackKind": "original_pre_batch_version",
+      "variantId": "question.achalasia.high-resolution-manometry.v3",
+      "conceptId": "concept.achalasia.high-resolution-manometry",
+      "provenance": {
+        "source": "tools/question-quality/fixtures/round3-batch1-before-20261102.json",
+        "sourceSha256": "083e84baa57bc16517d698b23ba7fa48b52d1971a9f0a6c2981c536127d1c862",
+        "reason": "No later owner-reviewed or shipped version is verified for this batch item in the available local review records. Use the exact captured original rather than label an unshipped author draft as a released fallback.",
+        "releaseStatus": "original; shipment not independently established",
+        "reviewStatus": "needs_clinician_review",
+        "lastClinicianReview": null
+      },
+      "exactNodeSha256": "963ebe0f29ffe32e4dcee57c23ce84cf148075d1ff1c1c0b34dec275efb51bfe",
+      "question": {
+        "contentVersion": "development-batch.2026-09-10.1",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "question.achalasia.high-resolution-manometry.v3",
+        "conceptId": "concept.achalasia.high-resolution-manometry",
+        "patientPresentationVariantId": "presentation.achalasia.slow-meals",
+        "patientPresentation": "{patientName} describes persistent difficulty passing both food and drinks with intermittent regurgitation. Structural evaluation by EGD is complete and excludes obstruction and concerning pseudoachalasia.",
+        "approvedInstantiationProfiles": [
+          {
+            "id": "profile.achalasia.slow-meals.female.34",
+            "prototypeDemographics": {
+              "ageYears": 34,
+              "sexLabel": "Female"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} describes persistent difficulty passing both food and drinks with intermittent regurgitation. Structural evaluation by EGD is complete and excludes obstruction and concerning pseudoachalasia."
+          },
+          {
+            "id": "profile.achalasia.slow-meals.male.34",
+            "prototypeDemographics": {
+              "ageYears": 34,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} describes persistent difficulty passing both food and drinks with intermittent regurgitation. Structural evaluation by EGD is complete and excludes obstruction and concerning pseudoachalasia."
+          },
+          {
+            "id": "profile.achalasia.slow-meals.female.40",
+            "prototypeDemographics": {
+              "ageYears": 40,
+              "sexLabel": "Female"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} describes persistent difficulty passing both food and drinks with intermittent regurgitation. Structural evaluation by EGD is complete and excludes obstruction and concerning pseudoachalasia."
+          },
+          {
+            "id": "profile.achalasia.slow-meals.male.40",
+            "prototypeDemographics": {
+              "ageYears": 40,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} describes persistent difficulty passing both food and drinks with intermittent regurgitation. Structural evaluation by EGD is complete and excludes obstruction and concerning pseudoachalasia."
+          }
+        ],
+        "stem": "Which test should confirm the suspected motility disorder in {patientName}?",
+        "answerChoices": [
+          {
+            "id": "manometry_3",
+            "label": "High-resolution esophageal manometry",
+            "isCorrect": true,
+            "distractorRationale": null
+          },
+          {
+            "id": "repeat_egd_3",
+            "label": "Repeat upper-GI endoscopy",
+            "isCorrect": false,
+            "distractorRationale": "An adequate recent EGD has already excluded a mechanical explanation and concerning pseudoachalasia."
+          },
+          {
+            "id": "ph_monitoring_3",
+            "label": "Ambulatory esophageal reflux monitoring",
+            "isCorrect": false,
+            "distractorRationale": "Reflux monitoring does not define the suspected motility disorder."
+          },
+          {
+            "id": "chest_ct_3",
+            "label": "Contrast-enhanced chest CT",
+            "isCorrect": false,
+            "distractorRationale": "Cross-sectional imaging does not provide the required esophageal physiology after the completed structural evaluation."
+          }
+        ],
+        "explanation": "After an adequate endoscopic structural assessment excludes obstruction and concerning pseudoachalasia, high-resolution manometry supplies the esophageal physiology needed to evaluate suspected achalasia.",
+        "supportingEvidenceClaimIds": [
+          "claim.achalasia.high-resolution-manometry"
+        ],
+        "agentReview": {
+          "authority": "owner-delegated agent authoring and review",
+          "reviewedOn": "2026-09-10",
+          "clinicianSignOff": false,
+          "scope": "Technical, editorial, source-traceability, and internal-consistency review; named clinician review remains required."
+        }
+      },
+      "node": {
+        "id": "node.achalasia.slow-meals.1",
+        "questionVariantId": "question.achalasia.high-resolution-manometry.v3",
+        "primaryConceptId": "concept.achalasia.high-resolution-manometry",
+        "stem": "Which test should confirm the suspected motility disorder in {patientName}?",
+        "showServicePreviews": false,
+        "answerChoices": [
+          {
+            "id": "manometry_3",
+            "label": "High-resolution esophageal manometry",
+            "isCorrect": true,
+            "serviceRequest": {
+              "serviceId": "service.esophageal_manometry"
+            }
+          },
+          {
+            "id": "repeat_egd_3",
+            "label": "Repeat upper-GI endoscopy",
+            "isCorrect": false,
+            "serviceRequest": null
+          },
+          {
+            "id": "ph_monitoring_3",
+            "label": "Ambulatory esophageal reflux monitoring",
+            "isCorrect": false,
+            "serviceRequest": null
+          },
+          {
+            "id": "chest_ct_3",
+            "label": "Contrast-enhanced chest CT",
+            "isCorrect": false,
+            "serviceRequest": null
+          }
+        ],
+        "shuffleAnswers": true,
+        "explanation": "After an adequate endoscopic structural assessment excludes obstruction and concerning pseudoachalasia, high-resolution manometry supplies the esophageal physiology needed to evaluate suspected achalasia.",
+        "sourceLabels": [
+          "Seoul achalasia consensus guideline (2020), CC BY-NC 4.0"
+        ],
+        "resultGateAfter": {
+          "id": "gate.achalasia.manometry.3",
+          "resultTypeId": "service.esophageal_manometry",
+          "pendingLabel": "Esophageal manometry pending",
+          "resultNarrative": "High-resolution manometry shows absent organized esophageal peristalsis together with impaired relaxation of the esophagogastric junction.",
+          "readiness": "all",
+          "allowedServiceRouteIds": [
+            "route.esophageal_manometry.outsourced"
+          ]
+        },
+        "terminalDispositions": []
+      },
+      "timing": {
+        "caseId": "case.achalasia.slow-meals",
+        "nodeId": "node.achalasia.slow-meals.1",
+        "questionVariantId": "question.achalasia.high-resolution-manometry.v3",
+        "classification": {
+          "kind": "test_choices",
+          "choices": [
+            {
+              "choiceId": "manometry_3",
+              "choiceLabel": "High-resolution esophageal manometry",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.physiology"
+              }
+            },
+            {
+              "choiceId": "repeat_egd_3",
+              "choiceLabel": "Repeat upper-GI endoscopy",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.upper_endoscopy"
+              }
+            },
+            {
+              "choiceId": "ph_monitoring_3",
+              "choiceLabel": "Ambulatory esophageal reflux monitoring",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.physiology"
+              }
+            },
+            {
+              "choiceId": "chest_ct_3",
+              "choiceLabel": "Contrast-enhanced chest CT",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.ct"
+              }
+            }
+          ]
+        }
+      },
+      "originalContext": {
+        "chiefComplaint": "Difficulty swallowing",
+        "presentation": "{patientName} describes persistent difficulty passing both food and drinks with intermittent regurgitation. Structural evaluation by EGD is complete and excludes obstruction and concerning pseudoachalasia.",
+        "patientDisplayName": "{patientName}",
+        "prototypeDemographics": {
+          "ageYears": 34,
+          "sexLabel": "Female"
+        },
+        "approvedInstantiationProfiles": [
+          {
+            "id": "profile.achalasia.slow-meals.female.34",
+            "prototypeDemographics": {
+              "ageYears": 34,
+              "sexLabel": "Female"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} describes persistent difficulty passing both food and drinks with intermittent regurgitation. Structural evaluation by EGD is complete and excludes obstruction and concerning pseudoachalasia."
+          },
+          {
+            "id": "profile.achalasia.slow-meals.male.34",
+            "prototypeDemographics": {
+              "ageYears": 34,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} describes persistent difficulty passing both food and drinks with intermittent regurgitation. Structural evaluation by EGD is complete and excludes obstruction and concerning pseudoachalasia."
+          },
+          {
+            "id": "profile.achalasia.slow-meals.female.40",
+            "prototypeDemographics": {
+              "ageYears": 40,
+              "sexLabel": "Female"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} describes persistent difficulty passing both food and drinks with intermittent regurgitation. Structural evaluation by EGD is complete and excludes obstruction and concerning pseudoachalasia."
+          },
+          {
+            "id": "profile.achalasia.slow-meals.male.40",
+            "prototypeDemographics": {
+              "ageYears": 40,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} describes persistent difficulty passing both food and drinks with intermittent regurgitation. Structural evaluation by EGD is complete and excludes obstruction and concerning pseudoachalasia."
+          }
+        ]
+      },
+      "restoreConstraint": "Reference only; no fallback is applied. Manager must restore only the rejected item and its explicit version/timing/service binding, retain all passed nodes and shared presentation/profile fields, and review sequence/result consistency. Do not revert the entire captured case, copy an approval to a different presentation, migrate FSRS history or overwrite another worker's content. Dropping only the r7 projection returns the round-six draft, not this original fallback. Use an explicit original-version projection, restoring the original concept and restoring or clearing Current update/Exhibit when the original has none; retain newer archived definitions/timings."
+    },
+    {
+      "id": "B05-context",
+      "caseId": "case.inguinal-hernia.standing-shift",
+      "nodeId": "node.inguinal-hernia.standing-shift.2",
+      "fallbackKind": "original_pre_batch_version",
+      "variantId": "question.inguinal-hernia.symptomatic-elective-repair.v4",
+      "conceptId": "concept.inguinal-hernia.symptomatic-elective-repair",
+      "provenance": {
+        "source": "tools/question-quality/fixtures/round3-batch1-before-20261102.json",
+        "sourceSha256": "083e84baa57bc16517d698b23ba7fa48b52d1971a9f0a6c2981c536127d1c862",
+        "reason": "No later owner-reviewed or shipped version is verified for this batch item in the available local review records. Use the exact captured original rather than label an unshipped author draft as a released fallback.",
+        "releaseStatus": "original; shipment not independently established",
+        "reviewStatus": "needs_clinician_review",
+        "lastClinicianReview": null
+      },
+      "exactNodeSha256": "8955a50367082dcbaf0fe48923a1a41210c536388e9039f1cf2b3a4e56b0ac77",
+      "question": {
+        "contentVersion": "development-batch.2026-09-10.1",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "question.inguinal-hernia.symptomatic-elective-repair.v4",
+        "conceptId": "concept.inguinal-hernia.symptomatic-elective-repair",
+        "patientPresentationVariantId": "presentation.inguinal-hernia.standing-shift",
+        "patientPresentation": "{patientName} has activity-related groin discomfort and a bulge late in long work shifts, but no visible mass is present at the visit. Groin and femoral assessment is equivocal, and experienced dynamic groin ultrasound is available; the patient denies vomiting, abdominal distension, severe constant pain, or an irreducible bulge.",
+        "approvedInstantiationProfiles": [
+          {
+            "id": "profile.inguinal-hernia.standing-shift.male.51",
+            "prototypeDemographics": {
+              "ageYears": 51,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has activity-related groin discomfort and a bulge late in long work shifts, but no visible mass is present at the visit. Groin and femoral assessment is equivocal, and experienced dynamic groin ultrasound is available; the patient denies vomiting, abdominal distension, severe constant pain, or an irreducible bulge."
+          },
+          {
+            "id": "profile.inguinal-hernia.standing-shift.male.54",
+            "prototypeDemographics": {
+              "ageYears": 54,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has activity-related groin discomfort and a bulge late in long work shifts, but no visible mass is present at the visit. Groin and femoral assessment is equivocal, and experienced dynamic groin ultrasound is available; the patient denies vomiting, abdominal distension, severe constant pain, or an irreducible bulge."
+          },
+          {
+            "id": "profile.inguinal-hernia.standing-shift.male.57",
+            "prototypeDemographics": {
+              "ageYears": 57,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has activity-related groin discomfort and a bulge late in long work shifts, but no visible mass is present at the visit. Groin and femoral assessment is equivocal, and experienced dynamic groin ultrasound is available; the patient denies vomiting, abdominal distension, severe constant pain, or an irreducible bulge."
+          },
+          {
+            "id": "profile.inguinal-hernia.standing-shift.male.60",
+            "prototypeDemographics": {
+              "ageYears": 60,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has activity-related groin discomfort and a bulge late in long work shifts, but no visible mass is present at the visit. Groin and femoral assessment is equivocal, and experienced dynamic groin ultrasound is available; the patient denies vomiting, abdominal distension, severe constant pain, or an irreducible bulge."
+          }
+        ],
+        "reachedCurrentUpdate": "A dynamic groin ultrasound confirms a reducible inguinal hernia; symptoms interfere with completing work shifts.",
+        "stem": "After {patientName}'s ultrasound confirms a reducible hernia limiting usual activities, what is the appropriate next plan?",
+        "answerChoices": [
+          {
+            "id": "elective_discussion_4",
+            "label": "Elective hernia repair consultation",
+            "isCorrect": true,
+            "distractorRationale": null
+          },
+          {
+            "id": "routine_observation_4",
+            "label": "Observation with activity modification",
+            "isCorrect": false,
+            "distractorRationale": "This patient has meaningful activity limitation rather than minimal symptoms."
+          },
+          {
+            "id": "emergency_operation_4",
+            "label": "Emergency exploration of the groin",
+            "isCorrect": false,
+            "distractorRationale": "The patient is stable and the returned study identifies a reducible hernia without emergency features."
+          },
+          {
+            "id": "activity_only_4",
+            "label": "Physical therapy for presumed groin strain",
+            "isCorrect": false,
+            "distractorRationale": "The confirmed hernia is limiting usual work or exercise and merits an elective discussion."
+          }
+        ],
+        "explanation": "A reducible inguinal hernia causing meaningful activity limitation supports elective repair discussion and planning. The stable presentation does not require emergency treatment or a specific technique selection.",
+        "supportingEvidenceClaimIds": [
+          "claim.inguinal-hernia.symptomatic-elective-repair"
+        ],
+        "agentReview": {
+          "authority": "owner-delegated agent authoring and review",
+          "reviewedOn": "2026-09-10",
+          "clinicianSignOff": false,
+          "scope": "Technical, editorial, source-traceability, and internal-consistency review; named clinician review remains required."
+        }
+      },
+      "node": {
+        "id": "node.inguinal-hernia.standing-shift.2",
+        "questionVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v4",
+        "primaryConceptId": "concept.inguinal-hernia.symptomatic-elective-repair",
+        "currentUpdate": "A dynamic groin ultrasound confirms a reducible inguinal hernia; symptoms interfere with completing work shifts.",
+        "stem": "After {patientName}'s ultrasound confirms a reducible hernia limiting usual activities, what is the appropriate next plan?",
+        "showServicePreviews": false,
+        "answerChoices": [
+          {
+            "id": "elective_discussion_4",
+            "label": "Elective hernia repair consultation",
+            "isCorrect": true,
+            "serviceRequest": null
+          },
+          {
+            "id": "routine_observation_4",
+            "label": "Observation with activity modification",
+            "isCorrect": false,
+            "serviceRequest": null
+          },
+          {
+            "id": "emergency_operation_4",
+            "label": "Emergency exploration of the groin",
+            "isCorrect": false,
+            "serviceRequest": null
+          },
+          {
+            "id": "activity_only_4",
+            "label": "Physical therapy for presumed groin strain",
+            "isCorrect": false,
+            "serviceRequest": null
+          }
+        ],
+        "shuffleAnswers": true,
+        "explanation": "A reducible inguinal hernia causing meaningful activity limitation supports elective repair discussion and planning. The stable presentation does not require emergency treatment or a specific technique selection.",
+        "sourceLabels": [
+          "HerniaSurge international groin-hernia guideline (2018), CC BY-NC 4.0",
+          "NIDDK inguinal hernia guidance (reviewed September 2019)"
+        ],
+        "resultGateAfter": null,
+        "terminalDispositions": [
+          {
+            "answerChoiceId": "routine_observation_4",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "The teaching encounter recorded “Observation with activity modification.”",
+            "clinicalRationale": "A reducible inguinal hernia causing meaningful activity limitation supports elective repair discussion and planning. The stable presentation does not require emergency treatment or a specific technique selection.",
+            "sourceLabels": [
+              "HerniaSurge international groin-hernia guideline (2018), CC BY-NC 4.0",
+              "NIDDK inguinal hernia guidance (reviewed September 2019)"
+            ]
+          },
+          {
+            "answerChoiceId": "emergency_operation_4",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "The teaching encounter recorded “Emergency exploration of the groin.”",
+            "clinicalRationale": "A reducible inguinal hernia causing meaningful activity limitation supports elective repair discussion and planning. The stable presentation does not require emergency treatment or a specific technique selection.",
+            "sourceLabels": [
+              "HerniaSurge international groin-hernia guideline (2018), CC BY-NC 4.0",
+              "NIDDK inguinal hernia guidance (reviewed September 2019)"
+            ]
+          },
+          {
+            "answerChoiceId": "activity_only_4",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "The teaching encounter recorded “Physical therapy for presumed groin strain.”",
+            "clinicalRationale": "A reducible inguinal hernia causing meaningful activity limitation supports elective repair discussion and planning. The stable presentation does not require emergency treatment or a specific technique selection.",
+            "sourceLabels": [
+              "HerniaSurge international groin-hernia guideline (2018), CC BY-NC 4.0",
+              "NIDDK inguinal hernia guidance (reviewed September 2019)"
+            ]
+          }
+        ]
+      },
+      "timing": {
+        "caseId": "case.inguinal-hernia.standing-shift",
+        "nodeId": "node.inguinal-hernia.standing-shift.2",
+        "questionVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v4",
+        "classification": {
+          "kind": "no_test"
+        }
+      },
+      "originalContext": {
+        "chiefComplaint": "Intermittent groin bulge",
+        "presentation": "{patientName} has activity-related groin discomfort and a bulge late in long work shifts, but no visible mass is present at the visit. Groin and femoral assessment is equivocal, and experienced dynamic groin ultrasound is available; the patient denies vomiting, abdominal distension, severe constant pain, or an irreducible bulge.",
+        "patientDisplayName": "{patientName}",
+        "prototypeDemographics": {
+          "ageYears": 51,
+          "sexLabel": "Male"
+        },
+        "approvedInstantiationProfiles": [
+          {
+            "id": "profile.inguinal-hernia.standing-shift.male.51",
+            "prototypeDemographics": {
+              "ageYears": 51,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has activity-related groin discomfort and a bulge late in long work shifts, but no visible mass is present at the visit. Groin and femoral assessment is equivocal, and experienced dynamic groin ultrasound is available; the patient denies vomiting, abdominal distension, severe constant pain, or an irreducible bulge."
+          },
+          {
+            "id": "profile.inguinal-hernia.standing-shift.male.54",
+            "prototypeDemographics": {
+              "ageYears": 54,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has activity-related groin discomfort and a bulge late in long work shifts, but no visible mass is present at the visit. Groin and femoral assessment is equivocal, and experienced dynamic groin ultrasound is available; the patient denies vomiting, abdominal distension, severe constant pain, or an irreducible bulge."
+          },
+          {
+            "id": "profile.inguinal-hernia.standing-shift.male.57",
+            "prototypeDemographics": {
+              "ageYears": 57,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has activity-related groin discomfort and a bulge late in long work shifts, but no visible mass is present at the visit. Groin and femoral assessment is equivocal, and experienced dynamic groin ultrasound is available; the patient denies vomiting, abdominal distension, severe constant pain, or an irreducible bulge."
+          },
+          {
+            "id": "profile.inguinal-hernia.standing-shift.male.60",
+            "prototypeDemographics": {
+              "ageYears": 60,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has activity-related groin discomfort and a bulge late in long work shifts, but no visible mass is present at the visit. Groin and femoral assessment is equivocal, and experienced dynamic groin ultrasound is available; the patient denies vomiting, abdominal distension, severe constant pain, or an irreducible bulge."
+          }
+        ]
+      },
+      "restoreConstraint": "Reference only; no fallback is applied. Manager must restore only the rejected item and its explicit version/timing/service binding, retain all passed nodes and shared presentation/profile fields, and review sequence/result consistency. Do not revert the entire captured case, copy an approval to a different presentation, migrate FSRS history or overwrite another worker's content. Dropping only the r7 projection returns the round-six draft, not this original fallback. Use an explicit original-version projection, restoring the original concept and restoring or clearing Current update/Exhibit when the original has none; retain newer archived definitions/timings."
+    },
+    {
+      "id": "B06-context",
+      "caseId": "case.inguinal-hernia.running-discomfort",
+      "nodeId": "node.inguinal-hernia.running-discomfort.2",
+      "fallbackKind": "original_pre_batch_version",
+      "variantId": "question.inguinal-hernia.symptomatic-elective-repair.v2",
+      "conceptId": "concept.inguinal-hernia.symptomatic-elective-repair",
+      "provenance": {
+        "source": "tools/question-quality/fixtures/round3-batch1-before-20261102.json",
+        "sourceSha256": "083e84baa57bc16517d698b23ba7fa48b52d1971a9f0a6c2981c536127d1c862",
+        "reason": "No later owner-reviewed or shipped version is verified for this batch item in the available local review records. Use the exact captured original rather than label an unshipped author draft as a released fallback.",
+        "releaseStatus": "original; shipment not independently established",
+        "reviewStatus": "needs_clinician_review",
+        "lastClinicianReview": null
+      },
+      "exactNodeSha256": "d1cd6995651864ec1eb9db75acad3f987a6bcf77719237dba9d80175d6c896e0",
+      "question": {
+        "contentVersion": "development-batch.2026-09-10.1",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "question.inguinal-hernia.symptomatic-elective-repair.v2",
+        "conceptId": "concept.inguinal-hernia.symptomatic-elective-repair",
+        "patientPresentationVariantId": "presentation.inguinal-hernia.running-discomfort",
+        "patientPresentation": "{patientName} describes recurring groin pressure during running and a fleeting bulge that cannot be reproduced in clinic. Groin and femoral assessment is equivocal, and experienced dynamic groin ultrasound is available; the patient denies obstruction symptoms, escalating pain, or an irreducible lump.",
+        "approvedInstantiationProfiles": [
+          {
+            "id": "profile.inguinal-hernia.running-discomfort.male.35",
+            "prototypeDemographics": {
+              "ageYears": 35,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} describes recurring groin pressure during running and a fleeting bulge that cannot be reproduced in clinic. Groin and femoral assessment is equivocal, and experienced dynamic groin ultrasound is available; the patient denies obstruction symptoms, escalating pain, or an irreducible lump."
+          },
+          {
+            "id": "profile.inguinal-hernia.running-discomfort.male.38",
+            "prototypeDemographics": {
+              "ageYears": 38,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} describes recurring groin pressure during running and a fleeting bulge that cannot be reproduced in clinic. Groin and femoral assessment is equivocal, and experienced dynamic groin ultrasound is available; the patient denies obstruction symptoms, escalating pain, or an irreducible lump."
+          },
+          {
+            "id": "profile.inguinal-hernia.running-discomfort.male.41",
+            "prototypeDemographics": {
+              "ageYears": 41,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} describes recurring groin pressure during running and a fleeting bulge that cannot be reproduced in clinic. Groin and femoral assessment is equivocal, and experienced dynamic groin ultrasound is available; the patient denies obstruction symptoms, escalating pain, or an irreducible lump."
+          },
+          {
+            "id": "profile.inguinal-hernia.running-discomfort.male.44",
+            "prototypeDemographics": {
+              "ageYears": 44,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} describes recurring groin pressure during running and a fleeting bulge that cannot be reproduced in clinic. Groin and femoral assessment is equivocal, and experienced dynamic groin ultrasound is available; the patient denies obstruction symptoms, escalating pain, or an irreducible lump."
+          }
+        ],
+        "reachedCurrentUpdate": "Targeted dynamic ultrasound demonstrates a reducible inguinal hernia, and the symptoms now prevent usual exercise.",
+        "stem": "After {patientName}'s ultrasound confirms a reducible hernia limiting usual activities, what is the appropriate next plan?",
+        "answerChoices": [
+          {
+            "id": "elective_discussion_2",
+            "label": "Elective hernia repair consultation",
+            "isCorrect": true,
+            "distractorRationale": null
+          },
+          {
+            "id": "routine_observation_2",
+            "label": "Observation with activity modification",
+            "isCorrect": false,
+            "distractorRationale": "This patient has meaningful activity limitation rather than minimal symptoms."
+          },
+          {
+            "id": "emergency_operation_2",
+            "label": "Emergency exploration of the groin",
+            "isCorrect": false,
+            "distractorRationale": "The patient is stable and the returned study identifies a reducible hernia without emergency features."
+          },
+          {
+            "id": "activity_only_2",
+            "label": "Physical therapy for presumed groin strain",
+            "isCorrect": false,
+            "distractorRationale": "The confirmed hernia is limiting usual work or exercise and merits an elective discussion."
+          }
+        ],
+        "explanation": "A reducible inguinal hernia causing meaningful activity limitation supports elective repair discussion and planning. The stable presentation does not require emergency treatment or a specific technique selection.",
+        "supportingEvidenceClaimIds": [
+          "claim.inguinal-hernia.symptomatic-elective-repair"
+        ],
+        "agentReview": {
+          "authority": "owner-delegated agent authoring and review",
+          "reviewedOn": "2026-09-10",
+          "clinicianSignOff": false,
+          "scope": "Technical, editorial, source-traceability, and internal-consistency review; named clinician review remains required."
+        }
+      },
+      "node": {
+        "id": "node.inguinal-hernia.running-discomfort.2",
+        "questionVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v2",
+        "primaryConceptId": "concept.inguinal-hernia.symptomatic-elective-repair",
+        "currentUpdate": "Targeted dynamic ultrasound demonstrates a reducible inguinal hernia, and the symptoms now prevent usual exercise.",
+        "stem": "After {patientName}'s ultrasound confirms a reducible hernia limiting usual activities, what is the appropriate next plan?",
+        "showServicePreviews": false,
+        "answerChoices": [
+          {
+            "id": "elective_discussion_2",
+            "label": "Elective hernia repair consultation",
+            "isCorrect": true,
+            "serviceRequest": null
+          },
+          {
+            "id": "routine_observation_2",
+            "label": "Observation with activity modification",
+            "isCorrect": false,
+            "serviceRequest": null
+          },
+          {
+            "id": "emergency_operation_2",
+            "label": "Emergency exploration of the groin",
+            "isCorrect": false,
+            "serviceRequest": null
+          },
+          {
+            "id": "activity_only_2",
+            "label": "Physical therapy for presumed groin strain",
+            "isCorrect": false,
+            "serviceRequest": null
+          }
+        ],
+        "shuffleAnswers": true,
+        "explanation": "A reducible inguinal hernia causing meaningful activity limitation supports elective repair discussion and planning. The stable presentation does not require emergency treatment or a specific technique selection.",
+        "sourceLabels": [
+          "HerniaSurge international groin-hernia guideline (2018), CC BY-NC 4.0",
+          "NIDDK inguinal hernia guidance (reviewed September 2019)"
+        ],
+        "resultGateAfter": null,
+        "terminalDispositions": [
+          {
+            "answerChoiceId": "routine_observation_2",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "The teaching encounter recorded “Observation with activity modification.”",
+            "clinicalRationale": "A reducible inguinal hernia causing meaningful activity limitation supports elective repair discussion and planning. The stable presentation does not require emergency treatment or a specific technique selection.",
+            "sourceLabels": [
+              "HerniaSurge international groin-hernia guideline (2018), CC BY-NC 4.0",
+              "NIDDK inguinal hernia guidance (reviewed September 2019)"
+            ]
+          },
+          {
+            "answerChoiceId": "emergency_operation_2",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "The teaching encounter recorded “Emergency exploration of the groin.”",
+            "clinicalRationale": "A reducible inguinal hernia causing meaningful activity limitation supports elective repair discussion and planning. The stable presentation does not require emergency treatment or a specific technique selection.",
+            "sourceLabels": [
+              "HerniaSurge international groin-hernia guideline (2018), CC BY-NC 4.0",
+              "NIDDK inguinal hernia guidance (reviewed September 2019)"
+            ]
+          },
+          {
+            "answerChoiceId": "activity_only_2",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "The teaching encounter recorded “Physical therapy for presumed groin strain.”",
+            "clinicalRationale": "A reducible inguinal hernia causing meaningful activity limitation supports elective repair discussion and planning. The stable presentation does not require emergency treatment or a specific technique selection.",
+            "sourceLabels": [
+              "HerniaSurge international groin-hernia guideline (2018), CC BY-NC 4.0",
+              "NIDDK inguinal hernia guidance (reviewed September 2019)"
+            ]
+          }
+        ]
+      },
+      "timing": {
+        "caseId": "case.inguinal-hernia.running-discomfort",
+        "nodeId": "node.inguinal-hernia.running-discomfort.2",
+        "questionVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v2",
+        "classification": {
+          "kind": "no_test"
+        }
+      },
+      "originalContext": {
+        "chiefComplaint": "Intermittent groin bulge",
+        "presentation": "{patientName} describes recurring groin pressure during running and a fleeting bulge that cannot be reproduced in clinic. Groin and femoral assessment is equivocal, and experienced dynamic groin ultrasound is available; the patient denies obstruction symptoms, escalating pain, or an irreducible lump.",
+        "patientDisplayName": "{patientName}",
+        "prototypeDemographics": {
+          "ageYears": 35,
+          "sexLabel": "Male"
+        },
+        "approvedInstantiationProfiles": [
+          {
+            "id": "profile.inguinal-hernia.running-discomfort.male.35",
+            "prototypeDemographics": {
+              "ageYears": 35,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} describes recurring groin pressure during running and a fleeting bulge that cannot be reproduced in clinic. Groin and femoral assessment is equivocal, and experienced dynamic groin ultrasound is available; the patient denies obstruction symptoms, escalating pain, or an irreducible lump."
+          },
+          {
+            "id": "profile.inguinal-hernia.running-discomfort.male.38",
+            "prototypeDemographics": {
+              "ageYears": 38,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} describes recurring groin pressure during running and a fleeting bulge that cannot be reproduced in clinic. Groin and femoral assessment is equivocal, and experienced dynamic groin ultrasound is available; the patient denies obstruction symptoms, escalating pain, or an irreducible lump."
+          },
+          {
+            "id": "profile.inguinal-hernia.running-discomfort.male.41",
+            "prototypeDemographics": {
+              "ageYears": 41,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} describes recurring groin pressure during running and a fleeting bulge that cannot be reproduced in clinic. Groin and femoral assessment is equivocal, and experienced dynamic groin ultrasound is available; the patient denies obstruction symptoms, escalating pain, or an irreducible lump."
+          },
+          {
+            "id": "profile.inguinal-hernia.running-discomfort.male.44",
+            "prototypeDemographics": {
+              "ageYears": 44,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} describes recurring groin pressure during running and a fleeting bulge that cannot be reproduced in clinic. Groin and femoral assessment is equivocal, and experienced dynamic groin ultrasound is available; the patient denies obstruction symptoms, escalating pain, or an irreducible lump."
+          }
+        ]
+      },
+      "restoreConstraint": "Reference only; no fallback is applied. Manager must restore only the rejected item and its explicit version/timing/service binding, retain all passed nodes and shared presentation/profile fields, and review sequence/result consistency. Do not revert the entire captured case, copy an approval to a different presentation, migrate FSRS history or overwrite another worker's content. Dropping only the r7 projection returns the round-six draft, not this original fallback. Use an explicit original-version projection, restoring the original concept and restoring or clearing Current update/Exhibit when the original has none; retain newer archived definitions/timings."
+    },
+    {
+      "id": "B07-context",
+      "caseId": "case.inguinal-hernia.caregiving-strain",
+      "nodeId": "node.inguinal-hernia.caregiving-strain.2",
+      "fallbackKind": "original_pre_batch_version",
+      "variantId": "question.inguinal-hernia.symptomatic-elective-repair.v3",
+      "conceptId": "concept.inguinal-hernia.symptomatic-elective-repair",
+      "provenance": {
+        "source": "tools/question-quality/fixtures/round3-batch1-before-20261102.json",
+        "sourceSha256": "083e84baa57bc16517d698b23ba7fa48b52d1971a9f0a6c2981c536127d1c862",
+        "reason": "No later owner-reviewed or shipped version is verified for this batch item in the available local review records. Use the exact captured original rather than label an unshipped author draft as a released fallback.",
+        "releaseStatus": "original; shipment not independently established",
+        "reviewStatus": "needs_clinician_review",
+        "lastClinicianReview": null
+      },
+      "exactNodeSha256": "22407cd3aea5c415796bd36278301709410189ac9d1d2bdf5dcae20e44166604",
+      "question": {
+        "contentVersion": "development-batch.2026-09-10.1",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "question.inguinal-hernia.symptomatic-elective-repair.v3",
+        "conceptId": "concept.inguinal-hernia.symptomatic-elective-repair",
+        "patientPresentationVariantId": "presentation.inguinal-hernia.caregiving-strain",
+        "patientPresentation": "{patientName} notes an intermittent groin bulge while assisting a family member, although today’s groin and femoral-region examination is equivocal. Experienced dynamic groin ultrasound is available, and there are no features of incarceration or bowel obstruction.",
+        "approvedInstantiationProfiles": [
+          {
+            "id": "profile.inguinal-hernia.caregiving-strain.male.59",
+            "prototypeDemographics": {
+              "ageYears": 59,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} notes an intermittent groin bulge while assisting a family member, although today’s groin and femoral-region examination is equivocal. Experienced dynamic groin ultrasound is available, and there are no features of incarceration or bowel obstruction."
+          },
+          {
+            "id": "profile.inguinal-hernia.caregiving-strain.male.62",
+            "prototypeDemographics": {
+              "ageYears": 62,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} notes an intermittent groin bulge while assisting a family member, although today’s groin and femoral-region examination is equivocal. Experienced dynamic groin ultrasound is available, and there are no features of incarceration or bowel obstruction."
+          },
+          {
+            "id": "profile.inguinal-hernia.caregiving-strain.male.65",
+            "prototypeDemographics": {
+              "ageYears": 65,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} notes an intermittent groin bulge while assisting a family member, although today’s groin and femoral-region examination is equivocal. Experienced dynamic groin ultrasound is available, and there are no features of incarceration or bowel obstruction."
+          },
+          {
+            "id": "profile.inguinal-hernia.caregiving-strain.male.68",
+            "prototypeDemographics": {
+              "ageYears": 68,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} notes an intermittent groin bulge while assisting a family member, although today’s groin and femoral-region examination is equivocal. Experienced dynamic groin ultrasound is available, and there are no features of incarceration or bowel obstruction."
+          }
+        ],
+        "reachedCurrentUpdate": "Dynamic ultrasound confirms inguinal anatomy with a reducible hernia. The recurring discomfort limits caregiving tasks.",
+        "stem": "After {patientName}'s ultrasound confirms a reducible hernia limiting usual activities, what is the appropriate next plan?",
+        "answerChoices": [
+          {
+            "id": "elective_discussion_3",
+            "label": "Elective hernia repair consultation",
+            "isCorrect": true,
+            "distractorRationale": null
+          },
+          {
+            "id": "routine_observation_3",
+            "label": "Observation with activity modification",
+            "isCorrect": false,
+            "distractorRationale": "This patient has meaningful activity limitation rather than minimal symptoms."
+          },
+          {
+            "id": "emergency_operation_3",
+            "label": "Emergency exploration of the groin",
+            "isCorrect": false,
+            "distractorRationale": "The patient is stable and the returned study identifies a reducible hernia without emergency features."
+          },
+          {
+            "id": "activity_only_3",
+            "label": "Physical therapy for presumed groin strain",
+            "isCorrect": false,
+            "distractorRationale": "The confirmed hernia is limiting usual work or exercise and merits an elective discussion."
+          }
+        ],
+        "explanation": "A reducible inguinal hernia causing meaningful activity limitation supports elective repair discussion and planning. The stable presentation does not require emergency treatment or a specific technique selection.",
+        "supportingEvidenceClaimIds": [
+          "claim.inguinal-hernia.symptomatic-elective-repair"
+        ],
+        "agentReview": {
+          "authority": "owner-delegated agent authoring and review",
+          "reviewedOn": "2026-09-10",
+          "clinicianSignOff": false,
+          "scope": "Technical, editorial, source-traceability, and internal-consistency review; named clinician review remains required."
+        }
+      },
+      "node": {
+        "id": "node.inguinal-hernia.caregiving-strain.2",
+        "questionVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v3",
+        "primaryConceptId": "concept.inguinal-hernia.symptomatic-elective-repair",
+        "currentUpdate": "Dynamic ultrasound confirms inguinal anatomy with a reducible hernia. The recurring discomfort limits caregiving tasks.",
+        "stem": "After {patientName}'s ultrasound confirms a reducible hernia limiting usual activities, what is the appropriate next plan?",
+        "showServicePreviews": false,
+        "answerChoices": [
+          {
+            "id": "elective_discussion_3",
+            "label": "Elective hernia repair consultation",
+            "isCorrect": true,
+            "serviceRequest": null
+          },
+          {
+            "id": "routine_observation_3",
+            "label": "Observation with activity modification",
+            "isCorrect": false,
+            "serviceRequest": null
+          },
+          {
+            "id": "emergency_operation_3",
+            "label": "Emergency exploration of the groin",
+            "isCorrect": false,
+            "serviceRequest": null
+          },
+          {
+            "id": "activity_only_3",
+            "label": "Physical therapy for presumed groin strain",
+            "isCorrect": false,
+            "serviceRequest": null
+          }
+        ],
+        "shuffleAnswers": true,
+        "explanation": "A reducible inguinal hernia causing meaningful activity limitation supports elective repair discussion and planning. The stable presentation does not require emergency treatment or a specific technique selection.",
+        "sourceLabels": [
+          "HerniaSurge international groin-hernia guideline (2018), CC BY-NC 4.0",
+          "NIDDK inguinal hernia guidance (reviewed September 2019)"
+        ],
+        "resultGateAfter": null,
+        "terminalDispositions": [
+          {
+            "answerChoiceId": "routine_observation_3",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "The teaching encounter recorded “Observation with activity modification.”",
+            "clinicalRationale": "A reducible inguinal hernia causing meaningful activity limitation supports elective repair discussion and planning. The stable presentation does not require emergency treatment or a specific technique selection.",
+            "sourceLabels": [
+              "HerniaSurge international groin-hernia guideline (2018), CC BY-NC 4.0",
+              "NIDDK inguinal hernia guidance (reviewed September 2019)"
+            ]
+          },
+          {
+            "answerChoiceId": "emergency_operation_3",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "The teaching encounter recorded “Emergency exploration of the groin.”",
+            "clinicalRationale": "A reducible inguinal hernia causing meaningful activity limitation supports elective repair discussion and planning. The stable presentation does not require emergency treatment or a specific technique selection.",
+            "sourceLabels": [
+              "HerniaSurge international groin-hernia guideline (2018), CC BY-NC 4.0",
+              "NIDDK inguinal hernia guidance (reviewed September 2019)"
+            ]
+          },
+          {
+            "answerChoiceId": "activity_only_3",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "The teaching encounter recorded “Physical therapy for presumed groin strain.”",
+            "clinicalRationale": "A reducible inguinal hernia causing meaningful activity limitation supports elective repair discussion and planning. The stable presentation does not require emergency treatment or a specific technique selection.",
+            "sourceLabels": [
+              "HerniaSurge international groin-hernia guideline (2018), CC BY-NC 4.0",
+              "NIDDK inguinal hernia guidance (reviewed September 2019)"
+            ]
+          }
+        ]
+      },
+      "timing": {
+        "caseId": "case.inguinal-hernia.caregiving-strain",
+        "nodeId": "node.inguinal-hernia.caregiving-strain.2",
+        "questionVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v3",
+        "classification": {
+          "kind": "no_test"
+        }
+      },
+      "originalContext": {
+        "chiefComplaint": "Intermittent groin bulge",
+        "presentation": "{patientName} notes an intermittent groin bulge while assisting a family member, although today’s groin and femoral-region examination is equivocal. Experienced dynamic groin ultrasound is available, and there are no features of incarceration or bowel obstruction.",
+        "patientDisplayName": "{patientName}",
+        "prototypeDemographics": {
+          "ageYears": 59,
+          "sexLabel": "Male"
+        },
+        "approvedInstantiationProfiles": [
+          {
+            "id": "profile.inguinal-hernia.caregiving-strain.male.59",
+            "prototypeDemographics": {
+              "ageYears": 59,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} notes an intermittent groin bulge while assisting a family member, although today’s groin and femoral-region examination is equivocal. Experienced dynamic groin ultrasound is available, and there are no features of incarceration or bowel obstruction."
+          },
+          {
+            "id": "profile.inguinal-hernia.caregiving-strain.male.62",
+            "prototypeDemographics": {
+              "ageYears": 62,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} notes an intermittent groin bulge while assisting a family member, although today’s groin and femoral-region examination is equivocal. Experienced dynamic groin ultrasound is available, and there are no features of incarceration or bowel obstruction."
+          },
+          {
+            "id": "profile.inguinal-hernia.caregiving-strain.male.65",
+            "prototypeDemographics": {
+              "ageYears": 65,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} notes an intermittent groin bulge while assisting a family member, although today’s groin and femoral-region examination is equivocal. Experienced dynamic groin ultrasound is available, and there are no features of incarceration or bowel obstruction."
+          },
+          {
+            "id": "profile.inguinal-hernia.caregiving-strain.male.68",
+            "prototypeDemographics": {
+              "ageYears": 68,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} notes an intermittent groin bulge while assisting a family member, although today’s groin and femoral-region examination is equivocal. Experienced dynamic groin ultrasound is available, and there are no features of incarceration or bowel obstruction."
+          }
+        ]
+      },
+      "restoreConstraint": "Reference only; no fallback is applied. Manager must restore only the rejected item and its explicit version/timing/service binding, retain all passed nodes and shared presentation/profile fields, and review sequence/result consistency. Do not revert the entire captured case, copy an approval to a different presentation, migrate FSRS history or overwrite another worker's content. Dropping only the r7 projection returns the round-six draft, not this original fallback. Use an explicit original-version projection, restoring the original concept and restoring or clearing Current update/Exhibit when the original has none; retain newer archived definitions/timings."
+    },
+    {
+      "id": "B08-context",
+      "caseId": "case.inguinal-hernia.lifting-bulge",
+      "nodeId": "node.inguinal-hernia.lifting-bulge.2",
+      "fallbackKind": "original_pre_batch_version",
+      "variantId": "question.inguinal-hernia.symptomatic-elective-repair.v1",
+      "conceptId": "concept.inguinal-hernia.symptomatic-elective-repair",
+      "provenance": {
+        "source": "tools/question-quality/fixtures/round3-batch1-before-20261102.json",
+        "sourceSha256": "083e84baa57bc16517d698b23ba7fa48b52d1971a9f0a6c2981c536127d1c862",
+        "reason": "No later owner-reviewed or shipped version is verified for this batch item in the available local review records. Use the exact captured original rather than label an unshipped author draft as a released fallback.",
+        "releaseStatus": "original; shipment not independently established",
+        "reviewStatus": "needs_clinician_review",
+        "lastClinicianReview": null
+      },
+      "exactNodeSha256": "5d9a41b96e84d95dc21754ece54340db8fbe80d2e7d933fc96703677d3f1f65e",
+      "question": {
+        "contentVersion": "development-batch.2026-09-10.1",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "question.inguinal-hernia.symptomatic-elective-repair.v1",
+        "conceptId": "concept.inguinal-hernia.symptomatic-elective-repair",
+        "patientPresentationVariantId": "presentation.inguinal-hernia.lifting-bulge",
+        "patientPresentation": "{patientName} reports an intermittent groin bulge and discomfort with lifting, but the bulge is absent during today’s examination. The groin and femoral regions are assessed, and experienced dynamic groin ultrasound is available; there is no vomiting, obstipation, persistent severe pain, or nonreducible mass.",
+        "approvedInstantiationProfiles": [
+          {
+            "id": "profile.inguinal-hernia.lifting-bulge.male.44",
+            "prototypeDemographics": {
+              "ageYears": 44,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} reports an intermittent groin bulge and discomfort with lifting, but the bulge is absent during today’s examination. The groin and femoral regions are assessed, and experienced dynamic groin ultrasound is available; there is no vomiting, obstipation, persistent severe pain, or nonreducible mass."
+          },
+          {
+            "id": "profile.inguinal-hernia.lifting-bulge.male.47",
+            "prototypeDemographics": {
+              "ageYears": 47,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} reports an intermittent groin bulge and discomfort with lifting, but the bulge is absent during today’s examination. The groin and femoral regions are assessed, and experienced dynamic groin ultrasound is available; there is no vomiting, obstipation, persistent severe pain, or nonreducible mass."
+          },
+          {
+            "id": "profile.inguinal-hernia.lifting-bulge.male.50",
+            "prototypeDemographics": {
+              "ageYears": 50,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} reports an intermittent groin bulge and discomfort with lifting, but the bulge is absent during today’s examination. The groin and femoral regions are assessed, and experienced dynamic groin ultrasound is available; there is no vomiting, obstipation, persistent severe pain, or nonreducible mass."
+          },
+          {
+            "id": "profile.inguinal-hernia.lifting-bulge.male.53",
+            "prototypeDemographics": {
+              "ageYears": 53,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} reports an intermittent groin bulge and discomfort with lifting, but the bulge is absent during today’s examination. The groin and femoral regions are assessed, and experienced dynamic groin ultrasound is available; there is no vomiting, obstipation, persistent severe pain, or nonreducible mass."
+          }
+        ],
+        "reachedCurrentUpdate": "Dynamic groin ultrasound confirms a reducible inguinal hernia. The patient reports that the symptoms limit lifting at work.",
+        "stem": "After {patientName}'s ultrasound confirms a reducible hernia limiting usual activities, what is the appropriate next plan?",
+        "answerChoices": [
+          {
+            "id": "elective_discussion_1",
+            "label": "Elective hernia repair consultation",
+            "isCorrect": true,
+            "distractorRationale": null
+          },
+          {
+            "id": "routine_observation_1",
+            "label": "Observation with activity modification",
+            "isCorrect": false,
+            "distractorRationale": "This patient has meaningful activity limitation rather than minimal symptoms."
+          },
+          {
+            "id": "emergency_operation_1",
+            "label": "Emergency exploration of the groin",
+            "isCorrect": false,
+            "distractorRationale": "The patient is stable and the returned study identifies a reducible hernia without emergency features."
+          },
+          {
+            "id": "activity_only_1",
+            "label": "Physical therapy for presumed groin strain",
+            "isCorrect": false,
+            "distractorRationale": "The confirmed hernia is limiting usual work or exercise and merits an elective discussion."
+          }
+        ],
+        "explanation": "A reducible inguinal hernia causing meaningful activity limitation supports elective repair discussion and planning. The stable presentation does not require emergency treatment or a specific technique selection.",
+        "supportingEvidenceClaimIds": [
+          "claim.inguinal-hernia.symptomatic-elective-repair"
+        ],
+        "agentReview": {
+          "authority": "owner-delegated agent authoring and review",
+          "reviewedOn": "2026-09-10",
+          "clinicianSignOff": false,
+          "scope": "Technical, editorial, source-traceability, and internal-consistency review; named clinician review remains required."
+        }
+      },
+      "node": {
+        "id": "node.inguinal-hernia.lifting-bulge.2",
+        "questionVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v1",
+        "primaryConceptId": "concept.inguinal-hernia.symptomatic-elective-repair",
+        "currentUpdate": "Dynamic groin ultrasound confirms a reducible inguinal hernia. The patient reports that the symptoms limit lifting at work.",
+        "stem": "After {patientName}'s ultrasound confirms a reducible hernia limiting usual activities, what is the appropriate next plan?",
+        "showServicePreviews": false,
+        "answerChoices": [
+          {
+            "id": "elective_discussion_1",
+            "label": "Elective hernia repair consultation",
+            "isCorrect": true,
+            "serviceRequest": null
+          },
+          {
+            "id": "routine_observation_1",
+            "label": "Observation with activity modification",
+            "isCorrect": false,
+            "serviceRequest": null
+          },
+          {
+            "id": "emergency_operation_1",
+            "label": "Emergency exploration of the groin",
+            "isCorrect": false,
+            "serviceRequest": null
+          },
+          {
+            "id": "activity_only_1",
+            "label": "Physical therapy for presumed groin strain",
+            "isCorrect": false,
+            "serviceRequest": null
+          }
+        ],
+        "shuffleAnswers": true,
+        "explanation": "A reducible inguinal hernia causing meaningful activity limitation supports elective repair discussion and planning. The stable presentation does not require emergency treatment or a specific technique selection.",
+        "sourceLabels": [
+          "HerniaSurge international groin-hernia guideline (2018), CC BY-NC 4.0",
+          "NIDDK inguinal hernia guidance (reviewed September 2019)"
+        ],
+        "resultGateAfter": null,
+        "terminalDispositions": [
+          {
+            "answerChoiceId": "routine_observation_1",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "The teaching encounter recorded “Observation with activity modification.”",
+            "clinicalRationale": "A reducible inguinal hernia causing meaningful activity limitation supports elective repair discussion and planning. The stable presentation does not require emergency treatment or a specific technique selection.",
+            "sourceLabels": [
+              "HerniaSurge international groin-hernia guideline (2018), CC BY-NC 4.0",
+              "NIDDK inguinal hernia guidance (reviewed September 2019)"
+            ]
+          },
+          {
+            "answerChoiceId": "emergency_operation_1",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "The teaching encounter recorded “Emergency exploration of the groin.”",
+            "clinicalRationale": "A reducible inguinal hernia causing meaningful activity limitation supports elective repair discussion and planning. The stable presentation does not require emergency treatment or a specific technique selection.",
+            "sourceLabels": [
+              "HerniaSurge international groin-hernia guideline (2018), CC BY-NC 4.0",
+              "NIDDK inguinal hernia guidance (reviewed September 2019)"
+            ]
+          },
+          {
+            "answerChoiceId": "activity_only_1",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "The teaching encounter recorded “Physical therapy for presumed groin strain.”",
+            "clinicalRationale": "A reducible inguinal hernia causing meaningful activity limitation supports elective repair discussion and planning. The stable presentation does not require emergency treatment or a specific technique selection.",
+            "sourceLabels": [
+              "HerniaSurge international groin-hernia guideline (2018), CC BY-NC 4.0",
+              "NIDDK inguinal hernia guidance (reviewed September 2019)"
+            ]
+          }
+        ]
+      },
+      "timing": {
+        "caseId": "case.inguinal-hernia.lifting-bulge",
+        "nodeId": "node.inguinal-hernia.lifting-bulge.2",
+        "questionVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v1",
+        "classification": {
+          "kind": "no_test"
+        }
+      },
+      "originalContext": {
+        "chiefComplaint": "Intermittent groin bulge",
+        "presentation": "{patientName} reports an intermittent groin bulge and discomfort with lifting, but the bulge is absent during today’s examination. The groin and femoral regions are assessed, and experienced dynamic groin ultrasound is available; there is no vomiting, obstipation, persistent severe pain, or nonreducible mass.",
+        "patientDisplayName": "{patientName}",
+        "prototypeDemographics": {
+          "ageYears": 44,
+          "sexLabel": "Male"
+        },
+        "approvedInstantiationProfiles": [
+          {
+            "id": "profile.inguinal-hernia.lifting-bulge.male.44",
+            "prototypeDemographics": {
+              "ageYears": 44,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} reports an intermittent groin bulge and discomfort with lifting, but the bulge is absent during today’s examination. The groin and femoral regions are assessed, and experienced dynamic groin ultrasound is available; there is no vomiting, obstipation, persistent severe pain, or nonreducible mass."
+          },
+          {
+            "id": "profile.inguinal-hernia.lifting-bulge.male.47",
+            "prototypeDemographics": {
+              "ageYears": 47,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} reports an intermittent groin bulge and discomfort with lifting, but the bulge is absent during today’s examination. The groin and femoral regions are assessed, and experienced dynamic groin ultrasound is available; there is no vomiting, obstipation, persistent severe pain, or nonreducible mass."
+          },
+          {
+            "id": "profile.inguinal-hernia.lifting-bulge.male.50",
+            "prototypeDemographics": {
+              "ageYears": 50,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} reports an intermittent groin bulge and discomfort with lifting, but the bulge is absent during today’s examination. The groin and femoral regions are assessed, and experienced dynamic groin ultrasound is available; there is no vomiting, obstipation, persistent severe pain, or nonreducible mass."
+          },
+          {
+            "id": "profile.inguinal-hernia.lifting-bulge.male.53",
+            "prototypeDemographics": {
+              "ageYears": 53,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} reports an intermittent groin bulge and discomfort with lifting, but the bulge is absent during today’s examination. The groin and femoral regions are assessed, and experienced dynamic groin ultrasound is available; there is no vomiting, obstipation, persistent severe pain, or nonreducible mass."
+          }
+        ]
+      },
+      "restoreConstraint": "Reference only; no fallback is applied. Manager must restore only the rejected item and its explicit version/timing/service binding, retain all passed nodes and shared presentation/profile fields, and review sequence/result consistency. Do not revert the entire captured case, copy an approval to a different presentation, migrate FSRS history or overwrite another worker's content. Dropping only the r7 projection returns the round-six draft, not this original fallback. Use an explicit original-version projection, restoring the original concept and restoring or clearing Current update/Exhibit when the original has none; retain newer archived definitions/timings."
+    },
+    {
+      "id": "B12-context",
+      "caseId": "case.pigmented-skin-lesion.forearm-change",
+      "nodeId": "node.pigmented-skin-lesion.forearm-change.1",
+      "fallbackKind": "original_pre_batch_version",
+      "variantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v4",
+      "conceptId": "concept.pigmented-skin-lesion.complete-diagnostic-biopsy",
+      "provenance": {
+        "source": "tools/question-quality/fixtures/round3-batch1-before-20261102.json",
+        "sourceSha256": "083e84baa57bc16517d698b23ba7fa48b52d1971a9f0a6c2981c536127d1c862",
+        "reason": "No later owner-reviewed or shipped version is verified for this batch item in the available local review records. Use the exact captured original rather than label an unshipped author draft as a released fallback.",
+        "releaseStatus": "original; shipment not independently established",
+        "reviewStatus": "needs_clinician_review",
+        "lastClinicianReview": null
+      },
+      "exactNodeSha256": "9751056b8801ce1e6aaf8d453d2d6ecf894eb0d22c719f030bd03e841b57abde",
+      "question": {
+        "contentVersion": "development-batch.2026-09-10.1",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v4",
+        "conceptId": "concept.pigmented-skin-lesion.complete-diagnostic-biopsy",
+        "patientPresentationVariantId": "presentation.pigmented-skin-lesion.forearm-change",
+        "patientPresentation": "{patientName} has a small superficial forearm lesion with documented change in border and pigmentation. It is accessible for complete local biopsy, with no tissue diagnosis or palpable regional nodes yet.",
+        "approvedInstantiationProfiles": [
+          {
+            "id": "profile.pigmented-skin-lesion.forearm-change.female.67",
+            "prototypeDemographics": {
+              "ageYears": 67,
+              "sexLabel": "Female"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has a small superficial forearm lesion with documented change in border and pigmentation. It is accessible for complete local biopsy, with no tissue diagnosis or palpable regional nodes yet."
+          },
+          {
+            "id": "profile.pigmented-skin-lesion.forearm-change.male.67",
+            "prototypeDemographics": {
+              "ageYears": 67,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has a small superficial forearm lesion with documented change in border and pigmentation. It is accessible for complete local biopsy, with no tissue diagnosis or palpable regional nodes yet."
+          },
+          {
+            "id": "profile.pigmented-skin-lesion.forearm-change.female.72",
+            "prototypeDemographics": {
+              "ageYears": 72,
+              "sexLabel": "Female"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has a small superficial forearm lesion with documented change in border and pigmentation. It is accessible for complete local biopsy, with no tissue diagnosis or palpable regional nodes yet."
+          },
+          {
+            "id": "profile.pigmented-skin-lesion.forearm-change.male.72",
+            "prototypeDemographics": {
+              "ageYears": 72,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has a small superficial forearm lesion with documented change in border and pigmentation. It is accessible for complete local biopsy, with no tissue diagnosis or palpable regional nodes yet."
+          }
+        ],
+        "stem": "Which initial tissue-diagnosis approach best fits {patientName}'s lesion?",
+        "answerChoices": [
+          {
+            "id": "excisional_4",
+            "label": "Complete excisional biopsy",
+            "isCorrect": true,
+            "distractorRationale": null
+          },
+          {
+            "id": "superficial_shave_4",
+            "label": "Superficial shave biopsy",
+            "isCorrect": false,
+            "distractorRationale": "A superficial sample can truncate the lesion and compromise microstaging."
+          },
+          {
+            "id": "partial_punch_4",
+            "label": "Partial punch biopsy",
+            "isCorrect": false,
+            "distractorRationale": "The small accessible lesion can be completely sampled rather than selecting one potentially unrepresentative edge."
+          },
+          {
+            "id": "wide_excision_4",
+            "label": "Definitive wide local excision",
+            "isCorrect": false,
+            "distractorRationale": "Diagnostic microstaging should guide definitive planning rather than beginning with an unselected wide excision."
+          }
+        ],
+        "explanation": "A small accessible lesion concerning for melanoma is usually removed completely with narrow clinical margins and enough depth for histologic microstaging. Selected large or difficult lesions can require a different biopsy approach.",
+        "supportingEvidenceClaimIds": [
+          "claim.pigmented-skin-lesion.complete-diagnostic-biopsy"
+        ],
+        "agentReview": {
+          "authority": "owner-delegated agent authoring and review",
+          "reviewedOn": "2026-09-10",
+          "clinicianSignOff": false,
+          "scope": "Technical, editorial, source-traceability, and internal-consistency review; named clinician review remains required."
+        }
+      },
+      "node": {
+        "id": "node.pigmented-skin-lesion.forearm-change.1",
+        "questionVariantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v4",
+        "primaryConceptId": "concept.pigmented-skin-lesion.complete-diagnostic-biopsy",
+        "stem": "Which initial tissue-diagnosis approach best fits {patientName}'s lesion?",
+        "showServicePreviews": false,
+        "answerChoices": [
+          {
+            "id": "excisional_4",
+            "label": "Complete excisional biopsy",
+            "isCorrect": true,
+            "serviceRequest": {
+              "serviceId": "service.skin_excisional_biopsy"
+            }
+          },
+          {
+            "id": "superficial_shave_4",
+            "label": "Superficial shave biopsy",
+            "isCorrect": false,
+            "serviceRequest": null
+          },
+          {
+            "id": "partial_punch_4",
+            "label": "Partial punch biopsy",
+            "isCorrect": false,
+            "serviceRequest": null
+          },
+          {
+            "id": "wide_excision_4",
+            "label": "Definitive wide local excision",
+            "isCorrect": false,
+            "serviceRequest": null
+          }
+        ],
+        "shuffleAnswers": true,
+        "explanation": "A small accessible lesion concerning for melanoma is usually removed completely with narrow clinical margins and enough depth for histologic microstaging. Selected large or difficult lesions can require a different biopsy approach.",
+        "sourceLabels": [
+          "NCI melanoma PDQ professional summary (updated May 2025)",
+          "AAD melanoma guideline highlights (undated)"
+        ],
+        "resultGateAfter": {
+          "id": "gate.pigmented-skin-lesion.biopsy.4",
+          "resultTypeId": "service.skin_excisional_biopsy",
+          "pendingLabel": "Skin-lesion pathology pending",
+          "resultNarrative": "Complete biopsy shows invasive melanoma with a measured thickness of 1.5 mm with adequate histologic microstaging.",
+          "readiness": "all",
+          "allowedServiceRouteIds": [
+            "route.skin_excisional_biopsy.in_house",
+            "route.skin_excisional_biopsy.outsourced"
+          ]
+        },
+        "terminalDispositions": []
+      },
+      "timing": {
+        "caseId": "case.pigmented-skin-lesion.forearm-change",
+        "nodeId": "node.pigmented-skin-lesion.forearm-change.1",
+        "questionVariantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v4",
+        "classification": {
+          "kind": "test_choices",
+          "choices": [
+            {
+              "choiceId": "excisional_4",
+              "choiceLabel": "Complete excisional biopsy",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.biopsy"
+              }
+            },
+            {
+              "choiceId": "superficial_shave_4",
+              "choiceLabel": "Superficial shave biopsy",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.biopsy"
+              }
+            },
+            {
+              "choiceId": "partial_punch_4",
+              "choiceLabel": "Partial punch biopsy",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.biopsy"
+              }
+            },
+            {
+              "choiceId": "wide_excision_4",
+              "choiceLabel": "Definitive wide local excision",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.biopsy"
+              }
+            }
+          ]
+        }
+      },
+      "originalContext": {
+        "chiefComplaint": "Changing skin spot",
+        "presentation": "{patientName} has a small superficial forearm lesion with documented change in border and pigmentation. It is accessible for complete local biopsy, with no tissue diagnosis or palpable regional nodes yet.",
+        "patientDisplayName": "{patientName}",
+        "prototypeDemographics": {
+          "ageYears": 67,
+          "sexLabel": "Female"
+        },
+        "approvedInstantiationProfiles": [
+          {
+            "id": "profile.pigmented-skin-lesion.forearm-change.female.67",
+            "prototypeDemographics": {
+              "ageYears": 67,
+              "sexLabel": "Female"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has a small superficial forearm lesion with documented change in border and pigmentation. It is accessible for complete local biopsy, with no tissue diagnosis or palpable regional nodes yet."
+          },
+          {
+            "id": "profile.pigmented-skin-lesion.forearm-change.male.67",
+            "prototypeDemographics": {
+              "ageYears": 67,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has a small superficial forearm lesion with documented change in border and pigmentation. It is accessible for complete local biopsy, with no tissue diagnosis or palpable regional nodes yet."
+          },
+          {
+            "id": "profile.pigmented-skin-lesion.forearm-change.female.72",
+            "prototypeDemographics": {
+              "ageYears": 72,
+              "sexLabel": "Female"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has a small superficial forearm lesion with documented change in border and pigmentation. It is accessible for complete local biopsy, with no tissue diagnosis or palpable regional nodes yet."
+          },
+          {
+            "id": "profile.pigmented-skin-lesion.forearm-change.male.72",
+            "prototypeDemographics": {
+              "ageYears": 72,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has a small superficial forearm lesion with documented change in border and pigmentation. It is accessible for complete local biopsy, with no tissue diagnosis or palpable regional nodes yet."
+          }
+        ]
+      },
+      "restoreConstraint": "Reference only; no fallback is applied. Manager must restore only the rejected item and its explicit version/timing/service binding, retain all passed nodes and shared presentation/profile fields, and review sequence/result consistency. Do not revert the entire captured case, copy an approval to a different presentation, migrate FSRS history or overwrite another worker's content. Dropping only the r7 projection returns the round-six draft, not this original fallback. Use an explicit original-version projection, restoring the original concept and restoring or clearing Current update/Exhibit when the original has none; retain newer archived definitions/timings."
+    },
+    {
+      "id": "B17-context",
+      "caseId": "case.pigmented-skin-lesion.changing-back-lesion",
+      "nodeId": "node.pigmented-skin-lesion.changing-back-lesion.1",
+      "fallbackKind": "original_pre_batch_version",
+      "variantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v1",
+      "conceptId": "concept.pigmented-skin-lesion.complete-diagnostic-biopsy",
+      "provenance": {
+        "source": "tools/question-quality/fixtures/round3-batch1-before-20261102.json",
+        "sourceSha256": "083e84baa57bc16517d698b23ba7fa48b52d1971a9f0a6c2981c536127d1c862",
+        "reason": "No later owner-reviewed or shipped version is verified for this batch item in the available local review records. Use the exact captured original rather than label an unshipped author draft as a released fallback.",
+        "releaseStatus": "original; shipment not independently established",
+        "reviewStatus": "needs_clinician_review",
+        "lastClinicianReview": null
+      },
+      "exactNodeSha256": "6a8dc2505fe3b393dbbe6a76adf5adc09bbf720c781d397ae83fab0395ac2674",
+      "question": {
+        "contentVersion": "development-batch.2026-09-10.1",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v1",
+        "conceptId": "concept.pigmented-skin-lesion.complete-diagnostic-biopsy",
+        "patientPresentationVariantId": "presentation.pigmented-skin-lesion.changing-back-lesion",
+        "patientPresentation": "{patientName} has a small accessible pigmented lesion on the upper back that has evolved in color and border. It is superficial and can be removed completely; regional nodes are not palpable, and no diagnosis has been made.",
+        "approvedInstantiationProfiles": [
+          {
+            "id": "profile.pigmented-skin-lesion.changing-back-lesion.female.46",
+            "prototypeDemographics": {
+              "ageYears": 46,
+              "sexLabel": "Female"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has a small accessible pigmented lesion on the upper back that has evolved in color and border. It is superficial and can be removed completely; regional nodes are not palpable, and no diagnosis has been made."
+          },
+          {
+            "id": "profile.pigmented-skin-lesion.changing-back-lesion.male.46",
+            "prototypeDemographics": {
+              "ageYears": 46,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has a small accessible pigmented lesion on the upper back that has evolved in color and border. It is superficial and can be removed completely; regional nodes are not palpable, and no diagnosis has been made."
+          },
+          {
+            "id": "profile.pigmented-skin-lesion.changing-back-lesion.female.51",
+            "prototypeDemographics": {
+              "ageYears": 51,
+              "sexLabel": "Female"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has a small accessible pigmented lesion on the upper back that has evolved in color and border. It is superficial and can be removed completely; regional nodes are not palpable, and no diagnosis has been made."
+          },
+          {
+            "id": "profile.pigmented-skin-lesion.changing-back-lesion.male.51",
+            "prototypeDemographics": {
+              "ageYears": 51,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has a small accessible pigmented lesion on the upper back that has evolved in color and border. It is superficial and can be removed completely; regional nodes are not palpable, and no diagnosis has been made."
+          }
+        ],
+        "stem": "Which initial tissue-diagnosis approach best fits {patientName}'s lesion?",
+        "answerChoices": [
+          {
+            "id": "excisional_1",
+            "label": "Complete excisional biopsy",
+            "isCorrect": true,
+            "distractorRationale": null
+          },
+          {
+            "id": "superficial_shave_1",
+            "label": "Superficial shave biopsy",
+            "isCorrect": false,
+            "distractorRationale": "A superficial sample can truncate the lesion and compromise microstaging."
+          },
+          {
+            "id": "partial_punch_1",
+            "label": "Partial punch biopsy",
+            "isCorrect": false,
+            "distractorRationale": "The small accessible lesion can be completely sampled rather than selecting one potentially unrepresentative edge."
+          },
+          {
+            "id": "wide_excision_1",
+            "label": "Definitive wide local excision",
+            "isCorrect": false,
+            "distractorRationale": "Diagnostic microstaging should guide definitive planning rather than beginning with an unselected wide excision."
+          }
+        ],
+        "explanation": "A small accessible lesion concerning for melanoma is usually removed completely with narrow clinical margins and enough depth for histologic microstaging. Selected large or difficult lesions can require a different biopsy approach.",
+        "supportingEvidenceClaimIds": [
+          "claim.pigmented-skin-lesion.complete-diagnostic-biopsy"
+        ],
+        "agentReview": {
+          "authority": "owner-delegated agent authoring and review",
+          "reviewedOn": "2026-09-10",
+          "clinicianSignOff": false,
+          "scope": "Technical, editorial, source-traceability, and internal-consistency review; named clinician review remains required."
+        }
+      },
+      "node": {
+        "id": "node.pigmented-skin-lesion.changing-back-lesion.1",
+        "questionVariantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v1",
+        "primaryConceptId": "concept.pigmented-skin-lesion.complete-diagnostic-biopsy",
+        "stem": "Which initial tissue-diagnosis approach best fits {patientName}'s lesion?",
+        "showServicePreviews": false,
+        "answerChoices": [
+          {
+            "id": "excisional_1",
+            "label": "Complete excisional biopsy",
+            "isCorrect": true,
+            "serviceRequest": {
+              "serviceId": "service.skin_excisional_biopsy"
+            }
+          },
+          {
+            "id": "superficial_shave_1",
+            "label": "Superficial shave biopsy",
+            "isCorrect": false,
+            "serviceRequest": null
+          },
+          {
+            "id": "partial_punch_1",
+            "label": "Partial punch biopsy",
+            "isCorrect": false,
+            "serviceRequest": null
+          },
+          {
+            "id": "wide_excision_1",
+            "label": "Definitive wide local excision",
+            "isCorrect": false,
+            "serviceRequest": null
+          }
+        ],
+        "shuffleAnswers": true,
+        "explanation": "A small accessible lesion concerning for melanoma is usually removed completely with narrow clinical margins and enough depth for histologic microstaging. Selected large or difficult lesions can require a different biopsy approach.",
+        "sourceLabels": [
+          "NCI melanoma PDQ professional summary (updated May 2025)",
+          "AAD melanoma guideline highlights (undated)"
+        ],
+        "resultGateAfter": {
+          "id": "gate.pigmented-skin-lesion.biopsy.1",
+          "resultTypeId": "service.skin_excisional_biopsy",
+          "pendingLabel": "Skin-lesion pathology pending",
+          "resultNarrative": "Complete biopsy shows invasive melanoma with a measured thickness of 1.4 mm with adequate histologic microstaging.",
+          "readiness": "all",
+          "allowedServiceRouteIds": [
+            "route.skin_excisional_biopsy.in_house",
+            "route.skin_excisional_biopsy.outsourced"
+          ]
+        },
+        "terminalDispositions": []
+      },
+      "timing": {
+        "caseId": "case.pigmented-skin-lesion.changing-back-lesion",
+        "nodeId": "node.pigmented-skin-lesion.changing-back-lesion.1",
+        "questionVariantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v1",
+        "classification": {
+          "kind": "test_choices",
+          "choices": [
+            {
+              "choiceId": "excisional_1",
+              "choiceLabel": "Complete excisional biopsy",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.biopsy"
+              }
+            },
+            {
+              "choiceId": "superficial_shave_1",
+              "choiceLabel": "Superficial shave biopsy",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.biopsy"
+              }
+            },
+            {
+              "choiceId": "partial_punch_1",
+              "choiceLabel": "Partial punch biopsy",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.biopsy"
+              }
+            },
+            {
+              "choiceId": "wide_excision_1",
+              "choiceLabel": "Definitive wide local excision",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.biopsy"
+              }
+            }
+          ]
+        }
+      },
+      "originalContext": {
+        "chiefComplaint": "Changing skin spot",
+        "presentation": "{patientName} has a small accessible pigmented lesion on the upper back that has evolved in color and border. It is superficial and can be removed completely; regional nodes are not palpable, and no diagnosis has been made.",
+        "patientDisplayName": "{patientName}",
+        "prototypeDemographics": {
+          "ageYears": 46,
+          "sexLabel": "Female"
+        },
+        "approvedInstantiationProfiles": [
+          {
+            "id": "profile.pigmented-skin-lesion.changing-back-lesion.female.46",
+            "prototypeDemographics": {
+              "ageYears": 46,
+              "sexLabel": "Female"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has a small accessible pigmented lesion on the upper back that has evolved in color and border. It is superficial and can be removed completely; regional nodes are not palpable, and no diagnosis has been made."
+          },
+          {
+            "id": "profile.pigmented-skin-lesion.changing-back-lesion.male.46",
+            "prototypeDemographics": {
+              "ageYears": 46,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has a small accessible pigmented lesion on the upper back that has evolved in color and border. It is superficial and can be removed completely; regional nodes are not palpable, and no diagnosis has been made."
+          },
+          {
+            "id": "profile.pigmented-skin-lesion.changing-back-lesion.female.51",
+            "prototypeDemographics": {
+              "ageYears": 51,
+              "sexLabel": "Female"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has a small accessible pigmented lesion on the upper back that has evolved in color and border. It is superficial and can be removed completely; regional nodes are not palpable, and no diagnosis has been made."
+          },
+          {
+            "id": "profile.pigmented-skin-lesion.changing-back-lesion.male.51",
+            "prototypeDemographics": {
+              "ageYears": 51,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has a small accessible pigmented lesion on the upper back that has evolved in color and border. It is superficial and can be removed completely; regional nodes are not palpable, and no diagnosis has been made."
+          }
+        ]
+      },
+      "restoreConstraint": "Reference only; no fallback is applied. Manager must restore only the rejected item and its explicit version/timing/service binding, retain all passed nodes and shared presentation/profile fields, and review sequence/result consistency. Do not revert the entire captured case, copy an approval to a different presentation, migrate FSRS history or overwrite another worker's content. Dropping only the r7 projection returns the round-six draft, not this original fallback. Use an explicit original-version projection, restoring the original concept and restoring or clearing Current update/Exhibit when the original has none; retain newer archived definitions/timings."
+    },
+    {
+      "id": "B18-context",
+      "caseId": "case.pigmented-skin-lesion.calf-growth",
+      "nodeId": "node.pigmented-skin-lesion.calf-growth.1",
+      "fallbackKind": "original_pre_batch_version",
+      "variantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v3",
+      "conceptId": "concept.pigmented-skin-lesion.complete-diagnostic-biopsy",
+      "provenance": {
+        "source": "tools/question-quality/fixtures/round3-batch1-before-20261102.json",
+        "sourceSha256": "083e84baa57bc16517d698b23ba7fa48b52d1971a9f0a6c2981c536127d1c862",
+        "reason": "No later owner-reviewed or shipped version is verified for this batch item in the available local review records. Use the exact captured original rather than label an unshipped author draft as a released fallback.",
+        "releaseStatus": "original; shipment not independently established",
+        "reviewStatus": "needs_clinician_review",
+        "lastClinicianReview": null
+      },
+      "exactNodeSha256": "06be99b376c5c5622b4b5a9020c16886d282df8220602c20395979aedfe72954",
+      "question": {
+        "contentVersion": "development-batch.2026-09-10.1",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v3",
+        "conceptId": "concept.pigmented-skin-lesion.complete-diagnostic-biopsy",
+        "patientPresentationVariantId": "presentation.pigmented-skin-lesion.calf-growth",
+        "patientPresentation": "{patientName} reports evolution of a small accessible pigmented calf lesion with asymmetric color. The entire lesion can be sampled locally, and regional nodal examination is clinically negative.",
+        "approvedInstantiationProfiles": [
+          {
+            "id": "profile.pigmented-skin-lesion.calf-growth.female.39",
+            "prototypeDemographics": {
+              "ageYears": 39,
+              "sexLabel": "Female"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} reports evolution of a small accessible pigmented calf lesion with asymmetric color. The entire lesion can be sampled locally, and regional nodal examination is clinically negative."
+          },
+          {
+            "id": "profile.pigmented-skin-lesion.calf-growth.male.39",
+            "prototypeDemographics": {
+              "ageYears": 39,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} reports evolution of a small accessible pigmented calf lesion with asymmetric color. The entire lesion can be sampled locally, and regional nodal examination is clinically negative."
+          },
+          {
+            "id": "profile.pigmented-skin-lesion.calf-growth.female.44",
+            "prototypeDemographics": {
+              "ageYears": 44,
+              "sexLabel": "Female"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} reports evolution of a small accessible pigmented calf lesion with asymmetric color. The entire lesion can be sampled locally, and regional nodal examination is clinically negative."
+          },
+          {
+            "id": "profile.pigmented-skin-lesion.calf-growth.male.44",
+            "prototypeDemographics": {
+              "ageYears": 44,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} reports evolution of a small accessible pigmented calf lesion with asymmetric color. The entire lesion can be sampled locally, and regional nodal examination is clinically negative."
+          }
+        ],
+        "stem": "Which initial tissue-diagnosis approach best fits {patientName}'s lesion?",
+        "answerChoices": [
+          {
+            "id": "excisional_3",
+            "label": "Complete excisional biopsy",
+            "isCorrect": true,
+            "distractorRationale": null
+          },
+          {
+            "id": "superficial_shave_3",
+            "label": "Superficial shave biopsy",
+            "isCorrect": false,
+            "distractorRationale": "A superficial sample can truncate the lesion and compromise microstaging."
+          },
+          {
+            "id": "partial_punch_3",
+            "label": "Partial punch biopsy",
+            "isCorrect": false,
+            "distractorRationale": "The small accessible lesion can be completely sampled rather than selecting one potentially unrepresentative edge."
+          },
+          {
+            "id": "wide_excision_3",
+            "label": "Definitive wide local excision",
+            "isCorrect": false,
+            "distractorRationale": "Diagnostic microstaging should guide definitive planning rather than beginning with an unselected wide excision."
+          }
+        ],
+        "explanation": "A small accessible lesion concerning for melanoma is usually removed completely with narrow clinical margins and enough depth for histologic microstaging. Selected large or difficult lesions can require a different biopsy approach.",
+        "supportingEvidenceClaimIds": [
+          "claim.pigmented-skin-lesion.complete-diagnostic-biopsy"
+        ],
+        "agentReview": {
+          "authority": "owner-delegated agent authoring and review",
+          "reviewedOn": "2026-09-10",
+          "clinicianSignOff": false,
+          "scope": "Technical, editorial, source-traceability, and internal-consistency review; named clinician review remains required."
+        }
+      },
+      "node": {
+        "id": "node.pigmented-skin-lesion.calf-growth.1",
+        "questionVariantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v3",
+        "primaryConceptId": "concept.pigmented-skin-lesion.complete-diagnostic-biopsy",
+        "stem": "Which initial tissue-diagnosis approach best fits {patientName}'s lesion?",
+        "showServicePreviews": false,
+        "answerChoices": [
+          {
+            "id": "excisional_3",
+            "label": "Complete excisional biopsy",
+            "isCorrect": true,
+            "serviceRequest": {
+              "serviceId": "service.skin_excisional_biopsy"
+            }
+          },
+          {
+            "id": "superficial_shave_3",
+            "label": "Superficial shave biopsy",
+            "isCorrect": false,
+            "serviceRequest": null
+          },
+          {
+            "id": "partial_punch_3",
+            "label": "Partial punch biopsy",
+            "isCorrect": false,
+            "serviceRequest": null
+          },
+          {
+            "id": "wide_excision_3",
+            "label": "Definitive wide local excision",
+            "isCorrect": false,
+            "serviceRequest": null
+          }
+        ],
+        "shuffleAnswers": true,
+        "explanation": "A small accessible lesion concerning for melanoma is usually removed completely with narrow clinical margins and enough depth for histologic microstaging. Selected large or difficult lesions can require a different biopsy approach.",
+        "sourceLabels": [
+          "NCI melanoma PDQ professional summary (updated May 2025)",
+          "AAD melanoma guideline highlights (undated)"
+        ],
+        "resultGateAfter": {
+          "id": "gate.pigmented-skin-lesion.biopsy.3",
+          "resultTypeId": "service.skin_excisional_biopsy",
+          "pendingLabel": "Skin-lesion pathology pending",
+          "resultNarrative": "Complete biopsy shows invasive melanoma with a measured thickness of 1.8 mm with adequate histologic microstaging.",
+          "readiness": "all",
+          "allowedServiceRouteIds": [
+            "route.skin_excisional_biopsy.in_house",
+            "route.skin_excisional_biopsy.outsourced"
+          ]
+        },
+        "terminalDispositions": []
+      },
+      "timing": {
+        "caseId": "case.pigmented-skin-lesion.calf-growth",
+        "nodeId": "node.pigmented-skin-lesion.calf-growth.1",
+        "questionVariantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v3",
+        "classification": {
+          "kind": "test_choices",
+          "choices": [
+            {
+              "choiceId": "excisional_3",
+              "choiceLabel": "Complete excisional biopsy",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.biopsy"
+              }
+            },
+            {
+              "choiceId": "superficial_shave_3",
+              "choiceLabel": "Superficial shave biopsy",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.biopsy"
+              }
+            },
+            {
+              "choiceId": "partial_punch_3",
+              "choiceLabel": "Partial punch biopsy",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.biopsy"
+              }
+            },
+            {
+              "choiceId": "wide_excision_3",
+              "choiceLabel": "Definitive wide local excision",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.biopsy"
+              }
+            }
+          ]
+        }
+      },
+      "originalContext": {
+        "chiefComplaint": "Changing skin spot",
+        "presentation": "{patientName} reports evolution of a small accessible pigmented calf lesion with asymmetric color. The entire lesion can be sampled locally, and regional nodal examination is clinically negative.",
+        "patientDisplayName": "{patientName}",
+        "prototypeDemographics": {
+          "ageYears": 39,
+          "sexLabel": "Female"
+        },
+        "approvedInstantiationProfiles": [
+          {
+            "id": "profile.pigmented-skin-lesion.calf-growth.female.39",
+            "prototypeDemographics": {
+              "ageYears": 39,
+              "sexLabel": "Female"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} reports evolution of a small accessible pigmented calf lesion with asymmetric color. The entire lesion can be sampled locally, and regional nodal examination is clinically negative."
+          },
+          {
+            "id": "profile.pigmented-skin-lesion.calf-growth.male.39",
+            "prototypeDemographics": {
+              "ageYears": 39,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} reports evolution of a small accessible pigmented calf lesion with asymmetric color. The entire lesion can be sampled locally, and regional nodal examination is clinically negative."
+          },
+          {
+            "id": "profile.pigmented-skin-lesion.calf-growth.female.44",
+            "prototypeDemographics": {
+              "ageYears": 44,
+              "sexLabel": "Female"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} reports evolution of a small accessible pigmented calf lesion with asymmetric color. The entire lesion can be sampled locally, and regional nodal examination is clinically negative."
+          },
+          {
+            "id": "profile.pigmented-skin-lesion.calf-growth.male.44",
+            "prototypeDemographics": {
+              "ageYears": 44,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} reports evolution of a small accessible pigmented calf lesion with asymmetric color. The entire lesion can be sampled locally, and regional nodal examination is clinically negative."
+          }
+        ]
+      },
+      "restoreConstraint": "Reference only; no fallback is applied. Manager must restore only the rejected item and its explicit version/timing/service binding, retain all passed nodes and shared presentation/profile fields, and review sequence/result consistency. Do not revert the entire captured case, copy an approval to a different presentation, migrate FSRS history or overwrite another worker's content. Dropping only the r7 projection returns the round-six draft, not this original fallback. Use an explicit original-version projection, restoring the original concept and restoring or clearing Current update/Exhibit when the original has none; retain newer archived definitions/timings."
+    },
+    {
+      "id": "B19-context",
+      "caseId": "case.soft-tissue-mass.deep-thigh",
+      "nodeId": "node.soft-tissue-mass.deep-thigh.1",
+      "fallbackKind": "original_pre_batch_version",
+      "variantId": "question.soft-tissue-mass.extremity-mri.v1",
+      "conceptId": "concept.soft-tissue-mass.extremity-mri",
+      "provenance": {
+        "source": "tools/question-quality/fixtures/round3-batch1-before-20261102.json",
+        "sourceSha256": "083e84baa57bc16517d698b23ba7fa48b52d1971a9f0a6c2981c536127d1c862",
+        "reason": "No later owner-reviewed or shipped version is verified for this batch item in the available local review records. Use the exact captured original rather than label an unshipped author draft as a released fallback.",
+        "releaseStatus": "original; shipment not independently established",
+        "reviewStatus": "needs_clinician_review",
+        "lastClinicianReview": null
+      },
+      "exactNodeSha256": "4af4887a482d14f1cf3d5201edc3a7991e5f5293c3a6d6d186782d7f8d9cffa0",
+      "question": {
+        "contentVersion": "development-batch.2026-09-09.1",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "question.soft-tissue-mass.extremity-mri.v1",
+        "conceptId": "concept.soft-tissue-mass.extremity-mri",
+        "patientPresentationVariantId": "presentation.soft-tissue-mass.deep-thigh",
+        "patientPresentation": "{patientName} has noticed a deep thigh mass enlarging over several months. Examination confirms a firm deep lesion; they have no acute neurovascular symptoms.",
+        "approvedInstantiationProfiles": [
+          {
+            "id": "profile.soft-tissue-mass.deep-thigh.female.39",
+            "prototypeDemographics": {
+              "ageYears": 39,
+              "sexLabel": "Female"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has noticed a deep thigh mass enlarging over several months. Examination confirms a firm deep lesion; they have no acute neurovascular symptoms."
+          },
+          {
+            "id": "profile.soft-tissue-mass.deep-thigh.male.39",
+            "prototypeDemographics": {
+              "ageYears": 39,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has noticed a deep thigh mass enlarging over several months. Examination confirms a firm deep lesion; they have no acute neurovascular symptoms."
+          },
+          {
+            "id": "profile.soft-tissue-mass.deep-thigh.female.43",
+            "prototypeDemographics": {
+              "ageYears": 43,
+              "sexLabel": "Female"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has noticed a deep thigh mass enlarging over several months. Examination confirms a firm deep lesion; they have no acute neurovascular symptoms."
+          },
+          {
+            "id": "profile.soft-tissue-mass.deep-thigh.male.43",
+            "prototypeDemographics": {
+              "ageYears": 43,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has noticed a deep thigh mass enlarging over several months. Examination confirms a firm deep lesion; they have no acute neurovascular symptoms."
+          }
+        ],
+        "stem": "Which imaging study best characterizes this mass locally before tissue sampling?",
+        "answerChoices": [
+          {
+            "id": "extremity_mri_1",
+            "label": "Dedicated MRI of the involved extremity",
+            "isCorrect": true,
+            "distractorRationale": null
+          },
+          {
+            "id": "repeat_ultrasound_1",
+            "label": "Focused ultrasound of the mass",
+            "isCorrect": false,
+            "distractorRationale": "Ultrasound has already been indeterminate or the lesion is deep and enlarging."
+          },
+          {
+            "id": "plain_radiograph_1",
+            "label": "Plain radiographs of the involved extremity",
+            "isCorrect": false,
+            "distractorRationale": "Radiographs can show bone or mineralization but do not provide the needed soft-tissue characterization."
+          },
+          {
+            "id": "noncontrast_ct_1",
+            "label": "Noncontrast CT of the involved extremity",
+            "isCorrect": false,
+            "distractorRationale": "CT is not the preferred local soft-tissue characterization study in this scenario."
+          }
+        ],
+        "explanation": "A deep, enlarging, or ultrasound-indeterminate extremity mass warrants dedicated MRI for local characterization before biopsy. MRI guides planning but does not prove a histologic diagnosis.",
+        "supportingEvidenceClaimIds": [
+          "claim.soft-tissue-mass.mri"
+        ],
+        "agentReview": {
+          "authority": "owner-delegated agent authoring and review",
+          "reviewedOn": "2026-09-09",
+          "clinicianSignOff": false,
+          "scope": "Technical, editorial, source-traceability, and internal-consistency review; clinical review remains required."
+        }
+      },
+      "node": {
+        "id": "node.soft-tissue-mass.deep-thigh.1",
+        "questionVariantId": "question.soft-tissue-mass.extremity-mri.v1",
+        "primaryConceptId": "concept.soft-tissue-mass.extremity-mri",
+        "stem": "Which imaging study best characterizes this mass locally before tissue sampling?",
+        "answerChoices": [
+          {
+            "id": "extremity_mri_1",
+            "label": "Dedicated MRI of the involved extremity",
+            "isCorrect": true,
+            "serviceRequest": {
+              "serviceId": "service.extremity_mri"
+            }
+          },
+          {
+            "id": "repeat_ultrasound_1",
+            "label": "Focused ultrasound of the mass",
+            "isCorrect": false,
+            "serviceRequest": {
+              "serviceId": "service.ultrasound"
+            }
+          },
+          {
+            "id": "plain_radiograph_1",
+            "label": "Plain radiographs of the involved extremity",
+            "isCorrect": false,
+            "serviceRequest": null
+          },
+          {
+            "id": "noncontrast_ct_1",
+            "label": "Noncontrast CT of the involved extremity",
+            "isCorrect": false,
+            "serviceRequest": {
+              "serviceId": "service.ct"
+            }
+          }
+        ],
+        "shuffleAnswers": true,
+        "explanation": "A deep, enlarging, or ultrasound-indeterminate extremity mass warrants dedicated MRI for local characterization before biopsy. MRI guides planning but does not prove a histologic diagnosis.",
+        "sourceLabels": [
+          "Noebauer-Huhmann et al., ESSR soft-tissue imaging guideline (2024), CC BY 4.0",
+          "NCI PDQ Soft Tissue Sarcoma Treatment (updated 2025)"
+        ],
+        "resultGateAfter": {
+          "id": "gate.soft-tissue-mass.mri.1",
+          "resultTypeId": "service.extremity_mri",
+          "pendingLabel": "Extremity MRI pending",
+          "resultNarrative": "Extremity MRI defines the lesion's local extent and shows features concerning for an aggressive soft-tissue tumor. Imaging is suspicious but does not establish a histologic diagnosis.",
+          "readiness": "all",
+          "allowedServiceRouteIds": [
+            "route.extremity_mri.outsourced"
+          ]
+        },
+        "terminalDispositions": []
+      },
+      "timing": {
+        "caseId": "case.soft-tissue-mass.deep-thigh",
+        "nodeId": "node.soft-tissue-mass.deep-thigh.1",
+        "questionVariantId": "question.soft-tissue-mass.extremity-mri.v1",
+        "classification": {
+          "kind": "test_choices",
+          "choices": [
+            {
+              "choiceId": "extremity_mri_1",
+              "choiceLabel": "Dedicated MRI of the involved extremity",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.mri"
+              }
+            },
+            {
+              "choiceId": "repeat_ultrasound_1",
+              "choiceLabel": "Focused ultrasound of the mass",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.ultrasound"
+              }
+            },
+            {
+              "choiceId": "plain_radiograph_1",
+              "choiceLabel": "Plain radiographs of the involved extremity",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.radiography"
+              }
+            },
+            {
+              "choiceId": "noncontrast_ct_1",
+              "choiceLabel": "Noncontrast CT of the involved extremity",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.ct"
+              }
+            }
+          ]
+        }
+      },
+      "originalContext": {
+        "chiefComplaint": "Enlarging limb mass",
+        "presentation": "{patientName} has noticed a deep thigh mass enlarging over several months. Examination confirms a firm deep lesion; they have no acute neurovascular symptoms.",
+        "patientDisplayName": "{patientName}",
+        "prototypeDemographics": {
+          "ageYears": 39,
+          "sexLabel": "Female"
+        },
+        "approvedInstantiationProfiles": [
+          {
+            "id": "profile.soft-tissue-mass.deep-thigh.female.39",
+            "prototypeDemographics": {
+              "ageYears": 39,
+              "sexLabel": "Female"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has noticed a deep thigh mass enlarging over several months. Examination confirms a firm deep lesion; they have no acute neurovascular symptoms."
+          },
+          {
+            "id": "profile.soft-tissue-mass.deep-thigh.male.39",
+            "prototypeDemographics": {
+              "ageYears": 39,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has noticed a deep thigh mass enlarging over several months. Examination confirms a firm deep lesion; they have no acute neurovascular symptoms."
+          },
+          {
+            "id": "profile.soft-tissue-mass.deep-thigh.female.43",
+            "prototypeDemographics": {
+              "ageYears": 43,
+              "sexLabel": "Female"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has noticed a deep thigh mass enlarging over several months. Examination confirms a firm deep lesion; they have no acute neurovascular symptoms."
+          },
+          {
+            "id": "profile.soft-tissue-mass.deep-thigh.male.43",
+            "prototypeDemographics": {
+              "ageYears": 43,
+              "sexLabel": "Male"
+            },
+            "prototypeVitalSigns": {
+              "heartRateBpm": 76,
+              "systolicBloodPressureMmHg": 118,
+              "diastolicBloodPressureMmHg": 74,
+              "temperatureF": 98.4,
+              "oxygenSaturationPercent": 99
+            },
+            "presentation": "{patientName} has noticed a deep thigh mass enlarging over several months. Examination confirms a firm deep lesion; they have no acute neurovascular symptoms."
+          }
+        ]
+      },
+      "restoreConstraint": "Reference only; no fallback is applied. Manager must restore only the rejected item and its explicit version/timing/service binding, retain all passed nodes and shared presentation/profile fields, and review sequence/result consistency. Do not revert the entire captured case, copy an approval to a different presentation, migrate FSRS history or overwrite another worker's content. Dropping only the r7 projection returns the round-six draft, not this original fallback. Use an explicit original-version projection, restoring the original concept and restoring or clearing Current update/Exhibit when the original has none; retain newer archived definitions/timings."
+    },
+    {
+      "id": "B24",
+      "caseId": "case.l2.gastric-malt.cd20-boundary.v1",
+      "nodeId": "node.gastric-malt.cd20-alone-boundary.v1",
+      "fallbackKind": "original_pre_batch_version",
+      "variantId": "question.gastric-malt.cd20-alone-boundary.v1",
+      "conceptId": "concept.gastric-malt-lymphoma.pathologic-recognition",
+      "provenance": {
+        "source": "tools/question-quality/fixtures/round3-batch1-before-20261102.json",
+        "sourceSha256": "083e84baa57bc16517d698b23ba7fa48b52d1971a9f0a6c2981c536127d1c862",
+        "reason": "No later owner-reviewed or shipped version is verified for this batch item in the available local review records. Use the exact captured original rather than label an unshipped author draft as a released fallback.",
+        "releaseStatus": "original; shipment not independently established",
+        "reviewStatus": "clinically_approved",
+        "lastClinicianReview": {
+          "reviewer": "Melissa Rowland, MD",
+          "reviewedOn": "2026-08-06",
+          "contentVersion": "clinical.owner-row-039.2026-08-06.1"
+        }
+      },
+      "exactNodeSha256": "4a75639974c47c1a6b4b6716283c0a84fb492e4095793f6ad96530721ffd1696",
+      "question": {
+        "contentVersion": "clinical.owner-row-039.2026-08-06.1",
+        "reviewStatus": "clinically_approved",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": {
+          "reviewer": "Melissa Rowland, MD",
+          "reviewedOn": "2026-08-06",
+          "contentVersion": "clinical.owner-row-039.2026-08-06.1"
+        },
+        "id": "question.gastric-malt.cd20-alone-boundary.v1",
+        "presentationVariantId": "presentation.gastric-malt.cd20-alone-boundary",
+        "patientPresentation": "A limited gastric biopsy from an adult with dyspepsia contains many CD20-positive lymphocytes, but the specimen lacks convincing lymphoepithelial lesions and other diagnostic morphology.",
+        "conceptId": "concept.gastric-malt-lymphoma.pathologic-recognition",
+        "releasePointId": "release.l2.endoscopy",
+        "requiredClinicalSetting": "endoscopy",
+        "requiredCapabilityIds": [
+          "capability.endoscopy"
+        ],
+        "encounterRole": "gastric-malt-approved-question-pool",
+        "stem": "How should the CD20 result be interpreted?",
+        "answerChoices": [
+          {
+            "id": "lineage_not_diagnosis",
+            "label": "CD20 confirms B-cell lineage, not MALT lymphoma by itself",
+            "isCorrect": true,
+            "distractorRationale": null
+          },
+          {
+            "id": "cd20_confirms_malt",
+            "label": "CD20 alone confirms gastric MALT lymphoma even without diagnostic morphology",
+            "isCorrect": false,
+            "distractorRationale": "CD20 identifies B cells but is not specific for MALT lymphoma and cannot replace integrated morphologic assessment."
+          },
+          {
+            "id": "cd20_confirms_dlbcl",
+            "label": "CD20 positivity proves diffuse large B-cell lymphoma regardless of cell size",
+            "isCorrect": false,
+            "distractorRationale": "Large-cell morphology and other pathologic features are required to diagnose DLBCL."
+          },
+          {
+            "id": "cd20_proves_reactive",
+            "label": "CD20 positivity proves the infiltrate is reactive and excludes lymphoma",
+            "isCorrect": false,
+            "distractorRationale": "Both reactive and neoplastic B cells may express CD20, so this conclusion is unsupported."
+          }
+        ],
+        "shuffleAnswers": true,
+        "explanation": "CD20 establishes that the infiltrate contains B cells. It does not distinguish reactive B cells from gastric MALT lymphoma without compatible morphology, immunophenotyping, and any additional evaluation needed for an equivocal biopsy.",
+        "supportingEvidenceClaimIds": [
+          "claim.gastric-malt.integrated-pathologic-recognition"
+        ]
+      },
+      "node": {
+        "id": "node.gastric-malt.cd20-alone-boundary.v1",
+        "questionVariantId": "question.gastric-malt.cd20-alone-boundary.v1",
+        "primaryConceptId": "concept.gastric-malt-lymphoma.pathologic-recognition",
+        "stem": "How should the CD20 result be interpreted?",
+        "answerChoices": [
+          {
+            "id": "lineage_not_diagnosis",
+            "label": "CD20 confirms B-cell lineage, not MALT lymphoma by itself",
+            "isCorrect": true,
+            "serviceRequest": null
+          },
+          {
+            "id": "cd20_confirms_malt",
+            "label": "CD20 alone confirms gastric MALT lymphoma even without diagnostic morphology",
+            "isCorrect": false,
+            "serviceRequest": null
+          },
+          {
+            "id": "cd20_confirms_dlbcl",
+            "label": "CD20 positivity proves diffuse large B-cell lymphoma regardless of cell size",
+            "isCorrect": false,
+            "serviceRequest": null
+          },
+          {
+            "id": "cd20_proves_reactive",
+            "label": "CD20 positivity proves the infiltrate is reactive and excludes lymphoma",
+            "isCorrect": false,
+            "serviceRequest": null
+          }
+        ],
+        "shuffleAnswers": true,
+        "explanation": "CD20 establishes that the infiltrate contains B cells. It does not distinguish reactive B cells from gastric MALT lymphoma without compatible morphology, immunophenotyping, and any additional evaluation needed for an equivocal biopsy.",
+        "sourceLabels": [
+          "Biomarker Research — Gastric mucosa-associated lymphoid tissue lymphoma and Helicobacter pylori infection: a review of current diagnosis and management (2016)",
+          "Cancers — Clinical Management of Patients with Gastric MALT Lymphoma: A Gastroenterologist's Point of View (2023)",
+          "Clinically approved by Melissa Rowland, MD on 2026-08-06"
+        ],
+        "resultGateAfter": null,
+        "terminalDispositions": [
+          {
+            "answerChoiceId": "cd20_confirms_malt",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "The encounter recorded CD20 alone confirms gastric MALT lymphoma even without diagnostic morphology instead of the approved answer.",
+            "clinicalRationale": "CD20 identifies B cells but is not specific for MALT lymphoma and cannot replace integrated morphologic assessment.",
+            "sourceLabels": [
+              "Biomarker Research — Gastric mucosa-associated lymphoid tissue lymphoma and Helicobacter pylori infection: a review of current diagnosis and management (2016)",
+              "Cancers — Clinical Management of Patients with Gastric MALT Lymphoma: A Gastroenterologist's Point of View (2023)",
+              "Clinically approved by Melissa Rowland, MD on 2026-08-06"
+            ]
+          },
+          {
+            "answerChoiceId": "cd20_confirms_dlbcl",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "The encounter recorded CD20 positivity proves diffuse large B-cell lymphoma regardless of cell size instead of the approved answer.",
+            "clinicalRationale": "Large-cell morphology and other pathologic features are required to diagnose DLBCL.",
+            "sourceLabels": [
+              "Biomarker Research — Gastric mucosa-associated lymphoid tissue lymphoma and Helicobacter pylori infection: a review of current diagnosis and management (2016)",
+              "Cancers — Clinical Management of Patients with Gastric MALT Lymphoma: A Gastroenterologist's Point of View (2023)",
+              "Clinically approved by Melissa Rowland, MD on 2026-08-06"
+            ]
+          },
+          {
+            "answerChoiceId": "cd20_proves_reactive",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "The encounter recorded CD20 positivity proves the infiltrate is reactive and excludes lymphoma instead of the approved answer.",
+            "clinicalRationale": "Both reactive and neoplastic B cells may express CD20, so this conclusion is unsupported.",
+            "sourceLabels": [
+              "Biomarker Research — Gastric mucosa-associated lymphoid tissue lymphoma and Helicobacter pylori infection: a review of current diagnosis and management (2016)",
+              "Cancers — Clinical Management of Patients with Gastric MALT Lymphoma: A Gastroenterologist's Point of View (2023)",
+              "Clinically approved by Melissa Rowland, MD on 2026-08-06"
+            ]
+          }
+        ]
+      },
+      "timing": {
+        "caseId": "case.l2.gastric-malt.cd20-boundary.v1",
+        "nodeId": "node.gastric-malt.cd20-alone-boundary.v1",
+        "questionVariantId": "question.gastric-malt.cd20-alone-boundary.v1",
+        "classification": {
+          "kind": "no_test"
+        }
+      },
+      "originalContext": {
+        "chiefComplaint": "Gastric biopsy review",
+        "presentation": "{patientName}'s limited gastric biopsy, obtained during evaluation for dyspepsia, contains many CD20-positive lymphocytes, but the specimen lacks convincing lymphoepithelial lesions and other diagnostic morphology.",
+        "patientDisplayName": "Outpatient Patient",
+        "approvedInstantiationProfiles": []
+      },
+      "restoreConstraint": "Reference only; no fallback is applied. Manager must restore only the rejected item and its explicit version/timing/service binding, retain all passed nodes and shared presentation/profile fields, and review sequence/result consistency. Do not revert the entire captured case, copy an approval to a different presentation, migrate FSRS history or overwrite another worker's content. Dropping only the r7 projection returns the round-six draft, not this original fallback. Use an explicit original-version projection, restoring the original concept and restoring or clearing Current update/Exhibit when the original has none; retain newer archived definitions/timings."
+    },
+    {
+      "id": "B36",
+      "caseId": "case.gs028se.pdsa-act-qi-measures.a-abandon-harm",
+      "nodeId": "node.gs028se.pdsa-act-qi-measures.a-abandon-harm.1",
+      "fallbackKind": "original_pre_batch_version",
+      "variantId": "question.quality-improvement.pdsa-act-and-iterate.v3",
+      "conceptId": "concept.quality-improvement.pdsa-act-and-iterate",
+      "provenance": {
+        "source": "tools/question-quality/fixtures/round3-batch1-before-20261102.json",
+        "sourceSha256": "083e84baa57bc16517d698b23ba7fa48b52d1971a9f0a6c2981c536127d1c862",
+        "reason": "No later owner-reviewed or shipped version is verified for this batch item in the available local review records. Use the exact captured original rather than label an unshipped author draft as a released fallback.",
+        "releaseStatus": "original; shipment not independently established",
+        "reviewStatus": "needs_clinician_review",
+        "lastClinicianReview": null
+      },
+      "exactNodeSha256": "e01980bd489e2757bbadd34cb7d4aa0e011d63b9c23dd0e8001fc5c2a07ebf53",
+      "question": {
+        "contentVersion": "development-batch.2026-09-29.statistics-ethics.2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "question.quality-improvement.pdsa-act-and-iterate.v3",
+        "conceptId": "concept.quality-improvement.pdsa-act-and-iterate",
+        "patientPresentationVariantId": "presentation.gs028se.pdsa-act-qi-measures.a-abandon-harm",
+        "patientPresentation": "{patientName}, the foregut improvement lead, reviews an authorized new nutrition-pathway pilot for gastroparesis after obstruction was excluded. Its symptom aim is not met and planning takes longer. The vendor insists the pathway saves time after staff complete extra training on saving time. No specific correctable defect has emerged from review, and the next cycle has not been planned.",
+        "approvedInstantiationProfiles": [],
+        "stem": "Which Act-step decision fits the authorized gastroparesis pathway pilot when its symptom aim is not met and care planning takes longer, with no specific correctable defect identified?",
+        "answerChoices": [
+          {
+            "id": "correct_abandon-harm",
+            "label": "Abandon this version and test another idea",
+            "isCorrect": true,
+            "rationale": "This version missed its stated aim and worsened care-planning time. Abandoning the version and testing another idea follows both unfavorable findings.",
+            "distractorRationale": null
+          },
+          {
+            "id": "d1_abandon-harm",
+            "label": "Adapt the pathway labels and repeat this version",
+            "isCorrect": false,
+            "rationale": "The observations do not identify a labeling problem to fix. That specific adaptation invents an explanation rather than using the supplied findings.",
+            "distractorRationale": "The observations do not identify a labeling problem to fix. That specific adaptation invents an explanation rather than using the supplied findings."
+          },
+          {
+            "id": "d2_abandon-harm",
+            "label": "Adopt the pathway and monitor the next cycle",
+            "isCorrect": false,
+            "rationale": "The tested version missed the aim and increased care-planning time, so the evidence does not support adopting it while monitoring later.",
+            "distractorRationale": "The tested version missed the aim and increased care-planning time, so the evidence does not support adopting it while monitoring later."
+          },
+          {
+            "id": "d3_abandon-harm",
+            "label": "Repeat the same test to confirm the findings",
+            "isCorrect": false,
+            "rationale": "The stated findings already support changing direction from this version. An unchanged repeat does not use the unfavorable learning to choose the next idea.",
+            "distractorRationale": "The stated findings already support changing direction from this version. An unchanged repeat does not use the unfavorable learning to choose the next idea."
+          }
+        ],
+        "explanation": "Abandon this unsuccessful pathway version and test another idea. Its symptom aim was missed and planning time increased, without a specific correctable defect identified in the supplied findings.",
+        "teachingPoint": "The Act step permits abandoning a tested version when findings are unfavorable. This pathway missed its symptom aim and increased planning time, supporting another idea for the next test. Remember that the verdict concerns this version. The observations do not establish that every nutrition pathway fails or identify a specific defect to repair.",
+        "exhibit": {
+          "kind": "keyValue",
+          "caption": "Unnamed investigational gastroparesis nutrition pathway pilot: invented symptom relief and care-planning time findings for practice. Results belong only to this authorized local test, not real intervention efficacy.",
+          "items": [
+            {
+              "label": "Symptom-relief aim",
+              "value": "Not met"
+            },
+            {
+              "label": "Care-planning time",
+              "value": "Longer"
+            }
+          ]
+        },
+        "supportingEvidenceClaimIds": [
+          "claim.gs028se.statistics.pdsa-act",
+          "claim.gastroparesis.diagnostic-framework",
+          "claim.gastroparesis.four-hour-solid-meal-scintigraphy"
+        ],
+        "agentReview": {
+          "authority": "owner-delegated agent authoring and review",
+          "reviewedOn": "2026-10-07",
+          "clinicianSignOff": false,
+          "scope": "Technical, editorial, source-traceability, and internal-consistency review; named clinician review remains required."
+        }
+      },
+      "node": {
+        "id": "node.gs028se.pdsa-act-qi-measures.a-abandon-harm.1",
+        "questionVariantId": "question.quality-improvement.pdsa-act-and-iterate.v3",
+        "primaryConceptId": "concept.quality-improvement.pdsa-act-and-iterate",
+        "stem": "Which Act-step decision fits the authorized gastroparesis pathway pilot when its symptom aim is not met and care planning takes longer, with no specific correctable defect identified?",
+        "answerChoices": [
+          {
+            "id": "correct_abandon-harm",
+            "label": "Abandon this version and test another idea",
+            "isCorrect": true,
+            "rationale": "This version missed its stated aim and worsened care-planning time. Abandoning the version and testing another idea follows both unfavorable findings.",
+            "serviceRequest": null
+          },
+          {
+            "id": "d1_abandon-harm",
+            "label": "Adapt the pathway labels and repeat this version",
+            "isCorrect": false,
+            "rationale": "The observations do not identify a labeling problem to fix. That specific adaptation invents an explanation rather than using the supplied findings.",
+            "serviceRequest": null
+          },
+          {
+            "id": "d2_abandon-harm",
+            "label": "Adopt the pathway and monitor the next cycle",
+            "isCorrect": false,
+            "rationale": "The tested version missed the aim and increased care-planning time, so the evidence does not support adopting it while monitoring later.",
+            "serviceRequest": null
+          },
+          {
+            "id": "d3_abandon-harm",
+            "label": "Repeat the same test to confirm the findings",
+            "isCorrect": false,
+            "rationale": "The stated findings already support changing direction from this version. An unchanged repeat does not use the unfavorable learning to choose the next idea.",
+            "serviceRequest": null
+          }
+        ],
+        "shuffleAnswers": true,
+        "explanation": "Abandon this unsuccessful pathway version and test another idea. Its symptom aim was missed and planning time increased, without a specific correctable defect identified in the supplied findings.",
+        "teachingPoint": "The Act step permits abandoning a tested version when findings are unfavorable. This pathway missed its symptom aim and increased planning time, supporting another idea for the next test. Remember that the verdict concerns this version. The observations do not establish that every nutrition pathway fails or identify a specific defect to repair.",
+        "exhibit": {
+          "kind": "keyValue",
+          "caption": "Unnamed investigational gastroparesis nutrition pathway pilot: invented symptom relief and care-planning time findings for practice. Results belong only to this authorized local test, not real intervention efficacy.",
+          "items": [
+            {
+              "label": "Symptom-relief aim",
+              "value": "Not met"
+            },
+            {
+              "label": "Care-planning time",
+              "value": "Longer"
+            }
+          ]
+        },
+        "sourceLabels": [
+          "Plan-Do-Check-Act Cycle",
+          "Chapter 6. Track Performance with Metrics",
+          "ACG Clinical Guideline: Gastroparesis",
+          "AGA Clinical Practice Guideline on Management of Gastroparesis",
+          "Gastroparesis"
+        ],
+        "resultGateAfter": null,
+        "terminalDispositions": [
+          {
+            "answerChoiceId": "d1_abandon-harm",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "Review the teaching point and choice rationales.",
+            "clinicalRationale": "Abandon this unsuccessful pathway version and test another idea. Its symptom aim was missed and planning time increased, without a specific correctable defect identified in the supplied findings.",
+            "sourceLabels": [
+              "Plan-Do-Check-Act Cycle",
+              "Chapter 6. Track Performance with Metrics"
+            ]
+          },
+          {
+            "answerChoiceId": "d2_abandon-harm",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "Review the teaching point and choice rationales.",
+            "clinicalRationale": "Abandon this unsuccessful pathway version and test another idea. Its symptom aim was missed and planning time increased, without a specific correctable defect identified in the supplied findings.",
+            "sourceLabels": [
+              "Plan-Do-Check-Act Cycle",
+              "Chapter 6. Track Performance with Metrics"
+            ]
+          },
+          {
+            "answerChoiceId": "d3_abandon-harm",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "Review the teaching point and choice rationales.",
+            "clinicalRationale": "Abandon this unsuccessful pathway version and test another idea. Its symptom aim was missed and planning time increased, without a specific correctable defect identified in the supplied findings.",
+            "sourceLabels": [
+              "Plan-Do-Check-Act Cycle",
+              "Chapter 6. Track Performance with Metrics"
+            ]
+          }
+        ]
+      },
+      "timing": {
+        "caseId": "case.gs028se.pdsa-act-qi-measures.a-abandon-harm",
+        "nodeId": "node.gs028se.pdsa-act-qi-measures.a-abandon-harm.1",
+        "questionVariantId": "question.quality-improvement.pdsa-act-and-iterate.v3",
+        "classification": {
+          "kind": "no_test"
+        }
+      },
+      "originalContext": {
+        "chiefComplaint": "gastroparesis study",
+        "presentation": "{patientName}, the foregut improvement lead, reviews an authorized new nutrition-pathway pilot for gastroparesis after obstruction was excluded. Its symptom aim is not met and planning takes longer. The vendor insists the pathway saves time after staff complete extra training on saving time. No specific correctable defect has emerged from review, and the next cycle has not been planned.",
+        "patientDisplayName": "{patientName}",
+        "approvedInstantiationProfiles": []
+      },
+      "restoreConstraint": "Reference only; no fallback is applied. Manager must restore only the rejected item and its explicit version/timing/service binding, retain all passed nodes and shared presentation/profile fields, and review sequence/result consistency. Do not revert the entire captured case, copy an approval to a different presentation, migrate FSRS history or overwrite another worker's content. Dropping only the r7 projection returns the round-six draft, not this original fallback. Use an explicit original-version projection, restoring the original concept and restoring or clearing Current update/Exhibit when the original has none; retain newer archived definitions/timings."
+    }
+  ]
+}

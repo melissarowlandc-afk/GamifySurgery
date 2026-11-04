@@ -470,7 +470,621 @@ const existingTerminalProcedureRecords: ExactTestChoiceOrderRecord[] = [
   ].map(([slug, number]) => record(`case.lactational-breast-abscess.${slug}`, `node.lactational-breast-abscess.${slug}.2`, `question.lactational-breast-abscess.selected-drainage.v${number}`, `guided_aspiration_${number}`, "Image-guided aspiration with fluid culture", "timing.test.image_guided_aspiration_culture", { kind: "existing_terminal_procedure" })),
 ];
 
+// Explicit wording revisions retain the original keyed test's operational
+// contract. Old exact records remain below for already frozen encounters.
+const questionQualityPilotRecords: ExactTestChoiceOrderRecord[] = [
+  record("case.gs028c.acute-cholecystitis.a-stones-without-secondary-signs", "node.gs028c.acute-cholecystitis.a-stones-without-secondary-signs.1", "question.cholecystitis.hida-after-equivocal-ultrasound.v2.r2", "correct_2", "Hepatobiliary scintigraphy", "timing.test.nuclear_imaging", { kind: "not_executed", reason: "external_only" }),
+  terminalService("case.gs028b.nipple-discharge.paired-bloody-single-duct", "node.gs028b.nipple-discharge.paired-bloody-single-duct.2", "question.pathologic-nipple-discharge.diagnostic-imaging.v1.r2", "correct_1", "Diagnostic mammography and ultrasound", "timing.test.breast_imaging_bundle", "service.diagnostic_breast_imaging", ["route.diagnostic_breast_imaging.outsourced"]),
+  terminalService("case.adrenal-incidentaloma.renal-cancer-mass", "node.adrenal-incidentaloma.renal-cancer-mass.1", "question.adrenal-incidentaloma.pheochromocytoma-before-biopsy.v3.r2", "metanephrines_3", "Plasma free metanephrines", "timing.test.basic_labs", "service.basic_labs", ["route.basic_labs.phlebotomy_sendout", "route.basic_labs.outsourced"]),
+  record("case.gs028g.merkel-cell.paired-skin-panel", "node.gs028g.merkel-cell.paired-skin-panel.2", "question.gs028g.merkel-cell.clinically-negative-node-staging.v1.r2", "correct_1", "Specialist sentinel lymph node staging", "timing.test.biopsy", { kind: "not_executed", reason: "specialist_or_unsupported_service" }),
+];
+
+// Manager-reviewed wording advances identity only; keep both earlier contracts
+// above and every pre-pilot record below for frozen encounters.
+const questionQualityReviewRecords: ExactTestChoiceOrderRecord[] = [
+  record("case.gs028c.acute-cholecystitis.a-stones-without-secondary-signs", "node.gs028c.acute-cholecystitis.a-stones-without-secondary-signs.1", "question.cholecystitis.hida-after-equivocal-ultrasound.v2.r3", "correct_2", "Hepatobiliary scintigraphy", "timing.test.nuclear_imaging", { kind: "not_executed", reason: "external_only" }),
+  terminalService("case.gs028b.nipple-discharge.paired-bloody-single-duct", "node.gs028b.nipple-discharge.paired-bloody-single-duct.2", "question.pathologic-nipple-discharge.diagnostic-imaging.v1.r3", "correct_1", "Diagnostic mammography and ultrasound", "timing.test.breast_imaging_bundle", "service.diagnostic_breast_imaging", ["route.diagnostic_breast_imaging.outsourced"]),
+  terminalService("case.adrenal-incidentaloma.renal-cancer-mass", "node.adrenal-incidentaloma.renal-cancer-mass.1", "question.adrenal-incidentaloma.pheochromocytoma-before-biopsy.v3.r3", "metanephrines_3", "Plasma free metanephrines", "timing.test.basic_labs", "service.basic_labs", ["route.basic_labs.phlebotomy_sendout", "route.basic_labs.outsourced"]),
+  record("case.gs028g.merkel-cell.paired-skin-panel", "node.gs028g.merkel-cell.paired-skin-panel.2", "question.gs028g.merkel-cell.clinically-negative-node-staging.v1.r3", "correct_1", "Sentinel lymph node staging", "timing.test.biopsy", { kind: "not_executed", reason: "specialist_or_unsupported_service" }),
+];
+
+// Owner round two: exact new identities; preserve every prior draft contract.
+const questionQualityOwnerRound2Records: ExactTestChoiceOrderRecord[] = [
+  record("case.gs028c.acute-cholecystitis.a-stones-without-secondary-signs", "node.gs028c.acute-cholecystitis.a-stones-without-secondary-signs.1", "question.cholecystitis.hida-after-equivocal-ultrasound.v2.r4", "correct_2", "Hepatobiliary scintigraphy", "timing.test.nuclear_imaging", { kind: "not_executed", reason: "external_only" }),
+  terminalService("case.gs028b.nipple-discharge.paired-bloody-single-duct", "node.gs028b.nipple-discharge.paired-bloody-single-duct.2", "question.pathologic-nipple-discharge.diagnostic-imaging.v1.r4", "correct_1", "Diagnostic mammography and ultrasound", "timing.test.breast_imaging_bundle", "service.diagnostic_breast_imaging", ["route.diagnostic_breast_imaging.outsourced"]),
+];
+
+// BEGIN QUESTION QUALITY 20261102 EXACT RECORDS
+const questionQuality20261102Records: ExactTestChoiceOrderRecord[] = [
+  {
+    "caseId": "case.gs028c.acute-cholecystitis.a-stones-without-secondary-signs",
+    "nodeId": "node.gs028c.acute-cholecystitis.a-stones-without-secondary-signs.1",
+    "questionVariantId": "question.cholecystitis.hida-after-equivocal-ultrasound.v2.r5",
+    "choiceId": "correct_2",
+    "choiceLabel": "Hepatobiliary scintigraphy",
+    "timingProfileId": "timing.test.nuclear_imaging",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "external_only"
+    }
+  },
+  {
+    "caseId": "case.gs028b.nipple-discharge.paired-bloody-single-duct",
+    "nodeId": "node.gs028b.nipple-discharge.paired-bloody-single-duct.2",
+    "questionVariantId": "question.pathologic-nipple-discharge.diagnostic-imaging.v1.r5",
+    "choiceId": "correct_1",
+    "choiceLabel": "Diagnostic mammography and ultrasound",
+    "timingProfileId": "timing.test.breast_imaging_bundle",
+    "disposition": {
+      "kind": "terminal_service",
+      "serviceId": "service.diagnostic_breast_imaging",
+      "allowedRouteIds": [
+        "route.diagnostic_breast_imaging.outsourced"
+      ]
+    }
+  },
+  {
+    "caseId": "case.gs028b.differentiated-thyroid-cancer.a-palpable-node",
+    "nodeId": "node.gs028b.differentiated-thyroid-cancer.a-palpable-node.1",
+    "questionVariantId": "question.differentiated-thyroid-cancer.preoperative-nodal-ultrasound.v3.r2",
+    "choiceId": "correct_3",
+    "choiceLabel": "Neck ultrasonography",
+    "timingProfileId": "timing.test.ultrasound",
+    "disposition": {
+      "kind": "terminal_service",
+      "serviceId": "service.ultrasound",
+      "allowedRouteIds": [
+        "route.ultrasound.in_house",
+        "route.ultrasound.outsourced"
+      ]
+    }
+  },
+  {
+    "caseId": "case.pigmented-skin-lesion.shoulder-border",
+    "nodeId": "node.pigmented-skin-lesion.shoulder-border.2",
+    "questionVariantId": "question.melanoma.sentinel-node-staging.v2.r2",
+    "choiceId": "sentinel_node_2",
+    "choiceLabel": "Sentinel lymph-node biopsy",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.pigmented-skin-lesion.forearm-change",
+    "nodeId": "node.pigmented-skin-lesion.forearm-change.2",
+    "questionVariantId": "question.melanoma.sentinel-node-staging.v4.r2",
+    "choiceId": "sentinel_node_4",
+    "choiceLabel": "Sentinel lymph-node biopsy",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.pigmented-skin-lesion.changing-back-lesion",
+    "nodeId": "node.pigmented-skin-lesion.changing-back-lesion.2",
+    "questionVariantId": "question.melanoma.sentinel-node-staging.v1.r2",
+    "choiceId": "sentinel_node_1",
+    "choiceLabel": "Sentinel lymph-node biopsy",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.pigmented-skin-lesion.calf-growth",
+    "nodeId": "node.pigmented-skin-lesion.calf-growth.2",
+    "questionVariantId": "question.melanoma.sentinel-node-staging.v3.r2",
+    "choiceId": "sentinel_node_3",
+    "choiceLabel": "Sentinel lymph-node biopsy",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.soft-tissue-mass.deep-thigh",
+    "nodeId": "node.soft-tissue-mass.deep-thigh.2",
+    "questionVariantId": "question.soft-tissue-mass.specialist-planned-biopsy.v1.r2",
+    "choiceId": "sarcoma_core_1",
+    "choiceLabel": "Image-guided core biopsy through a sarcoma service",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.soft-tissue-mass.upper-arm",
+    "nodeId": "node.soft-tissue-mass.upper-arm.2",
+    "questionVariantId": "question.soft-tissue-mass.specialist-planned-biopsy.v2.r2",
+    "choiceId": "sarcoma_core_2",
+    "choiceLabel": "Image-guided core biopsy through a sarcoma service",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.pancreatic-pseudocyst.early-satiety",
+    "nodeId": "node.pancreatic-pseudocyst.early-satiety.2",
+    "questionVariantId": "question.pseudocyst.symptomatic-endoscopic-drainage.v1.r2",
+    "choiceId": "drain_0",
+    "choiceLabel": "Endoscopic transmural drainage",
+    "timingProfileId": "timing.test.pseudocyst_drainage",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.pancreatic-pseudocyst.postmeal-vomiting",
+    "nodeId": "node.pancreatic-pseudocyst.postmeal-vomiting.2",
+    "questionVariantId": "question.pseudocyst.symptomatic-endoscopic-drainage.v2.r2",
+    "choiceId": "drain_1",
+    "choiceLabel": "Endoscopic transmural drainage",
+    "timingProfileId": "timing.test.pseudocyst_drainage",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.pancreatic-pseudocyst.persistent-pain",
+    "nodeId": "node.pancreatic-pseudocyst.persistent-pain.2",
+    "questionVariantId": "question.pseudocyst.symptomatic-endoscopic-drainage.v3.r2",
+    "choiceId": "drain_2",
+    "choiceLabel": "Endoscopic transmural drainage",
+    "timingProfileId": "timing.test.pseudocyst_drainage",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.pancreatic-pseudocyst.reduced-intake",
+    "nodeId": "node.pancreatic-pseudocyst.reduced-intake.2",
+    "questionVariantId": "question.pseudocyst.symptomatic-endoscopic-drainage.v4.r2",
+    "choiceId": "drain_3",
+    "choiceLabel": "Endoscopic transmural drainage",
+    "timingProfileId": "timing.test.pseudocyst_drainage",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  }
+];
+// END QUESTION QUALITY 20261102 EXACT RECORDS
+
+// BEGIN QUESTION QUALITY ADVERSARIAL 20261102 EXACT RECORDS
+const questionQualityAdversarial20261102Records: ExactTestChoiceOrderRecord[] = [
+  {
+    "caseId": "case.gs028c.acute-cholecystitis.a-stones-without-secondary-signs",
+    "nodeId": "node.gs028c.acute-cholecystitis.a-stones-without-secondary-signs.1",
+    "questionVariantId": "question.cholecystitis.hida-after-equivocal-ultrasound.v2.r6",
+    "choiceId": "correct_2",
+    "choiceLabel": "Hepatobiliary scintigraphy assessing gallbladder filling",
+    "timingProfileId": "timing.test.nuclear_imaging",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "external_only"
+    }
+  },
+  {
+    "caseId": "case.gs028b.nipple-discharge.paired-bloody-single-duct",
+    "nodeId": "node.gs028b.nipple-discharge.paired-bloody-single-duct.2",
+    "questionVariantId": "question.pathologic-nipple-discharge.diagnostic-imaging.v1.r6",
+    "choiceId": "correct_1",
+    "choiceLabel": "Mammography and targeted ultrasound",
+    "timingProfileId": "timing.test.breast_imaging_bundle",
+    "disposition": {
+      "kind": "terminal_service",
+      "serviceId": "service.diagnostic_breast_imaging",
+      "allowedRouteIds": [
+        "route.diagnostic_breast_imaging.outsourced"
+      ]
+    }
+  },
+  {
+    "caseId": "case.gs028b.differentiated-thyroid-cancer.a-palpable-node",
+    "nodeId": "node.gs028b.differentiated-thyroid-cancer.a-palpable-node.1",
+    "questionVariantId": "question.differentiated-thyroid-cancer.preoperative-nodal-ultrasound.v3.r3",
+    "choiceId": "correct_3",
+    "choiceLabel": "Neck ultrasound surveying central and lateral nodal compartments",
+    "timingProfileId": "timing.test.ultrasound",
+    "disposition": {
+      "kind": "terminal_service",
+      "serviceId": "service.ultrasound",
+      "allowedRouteIds": [
+        "route.ultrasound.in_house",
+        "route.ultrasound.outsourced"
+      ]
+    }
+  },
+  {
+    "caseId": "case.pigmented-skin-lesion.shoulder-border",
+    "nodeId": "node.pigmented-skin-lesion.shoulder-border.2",
+    "questionVariantId": "question.melanoma.sentinel-node-staging.v2.r3",
+    "choiceId": "sentinel_node_2",
+    "choiceLabel": "Sentinel lymph node mapping and biopsy",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.pigmented-skin-lesion.forearm-change",
+    "nodeId": "node.pigmented-skin-lesion.forearm-change.2",
+    "questionVariantId": "question.melanoma.sentinel-node-staging.v4.r3",
+    "choiceId": "sentinel_node_4",
+    "choiceLabel": "Sentinel lymph node mapping and biopsy",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.pigmented-skin-lesion.changing-back-lesion",
+    "nodeId": "node.pigmented-skin-lesion.changing-back-lesion.2",
+    "questionVariantId": "question.melanoma.sentinel-node-staging.v1.r3",
+    "choiceId": "sentinel_node_1",
+    "choiceLabel": "Sentinel lymph node mapping and biopsy",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.pigmented-skin-lesion.calf-growth",
+    "nodeId": "node.pigmented-skin-lesion.calf-growth.2",
+    "questionVariantId": "question.melanoma.sentinel-node-staging.v3.r3",
+    "choiceId": "sentinel_node_3",
+    "choiceLabel": "Sentinel lymph node mapping and biopsy",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.soft-tissue-mass.deep-thigh",
+    "nodeId": "node.soft-tissue-mass.deep-thigh.2",
+    "questionVariantId": "question.soft-tissue-mass.specialist-planned-biopsy.v1.r3",
+    "choiceId": "sarcoma_core_1",
+    "choiceLabel": "Region A within the mass",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.soft-tissue-mass.upper-arm",
+    "nodeId": "node.soft-tissue-mass.upper-arm.2",
+    "questionVariantId": "question.soft-tissue-mass.specialist-planned-biopsy.v2.r3",
+    "choiceId": "sarcoma_core_2",
+    "choiceLabel": "Region A within the mass",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.l2.gastric-malt.cd20-boundary.v1",
+    "nodeId": "node.gastric-malt.cd20-alone-boundary.v1",
+    "questionVariantId": "question.gastric-malt.cd20-alone-boundary.v1.r3",
+    "choiceId": "lineage_not_diagnosis",
+    "choiceLabel": "Endoscopic resampling for histology and immunophenotyping",
+    "timingProfileId": "timing.test.endoscopy_with_sampling",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.pancreatic-pseudocyst.early-satiety",
+    "nodeId": "node.pancreatic-pseudocyst.early-satiety.2",
+    "questionVariantId": "question.pseudocyst.symptomatic-endoscopic-drainage.v1.r3",
+    "choiceId": "drain_0",
+    "choiceLabel": "Referral for endoscopic transmural drainage assessment",
+    "timingProfileId": "timing.test.pseudocyst_drainage",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.pancreatic-pseudocyst.postmeal-vomiting",
+    "nodeId": "node.pancreatic-pseudocyst.postmeal-vomiting.2",
+    "questionVariantId": "question.pseudocyst.symptomatic-endoscopic-drainage.v2.r3",
+    "choiceId": "drain_1",
+    "choiceLabel": "Referral for endoscopic transmural drainage assessment",
+    "timingProfileId": "timing.test.pseudocyst_drainage",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.pancreatic-pseudocyst.persistent-pain",
+    "nodeId": "node.pancreatic-pseudocyst.persistent-pain.2",
+    "questionVariantId": "question.pseudocyst.symptomatic-endoscopic-drainage.v3.r3",
+    "choiceId": "drain_2",
+    "choiceLabel": "Referral for endoscopic transmural drainage assessment",
+    "timingProfileId": "timing.test.pseudocyst_drainage",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.pancreatic-pseudocyst.reduced-intake",
+    "nodeId": "node.pancreatic-pseudocyst.reduced-intake.2",
+    "questionVariantId": "question.pseudocyst.symptomatic-endoscopic-drainage.v4.r3",
+    "choiceId": "drain_3",
+    "choiceLabel": "Referral for endoscopic transmural drainage assessment",
+    "timingProfileId": "timing.test.pseudocyst_drainage",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  }
+];
+// END QUESTION QUALITY ADVERSARIAL 20261102 EXACT RECORDS
+
+// BEGIN QUESTION QUALITY ADVERSARIAL R3 20261102 EXACT RECORDS
+const questionQualityAdversarialR320261102Records: ExactTestChoiceOrderRecord[] = [
+  {
+    "caseId": "case.gs028b.nipple-discharge.paired-bloody-single-duct",
+    "nodeId": "node.gs028b.nipple-discharge.paired-bloody-single-duct.2",
+    "questionVariantId": "question.pathologic-nipple-discharge.diagnostic-imaging.v1.r7",
+    "choiceId": "correct_1",
+    "choiceLabel": "Diagnostic mammography and targeted retroareolar ultrasound",
+    "timingProfileId": "timing.test.breast_imaging_bundle",
+    "disposition": {
+      "kind": "terminal_service",
+      "serviceId": "service.diagnostic_breast_imaging",
+      "allowedRouteIds": [
+        "route.diagnostic_breast_imaging.outsourced"
+      ]
+    }
+  },
+  {
+    "caseId": "case.gs028b.differentiated-thyroid-cancer.a-palpable-node",
+    "nodeId": "node.gs028b.differentiated-thyroid-cancer.a-palpable-node.1",
+    "questionVariantId": "question.differentiated-thyroid-cancer.preoperative-nodal-ultrasound.v3.r4",
+    "choiceId": "correct_3",
+    "choiceLabel": "Neck ultrasound of central and lateral nodal compartments",
+    "timingProfileId": "timing.test.ultrasound",
+    "disposition": {
+      "kind": "terminal_service",
+      "serviceId": "service.ultrasound",
+      "allowedRouteIds": [
+        "route.ultrasound.in_house",
+        "route.ultrasound.outsourced"
+      ]
+    }
+  },
+  {
+    "caseId": "case.pigmented-skin-lesion.shoulder-border",
+    "nodeId": "node.pigmented-skin-lesion.shoulder-border.2",
+    "questionVariantId": "question.melanoma.sentinel-node-staging.v2.r4",
+    "choiceId": "sentinel_node_2",
+    "choiceLabel": "Sentinel-node biopsy with wide excision, before reconstructive closure",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.pigmented-skin-lesion.forearm-change",
+    "nodeId": "node.pigmented-skin-lesion.forearm-change.2",
+    "questionVariantId": "question.melanoma.sentinel-node-staging.v4.r4",
+    "choiceId": "sentinel_node_4",
+    "choiceLabel": "Sentinel lymph node mapping and biopsy",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.pigmented-skin-lesion.changing-back-lesion",
+    "nodeId": "node.pigmented-skin-lesion.changing-back-lesion.2",
+    "questionVariantId": "question.melanoma.sentinel-node-staging.v1.r4",
+    "choiceId": "sentinel_node_1",
+    "choiceLabel": "Sentinel-node biopsy with wide excision, before reconstructive closure",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.pigmented-skin-lesion.calf-growth",
+    "nodeId": "node.pigmented-skin-lesion.calf-growth.2",
+    "questionVariantId": "question.melanoma.sentinel-node-staging.v3.r4",
+    "choiceId": "sentinel_node_3",
+    "choiceLabel": "Sentinel lymph node mapping and biopsy",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.soft-tissue-mass.deep-thigh",
+    "nodeId": "node.soft-tissue-mass.deep-thigh.2",
+    "questionVariantId": "question.soft-tissue-mass.specialist-planned-biopsy.v1.r4",
+    "choiceId": "sarcoma_core_1",
+    "choiceLabel": "Image-guided core biopsy of region A along path A",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.soft-tissue-mass.upper-arm",
+    "nodeId": "node.soft-tissue-mass.upper-arm.2",
+    "questionVariantId": "question.soft-tissue-mass.specialist-planned-biopsy.v2.r4",
+    "choiceId": "sarcoma_core_2",
+    "choiceLabel": "Image-guided core biopsy of region B along path B",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.l2.gastric-malt.cd20-boundary.v1",
+    "nodeId": "node.gastric-malt.cd20-alone-boundary.v1",
+    "questionVariantId": "question.gastric-malt.cd20-alone-boundary.v1.r4",
+    "choiceId": "lineage_not_diagnosis",
+    "choiceLabel": "Repeat endoscopy with documented-site biopsies for histologic comparison",
+    "timingProfileId": "timing.test.upper_endoscopy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  }
+];
+// END QUESTION QUALITY ADVERSARIAL R3 20261102 EXACT RECORDS
+
+// BEGIN QUESTION QUALITY ADVERSARIAL R4 20261102 EXACT RECORDS
+const questionQualityAdversarialR420261102Records: ExactTestChoiceOrderRecord[] = [
+  {
+    "caseId": "case.gs028b.differentiated-thyroid-cancer.a-palpable-node",
+    "nodeId": "node.gs028b.differentiated-thyroid-cancer.a-palpable-node.1",
+    "questionVariantId": "question.differentiated-thyroid-cancer.preoperative-nodal-ultrasound.v3.r5",
+    "choiceId": "correct_3",
+    "choiceLabel": "Repeat node FNA with cytology and thyroglobulin washout",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "terminal_service",
+      "serviceId": "service.thyroid_fna",
+      "allowedRouteIds": [
+        "route.thyroid_fna.in_house",
+        "route.thyroid_fna.outsourced"
+      ]
+    }
+  },
+  {
+    "caseId": "case.pigmented-skin-lesion.calf-growth",
+    "nodeId": "node.pigmented-skin-lesion.calf-growth.2",
+    "questionVariantId": "question.melanoma.sentinel-node-staging.v3.r5",
+    "choiceId": "sentinel_node_3",
+    "choiceLabel": "Targeted core biopsy of the regional node",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.pancreatic-pseudocyst.early-satiety",
+    "nodeId": "node.pancreatic-pseudocyst.early-satiety.2",
+    "questionVariantId": "question.pseudocyst.symptomatic-endoscopic-drainage.v1.r4",
+    "choiceId": "drain_0",
+    "choiceLabel": "Arterial embolization, then collection drainage if required",
+    "timingProfileId": "timing.test.clinical_procedure",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.pancreatic-pseudocyst.postmeal-vomiting",
+    "nodeId": "node.pancreatic-pseudocyst.postmeal-vomiting.2",
+    "questionVariantId": "question.pseudocyst.symptomatic-endoscopic-drainage.v2.r4",
+    "choiceId": "drain_1",
+    "choiceLabel": "Transmural drainage with reassessment; add necrosectomy if required",
+    "timingProfileId": "timing.test.pseudocyst_drainage",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.pancreatic-pseudocyst.persistent-pain",
+    "nodeId": "node.pancreatic-pseudocyst.persistent-pain.2",
+    "questionVariantId": "question.pseudocyst.symptomatic-endoscopic-drainage.v3.r4",
+    "choiceId": "drain_2",
+    "choiceLabel": "Transpapillary pancreatic duct stenting",
+    "timingProfileId": "timing.test.ercp",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.pancreatic-pseudocyst.reduced-intake",
+    "nodeId": "node.pancreatic-pseudocyst.reduced-intake.2",
+    "questionVariantId": "question.pseudocyst.symptomatic-endoscopic-drainage.v4.r4",
+    "choiceId": "drain_3",
+    "choiceLabel": "Transmural drainage with planned long-term plastic-stent drainage",
+    "timingProfileId": "timing.test.pseudocyst_drainage",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  }
+];
+// END QUESTION QUALITY ADVERSARIAL R4 20261102 EXACT RECORDS
+
+// BEGIN QUESTION QUALITY ADVERSARIAL R5 20261102 EXACT RECORDS
+const questionQualityAdversarialR520261102Records: ExactTestChoiceOrderRecord[] = [
+  {
+    "caseId": "case.gs028b.differentiated-thyroid-cancer.a-palpable-node",
+    "nodeId": "node.gs028b.differentiated-thyroid-cancer.a-palpable-node.1",
+    "questionVariantId": "question.differentiated-thyroid-cancer.preoperative-nodal-ultrasound.v3.r6",
+    "choiceId": "correct_3",
+    "choiceLabel": "Solid-rim FNA for cytology; thyroglobulin in needle washout",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "terminal_service",
+      "serviceId": "service.thyroid_fna",
+      "allowedRouteIds": [
+        "route.thyroid_fna.in_house",
+        "route.thyroid_fna.outsourced"
+      ]
+    }
+  },
+  {
+    "caseId": "case.pancreatic-pseudocyst.early-satiety",
+    "nodeId": "node.pancreatic-pseudocyst.early-satiety.2",
+    "questionVariantId": "question.pseudocyst.symptomatic-endoscopic-drainage.v1.r5",
+    "choiceId": "drain_0",
+    "choiceLabel": "Arterial embolization, followed by reassessment for collection drainage",
+    "timingProfileId": "timing.test.clinical_procedure",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  }
+];
+// END QUESTION QUALITY ADVERSARIAL R5 20261102 EXACT RECORDS
+
 export const EXACT_TEST_CHOICE_ORDER_RECORDS: readonly ExactTestChoiceOrderRecord[] = [
+  ...questionQualityAdversarialR520261102Records,
+  ...questionQualityAdversarialR420261102Records,
+  ...questionQualityAdversarialR320261102Records,
+  ...questionQualityAdversarial20261102Records,
+  ...questionQuality20261102Records,
+  ...questionQualityOwnerRound2Records,
+  ...questionQualityReviewRecords,
+  ...questionQualityPilotRecords,
   ...terminalServices,
   ...gateRouteOverrides,
   ...stagedResultGates,

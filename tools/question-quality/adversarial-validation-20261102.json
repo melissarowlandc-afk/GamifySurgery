@@ -1,0 +1,155 @@
+{
+  "checkedOn": "2026-11-02",
+  "scope": "Worker-local validation, no release or clinical acceptance. Full-suite historical failures are retained separately from final supplemental passes.",
+  "finalChecks": [
+    {
+      "check": "clinical-content",
+      "command": "npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads --maxWorkers=2 --reporter=dot",
+      "exitCode": 0,
+      "filesPassed": 92,
+      "testsPassed": 726,
+      "testsFailed": 0,
+      "durationSeconds": 23.1,
+      "log": "tools/question-quality/adversarial-clinical-final-20261102.log"
+    },
+    {
+      "check": "lint unit tests",
+      "command": "npm.cmd run clinical:lint:test",
+      "exitCode": 0,
+      "testsPassed": 21,
+      "testsFailed": 0,
+      "log": "tools/question-quality/adversarial-lint-tests-final-20261102.log"
+    },
+    {
+      "check": "whole-bank advisory lint",
+      "command": "npm.cmd run clinical:lint -- --summary --json tools/question-quality/adversarial-whole-bank-20261102.json",
+      "exitCode": 0,
+      "cases": 1110,
+      "variants": 1418,
+      "contexts": 6039,
+      "findings": 1724,
+      "variantsWithFindings": 886,
+      "log": "tools/question-quality/adversarial-whole-bank-final-20261102.log"
+    },
+    {
+      "check": "four player presentation suites",
+      "command": "npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 --reporter=dot src/session/variety3ChartsViewModels.test.ts src/session/briefEarlyLevelsPresentation.test.ts src/session/pediatricChartsViewModels.test.ts src/session/earlyLevelsPresentation.test.ts",
+      "preload": "Command-local NODE_OPTIONS=--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs; prior value restored",
+      "exitCode": 0,
+      "filesPassed": 4,
+      "testsPassed": 43,
+      "testsFailed": 0,
+      "durationSeconds": 4.47,
+      "log": "tools/question-quality/adversarial-player-final-20261102.log"
+    },
+    {
+      "check": "seven workspace typechecks",
+      "command": "npm.cmd run typecheck",
+      "exitCode": 0,
+      "workspacesPassed": 7,
+      "workspacesFailed": 0,
+      "log": "tools/question-quality/adversarial-typecheck-final-20261102.log"
+    },
+    {
+      "check": "post-repair domain excluding two untouched Level 5 suites",
+      "command": "npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=2 --reporter=dot --exclude tests/level-five-integration.test.ts --exclude tests/level-five-latent-bugs.test.ts",
+      "exitCode": 0,
+      "filesPassed": 164,
+      "testsPassed": 4330,
+      "testsFailed": 0,
+      "testsSkipped": 1,
+      "durationSeconds": 636.08,
+      "log": "tools/question-quality/adversarial-domain-post-repairs-20261102.log"
+    },
+    {
+      "check": "authoring/report integrity",
+      "command": "node --disable-warning=ExperimentalWarning tools/question-quality/verify-adversarial-20261102.mjs",
+      "exitCode": 0,
+      "mainItems": 43,
+      "contextItems": 30,
+      "indexedNoteResponses": 586,
+      "exactClinicalApprovals": 11,
+      "retainedTimingRows": 1540,
+      "currentTimingRows": 1613,
+      "explicitNewOrderRecords": 14,
+      "newClaims": 39,
+      "sourceRecords": 35,
+      "mathematicalItems": 6,
+      "sourceSpans": 32805,
+      "protectedFilesUnchanged": 9,
+      "report": "tools/question-quality/adversarial-report-qa-20261102.json"
+    }
+  ],
+  "fullDomainAttempt": {
+    "command": "npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=2 --reporter=dot",
+    "exitCode": 1,
+    "filesPassed": 160,
+    "filesFailed": 6,
+    "testsPassed": 4355,
+    "testsFailed": 17,
+    "testsSkipped": 1,
+    "durationSeconds": 1004.83,
+    "log": "tools/question-quality/adversarial-domain-full-20261102.log",
+    "resolution": [
+      {
+        "count": 6,
+        "kind": "Content-caused stale expectations",
+        "action": "Fixed exact frozen EGD fixture and materialized A25 patient-name expectations; final non-Level-5 run passes without relaxing choices, coverage, FSRS, services or deadlines."
+      },
+      {
+        "count": 2,
+        "kind": "Employee diagnostic queue assertions in untouched shared lane",
+        "action": "Passed isolated whole file and final 164-file follow-up; no edits by this worker."
+      },
+      {
+        "count": 1,
+        "kind": "Level 4 24-hour APP fairness timeout at 120000ms",
+        "action": "Passed final 164-file follow-up under original deadline; no runtime or test edit."
+      },
+      {
+        "count": 1,
+        "kind": "Expected Level 5 bound-input hash mismatch",
+        "test": "tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > binds the actual run to its current game, balance, clinical and driver inputs and reconciles cash",
+        "action": "Manager rebind required after acceptance. This is the only failure attributed solely to binding. Evidence untouched."
+      },
+      {
+        "count": 7,
+        "kind": "Level 5 simulation timeouts",
+        "tests": [
+          "matches continued play after save/reload at integration-preparing (30000ms)",
+          "matches continued play after save/reload at integration-running (30000ms)",
+          "matches continued play after save/reload at integration-final (30000ms)",
+          "matches continued play after save/reload at integration-finish (30000ms)",
+          "continues normal operations, completes a genuinely lower retry and retains the higher best and first finish (300000ms)",
+          "finishes the garden return before starting offsite movement after live (5000ms)",
+          "finishes the garden return before starting offsite movement after legacy reload (5000ms)"
+        ],
+        "action": "Tests, deadlines and spatial.ts unchanged. Earlier manager direction identifies three pre-pilot timeouts; do not infer all newly observed checkpoint timeouts are proven pre-existing or caused by the hash. No fresh Level 5 rerun after test-only repairs."
+      }
+    ]
+  },
+  "supplementalFullPlayerAttempt": {
+    "exitCode": 1,
+    "filesPassed": 308,
+    "filesFailed": 7,
+    "testsPassed": 3244,
+    "testsFailed": 17,
+    "durationSeconds": 525.71,
+    "log": "tools/question-quality/adversarial-player-full-20261102.log",
+    "fixedContentCausedCount": 1,
+    "finalTouchedSuitePasses": 43,
+    "remainingUntouchedLaneFailures": {
+      "src/App.cloudAccess.test.tsx": 2,
+      "src/App.cloudLifecycle.test.tsx": 2,
+      "src/auth/AuthGate.test.tsx": 2,
+      "src/mobile/mobileEntryIntegration.test.tsx": 1,
+      "src/ui/WelcomeArtwork.test.tsx": 8,
+      "src/session/periopNurseOwnerFeedback.test.ts": 1
+    },
+    "note": "No full-player rerun after targeted repair; do not call the full player suite green."
+  },
+  "clinicalGate": "All 73 new draft versions require independent re-review, manager acceptance and exact clinical approval. Eleven historical exact approvals are metadata only; no blanket approval.",
+  "noChanges": [
+    "No Git, installs, network writes, shipment, evidence rebind, save migration, analytics collection, deadline extensions or spatial optimization."
+  ]
+}

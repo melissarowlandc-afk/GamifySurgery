@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   SURGERY_CENTER_CASES,
   SURGERY_CENTER_TESTED_CONCEPTS,
+  SYNTHETIC_CLINICAL_RELEASE,
 } from "@gamify-surgery/clinical-content";
 import {
   createInitialGameState,
@@ -101,7 +102,8 @@ describe("September 10 surgery-center production flows", () => {
   it("runs all forty two-node encounters and all thirty-two gated services through reducer actions", () => {
     let gateCount = 0;
     const reviewed = new Set<string>();
-    for (const [index, clinicalCase] of SURGERY_CENTER_CASES.entries()) {
+    for (const [index, sourceCase] of SURGERY_CENTER_CASES.entries()) {
+      const clinicalCase = SYNTHETIC_CLINICAL_RELEASE.cases.find(c => c.id === sourceCase.id)!;
       const encounterId = `encounter.sc.${index}`;
       let state = preparedState(`all-${index}`, clinicalCase.earliestFacilityStage === 2 ? 2 : 1);
       state = gameReducer(state, { type: "ADMIT_PATIENT", operationId: `sc.${index}.admit`, encounterId, caseId: clinicalCase.id, patientDisplayName: `Patient ${index}`, arrivalClass: "routine" });
@@ -135,7 +137,7 @@ describe("September 10 surgery-center production flows", () => {
           state = gameReducer(state, { type: "ADVANCE_TICK", operationId: `sc.${index}.before-result.${state.facilityTick}` });
         }
         state = ready(state, encounterId, `sc.${index}.result`);
-        expect(state.encounters[encounterId]!.deliveredResultNarratives).toContain(clinicalCase.decisionNodes[0]!.resultGateAfter!.resultNarrative);
+        expect(state.encounters[encounterId]!.deliveredResultNarratives).toContain(clinicalCase.decisionNodes[0]!.resultGateAfter!.resultNarrative.replaceAll("{patientName}", state.encounters[encounterId]!.patientDisplayName));
       } else state = ready(state, encounterId, `sc.${index}.second`);
       const secondConcept = getCurrentQuestion(state, encounterId)!.node.primaryConceptId;
       expect(secondConcept).toBe(clinicalCase.decisionNodes[1]!.primaryConceptId);
@@ -145,7 +147,23 @@ describe("September 10 surgery-center production flows", () => {
       expect(state.learningHistories[secondConcept]?.reviews).toHaveLength(1);
     }
     expect(gateCount).toBe(32);
-    expect(reviewed).toEqual(new Set(SURGERY_CENTER_TESTED_CONCEPTS.map((item) => item.id)));
+    // Four original objectives now have explicit application versions. Two
+    // melanoma cases retain the passed sentinel objective while two use the
+    // new nodal-evidence objective, so both must be witnessed.
+    const replaced=new Set(["concept.achalasia.high-resolution-manometry","concept.inguinal-hernia.equivocal-exam-ultrasound","concept.inguinal-hernia.symptomatic-elective-repair","concept.pigmented-skin-lesion.complete-diagnostic-biopsy"]);
+    const expected=new Set(SURGERY_CENTER_TESTED_CONCEPTS.map(item=>replaced.has(item.id)?item.id+".v2":item.id));
+    expected.add("concept.melanoma.sentinel-node-staging.v2");
+    // Round six retains HRM v2 in two cases and introduces v3 in another.
+    // All four mapped skin contexts now score the explicit v3 construct.
+    expected.add("concept.achalasia.high-resolution-manometry.v3");
+    expected.delete("concept.pigmented-skin-lesion.complete-diagnostic-biopsy.v2");
+    expected.add("concept.pigmented-skin-lesion.complete-diagnostic-biopsy.v3");
+    // Round seven retains old histories and scores the revised paired objectives.
+    expected.delete("concept.inguinal-hernia.symptomatic-elective-repair.v2");
+    expected.add("concept.inguinal-hernia.symptomatic-elective-repair.v3");
+    expected.add("concept.pigmented-skin-lesion.complete-diagnostic-biopsy.v4");
+    expected.add("concept.pigmented-skin-lesion.partial-depth-nodal-planning.v1");
+    expect(reviewed).toEqual(expected);
   }, hostedTime(60_000));
 
   it("uses corrective-forward Again grading and preserves a pending external encounter across reload", () => {
