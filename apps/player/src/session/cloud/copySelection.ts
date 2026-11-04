@@ -2,6 +2,7 @@ import { loadCloudEvidenceCheckpoint } from "./codecEvidence";
 import { logicalJsonText, sha256Utf8 } from "./codecJson";
 import { cloudProgress } from "./progress";
 import type { CloudConfirmed } from "./transport";
+import { isSnapshotCopy } from "./snapshotCodec";
 
 /** Identity is the only change made by a faithful separate-campaign import.
  * Normalize it for comparison so importing a branch cannot make it newer. */
@@ -18,8 +19,11 @@ export async function inspectLoadedCopy(loaded: Awaited<ReturnType<typeof loadCl
     evidence: { ...evidence, campaignId: identity, baseline: { ...evidence.baseline,
       source: { ...evidence.baseline.source, campaignId: identity }, pins: { ...evidence.baseline.pins, campaignId: identity } } } };
   const progress = cloudProgress(loaded.state);
-  return { campaign: loaded.campaign, progress, rank: [progress.facilityTick, snapshot.head.sequence,
-    progress.xp, progress.level, evidence.records.length], digest: await sha256Utf8(logicalJsonText(JSON.parse(JSON.stringify(normalized)))) };
+  const stateDigest = await sha256Utf8(logicalJsonText(JSON.parse(JSON.stringify({ ...loaded.state, campaignId: identity }))));
+  return { campaign: loaded.campaign, progress, rank: [progress.facilityTick, loaded.snapshotLineage?.sequence ?? snapshot.head.sequence,
+    progress.xp, progress.level, loaded.snapshotLineage ? 0 : evidence.records.length], stateDigest,
+    ...(loaded.snapshotLineage ? { lineage: loaded.snapshotLineage } : {}),
+    digest: loaded.snapshotLineage ? stateDigest : await sha256Utf8(logicalJsonText(JSON.parse(JSON.stringify(normalized)))) };
 }
 export type VerifiedCopyInspection = Awaited<ReturnType<typeof inspectVerifiedCopy>>;
 
@@ -32,6 +36,11 @@ export function compareVerifiedProgress(left: VerifiedCopyInspection, right: Ver
   return left.digest < right.digest ? -1 : left.digest > right.digest ? 1 : 0;
 }
 export function copyDescendsFrom(copy: CloudConfirmed, base: CloudConfirmed): boolean {
+  const legacyRoot = /^migration\.([a-f0-9]{64})$/.exec(base.lineage?.branchId ?? "")?.[1];
+  if (isSnapshotCopy(copy)) return !copy.priorRecovery && !base.priorRecovery && copy.campaignId === base.campaignId &&
+    (copy.snapshot.uncompressedSha256 === base.snapshot.uncompressedSha256 || copy.lineage?.parents.includes(base.snapshot.uncompressedSha256) === true ||
+      Boolean(legacyRoot && base.lineage?.parents.includes(legacyRoot) && copy.lineage?.parents.includes(legacyRoot)) ||
+      Boolean(copy.lineage && base.lineage && copy.lineage.branchId === base.lineage.branchId && copy.lineage.sequence >= base.lineage.sequence));
   return !copy.priorRecovery && !base.priorRecovery && copy.campaignId === base.campaignId && copy.baselineId === base.baselineId &&
     copy.evidence.header.uncompressedSha256 === base.evidence.header.uncompressedSha256 &&
     copy.evidence.records.length >= base.evidence.records.length && base.evidence.records.every((row, index) => {

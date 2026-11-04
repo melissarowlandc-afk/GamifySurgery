@@ -7,6 +7,7 @@ import { accountMenu, campaignScreen, expectPlaying, expectResumeReady, openAndC
 // No Supabase credentials, real Auth, copied localStorage or copied latest saves.
 async function rig(browser: Browser, baseURL: string) {
   const server = new FakeCloudServer(), contexts: BrowserContext[] = [], authenticated = new Map<Page, string | null>();
+  server.setAccess("qa-account-a", { snapshotSaves: true }); server.setAccess("qa-account-b", { snapshotSaves: true });
   const transports = new Map<string, CloudTransport>();
   const unavailablePages = new Set<Page>();
   const page = async (layout: "desktop" | "phone", accountId = "qa-account-a", sameContext?: BrowserContext, deviceCampaigns = 0) => {

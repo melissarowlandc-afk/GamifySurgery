@@ -10,10 +10,30 @@ import { FakeCloudServer } from "./cloud/fakeTransport";
 import { loadCloudEvidenceCheckpoint } from "./cloud/codecEvidence";
 import { accountStorageKey } from "./accountStorageKey";
 import { PROTOTYPE_PROFILE_KEY } from "./prototypeStorage";
+import { CloudCacheError } from "./cloud/codecCache";
 
 afterEach(() => { vi.restoreAllMocks(); vi.useRealTimers(); });
 const activeProfile = () => appendLocalCampaign(createFreshProfile(), createInitialGameState().founder, "Journal clinic", 0, "journal").profile;
 describe("legacy local profiles plus incremental durability", () => {
+  it("retries the pending baseline before starting another compaction and preserves subsequent commands", async () => {
+    let now = 0; vi.spyOn(performance, "now").mockImplementation(() => now);
+    const profile = activeProfile(), store = new MemoryJournalStorage(), errors: unknown[] = [];
+    const journal = await LocalProfileJournal.create(profile, null, error => errors.push(error), () => {}, store);
+    const record = (state: ReturnType<typeof createInitialGameState>) => journal.record({ ...profile,
+      campaigns: profile.campaigns.map(row => ({ ...row, state })) });
+    const first = journal.execute({ type: "SET_SIMULATION_SPEED", speed: 2, operationId: "before.failed.baseline" }, PROTOTYPE_DOMAIN_CONTEXT);
+    record(first);
+    let release!: () => void; const gate = new Promise<void>(resolve => { release = resolve; });
+    const compact = vi.spyOn(store, "compact").mockImplementationOnce(async () => { await gate; throw new CloudCacheError("transaction"); });
+    const failed = journal.compact(true);
+    const second = journal.execute({ type: "SET_SIMULATION_SPEED", speed: 4, operationId: "during.failed.baseline" }, PROTOTYPE_DOMAIN_CONTEXT);
+    record(second); await vi.waitFor(() => expect(compact).toHaveBeenCalledTimes(1));
+    release(); expect(await failed).toBe(false); expect(errors).toHaveLength(1);
+    now = 61_000; expect(await journal.compact(true)).toBe(true);
+    const third = journal.execute({ type: "SET_SIMULATION_SPEED", speed: 2, operationId: "after.baseline.retry" }, PROTOTYPE_DOMAIN_CONTEXT);
+    record(third); expect(await journal.durable()).toBe(true); journal.stop();
+    expect(requireActiveCampaign(await recoverLocalProfile(profile, null, store)).state).toEqual(third);
+  });
   it("reads a legacy profile unchanged when no journal exists", async () => {
     const profile = createFreshProfile(), before = JSON.stringify(profile);
     expect(await recoverLocalProfile(profile, null, new MemoryJournalStorage())).toBe(profile);
@@ -39,7 +59,7 @@ describe("legacy local profiles plus incremental durability", () => {
     expect(requireActiveCampaign(again).state).toEqual(later);
     const data = await store.read((await store.keys("local|"))[0]!);
     const rows = data!.snapshot.seed.checkpoint.evidence.records.concat(data!.rows.flatMap(row => row.delta?.records ?? []));
-    expect(rows.filter(row => row.kind === "transition")).toHaveLength(2);
+    expect(rows.filter(row => row.kind === "transition")).toHaveLength(1); // Only the post-snapshot crash tail remains; exact state above is unchanged.
   });
   it("does not run bulk encoding during ordinary commands or a hidden drain, and does not resurrect deletion", async () => {
     const profile = activeProfile(), store = new MemoryJournalStorage();

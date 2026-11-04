@@ -5,6 +5,7 @@ import { isCloudCodecProcessingError, utf8Bytes } from "./codecJson";
 import { cloudCodec } from "./codecWorker";
 import { cloudScopeData } from "./scopeData";
 import { timeCloudEntry } from "./entryTimings";
+import { isSnapshotCopy, SNAPSHOT_BASELINE, snapshotEvidence } from "./snapshotCodec";
 import { cloudCampaignStorageKey } from "../accountStorageKey";
 import { cloudCheckDeadline, CLOUD_READ_TIMEOUT_MS } from "./checkDeadline";
 import type { CloudEntryStore } from "./entryStorage";
@@ -12,6 +13,7 @@ import { newWriterToken, readWriterIdentity, writeWriterIdentity, type WriterAcq
 import type { CloudConflictCopies } from "./progress";
 import { importSeparateCloudCampaign, separateCloudCampaignId } from "./importCampaigns";
 import { cloudCopyFamily, copyDescendsFrom } from "./copySelection";
+import { snapshotConflictBackup } from "./retainedCopies";
 import type { CloudCodecExecutor } from "./codecTasks";
 import { CloudCacheError } from "./codecCache";
 import { type CloudCache, type CloudCacheEntry, type CloudCacheRead, type CloudRecovery } from "./cache";
@@ -107,6 +109,8 @@ export class CloudSyncCoordinator {
   private openedJournalHighWater: number | null = null;
   private backupRetryAfter: TimePair | null = null;
   private journalOwner: string | null = null;
+  private snapshotSaves = false;
+  get supportsSnapshots(): boolean { return this.snapshotSaves; }
 
   constructor(private readonly options: {
     scope: CloudScope; transport: CloudTransport; cache: CloudCache; enabled?: boolean;
@@ -121,7 +125,8 @@ export class CloudSyncCoordinator {
     this.lastReconnect = this.now();
     this.unbindDiagnostics = problemDiagnostics.source("coordinator", () => {
       const view = this.view;
-      return { phase: view.phase, failure: view.failure, canExecute: view.canExecute, localDurable: view.localDurable, pending: view.pending,
+      return { saveFormat: this.record?.entry.confirmed.saveFormat ?? 2, snapshotBytes: this.record?.entry.confirmed.snapshot.compressedBytes ?? null,
+        phase: view.phase, failure: view.failure, canExecute: view.canExecute, localDurable: view.localDurable, pending: view.pending,
         leaseExpiresAt: this.window?.until.wall ?? null, leaseRemainingMs: this.window ? this.remaining(this.window.until) : null,
         resumeAuthorized: this.resumeAuthorized, stopped: this.stopped, closing: this.closingRequested, checking: this.checking,
         uploading: Boolean(this.uploading), renewing: this.renewing, offlineLocal: this.offlineLocal };
@@ -135,7 +140,7 @@ export class CloudSyncCoordinator {
   async journalChangedSinceOpen(): Promise<boolean> {
     return ((await this.journal?.head(cloudCampaignStorageKey(this.scope)))?.highWater ?? null) !== this.openedJournalHighWater;
   }
-  noteLocalChange(dirty = true): void { this.journalDirty = dirty; if (dirty) this.dirtySince ??= this.now(); }
+  noteLocalChange(dirty = true): void { this.journalDirty = dirty; if (dirty) this.dirtySince ??= this.now(); else if (!this.recovery()) this.dirtySince = null; }
   confirmJournalDurability(): void {
     if (!this.localDurable && !this.attempted && !this.localCacheConflict) {
       this.localDurable = true; this.emit(); // Phase/lease/resume gates still require their checked recovery.
@@ -233,6 +238,7 @@ export class CloudSyncCoordinator {
     if (!access.enabled || access.writesEnabled === false) throw new CloudSyncError("disabled");
     if (!access.noticeAccepted) throw new CloudSyncError("notice");
     if (access.minProtocol > CLOUD_SYNC_PROTOCOL) throw new CloudSyncError("protocol");
+    this.snapshotSaves = access.snapshotSaves === true;
     return access;
   }
   private fail(error: unknown, preserveLocalDurability = false): void {
@@ -372,10 +378,11 @@ export class CloudSyncCoordinator {
   }
   private deviceCopy(): CloudConfirmed | null {
     const confirmed = this.confirmed, pending = this.pendingCandidate;
-    return confirmed && pending ? { ...confirmed, snapshot: pending.snapshot,
-      evidence: { header: confirmed.evidence.header, records: [...confirmed.evidence.records, ...pending.evidence.records] } } : confirmed;
+    return confirmed && pending ? { ...confirmed, ...(pending.saveFormat === 3 ? { saveFormat: 3 as const, lineage: pending.lineage, baselineId: SNAPSHOT_BASELINE } : {}), snapshot: pending.snapshot,
+      evidence: pending.saveFormat === 3 ? { header: confirmed.evidence.header, records: [] } : { header: confirmed.evidence.header, records: [...confirmed.evidence.records, ...pending.evidence.records] } } : confirmed;
   }
   private follows(device: CloudConfirmed, account: CloudConfirmed): boolean {
+    if (isSnapshotCopy(device)) return copyDescendsFrom(device, account);
     return !account.priorRecovery && device.baselineId === account.baselineId &&
       device.evidence.header.uncompressedSha256 === account.evidence.header.uncompressedSha256 &&
       device.evidence.records.length >= account.evidence.records.length && account.evidence.records.every((row, index) => {
@@ -503,7 +510,7 @@ export class CloudSyncCoordinator {
         expectedCampaignId: this.scope.campaignId, expectedBaselineId: copy.baselineId } });
       await this.options.entryStore.write(`offline-base:${this.scope.campaignId}`, { snapshotSha256: copy.snapshot.uncompressedSha256 });
       await this.persist({ schemaVersion: 1, scope: this.scope, confirmed: copy, recovery: usageQuestions.length ? {
-        baseRevision: copy.revision, writerGeneration: "0", inFlight: null, following: { campaign: loaded.campaign, snapshot: copy.snapshot,
+        baseRevision: copy.revision, writerGeneration: "0", inFlight: null, following: { ...(isSnapshotCopy(copy) ? { saveFormat: 3 as const, lineage: copy.lineage } : {}), campaign: loaded.campaign, snapshot: copy.snapshot,
           evidence: { headerSha256: copy.evidence.header.uncompressedSha256, fromRecord: copy.evidence.records.length,
             toRecord: copy.evidence.records.length, records: [] }, usageQuestions } } : null });
       this.window = null; this.suspendedLease = null; this.offlineLocal = true;
@@ -529,8 +536,8 @@ export class CloudSyncCoordinator {
         if (this.recovery()) await this.preserveCopies(account);
         const loaded = await this.codec.run({ kind: "verify", input: { ...chosen, expectedRevision: chosen.revision,
           expectedCampaignId: this.scope.campaignId, expectedBaselineId: chosen.baselineId } });
-        const candidate: CloudCandidate = { campaign: loaded.campaign, snapshot: chosen.snapshot,
-          evidence: { headerSha256: account.evidence.header.uncompressedSha256, fromRecord: account.evidence.records.length,
+        const candidate: CloudCandidate = { ...(isSnapshotCopy(chosen) ? { saveFormat: 3 as const, lineage: chosen.lineage } : {}), campaign: loaded.campaign, snapshot: chosen.snapshot,
+          evidence: isSnapshotCopy(chosen) ? { headerSha256: chosen.evidence.header.uncompressedSha256, fromRecord: 0, toRecord: 0, records: [] } : { headerSha256: account.evidence.header.uncompressedSha256, fromRecord: account.evidence.records.length,
             toRecord: chosen.evidence.records.length, records: chosen.evidence.records.slice(account.evidence.records.length) }, usageQuestions };
         await this.codec.run({ kind: "candidate", input: { candidate, confirmed: account, scope: this.scope } });
         const sent = this.now(), lease = await this.acquire(head, head.writerActive, epoch);
@@ -554,6 +561,43 @@ export class CloudSyncCoordinator {
     this.resumeAuthorized = false; this.window = null; this.suspendedLease = null; this.phase = "paused"; this.failure = "account-save-changed"; this.emit();
   }
 
+  /** A legacy immutable operation is reconciled before replacing its bytes.
+   * The first native snapshot also carries a faithful prior-head snapshot for
+   * the server's atomic evidence-to-snapshot conversion. */
+  private upgradingSnapshots: Promise<boolean> | null = null;
+  upgradeSnapshots(): Promise<boolean> {
+    if (this.upgradingSnapshots) return this.upgradingSnapshots;
+    const epoch = this.epoch;
+    this.upgradingSnapshots = cloudCheckDeadline(this.upgradeSnapshotsChecked(), 150_000, () => {
+      if (this.live(epoch)) { this.epoch++; this.fail(new CloudSyncError("processing")); }
+    }).catch(() => false).finally(() => { this.upgradingSnapshots = null; });
+    return this.upgradingSnapshots;
+  }
+  private async upgradeSnapshotsChecked(): Promise<boolean> {
+    if (!this.snapshotSaves || this.hasPriorRecovery || !this.record) return true;
+    if (!this.allowed()) return false;
+    if (isSnapshotCopy(this.record.entry.confirmed) && (!this.pendingCandidate || this.pendingCandidate.saveFormat === 3)) return true;
+    if (this.pendingCandidate?.saveFormat === 3 && this.pendingCandidate.legacyBaseSnapshot) return true;
+    const epoch = this.epoch;
+    try {
+      await this.localQueue;
+      const pending = this.recovery();
+      if (pending?.inFlight) {
+        const outcome = await this.options.transport.operation(this.scope.campaignId, pending.inFlight.operationId, pending.inFlight);
+        if (!this.live(epoch)) return false;
+        if (outcome.status === "committed") await this.acknowledge(pending.inFlight, outcome.receipt);
+        else if (outcome.status === "expired") throw new CloudSyncError("operation-expired");
+        else await this.preserveEntry(this.record.entry, this.record.entry.confirmed);
+      }
+      const candidate = await this.codec.run({ kind: "snapshotUpgrade", input: { confirmed: this.record.entry.confirmed, candidate: this.pendingCandidate } });
+      if (!this.live(epoch)) return false;
+      await this.codec.run({ kind: "candidate", input: { candidate, confirmed: this.record.entry.confirmed, scope: this.scope } });
+      await this.queue(() => this.persist({ ...this.record!.entry, recovery: { baseRevision: this.record!.entry.confirmed.revision,
+        writerGeneration: this.window!.lease.writerGeneration, inFlight: null, following: candidate } }));
+      this.emit(); return true;
+    } catch (error) { await this.failChecked(error, epoch); return false; }
+  }
+
   /** retainAccepted only finishes commands already accepted by CloudGameSession.
    * It preserves bytes across suspension; it never grants new commands or lease time. */
   stage(candidate: CloudCandidate, _reason: CloudCheckpointReason = "ordinary", retainAccepted = false): Promise<boolean> {
@@ -572,7 +616,17 @@ export class CloudSyncCoordinator {
       if (this.stopped || !this.record || !this.live(epoch) && !retainAccepted) return false;
       const prior = this.recovery();
       const accepted = this.record.entry.confirmed.evidence.records.length;
-      if (frozen.evidence.fromRecord < accepted) {
+      if (frozen.saveFormat === 3 && isSnapshotCopy(this.record.entry.confirmed)) {
+        const { legacyBaseSnapshot: _migration, ...current } = frozen;
+        frozen = { ...current, usageQuestions: frozen.usageQuestions.filter(r => !this.coveredUsage.has(r.receipt_id)) };
+        const base = this.record.entry.confirmed;
+        if (!frozen.usageQuestions.length && frozen.snapshot.uncompressedSha256 === base.snapshot.uncompressedSha256 && !prior?.inFlight) {
+          if (prior) await this.persist({ ...this.record.entry, recovery: null });
+          return true;
+        }
+        if (!frozen.usageQuestions.length && frozen.lineage?.branchId === base.lineage?.branchId && frozen.lineage!.sequence < base.lineage!.sequence) return true;
+      }
+      if (frozen.saveFormat !== 3 && frozen.evidence.fromRecord < accepted) {
         const covered = accepted - frozen.evidence.fromRecord;
         const prefix = this.record.entry.confirmed.evidence.records.slice(frozen.evidence.fromRecord);
         if (covered > frozen.evidence.records.length || prefix.some((row, index) => row.id !== frozen.evidence.records[index]?.id ||
@@ -632,10 +686,15 @@ export class CloudSyncCoordinator {
         acceptedAtMs: receipt.acceptedAtMs, snapshot: request.snapshot,
         evidence: { header: this.record.entry.confirmed.evidence.header,
           records: [...this.record.entry.confirmed.evidence.records, ...request.evidence.records] } };
+      if (request.saveFormat === 3) Object.assign(confirmed, { saveFormat: 3, lineage: request.lineage, baselineId: SNAPSHOT_BASELINE, evidence: await snapshotEvidence() });
       await timeCloudEntry("upload-verify", () => this.verify(confirmed));
       if (!this.live(epoch)) throw new CloudSyncError("auth");
       let following = recovery.following;
-      if (following) {
+      if (following?.saveFormat === 3) {
+        const { legacyBaseSnapshot: _migration, ...latest } = following;
+        following = { ...latest, usageQuestions: following.usageQuestions.filter(r => !receipt.usageReceiptIds.includes(r.receipt_id)) };
+        if (following.snapshot.uncompressedSha256 === confirmed.snapshot.uncompressedSha256 && !following.usageQuestions.length) following = null;
+      } else if (following) {
         const covered = receipt.evidenceHighWater - following.evidence.fromRecord;
         if (covered < 0 || covered > following.evidence.records.length ||
           following.evidence.records.slice(0, covered).some((row, index) => row.id !== request.evidence.records[index]?.id ||
@@ -1047,8 +1106,10 @@ export class CloudSyncCoordinator {
     if (!this.options.entryStore) throw new CloudSyncError("storage");
     const value = { scope: this.scope, device, account };
     const key = `conflict:${this.scope.campaignId}:${await this.codec.run({ kind: "hash", input: JSON.stringify(value) })}`;
-    await this.options.entryStore.create(key, value);
-    if (!same(await this.options.entryStore.read(key), value)) throw new CloudSyncError("storage");
+    const backup = this.snapshotSaves ? await snapshotConflictBackup(value, this.codec, key.slice(key.lastIndexOf(":") + 1)) : value;
+    await this.options.entryStore.create(key, backup);
+    const retained = await this.options.entryStore.read<{ compactedFrom?: string }>(key);
+    if (!same(retained, value) && retained?.compactedFrom !== key.slice(key.lastIndexOf(":") + 1)) throw new CloudSyncError("storage");
   }
   /** Explicit choice only. No evidence is renumbered, merged, dropped or replayed. */
   async keepDeviceProgress(): Promise<boolean> {

@@ -10,6 +10,7 @@ import { accountMenu, expectAccountSaved, expectPlaying, expectResumeReady, open
 test.setTimeout(180_000); // Independent cold Vite contexts; checks still use bounded state polling.
 async function rig(browser: Browser, baseURL: string, layout: "desktop" | "phone") {
   const server = new FakeCloudServer(), contexts: BrowserContext[] = [];
+  server.setAccess("qa-account-a", { snapshotSaves: true });
   const authenticated = new Map<Page, string | null>(), transport = server.transport("qa-account-a");
   const commitAttempts: CloudFrozenOperation[] = [];
   let unavailable: CloudFailureCode | null = null;
@@ -62,6 +63,9 @@ for (const layout of ["desktop", "phone"] as const) {
       await page.reload(); await expectPlaying(page);
       await expect.poll(() => f.commitAttempts.length, { timeout: CLOUD_QA_WAIT_MS }).toBeGreaterThan(attempts);
       expect((await snapshot(page)).state).toEqual(expected); expect((await snapshot(page)).pending).toBe(true);
+      // Raw enrollment bytes must not become a redundant older-copy import
+      // while the only real descendant checkpoint is held in the background.
+      expect(f.server.account("qa-account-a").campaigns.size).toBe(1);
       expect(f.server.operationCount("qa-account-a")).toBe(operations);
       release(); await expectAccountSaved(page);
       expect((await snapshot(page)).state).toEqual(expected);
@@ -134,9 +138,11 @@ for (const layout of ["desktop", "phone"] as const) {
       // is no release, copied save, elapsed lease, or explicit continuation.
       f.failPage(page, null); await page.reload(); await expectPlaying(page); await expectAccountSaved(page);
       expect((await snapshot(page)).state).toEqual(pending);
+      expect((await snapshot(page)).state!.campaignId).toBe(id);
       await expect(page.getByRole("dialog")).toHaveCount(0);
       await expect.poll(() => f.server.account("qa-account-a").campaigns.get(id)!.confirmed.revision).toBe("2");
       expect(f.server.operationCount("qa-account-a")).toBe(2); // import and one immutable checkpoint
+      expect(f.server.account("qa-account-a").campaigns.size).toBe(1);
       expect(f.server.usageCount("qa-account-a")).toBe(0);
       expect(await page.evaluate(() => localStorage.getItem("gamify-surgery.prototype.profile.v1.account.qa-account-a"))).toBe(original);
       // Also exercise an ordinary reload while this document still owns a live
@@ -152,6 +158,7 @@ for (const layout of ["desktop", "phone"] as const) {
       expect(ordinary.facilityTick).toBeGreaterThan(pending.facilityTick);
       await page.reload(); await expectPlaying(page); await expectAccountSaved(page);
       expect((await snapshot(page)).state).toEqual(ordinary);
+      expect((await snapshot(page)).state!.campaignId).toBe(id); // A pending-copy ACK must not turn this device's next commands into a new campaign.
       expect(f.server.account("qa-account-a").campaigns.get(id)!.generation).toBeGreaterThan(generation);
       expect(f.server.account("qa-account-a").campaigns.size).toBe(1);
       expect(f.server.operationCount("qa-account-a")).toBe(3);
@@ -309,6 +316,7 @@ for (const layout of ["desktop", "phone"] as const) {
       expect(copy.evidence.header).toEqual(initial.evidence.header);
       expect(copy.evidence.records.slice(0, initial.evidence.records.length)).toEqual(initial.evidence.records);
       expect(new Set(copy.evidence.records.map(row => row.id)).size).toBe(copy.evidence.records.length);
+      expect(copy.saveFormat).toBe(3); expect(copy.evidence.records).toEqual([]); // Current state, no historical replay/upload.
       const loaded = await loadCloudEvidenceCheckpoint({ ...copy, expectedRevision: "2", expectedCampaignId: before.campaignId, expectedBaselineId: initial.baselineId });
       expect(loaded.state).toEqual(newest);
       expect(f.server.usageCount("qa-account-a")).toBe(0);
@@ -329,21 +337,38 @@ for (const layout of ["desktop", "phone"] as const) {
       expect(f.server.account("qa-account-a").campaigns.get(id)!.confirmed).toEqual(confirmed);
     } finally { await f.close(); }
   });
-  test(`${layout}: capacity warning precedes the hard limit; a rejected checkpoint keeps history and offers recovery`, async ({ browser, baseURL }) => {
+  test(`${layout}: legacy capacity keeps exact progress and export, then reopens automatically as a snapshot`, async ({ browser, baseURL }) => {
     const f = await rig(browser, baseURL!, layout);
     try {
-      f.server.setAccess("qa-account-a", { quotaWarning: true }); const page = await f.page(1);
+      f.server.setAccess("qa-account-a", { quotaWarning: true, snapshotSaves: false }); const page = await f.page(1);
       await expect(page.getByText("Account storage is nearly full.", { exact: false })).toBeVisible();
       await importAndOpen(page);
       const id = (await snapshot(page)).state!.campaignId, before = structuredClone(f.server.account("qa-account-a").campaigns.get(id)!.confirmed);
+      const expected = await page.evaluate(async () => {
+        await window.__cloudQa!.command({ type: "SET_SIMULATION_SPEED", speed: 2 });
+        await window.__cloudQa!.command({ type: "SET_PAUSED", paused: true });
+        return window.__cloudQa!.snapshot().state!;
+      });
       f.server.faults.push({ method: "commit", at: "before", error: new CloudSyncError("capacity") });
-      expect(await page.evaluate(async () => { await window.__cloudQa!.command({ type: "SET_SIMULATION_SPEED", speed: 2 }); return window.__cloudQa!.checkpoint(); })).toBe(false);
+      expect(await page.evaluate(() => window.__cloudQa!.checkpoint())).toBe(false);
       const dialog = await details(page);
       await expect(dialog).toContainText("Account storage is full. Your progress is safe on this device.");
       expect((await snapshot(page)).phase).toBe("capacity"); expect((await snapshot(page)).pending).toBe(true);
       expect(await page.evaluate(() => window.__cloudQa!.command({ type: "ADVANCE_TICK" }))).toBe(false);
       await exportDeviceCopy(page);
       expect(f.server.account("qa-account-a").campaigns.get(id)!.confirmed).toEqual(before);
+      // Simulate deployment of the capability/migration, keeping this device's
+      // same IDB and pending immutable request. No chooser or manual recovery.
+      f.server.setAccess("qa-account-a", { snapshotSaves: true, quotaWarning: false });
+      await page.reload(); await expectPlaying(page); await expectAccountSaved(page);
+      expect((await snapshot(page)).state).toEqual(expected);
+      const copy = await f.server.transport("qa-account-a").load(id);
+      expect(copy.saveFormat).toBe(3); expect(copy.evidence.records).toEqual([]);
+      const verified = await loadCloudEvidenceCheckpoint({ ...copy, expectedRevision: copy.revision,
+        expectedCampaignId: id, expectedBaselineId: copy.baselineId });
+      expect(verified.state).toEqual(expected); expect(f.server.operationCount("qa-account-a")).toBe(2);
+      expect(f.server.account("qa-account-a").campaigns.size).toBe(1); // Conversion is part of the checkpoint, never a separate import.
+      expect(f.server.usageCount("qa-account-a")).toBe(0);
     } finally { await f.close(); }
   });
   test(`${layout}: a corrupt current revision reports verified-prior recovery, exports it and never rewinds the server`, async ({ browser, baseURL }) => {

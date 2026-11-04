@@ -5,7 +5,7 @@ import { cloudCodec } from "./codecWorker";
 import type { CloudCodecExecutor } from "./codecTasks";
 import { logicalJsonText, sha256Utf8, utf8Bytes } from "./codecJson";
 import { automaticCopyId, cloudCopyFamily, copyDescendsFrom } from "./copySelection";
-import { discoverClinicCopies, protectClinicCopy, retainedCopyParents, type VerifiedClinicCopy } from "./retainedCopies";
+import { discoverClinicCopies, protectClinicCopy, retainedCopyParents, snapshotConflictBackup, type VerifiedClinicCopy } from "./retainedCopies";
 import { importSeparateCloudCampaign } from "./importCampaigns";
 import { CloudGameSession } from "./gameSession";
 import { CLOUD_SYNC_PROTOCOL, CloudSyncError, type CloudConfirmed } from "./transport";
@@ -42,7 +42,7 @@ const uniqueName = (name: string, ending: string, taken: readonly string[]) => {
 /** Resolves before hydrating a playing session. Server authority remains CAS
  * fenced; every displaced copy is durably protected before any replacement. */
 export async function openAutomaticCloudCampaign(options: AutomaticOpenOptions): Promise<CloudSyncCoordinator> {
-  let cancelled = false;
+  let cancelled = false, snapshots = false;
   const current = () => !cancelled && !options.cancelled?.();
   const coordinators = new Set<CloudSyncCoordinator>();
   const codec = options.codec ?? cloudCodec, { runtime } = options;
@@ -63,7 +63,7 @@ export async function openAutomaticCloudCampaign(options: AutomaticOpenOptions):
   const check = async () => {
     if (!current()) throw new CloudSyncError("auth");
     if (await runtime.entryStore.read("deletion-requested")) throw new CloudSyncError("deleted");
-    const access = await transport.capabilities();
+    const access = await transport.capabilities(); snapshots = access.snapshotSaves === true;
     if (!current() || access.accountId !== runtime.accountId) throw new CloudSyncError("auth");
     if (access.deletionRequested || !access.admitted) {
       await runtime.entryStore.write("account-command-block", { failure: access.deletionRequested ? "deleted" : "revoked" }).catch(() => {});
@@ -102,7 +102,10 @@ export async function openAutomaticCloudCampaign(options: AutomaticOpenOptions):
     // the mounted game session will upload the suffix in the background. Do
     // not reload the head or wait for that optional backup before hydration.
     const selected = coordinator.pendingCandidate?.snapshot ?? coordinator.confirmed?.snapshot;
-    if (coordinator.view.canExecute && selected?.uncompressedSha256 === winner.copy.snapshot.uncompressedSha256) return coordinator;
+    if (coordinator.view.canExecute && selected?.uncompressedSha256 === winner.copy.snapshot.uncompressedSha256) {
+      if (!await coordinator.upgradeSnapshots()) throw new CloudSyncError(coordinator.view.failure as "network" ?? "network");
+      return coordinator;
+    }
     const fresh = await load(account.campaignId);
     if (await coordinator.journalChangedSinceOpen()) throw new CloudCacheError("conflict");
     if (fresh.snapshot.uncompressedSha256 !== account.snapshot.uncompressedSha256) {
@@ -110,15 +113,19 @@ export async function openAutomaticCloudCampaign(options: AutomaticOpenOptions):
       const inspection = await codec.run({ kind: "inspectCopy", input: fresh });
       if (inspection.digest !== winner.inspection.digest) throw new CloudSyncError("revision");
     }
-    if (coordinator.view.canExecute && coordinator.confirmed?.snapshot.uncompressedSha256 === winner.copy.snapshot.uncompressedSha256 && !coordinator.view.pending) return coordinator;
+    if (coordinator.view.canExecute && coordinator.confirmed?.snapshot.uncompressedSha256 === winner.copy.snapshot.uncompressedSha256 && !coordinator.view.pending) {
+      if (!await coordinator.upgradeSnapshots()) throw new CloudSyncError(coordinator.view.failure as "network" ?? "network");
+      return coordinator;
+    }
     if (!await coordinator.adoptAutomaticCopy(fresh, winner.copy, winner.usageQuestions)) throw coordinator.hasLocalCacheConflict ? new CloudCacheError("conflict") :
       new CloudSyncError(coordinator.view.failure as "network" ?? "network");
+    if (!await coordinator.upgradeSnapshots()) throw new CloudSyncError(coordinator.view.failure as "network" ?? "network");
     return coordinator;
   };
   const archiveHead = async (plan: Promotion): Promise<CloudConfirmed> => {
     const account = await load(plan.originalId), inspection = await codec.run({ kind: "inspectCopy", input: account });
     const expected = await codec.run({ kind: "inspectCopy", input: plan.account });
-    if (inspection.digest !== expected.digest) throw new CloudSyncError("revision");
+    if (inspection.stateDigest !== expected.stateDigest) throw new CloudSyncError("revision");
     if (inspection.campaign.status === "archived" && inspection.campaign.name === plan.olderName) return account;
     const coordinator = await ready(account, { copy: account, inspection, source: "account", usageQuestions: [] });
     // This metadata-only archival job deliberately handles the older account
@@ -216,9 +223,13 @@ export async function openAutomaticCloudCampaign(options: AutomaticOpenOptions):
           }
           const entries = await timeCloudEntry("copies-cache", async () => await runtime.cache.accountEntries?.(runtime) ?? []);
           const copies = await timeCloudEntry("copies-discover", () => discoverClinicCopies({ scope: cloudScopeData(runtime, requested), family, codec,
-            store: runtime.entryStore, entries, account, storage: options.storage, parents }));
+            store: runtime.entryStore, entries, account, storage: options.storage, parents, snapshots }));
           let winner = copies[0]; if (!winner) throw new CloudSyncError("corrupt");
-          const equivalentHead = copies.find(row => row.source === "account" && row.inspection.digest === winner!.inspection.digest && row.copy.campaignId !== winner!.copy.campaignId);
+          const metadataIntent = ["current:following", "current:in-flight"].includes(winner.source);
+          const metadata = (copy: VerifiedClinicCopy) => canonical({ ...copy.inspection.campaign, campaignId: "comparison", updatedAtRealMs: 0 });
+          const equivalentHead = copies.find(row => row.source === "account" && row.copy.saveFormat === 3 && row.inspection.stateDigest === winner!.inspection.stateDigest &&
+            (!metadataIntent || metadata(row) === metadata(winner!))) ??
+            copies.find(row => row.source === "account" && row.inspection.digest === winner!.inspection.digest && row.copy.campaignId !== winner!.copy.campaignId);
           if (equivalentHead) winner = equivalentHead;
           const active = related.find(row => row.status === "resumable" && !Object.hasOwn(parents, row.campaignId)) ??
             related.find(row => row.status === "resumable") ?? related.find(row => row.campaignId === requested) ?? related[0]!;
@@ -227,7 +238,7 @@ export async function openAutomaticCloudCampaign(options: AutomaticOpenOptions):
           while (Object.hasOwn(parents, namingId) && !seenParents.has(namingId)) { seenParents.add(namingId); namingId = parents[namingId]!; }
           const originalName = namingId !== active.campaignId ? related.find(row => row.campaignId === namingId)?.name ??
             copies.find(row => row.copy.campaignId === namingId)?.inspection.campaign.name : null;
-          const name = originalName?.replace(/ \(older copy\)(?: \(\d+\))?$/, "") ?? (active.status === "resumable" ? active.name :
+          const name = metadataIntent && winner.copy.campaignId === active.campaignId ? winner.inspection.campaign.name : originalName?.replace(/ \(older copy\)(?: \(\d+\))?$/, "") ?? (active.status === "resumable" ? active.name :
             winner.inspection.campaign.name.replace(/ \(older copy\)(?: \(\d+\))?$/, ""));
           const compatible = account.find(row => copyDescendsFrom(winner.copy, row));
           const ordinaryPending = compatible && !Object.hasOwn(parents, compatible.campaignId) &&
@@ -240,8 +251,9 @@ export async function openAutomaticCloudCampaign(options: AutomaticOpenOptions):
             (!ordinaryPending || entry.scope.campaignId !== compatible.campaignId)) {
             const value = { scope: entry.scope, device: entry, account: account.find(row => row.campaignId === entry.scope.campaignId) ?? account[0]! };
             const key = `conflict:${entry.scope.campaignId}:${await sha256Utf8(canonical(value))}`;
-            const stored = await runtime.entryStore.create(key, value);
-            if (canonical(stored) !== canonical(value) || canonical(await runtime.entryStore.read(key)) !== canonical(value)) throw new CloudSyncError("storage");
+            const stored = await runtime.entryStore.create(key, snapshots ? await snapshotConflictBackup(value, codec, key.slice(key.lastIndexOf(":") + 1)) : value);
+            if (canonical(stored) !== canonical(value) && (stored as { compactedFrom?: string }).compactedFrom !== key.slice(key.lastIndexOf(":") + 1) ||
+              canonical(await runtime.entryStore.read(key)) !== canonical(stored)) throw new CloudSyncError("storage");
           }
           const distinct = new Map(copies.map(row => [row.inspection.digest, row]));
           for (const copy of distinct.values()) {
@@ -310,8 +322,11 @@ export async function openAutomaticCloudCampaign(options: AutomaticOpenOptions):
         }
       }
       throw new CloudSyncError("revision");
-    })(), AUTOMATIC_RESOLUTION_TIMEOUT_MS, () => { cancelled = true; for (const coordinator of coordinators) coordinator.dispose(); });
-    if (!current()) throw new CloudSyncError("auth");
+    })().then(async coordinator => {
+      if (!await coordinator.upgradeSnapshots()) throw new CloudSyncError(coordinator.view.failure as "network" ?? "network");
+      return coordinator;
+    }), AUTOMATIC_RESOLUTION_TIMEOUT_MS, () => { cancelled = true; for (const coordinator of coordinators) coordinator.dispose(); });
+    if (!result || !current()) throw new CloudSyncError("auth");
     return result;
   } catch (error) {
     if (!(error instanceof CloudSyncError) || !["network", "throttled"].includes(error.code) || options.cancelled?.()) throw error;
@@ -322,7 +337,7 @@ export async function openAutomaticCloudCampaign(options: AutomaticOpenOptions):
       const entries = await runtime.cache.accountEntries?.(runtime) ?? [], parents = await retainedCopyParents(runtime, runtime.entryStore, entries);
       const family = await cloudCopyFamily(options.campaignId, parents);
       const copies = await discoverClinicCopies({ scope: cloudScopeData(runtime, options.campaignId), family, codec,
-        store: runtime.entryStore, entries, account: [], storage: options.storage, parents });
+        store: runtime.entryStore, entries, account: [], storage: options.storage, parents, snapshots });
       const winner = copies[0]; if (!winner || options.cancelled?.()) throw error;
       for (const copy of copies) await protectClinicCopy(runtime.entryStore, family, copy, "offline recovery");
       const coordinator = new CloudSyncCoordinator({ ...runtime, scope: cloudScopeData(runtime, winner.copy.campaignId), codec, clock: options.clock, enabled: true });

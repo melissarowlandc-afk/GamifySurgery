@@ -1,5 +1,17 @@
 # Supabase SQL verification
 
+## Snapshot-only saves (2026-11-03)
+
+Use [the disposable offline runner and rollout checklist](snapshot_only_offline.md).
+`snapshot_only_offline.sql` bootstraps minimal local Auth/roles and the real
+application migrations; `snapshot_only_cloud_saves.sql` adds R1–R6 regressions
+under default PL/pgSQL conflict behavior. The suite is psql-only/fail-fast and
+**must not run on live**: rollback does not prevent quota locks or WAL/bloat.
+The two-connection lock regression is `snapshot_only_lock_test.mjs`.
+Worker status: authored/source-tested, SQL/concurrency execution not performed.
+For this new migration, these instructions supersede the historical live
+SQL-editor rehearsal direction in the earlier Beta 2 section below.
+
 ## Beta 2 cloud saves: B2.2 revision 1 (2026-10-17)
 
 The binding owner decision is **test on the live GamifySurgery game project**

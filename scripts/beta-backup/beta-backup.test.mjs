@@ -191,3 +191,25 @@ test('help/local retention never reads credentials or uses fetch; invalid env/er
   assert.equal(await runBetaBackup(['backup'], opts), 1); assert.equal(requests, 0);
   f.refuse(); assert.equal(await f.run(['backup']), 1); assert.equal(f.output.join('').includes(KEY), false);
 });
+
+test('snapshot-only current/prior backups verify without evidence and remain restorable opaque rows', async () => {
+  await import('../../tools/economy-audit/source-loader.mjs');
+  const { createInitialGameState } = await import('../../packages/game-domain/src/index.ts');
+  const { snapshotCopy } = await import('../../apps/player/src/session/cloud/snapshotCodec.ts');
+  const state = createInitialGameState(undefined, { campaignId: CID, campaignSeed: 'snapshot.backup', createdAtRealMs: NOW });
+  const campaign = { campaignId: CID, name: 'Snapshot clinic', status: 'resumable', createdAtRealMs: NOW, updatedAtRealMs: NOW,
+    tutorial: { guidance: null, introDismissed: true, dailyRoutineTipAcknowledgments: [], dailyRoutinePause: null } };
+  const saved = await snapshotCopy(state, campaign, '2', NOW, { branchId: 'snapshot.backup', sequence: 1, parents: [] });
+  const a = account(), blob = saved.snapshot;
+  a.tables['public.beta2_campaigns'] = [{ ...a.tables['public.beta2_campaigns'][0], name: campaign.name, status: 'resumable',
+    current_revision: '2', prior_revision: '1', writer_generation: '3', evidence_high_water: 0, evidence_bytes: '0', current_sha256: blob.uncompressedSha256 }];
+  const row = { owner_id: OWNER, campaign_id: CID, content: '\\x' + Buffer.from(blob.dataBase64, 'base64').toString('hex'),
+    uncompressed_bytes: blob.uncompressedBytes, uncompressed_sha256: blob.uncompressedSha256, compressed_sha256: hash(Buffer.from(blob.dataBase64, 'base64')),
+    evidence_high_water: 0, cloud_format_version: 3, snapshot_lineage: saved.lineage, accepted_at: new Date(NOW).toISOString() };
+  a.tables['public.beta2_campaign_snapshots'] = [{ ...row, revision: '2' }, { ...row, revision: '1' }];
+  a.tables['public.beta2_evidence_headers'] = []; a.tables['public.beta2_evidence_pages'] = [];
+  const bundle = selectCampaign(a, CID); assert.equal(bundle.header, null);
+  assert.deepEqual(await verifyCampaignCodec(bundle), [{ revision: '2', evidenceHighWater: 0 }, { revision: '1', evidenceHighWater: 0 }]);
+  const missing = structuredClone(a); missing.tables['public.beta2_campaign_snapshots'][0].cloud_format_version = 2;
+  assert.throws(() => selectCampaign(missing, CID), /incomplete/);
+});

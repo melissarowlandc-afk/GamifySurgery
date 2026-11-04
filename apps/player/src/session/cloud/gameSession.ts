@@ -1,5 +1,5 @@
 import { problemDiagnostics, showCommandProblem } from "../../diagnostics/problemDiagnostics";
-import { applyGameEvidenceCommand, applyGameEvidenceBuildUndo, gameEvidenceDelta, type DomainContext, type GameCommand, type GameEvidenceCheckpoint, type GameState } from "@gamify-surgery/game-domain";
+import { createGameEvidenceCheckpoint, applyGameEvidenceCommand, applyGameEvidenceBuildUndo, gameEvidenceDelta, type DomainContext, type GameCommand, type GameEvidenceCheckpoint, type GameState } from "@gamify-surgery/game-domain";
 import { isFirstScoredAnswer } from "../../playtime/scoredQuestionUsage";
 import type { QuestionUsageReceipt } from "../../playtime/usageTypes";
 import type { LocalPrototypeProfile } from "../prototypeStorage";
@@ -8,7 +8,9 @@ import { loadCloudEvidenceCheckpoint, type CloudSourceProvenance } from "./codec
 import { CloudSyncCoordinator, type CloudCheckpointReason, type CloudSyncView } from "./coordinator";
 import { logicalJsonText } from "./codecJson";
 import { cloudCheckDeadline } from "./checkDeadline";
-import { CloudSyncError } from "./transport";
+import { CloudSyncError, type SnapshotLineage } from "./transport";
+import { SNAPSHOT_BASELINE, isSnapshotCopy } from "./snapshotCodec";
+import type { CloudCompressedText } from "./codecCompression";
 import { LocalJournalDrain, LOCAL_COMPACTION_MS, freezeJournalCheckpoint, journalWorkerAddress } from "../localJournal";
 import { bindJournal, prepareJournal } from "./journalCodec";
 import { cloudCampaignStorageKey } from "../accountStorageKey";
@@ -64,13 +66,23 @@ export class CloudGameSession {
   private lastWarmFailure = -Infinity;
   private backgrounded = false;
   private lifecycleVersion = 0;
+  private snapshotLineage: SnapshotLineage | null = null;
+  private legacyBaseSnapshot: CloudCompressedText | undefined;
   private readonly unsubscribeCheckpoint: () => void;
-  private constructor(readonly coordinator: CloudSyncCoordinator, loaded: Awaited<ReturnType<typeof loadCloudEvidenceCheckpoint>>,
+  private constructor(readonly coordinator: CloudSyncCoordinator, loaded: Awaited<ReturnType<typeof loadCloudEvidenceCheckpoint>>, parentSnapshotHashes: readonly string[],
     private readonly switchTo?: (campaignId: string) => Promise<void>, private readonly automaticReconnect?: (checked: boolean) => Promise<boolean>) {
     this.checkpoint = freezeJournalCheckpoint(loaded.checkpoint); this.current = loaded.state; this.campaign = loaded.campaign; this.source = loaded.source;
+    if (loaded.snapshotLineage) {
+      this.snapshotLineage = { ...loaded.snapshotLineage, branchId: crypto.randomUUID(),
+        // The opened pending copy can become the account head after hydration.
+        // Keep its exact hash as well as the previously confirmed ancestor.
+        parents: [...new Set([...parentSnapshotHashes, ...loaded.snapshotLineage.parents])].slice(0, 4) };
+      this.legacyBaseSnapshot = coordinator.pendingCandidate?.legacyBaseSnapshot;
+    }
     showCommandProblem(null);
     this.boundRevision = coordinator.confirmedRevision!;
     this.unbindDiagnostics = problemDiagnostics.source("gameSession", () => ({ reloadRequired: this.reloadRequired,
+      snapshotOnly: Boolean(this.snapshotLineage), journalTailCommands: this.checkpoint.snapshot.head.sequence, journalQueued: this.journalDrain?.queued ?? 0,
       closing: Boolean(this.closing), stopped: this.stopped, dirty: this.dirty, encoding: this.encoding, canExecute: this.canExecute,
       reconnecting: Boolean(this.reconnecting), preparing: Boolean(this.warming), lastCommandMs: this.lastCommandMs,
       commandAge: this.lastCommandAt === null ? null : Date.now() - this.lastCommandAt }));
@@ -81,7 +93,7 @@ export class CloudGameSession {
       }
       this.emit();
     });
-    this.unsubscribeReceipts = coordinator.onAcknowledged(receipt => { this.boundRevision = receipt.revision; for (const id of receipt.usageReceiptIds) this.questions.delete(id); });
+    this.unsubscribeReceipts = coordinator.onAcknowledged(receipt => { this.boundRevision = receipt.revision; for (const id of receipt.usageReceiptIds) this.questions.delete(id); if (this.snapshotLineage) queueMicrotask(() => { if (!this.stopped) void this.rebaseTail(); }); });
     this.unsubscribeRecovery = coordinator.beforeReconnect(async () => await this.durable() || !this.dirty);
     this.unsubscribeCheckpoint = coordinator.beforeCheckpoint(reason => this.prepareCheckpoint(reason));
     this.unsubscribeAutomatic = automaticReconnect ? coordinator.onAutomaticSelection(() => this.reconnect()) : () => {};
@@ -90,17 +102,20 @@ export class CloudGameSession {
     options: { journal?: boolean } = {}): Promise<CloudGameSession> {
     const confirmed = coordinator.confirmed;
     if (!confirmed || ["off", "checking", "blocked", "auth", "storage"].includes(coordinator.view.phase)) throw new Error("Open and verify the account campaign first.");
+    if (coordinator.view.canExecute && !await coordinator.upgradeSnapshots()) throw new CloudSyncError("processing");
     const pending = coordinator.pendingCandidate;
-    const loaded = await loadCloudEvidenceCheckpoint({ snapshot: pending?.snapshot ?? confirmed.snapshot,
+    const openedSnapshot = pending?.snapshot ?? confirmed.snapshot;
+    const loaded = await loadCloudEvidenceCheckpoint({ snapshot: openedSnapshot,
       evidence: pending ? { header: confirmed.evidence.header, records: [...confirmed.evidence.records, ...pending.evidence.records] } : confirmed.evidence,
       revision: confirmed.revision, expectedRevision: confirmed.revision, expectedCampaignId: coordinator.scope.campaignId,
-      expectedBaselineId: confirmed.baselineId });
-    const session = new CloudGameSession(coordinator, loaded, switchTo, automaticReconnect);
+      expectedBaselineId: pending?.saveFormat === 3 ? SNAPSHOT_BASELINE : confirmed.baselineId });
+    const session = new CloudGameSession(coordinator, loaded, [openedSnapshot.uncompressedSha256, confirmed.snapshot.uncompressedSha256], switchTo, automaticReconnect);
     const journal = coordinator.journal;
     if (journal && options.journal !== false && !coordinator.hasPriorRecovery && coordinator.view.canExecute) {
       try {
         const key = cloudCampaignStorageKey(coordinator.scope), owner = crypto.randomUUID();
         const head = await bindJournal(journal, key, owner, { checkpoint: loaded.checkpoint, campaign: loaded.campaign,
+          ...(session.snapshotLineage ? { snapshotPolicy: { lineage: session.snapshotLineage, legacyBaseSnapshot: session.legacyBaseSnapshot } } : {}),
           source: loaded.source, confirmed, usageQuestions: [...session.questions.values()], writerGeneration: coordinator.journalWriterGeneration }, coordinator.codec);
         session.journalStart = head.highWater;
         session.compactedThrough = head.highWater;
@@ -207,7 +222,10 @@ export class CloudGameSession {
       if (this.stopped || !prepared || prepared.owner !== this.journalDrain!.owner) return false;
       prepared.candidate.usageQuestions = prepared.candidate.usageQuestions.filter(r => this.questions.has(r.receipt_id));
       if (!await this.coordinator.stage(prepared.candidate, reason, true)) return false;
-      if (compact) await prepareJournal(this.journalDrain!.store, this.journalDrain!.key, this.coordinator.codec, { compact: true, encode: false });
+      if (compact) {
+        if (this.snapshotLineage) { if (!await this.rebaseTail()) return false; }
+        else await prepareJournal(this.journalDrain!.store, this.journalDrain!.key, this.coordinator.codec, { compact: true, encode: false });
+      }
       this.preparedVersion = prepared.through - this.journalStart;
       this.dirty = this.changeVersion > this.preparedVersion;
       this.coordinator.noteLocalChange(this.dirty);
@@ -234,11 +252,16 @@ export class CloudGameSession {
         // do not restart a full encode whenever the account head advances.
         const confirmed = this.coordinator.encodingBase;
         if (!confirmed) return false;
-        const encoded = await this.coordinator.codec.run({ kind: "encode", input: { checkpoint, campaign, source: this.source,
-          operationId: "local-candidate", expectedRevision: confirmed.revision,
-          acknowledgedEvidence: { headerSha256: confirmed.headerSha256, records: confirmed.records } } });
+        const lineage = this.snapshotLineage ? { ...this.snapshotLineage, sequence: this.snapshotLineage.sequence + checkpoint.snapshot.head.sequence } : null;
+        const encoded = lineage ? await this.coordinator.codec.run({ kind: "snapshotEncode", input: { state: this.current, campaign,
+          lineage } }) :
+          await this.coordinator.codec.run({ kind: "encode", input: { checkpoint, campaign, source: this.source,
+            operationId: "local-candidate", expectedRevision: confirmed.revision,
+            acknowledgedEvidence: { headerSha256: confirmed.headerSha256, records: confirmed.records } } });
         if (this.stopped) return false;
         success = await this.coordinator.stage({ campaign, snapshot: encoded.snapshot, evidence: encoded.evidence,
+          ...(lineage ? { saveFormat: 3, lineage,
+            ...(!isSnapshotCopy(this.coordinator.confirmed!) ? { legacyBaseSnapshot: this.legacyBaseSnapshot } : {}) } : {}),
           usageQuestions: usageQuestions.filter(receipt => this.questions.has(receipt.receipt_id)) }, "ordinary", true);
         if (!success) { this.dirty = true; this.finishDurability(false); return false; }
         this.durableVersion = version; this.finishDurability(true);
@@ -328,6 +351,27 @@ export class CloudGameSession {
   }
   /** Explicit support/import boundary: materialize local recovery without RPC. */
   prepareRecoveryCopy(): Promise<boolean> { return this.prepareCheckpoint("campaign-switch"); }
+  /** Move records are only a crash-recovery tail. A full current-state baseline
+   * replaces them at bounded boundaries; FSRS/clinical/world state is retained. */
+  private rebaseTail(): Promise<boolean> {
+    if (!this.snapshotLineage || this.stopped) return Promise.resolve(true);
+    if (this.compacting) return this.compacting.then(() => !this.journalDrain?.error);
+    const drain = this.journalDrain;
+    if (drain?.rebasePending) return drain.drain();
+    const lineage = { ...this.snapshotLineage, sequence: this.snapshotLineage.sequence + this.checkpoint.snapshot.head.sequence };
+    const checkpoint = freezeJournalCheckpoint(createGameEvidenceCheckpoint(this.current));
+    this.snapshotLineage = lineage; this.checkpoint = checkpoint;
+    if (!drain) { this.lastCompaction = performance.now(); return Promise.resolve(true); }
+    const seed = { checkpoint, campaign: this.campaign, source: this.source, confirmed: this.coordinator.confirmed,
+      usageQuestions: [...this.questions.values()], writerGeneration: this.coordinator.journalWriterGeneration,
+      snapshotPolicy: { lineage, ...(!isSnapshotCopy(this.coordinator.confirmed!) ? { legacyBaseSnapshot: this.legacyBaseSnapshot } : {}) } };
+    const target = drain.highWater;
+    const work = drain.rebase(through => this.coordinator.codec.run({ kind: "journalRebase", input: {
+      address: journalWorkerAddress(drain.store, drain.key), owner: drain.owner, through, seed } }));
+    this.compacting = work.then(ok => { if (ok) { this.compactedThrough = target; this.lastCompaction = performance.now(); } });
+    void this.compacting.finally(() => { this.compacting = null; }).catch(() => {});
+    return work;
+  }
   async pulse(): Promise<void> {
     await this.coordinator.pulse();
     if (typeof document !== "undefined" && document.visibilityState === "visible") this.backgrounded = false;
@@ -336,6 +380,7 @@ export class CloudGameSession {
     if (!drain || this.stopped || this.flushing || this.compacting || drain.highWater <= this.compactedThrough ||
       performance.now() - this.lastCompaction < LOCAL_COMPACTION_MS || performance.now() - this.lastCompactionAttempt < 60_000) return;
     this.lastCompactionAttempt = performance.now();
+    if (this.snapshotLineage) { await this.rebaseTail(); return; }
     // Operational compaction is independent of connectivity/lease authority.
     // It does not need to prepare a cloud body or change command permission.
     this.compacting = (async () => {

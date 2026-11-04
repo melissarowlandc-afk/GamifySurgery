@@ -51,7 +51,7 @@ export async function nativeDevCodecFactory(legacyVersionImport = false): Promis
           if (!item.n) continue;
           const next = item.n.startsWith(".") ? new URL(item.n, "http://local" + url).pathname : item.n;
           if (!next.startsWith("/")) throw new Error("Native worker has an unresolved import");
-          queue.push(next); changes.push({ start: item.s, end: item.e, text: "./" + name(next) });
+          queue.push(next); changes.push({ start: item.s, end: item.e, text: item.d >= 0 ? JSON.stringify("./" + name(next)) : "./" + name(next) });
         }
         for (const change of changes.reverse()) code = code.slice(0, change.start) + change.text + code.slice(change.end);
         await writeFile(join(graph, name(url)), code);

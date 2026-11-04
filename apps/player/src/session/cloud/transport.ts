@@ -6,6 +6,12 @@ import type { CloudPackedEvidence } from "./codecEvidence";
 /** B2.4 must explicitly opt in after notice, capability and enrollment checks. */
 export const CLOUD_SAVES_ENABLED_BY_DEFAULT = false;
 export const CLOUD_SYNC_PROTOCOL = 3;
+export const CLOUD_SNAPSHOT_PROTOCOL = 4;
+export interface SnapshotLineage {
+  branchId: string;
+  sequence: number;
+  parents: readonly string[];
+}
 export const CLOUD_LEASE_MS = 60_000;
 export const CLOUD_RENEW_MS = 15_000;
 export const CLOUD_CHECKPOINT_MS = 5 * 60_000;
@@ -33,6 +39,7 @@ export interface CloudCapabilities {
   enrollmentsEnabled?: boolean;
   enrolled?: boolean;
   quotaWarning?: boolean;
+  snapshotSaves?: boolean;
 }
 export interface CloudCampaignHead {
   campaignId: string;
@@ -55,6 +62,8 @@ export interface CloudLease extends CloudCampaignHead {
   expiresAtMs: number;
 }
 export interface CloudConfirmed {
+  saveFormat?: 3;
+  lineage?: SnapshotLineage;
   campaignId: string;
   revision: string;
   acceptedAtMs: number;
@@ -65,6 +74,8 @@ export interface CloudConfirmed {
   priorRecovery?: { serverRevision: string; serverEvidenceHighWater: number };
 }
 export interface CloudImportRequest {
+  saveFormat?: 3;
+  lineage?: SnapshotLineage;
   operationId: string;
   campaignId: string;
   campaign: CloudCampaignMetadata;
@@ -75,6 +86,10 @@ export interface CloudImportRequest {
 }
 /** Evidence is a suffix of the confirmed archive; never a second history upload. */
 export interface CloudCandidate {
+  saveFormat?: 3;
+  lineage?: SnapshotLineage;
+  /** One-time faithful replacement of the legacy head, retained as prior. */
+  legacyBaseSnapshot?: CloudCompressedText;
   campaign: CloudCampaignMetadata;
   snapshot: CloudCompressedText;
   evidence: {

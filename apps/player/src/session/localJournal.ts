@@ -2,7 +2,8 @@ import type { GameEvidenceCheckpoint, GameEvidenceDelta } from "@gamify-surgery/
 import { CloudCacheError } from "./cloud/codecCache";
 import type { CloudCampaignMetadata } from "./cloud/codec";
 import type { CloudSourceProvenance } from "./cloud/codecEvidence";
-import type { CloudCandidate, CloudConfirmed } from "./cloud/transport";
+import type { CloudCandidate, CloudConfirmed, SnapshotLineage } from "./cloud/transport";
+import type { CloudCompressedText } from "./cloud/codecCompression";
 import type { QuestionUsageReceipt } from "../playtime/usageTypes";
 import { observeStorage, problemDiagnostics } from "../diagnostics/problemDiagnostics";
 import { isStorageQuotaError, reclaimAuxiliaryStorage } from "./storagePressure";
@@ -23,6 +24,7 @@ export function freezeJournalCheckpoint<T>(value: T): T {
   return value;
 }
 export interface JournalSeed {
+  snapshotPolicy?: { lineage: SnapshotLineage; legacyBaseSnapshot?: CloudCompressedText };
   checkpoint: GameEvidenceCheckpoint;
   campaign: CloudCampaignMetadata;
   source: CloudSourceProvenance | null;
@@ -42,13 +44,14 @@ export interface JournalRow {
   writerGeneration?: string;
 }
 export interface JournalHead { schemaVersion: 1; key: string; owner: string; highWater: number; snapshotThrough: number; previousThrough: number | null;
-  pendingUsageIds?: string[]; acknowledgedUsage?: string[]; profileOrder?: number; acknowledgedRecords?: number }
+  snapshotFormat?: 3; pendingUsageIds?: string[]; acknowledgedUsage?: string[]; profileOrder?: number; acknowledgedRecords?: number }
 export interface JournalSnapshot { key: string; through: number; seed: JournalSeed; sha256: string }
 export interface JournalRead { head: JournalHead; snapshot: JournalSnapshot; rows: JournalRow[] }
 export interface JournalAddress { database: string; key: string }
 export interface PreparedJournal { owner: string; through: number; candidate: CloudCandidate }
 interface PreparedCursor { owner: string; through: number; campaign: CloudCandidate["campaign"]; snapshot: CloudCandidate["snapshot"];
-  headerSha256: string; fromRecord: number; toRecord: number; usageQuestions: CloudCandidate["usageQuestions"] }
+  headerSha256: string; fromRecord: number; toRecord: number; usageQuestions: CloudCandidate["usageQuestions"];
+  saveFormat?: 3; lineage?: SnapshotLineage; legacyBaseSnapshot?: CloudCompressedText }
 type PackedRecord = CloudCandidate["evidence"]["records"][number];
 export interface JournalStorage {
   readonly databaseName?: string;
@@ -191,7 +194,7 @@ export class IndexedDbJournalStorage implements JournalStorage {
       const pendingUsageIds = seed.usageQuestions.map(r => r.receipt_id);
       const head: JournalHead = { schemaVersion: 1, key, owner, highWater: through, snapshotThrough: through, previousThrough: actual?.snapshotThrough ?? null,
         pendingUsageIds, acknowledgedUsage: actual?.acknowledgedUsage?.filter(id => pendingUsageIds.includes(id)) ?? [], profileOrder: await this.profileOrder(tx, key),
-        acknowledgedRecords: seed.confirmed?.evidence.records.length ?? 0 };
+        acknowledgedRecords: seed.confirmed?.evidence.records.length ?? 0, ...(seed.snapshotPolicy ? { snapshotFormat: 3 } : {}) };
       await this.request(tx.objectStore("snapshots").put({ key, through, seed, sha256 } satisfies JournalSnapshot, snapshotKey(key, through)));
       if (actual?.previousThrough !== null && actual?.previousThrough !== undefined)
         await this.request(tx.objectStore("snapshots").delete(snapshotKey(key, actual.previousThrough)));
@@ -233,7 +236,7 @@ export class IndexedDbJournalStorage implements JournalStorage {
       // generation can be reclaimed, in the same manifest transaction.
       if (head!.previousThrough !== null) await this.request(snapshots.delete(snapshotKey(key, head!.previousThrough!)));
       for (let v = (head!.previousThrough ?? -1) + 1; v <= head!.snapshotThrough; v++) await this.request(rows.delete(rowKey(key, v)));
-      await this.request(heads.put({ ...head, previousThrough: head!.snapshotThrough, snapshotThrough: through }, key));
+      await this.request(heads.put({ ...head, previousThrough: head!.snapshotThrough, snapshotThrough: through, ...(seed.snapshotPolicy ? { snapshotFormat: 3 } : {}) }, key));
     });
   }
   keys(prefix: string): Promise<string[]> { return this.transaction("readonly", async tx => (await this.request(tx.objectStore("heads").getAllKeys())).filter((k): k is string => typeof k === "string" && k.startsWith(prefix))); }
@@ -252,6 +255,10 @@ export class IndexedDbJournalStorage implements JournalStorage {
       const head = await this.request(tx.objectStore("heads").get(key)) as JournalHead | undefined;
       const cursor = await this.request(tx.objectStore("prepared").get(key)) as PreparedCursor | undefined;
       if (!head || !cursor || cursor.owner !== head.owner) return null;
+      if (cursor.saveFormat === 3) return { owner: cursor.owner, through: cursor.through, candidate: {
+        saveFormat: 3, lineage: cursor.lineage, legacyBaseSnapshot: cursor.legacyBaseSnapshot, campaign: cursor.campaign, snapshot: cursor.snapshot,
+        evidence: { headerSha256: cursor.headerSha256, fromRecord: 0, toRecord: 0, records: [] },
+        usageQuestions: cursor.usageQuestions.filter(r => !head.acknowledgedUsage?.includes(r.receipt_id)) } };
       if ((head.acknowledgedRecords ?? 0) > cursor.toRecord) return null;
       const from = Math.max(cursor.fromRecord, head.acknowledgedRecords ?? 0);
       const records: PackedRecord[] = [];
@@ -280,6 +287,7 @@ export class IndexedDbJournalStorage implements JournalStorage {
         await this.request(chunks.put(row, chunkKey(key, owner, index)));
       }
       const cursor: PreparedCursor = { owner, through, campaign: candidate.campaign, snapshot: candidate.snapshot,
+        ...(candidate.saveFormat === 3 ? { saveFormat: 3, lineage: candidate.lineage, legacyBaseSnapshot: candidate.legacyBaseSnapshot } : {}),
         headerSha256: candidate.evidence.headerSha256, fromRecord: candidate.evidence.fromRecord, toRecord: candidate.evidence.toRecord, usageQuestions: candidate.usageQuestions };
       await this.request(tx.objectStore("prepared").put(cursor, key));
       if (cursor.fromRecord > 0 && typeof IDBKeyRange !== "undefined")
@@ -325,7 +333,7 @@ export class MemoryJournalStorage implements JournalStorage {
     const pendingUsageIds = seed.usageQuestions.map(r => r.receipt_id);
     const head: JournalHead = { schemaVersion: 1, key, owner, highWater: through, snapshotThrough: through, previousThrough: actual?.head.snapshotThrough ?? null,
       pendingUsageIds, acknowledgedUsage: actual?.head.acknowledgedUsage?.filter(id => pendingUsageIds.includes(id)) ?? [], profileOrder: this.profileOrder(key),
-      acknowledgedRecords: seed.confirmed?.evidence.records.length ?? 0 };
+      acknowledgedRecords: seed.confirmed?.evidence.records.length ?? 0, ...(seed.snapshotPolicy ? { snapshotFormat: 3 } : {}) };
     const d = actual ?? { head, snapshots: new Map(), rows: new Map() };
     if (actual?.head.previousThrough !== null && actual?.head.previousThrough !== undefined) d.snapshots.delete(actual.head.previousThrough);
     for (const version of d.rows.keys()) if (version <= (actual?.head.snapshotThrough ?? -1)) d.rows.delete(version);
@@ -353,7 +361,7 @@ export class MemoryJournalStorage implements JournalStorage {
     if (d!.head.previousThrough !== null) d!.snapshots.delete(d!.head.previousThrough);
     for (const version of d!.rows.keys()) if (version <= d!.head.snapshotThrough) d!.rows.delete(version);
     d!.snapshots.set(through, copy({ key, through, seed, sha256 }));
-    d!.head = { ...d!.head, snapshotThrough: through, previousThrough: d!.head.snapshotThrough };
+    d!.head = { ...d!.head, snapshotThrough: through, previousThrough: d!.head.snapshotThrough, ...(seed.snapshotPolicy ? { snapshotFormat: 3 } : {}) };
     if (fault === "after-commit") throw new CloudCacheError("transaction");
   }
   async keys(prefix: string) { return [...this.data.keys()].filter(k => k.startsWith(prefix)); }
@@ -365,6 +373,8 @@ export class MemoryJournalStorage implements JournalStorage {
   async prepared(key: string): Promise<PreparedJournal | null> {
     const value = this.preparedRows.get(key), head = this.data.get(key)?.head;
     if (!value || value.owner !== head?.owner) return null;
+    if (value.candidate.saveFormat === 3) return copy({ ...value, candidate: { ...value.candidate,
+      usageQuestions: value.candidate.usageQuestions.filter(r => !head.acknowledgedUsage?.includes(r.receipt_id)) } });
     const from = Math.max(value.candidate.evidence.fromRecord, head.acknowledgedRecords ?? 0);
     if (from > value.candidate.evidence.toRecord) return null;
     return copy({ ...value, candidate: { ...value.candidate, evidence: { ...value.candidate.evidence, fromRecord: from,
@@ -404,6 +414,8 @@ export function journalWorkerStore(address: JournalWorkerAddress): JournalStorag
  * Captured barriers do not wait for future ticks. Failure retains every row. */
 export class LocalJournalDrain {
   private pending: JournalRow[] = [];
+  private rebasing: { through: number; work(through: number): Promise<void> } | null = null;
+  private rebaseActive: Promise<boolean> | null = null;
   private active: Promise<boolean> | null = null;
   private timer: ReturnType<typeof setTimeout> | null = null;
   private dueAt = Infinity;
@@ -418,6 +430,7 @@ export class LocalJournalDrain {
   get dirty() { return this.version > this.committed; }
   get highWater() { return this.version; }
   get queued() { return this.pending.length; }
+  get rebasePending() { return this.rebasing !== null; }
   accept(row: Omit<JournalRow, "version">, tick = false): void {
     if (!this.canAccept) throw new CloudCacheError("transaction");
     this.pending.push({ ...row, version: ++this.version });
@@ -427,12 +440,32 @@ export class LocalJournalDrain {
       this.dueAt = due; this.timer = setTimeout(() => { this.timer = null; this.dueAt = Infinity; void this.drain(); }, Math.max(0, due - Date.now()));
     }
   }
+  /** Install the new baseline before any deltas that refer to it can commit.
+   * Accepted commands continue synchronously in the bounded pending queue. */
+  rebase(work: (through: number) => Promise<void>): Promise<boolean> {
+    if (!this.rebasing) this.rebasing = { through: this.version, work };
+    return this.finishRebase();
+  }
+  private finishRebase(): Promise<boolean> {
+    if (this.rebaseActive) return this.rebaseActive;
+    const job = this.rebasing; if (!job) return Promise.resolve(true);
+    this.rebaseActive = (async () => {
+      if (!await this.drainThrough(job.through)) return false;
+      await journalQuotaRetry(() => job.work(job.through));
+      this.rebasing = null; this.error = null; return true;
+    })().catch(error => { this.error = error; this.onFailure(error); return false; }).finally(() => { this.rebaseActive = null; });
+    return this.rebaseActive;
+  }
   async drain(): Promise<boolean> {
     const target = this.version;
+    if (this.rebasing && !await this.finishRebase()) return false;
+    return this.drainThrough(target);
+  }
+  private async drainThrough(target: number): Promise<boolean> {
     if (this.timer !== null) { clearTimeout(this.timer); this.timer = null; this.dueAt = Infinity; }
     while (this.committed < target && !this.stopped) {
       if (this.active) { if (!await this.active) return false; continue; }
-      const rows = this.pending.slice(), from = this.committed;
+      const rows = this.pending.filter(row => row.version <= target), from = this.committed;
       this.active = journalQuotaRetry(() => this.store.append(this.key, this.owner, from, rows)).then(through => {
         this.committed = through; this.pending = this.pending.filter(r => r.version > through); this.error = null;
         try { this.onCommit?.(rows.at(-1)!); } catch (error) { problemDiagnostics.error("journal-observer", error); }

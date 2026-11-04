@@ -1,21 +1,29 @@
 import { CLOUD_CAPACITY_LIMITS } from "./codec";
 import { encodeCloudEvidenceCheckpoint, loadCloudEvidenceCheckpoint } from "./codecEvidence";
-import { CloudCodecError, sha256Utf8, utf8Bytes } from "./codecJson";
+import { CloudCodecError, logicalJsonText, sha256Utf8, utf8Bytes } from "./codecJson";
 import { CloudCacheError, packCloudCache, unpackCloudCache, type StoredCache } from "./codecCache";
 import { prepareCloudImportWire, prepareCloudWire } from "./codecWire";
 import type { CloudCacheEntry, CloudCacheRead } from "./cache";
 import { CloudSyncError, type CloudCandidate, type CloudCommitRequest, type CloudConfirmed, type CloudImportRequest, type CloudScope } from "./transport";
 import type { CloudProgressSummary } from "./progress";
-import type { VerifiedCopyInspection } from "./copySelection";
+import { copyDescendsFrom, type VerifiedCopyInspection } from "./copySelection";
 import { VerifiedCopyCache } from "./verifiedCopyCache";
-import { bindJournalInWorker, prepareJournalInWorker } from "./journalCodec";
+import { bindJournalInWorker, prepareJournalInWorker, rebaseJournalInWorker } from "./journalCodec";
 import { warmJournalInWorker } from "./journalWarm";
+import { encodeCloudSnapshot, isSnapshotCopy, SNAPSHOT_BASELINE, snapshotCopy, snapshotEvidence, prepareSnapshotImport } from "./snapshotCodec";
+import { importGameEvidence } from "@gamify-surgery/game-domain";
+import type { SnapshotLineage } from "./transport";
 
 export type CloudCodecTask =
   | { kind: "journalWarm"; input: Parameters<typeof warmJournalInWorker>[0] }
   | { kind: "journalBind"; input: Parameters<typeof bindJournalInWorker>[0] }
+  | { kind: "journalRebase"; input: Parameters<typeof rebaseJournalInWorker>[0] }
   | { kind: "journalPrepare"; input: Parameters<typeof prepareJournalInWorker>[0] }
   | { kind: "encode"; input: Parameters<typeof encodeCloudEvidenceCheckpoint>[0] }
+  | { kind: "snapshotEncode"; input: ({ checkpoint: Parameters<typeof encodeCloudEvidenceCheckpoint>[0]["checkpoint"]; state?: never } | { state: import("@gamify-surgery/game-domain").GameState; checkpoint?: never }) & { campaign: CloudCandidate["campaign"]; lineage: SnapshotLineage } }
+  | { kind: "snapshotUpgrade"; input: { confirmed: CloudConfirmed; candidate: CloudCandidate | null } }
+  | { kind: "snapshotConvert"; input: { copy: CloudConfirmed; base?: CloudConfirmed; convertedBase?: CloudConfirmed; ancestorHashes?: readonly string[] } }
+  | { kind: "snapshotImport"; input: Parameters<typeof prepareSnapshotImport>[0] }
   | { kind: "verify"; input: Parameters<typeof loadCloudEvidenceCheckpoint>[0] }
   | { kind: "inspectCopy"; input: CloudConfirmed }
   | { kind: "candidate"; input: { candidate: CloudCandidate; confirmed: CloudConfirmed; scope: CloudScope } }
@@ -28,8 +36,13 @@ export type CloudCodecTask =
 export interface CloudCodecResults {
   journalWarm: Awaited<ReturnType<typeof warmJournalInWorker>>;
   journalBind: Awaited<ReturnType<typeof bindJournalInWorker>>;
+  journalRebase: void;
   journalPrepare: Awaited<ReturnType<typeof prepareJournalInWorker>>;
   encode: { snapshot: CloudCandidate["snapshot"]; evidence: CloudCandidate["evidence"]; decodedGameBytes: number };
+  snapshotEncode: CloudCandidate;
+  snapshotUpgrade: CloudCandidate;
+  snapshotConvert: CloudConfirmed;
+  snapshotImport: Awaited<ReturnType<typeof prepareSnapshotImport>>;
   verify: { campaign: Awaited<ReturnType<typeof loadCloudEvidenceCheckpoint>>["campaign"]; evidenceRecords: number; progress: CloudProgressSummary };
   inspectCopy: VerifiedCopyInspection;
   candidate: void;
@@ -58,6 +71,7 @@ export async function runCloudCodecTask<T extends CloudCodecTask>(task: T): Prom
   switch (task.kind) {
     case "journalWarm": result = await warmJournalInWorker(task.input); break;
     case "journalBind": result = await bindJournalInWorker(task.input); break;
+    case "journalRebase": result = await rebaseJournalInWorker(task.input); break;
     case "journalPrepare": result = await prepareJournalInWorker(task.input); break;
     case "encode": {
       const encoded = await encodeCloudEvidenceCheckpoint(task.input);
@@ -68,10 +82,59 @@ export async function runCloudCodecTask<T extends CloudCodecTask>(task: T): Prom
       result = { snapshot: encoded.snapshot, evidence, decodedGameBytes: encoded.sizes.decodedGameBytes };
       break;
     }
+    case "snapshotEncode": {
+      const encoded = await encodeCloudSnapshot({ state: task.input.state ?? importGameEvidence(task.input.checkpoint!.snapshot, task.input.checkpoint!.evidence),
+        campaign: task.input.campaign, lineage: task.input.lineage });
+      result = { saveFormat: 3, lineage: encoded.lineage, campaign: task.input.campaign, snapshot: encoded.snapshot,
+        evidence: { headerSha256: encoded.evidence.header.uncompressedSha256, fromRecord: 0, toRecord: 0, records: [] }, usageQuestions: [] }; break;
+    }
+    case "snapshotImport": result = await prepareSnapshotImport(task.input); break;
+    case "snapshotConvert": {
+      const { copy, base, convertedBase, ancestorHashes = [] } = task.input;
+      if (isSnapshotCopy(copy)) { result = copy; break; }
+      const loaded = await verifiedCopies.projection({ ...copy, expectedRevision: copy.revision,
+        expectedCampaignId: copy.campaignId, expectedBaselineId: copy.baselineId });
+      const descendant = base && copyDescendsFrom(copy, base);
+      if (descendant && convertedBase && copy.snapshot.uncompressedSha256 === base.snapshot.uncompressedSha256) {
+        result = { ...convertedBase, ...(copy.priorRecovery ? { priorRecovery: copy.priorRecovery } : {}) }; break;
+      }
+      const converted = await snapshotCopy(loaded.state, loaded.campaign, copy.revision, copy.acceptedAtMs,
+        { branchId: `migration.${copy.snapshot.uncompressedSha256}`, sequence: loaded.sequence,
+          parents: [...new Set([copy.snapshot.uncompressedSha256, ...(descendant ? [base!.snapshot.uncompressedSha256, ...(convertedBase ? [convertedBase.snapshot.uncompressedSha256] : [])] : []), ...ancestorHashes])].slice(0, 4) });
+      result = { ...converted, ...(copy.priorRecovery ? { priorRecovery: copy.priorRecovery } : {}) }; break;
+    }
+    case "snapshotUpgrade": {
+      const { confirmed, candidate } = task.input;
+      const base = await verifiedCopies.projection({ ...confirmed, expectedRevision: confirmed.revision, expectedCampaignId: confirmed.campaignId, expectedBaselineId: confirmed.baselineId });
+      const selected = candidate ? await verifiedCopies.projection({ snapshot: candidate.snapshot,
+        evidence: candidate.saveFormat === 3 ? await snapshotEvidence() : { header: confirmed.evidence.header, records: [...confirmed.evidence.records, ...candidate.evidence.records] },
+        revision: confirmed.revision, expectedRevision: confirmed.revision, expectedCampaignId: confirmed.campaignId,
+        ...(candidate.saveFormat === 3 ? { lineage: candidate.lineage } : {}), expectedBaselineId: candidate.saveFormat === 3 ? SNAPSHOT_BASELINE : confirmed.baselineId }) : base;
+      const prior = isSnapshotCopy(confirmed) ? confirmed : await snapshotCopy(base.state, base.campaign, confirmed.revision, confirmed.acceptedAtMs,
+        { branchId: `migration.${confirmed.snapshot.uncompressedSha256}`, sequence: base.sequence, parents: [confirmed.snapshot.uncompressedSha256] });
+      const lineage = selected.snapshotLineage ?? { branchId: crypto.randomUUID(), sequence: selected.sequence,
+        parents: [...new Set([confirmed.snapshot.uncompressedSha256, prior.snapshot.uncompressedSha256])] };
+      const encoded = await encodeCloudSnapshot({ state: selected.state, campaign: selected.campaign, lineage });
+      result = { saveFormat: 3, lineage, snapshot: encoded.snapshot, campaign: selected.campaign,
+        evidence: { headerSha256: encoded.evidence.header.uncompressedSha256, fromRecord: 0, toRecord: 0, records: [] },
+        usageQuestions: candidate?.usageQuestions ?? [], ...(!isSnapshotCopy(confirmed) ? { legacyBaseSnapshot: prior.snapshot } : {}) }; break;
+    }
     case "verify": result = await verify(task.input); break;
     case "inspectCopy": result = (await verifiedCopies.read({ ...task.input, expectedRevision: task.input.revision,
       expectedCampaignId: task.input.campaignId, expectedBaselineId: task.input.baselineId })).inspection; break;
     case "candidate": {
+      if (task.input.candidate.saveFormat === 3) {
+        const { candidate, scope } = task.input;
+        if (candidate.snapshot.uncompressedBytes > CLOUD_CAPACITY_LIMITS.snapshotCeilingBytes || candidate.snapshot.compressedBytes > CLOUD_CAPACITY_LIMITS.snapshotCeilingBytes) throw new CloudSyncError("capacity");
+        if (candidate.campaign.campaignId !== scope.campaignId || candidate.evidence.records.length || candidate.evidence.fromRecord !== 0 || candidate.evidence.toRecord !== 0)
+          throw new CloudSyncError("corrupt");
+        const loaded = await loadCloudEvidenceCheckpoint({ snapshot: candidate.snapshot, evidence: await snapshotEvidence(), revision: task.input.confirmed.revision,
+          expectedRevision: task.input.confirmed.revision, expectedCampaignId: scope.campaignId, expectedBaselineId: SNAPSHOT_BASELINE });
+        if (logicalJsonText(JSON.parse(JSON.stringify(loaded.campaign))) !== logicalJsonText(JSON.parse(JSON.stringify(candidate.campaign)))) throw new CloudSyncError("corrupt");
+        if (logicalJsonText(JSON.parse(JSON.stringify(loaded.snapshotLineage))) !== logicalJsonText(JSON.parse(JSON.stringify(candidate.lineage)))) throw new CloudSyncError("corrupt");
+        if (candidate.usageQuestions.length > 100 || new Set(candidate.usageQuestions.map(row => row.receipt_id)).size !== candidate.usageQuestions.length) throw new CloudSyncError("corrupt");
+        break;
+      }
       const { candidate, confirmed, scope } = task.input, delta = candidate.evidence, accepted = confirmed.evidence;
       if (candidate.campaign.campaignId !== scope.campaignId || delta.headerSha256 !== accepted.header.uncompressedSha256 ||
         delta.fromRecord !== accepted.records.length || delta.toRecord !== delta.fromRecord + delta.records.length ||
@@ -126,7 +189,7 @@ export async function handleCloudCodecMessage(message: CloudCodecMessage): Promi
     const reply = { id: message.id, result: await runCloudCodecTask(message.task) };
     // The inline executor must exercise the return boundary too. Production's
     // postMessage performs this clone itself, without a second full copy here.
-    return import.meta.env.DEV || import.meta.env.MODE === "test" ? structuredClone(reply) : reply;
+    return import.meta.env?.DEV || import.meta.env?.MODE === "test" ? structuredClone(reply) : reply;
   }
   catch (error) { return { id: message.id, error: packCodecFailure(error) }; }
 }

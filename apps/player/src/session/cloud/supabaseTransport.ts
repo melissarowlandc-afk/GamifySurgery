@@ -5,6 +5,7 @@ import { assertCloudRevision } from "./codec";
 import { compressCloudText, decompressCloudText, type CloudCompressedText } from "./codecCompression";
 import { decompressCloudEvidencePages, type CloudEvidencePage } from "./codecEvidencePages";
 import { logicalJsonText, parseCodecJson } from "./codecJson";
+import { readSnapshotLineage, SNAPSHOT_BASELINE, snapshotEvidence } from "./snapshotCodec";
 import {
   CLOUD_SYNC_PROTOCOL, CloudSyncError, type CloudCapabilities, type CloudCampaignHead, type CloudCampaignSummary,
   type CloudCommitRequest, type CloudCommitReceipt, type CloudConfirmed, type CloudFrozenOperation,
@@ -59,6 +60,7 @@ function mappedError(error: unknown): CloudSyncError {
 
 /** Thin adapter to 20261018000100_beta2_cloud_saves.sql's named protocol-3 RPCs. */
 export class SupabaseCloudTransport implements CloudTransport {
+  private snapshots = false;
   private readonly heads = new Map<string, CloudCampaignHead>();
   private readonly tokens = new Map<string, string>();
   constructor(private readonly client: CloudRpcClient, private readonly accountId: string,
@@ -78,10 +80,11 @@ export class SupabaseCloudTransport implements CloudTransport {
   }
   async capabilities(): Promise<CloudCapabilities> {
     const data = object(await this.call("beta2_cloud_access", { p_protocol: CLOUD_SYNC_PROTOCOL }));
+    this.snapshots = data.snapshotSaves === true;
     return { accountId: this.accountId, enabled: data.enabled === true, writesEnabled: data.writesEnabled === true,
       admitted: true, noticeAccepted: data.noticeAccepted === true, deletionRequested: false, minProtocol: integer(data.protocolVersion),
       enrollmentsEnabled: data.enrollmentsEnabled === true, enrolled: data.enrolled === true,
-      quotaWarning: data.quota != null && object(data.quota).warning === true };
+      quotaWarning: data.quota != null && object(data.quota).warning === true, snapshotSaves: this.snapshots };
   }
   async list(): Promise<readonly CloudCampaignSummary[]> {
     const data = object(await this.call("beta2_cloud_list", { p_protocol: CLOUD_SYNC_PROTOCOL }));
@@ -104,9 +107,16 @@ export class SupabaseCloudTransport implements CloudTransport {
     return found;
   }
   async load(campaignId: string, expectedRevision?: string): Promise<CloudConfirmed> {
-    const data = object(await this.call("beta2_cloud_load", { p_protocol: CLOUD_SYNC_PROTOCOL, p_campaign_id: campaignId, p_revision: expectedRevision ?? null }));
-    const snapshot = await packed(data.snapshot), evidence = object(data.evidence);
+    const data = object(await this.call(this.snapshots ? "beta2_snapshot_load" : "beta2_cloud_load", { p_protocol: CLOUD_SYNC_PROTOCOL, p_campaign_id: campaignId, p_revision: expectedRevision ?? null }));
+    const snapshot = await packed(data.snapshot);
     if (snapshot.compressedBytes > 3_000_000 || snapshot.uncompressedBytes > 3_000_000) throw new CloudSyncError("corrupt");
+    if (data.cloudFormatVersion === 3) {
+      const loadedRevision = revision(data.revision);
+      if (expectedRevision && loadedRevision !== expectedRevision) throw new CloudSyncError("revision");
+      return { saveFormat: 3, lineage: readSnapshotLineage(data.lineage), campaignId, revision: loadedRevision,
+        acceptedAtMs: timestamp(data.acceptedAt), snapshot, evidence: await snapshotEvidence(), baselineId: SNAPSHOT_BASELINE };
+    }
+    const evidence = object(data.evidence);
     if (!Array.isArray(evidence.pages) || evidence.pages.length > 512) throw new CloudSyncError("corrupt");
     const pages: CloudEvidencePage[] = [];
     for (const value of evidence.pages) {
@@ -190,7 +200,7 @@ export class SupabaseCloudTransport implements CloudTransport {
     const wire = operation.wireRequest;
     if (!wire || await cloudCodec.run({ kind: "hash", input: wire.text }) !== wire.sha256) throw new CloudSyncError("corrupt");
     const request = JSON.parse(operation.requestText) as CloudCommitRequest;
-    return this.receipt(await this.call("beta2_cloud_write", { p_request_text: wire.text, p_request_sha256: wire.sha256 }), request.campaignId, operation);
+    return this.receipt(await this.call(request.saveFormat === 3 ? "beta2_snapshot_write" : "beta2_cloud_write", { p_request_text: wire.text, p_request_sha256: wire.sha256 }), request.campaignId, operation);
   }
   async importCampaign(operation: CloudFrozenOperation): Promise<CloudCommitReceipt> {
     const receipt = await this.commit(operation), request = JSON.parse(operation.requestText) as CloudImportRequest;

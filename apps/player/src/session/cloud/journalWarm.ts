@@ -50,7 +50,16 @@ async function initialize(address: JournalWorkerAddress): Promise<Mirror | null>
 }
 async function warm(address: JournalWorkerAddress, owner: string): Promise<{ through: number }> {
   const id = JSON.stringify(address), store = journalWorkerStore(address);
-  if ((await store.head(address.key))?.owner !== owner) throw new CloudCacheError("conflict");
+  const openingHead = await store.head(address.key);
+  if (openingHead?.owner !== owner) throw new CloudCacheError("conflict");
+  if (openingHead.snapshotFormat === 3) {
+    const mode = await store.read(address.key);
+    if (!mode?.snapshot.seed.snapshotPolicy) throw new CloudCacheError("checksum");
+    const prepared = await prepareJournalInWorker({ data: mode });
+    if (!prepared || (await store.head(address.key))?.owner !== owner) throw new CloudCacheError("conflict");
+    if (prepared.candidate) await store.prepare(address.key, owner, prepared.through, prepared.candidate, []);
+    return { through: prepared.through };
+  }
   let mirror = mirrors.get(id), head: JournalHead;
   const changes = mirror ? await store.changes(address.key, mirror.through) : null;
   if (!mirror || !changes || changes.head.owner !== mirror.owner || changes.rows.length !== changes.head.highWater - mirror.through) {

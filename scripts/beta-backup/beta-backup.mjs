@@ -58,9 +58,10 @@ export function selectCampaign(account, campaignId) {
   const rows = name => account.tables[name].filter(row => row.campaign_id === campaignId);
   const snapshots = rows('public.beta2_campaign_snapshots'), headers = rows('public.beta2_evidence_headers'), pages = rows('public.beta2_evidence_pages').sort((a, b) => a.first_record - b.first_record);
   const revisions = [campaign.current_revision, ...(campaign.prior_revision === null ? [] : [campaign.prior_revision])];
-  if (headers.length !== 1 || snapshots.length !== revisions.length || revisions.some(rev => snapshots.filter(row => row.revision === rev).length !== 1) ||
+  const native = snapshots.find(s => s.revision === campaign.current_revision)?.cloud_format_version === 3;
+  if (headers.length !== (native ? 0 : 1) || snapshots.length !== revisions.length || revisions.some(rev => snapshots.filter(row => row.revision === rev).length !== 1) ||
       (campaign.prior_revision !== null && BigInt(campaign.prior_revision) >= BigInt(campaign.current_revision))) fail('Backup current/prior snapshot set is incomplete.');
-  if (headers[0].uncompressed_sha256 !== campaign.header_sha256 || snapshots.find(s => s.revision === campaign.current_revision).uncompressed_sha256 !== campaign.current_sha256) fail('Backup head hashes disagree.');
+  if ((!native && headers[0].uncompressed_sha256 !== campaign.header_sha256) || snapshots.find(s => s.revision === campaign.current_revision).uncompressed_sha256 !== campaign.current_sha256) fail('Backup head hashes disagree.');
   let cursor = 0;
   for (const page of pages) {
     if (page.first_record !== cursor || !Number.isSafeInteger(page.record_count) || page.record_count < 1) fail('Backup sealed evidence pages are incomplete or reordered.');
@@ -70,11 +71,17 @@ export function selectCampaign(account, campaignId) {
   if (cursor !== campaign.evidence_high_water || pages.length > 512) fail('Backup evidence high-water is incomplete.');
   for (const snapshot of snapshots) {
     revision(snapshot.revision);
+    if (!native && snapshot.cloud_format_version === 3) fail("Backup contains mixed snapshot formats.");
+    if (native) {
+      if (snapshot.cloud_format_version !== 3 || !snapshot.snapshot_lineage || snapshot.evidence_high_water !== 0 || pages.length ||
+        snapshot.uncompressed_bytes > 3_000_000) fail('Backup current-state snapshot is incomplete.');
+      continue;
+    }
     const prefix = pages.filter(p => p.first_record + p.record_count <= snapshot.evidence_high_water && BigInt(p.accepted_revision) <= BigInt(snapshot.revision));
     if (prefix.reduce((n, p) => n + p.record_count, 0) !== snapshot.evidence_high_water ||
       snapshot.uncompressed_bytes + headers[0].uncompressed_bytes + prefix.reduce((n, p) => n + p.uncompressed_bytes, 0) > 6_000_000) fail('Backup snapshot evidence prefix exceeds the supported load contract.');
   }
-  return { format: FORMAT, ownerId: account.ownerId, campaign, snapshots, header: headers[0], pages };
+  return { format: FORMAT, ownerId: account.ownerId, campaign, snapshots, header: headers[0] ?? null, pages };
 }
 
 function timestamp(name) {

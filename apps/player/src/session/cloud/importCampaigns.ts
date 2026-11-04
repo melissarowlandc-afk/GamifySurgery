@@ -132,19 +132,19 @@ export async function promoteExistingLocalQuestions(receipts: readonly QuestionU
   await store.write("usage-promoted", parseQuestionUsageReceipts([...promoted, ...pending]));
   await usage.flush();
 }
-interface ImportJournal { sourceDigest: string; operation: CloudFrozenOperation; verified: boolean }
+interface ImportJournal { sourceDigest: string; operation: CloudFrozenOperation; verified: boolean; compactedCopy?: CloudConfirmed }
 export interface CloudEnrollmentMarker { sourceDigest: string; operationId: string; campaignId: string; revision: string; facilityLevel?: number }
 export async function importLocalCloudCampaign(source: LocalCloudSource, name: string, transport: CloudTransport, store: CloudEntryStore) {
   if (source.error || !transport.importCampaign) throw new CloudSyncError("corrupt");
   const campaign = readCloudCampaignMetadata(JSON.parse(JSON.stringify({ ...source.campaign, name: name.trim() })));
   const sourceDigest = await sha256Utf8(JSON.stringify({ serializedState: source.serializedState, campaign }));
-  return importPreparedCampaign(campaign, sourceDigest, operationId => prepareLocalCloudSource(source, campaign, operationId), transport, store);
+  return importPreparedCampaign(campaign, sourceDigest, async (operationId, snapshots) => snapshots ? cloudCodec.run({ kind: "snapshotImport", input: { serializedState: source.serializedState, campaign, branchId: operationId } }) : prepareLocalCloudSource(source, campaign, operationId), transport, store);
 }
 
 /** Both initial enrollment and an explicit separate branch use the same frozen
  * import, receipt verification and readback. No historical usage is minted. */
 async function importPreparedCampaign(campaign: CloudCampaignMetadata, sourceDigest: string,
-  prepare: (operationId: string) => Promise<Awaited<ReturnType<typeof encodeCloudEvidenceCheckpoint>>>, transport: CloudTransport, store: CloudEntryStore) {
+  prepare: (operationId: string, snapshots: boolean) => Promise<Awaited<ReturnType<typeof encodeCloudEvidenceCheckpoint>> | import("./codecTasks").CloudCodecResults["snapshotImport"]>, transport: CloudTransport, store: CloudEntryStore) {
   if (!transport.importCampaign) throw new CloudSyncError("protocol");
   const journalKey = `import:${sourceDigest}`;
   let journal = await store.read<ImportJournal>(journalKey);
@@ -152,15 +152,22 @@ async function importPreparedCampaign(campaign: CloudCampaignMetadata, sourceDig
   if (!access.admitted || access.deletionRequested) throw new CloudSyncError("deleted");
   if (!access.noticeAccepted) throw new CloudSyncError("notice");
   if (!access.enabled || access.writesEnabled === false || access.enrollmentsEnabled === false) throw new CloudSyncError("disabled");
+  if (journal?.compactedCopy && journal.verified && journal.sourceDigest === sourceDigest) {
+    const loaded = await transport.load(campaign.campaignId), verified = await loadCloudEvidenceCheckpoint({ ...loaded,
+      expectedCampaignId: campaign.campaignId, expectedRevision: loaded.revision, expectedBaselineId: loaded.baselineId });
+    const marker = await store.read<CloudEnrollmentMarker>(`enrolled:${campaign.campaignId}`);
+    if (!marker || marker.sourceDigest !== sourceDigest) throw new CloudSyncError("storage");
+    return { marker, loaded, verified };
+  }
   if (!journal) {
     const summaries = await transport.list();
     if (summaries.some(row => row.campaignId === campaign.campaignId)) throw new CloudSyncError("revision");
     if (summaries.some(row => row.name.toLowerCase() === campaign.name.toLowerCase())) throw new CloudSyncError("corrupt");
     if (summaries.length >= 2) throw new CloudSyncError("capacity");
     const operationId = `import.${sourceDigest}`;
-    const prepared = await prepare(operationId);
+    const prepared = await prepare(operationId, access.snapshotSaves === true);
     if (prepared.sizes.decodedGameBytes > 3_000_000) throw new CloudSyncError("capacity");
-    const request: CloudImportRequest = { operationId, campaignId: campaign.campaignId, campaign, snapshot: prepared.snapshot,
+    const request: CloudImportRequest = { ...("saveFormat" in prepared ? { saveFormat: prepared.saveFormat, lineage: prepared.lineage } : {}), operationId, campaignId: campaign.campaignId, campaign, snapshot: prepared.snapshot,
       evidence: prepared.packedEvidence, baselineId: prepared.envelope.baselineId,
       writerToken: Array.from(crypto.getRandomValues(new Uint8Array(32)), byte => byte.toString(16).padStart(2, "0")).join("") };
     const requestText = JSON.stringify(request), createdAtMs = Date.now();
@@ -184,7 +191,7 @@ async function importPreparedCampaign(campaign: CloudCampaignMetadata, sourceDig
   if (loaded.revision === receipt.revision) {
     const expected = await loadCloudEvidenceCheckpoint({ snapshot: request.snapshot, evidence: request.evidence, revision: "1", expectedRevision: "1",
       expectedCampaignId: campaign.campaignId, expectedBaselineId: request.baselineId });
-    if (logicalJsonText(JSON.parse(JSON.stringify(expected.checkpoint))) !== logicalJsonText(JSON.parse(JSON.stringify(verified.checkpoint))) ||
+    if (logicalJsonText(JSON.parse(JSON.stringify(request.saveFormat === 3 ? expected.state : expected.checkpoint))) !== logicalJsonText(JSON.parse(JSON.stringify(request.saveFormat === 3 ? verified.state : verified.checkpoint))) ||
       logicalJsonText(JSON.parse(JSON.stringify(campaign))) !== logicalJsonText(JSON.parse(JSON.stringify(verified.campaign)))) throw new CloudSyncError("corrupt");
   }
   const marker: CloudEnrollmentMarker = { sourceDigest, operationId: operation.operationId, campaignId: campaign.campaignId, revision: loaded.revision, facilityLevel: verified.state.facilityLevel };
@@ -220,7 +227,8 @@ export async function importSeparateCloudCampaign(device: CloudConfirmed, transp
   campaign = readCloudCampaignMetadata(JSON.parse(JSON.stringify(campaign)));
   if (campaign.campaignId !== campaignId) throw new CloudSyncError("storage");
   const sourceDigest = await sha256Utf8(logicalJsonText(JSON.parse(JSON.stringify({ device, campaign }))));
-  return importPreparedCampaign(campaign, sourceDigest, async operationId => {
+  return importPreparedCampaign(campaign, sourceDigest, async (operationId, snapshots) => {
+    if (snapshots) return cloudCodec.run({ kind: "snapshotImport", input: { serializedState: serializeGameState({ ...original.state, campaignId }), campaign, branchId: operationId } });
     const { snapshot, evidence } = original.checkpoint;
     const checkpoint: GameEvidenceCheckpoint = {
       snapshot: { ...snapshot, campaignId, patches: snapshot.patches.filter(patch => !(patch.path.length === 1 && patch.path[0] === "campaignId")) },

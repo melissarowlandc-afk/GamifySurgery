@@ -18,6 +18,13 @@ export async function cloudWireBlob(value: CloudCompressedText): Promise<CloudWi
   uncompressedBytes: value.uncompressedBytes, uncompressedSha256: value.uncompressedSha256, compressedSha256: await compressedHash(value) };
 }
 export async function prepareCloudWire(request: CloudCommitRequest, issuedAtMs: number): Promise<{ text: string; sha256: string }> {
+  if (request.saveFormat === 3) return freezeCloudWire({ protocolVersion: 4, cloudFormatVersion: 3,
+    campaign: { campaignId: request.campaign.campaignId, name: request.campaign.name, status: request.campaign.status }, action: "save", operationId: request.operationId, issuedAt: new Date(issuedAtMs).toISOString(),
+    expectedRevision: request.expectedRevision, writerGeneration: request.writerGeneration, writerToken: request.writerToken,
+    campaignId: request.campaignId, snapshot: await cloudWireBlob(request.snapshot), lineage: request.lineage,
+    legacyBaseSnapshot: request.legacyBaseSnapshot ? await cloudWireBlob(request.legacyBaseSnapshot) : null,
+    legacyBaseLineage: request.legacyBaseSnapshot ? JSON.parse(await decompressCloudText(request.legacyBaseSnapshot)).lineage : null,
+    usageReceipts: request.usageQuestions });
   const recordTexts: string[] = [];
   for (const row of request.evidence.records) recordTexts.push(await decompressCloudText(row.content));
   const pages = await compressCloudEvidencePages(recordTexts, request.evidence.fromRecord);
@@ -38,6 +45,10 @@ async function freezeCloudWire(request: Record<string, unknown>): Promise<{ text
 }
 
 export async function prepareCloudImportWire(request: CloudImportRequest, issuedAtMs: number): Promise<{ text: string; sha256: string }> {
+  if (request.saveFormat === 3) return freezeCloudWire({ protocolVersion: 4, cloudFormatVersion: 3,
+    campaign: { campaignId: request.campaign.campaignId, name: request.campaign.name, status: request.campaign.status }, action: "import", operationId: request.operationId, issuedAt: new Date(issuedAtMs).toISOString(),
+    expectedRevision: "0", writerGeneration: "0", writerToken: request.writerToken, campaignId: request.campaignId,
+    snapshot: await cloudWireBlob(request.snapshot), lineage: request.lineage, legacyBaseSnapshot: null, legacyBaseLineage: null, usageReceipts: [] });
   const texts: string[] = [];
   for (const record of request.evidence.records) texts.push(await decompressCloudText(record.content));
   const pages = await compressCloudEvidencePages(texts);

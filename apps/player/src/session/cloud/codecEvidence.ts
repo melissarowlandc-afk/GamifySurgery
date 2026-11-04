@@ -7,6 +7,7 @@ import { compressCloudText, decompressCloudText, type CloudCompressedText, type 
 import { assertMappedGameFields } from "./codecOwnership";
 import { CloudCodecError, codecObject, logicalJsonText, parseCodecJson, sameLogicalJson, sha256Utf8, utf8Bytes, type CodecJson, type CodecObject } from "./codecJson";
 import { verifiedEvidenceText } from "./verifiedEvidenceText";
+import { loadCloudSnapshot, SNAPSHOT_BASELINE } from "./snapshotCodec";
 
 /** New normalized layout. Format 1 remains an offline/backward-compatibility baseline reader. */
 export const CLOUD_EVIDENCE_FORMAT_VERSION = 2;
@@ -145,7 +146,9 @@ export async function prepareCloudEvidenceImport(input: {
 export async function loadCloudEvidenceCheckpoint(input: {
   snapshot: CloudCompressedText; evidence: CloudPackedEvidence; revision: string;
   expectedRevision: string; expectedCampaignId: string; expectedBaselineId: string;
+  lineage?: import("./transport").SnapshotLineage;
 }) {
+  if (input.expectedBaselineId === SNAPSHOT_BASELINE) return loadCloudSnapshot(input);
   assertCloudRevision(input.revision); assertCloudRevision(input.expectedRevision);
   if (input.revision !== input.expectedRevision) throw new CloudCodecError("revision_mismatch", "The loaded revision differs from the requested revision.");
   const envelope = await decodedJson(input.snapshot);
@@ -177,5 +180,5 @@ export async function loadCloudEvidenceCheckpoint(input: {
   assertMappedGameFields(codecObject(parseCodecJson(serializeGameState(state)), "Hydrated domain state"));
   if (state.campaignId !== input.expectedCampaignId) throw new CloudCodecError("campaign_identity", "The reconstructed game has a different owner.");
   return { state, campaign, checkpoint: { snapshot: operational, evidence: archive } satisfies GameEvidenceCheckpoint,
-    originalSource: restoreGameEvidenceImportSource(archive), revision: input.revision, source: header.source };
+    originalSource: restoreGameEvidenceImportSource(archive), revision: input.revision, source: header.source, snapshotLineage: undefined };
 }

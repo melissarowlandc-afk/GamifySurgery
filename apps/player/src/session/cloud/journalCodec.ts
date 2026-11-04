@@ -1,10 +1,11 @@
 import { importGameEvidence, restoreGameEvidenceJournal } from "@gamify-surgery/game-domain";
-import { journalWorkerStore, journalQuotaRetry, journalRowText, type JournalAddress, type JournalHead, type JournalRead, type JournalSeed, type JournalStorage } from "../localJournal";
+import { journalWorkerStore, journalQuotaRetry, journalRowText, type JournalAddress, type JournalHead, type JournalRead, type JournalSeed, type JournalStorage, type JournalWorkerAddress } from "../localJournal";
 import { CloudCacheError } from "./codecCache";
 import { encodeCloudEvidenceCheckpoint, loadCloudEvidenceCheckpoint } from "./codecEvidence";
 import { logicalJsonText, sha256Utf8, type CodecJson } from "./codecJson";
 import type { CloudCandidate, CloudConfirmed } from "./transport";
 import { cloudProgress } from "./progress";
+import { encodeCloudSnapshot, isSnapshotCopy } from "./snapshotCodec";
 
 export interface JournalPreparationInput {
   address?: JournalAddress;
@@ -24,11 +25,18 @@ export interface JournalPreparation {
   writerGeneration?: string;
   profileOrder?: number;
 }
+export async function rebaseJournalInWorker(input: { address: JournalWorkerAddress; owner: string; through: number; seed: JournalSeed }) {
+  const store = journalWorkerStore(input.address), head = await store.head(input.address.key);
+  if (!head || head.owner !== input.owner || head.highWater !== input.through) throw new CloudCacheError("conflict");
+  importGameEvidence(input.seed.checkpoint.snapshot, input.seed.checkpoint.evidence);
+  await store.compact(input.address.key, input.owner, input.through, input.seed, await sha256Utf8(JSON.stringify(input.seed)));
+}
 function rejectRewind(seed: JournalSeed, latest: JournalPreparation | null): void {
   if (!latest?.seed || !latest.state) return;
   const state = importGameEvidence(seed.checkpoint.snapshot, seed.checkpoint.evidence);
-  const proposed = [state.facilityTick, seed.checkpoint.snapshot.head.sequence, cloudProgress(state).xp, state.facilityLevel, seed.checkpoint.evidence.records.length];
-  const current = [latest.state.facilityTick, latest.seed.checkpoint.snapshot.head.sequence, cloudProgress(latest.state).xp, latest.state.facilityLevel, latest.seed.checkpoint.evidence.records.length];
+  const native = Boolean(seed.snapshotPolicy || latest.seed.snapshotPolicy);
+  const proposed = [state.facilityTick, (seed.snapshotPolicy?.lineage.sequence ?? 0) + seed.checkpoint.snapshot.head.sequence, cloudProgress(state).xp, state.facilityLevel, native ? 0 : seed.checkpoint.evidence.records.length];
+  const current = [latest.state.facilityTick, (latest.seed.snapshotPolicy?.lineage.sequence ?? 0) + latest.seed.checkpoint.snapshot.head.sequence, cloudProgress(latest.state).xp, latest.state.facilityLevel, native ? 0 : latest.seed.checkpoint.evidence.records.length];
   for (let i = 0; i < proposed.length; i++) {
     if (proposed[i]! < current[i]!) throw new CloudCacheError("conflict");
     if (proposed[i]! > current[i]!) return;
@@ -58,7 +66,20 @@ export async function prepareJournalInWorker(input: JournalPreparationInput): Pr
     usageQuestions: (last?.usageQuestions ?? prior.usageQuestions).filter(r => !data.head.acknowledgedUsage?.includes(r.receipt_id)),
     ...(last?.profile === undefined ? {} : { profile: last.profile }) };
   let base = input.base ?? seed.confirmed, candidate: CloudCandidate | null = null;
-  if (input.encode !== false && base && seed.source) {
+  if (input.encode !== false && base && seed.snapshotPolicy) {
+    const state = importGameEvidence(checkpoint.snapshot, checkpoint.evidence);
+    const encoded = await encodeCloudSnapshot({ state, campaign: seed.campaign,
+      lineage: { ...seed.snapshotPolicy.lineage, sequence: seed.snapshotPolicy.lineage.sequence + checkpoint.snapshot.head.sequence } });
+    const loaded = isSnapshotCopy(base) ? await loadCloudEvidenceCheckpoint({ ...base, expectedRevision: base.revision,
+      expectedCampaignId: base.campaignId, expectedBaselineId: base.baselineId }) : null;
+    const equal = loaded && logicalJsonText(JSON.parse(JSON.stringify(loaded.state))) === logicalJsonText(JSON.parse(JSON.stringify(state))) &&
+      logicalJsonText(JSON.parse(JSON.stringify(loaded.campaign))) === logicalJsonText(JSON.parse(JSON.stringify(seed.campaign)));
+    const older = loaded?.snapshotLineage && loaded.snapshotLineage.branchId === encoded.lineage.branchId && loaded.snapshotLineage.sequence > encoded.lineage.sequence;
+    if (!older || seed.usageQuestions.length) candidate = { saveFormat: 3, lineage: equal ? loaded!.snapshotLineage : encoded.lineage,
+      campaign: seed.campaign, snapshot: equal ? base.snapshot : encoded.snapshot,
+      evidence: { headerSha256: encoded.evidence.header.uncompressedSha256, fromRecord: 0, toRecord: 0, records: [] }, usageQuestions: seed.usageQuestions,
+      ...(!isSnapshotCopy(base) && seed.snapshotPolicy.legacyBaseSnapshot ? { legacyBaseSnapshot: seed.snapshotPolicy.legacyBaseSnapshot } : {}) };
+  } else if (input.encode !== false && base && seed.source) {
     const loaded = await loadCloudEvidenceCheckpoint({ ...base, expectedRevision: base.revision, expectedCampaignId: base.campaignId, expectedBaselineId: base.baselineId });
     const actual = checkpoint.evidence.records, accepted = loaded.checkpoint.evidence.records;
     const equal = (a: unknown, b: unknown) => logicalJsonText(a as CodecJson) === logicalJsonText(b as CodecJson);

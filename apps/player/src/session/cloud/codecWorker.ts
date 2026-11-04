@@ -4,7 +4,7 @@ import { handleCloudCodecMessage, unpackCodecFailure, type CloudCodecExecutor, t
 
 // Vite development loads the workspace graph as individual modules. Release
 // builds load a bundled worker; neither startup nor processing waits forever.
-export const CLOUD_WORKER_STARTUP_TIMEOUT_MS = import.meta.env.MODE === "development" ? 60_000 : 10_000;
+export const CLOUD_WORKER_STARTUP_TIMEOUT_MS = import.meta.env?.MODE === "development" ? 60_000 : 10_000;
 // Active processing only, measured from the worker's dequeue/start message.
 // Keep the released generous cap; queued work never spends another task's budget.
 export const CLOUD_WORKER_TASK_TIMEOUT_MS = 60_000;
@@ -42,7 +42,7 @@ export class CloudCodecWorker implements CloudCodecExecutor {
       Date.now() - (p.started ?? p.posted), p.retries]) }; }
   run<T extends CloudCodecTask>(task: T): Promise<CloudCodecResults[T["kind"]]> {
     const createWorker = this.createWorker;
-    if (import.meta.env.DEV || import.meta.env.MODE === "test" || !createWorker) {
+    if (import.meta.env?.DEV || import.meta.env?.MODE === "test" || !createWorker) {
       try { task = structuredClone(task); }
       catch (error) { return Promise.reject(this.payloadFailure(error)); }
     }

@@ -11,7 +11,7 @@ export async function verifyCampaignCodec(bundle) {
   for (const snapshot of bundle.snapshots) {
     const prefix = bundle.pages.filter(p => p.first_record + p.record_count <= snapshot.evidence_high_water && BigInt(p.accepted_revision) <= BigInt(snapshot.revision));
     const payload = { revision: snapshot.revision, writerGeneration: bundle.campaign.writer_generation, acceptedAt: snapshot.accepted_at,
-      snapshot: pack(snapshot), evidence: { header: pack(bundle.header), pages: prefix.map(p => ({ firstRecord: p.first_record, recordCount: p.record_count, content: pack(p) })) } };
+      snapshot: pack(snapshot), ...(snapshot.cloud_format_version === 3 ? { cloudFormatVersion: 3, lineage: snapshot.snapshot_lineage } : { evidence: { header: pack(bundle.header), pages: prefix.map(p => ({ firstRecord: p.first_record, recordCount: p.record_count, content: pack(p) })) } }) };
     const client = { async rpc(name, args) {
       if (name !== 'beta2_cloud_load' || args.p_campaign_id !== bundle.campaign.campaign_id || args.p_revision !== snapshot.revision) throw new Error('Unexpected verification route');
       return { data: payload, error: null };

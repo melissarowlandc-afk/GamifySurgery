@@ -19,6 +19,27 @@ function initial() {
 }
 afterEach(() => { vi.restoreAllMocks(); vi.useRealTimers(); vi.unstubAllGlobals(); });
 describe("incremental local operational journal", () => {
+  it.each([false, true])("holds new-baseline deltas behind compaction, retrying its exact seed after a lost local acknowledgement (%s)", async lost => {
+    const store = new MemoryJournalStorage(), f = initial(), head = await bindJournal(store, "barrier", "owner", f.seed, codec);
+    const drain = new LocalJournalDrain(store, "barrier", "owner", head.highWater, () => {});
+    const first = applyGameEvidenceCommand(f.checkpoint, { type: "SET_SIMULATION_SPEED", speed: 2, operationId: "before.baseline" });
+    drain.accept({ delta: gameEvidenceDelta(f.checkpoint, first.checkpoint), campaign: f.seed.campaign, usageQuestions: [] });
+    const baseline = createGameEvidenceCheckpoint(first.state), seed = { ...f.seed, checkpoint: baseline }, gate = deferred();
+    let injected = false;
+    const rebase = drain.rebase(async through => {
+      await gate.promise;
+      if (lost && !injected) { store.fault = "after-commit"; injected = true; }
+      await store.compact("barrier", "owner", through, seed, await sha256Utf8(JSON.stringify(seed)));
+    });
+    const second = applyGameEvidenceCommand(baseline, { type: "SET_SIMULATION_SPEED", speed: 4, operationId: "after.baseline" });
+    drain.accept({ delta: gameEvidenceDelta(baseline, second.checkpoint), campaign: f.seed.campaign, usageQuestions: [] });
+    expect(drain.canAccept).toBe(true); await vi.waitFor(() => expect(drain.committed).toBe(1));
+    expect((await store.read("barrier"))!.head.highWater).toBe(1); gate.resolve();
+    expect(await rebase).toBe(!lost);
+    expect(await drain.drain()).toBe(true);
+    expect((await prepareJournal(store, "barrier", codec, { local: true }))!.state).toEqual(second.state);
+    expect((await store.read("barrier"))!.rows).toHaveLength(1); drain.stop();
+  });
   it("rejects a missing IDB request callback at the transaction deadline even after completion", async () => {
     const store = new IndexedDbJournalStorage("journal.missing-callback", new IDBFactory()), f = initial();
     await bindJournal(store, "preserved", "owner", f.seed, codec);

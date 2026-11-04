@@ -1,5 +1,6 @@
 import { sha256Utf8 } from "./codecJson";
 import { decompressCloudText } from "./codecCompression";
+import { loadCloudSnapshot, SNAPSHOT_BASELINE, snapshotEvidence, isSnapshotCopy } from "./snapshotCodec";
 import {
   CLOUD_LEASE_MS, CloudSyncError, type CloudCapabilities, type CloudCommitReceipt, type CloudCommitRequest,
   type CloudConfirmed, type CloudFrozenOperation, type CloudLease, type CloudTransport, type CloudImportRequest,
@@ -126,20 +127,37 @@ export class FakeCloudServer {
         if ([...account.campaigns].some(([id, other]) => id !== input.campaignId &&
           other.summary?.name.toLowerCase() === input.campaign.name.toLowerCase())) throw new CloudSyncError("corrupt");
         const row = campaign(input.campaignId);
+        let native: CloudConfirmed | null = null, prior: CloudConfirmed | null = null;
+        if (input.saveFormat === 3) {
+          if (!account.access.snapshotSaves) throw new CloudSyncError("protocol");
+          const loaded = await loadCloudSnapshot({ snapshot: input.snapshot, revision: row.confirmed.revision, expectedRevision: row.confirmed.revision,
+            expectedCampaignId: input.campaignId, lineage: input.lineage });
+          if (input.evidence.records.length || input.evidence.fromRecord || input.evidence.toRecord) throw new CloudSyncError("corrupt");
+          native = { saveFormat: 3, lineage: loaded.snapshotLineage, campaignId: input.campaignId, revision: row.confirmed.revision,
+            acceptedAtMs: this.now(), snapshot: input.snapshot, evidence: await snapshotEvidence(), baselineId: SNAPSHOT_BASELINE };
+          if (!isSnapshotCopy(row.confirmed)) {
+            if (!input.legacyBaseSnapshot) throw new CloudSyncError("corrupt");
+            const base = await loadCloudSnapshot({ snapshot: input.legacyBaseSnapshot, revision: row.confirmed.revision,
+              expectedRevision: row.confirmed.revision, expectedCampaignId: input.campaignId });
+            prior = { ...row.confirmed, saveFormat: 3, snapshot: input.legacyBaseSnapshot, baselineId: SNAPSHOT_BASELINE,
+              evidence: await snapshotEvidence(), lineage: base.snapshotLineage };
+          }
+        } else if (isSnapshotCopy(row.confirmed)) throw new CloudSyncError("protocol");
+        // No await after these checks: a concurrently fenced writer cannot commit.
         writer(row, input);
         if (row.confirmed.revision !== input.expectedRevision) throw new CloudSyncError("revision");
-        if (input.evidence.headerSha256 !== row.confirmed.evidence.header.uncompressedSha256 ||
+        if (!native && (input.evidence.headerSha256 !== row.confirmed.evidence.header.uncompressedSha256 ||
           input.evidence.fromRecord !== row.confirmed.evidence.records.length ||
-          input.evidence.toRecord !== input.evidence.fromRecord + input.evidence.records.length) throw new CloudSyncError("corrupt");
+          input.evidence.toRecord !== input.evidence.fromRecord + input.evidence.records.length)) throw new CloudSyncError("corrupt");
         const revision = String(BigInt(row.confirmed.revision) + 1n), acceptedAtMs = this.now();
         const receipt: CloudCommitReceipt = { operationId: input.operationId, requestSha256: operation.requestSha256,
           campaignId: input.campaignId, revision, snapshotSha256: input.snapshot.uncompressedSha256,
           snapshotBytes: input.snapshot.uncompressedBytes, acceptedAtMs, evidenceHighWater: input.evidence.toRecord,
           usageReceiptIds: input.usageQuestions.map(r => r.receipt_id) };
         // No await between the authority checks and the atomic fake commit.
-        row.prior = row.confirmed;
+        row.prior = prior ?? row.confirmed;
         row.summary = { name: input.campaign.name, status: input.campaign.status };
-        row.confirmed = { ...row.confirmed, snapshot: input.snapshot, revision, acceptedAtMs,
+        row.confirmed = native ? { ...native, revision, acceptedAtMs } : { ...row.confirmed, snapshot: input.snapshot, revision, acceptedAtMs,
           evidence: { header: row.confirmed.evidence.header, records: [...row.confirmed.evidence.records, ...input.evidence.records] } };
         for (const r of input.usageQuestions) account.usage.add(r.receipt_id);
         account.operations.set(input.operationId, { digest: operation.requestSha256, receipt });
@@ -164,8 +182,12 @@ export class FakeCloudServer {
         if (account.campaigns.has(input.campaignId)) throw new CloudSyncError("revision");
         const names = await Promise.all([...account.campaigns.values()].map(async row => JSON.parse(await decompressCloudText(row.confirmed.snapshot)).campaign.name.toLowerCase()));
         if (names.includes(input.campaign.name.toLowerCase())) throw new CloudSyncError("corrupt");
+        if (input.saveFormat === 3) {
+          if (!account.access.snapshotSaves || input.evidence.records.length) throw new CloudSyncError("protocol");
+          await loadCloudSnapshot({ snapshot: input.snapshot, revision: "1", expectedRevision: "1", expectedCampaignId: input.campaignId, lineage: input.lineage });
+        }
         const acceptedAtMs = this.now();
-        const confirmed: CloudConfirmed = { campaignId: input.campaignId, revision: "1", acceptedAtMs, snapshot: input.snapshot, evidence: input.evidence, baselineId: input.baselineId };
+        const confirmed: CloudConfirmed = { campaignId: input.campaignId, revision: "1", acceptedAtMs, snapshot: input.snapshot, evidence: input.evidence, baselineId: input.baselineId, ...(input.saveFormat === 3 ? { saveFormat: 3, lineage: input.lineage } : {}) };
         const receipt: CloudCommitReceipt = { operationId: input.operationId, campaignId: input.campaignId, revision: "1", requestSha256: operation.requestSha256,
           snapshotSha256: input.snapshot.uncompressedSha256, snapshotBytes: input.snapshot.uncompressedBytes, acceptedAtMs, evidenceHighWater: input.evidence.records.length, usageReceiptIds: [] };
         account.campaigns.set(input.campaignId, { confirmed, prior: null, summary: { name: input.campaign.name, status: input.campaign.status }, generation: 1n, token: input.writerToken, expiry: this.now() + CLOUD_LEASE_MS });

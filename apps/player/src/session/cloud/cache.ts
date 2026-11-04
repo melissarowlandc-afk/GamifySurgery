@@ -54,6 +54,8 @@ async function withJournal(entry: CloudCacheEntry, journal: JournalStorage, rawH
   const prepared = await preparedRead.result;
   if (!prepared?.candidate || !prepared.base) return entry;
   const candidate = prepared.candidate;
+  if (candidate.saveFormat === 3 && candidate.snapshot.uncompressedSha256 === entry.confirmed.snapshot.uncompressedSha256 &&
+    !candidate.usageQuestions.length && !entry.recovery?.inFlight) return { ...entry, recovery: null };
   const represented = entry.recovery?.following ?? (entry.recovery?.inFlight ? JSON.parse(entry.recovery.inFlight.requestText) as CloudCandidate : null);
   if (represented?.snapshot.uncompressedSha256 === candidate.snapshot.uncompressedSha256 &&
     candidate.usageQuestions.every(row => represented.usageQuestions.some(other => other.receipt_id === row.receipt_id))) return entry;

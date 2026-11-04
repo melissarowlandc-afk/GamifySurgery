@@ -28,6 +28,29 @@ it("starts the real development worker without window/React Refresh and settles 
     expect(local?.state?.campaignId).toBe("native.worker"); expect(local?.seed?.checkpoint).toEqual(seed.checkpoint);
     expect(await codec.run({ kind: "journalWarm", input: { address, owner: "native.owner" } })).toEqual({ through: 0 });
     expect(await codec.run({ kind: "journalPrepare", input: { address, compact: true } })).toMatchObject({ through: 0, candidate: null });
+    const upgraded = await codec.run({ kind: "snapshotUpgrade", input: { confirmed: fixture.confirmed, candidate: null } });
+    expect(upgraded).toMatchObject({ saveFormat: 3, evidence: { records: [], fromRecord: 0, toRecord: 0 } });
+    expect(upgraded.legacyBaseSnapshot).toBeDefined();
+    expect(await codec.run({ kind: "snapshotConvert", input: { copy: fixture.confirmed } })).toMatchObject({ saveFormat: 3, evidence: { records: [] } });
+    const imported = await codec.run({ kind: "snapshotImport", input: { serializedState: fixture.prepared.sourceRecovery.text,
+      campaign: seed.campaign, branchId: "native.import" } });
+    const nativeAddress = { database: "native-snapshot-journal", key: "native.worker" };
+    const nativeCopy = { ...fixture.confirmed, saveFormat: 3 as const, snapshot: imported.snapshot, evidence: imported.packedEvidence,
+      baselineId: imported.baselineId, lineage: imported.lineage };
+    const nativeSeed = { ...seed, confirmed: nativeCopy, snapshotPolicy: { lineage: imported.lineage } };
+    const bound = await codec.run({ kind: "journalBind", input: { address: nativeAddress, owner: "native.snapshot.owner", expected: null, seed: nativeSeed } });
+    expect(bound.snapshotFormat).toBe(3);
+    await codec.run({ kind: "journalRebase", input: { address: nativeAddress, owner: "native.snapshot.owner", through: 0, seed: nativeSeed } });
+    expect(await codec.run({ kind: "journalWarm", input: { address: nativeAddress, owner: "native.snapshot.owner" } })).toEqual({ through: 0 });
+    expect((await codec.run({ kind: "journalPrepare", input: { address: nativeAddress } }))?.candidate).toMatchObject({ saveFormat: 3, snapshot: nativeCopy.snapshot, evidence: { records: [] } });
+    const scope = { backendId: "native", accountId: "synthetic", campaignId: nativeCopy.campaignId };
+    await codec.run({ kind: "candidate", input: { candidate: upgraded, confirmed: fixture.confirmed, scope } });
+    const wire = await codec.run({ kind: "importWire", input: { issuedAtMs: 1_800_000_000_000, request: {
+      operationId: "native.import", campaignId: nativeCopy.campaignId, campaign: seed.campaign, snapshot: imported.snapshot,
+      evidence: imported.packedEvidence, baselineId: imported.baselineId, writerToken: "a".repeat(64), saveFormat: 3, lineage: imported.lineage } } });
+    expect(JSON.parse(wire.text)).not.toHaveProperty("evidence");
+    const packed = await codec.run({ kind: "packCache", input: { entry: { schemaVersion: 1, scope, confirmed: nativeCopy, recovery: null }, expected: null } });
+    expect((await codec.run({ kind: "unpackCache", input: { raw: packed, scope } })).entry.confirmed).toEqual(nativeCopy);
     expect(codec.health).toMatchObject({ ready: true, restarts: 0, inFlight: [], lastError: null });
   } finally { codec.dispose(); await native.close(); }
 }, 60_000);

@@ -1,7 +1,7 @@
 import { applyGameEvidenceBuildUndo, applyGameEvidenceCommand, createGameEvidenceCheckpoint, type DomainContext, type GameCommand, type GameEvidenceCheckpoint, type GameState, gameEvidenceDelta } from "@gamify-surgery/game-domain";
 import { cloudCodec } from "./cloud/codecWorker";
 import { bindJournal, prepareJournal } from "./cloud/journalCodec";
-import { IndexedDbJournalStorage, LocalJournalDrain, LOCAL_COMPACTION_MS, freezeJournalCheckpoint, type JournalStorage } from "./localJournal";
+import { IndexedDbJournalStorage, LocalJournalDrain, LOCAL_COMPACTION_MS, freezeJournalCheckpoint, journalWorkerAddress, type JournalStorage } from "./localJournal";
 import type { LocalPrototypeProfile } from "./prototypeStorage";
 import { cloudCampaignMetadata } from "./cloud/gameSession";
 import { problemDiagnostics } from "../diagnostics/problemDiagnostics";
@@ -95,12 +95,19 @@ export class LocalProfileJournal {
     if (!boundary && performance.now() - this.lastCompaction < LOCAL_COMPACTION_MS || this.lastCompactedVersion === this.drain.highWater) return Promise.resolve(true);
     if (performance.now() - this.lastCompactionAttempt < 60_000) return Promise.resolve(false);
     this.lastCompactionAttempt = performance.now();
-    this.compacting = (async () => {
-      if (!await this.durable()) return false;
-      const result = await prepareJournal(this.store, this.drain.key, cloudCodec, { compact: true });
-      if (!result) return false;
-      this.lastCompactedVersion = result.through; this.lastCompaction = performance.now(); return true;
-    })().catch(error => { problemDiagnostics.error("local-compaction", error); return false; }).finally(() => { this.compacting = null; });
+    // The live checkpoint already refers to the first pending baseline. Finish
+    // that exact job before creating another one or resetting its sequence.
+    if (this.drain.rebasePending) return this.durable();
+    const state = this.profile.campaigns.find(row => row.campaignId === this.campaignId)!.state;
+    this.checkpoint = this.recorded = freezeJournalCheckpoint(createGameEvidenceCheckpoint(state));
+    recovered.set(state, this.checkpoint);
+    const seed = { checkpoint: this.checkpoint, campaign: cloudCampaignMetadata(this.profile), source: null, confirmed: null,
+      profile: profileMetadata(this.profile), usageQuestions: this.profile.pendingUsageQuestions ?? [] };
+    const target = this.drain.highWater;
+    this.compacting = this.drain.rebase(through => cloudCodec.run({ kind: "journalRebase", input: {
+      address: journalWorkerAddress(this.store, this.drain.key), owner: this.drain.owner, through, seed } })).then(ok => {
+      if (ok) { this.lastCompactedVersion = target; this.lastCompaction = performance.now(); } return ok;
+    }).catch(error => { problemDiagnostics.error("local-compaction", error); return false; }).finally(() => { this.compacting = null; });
     return this.compacting;
   }
   stop() { this.drain.stop(); }
