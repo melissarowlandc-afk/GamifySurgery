@@ -74,7 +74,7 @@ function harness(definitionId: string, orientation: 0 | 270 = 0, scale = 64) {
 }
 
 describe("backless rolling stools", () => {
-  it("audits every approved stool crop and preserves every pre-change seat and placement", () => {
+  it("preserves every stool crop/size, including the accepted phlebotomy translation", () => {
     const found: string[] = [];
     for (const room of APPROVED_ROOM_PRESENTATIONS) for (const view of room.orientations) {
       // New native Level 4 stools have their own hash/scene tests; this is the
@@ -87,12 +87,22 @@ describe("backless rolling stools", () => {
         found.push(`${room.roomDefinitionId}:${view.runtimeOrientation}:${draw.id}`);
         const baseline = before.find((row) => row.room === room.roomDefinitionId && row.orientation === view.runtimeOrientation)!;
         const oldDraw = baseline.furniture.find((item) => item.id === draw.id)!;
+        const translated = room.roomDefinitionId === "room.phlebotomy";
         expect({ id: draw.id, assetId: draw.assetId, sourceRect: draw.sourceRect,
-          destinationTopLeftTiles: draw.destinationTopLeftTiles, renderSizeTiles: draw.renderSizeTiles }).toEqual(oldDraw);
+          destinationTopLeftTiles: translated ? oldDraw.destinationTopLeftTiles : draw.destinationTopLeftTiles, renderSizeTiles: draw.renderSizeTiles }).toEqual(oldDraw);
         for (const oldSeat of baseline.seats.filter((seat) => seat.id.startsWith("stool"))) {
           const support = resolveApprovedRoomActorSupports(room.roomDefinitionId, view.runtimeOrientation)
             .find((seat) => seat.id === oldSeat.id)!;
-          expect({ id: support.id, seat: support.seat, ground: support.ground }).toEqual(oldSeat);
+          if (translated) {
+            // The stool and its occupant translate together. Preserve its
+            // native crop, size and seat rise; every other room stays exact.
+            const dx = draw.destinationTopLeftTiles[0] - oldDraw.destinationTopLeftTiles[0]!;
+            const dy = draw.destinationTopLeftTiles[1] - oldDraw.destinationTopLeftTiles[1]!;
+            expect(support.seat.x).toBeCloseTo(oldSeat.seat.x + dx);
+            expect(support.seat.y).toBeCloseTo(oldSeat.seat.y + dy);
+            expect(support.ground.x).toBeCloseTo(oldSeat.ground.x + dx);
+            expect(support.ground.y).toBeCloseTo(oldSeat.ground.y + dy);
+          } else expect({ id: support.id, seat: support.seat, ground: support.ground }).toEqual(oldSeat);
         }
       }
     }

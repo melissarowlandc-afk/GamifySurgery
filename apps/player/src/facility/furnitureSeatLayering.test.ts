@@ -64,9 +64,12 @@ function harness(definitionId: string, orientation: 0 | 270 = 0) {
 }
 
 describe("furniture seating layer audit", () => {
-  it("preserves all 56 pre-change actor contacts and all 64 furniture crops/positions", () => {
+  it("preserves all 52 contacts and 60 placements outside the accepted phlebotomy fix", () => {
     let seatCount = 0, drawCount = 0;
     for (const view of before) {
+      // Only phlebotomy deliberately relocates these four records. Its crops,
+      // cushion contacts and depth/clearance have dedicated release tests.
+      if (view.room === "room.phlebotomy") continue;
       const orientation = view.orientation as 0 | 270;
       const supports = resolveApprovedRoomActorSupports(view.room, orientation);
       const draws = resolveApprovedRoomDrawRecords(view.room, orientation);
@@ -83,12 +86,12 @@ describe("furniture seating layer audit", () => {
         drawCount += 1;
       }
     }
-    expect([seatCount, drawCount]).toEqual([56, 64]);
+    expect([seatCount, drawCount]).toEqual([52, 60]);
   });
 
   it("covers every runtime east/west chair and bench, distinguishing armless seats", () => {
     const armless = new Set([
-      "room.examination:0:stool:clinician", "room.phlebotomy:270:stool:clinician",
+      "room.examination:0:stool:clinician", "room.phlebotomy:0:stool:clinician", "room.phlebotomy:270:stool:clinician",
       "room.staff_break:0:largeWest", "room.staff_break:0:largeEast",
     ]);
     const checked: string[] = [];
@@ -112,8 +115,8 @@ describe("furniture seating layer audit", () => {
         checked.push(key);
       }
     }
-    expect(checked).toHaveLength(13);
-    expect(checked.filter((key) => armless.has(key))).toHaveLength(4);
+    expect(checked).toHaveLength(14);
+    expect(checked.filter((key) => armless.has(key))).toHaveLength(5);
   });
 
   it("keeps south-facing beds and exam tables completely below their occupants at every scale", () => {

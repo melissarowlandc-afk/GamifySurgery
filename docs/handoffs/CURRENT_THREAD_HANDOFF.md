@@ -1,3 +1,36 @@
+> WORKER: ACCEPTED PHLEBOTOMY FIX PORTED TO GS-RELEASE (2026-11-04).
+> Manager already copied phlebotomyPresentation.ts / approvedRoomPresentation.ts;
+> verified exact accepted production hashes (6e99e881… / 418e0286…), only the
+> four approved phlebotomy adapter hunks vs pre-fix baseline. Worker did not
+> rewrite either production file. No additional FacilityScene/viewModels/
+> bitmapAssetManifest hunks required; all three release files stay unchanged.
+> Updated only phlebotomy expectations in approvedRoomPresentation.test.ts,
+> backlessRollingStools.test.ts, furnitureSeatLayering.test.ts and
+> staffIdleSupports.test.ts; new standalone phlebotomyPresentation.test.ts uses
+> original release registration/identity scales and no QA/proportion imports.
+> Preserves other-room contracts, native crops/stool size, unchanged 17 idle
+> targets; phlebotomy-only .7-tile sidestep follows accepted stool translation.
+> Covers chair -15%, cushion/floor rounding, depth/near-armrest/idle reuse,
+> normal/wide accepted QA patients with all five phlebotomists, both views,
+> six zooms, and actual unmodified release scene support path. Idle/seated scale
+> remains identical per identity. Pending 244 corrections / 19 redraws excluded.
+> PASS: focused 5 files / 71 tests, 27.35s; FULL PLAYER 332 files / 3,370 tests,
+> 533.09s (CI=true, threads, unchanged four workers, existing net-use/No-Git
+> preload); all seven final workspace typechecks. Six original failures resolved.
+> Reviewed scoped diff; 4,427 of initial 4,431 source/art files unchanged, only
+> four existing test files differ. New source is solely the dedicated test.
+> Exploratory universal rectangle bound was too strong for old release art:
+> adult.037 at tile71 had -1.15px boxes, zero opaque-pixel overlap; recorded in
+> scratch diagnostic. No production offset/scale was changed to satisfy it.
+> Worker files: those five tests, docs/execplans/phlebotomy-release-20261104.md,
+> and this additive entry. Ignored logs/baselines/patch/complete file manifest:
+> [.local-dev/phlebotomy-release-20261104/README.md](../../.local-dev/phlebotomy-release-20261104/README.md).
+> Manager's live 192/192 browser/review acceptance stands; no release browser
+> launched. Live tree read only, writes only GS-release. No Git, installs,
+> network, clinical/cloud/queue/other-room edits, deploy or publication.
+> MANAGER NEXT: review release-scope.json/source-changes.patch and continue
+> release/checkpoint handling. Local work only; no backup claimed by worker.
+>
 > MANAGER GITHUB BACKUP 6 VERIFIED (2026-10-14). Owner said "Push to GitHub". Commit 3436c8bbd8359c64c49b082f21e88a8985f594f7
 > on origin/beta (git ls-remote confirmed). Archive artifacts/checkpoints/manager-accepted-20261014/
 > (143 files, ~19 MB, 43 whole + 26 verified patches, verify PASS, no credentials/env files) plus 3 owned

@@ -18,7 +18,8 @@ describe("idle staff supports", () => {
           expect(support.role).toBe("staff-idle");
           // The walker arrives at the tile's floor point (x + .5, y + .72).
           // Workstations are a small sidestep from it; chairs sit within
-          // about half a tile so sitting down reads as one step.
+          // about half a tile so sitting down reads as one step. The accepted
+          // phlebotomy stool move is .7 tile from its unchanged arrival point.
           const dx = Math.abs(support.ground.x - (spot.tile.x + .5));
           const dy = Math.abs(support.ground.y - (spot.tile.y + .72));
           if (support.pose === "standing") {
@@ -26,7 +27,7 @@ describe("idle staff supports", () => {
             expect(dx, spot.id).toBeLessThanOrEqual(.3);
             expect(dy, spot.id).toBeLessThanOrEqual(.45);
           } else {
-            expect(dx, spot.id).toBeLessThanOrEqual(.5);
+            expect(dx, spot.id).toBeLessThanOrEqual(roomDefinitionId === "room.phlebotomy" ? .7 + 1e-9 : .5);
             expect(dy, spot.id).toBeLessThanOrEqual(.6);
           }
           spotCount += 1;
