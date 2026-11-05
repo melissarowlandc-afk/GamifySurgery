@@ -234,7 +234,7 @@ function BoundCloudAccount({ runtime, children }: { runtime: CloudAccountRuntime
         archivedQuestionFlags: await readArchivedReviewFlags(accountStorageKey("gamify-surgery.question-review-flags.v1", runtime.accountId)),
         localSessionProfile: localWriter.current?.("export") ?? null,
         campaigns, entry, localJournals,
-        activeRecovery: activeRef.current?.exportRecovery() ?? null });
+        activeRecovery: await activeRef.current?.exportRecoveryAsync() ?? null });
     },
     async clearDevice(recoveryExported) {
       if (!runtime.cache.clearAccount || !runtime.cache.accountEntries) throw new CloudSyncError("storage");

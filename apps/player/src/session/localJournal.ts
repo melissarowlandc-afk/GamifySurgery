@@ -85,7 +85,9 @@ const rowKey = (key: string, version: number) => JSON.stringify([key, String(ver
 const chunkKey = (key: string, owner: string, index: number) => JSON.stringify([key, owner, String(index).padStart(16, "0")]);
 const keyPrefix = (key: string) => JSON.stringify([key]).slice(0, -1) + ",";
 export const journalRowText = ({ sha256: _sha256, ...row }: JournalRow) => JSON.stringify(row);
-const hashedRows = (rows: JournalRow[]) => Promise.all(rows.map(async row => ({ ...row, sha256: await sha256Utf8(journalRowText(row)) })));
+const preparedHashes = new WeakMap<JournalRow, string>();
+const hashedRows = (rows: JournalRow[]) => Promise.all(rows.map(async row => ({ ...row,
+  sha256: preparedHashes.get(row) ?? await sha256Utf8(journalRowText(row)) })));
 export async function journalQuotaRetry<T>(write: () => Promise<T>): Promise<T> {
   try { return await write(); }
   catch (error) {
@@ -471,7 +473,8 @@ export class LocalJournalDrain {
   onCommit?: (row: JournalRow) => void;
   onRecovered?: () => void;
   constructor(readonly store: JournalStorage, readonly key: string, readonly owner: string, highWater: number,
-    private readonly onFailure: (error: unknown) => void) { this.version = this.committed = highWater; }
+    private readonly onFailure: (error: unknown) => void,
+    private readonly prepareHashes?: (rows: readonly JournalRow[]) => Promise<readonly string[] | null>) { this.version = this.committed = highWater; }
   get canAccept() { return !this.stopped && (!this.error || isTransientStorageError(this.error)) && this.pending.length < LOCAL_JOURNAL_QUEUE_LIMIT; }
   get dirty() { return this.version > this.committed; }
   get highWater() { return this.version; }
@@ -479,6 +482,12 @@ export class LocalJournalDrain {
   get rebasePending() { return this.rebasing !== null; }
   accept(row: Omit<JournalRow, "version">, tick = false): void {
     if (!this.canAccept) throw new CloudCacheError("transaction");
+    this.acceptAdmitted(row, tick);
+  }
+  /** Capacity reserved by the async session BEFORE dispatch. A storage failure
+   * during computation cannot discard its already admitted recovery delta. */
+  acceptAdmitted(row: Omit<JournalRow, "version">, tick = false): void {
+    if (this.stopped || this.pending.length >= LOCAL_JOURNAL_QUEUE_LIMIT) throw new CloudCacheError("transaction");
     this.pending.push({ ...row, version: ++this.version });
     if (isTransientStorageError(this.error)) { this.scheduleRetry(); return; }
     const due = Date.now() + (tick ? LOCAL_TICK_COMMIT_MS : LOCAL_COMMIT_MS);
@@ -526,7 +535,16 @@ export class LocalJournalDrain {
     while (this.committed < target && !this.stopped) {
       if (this.active) { if (!await this.active) return false; continue; }
       const rows = this.pending.filter(row => row.version <= target), from = this.committed;
-      this.active = journalQuotaRetry(() => this.store.append(this.key, this.owner, from, rows)).then(through => {
+      this.active = journalQuotaRetry(async () => {
+        if (this.prepareHashes && rows.some(row => !preparedHashes.has(row))) {
+          const hashes = await this.prepareHashes(rows);
+          if (hashes) {
+            if (hashes.length !== rows.length || hashes.some(hash => !/^[a-f0-9]{64}$/.test(hash))) throw new CloudCacheError("checksum");
+            rows.forEach((row, index) => preparedHashes.set(row, hashes[index]!));
+          }
+        }
+        return this.store.append(this.key, this.owner, from, rows);
+      }).then(through => {
         this.committed = through; this.pending = this.pending.filter(r => r.version > through); this.error = null; this.retries = 0;
         try { this.onCommit?.(rows.at(-1)!); } catch (error) { problemDiagnostics.error("journal-observer", error); }
         return true;

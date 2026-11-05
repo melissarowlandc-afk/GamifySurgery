@@ -2,6 +2,7 @@ import { QuestionFlagControl } from "../ui/QuestionFlagControl";
 import type { SubmitQuestionReviewFlag } from "../session/questionReviewFlags";
 import { useEffect, useRef } from "react";
 import { PixelAvatar } from "../ui/PixelAvatar";
+import { useQuestionWaitSnapshots } from "../ui/useQuestionWaitSnapshots";
 import { employeeDiscussionChartView } from "../ui/EmployeeDiscussionPanel";
 import type { AnswerChoiceView, ChartClinicalReviewView, ChartDecisionStepView, ChartPendingPhaseView, ChartView, EmployeeDiscussionView } from "../ui/types";
 
@@ -112,7 +113,7 @@ function Sources({ review }: { review: ChartClinicalReviewView }) {
 
 export function MobileChart(props: MobileChartProps) {
   const { chart, onClose, onAcknowledgeTerminalFeedback, onFileChart, onToggleSummary } = props;
-  const steps = mobileChartSteps(chart);
+  const steps = useQuestionWaitSnapshots(chart.id, mobileChartSteps(chart));
   const current = steps.find((step) => step.current);
   const feedbackStep = steps.find((step) => step.current && (step.feedbackBody || step.teachingPoint))
     ?? steps.find((step) => !step.complete && (step.feedbackBody || step.teachingPoint));

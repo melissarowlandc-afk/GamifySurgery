@@ -13,7 +13,8 @@ import type { CloudCodecWorkerPort } from "./codecWorker";
 /** Exercise the actual development transforms in a separate worker realm.
  * No HTTP/WebSocket server listens and the bootstrap forbids network traffic.
  * Bundling would tree-shake the JSX/HMR import that caused the entry regression. */
-export async function nativeDevCodecFactory(legacyVersionImport = false): Promise<{ create(): CloudCodecWorkerPort; errors: string[]; close(): Promise<void> }> {
+export async function nativeDevCodecFactory(legacyVersionImport = false,
+  entry = "/src/session/cloud/codec.worker.ts?worker_file&type=module"): Promise<{ create(): CloudCodecWorkerPort; errors: string[]; close(): Promise<void> }> {
   const player = fileURLToPath(new URL("../../../", import.meta.url)), repo = resolve(player, "../..");
   const scratch = join(repo, ".local-dev"); await mkdir(scratch, { recursive: true });
   const directory = await mkdtemp(join(scratch, "codec-native-")), graph = join(directory, "graph"); await mkdir(graph);
@@ -26,7 +27,7 @@ export async function nativeDevCodecFactory(legacyVersionImport = false): Promis
     server: { middlewareMode: true, hmr: { server: hmr } },
     optimizeDeps: { noDiscovery: true, include: ["react", "react/jsx-dev-runtime", "ts-fsrs"] } });
   const name = (url: string) => createHash("sha256").update(url).digest("hex") + ".mjs";
-  const first = "/src/session/cloud/codec.worker.ts?worker_file&type=module", queue = [first], seen = new Set<string>();
+  const first = entry, queue = [first], seen = new Set<string>();
   const workers: Worker[] = [], errors: string[] = [];
   try {
     await init;

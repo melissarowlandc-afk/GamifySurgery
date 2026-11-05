@@ -8,12 +8,12 @@ export type MobileMapSelection =
   | { kind: "character"; character: FacilityCharacterRef; name: string; role: string; activity: string;
       patient: { id: string; name: string; status: string } | null;
       praise: { employeeId: string; eligible: boolean } | null }
-  | { kind: "room"; room: FacilityRoomView; destination: GridPoint | null; status: string; moveAccepted?: boolean;
+  | { kind: "room"; room: FacilityRoomView; destination: GridPoint | null; status: string; moveAccepted?: boolean | Promise<boolean>;
       upgrade: { level: number; maximum: number; available: boolean; affordable: boolean } }
   | { kind: "door"; door: FacilityDoorView; room: FacilityRoomView }
   | { kind: "chair"; chair: FacilityFounderChairView; name: string }
   | { kind: "front-desk"; roomId: string }
-  | { kind: "floor"; destination: GridPoint; accepted: boolean }
+  | { kind: "floor"; destination: GridPoint; accepted: boolean | Promise<boolean> }
   | { kind: "environment"; action: "collect-litter" | "refill-water"; id?: string; name: string; status: string };
 
 export type MobileInspectorSelection = Extract<MobileMapSelection, { kind: "character" | "room" | "door" }>;

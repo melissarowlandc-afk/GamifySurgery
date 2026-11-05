@@ -12,6 +12,7 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import { PixelAvatar } from "./PixelAvatar";
+import { useQuestionWaitSnapshots } from "./useQuestionWaitSnapshots";
 import type {
   AnswerChoiceView,
   ChartClinicalReviewView,
@@ -792,7 +793,7 @@ export function ChartPanel({
   const [expandedChoices, setExpandedChoices] = useState<Record<string, boolean>>({});
   const placement = useChartPlacement(sheetRef, chart !== null);
 
-  const steps = chart ? getDecisionSteps(chart) : [];
+  const steps = useQuestionWaitSnapshots(chart?.id ?? null, chart ? getDecisionSteps(chart) : []);
   const currentStep = steps.find((step) => step.current);
   const showingBack = Boolean(chart?.summaryAvailable && chart.summaryVisible);
   const primary: ChartPrimaryAction | null = !chart

@@ -17,7 +17,7 @@ export interface MobileBuildActions {
   previewPlacement: (x: number, y: number, orientation?: RoomOrientation) => BuildValidation;
   previewHallway: (cells: readonly GridPoint[]) => HallwayPreview;
   previewDoor: (request: DoorRequest) => BuildValidation;
-  commitHallway: (cells: readonly GridPoint[]) => boolean;
+  commitHallway: (cells: readonly GridPoint[]) => boolean | Promise<boolean>;
 }
 export interface DoorSection {
   id: string;

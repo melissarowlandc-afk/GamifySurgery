@@ -1,3 +1,4 @@
+import { mapSessionAction } from "../../session/sessionActions";
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { GridPoint } from "@gamify-surgery/game-domain";
 import type { BuildDoorTool } from "../../facility/types";
@@ -89,15 +90,18 @@ export function useMobileBuild(props: PrototypeShellProps, doorTool: BuildDoorTo
     const fresh = actions?.previewPlacement(ghost.x, ghost.y, props.placementOrientation) ?? unavailable;
     if (!fresh.valid) { setFeedback(fresh.reason); return; }
     confirmLatch.current = true;
-    const placed = props.onPlaceRoom(ghost.x, ghost.y, props.placementOrientation);
+    void mapSessionAction(props.onPlaceRoom(ghost.x, ghost.y, props.placementOrientation), placed => {
     if (placed) { setGhost(null); if (!props.movingRoomInstanceId) setDoorTool("place"); }
     else { confirmLatch.current = false; setFeedback("The change could not be applied. Check the room status and try again."); }
+    });
   };
   const confirmHallway = () => {
     if (!props.buildMode || !hallwayActive || !hallway?.buildCells.length || confirmLatch.current) return;
     confirmLatch.current = true;
-    if (actions?.commitHallway(stroke)) setStroke([]);
+    void mapSessionAction(actions?.commitHallway(stroke) ?? false, placed => {
+    if (placed) setStroke([]);
     else { confirmLatch.current = false; setFeedback("The hallway could not be built. Check the preview and try again."); }
+    });
   };
   const exitDoors = () => { setDoorTool(null); setSelectedDoorId(null); setDoorNotice(null); setPendingRemovalId(null); };
   return { map, ghost, validation, hallway, selectedDoor, feedback, doorNotice, exitOpen, controlsHeight, setControlsHeight, doorTool, closeExit: () => setExitOpen(false),

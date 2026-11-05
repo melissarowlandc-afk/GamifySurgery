@@ -279,7 +279,7 @@ export default function MobileShell(props: PrototypeShellProps) {
     if (!props.buildMode) { setRoomToOpen(id); requestTab("build"); return; }
     props.onSelectRoom(id); setDoorTool(null); navigator.open("room");
   };
-  const selectMapTarget = (selection: MobileMapSelection | null) => {
+  const selectMapTarget = async (selection: MobileMapSelection | null) => {
     setMapHint(null);
     if (selection?.kind === "character") {
       const chartId = patientChartIdForCharacter(selection.character, props.facility);
@@ -291,19 +291,19 @@ export default function MobileShell(props: PrototypeShellProps) {
     let hint: string | null = null;
     if (selection?.kind === "floor") {
       // The scene owns floor movement; lawn is rejected without a command.
-      if (!selection.accepted) hint = "No walkable route, or the founder is doing required work.";
+      if (!await selection.accepted) hint = "No walkable route, or the founder is doing required work.";
     } else if (selection?.kind === "chair") {
       const { roomInstanceId, location, seatId, occupied } = selection.chair;
-      const accepted = !occupied && (seatId ? props.onSeatFounderInChair?.(roomInstanceId, location, seatId)
+      const accepted = !occupied && await (seatId ? props.onSeatFounderInChair?.(roomInstanceId, location, seatId)
         : props.onSeatFounderInChair?.(roomInstanceId, location));
       if (!accepted) hint = occupied ? "Seat occupied." : "Seat unavailable, or the founder is doing required work.";
     } else if (selection?.kind === "front-desk") {
-      if (!props.onSeatFounderAtFrontDesk?.()) hint = "Front Desk unavailable, or the founder is doing required work.";
+      if (!await props.onSeatFounderAtFrontDesk?.()) hint = "Front Desk unavailable, or the founder is doing required work.";
     } else if (selection?.kind === "environment") {
       if (selection.action === "collect-litter" && selection.id) props.onCollectLitter?.(selection.id);
       else props.onRefillWaterCooler?.();
     } else {
-      if (selection?.kind === "room" && selection.moveAccepted === false) {
+      if (selection?.kind === "room" && selection.moveAccepted !== undefined && await selection.moveAccepted === false) {
         hint = "No walkable route, or the founder is doing required work.";
       }
       setMapSelection(selection);
@@ -334,7 +334,7 @@ export default function MobileShell(props: PrototypeShellProps) {
   const runAction = async (id: string, action: ClinicAlertAction) => {
     if (action.kind === "save_and_pause" && props.cloudSave) { await props.cloudSave.onSaveAndClose(); return; }
     const result = action.kind === "save_and_pause" ? await props.onSaveAndPause() :
-      props.onClinicAlertAction?.(action) ?? { ok: false, reason: "This action is unavailable in this preview." };
+      await props.onClinicAlertAction?.(action) ?? { ok: false, reason: "This action is unavailable in this preview." };
     if (action.kind === "save_and_pause") setSaveResult(result as PrototypeSaveResult);
     setFailures((current) => {
       const next = { ...current };

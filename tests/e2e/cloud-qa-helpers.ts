@@ -7,6 +7,7 @@ export const status = (page: Page) => page.evaluate(() => window.__cloudQa?.stat
   hasState: false, revision: null, phase: "connecting", pending: false, canExecute: false, localDurable: false,
   needsReload: false, failure: null, accountPhase: "connecting", entryHeading: null,
   openingFailure: null,
+  operationalEngineHealth: null,
 });
 
 // Cold module/worker startup and explicit checkpoint preparation can exceed

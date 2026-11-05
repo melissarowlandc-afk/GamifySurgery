@@ -78,7 +78,7 @@ export function ActivePrototypeGame({
   }, [cloudSession, cloudAccount?.runtime]);
   const view = useMemo(
     () =>
-      createPrototypePlayerView(
+      (cloudSession ? cloudSession.playerView.bind(cloudSession) : createPrototypePlayerView)(
         session.state,
         session.state.openChartEncounterId,
         session.summaryVisible,
@@ -145,7 +145,7 @@ export function ActivePrototypeGame({
           await cloudAccount?.refresh();
           await onCloudOpen?.(id); return true;
         },
-        onKeepRecovery: async () => { downloadCloudRecovery(cloudSession.exportRecovery()); return true; },
+        onKeepRecovery: async () => { downloadCloudRecovery(await cloudSession.exportRecoveryAsync()); return true; },
         onSaveAndClose: () => cloudSession.saveAndClose(PROTOTYPE_DOMAIN_CONTEXT),
         onCampaigns: () => onCloudCampaigns?.(),
       } : undefined}

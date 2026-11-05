@@ -388,7 +388,7 @@ export type PlaceRoomRequest = (
   tileX: number,
   tileY: number,
   orientation?: RoomOrientation,
-) => boolean;
+) => boolean | Promise<boolean>;
 export type SelectRoomRequest = (roomInstanceId: string) => void;
 export type PlaceDoorRequest = (
   roomInstanceId: string,
@@ -399,8 +399,8 @@ export type RemoveDoorRequest = (doorInstanceId: string) => void;
 export type RequestRoomUpgrade = (roomInstanceId: string) => void;
 export type CollectLitterRequest = (litterId: string) => void;
 export type RefillWaterCoolerRequest = () => void;
-export type SeatFounderAtFrontDeskRequest = () => boolean;
-export type SeatFounderInChairRequest = (roomInstanceId: string, location: GridPoint, seatId?: string) => boolean;
+export type SeatFounderAtFrontDeskRequest = () => boolean | Promise<boolean>;
+export type SeatFounderInChairRequest = (roomInstanceId: string, location: GridPoint, seatId?: string) => boolean | Promise<boolean>;
 
 /** A character on the map the player clicked to see what they are doing. */
 export interface FacilityCharacterRef {
@@ -417,5 +417,5 @@ export type DescribeCharacterRequest = (
   character: FacilityCharacterRef,
 ) => FacilityCharacterDescription | null;
 export type PraiseEmployeeRequest = (employeeId: string) => void;
-export type MoveFounderRequest = (destination: GridPoint) => boolean;
+export type MoveFounderRequest = (destination: GridPoint) => boolean | Promise<boolean>;
 export type FacilityCameraChangeRequest = (camera: FacilityCameraView) => void;

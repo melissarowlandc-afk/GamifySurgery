@@ -1,3 +1,5 @@
+import { SessionActions, type SessionActionResult } from "./sessionActions";
+import { learningReviewCount } from "./learningReviewCount";
 import { startFacilityClock } from "./facilityClock";
 import { LocalProfileJournal } from "./localProfileJournal";
 import { cloudCheckDeadline } from "./cloud/checkDeadline";
@@ -109,6 +111,7 @@ type GameCommandInput = {
 }[GameCommand["type"]];
 
 interface ExecuteOptions {
+  clockPulse?: boolean;
   /** Only a confirmed phone hallway stroke defers intermediate saves. */
   deferPersistence?: boolean;
   announceReceipt?: boolean;
@@ -145,7 +148,7 @@ export interface PrototypeSession {
   summaryVisible: boolean;
   announcement: string;
   systemNotices: PrototypeSystemNotice[];
-  runClinicAlertAction: (action: ClinicAlertAction) => ClinicAlertActionResult;
+  runClinicAlertAction: (action: ClinicAlertAction) => SessionActionResult<ClinicAlertActionResult>;
   questionReviewFlags: QuestionReviewFlag[];
   togglePause: () => void;
   setSimulationSpeed: (speed: SimulationSpeed) => void;
@@ -172,7 +175,7 @@ export interface PrototypeSession {
     tileX: number,
     tileY: number,
     orientation?: RoomOrientation,
-  ) => boolean;
+  ) => SessionActionResult<boolean>;
   enterBuildMode: () => void;
   exitBuildMode: () => void;
   enterManagementMode: () => void;
@@ -198,12 +201,12 @@ export interface PrototypeSession {
   fireEmployee: (employeeId: string) => void;
   collectLitter: (litterId: string) => void;
   refillWaterCooler: () => void;
-  seatFounderAtFrontDesk: () => boolean;
-  seatFounderInChair: (roomInstanceId: string, location: GridPoint, seatId?: string) => boolean;
+  seatFounderAtFrontDesk: () => SessionActionResult<boolean>;
+  seatFounderInChair: (roomInstanceId: string, location: GridPoint, seatId?: string) => SessionActionResult<boolean>;
   /** Map info box text for a clicked character; reads live state only. */
   describeCharacter: DescribeCharacterRequest;
   praiseEmployee: (employeeId: string) => void;
-  moveFounder: (destination: GridPoint) => boolean;
+  moveFounder: (destination: GridPoint) => SessionActionResult<boolean>;
   levelUp: () => void;
   bookInspection: () => void;
   cancelInspection: () => void;
@@ -314,6 +317,8 @@ export function usePrototypeSession(
   // start saving under another account when AuthGate remounts its provider.
   const accountId = useRef(useAuthAccountId()).current;
   const cloud = useRef(cloudSession ?? null).current;
+  const actions = useRef(new SessionActions(Boolean(cloud?.usesOperationalEngine))).current;
+  cloud?.bindCommandActions(actions);
   // A router-owned open keeps the old projection mounted for recovery. Its
   // timers/events must not start a second reopen or upload against that check.
   // Keep the subscription and durability owner; do not dispose accepted bytes.
@@ -688,9 +693,10 @@ export function usePrototypeSession(
     const sync = () => {
       const next = cloud.state;
       if (next.facilityTick !== facilityHeartbeatRef.current.tick) facilityHeartbeatRef.current = { tick: next.facilityTick, at: Date.now() };
+      const changed = stateRef.current !== next;
       stateRef.current = next;
       setState(next);
-      setProfile(stageActiveState(next));
+      if (changed) setProfile(stageActiveState(next)); else setProfile(current => ({ ...current }));
       cloudUsageRef.current?.setGame({ campaignId: next.campaignId, paused: next.paused || !cloud.canExecute, finishReportOpen: finishReportOpenRef.current });
     };
     const unsubscribe = cloud.subscribe(sync);
@@ -772,7 +778,7 @@ export function usePrototypeSession(
     (
       commandInput: GameCommandInput,
       options: ExecuteOptions = {},
-    ): OperationReceipt["status"] => {
+    ): SessionActionResult<OperationReceipt["status"]> => {
       if (!cloud && campaignWriteGateRef.current.isSuppressed()) { if (commandInput.type !== "ADVANCE_TICK") showCommandProblem("This device session has been closed.", "rejection"); setAnnouncement("This device session has been closed."); return "rejected"; }
       if (localJournalRequired && (!localJournalRef.current || !localJournalRef.current.canAccept)) {
         if (commandInput.type !== "ADVANCE_TICK") showCommandProblem(localJournalRef.current ? "Device saving needs attention. Keep the app open and send a problem report." : "Preparing your device save. Try again in a moment.", localJournalRef.current ? "error" : "rejection"); return "rejected";
@@ -784,12 +790,7 @@ export function usePrototypeSession(
       } as GameCommand;
       const previous = stateRef.current;
       if (cloud) {
-        const next = cloud.execute(command, { ...PROTOTYPE_DOMAIN_CONTEXT,
-          guidanceBlockedTopicIds: guidanceContextRef.current.blockedTopicIds,
-          guidanceAttentionBlocked: guidanceContextRef.current.attentionBlocked }, () => {
-          usage?.activity();
-          return usage?.createQuestionReceipt() ?? null;
-        });
+        const publish = (next: GameState | null): OperationReceipt["status"] => {
         if (!next) {
           problemDiagnostics.event("command", "hosted-refused");
           if (command.type !== "ADVANCE_TICK") {
@@ -798,7 +799,7 @@ export function usePrototypeSession(
           }
           setAnnouncement("Account saving must be checked before continuing."); return "rejected";
         }
-        stateRef.current = next; setState(next); setProfile(stageActiveState(next));
+        if (stateRef.current !== next) { stateRef.current = next; setState(next); setProfile(stageActiveState(next)); }
         const receipt = next.operationReceipts[operationId];
         lastCommandReceiptRef.current = receipt;
         if (receipt && options.announceReceipt !== false) setAnnouncement(receipt.message);
@@ -807,6 +808,17 @@ export function usePrototypeSession(
           if (command.type !== "ADVANCE_TICK") showCommandProblem(receipt ? presentActionRejection(next, command, receipt.message) : "That action could not be completed. Try again.", receipt ? "rejection" : "error");
         } else if (command.type !== "ADVANCE_TICK") showCommandProblem(null);
         return receipt?.status ?? "rejected";
+        };
+        const dispatch = options.clockPulse && command.type === "ADVANCE_TICK"
+          ? (input: GameCommand, context: typeof PROTOTYPE_DOMAIN_CONTEXT) => cloud.advanceClock(input as Extract<GameCommand, { type: "ADVANCE_TICK" }>, context)
+          : cloud.executeControllerCommand.bind(cloud);
+        const next = dispatch(command, { ...PROTOTYPE_DOMAIN_CONTEXT,
+          guidanceBlockedTopicIds: guidanceContextRef.current.blockedTopicIds,
+          guidanceAttentionBlocked: guidanceContextRef.current.attentionBlocked }, () => {
+          usage?.activity();
+          return usage?.createQuestionReceipt() ?? null;
+        });
+        return next instanceof Promise ? next.then(publish) : publish(next);
       }
       let next: GameState;
       try {
@@ -921,11 +933,11 @@ export function usePrototypeSession(
   );
 
   const executeBuildCommand = useCallback(
-    (commandInput: GameCommandInput): OperationReceipt["status"] => {
+    actions.action(function* (commandInput: GameCommandInput) {
       const before = stateRef.current;
       const status = mobileHallwayBatchRef.current
-        ? execute(commandInput, { deferPersistence: true })
-        : execute(commandInput);
+        ? (yield execute(commandInput, { deferPersistence: true }))
+        : (yield execute(commandInput));
       if (mobileHallwayBatchRef.current) return status;
       if (status === "applied") {
         buildHistoryRef.current = [
@@ -959,17 +971,17 @@ export function usePrototypeSession(
         if (warning) showCommandProblem(warning, "warning");
       }
       return status;
-    },
+    }),
     [execute],
   );
 
-  const undoBuildAction = useCallback(() => {
+  const undoBuildAction = useCallback(actions.action(function* () {
     if (!buildMode || buildHistoryRef.current.length === 0) {
       showCommandProblem("There is no build action to undo.", "rejection"); setAnnouncement("There is no build action to undo.");
       return;
     }
     const previous = buildHistoryRef.current.at(-1)!;
-    if (cloud && !cloud.undoBuild(previous)) { showCommandProblem("Check the account save before undoing this build action.", "rejection"); setAnnouncement("Check the account save before undoing this build action."); return; }
+    if (cloud && !(yield cloud.undoBuildAsync(previous))) { showCommandProblem("Check the account save before undoing this build action.", "rejection"); setAnnouncement("Check the account save before undoing this build action."); return; }
     if (localJournalRef.current) {
       if (!localJournalRef.current.canAccept) { showCommandProblem("Device saving needs attention before undoing."); return; }
       localJournalRef.current.undo(previous);
@@ -977,8 +989,9 @@ export function usePrototypeSession(
     buildHistoryRef.current = buildHistoryRef.current.slice(0, -1);
     buildHistoryLabelsRef.current = buildHistoryLabelsRef.current.slice(0, -1);
     setBuildUndoLabel(buildHistoryLabelsRef.current.at(-1) ?? null);
-    stateRef.current = previous;
-    setState(previous);
+    const restored = cloud?.state ?? previous;
+    stateRef.current = restored;
+    setState(restored);
     if (!cloud) persistActiveState(previous);
     setBuildUndoCount(buildHistoryRef.current.length);
     setBuildExitBlockedReason(null);
@@ -988,7 +1001,7 @@ export function usePrototypeSession(
     }
     setMovingRoomInstanceId(null);
     setAnnouncement("The last build action was undone.");
-  }, [buildMode, cloud, persistActiveState, selectedRoomDefinitionId]);
+  }), [buildMode, cloud, persistActiveState, selectedRoomDefinitionId]);
 
   useEffect(() => {
     if (!buildMode) {
@@ -1092,130 +1105,130 @@ export function usePrototypeSession(
     return startFacilityClock(window, tutorialTickIntervalMs,
       () => ({ tick: stateRef.current.facilityTick, paused: stateRef.current.paused || finishReportOpenRef.current,
         speed: stateRef.current.simulationSpeed, visible: document.visibilityState !== "hidden", allowed: !cloud || cloud.canExecute }),
-      () => execute({ type: "ADVANCE_TICK", advancedAtRealMs: Date.now() }, { announceReceipt: false, announceEvents: true }));
+      () => actions.tick(() => execute({ type: "ADVANCE_TICK", advancedAtRealMs: Date.now() }, { clockPulse: true, announceReceipt: false, announceEvents: true })));
   }, [cloud, documentVisible, execute, state.paused, finishReportOpen, tutorialTickIntervalMs]);
 
-  const exitManagementMode = useCallback(() => {
+  const exitManagementMode = useCallback(actions.action(function* () {
     if (!managementMode) {
       return;
     }
     setManagementMode(false);
     if (!preManagementPausedRef.current && stateRef.current.paused) {
-      execute(
+      (yield execute(
         { type: "SET_PAUSED", paused: false },
         { announceReceipt: false },
-      );
+      ));
     }
     setAnnouncement(
       preManagementPausedRef.current
         ? "Management Mode closed. The clinic remains paused."
         : "Management Mode closed. Facility operations resumed.",
     );
-  }, [cloud, execute, managementMode]);
+  }), [cloud, execute, managementMode]);
 
-  const enterManagementMode = useCallback(() => {
-    if (cloud && !cloud.canExecute) { showCommandProblem("Check the account save before entering Management Mode.", "rejection"); setAnnouncement("Check the account save before entering Management Mode."); return; }
+  const enterManagementMode = useCallback(actions.action(function* () {
+    if (cloud && !cloud.canExecuteAction) { showCommandProblem("Check the account save before entering Management Mode.", "rejection"); setAnnouncement("Check the account save before entering Management Mode."); return; }
     if (managementMode || buildMode) {
       return;
     }
     const current = stateRef.current;
     preManagementPausedRef.current = current.paused;
     if (current.openEmployeeDiscussionId) {
-      execute({ type: "CLOSE_EMPLOYEE_DISCUSSION", discussionId: current.openEmployeeDiscussionId }, { announceReceipt: false });
+      (yield execute({ type: "CLOSE_EMPLOYEE_DISCUSSION", discussionId: current.openEmployeeDiscussionId }, { announceReceipt: false }));
     }
     if (current.openChartEncounterId !== null) {
-      execute(
+      (yield execute(
         {
           type: "CLOSE_CHART",
           encounterId: current.openChartEncounterId,
         },
         { announceReceipt: false },
-      );
+      ));
       setSummaryVisible(false);
     }
     if (!stateRef.current.paused) {
-      execute(
+      (yield execute(
         { type: "SET_PAUSED", paused: true },
         { announceReceipt: false },
-      );
+      ));
     }
     setManagementMode(true);
-    execute({type: "RECORD_GUIDANCE_TOPIC_EXPOSURE", topicIds: ["management"]}, {announceReceipt: false});
+    (yield execute({type: "RECORD_GUIDANCE_TOPIC_EXPOSURE", topicIds: ["management"]}, {announceReceipt: false}));
     setAnnouncement(
       "Management Mode opened. Facility time is paused while you manage staff.",
     );
-  }, [buildMode, cloud, execute, managementMode]);
+  }), [buildMode, cloud, execute, managementMode]);
 
-  const closeEmployeeDiscussion = useCallback(() => {
+  const closeEmployeeDiscussion = useCallback(actions.action(function* () {
     const discussionId = stateRef.current.openEmployeeDiscussionId;
-    if (discussionId) execute({type: "CLOSE_EMPLOYEE_DISCUSSION", discussionId});
-  }, [execute]);
-  const openEmployeeDiscussion = useCallback((discussionId: string) => {
-    if (managementMode) exitManagementMode();
+    if (discussionId) (yield execute({type: "CLOSE_EMPLOYEE_DISCUSSION", discussionId}));
+  }), [execute]);
+  const openEmployeeDiscussion = useCallback(actions.action(function* (discussionId: string) {
+    if (managementMode) (yield* exitManagementMode.steps());
     const current = stateRef.current;
     if (current.openChartEncounterId) {
       const acknowledgment = getChartFeedbackAcknowledgmentCommand(current, current.openChartEncounterId);
-      if (acknowledgment && execute(acknowledgment) !== "applied") return;
+      if (acknowledgment && (yield execute(acknowledgment)) !== "applied") return;
       if (stateRef.current.openChartEncounterId === current.openChartEncounterId &&
-          execute({type: "CLOSE_CHART", encounterId: current.openChartEncounterId}) !== "applied") return;
+          (yield execute({type: "CLOSE_CHART", encounterId: current.openChartEncounterId})) !== "applied") return;
       setSummaryVisible(false);
     }
     if (current.openEmployeeDiscussionId && current.openEmployeeDiscussionId !== discussionId) {
-      execute({type: "CLOSE_EMPLOYEE_DISCUSSION", discussionId: current.openEmployeeDiscussionId});
+      (yield execute({type: "CLOSE_EMPLOYEE_DISCUSSION", discussionId: current.openEmployeeDiscussionId}));
     }
-    execute({type: "OPEN_EMPLOYEE_DISCUSSION", discussionId});
-  }, [execute, exitManagementMode, managementMode]);
-  const answerEmployeeDiscussion = useCallback((answerChoiceId: string) => {
+    (yield execute({type: "OPEN_EMPLOYEE_DISCUSSION", discussionId}));
+  }), [execute, exitManagementMode, managementMode]);
+  const answerEmployeeDiscussion = useCallback(actions.action(function* (answerChoiceId: string) {
     const current = stateRef.current;
     const discussion = current.openEmployeeDiscussionId ? current.employeeDiscussions?.[current.openEmployeeDiscussionId] : undefined;
     const node = discussion?.frozenCase.decisionNodes[discussion.currentNodeIndex];
     if (!discussion || !node) { showCommandProblem("Open the team discussion again before answering.", "rejection"); return; }
-    execute({type: "SUBMIT_EMPLOYEE_DISCUSSION_ANSWER", discussionId: discussion.id, decisionNodeId: node.id, answerChoiceId, reviewedAtMs: Date.now()});
-  }, [execute]);
-  const acknowledgeEmployeeDiscussion = useCallback(() => {
+    (yield execute({type: "SUBMIT_EMPLOYEE_DISCUSSION_ANSWER", discussionId: discussion.id, decisionNodeId: node.id, answerChoiceId, reviewedAtMs: Date.now()}));
+  }), [execute]);
+  const acknowledgeEmployeeDiscussion = useCallback(actions.action(function* () {
     const current = stateRef.current;
     const discussion = current.openEmployeeDiscussionId ? current.employeeDiscussions?.[current.openEmployeeDiscussionId] : undefined;
     const node = discussion?.frozenCase.decisionNodes[discussion.currentNodeIndex];
     if (!discussion || !node) { showCommandProblem("Open the team discussion again to continue.", "rejection"); return; }
-    if (execute({type: "ACKNOWLEDGE_EMPLOYEE_DISCUSSION_FEEDBACK", discussionId: discussion.id, decisionNodeId: node.id}) !== "applied") return;
+    if ((yield execute({type: "ACKNOWLEDGE_EMPLOYEE_DISCUSSION_FEEDBACK", discussionId: discussion.id, decisionNodeId: node.id})) !== "applied") return;
     // The feedback card already holds the teaching text, so the final
     // acknowledgment files the discussion instead of opening a summary page.
     if (stateRef.current.employeeDiscussions?.[discussion.id]?.lifecycle === "resolved_summary_available") {
-      execute({type: "FILE_EMPLOYEE_DISCUSSION", discussionId: discussion.id});
+      (yield execute({type: "FILE_EMPLOYEE_DISCUSSION", discussionId: discussion.id}));
     }
-  }, [execute]);
-  const fileEmployeeDiscussion = useCallback(() => {
+  }), [execute]);
+  const fileEmployeeDiscussion = useCallback(actions.action(function* () {
     const discussionId = stateRef.current.openEmployeeDiscussionId;
-    if (discussionId) execute({type: "FILE_EMPLOYEE_DISCUSSION", discussionId});
-  }, [execute]);
+    if (discussionId) (yield execute({type: "FILE_EMPLOYEE_DISCUSSION", discussionId}));
+  }), [execute]);
 
   const openPatient = useCallback(
-    (encounterId: string) => {
+    actions.action(function* (encounterId: string) {
       if (managementMode) {
-        exitManagementMode();
+        (yield* exitManagementMode.steps());
       }
       if (stateRef.current.openEmployeeDiscussionId) {
-        execute({type: "CLOSE_EMPLOYEE_DISCUSSION", discussionId: stateRef.current.openEmployeeDiscussionId});
+        (yield execute({type: "CLOSE_EMPLOYEE_DISCUSSION", discussionId: stateRef.current.openEmployeeDiscussionId}));
       }
       const currentlyOpen = stateRef.current.openChartEncounterId;
       if (currentlyOpen !== null && currentlyOpen !== encounterId) {
         const acknowledgment = getChartFeedbackAcknowledgmentCommand(stateRef.current, currentlyOpen);
-        if (acknowledgment && execute(acknowledgment) !== "applied") return;
+        if (acknowledgment && (yield execute(acknowledgment)) !== "applied") return;
         if (stateRef.current.openChartEncounterId === currentlyOpen &&
-            execute({ type: "CLOSE_CHART", encounterId: currentlyOpen }) !== "applied") return;
+            (yield execute({ type: "CLOSE_CHART", encounterId: currentlyOpen })) !== "applied") return;
       }
-      const status = execute({
+      const status = (yield execute({
         type: "OPEN_CHART",
         encounterId,
-      });
+      }));
       if (status === "applied") {
         setSummaryVisible(false);
       }
-    },
+    }),
     [execute, exitManagementMode, managementMode],
   );
 
-  const closeChart = useCallback(() => {
+  const closeChart = useCallback(actions.action(function* () {
     const encounterId = stateRef.current.openChartEncounterId;
     if (encounterId === null) {
       return;
@@ -1224,7 +1237,7 @@ export function usePrototypeSession(
       stateRef.current,
       encounterId,
     );
-    if (acknowledgment && execute(acknowledgment) !== "applied") {
+    if (acknowledgment && (yield execute(acknowledgment)) !== "applied") {
       return;
     }
     // A pending service route closes its chart while feedback is acknowledged.
@@ -1233,21 +1246,21 @@ export function usePrototypeSession(
       setSummaryVisible(false);
       return;
     }
-    const status = execute({
+    const status = (yield execute({
       type: "CLOSE_CHART",
       encounterId,
-    });
+    }));
     if (status === "applied") {
       setSummaryVisible(false);
     }
-  }, [execute]);
+  }), [execute]);
 
-  const fileChart = useCallback(() => {
-    closeChart();
-  }, [closeChart]);
+  const fileChart = useCallback(actions.action(function* () {
+    (yield* closeChart.steps());
+  }), [closeChart]);
 
   const submitAnswer = useCallback(
-    (choiceId: string) => {
+    actions.action(function* (choiceId: string) {
       const currentState = stateRef.current;
       const encounterId = currentState.openChartEncounterId;
       if (encounterId === null) {
@@ -1259,14 +1272,14 @@ export function usePrototypeSession(
         showCommandProblem("This chart does not currently have a question.", "rejection"); setAnnouncement("This chart does not currently have a question.");
         return;
       }
-      execute({
+      (yield execute({
         type: "SUBMIT_ANSWER",
         encounterId,
         decisionNodeId: question.node.id,
         answerChoiceId: choiceId,
         reviewedAtMs: Date.now(),
-      });
-    },
+      }));
+    }),
     [execute],
   );
 
@@ -1320,7 +1333,7 @@ export function usePrototypeSession(
     [],
   );
 
-  const acknowledgeTerminalFeedback = useCallback(() => {
+  const acknowledgeTerminalFeedback = useCallback(actions.action(function* () {
     const encounterId = stateRef.current.openChartEncounterId;
     if (encounterId === null) {
       return;
@@ -1330,9 +1343,9 @@ export function usePrototypeSession(
       encounterId,
     );
     if (acknowledgment) {
-      execute(acknowledgment);
+      (yield execute(acknowledgment));
     }
-  }, [execute]);
+  }), [execute]);
 
   const toggleSummary = useCallback(() => {
     setSummaryVisible((currentlyVisible) => {
@@ -1389,23 +1402,19 @@ export function usePrototypeSession(
   }, [selectedRoomDefinitionId]);
 
   const placeRoom = useCallback(
-    (
-      tileX: number,
-      tileY: number,
-      requestedOrientation?: RoomOrientation,
-    ) => {
+    actions.action(function* (tileX: number, tileY: number, requestedOrientation?: RoomOrientation) {
       const roomDefinitionId = selectedRoomDefinitionId;
       if (!roomDefinitionId) {
         showCommandProblem("Select a room before choosing its location.", "rejection"); setAnnouncement("Select a room before choosing its location.");
         return false;
       }
       if (movingRoomInstanceId) {
-        const status = executeBuildCommand({
+        const status = (yield* executeBuildCommand.steps({
           type: "MOVE_ROOM",
           roomId: movingRoomInstanceId,
           x: tileX,
           y: tileY,
-        });
+        }));
         if (status === "applied") {
           setSelectedRoomDefinitionId(null);
           setMovingRoomInstanceId(null);
@@ -1417,7 +1426,7 @@ export function usePrototypeSession(
         "room.instance",
         stateRef.current.rooms.map((room) => room.id),
       );
-      const status = executeBuildCommand({
+      const status = (yield* executeBuildCommand.steps({
         type: "PLACE_ROOM",
         roomId,
         roomDefinitionId,
@@ -1428,7 +1437,7 @@ export function usePrototypeSession(
         )
           ? (requestedOrientation ?? placementOrientation)
           : 0,
-      });
+      }));
       if (status === "applied") {
         if (roomDefinitionId === "room.hallway") {
           // Hallways are a persistent paint tool. Keep it active across each
@@ -1447,7 +1456,7 @@ export function usePrototypeSession(
         }
       }
       return status === "applied";
-    },
+    }),
     [
       executeBuildCommand,
       movingRoomInstanceId,
@@ -1458,7 +1467,7 @@ export function usePrototypeSession(
 
   // This method is exposed only to MobileShell. The desktop placeRoom path above
   // still executes, saves and snapshots every cell separately.
-  const commitMobileHallway = useCallback((cells: readonly GridPoint[]): boolean => {
+  const commitMobileHallway = useCallback(actions.action(function* (cells: readonly GridPoint[]) {
     if (!buildMode || selectedRoomDefinitionId !== "room.hallway" || movingRoomInstanceId || mobileHallwayBatchRef.current) return false;
     const before = stateRef.current;
     const preview = previewMobileHallway(before, cells);
@@ -1467,7 +1476,7 @@ export function usePrototypeSession(
     mobileHallwayBatchRef.current = true;
     try {
       for (const cell of preview.buildCells) {
-        if (!placeRoom(cell.x, cell.y, 0)) break;
+        if (!(yield* placeRoom.steps(cell.x, cell.y, 0))) break;
         applied += 1;
       }
     } finally {
@@ -1494,7 +1503,7 @@ export function usePrototypeSession(
       }
     }
     return applied > 0;
-  }, [buildMode, cloud, selectedRoomDefinitionId, movingRoomInstanceId, placeRoom, persistActiveState, publishSystemNotice]);
+  }), [buildMode, cloud, selectedRoomDefinitionId, movingRoomInstanceId, placeRoom, persistActiveState, publishSystemNotice]);
 
   const previewMobileRoom = useCallback((x: number, y: number, orientation?: RoomOrientation) =>
     previewMobilePlacement(stateRef.current, selectedRoomDefinitionId, movingRoomInstanceId, x, y, orientation ?? placementOrientation),
@@ -1502,13 +1511,13 @@ export function usePrototypeSession(
   const previewMobileHallwayCells = useCallback((cells: readonly GridPoint[]) => previewMobileHallway(stateRef.current, cells), []);
   const previewMobileDoorRequest = useCallback<MobileBuildActions["previewDoor"]>(request => previewMobileDoor(stateRef.current, request), []);
 
-  const enterBuildMode = useCallback(() => {
-    if (cloud && !cloud.canExecute) { showCommandProblem("Check the account save before entering Build Mode.", "rejection"); setAnnouncement("Check the account save before entering Build Mode."); return; }
+  const enterBuildMode = useCallback(actions.action(function* () {
+    if (cloud && !cloud.canExecuteAction) { showCommandProblem("Check the account save before entering Build Mode.", "rejection"); setAnnouncement("Check the account save before entering Build Mode."); return; }
     if (buildMode) {
       return;
     }
     if (managementMode) {
-      exitManagementMode();
+      (yield* exitManagementMode.steps());
     }
     const current = stateRef.current;
     preBuildPausedRef.current = current.paused;
@@ -1520,23 +1529,23 @@ export function usePrototypeSession(
     setBuildExitBlockedIssues([]);
     setBuildExitBlockedIssues([]);
     if (current.openEmployeeDiscussionId) {
-      execute({ type: "CLOSE_EMPLOYEE_DISCUSSION", discussionId: current.openEmployeeDiscussionId }, { announceReceipt: false });
+      (yield execute({ type: "CLOSE_EMPLOYEE_DISCUSSION", discussionId: current.openEmployeeDiscussionId }, { announceReceipt: false }));
     }
     if (current.openChartEncounterId !== null) {
-      execute(
+      (yield execute(
         {
           type: "CLOSE_CHART",
           encounterId: current.openChartEncounterId,
         },
         { announceReceipt: false },
-      );
+      ));
       setSummaryVisible(false);
     }
     if (!stateRef.current.paused) {
-      execute(
+      (yield execute(
         { type: "SET_PAUSED", paused: true },
         { announceReceipt: false },
-      );
+      ));
     }
     setBuildMode(true);
     setSelectedRoomDefinitionId(null);
@@ -1546,9 +1555,9 @@ export function usePrototypeSession(
     setAnnouncement(
       "Build Mode opened. Facility time is paused while you remodel.",
     );
-  }, [buildMode, cloud, execute, exitManagementMode, managementMode]);
+  }), [buildMode, cloud, execute, exitManagementMode, managementMode]);
 
-  const exitBuildMode = useCallback(() => {
+  const exitBuildMode = useCallback(actions.action(function* () {
     if (!buildMode) {
       return;
     }
@@ -1574,17 +1583,17 @@ export function usePrototypeSession(
     setSelectedRoomInstanceId(null);
     setPlacementOrientation(0);
     if (!preBuildPausedRef.current && stateRef.current.paused) {
-      execute(
+      (yield execute(
         { type: "SET_PAUSED", paused: false },
         { announceReceipt: false },
-      );
+      ));
     }
     setAnnouncement(
       preBuildPausedRef.current
         ? "Build Mode closed. The clinic remains paused."
         : "Build Mode closed. Facility operations resumed.",
     );
-  }, [buildMode, cloud, execute]);
+  }), [buildMode, cloud, execute]);
 
   const selectRoom = useCallback((roomInstanceId: string) => {
     setSelectedRoomInstanceId(roomInstanceId);
@@ -1593,39 +1602,39 @@ export function usePrototypeSession(
     setAnnouncement("Room selected. Upgrade or sell it from Build Mode.");
   }, []);
 
-  const sellSelectedRoom = useCallback((roomId: string, saleConfirmationToken?: string) => {
+  const sellSelectedRoom = useCallback(actions.action(function* (roomId: string, saleConfirmationToken?: string) {
     if (!roomId) {
       showCommandProblem("Select a room to sell.", "rejection"); setAnnouncement("Select a room to sell.");
       return;
     }
-    const status = executeBuildCommand({
+    const status = (yield* executeBuildCommand.steps({
       type: "SELL_ROOM",
       roomId,
       saleConfirmationToken,
-    });
+    }));
     if (status === "applied" && selectedRoomInstanceId === roomId) {
       setSelectedRoomInstanceId(null);
     }
-  }, [executeBuildCommand, selectedRoomInstanceId]);
+  }), [executeBuildCommand, selectedRoomInstanceId]);
 
-  const upgradeSelectedRoom = useCallback(() => {
+  const upgradeSelectedRoom = useCallback(actions.action(function* () {
     if (!selectedRoomInstanceId) {
       showCommandProblem("Select a room to upgrade.", "rejection"); setAnnouncement("Select a room to upgrade.");
       return;
     }
-    executeBuildCommand({
+    (yield* executeBuildCommand.steps({
       type: "UPGRADE_ROOM",
       roomId: selectedRoomInstanceId,
-    });
-  }, [executeBuildCommand, selectedRoomInstanceId]);
+    }));
+  }), [executeBuildCommand, selectedRoomInstanceId]);
 
-  const upgradeRoom = useCallback((roomId: string) => {
+  const upgradeRoom = useCallback(actions.action(function* (roomId: string) {
     if (!buildMode) {
       showCommandProblem("Enter Build Mode before upgrading a room.", "rejection"); setAnnouncement("Enter Build Mode before upgrading a room.");
       return;
     }
-    executeBuildCommand({ type: "UPGRADE_ROOM", roomId });
-  }, [buildMode, executeBuildCommand]);
+    (yield* executeBuildCommand.steps({ type: "UPGRADE_ROOM", roomId }));
+  }), [buildMode, executeBuildCommand]);
 
   const beginMoveSelectedRoom = useCallback(() => {
     if (!selectedRoomInstanceId) {
@@ -1648,16 +1657,12 @@ export function usePrototypeSession(
   }, [selectedRoomInstanceId]);
 
   const placeDoor = useCallback(
-    (
-      roomId: string,
-      side: CardinalDirection,
-      offset: number,
-    ) => {
+    actions.action(function* (roomId: string, side: CardinalDirection, offset: number) {
       if (!buildMode) {
         showCommandProblem("Enter Build Mode before placing a door.", "rejection"); setAnnouncement("Enter Build Mode before placing a door.");
         return;
       }
-      const status = executeBuildCommand({
+      const status = (yield* executeBuildCommand.steps({
         type: "PLACE_DOOR",
         doorId: nextInstanceId(
           "door.instance",
@@ -1666,49 +1671,49 @@ export function usePrototypeSession(
         roomId,
         side,
         offset,
-      });
+      }));
       if (status === "applied") {
         setSelectedRoomDefinitionId(null);
         setMovingRoomInstanceId(null);
         setSelectedRoomInstanceId(roomId);
       }
-    },
+    }),
     [buildMode, executeBuildCommand],
   );
 
   const removeDoor = useCallback(
-    (doorId: string) => {
-      executeBuildCommand({
+    actions.action(function* (doorId: string) {
+      (yield* executeBuildCommand.steps({
         type: "REMOVE_DOOR",
         doorId,
-      });
-    },
+      }));
+    }),
     [executeBuildCommand],
   );
 
   const hireStaff = useCallback(
-    (staffRoleDefinitionId: string) => {
-      execute({
+    actions.action(function* (staffRoleDefinitionId: string) {
+      (yield execute({
         type: "HIRE_STAFF",
         employeeId: nextInstanceId(
           "employee.instance",
           stateRef.current.employees.map((employee) => employee.id),
         ),
         staffRoleDefinitionId,
-      });
-    },
+      }));
+    }),
     [execute],
   );
 
   const trainEmployee = useCallback(
-    (employeeId: string) => {
-      execute({ type: "TRAIN_EMPLOYEE", employeeId });
-    },
+    actions.action(function* (employeeId: string) {
+      (yield execute({ type: "TRAIN_EMPLOYEE", employeeId }));
+    }),
     [execute],
   );
 
   const changeEmployeeSalary = useCallback(
-    (employeeId: string, direction: -1 | 1) => {
+    actions.action(function* (employeeId: string, direction: -1 | 1) {
       const employee = stateRef.current.employees.find(
         (candidate) => candidate.id === employeeId,
       );
@@ -1726,55 +1731,54 @@ export function usePrototypeSession(
         role.minimumSalaryPerExpenseInterval,
         Math.min(role.maximumSalaryPerExpenseInterval, requested),
       );
-      execute({
+      (yield execute({
         type: "SET_EMPLOYEE_SALARY",
         employeeId,
         salaryPerExpenseInterval: salary,
-      });
-    },
+      }));
+    }),
     [execute],
   );
 
   const decreaseEmployeeSalary = useCallback(
-    (employeeId: string) => changeEmployeeSalary(employeeId, -1),
+    actions.action(function* (employeeId: string) { return (yield* changeEmployeeSalary.steps(employeeId, -1)); }),
     [changeEmployeeSalary],
   );
   const increaseEmployeeSalary = useCallback(
-    (employeeId: string) => changeEmployeeSalary(employeeId, 1),
+    actions.action(function* (employeeId: string) { return (yield* changeEmployeeSalary.steps(employeeId, 1)); }),
     [changeEmployeeSalary],
   );
 
   const fireEmployee = useCallback(
-    (employeeId: string) => {
-      execute({ type: "FIRE_EMPLOYEE", employeeId });
-    },
+    actions.action(function* (employeeId: string) {
+      (yield execute({ type: "FIRE_EMPLOYEE", employeeId }));
+    }),
     [execute],
   );
 
   const collectLitter = useCallback(
-    (litterId: string) => {
-      execute({ type: "COLLECT_LITTER", litterId });
-    },
+    actions.action(function* (litterId: string) {
+      (yield execute({ type: "COLLECT_LITTER", litterId }));
+    }),
     [execute],
   );
 
-  const refillWaterCooler = useCallback(() => {
-    execute({ type: "REFILL_WATER_COOLER" });
-  }, [execute]);
+  const refillWaterCooler = useCallback(actions.action(function* () {
+    (yield execute({ type: "REFILL_WATER_COOLER" }));
+  }), [execute]);
 
   const seatFounderAtFrontDesk = useCallback(
-    () => execute({ type: "SEAT_FOUNDER_AT_FRONT_DESK" }) === "applied",
+    actions.action(function* () { return (yield execute({ type: "SEAT_FOUNDER_AT_FRONT_DESK" })) === "applied"; }),
     [execute],
   );
 
   const seatFounderInChair = useCallback(
-    (roomInstanceId: string, location: GridPoint, seatId?: string) =>
-      execute({
+    actions.action(function* (roomInstanceId: string, location: GridPoint, seatId?: string) { return (yield execute({
         type: "SEAT_FOUNDER_IN_CHAIR",
         roomInstanceId,
         location,
         ...(seatId ? { seatId: seatId as LevelThreeBreakSeatId } : {}),
-      }) === "applied",
+      })) === "applied"; }),
     [execute],
   );
 
@@ -1784,60 +1788,59 @@ export function usePrototypeSession(
   );
 
   const praiseEmployee = useCallback(
-    (employeeId: string) => {
-      execute({ type: "PRAISE_EMPLOYEE", employeeId });
-    },
+    actions.action(function* (employeeId: string) {
+      (yield execute({ type: "PRAISE_EMPLOYEE", employeeId }));
+    }),
     [execute],
   );
 
   const moveFounder = useCallback(
-    (destination: GridPoint) =>
-      execute({
+    actions.action(function* (destination: GridPoint) { return (yield execute({
         type: "MOVE_FOUNDER",
         destination,
-      }) === "applied",
+      })) === "applied"; }),
     [execute],
   );
 
-  const bookInspection = useCallback(() => { execute({ type: "BOOK_INSPECTION" }); }, [execute]);
-  const cancelInspection = useCallback(() => { execute({ type: "CANCEL_INSPECTION" }); }, [execute]);
+  const bookInspection = useCallback(actions.action(function* () { (yield execute({ type: "BOOK_INSPECTION" })); }), [execute]);
+  const cancelInspection = useCallback(actions.action(function* () { (yield execute({ type: "CANCEL_INSPECTION" })); }), [execute]);
 
   // Session-owned presentation survives shell changes. Persist only the existing acknowledgment.
-  const openFinishReport = useCallback(() => {
+  const openFinishReport = useCallback(actions.action(function* () {
     if (finishReportOpenRef.current || stateRef.current.facilityLevel !== 5 || !stateRef.current.levelFive?.progress.gameFinished) return;
     resumeAfterFinishRef.current = !stateRef.current.paused;
     finishReportOpenRef.current = true;
-    if (!stateRef.current.paused) execute({ type: "SET_PAUSED", paused: true }, { announceReceipt: false });
+    if (!stateRef.current.paused) (yield execute({ type: "SET_PAUSED", paused: true }, { announceReceipt: false }));
     setFinishReportOpen(true);
-  }, [execute]);
-  const closeFinishReport = useCallback(() => {
+  }), [execute]);
+  const closeFinishReport = useCallback(actions.action(function* () {
     if (!finishReportOpenRef.current) return;
     if (stateRef.current.levelFive?.progress.finishPageAcknowledgedAtFacilityTick === null &&
-        execute({ type: "ACKNOWLEDGE_FINISH_PAGE" }, { announceReceipt: false }) !== "applied") return;
+        (yield execute({ type: "ACKNOWLEDGE_FINISH_PAGE" }, { announceReceipt: false })) !== "applied") return;
     finishReportOpenRef.current = false;
     setFinishReportOpen(false);
     if (resumeAfterFinishRef.current && stateRef.current.paused && !buildMode && !managementMode) {
-      execute({ type: "SET_PAUSED", paused: false }, { announceReceipt: false });
+      (yield execute({ type: "SET_PAUSED", paused: false }, { announceReceipt: false }));
     }
     resumeAfterFinishRef.current = false;
-  }, [execute, buildMode, managementMode]);
+  }), [execute, buildMode, managementMode]);
   useEffect(() => {
     if (state.facilityLevel === 5 && state.levelFive?.progress.gameFinished &&
         state.levelFive.progress.finishPageAcknowledgedAtFacilityTick === null) openFinishReport();
   }, [state.campaignId, state.facilityLevel, state.levelFive?.progress.gameFinished, state.levelFive?.progress.finishPageAcknowledgedAtFacilityTick, openFinishReport]);
 
-  const levelUp = useCallback(() => {
-    const status = execute({
+  const levelUp = useCallback(actions.action(function* () {
+    const status = (yield execute({
       type: "LEVEL_UP",
-    });
+    }));
     if (status === "applied") {
       setSelectedRoomDefinitionId(null);
     }
-  }, [execute]);
+  }), [execute]);
 
-  const fastForward = useCallback(() => {
+  const fastForward = useCallback(actions.action(function* () {
     if (finishReportOpenRef.current) return;
-    const status = execute(
+    const status = (yield execute(
       {
         type: "DEV_FAST_FORWARD",
         tickCount:
@@ -1848,16 +1851,16 @@ export function usePrototypeSession(
         announcementOverride:
           "Development fast-forward applied. Review arrivals, expenses, and patient state.",
       },
-    );
+    ));
     if (status === "applied") {
       publishSystemNotice(
         "alert.system.testing-mode",
         "Accelerated testing mode advanced facility time.",
       );
     }
-  }, [execute, publishSystemNotice]);
+  }), [execute, publishSystemNotice]);
 
-  const advanceTutorialResult = useCallback(() => {
+  const advanceTutorialResult = useCallback(actions.action(function* () {
     const tutorialEncounter =
       stateRef.current.encounters[TUTORIAL_ENCOUNTER_ID];
     const pendingResult = tutorialEncounter?.pendingResult;
@@ -1872,13 +1875,13 @@ export function usePrototypeSession(
     if (
       stateRef.current.openChartEncounterId === TUTORIAL_ENCOUNTER_ID
     ) {
-      execute(
+      (yield execute(
         {
           type: "CLOSE_CHART",
           encounterId: TUTORIAL_ENCOUNTER_ID,
         },
         { announceReceipt: false },
-      );
+      ));
       setSummaryVisible(false);
     }
 
@@ -1886,7 +1889,7 @@ export function usePrototypeSession(
       1,
       pendingResult.dueTick - stateRef.current.facilityTick,
     );
-    execute(
+    (yield execute(
       {
         type: "DEV_FAST_FORWARD",
         tickCount,
@@ -1895,62 +1898,62 @@ export function usePrototypeSession(
         announcementOverride:
           "The short tutorial result returned. Pixel Patient is ready in Existing Patients.",
       },
-    );
-  }, [execute]);
+    ));
+  }), [execute]);
 
-  const addMoney = useCallback(() => {
-    execute(
+  const addMoney = useCallback(actions.action(function* () {
+    (yield execute(
       {
         type: "DEV_ADD_MONEY",
       },
       {
         announcementOverride: `Added $${PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.development.addMoneyAmount} for prototype testing.`,
       },
-    );
-  }, [execute]);
+    ));
+  }), [execute]);
 
-  const runEmergencyGlp1Consultation = useCallback(() => {
+  const runEmergencyGlp1Consultation = useCallback(actions.action(function* () {
     if (buildMode) {
       setAnnouncement(
         "Exit Build Mode before running the emergency consultation.",
       );
       return;
     }
-    execute({
+    (yield execute({
       type: "RUN_EMERGENCY_GLP1_CONSULTATION",
-    });
-  }, [buildMode, execute]);
+    }));
+  }), [buildMode, execute]);
 
   const setAdvertisingLevel = useCallback(
-    (level: number) => {
+    actions.action(function* (level: number) {
       if (buildMode) {
         showCommandProblem("Exit Build Mode before changing advertising.", "rejection"); setAnnouncement("Exit Build Mode before changing advertising.");
         return;
       }
-      execute({
+      (yield execute({
         type: "SET_ADVERTISING_LEVEL",
         level,
-      });
-    },
+      }));
+    }),
     [buildMode, execute],
   );
 
   const setServiceAppointmentsEnabled = useCallback(
-    (enabled: boolean) => {
-      execute({ type: "SET_SERVICE_APPOINTMENTS_ENABLED", enabled });
-    },
+    actions.action(function* (enabled: boolean) {
+      (yield execute({ type: "SET_SERVICE_APPOINTMENTS_ENABLED", enabled }));
+    }),
     [execute],
   );
 
-  const startLaboratoryProcessing = useCallback(() => {
-    execute({
+  const startLaboratoryProcessing = useCallback(actions.action(function* () {
+    (yield execute({
       type: "START_SERVICE_OPERATION",
       incomeLineId: "income.laboratory_processing",
       actorKind: "remote",
-    });
-  }, [execute]);
+    }));
+  }), [execute]);
 
-  const togglePause = useCallback(() => {
+  const togglePause = useCallback(actions.action(function* () {
     if (finishReportOpenRef.current) { showCommandProblem("Close the finish report before resuming facility time.", "rejection"); setAnnouncement("Close the finish report before resuming facility time."); return; }
     if (buildMode || managementMode) {
       setAnnouncement(
@@ -1964,14 +1967,14 @@ export function usePrototypeSession(
     if (cloud && current.paused && !cloud.coordinator.resume()) {
       showCommandProblem("Check the account save before resuming.", "rejection"); setAnnouncement("Check the account save before resuming."); return;
     }
-    execute({
+    (yield execute({
       type: "SET_PAUSED",
       paused: !current.paused,
-    });
-  }, [buildMode, cloud, execute, managementMode]);
+    }));
+  }), [buildMode, cloud, execute, managementMode]);
 
   const setSimulationSpeed = useCallback(
-    (speed: SimulationSpeed) => {
+    actions.action(function* (speed: SimulationSpeed) {
       if (finishReportOpenRef.current) return;
       if (buildMode || managementMode) {
         setAnnouncement(
@@ -1981,11 +1984,11 @@ export function usePrototypeSession(
         );
         return;
       }
-      execute({
+      (yield execute({
         type: "SET_SIMULATION_SPEED",
         speed,
-      });
-    },
+      }));
+    }),
     [buildMode, execute, managementMode],
   );
 
@@ -2066,7 +2069,7 @@ export function usePrototypeSession(
     return localClosingRef.current;
   }, [localJournalRequired, saveAndPause, execute]);
 
-  const runClinicAlertAction = useCallback((action: ClinicAlertAction): ClinicAlertActionResult => {
+  const runClinicAlertAction = useCallback(actions.action(function* (action: ClinicAlertAction) {
     const problem = getClinicAlertActionProblem(stateRef.current, action);
     if (problem) return { ok: false, reason: problem };
     if (action.kind === "save_and_pause") {
@@ -2078,18 +2081,18 @@ export function usePrototypeSession(
       if (buildMode) {
         const access = getFacilityAccessValidation(stateRef.current);
         if (!access.valid) return { ok: false, reason: access.reason ?? "Finish the room access changes before opening a discussion." };
-        exitBuildMode();
+        (yield* exitBuildMode.steps());
       }
-      openEmployeeDiscussion(action.discussionId);
+      (yield* openEmployeeDiscussion.steps(action.discussionId));
       return stateRef.current.openEmployeeDiscussionId === action.discussionId ? { ok: true } : { ok: false, reason: lastCommandReceiptRef.current?.message ?? "The discussion could not be opened." };
     }
     if (action.kind === "open_chart") {
       if (buildMode) {
         const access = getFacilityAccessValidation(stateRef.current);
         if (!access.valid) return { ok: false, reason: access.reason ?? "Finish the room access changes before opening a chart." };
-        exitBuildMode();
+        (yield* exitBuildMode.steps());
       }
-      openPatient(action.encounterId);
+      (yield* openPatient.steps(action.encounterId));
       return stateRef.current.openChartEncounterId === action.encounterId ? { ok: true } :
         { ok: false, reason: lastCommandReceiptRef.current?.message ?? "The chart could not be opened." };
     }
@@ -2097,9 +2100,9 @@ export function usePrototypeSession(
     if (!command) return { ok: false, reason: "This action is no longer available." };
     // Build undo stores whole-state snapshots. Include every tray mutation so
     // undoing an older room edit cannot silently erase a later clinic fix.
-    const status = buildMode ? executeBuildCommand(command) : execute(command);
+    const status = buildMode ? (yield* executeBuildCommand.steps(command)) : (yield execute(command));
     return status === "applied" ? { ok: true } : { ok: false, reason: lastCommandReceiptRef.current?.message ?? "The clinic could not apply this action." };
-  }, [buildMode, execute, executeBuildCommand, exitBuildMode, openPatient, openEmployeeDiscussion, saveAndPause]);
+  }), [buildMode, execute, executeBuildCommand, exitBuildMode, openPatient, openEmployeeDiscussion, saveAndPause]);
 
   const clearLocalCampaigns = useCallback((): boolean => {
     if (cloud) { setAnnouncement("Use the account controls to manage account saves and recovery copies."); return false; }
@@ -2220,10 +2223,10 @@ export function usePrototypeSession(
   guidanceContextRef.current = { blockedTopicIds: tutorialStep?.topicIds ?? [],
     attentionBlocked: referencePauseLocked || finishReportOpen || buildMode || managementMode || tutorialStep?.target === "answer-choices" || tutorialStep?.target === "chart-feedback" };
 
-  const recordTutorialTopicExposure = useCallback((topicIds: readonly string[]) => {
+  const recordTutorialTopicExposure = useCallback(actions.action(function* (topicIds: readonly string[]) {
     const unseen = topicIds.filter((id) => stateRef.current.alertHumor.guidanceTips?.topicActivity?.[id]?.exposedAtTick === undefined);
-    if (unseen.length) execute({type: "RECORD_GUIDANCE_TOPIC_EXPOSURE", topicIds: unseen}, {announceReceipt: false, announceEvents: false});
-  }, [execute]);
+    if (unseen.length) (yield execute({type: "RECORD_GUIDANCE_TOPIC_EXPOSURE", topicIds: unseen}, {announceReceipt: false, announceEvents: false}));
+  }), [execute]);
 
   useEffect(() => { recordTutorialTopicExposure(campaignGuidance.exposedTopicIds); },
     [state.campaignId, campaignGuidance.exposedTopicIds.join("|"), recordTutorialTopicExposure]);
@@ -2252,7 +2255,7 @@ export function usePrototypeSession(
       nextProfile: LocalPrototypeProfile,
       successAnnouncement: string,
     ) => {
-      if (cloud && !cloud.canExecute) { showCommandProblem("Check the account save before changing guidance.", "rejection"); return; }
+      if (cloud && !cloud.canExecuteAction) { showCommandProblem("Check the account save before changing guidance.", "rejection"); return; }
       cancelScheduledAutosave();
       pendingAutosaveProfileRef.current = null;
       profileRef.current = nextProfile;
@@ -2387,17 +2390,17 @@ export function usePrototypeSession(
     [persistTutorialProfile],
   );
 
-  const openTutorialPatient = useCallback(() => {
+  const openTutorialPatient = useCallback(actions.action(function* () {
     if (tutorialTargetEncounter) {
-      openPatient(tutorialTargetEncounter.id);
+      (yield* openPatient.steps(tutorialTargetEncounter.id));
     }
-  }, [openPatient, tutorialTargetEncounter]);
+  }), [openPatient, tutorialTargetEncounter]);
 
   const performTutorialAction = useCallback(
-    (actionId: TutorialActionId) => {
+    actions.action(function* (actionId: TutorialActionId) {
       switch (actionId) {
         case "open-first-chart":
-          openPatient(TUTORIAL_ENCOUNTER_ID);
+          (yield* openPatient.steps(TUTORIAL_ENCOUNTER_ID));
           return;
         case "focus-first-chart":
           dismissTutorialIntro();
@@ -2410,7 +2413,7 @@ export function usePrototypeSession(
             return;
           }
           if (tutorialStep.id === "alerts-tour") {
-            execute({ type: "ACKNOWLEDGE_ALERTS_TUTORIAL" });
+            (yield execute({ type: "ACKNOWLEDGE_ALERTS_TUTORIAL" }));
           }
           if (isDailyRoutineTipId(tutorialStep.id) || isClinicControlsTutorialStepId(tutorialStep.id)) {
             acknowledgeTutorialTip(tutorialStep.id);
@@ -2425,16 +2428,16 @@ export function usePrototypeSession(
           });
           return;
         case "open-management":
-          enterManagementMode();
+          (yield* enterManagementMode.steps());
           return;
         case "advance-first-result":
-          advanceTutorialResult();
+          (yield* advanceTutorialResult.steps());
           return;
         case "open-ready-chart":
-          openPatient(TUTORIAL_ENCOUNTER_ID);
+          (yield* openPatient.steps(TUTORIAL_ENCOUNTER_ID));
           return;
         case "acknowledge-feedback":
-          acknowledgeTerminalFeedback();
+          (yield* acknowledgeTerminalFeedback.steps());
           if (tutorialStep) {
             setAcknowledgedTutorialStepIds((current) => {
               const key = `${stateRef.current.campaignId}:${tutorialStep.id}`;
@@ -2445,25 +2448,25 @@ export function usePrototypeSession(
           }
           return;
         case "resolve-chart":
-          fileChart();
+          (yield* fileChart.steps());
           return;
         case "open-second-chart":
-          openPatient(SECOND_TUTORIAL_ENCOUNTER_ID);
+          (yield* openPatient.steps(SECOND_TUTORIAL_ENCOUNTER_ID));
           return;
         case "enter-build-mode":
-          enterBuildMode();
+          (yield* enterBuildMode.steps());
           return;
         case "select-exam-room":
           beginPlacement("room.examination");
           return;
         case "exit-build-mode":
-          exitBuildMode();
+          (yield* exitBuildMode.steps());
           return;
         case "level-up":
-          levelUp();
+          (yield* levelUp.steps());
           return;
       }
-    },
+    }),
     [
       acknowledgeTerminalFeedback,
       acknowledgeTutorialTip,
@@ -2487,10 +2490,7 @@ export function usePrototypeSession(
       name: campaign.name,
       createdAtRealMs: campaign.createdAtRealMs,
       facilityLevel: campaign.state.facilityLevel,
-      fsrsReviewCount: Object.values(campaign.state.learningHistories).reduce(
-        (total, history) => total + history.reviews.length,
-        0,
-      ),
+      fsrsReviewCount: learningReviewCount(campaign.state.learningHistories, Boolean(cloud?.usesOperationalEngine && Object.isFrozen(campaign.state))),
       active: campaign.campaignId === profile.activeCampaignId,
       status: campaign.status,
     }))

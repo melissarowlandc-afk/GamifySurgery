@@ -1,3 +1,4 @@
+import { mapSessionAction } from "./session/sessionActions";
 import type { SubmitQuestionReviewFlag } from "./session/questionReviewFlags";
 import { clinicFeedForTutorial } from "./session/tutorialTipsIntegration";
 import { TesterFeedbackMenu } from "./feedback/TesterFeedback";
@@ -110,7 +111,7 @@ interface AppShellProps {
   serviceIncome: ServiceIncomeView;
   messages: MessageBoardItemView[];
   needsYou?: NeedsYouItemView[];
-  onClinicAlertAction?: (action: ClinicAlertAction) => ClinicAlertActionResult;
+  onClinicAlertAction?: (action: ClinicAlertAction) => ClinicAlertActionResult | Promise<ClinicAlertActionResult>;
   systemNotices: MessageBoardItemView[];
   questionReviewFlags: QuestionReviewFlag[];
   development: DevelopmentView;
@@ -151,7 +152,7 @@ interface AppShellProps {
     tileX: number,
     tileY: number,
     orientation?: RoomOrientation,
-  ) => boolean;
+  ) => boolean | Promise<boolean>;
   onEnterBuildMode: () => void;
   onExitBuildMode: () => void;
   onEnterManagementMode: () => void;
@@ -178,11 +179,11 @@ interface AppShellProps {
   onTrainEmployee?: (employeeId: string) => void;
   onCollectLitter: (litterId: string) => void;
   onRefillWaterCooler: () => void;
-  onSeatFounderAtFrontDesk: () => boolean;
-  onSeatFounderInChair: (roomInstanceId: string, location: GridPoint, seatId?: string) => boolean;
+  onSeatFounderAtFrontDesk: () => boolean | Promise<boolean>;
+  onSeatFounderInChair: (roomInstanceId: string, location: GridPoint, seatId?: string) => boolean | Promise<boolean>;
   onDescribeCharacter?: DescribeCharacterRequest;
   onPraiseEmployee: (employeeId: string) => void;
-  onMoveFounder: (destination: GridPoint) => boolean;
+  onMoveFounder: (destination: GridPoint) => boolean | Promise<boolean>;
   onLevelUp: () => void;
   onBookInspection?: () => void;
   onCancelInspection?: () => void;
@@ -549,13 +550,13 @@ export function AppShell({
     tileX: number,
     tileY: number,
     orientation?: RoomOrientation,
-  ): boolean => {
+  ): boolean | Promise<boolean> => {
     const placingNewRoom =
       !movingRoomInstanceId &&
       roomOptions.some(
         (room) => room.selected && room.id !== "room.hallway",
       );
-    const placed = onPlaceRoom(tileX, tileY, orientation);
+    return mapSessionAction(onPlaceRoom(tileX, tileY, orientation), placed => {
     if (placed) {
       setRoomMenuOpen(false);
       if (placingNewRoom) {
@@ -563,6 +564,7 @@ export function AppShell({
       }
     }
     return placed;
+    });
   };
 
   const handleMessageAction = (
@@ -702,7 +704,7 @@ export function AppShell({
   const runClinicAction = async (id: string, action: ClinicAlertAction) => {
     if (action.kind === "save_and_pause" && cloudSave) { await cloudSave.onSaveAndClose(); return; }
     const result = action.kind === "save_and_pause" ? await onSaveAndPause() :
-      onClinicAlertAction?.(action) ?? { ok: false, reason: "This action is unavailable in this preview." };
+      await onClinicAlertAction?.(action) ?? { ok: false, reason: "This action is unavailable in this preview." };
     setClinicActionFailures((current) => {
       const next = { ...current };
       if (result.ok) delete next[id]; else next[id] = "reason" in result && result.reason ? result.reason : "The action could not be applied.";

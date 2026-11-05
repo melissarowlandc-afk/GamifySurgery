@@ -1,3 +1,4 @@
+import { mapSessionAction } from "../session/sessionActions";
 import { useEffect, useState } from "react";
 import type {
   DescribeCharacterRequest, FacilityViewModel, PraiseEmployeeRequest, SeatFounderAtFrontDeskRequest,
@@ -37,7 +38,9 @@ export function MobileInspectorSheet(props: MobileInspectorSheetProps) {
         props.onPraiseEmployee?.(selection.praise!.employeeId); props.onClose();
       }}>Praise Employee</button> : null}
       {selection.character.kind === "founder" && props.onSeatFounderAtFrontDesk ? <button type="button" onClick={() => {
-        if (props.onSeatFounderAtFrontDesk?.()) props.onClose(); else setFailure("Front Desk unavailable.");
+        void mapSessionAction(props.onSeatFounderAtFrontDesk?.() ?? false, accepted => {
+          if (accepted) props.onClose(); else setFailure("Front Desk unavailable.");
+        });
       }}>Return to Front Desk</button> : null}
     </div>
   </>;

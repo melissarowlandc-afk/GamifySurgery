@@ -64,6 +64,47 @@ async function closeSaved(page: Page) {
   expect((await snapshot(page)).pending).toBe(false);
 }
 
+test("operational worker crash after private apply preserves one command, recovers automatically, and survives Save & Close/reload", async ({ browser, baseURL }) => {
+  test.setTimeout(180_000);
+  const f=await rig(browser,baseURL!);
+  try {
+    const page=await f.page("desktop","qa-account-a",undefined,1);
+    await openAndContinue(page);
+    await page.addInitScript(()=>{
+      const target=window as Window & {__engineFaultNext?:boolean;__engineFaultAt?:number};
+      const NativeWorker=window.Worker;
+      window.Worker=class extends NativeWorker {
+        constructor(url:string|URL,options?:WorkerOptions){
+          super(url,options);
+          if(String(url).includes("operationalEngine.worker"))this.addEventListener("message",event=>{
+            if(target.__engineFaultNext&&event.data?.kind==="applied"){
+              target.__engineFaultNext=false;target.__engineFaultAt=Date.now();event.stopImmediatePropagation();
+              this.dispatchEvent(new ErrorEvent("error",{message:"Disposable worker fault after private apply",cancelable:true}));
+            }
+          });
+        }
+      } as typeof Worker;
+    });
+    await page.reload();await openAndContinue(page);
+    await expect.poll(async()=>(await status(page)).operationalEngineHealth?.operationalEngine,{timeout:CLOUD_QA_STARTUP_WAIT_MS}).toBe("worker");
+    const before=(await snapshot(page)).state!;
+    expect(await page.evaluate(async()=>{
+      (window as Window & {__engineFaultNext?:boolean}).__engineFaultNext=true;
+      return window.__cloudQa!.command({type:"SET_SIMULATION_SPEED",speed:4});
+    })).toBe(true);
+    const after=(await snapshot(page)).state!;
+    expect(after.simulationSpeed).toBe(4);
+    expect(Object.keys(after.operationReceipts)).toHaveLength(Object.keys(before.operationReceipts).length+1);
+    expect((await status(page)).operationalEngineHealth?.operationalEngine).toBe("synchronous");
+    await page.waitForFunction(()=>Date.now()-((window as Window & {__engineFaultAt?:number}).__engineFaultAt??Date.now())>5100,undefined,{timeout:20000});
+    expect(await page.evaluate(()=>window.__cloudQa!.command({type:"SET_SIMULATION_SPEED",speed:2}))).toBe(true);
+    expect((await status(page)).operationalEngineHealth?.operationalEngine).toBe("worker");
+    await closeSaved(page);await page.reload();await openAndContinue(page);
+    expect((await snapshot(page)).state?.simulationSpeed).toBe(2);
+    expect((await status(page)).localDurable).toBe(true);
+  }finally{await f.close();}
+});
+
 test.describe("Beta 2 disposable fake transport across desktop and phone", () => {
   // Several independent cold contexts share the disposable dev server. Each
   // preparation is bounded separately; this is not the writer-choice deadline.

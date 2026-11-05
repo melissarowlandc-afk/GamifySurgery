@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { mapSessionAction } from "../session/sessionActions";
 import { roomThumbnailStage } from "./roomThumbnailCapture";
 import { initializeCanvasRoomLighting } from "./canvasRoomLighting";
 import { serviceVisitorWaitingSupport } from "./serviceVisitorWaitingPresentation";
@@ -8481,22 +8482,25 @@ export class FacilityScene extends Phaser.Scene {
       const accepted = chair.seatId
         ? this.bridge.onSeatFounderInChair(chair.roomInstanceId, chair.location, chair.seatId)
         : this.bridge.onSeatFounderInChair(chair.roomInstanceId, chair.location);
+      void mapSessionAction(accepted, accepted => {
       if (!accepted) this.showSeatBox(chair, "Seat unavailable");
       this.setInteractionHint(
         accepted ? "FOUNDER WALKING TO CHAIR" : "CHAIR UNAVAILABLE",
         pointer,
       );
+      });
       return;
     }
     const destination = this.walkDestinationAtPointer(pointer);
     if (!destination || !this.bridge.onMoveFounder) {
       return;
     }
-    const accepted = this.bridge.onMoveFounder(destination);
+    void mapSessionAction(this.bridge.onMoveFounder(destination), accepted => {
     this.setInteractionHint(
       accepted ? "DESTINATION SET" : "NO WALKABLE ROUTE",
       pointer,
     );
+    });
   }
 
   private handlePointerDown(pointer: Phaser.Input.Pointer): void {
@@ -8611,13 +8615,14 @@ export class FacilityScene extends Phaser.Scene {
         this.frontDeskSeatInteractionAtPointer(pointer) &&
         this.bridge.onSeatFounderAtFrontDesk
       ) {
-        const accepted = this.bridge.onSeatFounderAtFrontDesk();
+        void mapSessionAction(this.bridge.onSeatFounderAtFrontDesk(), accepted => {
         this.setInteractionHint(
           accepted
             ? "FOUNDER RETURNING TO FRONT DESK"
             : "FRONT DESK UNAVAILABLE",
           pointer,
         );
+        });
         return;
       }
     }
@@ -8690,6 +8695,7 @@ export class FacilityScene extends Phaser.Scene {
         candidate.y,
         this.bridge.viewModel.placement?.orientation,
       );
+      if (placed instanceof Promise) void placed.then(accepted => { if (!accepted) this.hallwayPaintBlocked = true; });
       if (placed === false) {
         // Affordability and other domain-only rules can reject a visually
         // clear square. Stop this stroke so a fast drag does not produce a

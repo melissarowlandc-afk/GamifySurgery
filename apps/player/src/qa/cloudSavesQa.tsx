@@ -32,6 +32,7 @@ interface CloudQaStatus {
   openingFailure: CloudOpeningDiagnostic | null;
   entryPreparation: Record<string, unknown> | null;
   codecHealth: Record<string, unknown> | null;
+  operationalEngineHealth: Record<string, unknown> | null;
 }
 declare global {
   interface Window {
@@ -112,7 +113,8 @@ function QaTools({ onCreate, onSwitch, openingFailure }: { onCreate(): void; onS
         pending: view?.pending ?? false, canExecute: view?.canExecute ?? false, localDurable: view?.localDurable ?? false,
         needsReload: active?.needsReload ?? false, failure: view?.failure ?? cloud.error, accountPhase: cloud.phase,
         entryHeading: document.querySelector("main h1")?.textContent ?? null, openingFailure: openingFailure(),
-        entryPreparation: problemDiagnostics.snapshot().health.entry ?? null, codecHealth: problemDiagnostics.snapshot().health.codec ?? null };
+        entryPreparation: problemDiagnostics.snapshot().health.entry ?? null, codecHealth: problemDiagnostics.snapshot().health.codec ?? null,
+        operationalEngineHealth: problemDiagnostics.snapshot().health.gameSession ?? null };
     };
     window.__cloudQa = {
       status,
@@ -121,7 +123,7 @@ function QaTools({ onCreate, onSwitch, openingFailure }: { onCreate(): void; onS
         canExecute: active?.canExecute ?? false, failure: active?.coordinator.view.failure ?? cloud.error }),
       async command(input) {
         if (!active) return false;
-        const result = active.execute({ ...input, operationId: crypto.randomUUID() } as GameCommand, PROTOTYPE_DOMAIN_CONTEXT);
+        const result = await active.executeAsync({ ...input, operationId: crypto.randomUUID() } as GameCommand, PROTOTYPE_DOMAIN_CONTEXT);
         return Boolean(result) && await active.durable();
       },
       async commands(inputs) {
@@ -129,7 +131,7 @@ function QaTools({ onCreate, onSwitch, openingFailure }: { onCreate(): void; onS
         // One fixture turn: no live interval/focus task can interleave between
         // its unpause, manual ticks and final pause. Check every command and
         // reject a replaced owner rather than returning its paused UI overlay.
-        for (const input of inputs) if (!active.execute({ ...input, operationId: crypto.randomUUID() } as GameCommand, PROTOTYPE_DOMAIN_CONTEXT)) return null;
+        for (const input of inputs) if (!await active.executeAsync({ ...input, operationId: crypto.randomUUID() } as GameCommand, PROTOTYPE_DOMAIN_CONTEXT)) return null;
         return await active.durable() && active.canExecute ? active.state : null;
       },
       checkpoint: async () => Boolean(cloud.active) && await cloud.active!.checkpointNow("purchase"),
@@ -154,7 +156,7 @@ function QaTools({ onCreate, onSwitch, openingFailure }: { onCreate(): void; onS
         await cloud.runtime.cache.journal?.clear(cloudCampaignStorageKey(entry.scope));
         onCreate();
       },
-      async undo(target) { return Boolean(active?.undoBuild(target)) && await active!.durable(); },
+      async undo(target) { return Boolean(await active?.undoBuildAsync(target)) && await active!.durable(); },
     };
     return () => { delete window.__cloudQa; };
   }, [cloud?.active, cloud?.phase]);

@@ -1,3 +1,31 @@
+> WORKER: ACCEPTED TICK WORKER INTEGRATION PORTED TO GS-RELEASE (2026-11-05).
+> Exactly49 integration paths:13 identical /4 hunk-ported /32 new; full SHA256
+> and dispositions recorded in the requested receipt. FacilityScene's accepted
+> mixed snapshot contained unrelated character changes: excluded28 edit blocks,
+> kept only8 tick-action adapter edits (5 unified hunks). Three other hunk ports
+> preserve release LF endings. No question/gate/flags/domain/coordinator/art work
+> imported; all other protected sources/art/scripts unchanged. GamifySurgery
+> read only; all writes in GS-release. No Git/install/network/agent/browser,
+> deployment or backup action.
+> PASS final CI=true threads/maxWorkers=2: PLAYER366files/3,514tests657.34s;
+> DOMAIN178files/4,433pass/1existing optional skip449.01s;
+> CLINICAL97files/764tests41.42s. All7 workspace types +E2E/QA types PASS.
+> Standalone production player build (both workers) and launcher contract PASS.
+> Root boundaries/build exit1 at No-Git inventory guard; same sole failure
+> reproduced on the isolated pre-port filesystem copy. Verifiers unchanged;
+> Git blocked before spawn. No remaining Vitest/unknown failure.
+> Full read-only L5:26,362 /6,056,335 /410 /0, all3 reports and9 checkpoints
+> byte-exact; all419 pins and canonical files unchanged; no rebind or writes.
+> Manager browser set now140 cloud cases (prior136 +one accepted crash case
+> per project), plus desktop/phone action/visual set. Strict16ms follow-up;
+> manager accepted17.5ms GC sample. Canonical owner pathway unchanged.
+> [ExecPlan](../execplans/perf-port-20261105.md),
+> [handoff/validation](../../.local-dev/release-verify/HANDOFF.md),
+> [all49 paths/hashes](../../.local-dev/release-verify/perf-port-20261105.json),
+> [browser commands](../../.local-dev/release-verify/MANAGER_BROWSER_SET.md).
+
+---
+
 > WORKER: ACCEPTED ACCOUNT REQUEST-BUDGET CLIENT PORT (2026-11-04).
 > Ported ONLY the manager-accepted account-server-load client lane from the
 > read-only GamifySurgery tree into GS-release. All15 existing production files
