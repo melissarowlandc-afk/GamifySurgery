@@ -23,8 +23,11 @@ export function cloudStatusText(view: CloudSyncView): string | null {
   if (view.failure === "writer" || view.failure === "writer-elsewhere") return "This clinic is now open on another device.";
   if (view.failure === "deleted" || view.failure === "revoked") return "Account access has stopped. Contact the owner.";
   if (view.priorRecovery) return "The latest save could not be verified. Your older copies are safe.";
+  if (view.storageRetrying) return "Device saving is delayed. Keep this app open while it retries.";
   if (view.failure === "processing") return "Save processing stopped. Keep this app open and retry.";
-  if (view.phase === "storage" || !view.localDurable && !view.canExecute) return "This browser could not save your progress. Free storage and retry.";
+  if (view.phase === "storage" || !view.localDurable && !view.canExecute) return view.storageQuota
+    ? "This browser could not save your progress. Free storage and retry."
+    : "This browser could not save your progress. Keep this app open and retry.";
   if (view.phase === "capacity") return "Account storage is full. Your progress is safe on this device.";
   if (view.phase === "auth") return "Sign in again from Account & privacy to continue.";
   if (view.phase === "blocked") return "This clinic could not be opened. Your saved copies are safe.";
@@ -94,7 +97,7 @@ export function CloudSaveControls({ save, closeRequest = 0, showCloseButton = tr
       if (!mounted.current) return;
       if (closing) setClosed(ok);
       if (!ok) setError(closing ? "Account save is not confirmed. Keep this app open and retry." :
-        !view.localDurable ? "This browser could not save your progress. Keep this app open, free storage and retry." :
+        !view.localDurable ? "This browser could not save your progress. Keep this app open and retry." :
         "Your saved copies are kept. Check your connection and retry.");
     } catch { if (mounted.current) setError("Saving is not confirmed. Keep this app open and retry."); }
     finally { if (mounted.current) setBusy(false); }

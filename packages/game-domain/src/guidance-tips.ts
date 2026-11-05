@@ -1,3 +1,4 @@
+import { withSettledStateQueries } from "./settledStateQueries";
 import { getEmployeeEffectiveMorale } from "./level-five-support";
 import {
   GUIDANCE_TIP_CATALOG, GUIDANCE_TIP_POLICY, SERVICE_INCOME_CATALOG,
@@ -181,6 +182,10 @@ function demand(state: GameState) {
 /** Pure catalog predicates. Delivery clocks are handled separately below. */
 export function evaluateGuidanceTipCandidates(state: GameState, context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
   asOfRealMs = state.createdAtRealMs + state.facilityTick * 60_000): GuidanceTipCandidate[] {
+  return withSettledStateQueries(state, () => evaluateSettledGuidanceTipCandidates(state, context, asOfRealMs));
+}
+function evaluateSettledGuidanceTipCandidates(state: GameState, context: DomainContext,
+  asOfRealMs: number): GuidanceTipCandidate[] {
   const candidates: GuidanceTipCandidate[] = [];
   const W = waitingPatients(state);
   const work = demand(state);
@@ -462,16 +467,21 @@ export function evaluateGuidanceTipCandidates(state: GameState, context: DomainC
       room.roomDefinitionId === "room.coffee_kiosk" && unhappy.length > 0;
     if (attributed) upgrade("tip.room.other-upgrade", room);
   }
-  const availability = getRoutinePatientAvailability({ ...state, paused: false }, asOfRealMs, context).reason;
+  // Preserve timestamp validation, but scan the clinical pool only when one of
+  // the advertising candidates actually needs its read-only availability.
+  if (!Number.isSafeInteger(asOfRealMs) || asOfRealMs < 0)
+    getRoutinePatientAvailability({ ...state, paused: false }, asOfRealMs, context);
+  let availabilityReason: ReturnType<typeof getRoutinePatientAvailability>["reason"] | undefined;
+  const availability = () => availabilityReason ??= getRoutinePatientAvailability({ ...state, paused: false }, asOfRealMs, context).reason;
   const adTier = context.balanceRelease.advertising.levels.find((tier) => tier.level === state.advertisingLevel);
   if (state.advertisingLevel === 0 && guidanceIntroductoryEncountersComplete(state) && state.alertHumor.lastPatientArrivalTick !== null &&
     state.facilityTick - state.alertHumor.lastPatientArrivalTick > GUIDANCE_TIP_POLICY.quietArrivalsMinutes &&
-    !getWorkloadSnapshot(state, context).atRoutineCapacity && ["available", "arrival_scheduled"].includes(availability)) {
+    !getWorkloadSnapshot(state, context).atRoutineCapacity && ["available", "arrival_scheduled"].includes(availability())) {
     const tier = context.balanceRelease.advertising.levels.find((tier) => tier.level === state.advertisingLevel + 1);
     if (tier && optionalPurchaseAllowed({ ...state, advertisingLevel: tier.level }, 0, context)) add("tip.advertising.increase", "advertising", simple({ kind: "set_advertising", level: tier.level, fromLevel: state.advertisingLevel }, `Raise advertising · ${money(tier.hourlyCost)}/hour`, "advertising"),
       { speaker: "Front Desk", priority: 1, optional: true, lastFixTick: latestEvent(state, ["advertising_level_changed"]) });
   }
-  if (state.advertisingLevel > 0 && (adTier?.hourlyCost ?? 0) > 0 && (getWorkloadSnapshot(state, context).atRoutineCapacity || ["reviews_not_due", "content_unavailable"].includes(availability) || upcomingOperatingPostingIsUnderfunded(state, context))) {
+  if (state.advertisingLevel > 0 && (adTier?.hourlyCost ?? 0) > 0 && (getWorkloadSnapshot(state, context).atRoutineCapacity || ["reviews_not_due", "content_unavailable"].includes(availability()) || upcomingOperatingPostingIsUnderfunded(state, context))) {
     const tier = context.balanceRelease.advertising.levels.find((tier) => tier.level === state.advertisingLevel - 1);
     if (tier) add("tip.advertising.reduce", "advertising", simple({ kind: "set_advertising", level: tier.level, fromLevel: state.advertisingLevel }, `Lower advertising · saves ${money((adTier?.hourlyCost ?? 0) - tier.hourlyCost)}/hour`, "advertising"),
       { speaker: "Finance", lastFixTick: latestEvent(state, ["advertising_level_changed"]) });

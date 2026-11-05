@@ -3,6 +3,7 @@ import { cloudCampaignStorageKey } from "../accountStorageKey";
 import { sha256Utf8 } from "./codecJson";
 import { CloudSyncError } from "./transport";
 import { CloudCacheError } from "./codecCache";
+import { retrySlowStorage, storageRequest as request, storageCompletion as completion, storageTransactionError } from "./storageRetry";
 import { isStorageQuotaError, reclaimAuxiliaryStorage } from "../storagePressure";
 
 export interface CloudEntryStore {
@@ -17,20 +18,6 @@ interface Stored { key: string; text: string; sha256: string }
 const DATABASE = "gamify-surgery.cloud-entry.v1";
 const STORE = "records";
 const clone = <T>(value: T): T => structuredClone(value);
-function request<T>(req: IDBRequest<T>): Promise<T> {
-  return new Promise((resolve, reject) => {
-    const timer = setTimeout(() => reject(new CloudSyncError("storage")), 10_000);
-    req.onsuccess = () => { clearTimeout(timer); resolve(req.result); };
-    req.onerror = () => { clearTimeout(timer); reject(isStorageQuotaError(req.error) ? new CloudCacheError("quota") : new CloudSyncError("storage")); };
-  });
-}
-function completion(tx: IDBTransaction): Promise<boolean> {
-  return new Promise(resolve => {
-    const timer = setTimeout(() => { try { tx.abort(); } catch { /* Already terminal. */ } resolve(false); }, 10_000);
-    tx.oncomplete = () => { clearTimeout(timer); resolve(true); }; tx.onabort = () => { clearTimeout(timer); resolve(false); }; tx.onerror = () => {};
-  });
-}
-
 /** Account/backend-scoped raw sources, frozen imports and additive enrollment markers. */
 export class IndexedDbCloudEntryStore implements CloudEntryStore {
   private readonly prefix: string;
@@ -42,12 +29,12 @@ export class IndexedDbCloudEntryStore implements CloudEntryStore {
   private open(): Promise<IDBDatabase> {
     if (this.database) return this.database;
     this.database = new Promise((resolve, reject) => {
-      if (!this.factory) return reject(new CloudSyncError("storage"));
+      if (!this.factory) return reject(new CloudCacheError("unavailable"));
       const opening = this.factory.open(this.databaseName, 1); let blocked = false;
-      const timer = setTimeout(() => { blocked = true; reject(new CloudSyncError("storage")); }, 10_000);
+      const timer = setTimeout(() => { blocked = true; reject(new CloudCacheError("timeout")); }, 10_000);
       opening.onupgradeneeded = () => opening.result.createObjectStore(STORE, { keyPath: "key" });
-      opening.onerror = () => { clearTimeout(timer); reject(new CloudSyncError("storage")); };
-      opening.onblocked = () => { clearTimeout(timer); blocked = true; reject(new CloudSyncError("storage")); };
+      opening.onerror = () => { clearTimeout(timer); reject(new CloudCacheError(isStorageQuotaError(opening.error) ? "quota" : "unavailable")); };
+      opening.onblocked = () => { clearTimeout(timer); blocked = true; reject(new CloudCacheError("blocked")); };
       opening.onsuccess = () => {
         clearTimeout(timer);
         if (blocked) { opening.result.close(); return; }
@@ -62,14 +49,14 @@ export class IndexedDbCloudEntryStore implements CloudEntryStore {
     if (!raw.key.startsWith(this.prefix) || typeof raw.text !== "string" || await sha256Utf8(raw.text) !== raw.sha256) throw new CloudSyncError("storage");
     return JSON.parse(raw.text) as T;
   }
-  read<T>(key: string): Promise<T | null> { return observeStorage("entry.read", () => this.readChecked<T>(key)); }
+  read<T>(key: string): Promise<T | null> { return observeStorage("entry.read", () => retrySlowStorage(() => this.readChecked<T>(key))); }
   private async readChecked<T>(key: string): Promise<T | null> {
     try {
       const db = await this.open(), tx = db.transaction(STORE, "readonly"), done = completion(tx);
       const raw = await request(tx.objectStore(STORE).get(this.prefix + key)) as Stored | undefined;
-      if (!await done) throw new CloudSyncError("storage");
+      if (!await done) throw storageTransactionError(tx);
       return raw ? this.unpack<T>(raw) : null;
-    } catch { throw new CloudSyncError("storage"); }
+    } catch (error) { throw error instanceof CloudSyncError ? error : new CloudCacheError(isStorageQuotaError(error) ? "quota" : "transaction"); }
   }
   private async put<T>(key: string, value: T, onlyAbsent: boolean, retryQuota = true): Promise<T> {
     try {
@@ -78,44 +65,46 @@ export class IndexedDbCloudEntryStore implements CloudEntryStore {
       const db = await this.open(), tx = db.transaction(STORE, "readwrite"), done = completion(tx), store = tx.objectStore(STORE);
       const prior = await request(store.get(raw.key)) as Stored | undefined;
       if (!onlyAbsent || !prior) await request(store.put(raw));
-      if (!await done) throw isStorageQuotaError(tx.error) ? new CloudCacheError("quota") : new CloudSyncError("storage");
+      if (!await done) throw storageTransactionError(tx);
       const selected = onlyAbsent && prior ? prior : raw, readback = await this.read<T>(key);
       if (JSON.stringify(readback) !== selected.text) throw new CloudSyncError("storage");
       return readback!;
     } catch (error) {
       if (retryQuota && isStorageQuotaError(error)) { await reclaimAuxiliaryStorage(); return this.put(key, value, onlyAbsent, false); }
-      throw error instanceof CloudSyncError ? error : new CloudSyncError("storage");
+      throw error instanceof CloudSyncError ? error : new CloudCacheError(isStorageQuotaError(error) ? "quota" : "transaction");
     }
   }
-  write<T>(key: string, value: T): Promise<T> { return observeStorage("entry.write", () => this.put(key, value, false)); }
-  create<T>(key: string, value: T): Promise<T> { return observeStorage("entry.create", () => this.put(key, value, true)); }
-  async compareAndSet<T>(key: string, expected: T, value: T, retryQuota = true): Promise<T> {
+  write<T>(key: string, value: T): Promise<T> { return observeStorage("entry.write", () => retrySlowStorage(() => this.put(key, value, false))); }
+  create<T>(key: string, value: T): Promise<T> { return observeStorage("entry.create", () => retrySlowStorage(() => this.put(key, value, true))); }
+  compareAndSet<T>(key: string, expected: T, value: T): Promise<T> { return retrySlowStorage(() => this.compareAndSetChecked(key, expected, value)); }
+  private async compareAndSetChecked<T>(key: string, expected: T, value: T, retryQuota = true): Promise<T> {
     try {
     const expectedText = JSON.stringify(expected), text = JSON.stringify(value);
     const expectedHash = await sha256Utf8(expectedText), sha256 = await sha256Utf8(text);
     const db = await this.open(), tx = db.transaction(STORE, "readwrite"), done = completion(tx), store = tx.objectStore(STORE);
     const prior = await request(store.get(this.prefix + key)) as Stored | undefined;
     if (prior?.text === expectedText && prior.sha256 === expectedHash) await request(store.put({ key: this.prefix + key, text, sha256 }));
-    if (!await done) throw isStorageQuotaError(tx.error) ? new CloudCacheError("quota") : new CloudSyncError("storage");
+    if (!await done) throw storageTransactionError(tx);
     const selected = await this.read<T>(key);
     if (selected === null) throw new CloudSyncError("storage");
     return selected;
     } catch (error) {
-      if (retryQuota && isStorageQuotaError(error)) { await reclaimAuxiliaryStorage(); return this.compareAndSet(key, expected, value, false); }
-      throw error instanceof CloudSyncError ? error : new CloudSyncError("storage");
+      if (retryQuota && isStorageQuotaError(error)) { await reclaimAuxiliaryStorage(); return this.compareAndSetChecked(key, expected, value, false); }
+      throw error instanceof CloudSyncError ? error : new CloudCacheError(isStorageQuotaError(error) ? "quota" : "transaction");
     }
   }
-  async entries(prefix = ""): Promise<{ key: string; value: unknown }[]> {
+  entries(prefix = ""): Promise<{ key: string; value: unknown }[]> { return retrySlowStorage(() => this.entriesChecked(prefix)); }
+  private async entriesChecked(prefix: string): Promise<{ key: string; value: unknown }[]> {
     const db = await this.open(), tx = db.transaction(STORE, "readonly"), done = completion(tx);
     const selected = this.prefix + prefix;
     const rows = await request(tx.objectStore(STORE).getAll(IDBKeyRange.bound(selected, selected + "\uffff"))) as Stored[];
-    if (!await done) throw new CloudSyncError("storage");
+    if (!await done) throw storageTransactionError(tx);
     return Promise.all(rows.filter(row => row.key.startsWith(this.prefix)).map(async row => ({ key: row.key.slice(this.prefix.length), value: await this.unpack(row) })));
   }
   async clear(): Promise<void> {
     const db = await this.open(), tx = db.transaction(STORE, "readwrite"), done = completion(tx), store = tx.objectStore(STORE);
     for (const key of await request(store.getAllKeys(IDBKeyRange.bound(this.prefix, this.prefix + "\uffff")))) if (typeof key === "string" && key.startsWith(this.prefix)) await request(store.delete(key));
-    if (!await done) throw new CloudSyncError("storage");
+    if (!await done) throw storageTransactionError(tx);
   }
 }
 export class MemoryCloudEntryStore implements CloudEntryStore {

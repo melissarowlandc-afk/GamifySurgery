@@ -7,7 +7,7 @@ import type { CloudCacheEntry, CloudCacheRead } from "./cache";
 import { CloudSyncError, type CloudCandidate, type CloudCommitRequest, type CloudConfirmed, type CloudImportRequest, type CloudScope } from "./transport";
 import type { CloudProgressSummary } from "./progress";
 import { copyDescendsFrom, type VerifiedCopyInspection } from "./copySelection";
-import { VerifiedCopyCache } from "./verifiedCopyCache";
+import { verifiedCopies, type VerifiedSessionSnapshot } from "./verifiedCopyCache";
 import { bindJournalInWorker, prepareJournalInWorker, rebaseJournalInWorker } from "./journalCodec";
 import { warmJournalInWorker } from "./journalWarm";
 import { encodeCloudSnapshot, isSnapshotCopy, SNAPSHOT_BASELINE, snapshotCopy, snapshotEvidence, prepareSnapshotImport } from "./snapshotCodec";
@@ -25,6 +25,7 @@ export type CloudCodecTask =
   | { kind: "snapshotConvert"; input: { copy: CloudConfirmed; base?: CloudConfirmed; convertedBase?: CloudConfirmed; ancestorHashes?: readonly string[] } }
   | { kind: "snapshotImport"; input: Parameters<typeof prepareSnapshotImport>[0] }
   | { kind: "verify"; input: Parameters<typeof loadCloudEvidenceCheckpoint>[0] }
+  | { kind: "hydrate"; input: Parameters<typeof loadCloudEvidenceCheckpoint>[0] }
   | { kind: "inspectCopy"; input: CloudConfirmed }
   | { kind: "candidate"; input: { candidate: CloudCandidate; confirmed: CloudConfirmed; scope: CloudScope } }
   | { kind: "freeze"; input: CloudCommitRequest }
@@ -44,6 +45,7 @@ export interface CloudCodecResults {
   snapshotConvert: CloudConfirmed;
   snapshotImport: Awaited<ReturnType<typeof prepareSnapshotImport>>;
   verify: { campaign: Awaited<ReturnType<typeof loadCloudEvidenceCheckpoint>>["campaign"]; evidenceRecords: number; progress: CloudProgressSummary };
+  hydrate: VerifiedSessionSnapshot;
   inspectCopy: VerifiedCopyInspection;
   candidate: void;
   freeze: { requestText: string; requestSha256: string };
@@ -57,7 +59,6 @@ export interface CloudCodecExecutor {
   run<T extends CloudCodecTask>(task: T): Promise<CloudCodecResults[T["kind"]]>;
 }
 
-const verifiedCopies = new VerifiedCopyCache();
 async function verify(input: Parameters<typeof loadCloudEvidenceCheckpoint>[0]): Promise<CloudCodecResults["verify"]> {
   const loaded = await verifiedCopies.read(input);
   if (loaded.decodedGameBytes > CLOUD_CAPACITY_LIMITS.snapshotCeilingBytes) throw new CloudSyncError("capacity");
@@ -120,6 +121,7 @@ export async function runCloudCodecTask<T extends CloudCodecTask>(task: T): Prom
         usageQuestions: candidate?.usageQuestions ?? [], ...(!isSnapshotCopy(confirmed) ? { legacyBaseSnapshot: prior.snapshot } : {}) }; break;
     }
     case "verify": result = await verify(task.input); break;
+    case "hydrate": result = await verifiedCopies.hydrate(task.input); break;
     case "inspectCopy": result = (await verifiedCopies.read({ ...task.input, expectedRevision: task.input.revision,
       expectedCampaignId: task.input.campaignId, expectedBaselineId: task.input.baselineId })).inspection; break;
     case "candidate": {
@@ -128,10 +130,10 @@ export async function runCloudCodecTask<T extends CloudCodecTask>(task: T): Prom
         if (candidate.snapshot.uncompressedBytes > CLOUD_CAPACITY_LIMITS.snapshotCeilingBytes || candidate.snapshot.compressedBytes > CLOUD_CAPACITY_LIMITS.snapshotCeilingBytes) throw new CloudSyncError("capacity");
         if (candidate.campaign.campaignId !== scope.campaignId || candidate.evidence.records.length || candidate.evidence.fromRecord !== 0 || candidate.evidence.toRecord !== 0)
           throw new CloudSyncError("corrupt");
-        const loaded = await loadCloudEvidenceCheckpoint({ snapshot: candidate.snapshot, evidence: await snapshotEvidence(), revision: task.input.confirmed.revision,
-          expectedRevision: task.input.confirmed.revision, expectedCampaignId: scope.campaignId, expectedBaselineId: SNAPSHOT_BASELINE });
-        if (logicalJsonText(JSON.parse(JSON.stringify(loaded.campaign))) !== logicalJsonText(JSON.parse(JSON.stringify(candidate.campaign)))) throw new CloudSyncError("corrupt");
-        if (logicalJsonText(JSON.parse(JSON.stringify(loaded.snapshotLineage))) !== logicalJsonText(JSON.parse(JSON.stringify(candidate.lineage)))) throw new CloudSyncError("corrupt");
+        const loaded = await verifiedCopies.read({ snapshot: candidate.snapshot, evidence: await snapshotEvidence(), revision: task.input.confirmed.revision,
+          expectedRevision: task.input.confirmed.revision, expectedCampaignId: scope.campaignId, expectedBaselineId: SNAPSHOT_BASELINE, lineage: candidate.lineage });
+        if (logicalJsonText(JSON.parse(JSON.stringify(loaded.inspection.campaign))) !== logicalJsonText(JSON.parse(JSON.stringify(candidate.campaign)))) throw new CloudSyncError("corrupt");
+        if (logicalJsonText(JSON.parse(JSON.stringify(loaded.inspection.lineage))) !== logicalJsonText(JSON.parse(JSON.stringify(candidate.lineage)))) throw new CloudSyncError("corrupt");
         if (candidate.usageQuestions.length > 100 || new Set(candidate.usageQuestions.map(row => row.receipt_id)).size !== candidate.usageQuestions.length) throw new CloudSyncError("corrupt");
         break;
       }

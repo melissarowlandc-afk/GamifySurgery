@@ -1,3 +1,4 @@
+import { settledStateQuery } from "./settledStateQueries";
 import type {
   ArrivalClass,
   CurrentQuestion,
@@ -329,12 +330,13 @@ export function isEmployeeAssignedToOperationalRoom(
 }
 
 /** Non-clinical work targets must be reachable and satisfy their room rules. */
+const operationalRoomQuery = Symbol("operational-room");
 export function isRoomOperationalForFacilityWork(
   state: GameState,
   roomId: string,
   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
 ): boolean {
-  return isRoomOperational(state, roomId, context, getFacilityAccessValidation(state, context));
+  return settledStateQuery(state, context, operationalRoomQuery, roomId, () => isRoomOperational(state, roomId, context, getFacilityAccessValidation(state, context)));
 }
 
 /** Capacity acquisition excludes overdue equipment and rooms already claimed for repair. */
@@ -359,10 +361,14 @@ export function isRoomAccessibleForFacilityWork(
   return isRoomAccessible(state, roomId, context, getFacilityAccessValidation(state, context));
 }
 
+const capabilityQuery = Symbol("installed-capabilities");
 export function getCurrentCapabilities(
   state: GameState,
   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
 ): Set<string> {
+  return new Set(settledStateQuery(state, context, capabilityQuery, null, () => computeCurrentCapabilities(state, context)));
+}
+function computeCurrentCapabilities(state: GameState, context: DomainContext): Set<string> {
   const capabilities = new Set<string>();
   const access = getFacilityAccessValidation(state, context);
   for (const placedRoom of state.rooms) {

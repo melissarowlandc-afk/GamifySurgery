@@ -7,6 +7,7 @@ import { IndexedDbJournalStorage, MemoryJournalStorage, type JournalStorage } fr
 import { prepareJournal } from "./journalCodec";
 import { CloudCacheError, type StoredCache } from "./codecCache";
 import { timeCloudEntry } from "./entryTimings";
+import { retrySlowStorage, isTransientStorageError, storageRequest as request, storageCompletion as completion, storageTransactionError } from "./storageRetry";
 export { CloudCacheError, cloudRecoveryBytes } from "./codecCache";
 import { type CloudCandidate, type CloudConfirmed, type CloudFrozenOperation, type CloudScope } from "./transport";
 
@@ -46,7 +47,17 @@ async function withJournal(entry: CloudCacheEntry, journal: JournalStorage, rawH
   const version = rawHash + JSON.stringify(head);
   let preparedRead = reads.get(key);
   if (preparedRead?.version !== version) {
-    const result = timeCloudEntry("journal-recovery", () => prepareJournal(journal, key, cloudCodec, { base: entry.confirmed }));
+    const result = timeCloudEntry("journal-recovery", async () => {
+      const prepared = await prepareJournal(journal, key, cloudCodec, { base: entry.confirmed });
+      // Verification precedes reclamation. Keep the current/prior full seeds,
+      // live suffix and immutable operation; only covered native rows/chunks
+      // are redundant. This frees space BEFORE the opening cache write/bind.
+      if (prepared?.snapshotOnly) {
+        try { await journal.reclaimCovered?.(key, head); }
+        catch (error) { problemDiagnostics.error("journal-reclaim", error); } // Optional cleanup never invalidates a verified copy.
+      }
+      return prepared;
+    });
     preparedRead = { version, result }; reads.set(key, preparedRead);
     if (reads.size > 2) reads.delete(reads.keys().next().value!);
     void result.catch(() => { if (reads!.get(key)?.result === result) reads!.delete(key); });
@@ -69,21 +80,6 @@ const pack = (entry: CloudCacheEntry, expected: number | null) => cloudCodec.run
   entry: { ...entry, scope: cloudScopeData(entry.scope, entry.scope.campaignId) }, expected } });
 const unpack = (raw: StoredCache, scope: CloudScope) => cloudCodec.run({ kind: "unpackCache", input: {
   raw, scope: cloudScopeData(scope, scope.campaignId) } });
-function request<T>(value: IDBRequest<T>): Promise<T> {
-  return new Promise((resolve, reject) => {
-    const timer = setTimeout(() => reject(new CloudCacheError("transaction")), 10_000);
-    value.onsuccess = () => { clearTimeout(timer); resolve(value.result); };
-    value.onerror = () => { clearTimeout(timer); reject(new CloudCacheError(isStorageQuotaError(value.error) ? "quota" : "transaction")); };
-  });
-}
-function completion(tx: IDBTransaction): Promise<boolean> {
-  return new Promise(resolve => {
-    const timer = setTimeout(() => { try { tx.abort(); } catch { /* Already terminal. */ } resolve(false); }, 10_000);
-    tx.oncomplete = () => { clearTimeout(timer); resolve(true); };
-    tx.onabort = () => { clearTimeout(timer); resolve(false); };
-    tx.onerror = () => { /* onabort is terminal */ };
-  });
-}
 export interface CloudCacheTestHooks {
   beforeCommit?: (tx: IDBTransaction) => void;
   afterCommit?: () => void | Promise<void>;
@@ -106,9 +102,9 @@ export class IndexedDbCloudCache implements CloudCache {
       try { opening = this.factory.open(this.databaseName, 1); }
       catch { reject(new CloudCacheError("unavailable")); return; }
       let blocked = false;
-      const timer = setTimeout(() => { blocked = true; problemDiagnostics.error("cache-open", new CloudCacheError("blocked")); reject(new CloudCacheError("blocked")); }, 10_000);
+      const timer = setTimeout(() => { blocked = true; problemDiagnostics.error("cache-open", new CloudCacheError("blocked")); reject(new CloudCacheError("timeout")); }, 10_000);
       opening.onupgradeneeded = () => { opening.result.createObjectStore(STORE, { keyPath: "key" }); };
-      opening.onerror = () => { clearTimeout(timer); reject(new CloudCacheError("unavailable")); };
+      opening.onerror = () => { clearTimeout(timer); reject(new CloudCacheError(isStorageQuotaError(opening.error) ? "quota" : "unavailable")); };
       opening.onblocked = () => { clearTimeout(timer); blocked = true; reject(new CloudCacheError("blocked")); };
       opening.onsuccess = () => {
         clearTimeout(timer);
@@ -123,7 +119,7 @@ export class IndexedDbCloudCache implements CloudCache {
   }
   read(scope: CloudScope, expectedText?: string): Promise<CloudCacheRead | null> {
     return observeStorage("cache.read", async () => {
-      const checked = await this.readChecked(scope, expectedText);
+      const checked = await retrySlowStorage(() => this.readChecked(scope, expectedText));
       if (!checked) return null;
       return expectedText === undefined ? { ...checked.value, entry: await withJournal(checked.value.entry, this.journal, checked.rawHash) } : checked.value;
     });
@@ -134,7 +130,7 @@ export class IndexedDbCloudCache implements CloudCache {
     try {
       const tx = db.transaction(STORE, "readonly"), done = completion(tx);
       raw = await request(tx.objectStore(STORE).get(cloudCampaignStorageKey(scope))) as StoredCache | undefined;
-      if (!await done) throw new CloudCacheError("transaction");
+      if (!await done) throw storageTransactionError(tx);
       if (expectedText !== undefined && raw?.text !== expectedText) throw new CloudCacheError("conflict");
     } catch (error) {
       if (error instanceof CloudCacheError) throw error;
@@ -146,15 +142,19 @@ export class IndexedDbCloudCache implements CloudCache {
     return observeStorage("cache.write", () => this.writeChecked(entry, expected));
   }
   private async writeChecked(entry: CloudCacheEntry, expected: number | null): Promise<CloudCacheRead> {
-    const stored = await pack(entry, expected), db = await this.open();
+    const stored = await pack(entry, expected);
+    let lostReply = false;
     const write = async () => {
+      const db = await this.open();
+      let putRequested = false;
       const tx = db.transaction(STORE, "readwrite"), done = completion(tx);
       try {
         const store = tx.objectStore(STORE), current = await request(store.get(stored.key)) as StoredCache | undefined;
-        if ((current?.cacheRevision ?? null) !== expected) throw new CloudCacheError("conflict");
-        await request(store.put(stored));
+        if ((current?.cacheRevision ?? null) !== expected) {
+          if (!lostReply || current?.cacheRevision !== stored.cacheRevision || current.text !== stored.text || current.sha256 !== stored.sha256) throw new CloudCacheError("conflict");
+        } else { putRequested = true; await request(store.put(stored)); }
         this.hooks.beforeCommit?.(tx);
-        if (!await done) throw new CloudCacheError(isStorageQuotaError(tx.error) ? "quota" : "transaction");
+        if (!await done) throw storageTransactionError(tx);
         await this.hooks.afterCommit?.();
         const readback = await this.read(entry.scope, stored.text);
         if (!readback || readback.cacheRevision !== stored.cacheRevision) {
@@ -162,6 +162,7 @@ export class IndexedDbCloudCache implements CloudCache {
         }
         return readback;
       } catch (error) {
+        if (putRequested && isTransientStorageError(error)) lostReply = true;
         try { tx.abort(); } catch { /* already completed */ }
         await done;
         if (error instanceof CloudCacheError) throw error;
@@ -170,14 +171,17 @@ export class IndexedDbCloudCache implements CloudCache {
     };
     // The IDB compare-and-swap also fences tabs when Web Locks is unavailable.
     const locks = typeof navigator === "undefined" ? undefined : navigator.locks;
-    return locks ? locks.request(stored.key, write) : write();
+    return retrySlowStorage(() => locks ? locks.request(stored.key, write) : write());
   }
   async close(): Promise<void> { if (this.database) (await this.database).close(); this.database = null; }
-  async accountEntries(scope: Pick<CloudScope, "backendId" | "accountId">): Promise<CloudCacheEntry[]> {
+  accountEntries(scope: Pick<CloudScope, "backendId" | "accountId">): Promise<CloudCacheEntry[]> {
+    return retrySlowStorage(() => this.accountEntriesChecked(scope));
+  }
+  private async accountEntriesChecked(scope: Pick<CloudScope, "backendId" | "accountId">): Promise<CloudCacheEntry[]> {
     const db = await this.open(), tx = db.transaction(STORE, "readonly"), done = completion(tx);
     const prefix = cloudCampaignStorageKey(cloudScopeData(scope, "_")).slice(0, -1);
     const records = await request(tx.objectStore(STORE).getAll(IDBKeyRange.bound(prefix, prefix + "\uffff"))) as StoredCache[];
-    if (!await done) throw new CloudCacheError("transaction");
+    if (!await done) throw storageTransactionError(tx);
     const entries: CloudCacheEntry[] = [];
     for (const raw of records.filter(row => row.key.startsWith(prefix))) {
       const campaignId = decodeURIComponent(raw.key.slice(prefix.length));
@@ -190,14 +194,17 @@ export class IndexedDbCloudCache implements CloudCache {
     const prefix = cloudCampaignStorageKey(cloudScopeData(scope, "_")).slice(0, -1);
     const keys = await request(store.getAllKeys(IDBKeyRange.bound(prefix, prefix + "\uffff")));
     for (const key of keys) if (typeof key === "string" && key.startsWith(prefix)) await request(store.delete(key));
-    if (!await done) throw new CloudCacheError("transaction");
+    if (!await done) throw storageTransactionError(tx);
     await this.journal.clear(prefix);
   }
-  async accountInventory(scope: Pick<CloudScope, "backendId" | "accountId">): Promise<{ campaignId: string }[]> {
+  accountInventory(scope: Pick<CloudScope, "backendId" | "accountId">): Promise<{ campaignId: string }[]> {
+    return retrySlowStorage(() => this.accountInventoryChecked(scope));
+  }
+  private async accountInventoryChecked(scope: Pick<CloudScope, "backendId" | "accountId">): Promise<{ campaignId: string }[]> {
     const prefix = cloudCampaignStorageKey(cloudScopeData(scope, "_")).slice(0, -1);
     const db = await this.open(), tx = db.transaction(STORE, "readonly"), done = completion(tx);
     const keys = await request(tx.objectStore(STORE).getAllKeys(IDBKeyRange.bound(prefix, prefix + "\uffff")));
-    if (!await done) throw new CloudCacheError("transaction");
+    if (!await done) throw storageTransactionError(tx);
     return keys.filter((key): key is string => typeof key === "string" && key.startsWith(prefix))
       .map(key => ({ campaignId: decodeURIComponent(key.slice(prefix.length)) }));
   }

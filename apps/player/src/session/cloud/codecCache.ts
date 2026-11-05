@@ -4,8 +4,8 @@ import { CLOUD_RECOVERY_BYTES, CloudSyncError, type CloudScope } from "./transpo
 import type { CloudCacheEntry, CloudCacheRead } from "./cache";
 
 export class CloudCacheError extends CloudSyncError {
-  constructor(readonly reason: "unavailable" | "blocked" | "transaction" | "quota" | "checksum" | "version" | "conflict" | "capacity") {
-    super(reason === "capacity" ? "capacity" : "storage");
+  constructor(readonly reason: "unavailable" | "blocked" | "transaction" | "timeout" | "quota" | "checksum" | "version" | "conflict" | "capacity") {
+    super(reason === "capacity" ? "capacity" : reason === "timeout" ? "processing" : "storage");
   }
 }
 export interface StoredCache { key: string; cacheRevision: number; text: string; sha256: string; utf8Bytes: number }

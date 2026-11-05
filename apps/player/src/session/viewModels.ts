@@ -1,4 +1,7 @@
+import { diagnosticChoicePreviews } from "./diagnosticChoicePreviews";
+import { withSettledStateQueries } from "@gamify-surgery/game-domain";
 import { questionReviewContext } from "./questionReviewContext";
+import { createLearningDevelopmentView } from "./learningDevelopmentView";
 import { createFacilityDoorViews } from "./buildViewModels";
 import { visibleQuestionChoices } from "./questionChoices";
 import { gardenRestActorSupport } from "./levelFiveSupportPresentation";
@@ -12,6 +15,7 @@ import { giftContactAtLocation } from "@gamify-surgery/game-domain";
 import { describeRetailTrip } from "./characterActivityPresentation";
 import { getExecutiveDeskLocation, quoteExecutiveStock } from "@gamify-surgery/game-domain";
 import { getEmployeeEffectiveMorale } from "@gamify-surgery/game-domain";
+import { getRoomAccessWarning, missingHireRoomMessage } from "../ui/roomAccessFeedback";
 import {
   getProcedureStaffSupportId,
   PROTOTYPE_DOMAIN_CONTEXT,
@@ -19,7 +23,6 @@ import {
   getFounderBreakSeatClaim,
   isFounderSeatOccupied,
   listFounderSeats,
-  getAnswerChoiceServicePreview,
   getDiagnosticOrderTiming,
   getDisplayedClinicSatisfaction,
   getFacilityAccessValidation,
@@ -734,10 +737,8 @@ function getLearningCardDateTimeFormatter(): Intl.DateTimeFormat {
 }
 
 function formatLearningCardStatus(
-  state: GameState,
-  conceptId: string,
+  history: GameState["learningHistories"][string] | undefined,
 ): string {
-  const history = state.learningHistories[conceptId];
   const latestReview = history?.reviews.at(-1);
   if (!history || !latestReview) {
     return "New · no campaign review";
@@ -940,6 +941,7 @@ function createChartView(
   if (encounterId === null) {
     return null;
   }
+  const choicePreview = diagnosticChoicePreviews(state);
   const encounter = state.encounters[encounterId];
   if (!encounter) {
     return null;
@@ -1144,11 +1146,7 @@ function createChartView(
         answerChoices: questionIsVisible ? visibleQuestionChoices(node.answerChoices, casualMode).map((choice) => {
           const preview =
             isCurrent && answer === null
-              ? getAnswerChoiceServicePreview(
-                  state,
-                  encounter.id,
-                  choice.id,
-                )
+              ? choicePreview(encounter.id, choice.id)
               : null;
           return {
             id: choice.id,
@@ -1388,11 +1386,7 @@ function createChartView(
       (question ? visibleQuestionChoices(question.node.answerChoices, casualMode) : []).map((choice) => {
         const preview =
           answerForQuestion === undefined
-            ? getAnswerChoiceServicePreview(
-                state,
-                encounter.id,
-                choice.id,
-              )
+            ? choicePreview(encounter.id, choice.id)
             : null;
         return {
           id: choice.id,
@@ -1472,7 +1466,7 @@ export function newestServiceIncomeReceipts<
   return newest;
 }
 
-export function createPrototypePlayerView(
+function derivePrototypePlayerView(
   state: GameState,
   selectedEncounterId: string | null,
   summaryVisible: boolean,
@@ -1488,6 +1482,7 @@ export function createPrototypePlayerView(
   questionReviewFlags: readonly QuestionReviewFlag[] = [],
   casualMode: boolean | null = false,
 ): PrototypePlayerView {
+  const learningDevelopment = createLearningDevelopmentView(state, PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts, formatLearningCardStatus);
   const lists = getPatientLists(state);
   // One pass over service history instead of one pass per resolved patient.
   const encounterIdsWithActiveServiceOperation = new Set(
@@ -2727,7 +2722,7 @@ export function createPrototypePlayerView(
             ? "Build a Reading Room to add four radiologist positions."
           : role.id === "staff.imaging_technician"
             ? `Build an ${imagingCapacityRooms} Room to add imaging technician capacity.`
-            : "Build a compatible room to add hiring capacity."
+            : missingHireRoomMessage(state, role.id) ?? "Build a compatible room to add hiring capacity."
           : atMaximum
             ? `Maximum ${roomCapacity.capacity} hired for the rooms you have built.`
           : !requirementsMet
@@ -2789,7 +2784,7 @@ export function createPrototypePlayerView(
             ? "Build a Reading Room to add four radiologist positions."
           : role.id === "staff.imaging_technician"
             ? `Build an ${imagingCapacityRooms} Room to add imaging technician capacity.`
-            : "Build a compatible room to add hiring capacity."
+            : missingHireRoomMessage(state, role.id) ?? "Build a compatible room to add hiring capacity."
           : atMaximum
             ? `Maximum ${roomCapacity.capacity} hired for the rooms you have built.`
           : !requirementsMet
@@ -2912,6 +2907,7 @@ export function createPrototypePlayerView(
         ...(benefit ? { benefit } : {}),
         canMove: !protectedRoom,
         accessProblem: buildUnreachableRoomIds.has(room.id),
+        ...(buildMode ? { accessWarning: getRoomAccessWarning(state, room.id) ?? undefined } : {}),
         nextUpgradeLevel,
         upgradeCostLabel:
           upgradeCost === null
@@ -2942,22 +2938,17 @@ export function createPrototypePlayerView(
         state.campaignId.length > 20
           ? `${state.campaignId.slice(0, 17)}…`
           : state.campaignId,
-      learningHistoryLabel: `${Object.values(
-        state.learningHistories,
-      ).filter((history) => history.reviews.length > 0).length} reviewed / ${
-        Object.keys(state.learningHistories).length
-      } available`,
+      learningHistoryLabel: learningDevelopment.learningHistoryLabel,
       reviewCountLabel: `${state.reviewIntents.length} scored`,
       fastForwardLabel: `Fast-forward ${PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.development.fastForwardTickCount} min`,
       addMoneyLabel: `Add $${PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.development.addMoneyAmount}`,
-      learningCards:
-        PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts.map((concept) => ({
-          conceptId: concept.id,
-          conceptLabel: concept.displayName,
-          statusLabel: formatLearningCardStatus(state, concept.id),
-        })),
+      learningCards: learningDevelopment.learningCards,
     },
     workloadStatus,
     patientAvailabilityGuidance: createPatientAvailabilityGuidance(state, Date.now()),
   };
+}
+
+export function createPrototypePlayerView(...args: Parameters<typeof derivePrototypePlayerView>): PrototypePlayerView {
+  return withSettledStateQueries(args[0], () => derivePrototypePlayerView(...args));
 }

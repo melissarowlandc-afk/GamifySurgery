@@ -1,6 +1,7 @@
 import type { SubmitQuestionReviewFlag } from "./session/questionReviewFlags";
 import { clinicFeedForTutorial } from "./session/tutorialTipsIntegration";
 import { TesterFeedbackMenu } from "./feedback/TesterFeedback";
+import { ActionFeedbackLayer } from "./ui/ActionFeedbackLayer";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { EmployeeDiscussionPanel } from "./ui/EmployeeDiscussionPanel";
 import { RoomActionMenu, type RoomMenuAnchor } from "./ui/RoomActionMenu";
@@ -1159,6 +1160,7 @@ export function AppShell({
       <p className="screen-reader-only" role="status" aria-live="polite">
         {announcement}
       </p>
+      <ActionFeedbackLayer shell="desktop" />
       {showCharacterQa ? (
         <CharacterQaGallery facility={facility} />
       ) : null}

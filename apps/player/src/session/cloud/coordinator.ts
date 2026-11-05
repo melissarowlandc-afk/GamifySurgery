@@ -17,6 +17,7 @@ import { cloudCopyFamily, copyDescendsFrom } from "./copySelection";
 import { snapshotConflictBackup } from "./retainedCopies";
 import type { CloudCodecExecutor } from "./codecTasks";
 import { CloudCacheError } from "./codecCache";
+import { isTransientStorageError, storageDeadline } from "./storageRetry";
 import { type CloudCache, type CloudCacheEntry, type CloudCacheRead, type CloudRecovery } from "./cache";
 import {
   CLOUD_CHECKPOINT_MS, CLOUD_GRACE_MS, CLOUD_LEASE_MS, CLOUD_RENEW_MS, CLOUD_SAVES_ENABLED_BY_DEFAULT,
@@ -34,6 +35,8 @@ export interface CloudSyncView {
   checking?: boolean;
   pending: boolean;
   localDurable: boolean;
+  storageQuota?: boolean;
+  storageRetrying?: boolean;
   revision: string | null;
   confirmedAtMs: number | null;
   failure: string | null;
@@ -85,6 +88,8 @@ export class CloudSyncCoordinator {
   private resumeAuthorized = false;
   private localDurable = true;
   private localCacheConflict = false;
+  private storageQuota = false;
+  private storageRetrying = false;
   private uploading: Promise<boolean> | null = null;
   private closing: Promise<boolean> | null = null;
   private closingRequested = false;
@@ -130,7 +135,8 @@ export class CloudSyncCoordinator {
         phase: view.phase, failure: view.failure, canExecute: view.canExecute, localDurable: view.localDurable, pending: view.pending,
         leaseExpiresAt: this.window?.until.wall ?? null, leaseRemainingMs: this.window ? this.remaining(this.window.until) : null,
         resumeAuthorized: this.resumeAuthorized, stopped: this.stopped, closing: this.closingRequested, checking: this.checking,
-        uploading: Boolean(this.uploading), renewing: this.renewing, offlineLocal: this.offlineLocal };
+        uploading: Boolean(this.uploading), renewing: this.renewing, offlineLocal: this.offlineLocal,
+        storageQuota: this.storageQuota, storageRetrying: this.storageRetrying };
     });
   }
   get codec(): CloudCodecExecutor { return this.options.codec ?? cloudCodec; }
@@ -143,21 +149,28 @@ export class CloudSyncCoordinator {
   }
   noteLocalChange(dirty = true): void { this.journalDirty = dirty; if (dirty) this.dirtySince ??= this.now(); else if (!this.recovery()) this.dirtySince = null; }
   confirmJournalDurability(): void {
+    if (this.storageRetrying && !this.attempted && this.failure === "processing" && this.allowed()) { this.storageRetrying = false; this.failure = null; this.backupRetryAfter = null; this.emit(); }
     if (!this.localDurable && !this.attempted && !this.localCacheConflict) {
       this.localDurable = true; this.emit(); // Phase/lease/resume gates still require their checked recovery.
     }
   }
   reportPreparationFailure(error: unknown): void {
     this.checkTime();
-    if (!isCloudCodecProcessingError(error) || !this.allowed() || !this.localDurable) { this.reportLocalFailure(error); return; }
+    if ((!isCloudCodecProcessingError(error) && !isTransientStorageError(error)) || !this.allowed() || !this.localDurable) { this.reportLocalFailure(error); return; }
     problemDiagnostics.error("checkpoint-preparation", error);
     this.failure = "processing"; this.backupRetryAfter = this.now(); this.emit();
     // The committed journal remains recoverable. No lease/phase/permission is
     // extended; the tiny renewal and all existing authority gates still apply.
   }
   preparationRecovered(): void {
+    if (this.attempted) return; // A prepared snapshot does not confirm a delayed immutable cache write.
     this.backupRetryAfter = null;
     if (this.failure === "processing" && this.localDurable && this.allowed()) { this.failure = null; this.emit(); }
+  }
+  reportStorageRetry(error: unknown): void {
+    this.storageRetrying = isTransientStorageError(error);
+    if (this.storageRetrying) this.reportPreparationFailure(error);
+    else this.reportLocalFailure(error);
   }
   beforeCheckpoint(prepare: (reason: CloudCheckpointReason) => Promise<boolean>): () => void {
     this.prepareCheckpoint = prepare;
@@ -205,6 +218,7 @@ export class CloudSyncCoordinator {
     this.checkTime();
     return { phase: this.phase, canExecute: this.allowed(), checking: Boolean(this.foregrounding || this.reconnecting) || this.phase === "checking", pending: this.offlineBase || this.recovery() !== null || Boolean(this.record?.entry.recovery),
       localDurable: this.localDurable, revision: this.record?.entry.confirmed.revision ?? null,
+      ...(this.storageQuota && this.failure === "storage" ? { storageQuota: true } : {}), ...(this.storageRetrying && this.failure === "processing" ? { storageRetrying: true } : {}),
       confirmedAtMs: this.record?.entry.confirmed.acceptedAtMs ?? null, failure: this.failure,
       ...(this.record?.entry.confirmed.priorRecovery ? { priorRecovery: { verifiedRevision: this.record.entry.confirmed.revision,
         serverRevision: this.record.entry.confirmed.priorRecovery.serverRevision } } : {}), writerElsewhere: this.writerElsewhere,
@@ -246,6 +260,10 @@ export class CloudSyncCoordinator {
     problemDiagnostics.error("coordinator", error);
     if (this.stopped) return;
     const code = error instanceof CloudSyncError ? error.code : "network";
+    this.storageQuota = isStorageQuotaError(error);
+    if (isTransientStorageError(error) && this.allowed() && this.localDurable) {
+      this.storageRetrying = true; this.failure = "processing"; this.backupRetryAfter = this.now(); this.emit(); return;
+    }
     this.retryAfterMs = error instanceof CloudSyncError ? error.retryAfterMs : 0;
     this.failure = code;
     if (code === "network" || code === "throttled") {
@@ -289,30 +307,34 @@ export class CloudSyncCoordinator {
     this.attempted = clone(entry);
     try {
       try {
-        const stored = await cloudCheckDeadline(this.options.cache.write(entry, this.record?.cacheRevision ?? null));
+        const stored = await storageDeadline(this.options.cache.write(entry, this.record?.cacheRevision ?? null));
         if (!this.live(epoch)) throw new CloudSyncError("auth");
         this.record = stored;
       }
       catch (error) {
         if (!this.live(epoch)) throw error;
-        if (!isStorageQuotaError(error)) throw error;
-        this.localDurable = false; this.emit();
-        await reclaimAuxiliaryStorage();
+        if (!isStorageQuotaError(error) && !isTransientStorageError(error)) throw error;
+        if (isStorageQuotaError(error)) { this.localDurable = false; this.emit(); await reclaimAuxiliaryStorage(); }
         // Never overwrite another writer or repeat a successful lost response.
-        const stored = await cloudCheckDeadline(this.options.cache.read(this.scope));
+        const stored = await storageDeadline(this.options.cache.read(this.scope));
         if (!this.live(epoch)) throw new CloudSyncError("auth");
         if (stored && same(stored.entry, entry)) this.record = stored;
         else {
           if ((stored?.cacheRevision ?? null) !== (this.record?.cacheRevision ?? null)) throw error;
-          const retried = await cloudCheckDeadline(this.options.cache.write(entry, this.record?.cacheRevision ?? null));
+          const retried = await storageDeadline(this.options.cache.write(entry, this.record?.cacheRevision ?? null));
           if (!this.live(epoch)) throw new CloudSyncError("auth");
           this.record = retried;
         }
       }
-      this.attempted = null; this.localDurable = true;
+      this.attempted = null; this.localDurable = true; this.storageQuota = false;
+      if (this.storageRetrying && this.failure === "processing" && this.allowed()) {
+        this.storageRetrying = false; this.failure = null; this.backupRetryAfter = null;
+        // Do not emit here: an ACK must publish its bound revision to receipt
+        // listeners before the ordinary session observer sees that revision.
+      }
     } catch (error) {
       if (this.live(epoch)) {
-        this.localDurable = false;
+        this.localDurable = isTransientStorageError(error) && this.journalOwner !== null;
         if (error instanceof CloudCacheError && error.reason === "conflict") {
           // A previous document can finish its last local commit after our read.
           // Keep both the original immutable request and accepted following bytes
@@ -615,6 +637,9 @@ export class CloudSyncCoordinator {
       // command waits behind an upload. Finish its recovery write; this grants
       // no commands or lease, and disposal still fences every queued writer.
       if (this.stopped || !this.record || !this.live(epoch) && !retainAccepted) return false;
+      // A slow cache may leave an exact durable-write attempt while the small
+      // journal remains playable. Finish it before replacing following bytes.
+      if (this.attempted) await this.persist(clone(this.attempted));
       const prior = this.recovery();
       const accepted = this.record.entry.confirmed.evidence.records.length;
       if (frozen.saveFormat === 3 && isSnapshotCopy(this.record.entry.confirmed)) {
@@ -652,6 +677,10 @@ export class CloudSyncCoordinator {
   private async freeze(): Promise<CloudFrozenOperation | null> {
     const epoch = this.epoch;
     return this.queue(async () => {
+      if (!this.live(epoch) || !this.record || !this.window) return null;
+      // Never send an immutable operation that only survived in memory after a
+      // lost/slow local reply. Its exact cache bytes must be committed first.
+      if (this.attempted) await this.persist(clone(this.attempted));
       const recovery = this.recovery();
       if (!this.live(epoch) || !this.record || !recovery || !this.window) return null;
       if (recovery.inFlight) return clone(recovery.inFlight);

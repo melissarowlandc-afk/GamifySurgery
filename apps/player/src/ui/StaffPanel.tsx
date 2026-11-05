@@ -175,17 +175,20 @@ export function StaffPanel({
                     onClick={() => onHire(role.id)}
                     disabled={!role.canHire}
                     title={role.blockedReason}
+                    aria-label={`Hire ${role.hiringCostLabel} (${role.displayName})`}
+                    aria-describedby={role.blockedReason && !role.canHire ? `${bodyId}-hire-reason` : undefined}
                     data-staff-role-hire
                   >
                     Hire {role.hiringCostLabel}
                   </button>
                 </div>
 
+                {role.blockedReason && !role.canHire ? (
+                  <p id={`${bodyId}-hire-reason`} className="staff-role-hire-reason">{role.blockedReason}</p>
+                ) : null}
+
                 {open ? (
                   <div className="staff-role-body" id={bodyId}>
-                    {role.blockedReason && !role.canHire && !full ? (
-                      <p className="staff-role-note is-blocked">{role.blockedReason}</p>
-                    ) : null}
                     {role.staffingGuidance ? (
                       <p className="staff-role-note">{role.staffingGuidance}</p>
                     ) : null}
@@ -215,6 +218,8 @@ export function StaffPanel({
                               onClick={() => onHire(role.id)}
                               disabled={!role.canHire}
                               title={role.blockedReason}
+                              aria-label={`Hire ${role.displayName} ${role.hiringCostLabel}`}
+                              aria-describedby={role.blockedReason && !role.canHire ? `${bodyId}-hire-reason` : undefined}
                             >
                               Hire {role.hiringCostLabel}
                             </button>

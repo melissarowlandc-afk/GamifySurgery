@@ -6,6 +6,7 @@ import { logicalJsonText, sha256Utf8, type CodecJson } from "./codecJson";
 import type { CloudCandidate, CloudConfirmed } from "./transport";
 import { cloudProgress } from "./progress";
 import { encodeCloudSnapshot, isSnapshotCopy } from "./snapshotCodec";
+import { verifiedCopies } from "./verifiedCopyCache";
 
 export interface JournalPreparationInput {
   address?: JournalAddress;
@@ -17,6 +18,7 @@ export interface JournalPreparationInput {
 }
 export interface JournalPreparation {
   through: number;
+  snapshotOnly?: boolean;
   candidate: CloudCandidate | null;
   base: CloudConfirmed | null;
   /** Returned only for inline stores/local opening, never ordinary native prep. */
@@ -70,7 +72,7 @@ export async function prepareJournalInWorker(input: JournalPreparationInput): Pr
     const state = importGameEvidence(checkpoint.snapshot, checkpoint.evidence);
     const encoded = await encodeCloudSnapshot({ state, campaign: seed.campaign,
       lineage: { ...seed.snapshotPolicy.lineage, sequence: seed.snapshotPolicy.lineage.sequence + checkpoint.snapshot.head.sequence } });
-    const loaded = isSnapshotCopy(base) ? await loadCloudEvidenceCheckpoint({ ...base, expectedRevision: base.revision,
+    const loaded = isSnapshotCopy(base) ? await verifiedCopies.projection({ ...base, expectedRevision: base.revision,
       expectedCampaignId: base.campaignId, expectedBaselineId: base.baselineId }) : null;
     const equal = loaded && logicalJsonText(JSON.parse(JSON.stringify(loaded.state))) === logicalJsonText(JSON.parse(JSON.stringify(state))) &&
       logicalJsonText(JSON.parse(JSON.stringify(loaded.campaign))) === logicalJsonText(JSON.parse(JSON.stringify(seed.campaign)));
@@ -103,7 +105,7 @@ export async function prepareJournalInWorker(input: JournalPreparationInput): Pr
     }
   }
   if (input.compact && store) await store.compact(input.address!.key, data.head.owner, data.head.highWater, seed, await sha256Utf8(JSON.stringify(seed)));
-  return { through: data.head.highWater, base: store && input.encode === false && !input.local ? null : base,
+  return { through: data.head.highWater, ...(seed.snapshotPolicy ? { snapshotOnly: true } : {}), base: store && input.encode === false && !input.local ? null : base,
     candidate, writerGeneration: seed.writerGeneration, profileOrder: data.head.profileOrder,
     ...(!store || input.local ? { seed } : {}), ...(input.local ? { state: importGameEvidence(checkpoint.snapshot, checkpoint.evidence) } : {}) };
 }

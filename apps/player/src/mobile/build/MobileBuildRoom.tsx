@@ -16,9 +16,10 @@ export function MobileBuildRoom({ props, room, onMove, onDoors }: {
   return <div className="mobile-build-room">
     <div className="mobile-build-room-heading"><RoomThumbnail definitionId={room.roomDefinitionId} upgradeLevel={room.upgradeLevel} /><div>
       <p>Tier {room.upgradeLevel}/{room.maxUpgradeLevel ?? 1}</p>
-      <p role="status">{room.accessProblem ? "No access yet. Add a door to a reachable room or hallway." : "Access ready"}</p>
+      <p role="status">{room.accessWarning ? "Staff access needs attention" : room.accessProblem ? "No access yet. Add a door to a reachable room or hallway." : "Access ready"}</p>
       {mapRoom?.cleanliness !== undefined ? <p>Cleanliness {mapRoom.cleanliness}%</p> : null}
     </div></div>
+    {room.accessWarning ? <p className="room-access-warning" role="status">{room.accessWarning}</p> : null}
     {room.benefit ? <div className="mobile-build-benefit"><strong>{room.benefit.perUpgradeLabel}</strong>
       <p>{room.benefit.totalCaption ?? "Now"}: {room.benefit.currentLabel}{room.benefit.nextLabel ? ` → Next: ${room.benefit.nextLabel}` : " · MAX"}</p>
       {room.benefit.upkeepLabel ? <p>{room.benefit.upkeepLabel}</p> : null}{room.benefit.note ? <p>{room.benefit.note}</p> : null}

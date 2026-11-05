@@ -77,31 +77,25 @@ export function getRoutinePatientAvailability(
     return { ...summary, reason: "at_capacity" };
   }
 
-  const stageCases = context.clinicalRelease.cases.filter(
-    (clinicalCase) =>
-      !isEmployeeDiscussionCase(clinicalCase) &&
-      clinicalCase.routineEligible &&
-      clinicalCaseHasSupportedPatientSemantics(clinicalCase) &&
-      clinicalCaseEarliestFacilityStage(clinicalCase) <= state.facilityLevel,
-  );
-  if (stageCases.length === 0) return summary;
-
   const capabilities = getCurrentCapabilities(state, context);
-  const gateCompatibleCases = stageCases.filter((clinicalCase) =>
-    getClinicalCaseEligibilityIssue(state, clinicalCase, context, capabilities) === null,
-  );
-  if (gateCompatibleCases.length === 0) {
-    return { ...summary, reason: "capabilities_unavailable" };
-  }
-
   const activeConceptIds = new Set([
     ...activeEncounters.flatMap((encounter) => conceptIds(encounter.frozenCase)),
     ...activeDiscussions.flatMap((discussion) => conceptIds(discussion.frozenCase)),
   ]);
   let unblockedCaseCount = 0;
+  let stageCaseCount = 0, gateCompatibleCaseCount = 0;
   let otherwiseReadyCaseIsInProgress = false;
   let nextReviewAtRealMs: number | null = null;
-  for (const clinicalCase of gateCompatibleCases) {
+  // Preserve source order and all eligibility rules. Availability can return
+  // at the first due, unblocked case; it need not build two whole-release arrays
+  // or inspect future-stage pediatric variants before reaching that case.
+  for (const clinicalCase of context.clinicalRelease.cases) {
+    if (isEmployeeDiscussionCase(clinicalCase) || !clinicalCase.routineEligible ||
+      clinicalCaseEarliestFacilityStage(clinicalCase) > state.facilityLevel ||
+      !clinicalCaseHasSupportedPatientSemantics(clinicalCase)) continue;
+    stageCaseCount++;
+    if (getClinicalCaseEligibilityIssue(state, clinicalCase, context, capabilities) !== null) continue;
+    gateCompatibleCaseCount++;
     const caseConceptIds = conceptIds(clinicalCase);
     if (caseConceptIds.length === 0) continue;
     const readyAt = caseReviewReadyAt(state, caseConceptIds, asOfRealMs);
@@ -121,6 +115,8 @@ export function getRoutinePatientAvailability(
       : Math.min(nextReviewAtRealMs, readyAt);
   }
 
+  if (!stageCaseCount) return summary;
+  if (!gateCompatibleCaseCount) return { ...summary, reason: "capabilities_unavailable" };
   if (otherwiseReadyCaseIsInProgress || (unblockedCaseCount === 0 && activeConceptIds.size > 0)) {
     return { ...summary, reason: "in_progress" };
   }

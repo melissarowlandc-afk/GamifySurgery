@@ -19,6 +19,82 @@ function initial() {
 }
 afterEach(() => { vi.restoreAllMocks(); vi.useRealTimers(); vi.unstubAllGlobals(); });
 describe("incremental local operational journal", () => {
+  it("automatically retries a timed-out native rebase before committing commands against its replacement baseline", async () => {
+    const f = initial(), store = new MemoryJournalStorage(), seed = { ...f.seed,
+      snapshotPolicy: { lineage: { branchId: "retry.baseline", sequence: 100, parents: [] } } };
+    const head = await bindJournal(store, "retry", "owner", seed, codec), recovered = vi.fn();
+    const drain = new LocalJournalDrain(store, "retry", "owner", head.highWater, () => {}); drain.onRecovered = recovered;
+    const before = applyGameEvidenceCommand(f.checkpoint, { type: "SET_SIMULATION_SPEED", speed: 2, operationId: "before.slow-rebase" });
+    drain.accept({ delta: gameEvidenceDelta(f.checkpoint, before.checkpoint), campaign: seed.campaign, usageQuestions: [] });
+    expect(await drain.drain()).toBe(true);
+    const baseline = createGameEvidenceCheckpoint(before.state), next = { ...seed, checkpoint: baseline,
+      snapshotPolicy: { lineage: { ...seed.snapshotPolicy.lineage, sequence: 101 } } }, hash = await sha256Utf8(JSON.stringify(next));
+    const compact = store.compact.bind(store);
+    const fault = vi.spyOn(store, "compact").mockRejectedValueOnce(new CloudCacheError("timeout"));
+    vi.useFakeTimers({ toFake: ["setTimeout", "clearTimeout"] });
+    try {
+      expect(await drain.rebase(through => store.compact("retry", "owner", through, next, hash))).toBe(false);
+      expect(drain.rebasePending).toBe(true); expect(drain.canAccept).toBe(true);
+      const after = applyGameEvidenceCommand(baseline, { type: "SET_SIMULATION_SPEED", speed: 4, operationId: "after.slow-rebase" });
+      drain.accept({ delta: gameEvidenceDelta(baseline, after.checkpoint), campaign: seed.campaign, usageQuestions: [] });
+      fault.mockImplementation(compact); await vi.advanceTimersByTimeAsync(250);
+      expect(await drain.drain()).toBe(true); expect(recovered).toHaveBeenCalledTimes(1);
+      expect(drain.rebasePending).toBe(false); expect(drain.error).toBeNull();
+      expect((await prepareJournal(store, "retry", codec, { local: true, encode: false }))!.state).toStrictEqual(after.state);
+    } finally { drain.stop(); }
+  });
+  it.each(["memory", "indexeddb"])("reclaims superseded native rows on compaction and on an old-session reload, preserving both full snapshots (%s)", async kind => {
+    const factory = new IDBFactory(), name = "native.pruning", key = "native";
+    const store = kind === "memory" ? new MemoryJournalStorage() : new IndexedDbJournalStorage(name, factory);
+    const f = initial();
+    const lineage = { branchId: "native.base", sequence: 100, parents: [] };
+    let checkpoint = f.checkpoint, seed: JournalSeed = { ...f.seed, snapshotPolicy: { lineage } };
+    let head = await bindJournal(store, key, "owner", seed, codec);
+    const drain = new LocalJournalDrain(store, key, "owner", head.highWater, () => {});
+    const inventory = async (restoreCovered?: JournalRow) => {
+      if (store instanceof MemoryJournalStorage) {
+        if (restoreCovered) { store.data.get(key)!.rows.set(restoreCovered.version, structuredClone(restoreCovered)); delete store.data.get(key)!.head.snapshotFormat; }
+        const data = store.data.get(key)!; return { rows: data.rows.size, snapshots: data.snapshots.size };
+      }
+      const legacyHead = restoreCovered ? { ...(await store.head(key))!, snapshotFormat: undefined } : null;
+      const db = await new Promise<IDBDatabase>((resolve, reject) => {
+        const opening = factory.open(name, 2); opening.onsuccess = () => resolve(opening.result); opening.onerror = () => reject(opening.error);
+      });
+      try {
+        const tx = db.transaction(["rows", "snapshots", "heads"], restoreCovered ? "readwrite" : "readonly");
+        if (restoreCovered) tx.objectStore("rows").put(restoreCovered, JSON.stringify([key, String(restoreCovered.version).padStart(16, "0")]));
+        if (legacyHead) tx.objectStore("heads").put(legacyHead, key);
+        const count = (table: string) => new Promise<number>((resolve, reject) => {
+          const request = tx.objectStore(table).count(); request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error);
+        });
+        const [rows, snapshots] = await Promise.all([count("rows"), count("snapshots")]); return { rows, snapshots };
+      } finally { db.close(); }
+    };
+    try {
+      for (let index = 0; index < 3; index++) {
+        const changed = applyGameEvidenceCommand(checkpoint, { type: "SET_SIMULATION_SPEED", speed: index % 2 ? 2 : 4, operationId: `native.prune.${index}` });
+        drain.accept({ delta: gameEvidenceDelta(checkpoint, changed.checkpoint), campaign: seed.campaign, usageQuestions: [] });
+        expect(await drain.drain()).toBe(true);
+        const covered = (await store.read(key))!.rows.at(-1)!;
+        expect((await prepareJournal(store, key, codec, { local: true, encode: false }))!.state).toStrictEqual(changed.state);
+        checkpoint = createGameEvidenceCheckpoint(changed.state);
+        seed = { ...seed, checkpoint, snapshotPolicy: { lineage: { ...lineage, sequence: 101 + index } } };
+        if (index < 2) {
+          const hash = await sha256Utf8(JSON.stringify(seed));
+          expect(await drain.rebase(through => store.compact(key, "owner", through, seed, hash))).toBe(true);
+          expect((await store.read(key))!.head.snapshotThrough).toBe(drain.committed);
+          expect(await inventory(covered)).toEqual({ rows: 1, snapshots: 2 }); // Old release's redundant generation.
+          await store.reclaimCovered!(key, (await store.head(key))!);
+        } else {
+          drain.stop(); head = (await store.head(key))!;
+          await bindJournal(store, key, "new-document", seed, codec);
+          expect((await prepareJournal(store, key, codec, { local: true, encode: false }))!.state).toStrictEqual(changed.state);
+          expect((await store.head(key))!.highWater).toBe(head.highWater + 1);
+        }
+        expect(await inventory()).toEqual({ rows: 0, snapshots: 2 });
+      }
+    } finally { drain.stop(); }
+  });
   it.each([false, true])("holds new-baseline deltas behind compaction, retrying its exact seed after a lost local acknowledgement (%s)", async lost => {
     const store = new MemoryJournalStorage(), f = initial(), head = await bindJournal(store, "barrier", "owner", f.seed, codec);
     const drain = new LocalJournalDrain(store, "barrier", "owner", head.highWater, () => {});
@@ -40,7 +116,7 @@ describe("incremental local operational journal", () => {
     expect((await prepareJournal(store, "barrier", codec, { local: true }))!.state).toEqual(second.state);
     expect((await store.read("barrier"))!.rows).toHaveLength(1); drain.stop();
   });
-  it("rejects a missing IDB request callback at the transaction deadline even after completion", async () => {
+  it("rejects a missing IDB request callback after bounded deadline retries even after completion", async () => {
     const store = new IndexedDbJournalStorage("journal.missing-callback", new IDBFactory()), f = initial();
     await bindJournal(store, "preserved", "owner", f.seed, codec);
     const started = deferred();
@@ -48,8 +124,14 @@ describe("incremental local operational journal", () => {
       started.resolve(); return { onsuccess: null, onerror: null } as IDBRequest<IDBValidKey[]>;
     });
     vi.useFakeTimers({ toFake: ["setTimeout", "clearTimeout"] });
-    const failed = expect(store.keys("preserved")).rejects.toMatchObject({ reason: "transaction" });
-    await started.promise; await vi.advanceTimersByTimeAsync(10_000); await failed;
+    const failed = expect(store.keys("preserved")).rejects.toMatchObject({ reason: "timeout" });
+    await started.promise;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      await vi.waitFor(() => expect(request).toHaveBeenCalledTimes(attempt + 1));
+      await vi.advanceTimersByTimeAsync(10_000);
+      if (attempt < 2) await vi.advanceTimersByTimeAsync(attempt === 0 ? 250 : 1_000);
+    }
+    await failed;
     request.mockRestore(); vi.useRealTimers();
     expect((await store.read("preserved"))!.snapshot.seed).toEqual(f.seed);
   });

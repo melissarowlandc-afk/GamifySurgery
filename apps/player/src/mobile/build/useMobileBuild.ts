@@ -3,9 +3,9 @@ import type { GridPoint } from "@gamify-surgery/game-domain";
 import type { BuildDoorTool } from "../../facility/types";
 import type { PrototypeShellProps } from "../../shellContract";
 import { phoneDoorSections } from "./doorSections";
-import type { MobileBuildIntent, MobileBuildMapState } from "./types";
+import type { BuildValidation, MobileBuildIntent, MobileBuildMapState } from "./types";
 
-const unavailable = { valid: false, reason: "The construction preview is unavailable.", cost: 0 };
+const unavailable: BuildValidation = { valid: false, reason: "The construction preview is unavailable.", cost: 0 };
 
 export function useMobileBuild(props: PrototypeShellProps, doorTool: BuildDoorTool, setDoorTool: (tool: BuildDoorTool) => void) {
   const [ghost, setGhost] = useState<GridPoint | null>(null);

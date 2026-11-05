@@ -1,0 +1,24 @@
+.action-feedback {
+  position: fixed;
+  z-index: 35000;
+  box-sizing: border-box;
+  max-height: calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 24px);
+  overflow: auto;
+  padding: 0.85rem 1rem;
+  border: 3px solid #8a4b16;
+  border-radius: 0.65rem;
+  background: #fff6d8;
+  color: #252a21;
+  box-shadow: 0 5px 0 #252a21, 0 8px 22px #0005;
+  font: inherit;
+  font-size: max(15px, 0.95rem);
+  line-height: 1.4;
+  text-align: left;
+}
+.action-feedback > strong { display: block; font-size: 1.05em; }
+.action-feedback p { margin: 0.4rem 0 0.6rem; color: inherit; overflow-wrap: anywhere; }
+.action-feedback--error { border-color: #9b3434; background: #fff2eb; }
+.action-feedback-actions { display: flex; justify-content: flex-end; align-items: center; flex-wrap: wrap; gap: 0.5rem 1rem; }
+.action-feedback .text-button { color: #252a21; min-height: 44px; font: inherit; text-decoration: underline; }
+.room-access-warning { padding: 0.6rem 0.75rem; border: 2px solid #8a4b16; border-radius: 0.4rem; background: #fff6d8; color: #252a21; line-height: 1.4; }
+.staff-role-hire-reason { margin: 0.35rem 0 0.65rem; padding: 0.5rem 0.75rem; border-left: 4px solid #8a4b16; background: #fff6d8; color: #252a21; font-size: 0.9rem; line-height: 1.35; }

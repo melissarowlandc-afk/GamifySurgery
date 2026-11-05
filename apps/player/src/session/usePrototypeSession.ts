@@ -1,7 +1,8 @@
 import { startFacilityClock } from "./facilityClock";
 import { LocalProfileJournal } from "./localProfileJournal";
 import { cloudCheckDeadline } from "./cloud/checkDeadline";
-import { problemDiagnostics, showCommandProblem } from "../diagnostics/problemDiagnostics";
+import { getCommandFeedback, problemDiagnostics, showCommandProblem } from "../diagnostics/problemDiagnostics";
+import { getBuildAccessWarning, getRoomAccessWarning, presentActionRejection } from "../ui/roomAccessFeedback";
 import { questionReviewContext } from "./questionReviewContext";
 import type { SubmitQuestionReviewFlag } from "./questionReviewFlags";
 import {
@@ -772,9 +773,9 @@ export function usePrototypeSession(
       commandInput: GameCommandInput,
       options: ExecuteOptions = {},
     ): OperationReceipt["status"] => {
-      if (!cloud && campaignWriteGateRef.current.isSuppressed()) { showCommandProblem("This device session has been closed."); setAnnouncement("This device session has been closed."); return "rejected"; }
+      if (!cloud && campaignWriteGateRef.current.isSuppressed()) { if (commandInput.type !== "ADVANCE_TICK") showCommandProblem("This device session has been closed.", "rejection"); setAnnouncement("This device session has been closed."); return "rejected"; }
       if (localJournalRequired && (!localJournalRef.current || !localJournalRef.current.canAccept)) {
-        showCommandProblem(localJournalRef.current ? "Device saving needs attention. Keep the app open and send a problem report." : "Preparing your device save. Try again in a moment."); return "rejected";
+        if (commandInput.type !== "ADVANCE_TICK") showCommandProblem(localJournalRef.current ? "Device saving needs attention. Keep the app open and send a problem report." : "Preparing your device save. Try again in a moment.", localJournalRef.current ? "error" : "rejection"); return "rejected";
       }
       const operationId = `${sessionIdRef.current}.${++sequenceRef.current}`;
       const command = {
@@ -789,14 +790,21 @@ export function usePrototypeSession(
           usage?.activity();
           return usage?.createQuestionReceipt() ?? null;
         });
-        if (!next) { problemDiagnostics.event("command", "hosted-refused"); setAnnouncement("Account saving must be checked before continuing."); return "rejected"; }
+        if (!next) {
+          problemDiagnostics.event("command", "hosted-refused");
+          if (command.type !== "ADVANCE_TICK") {
+            const problem = getCommandFeedback();
+            showCommandProblem(problem?.kind === "error" ? problem.message : "Account saving must be checked before continuing.", problem?.kind === "error" ? "error" : "rejection");
+          }
+          setAnnouncement("Account saving must be checked before continuing."); return "rejected";
+        }
         stateRef.current = next; setState(next); setProfile(stageActiveState(next));
         const receipt = next.operationReceipts[operationId];
         lastCommandReceiptRef.current = receipt;
         if (receipt && options.announceReceipt !== false) setAnnouncement(receipt.message);
         if (!receipt || receipt.status === "rejected") {
           problemDiagnostics.event("command", `rejected:${command.type}`);
-          if (command.type !== "ADVANCE_TICK") showCommandProblem(receipt?.message ?? "That action could not be completed. Try again.");
+          if (command.type !== "ADVANCE_TICK") showCommandProblem(receipt ? presentActionRejection(next, command, receipt.message) : "That action could not be completed. Try again.", receipt ? "rejection" : "error");
         } else if (command.type !== "ADVANCE_TICK") showCommandProblem(null);
         return receipt?.status ?? "rejected";
       }
@@ -844,7 +852,7 @@ export function usePrototypeSession(
       }
       const receipt = next.operationReceipts[operationId];
       lastCommandReceiptRef.current = receipt;
-      if (command.type !== "ADVANCE_TICK") showCommandProblem(receipt?.status === "rejected" ? receipt.message : null);
+      if (command.type !== "ADVANCE_TICK") showCommandProblem(receipt?.status === "rejected" ? presentActionRejection(next, command, receipt.message) : null, "rejection");
       const previousEventIds = new Set(
         previous.events.map((event) => event.id),
       );
@@ -941,6 +949,14 @@ export function usePrototypeSession(
         setBuildUndoLabel(undoLabel);
         setBuildExitBlockedReason(null);
         setBuildExitBlockedIssues([]);
+        // A hallway drag is many tiny commands; never scan the facility for
+        // warnings on every painted tile. Room/door confirmations are bounded
+        // user actions, independent of ordinary ticks or save preparation.
+        const warning = commandInput.type === "PLACE_ROOM" && commandInput.roomDefinitionId !== "room.hallway" || commandInput.type === "MOVE_ROOM"
+          ? getRoomAccessWarning(stateRef.current, commandInput.roomId)
+          : commandInput.type === "PLACE_DOOR" || commandInput.type === "REMOVE_DOOR"
+            ? getBuildAccessWarning(stateRef.current, "roomId" in commandInput ? commandInput.roomId : undefined) : null;
+        if (warning) showCommandProblem(warning, "warning");
       }
       return status;
     },
@@ -949,11 +965,11 @@ export function usePrototypeSession(
 
   const undoBuildAction = useCallback(() => {
     if (!buildMode || buildHistoryRef.current.length === 0) {
-      showCommandProblem("There is no build action to undo."); setAnnouncement("There is no build action to undo.");
+      showCommandProblem("There is no build action to undo.", "rejection"); setAnnouncement("There is no build action to undo.");
       return;
     }
     const previous = buildHistoryRef.current.at(-1)!;
-    if (cloud && !cloud.undoBuild(previous)) { showCommandProblem("Check the account save before undoing this build action."); setAnnouncement("Check the account save before undoing this build action."); return; }
+    if (cloud && !cloud.undoBuild(previous)) { showCommandProblem("Check the account save before undoing this build action.", "rejection"); setAnnouncement("Check the account save before undoing this build action."); return; }
     if (localJournalRef.current) {
       if (!localJournalRef.current.canAccept) { showCommandProblem("Device saving needs attention before undoing."); return; }
       localJournalRef.current.undo(previous);
@@ -1098,7 +1114,7 @@ export function usePrototypeSession(
   }, [cloud, execute, managementMode]);
 
   const enterManagementMode = useCallback(() => {
-    if (cloud && !cloud.canExecute) { showCommandProblem("Check the account save before entering Management Mode."); setAnnouncement("Check the account save before entering Management Mode."); return; }
+    if (cloud && !cloud.canExecute) { showCommandProblem("Check the account save before entering Management Mode.", "rejection"); setAnnouncement("Check the account save before entering Management Mode."); return; }
     if (managementMode || buildMode) {
       return;
     }
@@ -1153,14 +1169,14 @@ export function usePrototypeSession(
     const current = stateRef.current;
     const discussion = current.openEmployeeDiscussionId ? current.employeeDiscussions?.[current.openEmployeeDiscussionId] : undefined;
     const node = discussion?.frozenCase.decisionNodes[discussion.currentNodeIndex];
-    if (!discussion || !node) { showCommandProblem("Open the team discussion again before answering."); return; }
+    if (!discussion || !node) { showCommandProblem("Open the team discussion again before answering.", "rejection"); return; }
     execute({type: "SUBMIT_EMPLOYEE_DISCUSSION_ANSWER", discussionId: discussion.id, decisionNodeId: node.id, answerChoiceId, reviewedAtMs: Date.now()});
   }, [execute]);
   const acknowledgeEmployeeDiscussion = useCallback(() => {
     const current = stateRef.current;
     const discussion = current.openEmployeeDiscussionId ? current.employeeDiscussions?.[current.openEmployeeDiscussionId] : undefined;
     const node = discussion?.frozenCase.decisionNodes[discussion.currentNodeIndex];
-    if (!discussion || !node) { showCommandProblem("Open the team discussion again to continue."); return; }
+    if (!discussion || !node) { showCommandProblem("Open the team discussion again to continue.", "rejection"); return; }
     if (execute({type: "ACKNOWLEDGE_EMPLOYEE_DISCUSSION_FEEDBACK", discussionId: discussion.id, decisionNodeId: node.id}) !== "applied") return;
     // The feedback card already holds the teaching text, so the final
     // acknowledgment files the discussion instead of opening a summary page.
@@ -1235,12 +1251,12 @@ export function usePrototypeSession(
       const currentState = stateRef.current;
       const encounterId = currentState.openChartEncounterId;
       if (encounterId === null) {
-        showCommandProblem("Open an action-ready chart before answering."); setAnnouncement("Open an action-ready chart before answering.");
+        showCommandProblem("Open an action-ready chart before answering.", "rejection"); setAnnouncement("Open an action-ready chart before answering.");
         return;
       }
       const question = getCurrentQuestion(currentState, encounterId);
       if (!question) {
-        showCommandProblem("This chart does not currently have a question."); setAnnouncement("This chart does not currently have a question.");
+        showCommandProblem("This chart does not currently have a question.", "rejection"); setAnnouncement("This chart does not currently have a question.");
         return;
       }
       execute({
@@ -1330,7 +1346,7 @@ export function usePrototypeSession(
 
   const beginPlacement = useCallback((roomDefinitionId: string) => {
     if (!buildMode) {
-      showCommandProblem("Enter Build Mode before selecting construction."); setAnnouncement("Enter Build Mode before selecting construction.");
+      showCommandProblem("Enter Build Mode before selecting construction.", "rejection"); setAnnouncement("Enter Build Mode before selecting construction.");
       return;
     }
     setSelectedRoomDefinitionId(roomDefinitionId);
@@ -1353,14 +1369,14 @@ export function usePrototypeSession(
 
   const rotatePlacement = useCallback(() => {
     if (!selectedRoomDefinitionId) {
-      showCommandProblem("Select a room before rotating it."); setAnnouncement("Select a room before rotating it.");
+      showCommandProblem("Select a room before rotating it.", "rejection"); setAnnouncement("Select a room before rotating it.");
       return;
     }
     const orientations = getApprovedPlacementOrientations(
       selectedRoomDefinitionId,
     );
     if (orientations.length <= 1) {
-      showCommandProblem("This room has a fixed furniture orientation."); setAnnouncement("This room has a fixed furniture orientation.");
+      showCommandProblem("This room has a fixed furniture orientation.", "rejection"); setAnnouncement("This room has a fixed furniture orientation.");
       return;
     }
     setPlacementOrientation((current) => {
@@ -1380,7 +1396,7 @@ export function usePrototypeSession(
     ) => {
       const roomDefinitionId = selectedRoomDefinitionId;
       if (!roomDefinitionId) {
-        showCommandProblem("Select a room before choosing its location."); setAnnouncement("Select a room before choosing its location.");
+        showCommandProblem("Select a room before choosing its location.", "rejection"); setAnnouncement("Select a room before choosing its location.");
         return false;
       }
       if (movingRoomInstanceId) {
@@ -1487,7 +1503,7 @@ export function usePrototypeSession(
   const previewMobileDoorRequest = useCallback<MobileBuildActions["previewDoor"]>(request => previewMobileDoor(stateRef.current, request), []);
 
   const enterBuildMode = useCallback(() => {
-    if (cloud && !cloud.canExecute) { showCommandProblem("Check the account save before entering Build Mode."); setAnnouncement("Check the account save before entering Build Mode."); return; }
+    if (cloud && !cloud.canExecute) { showCommandProblem("Check the account save before entering Build Mode.", "rejection"); setAnnouncement("Check the account save before entering Build Mode."); return; }
     if (buildMode) {
       return;
     }
@@ -1579,7 +1595,7 @@ export function usePrototypeSession(
 
   const sellSelectedRoom = useCallback((roomId: string, saleConfirmationToken?: string) => {
     if (!roomId) {
-      showCommandProblem("Select a room to sell."); setAnnouncement("Select a room to sell.");
+      showCommandProblem("Select a room to sell.", "rejection"); setAnnouncement("Select a room to sell.");
       return;
     }
     const status = executeBuildCommand({
@@ -1594,7 +1610,7 @@ export function usePrototypeSession(
 
   const upgradeSelectedRoom = useCallback(() => {
     if (!selectedRoomInstanceId) {
-      showCommandProblem("Select a room to upgrade."); setAnnouncement("Select a room to upgrade.");
+      showCommandProblem("Select a room to upgrade.", "rejection"); setAnnouncement("Select a room to upgrade.");
       return;
     }
     executeBuildCommand({
@@ -1605,7 +1621,7 @@ export function usePrototypeSession(
 
   const upgradeRoom = useCallback((roomId: string) => {
     if (!buildMode) {
-      showCommandProblem("Enter Build Mode before upgrading a room."); setAnnouncement("Enter Build Mode before upgrading a room.");
+      showCommandProblem("Enter Build Mode before upgrading a room.", "rejection"); setAnnouncement("Enter Build Mode before upgrading a room.");
       return;
     }
     executeBuildCommand({ type: "UPGRADE_ROOM", roomId });
@@ -1613,14 +1629,14 @@ export function usePrototypeSession(
 
   const beginMoveSelectedRoom = useCallback(() => {
     if (!selectedRoomInstanceId) {
-      showCommandProblem("Select a room to move."); setAnnouncement("Select a room to move.");
+      showCommandProblem("Select a room to move.", "rejection"); setAnnouncement("Select a room to move.");
       return;
     }
     const room = stateRef.current.rooms.find(
       (candidate) => candidate.id === selectedRoomInstanceId,
     );
     if (!room) {
-      showCommandProblem("That room is no longer available."); setAnnouncement("That room is no longer available.");
+      showCommandProblem("That room is no longer available.", "rejection"); setAnnouncement("That room is no longer available.");
       return;
     }
     setMovingRoomInstanceId(room.id);
@@ -1638,7 +1654,7 @@ export function usePrototypeSession(
       offset: number,
     ) => {
       if (!buildMode) {
-        showCommandProblem("Enter Build Mode before placing a door."); setAnnouncement("Enter Build Mode before placing a door.");
+        showCommandProblem("Enter Build Mode before placing a door.", "rejection"); setAnnouncement("Enter Build Mode before placing a door.");
         return;
       }
       const status = executeBuildCommand({
@@ -1908,7 +1924,7 @@ export function usePrototypeSession(
   const setAdvertisingLevel = useCallback(
     (level: number) => {
       if (buildMode) {
-        showCommandProblem("Exit Build Mode before changing advertising."); setAnnouncement("Exit Build Mode before changing advertising.");
+        showCommandProblem("Exit Build Mode before changing advertising.", "rejection"); setAnnouncement("Exit Build Mode before changing advertising.");
         return;
       }
       execute({
@@ -1935,7 +1951,7 @@ export function usePrototypeSession(
   }, [execute]);
 
   const togglePause = useCallback(() => {
-    if (finishReportOpenRef.current) { showCommandProblem("Close the finish report before resuming facility time."); setAnnouncement("Close the finish report before resuming facility time."); return; }
+    if (finishReportOpenRef.current) { showCommandProblem("Close the finish report before resuming facility time.", "rejection"); setAnnouncement("Close the finish report before resuming facility time."); return; }
     if (buildMode || managementMode) {
       setAnnouncement(
         buildMode
@@ -1946,7 +1962,7 @@ export function usePrototypeSession(
     }
     const current = stateRef.current;
     if (cloud && current.paused && !cloud.coordinator.resume()) {
-      showCommandProblem("Check the account save before resuming."); setAnnouncement("Check the account save before resuming."); return;
+      showCommandProblem("Check the account save before resuming.", "rejection"); setAnnouncement("Check the account save before resuming."); return;
     }
     execute({
       type: "SET_PAUSED",
@@ -2236,7 +2252,7 @@ export function usePrototypeSession(
       nextProfile: LocalPrototypeProfile,
       successAnnouncement: string,
     ) => {
-      if (cloud && !cloud.canExecute) { showCommandProblem("Check the account save before changing guidance."); return; }
+      if (cloud && !cloud.canExecute) { showCommandProblem("Check the account save before changing guidance.", "rejection"); return; }
       cancelScheduledAutosave();
       pendingAutosaveProfileRef.current = null;
       profileRef.current = nextProfile;

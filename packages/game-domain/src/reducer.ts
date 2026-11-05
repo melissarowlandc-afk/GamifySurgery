@@ -1,5 +1,8 @@
+import { withFacilityNavigationScope } from "./facilityNavigation";
 import { chooseWaitingAreaDestination, serviceWaitingPointKind, waitingOccupiedPointKeys } from "./waiting-destinations";
 import { captureBeforeGameRetirement, captureGameEvent, captureGameReceipt } from "./game-evidence-capture";
+import { cloneTickState } from "./tickStateClone";
+import { memoizeSnapshotQuery } from "./tickQueryCache";
 import { advanceFacilityInspection, bookFacilityInspection, cancelFacilityInspection, observeInspectionQuestions, observeInspectionFirstAnswer, observeInspectionPatientEnd, observeInspectionReceipt, observeInspectionSettlement, observeInspectionExpensePosting } from "./facility-inspection";
 import { advanceInspectionPresentation } from "./inspection-presentation";
 import { getAverageEffectiveStaffMorale, getEmployeeEffectiveMorale } from "./level-five-support";
@@ -2835,6 +2838,7 @@ function employeeIsEligibleForDiscussion(
   context: DomainContext,
   clinicalCase: SyntheticClinicalCase,
   employee: EmployeeState,
+  hasApproach?: (employee: EmployeeState) => boolean,
 ): boolean {
   const participant = clinicalCase.participant;
   if (
@@ -2870,7 +2874,7 @@ function employeeIsEligibleForDiscussion(
   ) {
     return false;
   }
-  return getEmployeeDiscussionApproachPath(state, context, employee).length > 0;
+  return hasApproach ? hasApproach(employee) : getEmployeeDiscussionApproachPath(state, context, employee).length > 0;
 }
 
 function createEmployeeDiscussion(
@@ -2997,6 +3001,8 @@ function maybeScheduleEmployeeDiscussion(
         ),
     ],
   );
+  const hasApproach = memoizeSnapshotQuery((employee: EmployeeState) =>
+    getEmployeeDiscussionApproachPath(state, context, employee).length > 0);
   const candidates = context.clinicalRelease.cases.filter(
     (clinicalCase) =>
       employeeDiscussionCaseIsRuntimeSafe(clinicalCase) &&
@@ -3014,6 +3020,7 @@ function maybeScheduleEmployeeDiscussion(
           context,
           clinicalCase,
           employee,
+          hasApproach,
         ),
       ),
   );
@@ -3038,6 +3045,7 @@ function maybeScheduleEmployeeDiscussion(
         context,
         selection.clinicalCase,
         candidate,
+        hasApproach,
       ),
     )
     .sort((left, right) => left.id.localeCompare(right.id))[0];
@@ -3390,6 +3398,7 @@ function reduceOpenChart(
   state: GameState,
   command: Extract<GameCommand, { type: "OPEN_CHART" }>,
   context: DomainContext,
+  cloneState: (state: GameState) => GameState = clonePlain,
 ): GameState {
   if (
     state.openEmployeeDiscussionId !== null &&
@@ -3435,7 +3444,7 @@ function reduceOpenChart(
         : "The patient is already leaving the clinic.",
     );
   }
-  const next = clonePlain(state);
+  const next = cloneState(state);
   const nextEncounter = next.encounters[command.encounterId]!;
   const retailTrip = activeRetailOperationForActor(
     next,
@@ -6491,6 +6500,8 @@ function maybeAssignReceptionistWaterRefill(
       (employee) =>
         employee.staffRoleDefinitionId === "staff.receptionist" &&
         !employee.facilityTask &&
+        !state.retailOperations.some(trip => trip.actorKind === "employee" && trip.actorId === employee.id &&
+          !["completed", "cancelled", "abandoned"].includes(trip.status)) &&
         !isEmployeeAwayForTraining(employee) &&
         !(
           environment.founderActivity?.kind === "praise_employee" &&
@@ -8300,7 +8311,7 @@ function reduceAdvanceTick(
   command: Extract<GameCommand, { type: "ADVANCE_TICK" }>,
   context: DomainContext,
 ): GameState {
-  const next = clonePlain(state);
+  const next = cloneTickState(state);
   if (next.paused) {
     return recordReceipt(
       next,
@@ -8826,7 +8837,7 @@ function reduceAdvanceTick(
       type: "OPEN_CHART",
       operationId: retryOperationId,
       encounterId: next.openChartEncounterId,
-    }, context);
+    }, context, cloneTickState);
     if (retried.environment.founderActivity?.kind === "attend_encounter" &&
         retried.environment.founderActivity.targetId === next.openChartEncounterId) {
       delete retried.operationReceipts[retryOperationId];
@@ -11029,7 +11040,7 @@ function reduceGameCommand(
       );
     }
     case "ADVANCE_TICK":
-      return reduceAdvanceTick(state, command, context);
+      return withFacilityNavigationScope(() => reduceAdvanceTick(state, command, context));
     case "PLACE_ROOM":
       return reducePlaceRoom(state, command, context);
     case "SELL_ROOM":

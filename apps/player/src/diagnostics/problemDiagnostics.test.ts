@@ -7,6 +7,17 @@ afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 const storage = () => { const values = new Map<string, string>(); return { values, getItem: (key: string) => values.get(key) ?? null,
   setItem: (key: string, value: string) => { values.set(key, value); } }; };
 describe("independent bounded technical diagnostics", () => {
+  it("keeps the snapshot journal's committed versus pending counters and storage cause through a restart", () => {
+    const disk = storage(), first = new ProblemDiagnostics(() => 1_000);
+    first.connect(disk);
+    const coordinator = { saveFormat: 3, snapshotBytes: 95_682, phase: "ready", storageQuota: false, storageRetrying: true };
+    const gameSession = { snapshotOnly: true, journalTailCommands: 170, journalQueued: 1, journalHighWater: 172,
+      journalCommitted: 171, journalRebasePending: true };
+    first.source("coordinator", () => coordinator); first.source("gameSession", () => gameSession); first.persist(true);
+    const reopened = new ProblemDiagnostics(() => 2_000); reopened.connect(disk);
+    expect(reopened.report().previous?.health).toStrictEqual({ coordinator, gameSession });
+    expect(disk.values.get(DIAGNOSTICS_KEY)!.length).toBeLessThanOrEqual(DIAGNOSTICS_MAX_CHARS);
+  });
   it("retains twenty caught messages, sixteen events, tiny previous-session state and no arbitrary error data", () => {
     let now = 1_000; const disk = storage(), first = new ProblemDiagnostics(() => now);
     first.connect(disk); first.source("coordinator", () => ({ phase: "ready", canExecute: true }));

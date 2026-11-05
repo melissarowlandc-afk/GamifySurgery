@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
-import { getCommandProblem, problemDiagnostics, showCommandProblem, subscribeCommandProblem } from "../diagnostics/problemDiagnostics";
+import { getCommandFeedback, problemDiagnostics, showCommandProblem, subscribeCommandProblem } from "../diagnostics/problemDiagnostics";
 import { createProblemReport, problemReportDeadline } from "./problemReport";
 import { useAuthAccountId } from "../auth/AuthAccountContext";
 import { hostedAuthConfiguration } from "../auth/prototypeAuth";
@@ -146,10 +146,10 @@ export function ProblemReportButton({ level = 0, shell }: { level?: number; shel
 }
 
 export function CommandProblemNotice({ shell }: { shell: "phone" | "desktop" }) {
-  const message = useSyncExternalStore(subscribeCommandProblem, getCommandProblem, () => null);
-  if (!message) return null;
-  return <section role="alert" aria-label="Action could not be completed" className="command-problem-notice">
-    <p>{message}</p><ProblemReportButton shell={shell} />
+  const feedback = useSyncExternalStore(subscribeCommandProblem, getCommandFeedback, () => null);
+  if (!feedback) return null;
+  return <section role="alert" aria-label={feedback.kind === "warning" ? "Room access" : "Action could not be completed"} className="command-problem-notice">
+    <p>{feedback.message}</p>{feedback.kind === "error" ? <ProblemReportButton shell={shell} /> : null}
     <button type="button" className="text-button" onClick={() => showCommandProblem(null)}>Dismiss</button>
   </section>;
 }

@@ -7128,3 +7128,293 @@ npm.cmd run clinical:lint:test
 The advisory lint census reproduces 1,798 findings (21 linter tests pass); it does not confer clinical approval. Complete commands, numeric deltas, all checkpoint/report hashes, approval/frozen projections, legacy changed paths and file lists are in [the release rebind audit](../research/question-batch1-release-rebind13-20261103.json). Exact unabridged validation/native logs, backups, staged payloads and guarded scripts are under .local-dev/question-batch1-release-rebind13-20261103/. The binding guard SHA-256 is unchanged: 812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909. No Git command, install, network, browser, owner save, cloud/Supabase/backup lane, character implementation, main-tree write or external publication occurred. The manager owns acceptance, global handoff integration and the GitHub checkpoint reminder.
 
 Ignored native progress artifact .local-dev/level5-m9/progress-state.json was synchronized with the exact complete-run bytes (46e9fe9eedda21141327875839fbe96c57f34da166670a59ecf7bf95aa6b7cd9 -> da679ed3caf937b4039c0effc3ef6082eca0ee506d9ffac04c4c7d4ffb410257); the prior native progress file is backed up under the private rebind directory. This keeps the established lower-helper input consistent with the regenerated canonical results and checkpoints.
+
+
+## rebind 14 (release worktree, perf + storage + feedback + restroom)
+
+2026-11-04. Completed locally in `C:/Users/rowla/Projects/GS-release`; the live tree `C:/Users/rowla/Projects/GamifySurgery` was read-only. User-stated entry HEAD was `d03909b9`. No Git command was used to inspect or modify either tree.
+
+Ported **101 accepted lane files**, reconstructing existing files from release bytes plus **369 content-diff hunks**. The complete changed repository scope is **105 files**: those 101 paths, two canonical evidence artifacts, the execution plan and this requested handoff. Source manifests, pre-port backups, frozen incoming bytes and normalized content diffs are retained under `.local-dev/l5-evidence-rebind14-release-20261104/`. The worker owns only this port/rebind milestone; the manager owns integration, global CURRENT_THREAD_HANDOFF and backup decisions.
+
+Lane attribution: **1** tick/performance plus owner-save navigation (thread 01a1a842); **2** storage/journal recovery plus native opening proof reuse (thread 01a18320); **3** action feedback/build access warnings (thread 01a18320); **4** restroom recovery/receptionist refill busy guard and waiting-chart-attendance tests (thread 01a19d81). The corresponding six ExecPlans were ported. Restroom and attendance scope comes from their .local-dev handoffs and owned.diff/owned-files.json receipts. Shared reducer, viewModels, gameSession, localJournal and diagnostics hunks are attributed to these accepted lanes. **FacilityScene remains byte-identical**: all its live differences were excluded character work and it is absent from these accepted path manifests. All other character, clinical/question, question tooling/test-order, routine-OR and unowned source differences remain excluded. Every existing excluded release file retains its entry SHA-256.
+
+**Guarded native procedure:** original seed `level-five-m9.integration.01`, original funded Level 4 opening, unchanged native `tools/qa/level-five-integration-run.mjs` followed by unchanged `level-five-integration-lower.mjs`. Only the three established artifact paths were redirected through the staging wrapper; unexpected writes were rejected. The full journey completed in **326982.3 ms**, with 29 staged writes; the lower helper made two. Source maps stayed stable across both processes; neither wrote canonical evidence. `verify-staged.mjs` checked all stop gates and produced `accepted-run-verification.json` before `publish-verified.mjs` wrote the canonical artifacts. Raw staged checkpoint bytes were used directly. Only the established raw liveCap 4 ->5 metadata correction and complete previous-input history append were applied to the results. All 14 earlier entries remain unchanged; **inputHistory now has 15 entries**. No replay-compatible input exemption was added.
+
+**Required run numbers are unchanged: 26,362 commands /6,056,335 closing cents /410 completions /zero walkouts.** All native assertions remain, including >20,000 commands, three completed 3,000-minute reports, higher best/lower latest retry, immutable first finish, positive round/comfort/supplier witnesses and exact cash reconciliation. Cash remains opening 1,785,500 +gross 15,111,900 -stock 271,860 -paid operating 9,521,205 -capital 1,048,000 =closing 6,056,335 cents. Unlock tick **14709**, XP goal tick **14217**. Every other native summary value and snapshot phase equals the prior run. All **290 clinical inputs** match, including the complete released concept/question source map; clinical files, approval states and content were not edited. Binding inputs increase **409 ->418**: **14 changed, nine added, none removed**.
+
+All **three reports are byte-identical** (SHA-256 over their exact JSON serialization):
+
+| Report | Score | Scored patients | SHA-256, unchanged |
+| --- | ---: | ---: | --- |
+| 1 | 62.4813653779166 | 54 | `5f87b746aa5117e3f68f334adb604773f5c25d09f96aa99d6ffcbb14b8dcc62f` |
+| 2 | 66.64761689485275 | 48 | `b755397caca388420b75217b309388394788db3790a390e32ecafec37d932871` |
+| 3 | 45.299819146370375 | 52 | `5988fa3d9f547a683a7a0e19e0ff29cc2b98a65c19eb356466dc7a6d4f629cc2` |
+
+All nine checkpoint outcomes retain their tick, cash, XP, completion and walkout values. **Six entire checkpoint JSON objects are byte-identical.** Exactly the three documented retail states change:
+
+| Save | Tick | Cash cents | Completions | Walkouts | Comparison |
+| --- | ---: | ---: | ---: | ---: | --- |
+| integration-l4 | 3704 | 2635200 | 58 | 0 | byte-identical |
+| integration-build | 3704 | 1587200 | 58 | 0 | byte-identical |
+| integration-preparing | 14710 | 4148331 | 244 | 0 | byte-identical |
+| integration-running | 14847 | 4196706 | 247 | 0 | byte-identical |
+| integration-final | 17766 | 4838179 | 298 | 0 | byte-identical |
+| integration-finish | 17767 | 4838179 | 298 | 0 | byte-identical |
+| integration-repeat-final | 21423 | 5656213 | 357 | 0 | 185 retail leaves |
+| integration-repeat | 21424 | 5656213 | 357 | 0 | 55 retail leaves |
+| integration-lower-repeat | 24481 | 6056335 | 410 | 0 | 61 retail leaves |
+
+The changed states are `integration-repeat-final`, `integration-repeat`, and `integration-lower-repeat` with **185 /55 /61** differing leaf values, respectively. These match the accepted restroom worker's exact old/new pairs, rather than a broad field exemption. They comprise retail operation IDs, income receipt IDs/transaction keys, the dependent inspection observed-receipt-ID order (130 leaves in repeat-final), one external actor's active retail ID, and the retail ID sequence. That sequence is **1053 ->1052** in the first two and **1199 ->1198** in the lower retry. These are the sole changed numeric leaf values and are ID allocation counters; all financial amounts and gameplay counters are unchanged. Restoring only those concrete retained leaf values reproduces the **entire original checkpoint JSON byte-for-byte**, including property order, for all nine saves. Every encounter, frozen case and answer also remains byte-identical. Exact paths/values are in `checkpoint-leaf-differences.json`. The existing e2e specs and every other save/evidence fixture remain unchanged; consumers of these three named Level 5 saves will receive the new retail identifiers.
+
+**Independent causal check in this release tree:** two diagnostic tail replays each execute **2378 real journey commands** from the same unchanged finish checkpoint. The only source difference is removing the two receptionist busy-guard lines **in memory**. First divergence is ADVANCE_TICK at **18,780**. Without the guard, refill preempts retail-operation.916 and it cancels at 18,781; retry .924 buys at 18,904. With the guard, .916 buys at 18,784 and returns at 18,795. The earlier purchase gives a temporary **+202 cents from tick 18,784 through 18,903**, reconverging at 18,904. Both finish tick 20,000 with **5,304,136 cents /3,070 XP**; retail sequence is 975 fixed versus 976 without the guard. Water and XP agree at every recorded command. This reproduces the worker's causal evidence for one fewer cancelled/retried operation and reordered receipt observation. These diagnostic outputs were never used as canonical evidence. No simulation-number change was concealed or patched.
+
+Canonical artifact SHA-256:
+
+| Artifact | Before | After |
+| --- | --- | --- |
+| `tools/qa/level-five-integration-results-20261012.json` | `dead50020355be0bc328ff4557cd40199763097a8aa01baa3f8944d22492a8d5` | `5050e1e0460995ed641b4253db3fd422e370ad0e6208d4742c7440f9f2f75d8f` |
+| `tests/fixtures/level-five-integration-checkpoints-20261012.json` | `10322f2f3d58be7c211cdd3efd25915f01832f5af0f03a8e32a09397469b0346` | `51b18e225a75ac77b345d74ea15b3e0f6841807d00276b6fe6b78f5c7886df7d` |
+
+Changed/new input hashes (all earlier hashes are additionally preserved in history entry 15):
+
+| Bound input | Before | After |
+| --- | --- | --- |
+| `packages/game-domain/src/care-room-access.ts` | `c521512b8f72fa12a9813055b685cb78313e590cfa51996df3b8d5ec7e8b332b` | `ee355fdece91d18d1278c704a2dfce235a99ab00c7630ddfe14b9e971437a56d` |
+| `packages/game-domain/src/diagnostic-timing.ts` | `6d81945e698917387df0017d6469e0ccbb3d8d537249d4da02346f3ba5b7c647` | `2a8e915812e9c5bc2e5b40fcea74bdff129aa5d4fbecfef633004cf9cda48668` |
+| `packages/game-domain/src/diagnosticCandidatePriority.ts` | `new` | `bea903af6d50ca86ef5d33dea9db71ab1554870e11e395787d97051469b634d9` |
+| `packages/game-domain/src/employee-training.ts` | `de0617dfceb32216c84964d251ccf4686d4304cd8869d65c234c2f38d543f0b5` | `8f04b3f1f748047b8e71466b0070bccef4ea045682904f3c9fef7ccd2a4eef43` |
+| `packages/game-domain/src/facility-access-cache.ts` | `6d1d3e2378e9027b4cf725c6c4a8cf19147c0704cb9ee90dfd52fe815e6be42e` | `e10fa45bb74d16882972daffef87836c0abffe5e5eb68fbccd9f367d2aeebc61` |
+| `packages/game-domain/src/facilityNavigation.ts` | `new` | `e0e01ae9a2afa519fd7764f4092542b5789828774dd434feaa3c6c50df807338` |
+| `packages/game-domain/src/facilityNavigationReference.testSupport.ts` | `new` | `dc378df6455e072342e6d1a1426ac7dd1e2251b4297de9a2530565c70ce3f9b5` |
+| `packages/game-domain/src/facilityPathCache.ts` | `new` | `e679327b8ce4cf13ccc43a1a9673a1f0b8da837106addee6de894692ede19d47` |
+| `packages/game-domain/src/game-evidence.ts` | `13debcdfe16a9505d60a0a42f42997406cf97e250ca61a783106e2bd4f06dc58` | `ff5810d795a18e7d49e043da8a82e94b78fc3faeef15cd49ce75d413381cf9cc` |
+| `packages/game-domain/src/guidance-tips.ts` | `af1052becf169c39cd36ef734fec89bba81e315cbc811ca5704dd0aa76c23915` | `521812ecb3908999819ae88948eeedbdddf95894205ea97de36a19d8089ea5fb` |
+| `packages/game-domain/src/index.ts` | `1389c04a3c49479ce6d0bdea427a290d791f437b62f9d271856517e0e0d4e879` | `90fc224a8c04da1efb3f02e81f00b3da6d741c972dd28f9fc88965d6bc0e2433` |
+| `packages/game-domain/src/patient-amenities.ts` | `bb68111e2ad99087f7cafa2c0d04331221d9c449dbc58acbbb8ac93af1886f1d` | `60d6031577039452e49218ff02f484c69d8d381cbe384fd5eaa59ed8763836d8` |
+| `packages/game-domain/src/procedure-companions.ts` | `b14f513d5cf95215a4f4dd753e6ff785ad08c3e4809947e736b822c745ba5f7d` | `eef7ed35ad3963276a08c539968912ad9d4e99e6d964cd07ab10be94e9791bbb` |
+| `packages/game-domain/src/reducer.ts` | `8bcc7a5990e8d3aa025edbee5dde54bcda83294fb30c0636a6679a57a0f1b474` | `305b0d21dfe964dde67cd645b0435306d242cbe56a0d406d10f01c85e34bc5f9` |
+| `packages/game-domain/src/restroom-recovery.ts` | `new` | `a8c0e5c18f93e14a227d057ddc863192fdd6a9600a8ec002e3ff2cdc8adf4536` |
+| `packages/game-domain/src/retail-operations.ts` | `34011b67347d16b374185dc081d0596685c3eebbd42be12ce89aeaf5429295f5` | `6afb0724762579737a96f2ca110a0735e4fe5c04b457a05b7be4140b307a99fe` |
+| `packages/game-domain/src/routine-patient-availability.ts` | `53ccb6442e59df1449c7c4b467b73a2506b1569eef713d54bb2385d7b7018732` | `1c4eb483c4d6a8ca8807e4470f91c88718c9ba772bbb16d6a470a5355fb8a112` |
+| `packages/game-domain/src/routineAvailabilityReference.testSupport.ts` | `new` | `d7bff621b044a210088c5c8163569a24c0177c9fe6a615a2a1c022302b29cd46` |
+| `packages/game-domain/src/selectors.ts` | `b58929fbf08ee88a45074336ec6614639a8565ac88148bf665c20a69ef8023fb` | `7a2a03ef8f581705e90bb7588a47bb56a419cc41d62757b692f340746150f87c` |
+| `packages/game-domain/src/settledStateQueries.ts` | `new` | `8ed5e5e86d71af003552afc5640f806dc7f81855b980edd0ffd646fedae79385` |
+| `packages/game-domain/src/spatial.ts` | `978cbbedc761f9e039eb3931eef166a3ba623cbc9928d38084a167524fee5da7` | `b5ac30130bf0c1a03aaf2bf255f948e9a56bf3df123c8b03262cd728e1071791` |
+| `packages/game-domain/src/tickQueryCache.ts` | `new` | `ea4cd3d93692182682d4feeab9c0702870cfeff4e0f0629085025ef4de21fa66` |
+| `packages/game-domain/src/tickStateClone.ts` | `new` | `ea02d6760de025869e1a6911c9a3dcdefe57ce9e44efe530687954c4634a07ed` |
+
+Complete repository file inventory, with lane ownership and SHA-256. These are the exact 105 paths changed; private staging/logs are listed separately below.
+
+| Lane | Path | Before SHA-256 | After SHA-256 |
+| --- | --- | --- | --- |
+| 2 | `apps/player/src/App.cloudBrowserFailures.test.tsx` | `3d0670da9afcb4568e8d783808cbf6bd18e786df6f828a946c062c149353ad6e` | `864d95c2af713d9035ab264b1be42ac50e4bd3fbe7ec28aaa948948e29c64c9c` |
+| 3 | `apps/player/src/AppShell.tsx` | `82b1871f33128a3ccbccef31905d0db098d360ccd2d35bc4897208836ec26320` | `c4621056d7032adbf17e064fcffbe5ace8e5ca23b3428cfd48f83df80388b3ba` |
+| 2 | `apps/player/src/diagnostics/problemDiagnostics.test.ts` | `662779bed06cdf0024274f05243830c04e919934039caad3fbd6ca131057e0e4` | `ae00e7dd7115c9b3fc69fbde60f13880eea3cb3e56bfae9addb84c6cbbd294fd` |
+| 2, 3 | `apps/player/src/diagnostics/problemDiagnostics.ts` | `1e3501268912d2ef9b8bfd0c03acbf90524c0c0167795ccc4cfdb9ee529a664b` | `611d64a9f80328fcac6e15bf1026343d83f1ca4a2aec5a880f38499e5005311f` |
+| 4 | `apps/player/src/facility/restroomRecoveryPresentation.test.ts` | `new` | `b184e0e3fb4d84ef84ed675411bc136e1888e5797c0afbfee2182180d190bcc1` |
+| 4 | `apps/player/src/facility/waitingChartAttendancePresentation.test.ts` | `new` | `c2b45103940b5994f073dcd8bd00822237a513161a4875b96d9b4357683763d0` |
+| 3 | `apps/player/src/feedback/TesterFeedback.tsx` | `fb0d77bab7b76566aac70f3a5e44364676dc76344e9d837babc1012960b36075` | `456f746427d5281331862cc1bb7b38e71e0741f1565b6ea77cd4187536c51abc` |
+| 3 | `apps/player/src/mobile/build/buildSession.ts` | `20dbb0d5da8aa631591f53ed15e43ad7997305024fbb2d7f5c690f6afba019e4` | `8c8c2fa8888ed3aa8d0b401f5376543b211cc6cb8f2e872c68f7470d4e31c5e4` |
+| 3 | `apps/player/src/mobile/build/MobileBuildControls.tsx` | `f3865dafec4a4dcafe7f914d2c58ed1daf2030c94faf4b35b4fd5d774d36d193` | `5b07d9049a540795c331a665879cb29064e44f0aad92f09c09f288e6a9f63609` |
+| 3 | `apps/player/src/mobile/build/MobileBuildRoom.tsx` | `f32dbaa3c69b36e9ba2ced1b9899f30c2c57b5071d2dabaeaa9476764a81e630` | `628e84ad1fe1dbd64d94bf715e8499d057ddd61f14496b71177d1bb46d6c7305` |
+| 3 | `apps/player/src/mobile/build/types.ts` | `afd9da2f86960db929ba517812a0812f433f1f77f0891ef11df7fe6f893637c8` | `8118cea4f1521bb2cfa4a4715b841fc45f37640a641e7ea335698321d1dfb77e` |
+| 3 | `apps/player/src/mobile/build/useMobileBuild.ts` | `5c254080c8757a1d896ca6a6b017f3f317d88378f55e87db6cc12fbe9ec6d60e` | `9f1604361e9e1fe50d911f40920504348a8773264c0f4fcd3b8275505951e03a` |
+| 3 | `apps/player/src/mobile/manage/MobileEmployees.tsx` | `901d1d32600d1fa1b0b914b1a32f2d19fb95e02b26d103cf40bec4a617312084` | `6f1843c4ae4650a1d9b0a693610c435e36207e73a2bb676bb2e5da2ff2a5565b` |
+| 3 | `apps/player/src/mobile/MobileShell.tsx` | `79349805e4ea02214240a4b3859cd6878addae2a7f4def40e770b2a3898497cf` | `bb64b7fd95aab0968a01f8bdeea0efed4a0a6dfdc427a8e8c37ecedffeb718d0` |
+| 2 | `apps/player/src/session/cloud/cache.ts` | `438354e9274f422b0621254e1f8a76709c6ce1e57f63eefe54613bf7ba27b9bf` | `6059528ebdb77c9d10a52673c16bfcf3e0d201c5aecbcad334c328174accc76c` |
+| 2 | `apps/player/src/session/cloud/codecCache.ts` | `1edca52881ff4992ee86deb37baa2618540d7c2599b20adc5a2a4d7cc47cf7f5` | `b10527fd20b7bc914ec653988e77190721cc4fbbcebda476405089a75847e2d3` |
+| 2 | `apps/player/src/session/cloud/codecTasks.ts` | `08666325df5d753cbc72546798af8c965aa1a338f3e9937252a1f851eed16139` | `2bca813504653469aa7bd124173ee8c416d40924fea01328e2f83b7a5842bf30` |
+| 2 | `apps/player/src/session/cloud/codecWorkerNative.test.ts` | `99c53af0a64f6eda74b6cb9cb22ce446aa774c5a7759de6194f774b9cb0d6405` | `03f6279df29508e3ebd09f45237bd913d758cadcedfe1794e35e525b1920b857` |
+| 2 | `apps/player/src/session/cloud/coordinator.ts` | `f2ec3deb9b36ea02c1767d0c1adccf606876f2effe93dd8cca33aeecc106abd8` | `da480dee6c3c2198b72ef0be78970bdfc53a1c1f3874528103e440f6de52bc41` |
+| 1 | `apps/player/src/session/cloud/diagnosticWorkloadPerformance.test.ts` | `new` | `1fd3257e352c9b3c60b15ee9e30368463c12de8044ae4818e061ea99f784c536` |
+| 2 | `apps/player/src/session/cloud/entryStorage.ts` | `f31a252a0d944dda84b06f859da52f754e8e67f835cb59ae4ad16e9a1b355c1d` | `145c366632ec0f9d6210325f1b6312e6d31194e27d56fcc75fec24d5a2d56dd9` |
+| 1, 2 | `apps/player/src/session/cloud/gameSession.ts` | `3d2992567cc52d89e3ed534e933f74412b0a2cfdfb22febe225b3942e4938a15` | `9c7f815aaad9ec813181c7a95e93cba95819ca7b516b322db012e4d7328ac4b4` |
+| 2 | `apps/player/src/session/cloud/journalCodec.ts` | `ce4f7eca39d55775a97f5d376ea366b38c17893fb9248f9c7d84e59694ac104a` | `022da6f8661435bcfb38fb7d7549e1bb7ef657d8648feb247df5204b38accc49` |
+| 2 | `apps/player/src/session/cloud/nativeOpeningProof.test.ts` | `new` | `d8447a718a78893051e3fdc2b8bbd18f7864df882bda0332fc27ef377710093f` |
+| 1 | `apps/player/src/session/cloud/prepareSnapshotTick.test.ts` | `new` | `d250a9652d651e2426bd5b07b91abcb12ccd45e855769edbbb3df726859ff725` |
+| 1 | `apps/player/src/session/cloud/prepareSnapshotTick.ts` | `new` | `b920a513b2c3562caff9e0433567d7256ce9a130d20640fed3b1e7e8c0aed4fe` |
+| 1 | `apps/player/src/session/cloud/snapshotTailBounds.test.ts` | `new` | `4c9fdbcd01122e910535eb68f3910927185f16a90c23501929c32334c30eb690` |
+| 2 | `apps/player/src/session/cloud/storageGrowth.test.ts` | `new` | `d5d0a9434d79e0802f2537314e293e4e565059d222581b38305add1e54fa534e` |
+| 2 | `apps/player/src/session/cloud/storageRecovery.test.ts` | `new` | `2792ee02466742f283981ddd924fad0ccdbee5f66bc55972330652aea4be46f5` |
+| 2 | `apps/player/src/session/cloud/storageRetry.ts` | `new` | `caeae1ce6ade75a5ef3bb26e9af4f61a760fdeee07be77f7a276ef51bdcfbae8` |
+| 1 | `apps/player/src/session/cloud/tickPerformance.test.ts` | `new` | `63182a8577ffbf208dc00105cc6ce906b9125346378934e36cbb1106ebeef03d` |
+| 1 | `apps/player/src/session/cloud/tickPerformanceTestSupport.ts` | `new` | `3774fe630bbd9ba4993355d7be645e039cd22b9e35346359e5d862e6f2e8d9a4` |
+| 2 | `apps/player/src/session/cloud/verifiedCopyCache.test.ts` | `1fad99432e93a16a7fd1c4dd8a1e784a650f5106515c270ae1250b1e9f8d18eb` | `e1ae961603222a254e45175b6860cdc5db98bc3bc35e5fb61ed80bbe6e7a91e3` |
+| 2 | `apps/player/src/session/cloud/verifiedCopyCache.ts` | `cb25743a871d79830ec4ec1bf168d3a30996aeb61a4ed27a963a6a1a56a3ff75` | `f13d4cb395781226c2ce783420056e85a295809b117f826e9b6fd432f5283bc3` |
+| 2 | `apps/player/src/session/cloud/watchdogs.test.ts` | `c102713764a19e49f9a818f86be60eac1c2010e69c32eb3751b489d0d63a32e9` | `b0ad5bcc798b40f3f6c44fd6f0cf72e045994d0c39b999b8084129d70edfd86c` |
+| 1 | `apps/player/src/session/diagnosticChoicePreviews.ts` | `new` | `1bb321bb1e5b1e01982b3becce514c611b52dc16c75898da5056bcd4dbf4e4ca` |
+| 1 | `apps/player/src/session/diagnosticProjectionDifferential.test.ts` | `new` | `8ccd8042704b96d9ddffec3adef7784d2ad4fd9b1146e6d383c922712bef97ed` |
+| 1 | `apps/player/src/session/learningDevelopmentView.test.ts` | `new` | `de47733f799d1d41e80e213a73cb72aefb7fc1dc097d4b9b6c57fbe6e3c78bcc` |
+| 1 | `apps/player/src/session/learningDevelopmentView.ts` | `new` | `355dea25497eeca118ada4f0ae8cc94f4dc93defc08d07d894348a1efc754431` |
+| 2 | `apps/player/src/session/localJournal.test.ts` | `e149afb06e971f677a7fecffa69b2b8df07e781bc7bf883e635699103b35b0f1` | `a2678f65ea3c86a26f75726d6d36142808d48932040b1a42a54cee87718d0b81` |
+| 1, 2 | `apps/player/src/session/localJournal.ts` | `dfc322bc7ab37b5c2d9f282c2d8a27853ac3ac80124e12e99349aa13f0e063b0` | `c91f6096d98b71959e49cae7cd7e41a008e8b040beb70f9bb8e515856502aca8` |
+| 3 | `apps/player/src/session/usePrototypeSession.ts` | `71eda05f0fd849ca94b5afab8bfa41255a4207a681fede9a0f12ca046da0a25c` | `93e9d59c18ca1508ec194537d176ce4480a1b04e4a5cf8e4856e24c77203df1c` |
+| 1, 3 | `apps/player/src/session/viewModels.ts` | `7f84fda0270d6b0d9fe874843d4afb5e3a038c6e20b89a69344844ddf0ca6772` | `454f9d0ee5472c7d154c27503d0ec4129194d2f0c5ec4dcc0385133eb051dea2` |
+| 3 | `apps/player/src/ui/actionFeedbackClock.test.tsx` | `new` | `7334604c78fea0560e8ef42453fcbbd666f7685df65b2d99f920582a0d2deb2b` |
+| 3 | `apps/player/src/ui/actionFeedbackIntegration.test.tsx` | `new` | `c4e172476ce730731ff487bbba6fd05fe399edf297728004f21e4cd62fd8129a` |
+| 3 | `apps/player/src/ui/ActionFeedbackLayer.css` | `new` | `982e6f9603a7ed772932c381099faf404689434691643bee97ddd4e1cd598702` |
+| 3 | `apps/player/src/ui/ActionFeedbackLayer.test.tsx` | `new` | `c802ac9892bce490bba2e9807af929fd7744a30c4c005112c0b658b502d1e488` |
+| 3 | `apps/player/src/ui/ActionFeedbackLayer.tsx` | `new` | `0d8a1182d670c2892a3bfc605d7674937e456735c21ccc1493603bbc362f6ac8` |
+| 2 | `apps/player/src/ui/CloudSaveControls.tsx` | `c16fe235d078f8549ff247fbf81a555eee86ed2c459924265f3ec5e322d95aa7` | `4dc0dd2f99847eacc00e549fbc7570baac7235c1c0c411b21559564f5581c73f` |
+| 3 | `apps/player/src/ui/roomAccessFeedback.test.ts` | `new` | `e01f2d15a5dfa7e4624eba14083ca9314cdfdf99cd46d2b3513f13dbc3315ff7` |
+| 3 | `apps/player/src/ui/roomAccessFeedback.ts` | `new` | `8121a39a9fd1d5d76544f30be339f3b05c955c219cd1776222ca72e2e0834126` |
+| 3 | `apps/player/src/ui/roomAccessTestSupport.ts` | `new` | `f066a31eddb52e6bbd4f32d68439c23f757ecf442856286843028632818bcd01` |
+| 3 | `apps/player/src/ui/RoomActionMenu.tsx` | `a4f23e110373f5de5a929113b09ffb1729378929d6f25e80ef69288638f29ee2` | `f084ea858be1d53949e64d81981878fcf810ddf9c4e1ae68f6566cb05d22513c` |
+| 3 | `apps/player/src/ui/StaffPanel.tsx` | `7291cbb4528c075b5a8541d58fa2b93abe3468a7834343161e0ddf0189ad6947` | `e23d1ceafa396c4546877d2465d838b013b628a46df08e62dd18ae2f412d463c` |
+| 3 | `apps/player/src/ui/types.ts` | `75179334e59d8656c6b034513177998d7684e67aecb518ad5de823824f45db1d` | `3c6ff78f4d65f321e8d35be30117725e1e19e0e02906ce3291c9096ddef6783d` |
+| 3 | `docs/execplans/action-feedback-reachability-20261104.md` | `new` | `f8719c807b61abacff7353e26f808605b4797a82a0a0fc4a9b13daa9e73f2ffa` |
+| requested handoff | `docs/execplans/gs028-stats-ethics-overhaul-20261007.md` | `26fbb66553df7856b3c4bbf343e9292991d8706aa9fa563020bbd436d49b86ce` | `append only; final SHA recorded in private final-file-inventory.json` |
+| 2 | `docs/execplans/native-open-proof-reuse-20261104.md` | `new` | `1cd1dcb43200724cb5769a73732e0c0b97d03eaf22905e679d0451ac64707301` |
+| 1 | `docs/execplans/owner-save-navigation-perf-20261104.md` | `new` | `8e09853699868ed36265ee38b0ac3243afc3ae6e128f15d59aa2e5333e1a6982` |
+| execution plan | `docs/execplans/release-port-rebind14-20261104.md` | `new` | `3dbe813ff2ccd26207d806f53a3fadca66c97d5908023b9266af8b3df156b947` |
+| 2 | `docs/execplans/storage-journal-recovery-20261104.md` | `new` | `d008c68b563645ce438ec044f039a08ef8dd049cfc9cfef558f640989c3acc0a` |
+| 1 | `docs/execplans/tick-stutter-20261104.md` | `new` | `9ee7275d08aabcc335d226de0037ec674971136de731dd6c3b96d987e042aa46` |
+| 4 | `docs/execplans/waiting-chart-attendance-20261104.md` | `new` | `009bb9532ed69beafb469cb4344ba2d9ae5f8654535671d59a2561ed0ad03501` |
+| 1 | `packages/game-domain/src/care-room-access.ts` | `c521512b8f72fa12a9813055b685cb78313e590cfa51996df3b8d5ec7e8b332b` | `ee355fdece91d18d1278c704a2dfce235a99ab00c7630ddfe14b9e971437a56d` |
+| 1 | `packages/game-domain/src/diagnostic-timing.ts` | `6d81945e698917387df0017d6469e0ccbb3d8d537249d4da02346f3ba5b7c647` | `2a8e915812e9c5bc2e5b40fcea74bdff129aa5d4fbecfef633004cf9cda48668` |
+| 1 | `packages/game-domain/src/diagnosticCandidatePriority.test.ts` | `new` | `2f366a785c000b5f5a39d0b1a93f2b2ad13230e8b70739462ee6c0886c997d79` |
+| 1 | `packages/game-domain/src/diagnosticCandidatePriority.ts` | `new` | `bea903af6d50ca86ef5d33dea9db71ab1554870e11e395787d97051469b634d9` |
+| 1 | `packages/game-domain/src/employee-training.ts` | `de0617dfceb32216c84964d251ccf4686d4304cd8869d65c234c2f38d543f0b5` | `8f04b3f1f748047b8e71466b0070bccef4ea045682904f3c9fef7ccd2a4eef43` |
+| 1 | `packages/game-domain/src/facility-access-cache.ts` | `6d1d3e2378e9027b4cf725c6c4a8cf19147c0704cb9ee90dfd52fe815e6be42e` | `e10fa45bb74d16882972daffef87836c0abffe5e5eb68fbccd9f367d2aeebc61` |
+| 1 | `packages/game-domain/src/facilityNavigation.test.ts` | `new` | `8e6d8034d70f68b96a0717e43a98573fe47862138d6807c281e1a684363844f8` |
+| 1 | `packages/game-domain/src/facilityNavigation.ts` | `new` | `e0e01ae9a2afa519fd7764f4092542b5789828774dd434feaa3c6c50df807338` |
+| 1 | `packages/game-domain/src/facilityNavigationReference.testSupport.ts` | `new` | `dc378df6455e072342e6d1a1426ac7dd1e2251b4297de9a2530565c70ce3f9b5` |
+| 1 | `packages/game-domain/src/facilityPathCache.test.ts` | `new` | `a79be529d492aef52af1cf068f3fe1486667de463a8ca45873bb34a6b240aae1` |
+| 1 | `packages/game-domain/src/facilityPathCache.ts` | `new` | `e679327b8ce4cf13ccc43a1a9673a1f0b8da837106addee6de894692ede19d47` |
+| 1 | `packages/game-domain/src/game-evidence.ts` | `13debcdfe16a9505d60a0a42f42997406cf97e250ca61a783106e2bd4f06dc58` | `ff5810d795a18e7d49e043da8a82e94b78fc3faeef15cd49ce75d413381cf9cc` |
+| 1 | `packages/game-domain/src/guidance-tips.ts` | `af1052becf169c39cd36ef734fec89bba81e315cbc811ca5704dd0aa76c23915` | `521812ecb3908999819ae88948eeedbdddf95894205ea97de36a19d8089ea5fb` |
+| 1 | `packages/game-domain/src/index.ts` | `1389c04a3c49479ce6d0bdea427a290d791f437b62f9d271856517e0e0d4e879` | `90fc224a8c04da1efb3f02e81f00b3da6d741c972dd28f9fc88965d6bc0e2433` |
+| 4 | `packages/game-domain/src/patient-amenities.ts` | `bb68111e2ad99087f7cafa2c0d04331221d9c449dbc58acbbb8ac93af1886f1d` | `60d6031577039452e49218ff02f484c69d8d381cbe384fd5eaa59ed8763836d8` |
+| 4 | `packages/game-domain/src/procedure-companions.ts` | `b14f513d5cf95215a4f4dd753e6ff785ad08c3e4809947e736b822c745ba5f7d` | `eef7ed35ad3963276a08c539968912ad9d4e99e6d964cd07ab10be94e9791bbb` |
+| 1, 4 | `packages/game-domain/src/reducer.ts` | `8bcc7a5990e8d3aa025edbee5dde54bcda83294fb30c0636a6679a57a0f1b474` | `305b0d21dfe964dde67cd645b0435306d242cbe56a0d406d10f01c85e34bc5f9` |
+| 4 | `packages/game-domain/src/restroom-recovery.ts` | `new` | `a8c0e5c18f93e14a227d057ddc863192fdd6a9600a8ec002e3ff2cdc8adf4536` |
+| 4 | `packages/game-domain/src/retail-operations.ts` | `34011b67347d16b374185dc081d0596685c3eebbd42be12ce89aeaf5429295f5` | `6afb0724762579737a96f2ca110a0735e4fe5c04b457a05b7be4140b307a99fe` |
+| 1 | `packages/game-domain/src/routine-patient-availability.ts` | `53ccb6442e59df1449c7c4b467b73a2506b1569eef713d54bb2385d7b7018732` | `1c4eb483c4d6a8ca8807e4470f91c88718c9ba772bbb16d6a470a5355fb8a112` |
+| 1 | `packages/game-domain/src/routineAvailabilityReference.testSupport.ts` | `new` | `d7bff621b044a210088c5c8163569a24c0177c9fe6a615a2a1c022302b29cd46` |
+| 1 | `packages/game-domain/src/routineAvailabilityStreaming.test.ts` | `new` | `82b693a4b3f97182d276e081f88001324bdffd8ea053a8142ced271c28ceae0b` |
+| 1 | `packages/game-domain/src/selectors.ts` | `b58929fbf08ee88a45074336ec6614639a8565ac88148bf665c20a69ef8023fb` | `7a2a03ef8f581705e90bb7588a47bb56a419cc41d62757b692f340746150f87c` |
+| 1 | `packages/game-domain/src/settledStateQueries.test.ts` | `new` | `1636b5f35f24f72a7c2fed31a3d0d75f9ad956027a09a10e681a09fbf345934c` |
+| 1 | `packages/game-domain/src/settledStateQueries.ts` | `new` | `8ed5e5e86d71af003552afc5640f806dc7f81855b980edd0ffd646fedae79385` |
+| 1 | `packages/game-domain/src/spatial.ts` | `978cbbedc761f9e039eb3931eef166a3ba623cbc9928d38084a167524fee5da7` | `b5ac30130bf0c1a03aaf2bf255f948e9a56bf3df123c8b03262cd728e1071791` |
+| 1 | `packages/game-domain/src/tickAttendanceEvidence.test.ts` | `new` | `d55b59d5f99eac8af873a39612b72e5ef6fe292ba0f89e81af4748c9f3b37c58` |
+| 1 | `packages/game-domain/src/tickLearningProjection.test.ts` | `new` | `aa7a3472b6ef0e1f09f9a63315de45190accfcc07885524d9f6bb8436c1a1975` |
+| 1 | `packages/game-domain/src/tickQueryCache.test.ts` | `new` | `2168e6d4538e58b8305668622b8293798a2f5332742d6ad9f1059785e45d8ff3` |
+| 1 | `packages/game-domain/src/tickQueryCache.ts` | `new` | `ea4cd3d93692182682d4feeab9c0702870cfeff4e0f0629085025ef4de21fa66` |
+| 1 | `packages/game-domain/src/tickStateClone.test.ts` | `new` | `de58ed0f35373eb5a65d1e16102af461619d6601e573ffccba48deb31da52bfc` |
+| 1 | `packages/game-domain/src/tickStateClone.ts` | `new` | `ea02d6760de025869e1a6911c9a3dcdefe57ce9e44efe530687954c4634a07ed` |
+| 1 | `packages/game-domain/src/tickStateDifferential.test.ts` | `new` | `23df0cdf30e9a8ada9d75bc855ee6e5286ff9b97573e9f4079d7d145a3a5dfdc` |
+| 4 | `packages/game-domain/tests/companions.test.ts` | `cde38133a269fc920890b3a7881e8e4e7f9e63c78c58f6c1ac5ed89a1db8d0f6` | `bd7f9f6650cfe87ebf0efd2c4adcbe575cbb117b74d85e6351135ca40659b746` |
+| 4 | `packages/game-domain/tests/receptionist-water-refill.test.ts` | `93fa2ad0e66644698f6f64d54bec6e61d387f8e65217c1bbcd76de54a821d430` | `8a506e313772b6fd4ad0996e1308c6f95e34a7bb7232d3ac89989ad6de324361` |
+| 4 | `packages/game-domain/tests/restroom-recovery.test.ts` | `new` | `70f3f432535b06c69102b72b54564ff7042beb8689c07872f5c7030de39c5a33` |
+| 4 | `packages/game-domain/tests/waiting-chart-attendance.fixture.ts` | `new` | `1dd83678fcff7050518ddfc08a008f1462bbaab148d0bb92923c8ba0dcc585f0` |
+| 4 | `packages/game-domain/tests/waiting-chart-attendance.test.ts` | `new` | `fa973972d7454fa12929e220da84348126ee391133a6656dccbcf6ad05f5c3c5` |
+| 1 | `tests/fixtures/diagnostic-workload.ts` | `new` | `f2fa39f08638fc7d357270b48971bf4b69538114b2349156a8a9d18ea44d8836` |
+| evidence | `tests/fixtures/level-five-integration-checkpoints-20261012.json` | `10322f2f3d58be7c211cdd3efd25915f01832f5af0f03a8e32a09397469b0346` | `51b18e225a75ac77b345d74ea15b3e0f6841807d00276b6fe6b78f5c7886df7d` |
+| evidence | `tools/qa/level-five-integration-results-20261012.json` | `dead50020355be0bc328ff4557cd40199763097a8aa01baa3f8944d22492a8d5` | `5050e1e0460995ed641b4253db3fd422e370ad0e6208d4742c7440f9f2f75d8f` |
+| 1 | `tools/qa/tick-state-differential.mjs` | `new` | `598819e80e852907a495b271f7267baf4ace7d38482977466e3dfd3a88a970f9` |
+
+Final validation ran after canonical publication, with **CI=true**, PowerShell `npm.cmd`, sandbox `--pool=threads --maxWorkers=2`, process-local `NODE_OPTIONS=--require=C:/Users/rowla/Projects/GS-release/tools/question-quality/adversarial-r5-player-preload-20261102.cjs`, and task-local npm cache. The existing preload only routes the blocked net-use lookup through its callback; no install/network/browser operation was performed. No assertion, timeout or CI allowance was relaxed to make this rebind pass. The binding guard and native assertions remain byte-identical.
+
+`npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=C:/Users/rowla/Projects/GS-release/.local-dev/l5-evidence-rebind14-release-20261104/domain-final.json` — **exit 0**:
+
+```text
+ Test Files  178 passed (178)
+      Tests  4433 passed | 1 skipped (4434)
+   Start at  20:31:16
+   Duration  415.64s (transform 12.50s, setup 0ms, import 222.54s, tests 587.29s, environment 14ms)
+
+JSON report written to C:/Users/rowla/Projects/GS-release/.local-dev/l5-evidence-rebind14-release-20261104/domain-final.json
+```
+
+The one skipped test is the pre-existing opt-in historical evidence replay; the full native journey above did run. All 25 retained legacy behavioral comparisons pass unchanged; no legacy generator/evidence refresh was needed. No failing or timed-out test required an isolated waiver or rerun.
+
+`npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=C:/Users/rowla/Projects/GS-release/.local-dev/l5-evidence-rebind14-release-20261104/player-final.json` — **exit 0**:
+
+```text
+ Test Files  347 passed (347)
+      Tests  3435 passed (3435)
+   Start at  20:34:20
+   Duration  548.70s (transform 13.97s, setup 0ms, import 326.54s, tests 734.75s, environment 27ms)
+
+JSON report written to C:/Users/rowla/Projects/GS-release/.local-dev/l5-evidence-rebind14-release-20261104/player-final.json
+```
+
+An earlier source-port full player run also passed **347 files /3,435 tests**, 538.77 s. Because that run overlapped canonical publication, it is retained as `player-port-validation.*`; the fresh complete post-publication run above supplies final validation against frozen final artifacts.
+
+`npm.cmd run typecheck` — **exit 0**, all seven workspaces:
+
+```text
+> gamify-surgery@0.0.1 typecheck
+> npm run typecheck --workspaces --if-present
+
+
+> @gamify-surgery/clinical-context-workbench@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.client.json && tsc --noEmit -p tsconfig.server.json
+
+
+> @gamify-surgery/player@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/balance-config@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-authoring@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-content@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-research@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/game-domain@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+```
+
+Native summary values, all identical to the prior run:
+
+```json
+{
+  "version": "level-five-m9-integration.v1",
+  "seed": "level-five-m9.integration.01",
+  "setup": "Existing synthetic funded Level 4 opening. One ten-hour operating-day session per calendar day, with ordinary full-pool arrivals and real-world FSRS due dates. Real first answers and earned Level 4/5 goals; no XP/history/witness/report injection or offline active minutes.",
+  "liveCap": 5,
+  "commandsReconciled": 26362,
+  "openingCashCents": 1785500,
+  "grossCents": 15111900,
+  "stockCents": 271860,
+  "paidOperatingCents": 9521205,
+  "capitalCents": 1048000,
+  "closingCashCents": 6056335,
+  "levelFourAdvanceTick": 3704,
+  "xpGoalTick": 14217,
+  "unlock": {
+    "version": "level-five-inspection-unlock.v1",
+    "earnedAtFacilityTick": 14709,
+    "clinicalXp": 2088,
+    "displayedSatisfaction": 91,
+    "averageStaffMorale": 100,
+    "employedStaffCount": 9
+  },
+  "firstAnswers": 553,
+  "levelFiveFirstAnswers": 464,
+  "completedDailyRounds": 35,
+  "positiveComfortUses": 719,
+  "supplierSavings": {
+    "stockCents": 2140,
+    "upkeepSixtiethCents": 707700
+  },
+  "retiredReceipts": 5431,
+  "retiredEncounters": 399,
+  "finishNotices": 0
+}
+```
+
+Ignored artifacts: `.local-dev/level5-m9/progress-state.json` was synchronized with the exact complete-run progress bytes after checking its original hash; its previous bytes are backed up in the private task folder. All private scripts/receipts/backups/incoming bytes/diffs/staged payloads/logs are confined to `.local-dev/l5-evidence-rebind14-release-20261104/`; key records are `port-receipt.json`, `accepted-run-verification.json`, `publication-prepared.json`, `publication-receipt.json`, `progress-sync.json`, `retail-guard-attribution.json`, `final-file-inventory.json` and `final-verification.json`. The repository binding guard SHA remains **812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909**; both native generator files, original seed/opening, launch report pins, legacy fixture and all e2e specs are unchanged.
+
+No Git, installs, network, agents, browser, owner-save access, main-tree writes, deployment or external publication occurred. Source plans retain the measured-performance/browser acceptance limits; passing CI timing allowances is not a claim that the full owner-scale tick meets 16 ms. The waiting-chart-attendance lane remains a diagnosis/test lane: its original missing owner reproduction was not claimed fixed here. Manager next action: inspect this scoped diff/receipts, integrate the global handoff and decide the GitHub checkpoint.

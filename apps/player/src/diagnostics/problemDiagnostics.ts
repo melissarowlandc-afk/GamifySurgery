@@ -13,8 +13,8 @@ const HEALTH_KEYS: Record<string, readonly string[]> = {
   layout: ["layout"],
   entry: ["stage", "elapsedMs", "failure", "busy", "preparing"],
   entryWork: ["pending", "lastMs", "operations", "timings"],
-  coordinator: ["phase", "failure", "canExecute", "localDurable", "pending", "leaseExpiresAt", "leaseRemainingMs", "resumeAuthorized", "stopped", "closing", "checking", "uploading", "renewing", "offlineLocal"],
-  gameSession: ["reloadRequired", "closing", "stopped", "dirty", "encoding", "canExecute", "reconnecting", "preparing", "lastCommandMs", "commandAge"],
+  coordinator: ["saveFormat", "snapshotBytes", "phase", "failure", "canExecute", "localDurable", "pending", "leaseExpiresAt", "leaseRemainingMs", "resumeAuthorized", "stopped", "closing", "checking", "uploading", "renewing", "offlineLocal", "storageQuota", "storageRetrying"],
+  gameSession: ["snapshotOnly", "journalTailCommands", "journalQueued", "journalHighWater", "journalCommitted", "journalRebasePending", "reloadRequired", "closing", "stopped", "dirty", "encoding", "canExecute", "reconnecting", "preparing", "lastCommandMs", "commandAge"],
   facility: ["tick", "paused", "speed", "lastTickAt", "tickAge", "finishReportOpen"],
   clock: ["tick", "paused", "speed", "visible", "allowed", "lastTickAt", "tickAge", "timerAge", "rafAge", "rafPendingAge", "restarts"],
   render: ["frameAge", "restarts", "paused", "running"], codec: ["alive", "ready", "restarts", "lastError", "responseAge", "inFlight"],
@@ -136,12 +136,19 @@ export const problemDiagnostics = new ProblemDiagnostics();
 // Visible presentation only; never persisted or submitted (a domain receipt's
 // explanatory text may contain patient information).
 let commandProblem: string | null = null;
+export interface CommandFeedback { id: number; kind: "rejection" | "warning" | "error"; message: string }
+let commandFeedback: CommandFeedback | null = null;
+let commandFeedbackSequence = 0;
 const commandListeners = new Set<() => void>();
 export const getCommandProblem = () => commandProblem;
+export const getCommandFeedback = () => commandFeedback;
 export const subscribeCommandProblem = (listener: () => void) => { commandListeners.add(listener); return () => { commandListeners.delete(listener); }; };
-export function showCommandProblem(message: string | null): void {
-  if (message === commandProblem) return;
-  commandProblem = message; for (const listener of commandListeners) listener();
+export function showCommandProblem(message: string | null, kind: CommandFeedback["kind"] = "error"): void {
+  if (message === null && commandProblem === null) return;
+  commandProblem = message;
+  // An identical second rejection is a new action and must be noticeable again.
+  commandFeedback = message === null ? null : { id: ++commandFeedbackSequence, kind, message };
+  for (const listener of commandListeners) listener();
 }
 
 const storageWork = new Map<number, { operation: string; started: number }>();

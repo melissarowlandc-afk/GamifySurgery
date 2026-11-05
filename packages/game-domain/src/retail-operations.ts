@@ -30,6 +30,7 @@ import { findRouteFromDisplacedLocationOffscreen, findRouteFromDisplacedLocation
 import { findCareAwareFacilityPath } from "./care-room-access";
 import { recordLevelThreeRoomUse } from "./level-three-support";
 import { advanceProcedureCompanion, createProcedureCompanionState, planProcedureCompanionWait, reconcileProcedureCompanions } from "./procedure-companions";
+import { planRestroomRecovery, restroomAtPoint } from "./restroom-recovery";
 
 function facilityRoute(state: GameState, context: DomainContext, start: GridPoint, goal: GridPoint, allowedRoomIds: ReadonlySet<string> = new Set()): GridPoint[] {
   const ordinary = findCareAwareFacilityPath(state, context, start, goal, allowedRoomIds);
@@ -818,6 +819,15 @@ function advanceCompanions(state: GameState, context: DomainContext, createdThis
   for (const actor of state.retailExternalActors.filter((candidate) => candidate.lifecycle !== "departed")) {
     if (actor.pediatricFamilyId) continue;
     if (actor.activeRetailOperationId) continue;
+    // Legacy companions have no amenity clock. A saved stationary restroom
+    // position without a procedure excursion must not become a permanent wait.
+    if (!actor.procedureCompanion && restroomAtPoint(state, context, actor.location)) {
+      const recovery = planRestroomRecovery(state, context, { kind: "encounter", id: actor.id, location: actor.location });
+      if (recovery?.reservation) {
+        actor.location = { ...recovery.reservation.location }; actor.path = [{ ...actor.location }]; actor.pathIndex = 0;
+        actor.lastMovedAtFacilityTick = state.facilityTick;
+      }
+    }
     const service = actor.linkedServiceOperationId ? state.serviceOperations.find((operation) => operation.id === actor.linkedServiceOperationId) : null;
     const encounter = actor.linkedEncounterId ? state.encounters[actor.linkedEncounterId] : null;
     if (service && advanceProcedureCompanion(state, context, actor, service, createdThisTick.has(actor.id),

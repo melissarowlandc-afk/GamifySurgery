@@ -1,4 +1,6 @@
 import type { RoomDefinition } from "@gamify-surgery/balance-config";
+import { createFacilityNavigationCache } from "./facilityNavigation";
+export { withFacilityNavigationScope } from "./facilityNavigation";
 import type {
   CardinalDirection,
   DoorState,
@@ -179,6 +181,17 @@ export function getRoomCareStations(
   getDefinition: (definitionId: string) => RoomDefinition | null = (definitionId) =>
     definitionId === definition.id ? definition : null,
 ): RoomCareStation[] {
+  // Door-owned fixtures are geometry, independent of staffing/operational state.
+  // Alternate supplied room/definition objects retain the direct reader path.
+  if (rooms.includes(room) && getDefinition(room.roomDefinitionId) === definition) {
+    const layout = getNavigationLayout(rooms, doors, getDefinition);
+    let stations = layout.careStations.get(room.id);
+    if (!stations) { stations = computeRoomCareStations(room, definition, doors, rooms, getDefinition); layout.careStations.set(room.id, stations); }
+    return stations.map(station => ({ ...station, patientAnchor: { ...station.patientAnchor } }));
+  }
+  return computeRoomCareStations(room, definition, doors, rooms, getDefinition);
+}
+function computeRoomCareStations(room: PlacedRoom, definition: RoomDefinition, doors: readonly DoorState[], rooms: readonly PlacedRoom[], getDefinition: (id: string) => RoomDefinition | null): RoomCareStation[] {
   return (definition.navigation?.careStations ?? []).flatMap((station) =>
     roomFixtureHiddenByDoor(room, definition, station.id, doors, rooms, getDefinition)
       ? []
@@ -1045,49 +1058,48 @@ function tileAdjacencyForFacility(
   return adjacency;
 }
 
+// A graph's neighbors never change after construction. Preserve the original
+// cardinal-first, lexicographic non-cardinal order once, rather than per BFS visit.
+const orderedNeighbors = new WeakMap<ReadonlySet<string>, readonly string[]>();
+function stableNeighbors(key: string, neighbors: ReadonlySet<string>): readonly string[] {
+  let ordered = orderedNeighbors.get(neighbors);
+  if (!ordered) {
+    const current = parsePointKey(key);
+    const cardinal = CARDINAL_STEPS.map(step => pointKey({ x: current.x + step.x, y: current.y + step.y })).filter(next => neighbors.has(next));
+    ordered = [...cardinal, ...[...neighbors].sort().filter(next => {
+      const point = parsePointKey(next);
+      return Math.abs(point.x - current.x) + Math.abs(point.y - current.y) !== 1;
+    })];
+    orderedNeighbors.set(neighbors, ordered);
+  }
+  return ordered;
+}
+
 function findDeterministicAdjacencyPath(
   start: GridPoint,
   goal: GridPoint,
   adjacency: ReadonlyMap<string, ReadonlySet<string>>,
+  blocked: ReadonlySet<string> = new Set(),
+  displacedNeighbors: ReadonlySet<string> | null = null,
 ): GridPoint[] {
-  const startKey = pointKey(start);
-  const goalKey = pointKey(goal);
-  if (!adjacency.has(startKey) || !adjacency.has(goalKey)) {
-    return [];
-  }
-  const queue: GridPoint[] = [{ ...start }];
-  const parent = new Map<string, string | null>([[startKey, null]]);
-  while (queue.length > 0) {
-    const current = queue.shift()!;
-    const currentKey = pointKey(current);
-    if (currentKey === goalKey) {
+  const startKey = pointKey(start), goalKey = pointKey(goal);
+  const has = (key: string) => key === startKey && displacedNeighbors !== null || !blocked.has(key) && adjacency.has(key);
+  if (!has(startKey) || !has(goalKey)) return [];
+  const queue = [startKey], parent = new Map<string, string | null>([[startKey, null]]);
+  for (let head = 0; head < queue.length; head += 1) {
+    const key = queue[head]!;
+    if (key === goalKey) {
       const reversed: GridPoint[] = [];
-      let cursor: string | null = currentKey;
-      while (cursor !== null) {
-        reversed.push(parsePointKey(cursor));
-        cursor = parent.get(cursor) ?? null;
-      }
+      let cursor: string | null = key;
+      while (cursor !== null) { reversed.push(parsePointKey(cursor)); cursor = parent.get(cursor) ?? null; }
       return reversed.reverse();
     }
-    const neighbors = adjacency.get(currentKey);
-    for (const step of CARDINAL_STEPS) {
-      const next = {
-        x: current.x + step.x,
-        y: current.y + step.y,
-      };
-      const nextKey = pointKey(next);
-      if (neighbors?.has(nextKey) && !parent.has(nextKey)) {
-        parent.set(nextKey, currentKey);
-        queue.push(next);
-      }
-    }
-    for (const nextKey of [...(neighbors ?? [])].sort()) {
-      if (parent.has(nextKey)) continue;
-      const next = parsePointKey(nextKey);
-      if (Math.abs(next.x - current.x) + Math.abs(next.y - current.y) === 1) continue;
-      parent.set(nextKey, currentKey);
-      queue.push(next);
-    }
+    const neighbors = key === startKey && displacedNeighbors ? displacedNeighbors : adjacency.get(key);
+    // The legacy origin is the only query-local edge overlay. No graph copy.
+    const extra = displacedNeighbors?.has(key);
+    const ordered = neighbors ? stableNeighbors(key, neighbors) : [];
+    const steps = extra ? stableNeighbors(key, new Set([...ordered, startKey])) : ordered;
+    for (const next of steps) if (!blocked.has(next) && !parent.has(next)) { parent.set(next, key); queue.push(next); }
   }
   return [];
 }
@@ -1136,91 +1148,91 @@ function getDoorCellsForSpatial(
   };
 }
 
+type NavigationLayout = {
+  endpointKeys: Set<string>;
+  careStations: Map<string, RoomCareStation[]>;
+  roomTiles: Map<string, string[]>;
+  roomAt: Map<string, string>;
+  roomsAt: Map<string, number[]>;
+  graphs: Map<string, Map<string, Set<string>>>;
+  blockedTiles: Map<string, Set<string>>;
+  routes: Map<string, readonly GridPoint[]>;
+};
+const navigationLayout = createFacilityNavigationCache<NavigationLayout>();
+function getNavigationLayout(rooms: readonly PlacedRoom[], doors: readonly DoorState[], getDefinition: (id: string) => RoomDefinition | null): NavigationLayout {
+  return navigationLayout(rooms, doors, getDefinition, () => {
+    const endpointKeys = new Set<string>(), roomTiles = new Map<string, string[]>(), roomAt = new Map<string, string>(), roomsAt = new Map<string, number[]>();
+    for (const room of rooms) {
+      const definition = getDefinition(room.roomDefinitionId);
+      if (!definition) continue;
+      const tiles = getOccupiedTiles(room, definition).map(pointKey);
+      roomTiles.set(room.id, tiles);
+      for (const tile of tiles) {
+        if (!roomAt.has(tile)) roomAt.set(tile, room.id);
+        const owners = roomsAt.get(tile) ?? []; owners.push(rooms.indexOf(room)); roomsAt.set(tile, owners);
+      }
+      for (const key of getRoomEndpointOnlyTileKeys(room, definition)) endpointKeys.add(key);
+    }
+    return { endpointKeys, roomTiles, roomAt, roomsAt, careStations: new Map(), graphs: new Map(), blockedTiles: new Map(), routes: new Map() };
+  });
+}
+/** Geometry index; return the current state's room, never a stale condition or
+ * occupancy record retained from an earlier layout-equivalent state. */
+export function getFacilityRoomAtPoint(point: GridPoint, rooms: readonly PlacedRoom[], doors: readonly DoorState[], getDefinition: (id: string) => RoomDefinition | null, accepts: (room: PlacedRoom) => boolean): PlacedRoom | null {
+  const indices = getNavigationLayout(rooms, doors, getDefinition).roomsAt.get(pointKey(point)) ?? [];
+  for (const index of indices) if (accepts(rooms[index]!)) return rooms[index]!;
+  return null;
+}
+function navigationGraph(layout: NavigationLayout, rooms: readonly PlacedRoom[], doors: readonly DoorState[], getDefinition: (id: string) => RoomDefinition | null, endpoints: Set<string>): Map<string, Set<string>> {
+  const key = JSON.stringify([...endpoints].sort());
+  let graph = layout.graphs.get(key);
+  if (!graph) {
+    graph = tileAdjacencyForFacility(rooms, getDefinition, doors, endpoints);
+    layout.graphs.set(key, graph);
+    if (layout.graphs.size > 32) layout.graphs.delete(layout.graphs.keys().next().value!);
+  }
+  return graph;
+}
+/** Opening-only preparation. All subsequently published graphs stay private. */
+export function prepareFacilityPathfinding(rooms: readonly PlacedRoom[], doors: readonly DoorState[], getDefinition: (id: string) => RoomDefinition | null): void {
+  navigationGraph(getNavigationLayout(rooms, doors, getDefinition), rooms, doors, getDefinition, new Set());
+}
+
 export function findDeterministicFacilityPath(
   start: GridPoint,
   goal: GridPoint,
   rooms: readonly PlacedRoom[],
   doors: readonly DoorState[],
   getDefinition: (definitionId: string) => RoomDefinition | null,
-  options: {
-    blockedRoomInstanceIds?: ReadonlySet<string>;
-  } = {},
+  options: { blockedRoomInstanceIds?: ReadonlySet<string> } = {},
 ): GridPoint[] {
-  const requestedEndpointKeys = new Set<string>();
-  for (const room of rooms) {
-    const definition = getDefinition(room.roomDefinitionId);
-    if (!definition) continue;
-    const endpoints = getRoomEndpointOnlyTileKeys(room, definition);
-    for (const requested of [start, goal]) {
-      const key = pointKey(requested);
-      if (endpoints.has(key)) requestedEndpointKeys.add(key);
-    }
+  const layout = getNavigationLayout(rooms, doors, getDefinition);
+  const startKey = pointKey(start), goalKey = pointKey(goal);
+  const containingStartRoomId = layout.roomAt.get(startKey);
+  const blockedIds = [...(options.blockedRoomInstanceIds ?? [])].filter(id => id !== containingStartRoomId).sort();
+  const blockedKey = JSON.stringify(blockedIds);
+  const routeKey = JSON.stringify([startKey, goalKey, blockedKey]);
+  const cached = layout.routes.get(routeKey);
+  if (cached) return cached.map(point => ({ ...point }));
+  const endpoints = new Set([startKey, goalKey].filter(key => layout.endpointKeys.has(key)));
+  const adjacency = navigationGraph(layout, rooms, doors, getDefinition, endpoints);
+  let blocked = layout.blockedTiles.get(blockedKey);
+  if (!blocked) {
+    blocked = new Set(blockedIds.flatMap(id => layout.roomTiles.get(id) ?? []));
+    layout.blockedTiles.set(blockedKey, blocked);
+    if (layout.blockedTiles.size > 256) layout.blockedTiles.delete(layout.blockedTiles.keys().next().value!);
   }
-  const adjacency = tileAdjacencyForFacility(
-    rooms,
-    getDefinition,
-    doors,
-    requestedEndpointKeys,
-  );
-  const startKey = pointKey(start);
-  const containingStartRoomId = rooms.find((room) => {
-    const definition = getDefinition(room.roomDefinitionId);
-    return definition
-      ? getOccupiedTiles(room, definition).some((point) => pointKey(point) === startKey)
-      : false;
-  })?.id ?? null;
-  for (const room of rooms) {
-    if (!options.blockedRoomInstanceIds?.has(room.id) || room.id === containingStartRoomId) continue;
-    const definition = getDefinition(room.roomDefinitionId);
-    if (!definition) continue;
-    for (const point of getOccupiedTiles(room, definition)) {
-      const blockedKey = pointKey(point);
-      const neighbors = adjacency.get(blockedKey);
-      if (neighbors) {
-        for (const neighbor of neighbors) adjacency.get(neighbor)?.delete(blockedKey);
-      }
-      adjacency.delete(blockedKey);
-    }
+  let displacedNeighbors: Set<string> | null = null;
+  if ((!adjacency.has(startKey) || blocked.has(startKey)) && containingStartRoomId) {
+    // v6 origins on newly blocked fixtures may walk out, never teleport.
+    const occupied = new Set(layout.roomTiles.get(containingStartRoomId));
+    displacedNeighbors = new Set(CARDINAL_STEPS.map(step => pointKey({ x: start.x + step.x, y: start.y + step.y }))
+      .filter(key => occupied.has(key) && adjacency.has(key) && !blocked.has(key)));
   }
-  if (!adjacency.has(startKey)) {
-    const containingRoom = rooms.find((room) => {
-      const definition = getDefinition(room.roomDefinitionId);
-      return (
-        definition !== null &&
-        getOccupiedTiles(room, definition).some(
-          (point) => point.x === start.x && point.y === start.y,
-        )
-      );
-    });
-    const definition = containingRoom
-      ? getDefinition(containingRoom.roomDefinitionId)
-      : null;
-    if (containingRoom && definition) {
-      // A v6 save may place someone on a tile that became blocked when fixed
-      // fixture masks were introduced. Keep that one current tile as a
-      // temporary route origin and let the actor walk out through the nearest
-      // legal adjacent tile instead of teleporting during migration.
-      adjacency.set(startKey, new Set());
-      const occupied = new Set(
-        getOccupiedTiles(containingRoom, definition).map(pointKey),
-      );
-      for (const step of CARDINAL_STEPS) {
-        const neighbor = {
-          x: start.x + step.x,
-          y: start.y + step.y,
-        };
-        const neighborKey = pointKey(neighbor);
-        if (occupied.has(neighborKey) && adjacency.has(neighborKey)) {
-          connectNodes(adjacency, startKey, neighborKey);
-        }
-      }
-    }
-  }
-  return findDeterministicAdjacencyPath(
-    start,
-    goal,
-    adjacency,
-  );
+  const result = findDeterministicAdjacencyPath(start, goal, adjacency, blocked, displacedNeighbors);
+  layout.routes.set(routeKey, result);
+  if (layout.routes.size > 4096) layout.routes.delete(layout.routes.keys().next().value!);
+  return result.map(point => ({ ...point }));
 }
 
 /**

@@ -1,3 +1,4 @@
+import { facilityDefinitionReader, facilityNavigationKey } from "./facilityNavigation";
 import { validateFacilityAccess, type FacilityAccessValidation } from "./doors";
 import type { DomainContext, GameState } from "./types";
 
@@ -10,27 +11,24 @@ import type { DomainContext, GameState } from "./types";
  */
 const facilityAccessValidationCache = new WeakMap<
   DomainContext,
-  { layoutKey: string; validation: FacilityAccessValidation }
+  { layoutKey: string; width: number; height: number; protectedKey: string; validation: FacilityAccessValidation }
 >();
 
-function facilityAccessLayoutKey(state: Pick<GameState, "rooms" | "doors">): string {
-  // Door and spatial validation read only these room fields.
-  const rooms = state.rooms
-    .map((room) => `${room.id}:${room.roomDefinitionId}:${room.x},${room.y}:${room.orientation ?? ""}:${room.doorSide ?? ""}`)
-    .join("|");
-  return `${rooms}#${JSON.stringify(state.doors)}`;
-}
 
 export function getCachedFacilityAccessValidation(
   state: Pick<GameState, "rooms" | "doors">,
   context: DomainContext,
 ): FacilityAccessValidation {
-  const layoutKey = facilityAccessLayoutKey(state);
+  const facility = context.balanceRelease.facility;
+  const layoutKey = facilityNavigationKey(state.rooms, state.doors,
+    facilityDefinitionReader(context));
+  const protectedKey = JSON.stringify(facility.protectedRoomDefinitionIds);
   let cached = facilityAccessValidationCache.get(context);
-  if (!cached || cached.layoutKey !== layoutKey) {
+  if (!cached || cached.layoutKey !== layoutKey || cached.width !== facility.gridWidth ||
+      cached.height !== facility.gridHeight || cached.protectedKey !== protectedKey) {
     const facility = context.balanceRelease.facility;
     cached = {
-      layoutKey,
+      layoutKey, width: facility.gridWidth, height: facility.gridHeight, protectedKey,
       validation: validateFacilityAccess(
         state.rooms,
         state.doors,

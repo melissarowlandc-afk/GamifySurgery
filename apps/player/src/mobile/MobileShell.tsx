@@ -3,6 +3,7 @@ import { AccountMenu } from "../ui/AccountMenu";
 import { useAuthAccountActions } from "../auth/AuthAccountContext";
 import { ProblemReportButton, TesterFeedbackForm, useTesterFeedback } from "../feedback/TesterFeedback";
 import { VersionLabel } from "../appVersion";
+import { ActionFeedbackLayer } from "../ui/ActionFeedbackLayer";
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import type { BuildDoorTool } from "../facility";
 import { patientChartIdForCharacter } from "../facility/characterInspect";
@@ -522,6 +523,7 @@ export default function MobileShell(props: PrototypeShellProps) {
       </div>
     </footer>
     <p className="screen-reader-only" role="status" aria-live="polite">{props.announcement}</p>
+    <ActionFeedbackLayer shell="phone" />
     {props.finishReportOpen && props.progression.inspection && props.onCloseFinishReport ? <MobileFinishedGamePage
       key={props.progression.inspection.finish?.report.runId} inspection={props.progression.inspection}
       onKeepPlaying={props.onCloseFinishReport} onStartNewCampaign={props.onCreateCampaign} /> : null}

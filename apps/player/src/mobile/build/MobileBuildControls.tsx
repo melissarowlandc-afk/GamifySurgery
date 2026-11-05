@@ -28,6 +28,7 @@ export function MobileBuildControls({ props, build, onCatalog }: { props: Protot
       <p className={build.validation.valid ? "mobile-build-valid" : "mobile-build-reason"} role="status">
         {placement.displayName} · {placement.width} × {placement.height} · {build.validation.valid ? "Ready to place" : build.validation.reason}
       </p>
+      {build.validation.warning ? <p className="room-access-warning" role="status">{build.validation.warning}</p> : null}
       <p className="mobile-build-hint">Drag the ghost with one finger. Use two fingers to pan or pinch.</p>
       <div className="mobile-build-confirm">
         <button type="button" data-phone-anchor="place" data-phone-build-confirm="placement" disabled={!build.ghost || !build.validation.valid} onClick={build.confirmPlacement}>✓ {props.movingRoomInstanceId ? "Move" : "Place"} · {props.movingRoomInstanceId ? "$0" : price}</button>

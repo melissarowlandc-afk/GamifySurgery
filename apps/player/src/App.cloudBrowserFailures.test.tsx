@@ -110,7 +110,7 @@ describe.each(["phone", "desktop"] as const)("%s real account provider and autom
     expect(session.canExecute).toBe(false); expect(f.cloud.active).toBe(session);
     await act(async () => { await vi.advanceTimersByTimeAsync(CLOUD_CHECK_TIMEOUT_MS - 400); });
     await checking;
-    expect(session.coordinator.view).toMatchObject({ canExecute: false, failure: "storage" });
+    expect(session.coordinator.view).toMatchObject({ canExecute: false, failure: "processing", storageRetrying: true });
     expect(f.cloud.active).toBe(session);
     expect(f.server.operationCount(f.scope.accountId)).toBe(operations);
     if (trigger === "opening") {
@@ -120,7 +120,8 @@ describe.each(["phone", "desktop"] as const)("%s real account provider and autom
       expect(f.cloud.active).toBe(session);
     }
     const notices = allElements(f.env.doc.body, node => node.attributes["aria-label"] === "Clinic status");
-    expect(notices).toHaveLength(1); expect(notices[0]!.textContent).toContain("storage");
+    expect(notices).toHaveLength(1); expect(notices[0]!.textContent).toContain("delayed");
+    expect(notices[0]!.textContent).not.toContain("Free storage");
     vi.useRealTimers(); hold = false;
     await act(async () => { held.resolve(); expect(await session.durable()).toBe(true); });
     expect(session.coordinator.confirmedRevision).toBe(revision);

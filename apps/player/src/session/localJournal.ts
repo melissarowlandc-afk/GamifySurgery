@@ -8,11 +8,18 @@ import type { QuestionUsageReceipt } from "../playtime/usageTypes";
 import { observeStorage, problemDiagnostics } from "../diagnostics/problemDiagnostics";
 import { isStorageQuotaError, reclaimAuxiliaryStorage } from "./storagePressure";
 import { sha256Utf8 } from "./cloud/codecJson";
+import { isTransientStorageError, retrySlowStorage } from "./cloud/storageRetry";
 
 export const LOCAL_JOURNAL_DATABASE = "gamify-surgery.local-journal.v1";
 export const LOCAL_COMMIT_MS = 250;
 export const LOCAL_TICK_COMMIT_MS = 1_000;
 export const LOCAL_COMPACTION_MS = 5 * 60_000;
+/** Prepare a full native cloud body quietly, not after every one-second row.
+ * Explicit/boundary checkpoints bypass this preparation cooldown. */
+export const LOCAL_NATIVE_PREPARE_MS = 60_000;
+/** Native account move tails are recovery data, not campaign history. Pulse
+ * compacts an unusually busy/offline tail before the ordinary time boundary. */
+export const LOCAL_SNAPSHOT_TAIL_LIMIT = 512;
 export const LOCAL_JOURNAL_QUEUE_LIMIT = 128;
 /** Adopt an already verified, privately owned import once. Stable frozen
  * checkpoints let the incremental evidence index retain its exact parent. */
@@ -61,6 +68,9 @@ export interface JournalStorage {
   bind(key: string, owner: string, expected: JournalHead | null, seed: JournalSeed, sha256: string): Promise<JournalHead>;
   append(key: string, owner: string, from: number, rows: JournalRow[]): Promise<number>;
   compact(key: string, owner: string, through: number, seed: JournalSeed, sha256: string): Promise<void>;
+  /** Only after verification: reclaim older native representations before a
+   * quota-constrained reopen needs to allocate any new cache/snapshot bytes. */
+  reclaimCovered?(key: string, expected: JournalHead): Promise<void>;
   acknowledge(key: string, ids: readonly string[], records?: { owner: string; count: number }): Promise<void>;
   prepared(key: string): Promise<PreparedJournal | null>;
   prepare(key: string, owner: string, through: number, candidate: CloudCandidate, added: readonly PackedRecord[]): Promise<void>;
@@ -98,7 +108,7 @@ export class IndexedDbJournalStorage implements JournalStorage {
       if (!this.factory) { reject(new CloudCacheError("unavailable")); return; }
       let late = false;
       const opening = this.factory.open(this.name, 2);
-      const timer = setTimeout(() => { late = true; reject(new CloudCacheError("blocked")); }, 10_000);
+      const timer = setTimeout(() => { late = true; reject(new CloudCacheError("timeout")); }, 10_000);
       opening.onupgradeneeded = () => { for (const store of ["heads", "snapshots", "rows", "prepared", "chunks"])
         if (!opening.result.objectStoreNames.contains(store)) opening.result.createObjectStore(store); };
       opening.onerror = opening.onblocked = () => { clearTimeout(timer); late = true; reject(new CloudCacheError("unavailable")); };
@@ -123,7 +133,7 @@ export class IndexedDbJournalStorage implements JournalStorage {
     const order = (prior ?? 0) + 1; await this.request(heads.put(order, orderKey)); return order;
   }
   private async transaction<T>(mode: IDBTransactionMode, work: (tx: IDBTransaction) => Promise<T>): Promise<T> {
-    return observeStorage("journal." + mode, async () => {
+    return retrySlowStorage(() => observeStorage("journal." + mode, async () => {
       const db = await this.open();
       let tx: IDBTransaction;
       try { tx = db.transaction(["heads", "snapshots", "rows", "prepared", "chunks"], mode, mode === "readwrite" ? { durability: "strict" } : undefined); }
@@ -133,7 +143,7 @@ export class IndexedDbJournalStorage implements JournalStorage {
       const interrupted = new Promise<never>((_resolve, reject) => { interrupt = reject; });
       const done = new Promise<void>((resolve, reject) => {
         timeout = setTimeout(() => {
-          const error = new CloudCacheError("transaction"); interrupt(error);
+          const error = new CloudCacheError("timeout"); interrupt(error);
           try { tx.abort(); } catch { /* terminal */ } reject(error);
         }, 10_000);
         tx.oncomplete = () => resolve();
@@ -145,7 +155,7 @@ export class IndexedDbJournalStorage implements JournalStorage {
       try { return await Promise.race([(async () => { const value = await work(tx); await done; return value; })(), interrupted]); }
       catch (error) { try { tx.abort(); } catch { /* terminal */ } throw fail(error); }
       finally { clearTimeout(timeout!); }
-    });
+    }));
   }
   head(key: string): Promise<JournalHead | null> { return this.transaction("readonly", async tx => await this.request(tx.objectStore("heads").get(key)) ?? null); }
   read(key: string): Promise<JournalRead | null> {
@@ -195,14 +205,16 @@ export class IndexedDbJournalStorage implements JournalStorage {
       const head: JournalHead = { schemaVersion: 1, key, owner, highWater: through, snapshotThrough: through, previousThrough: actual?.snapshotThrough ?? null,
         pendingUsageIds, acknowledgedUsage: actual?.acknowledgedUsage?.filter(id => pendingUsageIds.includes(id)) ?? [], profileOrder: await this.profileOrder(tx, key),
         acknowledgedRecords: seed.confirmed?.evidence.records.length ?? 0, ...(seed.snapshotPolicy ? { snapshotFormat: 3 } : {}) };
-      await this.request(tx.objectStore("snapshots").put({ key, through, seed, sha256 } satisfies JournalSnapshot, snapshotKey(key, through)));
       if (actual?.previousThrough !== null && actual?.previousThrough !== undefined)
         await this.request(tx.objectStore("snapshots").delete(snapshotKey(key, actual.previousThrough)));
-      for (let v = (actual?.previousThrough ?? -1) + 1; v <= (actual?.snapshotThrough ?? -1); v++)
+      for (let v = (actual?.previousThrough ?? -1) + 1; v <= (seed.snapshotPolicy ? actual?.highWater ?? -1 : actual?.snapshotThrough ?? -1); v++)
         await this.request(tx.objectStore("rows").delete(rowKey(key, v)));
       await this.request(tx.objectStore("prepared").delete(key));
       for (const chunk of await this.request(tx.objectStore("chunks").getAllKeys()))
         if (typeof chunk === "string" && chunk.startsWith(keyPrefix(key))) await this.request(tx.objectStore("chunks").delete(chunk));
+      // Reclaim redundant generations before allocating the replacement. All
+      // mutations share this transaction: an abort restores every old byte.
+      await this.request(tx.objectStore("snapshots").put({ key, through, seed, sha256 } satisfies JournalSnapshot, snapshotKey(key, through)));
       await this.request(heads.put(head, key)); return head;
     });
   }
@@ -231,12 +243,39 @@ export class IndexedDbJournalStorage implements JournalStorage {
       if (!head || head.owner !== owner || through > head.highWater || through < head.snapshotThrough) conflict();
       if (through === head!.snapshotThrough) return;
       const snapshots = tx.objectStore("snapshots"), rows = tx.objectStore("rows");
-      await this.request(snapshots.put({ key, through, seed, sha256 } satisfies JournalSnapshot, snapshotKey(key, through)));
-      // Keep one complete prior snapshot AND its journal suffix. Only the older
-      // generation can be reclaimed, in the same manifest transaction.
+      // Keep one complete prior snapshot. Native full-state snapshots supersede
+      // their move rows; legacy evidence journals still retain the prior suffix.
       if (head!.previousThrough !== null) await this.request(snapshots.delete(snapshotKey(key, head!.previousThrough!)));
-      for (let v = (head!.previousThrough ?? -1) + 1; v <= head!.snapshotThrough; v++) await this.request(rows.delete(rowKey(key, v)));
+      const redundantThrough = seed.snapshotPolicy ? through : head!.snapshotThrough;
+      for (let v = (head!.previousThrough ?? -1) + 1; v <= redundantThrough; v++) await this.request(rows.delete(rowKey(key, v)));
+      if (seed.snapshotPolicy) {
+        // Native snapshots contain complete state. Old packed evidence is a
+        // regenerable legacy representation, not an unsent recovery operation.
+        const chunks = tx.objectStore("chunks"), prefix = keyPrefix(key);
+        for (const chunk of await this.request(chunks.getAllKeys())) if (typeof chunk === "string" && chunk.startsWith(prefix)) await this.request(chunks.delete(chunk));
+      }
+      await this.request(snapshots.put({ key, through, seed, sha256 } satisfies JournalSnapshot, snapshotKey(key, through)));
       await this.request(heads.put({ ...head, previousThrough: head!.snapshotThrough, snapshotThrough: through, ...(seed.snapshotPolicy ? { snapshotFormat: 3 } : {}) }, key));
+    });
+  }
+  reclaimCovered(key: string, expected: JournalHead): Promise<void> {
+    return this.transaction("readwrite", async tx => {
+      const head = await this.request(tx.objectStore("heads").get(key)) as JournalHead | undefined;
+      if (!head || head.owner !== expected.owner || head.snapshotThrough !== expected.snapshotThrough) return;
+      if (head.snapshotFormat !== 3) {
+        // The earliest native releases did not write the format hint. Inspect
+        // only that migration case; legacy evidence suffixes remain protected.
+        const snapshot = await this.request(tx.objectStore("snapshots").get(snapshotKey(key, head.snapshotThrough))) as JournalSnapshot | undefined;
+        if (!snapshot?.seed.snapshotPolicy) return;
+      }
+      const rows = tx.objectStore("rows"), prefix = keyPrefix(key);
+      const keys = await this.request(rows.getAllKeys(typeof IDBKeyRange === "undefined" ? undefined :
+        IDBKeyRange.bound(rowKey(key, 0), rowKey(key, head.snapshotThrough))));
+      for (const row of keys) if (typeof row === "string" && row.startsWith(prefix) &&
+        Number((JSON.parse(row) as [string, string])[1]) <= head.snapshotThrough) await this.request(rows.delete(row));
+      const chunks = tx.objectStore("chunks");
+      const packed = await this.request(chunks.getAllKeys(typeof IDBKeyRange === "undefined" ? undefined : IDBKeyRange.bound(prefix, prefix + "\uffff")));
+      for (const chunk of packed) if (typeof chunk === "string" && chunk.startsWith(prefix)) await this.request(chunks.delete(chunk));
     });
   }
   keys(prefix: string): Promise<string[]> { return this.transaction("readonly", async tx => (await this.request(tx.objectStore("heads").getAllKeys())).filter((k): k is string => typeof k === "string" && k.startsWith(prefix))); }
@@ -336,7 +375,7 @@ export class MemoryJournalStorage implements JournalStorage {
       acknowledgedRecords: seed.confirmed?.evidence.records.length ?? 0, ...(seed.snapshotPolicy ? { snapshotFormat: 3 } : {}) };
     const d = actual ?? { head, snapshots: new Map(), rows: new Map() };
     if (actual?.head.previousThrough !== null && actual?.head.previousThrough !== undefined) d.snapshots.delete(actual.head.previousThrough);
-    for (const version of d.rows.keys()) if (version <= (actual?.head.snapshotThrough ?? -1)) d.rows.delete(version);
+    for (const version of d.rows.keys()) if (version <= (seed.snapshotPolicy ? actual?.head.highWater ?? -1 : actual?.head.snapshotThrough ?? -1)) d.rows.delete(version);
     d.snapshots.set(through, copy({ key, through, seed, sha256 })); d.head = head; this.data.set(key, d); return copy(head);
   }
   async append(key: string, owner: string, from: number, rows: JournalRow[]) {
@@ -359,10 +398,15 @@ export class MemoryJournalStorage implements JournalStorage {
     const fault = this.fault; this.fault = null;
     if (fault === "before-commit") throw new CloudCacheError("transaction");
     if (d!.head.previousThrough !== null) d!.snapshots.delete(d!.head.previousThrough);
-    for (const version of d!.rows.keys()) if (version <= d!.head.snapshotThrough) d!.rows.delete(version);
+    for (const version of d!.rows.keys()) if (version <= (seed.snapshotPolicy ? through : d!.head.snapshotThrough)) d!.rows.delete(version);
     d!.snapshots.set(through, copy({ key, through, seed, sha256 }));
     d!.head = { ...d!.head, snapshotThrough: through, previousThrough: d!.head.snapshotThrough, ...(seed.snapshotPolicy ? { snapshotFormat: 3 } : {}) };
     if (fault === "after-commit") throw new CloudCacheError("transaction");
+  }
+  async reclaimCovered(key: string, expected: JournalHead) {
+    const data = this.data.get(key), head = data?.head;
+    if (!head || head.owner !== expected.owner || head.snapshotThrough !== expected.snapshotThrough || !data!.snapshots.get(head.snapshotThrough)?.seed.snapshotPolicy) return;
+    for (const version of data!.rows.keys()) if (version <= head.snapshotThrough) data!.rows.delete(version);
   }
   async keys(prefix: string) { return [...this.data.keys()].filter(k => k.startsWith(prefix)); }
   async acknowledge(key: string, ids: readonly string[], records?: { owner: string; count: number }) {
@@ -419,14 +463,16 @@ export class LocalJournalDrain {
   private active: Promise<boolean> | null = null;
   private timer: ReturnType<typeof setTimeout> | null = null;
   private dueAt = Infinity;
+  private retries = 0;
   private stopped = false;
   private version: number;
   committed: number;
   error: unknown = null;
   onCommit?: (row: JournalRow) => void;
+  onRecovered?: () => void;
   constructor(readonly store: JournalStorage, readonly key: string, readonly owner: string, highWater: number,
     private readonly onFailure: (error: unknown) => void) { this.version = this.committed = highWater; }
-  get canAccept() { return !this.stopped && !this.error && this.pending.length < LOCAL_JOURNAL_QUEUE_LIMIT; }
+  get canAccept() { return !this.stopped && (!this.error || isTransientStorageError(this.error)) && this.pending.length < LOCAL_JOURNAL_QUEUE_LIMIT; }
   get dirty() { return this.version > this.committed; }
   get highWater() { return this.version; }
   get queued() { return this.pending.length; }
@@ -434,11 +480,23 @@ export class LocalJournalDrain {
   accept(row: Omit<JournalRow, "version">, tick = false): void {
     if (!this.canAccept) throw new CloudCacheError("transaction");
     this.pending.push({ ...row, version: ++this.version });
+    if (isTransientStorageError(this.error)) { this.scheduleRetry(); return; }
     const due = Date.now() + (tick ? LOCAL_TICK_COMMIT_MS : LOCAL_COMMIT_MS);
     if (due < this.dueAt) {
       if (this.timer !== null) clearTimeout(this.timer);
       this.dueAt = due; this.timer = setTimeout(() => { this.timer = null; this.dueAt = Infinity; void this.drain(); }, Math.max(0, due - Date.now()));
     }
+  }
+  private scheduleRetry(): void {
+    if (this.stopped || this.timer !== null) return;
+    const delay = Math.min(10_000, 250 * 2 ** Math.min(this.retries++, 6));
+    this.dueAt = Date.now() + delay;
+    this.timer = setTimeout(() => { this.timer = null; this.dueAt = Infinity; void this.drain(); }, delay);
+  }
+  private failed(error: unknown): false {
+    this.error = error; this.onFailure(error);
+    if (isTransientStorageError(error)) this.scheduleRetry();
+    return false;
   }
   /** Install the new baseline before any deltas that refer to it can commit.
    * Accepted commands continue synchronously in the bounded pending queue. */
@@ -452,8 +510,10 @@ export class LocalJournalDrain {
     this.rebaseActive = (async () => {
       if (!await this.drainThrough(job.through)) return false;
       await journalQuotaRetry(() => job.work(job.through));
-      this.rebasing = null; this.error = null; return true;
-    })().catch(error => { this.error = error; this.onFailure(error); return false; }).finally(() => { this.rebaseActive = null; });
+      this.rebasing = null; this.error = null; this.retries = 0;
+      try { this.onRecovered?.(); } catch (error) { problemDiagnostics.error("journal-observer", error); }
+      return true;
+    })().catch(error => this.failed(error)).finally(() => { this.rebaseActive = null; });
     return this.rebaseActive;
   }
   async drain(): Promise<boolean> {
@@ -467,10 +527,10 @@ export class LocalJournalDrain {
       if (this.active) { if (!await this.active) return false; continue; }
       const rows = this.pending.filter(row => row.version <= target), from = this.committed;
       this.active = journalQuotaRetry(() => this.store.append(this.key, this.owner, from, rows)).then(through => {
-        this.committed = through; this.pending = this.pending.filter(r => r.version > through); this.error = null;
+        this.committed = through; this.pending = this.pending.filter(r => r.version > through); this.error = null; this.retries = 0;
         try { this.onCommit?.(rows.at(-1)!); } catch (error) { problemDiagnostics.error("journal-observer", error); }
         return true;
-      }).catch(error => { this.error = error; this.onFailure(error); return false; }).finally(() => { this.active = null; });
+      }).catch(error => this.failed(error)).finally(() => { this.active = null; });
       if (!await this.active) return false;
     }
     return !this.stopped && this.committed >= target;

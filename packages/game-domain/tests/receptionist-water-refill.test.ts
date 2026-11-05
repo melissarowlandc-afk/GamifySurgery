@@ -69,6 +69,65 @@ function advance(state: GameState, minutes: number): GameState {
 }
 
 describe("receptionist water-cooler work", () => {
+  it("keeps an active employee purchase ahead of refill, then starts in the first idle gap", () => {
+    let state = preparedState();
+    const employee = state.employees[0]!;
+    state.retailOperations.push({ id: "retail.busy", incomeLineId: "income.coffee", catalogVersion: 1,
+      actorKind: "employee", actorId: employee.id, displayName: employee.displayName, appearance: employee.appearance,
+      linkedServiceOperationId: null, authorizedOrderId: null, status: "returning", createdAtFacilityTick: 100,
+      waitDeadlineFacilityTick: 200, startedAtFacilityTick: 100, completedAtFacilityTick: null, quoteGross: 0,
+      quoteStockCost: 0, outletRoomInstanceId: "missing", outletDurationMinutes: 1, staffRoleDefinitionId: null,
+      servingEmployeeId: null, location: employee.location, returnLocation: employee.location,
+      path: Array.from({ length: 20 }, (_, i) => ({ x: employee.location.x + i, y: employee.location.y })), pathIndex: 0,
+      lastMovedAtFacilityTick: 101, purchaseEndsAtFacilityTick: null, cancellationReason: null });
+    const next = advance(state, 1);
+    expect(next.retailOperations[0]!.status).toBe("returning");
+    expect(next.employees[0]!.facilityTask).toBeNull();
+    expect(next.environment.waterCoolerFillPercent).toBe(0);
+    state.retailOperations = [];
+    state = advance(state, 1);
+    expect(state.employees[0]!.facilityTask?.kind).toBe("refill_water");
+  });
+
+  it("a real hire promptly refills and physically returns to the desk, also after reload", () => {
+    let state = preparedState();
+    state.employees = []; state.paused = false; state.cash = 10000; state.cashCents = 1000000;
+    state = gameReducer(state, { type: "HIRE_STAFF", operationId: "refill.real-hire", employeeId: "new.receptionist",
+      staffRoleDefinitionId: "staff.receptionist" });
+    expect(state.operationReceipts["refill.real-hire"]?.status).toBe("applied");
+    // Arrival travel is not an idle desk gap; refill starts once reachable.
+    for (let i = 0; i < 20 && state.employees[0]!.facilityTask?.kind !== "refill_water"; i++) state = advance(state, 1);
+    expect(state.employees[0]!.facilityTask?.kind).toBe("refill_water");
+    const control = advance(state, 20);
+    const restored = advance(deserializeGameState(serializeGameState(state)), 20);
+    const desk = state.rooms.find(room => room.roomDefinitionId === "room.front_desk")!;
+    const staff = getRoomNavigationAnchor(desk, getRoomDefinition(desk.roomDefinitionId)!, "staff");
+    for (const result of [control, restored]) {
+      expect(result.environment.waterCoolerFillPercent).toBe(100);
+      expect(result.employees[0]!.location).toEqual(staff);
+      expect(result.employees[0]!.facilityTask).toBeNull();
+    }
+  });
+
+  it("keeps a receptionist answering a team discussion at the desk", () => {
+    const state = preparedState();
+    state.employees[0]!.facilityTask = { kind: "participate_qi_discussion", targetId: "discussion.busy",
+      startedAtFacilityTick: 100, workMinutesRemaining: Number.MAX_SAFE_INTEGER };
+    const next = advance(state, 3);
+    expect(next.employees[0]!.facilityTask?.kind).toBe("participate_qi_discussion");
+    expect(next.environment.waterCoolerFillPercent).toBe(0);
+  });
+
+  it("preserves founder/manual refill when there is no hired receptionist", () => {
+    let state = preparedState(); state.employees = []; state.paused = false;
+    state = advance(state, 1);
+    expect(state.environment.waterCoolerFillPercent).toBe(0);
+    state = gameReducer(state, { type: "REFILL_WATER_COOLER", operationId: "refill.founder.complete" });
+    expect(state.operationReceipts["refill.founder.complete"]?.status).toBe("applied");
+    state = advance(state, 20);
+    expect(state.environment.waterCoolerFillPercent).toBe(100);
+  });
+
   it("assigns immediately when the cooler has just emptied, before an empty-since marker exists", () => {
     const state = preparedState();
     state.environment.waterCoolerEmptySinceTick = null;

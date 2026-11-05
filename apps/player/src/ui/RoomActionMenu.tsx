@@ -364,7 +364,9 @@ export function RoomActionMenu({
           </div>
         ) : null}
 
-        {room.accessProblem ? (
+        {room.accessWarning ? <p className="room-access-warning" role="status">{room.accessWarning}</p> : null}
+
+        {room.accessProblem && !room.accessWarning ? (
           <p className="room-action-menu-problem" role="status">
             No access yet. Add a door that connects this room to a hallway or
             a reachable room.

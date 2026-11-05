@@ -1,6 +1,6 @@
 import type { CardinalDirection, GridPoint, RoomOrientation } from "@gamify-surgery/game-domain";
 
-export interface BuildValidation { valid: boolean; reason: string | null; cost: number }
+export interface BuildValidation { valid: boolean; reason: string | null; cost: number; warning?: string }
 export type DoorRequest = { kind: "add"; roomId: string; side: CardinalDirection; offset: number } |
   { kind: "remove"; doorId: string };
 export interface HallwayCell extends GridPoint { status: "build" | "existing" | "blocked" }

@@ -428,6 +428,13 @@ function runtimeFor(checkpoint: GameEvidenceCheckpoint): EvidenceRuntime {
   return runtime;
 }
 
+/** Pay trusted-runtime adoption at an explicit opening/compaction boundary,
+ * before the clock starts. The same full validation remains mandatory; this
+ * neither applies a command nor changes the checkpoint or saved state. */
+export function prepareGameEvidenceCheckpoint(checkpoint: GameEvidenceCheckpoint): void {
+  runtimeFor(checkpoint);
+}
+
 function finance(state: GameState): FinanceWitness {
   const witness = { facilityTick: state.facilityTick, cashCents: state.cashCents,
     operatingAccrualSixtiethCents: state.operatingAccrualSixtiethCents, totalOperatingExpenses: state.totalOperatingExpenses,
@@ -588,15 +595,19 @@ function finishEvidenceTransition(checkpoint: GameEvidenceCheckpoint, runtime: E
   const state = runtime.state, oldLearning = runtime.learning, newLearning = learning(projected, runtime);
   if (next.campaignId !== checkpoint.snapshot.campaignId || next.schemaVersion !== checkpoint.snapshot.gameSchemaVersion) throw new GameEvidenceError("campaign-identity");
   if (!jsonEqual(pins(next), checkpoint.evidence.baseline.pins)) throw new GameEvidenceError("immutable-pins");
-  if (Object.keys(oldLearning).length !== Object.keys(newLearning).length) throw new GameEvidenceError("concept-set-change");
   const learningChanges: EvidenceJson[] = [];
-  for (const [conceptId, current] of Object.entries(newLearning)) {
-    const previous = oldLearning[conceptId];
-    if (previous === current) continue;
-    if (!previous || !jsonEqual(asJson(previous.reviews), asJson(current.reviews.slice(0, previous.reviews.length)))) throw new GameEvidenceError("review-removal-or-edit");
-    const appendedReviews = current.reviews.slice(previous.reviews.length);
-    if (previous.card !== current.card && appendedReviews.length === 0) throw new GameEvidenceError("card-change-without-review");
-    if (previous.card !== current.card || appendedReviews.length) learningChanges.push({ conceptId, beforeCard: previous.card, afterCard: current.card, appendedReviews });
+  // learning() returns the private previous projection only when the frozen
+  // projected histories are identical. Ticks need no concept-count/entry scan.
+  if (oldLearning !== newLearning) {
+    if (Object.keys(oldLearning).length !== Object.keys(newLearning).length) throw new GameEvidenceError("concept-set-change");
+    for (const [conceptId, current] of Object.entries(newLearning)) {
+      const previous = oldLearning[conceptId];
+      if (previous === current) continue;
+      if (!previous || !jsonEqual(asJson(previous.reviews), asJson(current.reviews.slice(0, previous.reviews.length)))) throw new GameEvidenceError("review-removal-or-edit");
+      const appendedReviews = current.reviews.slice(previous.reviews.length);
+      if (previous.card !== current.card && appendedReviews.length === 0) throw new GameEvidenceError("card-change-without-review");
+      if (previous.card !== current.card || appendedReviews.length) learningChanges.push({ conceptId, beforeCard: previous.card, afterCard: current.card, appendedReviews });
+    }
   }
   const sequence = checkpoint.snapshot.head.sequence + 1;
   const beforeFinance = finance(state), afterFinance = finance(next);

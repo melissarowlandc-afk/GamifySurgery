@@ -37,6 +37,14 @@ it("starts the real development worker without window/React Refresh and settles 
     const nativeAddress = { database: "native-snapshot-journal", key: "native.worker" };
     const nativeCopy = { ...fixture.confirmed, saveFormat: 3 as const, snapshot: imported.snapshot, evidence: imported.packedEvidence,
       baselineId: imported.baselineId, lineage: imported.lineage };
+    await codec.run({ kind: "inspectCopy", input: nativeCopy });
+    const hydrateInput = { ...nativeCopy, expectedRevision: nativeCopy.revision, expectedCampaignId: nativeCopy.campaignId, expectedBaselineId: nativeCopy.baselineId };
+    const hydrated = await codec.run({ kind: "hydrate", input: hydrateInput });
+    expect(hydrated.state).toEqual(JSON.parse(fixture.prepared.sourceRecovery.text));
+    hydrated.state.cashCents = 1;
+    hydrated.checkpoint.evidence.baseline.source.cashCents = 2;
+    expect((await codec.run({ kind: "hydrate", input: hydrateInput })).state).toEqual(JSON.parse(fixture.prepared.sourceRecovery.text));
+    await expect(codec.run({ kind: "hydrate", input: { ...hydrateInput, lineage: { ...imported.lineage, sequence: 99 } } })).rejects.toMatchObject({ code: "snapshot_lineage" });
     const nativeSeed = { ...seed, confirmed: nativeCopy, snapshotPolicy: { lineage: imported.lineage } };
     const bound = await codec.run({ kind: "journalBind", input: { address: nativeAddress, owner: "native.snapshot.owner", expected: null, seed: nativeSeed } });
     expect(bound.snapshotFormat).toBe(3);

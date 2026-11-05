@@ -60,12 +60,18 @@ describe("responsive commands and self-healing technical boundaries", () => {
   });
   it.each(["cache", "entry"] as const)("bounds an IndexedDB %s open that never fires an event and reports the failure", async kind => {
     vi.useFakeTimers();
-    const factory = { open: () => ({}) } as unknown as IDBFactory;
+    const opening = vi.fn(() => ({})), factory = { open: opening } as unknown as IDBFactory;
     const scope = { backendId: "test", accountId: "synthetic", campaignId: "synthetic" };
     const result = kind === "cache" ? new IndexedDbCloudCache(factory).read(scope) : new IndexedDbCloudEntryStore(scope, factory).read("test");
-    const rejected = expect(result).rejects.toMatchObject({ code: "storage" });
-    await vi.advanceTimersByTimeAsync(10_000); await rejected;
-    expect(problemDiagnostics.report().current.health.storage).toMatchObject({ pending: 0, lastError: expect.stringMatching(/blocked|storage/) });
+    const rejected = expect(result).rejects.toMatchObject({ code: "processing", reason: "timeout" });
+    // Exact bounded request budget, including the two transient retry backoffs.
+    // No real sleep or larger test timeout; a missing browser event still ends.
+    for (const backoff of [0, 250, 1_000]) {
+      if (backoff) await vi.advanceTimersByTimeAsync(backoff);
+      await vi.advanceTimersByTimeAsync(10_000);
+    }
+    await rejected; expect(opening).toHaveBeenCalledTimes(3);
+    expect(problemDiagnostics.report().current.health.storage).toMatchObject({ pending: 0, lastError: expect.stringMatching(/timeout$/) });
     expect(vi.getTimerCount()).toBe(0);
   });
   it("starts an immediate retry registered between a failed flush result and its cleanup", async () => {

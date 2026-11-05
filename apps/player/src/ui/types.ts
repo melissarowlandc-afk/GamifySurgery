@@ -506,6 +506,8 @@ export interface RoomBuildOptionView {
 }
 
 export interface SelectedRoomBuildView {
+  /** Care-aware public/staff access explanation, separate from physical connectivity. */
+  accessWarning?: string;
   id: string;
   roomDefinitionId: string;
   displayName: string;
