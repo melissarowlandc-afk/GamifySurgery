@@ -8946,3 +8946,357 @@ An unrelated concurrent file changed during the task and was preserved: `artifac
 - `tools/question-quality/question-flags2-typecheck-final-20261105.log`
 
 Full before/after per-file hashes, native logs, source/provenance proofs, raw staging and publication receipts are retained in the private task directory. Canonical evidence hashes are above. No other public path is claimed as this worker’s edit.
+
+
+## Release port 19 and Level 5 evidence rebind 19 (release worktree, endoscopy Ready-but-stuck) — 2026-11-05
+
+Completed in `C:/Users/rowla/Projects/GS-release`, manager-identified HEAD
+`33846e50`. The live tree was read-only. Ported only the accepted lane from
+`docs/research/endoscopy-ready-stuck-20261105.md`: retain the operation's own
+Recovery room when acquiring nurse/provider routes; select beds with onward
+Endoscopy geometry; repair prepared dead-end beds on the next tick when a
+replacement is free; show blocked care access and appointments-off accurately.
+Persistence remains non-mutating on reopen. No schema, clinical, balance,
+admission, cloud infrastructure, character, timing or unrelated perf edit.
+
+### Content diff and exact files
+
+Entry: 7,307 public files, 532 matching bound inputs and 391 unchanged clinical
+inputs. The scoped byte-content comparison found 95 differing live/release
+paths. Of those, nine paths were copied and one hunk-ported; 85 were excluded.
+Two accepted source planning/research documents were copied outside the scoped
+source scan: total port dispositions **11 copied / 1 hunk-ported / 85 excluded**.
+All dispositions and SHA-256s are in
+`.local-dev/release-verify/port19-20261105.json`. The exact comparison and
+candidate diff are retained under `.local-dev/release-port19-20261105/`.
+The shared `buildViewModels.test.ts` takes only the endoscopy test name and two
+Missing expectations; the release's strict Break Room summary/ladder assertions
+are preserved. Other live differences, including its historical evidence, were
+not copied.
+
+| Ported path | Disposition | Entry SHA-256 | Release SHA-256 |
+|---|---|---|---|
+| `apps/player/src/session/buildViewModels.test.ts` | hunk-ported | `b34546ecedfcfd00dafcdcb6405727a13ed1538a61836447112a3ff330fbcdcc` | `abdcaf53ab148d48f17d4f6d5d03b421f321c12a9eb77fab07bcbd7cfe141547` |
+| `apps/player/src/session/clinicAlertActions.ts` | copied | `3198ae735863129226199c00284fb19c2cdb18a6ac206a23ffc409679ae05bd9` | `5f55dfcc53877ffe2b1e1148db703032e2c28ac9e17df3f745eed1d797b70124` |
+| `apps/player/src/session/endoscopyReadiness.test.tsx` | copied | `new` | `11d9dcf823971d086eb7733b8b230b04d13238b77739140c1575d32740c0a1c4` |
+| `apps/player/src/session/viewModels.ts` | copied | `454f9d0ee5472c7d154c27503d0ec4129194d2f0c5ec4dcc0385133eb051dea2` | `ca024364cbe354a0b12a159923ebd0da51352e7c6e8ad43aa097ba3d9ba3d052` |
+| `docs/execplans/endoscopy-ready-stuck-20261105.md` | copied | `new` | `948beb259f5ca1ffa4f680cb4a52e3eac3a402969edf9eb1a5930fc523f22aaf` |
+| `docs/research/endoscopy-ready-stuck-20261105.md` | copied | `new` | `762ff54881732ef6cac73c149e9924ef278e6a0da2f94a61efda8b3945f1963a` |
+| `packages/game-domain/src/endoscopy-setup.ts` | copied | `new` | `360ad23656ea684c0742fa2545babad73f323685c81ab377fd4f22ea95b274f3` |
+| `packages/game-domain/src/guidance-tips.ts` | copied | `a4fb4c518be2dc8950f14232cb07f187719af352f069f0fadfd0bdde4ea0ae85` | `cedc98f3298947e51fed2acc6f078e9369fe9607bae1b7940d11093011e8d3a5` |
+| `packages/game-domain/src/index.ts` | copied | `90fc224a8c04da1efb3f02e81f00b3da6d741c972dd28f9fc88965d6bc0e2433` | `adb0aeb1d71a3216cc4b963e4e9bc5ccdee84af505844e79f10ddb64da9a563c` |
+| `packages/game-domain/src/service-operations.ts` | copied | `a19479a73b3e1486a344956ad277ddd7480c06e4c2c66da0787fb2be757cf159` | `92fc79feeb93a45f2af617f98c645576514a4183d8ace84096ce77ad176aa2af` |
+| `packages/game-domain/tests/routine-endoscopy-ready.fixture.ts` | copied | `new` | `bb58debf242074ac67bffe6c79818a4af54e36497fe42a1eb042ed60a916c24b` |
+| `packages/game-domain/tests/routine-endoscopy-ready.test.ts` | copied | `new` | `6644c86fa1af424964e57f9f98d2d5895e1bf9db1db731d94f6bf7ddf54191cd` |
+
+Exactly **16 public files changed**, including the twelve port paths above,
+the locally regenerated results, this append, the current handoff append and
+this worker's release execution plan:
+
+- `apps/player/src/session/buildViewModels.test.ts`
+- `apps/player/src/session/clinicAlertActions.ts`
+- `apps/player/src/session/endoscopyReadiness.test.tsx`
+- `apps/player/src/session/viewModels.ts`
+- `docs/execplans/endoscopy-ready-stuck-20261105.md`
+- `docs/execplans/gs028-stats-ethics-overhaul-20261007.md`
+- `docs/execplans/release-port19-20261105.md`
+- `docs/handoffs/CURRENT_THREAD_HANDOFF.md`
+- `docs/research/endoscopy-ready-stuck-20261105.md`
+- `packages/game-domain/src/endoscopy-setup.ts`
+- `packages/game-domain/src/guidance-tips.ts`
+- `packages/game-domain/src/index.ts`
+- `packages/game-domain/src/service-operations.ts`
+- `packages/game-domain/tests/routine-endoscopy-ready.fixture.ts`
+- `packages/game-domain/tests/routine-endoscopy-ready.test.ts`
+- `tools/qa/level-five-integration-results-20261012.json`
+
+### Native Level 5 CHECK and guarded publication
+
+Before the rebind, the existing integration/launch checks were **43 passed /
+1 failed (44)** in **104.51s**. The sole failure was the strict input binding on
+`guidance-tips.ts`; launch pins and all legacy behavioral checks passed.
+The source handoff used an older retained-content CHECK, so this worker reran
+the actual release-tree journey from scratch and then the lower helper. The
+original seed `level-five-m9.integration.01` and funded Level 4 opening were
+unchanged. `stage-generator.mjs` redirected only native artifact destinations;
+native journey/lower drivers, guard and assertions were not edited.
+
+Both native commands exited 0. Staging receipts show **36 journey writes and
+2 lower-helper writes**, with **zero canonical writes**. `verify-staged.mjs`
+required exact source/driver hashes, clinical identity, all native invariants,
+all checkpoint bytes, all three complete reports and every simulation value.
+Only then did `publish-verified.mjs` write the results JSON.
+
+| Metric | Before | After | Delta |
+|---|---:|---:|---:|
+| Commands | 30,501 | 30,501 | 0 |
+| Closing cash, cents | 6,790,515 | 6,790,515 | 0 |
+| Completed encounters | 471 | 471 | 0 |
+| Walkouts | 0 | 0 | 0 |
+| Final facility tick | 28,416 | 28,416 | 0 |
+| Unlock tick | 18,644 | 18,644 | 0 |
+| First answers / Level 5 first answers | 614 / 525 | 614 / 525 | 0 |
+| Completed daily rounds / positive comfort uses | 41 / 1,128 | 41 / 1,128 | 0 |
+
+Cash reconciles exactly:
+`1,785,500 + 17,456,400 - 335,899 - 11,067,486 - 1,048,000 = 6,790,515` cents.
+All nine checkpoint saves and all three reports are **byte-identical** to
+rebind 18. The checkpoint fixture was not rewritten. Best remains report 2,
+latest report 3, immutable first report 1; no launch pin or e2e specification
+changed. All 391 clinical file hashes match the entry/current release exactly.
+
+| Report | Score (unchanged) | Patients | SHA-256 (unchanged) |
+|---|---:|---:|---|
+| 1 | 62.002750872553335 | 49 | `178221d0d7aadcf95719ef27287c2d137ce3f47e368896b90fba846824fc9e12` |
+| 2 | 66.79094619665999 | 49 | `56ed6ebe8f69e5ad16e47ef1761b1f4fe3b25b65c0a3008a417a8cc65a6149f0` |
+| 3 | 45.363372018052374 | 47 | `6fb9f37b7785fb7d27caab7dbb43a6ba24072d9c2922491bd937975d8ea41137` |
+
+Results SHA-256: `b942f2458f64864ebbd8a1c26a91bf16dbedc28e34a70341baaabdc1187166e4` →
+`ba6e602765cdebe131541051b4a3a90df2d92e13475e25fd6068a658b50883ca`.
+Checkpoint SHA-256 remains `2d7df9fa212e10ea8b812c8ae3acc19c9525a760bf779b700ba118e188e83f85`.
+Complete native progress SHA-256 remains `03e1eb2252f021cdabeeda1dc46c5e55a3b6226f4296b5d3f3a7b09e6febe8e2`.
+Guard SHA-256 remains `812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909`.
+Recorded inputs: **532 → 533**, comprising three changed files and one newly
+bound read-only helper. `inputHistory` **18 → 19**: all previous entries remain
+exact, with the complete previous input/artifact maps and previous results hash
+appended. The sole established metadata correction is raw `liveCap: 4` to
+current `liveCap: 5`. No allow-list or replay compatibility entry was added.
+
+| Bound input | Previous SHA-256 | Current SHA-256 |
+|---|---|---|
+| `packages/game-domain/src/endoscopy-setup.ts` | `new dependency` | `360ad23656ea684c0742fa2545babad73f323685c81ab377fd4f22ea95b274f3` |
+| `packages/game-domain/src/guidance-tips.ts` | `a4fb4c518be2dc8950f14232cb07f187719af352f069f0fadfd0bdde4ea0ae85` | `cedc98f3298947e51fed2acc6f078e9369fe9607bae1b7940d11093011e8d3a5` |
+| `packages/game-domain/src/index.ts` | `90fc224a8c04da1efb3f02e81f00b3da6d741c972dd28f9fc88965d6bc0e2433` | `adb0aeb1d71a3216cc4b963e4e9bc5ccdee84af505844e79f10ddb64da9a563c` |
+| `packages/game-domain/src/service-operations.ts` | `a19479a73b3e1486a344956ad277ddd7480c06e4c2c66da0787fb2be757cf159` | `92fc79feeb93a45f2af617f98c645576514a4183d8ace84096ce77ad176aa2af` |
+
+### Save safety in this release
+
+The two exact original synthetic saves from the live handoff (source bytes
+verified against its original comparison receipts) pass the local format-3 snapshot
+codec. Logical state is identical immediately after reopen. The first tick
+dispatches the own-Recovery founder, or repairs the dead-end bed. Both then
+start and complete without repeating preparation, changing the accepted
+`quoteFee: 600`, changing queue priority, duplicating bed claims or generating
+more than one income receipt. No authentication/cloud request or tester storage
+was involved.
+
+| Synthetic save | Load tick | Bed repair | Dispatch | Procedure (elapsed) | Completion (elapsed) |
+|---|---:|---:|---:|---:|---:|
+| own-Recovery founder path | 215 | not needed | 216 | 229 (+14) | 337 (+122) |
+| prepared dead-end Recovery bed | 218 | 219 | 243 | 258 (+40) | 366 (+148) |
+
+The exact same two original payloads were replayed read-only against the entry
+`service-operations.ts`: neither dispatched, started or completed during the
+next **3,000 minutes**. Original source was supplied through an in-process read
+overlay; release source files were not changed for the control. Original-save
+proof/controls: `original-handoff-save-fixed.json` and
+`original-handoff-save-control.json`. Additional fresh release-generated
+fixture shapes also pass and have matching old-runtime controls
+(`save-verification-verified.json` and `save-control-verification.json`);
+that regenerated dead-end fixture loads at tick 226 and completes after 146
+further minutes. The exact original handoff save loads at tick 218 and completes
+after 148, reproducing its original timings. All receipts are in the private
+task directory. The full domain
+regressions also retain six-reload/400-real-tick deterministic equality,
+occupied-bed queuing and unauthorized-treatment-room path checks.
+
+An initial additional private proof compared JSON property insertion order
+instead of logical task equality and failed; its log is retained. The proof was
+corrected to deep equality, then rerun with explicit numeric `quoteFee`
+verification. No repository assertion was weakened or changed to address this
+private-script error.
+
+### Validation: commands and exact output
+
+All commands ran in GS-release with `CI=true`, installed dependencies, and the
+process-local `validation-preload.cjs`. It handles only the optional sandbox
+`net use` probe and blocks Git before spawn; it changes no gameplay assertion.
+Immutable native logs, exit files, command/process receipts and per-workspace
+Vitest JSON reports are in `.local-dev/release-port19-20261105/`.
+
+`npm.cmd test` exits **1** before tests because its boundary script attempts
+Git inventory: **Could not inspect tracked paths: Git blocked before spawn:
+manager required No Git.** No Git process ran. The requested fallback ran all
+seven workspace suites directly using `--pool=threads --maxWorkers=2`:
+
+`npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port19-20261105/workspace-json-reporter.mjs`
+
+`npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port19-20261105/workspace-json-reporter.mjs`
+
+`npm.cmd run test --workspace @gamify-surgery/clinical-context-workbench --workspace @gamify-surgery/balance-config --workspace @gamify-surgery/clinical-authoring --workspace @gamify-surgery/clinical-content --workspace @gamify-surgery/clinical-research -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port19-20261105/workspace-json-reporter.mjs`
+
+| Workspace | Test files | Passed | Failed | Skipped |
+|---|---:|---:|---:|---:|
+| clinical-context-workbench | 8 | 43 | 0 | 0 |
+| player | 379 | 3591 | 0 | 0 |
+| balance-config | 24 | 164 | 0 | 0 |
+| clinical-authoring | 7 | 81 | 0 | 0 |
+| clinical-content | 121 | 1337 | 0 | 0 |
+| clinical-research | 8 | 83 | 0 | 0 |
+| game-domain | 198 | 5171 | 0 | 1 |
+| **Total** | **745** | **10470** | **0** | **1** |
+
+All three direct test invocations exit **0**. Native output excerpts:
+
+`focused-domain`:
+```text
+ Test Files  4 passed (4)
+      Tests  77 passed (77)
+   Duration  20.35s (transform 6.47s, setup 0ms, import 15.24s, tests 15.56s, environment 0ms)
+Native exit: 0
+```
+
+`focused-player`:
+```text
+ Test Files  6 passed (6)
+      Tests  84 passed (84)
+   Duration  13.26s (transform 6.84s, setup 0ms, import 18.22s, tests 3.01s, environment 1ms)
+Native exit: 0
+```
+
+Full player:
+```text
+ Test Files  379 passed (379)
+      Tests  3591 passed (3591)
+   Duration  852.91s (transform 19.46s, setup 0ms, import 656.36s, tests 1006.82s, environment 28ms)
+Native exit: 0
+```
+
+Full domain:
+```text
+ Test Files  198 passed (198)
+      Tests  5171 passed | 1 skipped (5172)
+   Duration  574.19s (transform 13.58s, setup 0ms, import 418.10s, tests 707.00s, environment 16ms)
+Native exit: 0
+```
+
+Other five workspaces (in command order):
+```text
+ Test Files  8 passed (8)
+      Tests  43 passed (43)
+   Duration  1.26s (transform 356ms, setup 0ms, import 1.01s, tests 526ms, environment 1ms)
+ Test Files  24 passed (24)
+      Tests  164 passed (164)
+   Duration  2.63s (transform 623ms, setup 0ms, import 2.69s, tests 208ms, environment 3ms)
+ Test Files  7 passed (7)
+      Tests  81 passed (81)
+   Duration  726ms (transform 146ms, setup 0ms, import 406ms, tests 334ms, environment 0ms)
+ Test Files  121 passed (121)
+      Tests  1337 passed (1337)
+   Duration  108.24s (transform 6.48s, setup 0ms, import 186.37s, tests 15.47s, environment 12ms)
+ Test Files  8 passed (8)
+      Tests  83 passed (83)
+   Duration  2.30s (transform 204ms, setup 0ms, import 556ms, tests 1.08s, environment 0ms)
+Native exit: 0
+```
+
+`npm.cmd run typecheck`: **all seven workspaces pass**, native exit **0**;
+clinical-context-workbench client/server, player, balance-config,
+clinical-authoring, clinical-content, clinical-research, game-domain.
+
+`npm.cmd run build --workspace @gamify-surgery/player`: native exit **0**;
+**Vite 8.1.5, 1,027 modules, built in 6.41s**. Existing large-chunk and ineffective
+dynamic-import warnings remain. Main bundle 22,316.21 kB / gzip 3,727.77 kB.
+No browser/e2e execution was requested or performed in this sandbox.
+
+### Other live-tree differences deliberately excluded
+
+These are the 85 other differing paths observed in the requested content scan.
+Their live versions were not shipped. The results path below was regenerated
+locally from this release only; its historical live-tree version was excluded.
+
+- `apps/player/character-phlebotomy.html` — Unreviewed character/art/room presentation lane, excluded.
+- `apps/player/character-proportions.html` — Unreviewed character/art/room presentation lane, excluded.
+- `apps/player/character-rooms.html` — Unreviewed character/art/room presentation lane, excluded.
+- `apps/player/src/art/characterBitmapArt.test.ts` — Unreviewed character/art/room presentation lane, excluded.
+- `apps/player/src/art/characterBitmapArt.ts` — Unreviewed character/art/room presentation lane, excluded.
+- `apps/player/src/art/characterPhlebotomyQa.before.json` — Unreviewed character/art/room presentation lane, excluded.
+- `apps/player/src/art/characterPhlebotomyQa.frames.json` — Unreviewed character/art/room presentation lane, excluded.
+- `apps/player/src/art/characterPhlebotomyQa.test.ts` — Unreviewed character/art/room presentation lane, excluded.
+- `apps/player/src/art/characterPhlebotomyQa.ts` — Unreviewed character/art/room presentation lane, excluded.
+- `apps/player/src/art/characterPhlebotomyQaModel.ts` — Unreviewed character/art/room presentation lane, excluded.
+- `apps/player/src/art/characterProportions.generated.json` — Unreviewed character/art/room presentation lane, excluded.
+- `apps/player/src/art/characterProportions.test.ts` — Unreviewed character/art/room presentation lane, excluded.
+- `apps/player/src/art/characterProportions.ts` — Unreviewed character/art/room presentation lane, excluded.
+- `apps/player/src/art/characterProportionsQa.ts` — Unreviewed character/art/room presentation lane, excluded.
+- `apps/player/src/art/characterRoomProportions.generated.json` — Unreviewed character/art/room presentation lane, excluded.
+- `apps/player/src/art/characterRoomProportions.test.ts` — Unreviewed character/art/room presentation lane, excluded.
+- `apps/player/src/art/characterRoomProportions.ts` — Unreviewed character/art/room presentation lane, excluded.
+- `apps/player/src/art/characterRoomQaModel.ts` — Unreviewed character/art/room presentation lane, excluded.
+- `apps/player/src/art/characterRoomsQa.ts` — Unreviewed character/art/room presentation lane, excluded.
+- `apps/player/src/diagnostics/problemDiagnostics.test.ts` — Separate cloud/storage/diagnostics lane, excluded.
+- `apps/player/src/diagnostics/problemDiagnostics.ts` — Separate cloud/storage/diagnostics lane, excluded.
+- `apps/player/src/facility/approvedRoomPresentation.test.ts` — Unreviewed character/art/room presentation lane, excluded.
+- `apps/player/src/facility/backlessRollingStools.test.ts` — Unreviewed character/art/room presentation lane, excluded.
+- `apps/player/src/facility/characterPresentation.test.ts` — Unreviewed character/art/room presentation lane, excluded.
+- `apps/player/src/facility/characterPresentation.ts` — Unreviewed character/art/room presentation lane, excluded.
+- `apps/player/src/facility/characterRoomScaleIntegration.test.ts` — Unreviewed character/art/room presentation lane, excluded.
+- `apps/player/src/facility/FacilityCanvas.tsx` — Outside the accepted endoscopy handoff file list; preserve release version.
+- `apps/player/src/facility/FacilityScene.ts` — Outside the accepted endoscopy handoff file list; preserve release version.
+- `apps/player/src/facility/furnitureSeatLayering.test.ts` — Unreviewed character/art/room presentation lane, excluded.
+- `apps/player/src/facility/phlebotomyPresentation.test.ts` — Unreviewed character/art/room presentation lane, excluded.
+- `apps/player/src/facility/staffIdleSupports.test.ts` — Unreviewed character/art/room presentation lane, excluded.
+- `apps/player/src/feedback/TesterFeedback.tsx` — Separate cloud/storage/diagnostics lane, excluded.
+- `apps/player/src/mobile/MobileShell.tsx` — Outside the accepted endoscopy handoff file list; preserve release version.
+- `apps/player/src/session/breadButterPresentation.test.ts` — Retain release-specific clinical/evidence/test compatibility and pins; do not copy historical live evidence or tests.
+- `apps/player/src/session/cloud/cache.ts` — Separate cloud/storage/diagnostics lane, excluded.
+- `apps/player/src/session/cloud/codecTasks.ts` — Separate cloud/storage/diagnostics lane, excluded.
+- `apps/player/src/session/cloud/codecWorkerNative.test.ts` — Separate cloud/storage/diagnostics lane, excluded.
+- `apps/player/src/session/cloud/coordinator.ts` — Separate cloud/storage/diagnostics lane, excluded.
+- `apps/player/src/session/cloud/entryStorage.ts` — Separate cloud/storage/diagnostics lane, excluded.
+- `apps/player/src/session/cloud/gameSession.ts` — Separate cloud/storage/diagnostics lane, excluded.
+- `apps/player/src/session/cloud/journalCodec.ts` — Separate cloud/storage/diagnostics lane, excluded.
+- `apps/player/src/session/cloud/releaseCodecHeadroom.test.ts` — Separate cloud/storage/diagnostics lane, excluded.
+- `apps/player/src/session/cloud/separateCampaign.test.ts` — Separate cloud/storage/diagnostics lane, excluded.
+- `apps/player/src/session/cloud/tickPerformanceTestSupport.ts` — Separate cloud/storage/diagnostics lane, excluded.
+- `apps/player/src/session/cloud/watchdogs.test.ts` — Separate cloud/storage/diagnostics lane, excluded.
+- `apps/player/src/session/diagnosticProjectionDifferential.test.ts` — Separate incremental-tick/performance/waiting lane, excluded.
+- `apps/player/src/session/flagFreeze.test.tsx` — Retain release-specific clinical/evidence/test compatibility and pins; do not copy historical live evidence or tests.
+- `apps/player/src/session/levelFiveLaunch.test.tsx` — Retain release-specific clinical/evidence/test compatibility and pins; do not copy historical live evidence or tests.
+- `apps/player/src/session/levelFiveRoomsViewModels.test.tsx` — Retain release-specific clinical/evidence/test compatibility and pins; do not copy historical live evidence or tests.
+- `apps/player/src/session/localJournal.test.ts` — Separate cloud/storage/diagnostics lane, excluded.
+- `apps/player/src/session/localJournal.ts` — Separate cloud/storage/diagnostics lane, excluded.
+- `apps/player/src/ui/ChartPanel.tsx` — Outside the accepted endoscopy handoff file list; preserve release version.
+- `apps/player/src/ui/roomAccessFeedback.test.ts` — Outside the accepted endoscopy handoff file list; preserve release version.
+- `apps/player/src/ui/roomAccessTestSupport.ts` — Outside the accepted endoscopy handoff file list; preserve release version.
+- `packages/balance-config/src/guidance-tips.ts` — Outside the accepted endoscopy handoff file list; preserve release version.
+- `packages/game-domain/src/facilityNavigation.ts` — Separate incremental-tick/performance/waiting lane, excluded.
+- `packages/game-domain/src/facilityNavigationReference.testSupport.ts` — Separate incremental-tick/performance/waiting lane, excluded.
+- `packages/game-domain/src/incrementalEvidenceOwnership.test.ts` — Separate incremental-tick/performance/waiting lane, excluded.
+- `packages/game-domain/src/incrementalEvidenceOwnership.ts` — Separate incremental-tick/performance/waiting lane, excluded.
+- `packages/game-domain/src/incrementalEvidenceProjection.test.ts` — Separate incremental-tick/performance/waiting lane, excluded.
+- `packages/game-domain/src/incrementalEvidenceProjection.ts` — Separate incremental-tick/performance/waiting lane, excluded.
+- `packages/game-domain/src/incrementalEvidenceReferences.test.ts` — Separate incremental-tick/performance/waiting lane, excluded.
+- `packages/game-domain/src/incrementalEvidenceReferences.ts` — Separate incremental-tick/performance/waiting lane, excluded.
+- `packages/game-domain/src/incrementalEvidenceRetirement.test.ts` — Separate incremental-tick/performance/waiting lane, excluded.
+- `packages/game-domain/src/incrementalEvidenceRetirement.ts` — Separate incremental-tick/performance/waiting lane, excluded.
+- `packages/game-domain/src/incrementalEvidenceValues.test.ts` — Separate incremental-tick/performance/waiting lane, excluded.
+- `packages/game-domain/src/incrementalEvidenceValues.ts` — Separate incremental-tick/performance/waiting lane, excluded.
+- `packages/game-domain/src/incrementalTickClone.test.ts` — Separate incremental-tick/performance/waiting lane, excluded.
+- `packages/game-domain/src/incrementalTickClone.ts` — Separate incremental-tick/performance/waiting lane, excluded.
+- `packages/game-domain/src/readonlyProjectionMemo.ts` — Separate incremental-tick/performance/waiting lane, excluded.
+- `packages/game-domain/src/reducer.ts` — Separate incremental-tick/performance/waiting lane, excluded.
+- `packages/game-domain/src/routineAvailabilityReference.testSupport.ts` — Separate incremental-tick/performance/waiting lane, excluded.
+- `packages/game-domain/src/settledStateQueries.test.ts` — Separate incremental-tick/performance/waiting lane, excluded.
+- `packages/game-domain/src/settledStateQueries.ts` — Separate incremental-tick/performance/waiting lane, excluded.
+- `packages/game-domain/src/waiting-destinations.ts` — Separate incremental-tick/performance/waiting lane, excluded.
+- `packages/game-domain/tests/approved-clinical-admission.test.ts` — Retain release-specific clinical/evidence/test compatibility and pins; do not copy historical live evidence or tests.
+- `packages/game-domain/tests/level-five-launch.test.ts` — Retain release-specific clinical/evidence/test compatibility and pins; do not copy historical live evidence or tests.
+- `packages/game-domain/tests/readonlyProjectionMemo.test.ts` — Separate incremental-tick/performance/waiting lane, excluded.
+- `packages/game-domain/tests/waiting-chart-attendance.fixture.ts` — Separate incremental-tick/performance/waiting lane, excluded.
+- `packages/game-domain/tests/waiting-chart-attendance.test.ts` — Separate incremental-tick/performance/waiting lane, excluded.
+- `tests/fixtures/diagnostic-workload.ts` — Retain release-specific clinical/evidence/test compatibility and pins; do not copy historical live evidence or tests.
+- `tests/fixtures/level-five-integration-checkpoints-20261012.json` — Retain release-specific clinical/evidence/test compatibility and pins; do not copy historical live evidence or tests.
+- `tests/fixtures/level-five-legacy-behavior-20261012.json` — Retain release-specific clinical/evidence/test compatibility and pins; do not copy historical live evidence or tests.
+- `tools/qa/level-five-integration-results-20261012.json` — Retain release-specific clinical/evidence/test compatibility and pins; do not copy historical live evidence or tests. Locally regenerated by guarded rebind19; live-tree evidence remains excluded.
+- `tools/qa/tick-state-differential.mjs` — Separate incremental-tick/performance/waiting lane, excluded.
+
+### Remaining limits and manager handoff
+
+Manager reruns the root Git-inventory wrapper in its own environment. Browser
+behavior and the tester's actual private save remain unverified; the two
+synthetic local snapshot/continuation controls pass. Existing build warnings
+remain. The work stays local and uncommitted; no push or deploy occurred.
+The manager owns acceptance and the GitHub-backup checkpoint decision. Final
+per-file SHA-256s and unrelated-path preservation are recorded in
+`.local-dev/release-port19-20261105/final-file-inventory.json` after this append.

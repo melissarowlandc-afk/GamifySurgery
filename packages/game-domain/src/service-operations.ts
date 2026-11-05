@@ -703,11 +703,22 @@ function isPhaseBlockedOnlyByMaintenance(
   return usable.length <= (clinical.roomDefinitionCounts.get(phase.roomDefinitionId) ?? 0);
 }
 
+function periopBedConnectsToEndoscopy(state: GameState, operation: ServiceOperationState, roomId: string, point: GridPoint, context: DomainContext): boolean {
+  // Installed geometry only: occupied suites and temporarily busy staff still
+  // queue. Accepted diagnostic choices retain their separate frozen contract.
+  if (operation.diagnosticPhysicalWork || operation.phaseIndex !== 0 || operation.phaseFlowVersion !== 1 ||
+      operation.frozenOperationPhases?.[0]?.roomStationId !== "periop_preparation" || !SCHEDULED_ENDOSCOPY_LINE_IDS.has(operation.incomeLineId)) return true;
+  return state.rooms.some(room => room.roomDefinitionId === "room.endoscopy" && isRoomOperationalForFacilityWork(state, room.id, context) &&
+    findRouteFromDisplacedLocationToPoint(state, context, point,
+      getRoomNavigationAnchor(room, getRoomDefinition(room.roomDefinitionId, context)!), new Set([roomId, room.id])).length > 0);
+}
+
 function availablePeriopBedReservation(
   state: GameState,
   operation: ServiceOperationState,
   context: DomainContext,
   blockedRoomIds: ReadonlySet<string>,
+  repairProcedureAccess = false,
 ): NonNullable<ServiceOperationState["periopBedReservation"]> | null {
   const preferred = operation.diagnosticPhysicalWork?.phaseBindings[operation.phaseIndex]?.resource;
   if (operation.periopBedReservation) {
@@ -717,6 +728,13 @@ function availablePeriopBedReservation(
       ? getRoomCareStations(room, definition, state.doors, state.rooms, (id) => getRoomDefinition(id, context))
         .find((candidate) => candidate.id === operation.periopBedReservation!.bedId)
       : null;
+    if (repairProcedureAccess && operation.status === "waiting_for_next_phase" && station && room &&
+        !periopBedConnectsToEndoscopy(state, operation, room.id, station.patientAnchor, context) &&
+        availablePeriopBedReservation(state, { ...operation, periopBedReservation: undefined }, context, blockedRoomIds)) {
+      // Reuse the existing invalid-bed repair on the next simulation tick.
+      // Keep the old bed if no connected replacement is currently free.
+      return null;
+    }
     return station && samePoint(station.patientAnchor, operation.periopBedReservation.endpoint) &&
       isRoomOperationalForFacilityWork(state, room!.id, context)
       ? operation.periopBedReservation
@@ -749,6 +767,8 @@ function availablePeriopBedReservation(
     );
     for (const station of stations) {
       if (station.kind !== "periop_bed" || (preferred && station.id !== preferred.stationId) || occupied.has(`${room.id}:${station.id}`)) continue;
+      if (!periopBedConnectsToEndoscopy(state, operation, room.id, station.patientAnchor, context) ||
+          state.serviceOperations.some(other => other.id !== operation.id && active(other) && samePoint(operationLocation(state, other), station.patientAnchor))) continue;
       const actorLocation = operationLocation(state, operation);
       if (!actorLocation || findRouteFromDisplacedLocationToPoint(
         state, context, actorLocation, station.patientAnchor, new Set([room.id]),
@@ -980,7 +1000,9 @@ function tryReserveInRooms(
     const targets = procedureNurse && usesApprovedProcedureStaffSpots(room, definition)
       ? getProcedureStaffStandingSpots(room, definition, state.doors, "nurse").map(spot => spot.anchor) : [fallback];
     for (const target of targets) {
-      const allowed = new Set([room.id]);
+      // The operation retains its own periop bed through the procedure. Staff
+      // movement already authorizes that room; route acquisition must agree.
+      const allowed = new Set([room.id, ...(operation.periopBedReservation ? [operation.periopBedReservation.roomInstanceId] : [])]);
       const supportRoom = state.facilityLevel >= 5 ? getLevelFiveSupportRoomAt(state, employee.location) : null;
       if (supportRoom) return findLevelFiveSupportExitPath(state, supportRoom, employee.location, target, context, allowed);
       const ordinary = findCareAwareFacilityPath(state, context, employee.location, target, allowed);
@@ -1029,7 +1051,7 @@ function tryReserveInRooms(
       ? getProcedureStaffStandingSpots(room, definition, state.doors, actor).map((spot) => spot.anchor)
       : [fallback];
     for (const target of targets) {
-      const roomIds = new Set([room.id]);
+      const roomIds = new Set([room.id, ...(operation.periopBedReservation ? [operation.periopBedReservation.roomInstanceId] : [])]);
       const supportRoom = state.facilityLevel >= 5 ? getLevelFiveSupportRoomAt(state, location) : null;
       if (supportRoom) return findLevelFiveSupportExitPath(state, supportRoom, location, target, context, roomIds);
       const ordinary = findCareAwareFacilityPath(state, context, location, target, roomIds);
@@ -1525,7 +1547,7 @@ function reconcileOperationActorRoute(
 /** Load/tick watchdog: repair missing physical journeys without restarting an
  * accepted phase or charging/crediting work. MAX_SAFE_INTEGER is a legitimate
  * resource queue deadline, never proof that care is complete. */
-export function reconcileServiceOperationFlow(state: GameState, context: DomainContext): void {
+export function reconcileServiceOperationFlow(state: GameState, context: DomainContext, repairProcedureAccess = false): void {
   for (const operation of state.serviceOperations) {
     if (!active(operation)) continue;
     const line = operationIncomeLine(operation);
@@ -1562,7 +1584,7 @@ export function reconcileServiceOperationFlow(state: GameState, context: DomainC
       holdResolvedEncounterForActiveOperation(state, operation);
       const location = operationLocation(state, operation);
       const previousBed = operation.periopBedReservation;
-      const validBed = availablePeriopBedReservation(state, operation, context, new Set());
+      const validBed = availablePeriopBedReservation(state, operation, context, new Set(), repairProcedureAccess);
       const path = location && validBed
         ? findRouteFromDisplacedLocationToPoint(state, context, location, validBed.endpoint, new Set([validBed.roomInstanceId])) : [];
       if (!validBed || !path.length) {
@@ -2671,7 +2693,7 @@ export function advanceServiceOperations(
   scheduleArrivals(state, context);
   advanceOutsideRadiologyReads(state, context, false);
   advanceDiagnosticReading(state, context);
-  reconcileServiceOperationFlow(state, context);
+  reconcileServiceOperationFlow(state, context, true);
   advancePeriopNurseAttention(state, context);
   for (const operation of state.serviceOperations) {
     const line = operationIncomeLine(operation);
@@ -2980,7 +3002,7 @@ export function advanceServiceOperations(
         : null;
     }
   }
-  reconcileServiceOperationFlow(state, context);
+  reconcileServiceOperationFlow(state, context, true);
   advancePeriopNurseAttention(state, context);
   advanceOutsideRadiologyReads(state, context, true);
   reconcilePediatricFamilies(state, context);

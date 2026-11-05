@@ -1,4 +1,5 @@
 import { withSettledStateQueries } from "./settledStateQueries";
+import { getEndoscopySetupAccess } from "./endoscopy-setup";
 import { getEmployeeEffectiveMorale } from "./level-five-support";
 import {
   GUIDANCE_TIP_CATALOG, GUIDANCE_TIP_POLICY, SERVICE_INCOME_CATALOG,
@@ -417,7 +418,18 @@ function evaluateSettledGuidanceTipCandidates(state: GameState, context: DomainC
     ["tip.endoscopy.setup", "room.endoscopy", "staff.endoscopy_nurse", "progression.endoscopy_completion"],
     ["tip.surgery.setup", "room.ambulatory_or", "staff.or_nurse", "progression.ambulatory_operation_completion"],
   ] as const) if ((built(roomId).length || tip === "tip.surgery.setup" && unmetGoal(goal)) && (work.services.some(({ operation, queued }) => queued && serviceIsFor(operation, roomId)) || unmetGoal(goal))) {
-    const remedy = careChain(roomId, nurse).map((req) => missingSetupRemedy(state, req, context)).find(Boolean);
+    let remedy = careChain(roomId, nurse).map((req) => missingSetupRemedy(state, req, context)).find(Boolean);
+    if (!remedy && roomId === "room.endoscopy" && state.facilityLevel === 2) {
+      const access = getEndoscopySetupAccess(state, context);
+      const blockedRoomId = access.roomIssues.keys().next().value ?? access.providerAccessRoomId;
+      if (blockedRoomId) {
+        const name = getRoomDefinition(state.rooms.find(room => room.id === blockedRoomId)!.roomDefinitionId, context)!.displayName;
+        remedy = { action: { kind: "restore_access", roomId: blockedRoomId },
+          actionLabel: `Fix ${name} hallway access`,
+          fix: `Connect ${name} to the Front Desk with hallway doors, without crossing another treatment room`,
+          rootKey: `room:${blockedRoomId}`, lastFixTick: latestEvent(state, ["room_placed", "room_moved", "room_rotated", "room_sold", "door_placed", "door_removed"]) };
+      }
+    }
     add(tip, roomId, remedy ?? null, { rootKey: `care-chain:${roomId}`,
       priority: work.services.some(({ operation, queued }) => queued && serviceIsFor(operation, roomId)) ? 0 : 2 });
   }

@@ -32,7 +32,7 @@ describe("Build Mode view models", () => {
     ]));
   });
 
-  it("keeps busy reachable staff ready and gives existing inaccessible setup a repair hint instead of another purchase", () => {
+  it("shows missing care access even when hired staff have a reachable home, without suggesting another purchase", () => {
     const state = createInitialGameState();
     state.facilityLevel = 2;
     state.rooms.push({
@@ -59,8 +59,8 @@ describe("Build Mode view models", () => {
 
     const requirements = createPrototypePlayerView(state, null, false, null)
       .progression.endoscopySetupRequirements!;
-    expect(requirements.find((requirement) => requirement.id === "endoscopy.setup.staff.endoscopy_nurse")).toMatchObject({ met: true });
-    expect(requirements.find((requirement) => requirement.id === "endoscopy.setup.staff.periop_nurse")).toMatchObject({ met: true });
+    expect(requirements.find((requirement) => requirement.id === "endoscopy.setup.staff.endoscopy_nurse")).toMatchObject({ met: false });
+    expect(requirements.find((requirement) => requirement.id === "endoscopy.setup.staff.periop_nurse")).toMatchObject({ met: false });
     const inaccessibleEndoscopy = requirements.find(
       (requirement) => requirement.id === "endoscopy.setup.room.endoscopy",
     )!;

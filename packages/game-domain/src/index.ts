@@ -14,6 +14,7 @@ export * from "./clinical-case-eligibility";
 export * from "./routine-patient-availability";
 export * from "./context";
 export * from "./doors";
+export * from "./endoscopy-setup";
 export * from "./employee-discussions";
 export * from "./employee-idle-spots";
 export * from "./employee-training";

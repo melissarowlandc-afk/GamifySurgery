@@ -2,6 +2,7 @@ import {
   PROTOTYPE_DOMAIN_CONTEXT,
   findCareAwareFacilityPath,
   getAvailableEmployeeHomeRoom,
+  getEndoscopySetupAccess,
   getEmergencyGlp1Status,
   getCurrentQuestion,
   getCurrentEmployeeDiscussionQuestion,
@@ -132,7 +133,11 @@ export function getClinicAlertActionProblem(state: GameState, action: ClinicAler
     case "restore_access": {
       const room = state.rooms.find((candidate) => candidate.id === action.roomId);
       if (!room) return "That room no longer exists.";
-      if (isRoomOperationalForFacilityWork(state, room.id)) return "This room is already operational.";
+      if (isRoomOperationalForFacilityWork(state, room.id)) {
+        const access = state.facilityLevel === 2 && ["room.endoscopy", "room.periop_recovery"].includes(room.roomDefinitionId)
+          ? getEndoscopySetupAccess(state, PROTOTYPE_DOMAIN_CONTEXT) : null;
+        if (!access?.roomIssues.has(room.id) && access?.providerAccessRoomId !== room.id) return "This room is already operational.";
+      }
       if (room.maintenance?.status === "out_of_service") return "This room needs repair coverage, rather than a new door.";
       return null;
     }

@@ -9121,3 +9121,37 @@ Latest full suites:
 Validation is NOT all green: unchanged player levelFourIntegration.test.ts:50 has the strict float comparison 48.595041322314046 vs 48.59504132231405. Isolated current run fails; captured original-source control passes 3/3. Do not classify it as a prior release failure or silently loosen it. Manager owns the precision decision. Root/boundary Git inventory blocked before spawn under No Git; manager reruns permitted root gates. Seven typechecks, player build, launcher, 33 lint tests and phone e2e TypeScript pass. No browser/device thermal acceptance was claimed.
 
 Full exact file lists, artifact/input hashes, totals, failures and command outputs: docs/execplans/gs028-stats-ethics-overhaul-20261007.md (rebind 18). Private receipts: .local-dev/release-port-rebind18-20261105/. One unrelated concurrent ui-density screenshot change is preserved and excluded from this lane. No Git, installs, external network, agents, commit, push or deploy; no new backup is claimed. Owner opening pathway unchanged. Stop here for manager review.
+
+
+## Release port 19 / Level 5 rebind 19 — 2026-11-05 (GS-release)
+
+Completed the manager-accepted Level 2 endoscopy Ready-but-stuck lane only in
+GS-release (entry HEAD 33846e50). Dispositions: 11 copied, 1 hunk-ported,
+85 excluded; all paths/reasons/SHA-256s in
+`.local-dev/release-verify/port19-20261105.json`. Exactly 16 public paths changed,
+listed in the appended GS028 handoff; clinical, art, cloud and other perf lanes
+were preserved.
+
+Actual native journey plus lower helper: unchanged **30,501 commands /
+6,790,515 closing cents / 471 completions / 0 walkouts**. All nine checkpoint
+bytes, three reports and every simulation number unchanged; all 391 clinical
+hashes unchanged. Guard/drivers/assertions and launch pins unchanged. Only the
+results binding/history was written after strict staged verification: 533 inputs,
+19 history entries; results SHA-256 `ba6e602765cdebe131541051b4a3a90df2d92e13475e25fd6068a658b50883ca`.
+
+Both original handoff format-3 snapshots reopen identically and complete
+(122 / 148 further minutes), with one receipt each. The exact same snapshots
+stay stuck for 3,000 minutes under the original service runtime.
+
+Validation: all seven suites **745 files / 10470 passed /
+0 failed / 1 existing skip**, native exit 0. All seven
+typechecks pass. Player build passes (1,027 modules, 6.41s). Root npm test is
+blocked before Git inventory under the worker no-Git rule; manager reruns it.
+No browser run or tester-private-save access. Existing build warnings remain.
+
+Full evidence/validation/file/exclusion handoff:
+`docs/execplans/gs028-stats-ethics-overhaul-20261007.md`, release port 19 section.
+Immutable receipts and resumability state:
+`.local-dev/release-port19-20261105/`. No further worker milestone is open;
+manager reviews the scoped diff and receipts before acceptance. No commit,
+push or deployment was performed.

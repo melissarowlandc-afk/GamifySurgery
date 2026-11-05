@@ -18,6 +18,7 @@ import { getEmployeeEffectiveMorale } from "@gamify-surgery/game-domain";
 import { getRoomAccessWarning, missingHireRoomMessage } from "../ui/roomAccessFeedback";
 import {
   getProcedureStaffSupportId,
+  getEndoscopySetupAccess,
   PROTOTYPE_DOMAIN_CONTEXT,
   TUTORIAL_ENCOUNTER_ID,
   getFounderBreakSeatClaim,
@@ -199,11 +200,13 @@ function getProcedureSetupRequirements(
 ): ProcedureSetupRequirementView[] | undefined {
   const endoscopy = procedure === "endoscopy";
   if (state.facilityLevel !== (endoscopy ? 2 : 3)) return undefined;
+  const access = endoscopy ? getEndoscopySetupAccess(state, PROTOTYPE_DOMAIN_CONTEXT) : null;
   const roomRequirement = (id: string): ProcedureSetupRequirementView => {
     const definition = getRoomDefinition(id)!;
     const existing = state.rooms.filter((room) => room.roomDefinitionId === id);
     const met = existing.some((room) =>
-      room.roomDefinitionId === id && isRoomOperationalForFacilityWork(state, room.id),
+      room.roomDefinitionId === id && isRoomOperationalForFacilityWork(state, room.id) &&
+        (!access || (id === "room.periop_recovery" ? access.recoveryRoomIds : access.procedureRoomIds).has(room.id)),
     );
     return {
       id: `${procedure}.setup.${id}`,
@@ -211,7 +214,7 @@ function getProcedureSetupRequirements(
       detail: met
         ? `$${definition.constructionCost.toLocaleString()} build · $${definition.upkeepPerExpenseInterval.toLocaleString()}/hr upkeep`
         : existing.length > 0
-          ? "Built, but needs a reachable valid layout before it can operate."
+          ? existing.map(room => access?.roomIssues.get(room.id)).find(Boolean) ?? "Built, but needs a reachable valid layout before it can operate."
           : `$${definition.constructionCost.toLocaleString()} build · $${definition.upkeepPerExpenseInterval.toLocaleString()}/hr upkeep`,
       met,
       ...(!met && existing.length === 0 ? { action: { label: "Build" as const, target: "room" as const, id } } : {}),
@@ -223,7 +226,8 @@ function getProcedureSetupRequirements(
       employee.staffRoleDefinitionId === id,
     );
     const met = hired.some((employee) =>
-      employee.staffRoleDefinitionId === id && isEmployeeAssignedToOperationalRoom(state, employee.id),
+      employee.staffRoleDefinitionId === id && isEmployeeAssignedToOperationalRoom(state, employee.id) &&
+        (!access || (id === "staff.periop_nurse" ? access.periopNurseIds : access.endoscopyNurseIds).has(employee.id)),
     );
     return {
       id: `${procedure}.setup.${id}`,
@@ -231,7 +235,7 @@ function getProcedureSetupRequirements(
       detail: met
         ? `$${definition.hiringCost.toLocaleString()} hire · $${definition.salaryPerExpenseInterval.toLocaleString()}/hr salary`
         : hired.length > 0
-          ? "Hired, but their home room needs a reachable valid layout before they can operate."
+          ? "Hired, but their home room needs a reachable valid layout and a hallway route to the care room before they can operate."
           : `$${definition.hiringCost.toLocaleString()} hire · $${definition.salaryPerExpenseInterval.toLocaleString()}/hr salary`,
       met,
       ...(!met && hired.length === 0 ? { action: { label: "Hire" as const, target: "staff" as const, id } } : {}),
@@ -243,6 +247,10 @@ function getProcedureSetupRequirements(
       isEmployeeAssignedToOperationalRoom(state, employee.id),
   );
   return [
+    ...(endoscopy && !state.serviceAppointmentsEnabled ? [{
+      id: `${procedure}.setup.appointments`, label: "Scheduled appointments", met: false,
+      detail: "Turn on Scheduled appointments in Manage > Services. Booked procedure visitors do not arrive while it is off.",
+    }] : []),
     roomRequirement(endoscopy ? "room.endoscopy" : "room.ambulatory_or"),
     roomRequirement("room.periop_recovery"),
     staffRequirement(endoscopy ? "staff.endoscopy_nurse" : "staff.or_nurse"),
@@ -250,12 +258,14 @@ function getProcedureSetupRequirements(
     {
       id: `${procedure}.setup.provider`,
       label: `${provider.displayName} or founder`,
-      detail: hiredProvider
+      detail: access?.providerAccessRoomId
+        ? "The founder cannot reach Endoscopy without crossing another treatment room. Connect Endoscopy to the hallway, or hire an endoscopist with a connected home room."
+        : hiredProvider
         ? `${provider.displayName} hired.`
         : endoscopy
-          ? `Founder can perform endoscopy. Hire an endoscopist to keep yourself available for clinic patients. $${provider.hiringCost.toLocaleString()} hire · $${provider.salaryPerExpenseInterval.toLocaleString()}/hr salary.`
+          ? `Founder can perform endoscopy; visitors wait while the founder is busy. Hire an endoscopist to keep yourself available for clinic patients. $${provider.hiringCost.toLocaleString()} hire · $${provider.salaryPerExpenseInterval.toLocaleString()}/hr salary.`
           : `Founder can perform ambulatory operations. Hire a surgeon to keep yourself available for clinic patients. $${provider.hiringCost.toLocaleString()} hire · $${provider.salaryPerExpenseInterval.toLocaleString()}/hr salary.`,
-      met: true,
+      met: !access?.providerAccessRoomId,
     },
   ];
 }
