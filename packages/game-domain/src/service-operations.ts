@@ -548,6 +548,9 @@ function scheduledLineCapacity(
     const sharedCapabilityIds = new Set([
       "capability.ambulatory_or",
       "capability.periop_recovery",
+      // Installed OR-nurse capacity is already proved above. A nurse walking
+      // or on another task must queue the visit, not erase its arrival clock.
+      "capability.staff.or_nurse",
     ]);
     const installedCapabilities = getCurrentCapabilities(state, context);
     return line.requiredCapabilityIds
@@ -2558,9 +2561,9 @@ function scheduleArrivals(state: GameState, context: DomainContext): void {
       (state.nextServiceAppointmentTicks[line.id] ?? Number.MAX_SAFE_INTEGER) >
         state.facilityTick + cadence
     ) {
-      // Old saves can carry the former 300-minute first appointment. Clamp
-      // only future endoscopy timers so the new staffed-room cadence applies
-      // promptly without delaying an appointment that is already sooner.
+      // Old saves can carry a longer first procedure appointment. Clamp only
+      // future timers to the current staffed-room cadence without delaying
+      // an appointment that is already sooner.
       state.nextServiceAppointmentTicks[line.id] = state.facilityTick + cadence;
     }
     const due = state.nextServiceAppointmentTicks[line.id];

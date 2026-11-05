@@ -7418,3 +7418,324 @@ Native summary values, all identical to the prior run:
 Ignored artifacts: `.local-dev/level5-m9/progress-state.json` was synchronized with the exact complete-run progress bytes after checking its original hash; its previous bytes are backed up in the private task folder. All private scripts/receipts/backups/incoming bytes/diffs/staged payloads/logs are confined to `.local-dev/l5-evidence-rebind14-release-20261104/`; key records are `port-receipt.json`, `accepted-run-verification.json`, `publication-prepared.json`, `publication-receipt.json`, `progress-sync.json`, `retail-guard-attribution.json`, `final-file-inventory.json` and `final-verification.json`. The repository binding guard SHA remains **812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909**; both native generator files, original seed/opening, launch report pins, legacy fixture and all e2e specs are unchanged.
 
 No Git, installs, network, agents, browser, owner-save access, main-tree writes, deployment or external publication occurred. Source plans retain the measured-performance/browser acceptance limits; passing CI timing allowances is not a claim that the full owner-scale tick meets 16 ms. The waiting-chart-attendance lane remains a diagnosis/test lane: its original missing owner reproduction was not claimed fixed here. Manager next action: inspect this scoped diff/receipts, integrate the global handoff and decide the GitHub checkpoint.
+
+
+## rebind 16 (release worktree, routine ambulatory OR arrivals)
+
+2026-11-05. Worker completed the local evidence rebind in `C:/Users/rowla/Projects/GS-release`. User-stated branch/HEAD: `release/beta1-20261016` /`c94f657e`. The live tree was read-only; only its routine OR research handoff was read. No Git process, install, network, agent, browser, owner-save access, deployment or external publication occurred.
+
+Entry audit found exactly **two changed bindings** among **418 inputs**, no additions/removals, and **290 unchanged clinical input hashes**. The accepted source and four new OR test/fixture files were already present; this worker did not edit them or any runtime, balance, clinical, test, package-script or verifier source. The source hash changes match the manager's accepted OR handoff.
+
+| Changed input | Previous recorded SHA-256 | Current actual SHA-256 |
+| --- | --- | --- |
+| `packages/balance-config/src/service-income-catalog.ts` | `0fd2e7a817f9b438b44a056446bcbd472c3e5c7bd2784b0672ed089fd114aa9b` | `6096a39f88f9243917b41ec6d084500f7265baa57bc9a59ffd9f18a2603d42e8` |
+| `packages/game-domain/src/service-operations.ts` | `dd9cb06cf2fb06708594a9267db10e951a1ac9a6a7970fab6b49388a99bfa549` | `a19479a73b3e1486a344956ad277ddd7480c06e4c2c66da0787fb2be757cf159` |
+
+**Independent actual CHECK:** reran the unchanged native `tools/qa/level-five-integration-run.mjs` and `tools/qa/level-five-integration-lower.mjs` through task-scoped guarded scripts, starting from the original `level-five-m9.integration.01` seed and funded opening. All original assertions ran. The wrapper redirected only results/checkpoints/progress artifact paths, rejected other writes, and required stable complete source maps before/after each process. Journey native exit **0**, elapsed **264107.7 ms**, 29 private staged writes; lower native exit **0**, two staged writes. Canonical files were untouched until `verify-staged.mjs` recorded and enforced every stop gate. Comparison receipts precede publication.
+
+Before/after totals:
+
+| Metric | Before | Actual fresh run | Delta |
+| --- | ---: | ---: | ---: |
+| commands | 26362 | 26362 | 0 |
+| cashCents | 6056335 | 6056335 | 0 |
+| Encounter completions | 410 | 410 | 0 |
+| Walkouts | 0 | 0 | 0 |
+
+**No saves, reports, numbers or other native summary values changed.** Cash reconciles exactly: opening 1,785,500 +gross 15,111,900 -stock 271,860 -paid operating 9,521,205 -capital 1,048,000 =closing **6,056,335 cents**. Unlock tick **14709**; 2,000-XP tick **14217**; final tick **24481**. Every snapshot phase, learning history, frozen encounter and serialized field is identical. All three reports, including higher-best/lower-latest/immutable-first finish records, match exactly:
+
+| Report | Score, unchanged | Scored patients, unchanged | Exact JSON SHA-256, unchanged |
+| --- | ---: | ---: | --- |
+| 1 | 62.4813653779166 | 54 | `5f87b746aa5117e3f68f334adb604773f5c25d09f96aa99d6ffcbb14b8dcc62f` |
+| 2 | 66.64761689485275 | 48 | `b755397caca388420b75217b309388394788db3790a390e32ecafec37d932871` |
+| 3 | 45.299819146370375 | 52 | `5988fa3d9f547a683a7a0e19e0ff29cc2b98a65c19eb356466dc7a6d4f629cc2` |
+
+All nine checkpoint JSON objects and the **entire serialized checkpoint file** are byte-identical to this release's current canonical evidence. No retail exception applies. These are fresh current-release comparisons, independent of the live worker's older retained baseline. **The canonical checkpoint file was not rewritten.**
+
+| Checkpoint | Tick | Cash cents | XP | Completions | Walkouts | SHA-256, before =after |
+| --- | ---: | ---: | ---: | ---: | ---: | --- |
+| integration-l4 | 3704 | 2635200 | 754 | 58 | 0 | `ce81a28c1383d5f30d716e887df036945d2de8c367fd874e8e2ecff96f4e533d` |
+| integration-build | 3704 | 1587200 | 0 | 58 | 0 | `b2d3aafb4df43298bde97acdecc6d7d40f885193a84a552f8e55d751301eda70` |
+| integration-preparing | 14710 | 4148331 | 2088 | 244 | 0 | `afaeb0c68205e545dd3b60180b858a933ef08eba30c59cacc1103f60a23f64b6` |
+| integration-running | 14847 | 4196706 | 2110 | 247 | 0 | `08dc1124415152176e319e98720e8d57b5b7bcec0826cfe12c9d13c18587e43a` |
+| integration-final | 17766 | 4838179 | 2644 | 298 | 0 | `dfc9c8abfb182cb5663f48e16abd5b47961dcb59674dd05de5699033ad9cf7c0` |
+| integration-finish | 17767 | 4838179 | 2644 | 298 | 0 | `4fb7020a7f585496afd985a143ff3bbb264696a3a7bfdd530b5659027ce03e13` |
+| integration-repeat-final | 21423 | 5656213 | 3410 | 357 | 0 | `a2726fe41bc542782e80e4f4b88b27969048c2ea2bd034ef084c2192893ef181` |
+| integration-repeat | 21424 | 5656213 | 3410 | 357 | 0 | `c23ac9b740ef493a84f9d0da09af80058d630a3b50b934007eee5bc7aaf4a0b3` |
+| integration-lower-repeat | 24481 | 6056335 | 3552 | 410 | 0 | `52710418c56b66f1e34f469e9256daeb5049444fddb4a51fb43a37189847ac13` |
+
+Coverage: all nine actual checkpoints contain **zero ambulatory OR rooms, zero OR nurses and zero ambulatory OR operations**. This journey has no installed OR capacity; positive OR demand/care coverage comes from the full workspace suites, which include the new **14 domain /1 balance /1 player** routine OR tests. The retained journey verifies the published scenario and input provenance. No owner-save control was accessed by this worker.
+
+**Publication:** only the results input map/metadata was updated through `publish-verified.mjs` after the strict comparison passed. Applied the established raw liveCap **4 ->5** metadata correction and appended the complete previous input/artifact-input maps plus previous results SHA to `inputHistory`. All **15 previous entries** remain unchanged; history now has **16** entries. Inputs stay **418**, with just the two hashes above changed; all **290 clinical hashes** stay exact. No replay-compatible exemption or guard change was introduced.
+
+| Evidence artifact | Before SHA-256 | After SHA-256 | Disposition |
+| --- | --- | --- | --- |
+| `tools/qa/level-five-integration-results-20261012.json` | `5050e1e0460995ed641b4253db3fd422e370ad0e6208d4742c7440f9f2f75d8f` | `b59b0b5fe689cc654136770586731010d4509ae5ee8c48bc17bf1805919a3712` | Only changed evidence file |
+| `tests/fixtures/level-five-integration-checkpoints-20261012.json` | `51b18e225a75ac77b345d74ea15b3e0f6841807d00276b6fe6b78f5c7886df7d` | `51b18e225a75ac77b345d74ea15b3e0f6841807d00276b6fe6b78f5c7886df7d` | Identical; not rewritten |
+
+The binding guard remains `812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909`. Both native generator files, seed/opening, every assertion, legacy behavioral fixture, launch pins and e2e specs remain unchanged. The ignored native progress file already matched the fresh complete run (`f8b37971a60e842579c8fdc45b462299abad598a30a9c6ad6e363421ddab3c80`); it was not rewritten.
+
+**Exact validation counts:** CI=true throughout, existing process-local net-use/No-Git preload, sandbox threads/two workers. No assertion, timeout or CI budget was relaxed. The direct all-workspace command ran all seven workspaces after publication:
+
+```text
+npm.cmd run test --workspaces --if-present -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/l5-evidence-rebind16-release-20261105/workspace-json-reporter.mjs
+```
+
+The private reporter only chooses one output filename per workspace for Vitest's native JsonReporter; it changes no test behavior. Direct all-workspace native exit **0**.
+
+| Workspace | Files | Passed | Failed | Skipped |
+| --- | ---: | ---: | ---: | ---: |
+| clinical-context-workbench | 8 | 43 | 0 | 0 |
+| player | 368 | 3525 | 0 | 0 |
+| balance-config | 23 | 160 | 0 | 0 |
+| clinical-authoring | 7 | 81 | 0 | 0 |
+| clinical-content | 97 | 764 | 0 | 0 |
+| clinical-research | 8 | 83 | 0 | 0 |
+| game-domain | 179 | 4447 | 0 | 1 |
+| **Total** | **690** | **9103** | **0** | **1** |
+
+The one existing opt-in historical evidence replay remains skipped; the separate full actual current native journey ran above. All 25 legacy Level 0-4/schema 5-9 behavioral comparisons pass unchanged. No test timeout/failure needed an assertion waiver or isolated rerun. Exact terminal summaries:
+
+```text
+
+clinical-context-workbench
+ Test Files  8 passed (8)
+      Tests  43 passed (43)
+   Start at  04:37:33
+   Duration  1.02s (transform 293ms, setup 0ms, import 813ms, tests 422ms, environment 0ms)
+
+
+player
+ Test Files  368 passed (368)
+      Tests  3525 passed (3525)
+   Start at  04:37:35
+   Duration  569.22s (transform 12.56s, setup 0ms, import 324.42s, tests 777.71s, environment 26ms)
+
+
+balance-config
+ Test Files  23 passed (23)
+      Tests  160 passed (160)
+   Start at  04:47:04
+   Duration  2.04s (transform 490ms, setup 0ms, import 1.95s, tests 148ms, environment 1ms)
+
+
+clinical-authoring
+ Test Files  7 passed (7)
+      Tests  81 passed (81)
+   Start at  04:47:07
+   Duration  619ms (transform 120ms, setup 0ms, import 358ms, tests 270ms, environment 0ms)
+
+
+clinical-content
+ Test Files  97 passed (97)
+      Tests  764 passed (764)
+   Start at  04:47:08
+   Duration  37.63s (transform 3.54s, setup 0ms, import 59.00s, tests 6.44s, environment 6ms)
+
+
+clinical-research
+ Test Files  8 passed (8)
+      Tests  83 passed (83)
+   Start at  04:47:46
+   Duration  1.84s (transform 173ms, setup 0ms, import 469ms, tests 796ms, environment 0ms)
+
+
+game-domain
+ Test Files  179 passed (179)
+      Tests  4447 passed | 1 skipped (4448)
+   Start at  04:47:48
+   Duration  359.29s (transform 9.02s, setup 0ms, import 179.35s, tests 520.75s, environment 13ms)
+```
+
+**Root-command constraint:** the unchanged root `npm.cmd test`, `npm.cmd run test:boundaries`, and `npm.cmd run build` each exit **1** solely because their boundary prerequisite invokes Git tracked-path inventory. The mandatory No-Git preload rejects that call **before spawn**. The root test command does not reach its workspace test phase; the independent complete command above supplies all workspace results. The root build does not reach typecheck/Vite; both were run separately. These three root commands are **blocked/unverified**, not green. Runtime source/dependency scans report no other boundary failure. The original verifiers and package scripts are untouched. No fake tracked-path inventory was supplied.
+
+`npm.cmd test` — native exit **1**:
+
+```text
+> gamify-surgery@0.0.1 test
+> npm run test:boundaries && npm run test --workspaces --if-present
+
+
+> gamify-surgery@0.0.1 test:boundaries
+> node scripts/verify-app-boundaries.mjs && node scripts/verify-launcher-contract.mjs
+
+file:///C:/Users/rowla/Projects/GS-release/scripts/verify-app-boundaries.mjs:184
+  throw new Error(`Application boundary verification failed:\n- ${failures.join("\n- ")}`);
+        ^
+
+Error: Application boundary verification failed:
+- Could not inspect tracked paths: Git blocked before spawn: manager required No Git.
+    at file:///C:/Users/rowla/Projects/GS-release/scripts/verify-app-boundaries.mjs:184:9
+
+Node.js v24.19.0
+```
+
+`npm.cmd run test:boundaries` — native exit **1**:
+
+```text
+> gamify-surgery@0.0.1 test:boundaries
+> node scripts/verify-app-boundaries.mjs && node scripts/verify-launcher-contract.mjs
+
+file:///C:/Users/rowla/Projects/GS-release/scripts/verify-app-boundaries.mjs:184
+  throw new Error(`Application boundary verification failed:\n- ${failures.join("\n- ")}`);
+        ^
+
+Error: Application boundary verification failed:
+- Could not inspect tracked paths: Git blocked before spawn: manager required No Git.
+    at file:///C:/Users/rowla/Projects/GS-release/scripts/verify-app-boundaries.mjs:184:9
+
+Node.js v24.19.0
+```
+
+`npm.cmd run build` — native exit **1**:
+
+```text
+> gamify-surgery@0.0.1 build
+> npm run test:boundaries && npm run typecheck && npm run build --workspace @gamify-surgery/player
+
+
+> gamify-surgery@0.0.1 test:boundaries
+> node scripts/verify-app-boundaries.mjs && node scripts/verify-launcher-contract.mjs
+
+file:///C:/Users/rowla/Projects/GS-release/scripts/verify-app-boundaries.mjs:184
+  throw new Error(`Application boundary verification failed:\n- ${failures.join("\n- ")}`);
+        ^
+
+Error: Application boundary verification failed:
+- Could not inspect tracked paths: Git blocked before spawn: manager required No Git.
+    at file:///C:/Users/rowla/Projects/GS-release/scripts/verify-app-boundaries.mjs:184:9
+
+Node.js v24.19.0
+```
+
+`npm.cmd run typecheck` — native exit **0**, all seven workspaces:
+
+```text
+> gamify-surgery@0.0.1 typecheck
+> npm run typecheck --workspaces --if-present
+
+
+> @gamify-surgery/clinical-context-workbench@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.client.json && tsc --noEmit -p tsconfig.server.json
+
+
+> @gamify-surgery/player@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/balance-config@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-authoring@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-content@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-research@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/game-domain@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+```
+
+`npm.cmd run build --workspace @gamify-surgery/player` — native exit **0**, actual production build with codec/operational worker bundles:
+
+```text
+> @gamify-surgery/player@0.0.1 build
+> vite build
+
+vite v8.1.5 building client environment for production...
+
+transforming...✓ 910 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                                         1.49 kB │ gzip:     0.64 kB
+dist/assets/atkinson-hyperlegible-latin-400-normal-BbWidj28.woff       14.02 kB
+dist/assets/atkinson-hyperlegible-latin-700-normal-BK6Glc0m.woff       14.29 kB
+dist/assets/atkinson-hyperlegible-latin-400-normal-BrHNak5F.woff2      17.20 kB
+dist/assets/atkinson-hyperlegible-latin-700-normal-GZI4o3u0.woff2      17.52 kB
+dist/assets/codec.worker-DgzwFco4.js                                7,459.47 kB
+dist/assets/operationalEngine.worker-DTku3K8a.js                    7,989.88 kB
+dist/assets/MobileEntryPresentation-BTU4GZUB.css                        2.63 kB │ gzip:     0.76 kB
+dist/assets/MobileShell-Bbz1nUYS.css                                   43.05 kB │ gzip:     7.37 kB
+dist/assets/index-CnvUy12-.css                                        194.77 kB │ gzip:    36.34 kB
+dist/assets/MobileEntryPresentation-IC-FYVnk.js                         0.32 kB │ gzip:     0.21 kB
+dist/assets/MobileShell-DOU6nRkU.js                                   123.65 kB │ gzip:    32.38 kB
+dist/assets/index-BVwb5Gnv.js                                      16,266.14 kB │ gzip: 2,600.43 kB
+
+[INEFFECTIVE_DYNAMIC_IMPORT] src/session/cloud/codecEvidence.ts is dynamically imported by src/session/cloud/snapshotCodec.ts but also statically imported by src/session/cloud/codecTasks.ts, src/session/cloud/copySelection.ts, src/session/cloud/importCampaigns.ts, src/session/cloud/journalCodec.ts, src/session/cloud/journalWarm.ts, ..., dynamic import will not move module into another chunk.
+
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+[INEFFECTIVE_DYNAMIC_IMPORT] src/session/localProfileJournal.ts is dynamically imported by src/App.tsx but also statically imported by src/session/usePrototypeSession.ts, dynamic import will not move module into another chunk.
+
+[PLUGIN_TIMINGS] Your build spent significant time in plugins. Here is a breakdown:
+  - forbid-private-clinical-modules (84%)
+  - vite:prepare-out-dir (5%)
+See https://rolldown.rs/reference/InputOptions.checks#plugintimings for more details.
+
+✓ built in 4.67s
+```
+
+`node scripts/verify-launcher-contract.mjs` — native exit **0**:
+
+```text
+Verified launcher health contract gamify-surgery-player protocol 1.
+```
+
+Native summary values (all retained):
+
+```json
+{
+  "version": "level-five-m9-integration.v1",
+  "seed": "level-five-m9.integration.01",
+  "setup": "Existing synthetic funded Level 4 opening. One ten-hour operating-day session per calendar day, with ordinary full-pool arrivals and real-world FSRS due dates. Real first answers and earned Level 4/5 goals; no XP/history/witness/report injection or offline active minutes.",
+  "liveCap": 5,
+  "commandsReconciled": 26362,
+  "openingCashCents": 1785500,
+  "grossCents": 15111900,
+  "stockCents": 271860,
+  "paidOperatingCents": 9521205,
+  "capitalCents": 1048000,
+  "closingCashCents": 6056335,
+  "levelFourAdvanceTick": 3704,
+  "xpGoalTick": 14217,
+  "unlock": {
+    "version": "level-five-inspection-unlock.v1",
+    "earnedAtFacilityTick": 14709,
+    "clinicalXp": 2088,
+    "displayedSatisfaction": 91,
+    "averageStaffMorale": 100,
+    "employedStaffCount": 9
+  },
+  "firstAnswers": 553,
+  "levelFiveFirstAnswers": 464,
+  "completedDailyRounds": 35,
+  "positiveComfortUses": 719,
+  "supplierSavings": {
+    "stockCents": 2140,
+    "upkeepSixtiethCents": 707700
+  },
+  "retiredReceipts": 5431,
+  "retiredEncounters": 399,
+  "finishNotices": 0
+}
+```
+
+**Exact changed repository files (three):**
+
+- `tools/qa/level-five-integration-results-20261012.json` — evidence hashes/metadata above.
+- `docs/execplans/level-five-rebind16-release-20261105.md` — new execution plan, decisions and validation.
+- `docs/execplans/gs028-stats-ethics-overhaul-20261007.md` — this append only; all previous bytes preserved.
+
+No checkpoint, runtime, balance, clinical, test or unrelated source file changed during this task. Captured 6,612 public entry file hashes; final inventory verifies every unowned public file unchanged. Private backups, actual generated payloads, command-native exit receipts, logs, per-workspace JSON, source audit, exact comparisons, publication preparation and receipt, final inventory and this handoff's preparation are confined to `.local-dev/l5-evidence-rebind16-release-20261105/`. The three canonical-write review records are `accepted-run-verification.json`, `publication-prepared.json` and `publication-receipt.json`.
+
+Manager next action: review the scoped evidence and exact validation receipts, then rerun the unchanged root commands in a context that permits their Git inventory. Global CURRENT_THREAD_HANDOFF integration and backup decisions remain manager-owned. No deployment or backup is implied.
