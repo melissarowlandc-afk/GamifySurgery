@@ -9,6 +9,27 @@ import { SupabaseCloudTransport, cloudWireBlob, type CloudRpcClient } from "./su
 import { syncFixture, TestCloudClock } from "./syncTestSupport";
 import type { CloudCommitRequest, CloudFrozenOperation } from "./transport";
 
+it.each([false, true])("opts into efficient leases only when the server advertises support (%s)", async efficient => {
+  const rpc = vi.fn(async (name: string) => ({ data: name === "beta2_cloud_access"
+    ? { protocolVersion: 3, enabled: true, writesEnabled: true, noticeAccepted: true, efficientLeases: efficient }
+    : { revision: "1", writerGeneration: "2", expiresAt: "2026-11-04T12:10:00Z", serverTime: "2026-11-04T12:00:00Z" }, error: null }));
+  const transport = new SupabaseCloudTransport({ rpc }, "synthetic", async () => "synthetic"); await transport.capabilities();
+  const lease = await transport.acquire({ campaignId: "clinic", expectedRevision: "1", expectedWriterGeneration: "1", writerToken: "a".repeat(64), operationId: "acquire", takeover: false });
+  expect(rpc.mock.calls.map(([name]) => name)).toEqual(["beta2_cloud_access", efficient ? "beta2_cloud_lease_v2" : "beta2_cloud_lease"]);
+  expect(lease.expiresAtMs - lease.serverNowMs).toBe(600_000);
+});
+it.each(["PGRST202", "55000", "40001", "42501"])("only a missing optional endpoint permits legacy fallback (%s)", async code => {
+  const rpc = vi.fn(async (name: string) => name === "beta2_cloud_access"
+    ? { data: { protocolVersion: 3, enabled: true, writesEnabled: true, noticeAccepted: true, efficientLeases: true }, error: null }
+    : name === "beta2_cloud_lease_v2" ? { data: null, error: { code } }
+      : { data: { revision: "1", writerGeneration: "2", expiresAt: "2026-11-04T12:01:00Z", serverTime: "2026-11-04T12:00:00Z" }, error: null });
+  const transport = new SupabaseCloudTransport({ rpc }, "synthetic", async () => "synthetic"); await transport.capabilities();
+  const attempt = transport.acquire({ campaignId: "clinic", expectedRevision: "1", expectedWriterGeneration: "1", writerToken: "a".repeat(64), operationId: "acquire", takeover: false });
+  if (code === "PGRST202") { expect((await attempt).expiresAtMs).toBe(Date.parse("2026-11-04T12:01:00Z")); await transport.renew(await attempt);
+    expect(rpc.mock.calls.filter(([name]) => name === "beta2_cloud_lease_v2")).toHaveLength(1); }
+  else { await expect(attempt).rejects.toBeInstanceOf(Error); expect(rpc.mock.calls.some(([name]) => name === "beta2_cloud_lease")).toBe(false); }
+});
+
 async function rpcFixture() {
   const fixture = await syncFixture(), clock = new TestCloudClock();
   let revision = "1", generation = "1", active = false, lostAck = false, account = "account-a";
@@ -63,6 +84,8 @@ describe("Supabase protocol-3 sealed-page adapter (offline RPC contract tests)",
       const transport = new SupabaseCloudTransport({ rpc }, "a", async () => "a");
       const first = expect(transport.capabilities()).rejects.toMatchObject({ code: "network" });
       await vi.advanceTimersByTimeAsync(30_000); await first;
+      await expect(transport.capabilities()).rejects.toMatchObject({ code: "throttled" }); expect(rpc).toHaveBeenCalledOnce();
+      await vi.advanceTimersByTimeAsync(1_000);
       expect(await transport.capabilities()).toMatchObject({ enabled: true });
       expect(vi.getTimerCount()).toBe(0);
     } finally { vi.useRealTimers(); }

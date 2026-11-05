@@ -5,6 +5,7 @@ import { hostedAuthConfiguration } from "../auth/prototypeAuth";
 import { getSupabaseAuthClient } from "../auth/supabaseAuth";
 import { useUsageTracking } from "../playtime/UsageProvider";
 import { createFlagTransport, QuestionFlagQueue, type FlagStorage } from "./hostedQuestionFlags";
+import { canPollAccount } from "./requestBudget";
 
 const FlagContext = createContext<QuestionFlagQueue | null>(null);
 export const useQuestionFlags = () => useContext(FlagContext);
@@ -26,14 +27,15 @@ export function QuestionFlagProvider({ children }: { children: ReactNode }) {
     setQueue(current);
     const sync = () => {
       if (["deleted", "blocked"].includes(usage.status().state)) current.clear();
-      else if (usage.canRecordQuestions()) void current.flush();
+      else if (usage.canRecordQuestions() && canPollAccount(accountId)) void current.flush(true);
     };
-    const retry = () => { sync(); void current.refreshStatuses(); };
+    const retry = () => { if (!canPollAccount(accountId)) return; sync(); void current.refreshStatuses(true); };
     const unsubscribe = usage.subscribe(sync);
     const timer = window.setInterval(retry, 60_000);
     window.addEventListener("online", retry);
+    document.addEventListener("visibilitychange", retry);
     retry();
-    return () => { unbindDiagnostics(); unsubscribe(); window.clearInterval(timer); window.removeEventListener("online", retry); current.stop(); };
+    return () => { unbindDiagnostics(); unsubscribe(); window.clearInterval(timer); window.removeEventListener("online", retry); document.removeEventListener("visibilitychange", retry); current.stop(); };
   }, [accountId, usage]);
   return <FlagContext.Provider value={queue}>{children}</FlagContext.Provider>;
 }

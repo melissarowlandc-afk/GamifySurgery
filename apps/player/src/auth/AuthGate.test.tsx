@@ -92,6 +92,7 @@ beforeEach(() => {
   vi.stubEnv("BASE_URL", "/GamifySurgery/");
 });
 afterEach(async () => {
+  vi.restoreAllMocks();
   expect(mock.network).not.toHaveBeenCalled();
   await cleanupPhoneTests(); vi.unstubAllEnvs();
 });
@@ -263,6 +264,7 @@ describe("invite-only shared auth gate", () => {
 
   it.each(["desktop", "phone"])("keeps a cached %s session pending through transport failures and retries with backoff", async layout => {
     vi.useFakeTimers();
+    vi.spyOn(Math, "random").mockReturnValue(1);
     mock.getSession.mockResolvedValue({ data: { session: session() }, error: null });
     mock.getUser.mockRejectedValueOnce(new TypeError("Synthetic failed fetch"))
       .mockResolvedValueOnce({ data: { user: null }, error: { name: "AuthRetryableFetchError", status: 0 } });
@@ -283,13 +285,14 @@ describe("invite-only shared auth gate", () => {
     expect(mock.signOut).not.toHaveBeenCalled();
   });
 
-  it("caps repeated service failures at a 30-second retry delay", async () => {
+  it("caps repeated service failures at a five-minute retry delay", async () => {
     vi.useFakeTimers();
+    vi.spyOn(Math, "random").mockReturnValue(1);
     mock.getSession.mockResolvedValue({ data: { session: session() }, error: null });
     mock.getUser.mockResolvedValue({ data: { user: null }, error: { status: 503 } });
     const env = await setup();
     let calls = 1;
-    for (const delay of [1000, 2000, 4000, 8000, 16000, 30000, 30000]) {
+    for (const delay of [1000, 2000, 4000, 8000, 16000, 32000, 64000, 128000, 256000, 300000, 300000]) {
       await act(async () => { await vi.advanceTimersByTimeAsync(delay - 1); });
       expect(mock.getUser).toHaveBeenCalledTimes(calls);
       await act(async () => { await vi.advanceTimersByTimeAsync(1); });
@@ -299,12 +302,15 @@ describe("invite-only shared auth gate", () => {
     expect(mock.signOut).not.toHaveBeenCalled(); expect(mock.mounts).not.toHaveBeenCalled();
   });
 
-  it("retries immediately when connectivity returns and cancels the delayed retry", async () => {
+  it("coalesces connectivity bursts within the retry budget and recovers at its deadline", async () => {
     vi.useFakeTimers();
+    vi.spyOn(Math, "random").mockReturnValue(1);
     mock.getSession.mockResolvedValue({ data: { session: session() }, error: null });
     mock.getUser.mockRejectedValueOnce(new TypeError("Synthetic offline"));
     const env = await setup();
-    await act(async () => { env.browser.dispatchEvent(new Event("online")); });
+    await act(async () => { for (let i = 0; i < 100; i++) env.browser.dispatchEvent(new Event("online")); });
+    expect(mock.getUser).toHaveBeenCalledTimes(1);
+    await act(async () => { await vi.advanceTimersByTimeAsync(1_000); });
     expect(mock.getUser).toHaveBeenCalledTimes(2);
     expect(env.element.textContent).toContain("Clinic account-a");
     await act(async () => { await vi.advanceTimersByTimeAsync(60_000); });
@@ -393,6 +399,8 @@ describe("invite-only shared auth gate", () => {
     expect(allElements(env.doc.body, node => node.tagName === "BUTTON" && node.textContent === "Try again")).toHaveLength(1);
     expect(mock.mounts).not.toHaveBeenCalled(); expect(mock.signOut).not.toHaveBeenCalled();
     await act(async () => { env.browser.dispatchEvent(new Event("online")); });
+    expect(mock.getUser).toHaveBeenCalledTimes(1);
+    await act(async () => { await vi.advanceTimersByTimeAsync(1_000); });
     expect(env.element.textContent).toContain("Clinic account-a");
     await act(async () => { resolve({ data: { user: null }, error: { status: 401 } }); });
     expect(env.element.textContent).toContain("Clinic account-a"); expect(mock.signOut).not.toHaveBeenCalled();

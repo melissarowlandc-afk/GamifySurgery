@@ -1,4 +1,5 @@
 import { cloudCodec } from "./codecWorker";
+import { RequestBackoff } from "../requestBudget";
 import { compressedHash } from "./codecWire";
 export { cloudWireBlob, type CloudWireBlob } from "./codecWire";
 import { assertCloudRevision } from "./codec";
@@ -61,26 +62,45 @@ function mappedError(error: unknown): CloudSyncError {
 /** Thin adapter to 20261018000100_beta2_cloud_saves.sql's named protocol-3 RPCs. */
 export class SupabaseCloudTransport implements CloudTransport {
   private snapshots = false;
+  private efficientLeases = false;
   private readonly heads = new Map<string, CloudCampaignHead>();
   private readonly tokens = new Map<string, string>();
+  private readonly readBackoffs = new Map<string, RequestBackoff>();
   constructor(private readonly client: CloudRpcClient, private readonly accountId: string,
     private readonly currentAccountId: () => Promise<string | null>, private readonly now: () => number = () => Date.now()) {}
   private async call(name: string, args: Record<string, unknown>): Promise<unknown> {
     let timer: ReturnType<typeof setTimeout> | undefined;
+    let sent = false;
+    const reading = ["beta2_cloud_access", "beta2_cloud_list", "beta2_cloud_load", "beta2_snapshot_load"].includes(name);
+    let budget = this.readBackoffs.get(name);
+    if (reading && !budget) { budget = new RequestBackoff(1_000, 5 * 60_000, this.now); this.readBackoffs.set(name, budget); }
     try {
       return await Promise.race([(async () => {
         if (await this.currentAccountId() !== this.accountId) throw new CloudSyncError("auth");
+        if (budget && !budget.ready()) throw new CloudSyncError("throttled", budget.remaining());
+        sent = true;
         const { data, error } = await this.client.rpc(name, args);
         if (await this.currentAccountId() !== this.accountId) throw new CloudSyncError("auth");
+        if ((error as { code?: string } | null)?.code === "PGRST202" && name === "beta2_cloud_lease_v2") {
+          // Rollback/stale schema discovery only. Never downgrade an auth,
+          // generation, revision, quota or token rejection to another endpoint.
+          this.efficientLeases = false; return this.call("beta2_cloud_lease", args);
+        }
         if (error) throw error;
+        budget?.success();
         return data;
       })(), new Promise<never>((_, reject) => { timer = setTimeout(() => reject(new CloudSyncError("network")), 30_000); })]);
-    } catch (error) { throw mappedError(error); }
+    } catch (error) {
+      const failure = mappedError(error);
+      if (sent && budget && ["network", "throttled"].includes(failure.code)) budget.fail(failure.retryAfterMs);
+      throw failure;
+    }
     finally { clearTimeout(timer); }
   }
   async capabilities(): Promise<CloudCapabilities> {
     const data = object(await this.call("beta2_cloud_access", { p_protocol: CLOUD_SYNC_PROTOCOL }));
     this.snapshots = data.snapshotSaves === true;
+    this.efficientLeases = data.efficientLeases === true;
     return { accountId: this.accountId, enabled: data.enabled === true, writesEnabled: data.writesEnabled === true,
       admitted: true, noticeAccepted: data.noticeAccepted === true, deletionRequested: false, minProtocol: integer(data.protocolVersion),
       enrollmentsEnabled: data.enrollmentsEnabled === true, enrolled: data.enrolled === true,
@@ -150,7 +170,7 @@ export class SupabaseCloudTransport implements CloudTransport {
     return this.leaseCall(input.campaignId, input.takeover ? "takeover" : "acquire", input.expectedRevision, head.writerGeneration!, token);
   }
   private async leaseCall(campaignId: string, action: string, expectedRevision: string, writerGeneration: string, writerToken: string): Promise<CloudLease> {
-    const data = object(await this.call("beta2_cloud_lease", { p_protocol: CLOUD_SYNC_PROTOCOL, p_campaign_id: campaignId, p_action: action,
+    const data = object(await this.call(this.efficientLeases ? "beta2_cloud_lease_v2" : "beta2_cloud_lease", { p_protocol: CLOUD_SYNC_PROTOCOL, p_campaign_id: campaignId, p_action: action,
       p_expected_revision: expectedRevision, p_writer_generation: writerGeneration, p_writer_token: writerToken }));
     const result: CloudLease = { campaignId, revision: revision(data.revision), writerGeneration: revision(data.writerGeneration),
       writerToken, expiresAtMs: action === "release" ? timestamp(data.serverTime) : timestamp(data.expiresAt),

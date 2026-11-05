@@ -1,5 +1,6 @@
 import type { GameState } from "@gamify-surgery/game-domain";
 import { setAuxiliaryItem } from "../session/storagePressure";
+import { RequestBackoff } from "../session/requestBudget";
 import { averageDailyRevenue, readRevenueHistory, type RevenueHistory } from "./revenue";
 import { CompetitionAccessError, CompetitionValidationError, isCompetitionSubmission,
   type CompetitionSubmission, type CompetitionTransport } from "./types";
@@ -26,8 +27,12 @@ export class CompetitionClient {
   private flushing: Promise<void> | null = null;
   private blocked = false;
   private rankChecks = new Map<string, Promise<CompetitionRankChange | null>>();
+  private readonly deliveryBudget: RequestBackoff;
+  private readonly rankBudget: RequestBackoff;
   constructor(private transport: CompetitionTransport, private storage: CompetitionStorage | null,
     readonly storageKey: string, private now = () => Date.now()) {
+    this.deliveryBudget = new RequestBackoff(15_000, 15 * 60_000, now);
+    this.rankBudget = new RequestBackoff(60_000, 15 * 60_000, now);
     try {
       const parsed: unknown = JSON.parse(storage?.getItem(storageKey) ?? "[]");
       if (Array.isArray(parsed)) for (const value of parsed.slice(-MAX_CLINICS)) {
@@ -91,6 +96,7 @@ export class CompetitionClient {
    * Rank history belongs to the aggregate account/campaign cache, never saves. */
   async rankChange(campaignId: string, completedDay: number, casualMode: boolean | null): Promise<CompetitionRankChange | null> {
     if (this.blocked || casualMode !== false || !Number.isSafeInteger(completedDay) || completedDay < 1) return null;
+    if (!this.rankBudget.ready()) return null;
     const inFlight = this.rankChecks.get(campaignId);
     if (inFlight) { await inFlight; return this.rankChange(campaignId, completedDay, casualMode); }
     const record = this.records.get(campaignId);
@@ -103,6 +109,7 @@ export class CompetitionClient {
   private async readRankChange(campaignId: string, completedDay: number): Promise<CompetitionRankChange | null> {
     try {
       const board = await this.leaderboard();
+      this.rankBudget.success();
       const record = this.records.get(campaignId);
       if (this.blocked || !record || (record.rankCheckedDay ?? 0) >= completedDay) return null;
       const rank = board.hidden ? undefined : board.rows.find(row => row.isSelf)?.rank ?? undefined;
@@ -115,11 +122,12 @@ export class CompetitionClient {
       return { campaignId, completedDay, message: rank < previous
         ? `You moved up to #${rank} in Clinic Competition!`
         : `Another clinic passed yours — you're now #${rank}.` };
-    } catch { return null; } // Offline reads never consume the day's rank check.
+    } catch { this.rankBudget.fail(); return null; } // Never consume the day's check.
   }
   flush(): Promise<void> {
     if (this.blocked) return Promise.resolve();
     if (this.flushing) return this.flushing;
+    if (!this.deliveryBudget.ready()) return Promise.resolve();
     this.flushing = this.upload().finally(() => { this.flushing = null; });
     return this.flushing;
   }
@@ -130,6 +138,7 @@ export class CompetitionClient {
       if (record.touchedAt <= this.now() - QUEUE_MAX_AGE_MS) { record.pending = undefined; this.persist(); continue; }
       try {
         await this.transport.submit(pending);
+        this.deliveryBudget.success();
         if (this.blocked) return;
         const current = this.records.get(record.campaignId);
         if (current) {
@@ -144,6 +153,7 @@ export class CompetitionClient {
           if (this.records.get(record.campaignId)?.pending === pending) this.records.get(record.campaignId)!.pending = undefined;
           this.persist(); continue;
         }
+        this.deliveryBudget.fail();
         return; // Offline/quota failures retain the newest clinic sample for retry.
       }
     }

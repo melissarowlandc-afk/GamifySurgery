@@ -50,11 +50,15 @@ describe("game-day competition rank changes", () => {
     expect(transport.leaderboard).not.toHaveBeenCalled();
   });
   it("retains the last known rank through offline reads and retries without an invented alert", async () => {
-    const transport = fakeTransport(board(3)), client = new CompetitionClient(transport, memoryStorage(), "a");
+    let now = Date.now();
+    const transport = fakeTransport(board(3)), client = new CompetitionClient(transport, memoryStorage(), "a", () => now);
     await submit(client, 1); await client.rankChange("campaign.rank-test", 1, false);
     await submit(client, 2); transport.leaderboard.mockRejectedValueOnce(new Error("offline"));
     expect(await client.rankChange("campaign.rank-test", 2, false)).toBeNull();
     transport.leaderboard.mockResolvedValue(board(2));
+    expect(await client.rankChange("campaign.rank-test", 2, false)).toBeNull();
+    expect(transport.leaderboard).toHaveBeenCalledTimes(2);
+    now += 60_000;
     expect((await client.rankChange("campaign.rank-test", 2, false))?.message).toContain("moved up to #2");
     expect(await client.rankChange("campaign.rank-test", 2, false)).toBeNull();
   });

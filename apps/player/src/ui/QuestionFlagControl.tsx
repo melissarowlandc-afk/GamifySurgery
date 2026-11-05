@@ -3,6 +3,7 @@ import { useAuthAccountId } from "../auth/AuthAccountContext";
 import { useUsageTracking } from "../playtime/UsageProvider";
 import { createHostedQuestionFlag } from "../session/hostedQuestionFlags";
 import { useQuestionFlags } from "../session/QuestionFlagProvider";
+import { canPollAccount } from "../session/requestBudget";
 import type { QuestionReviewFlagInput, SubmitQuestionReviewFlag } from "../session/questionReviewFlags";
 import type { ChartDecisionStepView } from "./types";
 import "./betaAccount.css";
@@ -23,8 +24,8 @@ export function QuestionFlagControl({ step, onSubmit, compact = false }: {
   const [, redraw] = useState(0);
   useEffect(() => queue?.subscribe(() => redraw((n) => n + 1)), [queue]);
   useEffect(() => {
-    if (step.reviewFlagInput && queue) void queue.refreshStatuses();
-  }, [queue, step.reviewFlagInput?.clinicalCaseId, step.questionVariantId]);
+    if (step.reviewFlagInput && queue && (!accountId || canPollAccount(accountId))) void queue.refreshStatuses(true);
+  }, [queue, accountId, step.reviewFlagInput?.clinicalCaseId, step.questionVariantId]);
   const entry = step.reviewFlagInput ? queue?.find(step.reviewFlagInput) : undefined;
   const alreadyFlagged = Boolean(entry || step.flaggedForDeveloperReview);
   const cancel = () => { setCaptured(null); setComment(""); triggerRef.current?.focus(); };

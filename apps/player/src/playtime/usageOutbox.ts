@@ -13,7 +13,7 @@ export class UsageOutbox {
   private deleting = false;
   readonly key: string;
 
-  constructor(accountId: string, private storage: UsageStorage | null, private now: () => number) {
+  constructor(readonly accountId: string, private storage: UsageStorage | null, private now: () => number) {
     this.key = accountStorageKey(USAGE_OUTBOX_KEY, accountId);
     this.memory = this.read();
     // Prune persisted expired entries even when admission/consent blocks uploads.

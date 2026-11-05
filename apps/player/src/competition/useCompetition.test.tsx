@@ -19,7 +19,8 @@ afterEach(() => { vi.unstubAllEnvs(); hosted.getClient.mockReset(); hosted.usage
 
 describe("nonblocking day completion hook", () => {
   it("reads rank after submission, publishes a changed rank once, and retries offline reads", async () => {
-    const env = phoneTestDom(), transport = fakeTransport(), client = new CompetitionClient(transport, memoryStorage(), "rank-hook"), notify = vi.fn();
+    let now = Date.now();
+    const env = phoneTestDom(), transport = fakeTransport(), client = new CompetitionClient(transport, memoryStorage(), "rank-hook", () => now), notify = vi.fn();
     const order: string[] = []; let rank = 3;
     transport.submit.mockImplementation(async () => { order.push("submit"); });
     transport.leaderboard.mockImplementation(async () => { order.push("rank"); return { hidden: false, rows: [{ rank, isSelf: true, clinicName: "Clinic", facilityLevel: 0, averageDailyRevenueCents: 0, daysCounted: 1 }] }; });
@@ -31,6 +32,8 @@ describe("nonblocking day completion hook", () => {
     await render(2); expect(notify).toHaveBeenCalledTimes(1);
     rank = 4; transport.leaderboard.mockRejectedValueOnce(new Error("offline")); await render(3);
     expect(notify).toHaveBeenCalledTimes(1); expect(env.element.textContent).toBe("Game continues");
+    await act(async () => { env.browser.dispatchEvent(new Event("online")); }); expect(notify).toHaveBeenCalledTimes(1);
+    now += 60_000;
     await act(async () => { env.browser.dispatchEvent(new Event("online")); });
     expect(notify).toHaveBeenCalledTimes(2); expect(notify.mock.calls[1]![0].message).toBe("Another clinic passed yours — you're now #4.");
   });
@@ -57,10 +60,13 @@ describe("nonblocking day completion hook", () => {
     expect(transport.submit).toHaveBeenCalledTimes(2);
   });
   it("retries on reconnect while leaving gameplay rendered during failures", async () => {
-    const env = phoneTestDom(), transport = fakeTransport(), client = new CompetitionClient(transport, memoryStorage(), "a");
+    let now = Date.now();
+    const env = phoneTestDom(), transport = fakeTransport(), client = new CompetitionClient(transport, memoryStorage(), "a", () => now);
     transport.submit.mockRejectedValueOnce(new Error("offline"));
     await env.render(<CompetitionClientContext.Provider value={client}><Observe state={revenueState()} /></CompetitionClientContext.Provider>);
     expect(env.element.textContent).toBe("Game continues");
+    await act(async () => { env.browser.dispatchEvent(new Event("online")); }); expect(transport.submit).toHaveBeenCalledTimes(1);
+    now += 15_000;
     await act(async () => { env.browser.dispatchEvent(new Event("online")); });
     expect(transport.submit).toHaveBeenCalledTimes(2);
   });

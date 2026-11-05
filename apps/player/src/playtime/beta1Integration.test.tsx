@@ -198,6 +198,10 @@ describe("Beta 1 real adapter integration with a mocked Supabase client", () => 
     expect(current.state.paused).toBe(true); await env.click("Toggle synthetic pause");
     await act(async () => { usage!.activity(); });
     await heartbeat();
+    // Thirty-second receipt intervals are durable immediately; ordinary HTTP
+    // batching is now five minutes. A boundary still drains the exact minute.
+    expect(backend.receipts.size).toBe(0);
+    await act(async () => { await usage!.flush(); });
     const time = [...backend.receipts.values()].filter((receipt) => receipt.kind === "playtime").reduce((sum, receipt) => sum + receipt.active_ms, 0);
     expect(time).toBe(60_000);
     const encounter = current.state.encounters[current.state.openChartEncounterId!]!;

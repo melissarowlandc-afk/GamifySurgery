@@ -29,6 +29,7 @@ import { ClinicalContentNotice } from "../ui/ClinicalContentNotice";
 import { cloudCheckDeadline } from "../session/cloud/checkDeadline";
 import { clearAuthCallback, loadAuthPasswordFlow, readAuthCallback, saveAuthPasswordFlow } from "./authPasswordFlow";
 import { takeSetupLink } from "./setupLink";
+import { RequestBackoff, requestDocumentVisible } from "../session/requestBudget";
 import { SetupAccountForm } from "./SetupAccountForm";
 import "../ui/OpeningSequence.css";
 
@@ -42,7 +43,6 @@ const SIGN_IN_ERROR = "Sign-in could not be completed. Check your email and pass
 const LINK_ERROR = "This invitation or recovery link is invalid or has expired. Contact the person who invited you for a new link.";
 const RECOVERY_HELP = "Contact the person who invited you and ask them to email you a password-reset link. Open that link to choose a new password.";
 const SESSION_ERROR = "Your account session could not be verified. Sign in again, or try later if the account service is unavailable.";
-const AUTH_RETRY_DELAYS = [1_000, 2_000, 4_000, 8_000, 16_000, 30_000];
 
 function requestError(error: unknown): string {
   const details = error as { code?: string; status?: number } | null;
@@ -132,7 +132,7 @@ function HostedAuthGate({ children, setupLink, clearSetupLink }: AuthGateProps &
     let active = true;
     let finished = false;
     let inFlight = false;
-    let attempts = 0;
+    const retryBudget = new RequestBackoff(1_000, 5 * 60_000);
     let timer: ReturnType<typeof setTimeout> | undefined;
     const flow = callbackFlowRef.current ?? loadAuthPasswordFlow(candidateSession.user.id);
     callbackFlowRef.current = null;
@@ -156,10 +156,10 @@ function HostedAuthGate({ children, setupLink, clearSetupLink }: AuthGateProps &
       setSessionCheckUnavailable(true);
       setCheckingSession(true);
       timer = setTimeout(() => { timer = undefined; void verify(); },
-        AUTH_RETRY_DELAYS[Math.min(attempts++, AUTH_RETRY_DELAYS.length - 1)]);
+        retryBudget.fail());
     };
     const verify = async () => {
-      if (!active || finished || inFlight) return;
+      if (!active || finished || inFlight || !requestDocumentVisible()) return;
       inFlight = true;
       try {
         const { data, error } = await cloudCheckDeadline(authClient.auth.getUser(candidateSession.access_token));
@@ -179,16 +179,20 @@ function HostedAuthGate({ children, setupLink, clearSetupLink }: AuthGateProps &
       } finally { inFlight = false; }
     };
     const online = () => {
+      if (!requestDocumentVisible()) return;
+      if (timer !== undefined && !retryBudget.ready()) return;
       if (timer !== undefined) clearTimeout(timer);
       timer = undefined;
       void verify();
     };
     window.addEventListener("online", online);
+    document.addEventListener("visibilitychange", online);
     void verify();
     return () => {
       active = false;
       if (timer !== undefined) clearTimeout(timer);
       window.removeEventListener("online", online);
+      document.removeEventListener("visibilitychange", online);
     };
   }, [authClient, candidateSession]);
 

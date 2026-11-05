@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { PlaytimeTracker, type CasualModeMemory } from "./playtimeTracker";
 import { UsageOutbox, type UsageStorage } from "./usageOutbox";
 import { USAGE_IDLE_MS, USAGE_MAX_AGE_MS, USAGE_NOTICE_VERSION, USAGE_QUEUE_BYTES, type UsageAccess, type UsageReceipt, type UsageTransport } from "./usageTypes";
+import { setAccountRequestsActive } from "../session/requestBudget";
 
 export function memoryUsageStorage(): UsageStorage & { values: Map<string, string> } {
   const values = new Map<string, string>();
@@ -31,16 +32,17 @@ const activeMs = (receipts: readonly UsageReceipt[]) => receipts.reduce((sum, r)
 
 describe("account access recovery", () => {
   beforeEach(() => vi.useFakeTimers());
-  afterEach(() => vi.useRealTimers());
+  afterEach(() => { vi.useRealTimers(); vi.restoreAllMocks(); });
   const admitted = (casual: boolean): UsageAccess => ({ admitted: true, notice_accepted: true, deletion_requested: false, casual });
 
   it("recovers an unknown mode without an online event, using one capped backoff timer until success", async () => {
+    vi.spyOn(Math, "random").mockReturnValue(1);
     const f = usageFixture();
     vi.mocked(f.transport.access).mockRejectedValue(new Error("temporarily unavailable"));
     await f.tracker.refreshAccess();
     expect(f.tracker.casualMode()).toBeNull(); expect(f.tracker.canRecordQuestions()).toBe(false);
     expect(f.transport.access).toHaveBeenCalledTimes(1);
-    for (const [index, delay] of [2_000, 5_000, 15_000, 30_000].entries()) {
+    for (const [index, delay] of [2_000, 4_000, 8_000, 16_000].entries()) {
       expect(vi.getTimerCount()).toBe(1);
       await vi.advanceTimersByTimeAsync(delay - 1);
       expect(f.transport.access).toHaveBeenCalledTimes(index + 1);
@@ -48,7 +50,7 @@ describe("account access recovery", () => {
       expect(f.transport.access).toHaveBeenCalledTimes(index + 2);
     }
     vi.mocked(f.transport.access).mockResolvedValue(admitted(true));
-    await vi.advanceTimersByTimeAsync(29_999);
+    await vi.advanceTimersByTimeAsync(31_999);
     expect(f.transport.access).toHaveBeenCalledTimes(5);
     await vi.advanceTimersByTimeAsync(1);
     expect(f.transport.access).toHaveBeenCalledTimes(6);
@@ -101,6 +103,16 @@ describe("account access recovery", () => {
     }
   });
 
+  it("cancels automatic access retries on pagehide even without a visibility event", async () => {
+    const f = usageFixture();
+    vi.mocked(f.transport.access).mockRejectedValue(new Error("offline"));
+    await f.tracker.refreshAccess(); expect(vi.getTimerCount()).toBe(1);
+    f.tracker.pagehide(); expect(vi.getTimerCount()).toBe(0);
+    await vi.advanceTimersByTimeAsync(30 * 60_000); await f.tracker.refreshAccess(true);
+    expect(f.transport.access).toHaveBeenCalledOnce(); expect(f.transport.ingest).not.toHaveBeenCalled();
+    f.tracker.stop();
+  });
+
   it("does not start transport work after an immediate cleanup", async () => {
     const f = usageFixture(); const request = f.tracker.refreshAccess(); f.tracker.stop(); await request;
     expect(f.transport.access).not.toHaveBeenCalled(); expect(vi.getTimerCount()).toBe(0);
@@ -144,6 +156,32 @@ describe("account access recovery", () => {
 });
 
 describe("shared active playtime accounting", () => {
+  it("batches an hour into twelve uploads without losing any 30-second receipt or active millisecond", async () => {
+    const f = usageFixture(); await f.ready();
+    for (let second = 1; second <= 3_600; second++) {
+      if (second % 60 === 0) f.tracker.activity();
+      f.advance(1_000); f.tracker.tick();
+      for (let i = 0; i < 4; i++) await Promise.resolve();
+    }
+    const batches = vi.mocked(f.transport.ingest).mock.calls.map(([rows]) => rows);
+    expect(batches).toHaveLength(12); expect(batches.every(rows => rows.length === 10)).toBe(true);
+    expect(activeMs(batches.flat())).toBe(3_600_000);
+    expect(new Set(batches.flat().map(row => row.receipt_id)).size).toBe(120);
+    expect(f.outbox.batch()).toEqual([]); expect(f.outbox.status().droppedReceipts).toBe(0);
+    f.tracker.stop();
+  });
+  it("drains one small leaving batch then sends nothing hidden or after Save & Close", async () => {
+    const f = usageFixture(); await f.ready(); f.observe(50_000); f.tracker.setVisible(false);
+    for (let i = 0; i < 5; i++) await Promise.resolve();
+    expect(f.transport.ingest).toHaveBeenCalledOnce();
+    for (let minute = 0; minute < 60; minute++) { f.advance(60_000); f.tracker.tick(); await f.tracker.refreshAccess(true); }
+    expect(f.transport.ingest).toHaveBeenCalledOnce(); expect(f.transport.access).toHaveBeenCalledOnce();
+    f.tracker.setVisible(true); setAccountRequestsActive(f.outbox.accountId, false);
+    f.tracker.commitQuestions([f.tracker.createQuestionReceipt()!]);
+    for (let minute = 0; minute < 10; minute++) { f.advance(60_000); f.tracker.tick(); await f.tracker.flush(); await f.tracker.refreshAccess(true); }
+    expect(f.transport.ingest).toHaveBeenCalledOnce(); expect(f.transport.access).toHaveBeenCalledOnce();
+    expect(f.outbox.batch()).toHaveLength(1); f.tracker.stop();
+  });
   it("records no time/count before the full notice and fresh server admission", async () => {
     const f = usageFixture({ accepted: false }); await f.ready(); f.observe(61_000);
     expect(f.transport.ingest).not.toHaveBeenCalled(); expect(f.tracker.createQuestionReceipt()).toBeNull();
@@ -194,7 +232,7 @@ describe("shared active playtime accounting", () => {
     expect(f.transport.ingest).not.toHaveBeenCalled();
   });
 
-  it("persists <=30 second intervals and batches at 60 seconds", async () => {
+  it("persists <=30 second intervals before an explicit boundary upload at 60 seconds", async () => {
     const f = usageFixture(); await f.ready(); f.observe(59_000);
     expect(f.transport.ingest).not.toHaveBeenCalled(); expect(f.outbox.batch()).toHaveLength(1);
     f.observe(1_000); await f.tracker.flush();

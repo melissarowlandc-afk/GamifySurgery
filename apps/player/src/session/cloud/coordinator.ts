@@ -18,6 +18,8 @@ import { snapshotConflictBackup } from "./retainedCopies";
 import type { CloudCodecExecutor } from "./codecTasks";
 import { CloudCacheError } from "./codecCache";
 import { isTransientStorageError, storageDeadline } from "./storageRetry";
+import { ACCOUNT_READ_REFRESH_MS, healthyLeaseRenewMs, MAX_HEALTHY_LEASE_MS, RequestBackoff, requestDocumentVisible, setAccountRequestsActive } from "../requestBudget";
+import { networkRequestBudget } from "./networkRequestBudget";
 import { type CloudCache, type CloudCacheEntry, type CloudCacheRead, type CloudRecovery } from "./cache";
 import {
   CLOUD_CHECKPOINT_MS, CLOUD_GRACE_MS, CLOUD_LEASE_MS, CLOUD_RENEW_MS, CLOUD_SAVES_ENABLED_BY_DEFAULT,
@@ -80,6 +82,7 @@ export class CloudSyncCoordinator {
   private autoReconnect = false;
   private lastReconnect: TimePair;
   private retryAfterMs = 0;
+  private readonly networkBackoff: RequestBackoff;
   private prepareLocalRecovery: (() => Promise<boolean>) | null = null;
   private phase: CloudSyncPhase;
   private failure: string | null = null;
@@ -126,6 +129,8 @@ export class CloudSyncCoordinator {
     this.enabled = options.enabled ?? CLOUD_SAVES_ENABLED_BY_DEFAULT;
     this.phase = this.enabled ? "checking" : "off";
     this.clock = options.clock ?? { wallNow: () => Date.now(), monotonicNow: () => performance.now() };
+    this.networkBackoff = networkRequestBudget(options.entryStore ?? options.transport, JSON.stringify([this.scope.backendId, this.scope.accountId]), this.clock.monotonicNow.bind(this.clock));
+    this.retryAfterMs = this.networkBackoff.remaining();
     this.newId = options.newOperationId ?? (() => crypto.randomUUID());
     this.lastSample = this.now(); this.lastRenew = this.now(); this.lastHead = this.now();
     this.lastReconnect = this.now();
@@ -264,7 +269,8 @@ export class CloudSyncCoordinator {
     if (isTransientStorageError(error) && this.allowed() && this.localDurable) {
       this.storageRetrying = true; this.failure = "processing"; this.backupRetryAfter = this.now(); this.emit(); return;
     }
-    this.retryAfterMs = error instanceof CloudSyncError ? error.retryAfterMs : 0;
+    this.retryAfterMs = ["network", "throttled"].includes(code)
+      ? this.networkBackoff.fail(error instanceof CloudSyncError ? error.retryAfterMs : 0) : 0;
     this.failure = code;
     if (code === "network" || code === "throttled") {
       const remaining = this.window ? Math.max(0, this.remaining(this.window.until)) : 0;
@@ -371,7 +377,7 @@ export class CloudSyncCoordinator {
   private request(operation: CloudFrozenOperation): CloudCommitRequest { return JSON.parse(operation.requestText) as CloudCommitRequest; }
   private installLease(lease: CloudLease, sent: TimePair): void {
     assertCloudRevision(lease.writerGeneration, true);
-    const duration = Math.min(CLOUD_LEASE_MS, lease.expiresAtMs - lease.serverNowMs);
+    const duration = Math.min(MAX_HEALTHY_LEASE_MS, lease.expiresAtMs - lease.serverNowMs);
     if (!Number.isFinite(duration) || duration <= this.elapsed(sent) || lease.campaignId !== this.scope.campaignId || !lease.writerToken) {
       throw new CloudSyncError("writer");
     }
@@ -379,6 +385,11 @@ export class CloudSyncCoordinator {
     this.retainedWriter = lease;
     this.suspendedLease = null;
     this.lastRenew = sent;
+    this.networkBackoff.success(); this.retryAfterMs = 0;
+    setAccountRequestsActive(this.scope.accountId, true);
+  }
+  private renewalCadence(): number {
+    return healthyLeaseRenewMs(this.window ? this.window.until.mono - this.lastRenew.mono : CLOUD_LEASE_MS);
   }
   private async acquire(head: { revision: string; writerGeneration: string }, takeover: boolean, epoch: number,
     current: () => boolean = () => this.live(epoch)): Promise<CloudLease> {
@@ -921,16 +932,20 @@ export class CloudSyncCoordinator {
    * enough; after a real suspension check only admission/head/our small token.
    * null requests the existing full recovery path for changed/uncertain data. */
   foreground(online = false): Promise<boolean | null> {
+    if (!requestDocumentVisible()) return Promise.resolve(false);
     if (this.foregrounding) return this.foregrounding;
     const reconnectedNetwork = online && this.wasOffline;
     if (online) this.wasOffline = false;
+    const returnedFromBackground = this.backgroundedAt !== null;
     const hiddenFor = this.backgroundedAt ? this.elapsed(this.backgroundedAt) : 0;
     this.backgroundedAt = null;
     this.checkTime();
     if (this.lastPublishedStatus !== this.statusSignature()) this.emit();
     if (this.stopped || !this.enabled || this.closingRequested || this.hasPriorRecovery) return Promise.resolve(false);
     if (this.reconnecting || this.checking || this.renewing || this.uploading) return Promise.resolve(this.allowed());
-    if (this.phase === "closed") return Promise.resolve(null);
+    // Mere focus/online pulses must not reopen Save & Close. A genuine app
+    // return remains an approved automatic open, including iOS bfcache resumes.
+    if (this.phase === "closed") return Promise.resolve(returnedFromBackground ? null : false);
     if (this.failure && !["clock", "lease-expired", "lease-check", "network", "throttled", "storage", "processing"].includes(this.failure)) return Promise.resolve(false);
     const transient = this.failure === "network" || this.failure === "throttled";
     if (transient && this.allowed() && !reconnectedNetwork) return Promise.resolve(true);
@@ -940,7 +955,7 @@ export class CloudSyncCoordinator {
     }
     const lease = this.window?.lease ?? this.suspendedLease ?? this.retainedWriter;
     if (!lease || !this.record) return Promise.resolve(null);
-    const meaningfulReturn = hiddenFor >= 5_000 && (!this.lastForeground || this.elapsed(this.lastForeground) >= CLOUD_RENEW_MS);
+    const meaningfulReturn = hiddenFor >= 5_000 && (!this.lastForeground || this.elapsed(this.lastForeground) >= this.renewalCadence());
     if (!reconnectedNetwork && !meaningfulReturn && this.allowed() && this.window && this.remaining(this.window.until) > CLOUD_RENEW_MS) return Promise.resolve(true);
     this.lastForeground = this.now();
     const epoch = this.epoch, version = this.foregroundVersion;
@@ -1024,7 +1039,7 @@ export class CloudSyncCoordinator {
     this.fail(error instanceof CloudSyncError ? error : new CloudSyncError(isCloudCodecProcessingError(error) || catalogChanged ? "processing" : "corrupt"));
   }
   async pulse(): Promise<void> {
-    if (!this.enabled || this.stopped || this.closingRequested || this.phase === "closed") return;
+    if (!this.enabled || this.stopped || this.closingRequested || this.phase === "closed" || !requestDocumentVisible()) return;
     if (this.offlineLocal) {
       if (!this.automaticSelection || this.checking || this.elapsed(this.lastReconnect) < Math.max(CLOUD_RENEW_MS, this.retryAfterMs)) return;
       this.lastReconnect = this.now(); this.checking = true;
@@ -1033,10 +1048,14 @@ export class CloudSyncCoordinator {
         // Probe without pausing verified local play. A restored connection must
         // use full selection, never the local checkpoint as a server write base.
         await cloudCheckDeadline(this.admitted(), CLOUD_READ_TIMEOUT_MS);
+        // A local-only reopen can replace this coordinator without restoring
+        // server authority. Reserve the next interval before that handoff; only
+        // a checked server lease clears the shared retry schedule.
+        this.retryAfterMs = this.networkBackoff.fail();
         if (this.live(epoch)) await this.automaticSelection?.();
       } catch (error) {
         if (!this.live(epoch)) return;
-        if (error instanceof CloudSyncError && ["network", "throttled"].includes(error.code)) this.retryAfterMs = error.retryAfterMs;
+        if (error instanceof CloudSyncError && ["network", "throttled"].includes(error.code)) this.retryAfterMs = this.networkBackoff.fail(error.retryAfterMs);
         else this.fail(error);
       } finally { if (this.live(epoch)) this.checking = false; }
       return;
@@ -1057,7 +1076,7 @@ export class CloudSyncCoordinator {
     // A fresh authority check or close supersedes an already-sent renewal. Its
     // late response must neither fence the checked owner nor reopen a closed one.
     const current = () => this.live(epoch) && version === this.foregroundVersion && !this.closingRequested && this.phase !== "closed";
-    if (this.window && ["ready", "saving"].includes(this.phase) && this.elapsed(this.lastRenew) >= CLOUD_RENEW_MS) {
+    if (this.window && ["ready", "saving"].includes(this.phase) && this.elapsed(this.lastRenew) >= this.renewalCadence()) {
       this.renewing = true;
       const previous = this.window, sent = this.now();
       try {
@@ -1097,7 +1116,7 @@ export class CloudSyncCoordinator {
         } else await this.failChecked(error, epoch);
       }
       finally { this.renewing = false; }
-    } else if (!this.window && this.phase === "readonly" && this.elapsed(this.lastHead) >= CLOUD_RENEW_MS) {
+    } else if (!this.window && this.phase === "readonly" && this.elapsed(this.lastHead) >= ACCOUNT_READ_REFRESH_MS) {
       this.lastHead = this.now();
       try { await this.admitted(); if (!this.live(epoch)) return;
         const head = await this.options.transport.head(this.scope.campaignId);
@@ -1123,7 +1142,7 @@ export class CloudSyncCoordinator {
       const epoch = this.epoch, lease = this.window.lease;
       try {
         await cloudCheckDeadline(this.options.transport.release(lease)); if (!this.live(epoch)) return false;
-        this.window = null; this.phase = "closed"; this.emit(); return true;
+        this.window = null; this.phase = "closed"; setAccountRequestsActive(this.scope.accountId, false); this.emit(); return true;
       } catch (error) { if (this.live(epoch)) this.fail(error); return false; }
     })().finally(() => { this.closing = null; this.closingRequested = false; if (!this.stopped) this.emit(); });
     return this.closing;
@@ -1231,6 +1250,7 @@ export class CloudSyncCoordinator {
   }
   /** Sign-out, account/campaign switch and deletion revoke all later callbacks. No cache deletion. */
   dispose(reason: "switch" | "sign-out" | "revoked" | "deleted" = "switch"): void {
+    if (reason !== "switch") setAccountRequestsActive(this.scope.accountId, false);
     this.stopped = true; this.epoch++; this.resumeAuthorized = false; this.window = null; this.suspendedLease = null;
     this.phase = reason === "revoked" || reason === "deleted" ? "blocked" : "closed"; this.failure = reason; this.emit();
   }

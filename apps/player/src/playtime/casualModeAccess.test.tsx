@@ -7,6 +7,7 @@ import { CASUAL_MODE_STORAGE_KEY, UsageProvider, useCasualMode, useUsageTracking
 import { accountStorageKey } from "../session/accountStorageKey";
 import type { PlaytimeTracker } from "./playtimeTracker";
 import type { UsageAccess } from "./usageTypes";
+import { accountRequestsActive, setAccountRequestsActive } from "../session/requestBudget";
 
 const backend = vi.hoisted(() => ({ access: vi.fn(), authListeners: new Set<(event: string) => void>(), unsubscribe: vi.fn() }));
 vi.mock("../auth/supabaseAuth", () => ({ getSupabaseAuthClient: () => ({ auth: {
@@ -17,7 +18,10 @@ vi.mock("../auth/supabaseAuth", () => ({ getSupabaseAuthClient: () => ({ auth: {
 } }) }));
 vi.mock("./supabaseUsage", () => ({ createSupabaseUsageTransport: () => ({ access: backend.access,
   ingest: async () => [], acceptNotice: async () => {}, requestDeletion: async () => {} }) }));
-afterEach(async () => { await cleanupPhoneTests(); vi.unstubAllEnvs(); backend.access.mockReset(); backend.authListeners.clear(); backend.unsubscribe.mockReset(); });
+afterEach(async () => {
+  await cleanupPhoneTests(); vi.unstubAllEnvs(); backend.access.mockReset(); backend.authListeners.clear(); backend.unsubscribe.mockReset();
+  for (const account of ["account-a", "account-b", "account-c", "account/a", "account-casual", "account-closed-remount"]) setAccountRequestsActive(account, true);
+});
 
 const modeKey = (accountId: string) => accountStorageKey(CASUAL_MODE_STORAGE_KEY, accountId);
 const admitted = (casual: boolean): UsageAccess => ({ admitted: true, notice_accepted: true, deletion_requested: false, casual });
@@ -25,6 +29,7 @@ const admitted = (casual: boolean): UsageAccess => ({ admitted: true, notice_acc
 function hostedFixture(stored = new Map<string, string>()) {
   vi.stubEnv("VITE_SUPABASE_URL", "https://synthetic.supabase.co"); vi.stubEnv("VITE_SUPABASE_ANON_KEY", "synthetic-public-key");
   const env = phoneTestDom();
+  Object.assign(env.doc, { visibilityState: "visible" });
   Object.assign(env.browser, { setInterval: vi.fn(), clearInterval: vi.fn() });
   const setItem = vi.fn((key: string, value: string) => { stored.set(key, value); });
   const removeItem = vi.fn((key: string) => { stored.delete(key); });
@@ -42,6 +47,7 @@ describe("server-assigned casual account mode", () => {
   it("waits for server access, updates from that data only, and offers no account toggle", async () => {
     vi.stubEnv("VITE_SUPABASE_URL", "https://synthetic.supabase.co"); vi.stubEnv("VITE_SUPABASE_ANON_KEY", "synthetic-public-key");
     const env = phoneTestDom();
+    Object.assign(env.doc, { visibilityState: "visible" });
     Object.assign(env.browser, { setInterval: vi.fn(), clearInterval: vi.fn() });
     // Arbitrary storage keys and query strings cannot assign account mode.
     env.browser.location.search = "?casual=true&layout=phone";
@@ -86,6 +92,20 @@ describe("server-assigned casual account mode", () => {
     expect(f.mode()).toBe(!casual); expect(f.stored.get(modeKey("account/a"))).toBe(String(!casual));
     expect(f.setItem.mock.calls.filter(([key]) => key === modeKey("account/a")))
       .toEqual([[modeKey("account/a"), String(casual)], [modeKey("account/a"), String(!casual)]]);
+  });
+
+  it("keeps a closed account quiet through a provider remount, then refreshes on actual campaign activation", async () => {
+    const f = hostedFixture(), account = "account-closed-remount";
+    backend.access.mockResolvedValue(admitted(true));
+    await f.render(account); expect(backend.access).toHaveBeenCalledOnce();
+    await act(async () => setAccountRequestsActive(account, false));
+    await f.env.render(null); await f.render(account);
+    expect(accountRequestsActive(account)).toBe(false);
+    await act(async () => { for (let i = 0; i < 30; i++) f.env.browser.dispatchEvent(new Event("online")); });
+    expect(backend.access).toHaveBeenCalledOnce();
+    await act(async () => setAccountRequestsActive(account, true));
+    expect(backend.access).toHaveBeenCalledTimes(2);
+    expect(f.tracker().canRecordQuestions()).toBe(true); expect(f.mode()).toBe(true);
   });
 
   it("keeps remembered values account-scoped and waits when the next account has no value", async () => {

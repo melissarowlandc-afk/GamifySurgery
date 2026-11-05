@@ -9,6 +9,7 @@ import { USAGE_OUTBOX_KEY } from "../playtime/usageOutbox";
 import { CompetitionClient, COMPETITION_STORAGE_KEY, type CompetitionStorage, type CompetitionRankChange } from "./competitionClient";
 import { competitionDayMinutes } from "./revenue";
 import { createSupabaseCompetitionTransport } from "./supabaseCompetition";
+import { canPollAccount } from "../session/requestBudget";
 
 /** Optional injection for offline tests/previews. Production never uses a fake transport. */
 export const CompetitionClientContext = createContext<CompetitionClient | null | undefined>(undefined);
@@ -54,6 +55,7 @@ export function useCompetitionClient(): CompetitionClient | null {
 
 /** Fire-and-forget after a completed GAME day, in both local-save and cloud-save sessions. */
 export function useCompetitionSubmission(state: GameState, clinicName: string, onRankChange?: (change: CompetitionRankChange) => void): void {
+  const accountId = useAuthAccountId();
   const client = useCompetitionClient();
   const casualMode = useCasualMode();
   const completedDay = Math.floor(state.facilityTick / competitionDayMinutes());
@@ -63,7 +65,7 @@ export function useCompetitionSubmission(state: GameState, clinicName: string, o
   useEffect(() => { live.current = true; return () => { live.current = false; }; }, []);
   const refresh = useRef(async () => {});
   refresh.current = async () => {
-    if (!client) return;
+    if (!client || accountId && !canPollAccount(accountId)) return;
     try {
       await client.flush();
       if (!live.current || latest.current.campaignId !== state.campaignId || !latest.current.onRankChange || latest.current.casualMode !== false) return;
@@ -82,7 +84,8 @@ export function useCompetitionSubmission(state: GameState, clinicName: string, o
     const retry = () => { void refresh.current(); };
     window.addEventListener("online", retry);
     window.addEventListener("focus", retry);
+    document.addEventListener("visibilitychange", retry);
     const timer = setInterval(retry, 60_000);
-    return () => { window.removeEventListener("online", retry); window.removeEventListener("focus", retry); clearInterval(timer); };
+    return () => { window.removeEventListener("online", retry); window.removeEventListener("focus", retry); document.removeEventListener("visibilitychange", retry); clearInterval(timer); };
   }, [client]);
 }

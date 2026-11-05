@@ -3,6 +3,7 @@ import { APP_BUILD_VERSION } from "../appVersion";
 import { accountStorageKey } from "./accountStorageKey";
 import { AUXILIARY_ITEM_BYTES, setAuxiliaryItem } from "./storagePressure";
 import type { QuestionReviewFlagInput } from "./questionReviewFlags";
+import { RequestBackoff, FLAG_STATUS_REFRESH_MS } from "./requestBudget";
 
 export const HOSTED_FLAGS_KEY = "gamify-surgery.question-flag-outbox.v1";
 export const MAX_PENDING_FLAGS = 50;
@@ -121,11 +122,15 @@ export class QuestionFlagQueue {
   private statusesInFlight: Promise<void> | null = null;
   private stopped = false;
   private generation = 0;
+  private readonly deliveryBudget: RequestBackoff;
+  private readonly statusBudget: RequestBackoff;
   storageAvailable = true;
   dropped = 0;
   unavailable = false;
   constructor(readonly accountId: string, private storage: FlagStorage | null, private transport: FlagTransport,
     private allowed: () => boolean, private now = Date.now) {
+    this.deliveryBudget = new RequestBackoff(15_000, 15 * 60_000, now);
+    this.statusBudget = new RequestBackoff(60_000, 30 * 60_000, now);
     try {
       const parsed = JSON.parse(storage?.getItem(this.key()) ?? "null");
       if (parsed?.schemaVersion === 1 && Array.isArray(parsed.entries)) this.entries = parsed.entries.filter((entry: FlagEntry) =>
@@ -186,9 +191,10 @@ export class QuestionFlagQueue {
     this.enqueue(payload, input);
     await this.flush();
   }
-  flush(): Promise<void> {
+  flush(automatic = false): Promise<void> {
     if (this.stopped || !this.allowed()) return Promise.resolve();
     if (this.inFlight) return this.inFlight;
+    if (automatic && !this.deliveryBudget.ready()) return Promise.resolve();
     this.bound();
     const generation = this.generation;
     const request = (async () => {
@@ -200,15 +206,17 @@ export class QuestionFlagQueue {
           if (this.stopped || !this.allowed() || generation !== this.generation) break;
           entry.delivery = "sent"; entry.status = result.status; entry.fixedInVersion = result.fixedInVersion;
           this.unavailable = false; this.persist();
-        } catch { this.unavailable = true; this.publish(); break; }
+          this.deliveryBudget.success();
+        } catch { this.deliveryBudget.fail(); this.unavailable = true; this.publish(); break; }
       }
     })().finally(() => { this.inFlight = null; });
     this.inFlight = request;
     return request;
   }
-  refreshStatuses(): Promise<void> {
+  refreshStatuses(automatic = false): Promise<void> {
     if (this.stopped || !this.allowed()) return Promise.resolve();
     if (this.statusesInFlight) return this.statusesInFlight;
+    if (automatic && !this.statusBudget.ready()) return Promise.resolve();
     const ids = this.entries.filter((entry) => entry.delivery === "sent").map((entry) => entry.payload.flag_id);
     if (!ids.length) return Promise.resolve();
     const generation = this.generation;
@@ -227,7 +235,8 @@ export class QuestionFlagQueue {
         // Reading receipts on mount must not rewrite recovered storage or cause
         // another render unless a disposition actually changed.
         if (changed || !this.storageAvailable) this.persist();
-      } catch { /* Last acknowledged status remains available; no false disposition. */ }
+        this.statusBudget.success(FLAG_STATUS_REFRESH_MS);
+      } catch { this.statusBudget.fail(); /* Keep the last acknowledged status. */ }
     })().finally(() => { this.statusesInFlight = null; });
     this.statusesInFlight = request;
     return request;

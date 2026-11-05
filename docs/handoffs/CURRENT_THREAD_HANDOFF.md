@@ -1,3 +1,34 @@
+> WORKER: ACCEPTED ACCOUNT REQUEST-BUDGET CLIENT PORT (2026-11-04).
+> Ported ONLY the manager-accepted account-server-load client lane from the
+> read-only GamifySurgery tree into GS-release. All15 existing production files
+> matched the pre-budget baseline; reviewed/applied153 line-splice edits across
+> 26 existing files and added8 approved client/tests. All34 final normalized
+> source texts equal accepted content (33 byte-identical; coordinator preserves
+> release LF endings). All34 hashes fixed throughout release validation.
+> Existing17df3915 storage/opening/feedback and CI allowance preserved. Initial
+> 5,102-file source/art audit protects every package, character/art, clinical,
+> view-derivation and SQL file. Only26 existing client files +this additive
+> handoff changed; no package, public art or SQL additions/edits. App.tsx,
+> gameSession.ts, localJournal.ts and entryLarge.test.tsx remain exact.
+> SQL DEFERRED: no migration/test SQL copied or applied. Current server keeps
+> 60s grants/15s renewal. Optional v2 support stays dormant until advertised by
+> a future approved server. Do not claim projected20x lease savings now.
+> Client-only policy: shared flag status/send budgets, five-minute usage HTTP
+> batching with unchanged30s receipts, jittered bounded retries, visible/closed
+> request guards, online coalescing and SDK timer lifecycle. Existing true app
+> return/reload automatic reopening and every save/fencing contract retained.
+> PASS GS-release: focused21files/357tests31.19s; FULL PLAYER352files/3,459tests
+> 279.97s, CI=true +existing net-use/No-Git preload +threads/four workers.
+> All seven workspace typechecks PASS; e2e/QA typecheck PASS; all exits0.
+> Every36 source/doc path is listed in the ExecPlan and detailed local receipt.
+> [ExecPlan/file list](../execplans/account-server-load-20261104.md),
+> [port handoff](../../.local-dev/account-budget-port-20261104/HANDOFF.md),
+> [exact source patch](../../.local-dev/account-budget-port-20261104/client-port.patch).
+> No browser, Git, installs, network, DB or release action; writes only GS-release.
+> Local candidate only; manager owns browser acceptance and checkpoint/release.
+
+---
+
 > WORKER: ACCEPTED PHLEBOTOMY FIX PORTED TO GS-RELEASE (2026-11-04).
 > Manager already copied phlebotomyPresentation.ts / approvedRoomPresentation.ts;
 > verified exact accepted production hashes (6e99e881… / 418e0286…), only the

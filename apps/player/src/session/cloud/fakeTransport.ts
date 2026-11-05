@@ -26,7 +26,7 @@ export class FakeCloudServer {
   private readonly accounts = new Map<string, FakeAccount>();
   readonly calls: { accountId: string; method: Method; operationId?: string; requestSha256?: string }[] = [];
   readonly faults: CloudTransportFault[] = [];
-  constructor(readonly now: () => number = () => Date.now()) {}
+  constructor(readonly now: () => number = () => Date.now(), private readonly leaseMs = CLOUD_LEASE_MS) {}
   account(accountId: string): FakeAccount {
     let account = this.accounts.get(accountId);
     if (!account) {
@@ -106,10 +106,10 @@ export class FakeCloudServer {
           (input.expectedWriterGeneration === String(row.generation) || BigInt(input.expectedWriterGeneration ?? "-2") + 1n === row.generation)) return lease(row);
         if (input.expectedWriterGeneration !== undefined && input.expectedWriterGeneration !== String(row.generation)) throw new CloudSyncError("writer");
         if (row.token && row.expiry > this.now() && !input.takeover) throw new CloudSyncError("writer");
-        row.generation++; row.token = input.writerToken ?? `writer.${accountId}.${row.generation}`; row.expiry = this.now() + CLOUD_LEASE_MS;
+        row.generation++; row.token = input.writerToken ?? `writer.${accountId}.${row.generation}`; row.expiry = this.now() + this.leaseMs;
         const granted = lease(row); grants.set(input.operationId, { input: JSON.stringify(input), lease: granted }); return granted;
       }, { operationId: input.operationId }),
-      renew: input => run("renew", () => { const row = campaign(input.campaignId); writer(row, input); row.expiry = this.now() + CLOUD_LEASE_MS; return lease(row); }),
+      renew: input => run("renew", () => { const row = campaign(input.campaignId); writer(row, input); row.expiry = this.now() + this.leaseMs; return lease(row); }),
       release: input => run("release", () => { const row = campaign(input.campaignId); writer(row, input); row.token = null; row.expiry = 0; }),
       commit: operation => run("commit", async () => {
         if (await sha256Utf8(operation.requestText) !== operation.requestSha256) throw new CloudSyncError("corrupt");
@@ -190,7 +190,7 @@ export class FakeCloudServer {
         const confirmed: CloudConfirmed = { campaignId: input.campaignId, revision: "1", acceptedAtMs, snapshot: input.snapshot, evidence: input.evidence, baselineId: input.baselineId, ...(input.saveFormat === 3 ? { saveFormat: 3, lineage: input.lineage } : {}) };
         const receipt: CloudCommitReceipt = { operationId: input.operationId, campaignId: input.campaignId, revision: "1", requestSha256: operation.requestSha256,
           snapshotSha256: input.snapshot.uncompressedSha256, snapshotBytes: input.snapshot.uncompressedBytes, acceptedAtMs, evidenceHighWater: input.evidence.records.length, usageReceiptIds: [] };
-        account.campaigns.set(input.campaignId, { confirmed, prior: null, summary: { name: input.campaign.name, status: input.campaign.status }, generation: 1n, token: input.writerToken, expiry: this.now() + CLOUD_LEASE_MS });
+        account.campaigns.set(input.campaignId, { confirmed, prior: null, summary: { name: input.campaign.name, status: input.campaign.status }, generation: 1n, token: input.writerToken, expiry: this.now() + this.leaseMs });
         account.operations.set(input.operationId, { digest: operation.requestSha256, receipt }); account.access.enrolled = true;
         return receipt;
       }),

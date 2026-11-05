@@ -1,9 +1,11 @@
 import type { PlaytimeTracker } from "./playtimeTracker";
+import { RequestBackoff } from "../session/requestBudget";
 
 /** Web Locks is origin/account scoped and atomic across tabs. No device identifier. */
 export function bindBrowserUsage(tracker: PlaytimeTracker, accountId: string, browser: Window,
   doc: Document, locks: LockManager | undefined = browser.navigator.locks): () => void {
   let disposed = false, requesting = false, release: (() => void) | undefined;
+  const foregroundBudget = new RequestBackoff();
   const takeLease = () => {
     if (disposed || requesting || release || doc.visibilityState !== "visible" || !locks) return;
     requesting = true;
@@ -27,7 +29,11 @@ export function bindBrowserUsage(tracker: PlaytimeTracker, accountId: string, br
     tracker.activity();
   };
   const pagehide = () => { tracker.pagehide(); relinquish(); };
-  const online = () => { void tracker.refreshAccess().then(() => tracker.flush()); };
+  const online = () => {
+    if (doc.visibilityState === "hidden" || !foregroundBudget.ready()) return;
+    foregroundBudget.success(60_000);
+    void tracker.refreshAccess(true).then(() => tracker.flush());
+  };
   const visibilityChange = () => {
     visibility();
     if (doc.visibilityState === "visible") online();

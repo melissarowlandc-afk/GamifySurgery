@@ -9,6 +9,8 @@ import { PlaytimeTracker, type CasualModeMemory } from "./playtimeTracker";
 import { UsageOutbox, type UsageStorage } from "./usageOutbox";
 import { createSupabaseUsageTransport } from "./supabaseUsage";
 import { bindBrowserUsage } from "./browserUsage";
+import { bindAuthRequestBudget } from "../auth/authRequestBudget";
+import { accountRequestsActive, canPollAccount, setAccountRequestsActive, subscribeAccountRequests } from "../session/requestBudget";
 
 const UsageContext = createContext<PlaytimeTracker | null>(null);
 export const useUsageTracking = () => useContext(UsageContext);
@@ -52,17 +54,26 @@ export function UsageProvider({ children }: { children: ReactNode }) {
     let storage: UsageStorage | null = null;
     try { storage = window.localStorage; } catch { /* Estimates may lose an unreported tail. */ }
     const clock = { monotonic: () => performance.now(), wall: () => Date.now() };
+    const requestsWereActive = accountRequestsActive(accountId);
     const current = new PlaytimeTracker(new UsageOutbox(accountId, storage, clock.wall),
       createSupabaseUsageTransport(client, configuration, accountId), clock, () => crypto.randomUUID(),
       casualModeMemory(accountId, storage));
+    // A same-account auth/layout remount must not restart a closed clinic's
+    // background requests. Actual campaign activation re-enables its budget.
+    setAccountRequestsActive(accountId, requestsWereActive);
     const unbindDiagnostics = problemDiagnostics.source("usage", () => ({ ...current.status() }));
     setTracker(current);
     const unbind = bindBrowserUsage(current, accountId, window, document);
+    const unbindAuthBudget = bindAuthRequestBudget(client.auth, accountId, document);
     const { data: { subscription } } = client.auth.onAuthStateChange((event) => {
       if (event === "SIGNED_OUT") { current.stop(); current.clearRememberedMode(); }
     });
-    void current.refreshAccess().then(() => current.flush());
-    return () => { unbindDiagnostics(); subscription.unsubscribe(); unbind(); current.stop(); };
+    const refresh = () => { if (canPollAccount(accountId)) void current.refreshAccess(true).then(() => current.flush()); };
+    const unbindAccountBudget = subscribeAccountRequests(accountId, refresh);
+    refresh();
+    // Disposing this controller alone is not Save & Close or sign-out. Keep
+    // the account's existing policy across a normal same-account remount.
+    return () => { unbindDiagnostics(); subscription.unsubscribe(); unbind(); unbindAccountBudget(); unbindAuthBudget(); current.stop(false); };
   }, [accountId]);
   return <UsageContext.Provider value={tracker}>{children}</UsageContext.Provider>;
 }

@@ -3,11 +3,11 @@ import {
   type PlaytimeUsageReceipt, type UsageAccess, type UsageStatus, type UsageTransport, type QuestionUsageReceipt,
 } from "./usageTypes";
 import { UsageOutbox } from "./usageOutbox";
+import { accountRequestsActive, RequestBackoff, setAccountRequestsActive } from "../session/requestBudget";
 
 export interface UsageClock { monotonic(): number; wall(): number; }
 export interface TrackedGame { campaignId: string | null; paused: boolean; finishReportOpen: boolean; }
 export interface CasualModeMemory { initial: boolean | null; remember(mode: boolean | null): void; }
-const ACCESS_RETRY_DELAYS_MS = [2_000, 5_000, 15_000, 30_000];
 
 /** Pure accounting/controller; browser lifecycle and React each bind it once. */
 export class PlaytimeTracker {
@@ -27,8 +27,12 @@ export class PlaytimeTracker {
   private provisionalCasualMode: boolean | null;
   private accessInFlight: Promise<void> | null = null;
   private accessRetry: ReturnType<typeof setTimeout> | null = null;
-  private accessRetryStep = 0;
+  private accessRetryDelay = 2_000;
   private state: UsageStatus["state"] = "requires-notice";
+  private readonly uploadBudget: RequestBackoff;
+  private readonly accessBudget: RequestBackoff;
+  private accessCheckedAt = -Infinity;
+  private networkVisible = true;
   private stopped = false;
   private inFlight: Promise<void> | null = null;
   private listeners = new Set<() => void>();
@@ -37,6 +41,9 @@ export class PlaytimeTracker {
     private clock: UsageClock, private uuid: () => string, private modeMemory?: CasualModeMemory) {
     this.lastMono = clock.monotonic(); this.lastWall = clock.wall(); this.heartbeatAt = this.lastMono;
     this.provisionalCasualMode = modeMemory?.initial ?? null;
+    this.uploadBudget = new RequestBackoff(15_000, 15 * 60_000, clock.monotonic.bind(clock));
+    this.accessBudget = new RequestBackoff(2_000, 5 * 60_000, clock.monotonic.bind(clock));
+    setAccountRequestsActive(outbox.accountId, true);
     if (outbox.deletionRequested()) this.clearRememberedMode();
   }
 
@@ -47,9 +54,12 @@ export class PlaytimeTracker {
   casualMode = (): boolean | null => this.accessKnown
     ? this.access.admitted && !this.access.deletion_requested && this.access.casual === true : this.provisionalCasualMode;
 
-  refreshAccess(): Promise<void> {
+  refreshAccess(automatic = false): Promise<void> {
     if (this.stopped) return Promise.resolve();
     if (this.accessInFlight) return this.accessInFlight;
+    if (automatic && (!this.networkVisible || !accountRequestsActive(this.outbox.accountId))) return Promise.resolve();
+    if (automatic && !this.accessBudget.ready()) { this.scheduleAccessRetry(); return Promise.resolve(); }
+    if (automatic && this.clock.monotonic() - this.accessCheckedAt < 60_000) return Promise.resolve();
     this.clearAccessRetry();
     const request = (async () => {
       // Assign the in-flight promise before even a synchronous transport failure.
@@ -60,7 +70,7 @@ export class PlaytimeTracker {
         if (this.stopped) return;
         this.sample(); this.seal(); this.access = { ...access, deletion_requested: access.deletion_requested || this.outbox.deletionRequested() };
         this.accessKnown = true;
-        this.accessRetryStep = 0;
+        this.accessCheckedAt = this.clock.monotonic(); this.accessBudget.success();
         this.clearAccessRetry();
         this.state = access.deletion_requested ? "deleted" : this.outbox.deletionRequested() || !access.admitted ? "blocked" :
           !access.notice_accepted ? "requires-notice" : this.outbox.status().pendingReceipts ? "pending" : "ready";
@@ -68,7 +78,7 @@ export class PlaytimeTracker {
         else this.modeMemory?.remember(this.casualMode());
         if (access.deletion_requested) this.outbox.clear();
       } catch {
-        if (!this.stopped) { this.state = "unavailable"; this.scheduleAccessRetry(); }
+        if (!this.stopped) { this.accessRetryDelay = this.accessBudget.fail(); this.state = "unavailable"; this.scheduleAccessRetry(); }
       } finally { this.accessInFlight = null; this.publish(); }
     })();
     this.accessInFlight = request;
@@ -81,9 +91,8 @@ export class PlaytimeTracker {
   }
 
   private scheduleAccessRetry(): void {
-    if (this.stopped || this.accessKnown || this.access.deletion_requested || this.outbox.deletionRequested() || this.accessRetry !== null) return;
-    const delay = ACCESS_RETRY_DELAYS_MS[Math.min(this.accessRetryStep, ACCESS_RETRY_DELAYS_MS.length - 1)]!;
-    this.accessRetryStep += 1;
+    if (this.stopped || !this.networkVisible || !accountRequestsActive(this.outbox.accountId) || this.accessKnown || this.access.deletion_requested || this.outbox.deletionRequested() || this.accessRetry !== null) return;
+    const delay = this.accessRetryDelay;
     this.accessRetry = setTimeout(() => {
       this.accessRetry = null;
       void this.refreshAccess().then(() => this.flush());
@@ -124,6 +133,8 @@ export class PlaytimeTracker {
   activity(): void { this.sample(); this.lastInput = this.clock.monotonic(); }
   setVisible(visible: boolean): void {
     this.sample(); if (!visible) this.cut(); this.visible = visible;
+    this.networkVisible = visible;
+    if (!visible) this.clearAccessRetry();
     if (!visible) void this.flush();
   }
   setLease(lease: boolean): void { this.sample(); if (!lease) this.cut(); this.lease = lease; this.publish(); }
@@ -133,6 +144,7 @@ export class PlaytimeTracker {
     const pauseBoundary = game.paused && !this.game.paused;
     if (ended || pauseBoundary) this.cut();
     if (ended) this.sessionId = null;
+    if (game.campaignId && game.campaignId !== this.game.campaignId) setAccountRequestsActive(this.outbox.accountId, true);
     this.game = game;
     if (ended || pauseBoundary) void this.flush();
   }
@@ -156,7 +168,7 @@ export class PlaytimeTracker {
   tick(): void {
     if (this.stopped) return;
     this.sample();
-    if (this.clock.monotonic() - this.heartbeatAt >= USAGE_HEARTBEAT_MS) {
+    if (this.networkVisible && accountRequestsActive(this.outbox.accountId) && this.clock.monotonic() - this.heartbeatAt >= USAGE_HEARTBEAT_MS) {
       this.heartbeatAt = this.clock.monotonic(); this.seal(); void this.flush();
     }
   }
@@ -188,7 +200,7 @@ export class PlaytimeTracker {
 
   flush(keepalive = false): Promise<void> {
     this.sample(); this.seal();
-    if (this.stopped || !this.canRecordQuestions()) return Promise.resolve();
+    if (this.stopped || !accountRequestsActive(this.outbox.accountId) || !this.canRecordQuestions() || !this.uploadBudget.ready()) return Promise.resolve();
     if (this.inFlight) return this.inFlight;
     // One batch per heartbeat; reconnect backlogs drain in bounded requests.
     const batch = this.outbox.batch();
@@ -200,8 +212,9 @@ export class PlaytimeTracker {
         if (this.stopped || this.access.deletion_requested) return;
         const sent = new Set(batch.map((r) => r.receipt_id));
         this.outbox.acknowledge(acknowledged.filter((id) => sent.has(id)));
+        this.uploadBudget.success();
         this.state = this.outbox.status().pendingReceipts ? "pending" : "ready";
-      } catch { if (!this.stopped) this.state = "unavailable"; }
+      } catch { if (!this.stopped) { this.uploadBudget.fail(); this.state = "unavailable"; } }
       finally { this.inFlight = null; this.publish(); }
     })();
     this.inFlight = request;
@@ -210,7 +223,8 @@ export class PlaytimeTracker {
 
   pagehide(): void {
     this.sample(); this.cut(); void this.flush(true);
-    this.visible = false; this.sessionId = null;
+    this.visible = false; this.networkVisible = false; this.sessionId = null;
+    this.clearAccessRetry();
   }
 
   endSession(): void { this.sample(); this.cut(); this.sessionId = null; void this.flush(); }
@@ -225,8 +239,9 @@ export class PlaytimeTracker {
     this.outbox.clear(); this.state = "deleted"; this.publish();
   }
 
-  stop(): void {
+  stop(deactivateAccountRequests = true): void {
     this.sample(); this.seal(); this.stopped = true; this.lease = false; this.publish();
     this.clearAccessRetry();
+    if (deactivateAccountRequests) setAccountRequestsActive(this.outbox.accountId, false);
   }
 }

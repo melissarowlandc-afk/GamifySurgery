@@ -171,7 +171,10 @@ describe.each(["phone", "desktop"] as const)("%s actual disposable QA entry", la
     await act(async () => { expect(await qa().command({ type: "SET_SIMULATION_SPEED", speed: 4 })).toBe(true); });
     const newest = qa().snapshot().state!;
     expect(newest.paused).toBe(true); expect(f.server.operationCount("qa-account-a")).toBe(1);
-    f.unavailable(false); clock.advance(CLOUD_RENEW_MS);
+    f.unavailable(false);
+    // Failure backoff survives replacement with a verified offline session.
+    // Advancing the capped retry budget is local fake time, not a real sleep.
+    clock.advance(5 * 60_000);
     const pulse = vi.spyOn(CloudSyncCoordinator.prototype, "pulse");
     await act(async () => { for (const timer of [...f.intervals.values()]) timer.callback(); await Promise.all(pulse.mock.results.map(result => result.value)); });
     await f.playing();
@@ -322,17 +325,27 @@ describe.each(["phone", "desktop"] as const)("%s actual disposable QA entry", la
     await f.env.clickElement(buttons[0]!); await f.playing();
   });
 
-  it("automatically reopens Save & Close when the suspended app foregrounds, without a fresh document", async () => {
+  it("keeps Save & Close polling quiet, and automatically reopens when the backgrounded app actually returns", async () => {
     const f = await fixture(layout);
     await f.env.click("Save & Close");
     await vi.waitFor(async () => { await act(async () => {}); expect(f.browser.__cloudQa?.status().phase).toBe("closed"); });
     const oldCloseLease = f.browser.__cloudQa!.closeLease;
     const expected = f.browser.__cloudQa!.snapshot().state;
+    const closedCalls = f.server.calls.length;
+    await act(async () => {
+      for (let i = 0; i < 20; i++) {
+        f.env.browser.dispatchEvent(new Event("focus")); f.env.browser.dispatchEvent(new Event("online"));
+      }
+    });
+    expect(f.browser.__cloudQa!.status()).toMatchObject({ phase: "closed", canExecute: false });
+    expect(f.server.calls).toHaveLength(closedCalls);
     await act(async () => {
       Object.assign(f.env.doc, { visibilityState: "hidden" }); f.env.doc.dispatchEvent(new Event("visibilitychange"));
       Object.assign(f.env.doc, { visibilityState: "visible" }); f.env.doc.dispatchEvent(new Event("visibilitychange"));
       f.env.browser.dispatchEvent(new Event("pageshow")); f.env.doc.dispatchEvent(new Event("resume"));
     });
+    // Preserve automatic reopen for an actual app return (including bfcache),
+    // as well as the separate reload tests. Only incidental polling is stopped.
     await f.playing();
     expect(f.browser.__cloudQa!.snapshot().state).toEqual(expected);
     expect(await oldCloseLease()).toBe(false); // Old document owner cannot release the new lease.

@@ -22,6 +22,30 @@ function fixture() {
 }
 
 describe("voluntary hosted flags", () => {
+  it("backs off failed delivery even when usage publishes every second; retries the exact pending report", async () => {
+    let clock = now;
+    const f = fixture(), queue = new QuestionFlagQueue("account-a", f.storage, f.transport, () => true, () => clock);
+    const context = input(), payload = await createHostedQuestionFlag(context, "account-a", "synthetic", id(1), now);
+    queue.enqueue(payload, context);
+    vi.mocked(f.transport.send).mockRejectedValue(new Error("offline"));
+    for (let second = 0; second < 3_600; second++) { clock = now + second * 1_000; await queue.flush(true); }
+    expect(vi.mocked(f.transport.send).mock.calls.length).toBeLessThanOrEqual(15);
+    expect(queue.list()).toHaveLength(1); expect(queue.list()[0]!.payload).toEqual(payload);
+    clock += 900_000; vi.mocked(f.transport.send).mockResolvedValue({ status: "open", fixedInVersion: null });
+    await queue.flush(true); expect(queue.list()[0]!.delivery).toBe("sent");
+    expect(f.transport.send).toHaveBeenLastCalledWith(payload);
+  });
+  it("limits automatic dispositions to once per fifteen minutes and keeps explicit reads coalesced", async () => {
+    let clock = now;
+    const f = fixture(), queue = new QuestionFlagQueue("account-a", f.storage, f.transport, () => true, () => clock);
+    const context = input(), payload = await createHostedQuestionFlag(context, "account-a", "synthetic", id(2), now);
+    await queue.submit(payload, context);
+    for (let minute = 0; minute < 60; minute++) { clock = now + minute * 60_000; await queue.refreshStatuses(true); }
+    expect(f.transport.read).toHaveBeenCalledTimes(4);
+    await Promise.all([queue.refreshStatuses(), queue.refreshStatuses()]); expect(f.transport.read).toHaveBeenCalledTimes(5);
+    queue.stop(); clock += 900_000; await queue.refreshStatuses(true); await queue.flush(true);
+    expect(f.transport.read).toHaveBeenCalledTimes(5); expect(f.transport.send).toHaveBeenCalledOnce();
+  });
   it("does not read or rewrite the outbox when there are no sent receipts", async () => {
     const f = fixture(), write = vi.spyOn(f.storage, "setItem"), listener = vi.fn();
     f.queue.subscribe(listener);

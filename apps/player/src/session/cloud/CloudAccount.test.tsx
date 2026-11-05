@@ -12,8 +12,9 @@ import { CLOUD_CHECK_TIMEOUT_MS } from "./checkDeadline";
 import { createInitialGameState } from "@gamify-surgery/game-domain";
 import { createFreshProfile } from "../prototypeStorage";
 import { usePrototypeSession } from "../usePrototypeSession";
+import { setAccountRequestsActive } from "../requestBudget";
 
-afterEach(async () => { vi.useRealTimers(); vi.restoreAllMocks(); await cleanupPhoneTests(); vi.unstubAllEnvs(); });
+afterEach(async () => { vi.useRealTimers(); vi.restoreAllMocks(); await cleanupPhoneTests(); vi.unstubAllEnvs(); setAccountRequestsActive("account-a", true); });
 async function fixture(options: { retainedCloud?: boolean; initialNetworkFailure?: boolean } = {}) {
   const env = phoneTestDom(), server = new FakeCloudServer(), cache = new MemoryCloudCache(), entryStore = new MemoryCloudEntryStore();
   const runtime: CloudAccountRuntime = { backendId: "synthetic", accountId: "account-a", region: "Disposable QA", transport: server.transport("account-a"), cache, entryStore };
@@ -33,6 +34,20 @@ async function fixture(options: { retainedCloud?: boolean; initialNetworkFailure
   return { env, server, cache, entryStore, runtime, guard, get current() { return current; } };
 }
 describe("account entry lifetime and privacy", () => {
+  it("coalesces online refresh bursts and never refreshes a hidden or closed account automatically", async () => {
+    const f = await fixture({ retainedCloud: true }), before = f.server.calls.length;
+    await act(async () => { for (let i = 0; i < 100; i++) f.env.browser.dispatchEvent(new Event("online")); });
+    await vi.waitFor(() => expect(f.current.phase).toBe("available"));
+    expect(f.server.calls.slice(before).map(row => row.method)).toEqual(["capabilities", "list"]);
+    const count = f.server.calls.length;
+    await act(async () => { for (let i = 0; i < 100; i++) f.env.browser.dispatchEvent(new Event("online")); });
+    expect(f.server.calls).toHaveLength(count);
+    Object.assign(f.env.doc, { visibilityState: "hidden" });
+    await act(async () => f.env.browser.dispatchEvent(new Event("online")));
+    Object.assign(f.env.doc, { visibilityState: "visible" }); setAccountRequestsActive("account-a", false);
+    await act(async () => f.env.browser.dispatchEvent(new Event("online")));
+    expect(f.server.calls).toHaveLength(count);
+  });
   it("bounds cold admission and an unreadable recovery inventory without selecting an older local campaign", async () => {
     const env = phoneTestDom(), server = new FakeCloudServer(), data = await syncFixture(); server.seed("account-a", data.confirmed);
     const cache = new MemoryCloudCache(), entryStore = new MemoryCloudEntryStore(), transport = server.transport("account-a");

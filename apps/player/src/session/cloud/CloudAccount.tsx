@@ -16,6 +16,7 @@ import { CloudSyncError, type CloudCapabilities, type CloudCampaignSummary, type
 import type { CloudOpeningDiagnostic } from "./openingDiagnostic";
 import { IndexedDbJournalStorage } from "../localJournal";
 import { timeCloudEntry } from "./entryTimings";
+import { canPollAccount, RequestBackoff } from "../requestBudget";
 export type { CloudOpeningDiagnostic } from "./openingDiagnostic";
 
 export const CLOUD_NOTICE_VERSION = "beta2.cloud.v1";
@@ -165,7 +166,13 @@ function BoundCloudAccount({ runtime, children }: { runtime: CloudAccountRuntime
   }, [runtime]);
   useEffect(() => {
     if (entry !== "cloud") return;
-    const online = () => { if (!stopped.current && !deletion.current) void refresh(); };
+    const budget = new RequestBackoff();
+    const online = () => {
+      if (stopped.current || deletion.current || !canPollAccount(runtime.accountId) || !budget.ready()) return;
+      // Reserve before starting async access/list work. Duplicate standalone
+      // online events must not create overlapping, mutually stale refreshes.
+      budget.success(60_000); void refresh();
+    };
     window.addEventListener("online", online);
     return () => window.removeEventListener("online", online);
   }, [runtime, entry]);

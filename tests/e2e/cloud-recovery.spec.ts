@@ -9,15 +9,17 @@ import { accountMenu, expectAccountSaved, expectPlaying, expectResumeReady, open
 // 127.0.0.1:5184 origin. No Supabase, Auth keys, copied saves or live endpoints.
 test.setTimeout(180_000); // Independent cold Vite contexts; checks still use bounded state polling.
 async function rig(browser: Browser, baseURL: string, layout: "desktop" | "phone") {
-  const server = new FakeCloudServer(), contexts: BrowserContext[] = [];
+  let clockOffsetMs = 0;
+  const server = new FakeCloudServer(() => Date.now() + clockOffsetMs), contexts: BrowserContext[] = [];
   server.setAccess("qa-account-a", { snapshotSaves: true });
   const authenticated = new Map<Page, string | null>(), transport = server.transport("qa-account-a");
   const commitAttempts: CloudFrozenOperation[] = [];
   let unavailable: CloudFailureCode | null = null;
   const unavailablePages = new Map<Page, CloudFailureCode>();
-  const page = async (deviceCampaigns = 0) => {
+  const page = async (deviceCampaigns = 0, controlledTime = false) => {
     const context = await browser.newContext({ viewport: layout === "phone" ? { width: 390, height: 844 } : { width: 1440, height: 1000 }, isMobile: layout === "phone", hasTouch: layout === "phone", acceptDownloads: true });
     contexts.push(context); const tab = await context.newPage();
+    if (controlledTime) await tab.clock.install();
     await tab.exposeBinding("__cloudQaAuthenticate", ({ page }, account: string | null) => { authenticated.set(page, account); });
     await tab.exposeBinding("__cloudQaCall", async ({ page }, account: string, method: keyof CloudTransport, args: unknown[]) => {
       if (account !== "qa-account-a" || authenticated.get(page) !== account) return { error: { code: "auth" } };
@@ -39,6 +41,11 @@ async function rig(browser: Browser, baseURL: string, layout: "desktop" | "phone
     return tab;
   };
   return { server, page, commitAttempts, fail: (code: CloudFailureCode | null) => { unavailable = code; },
+    async advanceRetryBudget(tab: Page) {
+      // Move both clocks together: no real sleep, no shorter production retry,
+      // and no future-dated request/lease against the disposable server.
+      clockOffsetMs += 5 * 60_000; await tab.clock.fastForward(5 * 60_000);
+    },
     failPage: (page: Page, code: CloudFailureCode | null) => { if (code) unavailablePages.set(page, code); else unavailablePages.delete(page); },
     close: async () => { await Promise.all(contexts.map(c => c.close())); } };
 }
@@ -268,7 +275,7 @@ for (const layout of ["desktop", "phone"] as const) {
   test(`${layout}: unavailable service preserves pending work, fences unchecked commands and recovers in the background`, async ({ browser, baseURL }) => {
     const f = await rig(browser, baseURL!, layout);
     try {
-      const page = await f.page(1); await importAndOpen(page);
+      const page = await f.page(1, true); await importAndOpen(page);
       const before = (await snapshot(page)).state!, original = await page.evaluate(() => localStorage.getItem("gamify-surgery.prototype.profile.v1.account.qa-account-a"));
       const initial = structuredClone(f.server.account("qa-account-a").campaigns.get(before.campaignId)!.confirmed);
       f.fail("network");
@@ -295,6 +302,10 @@ for (const layout of ["desktop", "phone"] as const) {
       expect(await page.evaluate(() => window.__cloudQa!.command({ type: "SET_SIMULATION_SPEED", speed: 4 }))).toBe(true);
       const newest = (await snapshot(page)).state!; expect(newest.paused).toBe(true);
       f.fail(null);
+      // Failed checks now back off exponentially across offline coordinator
+      // replacement. Advance its cap; keep the original recovery timeout and
+      // every exact-state, immutable-operation and no-replay assertion below.
+      await f.advanceRetryBudget(page);
       await expect.poll(() => snapshot(page), { timeout: 40_000 }).toMatchObject({ canExecute: true, pending: false, failure: null });
       await expectPlaying(page); await expectAccountSaved(page);
       expect((await snapshot(page)).state!.simulationSpeed).toBe(4);
