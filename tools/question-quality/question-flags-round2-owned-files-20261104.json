@@ -1,0 +1,1026 @@
+{
+  "checkedOn": "2026-11-04",
+  "status": "validation_recorded_pending_independent_and_clinical_review",
+  "results": {
+    "clinical": {
+      "log": "tools/question-quality/question-flags-round2-clinical-clean-final-20261104.log",
+      "files": "99 passed (99)",
+      "tests": "778 passed (778)",
+      "duration": "42.91s (transform 3.41s, setup 0ms, import 67.91s, tests 8.05s, environment 7ms)",
+      "failures": []
+    },
+    "domainFocused": {
+      "log": "tools/question-quality/question-flags-round2-domain-focused-clean-20261104.log",
+      "files": "10 passed (10)",
+      "tests": "1230 passed (1230)",
+      "duration": "49.73s (transform 3.71s, setup 0ms, import 10.65s, tests 86.78s, environment 0ms)",
+      "failures": []
+    },
+    "domainIntegrationRepairs": {
+      "log": "tools/question-quality/question-flags-round2-domain-integration-repairs-20261104.log",
+      "files": "2 passed (2)",
+      "tests": "239 passed (239)",
+      "duration": "8.62s (transform 3.03s, setup 0ms, import 4.85s, tests 8.40s, environment 0ms)",
+      "failures": []
+    },
+    "playerFocused": {
+      "log": "tools/question-quality/question-flags-round2-player-focused-clean-20261104.log",
+      "files": "5 passed (5)",
+      "tests": "79 passed (79)",
+      "duration": "22.43s (transform 4.89s, setup 0ms, import 10.29s, tests 18.74s, environment 1ms)",
+      "failures": []
+    },
+    "domainInitial": {
+      "log": "tools/question-quality/question-flags-round2-domain-clean-20261104.log",
+      "files": "3 failed | 165 passed (168)",
+      "tests": "31 failed | 4346 passed | 1 skipped (4378)",
+      "duration": "1088.77s (transform 4.94s, setup 0ms, import 128.97s, tests 947.72s, environment 8ms)",
+      "failures": [
+        {
+          "title": "FAIL  tests/gs028-20260928-batch.test.ts > GS-028 September 28 pre-Endoscopy batch > binds the three authored terminal test choices to exact executable terminal-service orders",
+          "kind": "requires_review",
+          "error": "AssertionError: expected [ { …(7) }, { …(7) }, { …(7) }, …(3) ] to have a length of 3 but got 6 - Expected",
+          "location": "❯ tests/gs028-20260928-batch.test.ts:301:21"
+        },
+        {
+          "title": "FAIL  tests/gs028-20260928-batch.test.ts > GS-028 September 28 pre-Endoscopy batch > executes terminal service { caseId: 'case.gs028.varicose-veins.b-limited-mobility', nodeId: 'node.gs028.varicose-veins.b-limited-mobility.1', questionVariantId: 'question.varicose-veins.intervention-referral-after-axial-reflux.v4.r3', choiceId: 'correct_4', choiceLabel: 'Request a venous reflux duplex study', timingProfileId: 'timing.test.ultrasound', disposition: { kind: 'not_executed', reason: 'external_only' } } through its real onsite lifecycle while wrong answers create no order",
+          "kind": "requires_review",
+          "error": "AssertionError: expected undefined to match object { …(7) } - Expected:",
+          "location": "❯ tests/gs028-20260928-batch.test.ts:321:71"
+        },
+        {
+          "title": "FAIL  tests/gs028-20260928-batch.test.ts > GS-028 September 28 pre-Endoscopy batch > executes terminal service { caseId: 'case.gs028.varicose-veins.b-limited-mobility', nodeId: 'node.gs028.varicose-veins.b-limited-mobility.1', questionVariantId: 'question.varicose-veins.intervention-referral-after-axial-reflux.v4.r3', choiceId: 'choice.qf2.20261104.f03.d1', choiceLabel: 'Request a deep-venous compression duplex study', timingProfileId: 'timing.test.ultrasound', disposition: { kind: 'not_executed', reason: 'external_only' } } through its real onsite lifecycle while wrong answers create no order",
+          "kind": "requires_review",
+          "error": "AssertionError: expected undefined to match object { …(7) } - Expected:",
+          "location": "❯ tests/gs028-20260928-batch.test.ts:321:71"
+        },
+        {
+          "title": "FAIL  tests/gs028-20260928-batch.test.ts > GS-028 September 28 pre-Endoscopy batch > executes terminal service { caseId: 'case.gs028.varicose-veins.b-limited-mobility', nodeId: 'node.gs028.varicose-veins.b-limited-mobility.1', questionVariantId: 'question.varicose-veins.intervention-referral-after-axial-reflux.v4.r3', choiceId: 'choice.qf2.20261104.f03.d2', choiceLabel: 'Request a pelvic contrast CT venogram', timingProfileId: 'timing.test.ct', disposition: { kind: 'not_executed', reason: 'external_only' } } through its real onsite lifecycle while wrong answers create no order",
+          "kind": "requires_review",
+          "error": "AssertionError: expected undefined to match object { …(7) } - Expected:",
+          "location": "❯ tests/gs028-20260928-batch.test.ts:321:71"
+        },
+        {
+          "title": "FAIL  tests/gs028-statistics-ethics-batch.test.ts > GS-028 statistics and ethics runtime admission > scores ordinary case { id: 'case.gs028se.p2e.perioperative-dnr.v4.perianal-abscess', displayName: 'Ethics and communication', patientPresentationVariantId: 'presentation.gs028se.perioperative-dnr-error-disclosure.a-perioperative-dnr-4', releasePointId: 'release.l0.clinic_evaluation', patientDisplayName: '{patientName}', prototypeDemographics: { ageYears: 58, sexLabel: 'Male' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, approvedInstantiationProfiles: [ { id: 'profile.gs028se.perioperative-dnr-error-disclosure.a-perioperative-dnr-4.male.58', prototypeDemographics: { ageYears: 58, sexLabel: 'Male' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 58-year-old man, has a superficial perianal abscess requiring drainage and an existing DNR order. A staff member proposes omitting routine treatment and comfort measures because of the order. The patient asks whether abscess treatment and other care can continue. No individualized decision to refuse those treatments has been expressed; the team is preparing care.' }, { id: 'profile.gs028se.perioperative-dnr-error-disclosure.a-perioperative-dnr-4.female.58', prototypeDemographics: { ageYears: 58, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 58-year-old woman, has a superficial perianal abscess requiring drainage and an existing DNR order. A staff member proposes omitting routine treatment and comfort measures because of the order. The patient asks whether abscess treatment and other care can continue. No individualized decision to refuse those treatments has been expressed; the team is preparing care.' }, { id: 'profile.gs028se.perioperative-dnr-error-disclosure.a-perioperative-dnr-4.male.77', prototypeDemographics: { ageYears: 77, sexLabel: 'Male' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 77-year-old man, has a superficial perianal abscess requiring drainage and an existing DNR order. A staff member proposes omitting routine treatment and comfort measures because of the order. The patient asks whether abscess treatment and other care can continue. No individualized decision to refuse those treatments has been expressed; the team is preparing care.' }, { id: 'profile.gs028se.perioperative-dnr-error-disclosure.a-perioperative-dnr-4.female.77', prototypeDemographics: { ageYears: 77, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 77-year-old woman, has a superficial perianal abscess requiring drainage and an existing DNR order. A staff member proposes omitting routine treatment and comfort measures because of the order. The patient asks whether abscess treatment and other care can continue. No individualized decision to refuse those treatments has been expressed; the team is preparing care.' } ], chiefComplaint: 'Abscess care preferences', presentation: '{patientName}, a 58-year-old man, has a superficial perianal abscess requiring drainage and an existing DNR order. A staff member proposes omitting routine treatment and comfort measures because of the order. The patient asks whether abscess treatment and other care can continue. No individualized decision to refuse those treatments has been expressed; the team is preparing care.', tutorialEligible: false, routineEligible: true, earliestFacilityStage: +0, requiredClinicalSetting: 'clinic', requiredCapabilityIds: [], rewardTierId: 'reward.clinic_basic', sourceLabels: [ 'Statement on Ethical Guidelines for the Anesthesia Care of Patients with Do-Not-Resuscitate Orders', 'Orders Not to Attempt Resuscitation (DNAR)', 'The American Society of Colon and Rectal Surgeons Clinical Practice Guidelines for the Management of Anorectal Abscess, Fistula-in-Ano, and Rectovaginal Fistula' ], decisionNodes: [ { id: 'node.gs028se.p2e.perioperative-dnr.v4.perianal-abscess.1', questionVariantId: 'question.statistics-ethics.perioperative-dnr.v4', primaryConceptId: 'concept.statistics-ethics.perioperative-dnr', stem: 'How should the team interpret {patientName}\\'s DNR order when a staff member proposes omitting abscess treatment and comfort care?', answerChoices: [ { id: 'key-4', label: 'Resuscitation after cardiopulmonary arrest', isCorrect: true, rationale: 'DNR alone concerns resuscitative efforts after cardiopulmonary arrest. Other care remains a separate decision guided by the patient\\'s goals.', serviceRequest: null }, { id: 'wrong-4-1', label: 'Resuscitation and anesthetic airway support', isCorrect: false, rationale: 'The order alone does not establish a blanket ban on anesthetic airway support. Perioperative interventions require their own individualized discussion.', serviceRequest: null }, { id: 'wrong-4-2', label: 'Resuscitation and treatment of a new infection', isCorrect: false, rationale: 'A DNR order alone does not decline appropriate treatment of infection. Adding that restriction silently expands its scope beyond resuscitation.', serviceRequest: null }, { id: 'wrong-4-3', label: 'Resuscitation and diagnostic testing', isCorrect: false, rationale: 'Diagnostic testing is not automatically prohibited by DNR status. It remains a separate care decision consistent with the patient\\'s goals.', serviceRequest: null } ], shuffleAnswers: true, explanation: 'DNR alone limits resuscitation after cardiopulmonary arrest. It does not by itself decline symptom treatment, diagnostic testing, or other appropriate care consistent with the patient\\'s goals.', teachingPoint: 'A DNR order concerns resuscitative efforts after cardiopulmonary arrest. By itself it does not prohibit other appropriate evaluation or treatment consistent with the patient\\'s goals. Remember to distinguish the scope of the order from separate decisions about other care. Any further limits need their own discussion rather than being silently inferred from those letters.', sourceLabels: [ 'Statement on Ethical Guidelines for the Anesthesia Care of Patients with Do-Not-Resuscitate Orders', 'Orders Not to Attempt Resuscitation (DNAR)', 'The American Society of Colon and Rectal Surgeons Clinical Practice Guidelines for the Management of Anorectal Abscess, Fistula-in-Ano, and Rectovaginal Fistula' ], resultGateAfter: null, terminalDispositions: [] }, { id: 'node.gs028se.p2e.perioperative-dnr.v4.perianal-abscess.2', questionVariantId: 'question.perianal-abscess.prompt-drainage.v1.p2e.perioperative-dnr.v4', primaryConceptId: 'concept.perianal-abscess.prompt-drainage', stem: 'Which treatment should the team arrange for {patientName}\\'s clinically evident, uncomplicated superficial perianal abscess when the patient wants treatment and the DNR order remains in place?', answerChoices: [ { id: 'drain_1', label: 'Arrange incision and drainage', isCorrect: true, serviceRequest: null, rationale: 'Arrange prompt incision and drainage for this clinically evident superficial perianal abscess rather than delaying source control.' }, { id: 'antibiotic_1', label: 'Arrange an oral antibiotic course', isCorrect: false, serviceRequest: null, rationale: 'Antibiotics alone do not provide source control for a drainable abscess.' }, { id: 'compress_1', label: 'Arrange warm-compress treatment', isCorrect: false, serviceRequest: null, rationale: 'Supportive measures alone do not replace drainage of this evident collection.' }, { id: 'aspirate_1', label: 'Arrange aspiration through a needle', isCorrect: false, serviceRequest: null, rationale: 'Needle aspiration alone is not the standard source-control procedure for a routine perianal abscess.' } ], shuffleAnswers: true, explanation: 'Arrange prompt incision and drainage for the evident superficial perianal collection. Antibiotics, compresses or needle aspiration alone do not replace the authored drainage plan.', sourceLabels: [ 'The American Society of Colon and Rectal Surgeons Clinical Practice Guidelines for the Management of Anorectal Abscess, Fistula-in-Ano, and Rectovaginal Fistula', 'Statement on Ethical Guidelines for the Anesthesia Care of Patients with Do-Not-Resuscitate Orders', 'Orders Not to Attempt Resuscitation (DNAR)' ], resultGateAfter: null, terminalDispositions: [ { answerChoiceId: 'antibiotic_1', kind: 'no_terminal_outcome', consequenceNarrative: 'Review the teaching point and choice rationales.', clinicalRationale: 'Arrange prompt incision and drainage for the evident superficial perianal collection. Antibiotics, compresses or needle aspiration alone do not replace the authored drainage plan.', sourceLabels: [ 'The American Society of Colon and Rectal Surgeons Clinical Practice Guidelines for the Management of Anorectal Abscess, Fistula-in-Ano, and Rectovaginal Fistula', 'Statement on Ethical Guidelines for the Anesthesia Care of Patients with Do-Not-Resuscitate Orders', 'Orders Not to Attempt Resuscitation (DNAR)' ] }, { answerChoiceId: 'compress_1', kind: 'no_terminal_outcome', consequenceNarrative: 'Review the teaching point and choice rationales.', clinicalRationale: 'Arrange prompt incision and drainage for the evident superficial perianal collection. Antibiotics, compresses or needle aspiration alone do not replace the authored drainage plan.', sourceLabels: [ 'The American Society of Colon and Rectal Surgeons Clinical Practice Guidelines for the Management of Anorectal Abscess, Fistula-in-Ano, and Rectovaginal Fistula', 'Statement on Ethical Guidelines for the Anesthesia Care of Patients with Do-Not-Resuscitate Orders', 'Orders Not to Attempt Resuscitation (DNAR)' ] }, { answerChoiceId: 'aspirate_1', kind: 'no_terminal_outcome', consequenceNarrative: 'Review the teaching point and choice rationales.', clinicalRationale: 'Arrange prompt incision and drainage for the evident superficial perianal collection. Antibiotics, compresses or needle aspiration alone do not replace the authored drainage plan.', sourceLabels: [ 'The American Society of Colon and Rectal Surgeons Clinical Practice Guidelines for the Management of Anorectal Abscess, Fistula-in-Ano, and Rectovaginal Fistula', 'Statement on Ethical Guidelines for the Anesthesia Care of Patients with Do-Not-Resuscitate Orders', 'Orders Not to Attempt Resuscitation (DNAR)' ] } ], currentUpdate: 'The team clarifies that {patientName}\\'s DNR order alone does not decline abscess treatment or comfort care. The patient wants the abscess addressed. Examination shows a tender, fluctuant superficial perianal collection with stable vital signs, without Crohn disease, recurrence, immune compromise or deep pelvic symptoms. The DNR order remains in place while the team discusses the separate treatment plan.', teachingPoint: 'Arrange prompt incision and drainage for this clinically evident superficial perianal abscess rather than delaying source control.' } ], learningSummary: 'Review the teaching points and choice rationales for this encounter.' } correctly and incorrectly exactly once",
+          "kind": "requires_review",
+          "error": "AssertionError: expected [] to have a length of 1 but got +0 - Expected",
+          "location": "❯ runOrdinaryCase tests/gs028-statistics-ethics-batch.test.ts:143:69"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > binds the actual run to its current game, balance, clinical and driver inputs and reconciles cash",
+          "kind": "level5_input_binding",
+          "error": "AssertionError: packages/clinical-content/src/answer-choice-timing.ts: expected  '6019fffc14ddafda42e6790e4712dd5b21b65…' to be '7db1b1253c7d3064adb0602360925c0739bb6…' // Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:47:71"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 5",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'b71479e210a0953290ad9f025afd3447fbf3e…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 6",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'b71479e210a0953290ad9f025afd3447fbf3e…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 7",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'b71479e210a0953290ad9f025afd3447fbf3e…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 8",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'b71479e210a0953290ad9f025afd3447fbf3e…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 9",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'b71479e210a0953290ad9f025afd3447fbf3e…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 5",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'a9fa4c4159fb683942aa1aee1e1a0d3b02865…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 6",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'a9fa4c4159fb683942aa1aee1e1a0d3b02865…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 7",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'a9fa4c4159fb683942aa1aee1e1a0d3b02865…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 8",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'a9fa4c4159fb683942aa1aee1e1a0d3b02865…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 9",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'a9fa4c4159fb683942aa1aee1e1a0d3b02865…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 5",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'cdb72b50b868e605355d0742dabf03238c1b4…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 6",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'cdb72b50b868e605355d0742dabf03238c1b4…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 7",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'cdb72b50b868e605355d0742dabf03238c1b4…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 8",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'cdb72b50b868e605355d0742dabf03238c1b4…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 9",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'cdb72b50b868e605355d0742dabf03238c1b4…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 5",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'b0e7b11f2c02f5fc667bbd4e8d9661a79871b…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 6",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'b0e7b11f2c02f5fc667bbd4e8d9661a79871b…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 7",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'b0e7b11f2c02f5fc667bbd4e8d9661a79871b…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 8",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'b0e7b11f2c02f5fc667bbd4e8d9661a79871b…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 9",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'b0e7b11f2c02f5fc667bbd4e8d9661a79871b…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 5",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '4b15af99e2c03636b5e178f9958e6ca14709a…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 6",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '4b15af99e2c03636b5e178f9958e6ca14709a…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 7",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '4b15af99e2c03636b5e178f9958e6ca14709a…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 8",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '4b15af99e2c03636b5e178f9958e6ca14709a…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 9",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '4b15af99e2c03636b5e178f9958e6ca14709a…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        }
+      ]
+    },
+    "domain": {
+      "log": "tools/question-quality/question-flags-round2-domain-repaired-20261104.log",
+      "files": "1 failed | 167 passed (168)",
+      "tests": "26 failed | 4348 passed | 1 skipped (4375)",
+      "duration": "1345.38s (transform 5.65s, setup 0ms, import 168.34s, tests 1161.72s, environment 9ms)",
+      "failures": [
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > binds the actual run to its current game, balance, clinical and driver inputs and reconciles cash",
+          "kind": "level5_input_binding",
+          "error": "AssertionError: packages/clinical-content/src/answer-choice-timing.ts: expected  '6019fffc14ddafda42e6790e4712dd5b21b65…' to be '7db1b1253c7d3064adb0602360925c0739bb6…' // Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:47:71"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 5",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'b71479e210a0953290ad9f025afd3447fbf3e…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 6",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'b71479e210a0953290ad9f025afd3447fbf3e…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 7",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'b71479e210a0953290ad9f025afd3447fbf3e…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 8",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'b71479e210a0953290ad9f025afd3447fbf3e…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 9",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'b71479e210a0953290ad9f025afd3447fbf3e…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 5",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'a9fa4c4159fb683942aa1aee1e1a0d3b02865…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 6",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'a9fa4c4159fb683942aa1aee1e1a0d3b02865…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 7",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'a9fa4c4159fb683942aa1aee1e1a0d3b02865…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 8",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'a9fa4c4159fb683942aa1aee1e1a0d3b02865…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 9",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'a9fa4c4159fb683942aa1aee1e1a0d3b02865…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 5",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'cdb72b50b868e605355d0742dabf03238c1b4…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 6",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'cdb72b50b868e605355d0742dabf03238c1b4…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 7",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'cdb72b50b868e605355d0742dabf03238c1b4…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 8",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'cdb72b50b868e605355d0742dabf03238c1b4…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 9",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'cdb72b50b868e605355d0742dabf03238c1b4…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 5",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'b0e7b11f2c02f5fc667bbd4e8d9661a79871b…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 6",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'b0e7b11f2c02f5fc667bbd4e8d9661a79871b…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 7",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'b0e7b11f2c02f5fc667bbd4e8d9661a79871b…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 8",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'b0e7b11f2c02f5fc667bbd4e8d9661a79871b…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 9",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'b0e7b11f2c02f5fc667bbd4e8d9661a79871b…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 5",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '4b15af99e2c03636b5e178f9958e6ca14709a…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 6",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '4b15af99e2c03636b5e178f9958e6ca14709a…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 7",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '4b15af99e2c03636b5e178f9958e6ca14709a…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 8",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '4b15af99e2c03636b5e178f9958e6ca14709a…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 9",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '4b15af99e2c03636b5e178f9958e6ca14709a…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        }
+      ]
+    },
+    "player": {
+      "log": "tools/question-quality/question-flags-round2-player-clean-20261104.log",
+      "files": "334 passed (334)",
+      "tests": "3371 passed (3371)",
+      "duration": "488.24s (transform 11.90s, setup 0ms, import 308.42s, tests 635.14s, environment 25ms)",
+      "failures": []
+    },
+    "lint": {
+      "log": "tools/question-quality/question-flags-round2-lint-clean-20261104.log",
+      "tests": "30",
+      "pass": "30",
+      "fail": "0"
+    },
+    "typecheck": {
+      "log": "tools/question-quality/question-flags-round2-typecheck-integration-20261104.log",
+      "workspaces": [
+        "@gamify-surgery/clinical-context-workbench",
+        "@gamify-surgery/player",
+        "@gamify-surgery/balance-config",
+        "@gamify-surgery/clinical-authoring",
+        "@gamify-surgery/clinical-content",
+        "@gamify-surgery/clinical-research",
+        "@gamify-surgery/game-domain"
+      ],
+      "errors": false
+    }
+  },
+  "domainFailureCategories": {
+    "level5_input_binding": 1,
+    "legacy_loaded_state_hash": 25,
+    "timeout": 0,
+    "requires_review": 0
+  },
+  "validationInputLock": "tools/question-quality/question-flags-round2-validation-domain-repaired-lock-20261104.json",
+  "windowChanges": [],
+  "playerValidationInputLock": "tools/question-quality/question-flags-round2-validation-clean-lock-20261104.json",
+  "playerWindowChanges": [
+    {
+      "path": "packages/game-domain/tests/gs028-20260928-batch.test.ts",
+      "previous": "2100aabed7cd41cde815b2b5e3e7fd06d692c2113feea37d49209b9e92587426",
+      "current": "577f993550d64209a7feb5522ef3cfa81a972aa6af47c6cbbef088e0789c8b05"
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-statistics-ethics-batch.test.ts",
+      "previous": "d934207998c74ff7c896778e27344e2618bfb13603f339a8ea8b652e8d6ecee3",
+      "current": "440737e150561605cc4047cecba3c273bbc01ff6a91257de70a71dcf3bf8c246"
+    }
+  ],
+  "playerChangesAreDomainTestsOnly": true,
+  "protectedChanges": [],
+  "files": [
+    {
+      "path": "docs/clinical/question-authoring-standard.md",
+      "kind": "modified_this_round",
+      "sha256": "104c9e5d12abd3ee44aaa613a8858fcbfc19b666a71a6e190b6494b1b73bf0f3",
+      "bytes": 39662
+    },
+    {
+      "path": "docs/execplans/question-flags-20261104.md",
+      "kind": "modified_this_round",
+      "sha256": "3e0cc742af14bec53ac31da5b3f5cf6f2cd4b3951988025605a278e66e90808a",
+      "bytes": 20223
+    },
+    {
+      "path": "docs/research/question-flags-review-20261104.json",
+      "kind": "modified_this_round",
+      "sha256": "3874f7e28a884eadee77f38ecf1fd6b7903a7fdd9c1f8112bcd7299b58748c9b",
+      "bytes": 286247
+    },
+    {
+      "path": "docs/research/question-flags-round2-cue-audit-20261104.md",
+      "kind": "added_this_round",
+      "sha256": "7e8e828231583a9d882362918f6977f8b8c8839b4a4b0c1018cdc0a1b5699cad",
+      "bytes": 12416
+    },
+    {
+      "path": "docs/research/question-flags-round2-handoff-20261104.md",
+      "kind": "added_this_round",
+      "sha256": "f4c4420871c149af168d5e31d53c0572a2773057983ff8a496481cf8b29c4533",
+      "bytes": 27562
+    },
+    {
+      "path": "docs/research/question-flags-round2-review-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "3874f7e28a884eadee77f38ecf1fd6b7903a7fdd9c1f8112bcd7299b58748c9b",
+      "bytes": 286247
+    },
+    {
+      "path": "docs/research/sources-question-flags-round2-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "01e787cede6e8df8574ef3d1d87c4ac6ec3522136dedba6fa5eb4b07ca03fd3a",
+      "bytes": 142853
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+      "kind": "modified_this_round",
+      "sha256": "5bb3e0a817fce009ae71c096150746fcf32823719b4b5b00bf0598108026017d",
+      "bytes": 3460
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "kind": "modified_this_round",
+      "sha256": "6019fffc14ddafda42e6790e4712dd5b21b65af6b7fcca088b6b1380164001e5",
+      "bytes": 189547
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "kind": "modified_this_round",
+      "sha256": "227c93a817c6fc49971366218827a8d9acd444d4066c7bd7cc41f2c2b8db68bb",
+      "bytes": 4870
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags-20261104.test.ts",
+      "kind": "modified_this_round",
+      "sha256": "5c92ba99d2a8f4fa36be56a75f0ff9c9e7b62f31c974a7963af52f5cedd43a4d",
+      "bytes": 7433
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags-round2-20261104-data.ts",
+      "kind": "added_this_round",
+      "sha256": "8b845ae0b85a328c5a5b384a7be17e885423b8372a0ddaa31a76c5b1e08deac9",
+      "bytes": 234837
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags-round2-20261104.test.ts",
+      "kind": "added_this_round",
+      "sha256": "076d1e979e0a7b5908edf204591a24e77f82641815704eb90003c77aef613f18",
+      "bytes": 5702
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags-round2-20261104.ts",
+      "kind": "added_this_round",
+      "sha256": "8932e60db6762df66810ba0992766d2bc21ce9ffdc1bc0c0c8cc7c3e0322257d",
+      "bytes": 2081
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags-round2-evidence-20261104.ts",
+      "kind": "added_this_round",
+      "sha256": "592d67134c988dd8aff00cb3b24591605bd6afd71e1d342f3398125adcb10f80",
+      "bytes": 4643
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "kind": "modified_this_round",
+      "sha256": "b4cc3c8f874e51cdeeaa5fd0f2049bd899cdbc7c5b49b557e7e79f9237f43103",
+      "bytes": 60350
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "kind": "modified_this_round",
+      "sha256": "31eb2ff9b150900af08f0ae1f0e50cdb5508e6388fb84d7c6dc586267abd75ec",
+      "bytes": 88368
+    },
+    {
+      "path": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+      "kind": "modified_this_round",
+      "sha256": "cd0f9384982d1142c20996dc052e14ef22051ddf44a53efd4ad920e731fcfcd7",
+      "bytes": 15729
+    },
+    {
+      "path": "packages/game-domain/tests/diagnostics/patient-supply.test.ts",
+      "kind": "modified_this_round",
+      "sha256": "f8a4aad021550d0ff0fe008e7368347589a3e1372ef96e93be9d197e8f723912",
+      "bytes": 21883
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20260928-batch.test.ts",
+      "kind": "modified_this_round",
+      "sha256": "577f993550d64209a7feb5522ef3cfa81a972aa6af47c6cbbef088e0789c8b05",
+      "bytes": 26923
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261002-batch.test.ts",
+      "kind": "modified_this_round",
+      "sha256": "26efb2b3c8cc6266c12dc53034cea900b842c5d4a9b5b52d92e6ddd533d08f21",
+      "bytes": 31918
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261003-batch.test.ts",
+      "kind": "modified_this_round",
+      "sha256": "91b04bacd4284b2c1766e27792434cad1a3ba2cd590928d53f8d494837b831d5",
+      "bytes": 35323
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261007-batch.test.ts",
+      "kind": "modified_this_round",
+      "sha256": "dbf851c039bcad8d8a2b1d5dc8f7c354a6c68127ce4de2c96a4fe1a1fab8a351",
+      "bytes": 32529
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+      "kind": "modified_this_round",
+      "sha256": "6693bdf58ecacd7825955e0f065d60c7422e42aa446432d6306ae40272b23488",
+      "bytes": 46646
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-statistics-ethics-batch.test.ts",
+      "kind": "modified_this_round",
+      "sha256": "440737e150561605cc4047cecba3c273bbc01ff6a91257de70a71dcf3bf8c246",
+      "bytes": 11664
+    },
+    {
+      "path": "packages/game-domain/tests/patient-supply.test.ts",
+      "kind": "modified_this_round",
+      "sha256": "2eacb3b2d8145ae09eada551cd1eb55bc68c230601fcd6da86958bc93893bd25",
+      "bytes": 22411
+    },
+    {
+      "path": "packages/game-domain/tests/question-flags-bindings.test.ts",
+      "kind": "modified_this_round",
+      "sha256": "c97dc359df40e507b51ef73a052cbc231e25f460131d28c6a133bfed55e31a04",
+      "bytes": 2646
+    },
+    {
+      "path": "packages/game-domain/tests/question-flags-round2-bindings.test.ts",
+      "kind": "added_this_round",
+      "sha256": "479d6669738c2ad2dd53aa164d4778ad1f3d7838851977dabc4d8e3b8c954d73",
+      "bytes": 2541
+    },
+    {
+      "path": "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+      "kind": "modified_this_round",
+      "sha256": "71e3385981e61527d676ddbb1a1f22bbfcf62ddc7af92ddb8f219f45dc4c26b7",
+      "bytes": 20496
+    },
+    {
+      "path": "tools/question-quality/author-question-flags-round2-20261104.mjs",
+      "kind": "added_this_round",
+      "sha256": "9ad7c31b9019a8149f2c91031b50b38ef68f0669d58cbe0cf1fde6eb07b9d3f4",
+      "bytes": 6222
+    },
+    {
+      "path": "tools/question-quality/capture-question-flags-round2-20261104.mjs",
+      "kind": "added_this_round",
+      "sha256": "f0b29e5581d34dd5c7539e28b32f25a4ce125fc8514b897e14a8906b2a491a50",
+      "bytes": 2440
+    },
+    {
+      "path": "tools/question-quality/compare-question-flags-round2-supply-20261104.mjs",
+      "kind": "added_this_round",
+      "sha256": "1a0ae46a883160488048d77357c8cf793c2f4986adad3a6a9d913db0c128daae",
+      "bytes": 5811
+    },
+    {
+      "path": "tools/question-quality/evidence-question-flags-round2-20261104.mjs",
+      "kind": "added_this_round",
+      "sha256": "cc089a6101d030d86dac09f25d83fb19b655eb44ca4706adbf21e806ae7d8eb7",
+      "bytes": 2684
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-flags-round2-before-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "bcb43b76c0864b5f88fb5e55d1846c3eabe794939472354361deb07c7a7c8851",
+      "bytes": 23389067
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-flags-round2-integration-tests-before-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "1b41a8a49850fdbea8904310a14dfdcfbbfb00db27ef20e7964de7a9f18a0e8e",
+      "bytes": 39583
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-flags-round2-tests-before-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "4fd4216ce2c717e3c25796318483e0b36f0c6d90aadada9f21cd394da0e836c2",
+      "bytes": 234582
+    },
+    {
+      "path": "tools/question-quality/handoff-question-flags-round2-20261104.mjs",
+      "kind": "added_this_round",
+      "sha256": "c4ee8ec2755e1ca59126cc511d528a9c5794f46126dba54751e8b43701c01049",
+      "bytes": 25590
+    },
+    {
+      "path": "tools/question-quality/legacy-question-flags-round2-20261104.mjs",
+      "kind": "added_this_round",
+      "sha256": "cdab111e6b69aece136e506c0c70b418c133eca451557a1553d2f4b4139bdf5e",
+      "bytes": 2999
+    },
+    {
+      "path": "tools/question-quality/lint.mjs",
+      "kind": "modified_this_round",
+      "sha256": "3823dc26c5a35958888721e3ed0ec9c0e57f7ed5d0997ef09c018ba192b36f57",
+      "bytes": 21597
+    },
+    {
+      "path": "tools/question-quality/lint.test.mjs",
+      "kind": "modified_this_round",
+      "sha256": "fe82fc7d6b69a7840260f0bbecc9db2b0479d6e2b27615c5e9f985e08eb56c88",
+      "bytes": 23721
+    },
+    {
+      "path": "tools/question-quality/lock-question-flags-round2-validation-20261104.mjs",
+      "kind": "added_this_round",
+      "sha256": "49b6196df92da4dcdc60ec0d713171eaef9819eeeb8dff65823eba675bd380ab",
+      "bytes": 2092
+    },
+    {
+      "path": "tools/question-quality/orders-question-flags-round2-20261104.mjs",
+      "kind": "added_this_round",
+      "sha256": "1b728f63036f1ca781e10e9af224f187954b6a67316d3b60d9d6b018fcc26161",
+      "bytes": 2692
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-clinical-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "38143382f5969581597897da9c65b52297bbedb7af24e2c1e03f381a342cf83c",
+      "bytes": 2312
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-clinical-clean-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "bf5ac22feaa40dde468be0fc5b7897500614abb2b1993e43f4d0b3b6030f0c89",
+      "bytes": 5916
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-clinical-clean-final-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "e981443e85a9e6994a6547a7e5562bf4a935632c0862bb900d28200dc31e1329",
+      "bytes": 2312
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-clinical-final-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "6c28e3b20120fc270a70b01723d8bb01ba04b59c1104274925ddf9fff8b5a294",
+      "bytes": 2312
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-clinical-initial-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "e298a7108d64cd0e0965bb165fd9e19b876574c0da2415fc4f40a39473b4ec6e",
+      "bytes": 5586
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-domain-clean-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "5315c4cda92f5a6001f921fd569837e1a05041ee0e3588b646d3306a8a9cc0f6",
+      "bytes": 66920
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-domain-clean-failures-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "e664eade0844cc473c01354d07026cced52f3e0607cd61f3e6e3c00e941303b7",
+      "bytes": 27770
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-domain-final-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "e04fd5ab0ec33f32f5f0f16b56ef69c6566d42d555bdb8ca7a6169facec0cae5",
+      "bytes": 368
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-domain-focused-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "b9a52ca27812687f0190f43f41a030aa08e51398c83c2f6f32c14bbdb40cc6dc",
+      "bytes": 3818
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-domain-focused-clean-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "494d3e8a2523046351cb54353c588c5099d429cc23f5918da5b62b594ad8ddef",
+      "bytes": 3974
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-domain-focused-final-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "fe00fc83c11a8d79ddeb34af08a21c0665a2223e91c4a0b3769f017293472f6b",
+      "bytes": 3974
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-domain-focused-initial-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "c24562eca34612676ae79a96771b95446b7085cd8c36c72c7c289910b154313c",
+      "bytes": 89008
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-domain-integration-repairs-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "04f09b89eb965d49f3fc71bd11728524a34b0e73cc5e0e380683b0c6618ab200",
+      "bytes": 1364
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-domain-repaired-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "53146d94ca44c54425375087267bccc1ddd500f10d3c2af3bd84dca7af04d0d4",
+      "bytes": 30774
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-domain-repaired-failures-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "44e5477f4e8d38d6d55d72f637f723991b861aa66f8fde91f4ff410742f3ab4a",
+      "bytes": 13118
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-integration-fixture-review-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "6cd12e554a7482d209ed9176ae8a6f4db99e57e7b37195c649aa14a41d011af8",
+      "bytes": 1176
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-legacy-diagnosis-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "4561e81a5190d35dbf947713f8acc414719f63be1b79e597c6c6828f5b944934",
+      "bytes": 16179
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-legacy-diagnosis-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "2f619d400103ac91f4da2ac3b6813a022905aa928ce136a7526407b25347fcab",
+      "bytes": 266
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-lint-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "5723f4716c55bde2e521f3676da4504d703edfd64c9d2d0a7c632851ee263c6c",
+      "bytes": 624116
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-lint-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "90b1d719cdfb835f19dd5d2c6d85aa7825663cffda0824956fd00f15ed9700a3",
+      "bytes": 7480
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-lint-clean-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "963c8a6770a395057e548aba1e163f583169aaaf0b2c3ec1fbc95c8d28bae673",
+      "bytes": 7494
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-lint-final-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "d25f9dc1ee2d6b27bffe103986b75f14038f6b01d0e8cde1a71b9040c02ca657",
+      "bytes": 7482
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-lint-initial-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "48ff294db07b6cc7b52f9ee809e27a7109b204cc9d7886e2b50679723261a0b9",
+      "bytes": 7488
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-owned-files-20261104.json",
+      "kind": "added_this_round",
+      "sha256": null,
+      "bytes": null
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-packet-clean-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "594c9bc3918293086946cefc0e996ec99effda814342b7d77b79374771a3d5ce",
+      "bytes": 646
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-packet-final-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "594c9bc3918293086946cefc0e996ec99effda814342b7d77b79374771a3d5ce",
+      "bytes": 646
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-player-clean-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "20ddf5cfc77f47c11fd235cf226e41251b139fc30cc16c35e91cbd75de61228e",
+      "bytes": 3380610
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-player-focused-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "41891ccb060b8dd5ebd93eca95ba5de5c2774188d1d15c7ef5adcd01778754a7",
+      "bytes": 131892
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-player-focused-clean-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "8654830c3c33a26ec0702496f9938930bbadb0296b7416d09610bc27797546e0",
+      "bytes": 131892
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-scope-final-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "29814d29f22d424e2428c3edeed295b38fdc41d8a2c44d6da10e0c1eff7a0ed2",
+      "bytes": 508
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-snapshot-change-review-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "869f32c4271759f323e556cff00d6634f7a7a4ff286a31d38562699064def4d9",
+      "bytes": 60448
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-specs-20261104.mjs",
+      "kind": "added_this_round",
+      "sha256": "f1545523612b0f7cbca37d4806864697cea89cbcc846187616d2d1eb470db658",
+      "bytes": 52408
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-supply-candidate-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "f40219370922f09281b32c8b1b90b1beafec4c0cfbb10bf0ddedae34bad0412a",
+      "bytes": 61856
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-supply-candidate-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "6b22a9535f7874815db82ff9cb337fb082afc338ab5fec608bd7695efa6c68fe",
+      "bytes": 1552
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-supply-control-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "07b87d2dd1efdb35d7887847cdea8ddb102acd3a006b20524e1f0c1b62c89474",
+      "bytes": 61775
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-supply-control-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "2fc18de34ff53709622f01a2ec642ac0d05f9f875b1cc04fd3a743a116bfb29d",
+      "bytes": 1546
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-supply-update-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "38d4c298e42d08e7c5f370c739e0336a93686548c6b93c66e1d9d23428512650",
+      "bytes": 950
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-typecheck-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "bytes": 1504
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-typecheck-clean-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "bytes": 1504
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-typecheck-final-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "bytes": 1504
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-typecheck-initial-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "bytes": 1504
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-typecheck-integration-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "bytes": 1504
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-validation-clean-lock-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "db5d02bbe67b914bfb34d5693002768445caab748b8acfde0b7a458ecb8f605a",
+      "bytes": 143804
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-validation-domain-repaired-lock-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "676e7cbf7ad261b3326b18f85c90df81ce285b3a732c54a18f41ea7dc432ef3b",
+      "bytes": 143806
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-validation-lock-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "a3d16c2ed3df00e938e19586a83b7e71a2209a1e366a1e7c41f63eaebd506cf0",
+      "bytes": 143682
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-verification-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "16c5c6203cd65407408d840874529932d57e0968d885bd9f8b5eced67c9748e7",
+      "bytes": 13262
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-whole-bank-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "3afcf7590bc1c7271d75a2459cecadd7f307b005b8ca892f5b46938f150b7a59",
+      "bytes": 6609031
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-whole-bank-cli-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "9e85c6207fc9c47c2c85bfbb146c020778fcb2b279eec47d3a0599b5ff146e76",
+      "bytes": 3640
+    },
+    {
+      "path": "tools/question-quality/question-flags-round2-whole-bank-cli-clean-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "9e85c6207fc9c47c2c85bfbb146c020778fcb2b279eec47d3a0599b5ff146e76",
+      "bytes": 3640
+    },
+    {
+      "path": "tools/question-quality/report.mjs",
+      "kind": "modified_this_round",
+      "sha256": "b29491b29da858bdaec30338d0f62af381e77fb94d1ac26ba93fd09a6e3624a8",
+      "bytes": 6654
+    },
+    {
+      "path": "tools/question-quality/responses-question-flags-round2-20261104.mjs",
+      "kind": "added_this_round",
+      "sha256": "10bf32b77fc0428b6c621220a2df4106f2daad701a6798243832198ebcab7f95",
+      "bytes": 27884
+    },
+    {
+      "path": "tools/question-quality/review-question-flags-round2-20261104.mjs",
+      "kind": "added_this_round",
+      "sha256": "ef2a6828d9931090d202b3c9ddcf8131ccf30b971bc44077af5952d20980174e",
+      "bytes": 14647
+    },
+    {
+      "path": "tools/question-quality/review-question-flags-round2-integration-20261104.mjs",
+      "kind": "added_this_round",
+      "sha256": "594b9c024cf1263ade05d2c28a544f2363fa8e7462794f927ec4eb18efa5efb6",
+      "bytes": 1648
+    },
+    {
+      "path": "tools/question-quality/review-question-flags-round2-snapshots-20261104.mjs",
+      "kind": "added_this_round",
+      "sha256": "65aeee9b4930b16002c1fa98c4e09dab90591291f3c4c646621acd4efac693ce",
+      "bytes": 2515
+    },
+    {
+      "path": "tools/question-quality/verify-question-flags-round2-20261104.mjs",
+      "kind": "added_this_round",
+      "sha256": "8b411de2d8843ecf109c756811a59d963a9f4b06248c01c07336f0615eea99ee",
+      "bytes": 8719
+    }
+  ],
+  "note": "Self hash omitted to avoid recursion. All logs retained; final clean logs are the acceptance evidence. Original round-one artifacts and concurrent work are not owned by round two. No Git used."
+}

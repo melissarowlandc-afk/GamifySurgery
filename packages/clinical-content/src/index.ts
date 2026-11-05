@@ -47,6 +47,13 @@ export * from "./question-quality-adversarial-r4-20261102";
 export * from "./question-quality-adversarial-r5-20261102";
 export * from "./question-quality-adversarial-r6-20261102";
 export * from "./question-quality-adversarial-r7-20261102";
+export * from "./question-flags-20261104";
+export * from "./question-flags-round2-20261104";
+export * from "./question-flags-round2-evidence-20261104";
+export * from "./question-bank-batch2a-20261104";
+export * from "./question-bank-batch2a-evidence-20261104";
+export * from "./question-flags-round3-20261104";
+export * from "./question-flags-round3-evidence-20261104";
 export * from "./question-quality-round3-batch1-evidence-20261102";
 export * from "./development-batch/2026-09-09/twenty-concept-batch";
 export * from "./development-batch/2026-09-10/surgery-center-batch";
@@ -83,3 +90,53 @@ export {
   WITHHELD_TOPICS as VARIETY3_WITHHELD_TOPICS,
   EXCLUDED_SOURCE_CHECKS as VARIETY3_EXCLUDED_SOURCE_CHECKS,
 } from "./development-batch/2026-10-10-variety-3/variety3-batch";
+
+// BEGIN N1 append — new-content lane, independent of existing-question rewrites.
+export * from "./question-new-n1-20261104";
+// END N1 append.
+
+// BEGIN N2 append — separate new-content lane; N1 versions remain frozen.
+export * from "./question-new-n2-20261104";
+// END N2 append.
+export * from "./question-bank-batch2a-round2-20261104";
+export * from "./question-bank-batch2a-round2-evidence-20261104";
+
+// BEGIN N1 ROUND2 append — original N1 and independently reviewed N2 remain intact.
+export * from "./question-new-n1-round2-20261104";
+// END N1 ROUND2 append.
+
+export * from "./question-bank-batch2b-20261104";
+
+// BEGIN N2 ROUND2 append — separate draft versions; N1 and two N2 PASS versions retained.
+export * from "./question-new-n2-round2-20261104";
+// END N2 ROUND2 append.
+
+// BEGIN BATCH2A ROUND3 exports
+export * from "./question-bank-batch2a-round3-20261104";
+export * from "./question-bank-batch2a-round3-evidence-20261104";
+// END BATCH2A ROUND3 exports
+
+// BEGIN N1 ROUND3 append — 31 returned versions; nine exact PASS and N2 frozen.
+export * from "./question-new-n1-round3-20261104";
+// END N1 ROUND3 append.
+
+export * from "./question-bank-batch2b-round2-20261104";
+
+// BEGIN N2 ROUND3 and ship-gate exports
+export * from "./question-new-n2-round3-20261104";
+export * from "./question-ship-manifest";
+export * from "./question-ship-projection";
+// END N2 ROUND3 and ship-gate exports
+
+// BEGIN FLAGS2 retained candidates - no ship-manifest or gate changes.
+export * from "./question-flags2-20261105";
+// END FLAGS2 retained candidates.
+
+// BEGIN N3 explicit draft exports; no default-release acceptance.
+export * from "./question-new-n3-20261105";
+// END N3 explicit draft exports.
+
+// BEGIN FLAGS2 round2 retained candidates and exact G06 integration 20261105
+export * from "./question-flags2-round2-20261105";
+export { withAcceptedQuestionFlags2Concepts } from "./question-flags2-accepted-20261105";
+// END FLAGS2 round2 retained candidates and exact G06 integration 20261105

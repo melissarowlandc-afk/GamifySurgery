@@ -105,6 +105,14 @@ export const resultGateSchema = z
 /** Small, independently authored teaching exhibits; optional on legacy saves. */
 export const caseExhibitSchema = z.discriminatedUnion("kind", [
   z.object({
+    kind: z.literal("image"),
+    caption: z.string().min(1).max(240),
+    assetPath: z.string().regex(/^clinical-exhibits\/[a-z0-9-]+\.png$/),
+    description: z.string().min(1).max(2_000),
+    width: z.number().int().min(1).max(4_096),
+    height: z.number().int().min(1).max(4_096),
+  }).strict(),
+  z.object({
     kind: z.literal("table"),
     caption: z.string().min(1).max(240),
     columnHeaders: z.array(z.string().min(1).max(240)).min(1).max(12),

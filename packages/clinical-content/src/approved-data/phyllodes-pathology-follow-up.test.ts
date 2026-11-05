@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { SYNTHETIC_CLINICAL_RELEASE } from "../synthetic-content";
+// Original deferred package stays absent; N1 separately tests new unapproved clinic-record versions.
+import { QUESTION_NEW_N1_PRE_RELEASE as SYNTHETIC_CLINICAL_RELEASE } from "../synthetic-content";
 import { LEVEL_TWO_ROUTINE_CASE_IDS } from "./level-two-runtime";
 import {
   ROW_053_APPROVED_BACKLOG,

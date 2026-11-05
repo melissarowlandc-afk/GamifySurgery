@@ -1,0 +1,246 @@
+[
+  {
+    "id": "G01",
+    "title": "Persistent ITP: distinguish diagnostic review from the timing of surgery",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "Hematology is continuing treatment and follow-up",
+        "why": "Preselects continued medical care immediately before the key says 'Continue treatment'. A testwise reader can retain the explicitly stated plan rather than interpret the surgical indication."
+      },
+      {
+        "phrase": "Continue treatment; reassess elective splenectomy when disease duration reaches a year",
+        "why": "The only noncommittal, reassessment-based choice contrasts with two choices that both commit to surgery after a preparatory step. This structural outlier permits a cautious-answer shortcut; the year threshold need not be known to prefer it."
+      },
+      {
+        "phrase": "Bruises have recurred, but there has been no mucosal or internal bleeding.",
+        "why": "In this option set the reassuring severity contrast further favors the only defer-and-reassess option. These are necessary safety observations, not a recommendation to delete bleeding information; the competitors need repair."
+      }
+    ],
+    "fairness": [
+      "Scope for this report: judgments use only each item's after Presentation, Current update, Exhibit, Task and Options. The standard and flags2 handoff supply review rules, owner concerns and declared limitations, not extra patient facts. Titles, keys, author rationales and self-checks are not evidence of successful reasoning. No network/source re-verification, runtime audit or review of unseen replacement versions was performed. Difficulty predictions are qualitative; clinical judgments remain needs_clinician_review.",
+      "One-best-answer: continued medical management with later reassessment is the strongest offered plan on the supplied stable course. Vaccination and marrow sampling do not themselves establish an indication to operate. No confident competing key identified among these three choices.",
+      "Difficulty: the five-month course plus two surgery-after-preparation foils reduces the item to the familiar deferral rule. The serology, smear and platelet trajectory do not force a distinct second consequential inference before choosing the only defer option. Too easy for the requested PGY-2/3 target.",
+      "Specificity/realism: an outpatient surgical consultation after steroid relapse is credible, but 'Continue treatment' never identifies the current treatment. Both wrong options conflate completing a preparatory action with committing to splenectomy, rather than presenting close competing plans.",
+      "Importance: splenectomy timing and avoiding an automatic diagnostic-to-operative ladder are practically important general-surgery concepts and plausibly high-yield examination content; no current ABSITE blueprint verification is claimed.",
+      "Owner flag: partially resolved. These after fields no longer key marrow testing after negative HIV/HCV serology; marrow sampling remains part of an incorrect surgery sequence. The handoff reports a sibling audit, but the owner's unidentified prior encounter and consistency across its exact versions cannot be certified from this item.",
+      "Evidence limitation: the handoff explicitly retains an ITP marrow-boundary and ASH bibliographic verification hold. This review does not validate an exact universal one-year rule or forbid marrow evaluation categorically."
+    ],
+    "suggestions": [
+      "Remove the pre-answer declaration that hematology is continuing treatment; retain the observed course and necessary bleeding information.",
+      "Make all options parallel consultation recommendations, with comparable specificity and realistic timing. Replace at least one automatic surgery-after-preparation foil with a credible alternative medical/reassessment plan so 'choose the only cautious answer' no longer works.",
+      "If the intended distinction depends on ongoing treatment response or toxicity, state the relevant actual regimen and observed response using verified claims; do not invent a drug sequence or new numerical threshold.",
+      "Keep 'reassess' distinct from automatic surgery at a calendar date, and resolve the recorded source hold before accepting exact timing or marrow-boundary teaching."
+    ]
+  },
+  {
+    "id": "G02",
+    "title": "Anaesthetic plan despite a previously uncomplicated exposure",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Cue attack: no reliable knowledge-free key selection found. Options are comparable specific anesthetic regimens with parallel grammar and similar length. Repeated propofol points to two options, repeated fentanyl points to two wrong options, and prior sevoflurane exposure matches a distractor rather than the key; none uniquely assembles the answer. The sibling result and prior uncomplicated exposure are relevant competing clinical evidence, not gratuitous answer-rationale narration.",
+      "One-best-answer: the propofol/remifentanil/rocuronium regimen is the intended and, on standard MH pharmacology, defensible best answer. The other regimens introduce a volatile agent or succinylcholine. I identify no confident competing key, but have not re-verified agent guidance offline.",
+      "Difficulty: two real operations are present—interpret familial risk despite prior uneventful exposure, then identify a suitable regimen. Nevertheless, a typical PGY-2/3 who recognizes the two familiar trigger categories can dismiss both distractors immediately. Predicted easy, despite two-step structure; specificity alone has not met the owner's struggle target.",
+      "Importance/realism: high practical perioperative safety value and plausible high-yield resident examination content. A pre-colectomy anesthesia discussion is realistic. The question reasonably compares regimens rather than claiming to prescribe every part of anesthesia preparation.",
+      "Owner flag: partially resolved for the exact re-queued v2. Choices are now specific and no longer involve ignoring records or treating a crisis in clinic. The 'too easy' component remains. This says nothing about the separately queued v4 sibling.",
+      "Evidence limitation: the handoff's prior-exposure, family-testing and named-agent verification hold remains unresolved. No clinical sign-off or release approval follows from this review."
+    ],
+    "suggestions": [
+      "Keep the family result and prior exposure chronology; do not remove the safety information to manufacture difficulty.",
+      "For a resident application item, introduce a verified, consequential preoperative assessment or sequencing distinction and compare complete plans at that same stage. If all choices use acceptable drugs, an explicit clinical constraint must make one plan preferable; do not arbitrarily rank safe regimens.",
+      "If preserving this exact trigger-recognition objective, seek an explicit safety/foundational exception rather than describing it as a challenging resident item. Resolve the recorded source hold either way."
+    ]
+  },
+  {
+    "id": "G03",
+    "title": "Exact breast-imaging flag already covered by batch 2b round two",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "the exact palpable area has not been assessed with ultrasound",
+        "why": "Directly names the omitted test that appears only in the key. No medical knowledge is required to fill the announced gap."
+      },
+      {
+        "phrase": "after negative diagnostic mammography",
+        "why": "Combined with the explicit ultrasound omission, the task frames the only repeat-test option as repeating completed work rather than making the learner interpret acquisition adequacy."
+      },
+      {
+        "phrase": "Contrast-enhanced chest CT",
+        "why": "Anatomical/category outlier among three dedicated breast studies in a task explicitly asking about a focal breast finding. Ordinary word matching removes it without resolving a clinical issue."
+      }
+    ],
+    "fairness": [
+      "One-best-answer: targeted ultrasound is a defensible next imaging choice among the listed options. A negative mammogram should not be read as resolving the persistent palpable finding. The task is narrow enough that lack of a biopsy option is not itself a second-key problem.",
+      "Difficulty: direct named-omission matching, not two-step interpretation. Too easy for PGY-2/3 residents.",
+      "Importance/realism: evaluation of a persistent palpable breast finding and imaging-clinical concordance are high-value surgical concepts. The outpatient setting is realistic; the distractor set does not reflect the closest practical errors.",
+      "Owner flag: NOT resolved in the displayed after fields. They retain the exact ultrasound giveaway. The handoff says a frozen B2B36 round-two version addresses acquisition adequacy, but its after text is absent here. Coverage elsewhere is neither acceptance of this version nor evidence that the replacement is live.",
+      "Verdict applies to the unchanged v1 text shown here, not to the unseen B2B36 rewrite. No confident clinical inaccuracy or equally defensible offered key identified."
+    ],
+    "suggestions": [
+      "Do not rewrite or approve the frozen replacement on this report's authority. Reconcile the exact flagged variant with the independently reviewed B2B36 replacement and its eventual selection status.",
+      "For any authorized repair, show what was actually acquired at the relevant site, with enough localization and protocol detail to distinguish retrieval, repeat targeted imaging or a genuinely different next action. Remove the sentence that names the missing answer.",
+      "Replace chest CT with a credible same-stage competitor supported by the actual acquisition findings; do not add MRI as routine complexity."
+    ]
+  },
+  {
+    "id": "G04",
+    "title": "Propose merging redundant pregnancy-assay recognition",
+    "verdict": "FAIL",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "Pregnancy is possible, but no pregnancy test has been performed.",
+        "why": "Announces the missing test category before the task asks for that exact category. The patient story supplies no additional inference."
+      },
+      {
+        "phrase": "Which laboratory test should assess possible pregnancy",
+        "why": "Direct assay-identification prompt. A reader with ordinary familiarity with pregnancy testing can match hCG without clinical reasoning; this is a recognition shortcut rather than literal key-word repetition."
+      },
+      {
+        "phrase": "The patient is alert, has normal current vital signs and no syncope or severe pain; clinical assessment is underway.",
+        "why": "Reassuring/permission framing does not distinguish any of the four laboratory assays. It creates a clinical veneer around an unchanged identification task; it is not independently a key-selecting clue."
+      }
+    ],
+    "fairness": [
+      "One-best-answer: serum hCG is the unique pregnancy assay among the four options. No confident clinical error or competing listed key identified. FAIL denotes failure as a resident assessment, not an unsafe hCG key.",
+      "Difficulty: elementary assay recognition, with no two-step reasoning. The CBC, lipase and creatinine choices are not credible near-misses for the explicitly stated task.",
+      "Importance: considering pregnancy in a patient with abdominal/pelvic pain is clinically important for general surgeons. Identifying the assay by name has low incremental educational value for PGY-2/3 residents and does not justify an independent challenging item.",
+      "Realism: the presentation could occur in clinic, but the testing decision is artificially elementary. Current normal vital signs should not be transformed into a claim that serious pathology is excluded; this item does not establish that.",
+      "Owner flag: not resolved by the unchanged after version. The retirement/merge proposal addresses the underlying complaint appropriately but remains a proposal, not an applied repair.",
+      "Retirement/merge assessment: AGREE. Remove this redundant assay-recognition assessment from fresh resident selection after manager acceptance, or merge the foundational reminder into a stronger separately reviewed early-pregnancy decision. Do not obscure the assay name or hide pregnancy possibility merely to make this objective harder. The handoff's suggested ectopic-disposition sibling is not reviewed or accepted here."
+    ],
+    "suggestions": [
+      "Accept the retirement/merge direction while preserving historical versions, frozen encounters and existing FSRS records; this review applies no selection change.",
+      "Retain pregnancy assessment in the curriculum through a consequential interpretation/disposition item with the observations necessary to distinguish the competing actions.",
+      "If a deliberate onboarding reminder is still needed, label and approve that purpose separately rather than counting this unchanged question as resident-level challenge. A changed clinical objective requires its own concept/version decision."
+    ]
+  },
+  {
+    "id": "G05",
+    "title": "Normal skeletal assessment does not remove an age-based operative indication",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "The referral requests an operative opinion and a baseline skeletal assessment.",
+        "why": "Operative framing primes the sole surgical option before a neutral management question. It is a weaker nudge rather than proof of surgery: an operative opinion can legitimately recommend surveillance. The sequencing clarification is useful, but should not be mistaken for a difficult inference."
+      },
+      {
+        "phrase": "Recommend parathyroidectomy through endocrine surgery",
+        "why": "Only surgical action and only endocrine-surgery destination; both distractors share endocrinology follow-up. Coupled with the operative referral, specialty/setting matching offers a nonclinical shortcut. The destination labels add no discriminating medical information."
+      }
+    ],
+    "fairness": [
+      "One-best-answer: on the age-based indication represented in the handoff, recommending parathyroidectomy is defensible despite normal skeletal assessment. Neither operative refusal nor a contraindication is supplied, so I do not infer one to make surveillance equally correct.",
+      "Difficulty: the diagnosis is given and the decisive age rule is a single recall-to-recommendation step. The normal skeletal result is a useful misconception check but does not require interpreting raw data, and deleting it still leaves the independent age indication. Too easy for the requested PGY-2/3 challenge.",
+      "Competitor quality: cinacalcet is named, but calcium burden, a reason to avoid surgery and a treatment goal that would make this a close competitor are absent. That makes it weak here rather than proving an alternative key. Do not invent a drug-initiation threshold.",
+      "Importance/realism: surgical indications for primary hyperparathyroidism and the distinction between baseline organ assessment and eligibility are high-yield, practical endocrine-surgery content. Concurrent operative assessment and skeletal characterization is a credible outpatient pathway.",
+      "Owner flag: resolved in the supplied paired wording at the conceptual level. G05-staging explicitly orders skeletal assessment alongside the operative consultation, and G05 recommends surgery despite a normal result. This removes the claim that DXA must first confer eligibility. Actual result-gate behavior or delay of referral cannot be certified from the after fields; full runtime resolution is unverified.",
+      "Evidence limitation: the handoff identifies one adequate guideline for the age/skeletal claims and a separate cinacalcet mapping needing confirmation. This offline review does not close that limitation or clinically approve the version."
+    ],
+    "suggestions": [
+      "Remove specialty destinations from all three options and compare equally specific actions; preserve the concurrent-assessment chronology without implying that a referral predetermines its recommendation.",
+      "Replace the unsupported cinacalcet temptation with a clinically credible competing management plan, or supply the verified patient-specific facts needed to make that pathway plausible but less appropriate.",
+      "If retaining the narrow age-indication objective, acknowledge its foundational difficulty. For a harder separate version, use supported findings whose interpretation actually changes a management choice; do not manufacture a conflict by hiding operative risk or inventing a numerical criterion.",
+      "Review both nodes together and verify that clinical referral proceeds without waiting for the game to display DXA results. Preserve the owner's resolved distinction during any difficulty repair."
+    ]
+  },
+  {
+    "id": "G05-staging",
+    "title": "Linked skeletal-assessment task: no DXA prerequisite for operative referral",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "Dual-energy X-ray absorptiometry at spine, hip and distal forearm",
+        "why": "The key is the only three-site plan and the only one including a peripheral site; compared with two-site CT and axial scintigraphy it invites 'choose the most comprehensive assessment'. Its somewhat longer wording is a weak completeness cue, not a sufficient standalone answer proof."
+      }
+    ],
+    "fairness": [
+      "One-best-answer: three-site DXA is the intended standard baseline choice and the strongest of these modalities. The item is not unfair merely because other skeletal imaging exists; no patient-specific DXA limitation or alternative indication is provided.",
+      "Precision: 'distal forearm' is less exact than the distal one-third radius site recorded in the handoff/standard context. This is a specificity repair for an order-selection task, not a claim that every distal-forearm measurement is interchangeable.",
+      "Difficulty: the task already supplies both the baseline skeletal purpose and concurrency with operative consultation. The learner selects a familiar modality; there is no independent inference about whether surgery should proceed. Too easy for routine PGY-2/3 challenge, even though the handoff honestly labels it foundational.",
+      "Importance/realism: baseline skeletal characterization in primary hyperparathyroidism is useful surgical preparation. Its practical relevance exceeds its challenge. The two alternative modalities are specific but weak substitutes for routine bone-density assessment in this patient.",
+      "Owner flag: the linked sequencing concern is resolved in the displayed words 'alongside Jamie Taylor's operative consultation'. This is not proof of runtime sequencing or of independent acceptance as a basic exception.",
+      "Basic-purpose disposition: do not accept this as a hard item or silently grant a basic exception. A useful necessary staging action need not be a separately scored recall question; manager acceptance is still needed if retaining it as deliberate foundational content.",
+      "Pair-level limitation: G05 and G05-staging are assessed only from their after fields; this report makes no claim about unseen prior feedback, finite profiles, wait previews or actual service gating."
+    ],
+    "suggestions": [
+      "Use the precise supported skeletal sites in the order wording, including the distal one-third radius, without adding unsourced thresholds.",
+      "Prefer making routine baseline assessment unscored encounter context if the resident learning objective is the subsequent management decision; alternatively obtain explicit approval for this foundational role.",
+      "If a scored harder skeletal-assessment version is desired, show an actual prior acquisition/site record and compare concrete orders that differ on a consequential adequacy issue. Version any changed objective and do not tell the learner which site was omitted.",
+      "Keep the concurrent operative consultation explicit wherever needed to prevent reintroducing the owner's sequencing complaint."
+    ]
+  },
+  {
+    "id": "G06",
+    "title": "Use the testing population at collection, not the later referral setting",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Cue attack: no exploitable wording, length, grammar, convergence or category outlier found. All four numeric options are parallel. The specimen-collection setting legitimately identifies the relevant cohort; it does not disclose the numeric key. The constructed-data caption disclaims empirical assay performance without teaching the calculation.",
+      "One-best-answer: pre-admission PPV is 45/(45+19) = 70.3125%, so about 70% is uniquely correct for the specified audit. About 92% comes from the ICU row, 180/(180+16); about 90% is sensitivity, 45/(45+5); about 5% is pre-admission reference-positive prevalence, (45+5)/1000. These are coherent competing denominator/cohort errors.",
+      "Difficulty: moderate, with two consequential steps—select the population at specimen collection rather than the later discussion setting, then condition on positive PCR results. A resident fluent in two-by-two tables may find it easy; the prediction is not measured difficulty. The exhibit is necessary.",
+      "Fairness boundary: this is an audit-based predictive-value exercise for the original nasal specimen. It does not estimate this patient's current postoperative colonization status, diagnose invasive MRSA infection or establish real-world assay performance. The task's 'Using this audit' qualifier and explicit constructed-data caption make the intended scope sufficiently clear.",
+      "Importance: diagnostic-test numeracy and selecting the appropriate reference population are useful to general-surgery residents and plausibly relevant examination skills. The specific MRSA percentage is not a fact to memorize and no management policy can be inferred from it.",
+      "Realism: a pre-admission result discussed later is plausible, although a post-cancer-surgery clinic visit centered on a screening PPV is somewhat contrived and the pancreatic-tail cancer detail is unnecessary to the calculation. This minor context issue does not compromise the key or require a new version to pass.",
+      "Owner flag: fully resolved for the exact re-queued v2's 'too hypothetical' concern at the item level. There is now a named patient's actual reported positive result, a specified collection time and a usable constructed audit. Fictional teaching data are transparently labelled. This does not resolve or accept the separately queued v3 sibling.",
+      "PASS is an editorial judgment of these exact after fields, not clinical sign-off, source re-verification, runtime approval or permission to promote a draft."
+    ],
+    "suggestions": [
+      "Retain the two cohorts, collection/discussion chronology, numeric distractors and constructed-data label; they do substantive assessment work.",
+      "Optional future polish: shorten the unrelated cancer/procedure detail, and phrase the target as the audit PPV for the original pre-admission specimen if user testing suggests learners interpret it as current infection risk.",
+      "Do not add decolonization, prophylaxis or treatment claims to feedback without separately supported clinical review."
+    ]
+  },
+  {
+    "id": "G07",
+    "title": "Select tissue method and target for a transplant-recipient neck node",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "its cell block has no intact tissue fragments",
+        "why": "This is legitimate specimen information, but combined with a previously unsuccessful aspirate and only two possible methods it encourages 'do the other technique to get tissue'. A reader can favor core over repeat aspiration without understanding the transplant differential or classification requirement. Do not simply remove the adequacy observation."
+      },
+      {
+        "phrase": "Solid tissue with internal Doppler flow",
+        "why": "Contrasts with fluid/debris and maps to 'peripheral solid-tissue target' in two options. This does not uniquely cue the key by itself, but ordinary solid-versus-debris reasoning eliminates both central-target choices and combines with the repeat-aspirate shortcut."
+      },
+      {
+        "phrase": "Fluid-like material and debris; no internal Doppler flow",
+        "why": "Makes the two central-region options look like sampling nonrepresentative waste rather than viable tissue. This is necessary target information, but the target half of the matrix contributes little challenge when both distractors depend on ignoring it."
+      }
+    ],
+    "fairness": [
+      "One-best-answer: peripheral core sampling is a plausible best choice for tissue classification among these options, but the after fields never explicitly establish the unresolved classification/ancillary question or why repeat targeted aspiration cannot meet it. The broad task is simply the next image-guided sampling request.",
+      "Closest competitor: fine-needle aspiration of the peripheral solid portion changes the sampled target. The original aspirate's target and ancillary studies are unspecified. Its absence of intact tissue fragments does not by itself demonstrate that every repeat aspiration strategy would fail; an aspirate and a histologic core supply different information. This is a source/clinical-review uncertainty, not a claim that repeat FNA is equally good in every suspected PTLD case.",
+      "Scope/realism: transplant history, an enlarging supraclavicular node and limited sampling form a credible surgical referral. Excisional sampling is a potentially relevant broader pathway, but the task explicitly limits choices to image-guided sampling. That restriction makes the local comparison answerable in principle; the setting should explain the actual procedural decision rather than silently teach core as universally preferable to excision.",
+      "Exhibit: the key-value list provides usable observations but is a prose ultrasound report, not an image to interpret. It should not be credited as testing image-reading skill. The supplied fields do not promise an absent picture.",
+      "Difficulty: lower-moderate on intended reasoning—interpret prior specimen limitations, then combine tissue method with representative target. The balanced two-by-two matrix has no majority-component convergence or length/grammar outlier. Nevertheless, two central-target options are weak and the content-based shortcuts substantially reduce challenge; uncertainty about unstated pathology needs must not be counted as desirable difficulty.",
+      "Importance: obtaining representative tissue for an enlarging node and understanding limitations of a blood EBV result are practically relevant to general surgery. The exact PTLD-specific method preference has narrower scope and requires confirmation; no current ABSITE blueprint support was verified.",
+      "Owner flag: fully resolved narrowly for the exact v4's nonspecific-choice complaint. Every choice now names a needle method and target. The new sampling objective introduces adequacy and scope questions that remain unresolved, so specific options do not justify accepting the rewrite overall.",
+      "Evidence limitation: the handoff explicitly says the old PTLD claim excluded technique and that general neck-core guidance does not independently establish this combined PTLD target/method preference. That hold remains open. No categorical PTLD biopsy rule is clinically approved here."
+    ],
+    "suggestions": [
+      "Clarify the actual sampling decision and the pathology question that remains unresolved using observed prior specimen/ancillary findings and verified clinical criteria. Do not insert a teaching sentence saying that architecture requires a core.",
+      "State the prior sampled compartment when known so repeating aspiration at a different target is evaluated fairly. Ask clinician/pathology review to decide whether the proposed peripheral FNA remains a credible competitor under those exact facts.",
+      "Use a genuine image-guided planning context if that is the intended scope. If excision is a realistic competing next action, compare it explicitly with needle pathways at the same decision stage and supply a supported reason for ranking them.",
+      "Reduce dependence on two obviously fluid/debris-target foils. Build the close distinction around a verified specimen-adequacy or processing decision, with equally credible targets, rather than making the answer the only plan that gets solid tissue after a failed aspirate.",
+      "Resolve the recorded PTLD-specific source hold before acceptance; preserve the old coordination concept and do not infer diagnosis or treatment from EBV DNA alone."
+    ]
+  }
+]

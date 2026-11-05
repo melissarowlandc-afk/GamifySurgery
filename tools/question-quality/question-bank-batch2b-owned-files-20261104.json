@@ -1,0 +1,710 @@
+{
+  "generatedAt": "2026-11-05T02:24:25.749Z",
+  "scope": "Only batch-2b hunks; shared registry/source hashes contain concurrent work. No question-new/cloud/save/evidence ownership.",
+  "handoff": "docs/research/question-bank-batch2b-handoff-20261104.md",
+  "packet": "docs/research/question-bank-batch2b-20261104.json",
+  "exactLevel5BoundInputs": [
+    "packages/clinical-content/src/index.ts",
+    "packages/clinical-content/src/synthetic-content.ts",
+    "packages/clinical-content/src/answer-choice-timing.ts",
+    "packages/game-domain/src/test-choice-orders.ts",
+    "packages/clinical-content/src/question-bank-batch2b-20261104.ts",
+    "packages/clinical-content/src/question-bank-batch2b-20261104-data.ts",
+    "packages/clinical-content/src/question-bank-batch2b-evidence-20261104.ts",
+    "packages/game-domain/src/question-bank-batch2b-test-orders.ts"
+  ],
+  "boundInputChanges": [
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "beforeSha256": "3955e9f6b52012d1ace05bf76a5afaaa4cf1b638a20bb1308b1709449d9f3b91",
+      "afterSha256": "6d7ed768a137b5649d9cfc86495de75a36f5318c27445c53230c6ba445ba4bb4",
+      "sharedCompositionRegistry": true
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "beforeSha256": "b3685bee5631443110fb5d552737b567f65af4e1c8f5239121fb4e727059e09f",
+      "afterSha256": "1766c1aa372b47d3253378e389bd4bb45f2530238fe4b5f56f181dae366a69f2",
+      "sharedCompositionRegistry": true
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "beforeSha256": "d8fe26405fd3d1552cfbfabc808ee0fa2a633f37d626636784d4fc510ec31b5c",
+      "afterSha256": "96aaccfd7f382f73ccc508f17da1e70abcabc489c5c448f61178b0c290c5e881",
+      "sharedCompositionRegistry": true
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "beforeSha256": "e9270c9562335ee5b0f0baecafc84126a844d8a5b262678f3bb7a56e9ca9f1cf",
+      "afterSha256": "f9754cdec6f6e5c395683f248121c8313cb068be523a95736d02ba5ae8e6b45e",
+      "sharedCompositionRegistry": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2b-20261104.ts",
+      "beforeSha256": null,
+      "afterSha256": "3d768de874bc821c1aa312d59c6f92b03717dec3f59555e1b61047d39733049d",
+      "sharedCompositionRegistry": false
+    },
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2b-20261104-data.ts",
+      "beforeSha256": null,
+      "afterSha256": "5c03e84388207c06ba6e721741b7383cb78e460ab98da4ace4aef1a082795196",
+      "sharedCompositionRegistry": false
+    },
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2b-evidence-20261104.ts",
+      "beforeSha256": null,
+      "afterSha256": "89cee9967db77952031f887fbf5cdc00165f0821f7d14a824f70aefa92ba365f",
+      "sharedCompositionRegistry": false
+    },
+    {
+      "path": "packages/game-domain/src/question-bank-batch2b-test-orders.ts",
+      "beforeSha256": null,
+      "afterSha256": "79f895d1246fced9525bb605ec1b08e6daa87f61dfec640393e969d5f51fd4e3",
+      "sharedCompositionRegistry": false
+    }
+  ],
+  "files": [
+    {
+      "path": "docs/execplans/question-bank-program-20261104.md",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "a0ad13b73848a5812310e4425175841882564fbf3e05523bffd2a59e8a705df9",
+      "level5Bound": false
+    },
+    {
+      "path": "docs/handoffs/CURRENT_THREAD_HANDOFF.md",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "a51aadf9779755fb17fdecd1453cf087ee509ac58231938f5f066f85c93d69ea",
+      "level5Bound": false
+    },
+    {
+      "path": "docs/research/question-bank-batch2b-20261104.json",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "1a92c8329e96ee56e463df927f8afc3491c529c0e80acd7680f80270d19dbdfd",
+      "level5Bound": false
+    },
+    {
+      "path": "docs/research/question-bank-batch2b-cue-audit-20261104.md",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "b365b57fdd5030845d57ff3a48e180544a0bc393562deab30dba29867bbc4e50",
+      "level5Bound": false
+    },
+    {
+      "path": "docs/research/question-bank-batch2b-deferrals-20261104.json",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "a9cc0aa591b6092957ab59069c7de7d7d47b4a783934148dcf21d3d14f4a83ad",
+      "level5Bound": false
+    },
+    {
+      "path": "docs/research/question-bank-batch2b-handoff-20261104.md",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "28bce1c61fac7e2e9896fcfa99545f63b89d005125cc32bd06a4e78b2d3b83b2",
+      "level5Bound": false
+    },
+    {
+      "path": "docs/research/question-bank-batch2b-proposal-20261104.md",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "a3c4bfd02cf754b76026904f284d33505df964a826a3b5c3f05128938c9e2d28",
+      "level5Bound": false
+    },
+    {
+      "path": "docs/research/question-bank-batch2c-proposal-20261104.md",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "9d4c5862991dd8f68909a4d1b66dce8e661a1724c906d96df30b23aa7c6ae190",
+      "level5Bound": false
+    },
+    {
+      "path": "docs/research/question-bank-program-queue-20261104.json",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "206c5875d4de624432882720029968883b9d17dbc148b009eb2f6c8239691811",
+      "level5Bound": false
+    },
+    {
+      "path": "docs/research/question-bank-retire-merge-proposals-20261104.md",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "5764cf5a576ab01104b630a05540879f1ffa828f8a8da07dc1fc8739d6aee390",
+      "level5Bound": false
+    },
+    {
+      "path": "docs/research/sources-question-bank-batch2b-20261104.json",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "60b387fff76bae1a6f23c415af72986790bc14e0f119ac51491dea90028f0d4b",
+      "level5Bound": false
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+      "change": "modified_shared_or_existing",
+      "sha256": "daec56afa56a2b2653f800a6d5b60cd5179513171539527d8f49f89cc24a7c53",
+      "level5Bound": false
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "change": "modified_shared_or_existing",
+      "sha256": "96aaccfd7f382f73ccc508f17da1e70abcabc489c5c448f61178b0c290c5e881",
+      "level5Bound": true
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "change": "modified_shared_or_existing",
+      "sha256": "6d7ed768a137b5649d9cfc86495de75a36f5318c27445c53230c6ba445ba4bb4",
+      "level5Bound": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2b-20261104-data.ts",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "5c03e84388207c06ba6e721741b7383cb78e460ab98da4ace4aef1a082795196",
+      "level5Bound": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2b-20261104.test.ts",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "ef0120028997897785f04fd7ee978e54d5ef31afb9351b4767ecca1e72e9a9e8",
+      "level5Bound": false
+    },
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2b-20261104.ts",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "3d768de874bc821c1aa312d59c6f92b03717dec3f59555e1b61047d39733049d",
+      "level5Bound": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2b-evidence-20261104.ts",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "89cee9967db77952031f887fbf5cdc00165f0821f7d14a824f70aefa92ba365f",
+      "level5Bound": true
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "change": "modified_shared_or_existing",
+      "sha256": "1766c1aa372b47d3253378e389bd4bb45f2530238fe4b5f56f181dae366a69f2",
+      "level5Bound": true
+    },
+    {
+      "path": "packages/game-domain/src/question-bank-batch2b-test-orders.ts",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "79f895d1246fced9525bb605ec1b08e6daa87f61dfec640393e969d5f51fd4e3",
+      "level5Bound": true
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "change": "modified_shared_or_existing",
+      "sha256": "f9754cdec6f6e5c395683f248121c8313cb068be523a95736d02ba5ae8e6b45e",
+      "level5Bound": true
+    },
+    {
+      "path": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+      "change": "modified_shared_or_existing",
+      "sha256": "291d306f67921c28e128adf6bd42780cf322829af71554e7aa54ac8dc4243b51",
+      "level5Bound": false
+    },
+    {
+      "path": "packages/game-domain/tests/bread-butter-20260917-batch.test.ts",
+      "change": "modified_shared_or_existing",
+      "sha256": "70eb5199b02e506edcdd83870073d5562c0f9d178d461da6974ab70b2d8ac59d",
+      "level5Bound": false
+    },
+    {
+      "path": "packages/game-domain/tests/diagnostics/patient-supply.test.ts",
+      "change": "modified_shared_or_existing",
+      "sha256": "6973a28216ffeeb8869a14af2edb9d2aebc29e40c335fffcaecc72bac2b8b6ec",
+      "level5Bound": false
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261002-batch.test.ts",
+      "change": "modified_shared_or_existing",
+      "sha256": "720c0da8cecc3485bcfec151bbba8d0b3a93c73ef352aea9110d841201ace36e",
+      "level5Bound": false
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261003-batch.test.ts",
+      "change": "modified_shared_or_existing",
+      "sha256": "73625b2bd44eb85221fec11c7601fdcd4e868194fe9051e1792261c99f3fb484",
+      "level5Bound": false
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261007-batch.test.ts",
+      "change": "modified_shared_or_existing",
+      "sha256": "57848ac6474e3f8133b63ab787668deedc9560836fe6e46226d177ace6081923",
+      "level5Bound": false
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+      "change": "modified_shared_or_existing",
+      "sha256": "67b1b2fc1a1a478a09e0f917c69b06704107c3219dc9c02abf9588d3653f28d5",
+      "level5Bound": false
+    },
+    {
+      "path": "packages/game-domain/tests/patient-supply.test.ts",
+      "change": "modified_shared_or_existing",
+      "sha256": "f436cc1373c461d45e6a3a0534adb68e1358838d4e9bb34ec255f7fe5f1281f1",
+      "level5Bound": false
+    },
+    {
+      "path": "packages/game-domain/tests/question-bank-batch2b-bindings.test.ts",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "10b6956efd50af7db8ed130d968c0b6bda44665b759a94f9effba3f5c42014d4",
+      "level5Bound": false
+    },
+    {
+      "path": "packages/game-domain/tests/question-flags-round3-bindings.test.ts",
+      "change": "modified_shared_or_existing",
+      "sha256": "08a028c37be9dca02069188025a3b055d441109566aae58f083f5f2b0d29a8be",
+      "level5Bound": false
+    },
+    {
+      "path": "packages/game-domain/tests/service-procedure-operations.test.ts",
+      "change": "modified_shared_or_existing",
+      "sha256": "68ec9cd016b9a93a7abb786dc8ce5c851e270ebbe5ed3f260f921be60c8900cb",
+      "level5Bound": false
+    },
+    {
+      "path": "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+      "change": "modified_shared_or_existing",
+      "sha256": "af9749c917c4c13116d431120505096b35f9f9511960d2d9c0df6e384d782054",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/build-question-bank-batch2b-20261104.mjs",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "a29fd11f80c05d609752a576e32a2818a1088e0768e20ba7b3db9ff79fd67ac2",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/capture-question-bank-batch2b-20261104.mjs",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "3e6346f40184deb7a72a34f33a07bd8b4834d36125b83bab5211f997c35bfee1",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/control-question-bank-batch2b-fixtures-20261104.mjs",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "c794a1a5db6499265f1d8575e380a2a56b020bc73a9da3ecb30b9dff4be85233",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/control-question-bank-batch2b-inventory-20261104.mjs",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "dca3ed3965e13ac65651ae8e9a9b7e72910ef3bdc10237edbff7985e8ede38aa",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/control-question-bank-batch2b-records-20261104.mjs",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "a49ca3c65aafeeb28e4054474e3d351508a3c5c4b62cb0fc511ead253bbaf87b",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-bank-batch2b-before-20261104.json",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "61509103e07f63bc9bcad8bea784d17ffc2a831ee25f6a1b690b5e2ea17922ea",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-bank-batch2b-domain-fixtures-before-20261104.json",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "091fb3c604e124de16f24dc7f2088af4e631a5c998f97096eaf984e6c64458a2",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-bank-batch2b-queue-before-20261104.json",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "dc1a960ccb621f48b094c868ce19c99bbb48b33613a25c6d76e5a5ed733e08eb",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/handoff-question-bank-batch2b-20261104.mjs",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "e497bc8b4fec4341f0851972e0112ddfd3785f7dea3b2cf00bc5fcc1b825e883",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/inspect-question-bank-batch2b-20261104.mjs",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "7d6dfa4598e2acbef61354b3b91515ecd1cfd6e6efd5d06c1303b1cef70c1d57",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/integrate-question-bank-batch2b-20261104.mjs",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "441625605b8de4f63ccd8be8a57b06ee9de98e809611c57b0e77cdf04e414122",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/lock-question-bank-batch2b-validation-20261104.mjs",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "33ba88d1a1a913315eb3c4bbdd571b99fce5910952cb208d24fa211f6083da28",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-cli-lint-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "8bef0b007603d69104756f7fbc3a55b04c89381ed3e5bbfb870f6818362efa91",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-cli-lint-final-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "fd8a7036458559a78b8892a84a72fa71d4738b50560b5530ac41e7c8652f95bf",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-cli-lint-handoff-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "fd8a7036458559a78b8892a84a72fa71d4738b50560b5530ac41e7c8652f95bf",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-clinical-complete-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "f51ccb4ee998975e12a94c2310fe9d2696ab77ea64a73f65bf7f5e498fc9e73d",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-clinical-final-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "6002e6fa72f9200aa8d77f40dcf0d06b14194df10897be9dac86af684db33721",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-clinical-final-metadata-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "d5c19f635c1f0cd47ed121c12279b4e2866a43b61889fab1f368a8fd6d9e299e",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-clinical-focused-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "c582ed36111144d2ff98d08f90ac7b00c3fddb40f90601d41a4fcedca4484d13",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-clinical-full-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "a479f77e5de71cd32e954eb0a32771137c64d71b3a09c2f9d7f87705917be945",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-clinical-handoff-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "605c593415154d044a7d52e3677c0bffc4c213c9ec4229b22b6f6a577ea339ee",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-clinical-parity-fixed-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "e2f0eeb8a56ee41c1e97243a72da1b310889af1aca1185725d392a0619f5e0d0",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-domain-final-focused-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "8469b9c5bee73292a96d7346984fa5edd55ccb5b12e3ea234b7fadb0911c22f7",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-domain-focused-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "0a5b307151f8d619b825231041d94d0783a476bfff431add09f67c68c26c6f1f",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-domain-focused-fixed-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "05e8b2092295884111e1877687acc3e61022c50d1b16fa0548b2d891beadcbe5",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-domain-full-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "032bd3aecb779996dc5032d11edab9119f99958225306605ae516b5ea3734dbd",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-domain-inventory-isolated-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "13858117c18318aedd89fdf7fb66f9624769921e452710f8b1c8e17e978e44c0",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-domain-repaired-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "c9af7f1356416d998de7c970bc27f81beeaffd576c6d860e5a032c25d54ca653",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-domain-repaired-focused-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "44e4e9ed5b84d715f98765a9baa19c06466912353d3acd241cfec175b3965d97",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-entry-lint-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "bd392c3d15c88c3a99e3da761896ad61f1141afcbc74e7142d5900c07201a524",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-fixture-control-20261104.json",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "ad81ed32d1845775d9e6d1d718748ac9e080d19fb023e6d6d12f8308b51a5bee",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-fixture-control-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "758eec5ec25b56ad6f8a805617cdf9ad76369fdd30f5b6e0bbe879f79ee78e7b",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-fixture-review-20261104.json",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "03f95f5b068f3a7721c42ea1a3e3af5774eec597d7e2382d26cb3cd122504135",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-inventory-control-20261104.json",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "b489d84023d395e45f12ada329a855fdd7c0f293b001f90a0c0bce5908bfa2cd",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-inventory-control-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "e692dd3c1b79f934e336e3d6e2b1047e9ddbfc1dd4390885d90aefe7cf61430e",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-lint-20261104.json",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "3fa67764280cf7debcb6dc406577e87ccdd03902a9be61f3041dcf3614712177",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-lint-tests-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "4a87a8d4e901fdc3f6d991190cc2805d89760fbb8c1f3da4891ce1c4bbf5766f",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-lint-tests-final-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "585d665cf35dae6bc441cc7b191279dbcf9d64544bf8f838fb28e275d0cfc33d",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-lint-tests-handoff-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "b8aac2102994573562b8b38585f5d61f335aac07a6168aee46131faaf84bf9e0",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-player-focused-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "b762f81e4ae4a37bc6946c7ef819b4894d3331195f9e4f85f5f4bb576b69fff1",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-player-full-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "313df5f3583c97d90fabf7329bf19f85cc70922383a620868c24e0de2351fec4",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-player-isolated-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "5f02d7eb01ff36dc86eb374958e843ce552948178caf1416bf3d79a9c46c3e13",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-player-performance-isolated-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "3341186d1b939d15f4dc90b5352df5507d59912459ff39ffc806b8384be17c6f",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-queue-review-20261104.json",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "ffd3ee7ad8db268edaa6e855e769eb097841739963c282c9c41eaebe292df1f4",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-records-control-20261104.json",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "946f4b53f3b5a89b6e460121995f99d56b860090cf271a4eb04a47d627ac3444",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-review-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "84fb0fd1203e6ff7e7365ff88ba986aaf6b225929ed3ff37c42d9523460f75a5",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-review-final-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "84fb0fd1203e6ff7e7365ff88ba986aaf6b225929ed3ff37c42d9523460f75a5",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-specs-20261104.mjs",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "5c2180a35a15fb9ce9198ab1a8d562dfb52ab98c65456e9b7fb61ca2260fd16f",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-typecheck-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-typecheck-final-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "db436839af1c35f96f069c7bec7f24f2face6a8940f3a5f00305ad2289f8f81f",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-typecheck-handoff-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-typecheck-post-worker-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-typecheck-repaired-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "f1885b61c18acc74badaba0565372f8a7f79ad2c9d73a90ee62d2d6b2a127712",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-validation-author-final-lock-20261104.json",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "61587c9f8185aa0086c252dea4946ac21e84ff0d3055dd6b4fcfd471e8e0069d",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-validation-author-final-window-20261104.json",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "1061294d0d22362342f2ab38763b218fb494584613794ea8dd33b7ae73cb73b0",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-validation-complete-lock-20261104.json",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "f8aae8260247e6fe5d526fb65b6b549e9e4a569764f4459bdc5941f718d76dc7",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-validation-complete-window-20261104.json",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "a0987421aee6a968a7e4d3ee4c0e47190861a659ac7e53101387bd88c27578f7",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-validation-domain-lock-20261104.json",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "2181d6a1500b108892d329ca19eca055f02e310bc4f3bf10b6f436a824afa378",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-validation-domain-window-20261104.json",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "d88a75e0d11fd4b3698e5da6b8a9f1e01ffd8570a4ea830853937b5cea5c7bef",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-validation-final-lock-20261104.json",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "ae35d1fc2d83d6c131b5aaeed67ca0310f2bf71632588f809df190538323137b",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-validation-final-window-20261104.json",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "853f5b5e1a81c0c9373f561aebb54c4e9b6d0c4cb181aef3b82d610428930b6f",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-validation-player-lock-20261104.json",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "4ddf779ed0825c1217f51097b82065cb638ded5947951b282e2559ef2ca70a59",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-validation-player-window-20261104.json",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "80ea7421b666308ca664dd0b0d38c8bcff50fb5c6577ce93feebdee0ca5173c4",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-validation-repaired-lock-20261104.json",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "9c501b141fa876aa3474d2016f6ff5d22e4e77bbea81ae6bdc9aabb06f15bc91",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-validation-repaired-window-20261104.json",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "c867fe5dfe69dded4435919a0cc3d19b8abe1b187b81fb0d8759167e238f13b7",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-validation-summary-20261104.json",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "9f6f1012589d2f11f1d916b22d51a35dafb83303573ece1a459d8b5bf830cddd",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-validation-summary-20261104.log",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "93655e880594a84d1a91abdd454dc1ffab9ec6b97c214d3c7b2d1571545e11db",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-verification-20261104.json",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "c552406a673d1b32b8ec9e157a4f36789e39cc76bbf101004078c4925f8db26d",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2b-whole-bank-20261104.json",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "ea1baaaecfa3a43bbb5137896e274b7ecffe8230f4a9b69ca1d13eaa384e40ca",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/queue-question-bank-batch2b-20261104.mjs",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "46fd3e2c774655ddf6c30dd8158d4bcf9837bf2a365fc482bb2f3a0208c4d842",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/repair-question-bank-batch2b-fixtures-20261104.mjs",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "1309e2b5e1a43326566efcc2fffcd9d7db641fb14975e976afcd73d727bbe336",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/report.mjs",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "bcc8988603cf1f2c4b1598a6178157a3c101f5ce0b8e91e174bdf10f74a6f34b",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/review-question-bank-batch2b-20261104.mjs",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "a7257ba2e95f2e409e22647978b2066c26ed067913a77a9464110134e5e7e1c8",
+      "level5Bound": false
+    },
+    {
+      "path": "tools/question-quality/summarize-question-bank-batch2b-validation-20261104.mjs",
+      "change": "added_or_doc_outside_entry_hash_scope",
+      "sha256": "7985589fef1d043410e71a617f6364350820e5d80324e9e3cc40cb43758c2edb",
+      "level5Bound": false
+    }
+  ]
+}

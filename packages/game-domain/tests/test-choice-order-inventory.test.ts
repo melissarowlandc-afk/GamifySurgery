@@ -1,6 +1,12 @@
+import { QUESTION_NEW_N1_ROUND3_PRE_RELEASE } from "@gamify-surgery/clinical-content";
+// Ship-gate integration: retained draft tuples remain inspectable, not admissible.
+import { QUESTION_CATALOG_RELEASE, QUESTION_NEW_N2_ROUND3_PRE_RELEASE, QUESTION_BANK_BATCH2B_ROUND2_SOURCE_RELEASE } from "@gamify-surgery/clinical-content";
 import { PROTOTYPE_BALANCE_RELEASE, getServiceIncomeForRoute } from "@gamify-surgery/balance-config";
 import { ANSWER_CHOICE_TIMING_REGISTRY, SYNTHETIC_CLINICAL_RELEASE, QUESTION_QUALITY_SOURCE_RELEASE, QUESTION_QUALITY_PRE_BATCH1_RELEASE, QUESTION_QUALITY_PRE_ADVERSARIAL_RELEASE, QUESTION_QUALITY_PRE_ADVERSARIAL_R3_RELEASE, QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE, QUESTION_QUALITY_PRE_ADVERSARIAL_R5_RELEASE, QUESTION_QUALITY_PRE_ADVERSARIAL_R7_RELEASE, QUESTION_QUALITY_PRE_ADVERSARIAL_R6_RELEASE, QUESTION_QUALITY_REVISIONS, QUESTION_QUALITY_CURRENT_REVISIONS, QUESTION_QUALITY_ADVERSARIAL_REVISIONS, QUESTION_QUALITY_ADVERSARIAL_R3_REVISIONS, QUESTION_QUALITY_ADVERSARIAL_R4_REVISIONS, QUESTION_QUALITY_ADVERSARIAL_R5_REVISIONS, QUESTION_QUALITY_ADVERSARIAL_R7_REVISIONS, QUESTION_QUALITY_ADVERSARIAL_R6_REVISIONS, QUESTION_QUALITY_PRIOR_REVISIONS, QUESTION_QUALITY_OWNER_ROUND1_REVISIONS, QUESTION_QUALITY_OWNER_ROUND2_REVISIONS, QUESTION_QUALITY_RETAINED_REVISIONS, QUESTION_QUALITY_BATCH1_REVISIONS, applyQuestionQualityRevisions } from "@gamify-surgery/clinical-content";
 import { describe, expect, it } from "vitest";
+import { QUESTION_FLAG_REVISIONS, QUESTION_FLAG_ROUND2_REVISIONS, QUESTION_FLAGS_PRE_REVISION_RELEASE, QUESTION_FLAGS_ROUND1_RELEASE } from "@gamify-surgery/clinical-content";
+import { QUESTION_FLAGS_PRE_ROUND3_RELEASE, QUESTION_NEW_N1_ROUND2_PRE_RELEASE } from "@gamify-surgery/clinical-content";
+import { QUESTION_BANK_PRE_BATCH2A_ROUND3_RELEASE } from "@gamify-surgery/clinical-content";
 import { EXACT_TEST_CHOICE_ORDER_RECORDS, getExactTestChoiceOrderRecord } from "../src/test-choice-orders";
 import type { EncounterState } from "../src/types";
 
@@ -15,16 +21,39 @@ const serviceRoutes = new Map(
 );
 
 describe("active-release test-choice order inventory", () => {
-  it("preserves the active release timing inventory counts", () => {
-    const timed = SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((clinicalCase) => clinicalCase.decisionNodes.flatMap((node, index) => {
+  it("preserves the pre-ship catalog timing inventory counts", () => {
+    const timed = QUESTION_NEW_N2_ROUND3_PRE_RELEASE.cases.flatMap((clinicalCase) => clinicalCase.decisionNodes.flatMap((node, index) => {
       const entry = ANSWER_CHOICE_TIMING_REGISTRY.find((candidate) => candidate.caseId === clinicalCase.id && candidate.nodeId === node.id && candidate.questionVariantId === node.questionVariantId);
       return entry?.classification.kind === "test_choices" ? entry.classification.choices.map((choice) => ({ isTerminal: index === clinicalCase.decisionNodes.length - 1, isCorrect: node.answerChoices.find((candidate) => candidate.id === choice.choiceId)?.isCorrect === true, timing: choice.timing })) : [];
     })).filter((item) => item.timing.kind === "test");
-    // Round five adds 15 net testing-option previews to the current application sets.
+    // Question flags: +3 prospective neck-biopsy previews, -1 HIDA CT option,
+    // -1 repeat mammography option. SLNB previews remain two; ALND is not a test.
     // All earlier labels, timings and exact records remain bound to their frozen
     // versions; no new duration or terminal execution rule is introduced.
-    expect(timed).toHaveLength(1467);
-    expect(timed.filter((item) => item.isTerminal && item.isCorrect)).toHaveLength(138);
+    // Round two replaces 12 timed choices with 22 (+10). Four additional keys
+    // are planned outside studies; all are explicit non-execution records.
+    // Batch 2a: two repeat-US distractors (+2), a four-choice pressure
+    // interpretation becomes non-testing (-4), cortisol-only choices (-1).
+    // Net -3 offered studies; terminal correct-test count remains unchanged.
+    // Flag round three: 19 old offered studies become 18 (-1), with one fewer
+    // terminal testing key. Concurrent N1 adds 37 studies / 13 terminal keys.
+    // Both deltas were computed independently against the retained entry bank;
+    // all exact label/timing/route and frozen-record checks below still apply.
+    // N2 adds 14 existing-profile previews, four on keyed terminal choices.
+    // All are explicit external-only non-execution records, tested separately.
+    // Batch 2a round two replaces fourteen offered studies with seventeen (+3),
+    // and adds one terminal testing key. Old tuples remain available unchanged.
+    // N1 round two replaces 34 offered previews with 47 (+13), and 12 testing keys with 15 (+3).
+    // The original exact tuples are retained for frozen encounters.
+    // Batch 2b replaces 34 offered studies with 60 (+26), including nine
+    // additional terminal testing keys. Existing three service paths persist;
+    // every other new timed plan is explicitly nonexecuted.
+    // N2 round two: 14 offered previews become 38 (+24), four terminal keys become 12 (+8).
+    // Every original exact tuple remains available for a frozen encounter.
+    // N1 round three replaces 34 previews with 43 (+9), and 11 testing keys with 14 (+3).
+    // The pre-round-three assembly preserves every exact superseded v2 choice.
+    expect(timed).toHaveLength(1511 + 14 + 3 + 13 + 26 + 24 + 9);
+    expect(timed.filter((item) => item.isTerminal && item.isCorrect)).toHaveLength(155 + 4 + 1 + 3 + 9 + 8 + 3);
   });
 
   it("classifies every timing.test choice and permits incorrect records only as explicit non-execution", () => {
@@ -76,13 +105,15 @@ describe("active-release test-choice order inventory", () => {
 
   it("binds every exact record to an active or explicitly retained frozen choice, exact timing metadata, and valid routes", () => {
     const activeChoices = new Map<string, { label: string; correct: boolean; timingProfileId: string }>();
-    const retained = new Set([...QUESTION_QUALITY_REVISIONS, ...QUESTION_QUALITY_BATCH1_REVISIONS, ...QUESTION_QUALITY_ADVERSARIAL_REVISIONS, ...QUESTION_QUALITY_ADVERSARIAL_R3_REVISIONS, ...QUESTION_QUALITY_ADVERSARIAL_R4_REVISIONS, ...QUESTION_QUALITY_ADVERSARIAL_R5_REVISIONS, ...QUESTION_QUALITY_ADVERSARIAL_R6_REVISIONS, ...QUESTION_QUALITY_ADVERSARIAL_R7_REVISIONS].map(r => keyOf(r.caseId, r.nodeId, r.previousQuestionVariantId, "")));
+    const retained = new Set([...QUESTION_QUALITY_REVISIONS, ...QUESTION_QUALITY_BATCH1_REVISIONS, ...QUESTION_QUALITY_ADVERSARIAL_REVISIONS, ...QUESTION_QUALITY_ADVERSARIAL_R3_REVISIONS, ...QUESTION_QUALITY_ADVERSARIAL_R4_REVISIONS, ...QUESTION_QUALITY_ADVERSARIAL_R5_REVISIONS, ...QUESTION_QUALITY_ADVERSARIAL_R6_REVISIONS, ...QUESTION_QUALITY_ADVERSARIAL_R7_REVISIONS, ...QUESTION_FLAG_REVISIONS, ...QUESTION_FLAG_ROUND2_REVISIONS].map(r => keyOf(r.caseId, r.nodeId, r.previousQuestionVariantId, "")));
     const legacyCases = QUESTION_QUALITY_SOURCE_RELEASE.cases.map(c => ({ ...c,
       decisionNodes: c.decisionNodes.filter(n => retained.has(keyOf(c.id, n.id, n.questionVariantId, ""))),
     })).filter(c => c.decisionNodes.length);
     const retainedDraftIds = new Set(QUESTION_QUALITY_RETAINED_REVISIONS.map(r => r.questionVariantId));
     const retainedDraftCases = [...priorDraftCases, ...ownerRoundOneCases, ...ownerRoundTwoCases].map(c => ({ ...c, decisionNodes: c.decisionNodes.filter(n => retainedDraftIds.has(n.questionVariantId)) })).filter(c => c.decisionNodes.length);
-    for (const clinicalCase of [...SYNTHETIC_CLINICAL_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R7_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R6_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R5_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R3_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_RELEASE.cases, ...QUESTION_QUALITY_PRE_BATCH1_RELEASE.cases, ...legacyCases, ...retainedDraftCases]) {
+    // Round-two encounters retain their exact timed choices after the seven
+    // round-three replacements. Validate those tuples against their real stage.
+    for (const clinicalCase of [...SYNTHETIC_CLINICAL_RELEASE.cases, ...QUESTION_CATALOG_RELEASE.cases, ...QUESTION_NEW_N2_ROUND3_PRE_RELEASE.cases, ...QUESTION_BANK_BATCH2B_ROUND2_SOURCE_RELEASE.cases, ...QUESTION_NEW_N1_ROUND3_PRE_RELEASE.cases, ...QUESTION_BANK_PRE_BATCH2A_ROUND3_RELEASE.cases, ...QUESTION_NEW_N1_ROUND2_PRE_RELEASE.cases, ...QUESTION_FLAGS_PRE_ROUND3_RELEASE.cases, ...QUESTION_FLAGS_ROUND1_RELEASE.cases, ...QUESTION_FLAGS_PRE_REVISION_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R7_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R6_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R5_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R3_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_RELEASE.cases, ...QUESTION_QUALITY_PRE_BATCH1_RELEASE.cases, ...legacyCases, ...retainedDraftCases]) {
       for (const node of clinicalCase.decisionNodes) {
         const timingEntry = ANSWER_CHOICE_TIMING_REGISTRY.find((entry) => entry.caseId === clinicalCase.id && entry.nodeId === node.id && entry.questionVariantId === node.questionVariantId);
         if (timingEntry?.classification.kind !== "test_choices") continue;

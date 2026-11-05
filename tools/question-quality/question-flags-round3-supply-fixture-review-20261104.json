@@ -1,0 +1,60 @@
+{
+  "checkedOn": "2026-11-04",
+  "file": "packages/game-domain/tests/diagnostics/patient-supply.test.ts",
+  "assertionCallSites": 12,
+  "onlyInlineSnapshotChanged": true,
+  "commandsAndDeadlinesUnchanged": true,
+  "sourceControl": "question-flags-round3-supply-control-20261104.json",
+  "justification": "The same domain runtime and same N1 cases reproduce the old exact snapshot with the entry clinical bank. Versioned objectives change the deterministic unseen-concept patient mix. Only that resulting snapshot is updated; no routing, scheduling, save or patient-flow assertion changes.",
+  "before": {
+    "facilityTick": 4800,
+    "arrivalsByDay": [
+      13,
+      11,
+      11,
+      12,
+      12,
+      12,
+      13,
+      12
+    ],
+    "totalArrivals": 96,
+    "lastArrivalTick": 4759,
+    "completed": 95,
+    "walkouts": 0,
+    "unresolved": 1,
+    "pendingResults": 1,
+    "scoredConcepts": 132,
+    "unseenAvailableConceptIds": 174,
+    "dueReviews": 0,
+    "nextRoutineArrivalTick": 4816,
+    "nextSelectionKind": "new_concept",
+    "answers": 132
+  },
+  "after": {
+    "facilityTick": 4800,
+    "arrivalsByDay": [
+      13,
+      11,
+      11,
+      12,
+      12,
+      12,
+      12,
+      13
+    ],
+    "totalArrivals": 96,
+    "lastArrivalTick": 4783,
+    "completed": 94,
+    "walkouts": 0,
+    "unresolved": 2,
+    "pendingResults": 1,
+    "scoredConcepts": 128,
+    "unseenAvailableConceptIds": 179,
+    "dueReviews": 0,
+    "nextRoutineArrivalTick": 4840,
+    "nextSelectionKind": "new_concept",
+    "answers": 128
+  },
+  "limitation": "The disposable diagnostic is not a Vitest pass or performance benchmark. The actual focused test must pass its unchanged deadline."
+}

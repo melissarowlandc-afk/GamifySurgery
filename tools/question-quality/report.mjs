@@ -33,7 +33,7 @@ export async function assembleReport() {
   const content=await import("../../packages/clinical-content/src/index.ts");
   return inventoryRelease(content.SYNTHETIC_CLINICAL_RELEASE,collectAuthoredMetadata(content),{
     tutorialCaseIds:[content.FIRST_TUTORIAL_CASE_ID,content.SECOND_TUTORIAL_CASE_ID],
-    pilotRevisions:content.QUESTION_QUALITY_CURRENT_REVISIONS??[],
+    pilotRevisions:[...(content.QUESTION_QUALITY_CURRENT_REVISIONS??[]),...(content.QUESTION_FLAG_REVISIONS??[]),...(content.QUESTION_FLAG_ROUND2_REVISIONS??[]),...(content.QUESTION_BANK_BATCH2A_REVISIONS??[]),...(content.QUESTION_FLAG_ROUND3_REVISIONS??[]),...(content.QUESTION_BANK_BATCH2A_ROUND2_REVISIONS??[]),...(content.QUESTION_BANK_BATCH2B_REVISIONS??[]),...(content.QUESTION_BANK_BATCH2A_ROUND3_REVISIONS??[])],
   });
 }
 export async function main(args=process.argv.slice(2)) {

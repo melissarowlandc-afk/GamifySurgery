@@ -1,0 +1,165 @@
+{
+  "startedAt": "2026-11-05T06:36:16.195Z",
+  "closedAt": "2026-11-05T06:46:17.717Z",
+  "ownRuntimeStable": true,
+  "ownRuntime": [
+    "packages/clinical-content/src/question-bank-batch2b-round2-20261104.ts",
+    "packages/clinical-content/src/question-bank-batch2b-round2-20261104-data.ts",
+    "packages/clinical-content/src/question-bank-batch2b-round2-evidence-20261104.ts",
+    "packages/game-domain/src/question-bank-batch2b-round2-test-orders.ts",
+    "apps/player/public/clinical-exhibits/batch2b-r2-b24-breast-map.png"
+  ],
+  "sharedRoots": [
+    "packages/clinical-content/src/index.ts",
+    "packages/clinical-content/src/synthetic-content.ts",
+    "packages/clinical-content/src/answer-choice-timing.ts",
+    "packages/game-domain/src/test-choice-orders.ts"
+  ],
+  "changes": [
+    {
+      "path": "apps/player/src/session/cloud/gameSession.ts",
+      "before": "a16426fcc8dc41a306f2dce46757289bac87d5deb725272841f891b60aec5f6b",
+      "after": "619f16074d2f40d3709e695d1a362919a3adfbffb6c8962efba875147aab97d6"
+    },
+    {
+      "path": "docs/research/question-bank-program-queue-20261104.json",
+      "before": "d83792b787f8c8af955fd86c81b2a23eafe9daded7d0d832a614c72cfeef222c",
+      "after": "ab2312257803e784b0d7ad5b7f457f4c442899fb1a008c381397298d8d1b100a"
+    }
+  ],
+  "notCapturedAtLock": [
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2b-round2-20261104.test.ts",
+      "current": "c975a33e84885d939b01aad1d3f1bcc01adc086ba6679b0f752e4251d0895046"
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n1-round3-20261104.test.ts",
+      "current": "dd620d1384ad175890e22d815d3e93252f6ec7825ea2d9d87c24debf4da1d281"
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n2-round3-20261104.test.ts",
+      "current": "4657a2d4e96d48589b76ee9acf1dbc8648bed669867139f2e36354fa883d2a57"
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n2-round3-20261104.ts",
+      "current": "8c3e9b2f5d998b31d97414051911513ff4c5f1ed1581b1032210a37c5bf8bf25"
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n2-round3-abdominal.ts",
+      "current": "831077133c111a1d11fd0c75890fbb1a8f09bfafb89451275e6b30f123b034e5"
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n2-round3-evidence-20261104.ts",
+      "current": "bd9ccf32cd76a161f6faaf67c8ecef5b6efb3ee2a38d433472f77db381a844d8"
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n2-round3-nutrition.ts",
+      "current": "340bc10a905bf1679051e841513a64e55e85779e068132075c463f80231ee00f"
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n2-round3-perioperative.ts",
+      "current": "5e45d1255698c29974f242516011e927e2385e8970062ae85eb0aafdee8785da"
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n2-round3-research.ts",
+      "current": "8a8c0d0e1433a0a6c8ab5dfbfd625fd420cc07e7b4e4994b93a5356aeffce9c8"
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n2-round3-specialty.ts",
+      "current": "4a540380444cb6b5cc23cbb00604ad752fc9217ac54f7eb3b1252cc6989d98a3"
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n2-round3-types.ts",
+      "current": "5f50a74fb0b7cc9dc3440d511fd37b09c4b7e7015a0717e0e7331304e61b9136"
+    },
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+      "current": "0a24ef3c09ef0e045bcde5327c202435b6b457e20afc5c9c9f9a2490ce5adf69"
+    },
+    {
+      "path": "packages/game-domain/src/question-new-n2-round3-test-orders.ts",
+      "current": "deeacf6b255512811af0fe650275d2576f93d8aaf2189b0adc9f0fd052e9505a"
+    },
+    {
+      "path": "packages/game-domain/tests/question-bank-batch2b-round2-bindings.test.ts",
+      "current": "752a5723894f1425fce20e7925478da7816ec7da6c07cf7895dd2ec192190840"
+    },
+    {
+      "path": "packages/game-domain/tests/question-new-n1-round3-admission.test.ts",
+      "current": "d5cd5dd723f60b822815a875346113c970effd46fbc9127af3ebbd80ae50f04e"
+    },
+    {
+      "path": "packages/game-domain/tests/question-ship-gate.test.ts",
+      "current": "57077c8a92a08681b8d681b9881faf6c2b59f12bbdb8a0f4e18536babfeb372d"
+    },
+    {
+      "path": "apps/player/src/session/cloud/operationalBuildController.test.tsx",
+      "current": "22ffea59a23d56a9a6e0dced914eb622597f86735249c0faf88661dfe6733a71"
+    },
+    {
+      "path": "apps/player/src/session/cloud/operationalController.test.tsx",
+      "current": "03839f9b1e6ad9b83d32a50d6cba1e403edb0a5b48e6bace813a34e2dc1b9668"
+    },
+    {
+      "path": "apps/player/src/session/cloud/operationalControllerTestSupport.tsx",
+      "current": "102069f2d5084e4fd5167c762b6f282b4a5d1aeb7cdd176dc5f5f56ea1956bb4"
+    },
+    {
+      "path": "apps/player/src/session/cloud/operationalEngineDev.test.ts",
+      "current": "9dd5ea88468693f61327b4342545c43ca4007cb8ab047159aef49d5b87d69d4a"
+    },
+    {
+      "path": "apps/player/src/session/cloud/operationalEngineDispatch.test.ts",
+      "current": "1663cc3c5f10f1bd8d46aa939fcd3083add9f9eb5da8e75651bb873e20c85c7f"
+    },
+    {
+      "path": "apps/player/src/session/cloud/operationalEngineDispatch.ts",
+      "current": "e55f1a90b4d2d5a8d77c5c57a87ea98a72b5d92a8d0e380d9048ff92ffd09d6f"
+    },
+    {
+      "path": "apps/player/src/session/cloud/operationalEvidenceMirror.test.ts",
+      "current": "dfd65d9a5edd5d5efb14350451e949453031dc12d4155dad4f316be9b5063a4f"
+    },
+    {
+      "path": "apps/player/src/session/cloud/operationalEvidenceMirror.ts",
+      "current": "bf194eba406946d30731748d88438d1d677d1bc18a832b48196581568bd075b8"
+    },
+    {
+      "path": "apps/player/src/session/cloud/operationalFreeze.test.ts",
+      "current": "a75fe30b27aad2a446ec683f236184d437358025bb619882f6b629fcdd999a27"
+    },
+    {
+      "path": "apps/player/src/session/cloud/operationalFreeze.ts",
+      "current": "4280eab0291ebace84f2c45f62233c1a682c2250451da22a2677a7ba96ae9fe9"
+    },
+    {
+      "path": "apps/player/src/session/cloud/operationalSession.test.ts",
+      "current": "a4b0e8e823934bc9fea88b38326970371f40f768e0bf5a360a5ff667c1f3cc0d"
+    },
+    {
+      "path": "apps/player/src/session/cloud/operationalSessionPerformance.test.tsx",
+      "current": "c943d7fc6ea4af13f7e984a643ec21dcfbb91e520e9429aba5e82ace7d83d8a7"
+    },
+    {
+      "path": "apps/player/src/session/cloud/operationalSessionTestSupport.ts",
+      "current": "a4dc940bf907e524ad002401d732ceed069c13a1318fc0ec0e7772a905dc565e"
+    },
+    {
+      "path": "apps/player/src/session/learningReviewCount.test.ts",
+      "current": "659cdcbe6f828ae5adcbbf3e3c7999f91e5cb8a57e7452a9e190dbc5d19237ea"
+    },
+    {
+      "path": "apps/player/src/session/learningReviewCount.ts",
+      "current": "e846a012beac321d3f966b9dd6b2c1c8983f3e788779628d2dcf4b1e86915328"
+    },
+    {
+      "path": "apps/player/public/clinical-exhibits/question-new-n1-r3-venous-flow.png",
+      "current": "4605605403f8c72243df7b36f44402ec197ca13862b0d2fcf824df2731955f73"
+    },
+    {
+      "path": "apps/player/public/clinical-exhibits/question-new-n2-r3-pressure.png",
+      "current": "0ff1af1eaec1319d0e9dded975350899e1bd0cbce972632fbc16b2658c6b11f6"
+    }
+  ],
+  "policy": "Tracked inputs come from the intake plus explicit owned/runtime and manifest files. Extra paths may predate this lock; do not infer their creation time or authorship. Shared work is not attributed or reverted. Each full log retains its actual earlier start window; the final lock covers the late one-word B36 cleanup and focused verification."
+}

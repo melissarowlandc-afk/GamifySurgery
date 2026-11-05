@@ -1,0 +1,558 @@
+{
+  "checkedOn": "2026-11-04",
+  "frozenCases": 1101,
+  "frozenNodes": 1412,
+  "changedNodes": 11,
+  "caseCount": 1110,
+  "conceptsBefore": 412,
+  "conceptsAfter": 414,
+  "exactPilotApprovalsPreserved": 11,
+  "pendingFlagDraftsPreserved": 16,
+  "timingRowsBefore": 1799,
+  "timingRowsAfter": 1810,
+  "exactRowsBefore": 357,
+  "exactRowsAfter": 371,
+  "registryBytesOutsideAppendPreserved": true,
+  "ownerDirectionCoverage": [
+    {
+      "id": "B2A01",
+      "ownerItemId": "b1-B01"
+    },
+    {
+      "id": "B2A02",
+      "ownerItemId": "b1-B02"
+    },
+    {
+      "id": "B2A03",
+      "ownerItemId": "b1-B02-context"
+    },
+    {
+      "id": "B2A04",
+      "ownerItemId": "b1-B03-context"
+    },
+    {
+      "id": "B2A05",
+      "ownerItemId": "b1-B05-context"
+    },
+    {
+      "id": "B2A06",
+      "ownerItemId": "b1-B06"
+    },
+    {
+      "id": "B2A07",
+      "ownerItemId": "b1-B06-context-continuity"
+    },
+    {
+      "id": "B2A08",
+      "ownerItemId": "b1-B07-context"
+    },
+    {
+      "id": "B2A09",
+      "ownerItemId": "b1-B12-context"
+    },
+    {
+      "id": "B2A10",
+      "ownerItemId": "b1-B36"
+    },
+    {
+      "id": "B2A11",
+      "ownerItemId": "new-adrenal-question-flag"
+    }
+  ],
+  "changedExistingFiles": [
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+      "entry": "5bb3e0a817fce009ae71c096150746fcf32823719b4b5b00bf0598108026017d",
+      "current": "5c67c6a4e0cbdfc1e2beba1df2d987d18204d9235f38d6342d14db95dd9dc409",
+      "ownership": "this batch"
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "entry": "6019fffc14ddafda42e6790e4712dd5b21b65af6b7fcca088b6b1380164001e5",
+      "current": "64c8b2dc402055d8495f85fd9289b44e9dc6fa9d7b5d0704fb799bd8bfeb6b9c",
+      "ownership": "this batch"
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "entry": "227c93a817c6fc49971366218827a8d9acd444d4066c7bd7cc41f2c2b8db68bb",
+      "current": "631cd547564e7319e6215939f16901eead900aea836f44631240449c10df435c",
+      "ownership": "this batch"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags-round2-20261104.test.ts",
+      "entry": "076d1e979e0a7b5908edf204591a24e77f82641815704eb90003c77aef613f18",
+      "current": "a42c6113aea0c939efce63763ba79ed6cdb4e1fef9a83e71585c472ce5345a9b",
+      "ownership": "this batch"
+    },
+    {
+      "path": "packages/clinical-content/src/schema.ts",
+      "entry": "43f23113bf7ed0830d995afdb018f5b8b9c46aeb76bedadf952a92646ffbcc6a",
+      "current": "c4d1640ba549c49b6a3dc7bfdf9155504611dd04c756865bc9f5fa0fd40015c7",
+      "ownership": "this batch"
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "entry": "b4cc3c8f874e51cdeeaa5fd0f2049bd899cdbc7c5b49b557e7e79f9237f43103",
+      "current": "f4087dd2674b942d7f018fee696c7a846c2c35ff002eb1e83d1f2b51d36870af",
+      "ownership": "this batch"
+    },
+    {
+      "path": "packages/game-domain/src/patient-amenities.ts",
+      "entry": "bb68111e2ad99087f7cafa2c0d04331221d9c449dbc58acbbb8ac93af1886f1d",
+      "current": "6010f28a097e37291a1940d68961579c301d088b353dea93244ba0c94c0e0e99",
+      "ownership": "external shared-tree change; preserve and report"
+    },
+    {
+      "path": "packages/game-domain/src/procedure-companions.ts",
+      "entry": "b14f513d5cf95215a4f4dd753e6ff785ad08c3e4809947e736b822c745ba5f7d",
+      "current": "eef7ed35ad3963276a08c539968912ad9d4e99e6d964cd07ab10be94e9791bbb",
+      "ownership": "external shared-tree change; preserve and report"
+    },
+    {
+      "path": "packages/game-domain/src/reducer.ts",
+      "entry": "9ef61e771a6355875a7de9a528944e97104e5a6582eaa214f0bcfe23e5e422d6",
+      "current": "fb30915e3c0bf99b7beac99bfa82a40c107ae516958af196fdfd53bbba36715d",
+      "ownership": "external shared-tree change; preserve and report"
+    },
+    {
+      "path": "packages/game-domain/src/retail-operations.ts",
+      "entry": "34011b67347d16b374185dc081d0596685c3eebbd42be12ce89aeaf5429295f5",
+      "current": "6afb0724762579737a96f2ca110a0735e4fe5c04b457a05b7be4140b307a99fe",
+      "ownership": "external shared-tree change; preserve and report"
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "entry": "31eb2ff9b150900af08f0ae1f0e50cdb5508e6388fb84d7c6dc586267abd75ec",
+      "current": "52dbc97240511ec5bab5f4fde92a3456a02cbeab2810848fdb761c7131520d3d",
+      "ownership": "this batch"
+    },
+    {
+      "path": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+      "entry": "cd0f9384982d1142c20996dc052e14ef22051ddf44a53efd4ad920e731fcfcd7",
+      "current": "ee98d1798b415573fd771dc94f83db6aa23b3e7136159ba747aefe37df0a0bbb",
+      "ownership": "this batch"
+    },
+    {
+      "path": "packages/game-domain/tests/companions.test.ts",
+      "entry": "cde38133a269fc920890b3a7881e8e4e7f9e63c78c58f6c1ac5ed89a1db8d0f6",
+      "current": "1577e42db1a16a1b946f4324cdcfc54f66c4c3c6d86a8f2853aa8cc63fd39059",
+      "ownership": "external shared-tree change; preserve and report"
+    },
+    {
+      "path": "packages/game-domain/tests/diagnostics/patient-supply.test.ts",
+      "entry": "f8a4aad021550d0ff0fe008e7368347589a3e1372ef96e93be9d197e8f723912",
+      "current": "5937d82f2134a83558cfa9d4af40d7922e647174479d037a24b28099b0ec6ecc",
+      "ownership": "this batch"
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261007-batch.test.ts",
+      "entry": "dbf851c039bcad8d8a2b1d5dc8f7c354a6c68127ce4de2c96a4fe1a1fab8a351",
+      "current": "2b2b79b32f6156aa9b1ec9dd43bcfc1f3fedfdb0a7a0463cb555a4be10334aea",
+      "ownership": "this batch"
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+      "entry": "6693bdf58ecacd7825955e0f065d60c7422e42aa446432d6306ae40272b23488",
+      "current": "5cf9998910111a6869c95b73b000ba0492fc5d377cd4272b4de63ef3ec8397fc",
+      "ownership": "this batch"
+    },
+    {
+      "path": "packages/game-domain/tests/patient-supply.test.ts",
+      "entry": "2eacb3b2d8145ae09eada551cd1eb55bc68c230601fcd6da86958bc93893bd25",
+      "current": "9a52a2e370e12835cbb986761acd0c575312e8c54eb2491215a32f2a0c5b2987",
+      "ownership": "this batch"
+    },
+    {
+      "path": "packages/game-domain/tests/question-flags-round2-bindings.test.ts",
+      "entry": "479d6669738c2ad2dd53aa164d4778ad1f3d7838851977dabc4d8e3b8c954d73",
+      "current": "4d5704db9fdbd79c9041b7561e1017559026c6bd0252e00b856c819cb5b43f1d",
+      "ownership": "this batch"
+    },
+    {
+      "path": "packages/game-domain/tests/receptionist-water-refill.test.ts",
+      "entry": "93fa2ad0e66644698f6f64d54bec6e61d387f8e65217c1bbcd76de54a821d430",
+      "current": "8a506e313772b6fd4ad0996e1308c6f95e34a7bb7232d3ac89989ad6de324361",
+      "ownership": "external shared-tree change; preserve and report"
+    },
+    {
+      "path": "packages/game-domain/tests/surgery-center-batch.test.ts",
+      "entry": "4b151e91e6a6ab29ef1742ff46bbfdd5558bc54ec509fe7769da3bf6e8481c59",
+      "current": "ed3271f91c6d1b2edb15621f2686b3e05968f38ed2650097bd6bd2159c77111a",
+      "ownership": "this batch"
+    },
+    {
+      "path": "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+      "entry": "71e3385981e61527d676ddbb1a1f22bbfcf62ddc7af92ddb8f219f45dc4c26b7",
+      "current": "a7d786469665313550687b97878e2698164e1a5aa64792f9ce2639efbd09c13f",
+      "ownership": "this batch"
+    },
+    {
+      "path": "apps/player/src/facility/approvedRoomPresentation.test.ts",
+      "entry": "a832ddd989ee22658eb122b4729033e121c8f66a30a8ab7e1f177b787dfffcca",
+      "current": "4b7b9578ca1ee63be0df01119a97fbe589a637609327b5ccd8b3952c67ee0764",
+      "ownership": "external shared-tree change; preserve and report"
+    },
+    {
+      "path": "apps/player/src/facility/approvedRoomPresentation.ts",
+      "entry": "ea08793d45fa2c62a25bed986797a0cab6a127f584bd316b31abf505e84332e4",
+      "current": "418e0286e75d1025fbcf3b7ec822278522f0a364e7be09340747668ac8318a88",
+      "ownership": "external shared-tree change; preserve and report"
+    },
+    {
+      "path": "apps/player/src/facility/backlessRollingStools.test.ts",
+      "entry": "03729e7838562236a0c75b5c4236288b903cb25b02deefb2df18b1ac61295092",
+      "current": "d7723980a35e4bf22149033816d37e529725f020d0bacc71ced81b038ee98356",
+      "ownership": "external shared-tree change; preserve and report"
+    },
+    {
+      "path": "apps/player/src/facility/FacilityScene.ts",
+      "entry": "0e5cc4ef84c6d3a3a1a8c8b270b507c504f0207809a9e47bf49394b1729b49bb",
+      "current": "a9ce2ee44d7f2a4879ca554bb9543de0dcb568c7c63adbd6f26db3a9060f8f93",
+      "ownership": "external shared-tree change; preserve and report"
+    },
+    {
+      "path": "apps/player/src/facility/furnitureSeatLayering.test.ts",
+      "entry": "beffc8917fe5f9753b478c34a34a1890721488aa662abddef14ffba024b585c8",
+      "current": "4d76e266a633dc27b28d60fe231f75d70fb4f482010a4d8e4034636db3764383",
+      "ownership": "external shared-tree change; preserve and report"
+    },
+    {
+      "path": "apps/player/src/mobile/MobileChart.tsx",
+      "entry": "d13db860ce9bb99f5f73e1379694ec7ed47640408fb13d958e6681f11d2f2fd7",
+      "current": "b679b653a8c285bafa67f8e78a57ded9e1c504ab2e9e4d99912e8535eb794981",
+      "ownership": "this batch"
+    },
+    {
+      "path": "apps/player/src/ui/ChartPanel.tsx",
+      "entry": "da6c0ae27271c412f053181e15dc83a4c73ed51a2ebd55c8ad7633bd3b38eac2",
+      "current": "658ec7269612aa07e110bfa1a7800f256e01adb5f41db266a96884642a5a6706",
+      "ownership": "this batch"
+    },
+    {
+      "path": "docs/clinical/question-authoring-standard.md",
+      "entry": "104c9e5d12abd3ee44aaa613a8858fcbfc19b666a71a6e190b6494b1b73bf0f3",
+      "current": "ea42f31ccebe27f674a2df2f37b7ffc0a9578f034559a34e312e57d423cb72d7",
+      "ownership": "this batch"
+    },
+    {
+      "path": "tools/question-quality/lint.mjs",
+      "entry": "3823dc26c5a35958888721e3ed0ec9c0e57f7ed5d0997ef09c018ba192b36f57",
+      "current": "9001747ca5b2b7bdab183ce4c8f22b85abe60cc3acf120ee0e448ba30caf321c",
+      "ownership": "this batch"
+    },
+    {
+      "path": "tools/question-quality/lint.test.mjs",
+      "entry": "fe82fc7d6b69a7840260f0bbecc9db2b0479d6e2b27615c5e9f985e08eb56c88",
+      "current": "f812c954ff611d530ae3bfdb33a87626d5df9ef845ecf1128d3c38f41b3910b6",
+      "ownership": "this batch"
+    },
+    {
+      "path": "tools/question-quality/report.mjs",
+      "entry": "b29491b29da858bdaec30338d0f62af381e77fb94d1ac26ba93fd09a6e3624a8",
+      "current": "2ad3c644b794e27ffdace2d7c89190e75a0fa86ced00807fcacd2862e2d757b5",
+      "ownership": "this batch"
+    }
+  ],
+  "protectedChanges": [
+    {
+      "path": "packages/game-domain/src/patient-amenities.ts",
+      "entry": "bb68111e2ad99087f7cafa2c0d04331221d9c449dbc58acbbb8ac93af1886f1d",
+      "current": "6010f28a097e37291a1940d68961579c301d088b353dea93244ba0c94c0e0e99",
+      "ownership": "external shared-tree change; preserve and report"
+    },
+    {
+      "path": "packages/game-domain/src/procedure-companions.ts",
+      "entry": "b14f513d5cf95215a4f4dd753e6ff785ad08c3e4809947e736b822c745ba5f7d",
+      "current": "eef7ed35ad3963276a08c539968912ad9d4e99e6d964cd07ab10be94e9791bbb",
+      "ownership": "external shared-tree change; preserve and report"
+    },
+    {
+      "path": "packages/game-domain/src/reducer.ts",
+      "entry": "9ef61e771a6355875a7de9a528944e97104e5a6582eaa214f0bcfe23e5e422d6",
+      "current": "fb30915e3c0bf99b7beac99bfa82a40c107ae516958af196fdfd53bbba36715d",
+      "ownership": "external shared-tree change; preserve and report"
+    },
+    {
+      "path": "packages/game-domain/src/retail-operations.ts",
+      "entry": "34011b67347d16b374185dc081d0596685c3eebbd42be12ce89aeaf5429295f5",
+      "current": "6afb0724762579737a96f2ca110a0735e4fe5c04b457a05b7be4140b307a99fe",
+      "ownership": "external shared-tree change; preserve and report"
+    },
+    {
+      "path": "packages/game-domain/tests/companions.test.ts",
+      "entry": "cde38133a269fc920890b3a7881e8e4e7f9e63c78c58f6c1ac5ed89a1db8d0f6",
+      "current": "1577e42db1a16a1b946f4324cdcfc54f66c4c3c6d86a8f2853aa8cc63fd39059",
+      "ownership": "external shared-tree change; preserve and report"
+    },
+    {
+      "path": "packages/game-domain/tests/receptionist-water-refill.test.ts",
+      "entry": "93fa2ad0e66644698f6f64d54bec6e61d387f8e65217c1bbcd76de54a821d430",
+      "current": "8a506e313772b6fd4ad0996e1308c6f95e34a7bb7232d3ac89989ad6de324361",
+      "ownership": "external shared-tree change; preserve and report"
+    },
+    {
+      "path": "apps/player/src/facility/approvedRoomPresentation.test.ts",
+      "entry": "a832ddd989ee22658eb122b4729033e121c8f66a30a8ab7e1f177b787dfffcca",
+      "current": "4b7b9578ca1ee63be0df01119a97fbe589a637609327b5ccd8b3952c67ee0764",
+      "ownership": "external shared-tree change; preserve and report"
+    },
+    {
+      "path": "apps/player/src/facility/approvedRoomPresentation.ts",
+      "entry": "ea08793d45fa2c62a25bed986797a0cab6a127f584bd316b31abf505e84332e4",
+      "current": "418e0286e75d1025fbcf3b7ec822278522f0a364e7be09340747668ac8318a88",
+      "ownership": "external shared-tree change; preserve and report"
+    },
+    {
+      "path": "apps/player/src/facility/backlessRollingStools.test.ts",
+      "entry": "03729e7838562236a0c75b5c4236288b903cb25b02deefb2df18b1ac61295092",
+      "current": "d7723980a35e4bf22149033816d37e529725f020d0bacc71ced81b038ee98356",
+      "ownership": "external shared-tree change; preserve and report"
+    },
+    {
+      "path": "apps/player/src/facility/FacilityScene.ts",
+      "entry": "0e5cc4ef84c6d3a3a1a8c8b270b507c504f0207809a9e47bf49394b1729b49bb",
+      "current": "a9ce2ee44d7f2a4879ca554bb9543de0dcb568c7c63adbd6f26db3a9060f8f93",
+      "ownership": "external shared-tree change; preserve and report"
+    },
+    {
+      "path": "apps/player/src/facility/furnitureSeatLayering.test.ts",
+      "entry": "beffc8917fe5f9753b478c34a34a1890721488aa662abddef14ffba024b585c8",
+      "current": "4d76e266a633dc27b28d60fe231f75d70fb4f482010a4d8e4034636db3764383",
+      "ownership": "external shared-tree change; preserve and report"
+    }
+  ],
+  "externalAddedFiles": [
+    {
+      "path": "packages/game-domain/src/restroom-recovery.ts",
+      "current": "556ebd817e39d3fccdc7dd802e860ceaf9317fecfee4602d72ccace953f7432b",
+      "ownership": "concurrent external addition; not edited by this worker"
+    },
+    {
+      "path": "packages/game-domain/tests/restroom-recovery.test.ts",
+      "current": "a6a0240f73feeec1c661979af295b9ac217bbfa78d2561297889adaa3011191b",
+      "ownership": "concurrent external addition; not edited by this worker"
+    },
+    {
+      "path": "packages/game-domain/tests/waiting-chart-attendance.fixture.ts",
+      "current": "02d02619c4e2180997c7b08b1086dd8b49cb75d60efc41968384509b08621679",
+      "ownership": "concurrent external addition; not edited by this worker"
+    },
+    {
+      "path": "packages/game-domain/tests/waiting-chart-attendance.test.ts",
+      "current": "7e635b4d773c82309ca08a3efb612d4082af77d42bdc87651a94dcfb71655987",
+      "ownership": "concurrent external addition; not edited by this worker"
+    },
+    {
+      "path": "apps/player/src/art/characterPhlebotomyQa.before.json",
+      "current": "ca1f5b7058576c1f499cde9489806d52c5699e68f2c9484d8d7ab63bd32ec0d7",
+      "ownership": "concurrent external addition; not edited by this worker"
+    },
+    {
+      "path": "apps/player/src/art/characterPhlebotomyQa.ts",
+      "current": "e1b521d0bd41e8072deedddb5ffbcbf3d3e076302fac60f304c306268eac4307",
+      "ownership": "concurrent external addition; not edited by this worker"
+    },
+    {
+      "path": "apps/player/src/art/characterPhlebotomyQaModel.ts",
+      "current": "eb8a020bdc7f0268d10494c2caad5320050aa58a63562f58fe4d52dec1cd1658",
+      "ownership": "concurrent external addition; not edited by this worker"
+    },
+    {
+      "path": "apps/player/src/facility/phlebotomyPresentation.test.ts",
+      "current": "38ad306518a774b0a7b9ad0486db51cc4de562676bef6312b8a0e2c7e51ea3f3",
+      "ownership": "concurrent external addition; not edited by this worker"
+    },
+    {
+      "path": "apps/player/src/facility/phlebotomyPresentation.ts",
+      "current": "6e99e8815ded8169b0d0407426c26d229a9f8ae27102e8233c936d1a5269792f",
+      "ownership": "concurrent external addition; not edited by this worker"
+    },
+    {
+      "path": "apps/player/src/facility/restroomRecoveryPresentation.test.ts",
+      "current": "a282a06e13a0e1e57c96db352a6728577483407a321ace6f9c100ee61ccd024d",
+      "ownership": "concurrent external addition; not edited by this worker"
+    },
+    {
+      "path": "apps/player/src/facility/waitingChartAttendancePresentation.test.ts",
+      "current": "c2b45103940b5994f073dcd8bd00822237a513161a4875b96d9b4357683763d0",
+      "ownership": "concurrent external addition; not edited by this worker"
+    }
+  ],
+  "ownedExisting": [
+    "packages/clinical-content/src/answer-choice-timing.ts",
+    "packages/clinical-content/src/index.ts",
+    "packages/clinical-content/src/synthetic-content.ts",
+    "packages/clinical-content/src/schema.ts",
+    "packages/clinical-content/src/answer-choice-timing.test.ts",
+    "packages/clinical-content/src/question-flags-round2-20261104.test.ts",
+    "packages/game-domain/src/test-choice-orders.ts",
+    "packages/game-domain/tests/approved-clinical-admission.test.ts",
+    "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+    "packages/game-domain/tests/question-flags-round2-bindings.test.ts",
+    "packages/game-domain/tests/patient-supply.test.ts",
+    "packages/game-domain/tests/diagnostics/patient-supply.test.ts",
+    "packages/game-domain/tests/gs028-20261007-batch.test.ts",
+    "packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+    "packages/game-domain/tests/surgery-center-batch.test.ts",
+    "apps/player/src/ui/ChartPanel.tsx",
+    "apps/player/src/mobile/MobileChart.tsx",
+    "tools/question-quality/lint.mjs",
+    "tools/question-quality/lint.test.mjs",
+    "tools/question-quality/report.mjs",
+    "tools/question-quality/bank.mjs",
+    "tools/question-quality/owner-flag-rules-20261104.mjs",
+    "docs/clinical/question-authoring-standard.md"
+  ],
+  "boundInputs": {
+    "recordedInputCount": 409,
+    "currentInputCount": 418,
+    "changedThisBatch": [
+      {
+        "path": "packages/clinical-content/src/answer-choice-timing.ts",
+        "entry": "6019fffc14ddafda42e6790e4712dd5b21b65af6b7fcca088b6b1380164001e5",
+        "current": "64c8b2dc402055d8495f85fd9289b44e9dc6fa9d7b5d0704fb799bd8bfeb6b9c",
+        "recorded": "7db1b1253c7d3064adb0602360925c0739bb65c719603507c3fa09a6732ba245"
+      },
+      {
+        "path": "packages/clinical-content/src/index.ts",
+        "entry": "227c93a817c6fc49971366218827a8d9acd444d4066c7bd7cc41f2c2b8db68bb",
+        "current": "631cd547564e7319e6215939f16901eead900aea836f44631240449c10df435c",
+        "recorded": "a57ffcec34d75e2e337790f1ac0d71e4bfdc8f79d53cdb28596e00ead60413e4"
+      },
+      {
+        "path": "packages/clinical-content/src/schema.ts",
+        "entry": "43f23113bf7ed0830d995afdb018f5b8b9c46aeb76bedadf952a92646ffbcc6a",
+        "current": "c4d1640ba549c49b6a3dc7bfdf9155504611dd04c756865bc9f5fa0fd40015c7",
+        "recorded": "43f23113bf7ed0830d995afdb018f5b8b9c46aeb76bedadf952a92646ffbcc6a"
+      },
+      {
+        "path": "packages/clinical-content/src/synthetic-content.ts",
+        "entry": "b4cc3c8f874e51cdeeaa5fd0f2049bd899cdbc7c5b49b557e7e79f9237f43103",
+        "current": "f4087dd2674b942d7f018fee696c7a846c2c35ff002eb1e83d1f2b51d36870af",
+        "recorded": "6d9870d53383af7da6ee7547ba702410a2545882876faa1696c0e1217fae311c"
+      },
+      {
+        "path": "packages/game-domain/src/test-choice-orders.ts",
+        "entry": "31eb2ff9b150900af08f0ae1f0e50cdb5508e6388fb84d7c6dc586267abd75ec",
+        "current": "52dbc97240511ec5bab5f4fde92a3456a02cbeab2810848fdb761c7131520d3d",
+        "recorded": "522c3fbd3b3503f4b6d74f38e7dbd994b98727a3037b0374f86e58dbf5a41639"
+      }
+    ],
+    "addedThisBatch": [
+      {
+        "path": "packages/clinical-content/src/question-bank-batch2a-20261104.ts",
+        "current": "3bf51ef4423bd2a0b7e75c100bbcb06af615218e57f92786f09c3ada972940e1"
+      },
+      {
+        "path": "packages/clinical-content/src/question-bank-batch2a-20261104-data.ts",
+        "current": "e639ddfb34f817ec12ba760910951dcbc81a2464f3da1918470f8173e4849324"
+      },
+      {
+        "path": "packages/clinical-content/src/question-bank-batch2a-evidence-20261104.ts",
+        "current": "77e3695047de700a5f16bd3a92f7dc162dd79ef20a12c87657cd8ef44b17c74e"
+      }
+    ],
+    "allRecordedDifferences": [
+      {
+        "path": "packages/clinical-content/src/answer-choice-timing.ts",
+        "recorded": "7db1b1253c7d3064adb0602360925c0739bb65c719603507c3fa09a6732ba245",
+        "current": "64c8b2dc402055d8495f85fd9289b44e9dc6fa9d7b5d0704fb799bd8bfeb6b9c",
+        "changedSinceBatch2aEntry": true
+      },
+      {
+        "path": "packages/clinical-content/src/index.ts",
+        "recorded": "a57ffcec34d75e2e337790f1ac0d71e4bfdc8f79d53cdb28596e00ead60413e4",
+        "current": "631cd547564e7319e6215939f16901eead900aea836f44631240449c10df435c",
+        "changedSinceBatch2aEntry": true
+      },
+      {
+        "path": "packages/clinical-content/src/schema.ts",
+        "recorded": "43f23113bf7ed0830d995afdb018f5b8b9c46aeb76bedadf952a92646ffbcc6a",
+        "current": "c4d1640ba549c49b6a3dc7bfdf9155504611dd04c756865bc9f5fa0fd40015c7",
+        "changedSinceBatch2aEntry": true
+      },
+      {
+        "path": "packages/clinical-content/src/synthetic-content.ts",
+        "recorded": "6d9870d53383af7da6ee7547ba702410a2545882876faa1696c0e1217fae311c",
+        "current": "f4087dd2674b942d7f018fee696c7a846c2c35ff002eb1e83d1f2b51d36870af",
+        "changedSinceBatch2aEntry": true
+      },
+      {
+        "path": "packages/game-domain/src/patient-amenities.ts",
+        "recorded": "bb68111e2ad99087f7cafa2c0d04331221d9c449dbc58acbbb8ac93af1886f1d",
+        "current": "6010f28a097e37291a1940d68961579c301d088b353dea93244ba0c94c0e0e99",
+        "changedSinceBatch2aEntry": true
+      },
+      {
+        "path": "packages/game-domain/src/procedure-companions.ts",
+        "recorded": "b14f513d5cf95215a4f4dd753e6ff785ad08c3e4809947e736b822c745ba5f7d",
+        "current": "eef7ed35ad3963276a08c539968912ad9d4e99e6d964cd07ab10be94e9791bbb",
+        "changedSinceBatch2aEntry": true
+      },
+      {
+        "path": "packages/game-domain/src/reducer.ts",
+        "recorded": "8bcc7a5990e8d3aa025edbee5dde54bcda83294fb30c0636a6679a57a0f1b474",
+        "current": "fb30915e3c0bf99b7beac99bfa82a40c107ae516958af196fdfd53bbba36715d",
+        "changedSinceBatch2aEntry": true
+      },
+      {
+        "path": "packages/game-domain/src/retail-operations.ts",
+        "recorded": "34011b67347d16b374185dc081d0596685c3eebbd42be12ce89aeaf5429295f5",
+        "current": "6afb0724762579737a96f2ca110a0735e4fe5c04b457a05b7be4140b307a99fe",
+        "changedSinceBatch2aEntry": true
+      },
+      {
+        "path": "packages/game-domain/src/test-choice-orders.ts",
+        "recorded": "522c3fbd3b3503f4b6d74f38e7dbd994b98727a3037b0374f86e58dbf5a41639",
+        "current": "52dbc97240511ec5bab5f4fde92a3456a02cbeab2810848fdb761c7131520d3d",
+        "changedSinceBatch2aEntry": true
+      },
+      {
+        "path": "packages/game-domain/src/waiting-destinations.ts",
+        "recorded": "cfac0f00fee09602e959575dfb561d000ccb14c6f4468e12a03cee2a1e3cc8c0",
+        "current": "50ea90e5fc64e829604252ccc893ffffec900cc8fb3ea115b6c9ec6ca509bb46",
+        "changedSinceBatch2aEntry": false
+      }
+    ],
+    "newSinceRecorded": [
+      "packages/clinical-content/src/question-bank-batch2a-20261104-data.ts",
+      "packages/clinical-content/src/question-bank-batch2a-20261104.ts",
+      "packages/clinical-content/src/question-bank-batch2a-evidence-20261104.ts",
+      "packages/clinical-content/src/question-flags-20261104-data.ts",
+      "packages/clinical-content/src/question-flags-20261104.ts",
+      "packages/clinical-content/src/question-flags-round2-20261104-data.ts",
+      "packages/clinical-content/src/question-flags-round2-20261104.ts",
+      "packages/clinical-content/src/question-flags-round2-evidence-20261104.ts",
+      "packages/game-domain/src/restroom-recovery.ts"
+    ],
+    "externalChangesSinceBatchEntry": [
+      {
+        "path": "packages/game-domain/src/patient-amenities.ts",
+        "entry": "bb68111e2ad99087f7cafa2c0d04331221d9c449dbc58acbbb8ac93af1886f1d",
+        "current": "6010f28a097e37291a1940d68961579c301d088b353dea93244ba0c94c0e0e99"
+      },
+      {
+        "path": "packages/game-domain/src/procedure-companions.ts",
+        "entry": "b14f513d5cf95215a4f4dd753e6ff785ad08c3e4809947e736b822c745ba5f7d",
+        "current": "eef7ed35ad3963276a08c539968912ad9d4e99e6d964cd07ab10be94e9791bbb"
+      },
+      {
+        "path": "packages/game-domain/src/reducer.ts",
+        "entry": "9ef61e771a6355875a7de9a528944e97104e5a6582eaa214f0bcfe23e5e422d6",
+        "current": "fb30915e3c0bf99b7beac99bfa82a40c107ae516958af196fdfd53bbba36715d"
+      },
+      {
+        "path": "packages/game-domain/src/retail-operations.ts",
+        "entry": "34011b67347d16b374185dc081d0596685c3eebbd42be12ce89aeaf5429295f5",
+        "current": "6afb0724762579737a96f2ca110a0735e4fe5c04b457a05b7be4140b307a99fe"
+      }
+    ],
+    "externalAdditionsSinceBatchEntry": [
+      {
+        "path": "packages/game-domain/src/restroom-recovery.ts",
+        "current": "556ebd817e39d3fccdc7dd802e860ceaf9317fecfee4602d72ccace953f7432b"
+      }
+    ],
+    "note": "Read-only audit of the existing Level 5 enumerator. PNG assets and player UI are not currently bound by this guard; their hashes are separately locked. No evidence, rebind, legacy refresh or Level 4/5 test edited. External concurrent changes are attributed separately."
+  }
+}

@@ -7739,3 +7739,815 @@ Native summary values (all retained):
 No checkpoint, runtime, balance, clinical, test or unrelated source file changed during this task. Captured 6,612 public entry file hashes; final inventory verifies every unowned public file unchanged. Private backups, actual generated payloads, command-native exit receipts, logs, per-workspace JSON, source audit, exact comparisons, publication preparation and receipt, final inventory and this handoff's preparation are confined to `.local-dev/l5-evidence-rebind16-release-20261105/`. The three canonical-write review records are `accepted-run-verification.json`, `publication-prepared.json` and `publication-receipt.json`.
 
 Manager next action: review the scoped evidence and exact validation receipts, then rerun the unchanged root commands in a context that permits their Git inventory. Global CURRENT_THREAD_HANDOFF integration and backup decisions remain manager-owned. No deployment or backup is implied.
+
+## Level 5 evidence rebind 17 (release worktree, question ship manifest) (2026-11-05)
+
+Manager-directed port and local evidence refresh in C:/Users/rowla/Projects/GS-release only. User-stated starting HEAD 4e01bb57, branch release/beta1-20261016. The live GamifySurgery tree was read-only; incoming bytes were captured before porting. No Git command, installation, external network, agent, deployment or browser/owner-storage operation was performed. Root npm test reached the Git inventory and was blocked before Git spawn; the authorized seven-workspace fallback completed successfully.
+
+### Exact acceptance and port scope
+
+The default release is the manifest projection: exactly 62 directed acceptances and 1,423 unchanged legacy tuples. The independent decision comparison, exact source-node/header validation and production manifest tests all pass. No acceptance was inferred from review PASS, candidate integration or an authoring export.
+
+| Decision lane | Accepted | Decision record |
+| --- | ---: | --- |
+| Owner/tester flags | 9 | docs/research/question-flags-manager-decision-20261104.md |
+| Batch 2a | 10 | docs/research/question-bank-batch2a-manager-decision-20261104.md |
+| N1 review three | 12 | docs/research/question-new-manager-decision-20261105.md |
+| N2 source-screened review three | 14 | docs/research/question-new-manager-decision-20261105.md |
+| Batch 2b | 16 | docs/research/question-bank-batch2b-manager-decision-20261105.md |
+| Flags2 G06 | 1 | docs/research/question-flags2-manager-decision-20261105.md |
+
+Default cases/nodes: 1,110 / 1,423 before, 1,136 / 1,449 after. There are 36 exact replacements and 26 accepted new cases. All 1,387 unaccepted legacy nodes remain exact. The explicit catalog retains 1,229 cases; 28 N1 returned cases, 25 N2 returned/source-held cases and all 40 N3 drafts remain outside default new admissions. All 62 accepted authored versions retain needs_clinician_review; manifest clinicalApproval remains false. All 11 existing owner approvals and the 38 protected production/provenance paths checked by the preservation proof remain exact. Existing 396 meanings are preserved; registered histories become 598, including historical identities required for saved cards. No clinical definition was edited during this port.
+
+Path dispositions: 633 copied and 10 hunk-ported; 37829 differences excluded. Every incoming difference has its before/live hashes and reason in .local-dev/release-verify/question-port-20261105.json. The complete 648-path repository write list is below. The five admission modules were left byte-exact; their normalized live sources match the release. Domain production changes are the question-specific exact-order archive and ten helper modules. Desktop/mobile chart changes consist only of the image component import and image branch; release wait-snapshot behavior is preserved. Unreleased character/performance/session/cloud production, Supabase, backup and other lanes were excluded.
+
+Two nonclinical JSON records received encoding-only normalization: docs/research/question-new-n2-review3-20261104.json (CRLF to LF) and tools/question-quality/round2-validation-exits-20261029.json (BOM removal and CRLF to LF). Parsed payloads are deeply identical to the captured source; original bytes, original/new SHA-256 and canonical payload hashes remain in record-encoding-normalization.json. The clinical package itself is copied byte-exact. All repository writes are UTF-8 without BOM and LF.
+
+Clinical images: 5 accepted images and 8 retained catalog/source-view images. Every carried path is referenced by the production chunks (literal path or compiled template plus exact slug), required by retained authored-version integrity tests, and copied byte-identically to dist. Draft images grant no admission. Evidence: C:\Users\rowla\Projects\GS-release\.local-dev\question-release-rebind17-20261105/bundle-asset-closure.json.
+
+### Old-save safety
+
+Before any port, the actual current release created real reducer-admitted DCIS-v3 snapshots at waiting_unopened and at the ordinary in-progress answer step. Each format-three snapshot reopened exactly under the ported default, retained the old frozen question and previous FSRS review/card, completed with one new review, rejected a duplicate answer by idempotence, and survived an exact second reopen. The new default version is question.dcis.margin-bcs-wbrt.v3.r3; the saved version remains question.dcis.margin-bcs-wbrt.v3.
+
+- waiting: .local-dev/question-release-rebind17-20261105/old-save-waiting.json; SHA-256 7230d6b2b1b412ad4888495df0a0de74d9dece952cf4d51b94a86ef656f00abc.
+- in-progress: .local-dev/question-release-rebind17-20261105/old-save-in-progress.json; SHA-256 95a480c8a5f2cf00f80a404f8cd8d247ea01f656a4ffd15ece278814f4c42da8.
+
+An additional combined snapshot contains that captured in-progress DCIS patient plus an ordinarily admitted waiting predictive-value patient. It was constructed after porting by executing the five captured pre-port source before-images in memory, with their exact original hashes; no release source was restored or rewritten. Both saved questions are replaced by this port. Both reopened and completed under the ported default with unchanged frozen cases and one review each, then the combined completed save reopened exactly again. This additional reconstruction is distinguished from the two genuine chronologically pre-port snapshots. Details and source hashes are in old-save-combined-verification.json. The six official format-three/journal compatibility tests also pass.
+
+The nine old checkpoint saves contain 122 retained encounters. All raw frozen definitions remain exact on reopen; complete loaded encounters equal the before-content control. One pre-existing L4 satisfaction-clock normalization (3702 to 3704) occurs identically with both releases; it is not a new content or frozen-definition change.
+
+### Actual Level 5 journey and causal deltas
+
+Both unchanged native generators ran through the guarded stage-generator.mjs and run-command.ps1 in the release worktree, using seed level-five-m9.integration.01 and the original funded Level 4 opening. Only the three artifact paths were redirected. No gameplay source, balance, frozen case, XP, history, report or witness was overlaid or injected in this journey. verify-staged.mjs passed before publish-verified.mjs wrote canonical evidence. Every native assertion and the binding guard remain unchanged.
+
+| Metric | Before | After | Delta |
+| --- | ---: | ---: | ---: |
+| commandsReconciled | 26362 | 26818 | 456 |
+| closingCashCents | 6056335 | 5996736 | -59599 |
+| levelFourAdvanceTick | 3704 | 4134 | 430 |
+| xpGoalTick | 14217 | 15219 | 1002 |
+| firstAnswers | 553 | 532 | -21 |
+| levelFiveFirstAnswers | 464 | 443 | -21 |
+| completedDailyRounds | 35 | 36 | 1 |
+| positiveComfortUses | 719 | 659 | -60 |
+| retiredReceipts | 5431 | 5205 | -226 |
+| retiredEncounters | 399 | 407 | 8 |
+| finishNotices | 0 | 0 | 0 |
+| Completed patients | 410 | 417 | 7 |
+| Walkouts | 0 | 0 | 0 |
+| Unlock tick | 14709 | 15219 | 510 |
+
+| Cash component (cents) | Before | After | Delta |
+| --- | ---: | ---: | ---: |
+| openingCashCents | 1785500 | 1785500 | 0 |
+| grossCents | 15111900 | 15217700 | 105800 |
+| stockCents | 271860 | 282789 | 10929 |
+| paidOperatingCents | 9521205 | 9675675 | 154470 |
+| capitalCents | 1048000 | 1048000 | 0 |
+| closingCashCents | 6056335 | 5996736 | -59599 |
+
+Reconciliation: 1,785,500 + 15,217,700 - 282,789 - 9,675,675 - 1,048,000 = 5,996,736 cents. The 59,599-cent closing decrease is exactly +105,800 gross -10,929 stock -154,470 paid operating. The question pool and exact question/timing records change seeded patient choices and scored encounters; L4 advances 430 ticks later, unlock and all later inspection phases shift 510 ticks, and daily rounds increase 35 to 36. Completion count increases seven (about 1.7%); zero walkouts occur at every checkpoint. All other bound domain/balance/driver sources remain exact. The changed sample and care mix, rather than a routing or economic algorithm change, explain the reports and cash. Full numeric differences and the source delta are recorded in accepted-run-verification.json / input-delta.json.
+
+| Report | Patients before -> after | Score before -> after | SHA-256 after |
+| --- | --- | --- | --- |
+| 1 | 54 -> 51 | 62.4813653779166 -> 62.304886301437534 | 4e781941025a68f095d6b78402f7ebd08bebc6e0cb2bab249b9a71980aa702ec |
+| 2 | 48 -> 50 | 66.64761689485275 -> 66.68920376175498 | 43136dd1319f737a17a7e44d8f9608414cc4d4979252a9b4a5de4d1da25270f8 |
+| 3 | 52 -> 49 | 45.299819146370375 -> 45.32438743522438 | b0ef71f33179cdce4e3f221da0a355fd65d008da6fbf06743ab43105b6c9cfe7 |
+
+All three reports are completed real 3,000-minute windows with at least 20 scored patients and ten categories. The second remains the best, the third the latest, and the first-completed finish remains immutable. The first is below 80, the second improves it, and the third is genuinely lower. Commands exceed 20,000; supplier stock/upkeep savings, comfort, daily rounds and retirement checks all remain enforced.
+
+| Checkpoint | Tick before -> after | Cash cents before -> after | XP before -> after | Completed before -> after | Walkouts |
+| --- | --- | --- | --- | --- | --- |
+| integration-l4 | 3704 -> 4134 | 2635200 -> 2734550 | 754 -> 754 | 58 -> 66 | 0 |
+| integration-build | 3704 -> 4134 | 1587200 -> 1686550 | 0 -> 0 | 58 -> 66 | 0 |
+| integration-preparing | 14710 -> 15220 | 4148331 -> 4117521 | 2088 -> 2004 | 244 -> 254 | 0 |
+| integration-running | 14847 -> 15357 | 4196706 -> 4135595 | 2110 -> 2016 | 247 -> 256 | 0 |
+| integration-final | 17766 -> 18276 | 4838179 -> 4781659 | 2644 -> 2540 | 298 -> 306 | 0 |
+| integration-finish | 17767 -> 18277 | 4838179 -> 4781659 | 2644 -> 2540 | 298 -> 306 | 0 |
+| integration-repeat-final | 21423 -> 21933 | 5656213 -> 5598451 | 3410 -> 3274 | 357 -> 367 | 0 |
+| integration-repeat | 21424 -> 21934 | 5656213 -> 5598451 | 3410 -> 3274 | 357 -> 367 | 0 |
+| integration-lower-repeat | 24481 -> 24991 | 6056335 -> 5996736 | 3552 -> 3406 | 410 -> 417 | 0 |
+
+All nine freshly generated checkpoints change; they are actual new-run bytes. First-report launch pins now require 51 patients / 62.304886301437534, and the player scoreLabel requires 62.30. The entryLarge 4,900,000-byte threshold remains unchanged and passes. The two stale general question inventories were reconciled exactly: thirteen accepted B2B/G06 meanings bring the ordered expected history list from 585 to 598; only the exact accepted B2B40 variant expects three choices, with four still required elsewhere. Full choice-ID and timing assertions remain.
+
+The established legacy generator adapter regenerated all 25 Level 0-4/schema 5-9 loads and their actual 120-minute continuations from the five unchanged serialized inputs. Every added load path is one of 202 empty concept histories; all prior histories and frozen input encounters remain exact. L0/L3 continuations are otherwise identical. L1/L2/L4 differ only through new admissions, plus exactly two L4 ambient identity leaves. A diagnostic counterfactual changing only the new patient portrait reproduces the old environment exactly: the arrival at tick 74 changes portrait reservations before ambient-pedestrian.1 is created at tick 115. appearance.ts and ambient-pedestrians.ts remain byte-exact. The canonical legacy fixture stores the unmodified actual continuation, not the counterfactual. No gameplay assertion or broad allow-list was changed. Full leaf paths, schema controls and counterfactual trace are in legacy-diagnosis.json.
+
+### Binding and artifact provenance
+
+Inputs: 418 -> 508; clinical inputs: 290 -> 370. Five existing bound hashes change (four clinical, one domain); ninety inputs are added (eighty clinical, ten domain helpers); none are removed. All new input paths/hashes are listed in input-delta.json and the results inputs map. The previous full inputs and artifactInputs were appended to inputHistory, preserving every earlier entry (17 total). Only the established liveCap metadata correction 4 to 5 was applied to raw generator results. Guard SHA-256 remains 812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909.
+
+| Existing bound input | Before SHA-256 | After SHA-256 |
+| --- | --- | --- |
+| packages/clinical-content/src/answer-choice-timing.ts | 7db1b1253c7d3064adb0602360925c0739bb65c719603507c3fa09a6732ba245 | 2391e3a6440890af5698d66f6a0cb56c34fae9848466e3cacc96c2ca28f8d7e1 |
+| packages/clinical-content/src/index.ts | a57ffcec34d75e2e337790f1ac0d71e4bfdc8f79d53cdb28596e00ead60413e4 | 41472b04a8d9e863a4e185b07b9224c1e5bc1235f587e94eddc55ef6c6daaeb3 |
+| packages/clinical-content/src/schema.ts | 43f23113bf7ed0830d995afdb018f5b8b9c46aeb76bedadf952a92646ffbcc6a | c4d1640ba549c49b6a3dc7bfdf9155504611dd04c756865bc9f5fa0fd40015c7 |
+| packages/clinical-content/src/synthetic-content.ts | 6d9870d53383af7da6ee7547ba702410a2545882876faa1696c0e1217fae311c | 0dcec62fa1a9d7ef42b4400595d0e8d0d73b253d40817fda4b55ea3ee0e4c633 |
+| packages/game-domain/src/test-choice-orders.ts | 522c3fbd3b3503f4b6d74f38e7dbd994b98727a3037b0374f86e58dbf5a41639 | 308ecf40a5eb130fbcd6a55ca59b390508e76ec1d8c2a4367c05171e54d84d6d |
+
+| Evidence artifact | Before SHA-256 | After SHA-256 |
+| --- | --- | --- |
+| tools/qa/level-five-integration-results-20261012.json | b59b0b5fe689cc654136770586731010d4509ae5ee8c48bc17bf1805919a3712 | 327615d06420d0424a3060d837b056a0875dfa494f1514d41efc658ea6a7aa89 |
+| tests/fixtures/level-five-integration-checkpoints-20261012.json | 51b18e225a75ac77b345d74ea15b3e0f6841807d00276b6fe6b78f5c7886df7d | 0a45ff87e2a92a03d48702453e9899fd57d8c04d12611bafb51c0c8ac38809b2 |
+| tests/fixtures/level-five-legacy-behavior-20261012.json | 421e564f86cb502cb3dda02c84c5a19352c575ab89a4236654ef7d0cb249491e | dc06e1557f59a72b9f4739dc11f25e6cbd63a709d3a2e41d83a72f2d55314ff2 |
+
+### Exact validation
+
+Final CI=true seven-workspace fallback, threads/maxWorkers=2, native exit 0. The JSON reporter only records results; no test configuration, assertion, budget or timeout is changed.
+
+| Workspace | Passed files | Passed tests | Failed | Skipped |
+| --- | ---: | ---: | ---: | ---: |
+| clinical-context-workbench | 8 | 43 | 0 | 0 |
+| player | 371 | 3537 | 0 | 0 |
+| balance-config | 23 | 160 | 0 | 0 |
+| clinical-authoring | 7 | 81 | 0 | 0 |
+| clinical-content | 116 | 1238 | 0 | 0 |
+| clinical-research | 8 | 83 | 0 | 0 |
+| game-domain | 194 | 5070 | 0 | 1 |
+| Total | 727 | 10212 | 0 | 1 |
+
+Native commands (CI=true; validation-preload.cjs blocks Git before spawn and handles the known net-use EPERM only):
+
+```text
+npm.cmd test
+NATIVE_EXIT_CODE=1
+npm.cmd run test --workspaces --if-present -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/question-release-rebind17-20261105/workspace-json-reporter.mjs
+NATIVE_EXIT_CODE=1
+npm.cmd run typecheck
+NATIVE_EXIT_CODE=0
+npm.cmd run build --workspace @gamify-surgery/player
+NATIVE_EXIT_CODE=0
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 src/questionShipSaveCompatibility.test.ts src/ui/ClinicalImageExhibit.test.tsx src/ui/questionBankBatch2aRound3Exhibit.test.tsx
+NATIVE_EXIT_CODE=0
+npm.cmd run clinical:lint:test
+NATIVE_EXIT_CODE=0
+npm.cmd run test --workspaces --if-present -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/question-release-rebind17-20261105/final/workspace-json-reporter.mjs
+NATIVE_EXIT_CODE=0
+```
+
+Seven workspace typechecks pass, native exit 0. Player production build passes, native exit 0 (1,000 modules; 4.74 s). Output includes the existing dynamic-import/chunk-size warnings; the entry chunk is 21,763.20 kB / 3,596.68 kB gzip, codec worker 12,959.09 kB and operational worker 13,486.10 kB. No chunk budget or runtime behavior was changed to suppress warnings. Focused question/save/image checks: 3 files, 12 passed. Historical fixture integration: 2 files, 48 passed. Clinical rerun after adding the missing source ledgers: 116 files, 1,238 passed. Lint: 33 passed. Final workspace reports and complete raw stdout/stderr are under final/.
+
+The earlier all-workspace command exited 1: player had two missing historical-v4 lookups and one format-two retirement source-string capacity failure; clinical had two ENOENT suite-setup errors for omitted source ledgers. The ledgers were copied byte-exact. The historical v4 test now resolves its exact old version from the retained release; the retirement fixture keeps all twelve encounters and every import/hash/state assertion while using the complete historical release context. Codec/string limits and all production session/cloud code remain unchanged. The focused 48-test rerun and final full command pass. No timeout was waived. Earlier failing logs/reports remain preserved.
+
+Root npm test remains intentionally uncompleted at its prohibited inventory operation:
+
+```text
+Error: Application boundary verification failed:
+- Could not inspect tracked paths: Git blocked before spawn: manager required No Git.
+```
+
+The manager owns the root-script rerun in an environment where its Git inventory is permitted. This is a local, validated release-worktree checkpoint; no external publication or backup was performed.
+
+### Exact repository paths written
+
+This list includes the port, the exact integration fixtures/pins, three generated evidence artifacts, this handoff and the bounded ExecPlan. Private captured before-images/incoming snapshots, native staging, logs, JSON validation reports and audit receipts remain under .local-dev/question-release-rebind17-20261105/; the full incoming disposition receipt is .local-dev/release-verify/question-port-20261105.json. The post-append final-file-inventory.json records complete before/after hashes, including this handoff (whose own hash cannot be embedded in itself).
+
+| Path | After SHA-256 |
+| --- | --- |
+| apps/player/public/clinical-exhibits/batch2a-b01-pressure.png | 1f677fda73366997819c2781a5ee6f76ef725e97e286447ad8c402b1e4642200 |
+| apps/player/public/clinical-exhibits/batch2a-b03-pressure.png | d3a8b05ff54d17ec6734eca0eda4ac022f36b4f848126e5bbefd59ad51d22173 |
+| apps/player/public/clinical-exhibits/batch2a-r2-b04-pressure.png | 24cbb0f69c57ef337ef16e2295356a5d0ef48fbb12e7d8f404321e0897fd86a8 |
+| apps/player/public/clinical-exhibits/batch2a-r3-b04-pressure.png | 156a3f949b7f1a523c7cd3ef246de38d9b952af81181042af67a376b6ed14e69 |
+| apps/player/public/clinical-exhibits/batch2b-r2-b24-breast-map.png | 89472850c2b4ff2e03a0fdc173cc0f5920b06dc04fb7f0162d22c192db701075 |
+| apps/player/public/clinical-exhibits/question-new-n1-r2-groin.png | 59d561a9ad1606fe19660b34109b436a2460c217e2359402f9fd7089fa97f350 |
+| apps/player/public/clinical-exhibits/question-new-n1-r2-meckel.png | 4f99c946a90ee3df17b0c2b72fed32f6fc2e7a04c0fbabecb381622df244a463 |
+| apps/player/public/clinical-exhibits/question-new-n1-r2-thorax.png | 9997ace5a06962033fda29a9de1a8bebb0eed97aa6543308aa2f28a18d05b18e |
+| apps/player/public/clinical-exhibits/question-new-n1-r3-venous-flow.png | 4605605403f8c72243df7b36f44402ec197ca13862b0d2fcf824df2731955f73 |
+| apps/player/public/clinical-exhibits/question-new-n2-r2-coverage.png | 4f4b00e67a35215488fb3aff72a45668e3a9643bf2312ae2b3436ab7cce109cd |
+| apps/player/public/clinical-exhibits/question-new-n2-r2-ducts.png | da479447fd1805d506127a2c37969382438d102f3203e359a6b0b4ad3735eaf0 |
+| apps/player/public/clinical-exhibits/question-new-n2-r2-vessels.png | 1b8ebcec84c9aa1b4fb807c74abb976cbaeb276394b3326eff41a2cb9a39ef4d |
+| apps/player/public/clinical-exhibits/question-new-n2-r3-pressure.png | 0ff1af1eaec1319d0e9dded975350899e1bd0cbce972632fbc16b2658c6b11f6 |
+| apps/player/src/mobile/MobileChart.tsx | aae5c053a3039980ddf8c437feebfa7ecf969651479db9d572007c5565125493 |
+| apps/player/src/questionShipSaveCompatibility.test.ts | ef91e35c062eea64057ca790b903fd1b51032a65c7303293478795823b3b590e |
+| apps/player/src/session/breadButterPresentation.test.ts | 670e931b221aa603d154d9634916775ff0620c4d2aebf47ab92fbba662526e90 |
+| apps/player/src/session/cloud/separateCampaign.test.ts | 5c4787932548881460442e4d91a2e97426e5ee0995b17730cbe5b5f98194dfb4 |
+| apps/player/src/session/flagFreeze.test.tsx | 30b48991783884f74727cb0d031acb244b8b13fae290ef352edfe4ec786103dd |
+| apps/player/src/session/levelFiveLaunch.test.tsx | 84d235214ea219565e638121ddd0789a240a296be07365802a40e6c33c72853d |
+| apps/player/src/ui/ChartPanel.tsx | 4f5d99d593166eedc2277c77cca4161e02ca1697144cf8874c847bd08c886d17 |
+| apps/player/src/ui/ClinicalImageExhibit.test.tsx | 275f4d9bf0741383dc6bce52631952312c7fbca092dd80574a214778d849daca |
+| apps/player/src/ui/ClinicalImageExhibit.tsx | c403e359e3037738d812aa10adb5dbc221aca8ba68a608aceb98023dbbc26768 |
+| apps/player/src/ui/questionBankBatch2aRound3Exhibit.test.tsx | e649195ccf612467ca93796c0b5349559984c3e7ab36a7f5e000747119c296a0 |
+| docs/clinical/question-authoring-standard.md | c45acfe30886d82d91d7392a3b591334ac697a9f4c2991fa0e124acd8824fa4c |
+| docs/execplans/gs028-stats-ethics-overhaul-20261007.md | Recorded after append in final-file-inventory.json |
+| docs/execplans/question-bank-batch2b-acceptance-20261105.md | dba882c4efb8a8a89fa92fe8e36b6cd0f44a239a295b36eaeccef3235ce1aaee |
+| docs/execplans/question-bank-program-20261104.md | 3bbadc5e77c66e471588a467fa5a3a764049119df53c417d53dec3afd4c6eda0 |
+| docs/execplans/question-flags-20261104.md | 3e0cc742af14bec53ac31da5b3f5cf6f2cd4b3951988025605a278e66e90808a |
+| docs/execplans/question-flags2-20261105.md | c7aef253e1e2929b40bc274ecaaf2af9c943c990d2820bbcd930de540f03877b |
+| docs/execplans/question-flags2-round2-20261105.md | 19d00feb56d7437783624551ada93e5d25188535252e15c40edf04ea2d8d84b3 |
+| docs/execplans/question-new-content-20261104.md | 5d1c38ecec05bd0af1f7b1eacab8f18ae603120f08987ec6c3b45080fcf14618 |
+| docs/execplans/question-new-content-n2-20261104.md | ce54ee0f07dfad0e9acde394f17b0a532d075b3f26a35a88cb9fb3fce7500065 |
+| docs/execplans/question-new-n1-round2-20261104.md | e5bb2ad5d84ae19a86695cb0ef4abbea72633eefa874cd43004345ac3d016260 |
+| docs/execplans/question-new-n1-round3-20261104.md | 3ca518b308b61666d935b4ea92ae8965cc333e7074b42c8a886989fc47735822 |
+| docs/execplans/question-new-n2-round2-20261104.md | 3660a0b00ec3ebec24ce49253de1bec66550f6454e14281218d11eafc251c267 |
+| docs/execplans/question-new-n2-round3-ship-gate-20261104.md | 06bdc723c3a05525c46f45435394245f11cd8909453d3946cfbf9f42b4cad1ad |
+| docs/execplans/question-new-n3-20261105.md | 5ce0a73b7c42c99ba9a1d49127d2f6fa627a4c6ed267867bcea9d3be59e1b749 |
+| docs/execplans/question-new-n3-round2-20261105.md | 71333cd2e0a04e2f462829998e08566dcf7a862f17c2e668bf3fdedc50cf224f |
+| docs/execplans/question-release-rebind17-20261105.md | 0a1e21ffb9c40171de4376160551f4ca981cfccef32d2d422df176740fbac41d |
+| docs/execplans/question-ship-gate-narrowing-20261105.md | ab3358c1f64ef0a4e4bef6fbf13aaed835cae3459d1684aad520cbad120580aa |
+| docs/execplans/question-wait-snapshots-20261105.md | fe9b8d0a73d878107e51b049fabbb64f2bb5e7fb9f1729a088d6bbf66779abc2 |
+| docs/research/question-bank-batch2a-20261104.json | 831efc2e5047d78b006872d9f473ae351783afa9792e29e30c50bb40b39d7214 |
+| docs/research/question-bank-batch2a-cue-audit-20261104.md | 04a5103582878651955d99ff72be206578d3a94f7d3c327835b6f9bcf545c561 |
+| docs/research/question-bank-batch2a-handoff-20261104.md | 8482d8101d3785ee58619af743ee89a463c7fb367afbe2d596a3e3c90b912a07 |
+| docs/research/question-bank-batch2a-manager-decision-20261104.md | 0caaaab94f5d5aa84c3ea3304eb265c6103e7d80a081c54e3732d7c7dced02c7 |
+| docs/research/question-bank-batch2a-review-20261104.json | a8ed134bb4f36b91251e1c6425cd52ba8fd8e609207a6a5220cb672955095c26 |
+| docs/research/question-bank-batch2a-review2-20261104.json | 6657f97a95fddfdd17aa6db4e3b2da5aabd2f8550ff096223e51b3635127bd3d |
+| docs/research/question-bank-batch2a-review3-20261104.json | 6ff133d6755a66d76c0056a6d38790e6a781657c785402282fc15e9d3bf1b6a3 |
+| docs/research/question-bank-batch2a-round2-20261104.json | 831efc2e5047d78b006872d9f473ae351783afa9792e29e30c50bb40b39d7214 |
+| docs/research/question-bank-batch2a-round2-cue-audit-20261104.md | 5c738a4a3c166b8370dd82e6fb19661042f63feae29040bee3ef672e2c86b232 |
+| docs/research/question-bank-batch2a-round2-handoff-20261104.md | 4dc69506af69c62ef8f2b7b6ea0b650597c205d0f2cfbd7e4fd88536ee9cea8c |
+| docs/research/question-bank-batch2a-round3-20261104.json | b639e9406fd8f12728c560c538cb31ddfffb5dadf32ea96b62f2a315d85f4bb4 |
+| docs/research/question-bank-batch2a-round3-cue-audit-20261104.md | 651592e1b7406db216210a027f6dc3ea9d7efbdcd6164481e4b0b3ba4a445c53 |
+| docs/research/question-bank-batch2a-round3-handoff-20261104.md | 2d01a6df98ce39da510e5206190782b6648b6d6ff6a9b1dd441bbd373998ebff |
+| docs/research/question-bank-batch2b-20261104.json | 1a92c8329e96ee56e463df927f8afc3491c529c0e80acd7680f80270d19dbdfd |
+| docs/research/question-bank-batch2b-composed-preview-20261105.json | 8be13a638700845b745c47c561e366fa960e741241b02f9a0f36cc6e8d0496f4 |
+| docs/research/question-bank-batch2b-cue-audit-20261104.md | b365b57fdd5030845d57ff3a48e180544a0bc393562deab30dba29867bbc4e50 |
+| docs/research/question-bank-batch2b-deferrals-20261104.json | a9cc0aa591b6092957ab59069c7de7d7d47b4a783934148dcf21d3d14f4a83ad |
+| docs/research/question-bank-batch2b-handoff-20261104.md | 28bce1c61fac7e2e9896fcfa99545f63b89d005125cc32bd06a4e78b2d3b83b2 |
+| docs/research/question-bank-batch2b-manager-decision-20261105.md | 23988a380e9e4d1ca98466f975a3768c7724eb075e6430528f7904f710076951 |
+| docs/research/question-bank-batch2b-proposal-20261104.md | a3c4bfd02cf754b76026904f284d33505df964a826a3b5c3f05128938c9e2d28 |
+| docs/research/question-bank-batch2b-review-20261104.json | ecdd8f84da56362bf9f644c8baec95ca90b00b560b27b00cd10df76fcd5ae76a |
+| docs/research/question-bank-batch2b-review2-20261104.json | 80f5622d0d646d912243569003af5f734c02d1468a19d0a74656ab5122ad741f |
+| docs/research/question-bank-batch2b-round2-20261104.json | d9a20a69d858fe8f1eb8e2ea2a170cd27ea2055f3cc54fdaf610bbe9bfdade88 |
+| docs/research/question-bank-batch2b-round2-cue-audit-20261104.md | c811e76c2c0dee01899778241ddd7e23af1340751e491f466d80fa24e3201653 |
+| docs/research/question-bank-batch2b-round2-handoff-20261104.md | 06f8cb692ba6e4464b08ecd24eea1dd36f48d42ac6ee4e8dca56ca062ab7c3c5 |
+| docs/research/question-bank-batch2c-proposal-20261104.md | d9d33552efee521bef528d744ac291a140810e13c49d6659ce6ad233fb7e63e5 |
+| docs/research/question-bank-program-queue-20261104.json | ab2312257803e784b0d7ad5b7f457f4c442899fb1a008c381397298d8d1b100a |
+| docs/research/question-bank-retire-merge-proposals-20261104.md | 237d81a5eaaeba27a99dac5691d654c937a695f353da6f9783da6340caeff6ee |
+| docs/research/question-coverage-gaps-20261104.json | 855c495de6472d2b6aaca12c99a33bfdb75e47ca1352f9d7b7a0fbe7b4745861 |
+| docs/research/question-coverage-gaps-20261104.md | a0aceb5996c0cf60b8f2322f91a523b325ffa9809b8fec57a1674b746fed76ad |
+| docs/research/question-flags-adversarial-review-20261104.json | a8bc0365f419ba8e01a65f36f42f9e7484438b08312688ab6e6191e1a3b0b985 |
+| docs/research/question-flags-adversarial-review2-20261104.json | ecca16ddd5bf4fec2f8525e9212ae30e7ed31661073d4f8f0c2e9ee4a4002cf1 |
+| docs/research/question-flags-adversarial-review3-20261104.json | 41157331a9dcf0f8fee2eb4320dc00cda8922f1ceabad9b95d49bb6682b235bf |
+| docs/research/question-flags-cue-audit-20261104.md | ce0fae8d43b10c062ed8441e9e9ce6dcb60c4ba0c775ad598e0768c4226d5672 |
+| docs/research/question-flags-handoff-20261104.md | 3a33fccb498f62bed67f9bf8ecb01f9f9d9d0741de87ba5287206e2fc6dc1f01 |
+| docs/research/question-flags-manager-decision-20261104.md | cd19d5eaeef071552733d6d42fc8957da27360e79d162090889ac2a5c6b1ac8b |
+| docs/research/question-flags-review-20261104.json | a60728c3c05c7ba80c7e4ed7edba92397e55ab0aa7ee715c6c24c8f9e22ba04b |
+| docs/research/question-flags-round2-cue-audit-20261104.md | 7e8e828231583a9d882362918f6977f8b8c8839b4a4b0c1018cdc0a1b5699cad |
+| docs/research/question-flags-round2-handoff-20261104.md | f4c4420871c149af168d5e31d53c0572a2773057983ff8a496481cf8b29c4533 |
+| docs/research/question-flags-round2-review-20261104.json | 3874f7e28a884eadee77f38ecf1fd6b7903a7fdd9c1f8112bcd7299b58748c9b |
+| docs/research/question-flags-round3-cue-audit-20261104.md | 78d597ef1e6df110bfe545228002667d60d3779643a5ac207c0d8229ec34da1b |
+| docs/research/question-flags-round3-handoff-20261104.md | 748003daa299b20434f2255eb1dfadfad60141c4b69863ae0dda7cec755b45e7 |
+| docs/research/question-flags-round3-review-20261104.json | d950828f35018c2eddaaf36f11db8208e990566623f59640ee906386cffb4cae |
+| docs/research/question-flags2-20261105.json | e040a64437a1eeb07e9e13e71be08280c881588354912c476df742ae4c2ae37f |
+| docs/research/question-flags2-handoff-20261105.md | d51f72bca6804fa2a8322568b8651d3312e5a4242c0bd1b8eed39077c16a09bb |
+| docs/research/question-flags2-manager-decision-20261105.md | a6cb9ecbd7683100f288939592202528e60a446f1037714bfed574fbb14a3a0d |
+| docs/research/question-flags2-review-20261105.json | 4008bd70971f98af79f2e4d619dff1a1c7111131415f8924e374bbda43829063 |
+| docs/research/question-flags2-round2-20261105.json | a065754c929bb7d31ce9565aa623b74324c0f7d6aac1fa7757b410c40c39c207 |
+| docs/research/question-flags2-round2-handoff-20261105.md | 8419e467eab0b30a6febf6337ed5dcfb539a3e4cc07e71779dfdf98f06953191 |
+| docs/research/question-new-manager-decision-20261105.md | 975ea850301f450f469defeac6995eca005ce0a89d5347a0dc32ce644e900bd3 |
+| docs/research/question-new-n1-20261104.json | 36271bbd06916bfa0365e90732b68c4790c4893650a9762f5e17e1b1f73274e9 |
+| docs/research/question-new-n1-lint-dispositions-20261104.json | cf6beac6ceec4471f51ffc853ec577db8a6c554816b6f7151e93b5189b699adc |
+| docs/research/question-new-n1-review-20261104.json | 44ccdaada42622a8460efc82b95acc7a84af52e00ad25e68820abcd06c0f6d42 |
+| docs/research/question-new-n1-review2-20261104.json | 6f4aaf8ebcb73e6f5f34089ec6eb2babf90cc7bc57a4c827ffec4530422e22a2 |
+| docs/research/question-new-n1-review3-20261104.json | 5da9be339bd0c8bd482151fa94ed276fa086b75640ecb4d610b06d783abd722b |
+| docs/research/question-new-n1-round2-20261104.json | fb0e88addc0abfc10b6f2745f5105124dc2b13a82f23f1e0969aab867f441eb6 |
+| docs/research/question-new-n1-round2-20261104.md | 033dfe0b89f79fe28bf9972b330605ee450c94ec2b8aebf302c6d50f2bbb5506 |
+| docs/research/question-new-n1-round2-self-check-20261104.json | 4a16a21c5f1cf300d592391021798a86d6cade510ff0f3bf08ba17359104aa67 |
+| docs/research/question-new-n1-round3-20261104.json | 5eb87126611c4caf9790e15f705cf9ca2de13d69cb6b1e87fbe788e6b4175f6a |
+| docs/research/question-new-n1-round3-20261104.md | bd58a948cd478da3c792efe7ef1c09cdf035a0ee92de0d576ed021fb135d2346 |
+| docs/research/question-new-n1-round3-calibration-20261104.md | b240329f6d13fa06560b60a025f182661155206989c454382e93031e14a44350 |
+| docs/research/question-new-n1-round3-merge-proposals-20261104.md | 748e7ce4fb11400b919f4872488d4cd09e529e000323c9b51efc588c6770c59b |
+| docs/research/question-new-n1-round3-self-check-20261104.json | b53f9de5281237ee72ceacd27930f309c86b565bf4ff07f0cf06f458bd8dafea |
+| docs/research/question-new-n2-20261104.json | 92cf31061441a5e3611f3c7d50d4fc7fdd880eedc32318a8fd33ab8bcb139461 |
+| docs/research/question-new-n2-20261104.md | d33b4873996d7696ed0534fb1e29ab024b7af9b9712b08694b1eeb13803bbe7d |
+| docs/research/question-new-n2-coverage-20261104.json | e66bef5c9c8b99fa34adde0220deb3e1017050ab6ff1af84f2255900e9d18a03 |
+| docs/research/question-new-n2-review-20261104.json | 2fe2d1616e216601e0bf5b071115871da50db6bf684e23ce0b65dd754b4bc67f |
+| docs/research/question-new-n2-review2-20261104.json | 8071f59227a3deae6185238d7a3080d73803f0ac1d6a4e6e5ed51ccd20cd7d24 |
+| docs/research/question-new-n2-review3-20261104.json | b21f71f1c875ac855a6f17843929f0b81a96dfab5d01fec1fab44306aae9a4cc |
+| docs/research/question-new-n2-round2-20261104.json | e9540813f30c6fb8169a7f25b765a4a0993ddb0463a2003660bd631ca19fb446 |
+| docs/research/question-new-n2-round2-20261104.md | 121a63b51e8adaa0e1242f97bb14be89d90a7f35d2a30beb36cbcb2331bd2542 |
+| docs/research/question-new-n2-round2-calibration-20261104.md | 47b4eea59e589c169c08e3bcb63207e6cce2083535d3220fd54b5c4580bb6d96 |
+| docs/research/question-new-n2-round2-self-check-20261104.json | 9abccf9092645512ad83b58643fdb1f7889ac357ce0fbb57861d546c6d9298c5 |
+| docs/research/question-new-n2-round3-20261104.json | b5f83447c60ce610b72289f605934ecd3f58fe461c50083c2af94724c56b5495 |
+| docs/research/question-new-n2-round3-20261104.md | 85d6344df137866081cc4c99f5ced6646a0fc3f239b9ea4e2c72830f9382daa6 |
+| docs/research/question-new-n2-round3-self-check-20261104.json | a0533e2f37c9611d5a6b94c05b4ad4c658357b0a6e8c1a438a40381d179097c9 |
+| docs/research/question-new-n2-source-hold-disposition-20261105.json | 6cdb511060b994cf28369eec0d0259118e34bbb8e1fe0cc9f6ec7dbf52799b0a |
+| docs/research/question-new-n3-20261105.json | a7209ccf4b2f7e98b1fd48d278a45e70d85460e770977f9c2ccb368cca565350 |
+| docs/research/question-new-n3-handoff-20261105.md | 06d0bf027e6938c0e3196d7618c73530788ad08c87175b25430812ed7d087c09 |
+| docs/research/question-new-n3-review-20261105.json | 9726a784f228ab64101f5761de94184afdd7ea2aaae70af09d6eec4221274821 |
+| docs/research/question-new-n3-round2-calibration-20261105.md | 1b6c083b325698bb915b0985fd54bae99441a4ef14ceaa6bbf0630e98d7bc8da |
+| docs/research/question-new-n3-source-ledger-20261105.json | d78ba11fd05a5d4d239c37522ebcd02d1cb1a9e8ebe8fcd6fd1131a7b99420fd |
+| docs/research/question-new-n3-supply-20261105.json | df0dcc3a30abd1c2d4d162e5944c5ba5effa2e7115a02925dc06e88d0f22c6b2 |
+| docs/research/question-ship-gate-narrowing-20261105.md | 43bcdf5705eee5afc26f5e6682d82c1595a3538ac5f34fca553d9326c889e334 |
+| docs/research/question-ship-integration-20261104.md | 9c5f59a173f562ef1f7877800c91e27c2efe78a8a7ecd249d99dbbe5b73b9030 |
+| docs/research/question-ship-preview-20261104.json | 445637e568fde52083e1d54a195e2abcaf683178312b341e0d47a1b832405ead |
+| docs/research/sources-question-bank-batch2a-20261104.json | 7b98955681ae62159684061b5afe7e4aff283845820d46b8bde561c3e7d6df7c |
+| docs/research/sources-question-bank-batch2a-round2-20261104.json | fb03a0125c32c649099c6cff9b77e958e0d226f700e0c0c5237241b9e8f76d93 |
+| docs/research/sources-question-bank-batch2a-round3-20261104.json | 415ef74b021a87b71dfe06fddd6ab3387eb4a8739980012b6db884767cf530d5 |
+| docs/research/sources-question-bank-batch2b-20261104.json | 60b387fff76bae1a6f23c415af72986790bc14e0f119ac51491dea90028f0d4b |
+| docs/research/sources-question-bank-batch2b-round2-20261104.json | 1a5bca994cf27a3421faa2ca5827edc73cc98f6e9303099ad92c482f0863299f |
+| docs/research/sources-question-flags-20261104.json | fcf8c2fdc599b1b6a1302e5c280056e3ffbd2096385fdfb72613df5ed4016a78 |
+| docs/research/sources-question-flags-round2-20261104.json | 01e787cede6e8df8574ef3d1d87c4ac6ec3522136dedba6fa5eb4b07ca03fd3a |
+| docs/research/sources-question-flags-round3-20261104.json | 52a619a75b5c4747fbe7191309ef7ec3400296b00d16c7c0e88bfc0368164894 |
+| docs/research/sources-question-flags2-20261105.json | f6e0c8f75e58f917db9913699963d37b36147dd2235cdf5d4d256ff1485a42e7 |
+| docs/research/sources-question-flags2-round2-20261105.json | 2739b2261f09f615e0a829c0e3b6b612964b666e5a775e6e0d7849ac4b3e378e |
+| docs/research/sources-question-new-n1-20261104.json | b08fe868e33909f7ceffabcc554b13b583683ba4a4b70f43ae0f42d250f22e99 |
+| docs/research/sources-question-new-n1-round2-20261104.json | e08158364270cd6746506ac227d10d2d21e122871c4216a741d891b0ba42f9a6 |
+| docs/research/sources-question-new-n1-round3-20261104.json | d7415d885d814206579a44fe8ce38de9680964bedc65364e91ac4a6d4baec1ed |
+| docs/research/sources-question-new-n2-20261104.json | 6ee4edfb5db48a56282f5b68ea689207dbd0f86f28e44341812f7d20aa3f31dd |
+| docs/research/sources-question-new-n2-round2-20261104.json | 22227ef981b8fbfddfeb79153c4f3a4704ca946398f98644560f667e4b44665a |
+| docs/research/sources-question-new-n2-round3-20261104.json | 3813ace01ca1b7799a3b9f70fe84a37f99876acec73cc068cc182414fbf8bfc4 |
+| packages/clinical-content/src/answer-choice-timing.test.ts | e55ba41e2d7ad07a4652bd3005aa912e3aec4e317d969e423c8f461627874558 |
+| packages/clinical-content/src/answer-choice-timing.ts | 2391e3a6440890af5698d66f6a0cb56c34fae9848466e3cacc96c2ca28f8d7e1 |
+| packages/clinical-content/src/approved-data/breast-cyst-pathway.test.ts | 164be3a2c95696dc5e0bbc7fecbbb75e0b2dce5dfddd9e060504637bc4f09c87 |
+| packages/clinical-content/src/approved-data/controlled-enterotomy-mesh-selection.test.ts | 9a6b07035b9bc1fe06c305cb2210ce41d74dd61d950b06c971fbc2259f736e39 |
+| packages/clinical-content/src/approved-data/direct-inguinal-operative-anatomy.test.ts | 9b7831d6df8918d125c3b8252eae5e0a4c42b22db9e777a56cad37a2fe71f125 |
+| packages/clinical-content/src/approved-data/meckel-resection-extent.test.ts | 3c3cb46a7fad462ae4bc7a7766791d2b6c096129e8f573a5ac51bc126ae7da97 |
+| packages/clinical-content/src/approved-data/phyllodes-pathology-follow-up.test.ts | a73672d8a0f4788b15cbbdfa1a5333cb6b5c692e7985da214881752fd52542c0 |
+| packages/clinical-content/src/approved-data/postoperative-chylous-ascites.test.ts | 86b71d9425c9c6c559998950ebca91368ea1d817abbd4c95abc7c95418a6bb2f |
+| packages/clinical-content/src/approved-data/postoperative-ileus.test.ts | 3860f7bf8e6fd870d832355e0f6eaf5131ece3d106f8844c46124aba30cf0f34 |
+| packages/clinical-content/src/approved-data/right-thoracotomy-trauma-exposure.test.ts | 559ff5a02cc3dee926dc628d588ea7a1202e83810e852b91afb633c655f54713 |
+| packages/clinical-content/src/approved-data/severe-burn-early-enteral-nutrition.test.ts | e4ecd6338de84698cf45061b164f3bd99481887915a0f1316f9b8824b8fcccee |
+| packages/clinical-content/src/approved-data/suspicious-breast-imaging.test.ts | 1a9f25da3cda7255a0992e5176630c5bc49435dd13a2b077738d2e8a486eb3bf |
+| packages/clinical-content/src/approved-data/trauma-vka-emergency-reversal.test.ts | 9c5a8e313e1264548dfe74292bb29d79bb5fecebc8431cd953fb0351e718917b |
+| packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/ethics-clinical-pairings.test.ts | 5e18c1ead30d583357f5c6d67d63cc2399b7865203282e8764ee2c512d70c225 |
+| packages/clinical-content/src/index.ts | 41472b04a8d9e863a4e185b07b9224c1e5bc1235f587e94eddc55ef6c6daaeb3 |
+| packages/clinical-content/src/playable-patient-narrative.test.ts | fb91a0865112c65cff80412813b8e140a56ff1f6e226653e856a3a1b979c1400 |
+| packages/clinical-content/src/question-bank-batch2a-20261104-data.ts | e639ddfb34f817ec12ba760910951dcbc81a2464f3da1918470f8173e4849324 |
+| packages/clinical-content/src/question-bank-batch2a-20261104.test.ts | 32af03760e2c6cfe7b1dd8c7a21ed9481c0601025d601fd9322d0de25e03d181 |
+| packages/clinical-content/src/question-bank-batch2a-20261104.ts | 3bf51ef4423bd2a0b7e75c100bbcb06af615218e57f92786f09c3ada972940e1 |
+| packages/clinical-content/src/question-bank-batch2a-evidence-20261104.ts | 77e3695047de700a5f16bd3a92f7dc162dd79ef20a12c87657cd8ef44b17c74e |
+| packages/clinical-content/src/question-bank-batch2a-round2-20261104-data.ts | d0b1e76e6b52606a4f3e28ec0ad59253788952a8f3fb109fa0e50998c6cee65a |
+| packages/clinical-content/src/question-bank-batch2a-round2-20261104.test.ts | 57e609ca7fdf7b57b160dd8fe4cf58b08f41da9f491cc62dc6ca8614d8a7677e |
+| packages/clinical-content/src/question-bank-batch2a-round2-20261104.ts | 9a6af26f07cb6493c1406fc83b3405ea85caf1d75a2b6d6914f9fdf4d8344670 |
+| packages/clinical-content/src/question-bank-batch2a-round2-evidence-20261104.ts | 15871c6cbb641c74d604a460789adfbdf2b1d802c785c67d538d68d22d78f7e0 |
+| packages/clinical-content/src/question-bank-batch2a-round3-20261104-data.ts | 8256b20da8d5e6c9837ee4acb44d0880448a9449e9fa3294c4d97f5b1a9084c5 |
+| packages/clinical-content/src/question-bank-batch2a-round3-20261104.test.ts | 2335a5a634a978f75aac0ba18a2726a109903e6b680b5b261e6bd1344ff06c3b |
+| packages/clinical-content/src/question-bank-batch2a-round3-20261104.ts | a7a500ba47bcf19db241c639b87c31a5b4a689da3fd494950d5a534c01dee2d7 |
+| packages/clinical-content/src/question-bank-batch2a-round3-evidence-20261104.ts | b51caf2e739e5057d75a9caf21acbe2eafaba083fefbe7a7335a122221e03456 |
+| packages/clinical-content/src/question-bank-batch2b-20261104-data.ts | 5c03e84388207c06ba6e721741b7383cb78e460ab98da4ace4aef1a082795196 |
+| packages/clinical-content/src/question-bank-batch2b-20261104.test.ts | fb50cb20408cf0e3f7b7d4488285f5086ddfd763af4871530b83287e1890867e |
+| packages/clinical-content/src/question-bank-batch2b-20261104.ts | 3d768de874bc821c1aa312d59c6f92b03717dec3f59555e1b61047d39733049d |
+| packages/clinical-content/src/question-bank-batch2b-acceptance-20261105.test.ts | 113771968cfd81eb317369e3d4bc14ea603b2d7e8e046ed02921907ca14ad336 |
+| packages/clinical-content/src/question-bank-batch2b-evidence-20261104.ts | 89cee9967db77952031f887fbf5cdc00165f0821f7d14a824f70aefa92ba365f |
+| packages/clinical-content/src/question-bank-batch2b-round2-20261104-data.ts | 32bad25a7d35431e7e8fb6c2f3868905097007c4e3512f2bb8b61430af4834df |
+| packages/clinical-content/src/question-bank-batch2b-round2-20261104.test.ts | c975a33e84885d939b01aad1d3f1bcc01adc086ba6679b0f752e4251d0895046 |
+| packages/clinical-content/src/question-bank-batch2b-round2-20261104.ts | 358051fb4ad7441513e379f835cc6afd9d69a59aa2729a93fad594db55ea4dfe |
+| packages/clinical-content/src/question-bank-batch2b-round2-evidence-20261104.ts | 31059c6bc53bce26f4d30fd2be26c35f37290a1599649644a112eceff21bfcb7 |
+| packages/clinical-content/src/question-flags-20261104-data.ts | 0fa520db3a9c3bdedc3bbfc136e8ec1d23f2f259191712a848a05d7344dfdc78 |
+| packages/clinical-content/src/question-flags-20261104.test.ts | 5c92ba99d2a8f4fa36be56a75f0ff9c9e7b62f31c974a7963af52f5cedd43a4d |
+| packages/clinical-content/src/question-flags-20261104.ts | 9131f7f1be7b2c2c20ffc1d7d72634ff69f1511620c66fe2dbfbf74d8fac556e |
+| packages/clinical-content/src/question-flags-round2-20261104-data.ts | 8b845ae0b85a328c5a5b384a7be17e885423b8372a0ddaa31a76c5b1e08deac9 |
+| packages/clinical-content/src/question-flags-round2-20261104.test.ts | a42c6113aea0c939efce63763ba79ed6cdb4e1fef9a83e71585c472ce5345a9b |
+| packages/clinical-content/src/question-flags-round2-20261104.ts | 8932e60db6762df66810ba0992766d2bc21ce9ffdc1bc0c0c8cc7c3e0322257d |
+| packages/clinical-content/src/question-flags-round2-evidence-20261104.ts | 592d67134c988dd8aff00cb3b24591605bd6afd71e1d342f3398125adcb10f80 |
+| packages/clinical-content/src/question-flags-round3-20261104-data.ts | b47081a164cdde7e0b2a9e7df35b32dfd658bb0772a75544ac2c1862cf6e9da2 |
+| packages/clinical-content/src/question-flags-round3-20261104.test.ts | 060e0185326634a20ebf3c8b73add650dc9e5b997c52d92e27211332e315571e |
+| packages/clinical-content/src/question-flags-round3-20261104.ts | d32476015827e917e831564feafb40ef6ae60e85ea8d6c9fb643cf61707411e5 |
+| packages/clinical-content/src/question-flags-round3-evidence-20261104.ts | 1c27f65bcc03a29d7769350230a14dc9b96bb04c95d8472ef19d971b93608889 |
+| packages/clinical-content/src/question-flags2-20261105-data.ts | 0f493b174cdf8e907f39b4d837af374ded33830db1d8f0639f9526c5bd85a30f |
+| packages/clinical-content/src/question-flags2-20261105.test.ts | 0f4cf7fd88191e81c974757479d20bda4a910e33d26a7fdf7fbcdee83da246ef |
+| packages/clinical-content/src/question-flags2-20261105.ts | 87aff1e97d9f7700d96566e3783340d74dd16d2f1e1ce777206c7a50b3df72c9 |
+| packages/clinical-content/src/question-flags2-accepted-20261105.ts | 3316aba91ee34df1000e73bf177c593474ac1b029454e1c47246858019b08bc8 |
+| packages/clinical-content/src/question-flags2-evidence-20261105.ts | 3a7834e845c0dbcabfc10e6f8ab34b0cbf9125eb63e51dd01041fd2cb0138fc7 |
+| packages/clinical-content/src/question-flags2-retained-input-20261105.ts | 5767a31ec81de754b26d983d9e94c827eff9a2d7d90e1132b56d46ea4ab9086d |
+| packages/clinical-content/src/question-flags2-round2-20261105-data.ts | 55a01666c87be8cb513feaeb9913257ce6eab17e9624ab16543b536d8f8eb85a |
+| packages/clinical-content/src/question-flags2-round2-20261105.test.ts | 12c61884c91d7cc32a3e41d4b81f4d081c91691058b2edbb47c81f3046294170 |
+| packages/clinical-content/src/question-flags2-round2-20261105.ts | a1c50dd25e3bbdd368bbd1d3a3563fb68457a5a6f5f4a053c1f536c65fe81324 |
+| packages/clinical-content/src/question-flags2-round2-evidence-20261105.ts | ea217ce54f8639d9de211c37e6b867f351bffd54634e8fb1a591775ee55b7ef3 |
+| packages/clinical-content/src/question-flags2-round2-retained-input-20261105.ts | c5876291ebb8d08d7adf2c21d86dd438ada212a8bc9eb6e58e9572574a491bf9 |
+| packages/clinical-content/src/question-new-n1-20261104.test.ts | 87ee0fdd865d94d2954ca86732d928629a7c18e1beaa8eca32b39a1be1347632 |
+| packages/clinical-content/src/question-new-n1-20261104.ts | 0d917b6501740fabdad2360dc4fdc0c7e1d142ffad2c0a38769de83382c60303 |
+| packages/clinical-content/src/question-new-n1-abdominal.ts | 9893cd21c4e73a1ec19db580c31bc93a4df4d26274400462b743c727e23ba6f6 |
+| packages/clinical-content/src/question-new-n1-breast.ts | f3e8f681d334e6918b9f614b070bc2a2691242f0bd6a78e30b59fa4d298a6ba0 |
+| packages/clinical-content/src/question-new-n1-evidence-20261104.ts | b7dd73214680af807c9670259888b42810decbebb30fcebd9069e13fa7736db2 |
+| packages/clinical-content/src/question-new-n1-perioperative.ts | a2c5eff22f1ce7b7d439e9ed2c904dec7f797b70235794b066ff39afbeff408c |
+| packages/clinical-content/src/question-new-n1-round2-20261104.test.ts | dc5ab9a31de8e7d0f8097f928cf983fd4585595ec220b81ee64d3de8f252db4b |
+| packages/clinical-content/src/question-new-n1-round2-20261104.ts | 14af52c517d802fd02c10b51e7d3a93e6d4febf40272fb3d2f154d2bc21fe093 |
+| packages/clinical-content/src/question-new-n1-round2-abdominal.ts | 2d9c21cf08df1fba2f354594ae10c09ae17976aa741d3c9e850579d02266b397 |
+| packages/clinical-content/src/question-new-n1-round2-breast.ts | 478349e42944c923d6cf6695e7b711b1e84def1dce8fd8bc9ad88da75c34e4b4 |
+| packages/clinical-content/src/question-new-n1-round2-evidence-20261104.ts | 355e3c05e11fed88bc14b3be7498c7b43ce7504b333bf09b23cf8c3db480b957 |
+| packages/clinical-content/src/question-new-n1-round2-perioperative.ts | ee1bc6600bc18f20e5df161b55d22de8d866cd09ed8553cb989e6726a4376aba |
+| packages/clinical-content/src/question-new-n1-round2-types.ts | b5abfdb02a2b95d35963938bdeb34a370ac11a0b9f67169cfb655e67a0d9085e |
+| packages/clinical-content/src/question-new-n1-round3-20261104.test.ts | acb374ca60bb3983b8ae3afe455fdc7e9e059ae7ccfa1b5402192a9b6a1259fe |
+| packages/clinical-content/src/question-new-n1-round3-20261104.ts | f7a6cba0ecd17c1e0d437f73268a65bdd1d6d2c7e3c058e510e4e02fd37d44d5 |
+| packages/clinical-content/src/question-new-n1-round3-abdominal.ts | eac5d8a1d2dc008dce776e202379bdbfde5e9757a317a848080f905909ce02ee |
+| packages/clinical-content/src/question-new-n1-round3-breast.ts | c62d501613578b7a5f944972244b2a80343b41494c7e9fceb07b4634abbf1c19 |
+| packages/clinical-content/src/question-new-n1-round3-evidence-20261104.ts | e4d55a8e8295a4f3e542e56338709909ce7ffbae6a5fe190ed0261d4e84398d7 |
+| packages/clinical-content/src/question-new-n1-round3-perioperative.ts | f11370e24e1b586f5c9049a18996ef01e361ee04ab19123e3132142e770cb823 |
+| packages/clinical-content/src/question-new-n1-round3-types.ts | a7e9b890868821b75d56eea23caedfd7bff23a4bd9dac27c403b19f37e60f00a |
+| packages/clinical-content/src/question-new-n1-types.ts | 83fd93f98f00b1f5e0ef39d8fafe8cdc619f67d847ee50ee20570d23366e1f05 |
+| packages/clinical-content/src/question-new-n2-20261104.test.ts | 9ca4700bbc5c1fa9ae2dc3caedd68b5f00907085269d3b19864e2e62453d7a3a |
+| packages/clinical-content/src/question-new-n2-20261104.ts | ef0f0ecadb8b46bbfdad31436d4f324d2221f064eb0f8c2545e5bfe33aec76bc |
+| packages/clinical-content/src/question-new-n2-abdominal.ts | 39a8af30fb38725c7d765b9a95d1ec232e6dcb5a6379aa819b2db20943aed1b2 |
+| packages/clinical-content/src/question-new-n2-evidence-20261104.ts | 3d0a8c7c00467d21b43f2659d787f0e09c4758122de2531f8dc679ffbc80ed9f |
+| packages/clinical-content/src/question-new-n2-perioperative.ts | d5c95a43580182d1ffe52c289ca66d1fbc37b897103ee83a2549eabfe01a7ba1 |
+| packages/clinical-content/src/question-new-n2-research.ts | 8188a4e7e0ec780dc7c781d6c6f8761a286b83ef439e07b985f28f6ca8776e06 |
+| packages/clinical-content/src/question-new-n2-round2-20261104.test.ts | 581ad4c53ea9c77b241ab76e74e73dbef95c7a47a0b957174da7ca0aa42b82bd |
+| packages/clinical-content/src/question-new-n2-round2-20261104.ts | 90b905c378e0fa31a4f9bf003c62b0e7e5f820d069f417b61f4e5ca5c0a2493c |
+| packages/clinical-content/src/question-new-n2-round2-abdominal.ts | e5a99e7d09a5f5bf2891143e690109e7419e1bcd9cc7e3b4cc1bd189db00bb9f |
+| packages/clinical-content/src/question-new-n2-round2-evidence-20261104.ts | 56b181809c4ca409ce279c2906881348a0fee7aef14e5f942327c0a63e918f19 |
+| packages/clinical-content/src/question-new-n2-round2-perioperative.ts | cc1e7ccced5414bc13614cdc0c41258cb904fbc9b1364a3df056269ec3b2c915 |
+| packages/clinical-content/src/question-new-n2-round2-research.ts | 98feecb0b210f6f88a61aec99acf7a8bc05152feab94d5789a9d096b2db69276 |
+| packages/clinical-content/src/question-new-n2-round2-specialty.ts | ac1c6a0c06a39c091c2eaa2f8bcac3fe132e67d7e2d2f7cdb87a1c6125a95561 |
+| packages/clinical-content/src/question-new-n2-round2-types.ts | 9d842c2d2ab3326a8382cb78a2efad4aad81836702538e0f3b2533f0c0ac0482 |
+| packages/clinical-content/src/question-new-n2-round3-20261104.test.ts | 7f45735dd4a68ed3a3df3781fd62830d2a58dd1167829f84b1255c66d30239be |
+| packages/clinical-content/src/question-new-n2-round3-20261104.ts | 8c3e9b2f5d998b31d97414051911513ff4c5f1ed1581b1032210a37c5bf8bf25 |
+| packages/clinical-content/src/question-new-n2-round3-abdominal.ts | 831077133c111a1d11fd0c75890fbb1a8f09bfafb89451275e6b30f123b034e5 |
+| packages/clinical-content/src/question-new-n2-round3-evidence-20261104.ts | bd9ccf32cd76a161f6faaf67c8ecef5b6efb3ee2a38d433472f77db381a844d8 |
+| packages/clinical-content/src/question-new-n2-round3-nutrition.ts | 340bc10a905bf1679051e841513a64e55e85779e068132075c463f80231ee00f |
+| packages/clinical-content/src/question-new-n2-round3-perioperative.ts | 5e45d1255698c29974f242516011e927e2385e8970062ae85eb0aafdee8785da |
+| packages/clinical-content/src/question-new-n2-round3-research.ts | 8a8c0d0e1433a0a6c8ab5dfbfd625fd420cc07e7b4e4994b93a5356aeffce9c8 |
+| packages/clinical-content/src/question-new-n2-round3-specialty.ts | 4a540380444cb6b5cc23cbb00604ad752fc9217ac54f7eb3b1252cc6989d98a3 |
+| packages/clinical-content/src/question-new-n2-round3-types.ts | 5f50a74fb0b7cc9dc3440d511fd37b09c4b7e7015a0717e0e7331304e61b9136 |
+| packages/clinical-content/src/question-new-n2-specialty.ts | 0e3bdaade21f0cbbaa3a0021301dc76840720f8817170109590c70b1b694b7e7 |
+| packages/clinical-content/src/question-new-n2-types.ts | 5054346f4ea34a3dbd636c4f10f86144320c19759f73d714be9b13d3adc02717 |
+| packages/clinical-content/src/question-new-n3-20261105.test.ts | 71aacbc3c8644487afc23141d4729b976176931132a0be8beaa0ade0eafbd56c |
+| packages/clinical-content/src/question-new-n3-20261105.ts | b1558d6ad01cc14b99f53e498ed48e355d222aa4e04d51c9589fed03112f923a |
+| packages/clinical-content/src/question-new-n3-evidence-20261105.ts | 0874918aeb85b234190c55c0792ea18a47cef6c541f11c1b44181327046a8c7c |
+| packages/clinical-content/src/question-new-n3-level3.ts | d10b8a724aaba520a73c63b4f36583723c5d6f066ca6ec887a835a89233bea13 |
+| packages/clinical-content/src/question-new-n3-level4.ts | 24ce8a42cf6d08b6d850bc7e74d87bde17e7a87af071bcbe0f634b671cbbce25 |
+| packages/clinical-content/src/question-new-n3-types.ts | 478c5509169139a76033611f8da0ffaddb4bc11fe85f55902fd96fbb7fae9606 |
+| packages/clinical-content/src/question-quality-adversarial-r7.test.ts | efff6f1cd747bf67268dd1dd3bc11598d1a41fd1e2f805d743e034137796034f |
+| packages/clinical-content/src/question-ship-manifest-validation.ts | aa6d130a159f98cc98037749911f33b554bcc2fbd90c6467608754b09e3d5517 |
+| packages/clinical-content/src/question-ship-manifest.test.ts | 75b53e39ac9fc7af8d101aa995a89f8bc59c30d515cfdd50b6b12000c13251cc |
+| packages/clinical-content/src/question-ship-manifest.ts | e29038894c101d0618970fb10c4367919e24a773725a8dd16ee781f4b82e7a3f |
+| packages/clinical-content/src/question-ship-projection.ts | 099b803a240828b1a432e2e13d8bc6ff15fad2b61a38e4ef026962b98da8a033 |
+| packages/clinical-content/src/schema.ts | c4d1640ba549c49b6a3dc7bfdf9155504611dd04c756865bc9f5fa0fd40015c7 |
+| packages/clinical-content/src/synthetic-content.ts | 0dcec62fa1a9d7ef42b4400595d0e8d0d73b253d40817fda4b55ea3ee0e4c633 |
+| packages/game-domain/src/question-bank-batch2a-round3-test-orders.ts | 5e1c4130301870329736b53142d8b1d1157189ba6e0b778a513b96c53f5bce41 |
+| packages/game-domain/src/question-bank-batch2b-round2-test-orders.ts | da5b27859624e7087e2092ad6a24b00d8c019ea39c1d2c5434dbf1727e716246 |
+| packages/game-domain/src/question-bank-batch2b-test-orders.ts | 79f895d1246fced9525bb605ec1b08e6daa87f61dfec640393e969d5f51fd4e3 |
+| packages/game-domain/src/question-new-n1-round2-test-orders.ts | e03f6367c0b8cfaea09e54003a724fb6282e5a93357d5ea7eea908301d6712b8 |
+| packages/game-domain/src/question-new-n1-round3-test-orders.ts | 7681e1db5a8646b3ce95fe6f0ef0d65c65a9b282500144e7cce4ba38f3a0c1e7 |
+| packages/game-domain/src/question-new-n1-test-orders.ts | d18ad972a0514106b34b552f250254998c5f67745eeb68f6089128d98cd8573c |
+| packages/game-domain/src/question-new-n2-round2-test-orders.ts | 6fb29a86a30bd1777921910e0fb3707dc627a7af2f00e4b454a68c10c0b9e1e6 |
+| packages/game-domain/src/question-new-n2-round3-test-orders.ts | deeacf6b255512811af0fe650275d2576f93d8aaf2189b0adc9f0fd052e9505a |
+| packages/game-domain/src/question-new-n2-test-orders.ts | 04fc0792328f9eaa3bfe75e7ec4d1a25e71bb340ebd8349276a28755332ed061 |
+| packages/game-domain/src/question-new-n3-test-orders.ts | 81ed2c114aba2355b1233cc5336e017044c78b4ca03b2ebeb52815bab43f2842 |
+| packages/game-domain/src/test-choice-orders.ts | 308ecf40a5eb130fbcd6a55ca59b390508e76ec1d8c2a4367c05171e54d84d6d |
+| packages/game-domain/tests/approved-clinical-admission.test.ts | 3108b93584b766ae7e3e95f17306deefe8f43dfa15e805d015bc21b12d840b92 |
+| packages/game-domain/tests/bread-butter-20260917-batch.test.ts | 70eb5199b02e506edcdd83870073d5562c0f9d178d461da6974ab70b2d8ac59d |
+| packages/game-domain/tests/clinical-content-withdrawal.test.ts | a8d1c17c7fda6aeda953d17b9ffeda484be782d4ba215efc473069b8c5f0a1f7 |
+| packages/game-domain/tests/diagnostics/patient-supply.test.ts | 0ba46a64b9b8c6868b36ff7d7797810e244a742159e1da5f4692729ee54e9017 |
+| packages/game-domain/tests/gs028-20260928-batch.test.ts | 577f993550d64209a7feb5522ef3cfa81a972aa6af47c6cbbef088e0789c8b05 |
+| packages/game-domain/tests/gs028-20261002-batch.test.ts | d576b2b3cf84670fc37eb14123f05e092df053d8433a78cea52f53d99b3c8d3d |
+| packages/game-domain/tests/gs028-20261003-batch.test.ts | fc86807987ce2e088408ba220a869da3666904fbf32a627d1069aa48a5fa607e |
+| packages/game-domain/tests/gs028-20261007-batch.test.ts | c94fc634a89d110ec1e5b0d0265ce453a28fcb2fc70ef71d873d4a8a1db88904 |
+| packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts | 3eba081f4880be99791f22771a2881e7589a14644782f204d0e1137f9d2c98f8 |
+| packages/game-domain/tests/gs028-statistics-ethics-batch.test.ts | 5098ae3918da1219da3791462b0e35d8d38a8a7cfc68f02641c9e7c919fb252e |
+| packages/game-domain/tests/level-five-launch.test.ts | 813fe235d6eac5876c4b2dc3d84b6bbd8ba67a71f7c71684ef7cc23b8b666a41 |
+| packages/game-domain/tests/patient-supply.test.ts | 2238b774f112c286eedff63cbc50991db63256d434dffce1f2626993d34a28fb |
+| packages/game-domain/tests/question-bank-batch2a-bindings.test.ts | d93a0db6b5982913f142d6ef6bb68ea857f11391d50e91e0be802cb40fd24d98 |
+| packages/game-domain/tests/question-bank-batch2a-round2-bindings.test.ts | da6b3212272e143a0e98c94265ad7190b3b4fcd732df52121f60bb21fcc1b5cc |
+| packages/game-domain/tests/question-bank-batch2a-round3-bindings.test.ts | 0bcc7be6fb9e63079b7f2540f12416620bcb86fa33a4730de17c46a34578bb8f |
+| packages/game-domain/tests/question-bank-batch2b-bindings.test.ts | 53c3d8a670d8927148042506d717b753428b88fa45533fa635dbd998e9a1807b |
+| packages/game-domain/tests/question-bank-batch2b-round2-bindings.test.ts | 752a5723894f1425fce20e7925478da7816ec7da6c07cf7895dd2ec192190840 |
+| packages/game-domain/tests/question-flags-bindings.test.ts | c97dc359df40e507b51ef73a052cbc231e25f460131d28c6a133bfed55e31a04 |
+| packages/game-domain/tests/question-flags-round2-bindings.test.ts | 4d5704db9fdbd79c9041b7561e1017559026c6bd0252e00b856c819cb5b43f1d |
+| packages/game-domain/tests/question-flags-round3-bindings.test.ts | 08a028c37be9dca02069188025a3b055d441109566aae58f083f5f2b0d29a8be |
+| packages/game-domain/tests/question-new-n1-admission.test.ts | e9e00d8fed4740f91c8535df25b66d9f7e19ad029680c98ba1622fb1df601d44 |
+| packages/game-domain/tests/question-new-n1-round2-admission.test.ts | 44a8011a58827659721790ce67261f824019d40704e3731da34d174875e2292c |
+| packages/game-domain/tests/question-new-n1-round3-admission.test.ts | df927e1642f88af6aaa1308923ebfb227d91cc4d48141810f0d84835c14ef315 |
+| packages/game-domain/tests/question-new-n2-admission.test.ts | be711aa19b897817667246a742d0d2198d2ad201221b813ad1632584078fd189 |
+| packages/game-domain/tests/question-new-n2-round2-admission.test.ts | cb54e0c0ab79e5f2591f8c44a61e9ad7be56814b874dd7481a2050e49714af77 |
+| packages/game-domain/tests/question-new-n3-supply.test.ts | bac222cc0deacde32ce4313600fa5fac9b84c7c9bbc77a4bb89c6995a847ff89 |
+| packages/game-domain/tests/question-ship-gate.test.ts | 4d3ce7d12017dbe623e7f20ce088e7e15eb695891eb4db43cf4a021c5a6323f7 |
+| packages/game-domain/tests/service-procedure-operations.test.ts | ece59010cebff996e54d48b913312c10ca7cecca5660fa98bc3b4cf78a4fd072 |
+| packages/game-domain/tests/surgery-center-batch.test.ts | 11e3e8e51cc6c4d3ecb787108ad6a447e38e385e6bff2ce37fd2acb956994571 |
+| packages/game-domain/tests/test-choice-order-inventory.test.ts | accc0598ff44fcd82e13ce994d0164c1b82ff1e3aeb2a2edd99dce9637ec47db |
+| tests/fixtures/clinical-author-stage.ts | d062922d84807d7e945ddef432e46dd7c20a6094d8a55c3895390c6bfe78ac8c |
+| tests/fixtures/level-five-integration-checkpoints-20261012.json | 0a45ff87e2a92a03d48702453e9899fd57d8c04d12611bafb51c0c8ac38809b2 |
+| tests/fixtures/level-five-legacy-behavior-20261012.json | dc06e1557f59a72b9f4739dc11f25e6cbd63a709d3a2e41d83a72f2d55314ff2 |
+| tools/qa/level-five-integration-results-20261012.json | 327615d06420d0424a3060d837b056a0875dfa494f1514d41efc658ea6a7aa89 |
+| tools/question-new-n1/audit.mjs | f1378aac9816f37602928b47a2aae00f0102f315382ae440a183aac8ab90fe7d |
+| tools/question-new-n1/build-evidence.mjs | 07514e52f66c1fff8f03198819f85d4bfa3f958f8c2bcfb1c1ffb3aa9707b947 |
+| tools/question-new-n1/check-labels.mjs | 4c8d58d7d23ba09eaa2f87648bea03e0484ae77651825c6d04300400c9645ffd |
+| tools/question-new-n1/coverage.mjs | 1e526d2cd01ffe6be323e089d32a40f044190f7b7e0c64fb226d2c73befb9192 |
+| tools/question-new-n1/inspect.mjs | 182407091112c591e15a9c710462f199e6c3f2e5c3f8effb7886ecf6960fa6c3 |
+| tools/question-new-n1/lint-dispositions.mjs | 8545447e2273cb034a1b4f610c6404b451028967cd4b9cdcf3ee17e7c2b0e33a |
+| tools/question-new-n1/measure.mjs | 39be643a02895a41d98cb3e206a3df43d80c467d30fbcb9661c3206fd7efa320 |
+| tools/question-new-n1/review.mjs | 7b2e2888a24e08bf680cc5328ed22b0cd054b8e8e2e5e013d01373e47283f08a |
+| tools/question-new-n1/verify-artifacts.mjs | cbc48d17a86dda602ebc63b4ed6f0041e979b02be861826ef0bb321fb8e4cc85 |
+| tools/question-new-n2/audit.mjs | abf3a4f6115a71c6f95958039c70c8c4c7dbbb1cfcc044f0bf0aa235c37a6835 |
+| tools/question-new-n2/build-evidence.mjs | cb7c5ab573bbe870beb065dd072cbb0c3e26a4f831097f5e9ad0869dd7d911ef |
+| tools/question-new-n2/check-content.mjs | ab9f8793cc8b4f9a6d814014582de67428ae34dd28e6a960208ff133a81986ef |
+| tools/question-new-n2/inspect.mjs | 78f2fc1d1d580d478c262d0ee0099f229aec6200e2c6edd88e1e318cf0b5ef7f |
+| tools/question-new-n2/results.mjs | 57d1b40a6709303f06000b6162e80d022a6673204202bf8a628b3e448450ca88 |
+| tools/question-new-n2/review.mjs | 08010685ab28adb383d7a2bc466b3e6d964c337f80a204ca0b6b998974f45d6b |
+| tools/question-new-n3/build-evidence.mjs | 45dc7d43923d14070fd4a0d3fc73a20e22106b81a21a7ca320d89351b42e027c |
+| tools/question-new-n3/review.mjs | 2cdf530128a9dcfabd8c1e8327d36ec3f31b81e59a2ea898818d90947c7dfacb |
+| tools/question-new-n3/supply.mjs | 672055426bbddcaceb4f7a7f04777e917afa2f6737f9cc9720651fa3d4cdaa15 |
+| tools/question-new-n3/validation.mjs | 5ce23311107d163f49d22485ead5a51ead446fedb0fef5b4cbf097ff6e04377e |
+| tools/question-quality/author-question-bank-batch2a-20261104.mjs | 74304339e3546038ed5258a566ec61834220cb26f0a8458a16a4dbcf8ef38479 |
+| tools/question-quality/author-question-bank-batch2a-round2-20261104.mjs | 81db9bc9071972a829bb515f5c09ef6fbd74a7dc6111e13edb8aca3dd83b4106 |
+| tools/question-quality/author-question-bank-batch2a-round3-20261104.mjs | 313c9f34cf5c120fa420228594ebc379c2a0ce1e9a918c8f3ca1957fdac934f6 |
+| tools/question-quality/author-question-flags-20261104.mjs | dd6aafedc205e2390845b2e624ce5bec3d7780230d9fadb949ab068a56368a55 |
+| tools/question-quality/author-question-flags-round2-20261104.mjs | 9ad7c31b9019a8149f2c91031b50b38ef68f0669d58cbe0cf1fde6eb07b9d3f4 |
+| tools/question-quality/author-question-flags-round3-20261104.mjs | ecc9cdc2c37eaeeb0543449c337d6fa77bc49a98603aea180c506f55d0c48997 |
+| tools/question-quality/bank.mjs | 59d4ee423c403b8d584181e686efbb2491c6939f993a82a34dfb064fb295e3b4 |
+| tools/question-quality/batch2b-acceptance-changes-20261105.json | 64c7484e038faec216b36ff2ad7a7ac4886b280c3af66d588d5111d9914909bc |
+| tools/question-quality/batch2b-acceptance-controls-20261105.json | 83bf69fcb3cc441d6ea3a9e20b8034e1904ae57fceaa8417c7b7b3d1fbd5afe1 |
+| tools/question-quality/batch2b-acceptance-scope-20261105.json | 6928fdf17b11018444364ca61680b689aabeae54e2a636d0ce995b419b84a3d0 |
+| tools/question-quality/batch2b-acceptance-validation-20261105.json | 13dfdcf9ecbb8b420b53fff2f3cf744e8a8c6f682e4930f4ee845dda1a5e4747 |
+| tools/question-quality/build-question-bank-batch2b-20261104.mjs | a29fd11f80c05d609752a576e32a2818a1088e0768e20ba7b3db9ff79fd67ac2 |
+| tools/question-quality/build-question-bank-batch2b-round2-20261104.mjs | a85868cd0d80a4208a944ea7fa67a31918c3a0ca764ec313617eac17d3bca089 |
+| tools/question-quality/build-question-flags2-20261105.mjs | 8d8533406b16df277df226d07ad53f151edde9891b644dc1a40709410936cc74 |
+| tools/question-quality/build-question-flags2-round2-20261105.mjs | 06ef91aa21ee8964209408c34488205d890a6d072d5d0db29c1ed3515d1737c5 |
+| tools/question-quality/capture-batch2b-acceptance-20261105.mjs | 166ca42b3e0f966a1659941651464ed2bd55a7fd2ee765c48d20d853642eb145 |
+| tools/question-quality/capture-question-bank-batch2a-20261104.mjs | 068ae367d2d2c3be8013efd51730d4b31aead1b1ab3828ebeacd6e85e31e2c5b |
+| tools/question-quality/capture-question-bank-batch2a-round2-20261104.mjs | a69a79aa48ee777a6f9ba27b0e5e67e863c409f9823fbaab2ab73106f5a2aa8d |
+| tools/question-quality/capture-question-bank-batch2a-round3-20261104.mjs | 40ea42c44b2eb22fc247275a8e545faa7bd22bb52690060f11c714bb8012ab48 |
+| tools/question-quality/capture-question-bank-batch2b-20261104.mjs | 3e6346f40184deb7a72a34f33a07bd8b4834d36125b83bab5211f997c35bfee1 |
+| tools/question-quality/capture-question-bank-batch2b-round2-20261104.mjs | eed75ab48c8eea06c2fab4db69c2c7bf31939b342c072995715b10eb1d415868 |
+| tools/question-quality/capture-question-flags-round2-20261104.mjs | f0b29e5581d34dd5c7539e28b32f25a4ce125fc8514b897e14a8906b2a491a50 |
+| tools/question-quality/capture-question-flags-round3-20261104.mjs | 4ab3fe4e7efbc7b32a8e2b616fdfd942c803881cba95fb57cc9f7fe18560fce6 |
+| tools/question-quality/capture-question-flags2-20261105.mjs | 94a01c471b48b4a9e1bcae9faea648e7e4b7e2308fe0f33fbc3395688ef05e1e |
+| tools/question-quality/capture-question-flags2-round2-20261105.mjs | 82d1e12db95e0b6334ebc36680fa480a199ce729f0f245a290824920300ffe30 |
+| tools/question-quality/compare-question-bank-batch2a-supply-20261104.mjs | 7973ecb77e86ada42a824c4053b39797391b8f9ed354b76bf971592829ab7720 |
+| tools/question-quality/compare-question-flags-round2-supply-20261104.mjs | 1a0ae46a883160488048d77357c8cf793c2f4986adad3a6a9d913db0c128daae |
+| tools/question-quality/compare-question-flags-supply-20261104.mjs | b8f6367034ed27a3510e8755cc764de4139a0ad367c9d407fd82621342b3a856 |
+| tools/question-quality/control-question-bank-batch2a-round2-fixtures-20261104.mjs | 21ddfdfd41b1e0e72ae021e008ba3aa682ff5e063ae80982788ea97ede51a04c |
+| tools/question-quality/control-question-bank-batch2a-round2-workload-20261104.mjs | 41d0b5f2b0bf199584f5c2436026d442504649de11164f21ca5638af801e8a62 |
+| tools/question-quality/control-question-bank-batch2a-round3-fixtures-20261104.mjs | 81b62c30c2f5e0d12b7c07be19c907b7d9eedd2631d9e2c9f66098a0b5b8e532 |
+| tools/question-quality/control-question-bank-batch2b-fixtures-20261104.mjs | c794a1a5db6499265f1d8575e380a2a56b020bc73a9da3ecb30b9dff4be85233 |
+| tools/question-quality/control-question-bank-batch2b-inventory-20261104.mjs | dca3ed3965e13ac65651ae8e9a9b7e72910ef3bdc10237edbff7985e8ede38aa |
+| tools/question-quality/control-question-bank-batch2b-records-20261104.mjs | a49ca3c65aafeeb28e4054474e3d351508a3c5c4b62cb0fc511ead253bbaf87b |
+| tools/question-quality/control-question-bank-batch2b-round2-20261104.mjs | 125bf413f618c9b3c0ac8022e00135b3bfc949aacbb31e88df5feb31d4492c37 |
+| tools/question-quality/control-question-flags-round3-cohort-20261104.mjs | 653a41fa1801658f6c9dda214a8960d2efcca190a6dd25d72f3896aee75e8f3b |
+| tools/question-quality/control-question-flags-round3-remaining-fixtures-20261104.mjs | 2ea128aa3707666da1659bcd487a2c9e4c81b06e60c7564f049837003ba24bd7 |
+| tools/question-quality/control-question-flags-round3-supply-20261104.mjs | 785aa05c9f0499e19fac4e1bd265b78a189b0386cfa8b316a33c225027d0883c |
+| tools/question-quality/control-question-flags2-20261105.mjs | 747eb7d0cc02eb46e306eee7e87e5139682e86ede4a6c3aaba99aecfba8ed5fc |
+| tools/question-quality/control-question-flags2-round2-20261105.mjs | 18989acac3dc53d98e255712d7782e469590568628a63b2e6fe6dd6a0c60a6f8 |
+| tools/question-quality/evidence-question-bank-batch2a-20261104.mjs | a41f07f20caf6a5836cf9b0b90ae15ccba684cebd413d3706989d7fe5b89e59e |
+| tools/question-quality/evidence-question-bank-batch2a-round2-20261104.mjs | 807dd3be05bb6fad2e39b24155327d0d6de097a07da51f18a77bb3675f807283 |
+| tools/question-quality/evidence-question-bank-batch2a-round3-20261104.mjs | 55d3ce6b06016450514c33ed8726211c880843e26f21b676c0677f866c8b4bb1 |
+| tools/question-quality/evidence-question-flags-round2-20261104.mjs | cc089a6101d030d86dac09f25d83fb19b655eb44ca4706adbf21e806ae7d8eb7 |
+| tools/question-quality/evidence-question-flags-round3-20261104.mjs | c858fe552e43d702e1f0a411027e20accf430736d5381b9784a2197ec7c72beb |
+| tools/question-quality/exact-adversarial-records-20261102.json | 7ed82de29ba5cadc8656e4d38aabcc592b828f8654432c94f7be9cbaac02fd01 |
+| tools/question-quality/finalize-batch2b-acceptance-20261105.mjs | fa9586cea564d99f73b70762ffecc97b0971eb384091042a5e41698d7cb3d0a7 |
+| tools/question-quality/fixtures/batch2b-acceptance-before-20261105.json | de3536908494941dc50ad5b81c5aadc108fa7cb0466342638337ed83545e9c0f |
+| tools/question-quality/fixtures/question-bank-batch2a-before-20261104.json | afcfb4cdb331467023c9717c08b348baa15b1c43f6fcd74ae596cd294ba4e046 |
+| tools/question-quality/fixtures/question-bank-batch2a-domain-fixtures-before-20261104.json | e124832900c7e4d86f278d705a2a9760a69d711774c91b9c680e5a5ba803b6ef |
+| tools/question-quality/fixtures/question-bank-batch2a-round2-before-20261104.json | 7c55d7bce5b87869a509d6a8c775498d7cfa0362343657c16df291779afd3d8d |
+| tools/question-quality/fixtures/question-bank-batch2a-round2-domain-fixtures-before-20261104.json | 42a646d2568d9d40857d100acd8eb843980a259bcb9945e65daf84559d3844a4 |
+| tools/question-quality/fixtures/question-bank-batch2a-round2-queue-before-20261104.json | 8f87d5924de66c40696fe31de4d99cef940eaeae73482f962e32d94c84020955 |
+| tools/question-quality/fixtures/question-bank-batch2a-round3-before-20261104.json | 3438c017a169bd686cfa060b04bd5dbd3dc62a005cae018112a4f6c893e750d8 |
+| tools/question-quality/fixtures/question-bank-batch2a-round3-domain-fixtures-before-20261104.json | 937559004d0456c1a31a4e955339dd00be37c8d7a4d4699641a9df19a28eaa65 |
+| tools/question-quality/fixtures/question-bank-batch2a-round3-queue-before-20261104.json | 206c5875d4de624432882720029968883b9d17dbc148b009eb2f6c8239691811 |
+| tools/question-quality/fixtures/question-bank-batch2a-tests-before-20261104.json | 9d6e7eac4dac01caf6fcec6f0608e6c556d58148fa1b08514bbbfe52480053ae |
+| tools/question-quality/fixtures/question-bank-batch2b-before-20261104.json | 9c26ed58ea01ef718aeadbec783b5c837a32da41fa65698c074231ad42fddbc4 |
+| tools/question-quality/fixtures/question-bank-batch2b-domain-fixtures-before-20261104.json | 091fb3c604e124de16f24dc7f2088af4e631a5c998f97096eaf984e6c64458a2 |
+| tools/question-quality/fixtures/question-bank-batch2b-queue-before-20261104.json | dc1a960ccb621f48b094c868ce19c99bbb48b33613a25c6d76e5a5ed733e08eb |
+| tools/question-quality/fixtures/question-bank-batch2b-round2-before-20261104.json | e9d78b010325a62b8bd9a44d796d32c56d415af906a082ae1ce063d919245e35 |
+| tools/question-quality/fixtures/question-flags-before-20261104.json | c8a500d1df1f61952385e6a11f29581bec65b055955875e91f0e36b51f4e2087 |
+| tools/question-quality/fixtures/question-flags-integration-tests-before-20261104.json | 8a00c726d25bb0fd9b023ffafe7f02533fe3d76d944b1ce4e0bda11419773875 |
+| tools/question-quality/fixtures/question-flags-orders-before-20261104.json | 0987163199604d5bc4a9fb43cf31847858a3c34a03c7510f99a1574f4f686246 |
+| tools/question-quality/fixtures/question-flags-round2-before-20261104.json | bcb43b76c0864b5f88fb5e55d1846c3eabe794939472354361deb07c7a7c8851 |
+| tools/question-quality/fixtures/question-flags-round2-integration-tests-before-20261104.json | 1b41a8a49850fdbea8904310a14dfdcfbbfb00db27ef20e7964de7a9f18a0e8e |
+| tools/question-quality/fixtures/question-flags-round2-tests-before-20261104.json | 4fd4216ce2c717e3c25796318483e0b36f0c6d90aadada9f21cd394da0e836c2 |
+| tools/question-quality/fixtures/question-flags-round3-before-20261104.json | 251b5f3f1e02580eb7a66ebd3e9b57cb09d8efbef3ae55b019ae816b32bb1114 |
+| tools/question-quality/fixtures/question-flags-round3-cohort-before-20261104.json | 0a0a7557be103f7509c6f1ae19bacc24a94f52bcf641dd08c6820bbc02750baf |
+| tools/question-quality/fixtures/question-flags-round3-cohort-first-before-20261104.json | a6e7a07c628eda94e8fc617ea20ed1466708b847982fa5b4ee3322322e3ba93e |
+| tools/question-quality/fixtures/question-flags-round3-queue-before-20261104.json | c1c641590095f8601008cb390ee8ba41e3533d04d52d89e4c18c475256443b94 |
+| tools/question-quality/fixtures/question-flags-round3-remaining-fixtures-before-20261104.json | b340eede195a87608d74ecee421b6fe72d9b84da49e97aa73e4a2e7617da5fae |
+| tools/question-quality/fixtures/question-flags-round3-supply-before-20261104.json | 3d2ff008cf0ca9fbfa6a7b6b4d4b02ee86056d89a26d1d16a10aa872e86fc2c9 |
+| tools/question-quality/fixtures/question-flags2-before-20261105.json | 4a1ea1155c8404d35ac87fe4e3fda74c5451bd2602fe234e7328efd3987e45b1 |
+| tools/question-quality/fixtures/question-flags2-round2-before-20261105.json | 41fec1e7defc32d58bc6a19f0ad31a6abce8d018187fcdd9e7351f5b922ac256 |
+| tools/question-quality/handoff-question-bank-batch2a-20261104.mjs | b2548ceb441340e57b56b115af316c5b56d0bff3a8a8686f8ad7b38b90af01b2 |
+| tools/question-quality/handoff-question-bank-batch2a-round2-20261104.mjs | d36bc33dfc3eedc85efe965cc4dbb9e03c6d50371c754ff6328653d478eabb15 |
+| tools/question-quality/handoff-question-bank-batch2a-round3-20261104.mjs | cd18d4ebceebf8050a308db1b07aae81cc9551960f289aafe6d32099407a676b |
+| tools/question-quality/handoff-question-bank-batch2b-20261104.mjs | e497bc8b4fec4341f0851972e0112ddfd3785f7dea3b2cf00bc5fcc1b825e883 |
+| tools/question-quality/handoff-question-bank-batch2b-round2-20261104.mjs | c3ef6bae2eebd393ae9840a19a6a70ff550387c03f1729cab057854fd33cdfb3 |
+| tools/question-quality/handoff-question-flags-20261104.mjs | 8a13e1bca933640517a56a5837b44835993f6c8fe8cfdb71cbdee6543d79e85f |
+| tools/question-quality/handoff-question-flags-round2-20261104.mjs | c4ee8ec2755e1ca59126cc511d528a9c5794f46126dba54751e8b43701c01049 |
+| tools/question-quality/handoff-question-flags-round3-20261104.mjs | eaf0252287f83b6c3a80f68b00bbcd3f8b6872e7e5c1e2987d0d77d22280d825 |
+| tools/question-quality/handoff-question-flags2-20261105.mjs | 1275e8f6ebda661ac4411267363d725f46d25d0fd96bb64854f4e55ae36732be |
+| tools/question-quality/handoff-question-flags2-round2-20261105.mjs | 95ede30c4061ddc9bbaf42178bb9a4459b7ad5a38e4bb2aef9cdce2a63f49b23 |
+| tools/question-quality/inspect-question-bank-batch2b-20261104.mjs | 7d6dfa4598e2acbef61354b3b91515ecd1cfd6e6efd5d06c1303b1cef70c1d57 |
+| tools/question-quality/integrate-batch2b-acceptance-20261105.mjs | 385e6f7c41d86bd06bb745278323b6728dd4f25c7b92c3fe4abec744fa84786b |
+| tools/question-quality/integrate-question-bank-batch2a-round3-20261104.mjs | a8c34f1ae80f03b1ad1e047cc6a9baf459f2168e2b6ec2e9a70aa4f39d584914 |
+| tools/question-quality/integrate-question-bank-batch2b-20261104.mjs | 441625605b8de4f63ccd8be8a57b06ee9de98e809611c57b0e77cdf04e414122 |
+| tools/question-quality/integrate-question-bank-batch2b-round2-20261104.mjs | 13667594b2e37cd4e4e3b2e4d6cb409438042ec4890b0895c272791bef7b1232 |
+| tools/question-quality/integrate-question-flags2-g06-20261105.mjs | 074de894c69c246aa07de5b28cf0bfb4a69a6edc4691f9fa63ef9b692e7aea80 |
+| tools/question-quality/legacy-question-bank-batch2a-20261104.mjs | 329a051302569ba9e27b60646d8046cfaac1fb9296516242dda5d25398bb4056 |
+| tools/question-quality/legacy-question-bank-batch2a-round3-20261104.mjs | bf819073609347facc445ed4dd2decde304b141fbfd69c336a526966ff3ef37b |
+| tools/question-quality/legacy-question-flags-round2-20261104.mjs | cdab111e6b69aece136e506c0c70b418c133eca451557a1553d2f4b4139bdf5e |
+| tools/question-quality/lint.mjs | 9001747ca5b2b7bdab183ce4c8f22b85abe60cc3acf120ee0e448ba30caf321c |
+| tools/question-quality/lint.test.mjs | 3feca589bb15f415709ea614bbdb6ccd2dee6363e91feec0f9a4fbbaa8e6e143 |
+| tools/question-quality/lock-question-bank-batch2a-round2-validation-20261104.mjs | 888eaa3fc3150edd8a1af18140ac92316e2d1fee90e2bf3fc881fce1c9985c25 |
+| tools/question-quality/lock-question-bank-batch2a-round3-validation-20261104.mjs | 334bca0c325c8493604578ea748f80741fa6fdc529dd8698c92a8beb16ca9aff |
+| tools/question-quality/lock-question-bank-batch2a-validation-20261104.mjs | cc848053f182d4226ae5561d083aa31c8c84807ea8aa295c4c1c60c45ff0a95a |
+| tools/question-quality/lock-question-bank-batch2b-round2-20261104.mjs | 3804dc0806a2b595fd0e94eed56ff570a7637ae563f95a568b3d5e0c230b9e96 |
+| tools/question-quality/lock-question-bank-batch2b-validation-20261104.mjs | 33ba88d1a1a913315eb3c4bbdd571b99fce5910952cb208d24fa211f6083da28 |
+| tools/question-quality/lock-question-flags-round2-validation-20261104.mjs | 49b6196df92da4dcdc60ec0d713171eaef9819eeeb8dff65823eba675bd380ab |
+| tools/question-quality/lock-question-flags-round3-validation-20261104.mjs | 5160c287757133327ed9f697b11ba0fef6a053a974d5de7850ec41ab29f78db0 |
+| tools/question-quality/orders-question-bank-batch2a-20261104.mjs | 1314ca98a096ab4d82d929d0627d04758b09fa736ed3ab8f6227245c693dd929 |
+| tools/question-quality/orders-question-bank-batch2a-round2-20261104.mjs | d1193ba4bb0b35c6cf351b540ebb689def52e09f0890b2e6a263497c0afeb01f |
+| tools/question-quality/orders-question-bank-batch2a-round3-20261104.mjs | 5d1f72abdb60c1c18b9f69dd43f4522edda39c09b104550e05a93efd351a92f8 |
+| tools/question-quality/orders-question-flags-round2-20261104.mjs | 1b728f63036f1ca781e10e9af224f187954b6a67316d3b60d9d6b018fcc26161 |
+| tools/question-quality/orders-question-flags-round3-20261104.mjs | 2327831ffbbbb12f0685606e01d3d32642c17d14d9a30df2789bbb7d8ba0cc99 |
+| tools/question-quality/owner-flag-rules-20261104.mjs | 8a83ea1dd34a6387e27a04c2637a6975a61d9ad02cc772119f3d2720256cc9e2 |
+| tools/question-quality/question-bank-batch2a-domain-failures-20261104.json | 0ff1c5d8d7939344d347685f339b2b7d173862318aea90e1811a5aaad90fcd65 |
+| tools/question-quality/question-bank-batch2a-domain-fixture-review-20261104.json | b2bee0434646a56e4eaedcb5ca917ba3705453a93ab5e1ef4b2ac37fef7fc66e |
+| tools/question-quality/question-bank-batch2a-domain-initial-failures-20261104.json | e142bc0079af9dac7d5f497ee975b4f7e6ddab15068308c7b0fb1ff278322259 |
+| tools/question-quality/question-bank-batch2a-legacy-diagnosis-20261104.json | 0323591f9a0747e2c124bfa535867f4a36d6eb7d1a1230213865cbbbda273958 |
+| tools/question-quality/question-bank-batch2a-lint-20261104.json | 25be2b7d15f8db560051ca1dac40cd50dfc9e1564edfa160fc4947bdb7000aee |
+| tools/question-quality/question-bank-batch2a-owned-files-20261104.json | 39e085ffea1c8735c237325d250cff2e7ebce1078f24921730fbe2d1840a2160 |
+| tools/question-quality/question-bank-batch2a-round2-cli-whole-bank-20261104.json | e3cc64ef0d774a301c44b5f5f3dc592e187dbca908b73a9b9cc6b2dba3c732c9 |
+| tools/question-quality/question-bank-batch2a-round2-fixture-control-20261104.json | 5cbb8bd264b076ec5d12c765c53f2bcb5ec10072dabd1372f855c8aca63c3a4c |
+| tools/question-quality/question-bank-batch2a-round2-fixture-review-20261104.json | cb02c1012120025ac0a75c04edb7af90c6f6bdef741d12d76f10587ba591340e |
+| tools/question-quality/question-bank-batch2a-round2-isolated-verification-20261104.json | 0d3ecf8b040bc9478021018127a2d0f13b150c61c56fab468c9e6cc3d92eeacd |
+| tools/question-quality/question-bank-batch2a-round2-lint-20261104.json | d20758dca7a81d19de0b0c082574eab8a4be0483eb5e2485d6b2c6684645de13 |
+| tools/question-quality/question-bank-batch2a-round2-owned-files-20261104.json | 0862bb76bef2a3db4edbc6f2b8b08290ffb5acdb351caab9b3afbd89eb898b01 |
+| tools/question-quality/question-bank-batch2a-round2-queue-review-20261104.json | af4aa9473d03262d4cf153eafcfbcbe2a36c57967ee0b6dd8492ee1b969d8da9 |
+| tools/question-quality/question-bank-batch2a-round2-specs-20261104.mjs | 5dc37f239a2ee5ef894e3ddfb32e1d89e609b3ece526e6a8c59cc74b4391abbd |
+| tools/question-quality/question-bank-batch2a-round2-validation-final-lock-20261104.json | 3715cd86462146633ad187912efa9963a2bc3390624d3ce3c32c51600bfac631 |
+| tools/question-quality/question-bank-batch2a-round2-validation-final-window-20261104.json | 0b44acff7954d62b832528810fe5de326e94b45ba39a4f9795cfbe57e38d9b70 |
+| tools/question-quality/question-bank-batch2a-round2-validation-full-lock-20261104.json | 7f541467228fab50be6f657f7a53e79d4d875f805010083d8c1d652d2a1f8315 |
+| tools/question-quality/question-bank-batch2a-round2-validation-full-window-20261104.json | 22fd83edb0747cf5de7e6872f09a1d9a9d1a7f8b762b680e2e9d59845cb40b9b |
+| tools/question-quality/question-bank-batch2a-round2-validation-repaired-lock-20261104.json | 6ae4b289f0de68103826f177b399e79e0d1b846a7aa5278aa5973bd4f8561ac5 |
+| tools/question-quality/question-bank-batch2a-round2-validation-repaired-window-20261104.json | 09a13d4a037e27b1ea678ef28f2a02debf23d738f37d6eff62fc5d9ace8b11a3 |
+| tools/question-quality/question-bank-batch2a-round2-verification-20261104.json | 8dd8f680da0a556d79ccdcb012c0ef1da8d2b4b6534532078e67ddd9dc5b9508 |
+| tools/question-quality/question-bank-batch2a-round2-verification-before-n1-20261104.json | 8dd8f680da0a556d79ccdcb012c0ef1da8d2b4b6534532078e67ddd9dc5b9508 |
+| tools/question-quality/question-bank-batch2a-round2-whole-bank-20261104.json | c5015e94081b84ce531b670ca81f2a7365c5be33d25d19cda094b2ea2fba6997 |
+| tools/question-quality/question-bank-batch2a-round2-workload-control-20261104.json | b08ddae3fbab5d0beecd1971937ee6b61602a772357415fecf0a0b40b7ad033f |
+| tools/question-quality/question-bank-batch2a-round3-cli-whole-bank-20261104.json | 6847ababa46a2a817060fa5bbc2821ed841b6852309073cab917c196b3ffb70a |
+| tools/question-quality/question-bank-batch2a-round3-cli-whole-bank-deletion-final-20261104.json | 557f1bf6aec18f366482472a21198acadd666a4811432e5689735ea2bb2ce526 |
+| tools/question-quality/question-bank-batch2a-round3-cli-whole-bank-final-20261104.json | 00b76ef118a02f1b9662fff82762d5c9ab9f27bc7cf67be43b2442e1bf18e9bf |
+| tools/question-quality/question-bank-batch2a-round3-cli-whole-bank-handoff-20261104.json | 640d2ceaa8083e441ec35468be0524efeb94e6506ab96a78816749adc5615995 |
+| tools/question-quality/question-bank-batch2a-round3-fixture-control-20261104.json | c38ed24f43e04b2a9c907d8282b1f38920285ac1315ae95acf4d3343ca2fe6ae |
+| tools/question-quality/question-bank-batch2a-round3-fixture-review-20261104.json | b25f0b3bf10239f18195fe2d3dc12093cfd67fc89840519085de1a7d39f0d145 |
+| tools/question-quality/question-bank-batch2a-round3-legacy-diagnosis-20261104.json | 64c993b3f6e7e88be8b42ef3a2247b6ae692f036aaef909dd0703f43610ae254 |
+| tools/question-quality/question-bank-batch2a-round3-lint-20261104.json | ba7178ab1904e3b0f32f33a951b6c2eb41e2c2d18ab18084fae64bc65f596026 |
+| tools/question-quality/question-bank-batch2a-round3-owned-files-20261104.json | 140b87795a7e2d8c28f2bf88683e229942d02c1d28cdeae4600df8029fa167be |
+| tools/question-quality/question-bank-batch2a-round3-queue-review-20261104.json | 78a1a598ebf26eadeb5442812f6bb523d1ec3ee8623c6fa65104e4352a3db6cd |
+| tools/question-quality/question-bank-batch2a-round3-specs-20261104.mjs | 5eb9e800c4fae885298d7222078321b97cd8491cd17dc418c69143751e42cfd1 |
+| tools/question-quality/question-bank-batch2a-round3-validation-author-final-lock-20261104.json | 07d0fd96f91dd0a7e97a32920669bb8551ece0c93f02fc60c5aa8edd10d6ae51 |
+| tools/question-quality/question-bank-batch2a-round3-validation-author-final-window-20261104.json | cd94fd37c5a4d0a356afbcf19529489e6d9ef7625f80316e0f3db5695ed81d0c |
+| tools/question-quality/question-bank-batch2a-round3-validation-cue-final-lock-20261104.json | f77e0f118f344207214c325db6d15ff2e1bc7788729b3dabcbcc918e0ed91cf6 |
+| tools/question-quality/question-bank-batch2a-round3-validation-cue-final-window-20261104.json | f1bf908895350160aa2b71b4fb622a688511d7dde156c50fd2665ddde18aad9c |
+| tools/question-quality/question-bank-batch2a-round3-validation-deletion-final-lock-20261104.json | 1abd2118d902300fb22e6a94b0964bfb5ec04b9b655c1f4e7f2408ca51bd68e9 |
+| tools/question-quality/question-bank-batch2a-round3-validation-deletion-final-window-20261104.json | d9ce1bb0b59756d47c96d8ad608147357813b64ce1a29c721bfcd5d14dcae2fa |
+| tools/question-quality/question-bank-batch2a-round3-validation-final-lock-20261104.json | 10b56d338da3e8e2733c23efc8dca770a3e2be0586eb018e45c5c7e5b97adf65 |
+| tools/question-quality/question-bank-batch2a-round3-validation-final-window-20261104.json | efee80082b21d085ef2cd618eb69b76a6aace607b6d43b4e41012dde1b31f7ea |
+| tools/question-quality/question-bank-batch2a-round3-validation-full-lock-20261104.json | b4d2df327c271ec53f165eca15923f055b1f15e161c258015932452f99eae209 |
+| tools/question-quality/question-bank-batch2a-round3-validation-full-window-20261104.json | dc483b049335f858ad4a9e0f0fc8ed89d702f1cc01c9ae2f5ea8f92cd0f161d0 |
+| tools/question-quality/question-bank-batch2a-round3-validation-late-typecheck-lock-20261104.json | 25d8dbb8b91cd1479cdb23e5e03b3e6263497e26029a62419f9c8a95ac1bfe94 |
+| tools/question-quality/question-bank-batch2a-round3-validation-late-typecheck-window-20261104.json | fed78dae0bca9e8790457f15ff77bdf867f82e8c1ed4180e38302b1b0a37df23 |
+| tools/question-quality/question-bank-batch2a-round3-validation-repaired-lock-20261104.json | a5c1e5e6769eda63f39d46fdc6ef4d7c092393171334a70d5585c1eae7f4e063 |
+| tools/question-quality/question-bank-batch2a-round3-validation-repaired-window-20261104.json | 00a495880f73afd585ecf3ae235ef1bc1b5db772a6ff5fc096b9d1cec9507472 |
+| tools/question-quality/question-bank-batch2a-round3-validation-summary-20261104.json | 162829838a520f908f68ea676248c4bc2f7ae7d1f4fc62097ba1f7a28a0935b2 |
+| tools/question-quality/question-bank-batch2a-round3-verification-20261104.json | e81bbd38aa942b93b9658b72b57ed677532ce7f6deea6932064fa3585dfcb419 |
+| tools/question-quality/question-bank-batch2a-round3-whole-bank-20261104.json | 557f1bf6aec18f366482472a21198acadd666a4811432e5689735ea2bb2ce526 |
+| tools/question-quality/question-bank-batch2a-snapshot-change-review-20261104.json | a59af46f720b9349a6634f4f84f6991433b964e549f79e51c73dbd432fc2e268 |
+| tools/question-quality/question-bank-batch2a-specs-20261104.mjs | 6ea07895984a7de5d70c4bfebf4916ac4ec121cbe42914fb2f1c88cde45ddc8b |
+| tools/question-quality/question-bank-batch2a-supply-candidate-20261104.json | 513ad32981ca21b8a6801366df47d56265d9ed5c1037e36f7276318936b4ff6e |
+| tools/question-quality/question-bank-batch2a-validation-domain-repaired-lock-20261104.json | 09b577b79a2a62b79f6e3db50a66c2f4b2fb64dea00b38a179e9d5ec9053e4a5 |
+| tools/question-quality/question-bank-batch2a-validation-final-lock-20261104.json | 8f1431e8bf95c67da660e3fd73998a8f251ffc1292c7d6117db6a7a01830dea0 |
+| tools/question-quality/question-bank-batch2a-verification-20261104.json | cc435bb46da43681ab8db1410be36a251736c55569a5d0c24685933df19690c4 |
+| tools/question-quality/question-bank-batch2a-whole-bank-20261104.json | 17e92713b7d8032a402dd0077c8c464bbff0ad88e2d0f806737add1aa1458bcd |
+| tools/question-quality/question-bank-batch2b-fixture-control-20261104.json | ad81ed32d1845775d9e6d1d718748ac9e080d19fb023e6d6d12f8308b51a5bee |
+| tools/question-quality/question-bank-batch2b-fixture-review-20261104.json | 03f95f5b068f3a7721c42ea1a3e3af5774eec597d7e2382d26cb3cd122504135 |
+| tools/question-quality/question-bank-batch2b-inventory-control-20261104.json | b489d84023d395e45f12ada329a855fdd7c0f293b001f90a0c0bce5908bfa2cd |
+| tools/question-quality/question-bank-batch2b-lint-20261104.json | 3fa67764280cf7debcb6dc406577e87ccdd03902a9be61f3041dcf3614712177 |
+| tools/question-quality/question-bank-batch2b-owned-files-20261104.json | a19bff314ac80c761bf0de4373f66cf61114876c0f0ddfd24271ea423f3bbb1d |
+| tools/question-quality/question-bank-batch2b-queue-review-20261104.json | ffd3ee7ad8db268edaa6e855e769eb097841739963c282c9c41eaebe292df1f4 |
+| tools/question-quality/question-bank-batch2b-records-control-20261104.json | 946f4b53f3b5a89b6e460121995f99d56b860090cf271a4eb04a47d627ac3444 |
+| tools/question-quality/question-bank-batch2b-round2-bound-inputs-20261104.json | c6f40a2f8fcb9245d79362bdafcace153a592165db0f42e002bf64db1b0e12be |
+| tools/question-quality/question-bank-batch2b-round2-cli-live-20261104.json | d10680572db076a10ec05437aec41e060c7d00d4342d885a2eb6417dc6651319 |
+| tools/question-quality/question-bank-batch2b-round2-files-20261104.json | 6453d6cc7a3ded7e4b254206ed168e145592306cf0884b5ea2389e5ff42e8765 |
+| tools/question-quality/question-bank-batch2b-round2-lint-20261104.json | b5000fb0774303f89b78d983a01e172e77a9fc877f5d2fe6b2ca2c978145160d |
+| tools/question-quality/question-bank-batch2b-round2-live-control-20261104.json | e4cd74d957b53df1a177f365bd477b42ca7009bb3a2f1cdd80749ea6294899a8 |
+| tools/question-quality/question-bank-batch2b-round2-live-lint-20261104.json | 8e8d9dbc38b09bce4e5a157c5eecaa1bc0d28d2d54983ff3d868dd18ca6ddc30 |
+| tools/question-quality/question-bank-batch2b-round2-queue-delta-20261104.json | cb542eefadc4d0483195962b2dd48d00c1aae6bfa664e51ac6c529088ec43308 |
+| tools/question-quality/question-bank-batch2b-round2-queue-refresh-20261104.json | 014f61c16acddf4fc0fd704c84098452c7fe63d65b476f4d16ee3c83c6a138bf |
+| tools/question-quality/question-bank-batch2b-round2-specs-20261104.mjs | f92ff1bad25248fbcd235ad3932e2cef3789fa2e3b52863ef454a5fb14e25f89 |
+| tools/question-quality/question-bank-batch2b-round2-specs.test.mjs | 7af11c2f5a3b645fb5e1832e0aaf9574f62a1b00f04ce36ff20ad138a30ecbe5 |
+| tools/question-quality/question-bank-batch2b-round2-validation-final-lock-20261104.json | 202f540cb519f272cc24b90d35bc85ad6adbb41cc40a497afaecd8f19afa352d |
+| tools/question-quality/question-bank-batch2b-round2-validation-handoff-lock-20261104.json | 23065be94806916e399cde35d4de6b9a84bec13279ee3267202c91fa4248089f |
+| tools/question-quality/question-bank-batch2b-round2-validation-handoff-window-20261104.json | afe25906ce5d0f3192a4ae16c0d9dc478cdab11ce814ef6405b2a3c29e242edb |
+| tools/question-quality/question-bank-batch2b-round2-validation-lock-20261104.json | 595b893528312feaed6a02427841a26210352698d4405a6470c7690f57248f8d |
+| tools/question-quality/question-bank-batch2b-round2-validation-post-lock-20261104.json | 686e5c064fbaf27267f805ce64776adcb0f2e286067cb3cbda0a69ced861b4b4 |
+| tools/question-quality/question-bank-batch2b-round2-validation-post-window-20261104.json | 5542b0dde2f744f2e3f7aafdf958677e6f67c4aff3b778ead4e71a7216d8695d |
+| tools/question-quality/question-bank-batch2b-round2-validation-summary-20261104.json | 36330300aaa69437a466cd31b98f6568de153d3ae2164208d4262d51060372ad |
+| tools/question-quality/question-bank-batch2b-round2-verification-20261104.json | 6a9461a0c4a235d4bf70fdba2b925c68047b8884586868c1e8a17628be89ead8 |
+| tools/question-quality/question-bank-batch2b-round2-whole-bank-20261104.json | 963f8887d79fd78f5780882211163b471a1bc7b89af99c8e073904775eda83e4 |
+| tools/question-quality/question-bank-batch2b-specs-20261104.mjs | 5c2180a35a15fb9ce9198ab1a8d562dfb52ab98c65456e9b7fb61ca2260fd16f |
+| tools/question-quality/question-bank-batch2b-validation-author-final-lock-20261104.json | 61587c9f8185aa0086c252dea4946ac21e84ff0d3055dd6b4fcfd471e8e0069d |
+| tools/question-quality/question-bank-batch2b-validation-author-final-window-20261104.json | 1061294d0d22362342f2ab38763b218fb494584613794ea8dd33b7ae73cb73b0 |
+| tools/question-quality/question-bank-batch2b-validation-complete-lock-20261104.json | f8aae8260247e6fe5d526fb65b6b549e9e4a569764f4459bdc5941f718d76dc7 |
+| tools/question-quality/question-bank-batch2b-validation-complete-window-20261104.json | a0987421aee6a968a7e4d3ee4c0e47190861a659ac7e53101387bd88c27578f7 |
+| tools/question-quality/question-bank-batch2b-validation-domain-lock-20261104.json | 2181d6a1500b108892d329ca19eca055f02e310bc4f3bf10b6f436a824afa378 |
+| tools/question-quality/question-bank-batch2b-validation-domain-window-20261104.json | d88a75e0d11fd4b3698e5da6b8a9f1e01ffd8570a4ea830853937b5cea5c7bef |
+| tools/question-quality/question-bank-batch2b-validation-final-lock-20261104.json | ae35d1fc2d83d6c131b5aaeed67ca0310f2bf71632588f809df190538323137b |
+| tools/question-quality/question-bank-batch2b-validation-final-window-20261104.json | 853f5b5e1a81c0c9373f561aebb54c4e9b6d0c4cb181aef3b82d610428930b6f |
+| tools/question-quality/question-bank-batch2b-validation-player-lock-20261104.json | 4ddf779ed0825c1217f51097b82065cb638ded5947951b282e2559ef2ca70a59 |
+| tools/question-quality/question-bank-batch2b-validation-player-window-20261104.json | 80ea7421b666308ca664dd0b0d38c8bcff50fb5c6577ce93feebdee0ca5173c4 |
+| tools/question-quality/question-bank-batch2b-validation-repaired-lock-20261104.json | 9c501b141fa876aa3474d2016f6ff5d22e4e77bbea81ae6bdc9aabb06f15bc91 |
+| tools/question-quality/question-bank-batch2b-validation-repaired-window-20261104.json | c867fe5dfe69dded4435919a0cc3d19b8abe1b187b81fb0d8759167e238f13b7 |
+| tools/question-quality/question-bank-batch2b-validation-summary-20261104.json | 9f6f1012589d2f11f1d916b22d51a35dafb83303573ece1a459d8b5bf830cddd |
+| tools/question-quality/question-bank-batch2b-verification-20261104.json | c552406a673d1b32b8ec9e157a4f36789e39cc76bbf101004078c4925f8db26d |
+| tools/question-quality/question-bank-batch2b-whole-bank-20261104.json | ea1baaaecfa3a43bbb5137896e274b7ecffe8230f4a9b69ca1d13eaa384e40ca |
+| tools/question-quality/question-cue-round2-report-20261029.json | 525acae06d3711db7e92d2cd02c0d724843a0c4756f9a75da0d81b93b75a601b |
+| tools/question-quality/question-flags-capture-20261104.mjs | 61e5106d5d0ba53c46541b72ddc36348e772acbf1e9a7a82cd8af35c8c3bc2c3 |
+| tools/question-quality/question-flags-domain-failures-20261104.json | 74912557a172aa2de555a5e035c6e440d138e72105555226581933378a0bc2b0 |
+| tools/question-quality/question-flags-domain-final-failures-20261104.json | 93510bd281f3231a952d014bd1ca4f930ca37086b7461d286ad440426bb6f241 |
+| tools/question-quality/question-flags-entry-release.config.mjs | 1a58b46a2d72c35f93712c45e9f946d2fac6a220e6a6cbe37bcdf47f58110944 |
+| tools/question-quality/question-flags-entry-release.setup.ts | 802bddb632bc87715ee69dc1ebb732273e7d6897386a3d618e5c7b85c9786954 |
+| tools/question-quality/question-flags-final-bindings-lock-20261104.json | 2c39775585347ff41932e07741218d179e71fd06e3190a5346dc987baacdadea |
+| tools/question-quality/question-flags-final-integrated-lock-20261104.json | 4075fa84f00e62e6bd0869cc94a5646619d013ccfe4fba0c4ece048ca803139d |
+| tools/question-quality/question-flags-legacy-diagnosis-20261104.json | c8cc42435198202979cf4f51d181c9482cb186943cb16bdcac63d636b492d7e3 |
+| tools/question-quality/question-flags-legacy-diagnosis-20261104.mjs | 6e6fa72a0c5c1da27b0e467fa349adee98816a6b5d206e38b0923daff4b77839 |
+| tools/question-quality/question-flags-lint-20261104.json | 0bdf13425b97b4dbaa02d4fa38e59c1537069dc4368f7f96e3b53d937fd22db8 |
+| tools/question-quality/question-flags-order-records-20261104.mjs | 122ef79e8b6719407d01166e62f78262737c760d1d1a33437e88f5aeddcc75ac |
+| tools/question-quality/question-flags-owned-files-20261104.json | db51326e8fd3d16278f4bfb2ec4ec542f2f8ae9ce72ed20ca681248fdc5a9b2b |
+| tools/question-quality/question-flags-pre-final-cue-lock-20261104.json | 823d1789dd6a077298119c6d3c25eb208f8925492a613674dab22cc626c80a37 |
+| tools/question-quality/question-flags-round2-domain-clean-failures-20261104.json | e664eade0844cc473c01354d07026cced52f3e0607cd61f3e6e3c00e941303b7 |
+| tools/question-quality/question-flags-round2-domain-repaired-failures-20261104.json | 44e5477f4e8d38d6d55d72f637f723991b861aa66f8fde91f4ff410742f3ab4a |
+| tools/question-quality/question-flags-round2-integration-fixture-review-20261104.json | 6cd12e554a7482d209ed9176ae8a6f4db99e57e7b37195c649aa14a41d011af8 |
+| tools/question-quality/question-flags-round2-legacy-diagnosis-20261104.json | 4561e81a5190d35dbf947713f8acc414719f63be1b79e597c6c6828f5b944934 |
+| tools/question-quality/question-flags-round2-lint-20261104.json | 5723f4716c55bde2e521f3676da4504d703edfd64c9d2d0a7c632851ee263c6c |
+| tools/question-quality/question-flags-round2-owned-files-20261104.json | 3156a9a6ece91cb7e4ca1589546858c5c23830327e30bc1a12c46c4fbc478bbe |
+| tools/question-quality/question-flags-round2-snapshot-change-review-20261104.json | 869f32c4271759f323e556cff00d6634f7a7a4ff286a31d38562699064def4d9 |
+| tools/question-quality/question-flags-round2-specs-20261104.mjs | f1545523612b0f7cbca37d4806864697cea89cbcc846187616d2d1eb470db658 |
+| tools/question-quality/question-flags-round2-supply-candidate-20261104.json | f40219370922f09281b32c8b1b90b1beafec4c0cfbb10bf0ddedae34bad0412a |
+| tools/question-quality/question-flags-round2-supply-control-20261104.json | 07b87d2dd1efdb35d7887847cdea8ddb102acd3a006b20524e1f0c1b62c89474 |
+| tools/question-quality/question-flags-round2-validation-clean-lock-20261104.json | db5d02bbe67b914bfb34d5693002768445caab748b8acfde0b7a458ecb8f605a |
+| tools/question-quality/question-flags-round2-validation-domain-repaired-lock-20261104.json | 676e7cbf7ad261b3326b18f85c90df81ce285b3a732c54a18f41ea7dc432ef3b |
+| tools/question-quality/question-flags-round2-validation-lock-20261104.json | a3d16c2ed3df00e938e19586a83b7e71a2209a1e366a1e7c41f63eaebd506cf0 |
+| tools/question-quality/question-flags-round2-verification-20261104.json | 16c5c6203cd65407408d840874529932d57e0968d885bd9f8b5eced67c9748e7 |
+| tools/question-quality/question-flags-round2-whole-bank-20261104.json | 3afcf7590bc1c7271d75a2459cecadd7f307b005b8ca892f5b46938f150b7a59 |
+| tools/question-quality/question-flags-round3-cohort-control-20261104.json | 71067d560573a357c0c206e0239077e8bf7f47831a2d15885134f9e59066ea41 |
+| tools/question-quality/question-flags-round3-cohort-first-control-20261104.json | 26b15509ee2222396eb9a02762faadfe445de92efb9ba91f8bcd322b4003d8ca |
+| tools/question-quality/question-flags-round3-cohort-fixture-review-20261104.json | db15a692af7787a741374db9ed97ca6bdbc67ac6ac5b8c6b792751e257012178 |
+| tools/question-quality/question-flags-round3-lint-20261104.json | 887f1f6f130bd7d0900647cff2c126e7c1426d7b6d8c814d9f05001c5dae8fe2 |
+| tools/question-quality/question-flags-round3-owned-files-20261104.json | 0120979a4b81eacf8bf03d14f0b9a638ee47da44826a9891633162d0d398bae7 |
+| tools/question-quality/question-flags-round3-remaining-fixtures-control-20261104.json | c5efd2095424d604af0de0acf76ca7dd84dcdfb44ff8e72708893d2e910dbb26 |
+| tools/question-quality/question-flags-round3-remaining-fixtures-review-20261104.json | b9472d5cf6b6608bfbc9cd2ab489a466dcdbb4795c231d10845587c43faaf6e7 |
+| tools/question-quality/question-flags-round3-specs-20261104.mjs | 9a894c208dc473b1e0243d365bca18151d80f123cfe3d96c411f11b18a9fe33a |
+| tools/question-quality/question-flags-round3-supply-control-20261104.json | 09b1c1dad9cd3665d39e6c2f75365c984bbe042884265de46240aad1e520138c |
+| tools/question-quality/question-flags-round3-supply-fixture-review-20261104.json | 50e705927453e07827c9313bd1b4a90ac65522647341ad57e39946e1c1d02193 |
+| tools/question-quality/question-flags-round3-validation-complete-lock-20261104.json | 9440a662b789d8ed38c8d2443e23f206205a3f33d6894f45a902c944ce1888ae |
+| tools/question-quality/question-flags-round3-validation-complete-window-20261104.json | 98edef930d0aebdcdcc3dc5d1016000db6d6ed4aaa3d5d4aed6a773dd9000236 |
+| tools/question-quality/question-flags-round3-validation-final-lock-20261104.json | 8a922b968a3bae4cba468df0392fd929769438043bd97a844c8636384cb4ab1c |
+| tools/question-quality/question-flags-round3-validation-handoff-lock-20261104.json | 2c087f8755d0814e30fa899a4882537f464e786f628c572bc9f5c43b0d9111a5 |
+| tools/question-quality/question-flags-round3-validation-handoff-window-20261104.json | ef890e4d220cab39a49195be597a1f4a11076b3a024479ccacf7652cab1fc35e |
+| tools/question-quality/question-flags-round3-validation-locked-lock-20261104.json | ff4e487f44cadfbfe047d1b144be21b039ef9ebfebab0a282555c71508f33be8 |
+| tools/question-quality/question-flags-round3-validation-status-20261104.json | 51a294646c76d9ea01fc28ea34c715305994ad3d49a2f24d38dd95a699695bad |
+| tools/question-quality/question-flags-round3-verification-20261104.json | 51d3f1ee1632628abd38d1759f10aa483704d154fc14b635ae0bcdcb95398048 |
+| tools/question-quality/question-flags-round3-whole-bank-20261104.json | 71faa55e0b4e9fb7dc58fceb545aad3c5657e4b3157ad7ee84f5003860018ab1 |
+| tools/question-quality/question-flags-snapshot-change-review-20261104.json | 4fa43848a7e7f5be2bbeccd2e3851245a4ccf3d3a5fd3e91a932a76ac8b40f29 |
+| tools/question-quality/question-flags-specs-20261104.mjs | 69fb7c80cc4fc4e317b03b0195b4d544a06a198dae636d6b03fe7060600c61b2 |
+| tools/question-quality/question-flags-supply-candidate-20261104.json | 916c037d98ac1850b8ada89d8543db87a6088a4fed9e45bb7ce8139e244f6200 |
+| tools/question-quality/question-flags-supply-control-20261104.json | 86691378d0b1daec139123d619d64eeb4e62e4efa144e1ff2a64c5f9e320881d |
+| tools/question-quality/question-flags-validation-lock-20261104.json | 4ed8f9e9b93ed002feb3285e9dee9c89d8a3d62331430f3376a2afd1a98a094d |
+| tools/question-quality/question-flags-validation-samples-20261104.json | 13ce15da34b6732445c4d318f86688b5351d24ed476fe49649d685475b8e862f |
+| tools/question-quality/question-flags-verification-20261104.json | 92968358906bc226bd5a8d6abc285db95323d01ddd3f9276037b15f4483a4532 |
+| tools/question-quality/question-flags-whole-bank-20261104.json | 1ad194cb97f134e46830113c2170b71d048e9d81843e71568039dfca73061342 |
+| tools/question-quality/question-flags2-controls-20261105.json | 584ea03a773dfd4df627bef11bd40ec7a212827aa879b945a0bdd935f5a42318 |
+| tools/question-quality/question-flags2-files-20261105.json | cf6e4feb39762071a9b24ad069fb477bd4ee377af16776eaf5cecb70c4c18808 |
+| tools/question-quality/question-flags2-g06-integration-20261105.json | 321df201fe5b9aaef445260db2adb9656307456e36201382a4fca77bc53fd6fb |
+| tools/question-quality/question-flags2-lint-20261105.json | 11fc8981c330905b3041a353fc3c570d19fea6da6d0834c44e6004209c24daf2 |
+| tools/question-quality/question-flags2-round2-controls-20261105.json | 2ee4bcc0f76c140fff918c76400eeb01bfb8b833e0b11ada0c81ccc95dba0610 |
+| tools/question-quality/question-flags2-round2-files-20261105.json | a3b47c70fc502db9d4e25e68331cc5c01fd5170eefefacfdc3ed211e0a1107c9 |
+| tools/question-quality/question-flags2-round2-lint-20261105.json | efecff3f9bb576e3fc51bed171c29e1924e644fc9de3a49d5b4f07a7ad18a338 |
+| tools/question-quality/question-flags2-round2-specs-20261105.mjs | 5aa85e39321db13067e59adf62d2071c07866736d627b9abefcda18bd3349ddc |
+| tools/question-quality/question-flags2-round2-validation-20261105.json | c35747a727e01733ef57a8e68e6254311d5ddbb2dd7ccf9cb45c2f74a98d3088 |
+| tools/question-quality/question-flags2-runtime-lock-20261105.json | fceaf181b5086f2b847074fa947f54a777ea18866f81d63d3a97af9206d4a7c0 |
+| tools/question-quality/question-flags2-runtime-lock-final-20261105.json | 80bdbf7eeea99352fee20d0d1595536e2cfedaa51d53814fb4a1305a84be104f |
+| tools/question-quality/question-flags2-specs-20261105.mjs | 03ccdb283d983219722ccd376ae8f233bf616929e6714cf9af893eb4a85d9782 |
+| tools/question-quality/question-flags2-validation-20261105.json | 0eaf64e4bc681d4a936bd4df1b35c800fffe782e58275595f1fd17e360440564 |
+| tools/question-quality/queue-question-bank-batch2a-round2-20261104.mjs | 67cd87ce5ec2ae0e93f4a096338388bf4d4de69c6adedea33088bbfcd99a5bef |
+| tools/question-quality/queue-question-bank-batch2a-round3-20261104.mjs | 5afd8dc1f342fc37e7fbc8c0d5a75e022915f1084eef9c775df6344cce4c71d9 |
+| tools/question-quality/queue-question-bank-batch2b-20261104.mjs | 46fd3e2c774655ddf6c30dd8158d4bcf9837bf2a365fc482bb2f3a0208c4d842 |
+| tools/question-quality/queue-question-bank-batch2b-round2-20261104.mjs | 1fccf2d4665a8d9099e742ae54273c66f51677237f55a76a8d1f8fca2c70a305 |
+| tools/question-quality/queue-question-flags-round3-20261104.mjs | c80ded2f79ad443821fcfb875c65ff1ab37f9164700ea010497a0b6c506cca31 |
+| tools/question-quality/repair-question-bank-batch2a-round2-fixtures-20261104.mjs | 95962936d5cfffeabdca28e2f4bf85b190b14ad21c4d1ae1b99bdde6b935180a |
+| tools/question-quality/repair-question-bank-batch2a-round3-fixtures-20261104.mjs | ec71bea506e5609afda9d85de389eb201103c7627bffa21639ca1b65317ca137 |
+| tools/question-quality/repair-question-bank-batch2b-fixtures-20261104.mjs | 1309e2b5e1a43326566efcc2fffcd9d7db641fb14975e976afcd73d727bbe336 |
+| tools/question-quality/repair-question-flags-round3-cohort-20261104.mjs | 8349bfcb5326d8a3c1600359f39953b442605e5481cdd5b8bac260b597a953ed |
+| tools/question-quality/repair-question-flags-round3-remaining-fixtures-20261104.mjs | 555ba20e3f75fe4abd545c086fefa48535b49fde0aca873ae7dd25b704d7e7d3 |
+| tools/question-quality/repair-question-flags-round3-supply-20261104.mjs | 8491edb9f940a00e8f1c7e6a4a5107cf3e200528bef7504e9d50415eb2c7433a |
+| tools/question-quality/report.mjs | aaa3b546c8df5c35d1b6f170a1ca43036aca92ff7fb6d368a2047faa30fcb535 |
+| tools/question-quality/responses-question-bank-batch2a-round2-20261104.mjs | 50417ad1fe278135d4b00d516e24face46767ab2bdc118b2f32d12257db1694b |
+| tools/question-quality/responses-question-bank-batch2a-round3-20261104.mjs | 3a23314a6496db2606693ed9fcc8072d1009b54c0466c32b6f0a2e382b7d9995 |
+| tools/question-quality/responses-question-flags-round2-20261104.mjs | 10bf32b77fc0428b6c621220a2df4106f2daad701a6798243832198ebcab7f95 |
+| tools/question-quality/responses-question-flags-round3-20261104.mjs | 5e857041d87b06c158183199f596f15439e5d23347ce3eceb84d871f716d2ad7 |
+| tools/question-quality/review-batch2b-acceptance-20261105.mjs | ab16ecd3fc222ad2a65550b4394953ccbf06810014716baf2ab1db97ae22a370 |
+| tools/question-quality/review-question-bank-batch2a-20261104.mjs | f69e190ae7e05853bab0fb4c3edf504109a29650576843098f3c596e579f55b0 |
+| tools/question-quality/review-question-bank-batch2a-domain-fixtures-20261104.mjs | ec606ceaaca908dc2af3696abe1d3108fdf12a42c4a798df3bd58ddaad1f9fc1 |
+| tools/question-quality/review-question-bank-batch2a-round2-20261104.mjs | a57fa7e923b603c3e95c2616883a711ed0b9e27f5f6e3db1bf4680ade68412ac |
+| tools/question-quality/review-question-bank-batch2a-round3-20261104.mjs | 55c8e03926370d7da8e98eb9a3e42937a943e6aa5c66bfd61f81a63110a47c61 |
+| tools/question-quality/review-question-bank-batch2a-snapshots-20261104.mjs | f034354cbb7170b1ca878dc8bb493ce24cf3027844e5a183359d31c9e153a67b |
+| tools/question-quality/review-question-bank-batch2b-20261104.mjs | a7257ba2e95f2e409e22647978b2066c26ed067913a77a9464110134e5e7e1c8 |
+| tools/question-quality/review-question-bank-batch2b-round2-20261104.mjs | ad35c1cb97bb7ced1c932fd2e4cb8b6d72dddb970493e5bc1bb897b979198e59 |
+| tools/question-quality/review-question-flags-20261104.mjs | d07acd63b726977562d4a1819386556478f2f7782391f024ad87d68ecda978b7 |
+| tools/question-quality/review-question-flags-round2-20261104.mjs | ef2a6828d9931090d202b3c9ddcf8131ccf30b971bc44077af5952d20980174e |
+| tools/question-quality/review-question-flags-round2-integration-20261104.mjs | 594b9c024cf1263ade05d2c28a544f2363fa8e7462794f927ec4eb18efa5efb6 |
+| tools/question-quality/review-question-flags-round2-snapshots-20261104.mjs | 65aeee9b4930b16002c1fa98c4e09dab90591291f3c4c646621acd4efac693ce |
+| tools/question-quality/review-question-flags-round3-20261104.mjs | 43f4cc2891f2a47c683c7c28b868a8b7f263d14fae520fd5f1bafc95dbea1184 |
+| tools/question-quality/review-question-flags-snapshots-20261104.mjs | a0fb55a0728f122bf0f31969fa3f19e51f6115f5f8f5e53e4c8c0aacc225d679 |
+| tools/question-quality/review-question-flags2-20261105.mjs | b0031a944736fb5189bed221a1e9d26bbff16d26207a0bb58afcfd8f2d4adbe9 |
+| tools/question-quality/review-question-flags2-round2-20261105.mjs | 8f0c0e1a6fafbe1f3f6194ca74ef9f0449cb1848d8e435e7808f6c8f1707da31 |
+| tools/question-quality/round2-bound-inputs-20261029.json | ce0af9dc5cb14200850a3803f0b4a9b2834bbee87a1885f410770b7129cd73c9 |
+| tools/question-quality/round2-report-qa-20261029.json | 24788372029797f3fc198584bc8e5945a18bdff5272b8253a5dea68ad8e8fe84 |
+| tools/question-quality/round2-validation-exits-20261029.json | 5fe284b1c5ef5532cd0d10150c0e873f78293fa5b9b818dc262bb150711d2436 |
+| tools/question-quality/summarize-question-bank-batch2b-round2-validation-20261104.mjs | bd7dcd4b83d19e6de0d6be7b0584fb4d54e98c8d46ff6533d0ce8ba144267b74 |
+| tools/question-quality/summarize-question-bank-batch2b-validation-20261104.mjs | 7985589fef1d043410e71a617f6364350820e5d80324e9e3cc40cb43758c2edb |
+| tools/question-quality/verify-question-bank-batch2a-20261104.mjs | af2e80229294b4dfd88ebe65725e59e41ace06f13ffb9f15d8ad2e2646dc3d5e |
+| tools/question-quality/verify-question-bank-batch2a-round2-20261104.mjs | 2fbe2d8ef303d2e53b97fb678dde4552c5575ab1f96b7161af6560ea8414f530 |
+| tools/question-quality/verify-question-bank-batch2a-round2-isolated-20261104.mjs | 9bb66da2da20cd7053dc3aa0eaaf591d5f27291962ad1e5e93c6ac312994741d |
+| tools/question-quality/verify-question-bank-batch2a-round3-handoff-20261104.mjs | 4adc3a1f6178a4a324c8230b3a5d3acbe6cd45ec8844e7d56d811c8d63e6e461 |
+| tools/question-quality/verify-question-flags-20261104.mjs | 45408f5e160cc0d6ef446309c4a61cccf9063834a859a3fdcae3ebe00a5ad432 |
+| tools/question-quality/verify-question-flags-round2-20261104.mjs | 8b411de2d8843ecf109c756811a59d963a9f4b06248c01c07336f0615eea99ee |
+| tools/question-quality/verify-question-flags-round3-20261104.mjs | 9f9803244d49f3cb6eb641a9ccbb95923e07e4fa26af03d197bd6531a8fa05d2 |

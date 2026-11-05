@@ -46,6 +46,15 @@ const BATCH_CONTEXT = validateDomainContext({
 
 type BatchCase = (typeof GS028_20260928_CASES)[number];
 
+// This context deliberately instantiates the retained September-28 questions.
+// A stable case ID also has newer, non-executing referral-study variants; those
+// exact identities are covered by question-flags-round2-bindings.test.ts.
+const AUTHORED_TERMINAL_RECORDS = EXACT_TEST_CHOICE_ORDER_RECORDS.filter((record) =>
+  GS028_20260928_CASES.some((clinicalCase) => clinicalCase.id === record.caseId
+    && clinicalCase.decisionNodes.some((node) => node.id === record.nodeId
+      && node.questionVariantId === record.questionVariantId)),
+);
+
 function prepared(seed: string, stage: 0 | 1 | 2): GameState {
   const state = createInitialGameState(undefined, {
     campaignId: `campaign.gs028.${seed}`,
@@ -295,9 +304,7 @@ describe("GS-028 September 28 pre-Endoscopy batch", () => {
   });
 
   it("binds the three authored terminal test choices to exact executable terminal-service orders", () => {
-    const records = EXACT_TEST_CHOICE_ORDER_RECORDS.filter((record) =>
-      record.caseId.startsWith("case.gs028."),
-    );
+    const records = AUTHORED_TERMINAL_RECORDS;
     expect(records).toHaveLength(3);
     for (const record of records) {
       const clinicalCase = GS028_20260928_CASES.find((item) => item.id === record.caseId);
@@ -310,7 +317,7 @@ describe("GS-028 September 28 pre-Endoscopy batch", () => {
   });
 
   it.each(
-    EXACT_TEST_CHOICE_ORDER_RECORDS.filter((record) => record.caseId.startsWith("case.gs028.")).map((record) => [record] as const),
+    AUTHORED_TERMINAL_RECORDS.map((record) => [record] as const),
   )("executes terminal service %s through its real onsite lifecycle while wrong answers create no order", (record) => {
     const clinicalCase = GS028_20260928_CASES.find((item) => item.id === record.caseId);
     if (!clinicalCase) throw new Error(`Missing terminal-service case ${record.caseId}.`);

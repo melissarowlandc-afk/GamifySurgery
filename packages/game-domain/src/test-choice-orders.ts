@@ -1,5 +1,31 @@
+// BEGIN N2 ROUND3 exact-order import
+import { QUESTION_NEW_N2_ROUND3_TEST_ORDER_RECORDS } from "./question-new-n2-round3-test-orders";
+// END N2 ROUND3 exact-order import
+// BEGIN BATCH2B ROUND2 exact orders
+import { QUESTION_BANK_BATCH2B_ROUND2_TEST_ORDER_RECORDS } from "./question-bank-batch2b-round2-test-orders";
+// END BATCH2B ROUND2 exact orders
+// BEGIN N1 ROUND3 exact-order import
+import { QUESTION_NEW_N1_ROUND3_TEST_ORDER_RECORDS } from "./question-new-n1-round3-test-orders";
+// END N1 ROUND3 exact-order import
+// BEGIN BATCH2A ROUND3 exact orders
+import { QUESTION_BANK_BATCH2A_ROUND3_TEST_ORDER_RECORDS } from "./question-bank-batch2a-round3-test-orders";
+// END BATCH2A ROUND3 exact orders
+// BEGIN N2 ROUND2 append — separate external-only exact records.
+import { QUESTION_NEW_N2_ROUND2_TEST_ORDER_RECORDS } from "./question-new-n2-round2-test-orders";
+// END N2 ROUND2 append.
+// BEGIN BATCH2B exact orders
+import { QUESTION_BANK_BATCH2B_TEST_ORDER_RECORDS } from "./question-bank-batch2b-test-orders";
+// END BATCH2B exact orders
 import { ANSWER_CHOICE_TIMING_REGISTRY, GS028_20261007_LEVEL3_TIMING_ENTRIES, VARIETY3_TIMING_ENTRIES, type DecisionNode } from "@gamify-surgery/clinical-content";
 import type { EncounterState } from "./types";
+import { QUESTION_NEW_N1_TEST_ORDER_RECORDS } from "./question-new-n1-test-orders";
+// BEGIN N2 append — standalone helper owns new exact external-only records.
+import { QUESTION_NEW_N2_TEST_ORDER_RECORDS } from "./question-new-n2-test-orders";
+// END N2 append.
+
+// BEGIN N1 ROUND2 append — separate exact external-only version records.
+import { QUESTION_NEW_N1_ROUND2_TEST_ORDER_RECORDS } from "./question-new-n1-round2-test-orders";
+// END N1 ROUND2 append.
 
 export type TestChoiceOrderDisposition =
   | {
@@ -1076,6 +1102,1057 @@ const questionQualityAdversarialR520261102Records: ExactTestChoiceOrderRecord[] 
 ];
 // END QUESTION QUALITY ADVERSARIAL R5 20261102 EXACT RECORDS
 
+// BEGIN QUESTION FLAGS 20261104 EXACT RECORDS
+/** New identities preserve planned/outside-only non-execution; no new service route. */
+const questionFlag20261104Records: ExactTestChoiceOrderRecord[] = [
+  {
+    "caseId": "case.gs028d.hyperkalaemia.a-renal-result",
+    "nodeId": "node.gs028d.hyperkalaemia.a-renal-result.1",
+    "questionVariantId": "question.hyperkalaemia.severe-community-result-transfer.v1.r2",
+    "choiceId": "choice.qf20261104.f04.d1",
+    "choiceLabel": "Repeat potassium in the community later today",
+    "timingProfileId": "timing.test.basic_labs",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.gs028f.neck-mass.c2-completed-needle-record",
+    "nodeId": "node.gs028f.neck-mass.c2-completed-needle-record.1",
+    "questionVariantId": "question.gs028f.head-neck.initial-fna-not-open-biopsy.v4.r2",
+    "choiceId": "correct_4",
+    "choiceLabel": "Fine-needle aspiration of the neck node",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.gs028f.neck-mass.c2-completed-needle-record",
+    "nodeId": "node.gs028f.neck-mass.c2-completed-needle-record.1",
+    "questionVariantId": "question.gs028f.head-neck.initial-fna-not-open-biopsy.v4.r2",
+    "choiceId": "choice.qf20261104.f05.d1",
+    "choiceLabel": "Open incisional biopsy of the neck node",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.gs028f.neck-mass.c2-completed-needle-record",
+    "nodeId": "node.gs028f.neck-mass.c2-completed-needle-record.1",
+    "questionVariantId": "question.gs028f.head-neck.initial-fna-not-open-biopsy.v4.r2",
+    "choiceId": "choice.qf20261104.f05.d2",
+    "choiceLabel": "Open excisional biopsy of the neck node",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.gs028c.dcis.b-oncoplastic-mapping",
+    "nodeId": "node.gs028c.dcis.b-oncoplastic-mapping.1",
+    "questionVariantId": "question.dcis.sentinel-node-setting.v3.r2",
+    "choiceId": "correct_3",
+    "choiceLabel": "Sentinel-node biopsy with breast removal",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.gs028c.dcis.b-oncoplastic-mapping",
+    "nodeId": "node.gs028c.dcis.b-oncoplastic-mapping.1",
+    "questionVariantId": "question.dcis.sentinel-node-setting.v3.r2",
+    "choiceId": "choice.qf20261104.f10.d1",
+    "choiceLabel": "Sentinel-node biopsy after invasive final pathology",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.gs028c.acute-cholecystitis.a-persistent-suspicion",
+    "nodeId": "node.gs028c.acute-cholecystitis.a-persistent-suspicion.1",
+    "questionVariantId": "question.cholecystitis.hida-after-equivocal-ultrasound.v4.r2",
+    "choiceId": "correct_4",
+    "choiceLabel": "Hepatobiliary scintigraphy",
+    "timingProfileId": "timing.test.nuclear_imaging",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "external_only"
+    }
+  },
+  {
+    "caseId": "case.gs028c.acute-cholecystitis.a-persistent-suspicion",
+    "nodeId": "node.gs028c.acute-cholecystitis.a-persistent-suspicion.1",
+    "questionVariantId": "question.cholecystitis.hida-after-equivocal-ultrasound.v4.r2",
+    "choiceId": "choice.qf20261104.f12.d1",
+    "choiceLabel": "Magnetic resonance cholangiopancreatography",
+    "timingProfileId": "timing.test.mri",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "external_only"
+    }
+  },
+  {
+    "caseId": "case.gs028c.acute-cholecystitis.a-persistent-suspicion",
+    "nodeId": "node.gs028c.acute-cholecystitis.a-persistent-suspicion.1",
+    "questionVariantId": "question.cholecystitis.hida-after-equivocal-ultrasound.v4.r2",
+    "choiceId": "choice.qf20261104.f12.d2",
+    "choiceLabel": "Repeat right-upper-quadrant ultrasonography",
+    "timingProfileId": "timing.test.ultrasound",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "external_only"
+    }
+  },
+  {
+    "caseId": "case.gs028c.palpable-breast.b-surgeon-discordance",
+    "nodeId": "node.gs028c.palpable-breast.b-surgeon-discordance.1",
+    "questionVariantId": "question.palpable-breast.suspicious-mass-biopsy-despite-negative-imaging.v4.r2",
+    "choiceId": "correct_4",
+    "choiceLabel": "Arrange tissue sampling of the palpable area",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.gs028c.palpable-breast.b-surgeon-discordance",
+    "nodeId": "node.gs028c.palpable-breast.b-surgeon-discordance.1",
+    "questionVariantId": "question.palpable-breast.suspicious-mass-biopsy-despite-negative-imaging.v4.r2",
+    "choiceId": "choice.qf20261104.f17.d1",
+    "choiceLabel": "Arrange contrast-enhanced MRI of the palpable area",
+    "timingProfileId": "timing.test.breast_mri",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.gs028c.palpable-breast.b-surgeon-discordance",
+    "nodeId": "node.gs028c.palpable-breast.b-surgeon-discordance.1",
+    "questionVariantId": "question.palpable-breast.suspicious-mass-biopsy-despite-negative-imaging.v4.r2",
+    "choiceId": "choice.qf20261104.f17.d2",
+    "choiceLabel": "Arrange repeat ultrasound of the palpable area",
+    "timingProfileId": "timing.test.ultrasound",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  }
+];
+// END QUESTION FLAGS 20261104 EXACT RECORDS
+
+// BEGIN QUESTION FLAGS ROUND2 20261104 EXACT RECORDS
+/** Explicit outside/planned studies; no new local service or routing policy. */
+const questionFlagRound2Records: ExactTestChoiceOrderRecord[] = [
+  {
+    "caseId": "case.gs028e.mis-principles.c3-phrenic-pathway",
+    "nodeId": "node.gs028e.mis-principles.c3-phrenic-pathway.1",
+    "questionVariantId": "question.postlaparoscopy.benign-referred-shoulder-pain.v2.r3",
+    "choiceId": "correct_2",
+    "choiceLabel": "MR cholangiography with a hepatobiliary contrast agent",
+    "timingProfileId": "timing.test.hepatobiliary_contrast_mrcp",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "external_only"
+    }
+  },
+  {
+    "caseId": "case.gs028e.mis-principles.c3-phrenic-pathway",
+    "nodeId": "node.gs028e.mis-principles.c3-phrenic-pathway.1",
+    "questionVariantId": "question.postlaparoscopy.benign-referred-shoulder-pain.v2.r3",
+    "choiceId": "choice.qf2.20261104.f02.d1",
+    "choiceLabel": "Hepatobiliary scintigraphy with dynamic delayed imaging",
+    "timingProfileId": "timing.test.nuclear_imaging",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "external_only"
+    }
+  },
+  {
+    "caseId": "case.gs028e.mis-principles.c3-phrenic-pathway",
+    "nodeId": "node.gs028e.mis-principles.c3-phrenic-pathway.1",
+    "questionVariantId": "question.postlaparoscopy.benign-referred-shoulder-pain.v2.r3",
+    "choiceId": "choice.qf2.20261104.f02.d2",
+    "choiceLabel": "MR cholangiography without a hepatobiliary contrast agent",
+    "timingProfileId": "timing.test.mrcp",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "external_only"
+    }
+  },
+  {
+    "caseId": "case.gs028.varicose-veins.b-limited-mobility",
+    "nodeId": "node.gs028.varicose-veins.b-limited-mobility.1",
+    "questionVariantId": "question.varicose-veins.intervention-referral-after-axial-reflux.v4.r3",
+    "choiceId": "correct_4",
+    "choiceLabel": "Request a venous reflux duplex study",
+    "timingProfileId": "timing.test.ultrasound",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "external_only"
+    }
+  },
+  {
+    "caseId": "case.gs028.varicose-veins.b-limited-mobility",
+    "nodeId": "node.gs028.varicose-veins.b-limited-mobility.1",
+    "questionVariantId": "question.varicose-veins.intervention-referral-after-axial-reflux.v4.r3",
+    "choiceId": "choice.qf2.20261104.f03.d1",
+    "choiceLabel": "Request a deep-venous compression duplex study",
+    "timingProfileId": "timing.test.ultrasound",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "external_only"
+    }
+  },
+  {
+    "caseId": "case.gs028.varicose-veins.b-limited-mobility",
+    "nodeId": "node.gs028.varicose-veins.b-limited-mobility.1",
+    "questionVariantId": "question.varicose-veins.intervention-referral-after-axial-reflux.v4.r3",
+    "choiceId": "choice.qf2.20261104.f03.d2",
+    "choiceLabel": "Request a pelvic contrast CT venogram",
+    "timingProfileId": "timing.test.ct",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "external_only"
+    }
+  },
+  {
+    "caseId": "case.gs028f.neck-mass.c2-completed-needle-record",
+    "nodeId": "node.gs028f.neck-mass.c2-completed-needle-record.1",
+    "questionVariantId": "question.gs028f.head-neck.initial-fna-not-open-biopsy.v4.r3",
+    "choiceId": "correct_4",
+    "choiceLabel": "Repeat image-guided needle assessment of the lesion",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.gs028f.neck-mass.c2-completed-needle-record",
+    "nodeId": "node.gs028f.neck-mass.c2-completed-needle-record.1",
+    "questionVariantId": "question.gs028f.head-neck.initial-fna-not-open-biopsy.v4.r3",
+    "choiceId": "choice.qf2.20261104.f05.d1",
+    "choiceLabel": "Arrange open diagnostic excision of the lesion",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.gs028f.neck-mass.c2-completed-needle-record",
+    "nodeId": "node.gs028f.neck-mass.c2-completed-needle-record.1",
+    "questionVariantId": "question.gs028f.head-neck.initial-fna-not-open-biopsy.v4.r3",
+    "choiceId": "choice.qf2.20261104.f05.d2",
+    "choiceLabel": "Arrange interval ultrasound surveillance of the lesion",
+    "timingProfileId": "timing.test.ultrasound",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.lymphangitis.heel-inguinal",
+    "nodeId": "node.lymphangitis.heel-inguinal.v1",
+    "questionVariantId": "question.lymphangitis.heel-inguinal.v1.r3",
+    "choiceId": "acute_lymphangitis",
+    "choiceLabel": "Targeted soft-tissue ultrasound at the heel",
+    "timingProfileId": "timing.test.ultrasound",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.lymphangitis.heel-inguinal",
+    "nodeId": "node.lymphangitis.heel-inguinal.v1",
+    "questionVariantId": "question.lymphangitis.heel-inguinal.v1.r3",
+    "choiceId": "choice.qf2.20261104.f08.d1",
+    "choiceLabel": "Compression venous ultrasound along the calf",
+    "timingProfileId": "timing.test.ultrasound",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.lymphangitis.heel-inguinal",
+    "nodeId": "node.lymphangitis.heel-inguinal.v1",
+    "questionVariantId": "question.lymphangitis.heel-inguinal.v1.r3",
+    "choiceId": "choice.qf2.20261104.f08.d2",
+    "choiceLabel": "Targeted soft-tissue ultrasound at the groin",
+    "timingProfileId": "timing.test.ultrasound",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.gs028c.dcis.b-oncoplastic-mapping",
+    "nodeId": "node.gs028c.dcis.b-oncoplastic-mapping.1",
+    "questionVariantId": "question.dcis.sentinel-node-setting.v3.r3",
+    "choiceId": "correct_3",
+    "choiceLabel": "Schedule sentinel-node biopsy at the forthcoming operation",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.gs028c.dcis.b-oncoplastic-mapping",
+    "nodeId": "node.gs028c.dcis.b-oncoplastic-mapping.1",
+    "questionVariantId": "question.dcis.sentinel-node-setting.v3.r3",
+    "choiceId": "choice.qf2.20261104.f10.d1",
+    "choiceLabel": "Schedule sentinel-node biopsy if final pathology reveals invasion",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.gs028c.acute-cholecystitis.a-persistent-suspicion",
+    "nodeId": "node.gs028c.acute-cholecystitis.a-persistent-suspicion.1",
+    "questionVariantId": "question.cholecystitis.hida-after-equivocal-ultrasound.v4.r3",
+    "choiceId": "correct_4",
+    "choiceLabel": "Magnetic resonance cholangiopancreatography",
+    "timingProfileId": "timing.test.mrcp",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "external_only"
+    }
+  },
+  {
+    "caseId": "case.gs028c.acute-cholecystitis.a-persistent-suspicion",
+    "nodeId": "node.gs028c.acute-cholecystitis.a-persistent-suspicion.1",
+    "questionVariantId": "question.cholecystitis.hida-after-equivocal-ultrasound.v4.r3",
+    "choiceId": "choice.qf2.20261104.f12.d1",
+    "choiceLabel": "Hepatobiliary scintigraphy",
+    "timingProfileId": "timing.test.nuclear_imaging",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "external_only"
+    }
+  },
+  {
+    "caseId": "case.gs028c.acute-cholecystitis.a-persistent-suspicion",
+    "nodeId": "node.gs028c.acute-cholecystitis.a-persistent-suspicion.1",
+    "questionVariantId": "question.cholecystitis.hida-after-equivocal-ultrasound.v4.r3",
+    "choiceId": "choice.qf2.20261104.f12.d2",
+    "choiceLabel": "Endoscopic retrograde cholangiopancreatography",
+    "timingProfileId": "timing.test.ercp",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "external_only"
+    }
+  },
+  {
+    "caseId": "case.gs028b.differentiated-thyroid-cancer.a-completed-negative",
+    "nodeId": "node.gs028b.differentiated-thyroid-cancer.a-completed-negative.1",
+    "questionVariantId": "question.differentiated-thyroid-cancer.preoperative-nodal-ultrasound.v4.r3",
+    "choiceId": "correct_4",
+    "choiceLabel": "Node aspiration for cytology and thyroglobulin measurement",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.gs028b.differentiated-thyroid-cancer.a-completed-negative",
+    "nodeId": "node.gs028b.differentiated-thyroid-cancer.a-completed-negative.1",
+    "questionVariantId": "question.differentiated-thyroid-cancer.preoperative-nodal-ultrasound.v4.r3",
+    "choiceId": "choice.qf2.20261104.f16.d1",
+    "choiceLabel": "Node aspiration for cytology and flow-cytometric assessment",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.gs028b.differentiated-thyroid-cancer.a-completed-negative",
+    "nodeId": "node.gs028b.differentiated-thyroid-cancer.a-completed-negative.1",
+    "questionVariantId": "question.differentiated-thyroid-cancer.preoperative-nodal-ultrasound.v4.r3",
+    "choiceId": "choice.qf2.20261104.f16.d2",
+    "choiceLabel": "Node aspiration for cytology and microbiological culture",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.gs028c.palpable-breast.b-surgeon-discordance",
+    "nodeId": "node.gs028c.palpable-breast.b-surgeon-discordance.1",
+    "questionVariantId": "question.palpable-breast.suspicious-mass-biopsy-despite-negative-imaging.v4.r3",
+    "choiceId": "correct_4",
+    "choiceLabel": "Arrange examination-guided tissue sampling",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.gs028c.palpable-breast.b-surgeon-discordance",
+    "nodeId": "node.gs028c.palpable-breast.b-surgeon-discordance.1",
+    "questionVariantId": "question.palpable-breast.suspicious-mass-biopsy-despite-negative-imaging.v4.r3",
+    "choiceId": "choice.qf2.20261104.f17.d1",
+    "choiceLabel": "Arrange contrast-enhanced breast MRI",
+    "timingProfileId": "timing.test.breast_mri",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  }
+];
+// END QUESTION FLAGS ROUND2 20261104 EXACT RECORDS
+
+// BEGIN QUESTION BANK BATCH2A 20261104 EXACT RECORDS
+/** Version-specific existing-service gates and non-execution previews; no routing policy change. */
+const questionBankBatch2aRecords: ExactTestChoiceOrderRecord[] = [
+  {
+    "caseId": "case.achalasia.night-regurgitation",
+    "nodeId": "node.achalasia.night-regurgitation.1",
+    "questionVariantId": "question.achalasia.high-resolution-manometry.v2.r7",
+    "choiceId": "manometry_2",
+    "choiceLabel": "Repeat standard high-resolution esophageal manometry",
+    "timingProfileId": "timing.test.esophageal_manometry",
+    "disposition": {
+      "kind": "result_gate_route_override",
+      "serviceId": "service.esophageal_manometry",
+      "allowedRouteIds": [
+        "route.esophageal_manometry.outsourced"
+      ]
+    }
+  },
+  {
+    "caseId": "case.achalasia.night-regurgitation",
+    "nodeId": "node.achalasia.night-regurgitation.1",
+    "questionVariantId": "question.achalasia.high-resolution-manometry.v2.r7",
+    "choiceId": "choice.qbp2a.20261104.b2a03.d1",
+    "choiceLabel": "Obtain a timed barium esophagram with a tablet",
+    "timingProfileId": "timing.test.contrast_swallow",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.achalasia.night-regurgitation",
+    "nodeId": "node.achalasia.night-regurgitation.1",
+    "questionVariantId": "question.achalasia.high-resolution-manometry.v2.r7",
+    "choiceId": "choice.qbp2a.20261104.b2a03.d2",
+    "choiceLabel": "Obtain ambulatory esophageal pH-impedance monitoring",
+    "timingProfileId": "timing.test.ambulatory_reflux_monitoring",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.inguinal-hernia.standing-shift",
+    "nodeId": "node.inguinal-hernia.standing-shift.2",
+    "questionVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v4.r9",
+    "choiceId": "choice.qbp2a.20261104.b2a05.d2",
+    "choiceLabel": "Repeat targeted dynamic groin ultrasonography",
+    "timingProfileId": "timing.test.ultrasound",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.inguinal-hernia.running-discomfort",
+    "nodeId": "node.inguinal-hernia.running-discomfort.1",
+    "questionVariantId": "question.inguinal-hernia.equivocal-exam-ultrasound.v2.r7",
+    "choiceId": "dynamic_ultrasound_2",
+    "choiceLabel": "Repeat dynamic groin ultrasound",
+    "timingProfileId": "timing.test.ultrasound",
+    "disposition": {
+      "kind": "result_gate_route_override",
+      "serviceId": "service.ultrasound",
+      "allowedRouteIds": [
+        "route.ultrasound.outsourced",
+        "route.ultrasound.in_house"
+      ]
+    }
+  },
+  {
+    "caseId": "case.inguinal-hernia.running-discomfort",
+    "nodeId": "node.inguinal-hernia.running-discomfort.1",
+    "questionVariantId": "question.inguinal-hernia.equivocal-exam-ultrasound.v2.r7",
+    "choiceId": "choice.qbp2a.20261104.b2a06.d1",
+    "choiceLabel": "Obtain dynamic groin MRI",
+    "timingProfileId": "timing.test.mri",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.inguinal-hernia.running-discomfort",
+    "nodeId": "node.inguinal-hernia.running-discomfort.1",
+    "questionVariantId": "question.inguinal-hernia.equivocal-exam-ultrasound.v2.r7",
+    "choiceId": "choice.qbp2a.20261104.b2a06.d2",
+    "choiceLabel": "Obtain contrast-enhanced pelvic CT",
+    "timingProfileId": "timing.test.ct",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.inguinal-hernia.caregiving-strain",
+    "nodeId": "node.inguinal-hernia.caregiving-strain.2",
+    "questionVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v3.r9",
+    "choiceId": "choice.qbp2a.20261104.b2a08.d2",
+    "choiceLabel": "Repeat targeted dynamic groin ultrasonography",
+    "timingProfileId": "timing.test.ultrasound",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.pigmented-skin-lesion.forearm-change",
+    "nodeId": "node.pigmented-skin-lesion.forearm-change.1",
+    "questionVariantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v4.r9",
+    "choiceId": "excisional_4",
+    "choiceLabel": "Perform a narrow-margin excisional biopsy",
+    "timingProfileId": "timing.test.excisional_biopsy",
+    "disposition": {
+      "kind": "result_gate_route_override",
+      "serviceId": "service.skin_excisional_biopsy",
+      "allowedRouteIds": [
+        "route.skin_excisional_biopsy.in_house",
+        "route.skin_excisional_biopsy.outsourced"
+      ]
+    }
+  },
+  {
+    "caseId": "case.pigmented-skin-lesion.forearm-change",
+    "nodeId": "node.pigmented-skin-lesion.forearm-change.1",
+    "questionVariantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v4.r9",
+    "choiceId": "choice.qbp2a.20261104.b2a09.d1",
+    "choiceLabel": "Perform a punch biopsy of the darker portion",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.pigmented-skin-lesion.forearm-change",
+    "nodeId": "node.pigmented-skin-lesion.forearm-change.1",
+    "questionVariantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v4.r9",
+    "choiceId": "choice.qbp2a.20261104.b2a09.d2",
+    "choiceLabel": "Request deeper histological sections from the block",
+    "timingProfileId": "timing.test.pathology_review",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.adrenal-incidentaloma.small-adrenal-adenoma",
+    "nodeId": "node.adrenal-incidentaloma.small-adrenal-adenoma.1",
+    "questionVariantId": "question.adrenal-incidentaloma.one-mg-dst.v4.r2",
+    "choiceId": "dst_4",
+    "choiceLabel": "1-mg overnight dexamethasone test",
+    "timingProfileId": "timing.test.dexamethasone_suppression",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.adrenal-incidentaloma.small-adrenal-adenoma",
+    "nodeId": "node.adrenal-incidentaloma.small-adrenal-adenoma.1",
+    "questionVariantId": "question.adrenal-incidentaloma.one-mg-dst.v4.r2",
+    "choiceId": "choice.qbp2a.20261104.b2a11.d1",
+    "choiceLabel": "Late-night salivary cortisol measurement",
+    "timingProfileId": "timing.test.basic_labs",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.adrenal-incidentaloma.small-adrenal-adenoma",
+    "nodeId": "node.adrenal-incidentaloma.small-adrenal-adenoma.1",
+    "questionVariantId": "question.adrenal-incidentaloma.one-mg-dst.v4.r2",
+    "choiceId": "choice.qbp2a.20261104.b2a11.d2",
+    "choiceLabel": "Urinary free cortisol measurement",
+    "timingProfileId": "timing.test.twenty_four_hour_protocol",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  }
+];
+// END QUESTION BANK BATCH2A 20261104 EXACT RECORDS
+
+// BEGIN QUESTION FLAGS ROUND3 20261104 EXACT RECORDS
+/** Retrospective/outside or planned studies; retained old tuples remain exact. */
+const questionFlagRound3Records: ExactTestChoiceOrderRecord[] = [
+  {
+    "caseId": "case.gs028e.mis-principles.c3-phrenic-pathway",
+    "nodeId": "node.gs028e.mis-principles.c3-phrenic-pathway.1",
+    "questionVariantId": "question.postlaparoscopy.benign-referred-shoulder-pain.v2.r4",
+    "choiceId": "correct_2",
+    "choiceLabel": "Endoscopic transpapillary plastic-stent placement",
+    "timingProfileId": "timing.test.ercp",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "external_only"
+    }
+  },
+  {
+    "caseId": "case.gs028e.mis-principles.c3-phrenic-pathway",
+    "nodeId": "node.gs028e.mis-principles.c3-phrenic-pathway.1",
+    "questionVariantId": "question.postlaparoscopy.benign-referred-shoulder-pain.v2.r4",
+    "choiceId": "choice.qf3.20261104.f02.d1",
+    "choiceLabel": "Percutaneous exchange for a larger drainage catheter",
+    "timingProfileId": "timing.test.clinical_procedure",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "external_only"
+    }
+  },
+  {
+    "caseId": "case.gs028.varicose-veins.b-limited-mobility",
+    "nodeId": "node.gs028.varicose-veins.b-limited-mobility.1",
+    "questionVariantId": "question.varicose-veins.intervention-referral-after-axial-reflux.v4.r4",
+    "choiceId": "correct_4",
+    "choiceLabel": "Reflux mapping of the superficial and deep leg veins",
+    "timingProfileId": "timing.test.ultrasound",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "external_only"
+    }
+  },
+  {
+    "caseId": "case.gs028.varicose-veins.b-limited-mobility",
+    "nodeId": "node.gs028.varicose-veins.b-limited-mobility.1",
+    "questionVariantId": "question.varicose-veins.intervention-referral-after-axial-reflux.v4.r4",
+    "choiceId": "choice.qf3.20261104.f03.d1",
+    "choiceLabel": "Obstruction mapping of the superficial and deep leg veins",
+    "timingProfileId": "timing.test.ultrasound",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "external_only"
+    }
+  },
+  {
+    "caseId": "case.gs028.varicose-veins.b-limited-mobility",
+    "nodeId": "node.gs028.varicose-veins.b-limited-mobility.1",
+    "questionVariantId": "question.varicose-veins.intervention-referral-after-axial-reflux.v4.r4",
+    "choiceId": "choice.qf3.20261104.f03.d2",
+    "choiceLabel": "Reflux mapping of the visible calf tributaries",
+    "timingProfileId": "timing.test.ultrasound",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "external_only"
+    }
+  },
+  {
+    "caseId": "case.gs028.varicose-veins.b-limited-mobility",
+    "nodeId": "node.gs028.varicose-veins.b-limited-mobility.1",
+    "questionVariantId": "question.varicose-veins.intervention-referral-after-axial-reflux.v4.r4",
+    "choiceId": "choice.qf3.20261104.f03.d3",
+    "choiceLabel": "Obstruction mapping of the visible calf tributaries",
+    "timingProfileId": "timing.test.ultrasound",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "external_only"
+    }
+  },
+  {
+    "caseId": "case.gs028f.neck-mass.c2-completed-needle-record",
+    "nodeId": "node.gs028f.neck-mass.c2-completed-needle-record.1",
+    "questionVariantId": "question.gs028f.head-neck.initial-fna-not-open-biopsy.v4.r4",
+    "choiceId": "correct_4",
+    "choiceLabel": "Ultrasound-guided core biopsy of mural tissue",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.gs028f.neck-mass.c2-completed-needle-record",
+    "nodeId": "node.gs028f.neck-mass.c2-completed-needle-record.1",
+    "questionVariantId": "question.gs028f.head-neck.initial-fna-not-open-biopsy.v4.r4",
+    "choiceId": "choice.qf3.20261104.f05.d1",
+    "choiceLabel": "Open excisional biopsy of the entire neck mass",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.gs028f.neck-mass.c2-completed-needle-record",
+    "nodeId": "node.gs028f.neck-mass.c2-completed-needle-record.1",
+    "questionVariantId": "question.gs028f.head-neck.initial-fna-not-open-biopsy.v4.r4",
+    "choiceId": "choice.qf3.20261104.f05.d2",
+    "choiceLabel": "Interval ultrasound surveillance of the neck mass",
+    "timingProfileId": "timing.test.ultrasound",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "specialist_or_unsupported_service"
+    }
+  },
+  {
+    "caseId": "case.gs028c.dcis.b-oncoplastic-mapping",
+    "nodeId": "node.gs028c.dcis.b-oncoplastic-mapping.1",
+    "questionVariantId": "question.dcis.sentinel-node-setting.v3.r4",
+    "choiceId": "correct_3",
+    "choiceLabel": "Left sentinel-node biopsy",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.gs028c.dcis.b-oncoplastic-mapping",
+    "nodeId": "node.gs028c.dcis.b-oncoplastic-mapping.1",
+    "questionVariantId": "question.dcis.sentinel-node-setting.v3.r4",
+    "choiceId": "choice.qf3.20261104.f10.d1",
+    "choiceLabel": "Right sentinel-node biopsy",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.gs028c.dcis.b-oncoplastic-mapping",
+    "nodeId": "node.gs028c.dcis.b-oncoplastic-mapping.1",
+    "questionVariantId": "question.dcis.sentinel-node-setting.v3.r4",
+    "choiceId": "choice.qf3.20261104.f10.d2",
+    "choiceLabel": "Left and right sentinel-node biopsy",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.gs028d.anesthesia.a-validated-not-impression",
+    "nodeId": "node.gs028d.anesthesia.a-validated-not-impression.1",
+    "questionVariantId": "question.preoperative-osa.validated-risk-screening.v4.r4",
+    "choiceId": "choice.qf3.20261104.f13.d2",
+    "choiceLabel": "Obtain diagnostic polysomnography before planning precautions",
+    "timingProfileId": "timing.test.overnight_protocol",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.gs028b.differentiated-thyroid-cancer.a-completed-negative",
+    "nodeId": "node.gs028b.differentiated-thyroid-cancer.a-completed-negative.1",
+    "questionVariantId": "question.differentiated-thyroid-cancer.preoperative-nodal-ultrasound.v4.r4",
+    "choiceId": "correct_4",
+    "choiceLabel": "Resample the neck node by an extrathyroidal route",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.gs028b.differentiated-thyroid-cancer.a-completed-negative",
+    "nodeId": "node.gs028b.differentiated-thyroid-cancer.a-completed-negative.1",
+    "questionVariantId": "question.differentiated-thyroid-cancer.preoperative-nodal-ultrasound.v4.r4",
+    "choiceId": "choice.qf3.20261104.f16.d2",
+    "choiceLabel": "Book thyroidectomy and nodal ultrasound surveillance",
+    "timingProfileId": "timing.test.ultrasound",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.gs028c.palpable-breast.b-surgeon-discordance",
+    "nodeId": "node.gs028c.palpable-breast.b-surgeon-discordance.1",
+    "questionVariantId": "question.palpable-breast.suspicious-mass-biopsy-despite-negative-imaging.v4.r4",
+    "choiceId": "correct_4",
+    "choiceLabel": "Repeat tissue sampling under palpation guidance",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.gs028c.palpable-breast.b-surgeon-discordance",
+    "nodeId": "node.gs028c.palpable-breast.b-surgeon-discordance.1",
+    "questionVariantId": "question.palpable-breast.suspicious-mass-biopsy-despite-negative-imaging.v4.r4",
+    "choiceId": "choice.qf3.20261104.f17.d1",
+    "choiceLabel": "Repeat tissue sampling under ultrasound guidance",
+    "timingProfileId": "timing.test.biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.gs028c.palpable-breast.b-surgeon-discordance",
+    "nodeId": "node.gs028c.palpable-breast.b-surgeon-discordance.1",
+    "questionVariantId": "question.palpable-breast.suspicious-mass-biopsy-despite-negative-imaging.v4.r4",
+    "choiceId": "choice.qf3.20261104.f17.d2",
+    "choiceLabel": "Obtain breast MRI before repeat tissue sampling",
+    "timingProfileId": "timing.test.mri",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  }
+];
+// END QUESTION FLAGS ROUND3 20261104 EXACT RECORDS
+
+// BEGIN QUESTION BANK BATCH2A ROUND2 20261104 EXACT RECORDS
+/** Version-specific existing-service gates and advisory nonexecution previews. */
+const questionBankBatch2aRound2Records: ExactTestChoiceOrderRecord[] = [
+  {
+    "caseId": "case.achalasia.night-regurgitation",
+    "nodeId": "node.achalasia.night-regurgitation.2",
+    "questionVariantId": "question.achalasia.manometric-recognition.v2.r6",
+    "choiceId": "achalasia_2",
+    "choiceLabel": "Endoscopic ultrasound with wall sampling",
+    "timingProfileId": "timing.test.endoscopy_with_sampling",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.achalasia.night-regurgitation",
+    "nodeId": "node.achalasia.night-regurgitation.2",
+    "questionVariantId": "question.achalasia.manometric-recognition.v2.r6",
+    "choiceId": "choice.qbp2ar2.20261104.b2a02.d1",
+    "choiceLabel": "Functional lumen imaging probe distensibility study",
+    "timingProfileId": "timing.test.upper_endoscopy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.achalasia.night-regurgitation",
+    "nodeId": "node.achalasia.night-regurgitation.2",
+    "questionVariantId": "question.achalasia.manometric-recognition.v2.r6",
+    "choiceId": "choice.qbp2ar2.20261104.b2a02.d2",
+    "choiceLabel": "Timed barium esophagram with a tablet",
+    "timingProfileId": "timing.test.contrast_swallow",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.achalasia.night-regurgitation",
+    "nodeId": "node.achalasia.night-regurgitation.1",
+    "questionVariantId": "question.achalasia.high-resolution-manometry.v2.r8",
+    "choiceId": "manometry_2",
+    "choiceLabel": "Separated single-water-swallow pressure series",
+    "timingProfileId": "timing.test.esophageal_manometry",
+    "disposition": {
+      "kind": "result_gate_route_override",
+      "serviceId": "service.esophageal_manometry",
+      "allowedRouteIds": [
+        "route.esophageal_manometry.outsourced"
+      ]
+    }
+  },
+  {
+    "caseId": "case.achalasia.night-regurgitation",
+    "nodeId": "node.achalasia.night-regurgitation.1",
+    "questionVariantId": "question.achalasia.high-resolution-manometry.v2.r8",
+    "choiceId": "choice.qbp2ar2.20261104.b2a03.d1",
+    "choiceLabel": "Repeated multiple-rapid-swallow pressure series",
+    "timingProfileId": "timing.test.esophageal_manometry",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.achalasia.night-regurgitation",
+    "nodeId": "node.achalasia.night-regurgitation.1",
+    "questionVariantId": "question.achalasia.high-resolution-manometry.v2.r8",
+    "choiceId": "choice.qbp2ar2.20261104.b2a03.d2",
+    "choiceLabel": "Continuous rapid-water-drinking pressure series",
+    "timingProfileId": "timing.test.esophageal_manometry",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.achalasia.slow-meals",
+    "nodeId": "node.achalasia.slow-meals.1",
+    "questionVariantId": "question.achalasia.high-resolution-manometry.v3.r10",
+    "choiceId": "manometry_3",
+    "choiceLabel": "Reduced contraction reserve; obtain a timed barium esophagram",
+    "timingProfileId": "timing.test.contrast_swallow",
+    "disposition": {
+      "kind": "result_gate_route_override",
+      "serviceId": "service.contrast_swallow",
+      "allowedRouteIds": [
+        "route.contrast_swallow.outsourced"
+      ]
+    }
+  },
+  {
+    "caseId": "case.achalasia.slow-meals",
+    "nodeId": "node.achalasia.slow-meals.1",
+    "questionVariantId": "question.achalasia.high-resolution-manometry.v3.r10",
+    "choiceId": "choice.qbp2ar2.20261104.b2a04.d2",
+    "choiceLabel": "Preserved contraction reserve; obtain a timed barium esophagram",
+    "timingProfileId": "timing.test.contrast_swallow",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.inguinal-hernia.running-discomfort",
+    "nodeId": "node.inguinal-hernia.running-discomfort.1",
+    "questionVariantId": "question.inguinal-hernia.equivocal-exam-ultrasound.v2.r8",
+    "choiceId": "dynamic_ultrasound_2",
+    "choiceLabel": "Standing strain; cine ultrasound of groin canals",
+    "timingProfileId": "timing.test.ultrasound",
+    "disposition": {
+      "kind": "result_gate_route_override",
+      "serviceId": "service.ultrasound",
+      "allowedRouteIds": [
+        "route.ultrasound.outsourced",
+        "route.ultrasound.in_house"
+      ]
+    }
+  },
+  {
+    "caseId": "case.inguinal-hernia.running-discomfort",
+    "nodeId": "node.inguinal-hernia.running-discomfort.1",
+    "questionVariantId": "question.inguinal-hernia.equivocal-exam-ultrasound.v2.r8",
+    "choiceId": "choice.qbp2ar2.20261104.b2a06.d1",
+    "choiceLabel": "Supine strain; cine ultrasound of groin canals",
+    "timingProfileId": "timing.test.ultrasound",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.inguinal-hernia.running-discomfort",
+    "nodeId": "node.inguinal-hernia.running-discomfort.1",
+    "questionVariantId": "question.inguinal-hernia.equivocal-exam-ultrasound.v2.r8",
+    "choiceId": "choice.qbp2ar2.20261104.b2a06.d2",
+    "choiceLabel": "Standing compression; Doppler ultrasound of groin veins",
+    "timingProfileId": "timing.test.ultrasound",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.inguinal-hernia.running-discomfort",
+    "nodeId": "node.inguinal-hernia.running-discomfort.1",
+    "questionVariantId": "question.inguinal-hernia.equivocal-exam-ultrasound.v2.r8",
+    "choiceId": "choice.qbp2ar2.20261104.b2a06.d3",
+    "choiceLabel": "Supine compression; Doppler ultrasound of groin veins",
+    "timingProfileId": "timing.test.ultrasound",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.pigmented-skin-lesion.forearm-change",
+    "nodeId": "node.pigmented-skin-lesion.forearm-change.1",
+    "questionVariantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v4.r10",
+    "choiceId": "excisional_4",
+    "choiceLabel": "Narrow-margin excision of the residual patch",
+    "timingProfileId": "timing.test.excisional_biopsy",
+    "disposition": {
+      "kind": "result_gate_route_override",
+      "serviceId": "service.skin_excisional_biopsy",
+      "allowedRouteIds": [
+        "route.skin_excisional_biopsy.in_house",
+        "route.skin_excisional_biopsy.outsourced"
+      ]
+    }
+  },
+  {
+    "caseId": "case.pigmented-skin-lesion.forearm-change",
+    "nodeId": "node.pigmented-skin-lesion.forearm-change.1",
+    "questionVariantId": "question.pigmented-skin-lesion.complete-diagnostic-biopsy.v4.r10",
+    "choiceId": "choice.qbp2ar2.20261104.b2a09.d1",
+    "choiceLabel": "Deep punch biopsy through the medial focus",
+    "timingProfileId": "timing.test.cutaneous_lesion_biopsy",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.adrenal-incidentaloma.small-adrenal-adenoma",
+    "nodeId": "node.adrenal-incidentaloma.small-adrenal-adenoma.1",
+    "questionVariantId": "question.adrenal-incidentaloma.one-mg-dst.v4.r3",
+    "choiceId": "dst_4",
+    "choiceLabel": "Basal plasma corticotropin measurement",
+    "timingProfileId": "timing.test.basic_labs",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.adrenal-incidentaloma.small-adrenal-adenoma",
+    "nodeId": "node.adrenal-incidentaloma.small-adrenal-adenoma.1",
+    "questionVariantId": "question.adrenal-incidentaloma.one-mg-dst.v4.r3",
+    "choiceId": "choice.qbp2ar2.20261104.b2a11.d1",
+    "choiceLabel": "High-dose dexamethasone suppression study",
+    "timingProfileId": "timing.test.dexamethasone_suppression",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  },
+  {
+    "caseId": "case.adrenal-incidentaloma.small-adrenal-adenoma",
+    "nodeId": "node.adrenal-incidentaloma.small-adrenal-adenoma.1",
+    "questionVariantId": "question.adrenal-incidentaloma.one-mg-dst.v4.r3",
+    "choiceId": "choice.qbp2ar2.20261104.b2a11.d2",
+    "choiceLabel": "Corticotropin-releasing hormone stimulation study",
+    "timingProfileId": "timing.test.basic_labs",
+    "disposition": {
+      "kind": "not_executed",
+      "reason": "future_planned"
+    }
+  }
+];
+// END QUESTION BANK BATCH2A ROUND2 20261104 EXACT RECORDS
+
 export const EXACT_TEST_CHOICE_ORDER_RECORDS: readonly ExactTestChoiceOrderRecord[] = [
   ...questionQualityAdversarialR520261102Records,
   ...questionQualityAdversarialR420261102Records,
@@ -1104,7 +2181,40 @@ export const EXACT_TEST_CHOICE_ORDER_RECORDS: readonly ExactTestChoiceOrderRecor
       choice.timing.kind === "test" ? [record(entry.caseId, entry.nodeId, entry.questionVariantId,
         choice.choiceId, choice.choiceLabel, choice.timing.timingProfileId,
         { kind: "not_executed", reason: "external_only" })] : []) : []),
+  ...questionFlag20261104Records,
+  ...questionFlagRound2Records,
+  ...questionBankBatch2aRecords,
+  // BEGIN N1 append — presentation-only clinic/outside-plan choices.
+  ...QUESTION_NEW_N1_TEST_ORDER_RECORDS,
+  // END N1 append.
+  ...questionFlagRound3Records,
+  // BEGIN N2 append — no new executed service or result gate.
+  ...QUESTION_NEW_N2_TEST_ORDER_RECORDS,
+  // END N2 append.
+  ...questionBankBatch2aRound2Records,
+  // BEGIN N1 ROUND2 append — keep original N1 and N2 records for frozen charts.
+  ...QUESTION_NEW_N1_ROUND2_TEST_ORDER_RECORDS,
+  // END N1 ROUND2 append.
+  ...QUESTION_BANK_BATCH2B_TEST_ORDER_RECORDS,
+  // BEGIN N2 ROUND2 append — retain original/frozen order records.
+  ...QUESTION_NEW_N2_ROUND2_TEST_ORDER_RECORDS,
+  // END N2 ROUND2 append.
+  ...QUESTION_BANK_BATCH2A_ROUND3_TEST_ORDER_RECORDS,
+  // BEGIN N1 ROUND3 exact-order append
+  ...QUESTION_NEW_N1_ROUND3_TEST_ORDER_RECORDS,
+  // END N1 ROUND3 exact-order append
+  // BEGIN N2 ROUND3 exact-order append
+  ...QUESTION_NEW_N2_ROUND3_TEST_ORDER_RECORDS,
+  // END N2 ROUND3 exact-order append
+  ...QUESTION_BANK_BATCH2B_ROUND2_TEST_ORDER_RECORDS,
+  // BEGIN N3 exact-order append - external-only records, old identities retained.
+  ...QUESTION_NEW_N3_TEST_ORDER_RECORDS,
+  // END N3 exact-order append.
 ];
+
+// BEGIN N3 exact-order append - external-only records, old identities retained.
+import { QUESTION_NEW_N3_TEST_ORDER_RECORDS } from "./question-new-n3-test-orders";
+// END N3 exact-order append.
 
 const recordByExactKey = new Map(
   EXACT_TEST_CHOICE_ORDER_RECORDS.map((entry) => [

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { validateSyntheticClinicalRelease } from "../schema";
-import { SYNTHETIC_CLINICAL_RELEASE as releaseWithLevel3 } from "../synthetic-content";
+import { QUESTION_NEW_N1_PRE_RELEASE as releaseWithLevel3 } from "../synthetic-content";
 // Keep this historical batch's inventory proof scoped to its original bank.
 // Later-batch admission/protected-intake checks live in their own tests.
 const SYNTHETIC_CLINICAL_RELEASE = { ...releaseWithLevel3,

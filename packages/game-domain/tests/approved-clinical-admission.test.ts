@@ -1,4 +1,10 @@
+import { QUESTION_NEW_N2_ROUND3_NEW_CONCEPT_VERSIONS } from "@gamify-surgery/clinical-content";
+import { QUESTION_NEW_N1_ROUND3_NEW_CONCEPT_VERSIONS } from "@gamify-surgery/clinical-content";
+import { QUESTION_FLAG_TESTED_CONCEPTS, QUESTION_FLAG_ROUND2_TESTED_CONCEPTS, QUESTION_FLAG_ROUND3_TESTED_CONCEPTS } from "@gamify-surgery/clinical-content";
+import { QUESTION_NEW_N1_TESTED_CONCEPTS, QUESTION_NEW_N2_TESTED_CONCEPTS } from "@gamify-surgery/clinical-content";
+import { QUESTION_NEW_N1_ROUND2_NEW_CONCEPT_VERSIONS } from "@gamify-surgery/clinical-content";
 import { describe, expect, it } from "vitest";
+import { QUESTION_NEW_N2_ROUND2_NEW_CONCEPT_VERSIONS } from "@gamify-surgery/clinical-content";
 import { QUESTION_QUALITY_ADVERSARIAL_R7_TESTED_CONCEPTS, QUESTION_QUALITY_ADVERSARIAL_R6_TESTED_CONCEPTS, QUESTION_QUALITY_ADVERSARIAL_R5_TESTED_CONCEPTS, QUESTION_QUALITY_ADVERSARIAL_R4_TESTED_CONCEPTS, GS028_20261007_LEVEL3_TESTED_CONCEPTS, GS028_20261007_VARIETY2_TESTED_CONCEPTS, PEDIATRIC_CLINIC_TESTED_CONCEPTS, PEDIATRIC_CLINIC_BATCH_MANIFEST, VARIETY3_TESTED_CONCEPTS } from "@gamify-surgery/clinical-content";
 import { BOARD_EXPANSION_20260912_TESTED_CONCEPTS, BOARD_EXPANSION_TESTED_CONCEPTS, BREAD_BUTTER_20260917_TESTED_CONCEPTS, BRIEF_EARLY_LEVELS_20260917_TESTED_CONCEPTS, EARLY_LEVELS_20260913_TESTED_CONCEPTS, GS028_20260928_TESTED_CONCEPTS, GS028_20260929_TESTED_CONCEPTS, GS028_20261002_TESTED_CONCEPTS, GS028_20261003_TESTED_CONCEPTS, GS028_20261007_TESTED_CONCEPTS, GS028_STATS_ETHICS_20260929_TESTED_CONCEPTS, LEVEL_TWO_RUNTIME_CONCEPTS, SURGERY_CENTER_TESTED_CONCEPTS, TWENTY_CONCEPT_BATCH_CONCEPTS } from "@gamify-surgery/clinical-content";
 import {
@@ -215,6 +221,55 @@ describe("approved clinical admission boundaries", () => {
       ...QUESTION_QUALITY_ADVERSARIAL_R5_TESTED_CONCEPTS.map(concept => concept.id),
       ...QUESTION_QUALITY_ADVERSARIAL_R6_TESTED_CONCEPTS.map(concept => concept.id),
       ...QUESTION_QUALITY_ADVERSARIAL_R7_TESTED_CONCEPTS.map(concept => concept.id),
+      ...QUESTION_FLAG_TESTED_CONCEPTS.map(concept => concept.id),
+      ...QUESTION_FLAG_ROUND2_TESTED_CONCEPTS.map(concept => concept.id),
+      "concept.achalasia.physiology-directed-treatment.v1",
+      "concept.pigmented-skin-lesion.complete-diagnostic-biopsy.v5",
+      ...QUESTION_FLAG_ROUND3_TESTED_CONCEPTS.map(concept => concept.id),
+      ...QUESTION_NEW_N1_TESTED_CONCEPTS.map(concept => concept.id),
+      ...QUESTION_NEW_N2_TESTED_CONCEPTS.map(concept => concept.id),
+      // Six changed scored objectives; old cards and definitions remain admitted.
+      "concept.achalasia.secondary-junction-lesion-assessment.v1",
+      "concept.esophageal-physiology.reserve-before-junction-intervention.v1",
+      "concept.groin-ultrasound.symptom-provocation-protocol.v1",
+      "concept.groin-hernia.femoral-defect-repair-priority.v1",
+      "concept.quality-improvement.source-by-method-next-pilot.v1",
+      "concept.adrenal-incidentaloma.cortisol-etiologic-classification.v1",
+      // Batch 2a final round: materially changed scores, with old histories retained.
+      "concept.esophageal-physiology.reserve-acquisition-integrity.v1",
+      "concept.esophageal-physiology.integrated-pressure-report.v2",
+      "concept.inguinal-hernia.recurrence-after-anterior-repair.v1",
+      "concept.groin-ultrasound.proximal-neck-localization.v2",
+      "concept.adrenal-incidentaloma.acth-directed-source-imaging.v2",
+      // N1 round two retains 32 meanings and appends only six materially changed constructs.
+      ...QUESTION_NEW_N1_ROUND2_NEW_CONCEPT_VERSIONS.map(concept => concept.id),
+        // Batch 2b: new scored constructs remain drafts; prior histories persist.
+        "concept.hyperacute-rejection.event-and-compatibility-review.v1",
+        "concept.dtc.representative-node-target-and-assay.v1",
+        "concept.palpable-breast.site-concordant-imaging.v1",
+        "concept.perianal-abscess.source-control-and-antibiotic-selection.v1",
+        "concept.immunology.graft-evidence-to-review-focus.v1",
+        "concept.metabolic-acidosis.corrected-gap-directed-evaluation.v1",
+        "concept.preoperative-nutrition.risk-before-route-selection.v1",
+      // N2 round two: draft versions, without transfer/reset of prior histories.
+      ...QUESTION_NEW_N2_ROUND2_NEW_CONCEPT_VERSIONS.map(concept => concept.id),
+      // N1 round three: 17 separate changed meanings; earlier histories are retained.
+      ...QUESTION_NEW_N1_ROUND3_NEW_CONCEPT_VERSIONS.map(concept => concept.id),
+      ...QUESTION_NEW_N2_ROUND3_NEW_CONCEPT_VERSIONS.map((concept) => concept.id),
+      // Manager-accepted batch 2b / G06 meanings; exact inventory additions.
+      "concept.transplant.class-ii-crossmatch-target-and-window.v1",
+      "concept.breast.inflammatory-phenotype-after-neoadjuvant-response.v1",
+      "concept.mesenteric-ischaemia.post-revascularization-bowel-staging.v1",
+      "concept.dialysis-access.symptomatic-central-outflow-assessment.v1",
+      "concept.postoperative-delirium.benzodiazepine-withdrawal-exception.v1",
+      "concept.biliary-pancreatitis.local-complication-before-cholecystectomy.v1",
+      "concept.cholecystectomy.subtotal-type-from-remnant-tissue.v1",
+      "concept.diabetic-ketoacidosis.ongoing-insulin-substrate.v1",
+      "concept.acid-base.euglycaemic-risk-with-mixed-gas.v1",
+      "concept.anorectal-fistula.tract-and-transplant-host-plan.v1",
+      "concept.anorectal-fistula.function-before-low-tract-division.v1",
+      "concept.nutrition.gastric-versus-postpyloric-delivery.v1",
+      "concept.predictive-value.collection-population-denominator.v1",
     ]);
   });
 

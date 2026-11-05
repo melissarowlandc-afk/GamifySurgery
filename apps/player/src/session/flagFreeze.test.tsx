@@ -3,6 +3,7 @@ import { writeFileSync } from "node:fs";
 import { IDBFactory } from "fake-indexeddb";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { PROTOTYPE_DOMAIN_CONTEXT, serializeGameState, type GameState } from "@gamify-surgery/game-domain";
+import { QUESTION_FLAGS_PRE_REVISION_RELEASE } from "@gamify-surgery/clinical-content";
 import { AppShell } from "../AppShell";
 import { AuthAccountContext } from "../auth/AuthAccountContext";
 import MobileShell from "../mobile/MobileShell";
@@ -87,7 +88,9 @@ async function fixture(layout: "phone" | "desktop", employee: boolean, casual: b
   const subjectId = employee ? state.openEmployeeDiscussionId! : state.openChartEncounterId!;
   if (reported) {
     const encounter = Object.values(state.encounters)[0]!;
-    const clinicalCase = PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.find(value => value.decisionNodes.some(node => node.questionVariantId === reportedVariant))!;
+    // This regression deliberately freezes the reported historical v4, even
+    // after a manager-accepted replacement becomes the default fresh question.
+    const clinicalCase = QUESTION_FLAGS_PRE_REVISION_RELEASE.cases.find(value => value.decisionNodes.some(node => node.questionVariantId === reportedVariant))!;
     expect(clinicalCase).toBeDefined();
     expect(clinicalCase.decisionNodes[0]!.questionVariantId).toBe(reportedVariant);
     encounter.frozenCase = structuredClone(clinicalCase);

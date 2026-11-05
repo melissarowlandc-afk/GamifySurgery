@@ -1,4 +1,4 @@
-import { BREAD_BUTTER_20260917_CASES } from "@gamify-surgery/clinical-content";
+import { BREAD_BUTTER_20260917_CASES as authoredCases, SYNTHETIC_CLINICAL_RELEASE } from "@gamify-surgery/clinical-content";
 import { describe, expect, it } from "vitest";
 import {
   createInitialGameState,
@@ -10,6 +10,13 @@ import {
   type GameState,
 } from "../src";
 
+// These tests admit fresh cases. New scored versions must be checked against
+// their current concept, while the original export remains for frozen saves.
+const BREAD_BUTTER_20260917_CASES = authoredCases.map(c => {
+  const current = SYNTHETIC_CLINICAL_RELEASE.cases.find(current => current.id === c.id)!;
+  if (current.earliestFacilityStage !== c.earliestFacilityStage) throw new Error(`Changed facility stage: ${c.id}`);
+  return { ...current, earliestFacilityStage: c.earliestFacilityStage };
+});
 type BreadButterCase = (typeof BREAD_BUTTER_20260917_CASES)[number];
 
 function prepared(seed: string, level: 0 | 1 | 2): GameState {
@@ -310,6 +317,9 @@ describe("September 17 bread-and-butter production flows", () => {
         expect(
           state.learningHistories[node.primaryConceptId]?.reviews,
         ).toHaveLength(1);
+        if (node.primaryConceptId === "concept.perianal-abscess.source-control-and-antibiotic-selection.v1") {
+          expect(state.learningHistories["concept.perianal-abscess.prompt-drainage"]?.reviews).toHaveLength(0);
+        }
       }
     },
   );

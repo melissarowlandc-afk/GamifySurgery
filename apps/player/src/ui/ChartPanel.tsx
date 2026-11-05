@@ -1,3 +1,4 @@
+import { ClinicalImageExhibit } from "./ClinicalImageExhibit";
 import { QuestionFlagControl } from "./QuestionFlagControl";
 import { ClinicalContentNotice } from "./ClinicalContentNotice";
 import type { SubmitQuestionReviewFlag } from "../session/questionReviewFlags";
@@ -246,7 +247,7 @@ function ExhibitCard({
         <span className="cs-eyebrow">Teaching dataset</span>
         {heading ? <span className="cs-exhibit-step">{heading}</span> : null}
       </figcaption>
-      {exhibit.kind === "table" ? (
+      {exhibit.kind === "image" ? <ClinicalImageExhibit exhibit={exhibit} /> : exhibit.kind === "table" ? (
         <div className="cs-exhibit-table" tabIndex={0} role="region" aria-label={exhibit.caption}>
           <table>
             <caption>{exhibit.caption}</caption>

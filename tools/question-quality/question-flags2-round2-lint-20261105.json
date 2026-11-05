@@ -1,0 +1,534 @@
+{
+  "checkedOn": "2026-11-05",
+  "scope": "Seven new round-two exact variants across all canonical/finite-profile contexts, including earlier visible results and feedback. G06 is frozen and independently passed; unmodified source neighbors are reported separately.",
+  "linterVersion": "question-cue-lint.2026-11-04.v8",
+  "totals": {
+    "newVariants": 7,
+    "cases": 6,
+    "profileContexts": 31,
+    "beforeFindings": 3,
+    "afterFindings": 0,
+    "variantsWithFindings": 0
+  },
+  "variants": [
+    {
+      "id": "G01",
+      "variantId": "question.persistent-itp.defer-elective-splenectomy.v3.r2",
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [],
+      "after": [],
+      "beforeCount": 0,
+      "afterCount": 0,
+      "profileContexts": 5
+    },
+    {
+      "id": "G02",
+      "variantId": "question.malignant-hyperthermia-susceptibility.trigger-free-anesthesia-plan.v2.r2",
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [],
+      "after": [],
+      "beforeCount": 0,
+      "afterCount": 0,
+      "profileContexts": 5
+    },
+    {
+      "id": "G03",
+      "variantId": "question.palpable-breast.negative-mammogram-targeted-us.v1.r3",
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [
+        {
+          "id": "2be44d671808b182",
+          "rule": "key-only-word-overlap",
+          "severity": "advisory",
+          "message": "A substantive word appears in the context and key only; clinical relevance may justify it.",
+          "evidence": [
+            {
+              "field": "presentation",
+              "text": "ultrasound",
+              "start": 181,
+              "end": 191
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "ultrasound",
+              "start": 16,
+              "end": 26,
+              "choiceId": "correct_1"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028c.palpable-breast.paired-dense-focal",
+              "profileIds": [
+                "canonical",
+                "profile.gs028c.palpable-breast.paired-dense-focal.female.44"
+              ],
+              "ranges": [
+                {
+                  "start": 181,
+                  "end": 191
+                },
+                {
+                  "start": 16,
+                  "end": 26
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028c.palpable-breast.paired-dense-focal",
+              "profileIds": [
+                "profile.gs028c.palpable-breast.paired-dense-focal.female.58"
+              ],
+              "ranges": [
+                {
+                  "start": 181,
+                  "end": 191
+                },
+                {
+                  "start": 16,
+                  "end": 26
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "7e7d42da60889f95",
+          "rule": "key-test-name-in-context",
+          "severity": "advisory",
+          "message": "A named test/alias in the context identifies the keyed test.",
+          "evidence": [
+            {
+              "field": "presentation",
+              "text": "ultrasound",
+              "start": 181,
+              "end": 191
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "ultrasound",
+              "start": 16,
+              "end": 26,
+              "choiceId": "correct_1"
+            }
+          ],
+          "metrics": {
+            "aliasGroup": "Ultrasound"
+          },
+          "occurrences": [
+            {
+              "caseId": "case.gs028c.palpable-breast.paired-dense-focal",
+              "profileIds": [
+                "canonical",
+                "profile.gs028c.palpable-breast.paired-dense-focal.female.44"
+              ],
+              "ranges": [
+                {
+                  "start": 181,
+                  "end": 191
+                },
+                {
+                  "start": 16,
+                  "end": 26
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028c.palpable-breast.paired-dense-focal",
+              "profileIds": [
+                "profile.gs028c.palpable-breast.paired-dense-focal.female.58"
+              ],
+              "ranges": [
+                {
+                  "start": 181,
+                  "end": 191
+                },
+                {
+                  "start": 16,
+                  "end": 26
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "990266a1fab0e262",
+          "rule": "unexplained-negative-imaging",
+          "severity": "advisory",
+          "message": "Describe what imaging showed or failed to show at the relevant site. A bare negative label does not say whether there was no correlate, benign findings or an inadequate examination.",
+          "evidence": [
+            {
+              "field": "presentation",
+              "text": "mammography is negative",
+              "start": 101,
+              "end": 124
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028c.palpable-breast.paired-dense-focal",
+              "profileIds": [
+                "canonical",
+                "profile.gs028c.palpable-breast.paired-dense-focal.female.44"
+              ],
+              "ranges": [
+                {
+                  "start": 101,
+                  "end": 124
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028c.palpable-breast.paired-dense-focal",
+              "profileIds": [
+                "profile.gs028c.palpable-breast.paired-dense-focal.female.58"
+              ],
+              "ranges": [
+                {
+                  "start": 101,
+                  "end": 124
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "after": [],
+      "beforeCount": 3,
+      "afterCount": 0,
+      "profileContexts": 3
+    },
+    {
+      "id": "G04-R",
+      "variantId": "question.gs028f.gynecology.pregnancy-testing-pelvic-pain.v1.r1",
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [],
+      "after": [],
+      "beforeCount": 0,
+      "afterCount": 0,
+      "profileContexts": 3
+    },
+    {
+      "id": "G05-staging",
+      "variantId": "question.asymptomatic-phpt.three-site-dxa.v1.r2",
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [],
+      "after": [],
+      "beforeCount": 0,
+      "afterCount": 0,
+      "profileContexts": 5
+    },
+    {
+      "id": "G05",
+      "variantId": "question.asymptomatic-phpt.age-based-surgery.v1.r2",
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [],
+      "after": [],
+      "beforeCount": 0,
+      "afterCount": 0,
+      "profileContexts": 5
+    },
+    {
+      "id": "G07",
+      "variantId": "question.ptld.tissue-diagnosis-coordination.v4.r2",
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [],
+      "after": [],
+      "beforeCount": 0,
+      "afterCount": 0,
+      "profileContexts": 5
+    }
+  ],
+  "unmodifiedNeighbors": [
+    {
+      "variantId": "question.palpable-breast.suspicious-mass-biopsy-despite-negative-imaging.v1",
+      "findings": [
+        {
+          "id": "1530dbfa53e52e3c",
+          "rule": "unexplained-negative-imaging",
+          "severity": "advisory",
+          "message": "Describe what imaging showed or failed to show at the relevant site. A bare negative label does not say whether there was no correlate, benign findings or an inadequate examination.",
+          "evidence": [
+            {
+              "field": "stem",
+              "text": "negative mammography",
+              "start": 110,
+              "end": 130
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028c.palpable-breast.paired-dense-focal",
+              "profileIds": [
+                "canonical",
+                "profile.gs028c.palpable-breast.paired-dense-focal.female.44"
+              ],
+              "ranges": [
+                {
+                  "start": 110,
+                  "end": 130
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028c.palpable-breast.paired-dense-focal",
+              "profileIds": [
+                "profile.gs028c.palpable-breast.paired-dense-focal.female.58"
+              ],
+              "ranges": [
+                {
+                  "start": 110,
+                  "end": 130
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "variantId": "question.statistics-ethics.predictive-value-prevalence.v2.r1",
+      "findings": []
+    },
+    {
+      "variantId": "question.persistent-itp.hiv-hcv-secondary-evaluation.v3",
+      "findings": [
+        {
+          "id": "588d17a5ed8470aa",
+          "rule": "option-length-disparity",
+          "severity": "advisory",
+          "message": "Option lengths differ; check necessary specificity and abbreviation effects.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "HIV and HCV serology",
+              "start": 0,
+              "end": 20,
+              "choiceId": "viral_serology_3"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Abdominal ultrasound",
+              "start": 0,
+              "end": 20,
+              "choiceId": "abdominal_ct_3"
+            }
+          ],
+          "metrics": {
+            "wordCounts": {
+              "viral_serology_3": 4,
+              "bone_scan_3": 3,
+              "abdominal_ct_3": 2,
+              "platelet_repeat_3": 3
+            },
+            "ratio": 2
+          },
+          "occurrences": [
+            {
+              "caseId": "case.persistent-itp.hematology-followup",
+              "profileIds": [
+                "canonical",
+                "profile.persistent-itp.hematology-followup.female.57"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 20
+                },
+                {
+                  "start": 0,
+                  "end": 20
+                }
+              ]
+            },
+            {
+              "caseId": "case.persistent-itp.hematology-followup",
+              "profileIds": [
+                "profile.persistent-itp.hematology-followup.male.57"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 20
+                },
+                {
+                  "start": 0,
+                  "end": 20
+                }
+              ]
+            },
+            {
+              "caseId": "case.persistent-itp.hematology-followup",
+              "profileIds": [
+                "profile.persistent-itp.hematology-followup.female.55"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 20
+                },
+                {
+                  "start": 0,
+                  "end": 20
+                }
+              ]
+            },
+            {
+              "caseId": "case.persistent-itp.hematology-followup",
+              "profileIds": [
+                "profile.persistent-itp.hematology-followup.male.55"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 20
+                },
+                {
+                  "start": 0,
+                  "end": 20
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b32fd2f50de66c16",
+          "rule": "unique-key-abbreviation",
+          "severity": "advisory",
+          "message": "An abbreviation occurs only in the key; check naming/style parity.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "HIV",
+              "start": 0,
+              "end": 3,
+              "choiceId": "viral_serology_3"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.persistent-itp.hematology-followup",
+              "profileIds": [
+                "canonical",
+                "profile.persistent-itp.hematology-followup.female.57"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 3
+                }
+              ]
+            },
+            {
+              "caseId": "case.persistent-itp.hematology-followup",
+              "profileIds": [
+                "profile.persistent-itp.hematology-followup.male.57"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 3
+                }
+              ]
+            },
+            {
+              "caseId": "case.persistent-itp.hematology-followup",
+              "profileIds": [
+                "profile.persistent-itp.hematology-followup.female.55"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 3
+                }
+              ]
+            },
+            {
+              "caseId": "case.persistent-itp.hematology-followup",
+              "profileIds": [
+                "profile.persistent-itp.hematology-followup.male.55"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 3
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "c4eebba908e9835b",
+          "rule": "unique-key-abbreviation",
+          "severity": "advisory",
+          "message": "An abbreviation occurs only in the key; check naming/style parity.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "HCV",
+              "start": 8,
+              "end": 11,
+              "choiceId": "viral_serology_3"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.persistent-itp.hematology-followup",
+              "profileIds": [
+                "canonical",
+                "profile.persistent-itp.hematology-followup.female.57"
+              ],
+              "ranges": [
+                {
+                  "start": 8,
+                  "end": 11
+                }
+              ]
+            },
+            {
+              "caseId": "case.persistent-itp.hematology-followup",
+              "profileIds": [
+                "profile.persistent-itp.hematology-followup.male.57"
+              ],
+              "ranges": [
+                {
+                  "start": 8,
+                  "end": 11
+                }
+              ]
+            },
+            {
+              "caseId": "case.persistent-itp.hematology-followup",
+              "profileIds": [
+                "profile.persistent-itp.hematology-followup.female.55"
+              ],
+              "ranges": [
+                {
+                  "start": 8,
+                  "end": 11
+                }
+              ]
+            },
+            {
+              "caseId": "case.persistent-itp.hematology-followup",
+              "profileIds": [
+                "profile.persistent-itp.hematology-followup.male.55"
+              ],
+              "ranges": [
+                {
+                  "start": 8,
+                  "end": 11
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1155 @@
+{
+  "checkedOn": "2026-11-04",
+  "status": "reviewed",
+  "scope": "Three expected snapshot values plus exact two-concept catalog increment; every other functional assertion/command/deadline retained. Day six now selects the one-node adrenal DST case instead of the two-node interpreter/consent case; both actually complete. No snapshot is a performance benchmark or player analytics.",
+  "results": [
+    {
+      "file": "packages/game-domain/tests/patient-supply.test.ts",
+      "sourceBefore": "2eacb3b2d8145ae09eada551cd1eb55bc68c230601fcd6da86958bc93893bd25",
+      "sourceAfter": "9a52a2e370e12835cbb986761acd0c575312e8c54eb2491215a32f2a0c5b2987",
+      "snapshotCount": 2,
+      "nonSnapshotAssertionsUnchanged": true,
+      "onlyOtherChange": "catalog count 412 to 414 and explanatory comment",
+      "rationale": "Same domain code with exact entry/current clinical releases. Two new scored constructs and the intentional MRI-to-US workup change alter deterministic availability/selection and journey schedules; neither selector nor routing is changed. Actual admission, answer, gate and completion assertions remain enforced.",
+      "scenarios": [
+        {
+          "title": "records the current clinical inventory and exact unseen-patient boundary by stage",
+          "entrySnapshotOnEntryRelease": "passed",
+          "old": {
+            "stageZero": {
+              "cases": 636,
+              "availableConcepts": 188,
+              "introducedConcepts": 187,
+              "strandedConceptIds": [
+                "concept.fhh.biochemical-evaluation"
+              ],
+              "seededPatientsUntilNotDue": 167,
+              "patientBoundaryAcrossSeeds": {
+                "minimum": 169,
+                "maximum": 177
+              }
+            },
+            "stageOne": {
+              "cases": 882,
+              "availableConcepts": 305,
+              "introducedConcepts": 300,
+              "strandedConceptIds": [
+                "concept.achalasia.high-resolution-manometry.v2",
+                "concept.colon-cancer.preoperative-cross-sectional-staging",
+                "concept.fhh.biochemical-evaluation",
+                "concept.soft-tissue-mass.extremity-mri.v2",
+                "concept.soft-tissue-mass.extremity-mri.v4"
+              ],
+              "seededPatientsUntilNotDue": 238,
+              "patientBoundaryAcrossSeeds": {
+                "minimum": 234,
+                "maximum": 242
+              }
+            },
+            "stageTwoExternal": {
+              "cases": 926,
+              "availableConcepts": 326,
+              "introducedConcepts": 321,
+              "strandedConceptIds": [
+                "concept.achalasia.high-resolution-manometry.v3",
+                "concept.colon-cancer.preoperative-cross-sectional-staging",
+                "concept.inflammatory-breast-cancer.core-biopsy-confirmation.v2",
+                "concept.soft-tissue-mass.extremity-mri",
+                "concept.soft-tissue-mass.extremity-mri.v4"
+              ],
+              "seededPatientsUntilNotDue": 249,
+              "patientBoundaryAcrossSeeds": {
+                "minimum": 245,
+                "maximum": 255
+              }
+            },
+            "stageTwoAllCapabilities": {
+              "cases": 964,
+              "availableConcepts": 352,
+              "introducedConcepts": 344,
+              "strandedConceptIds": [
+                "concept.achalasia.high-resolution-manometry.v2",
+                "concept.breast-cyst.asymptomatic-simple-observation",
+                "concept.colon-cancer.preoperative-cross-sectional-staging",
+                "concept.felty-syndrome.splenectomy-for-refractory-infections",
+                "concept.inflammatory-breast-cancer.core-biopsy-confirmation",
+                "concept.pigmented-skin-lesion.partial-depth-nodal-planning.v1",
+                "concept.soft-tissue-mass.extremity-mri",
+                "concept.soft-tissue-mass.extremity-mri.v4"
+              ],
+              "seededPatientsUntilNotDue": 264,
+              "patientBoundaryAcrossSeeds": {
+                "minimum": 261,
+                "maximum": 269
+              }
+            },
+            "conceptsWithoutRoutineCases": [
+              "concept.achalasia.high-resolution-manometry",
+              "concept.colonic-lipoma.endoscopic-recognition",
+              "concept.colonic-lipoma.endoscopic-recognition.v2",
+              "concept.gs028g.hiv-perioperative.art-continuity",
+              "concept.gs028g.hiv-perioperative.booster-midazolam-interaction",
+              "concept.gs028g.hiv-perioperative.booster-midazolam-interaction.v2",
+              "concept.gs028g.incidental-gallbladder.completely-resected-t1a",
+              "concept.gs028g.incidental-gallbladder.t1a-depth",
+              "concept.gs028g.incisional-hernia.fascial-closure",
+              "concept.gs028g.incisional-hernia.retrorectus-plane",
+              "concept.gs028g.laparoscopy-respiratory.co2-absorption",
+              "concept.gs028g.laparoscopy-respiratory.diaphragm-compliance",
+              "concept.gs028g.merkel-cell.clinically-negative-node-staging",
+              "concept.gs028g.merkel-cell.integrated-diagnosis",
+              "concept.gs028g.mucocutaneous-separation.recognition",
+              "concept.gs028g.mucocutaneous-separation.superficial-care",
+              "concept.gs028g.neuromuscular-recovery.quantitative-assessment",
+              "concept.gs028g.neuromuscular-recovery.sugammadex-selectivity",
+              "concept.gs028g.peristomal-skin.effluent-irritation",
+              "concept.gs028g.peristomal-skin.restore-seal",
+              "concept.gs028g.postoperative-scapula.long-thoracic",
+              "concept.gs028g.postoperative-scapula.spinal-accessory",
+              "concept.gs028g.subtotal-cholecystectomy.remnant-classification",
+              "concept.gs028g.subtotal-cholecystectomy.safe-bailout",
+              "concept.inguinal-hernia.equivocal-exam-ultrasound",
+              "concept.inguinal-hernia.symptomatic-elective-repair",
+              "concept.inguinal-hernia.symptomatic-elective-repair.v2",
+              "concept.pediatric-clinic.acquired-testis-ascent-referral",
+              "concept.pediatric-clinic.concerning-neck-node-referral",
+              "concept.pediatric-clinic.developmental-assent-discussion",
+              "concept.pediatric-clinic.inguinal-hernia-referral",
+              "concept.pediatric-clinic.limited-pilonidal-conservative-care",
+              "concept.pediatric-clinic.pectus-carinatum-brace-assessment",
+              "concept.pediatric-clinic.reactive-neck-node-observation",
+              "concept.pediatric-clinic.symptomatic-pectus-excavatum-evaluation",
+              "concept.pediatric-clinic.true-retractile-testis-surveillance",
+              "concept.pigmented-skin-lesion.complete-diagnostic-biopsy",
+              "concept.pigmented-skin-lesion.complete-diagnostic-biopsy.v2",
+              "concept.pseudocyst.contrast-ct-characterization",
+              "concept.pseudocyst.symptomatic-endoscopic-drainage",
+              "concept.quality-improvement.pdsa-act-and-iterate",
+              "concept.soft-tissue-mass.extremity-mri.v3",
+              "concept.statistics-ethics.bias-confounding",
+              "concept.statistics-ethics.chi-square",
+              "concept.statistics-ethics.confidence-interval",
+              "concept.statistics-ethics.errors-power",
+              "concept.statistics-ethics.fisher-exact",
+              "concept.statistics-ethics.independent-t",
+              "concept.statistics-ethics.one-way-anova",
+              "concept.statistics-ethics.p-value",
+              "concept.statistics-ethics.p-value.v2",
+              "concept.statistics-ethics.paired-t",
+              "concept.statistics-ethics.qi-measures",
+              "concept.statistics-ethics.rank-sum",
+              "concept.statistics-ethics.risk-ratio-odds-ratio",
+              "concept.statistics-ethics.signed-rank",
+              "concept.statistics-ethics.study-design",
+              "concept.varicose-veins.axial-trunk-referral-target.v1",
+              "concept.variety3.penicillin-label-structured-history",
+              "concept.variety3.surgical-hair-preparation"
+            ],
+            "duplicateConceptRecordIds": []
+          },
+          "current": {
+            "stageZero": {
+              "cases": 636,
+              "availableConcepts": 188,
+              "introducedConcepts": 187,
+              "strandedConceptIds": [
+                "concept.fhh.biochemical-evaluation"
+              ],
+              "seededPatientsUntilNotDue": 167,
+              "patientBoundaryAcrossSeeds": {
+                "minimum": 169,
+                "maximum": 177
+              }
+            },
+            "stageOne": {
+              "cases": 882,
+              "availableConcepts": 306,
+              "introducedConcepts": 301,
+              "strandedConceptIds": [
+                "concept.colon-cancer.preoperative-cross-sectional-staging",
+                "concept.felty-syndrome.splenectomy-for-refractory-infections",
+                "concept.perioperative-dnr.recovery-endpoint.v1",
+                "concept.soft-tissue-mass.extremity-mri.v2",
+                "concept.soft-tissue-mass.extremity-mri.v4"
+              ],
+              "seededPatientsUntilNotDue": 237,
+              "patientBoundaryAcrossSeeds": {
+                "minimum": 233,
+                "maximum": 241
+              }
+            },
+            "stageTwoExternal": {
+              "cases": 926,
+              "availableConcepts": 327,
+              "introducedConcepts": 320,
+              "strandedConceptIds": [
+                "concept.achalasia.high-resolution-manometry.v3",
+                "concept.achalasia.physiology-directed-treatment.v1",
+                "concept.colon-cancer.preoperative-cross-sectional-staging.v2",
+                "concept.felty-syndrome.splenectomy-for-refractory-infections",
+                "concept.inflammatory-breast-cancer.core-biopsy-confirmation.v2",
+                "concept.soft-tissue-mass.extremity-mri",
+                "concept.soft-tissue-mass.extremity-mri.v4"
+              ],
+              "seededPatientsUntilNotDue": 252,
+              "patientBoundaryAcrossSeeds": {
+                "minimum": 247,
+                "maximum": 252
+              }
+            },
+            "stageTwoAllCapabilities": {
+              "cases": 964,
+              "availableConcepts": 354,
+              "introducedConcepts": 344,
+              "strandedConceptIds": [
+                "concept.achalasia.high-resolution-manometry.v3",
+                "concept.achalasia.physiology-directed-treatment.v1",
+                "concept.breast-cyst.asymptomatic-simple-observation",
+                "concept.colon-cancer.preoperative-cross-sectional-staging",
+                "concept.felty-syndrome.splenectomy-for-refractory-infections",
+                "concept.inflammatory-breast-cancer.core-biopsy-confirmation",
+                "concept.pigmented-skin-lesion.complete-diagnostic-biopsy.v4",
+                "concept.pigmented-skin-lesion.partial-depth-nodal-planning.v1",
+                "concept.soft-tissue-mass.extremity-mri",
+                "concept.soft-tissue-mass.extremity-mri.v4"
+              ],
+              "seededPatientsUntilNotDue": 264,
+              "patientBoundaryAcrossSeeds": {
+                "minimum": 264,
+                "maximum": 271
+              }
+            },
+            "conceptsWithoutRoutineCases": [
+              "concept.achalasia.high-resolution-manometry",
+              "concept.colonic-lipoma.endoscopic-recognition",
+              "concept.colonic-lipoma.endoscopic-recognition.v2",
+              "concept.gs028g.hiv-perioperative.art-continuity",
+              "concept.gs028g.hiv-perioperative.booster-midazolam-interaction",
+              "concept.gs028g.hiv-perioperative.booster-midazolam-interaction.v2",
+              "concept.gs028g.incidental-gallbladder.completely-resected-t1a",
+              "concept.gs028g.incidental-gallbladder.t1a-depth",
+              "concept.gs028g.incisional-hernia.fascial-closure",
+              "concept.gs028g.incisional-hernia.retrorectus-plane",
+              "concept.gs028g.laparoscopy-respiratory.co2-absorption",
+              "concept.gs028g.laparoscopy-respiratory.diaphragm-compliance",
+              "concept.gs028g.merkel-cell.clinically-negative-node-staging",
+              "concept.gs028g.merkel-cell.integrated-diagnosis",
+              "concept.gs028g.mucocutaneous-separation.recognition",
+              "concept.gs028g.mucocutaneous-separation.superficial-care",
+              "concept.gs028g.neuromuscular-recovery.quantitative-assessment",
+              "concept.gs028g.neuromuscular-recovery.sugammadex-selectivity",
+              "concept.gs028g.peristomal-skin.effluent-irritation",
+              "concept.gs028g.peristomal-skin.restore-seal",
+              "concept.gs028g.postoperative-scapula.long-thoracic",
+              "concept.gs028g.postoperative-scapula.spinal-accessory",
+              "concept.gs028g.subtotal-cholecystectomy.remnant-classification",
+              "concept.gs028g.subtotal-cholecystectomy.safe-bailout",
+              "concept.inguinal-hernia.equivocal-exam-ultrasound",
+              "concept.inguinal-hernia.symptomatic-elective-repair",
+              "concept.inguinal-hernia.symptomatic-elective-repair.v2",
+              "concept.pediatric-clinic.acquired-testis-ascent-referral",
+              "concept.pediatric-clinic.concerning-neck-node-referral",
+              "concept.pediatric-clinic.developmental-assent-discussion",
+              "concept.pediatric-clinic.inguinal-hernia-referral",
+              "concept.pediatric-clinic.limited-pilonidal-conservative-care",
+              "concept.pediatric-clinic.pectus-carinatum-brace-assessment",
+              "concept.pediatric-clinic.reactive-neck-node-observation",
+              "concept.pediatric-clinic.symptomatic-pectus-excavatum-evaluation",
+              "concept.pediatric-clinic.true-retractile-testis-surveillance",
+              "concept.pigmented-skin-lesion.complete-diagnostic-biopsy",
+              "concept.pigmented-skin-lesion.complete-diagnostic-biopsy.v2",
+              "concept.pseudocyst.contrast-ct-characterization",
+              "concept.pseudocyst.symptomatic-endoscopic-drainage",
+              "concept.quality-improvement.pdsa-act-and-iterate",
+              "concept.soft-tissue-mass.extremity-mri.v3",
+              "concept.statistics-ethics.bias-confounding",
+              "concept.statistics-ethics.chi-square",
+              "concept.statistics-ethics.confidence-interval",
+              "concept.statistics-ethics.errors-power",
+              "concept.statistics-ethics.fisher-exact",
+              "concept.statistics-ethics.independent-t",
+              "concept.statistics-ethics.one-way-anova",
+              "concept.statistics-ethics.p-value",
+              "concept.statistics-ethics.p-value.v2",
+              "concept.statistics-ethics.paired-t",
+              "concept.statistics-ethics.qi-measures",
+              "concept.statistics-ethics.rank-sum",
+              "concept.statistics-ethics.risk-ratio-odds-ratio",
+              "concept.statistics-ethics.signed-rank",
+              "concept.statistics-ethics.study-design",
+              "concept.varicose-veins.axial-trunk-referral-target.v1",
+              "concept.variety3.penicillin-label-structured-history",
+              "concept.variety3.surgical-hair-preparation"
+            ],
+            "duplicateConceptRecordIds": []
+          },
+          "entryTrace": null,
+          "currentTrace": null
+        },
+        {
+          "title": "admits and completes patients in prepared day-six through day-eight states",
+          "entrySnapshotOnEntryRelease": "passed",
+          "old": [
+            {
+              "dayNumber": 6,
+              "arrivalTick": 3000,
+              "answerCorrectly": false,
+              "answerCount": 2,
+              "resolutionReason": "completed"
+            },
+            {
+              "dayNumber": 7,
+              "arrivalTick": 3600,
+              "answerCorrectly": true,
+              "answerCount": 1,
+              "resolutionReason": "completed"
+            },
+            {
+              "dayNumber": 8,
+              "arrivalTick": 4200,
+              "answerCorrectly": false,
+              "answerCount": 2,
+              "resolutionReason": "completed"
+            }
+          ],
+          "current": [
+            {
+              "dayNumber": 6,
+              "arrivalTick": 3000,
+              "answerCorrectly": false,
+              "answerCount": 1,
+              "resolutionReason": "completed"
+            },
+            {
+              "dayNumber": 7,
+              "arrivalTick": 3600,
+              "answerCorrectly": true,
+              "answerCount": 1,
+              "resolutionReason": "completed"
+            },
+            {
+              "dayNumber": 8,
+              "arrivalTick": 4200,
+              "answerCorrectly": false,
+              "answerCount": 2,
+              "resolutionReason": "completed"
+            }
+          ],
+          "entryTrace": [
+            {
+              "id": "encounter.auto.1.0",
+              "steps": [
+                {
+                  "decisionNodeId": "node.gs028se.qualified-interpreter-informed-consent.paired-qualified-interpreter-1.1",
+                  "questionVariantId": "question.statistics-ethics.qualified-interpreter.v1",
+                  "primaryConceptId": "concept.statistics-ethics.qualified-interpreter",
+                  "status": "completed"
+                },
+                {
+                  "decisionNodeId": "node.gs028se.qualified-interpreter-informed-consent.paired-qualified-interpreter-1.2",
+                  "questionVariantId": "question.statistics-ethics.informed-consent.v1",
+                  "primaryConceptId": "concept.statistics-ethics.informed-consent",
+                  "status": "completed"
+                }
+              ]
+            },
+            {
+              "id": "encounter.auto.1.1",
+              "steps": [
+                {
+                  "decisionNodeId": "node.gs028e.oncology.c2-both-copies-deleted.1",
+                  "questionVariantId": "question.oncology.rb1-biallelic-tumor-suppressor-loss.v2",
+                  "primaryConceptId": "concept.oncology.rb1-biallelic-tumor-suppressor-loss",
+                  "status": "completed"
+                }
+              ]
+            },
+            {
+              "id": "encounter.auto.1.2",
+              "steps": [
+                {
+                  "decisionNodeId": "node.thyroglossal-duct-cyst.intermittent-lump.1",
+                  "questionVariantId": "question.thyroglossal-duct-cyst.ultrasound.v4",
+                  "primaryConceptId": "concept.thyroglossal-duct-cyst.ultrasound",
+                  "status": "completed"
+                },
+                {
+                  "decisionNodeId": "node.thyroglossal-duct-cyst.intermittent-lump.2",
+                  "questionVariantId": "question.thyroglossal-duct-cyst.sistrunk-referral.v4",
+                  "primaryConceptId": "concept.thyroglossal-duct-cyst.sistrunk-referral",
+                  "status": "completed"
+                }
+              ]
+            }
+          ],
+          "currentTrace": [
+            {
+              "id": "encounter.auto.1.0",
+              "steps": [
+                {
+                  "decisionNodeId": "node.adrenal-incidentaloma.small-adrenal-adenoma.1",
+                  "questionVariantId": "question.adrenal-incidentaloma.one-mg-dst.v4.r2",
+                  "primaryConceptId": "concept.adrenal-incidentaloma.one-mg-dst",
+                  "status": "completed"
+                }
+              ]
+            },
+            {
+              "id": "encounter.auto.1.1",
+              "steps": [
+                {
+                  "decisionNodeId": "node.gs028e.radiology.c1-planned-mri-ct.1",
+                  "questionVariantId": "question.imaging.ionizing-versus-nonionizing-modalities.v2",
+                  "primaryConceptId": "concept.imaging.ionizing-versus-nonionizing-modalities",
+                  "status": "completed"
+                }
+              ]
+            },
+            {
+              "id": "encounter.auto.1.2",
+              "steps": [
+                {
+                  "decisionNodeId": "node.bread-butter.hernia-anatomy.hernia-anatomy.1",
+                  "questionVariantId": "question.inguinal-hernia.indirect-vessel-relationship.v2",
+                  "primaryConceptId": "concept.inguinal-hernia.indirect-vessel-relationship",
+                  "status": "completed"
+                },
+                {
+                  "decisionNodeId": "node.bread-butter.hernia-anatomy.hernia-anatomy.2",
+                  "questionVariantId": "question.inguinal-hernia.lateral-femoral-cutaneous-localization.v2",
+                  "primaryConceptId": "concept.inguinal-hernia.lateral-femoral-cutaneous-localization",
+                  "status": "completed"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "packages/game-domain/tests/diagnostics/patient-supply.test.ts",
+      "sourceBefore": "f8a4aad021550d0ff0fe008e7368347589a3e1372ef96e93be9d197e8f723912",
+      "sourceAfter": "5937d82f2134a83558cfa9d4af40d7922e647174479d037a24b28099b0ec6ecc",
+      "snapshotCount": 1,
+      "nonSnapshotAssertionsUnchanged": true,
+      "onlyOtherChange": "none",
+      "rationale": "Same domain code with exact entry/current clinical releases. Two new scored constructs and the intentional MRI-to-US workup change alter deterministic availability/selection and journey schedules; neither selector nor routing is changed. Actual admission, answer, gate and completion assertions remain enforced.",
+      "scenarios": [
+        {
+          "title": "runs normal ticks, arrivals, gates, and completions through day eight",
+          "entrySnapshotOnEntryRelease": "passed",
+          "old": {
+            "facilityTick": 4800,
+            "arrivalsByDay": [
+              13,
+              11,
+              11,
+              12,
+              10,
+              11,
+              12,
+              13
+            ],
+            "totalArrivals": 93,
+            "lastArrivalTick": 4784,
+            "completed": 92,
+            "walkouts": 0,
+            "unresolved": 1,
+            "pendingResults": 0,
+            "scoredConcepts": 126,
+            "unseenAvailableConceptIds": [
+              "concept.aaa.female-sex-associated-perioperative-mortality",
+              "concept.accessory-spleen.common-location",
+              "concept.achalasia.high-resolution-manometry.v3",
+              "concept.acute-limb-ischemia.heparin-emergency-transfer",
+              "concept.acute-limb-ischemia.viability-exam",
+              "concept.acute-mesenteric-ischemia.prompt-cta",
+              "concept.acute-pancreatitis.mild-biliary-chole-before-discharge",
+              "concept.acute-pancreatitis.selective-early-ct",
+              "concept.adrenal-incidentaloma.one-mg-dst",
+              "concept.anal-hsil.high-risk-hpv-association",
+              "concept.anal-scc.biopsy-and-staging",
+              "concept.anal-scc.localized-chemoradiation-referral",
+              "concept.appendicitis.appendicolith-operative-pathway",
+              "concept.appendicitis.stable-adult-ct",
+              "concept.ards.predicted-body-weight-ventilation",
+              "concept.asplenia.fever-emergency-action",
+              "concept.basal-cell-carcinoma.clinical-pattern-recognition",
+              "concept.basal-cell-carcinoma.local-invasion-metastasis-counseling",
+              "concept.blunt-cardiac-injury.ecg-troponin-evaluation",
+              "concept.blunt-cardiac-injury.monitored-disposition",
+              "concept.breast-cancer-after-neoadjuvant-therapy.breast-conservation-selection",
+              "concept.burn.referral-consultation-selection",
+              "concept.carotid-stenosis.confirmatory-vascular-imaging",
+              "concept.carotid-stenosis.symptomatic-endarterectomy-selection",
+              "concept.cholecystitis.fit-patient-index-admission-cholecystectomy",
+              "concept.cholecystitis.hida-after-equivocal-ultrasound",
+              "concept.choledochal-cyst.type-iva-combined-duct-dilation",
+              "concept.choledocholithiasis.confirmed-stone-therapy",
+              "concept.choledocholithiasis.intermediate-mrcp",
+              "concept.chronic-anal-fissure.lis-after-medical-treatment",
+              "concept.chronic-anal-fissure.topical-calcium-channel-blocker",
+              "concept.chronic-mesenteric-ischemia.cta-diagnosis",
+              "concept.chronic-mesenteric-ischemia.revascularization-referral",
+              "concept.cirrhosis-perioperative-risk.decompensation-optimization-boundary",
+              "concept.cirrhosis-perioperative-risk.multifactor-assessment",
+              "concept.coagulation.mixing-study-initial-interpretation",
+              "concept.colon-cancer.oncologic-regional-resection",
+              "concept.colon-cancer.preoperative-cross-sectional-staging",
+              "concept.colon-cancer.preoperative-cross-sectional-staging.v2",
+              "concept.cushing.acth-classification",
+              "concept.cushing.suppressed-acth-adrenal-imaging",
+              "concept.dcis.final-cavity-shave-plan.v1",
+              "concept.dcis.sentinel-node-mastectomy.v1",
+              "concept.desmoid.initial-active-surveillance",
+              "concept.desmoid.progressing-abdominal-wall-surgical-option",
+              "concept.diabetic-foot-infection.clinical-recognition",
+              "concept.diabetic-foot-ulcer.no-antibiotics-without-infection",
+              "concept.dialysis-access.clinical-dysfunction-referral",
+              "concept.dialysis-access.maturation-physical-assessment",
+              "concept.dialysis-nutrition.hospital-protein-target",
+              "concept.differentiated-thyroid-cancer.individualized-surgical-extent",
+              "concept.differentiated-thyroid-cancer.preoperative-nodal-ultrasound",
+              "concept.differentiated-thyroid-cancer.preoperative-nodal-ultrasound.v2",
+              "concept.distal-cholangiocarcinoma.resection-selection",
+              "concept.dtc.cystic-node-repeat-sampling.v1",
+              "concept.ebv.associated-malignancy-recognition",
+              "concept.elective-splenectomy.encapsulated-organism-vaccine-review",
+              "concept.fecal-incontinence.endoanal-ultrasound-repair-planning",
+              "concept.felty-syndrome.methotrexate-first-line",
+              "concept.felty-syndrome.recognition",
+              "concept.felty-syndrome.splenectomy-for-refractory-infections",
+              "concept.fhh.recognition-and-confirmation",
+              "concept.gallbladder-polyp.initial-management-category",
+              "concept.gallstones.cholestatic-next-study.v1",
+              "concept.gcs.complete-component-total",
+              "concept.graves.clinical-pattern-recognition",
+              "concept.graves.rai-active-ted-avoidance",
+              "concept.graves.rai-lactation-contraindication",
+              "concept.graves.trab-diagnostic-support",
+              "concept.gs028f.anesthesia.local-anesthetic-systemic-toxicity-recognition",
+              "concept.gs028f.anesthesia.neuromuscular-blockade-effect-boundary",
+              "concept.gs028f.esophagus.confirmed-sharp-object-emergency-referral",
+              "concept.gs028f.esophagus.negative-radiograph-retained-bone-limit",
+              "concept.gs028f.gynecology.pregnancy-testing-pelvic-pain",
+              "concept.gs028f.gynecology.suspected-ectopic-urgent-evaluation",
+              "concept.gs028f.nutrition.high-risk-refeeding-thiamine-planning",
+              "concept.gs028f.oncology.small-bowel-melanoma-cutaneous-origin",
+              "concept.gs028f.outcomes.rca-versus-fmea-purpose",
+              "concept.gs028f.pharmacology.tacrolimus-calcineurin-inhibition",
+              "concept.gs028f.plastic.split-thickness-donor-epithelial-regrowth",
+              "concept.head-injury.anticoagulant-ed-ct-evaluation",
+              "concept.head-neck.cyst-fluid-sample-assessment.v1",
+              "concept.hepatic-adenoma.multiphasic-mri-characterization",
+              "concept.hepatic-adenoma.resection-in-men",
+              "concept.hereditary-spherocytosis.confirmed-accessory-spleen-management",
+              "concept.hereditary-spherocytosis.postsplenectomy-persistent-hemolysis-evaluation",
+              "concept.hidradenitis-suppurativa.pattern-recognition",
+              "concept.imaging.ionizing-versus-nonionizing-modalities",
+              "concept.inguinal-hernia.equivocal-exam-ultrasound.v2",
+              "concept.inguinal-hernia.indirect-vessel-relationship",
+              "concept.inguinal-hernia.lateral-femoral-cutaneous-localization",
+              "concept.inguinal-hernia.selected-watchful-waiting",
+              "concept.inguinal-hernia.symptomatic-elective-repair.v3",
+              "concept.iodinated-contrast.physiologic-versus-allergic-like-reaction",
+              "concept.ipaa.pouchitis-common-post-ipaa-complication",
+              "concept.laparoscopy.co2-absorption-hypercarbia",
+              "concept.laparoscopy.position-gas-integration.v1",
+              "concept.lung-cancer-screening.annual-ldct-eligibility",
+              "concept.lymphangitis.distal-source-imaging.v1",
+              "concept.malignant-polyp.adverse-feature-colectomy",
+              "concept.malignant-polyp.low-risk-endoscopic-excision",
+              "concept.marginal-ulcer.initial-medical-management",
+              "concept.men2a.pheochromocytoma-precedes-thyroid-intervention",
+              "concept.metabolic-acidosis.albumin-corrected-anion-gap",
+              "concept.metabolic-acidosis.confirm-with-blood-gas",
+              "concept.mondor-disease.clinical-recognition",
+              "concept.nephrolithiasis.noncontrast-ct-evaluation",
+              "concept.nephrolithiasis.recurrent-metabolic-evaluation",
+              "concept.osa.discordant-screen-documentation.v1",
+              "concept.palpable-breast.negative-mammogram-targeted-us",
+              "concept.palpable-breast.suspicious-mass-biopsy-despite-negative-imaging",
+              "concept.pancreatic-cyst.mcn-pattern-recognition",
+              "concept.pancreatic-cyst.mrcp-duct-assessment",
+              "concept.pancreatic-tail-adenocarcinoma.distal-pancreatectomy-with-splenectomy",
+              "concept.parastomal-hernia.clinical-recognition",
+              "concept.pathologic-nipple-discharge.diagnostic-imaging",
+              "concept.perioperative-dnr.recovery-endpoint.v1",
+              "concept.persistent-itp.defer-elective-splenectomy",
+              "concept.persistent-itp.hiv-hcv-secondary-evaluation",
+              "concept.pheochromocytoma.alpha-before-beta-blockade",
+              "concept.pilonidal-disease.chronic-sinus-recognition",
+              "concept.pilonidal-disease.off-midline-closure-planning",
+              "concept.pleural-infection.intercostal-drain-indication",
+              "concept.pneumoperitoneum.context-dependent-venous-return",
+              "concept.postoperative-delirium.multicomponent-prevention-plan",
+              "concept.postoperative-dvt.three-month-anticoagulation",
+              "concept.postoperative-dvt.venous-duplex",
+              "concept.postoperative-retention.bladder-scan",
+              "concept.postoperative-retention.catheter-decompression",
+              "concept.preoperative-frailty.validated-assessment",
+              "concept.preoperative-nutrition.oral-enteral-first-line",
+              "concept.preoperative-osa.validated-risk-screening",
+              "concept.primary-hyperparathyroidism.biochemical-confirmation",
+              "concept.primary-hyperparathyroidism.symptomatic-surgery-assessment",
+              "concept.prosthetic-mesh-infection.deep-infection-recognition",
+              "concept.prosthetic-mesh-infection.specialist-source-control-evaluation",
+              "concept.ptld.posttransplant-pattern-recognition",
+              "concept.ptld.tissue-diagnosis-coordination",
+              "concept.recovered-diverticulitis.interval-colonoscopy",
+              "concept.recovered-diverticulitis.shared-elective-sigmoid-discussion",
+              "concept.rectal-cancer.multimodal-response-assessment",
+              "concept.rectal-cancer.selected-watch-and-wait",
+              "concept.rectal-prolapse.dynamic-defecography",
+              "concept.rectal-prolapse.surgical-referral",
+              "concept.retained-antrum.recognition",
+              "concept.secondary-lymphedema.clinical-recognition",
+              "concept.secondary-lymphedema.decongestive-therapy-referral",
+              "concept.small-bowel-obstruction.urgent-surgical-escalation",
+              "concept.soft-tissue-mass.extremity-mri",
+              "concept.soft-tissue-mass.extremity-mri.v2",
+              "concept.spigelian-hernia.elective-repair-referral",
+              "concept.spontaneous-pneumothorax.recurrence-prevention-referral",
+              "concept.statistics-ethics.arr-nnt",
+              "concept.statistics-ethics.capacity-refusal",
+              "concept.statistics-ethics.confidentiality",
+              "concept.statistics-ethics.error-disclosure",
+              "concept.statistics-ethics.impaired-colleague",
+              "concept.statistics-ethics.perioperative-dnr",
+              "concept.statistics-ethics.predictive-value-prevalence",
+              "concept.statistics-ethics.qi-versus-research",
+              "concept.statistics-ethics.research-consent",
+              "concept.statistics-ethics.sensitivity-specificity",
+              "concept.statistics-ethics.surrogate-decisions",
+              "concept.stoma-prolapse.urgent-surgical-escalation",
+              "concept.stoma-prolapse.viability-obstruction-assessment",
+              "concept.thyroglossal-duct-cyst.sistrunk-referral",
+              "concept.thyroglossal-duct-cyst.ultrasound",
+              "concept.thyroid-nodule.fna-selection",
+              "concept.thyroid-nodule.follicular-invasion-histology",
+              "concept.umbilical-epigastric-hernia.symptomatic-elective-referral",
+              "concept.varicose-veins.reflux-after-compression-study.v1",
+              "concept.variety3.epidermoid-cyst-recognition",
+              "concept.variety3.rectus-diastasis-recognition",
+              "concept.variety3.thrombosed-external-hemorrhoid-recognition",
+              "concept.venous-leg-ulcer.arterial-assessment-before-compression",
+              "concept.venous-leg-ulcer.compression-with-adequate-arterial-perfusion",
+              "concept.ventral-hernia.elective-pulmonary-optimization",
+              "concept.wound-healing.type-iii-to-type-i-collagen-remodeling",
+              "concept.wound.hypertrophic-versus-keloid-extent"
+            ],
+            "dueReviews": 0,
+            "nextRoutineArrivalTick": 4834,
+            "nextSelectionKind": "new_concept",
+            "answers": 126
+          },
+          "current": {
+            "facilityTick": 4800,
+            "arrivalsByDay": [
+              13,
+              11,
+              11,
+              12,
+              12,
+              12,
+              13,
+              12
+            ],
+            "totalArrivals": 96,
+            "lastArrivalTick": 4759,
+            "completed": 95,
+            "walkouts": 0,
+            "unresolved": 1,
+            "pendingResults": 1,
+            "scoredConcepts": 132,
+            "unseenAvailableConceptIds": [
+              "concept.acute-limb-ischemia.viability-exam",
+              "concept.acute-mesenteric-ischemia.peritonitis-exploration",
+              "concept.acute-pancreatitis.mild-biliary-chole-before-discharge",
+              "concept.anal-fissure.acute-recognition",
+              "concept.anal-fissure.initial-conservative-care",
+              "concept.anal-hsil.high-risk-hpv-association",
+              "concept.appendicitis.stable-adult-ct",
+              "concept.ards.permeability-edema-mechanism",
+              "concept.ards.predicted-body-weight-ventilation",
+              "concept.asplenia.fever-emergency-action",
+              "concept.basal-cell-carcinoma.clinical-pattern-recognition",
+              "concept.basal-cell-carcinoma.local-invasion-metastasis-counseling",
+              "concept.blunt-cardiac-injury.ecg-troponin-evaluation",
+              "concept.breast-cancer-after-neoadjuvant-therapy.breast-conservation-selection",
+              "concept.breast-cancer-after-neoadjuvant-therapy.response-mapping",
+              "concept.carotid-stenosis.confirmatory-vascular-imaging",
+              "concept.carotid-stenosis.symptomatic-endarterectomy-selection",
+              "concept.cholecystitis.fit-patient-index-admission-cholecystectomy",
+              "concept.cholecystitis.hida-after-equivocal-ultrasound",
+              "concept.choledochal-cyst.type-iva-combined-duct-dilation",
+              "concept.choledocholithiasis.confirmed-stone-therapy",
+              "concept.choledocholithiasis.intermediate-mrcp",
+              "concept.chronic-anal-fissure.topical-calcium-channel-blocker",
+              "concept.cirrhosis-perioperative-risk.multifactor-assessment",
+              "concept.cirrhosis.new-fluid-elective-plan.v1",
+              "concept.coagulation.isolated-aptt-mixing-workup",
+              "concept.coagulation.mixing-study-initial-interpretation",
+              "concept.colon-cancer.oncologic-regional-resection",
+              "concept.colon-cancer.preoperative-cross-sectional-staging",
+              "concept.colon-cancer.preoperative-cross-sectional-staging.v2",
+              "concept.colorectal.histologic-confirmation",
+              "concept.colorectal.positive-fit-colonoscopy",
+              "concept.dcis.final-cavity-shave-plan.v1",
+              "concept.dcis.margin-bcs-wbrt",
+              "concept.dcis.sentinel-node-mastectomy.v1",
+              "concept.dcis.sentinel-node-setting",
+              "concept.desmoid.initial-active-surveillance",
+              "concept.desmoid.progressing-abdominal-wall-surgical-option",
+              "concept.diabetic-foot-infection.clinical-recognition",
+              "concept.dialysis-nutrition.avoid-calorie-overfeeding",
+              "concept.dialysis-nutrition.hospital-protein-target",
+              "concept.differentiated-thyroid-cancer.individualized-surgical-extent",
+              "concept.differentiated-thyroid-cancer.preoperative-nodal-ultrasound",
+              "concept.distal-cholangiocarcinoma.resection-selection",
+              "concept.diverticulitis.first-presentation-ct",
+              "concept.diverticulitis.selected-supportive-care",
+              "concept.ebv.associated-malignancy-recognition",
+              "concept.elective-splenectomy.encapsulated-organism-vaccine-review",
+              "concept.fap.germline-testing-after-diffuse-adenomas",
+              "concept.fap.ipaa-for-uncontrolled-rectal-burden",
+              "concept.fecal-incontinence.endoanal-ultrasound-repair-planning",
+              "concept.fecal-incontinence.first-line-stool-care",
+              "concept.felty-syndrome.splenectomy-for-refractory-infections",
+              "concept.fhh.avoid-parathyroid-surgery",
+              "concept.fhh.biochemical-evaluation",
+              "concept.fhh.recognition-and-confirmation",
+              "concept.gallstones.cholestatic-next-study.v1",
+              "concept.gallstones.incidental-observation",
+              "concept.gastric-gist.eus-core-molecular-diagnosis",
+              "concept.gastric-gist.mutation-guided-neoadjuvant-imatinib",
+              "concept.gcs.verbal-not-testable-documentation",
+              "concept.graves.clinical-pattern-recognition",
+              "concept.graves.rai-appropriate-candidate",
+              "concept.graves.rai-lactation-contraindication",
+              "concept.graves.rai-pregnancy-contraindication",
+              "concept.graves.trab-diagnostic-support",
+              "concept.gs028f.anesthesia.local-anesthetic-systemic-toxicity-recognition",
+              "concept.gs028f.anesthesia.neuromuscular-blockade-effect-boundary",
+              "concept.gs028f.esophagus.confirmed-sharp-object-emergency-referral",
+              "concept.gs028f.esophagus.negative-radiograph-retained-bone-limit",
+              "concept.gs028f.gynecology.pregnancy-testing-pelvic-pain",
+              "concept.gs028f.head-neck.initial-fna-not-open-biopsy",
+              "concept.gs028f.nutrition.high-risk-refeeding-thiamine-planning",
+              "concept.gs028f.nutrition.refeeding-insulin-phosphate-shift",
+              "concept.gs028f.oncology.small-bowel-melanoma-cutaneous-origin",
+              "concept.gs028f.pharmacology.local-anesthetic-sodium-channel-block",
+              "concept.gs028f.plastic.graft-versus-flap-blood-supply",
+              "concept.gs028f.plastic.median-carpal-tunnel-localization",
+              "concept.gs028f.plastic.split-thickness-donor-epithelial-regrowth",
+              "concept.gs028f.plastic.ulnar-cubital-tunnel-localization",
+              "concept.gs028f.transplantation.donor-recipient-relationships",
+              "concept.hcc.compensated-cirrhosis-resection-selection",
+              "concept.hcc.milan-transplant-evaluation",
+              "concept.head-neck.cyst-fluid-sample-assessment.v1",
+              "concept.hepatic-adenoma.multiphasic-mri-characterization",
+              "concept.hepatic-adenoma.resection-in-men",
+              "concept.hereditary-spherocytosis.postsplenectomy-persistent-hemolysis-evaluation",
+              "concept.hidradenitis-suppurativa.multimodal-specialist-planning",
+              "concept.high-output-ileostomy.renal-electrolyte-magnesium-assessment",
+              "concept.high-output-ileostomy.sodium-glucose-oral-rehydration",
+              "concept.hyperkalaemia.severe-community-result-transfer",
+              "concept.imaging.ionizing-versus-nonionizing-modalities",
+              "concept.immunology.preformed-antibody-hyperacute-rejection",
+              "concept.immunology.t-cell-type-iv-contact",
+              "concept.inguinal-hernia.selected-watchful-waiting",
+              "concept.iodinated-contrast.physiologic-versus-allergic-like-reaction",
+              "concept.ipaa.pouchitis-common-post-ipaa-complication",
+              "concept.iron-deficiency.gi-evaluation",
+              "concept.iron-deficiency.iron-studies",
+              "concept.laparoscopy.co2-absorption-hypercarbia",
+              "concept.laparoscopy.position-gas-integration.v1",
+              "concept.laparoscopy.pressure-cardiopulmonary.v1",
+              "concept.lymphangitis.distal-source-imaging.v1",
+              "concept.malignant-hyperthermia-susceptibility.trigger-free-anesthesia-plan",
+              "concept.malignant-polyp.adverse-feature-colectomy",
+              "concept.men2a.core-manifestation-pattern",
+              "concept.men2a.pheochromocytoma-precedes-thyroid-intervention",
+              "concept.metabolic-acidosis.albumin-corrected-anion-gap",
+              "concept.metabolic-acidosis.confirm-with-blood-gas",
+              "concept.mondor-disease.clinical-recognition",
+              "concept.mondor-disease.selective-imaging-evaluation",
+              "concept.mondor-disease.supportive-management",
+              "concept.mri.device-specific-safety-verification",
+              "concept.naloxone.competitive-opioid-antagonist-mechanism",
+              "concept.obstructive-jaundice.vitamin-k-coagulopathy",
+              "concept.oncology.rb1-biallelic-tumor-suppressor-loss",
+              "concept.osa.discordant-screen-documentation.v1",
+              "concept.palpable-mass.separate-benign-target.v1",
+              "concept.pancreatic-cyst.mcn-pattern-recognition",
+              "concept.pancreatic-cyst.mrcp-duct-assessment",
+              "concept.pancreatic-tail-adenocarcinoma.distal-pancreatectomy-with-splenectomy",
+              "concept.parastomal-hernia.clinical-recognition",
+              "concept.parastomal-hernia.nonurgent-stoma-specialist-management",
+              "concept.pathologic-nipple-discharge.pathologic-vs-physiologic-recognition",
+              "concept.perianal-abscess.selective-antibiotics",
+              "concept.perioperative-dnr.recovery-endpoint.v1",
+              "concept.perioperative-medication.continue-chronic-beta-blocker",
+              "concept.perioperative-medication.warfarin-interruption-no-bridge",
+              "concept.perioperative-sglt2.drug-specific-interruption",
+              "concept.peripheral-arterial-disease.resting-abi",
+              "concept.peripheral-arterial-disease.structured-exercise",
+              "concept.pilonidal-disease.chronic-sinus-recognition",
+              "concept.pilonidal-disease.off-midline-closure-planning",
+              "concept.pleural-effusion.image-guided-thoracentesis-referral",
+              "concept.pleural-infection.intercostal-drain-indication",
+              "concept.post-thyroidectomy-voice.external-superior-laryngeal-nerve",
+              "concept.post-thyroidectomy-voice.laryngeal-examination",
+              "concept.postherniorrhaphy-pain.neuropathic-pattern-recognition",
+              "concept.postherniorrhaphy-pain.targeted-block-specialist-evaluation",
+              "concept.postlaparoscopy.benign-referred-shoulder-pain",
+              "concept.postlaparoscopy.shoulder-pain-biliary-localization.v1",
+              "concept.postoperative-delirium.multicomponent-prevention-plan",
+              "concept.postoperative-retention.bladder-scan",
+              "concept.postoperative-retention.catheter-decompression",
+              "concept.preoperative-frailty.validated-assessment",
+              "concept.preoperative-nutrition.nutritional-risk-screening",
+              "concept.preoperative-nutrition.oral-enteral-first-line",
+              "concept.preoperative-osa.validated-risk-screening",
+              "concept.primary-hyperparathyroidism.biochemical-confirmation",
+              "concept.primary-hyperparathyroidism.symptomatic-surgery-assessment",
+              "concept.prosthetic-mesh-infection.specialist-source-control-evaluation",
+              "concept.retained-antrum.recognition",
+              "concept.sglt2-inhibitor.euglycemic-ketoacidosis-adverse-effect",
+              "concept.small-bowel-obstruction.urgent-surgical-escalation",
+              "concept.soft-tissue-mass.extremity-mri.v2",
+              "concept.soft-tissue-mass.extremity-mri.v4",
+              "concept.spigelian-hernia.clinical-imaging-recognition",
+              "concept.spigelian-hernia.elective-repair-referral",
+              "concept.statistics-ethics.capacity-refusal",
+              "concept.statistics-ethics.confidentiality",
+              "concept.statistics-ethics.impaired-colleague",
+              "concept.statistics-ethics.predictive-value-prevalence",
+              "concept.statistics-ethics.research-consent",
+              "concept.statistics-ethics.surrogate-decisions",
+              "concept.stoma-prolapse.urgent-surgical-escalation",
+              "concept.thyroglossal-duct-cyst.sistrunk-referral",
+              "concept.thyroglossal-duct-cyst.ultrasound",
+              "concept.umbilical-epigastric-hernia.symptomatic-elective-referral",
+              "concept.varicose-veins.reflux-after-compression-study.v1",
+              "concept.variety3.rectus-diastasis-recognition",
+              "concept.venous-leg-ulcer.compression-with-adequate-arterial-perfusion",
+              "concept.ventral-hernia.elective-pulmonary-optimization",
+              "concept.wound-healing.type-iii-to-type-i-collagen-remodeling",
+              "concept.wound.hypertrophic-versus-keloid-extent"
+            ],
+            "dueReviews": 0,
+            "nextRoutineArrivalTick": 4816,
+            "nextSelectionKind": "new_concept",
+            "answers": 132
+          },
+          "entryTrace": [
+            {
+              "id": "encounter.auto.1.79",
+              "steps": [
+                {
+                  "decisionNodeId": "node.postoperative-seroma.excisional-biopsy.1",
+                  "questionVariantId": "question.postoperative-seroma.ultrasound-characterization.v2",
+                  "primaryConceptId": "concept.postoperative-seroma.ultrasound-characterization",
+                  "status": "completed"
+                },
+                {
+                  "decisionNodeId": "node.postoperative-seroma.excisional-biopsy.2",
+                  "questionVariantId": "question.postoperative-seroma.uncomplicated-observation.v2",
+                  "primaryConceptId": "concept.postoperative-seroma.uncomplicated-observation",
+                  "status": "completed"
+                }
+              ]
+            },
+            {
+              "id": "encounter.auto.1.80",
+              "steps": [
+                {
+                  "decisionNodeId": "node.colorectal.repeat-screening.1",
+                  "questionVariantId": "question.colorectal.positive-fit-colonoscopy.v4",
+                  "primaryConceptId": "concept.colorectal.positive-fit-colonoscopy",
+                  "status": "completed"
+                },
+                {
+                  "decisionNodeId": "node.colorectal.repeat-screening.2",
+                  "questionVariantId": "question.colorectal.histologic-confirmation.v4",
+                  "primaryConceptId": "concept.colorectal.histologic-confirmation",
+                  "status": "completed"
+                }
+              ]
+            },
+            {
+              "id": "encounter.auto.1.83",
+              "steps": [
+                {
+                  "decisionNodeId": "node.gs028c.dcis.a-two-mm-wbrt.1",
+                  "questionVariantId": "question.dcis.margin-bcs-wbrt.v1",
+                  "primaryConceptId": "concept.dcis.margin-bcs-wbrt",
+                  "status": "completed"
+                }
+              ]
+            },
+            {
+              "id": "encounter.auto.1.84",
+              "steps": [
+                {
+                  "decisionNodeId": "node.gs028f.reconstruction.c1-reconnected-vessels.1",
+                  "questionVariantId": "question.gs028f.plastic.graft-versus-flap-blood-supply.v2",
+                  "primaryConceptId": "concept.gs028f.plastic.graft-versus-flap-blood-supply",
+                  "status": "completed"
+                }
+              ]
+            },
+            {
+              "id": "encounter.auto.1.85",
+              "steps": [
+                {
+                  "decisionNodeId": "node.gs028e.mis-principles.c3-phrenic-pathway.1",
+                  "questionVariantId": "question.postlaparoscopy.benign-referred-shoulder-pain.v2.r3",
+                  "primaryConceptId": "concept.postlaparoscopy.shoulder-pain-biliary-localization.v1",
+                  "status": "completed"
+                }
+              ]
+            },
+            {
+              "id": "encounter.auto.1.86",
+              "steps": [
+                {
+                  "decisionNodeId": "node.gs028d.thoracic-pleural.b-postoperative-effusion.1",
+                  "questionVariantId": "question.pleural-effusion.image-guided-thoracentesis-referral.v4",
+                  "primaryConceptId": "concept.pleural-effusion.image-guided-thoracentesis-referral",
+                  "status": "completed"
+                }
+              ]
+            },
+            {
+              "id": "encounter.auto.1.87",
+              "steps": [
+                {
+                  "decisionNodeId": "node.soft-tissue-mass.deep-thigh.1",
+                  "questionVariantId": "question.soft-tissue-mass.extremity-mri.v1.r8",
+                  "primaryConceptId": "concept.soft-tissue-mass.extremity-mri.v4",
+                  "status": "completed"
+                },
+                {
+                  "decisionNodeId": "node.soft-tissue-mass.deep-thigh.2",
+                  "questionVariantId": "question.soft-tissue-mass.specialist-planned-biopsy.v1.r4",
+                  "primaryConceptId": "concept.soft-tissue-mass.specialist-planned-biopsy",
+                  "status": "completed"
+                }
+              ]
+            },
+            {
+              "id": "encounter.auto.1.88",
+              "steps": [
+                {
+                  "decisionNodeId": "node.gs028e.oncology.c1-breast-microscopy.1",
+                  "questionVariantId": "question.oncology.stage-versus-grade.v2",
+                  "primaryConceptId": "concept.oncology.stage-versus-grade",
+                  "status": "completed"
+                }
+              ]
+            },
+            {
+              "id": "encounter.auto.1.89",
+              "steps": [
+                {
+                  "decisionNodeId": "node.internal-hemorrhoids.commute.1",
+                  "questionVariantId": "question.internal-hemorrhoids.anoscopy-evaluation.v1",
+                  "primaryConceptId": "concept.internal-hemorrhoids.anoscopy-evaluation",
+                  "status": "completed"
+                },
+                {
+                  "decisionNodeId": "node.internal-hemorrhoids.commute.2",
+                  "questionVariantId": "question.internal-hemorrhoids.office-banding-selection.v1",
+                  "primaryConceptId": "concept.internal-hemorrhoids.office-banding-selection",
+                  "status": "completed"
+                }
+              ]
+            },
+            {
+              "id": "encounter.auto.1.90",
+              "steps": [
+                {
+                  "decisionNodeId": "node.gs028e.coagulation.c1-referral-test-purpose.1",
+                  "questionVariantId": "question.coagulation.isolated-aptt-mixing-workup.v3",
+                  "primaryConceptId": "concept.coagulation.isolated-aptt-mixing-workup",
+                  "status": "completed"
+                }
+              ]
+            },
+            {
+              "id": "encounter.auto.1.91",
+              "steps": [
+                {
+                  "decisionNodeId": "node.gs028e.pharmacology.c2-opioid-specific-target.1",
+                  "questionVariantId": "question.naloxone.competitive-opioid-antagonist-mechanism.v4",
+                  "primaryConceptId": "concept.naloxone.competitive-opioid-antagonist-mechanism",
+                  "status": "completed"
+                }
+              ]
+            },
+            {
+              "id": "encounter.auto.1.92",
+              "steps": [
+                {
+                  "decisionNodeId": "node.anal-hsil.hpv.3b",
+                  "questionVariantId": "question.anal-hsil.hpv.3b.v1",
+                  "primaryConceptId": "concept.anal-hsil.high-risk-hpv-association",
+                  "status": "action_required"
+                }
+              ]
+            }
+          ],
+          "currentTrace": [
+            {
+              "id": "encounter.auto.1.83",
+              "steps": [
+                {
+                  "decisionNodeId": "node.h-pylori-ulcer.healed-ulcer.1",
+                  "questionVariantId": "question.h-pylori-ulcer.active-infection-testing.v3",
+                  "primaryConceptId": "concept.h-pylori-ulcer.active-infection-testing",
+                  "status": "completed"
+                },
+                {
+                  "decisionNodeId": "node.h-pylori-ulcer.healed-ulcer.2",
+                  "questionVariantId": "question.h-pylori-ulcer.test-of-cure-plan.v3",
+                  "primaryConceptId": "concept.h-pylori-ulcer.test-of-cure-plan",
+                  "status": "completed"
+                }
+              ]
+            },
+            {
+              "id": "encounter.auto.1.86",
+              "steps": [
+                {
+                  "decisionNodeId": "node.gs028e.wound-healing-remaining.c2-closure-method-form.1",
+                  "questionVariantId": "question.wound.secondary-intention-healing.v4",
+                  "primaryConceptId": "concept.wound.secondary-intention-healing",
+                  "status": "completed"
+                }
+              ]
+            },
+            {
+              "id": "encounter.auto.1.87",
+              "steps": [
+                {
+                  "decisionNodeId": "node.gs028f.gynecology.c2-pain-without-bleeding.1",
+                  "questionVariantId": "question.gs028f.gynecology.suspected-ectopic-urgent-evaluation.v4",
+                  "primaryConceptId": "concept.gs028f.gynecology.suspected-ectopic-urgent-evaluation",
+                  "status": "completed"
+                }
+              ]
+            },
+            {
+              "id": "encounter.auto.1.88",
+              "steps": [
+                {
+                  "decisionNodeId": "node.gs028c.recurrent-gastric-ulcer.b-nsaid.1",
+                  "questionVariantId": "question.marginal-ulcer.initial-medical-management.v1",
+                  "primaryConceptId": "concept.marginal-ulcer.initial-medical-management",
+                  "status": "completed"
+                }
+              ]
+            },
+            {
+              "id": "encounter.auto.1.89",
+              "steps": [
+                {
+                  "decisionNodeId": "node.gs028d.hyperkalaemia.a-renal-result.1",
+                  "questionVariantId": "question.hyperkalaemia.severe-community-result-transfer.v1.r3",
+                  "primaryConceptId": "concept.hyperkalaemia.post-calcium-treatment.v1",
+                  "status": "completed"
+                }
+              ]
+            },
+            {
+              "id": "encounter.auto.1.90",
+              "steps": [
+                {
+                  "decisionNodeId": "node.preoperative-gerd.reflux-referral.1",
+                  "questionVariantId": "question.gerd.off-ppi-reflux-monitoring.v4",
+                  "primaryConceptId": "concept.gerd.off-ppi-reflux-monitoring",
+                  "status": "completed"
+                },
+                {
+                  "decisionNodeId": "node.preoperative-gerd.reflux-referral.2",
+                  "questionVariantId": "question.gerd.hrm-before-operative-planning.v4",
+                  "primaryConceptId": "concept.gerd.hrm-before-operative-planning",
+                  "status": "completed"
+                }
+              ]
+            },
+            {
+              "id": "encounter.auto.1.91",
+              "steps": [
+                {
+                  "decisionNodeId": "node.lynch-tumor.oncology-visit.1",
+                  "questionVariantId": "question.lynch-tumor.universal-mmr-screening.v3",
+                  "primaryConceptId": "concept.lynch-tumor.universal-mmr-screening",
+                  "status": "completed"
+                },
+                {
+                  "decisionNodeId": "node.lynch-tumor.oncology-visit.2",
+                  "questionVariantId": "question.lynch-tumor.germline-counseling-after-suggestive-ihc.v3",
+                  "primaryConceptId": "concept.lynch-tumor.germline-counseling-after-suggestive-ihc",
+                  "status": "completed"
+                }
+              ]
+            },
+            {
+              "id": "encounter.auto.1.92",
+              "steps": [
+                {
+                  "decisionNodeId": "node.graves-rai-active-ted-avoidance.v3",
+                  "questionVariantId": "question.graves-rai-active-ted-avoidance.v3",
+                  "primaryConceptId": "concept.graves.rai-active-ted-avoidance",
+                  "status": "completed"
+                }
+              ]
+            },
+            {
+              "id": "encounter.auto.1.93",
+              "steps": [
+                {
+                  "decisionNodeId": "node.bread-butter.femoral-hernia.reducible-femoral-hernia.1",
+                  "questionVariantId": "question.femoral-hernia.timely-elective-repair.v4",
+                  "primaryConceptId": "concept.femoral-hernia.timely-elective-repair",
+                  "status": "completed"
+                }
+              ]
+            },
+            {
+              "id": "encounter.auto.1.94",
+              "steps": [
+                {
+                  "decisionNodeId": "node.venous-leg-ulcer.varicose-changes.1",
+                  "questionVariantId": "question.venous-leg-ulcer.arterial-assessment-before-compression.v3",
+                  "primaryConceptId": "concept.venous-leg-ulcer.arterial-assessment-before-compression",
+                  "status": "result_pending"
+                },
+                {
+                  "decisionNodeId": "node.venous-leg-ulcer.varicose-changes.2",
+                  "questionVariantId": "question.venous-leg-ulcer.compression-with-adequate-arterial-perfusion.v3",
+                  "primaryConceptId": "concept.venous-leg-ulcer.compression-with-adequate-arterial-perfusion",
+                  "status": "locked"
+                }
+              ]
+            },
+            {
+              "id": "encounter.auto.1.95",
+              "steps": [
+                {
+                  "decisionNodeId": "node.gs028d.head-pelvis-trauma.b-transfer-note-correction.1",
+                  "questionVariantId": "question.pelvic-trauma.binder-greater-trochanter-placement.v2",
+                  "primaryConceptId": "concept.pelvic-trauma.binder-greater-trochanter-placement",
+                  "status": "completed"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

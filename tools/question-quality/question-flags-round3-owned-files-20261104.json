@@ -1,0 +1,2235 @@
+{
+  "checkedOn": "2026-11-04T22:53:38.253Z",
+  "status": "author_round_complete_nothing_shipped_independent_review_and_source_alignment_pending",
+  "revisions": 14,
+  "frozen": [
+    "F01",
+    "F12",
+    "F14",
+    "all eleven batch-2a versions",
+    "all existing exact approvals"
+  ],
+  "noteResponses": 140,
+  "results": {
+    "clinical": {
+      "path": "tools/question-quality/question-flags-round3-clinical-handoff-20261104.log",
+      "files": "102 passed (102)",
+      "tests": "835 passed (835)",
+      "duration": "112.37s (transform 7.05s, setup 0ms, import 91.32s, tests 10.52s, environment 7ms)",
+      "failures": [],
+      "typecheckWorkspaces": [],
+      "typeErrors": [],
+      "nodePass": null,
+      "nodeFail": null
+    },
+    "clinicalEarlier": {
+      "path": "tools/question-quality/question-flags-round3-clinical-final-20261104.log",
+      "files": "13 failed | 88 passed (101)",
+      "tests": "13 failed | 779 passed (792)",
+      "duration": "72.66s (transform 7.30s, setup 0ms, import 117.48s, tests 13.15s, environment 10ms)",
+      "failures": [
+        "src/patient-library-wording-repair.test.ts > full patient-library wording repair > uses concise complaint phrases and named presentations throughout the library",
+        "src/pilot-content.test.ts > five-diagnosis pilot registry > does not make the keyed answer uniquely longest in the runtime release",
+        "src/approved-data/breast-cyst-pathway.test.ts > owner row 30 approved breast-cyst pathway > admits only today's reviewed cases to the active development release",
+        "src/approved-data/controlled-enterotomy-mesh-selection.test.ts > owner row 44 approved controlled-enterotomy mesh content > keeps the package outside the current runtime",
+        "src/approved-data/direct-inguinal-operative-anatomy.test.ts > owner rows 8 and 25 approved direct-inguinal anatomy > does not admit deferred Level 3 content to the Level 0-1 runtime",
+        "src/approved-data/meckel-resection-extent.test.ts > owner row 46 approved Meckel resection-extent content > keeps the package outside the current runtime",
+        "src/approved-data/phyllodes-pathology-follow-up.test.ts > owner row 53 approved deferred phyllodes pathology follow-up > does not admit this deferred package to the active release or routine case pool",
+        "src/approved-data/postoperative-chylous-ascites.test.ts > owner row 37 approved postoperative chylous-ascites pathway > keeps the approved future pathway outside the current playable release",
+        "src/approved-data/postoperative-ileus.test.ts > owner row 41 approved prolonged postoperative-ileus content > keeps the approved future package outside the current runtime",
+        "src/approved-data/right-thoracotomy-trauma-exposure.test.ts > owner row 45 approved right-thoracotomy exposure content > keeps the package outside the current runtime",
+        "src/approved-data/severe-burn-early-enteral-nutrition.test.ts > owner row 43 approved severe-burn nutrition content > keeps the package outside the current Level 0-1 runtime",
+        "src/approved-data/suspicious-breast-imaging.test.ts > owner row 35 breast-imaging content > keeps Level 3 breast-imaging material out of the playable Level 0-1 release",
+        "src/approved-data/trauma-vka-emergency-reversal.test.ts > owner row 54 approved deferred trauma/VKA emergency reversal > keeps the package out of active gameplay and away from dosing or treatment-simulation payloads"
+      ],
+      "typecheckWorkspaces": [],
+      "typeErrors": [],
+      "nodePass": null,
+      "nodeFail": null
+    },
+    "clinicalFocused": {
+      "path": "tools/question-quality/question-flags-round3-clinical-focused-final-20261104.log",
+      "files": "7 passed (7)",
+      "tests": "50 passed (50)",
+      "duration": "16.79s (transform 2.94s, setup 0ms, import 13.60s, tests 2.19s, environment 1ms)",
+      "failures": [],
+      "typecheckWorkspaces": [],
+      "typeErrors": [],
+      "nodePass": null,
+      "nodeFail": null
+    },
+    "domain": {
+      "path": "tools/question-quality/question-flags-round3-domain-complete-20261104.log",
+      "files": "13 failed | 163 passed (176)",
+      "tests": "47 failed | 4470 passed | 1 skipped (4518)",
+      "duration": "3312.02s (transform 13.70s, setup 0ms, import 294.97s, tests 2996.23s, environment 13ms)",
+      "failures": [
+        "tests/gs028-20261002-batch.test.ts > GS-028 October 2 batch admission > admits all twenty objectives, seventy-eight cases, and their exact timed orders",
+        "tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > admits all twenty objectives, seventy-eight cases, and their exact timed orders",
+        "tests/gs028-20261007-batch.test.ts > GS-028 October 7 real gameplay admission > binds two executable gates, one planned correct study and eight non-executed distractors",
+        "tests/gs028-20261007-batch.test.ts > GS-028 October 7 real gameplay admission > measures the real ordinary pools before and after admission",
+        "tests/gs028-20261007-batch.test.ts > GS-028 October 7 real gameplay admission > covers all eighty actual nodes and every current authored choice",
+        "tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > measures the actual early ordinary pool delta of seventy-eight cases and twenty-one active concepts",
+        "tests/gs028-statistics-ethics-batch.test.ts > GS-028 statistics and ethics runtime admission > admits the 28 original objectives and 120 nodes in 108 cases, reusing eight existing clinical concepts",
+        "tests/level-five-executive.test.ts > M4 daily Executive lifecycle > trains through all four paid tiers, without repricing the accepted daily terms",
+        "tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > binds the actual run to its current game, balance, clinical and driver inputs and reconciles cash",
+        "tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after save/reload at integration-preparing",
+        "tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after save/reload at integration-running",
+        "tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after save/reload at integration-final",
+        "tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after save/reload at integration-finish",
+        "tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > continues normal operations, completes a genuinely lower retry and retains the higher best and first finish",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 5",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 6",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 7",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 8",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 9",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 5",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 6",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 7",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 8",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 9",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 5",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 6",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 7",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 8",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 9",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 5",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 6",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 7",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 8",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 9",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 5",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 6",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 7",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 8",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 9",
+        "tests/level-five-latent-bugs.test.ts > Level 5 garden and diagnostic movement ownership > finishes the garden return before starting offsite movement after live",
+        "tests/patient-supply.test.ts > routine patient supply > records the current clinical inventory and exact unseen-patient boundary by stage",
+        "tests/patient-supply.test.ts > routine patient supply > admits and completes patients in prepared day-six through day-eight states",
+        "tests/pediatric-appointments.test.ts > M5c pediatric APP appointments > evacuates a sold exam together and preserves remaining work and the frozen fee in a second home",
+        "tests/restroom-recovery.test.ts > restroom exit recovery > preserves a visitor's captured exit path after its room is removed",
+        "tests/restroom-recovery.test.ts > restroom exit recovery > preserves a encounter's captured exit path after its room is removed",
+        "tests/test-choice-order-inventory.test.ts > active-release test-choice order inventory > preserves the active release timing inventory counts",
+        "tests/diagnostics/patient-supply.test.ts > GS-017 sustained patient supply diagnostic > runs normal ticks, arrivals, gates, and completions through day eight"
+      ],
+      "typecheckWorkspaces": [],
+      "typeErrors": [],
+      "nodePass": null,
+      "nodeFail": null
+    },
+    "domainEarlier": {
+      "path": "tools/question-quality/question-flags-round3-domain-final-20261104.log",
+      "files": null,
+      "tests": null,
+      "duration": null,
+      "failures": [],
+      "typecheckWorkspaces": [],
+      "typeErrors": [],
+      "nodePass": null,
+      "nodeFail": null
+    },
+    "domainFocused": {
+      "path": "tools/question-quality/question-flags-round3-domain-focused-final-20261104.log",
+      "files": "4 passed (4)",
+      "tests": "21 passed (21)",
+      "duration": "78.48s (transform 105.23s, setup 0ms, import 147.99s, tests 461ms, environment 0ms)",
+      "failures": [],
+      "typecheckWorkspaces": [],
+      "typeErrors": [],
+      "nodePass": null,
+      "nodeFail": null
+    },
+    "domainOwnedHandoff": {
+      "path": "tools/question-quality/question-flags-round3-domain-owned-handoff-20261104.log",
+      "files": "2 passed (2)",
+      "tests": "6 passed (6)",
+      "duration": "3.47s (transform 1.41s, setup 0ms, import 3.30s, tests 15ms, environment 0ms)",
+      "failures": [],
+      "typecheckWorkspaces": [],
+      "typeErrors": [],
+      "nodePass": null,
+      "nodeFail": null
+    },
+    "domainCohortRepair": {
+      "path": "tools/question-quality/question-flags-round3-cohort-repaired-final-20261104.log",
+      "files": "4 passed (4)",
+      "tests": "708 passed (708)",
+      "duration": "73.89s (transform 4.85s, setup 0ms, import 12.42s, tests 60.81s, environment 3ms)",
+      "failures": [],
+      "typecheckWorkspaces": [],
+      "typeErrors": [],
+      "nodePass": null,
+      "nodeFail": null
+    },
+    "domainDiagnosticRepair": {
+      "path": "tools/question-quality/question-flags-round3-supply-repaired-20261104.log",
+      "files": "1 passed (1)",
+      "tests": "1 passed (1)",
+      "duration": "22.81s (transform 4.11s, setup 0ms, import 6.00s, tests 16.63s, environment 0ms)",
+      "failures": [],
+      "typecheckWorkspaces": [],
+      "typeErrors": [],
+      "nodePass": null,
+      "nodeFail": null
+    },
+    "domainRemainingFixtures": {
+      "path": "tools/question-quality/question-flags-round3-remaining-fixtures-repaired-20261104.log",
+      "files": "3 failed | 1 passed (4)",
+      "tests": "3 failed | 560 passed (563)",
+      "duration": "18.29s (transform 2.79s, setup 0ms, import 7.58s, tests 10.32s, environment 0ms)",
+      "failures": [
+        "tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > admits all twenty objectives, seventy-eight cases, and their exact timed orders",
+        "tests/gs028-statistics-ethics-batch.test.ts > GS-028 statistics and ethics runtime admission > admits the 28 original objectives and 120 nodes in 108 cases, reusing eight existing clinical concepts",
+        "tests/patient-supply.test.ts > routine patient supply > records the current clinical inventory and exact unseen-patient boundary by stage"
+      ],
+      "typecheckWorkspaces": [],
+      "typeErrors": [],
+      "nodePass": null,
+      "nodeFail": null
+    },
+    "player": {
+      "path": "tools/question-quality/question-flags-round3-player-complete-20261104.log",
+      "files": "2 failed | 341 passed (343)",
+      "tests": "2 failed | 3415 passed (3417)",
+      "duration": "2061.44s (transform 33.49s, setup 0ms, import 954.34s, tests 1041.07s, environment 48ms)",
+      "failures": [
+        "src/session/levelFourIntegration.test.ts > Level 4 M9 real-engine player integration > projects all specialty services from real care supports, retaining Money/HUD equality and reload identities",
+        "src/session/periopNurseOwnerFeedback.test.ts > Owner peri-op feedback in an approved Level-2/3 clinic > shows all 3 nurses walking/checking/resting in the compiled Level-3 view"
+      ],
+      "typecheckWorkspaces": [],
+      "typeErrors": [],
+      "nodePass": null,
+      "nodeFail": null
+    },
+    "playerEarlier": {
+      "path": "tools/question-quality/question-flags-round3-player-final-20261104.log",
+      "files": "8 failed | 334 passed (342)",
+      "tests": "14 failed | 3399 passed (3413)",
+      "duration": "1546.42s (transform 65.04s, setup 0ms, import 1545.96s, tests 1454.03s, environment 70ms)",
+      "failures": [
+        "src/App.cloudBrowserFailures.test.tsx > desktop real account provider and automatic session > opens a verified prior copy read-only and exports it without closing it or modifying the account (current cache=confirmed)",
+        "src/App.cloudBrowserFailures.test.tsx > desktop real account provider and automatic session > opens a verified prior copy read-only and exports it without closing it or modifying the account (current cache=pending)",
+        "src/facility/levelFiveGiftRouteMotion.test.ts > samples actual gift queue/counter/return paths at 1x, through reload without routeMotion changes",
+        "src/facility/levelFiveGiftRouteMotion.test.ts > samples actual gift queue/counter/return paths at 4x, through reload without routeMotion changes",
+        "src/ui/ActionFeedbackLayer.test.tsx > keeps a canvas placement warning through pointerup/click of the same gesture",
+        "src/session/finishedGameFlow.test.tsx > M7c finished-game page in the actual desktop and phone shells > opens automatically when the session's next real minute completes the first valid inspection",
+        "src/session/levelFourIntegration.test.ts > Level 4 M9 real-engine player integration > projects all specialty services from real care supports, retaining Money/HUD equality and reload identities",
+        "src/session/periopNurseOwnerFeedback.test.ts > Owner peri-op feedback in an approved Level-2/3 clinic > shows all 2 nurses walking/checking/resting in the compiled Level-2 view",
+        "src/session/periopNurseOwnerFeedback.test.ts > Owner peri-op feedback in an approved Level-2/3 clinic > shows all 3 nurses walking/checking/resting in the compiled Level-3 view",
+        "src/session/cloud/snapshotConceptCompatibility.test.ts > opens the actual pre-batch Level 5 snapshot catalog, durably adds only missing histories and survives a kill before the first command",
+        "src/session/cloud/snapshotSaves.test.ts > automatically selects the newest native branch and protects both complete states (local newer=true, free slot=true)",
+        "src/session/cloud/snapshotSaves.test.ts > automatically selects the newest native branch and protects both complete states (local newer=true, free slot=false)",
+        "src/session/cloud/snapshotSaves.test.ts > automatically selects the newest native branch and protects both complete states (local newer=false, free slot=true)",
+        "src/session/cloud/snapshotSaves.test.ts > automatically selects the newest native branch and protects both complete states (local newer=false, free slot=false)"
+      ],
+      "typecheckWorkspaces": [],
+      "typeErrors": [],
+      "nodePass": null,
+      "nodeFail": null
+    },
+    "playerFocused": {
+      "path": "tools/question-quality/question-flags-round3-player-focused-final-20261104.log",
+      "files": "3 passed (3)",
+      "tests": "59 passed (59)",
+      "duration": "33.51s (transform 4.65s, setup 0ms, import 9.15s, tests 24.08s, environment 0ms)",
+      "failures": [],
+      "typecheckWorkspaces": [],
+      "typeErrors": [],
+      "nodePass": null,
+      "nodeFail": null
+    },
+    "playerTimeoutCheck": {
+      "path": "tools/question-quality/question-flags-round3-player-timeout-check-20261104.log",
+      "files": "2 passed (2)",
+      "tests": "6 passed (6)",
+      "duration": "44.14s (transform 10.53s, setup 0ms, import 18.01s, tests 25.73s, environment 0ms)",
+      "failures": [],
+      "typecheckWorkspaces": [],
+      "typeErrors": [],
+      "nodePass": null,
+      "nodeFail": null
+    },
+    "typecheck": {
+      "path": "tools/question-quality/question-flags-round3-typecheck-after-n2-20261104.log",
+      "files": null,
+      "tests": null,
+      "duration": null,
+      "failures": [],
+      "typecheckWorkspaces": [
+        "@gamify-surgery/clinical-context-workbench@0.0.1",
+        "@gamify-surgery/player@0.0.1",
+        "@gamify-surgery/balance-config@0.0.1",
+        "@gamify-surgery/clinical-authoring@0.0.1",
+        "@gamify-surgery/clinical-content@0.0.1",
+        "@gamify-surgery/clinical-research@0.0.1",
+        "@gamify-surgery/game-domain@0.0.1"
+      ],
+      "typeErrors": [],
+      "nodePass": null,
+      "nodeFail": null
+    },
+    "typecheckN2Window": {
+      "path": "tools/question-quality/question-flags-round3-typecheck-handoff-20261104.log",
+      "files": null,
+      "tests": null,
+      "duration": null,
+      "failures": [],
+      "typecheckWorkspaces": [
+        "@gamify-surgery/clinical-context-workbench@0.0.1",
+        "@gamify-surgery/player@0.0.1",
+        "@gamify-surgery/balance-config@0.0.1",
+        "@gamify-surgery/clinical-authoring@0.0.1",
+        "@gamify-surgery/clinical-content@0.0.1",
+        "@gamify-surgery/clinical-research@0.0.1",
+        "@gamify-surgery/game-domain@0.0.1"
+      ],
+      "typeErrors": [
+        "src/question-new-n2-evidence-20261104.ts(6431,5): error TS2353: Object literal may only specify known properties, and '\"termsUrl\"' does not exist in type 'ClinicalSource'.\r",
+        "src/question-new-n2-evidence-20261104.ts(6461,5): error TS2353: Object literal may only specify known properties, and '\"termsUrl\"' does not exist in type 'ClinicalSource'.\r"
+      ],
+      "nodePass": null,
+      "nodeFail": null
+    },
+    "typecheckEarlier": {
+      "path": "tools/question-quality/question-flags-round3-typecheck-locked-20261104.log",
+      "files": null,
+      "tests": null,
+      "duration": null,
+      "failures": [],
+      "typecheckWorkspaces": [
+        "@gamify-surgery/clinical-context-workbench@0.0.1",
+        "@gamify-surgery/player@0.0.1",
+        "@gamify-surgery/balance-config@0.0.1",
+        "@gamify-surgery/clinical-authoring@0.0.1",
+        "@gamify-surgery/clinical-content@0.0.1",
+        "@gamify-surgery/clinical-research@0.0.1",
+        "@gamify-surgery/game-domain@0.0.1"
+      ],
+      "typeErrors": [],
+      "nodePass": null,
+      "nodeFail": null
+    },
+    "lint": {
+      "path": "tools/question-quality/question-flags-round3-lint-tests-handoff-20261104.log",
+      "files": null,
+      "tests": null,
+      "duration": null,
+      "failures": [],
+      "typecheckWorkspaces": [],
+      "typeErrors": [],
+      "nodePass": "33",
+      "nodeFail": "0"
+    }
+  },
+  "lint": {
+    "linterVersion": "question-cue-lint.2026-11-04.v8",
+    "before": {
+      "cases": 1189,
+      "nodeOccurrences": 1502,
+      "uniqueVariants": 1497,
+      "concepts": 481,
+      "profileContexts": 6197,
+      "variantsWithFindings": 956,
+      "findings": 2039,
+      "tutorialSequenceVariants": 3,
+      "missingAuthoredVersion": 0,
+      "missingEducationalTier": 153,
+      "approvalRecordOnlyMetadata": 40,
+      "variantsWithCompleteRationales": 334,
+      "variantsWithMultipleDefinitions": 0,
+      "byPriorityStage": {
+        "0": 687,
+        "1": 464,
+        "2": 163,
+        "3": 127,
+        "4": 56
+      },
+      "byOptionCount": {
+        "3": 210,
+        "4": 1287
+      },
+      "variantsByRule": {
+        "ambiguous-cervical-term": 19,
+        "availability-permission-cue": 15,
+        "case-detail-decision-cue": 9,
+        "case-detail-key-rationale-overlap": 36,
+        "convergence": 82,
+        "heterogeneous-option-category": 87,
+        "key-length-disparity": 52,
+        "key-only-phrase-overlap": 49,
+        "key-only-word-overlap": 329,
+        "key-test-name-in-context": 8,
+        "lead-in-decision-principle": 15,
+        "near-duplicate-options": 41,
+        "negative-aligned-to-distractor": 106,
+        "option-absolute": 94,
+        "option-alone": 120,
+        "option-explanation": 37,
+        "option-generic-individualization": 11,
+        "option-length-disparity": 295,
+        "option-scope-mismatch": 2,
+        "option-specificity-disparity": 22,
+        "supplied-clinical-conclusion": 18,
+        "unexplained-negative-imaging": 6,
+        "unique-key-abbreviation": 131,
+        "unique-key-test-name": 16,
+        "unnamed-treatment-action": 2
+      }
+    },
+    "after": {
+      "cases": 1189,
+      "nodeOccurrences": 1502,
+      "uniqueVariants": 1497,
+      "concepts": 482,
+      "profileContexts": 6197,
+      "variantsWithFindings": 957,
+      "findings": 2044,
+      "tutorialSequenceVariants": 3,
+      "missingAuthoredVersion": 0,
+      "missingEducationalTier": 153,
+      "approvalRecordOnlyMetadata": 40,
+      "variantsWithCompleteRationales": 334,
+      "variantsWithMultipleDefinitions": 0,
+      "byPriorityStage": {
+        "0": 687,
+        "1": 464,
+        "2": 163,
+        "3": 127,
+        "4": 56
+      },
+      "byOptionCount": {
+        "3": 207,
+        "4": 1290
+      },
+      "variantsByRule": {
+        "ambiguous-cervical-term": 19,
+        "availability-permission-cue": 15,
+        "case-detail-decision-cue": 9,
+        "case-detail-key-rationale-overlap": 36,
+        "convergence": 85,
+        "heterogeneous-option-category": 87,
+        "key-length-disparity": 52,
+        "key-only-phrase-overlap": 50,
+        "key-only-word-overlap": 330,
+        "key-test-name-in-context": 8,
+        "lead-in-decision-principle": 15,
+        "near-duplicate-options": 42,
+        "negative-aligned-to-distractor": 105,
+        "option-absolute": 94,
+        "option-alone": 120,
+        "option-explanation": 37,
+        "option-generic-individualization": 11,
+        "option-length-disparity": 295,
+        "option-scope-mismatch": 2,
+        "option-specificity-disparity": 22,
+        "supplied-clinical-conclusion": 18,
+        "unexplained-negative-imaging": 6,
+        "unique-key-abbreviation": 131,
+        "unique-key-test-name": 16,
+        "unnamed-treatment-action": 2
+      }
+    },
+    "selected": {
+      "rewritten": 14,
+      "noteResponses": 140,
+      "beforeFindings": 7,
+      "afterFindings": 12,
+      "beforeOwnerFindings": 0,
+      "afterOwnerFindings": 0
+    },
+    "ownerRulesBefore": {
+      "option-alone": {
+        "variants": 120,
+        "findings": 164
+      },
+      "option-generic-individualization": {
+        "variants": 11,
+        "findings": 11
+      },
+      "availability-permission-cue": {
+        "variants": 15,
+        "findings": 16
+      },
+      "supplied-clinical-conclusion": {
+        "variants": 18,
+        "findings": 24
+      },
+      "unexplained-negative-imaging": {
+        "variants": 6,
+        "findings": 10
+      },
+      "ambiguous-cervical-term": {
+        "variants": 19,
+        "findings": 24
+      },
+      "nerve-competitor-plausibility": {
+        "variants": 0,
+        "findings": 0
+      },
+      "unnamed-treatment-action": {
+        "variants": 2,
+        "findings": 5
+      }
+    },
+    "ownerRulesAfter": {
+      "option-alone": {
+        "variants": 120,
+        "findings": 164
+      },
+      "option-generic-individualization": {
+        "variants": 11,
+        "findings": 11
+      },
+      "availability-permission-cue": {
+        "variants": 15,
+        "findings": 16
+      },
+      "supplied-clinical-conclusion": {
+        "variants": 18,
+        "findings": 24
+      },
+      "unexplained-negative-imaging": {
+        "variants": 6,
+        "findings": 10
+      },
+      "ambiguous-cervical-term": {
+        "variants": 19,
+        "findings": 24
+      },
+      "nerve-competitor-plausibility": {
+        "variants": 0,
+        "findings": 0
+      },
+      "unnamed-treatment-action": {
+        "variants": 2,
+        "findings": 5
+      }
+    },
+    "frozen": [
+      "F01",
+      "F12",
+      "F14",
+      "all eleven batch-2a versions",
+      "all exact clinical approvals"
+    ]
+  },
+  "verification": {
+    "verifiedOn": "2026-11-04T22:52:05.665Z",
+    "revisions": 14,
+    "newConcepts": 8,
+    "frozenCases": 1096,
+    "frozenNodes": 1409,
+    "retainedTimings": 1810,
+    "retainedOrders": 371,
+    "newOrders": 18,
+    "entryConcepts": 414,
+    "ownConcepts": 422,
+    "currentConcepts": 501,
+    "entryCases": 1110,
+    "currentCases": 1189,
+    "noteResponses": 140,
+    "exactLevel5BoundInputsThisRound": [
+      {
+        "path": "packages/clinical-content/src/answer-choice-timing.ts",
+        "change": "modified",
+        "sha256": "dd2e637bb54b1c4de00787254701f30d7ff7ca73083463ed8b1786d13aa795c5"
+      },
+      {
+        "path": "packages/clinical-content/src/index.ts",
+        "change": "modified",
+        "sha256": "e4c8c417af6a50bcd1e0590b333984ed8ced76603b8511e5600b861442c3c4d7"
+      },
+      {
+        "path": "packages/clinical-content/src/synthetic-content.ts",
+        "change": "modified",
+        "sha256": "ce9b7be14568f7f5cc24d03ba2a079b4db2d7f433bdbd7545b40f46f33ff4415"
+      },
+      {
+        "path": "packages/clinical-content/src/question-flags-round3-20261104.ts",
+        "change": "added",
+        "sha256": "d32476015827e917e831564feafb40ef6ae60e85ea8d6c9fb643cf61707411e5"
+      },
+      {
+        "path": "packages/clinical-content/src/question-flags-round3-20261104-data.ts",
+        "change": "added",
+        "sha256": "b47081a164cdde7e0b2a9e7df35b32dfd658bb0772a75544ac2c1862cf6e9da2"
+      },
+      {
+        "path": "packages/clinical-content/src/question-flags-round3-evidence-20261104.ts",
+        "change": "added",
+        "sha256": "1c27f65bcc03a29d7769350230a14dc9b96bb04c95d8472ef19d971b93608889"
+      },
+      {
+        "path": "packages/game-domain/src/test-choice-orders.ts",
+        "change": "modified",
+        "sha256": "637b6042332c210fc6cec73c451ec996084c9380a8f8e89953fa7a46c989f311"
+      }
+    ],
+    "changedEntryFiles": [
+      {
+        "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+        "previous": "5c67c6a4e0cbdfc1e2beba1df2d987d18204d9235f38d6342d14db95dd9dc409",
+        "current": "22465643ba225336b13120d0608a211d55755df4bfb919442d9bf8a3633323b9",
+        "ownership": "round-three scoped edit (shared assembly may also include N1/N2 appends)"
+      },
+      {
+        "path": "packages/clinical-content/src/answer-choice-timing.ts",
+        "previous": "64c8b2dc402055d8495f85fd9289b44e9dc6fa9d7b5d0704fb799bd8bfeb6b9c",
+        "current": "dd2e637bb54b1c4de00787254701f30d7ff7ca73083463ed8b1786d13aa795c5",
+        "ownership": "round-three scoped edit (shared assembly may also include N1/N2 appends)"
+      },
+      {
+        "path": "packages/clinical-content/src/approved-data/breast-cyst-pathway.test.ts",
+        "previous": "c0e6e2186d08ef4a9c2add62f2347da2bf17b236d689e2b6fbabb2caf919cfac",
+        "current": "164be3a2c95696dc5e0bbc7fecbbb75e0b2dce5dfddd9e060504637bc4f09c87",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "packages/clinical-content/src/approved-data/controlled-enterotomy-mesh-selection.test.ts",
+        "previous": "db6cb49c31ba7502ab2525d4f3d6d8dae64467ddffd88ded20563561f77b96df",
+        "current": "9a6b07035b9bc1fe06c305cb2210ce41d74dd61d950b06c971fbc2259f736e39",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "packages/clinical-content/src/approved-data/direct-inguinal-operative-anatomy.test.ts",
+        "previous": "d3eb203569d406764b47240df6a9bbffee62495d68493ca54871fd86d8dff82b",
+        "current": "9b7831d6df8918d125c3b8252eae5e0a4c42b22db9e777a56cad37a2fe71f125",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "packages/clinical-content/src/approved-data/meckel-resection-extent.test.ts",
+        "previous": "2e3742789bd94953052bddea320e26cd06cdf3887b99b9e3a52164ad6d700c06",
+        "current": "3c3cb46a7fad462ae4bc7a7766791d2b6c096129e8f573a5ac51bc126ae7da97",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "packages/clinical-content/src/approved-data/phyllodes-pathology-follow-up.test.ts",
+        "previous": "47e52a6228f910f36f1241be4ae368750ded662287a83b2a4e9ef14644309c3a",
+        "current": "a73672d8a0f4788b15cbbdfa1a5333cb6b5c692e7985da214881752fd52542c0",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "packages/clinical-content/src/approved-data/postoperative-chylous-ascites.test.ts",
+        "previous": "20b12e94e184f94d4fe09b19b3b46fd2c3189d2627b12590f3c66e72d1a4df1c",
+        "current": "86b71d9425c9c6c559998950ebca91368ea1d817abbd4c95abc7c95418a6bb2f",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "packages/clinical-content/src/approved-data/postoperative-ileus.test.ts",
+        "previous": "f8d6d188ebdf1911bf9257f0dfc04402260f94295b8e8624413643d745543cbe",
+        "current": "3860f7bf8e6fd870d832355e0f6eaf5131ece3d106f8844c46124aba30cf0f34",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "packages/clinical-content/src/approved-data/right-thoracotomy-trauma-exposure.test.ts",
+        "previous": "ac6882dd9546be57a78190c159368841a020fbdba50f2c66d328adde79769d08",
+        "current": "559ff5a02cc3dee926dc628d588ea7a1202e83810e852b91afb633c655f54713",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "packages/clinical-content/src/approved-data/severe-burn-early-enteral-nutrition.test.ts",
+        "previous": "c78eb3fb990ae7898cbc6c57b71e27162c2f260c7c497c31d09ea2578a2482eb",
+        "current": "e4ecd6338de84698cf45061b164f3bd99481887915a0f1316f9b8824b8fcccee",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "packages/clinical-content/src/approved-data/suspicious-breast-imaging.test.ts",
+        "previous": "31b1d25ed1444d3cc04c09e97c6d7d7f5a4497d4ad72402e088a24b8336ce9c3",
+        "current": "1a9f25da3cda7255a0992e5176630c5bc49435dd13a2b077738d2e8a486eb3bf",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "packages/clinical-content/src/approved-data/trauma-vka-emergency-reversal.test.ts",
+        "previous": "aa89d9a9490d6ccc109b2ec30994f7630eba5c93b3b02ca857fc274d95ff54c2",
+        "current": "9c5a8e313e1264548dfe74292bb29d79bb5fecebc8431cd953fb0351e718917b",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "packages/clinical-content/src/index.ts",
+        "previous": "631cd547564e7319e6215939f16901eead900aea836f44631240449c10df435c",
+        "current": "e4c8c417af6a50bcd1e0590b333984ed8ced76603b8511e5600b861442c3c4d7",
+        "ownership": "round-three scoped edit (shared assembly may also include N1/N2 appends)"
+      },
+      {
+        "path": "packages/clinical-content/src/question-bank-batch2a-20261104.test.ts",
+        "previous": "bd3e3c3af63db62eb9c614435888b9b2f3a2dd05fa6e003013472ecf7bbfe4d3",
+        "current": "32af03760e2c6cfe7b1dd8c7a21ed9481c0601025d601fd9322d0de25e03d181",
+        "ownership": "round-three scoped edit (shared assembly may also include N1/N2 appends)"
+      },
+      {
+        "path": "packages/clinical-content/src/synthetic-content.ts",
+        "previous": "f4087dd2674b942d7f018fee696c7a846c2c35ff002eb1e83d1f2b51d36870af",
+        "current": "ce9b7be14568f7f5cc24d03ba2a079b4db2d7f433bdbd7545b40f46f33ff4415",
+        "ownership": "round-three scoped edit (shared assembly may also include N1/N2 appends)"
+      },
+      {
+        "path": "packages/game-domain/src/game-evidence.ts",
+        "previous": "13debcdfe16a9505d60a0a42f42997406cf97e250ca61a783106e2bd4f06dc58",
+        "current": "ff5810d795a18e7d49e043da8a82e94b78fc3faeef15cd49ce75d413381cf9cc",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "packages/game-domain/src/guidance-tips.ts",
+        "previous": "af1052becf169c39cd36ef734fec89bba81e315cbc811ca5704dd0aa76c23915",
+        "current": "3d158c8f992dd339721fe53b6c30eb75880ba7362b654f94f9d7eb7e6e243dcd",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "packages/game-domain/src/patient-amenities.ts",
+        "previous": "38405dd7014e5b591ee567c860eb3c313d6e09ed15581e4ad040cc10748be043",
+        "current": "60d6031577039452e49218ff02f484c69d8d381cbe384fd5eaa59ed8763836d8",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "packages/game-domain/src/reducer.ts",
+        "previous": "fb30915e3c0bf99b7beac99bfa82a40c107ae516958af196fdfd53bbba36715d",
+        "current": "a7ebca635a864d58c6f6d1b1006f13a78bf3c32153cd1d4e7283bacf5aece6b6",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "packages/game-domain/src/restroom-recovery.ts",
+        "previous": "556ebd817e39d3fccdc7dd802e860ceaf9317fecfee4602d72ccace953f7432b",
+        "current": "a8c0e5c18f93e14a227d057ddc863192fdd6a9600a8ec002e3ff2cdc8adf4536",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "packages/game-domain/src/routine-patient-availability.ts",
+        "previous": "53ccb6442e59df1449c7c4b467b73a2506b1569eef713d54bb2385d7b7018732",
+        "current": "1c4eb483c4d6a8ca8807e4470f91c88718c9ba772bbb16d6a470a5355fb8a112",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "packages/game-domain/src/spatial.ts",
+        "previous": "978cbbedc761f9e039eb3931eef166a3ba623cbc9928d38084a167524fee5da7",
+        "current": "0c881fa9585c42ec81032adaf6ef4ae0be53ddccb8f0f2fe58bc392257b2ac57",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "packages/game-domain/src/test-choice-orders.ts",
+        "previous": "52dbc97240511ec5bab5f4fde92a3456a02cbeab2810848fdb761c7131520d3d",
+        "current": "637b6042332c210fc6cec73c451ec996084c9380a8f8e89953fa7a46c989f311",
+        "ownership": "round-three scoped edit (shared assembly may also include N1/N2 appends)"
+      },
+      {
+        "path": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+        "previous": "ee98d1798b415573fd771dc94f83db6aa23b3e7136159ba747aefe37df0a0bbb",
+        "current": "6439ba6ba2007aa5de81dc50fe5f9380ada216a8bb970b32e3355d576e19bf7d",
+        "ownership": "round-three scoped edit (shared assembly may also include N1/N2 appends)"
+      },
+      {
+        "path": "packages/game-domain/tests/clinical-content-withdrawal.test.ts",
+        "previous": "155825789cd64e2d6b5d067c7be13c8b7d7e7f5ae1e906f50ea81e87f2b6a5ea",
+        "current": "1e3d170688819deac95b3b3345b126b78fe732f4d0cdc91199616cf99d0ec73f",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "packages/game-domain/tests/diagnostics/patient-supply.test.ts",
+        "previous": "5937d82f2134a83558cfa9d4af40d7922e647174479d037a24b28099b0ec6ecc",
+        "current": "220375aaf65c3591b9ac1a25ba65fe3cf8c3b1b32295d7f1fe613a6cfffc68ac",
+        "ownership": "round-three scoped edit (shared assembly may also include N1/N2 appends)"
+      },
+      {
+        "path": "packages/game-domain/tests/gs028-20261002-batch.test.ts",
+        "previous": "26efb2b3c8cc6266c12dc53034cea900b842c5d4a9b5b52d92e6ddd533d08f21",
+        "current": "ec4db7f8ba96dd64f82987285959ccbc555cb6d2b95794b3267e0588565f2c5b",
+        "ownership": "round-three scoped edit (shared assembly may also include N1/N2 appends)"
+      },
+      {
+        "path": "packages/game-domain/tests/gs028-20261003-batch.test.ts",
+        "previous": "91b04bacd4284b2c1766e27792434cad1a3ba2cd590928d53f8d494837b831d5",
+        "current": "22796b3a1b1331c9c14c4c4e2fa5ceaa4c6a98e4e4722eedcfc3b42ceb42a04c",
+        "ownership": "round-three scoped edit (shared assembly may also include N1/N2 appends)"
+      },
+      {
+        "path": "packages/game-domain/tests/gs028-20261007-batch.test.ts",
+        "previous": "2b2b79b32f6156aa9b1ec9dd43bcfc1f3fedfdb0a7a0463cb555a4be10334aea",
+        "current": "0386b8e6297a207c917e0959f247b8fbb27328d7c2523838be01e9b56cfa9bd3",
+        "ownership": "round-three scoped edit (shared assembly may also include N1/N2 appends)"
+      },
+      {
+        "path": "packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+        "previous": "5cf9998910111a6869c95b73b000ba0492fc5d377cd4272b4de63ef3ec8397fc",
+        "current": "4be72ebd064e6e025bf36ac227cf03012b44ead63f07ade672dcc734662e2c2d",
+        "ownership": "round-three scoped edit (shared assembly may also include N1/N2 appends)"
+      },
+      {
+        "path": "packages/game-domain/tests/gs028-statistics-ethics-batch.test.ts",
+        "previous": "440737e150561605cc4047cecba3c273bbc01ff6a91257de70a71dcf3bf8c246",
+        "current": "625615ce511ce8c2f2130e34d9a8a9cb17b2670c5294644bcbfc21b538616da0",
+        "ownership": "round-three scoped edit (shared assembly may also include N1/N2 appends)"
+      },
+      {
+        "path": "packages/game-domain/tests/patient-supply.test.ts",
+        "previous": "9a52a2e370e12835cbb986761acd0c575312e8c54eb2491215a32f2a0c5b2987",
+        "current": "5742f162669afb9ccb60559d27df5ab9e58d194e38cd02c66d5458b7a4be69fe",
+        "ownership": "round-three scoped edit (shared assembly may also include N1/N2 appends)"
+      },
+      {
+        "path": "packages/game-domain/tests/question-bank-batch2a-bindings.test.ts",
+        "previous": "b8b36802252e11621a5096ad76dd48c3c166c4595ff24b52f39419656a84e90e",
+        "current": "2988221ebc269e26e11df727251d1649c4c37ccd984d04c5891698224b2bb6ef",
+        "ownership": "round-three scoped edit (shared assembly may also include N1/N2 appends)"
+      },
+      {
+        "path": "packages/game-domain/tests/restroom-recovery.test.ts",
+        "previous": "deda186a7745dc22a2393d63500843b7462a4a767ef001d7a0a3a1c45723784c",
+        "current": "70f3f432535b06c69102b72b54564ff7042beb8689c07872f5c7030de39c5a33",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+        "previous": "a7d786469665313550687b97878e2698164e1a5aa64792f9ce2639efbd09c13f",
+        "current": "6f316140285d5f8737c5773e0d82b37c297829854c11cc276c73d20139124521",
+        "ownership": "round-three scoped edit (shared assembly may also include N1/N2 appends)"
+      },
+      {
+        "path": "apps/player/src/App.cloudBrowserFailures.test.tsx",
+        "previous": "3d0670da9afcb4568e8d783808cbf6bd18e786df6f828a946c062c149353ad6e",
+        "current": "864d95c2af713d9035ab264b1be42ac50e4bd3fbe7ec28aaa948948e29c64c9c",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "apps/player/src/AppShell.tsx",
+        "previous": "82b1871f33128a3ccbccef31905d0db098d360ccd2d35bc4897208836ec26320",
+        "current": "c4621056d7032adbf17e064fcffbe5ace8e5ca23b3428cfd48f83df80388b3ba",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "apps/player/src/art/characterPhlebotomyQa.ts",
+        "previous": "e1b521d0bd41e8072deedddb5ffbcbf3d3e076302fac60f304c306268eac4307",
+        "current": "3dc4bdd7500687e8fe598b0af462e423ba1a99fbcfff530c1b95e88201a5854a",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "apps/player/src/art/characterPhlebotomyQaModel.ts",
+        "previous": "eb8a020bdc7f0268d10494c2caad5320050aa58a63562f58fe4d52dec1cd1658",
+        "current": "7d25174e9a4f572745ce4bbafbc6856b09351d6dbab2b6de2149612cb7502452",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "apps/player/src/diagnostics/problemDiagnostics.test.ts",
+        "previous": "662779bed06cdf0024274f05243830c04e919934039caad3fbd6ca131057e0e4",
+        "current": "fdf5f4496541cd892f736e9a02324a8312c634e31b4df7027c9c7d759451339c",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "apps/player/src/diagnostics/problemDiagnostics.ts",
+        "previous": "1e3501268912d2ef9b8bfd0c03acbf90524c0c0167795ccc4cfdb9ee529a664b",
+        "current": "6db275b90ddc4b344da3c5623ccff85449ee8dd7349f02d1e00b776058f2c425",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "apps/player/src/facility/FacilityScene.ts",
+        "previous": "a9ce2ee44d7f2a4879ca554bb9543de0dcb568c7c63adbd6f26db3a9060f8f93",
+        "current": "ca0dafe15824da8b997e4f1ec7dc76da5feeccf27a48b3d5e58035c419192d4d",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "apps/player/src/facility/phlebotomyPresentation.test.ts",
+        "previous": "dcc320309107a34896ddceaed960941761daa892d962bd4ce444724cf6fa9abf",
+        "current": "6ed43229902f6a507da90eb10393c69cfceb9471035627000d062f37061e804d",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "apps/player/src/facility/staffIdleSupports.test.ts",
+        "previous": "d2840a97b2fd13603449a1cb7336a12f8df7f83797ba6bf9e852612b65ecc1ee",
+        "current": "0dad84857c8d4930c174e7ab1a8fc15fbdfeda2d248035a3b2147becf5d8f73e",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "apps/player/src/feedback/TesterFeedback.tsx",
+        "previous": "fb0d77bab7b76566aac70f3a5e44364676dc76344e9d837babc1012960b36075",
+        "current": "15bae0fbd0725d45f05597db7cda47b756a50c1959d93387c0763b5641605b41",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "apps/player/src/mobile/build/buildSession.ts",
+        "previous": "20dbb0d5da8aa631591f53ed15e43ad7997305024fbb2d7f5c690f6afba019e4",
+        "current": "8c8c2fa8888ed3aa8d0b401f5376543b211cc6cb8f2e872c68f7470d4e31c5e4",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "apps/player/src/mobile/build/MobileBuildControls.tsx",
+        "previous": "f3865dafec4a4dcafe7f914d2c58ed1daf2030c94faf4b35b4fd5d774d36d193",
+        "current": "5b07d9049a540795c331a665879cb29064e44f0aad92f09c09f288e6a9f63609",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "apps/player/src/mobile/build/MobileBuildRoom.tsx",
+        "previous": "f32dbaa3c69b36e9ba2ced1b9899f30c2c57b5071d2dabaeaa9476764a81e630",
+        "current": "628e84ad1fe1dbd64d94bf715e8499d057ddd61f14496b71177d1bb46d6c7305",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "apps/player/src/mobile/build/types.ts",
+        "previous": "afd9da2f86960db929ba517812a0812f433f1f77f0891ef11df7fe6f893637c8",
+        "current": "8118cea4f1521bb2cfa4a4715b841fc45f37640a641e7ea335698321d1dfb77e",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "apps/player/src/mobile/build/useMobileBuild.ts",
+        "previous": "5c254080c8757a1d896ca6a6b017f3f317d88378f55e87db6cc12fbe9ec6d60e",
+        "current": "9f1604361e9e1fe50d911f40920504348a8773264c0f4fcd3b8275505951e03a",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "apps/player/src/mobile/manage/MobileEmployees.tsx",
+        "previous": "901d1d32600d1fa1b0b914b1a32f2d19fb95e02b26d103cf40bec4a617312084",
+        "current": "6f1843c4ae4650a1d9b0a693610c435e36207e73a2bb676bb2e5da2ff2a5565b",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "apps/player/src/mobile/MobileShell.tsx",
+        "previous": "79349805e4ea02214240a4b3859cd6878addae2a7f4def40e770b2a3898497cf",
+        "current": "35b50af18613d3b225e149454b38cd439f18d6cad8936e707321587ee104b671",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "apps/player/src/session/cloud/cache.ts",
+        "previous": "438354e9274f422b0621254e1f8a76709c6ce1e57f63eefe54613bf7ba27b9bf",
+        "current": "8d89ade786fb2244234a3c4a8ad6d4df805c3dc9d96280465c09c37487a3aee8",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "apps/player/src/session/cloud/codecCache.ts",
+        "previous": "1edca52881ff4992ee86deb37baa2618540d7c2599b20adc5a2a4d7cc47cf7f5",
+        "current": "b10527fd20b7bc914ec653988e77190721cc4fbbcebda476405089a75847e2d3",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "apps/player/src/session/cloud/coordinator.ts",
+        "previous": "f2ec3deb9b36ea02c1767d0c1adccf606876f2effe93dd8cca33aeecc106abd8",
+        "current": "040c958b09c6a35015de791390a04b3e239372cfbdee5ad97748f01e7bd6a35c",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "apps/player/src/session/cloud/entryStorage.ts",
+        "previous": "f31a252a0d944dda84b06f859da52f754e8e67f835cb59ae4ad16e9a1b355c1d",
+        "current": "a01b6c9abcf932efb2666a45f473171eafc2d6e2b1902428b8d9238ee7f79956",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "apps/player/src/session/cloud/gameSession.ts",
+        "previous": "3d2992567cc52d89e3ed534e933f74412b0a2cfdfb22febe225b3942e4938a15",
+        "current": "9454c397873d6b4e52d9066e045972b94971ddfbba259247140e879ace98df19",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "apps/player/src/session/cloud/journalCodec.ts",
+        "previous": "ce4f7eca39d55775a97f5d376ea366b38c17893fb9248f9c7d84e59694ac104a",
+        "current": "dd5aa040b2b52aed5ee8855655f546aa75a797d5442217b01cad218f644b5f65",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "apps/player/src/session/cloud/watchdogs.test.ts",
+        "previous": "c102713764a19e49f9a818f86be60eac1c2010e69c32eb3751b489d0d63a32e9",
+        "current": "b65aa34ae783a4edbfdf197c1faa6ce85a900be129583b1b0672745b6f2a7c12",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "apps/player/src/session/localJournal.test.ts",
+        "previous": "e149afb06e971f677a7fecffa69b2b8df07e781bc7bf883e635699103b35b0f1",
+        "current": "af627f6e3f5c00b25d631c808cace49d3a6ac01ec0b4d7f85b47be157bd42959",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "apps/player/src/session/localJournal.ts",
+        "previous": "dfc322bc7ab37b5c2d9f282c2d8a27853ac3ac80124e12e99349aa13f0e063b0",
+        "current": "2f01a47805cde9ded0da1c50b95629670c615a1bd3bd0a55e90ec96b8cd45409",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "apps/player/src/session/usePrototypeSession.ts",
+        "previous": "71eda05f0fd849ca94b5afab8bfa41255a4207a681fede9a0f12ca046da0a25c",
+        "current": "77e606ddd95620e9af1cba423e1177894e357d9f6a3b40a2757a583431de8803",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "apps/player/src/session/viewModels.ts",
+        "previous": "7f84fda0270d6b0d9fe874843d4afb5e3a038c6e20b89a69344844ddf0ca6772",
+        "current": "1665d80e8ff7248a6de82eeae08185e2a8e959cdd4a2ccde53175f06be39701c",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "apps/player/src/ui/CloudSaveControls.tsx",
+        "previous": "c16fe235d078f8549ff247fbf81a555eee86ed2c459924265f3ec5e322d95aa7",
+        "current": "4dc0dd2f99847eacc00e549fbc7570baac7235c1c0c411b21559564f5581c73f",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "apps/player/src/ui/RoomActionMenu.tsx",
+        "previous": "a4f23e110373f5de5a929113b09ffb1729378929d6f25e80ef69288638f29ee2",
+        "current": "f084ea858be1d53949e64d81981878fcf810ddf9c4e1ae68f6566cb05d22513c",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "apps/player/src/ui/StaffPanel.tsx",
+        "previous": "7291cbb4528c075b5a8541d58fa2b93abe3468a7834343161e0ddf0189ad6947",
+        "current": "e23d1ceafa396c4546877d2465d838b013b628a46df08e62dd18ae2f412d463c",
+        "ownership": "concurrent unrelated change; preserved"
+      },
+      {
+        "path": "apps/player/src/ui/types.ts",
+        "previous": "75179334e59d8656c6b034513177998d7684e67aecb518ad5de823824f45db1d",
+        "current": "3c6ff78f4d65f321e8d35be30117725e1e19e0e02906ce3291c9096ddef6783d",
+        "ownership": "concurrent unrelated change; preserved"
+      }
+    ],
+    "concurrentNewContent": [
+      {
+        "caseId": "case.n1.direct-inguinal-anatomy.v1",
+        "variantIds": [
+          "question.n1.direct-inguinal-anatomy.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.postoperative-ascites-ct.v1",
+        "variantIds": [
+          "question.n1.postoperative-ascites-ct.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.chylous-fluid-confirmation.v1",
+        "variantIds": [
+          "question.n1.chylous-fluid-confirmation.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.chylous-nutrition.v1",
+        "variantIds": [
+          "question.n1.chylous-nutrition.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.ileus-parenteral-nutrition.v1",
+        "variantIds": [
+          "question.n1.ileus-parenteral-nutrition.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.controlled-enterotomy-mesh.v1",
+        "variantIds": [
+          "question.n1.controlled-enterotomy-mesh.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.meckel-resection.v1",
+        "variantIds": [
+          "question.n1.meckel-resection.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.celiac-iga-deficiency.v1",
+        "variantIds": [
+          "question.n1.celiac-iga-deficiency.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.celiac-gluten-withdrawal.v1",
+        "variantIds": [
+          "question.n1.celiac-gluten-withdrawal.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.celiac-hla.v1",
+        "variantIds": [
+          "question.n1.celiac-hla.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.hcc-portal-hypertension.v1",
+        "variantIds": [
+          "question.n1.hcc-portal-hypertension.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.gastroparesis-obstruction.v1",
+        "variantIds": [
+          "question.n1.gastroparesis-obstruction.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.pn-return-enteral.v1",
+        "variantIds": [
+          "question.n1.pn-return-enteral.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.incidental-t1b.v1",
+        "variantIds": [
+          "question.n1.incidental-t1b.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.gastric-adjacent-invasion.v1",
+        "variantIds": [
+          "question.n1.gastric-adjacent-invasion.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.breast-mass-morphology.v1",
+        "variantIds": [
+          "question.n1.breast-mass-morphology.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.breast-calcification.v1",
+        "variantIds": [
+          "question.n1.breast-calcification.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.breast-thirties-imaging.v1",
+        "variantIds": [
+          "question.n1.breast-thirties-imaging.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.phyllodes-benign-excision.v1",
+        "variantIds": [
+          "question.n1.phyllodes-benign-excision.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.phyllodes-benign-margin.v1",
+        "variantIds": [
+          "question.n1.phyllodes-benign-margin.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.phyllodes-borderline-close.v1",
+        "variantIds": [
+          "question.n1.phyllodes-borderline-close.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.phyllodes-malignant-close.v1",
+        "variantIds": [
+          "question.n1.phyllodes-malignant-close.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.phyllodes-negative-axilla.v1",
+        "variantIds": [
+          "question.n1.phyllodes-negative-axilla.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.phyllodes-suspicious-node.v1",
+        "variantIds": [
+          "question.n1.phyllodes-suspicious-node.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.phyllodes-borderline-target.v1",
+        "variantIds": [
+          "question.n1.phyllodes-borderline-target.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.phyllodes-malignant-target.v1",
+        "variantIds": [
+          "question.n1.phyllodes-malignant-target.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.phyllodes-spread.v1",
+        "variantIds": [
+          "question.n1.phyllodes-spread.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.aldosterone-overt-phenotype.v1",
+        "variantIds": [
+          "question.n1.aldosterone-overt-phenotype.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.mixing-study-followup.v1",
+        "variantIds": [
+          "question.n1.mixing-study-followup.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.lymphedema-new-swelling.v1",
+        "variantIds": [
+          "question.n1.lymphedema-new-swelling.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.graves-beta-blocker-boundary.v1",
+        "variantIds": [
+          "question.n1.graves-beta-blocker-boundary.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.dvt-filter.v1",
+        "variantIds": [
+          "question.n1.dvt-filter.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.hemoglobin-measurement.v1",
+        "variantIds": [
+          "question.n1.hemoglobin-measurement.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.neck-core-after-fna.v1",
+        "variantIds": [
+          "question.n1.neck-core-after-fna.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.respiratory-acidosis.v1",
+        "variantIds": [
+          "question.n1.respiratory-acidosis.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.burn-depth-reassessment.v1",
+        "variantIds": [
+          "question.n1.burn-depth-reassessment.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.vka-vitamin-k.v1",
+        "variantIds": [
+          "question.n1.vka-vitamin-k.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.vka-pcc-selection.v1",
+        "variantIds": [
+          "question.n1.vka-pcc-selection.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.burn-enteral-nutrition.v1",
+        "variantIds": [
+          "question.n1.burn-enteral-nutrition.v1"
+        ]
+      },
+      {
+        "caseId": "case.n1.thoracic-exposure.v1",
+        "variantIds": [
+          "question.n1.thoracic-exposure.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.sglt2-postoperative-restart.v1",
+        "variantIds": [
+          "question.n2.sglt2-postoperative-restart.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.naloxone-response-recurrence.v1",
+        "variantIds": [
+          "question.n2.naloxone-response-recurrence.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.oxygenation-versus-ventilation-monitoring.v1",
+        "variantIds": [
+          "question.n2.oxygenation-versus-ventilation-monitoring.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.sugammadex-recovery-endpoints.v1",
+        "variantIds": [
+          "question.n2.sugammadex-recovery-endpoints.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.ventilator-elastic-versus-resistive-load.v1",
+        "variantIds": [
+          "question.n2.ventilator-elastic-versus-resistive-load.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.refeeding-baseline-phosphate-attribution.v1",
+        "variantIds": [
+          "question.n2.refeeding-baseline-phosphate-attribution.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.burn-feeding-perfusion-prerequisite.v1",
+        "variantIds": [
+          "question.n2.burn-feeding-perfusion-prerequisite.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.parenteral-response-versus-bowel-recovery.v1",
+        "variantIds": [
+          "question.n2.parenteral-response-versus-bowel-recovery.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.dialysis-isocaloric-protein-adjustment.v1",
+        "variantIds": [
+          "question.n2.dialysis-isocaloric-protein-adjustment.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.vitamin-c-indication-boundary.v1",
+        "variantIds": [
+          "question.n2.vitamin-c-indication-boundary.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.vte-prophylaxis-to-treatment.v1",
+        "variantIds": [
+          "question.n2.vte-prophylaxis-to-treatment.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.af-bridging-versus-surgical-prophylaxis.v1",
+        "variantIds": [
+          "question.n2.af-bridging-versus-surgical-prophylaxis.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.factor-assays-without-mixing-gate.v1",
+        "variantIds": [
+          "question.n2.factor-assays-without-mixing-gate.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.prophylaxis-versus-ssi-source-control.v1",
+        "variantIds": [
+          "question.n2.prophylaxis-versus-ssi-source-control.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.serial-gcs-verbal-interference.v1",
+        "variantIds": [
+          "question.n2.serial-gcs-verbal-interference.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.dnr-versus-active-source-control.v1",
+        "variantIds": [
+          "question.n2.dnr-versus-active-source-control.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.pancreatic-cyst-predates-pancreatitis.v1",
+        "variantIds": [
+          "question.n2.pancreatic-cyst-predates-pancreatitis.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.marginal-ulcer-obstructive-escalation.v1",
+        "variantIds": [
+          "question.n2.marginal-ulcer-obstructive-escalation.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.ulcer-posthemostasis-acid-suppression.v1",
+        "variantIds": [
+          "question.n2.ulcer-posthemostasis-acid-suppression.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.bile-leak-duct-continuity-boundary.v1",
+        "variantIds": [
+          "question.n2.bile-leak-duct-continuity-boundary.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.gastric-wall-mass-specimen-provenance.v1",
+        "variantIds": [
+          "question.n2.gastric-wall-mass-specimen-provenance.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.ercp-versus-gallbladder-source.v1",
+        "variantIds": [
+          "question.n2.ercp-versus-gallbladder-source.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.hpylori-antibody-after-valid-cure-test.v1",
+        "variantIds": [
+          "question.n2.hpylori-antibody-after-valid-cure-test.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.malignant-polyp-local-versus-regional-risk.v1",
+        "variantIds": [
+          "question.n2.malignant-polyp-local-versus-regional-risk.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.fissure-sphincterotomy-continence-boundary.v1",
+        "variantIds": [
+          "question.n2.fissure-sphincterotomy-continence-boundary.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.solid-meal-manometry-provocation.v1",
+        "variantIds": [
+          "question.n2.solid-meal-manometry-provocation.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.coverage-recipient-bed-versus-flap-supply.v1",
+        "variantIds": [
+          "question.n2.coverage-recipient-bed-versus-flap-supply.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.free-transfer-vascular-reconnection.v1",
+        "variantIds": [
+          "question.n2.free-transfer-vascular-reconnection.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.operative-wound-class-versus-later-ssi.v1",
+        "variantIds": [
+          "question.n2.operative-wound-class-versus-later-ssi.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.contrast-local-extravasation-pattern.v1",
+        "variantIds": [
+          "question.n2.contrast-local-extravasation-pattern.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.tacrolimus-antibody-pathway-boundary.v1",
+        "variantIds": [
+          "question.n2.tacrolimus-antibody-pathway-boundary.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.ventral-hernia-priority-change.v1",
+        "variantIds": [
+          "question.n2.ventral-hernia-priority-change.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.irreversible-ischemia-revascularization-boundary.v1",
+        "variantIds": [
+          "question.n2.irreversible-ischemia-revascularization-boundary.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.negative-predictive-value-denominator.v1",
+        "variantIds": [
+          "question.n2.negative-predictive-value-denominator.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.positive-likelihood-ratio.v1",
+        "variantIds": [
+          "question.n2.positive-likelihood-ratio.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.number-needed-to-harm.v1",
+        "variantIds": [
+          "question.n2.number-needed-to-harm.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.mcnemar-paired-binary-outcomes.v1",
+        "variantIds": [
+          "question.n2.mcnemar-paired-binary-outcomes.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.equivalence-margin-versus-null-test.v1",
+        "variantIds": [
+          "question.n2.equivalence-margin-versus-null-test.v1"
+        ]
+      },
+      {
+        "caseId": "case.n2.case-mix-standardized-risk.v1",
+        "variantIds": [
+          "question.n2.case-mix-standardized-risk.v1"
+        ]
+      }
+    ],
+    "frozenSourceDefinitionHashes": "Exact for round-two definitions (including F01/F12), batch-2a definitions/evidence and both PNGs. All earlier approvals and source-held F14 exact. Shared assembly appends are separately attributed."
+  },
+  "validationWindows": [
+    {
+      "checkedAt": "2026-11-04T21:06:38.208Z",
+      "lock": "tools/question-quality/question-flags-round3-validation-complete-lock-20261104.json",
+      "inputs": 4830,
+      "changes": [
+        {
+          "path": "packages/game-domain/src/game-evidence-capture.ts",
+          "previous": "b0397262f4a5009397fb366baf08ecfa83744caf3bc80e9dfd88714949c0975f",
+          "current": "63c8d01af0f14dfe777e8f3cb8ee6dc3a402abfa33439632cec59a87086927d0"
+        },
+        {
+          "path": "packages/game-domain/src/guidance-tips.ts",
+          "previous": "af1052becf169c39cd36ef734fec89bba81e315cbc811ca5704dd0aa76c23915",
+          "current": "3d158c8f992dd339721fe53b6c30eb75880ba7362b654f94f9d7eb7e6e243dcd"
+        },
+        {
+          "path": "packages/game-domain/src/reducer.ts",
+          "previous": "fb30915e3c0bf99b7beac99bfa82a40c107ae516958af196fdfd53bbba36715d",
+          "current": "ff0a4feb73a031eacdbf67019df3c09d5d8cfa46daf08f287dac8dd4e388739d"
+        },
+        {
+          "path": "packages/game-domain/src/tickStateDraft.ts",
+          "previous": "b29737ad58d464862d6246afdd63a38df758af1cc555da9aeefb580617695945",
+          "current": "c80c36a43f3ed23e5539f04e300923565984456775727d1b40337ccd90720734"
+        },
+        {
+          "path": "apps/player/src/ui/actionFeedbackClock.test.tsx",
+          "previous": "f197ae0216a7804e2984709741e483262f180c7eb113bd11f6aeec372e449d57",
+          "current": "9e8bc34a5531fbff7bae7a4e58c66260e8646f391e96cf1ec992851921c47390"
+        }
+      ]
+    },
+    {
+      "checkedAt": "2026-11-04T22:52:51.247Z",
+      "lock": "tools/question-quality/question-flags-round3-validation-handoff-lock-20261104.json",
+      "inputs": 4856,
+      "changes": [
+        {
+          "path": "packages/clinical-content/src/question-new-n2-abdominal.ts",
+          "previous": "b6d9f235762c3676bb26f4b0f86a67fc4f5d57fae1fd76d914e19074d55803d5",
+          "current": "de1d1dba22fa7e884d3d3f5483626f22bb5f4fafd1d793e30657d5b2a69d074b"
+        },
+        {
+          "path": "packages/clinical-content/src/question-new-n2-evidence-20261104.ts",
+          "previous": "bde3c88addfe904bd40f9fedda404f0373050fe062e34c6ec856598bb42b34cf",
+          "current": "b5bd7f00b969b5348b00389ccc9d70f615acd05a67bde7ded96e96bfce6437c2"
+        },
+        {
+          "path": "apps/player/src/session/cloud/coordinator.ts",
+          "previous": "e504a20e4a7be464249b93fa73acaae0a67a6408ea5c76d84c76efdd4aabf990",
+          "current": "a067ad00bcd2ff3d3c03755f2ea0e3a7f9c195d7558cbec43a17f0f7f62fbe03"
+        },
+        {
+          "path": "apps/player/src/session/cloud/storageRecovery.test.ts",
+          "previous": "9940668d00d14deeaa06a93729fc63aae45f6029bafd1433e0755e00e831923a",
+          "current": "2792ee02466742f283981ddd924fad0ccdbee5f66bc55972330652aea4be46f5"
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "path": "docs/execplans/question-bank-program-20261104.md",
+      "kind": "modified_existing",
+      "sha256": "e633551702da6b4665cc75e858dd7f23508d27b199c55b3486ddebeffa77ac71",
+      "bytes": 18434
+    },
+    {
+      "path": "docs/research/question-bank-program-queue-20261104.json",
+      "kind": "modified_existing",
+      "sha256": "8f87d5924de66c40696fe31de4d99cef940eaeae73482f962e32d94c84020955",
+      "bytes": 1130027
+    },
+    {
+      "path": "docs/research/question-bank-retire-merge-proposals-20261104.md",
+      "kind": "modified_existing",
+      "sha256": "1d04f70f9a421a5b0f868b8689f5725e412ce6a763f68584746209843bea53a8",
+      "bytes": 3933
+    },
+    {
+      "path": "docs/research/question-flags-review-20261104.json",
+      "kind": "modified_existing",
+      "sha256": "a60728c3c05c7ba80c7e4ed7edba92397e55ab0aa7ee715c6c24c8f9e22ba04b",
+      "bytes": 338009
+    },
+    {
+      "path": "docs/research/question-flags-round3-cue-audit-20261104.md",
+      "kind": "added_this_round",
+      "sha256": "78d597ef1e6df110bfe545228002667d60d3779643a5ac207c0d8229ec34da1b",
+      "bytes": 7298
+    },
+    {
+      "path": "docs/research/question-flags-round3-handoff-20261104.md",
+      "kind": "added_this_round",
+      "sha256": "748003daa299b20434f2255eb1dfadfad60141c4b69863ae0dda7cec755b45e7",
+      "bytes": 45359
+    },
+    {
+      "path": "docs/research/question-flags-round3-review-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "d950828f35018c2eddaaf36f11db8208e990566623f59640ee906386cffb4cae",
+      "bytes": 282363
+    },
+    {
+      "path": "docs/research/sources-question-flags-round3-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "52a619a75b5c4747fbe7191309ef7ec3400296b00d16c7c0e88bfc0368164894",
+      "bytes": 141878
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+      "kind": "modified_existing",
+      "sha256": "22465643ba225336b13120d0608a211d55755df4bfb919442d9bf8a3633323b9",
+      "bytes": 3626
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "kind": "modified_existing",
+      "sha256": "dd2e637bb54b1c4de00787254701f30d7ff7ca73083463ed8b1786d13aa795c5",
+      "bytes": 190744
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "kind": "modified_existing",
+      "sha256": "e4c8c417af6a50bcd1e0590b333984ed8ced76603b8511e5600b861442c3c4d7",
+      "bytes": 5375
+    },
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2a-20261104.test.ts",
+      "kind": "modified_existing",
+      "sha256": "32af03760e2c6cfe7b1dd8c7a21ed9481c0601025d601fd9322d0de25e03d181",
+      "bytes": 7865
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags-round3-20261104-data.ts",
+      "kind": "added_this_round",
+      "sha256": "b47081a164cdde7e0b2a9e7df35b32dfd658bb0772a75544ac2c1862cf6e9da2",
+      "bytes": 222745
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags-round3-20261104.test.ts",
+      "kind": "added_this_round",
+      "sha256": "060e0185326634a20ebf3c8b73add650dc9e5b997c52d92e27211332e315571e",
+      "bytes": 6262
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags-round3-20261104.ts",
+      "kind": "added_this_round",
+      "sha256": "d32476015827e917e831564feafb40ef6ae60e85ea8d6c9fb643cf61707411e5",
+      "bytes": 2083
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags-round3-evidence-20261104.ts",
+      "kind": "added_this_round",
+      "sha256": "1c27f65bcc03a29d7769350230a14dc9b96bb04c95d8472ef19d971b93608889",
+      "bytes": 18937
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "kind": "modified_existing",
+      "sha256": "ce9b7be14568f7f5cc24d03ba2a079b4db2d7f433bdbd7545b40f46f33ff4415",
+      "bytes": 62320
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "kind": "modified_existing",
+      "sha256": "637b6042332c210fc6cec73c451ec996084c9380a8f8e89953fa7a46c989f311",
+      "bytes": 105073
+    },
+    {
+      "path": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+      "kind": "modified_existing",
+      "sha256": "6439ba6ba2007aa5de81dc50fe5f9380ada216a8bb970b32e3355d576e19bf7d",
+      "bytes": 16123
+    },
+    {
+      "path": "packages/game-domain/tests/diagnostics/patient-supply.test.ts",
+      "kind": "modified_existing",
+      "sha256": "220375aaf65c3591b9ac1a25ba65fe3cf8c3b1b32295d7f1fe613a6cfffc68ac",
+      "bytes": 20414
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261002-batch.test.ts",
+      "kind": "modified_existing",
+      "sha256": "ec4db7f8ba96dd64f82987285959ccbc555cb6d2b95794b3267e0588565f2c5b",
+      "bytes": 31938
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261003-batch.test.ts",
+      "kind": "modified_existing",
+      "sha256": "22796b3a1b1331c9c14c4c4e2fa5ceaa4c6a98e4e4722eedcfc3b42ceb42a04c",
+      "bytes": 35406
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261007-batch.test.ts",
+      "kind": "modified_existing",
+      "sha256": "0386b8e6297a207c917e0959f247b8fbb27328d7c2523838be01e9b56cfa9bd3",
+      "bytes": 32896
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+      "kind": "modified_existing",
+      "sha256": "4be72ebd064e6e025bf36ac227cf03012b44ead63f07ade672dcc734662e2c2d",
+      "bytes": 46958
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-statistics-ethics-batch.test.ts",
+      "kind": "modified_existing",
+      "sha256": "625615ce511ce8c2f2130e34d9a8a9cb17b2670c5294644bcbfc21b538616da0",
+      "bytes": 11747
+    },
+    {
+      "path": "packages/game-domain/tests/patient-supply.test.ts",
+      "kind": "modified_existing",
+      "sha256": "5742f162669afb9ccb60559d27df5ab9e58d194e38cd02c66d5458b7a4be69fe",
+      "bytes": 24693
+    },
+    {
+      "path": "packages/game-domain/tests/question-bank-batch2a-bindings.test.ts",
+      "kind": "modified_existing",
+      "sha256": "2988221ebc269e26e11df727251d1649c4c37ccd984d04c5891698224b2bb6ef",
+      "bytes": 4178
+    },
+    {
+      "path": "packages/game-domain/tests/question-flags-round3-bindings.test.ts",
+      "kind": "added_this_round",
+      "sha256": "de8639e96b76e344b7176c38812d1946b2cc6bec7638f061a1cfb45cc5974c85",
+      "bytes": 2596
+    },
+    {
+      "path": "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+      "kind": "modified_existing",
+      "sha256": "6f316140285d5f8737c5773e0d82b37c297829854c11cc276c73d20139124521",
+      "bytes": 21170
+    },
+    {
+      "path": "tools/question-quality/author-question-flags-round3-20261104.mjs",
+      "kind": "added_this_round",
+      "sha256": "ecc9cdc2c37eaeeb0543449c337d6fa77bc49a98603aea180c506f55d0c48997",
+      "bytes": 6173
+    },
+    {
+      "path": "tools/question-quality/capture-question-flags-round3-20261104.mjs",
+      "kind": "added_this_round",
+      "sha256": "4ab3fe4e7efbc7b32a8e2b616fdfd942c803881cba95fb57cc9f7fe18560fce6",
+      "bytes": 2206
+    },
+    {
+      "path": "tools/question-quality/control-question-flags-round3-cohort-20261104.mjs",
+      "kind": "added_this_round",
+      "sha256": "653a41fa1801658f6c9dda214a8960d2efcca190a6dd25d72f3896aee75e8f3b",
+      "bytes": 5460
+    },
+    {
+      "path": "tools/question-quality/control-question-flags-round3-remaining-fixtures-20261104.mjs",
+      "kind": "added_this_round",
+      "sha256": "2ea128aa3707666da1659bcd487a2c9e4c81b06e60c7564f049837003ba24bd7",
+      "bytes": 7162
+    },
+    {
+      "path": "tools/question-quality/control-question-flags-round3-supply-20261104.mjs",
+      "kind": "added_this_round",
+      "sha256": "785aa05c9f0499e19fac4e1bd265b78a189b0386cfa8b316a33c225027d0883c",
+      "bytes": 4816
+    },
+    {
+      "path": "tools/question-quality/evidence-question-flags-round3-20261104.mjs",
+      "kind": "added_this_round",
+      "sha256": "c858fe552e43d702e1f0a411027e20accf430736d5381b9784a2197ec7c72beb",
+      "bytes": 8204
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-flags-round3-before-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "251b5f3f1e02580eb7a66ebd3e9b57cb09d8efbef3ae55b019ae816b32bb1114",
+      "bytes": 24145980
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-flags-round3-cohort-before-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "0a0a7557be103f7509c6f1ae19bacc24a94f52bcf641dd08c6820bbc02750baf",
+      "bytes": 48056
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-flags-round3-cohort-first-before-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "a6e7a07c628eda94e8fc617ea20ed1466708b847982fa5b4ee3322322e3ba93e",
+      "bytes": 33511
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-flags-round3-queue-before-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "c1c641590095f8601008cb390ee8ba41e3533d04d52d89e4c18c475256443b94",
+      "bytes": 1072215
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-flags-round3-remaining-fixtures-before-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "b340eede195a87608d74ecee421b6fe72d9b84da49e97aa73e4a2e7617da5fae",
+      "bytes": 104992
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-flags-round3-supply-before-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "3d2ff008cf0ca9fbfa6a7b6b4d4b02ee86056d89a26d1d16a10aa872e86fc2c9",
+      "bytes": 22631
+    },
+    {
+      "path": "tools/question-quality/handoff-question-flags-round3-20261104.mjs",
+      "kind": "added_this_round",
+      "sha256": "eaf0252287f83b6c3a80f68b00bbcd3f8b6872e7e5c1e2987d0d77d22280d825",
+      "bytes": 21405
+    },
+    {
+      "path": "tools/question-quality/lock-question-flags-round3-validation-20261104.mjs",
+      "kind": "added_this_round",
+      "sha256": "5160c287757133327ed9f697b11ba0fef6a053a974d5de7850ec41ab29f78db0",
+      "bytes": 2099
+    },
+    {
+      "path": "tools/question-quality/orders-question-flags-round3-20261104.mjs",
+      "kind": "added_this_round",
+      "sha256": "2327831ffbbbb12f0685606e01d3d32642c17d14d9a30df2789bbb7d8ba0cc99",
+      "bytes": 2491
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-clinical-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "752ce62d254db2b719ec9b3713651076bc0c3f2a6d8c0e273ae32b389484b022",
+      "bytes": 2350
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-clinical-complete-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "5dcba914428edde2291aaf19260fd30f540c795d33d82f27ffed66a35259eb8c",
+      "bytes": 2440
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-clinical-final-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "fe566837e9980e3a708967c864c7ffc60c819a3aaeef8cc44319138064dc600c",
+      "bytes": 26378
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-clinical-final-drafts-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "f38647f9e2a5815874c1712c52655de8cd1b86c7a591207f6575ca23b065c85f",
+      "bytes": 2434
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-clinical-focused-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "9e4b4bee870e7d8bbf6ec430d8ac84715b496d6f73b49bffd84eff4e27b52972",
+      "bytes": 1204
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-clinical-focused-final-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "f17f530e9c796cc7217d0aa7bd3d74ebc745272e91f128b288eb8f2fc83a25f7",
+      "bytes": 1388
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-clinical-handoff-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "cea5ea69d47c00de1cb9a0af80e68d2da925ac25e322c202879f062ded276dac",
+      "bytes": 2434
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-clinical-initial-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "e26d4f017efab803c623121051b3d97c676b247e86e060a67267c79c9be09ffe",
+      "bytes": 88422
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-clinical-locked-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "95ed74645ded595ceb855862a1bb8c2ad0ecffee795e19f00e925b9308cafc3e",
+      "bytes": 2438
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-cohort-control-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "71067d560573a357c0c206e0239077e8bf7f47831a2d15885134f9e59066ea41",
+      "bytes": 145015
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-cohort-control-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "58460869e794087e30b0b52e89ce0eda41dde66c50b9b307fce398feaff95ef7",
+      "bytes": 6928
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-cohort-first-control-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "26b15509ee2222396eb9a02762faadfe445de92efb9ba91f8bcd322b4003d8ca",
+      "bytes": 124529
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-cohort-first-control-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "ef15a3c4b3a58cf080b134ab8ed995be3acdc0064052c94165e10fbe0c1dfb70",
+      "bytes": 7040
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-cohort-fixture-review-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "db15a692af7787a741374db9ed97ca6bdbc67ac6ac5b8c6b792751e257012178",
+      "bytes": 2868
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-cohort-repaired-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "2016da8544d57b743e0a9210bafed6aae0ff9464f00028779ce7b9dbcf579f0f",
+      "bytes": 5818
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-cohort-repaired-final-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "ecc66b84c8f02a3991a0387d5c52e80dc74191c1012aa4fca436816bf853d6a2",
+      "bytes": 2482
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-domain-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "e04fd5ab0ec33f32f5f0f16b56ef69c6566d42d555bdb8ca7a6169facec0cae5",
+      "bytes": 368
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-domain-complete-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "15b385831fd76d23e8b12dad187728b4e63be036fe906c9ec63f7f1991d8b29b",
+      "bytes": 5953886
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-domain-complete-process-20261104.txt",
+      "kind": "added_this_round",
+      "sha256": "bb03ec945327f80c7ff91e844b3492af4ebb8637f27aa4e8cac4df183d83c99c",
+      "bytes": 6
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-domain-final-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "e04fd5ab0ec33f32f5f0f16b56ef69c6566d42d555bdb8ca7a6169facec0cae5",
+      "bytes": 368
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-domain-focused-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "d3c668730b0e97ea8c8398b1309158841125df2c01207370a53b785a686a2aeb",
+      "bytes": 15946
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-domain-focused-final-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "2e9b4888c4f7374be3444167e69b313f44a3acc42636084dd644eb71263648d9",
+      "bytes": 1124
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-domain-owned-handoff-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "315eb82c4e5db41d59aed0d60d92755ed4d352a1ebc1df2b13996ed5a90420d3",
+      "bytes": 910
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-generation-check-handoff-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "de4d8df5a6a9e30751e0e3d79820839902ab6ff1abdba94f2d72adb9574ce6e0",
+      "bytes": 156
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-lint-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "887f1f6f130bd7d0900647cff2c126e7c1426d7b6d8c814d9f05001c5dae8fe2",
+      "bytes": 4894
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-lint-tests-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "c2cadf49dd71cd6c62b92eb416c6ffcd144239c278375d74e415de3c6e053a96",
+      "bytes": 8084
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-lint-tests-final-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "0c7941acfe0a508abfef3afb9c966895a768f2faa38d2d40df099b5d064f9458",
+      "bytes": 8086
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-lint-tests-handoff-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "81f82c21031d859a0f0d6bdf2b5f4df191cacbbe77f45674a4315e39926b10e2",
+      "bytes": 8074
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-orders-check-handoff-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "fe50850e5435eff268c1a8f87e9e5ee566f32aa02595f88b476acea538122724",
+      "bytes": 1114
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-packet-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "d8dd9b5918ac6295ffb798acad0e8451c0f2a5ae618420745e1b3487aa7d0120",
+      "bytes": 1536
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-packet-handoff-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "aaac35c13ff7952f414df5e86f8a62a1633568679e5a040824696e4ac2694333",
+      "bytes": 474
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-player-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "3b64aa0e5dcb22d3cdf7e1fdffc4d1497be4f5aecaafc8b5af5edbc458dd87fa",
+      "bytes": 340
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-player-complete-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "0fd1da752555a6c3113b4ca3a19bbf203d229f01099da16595c57cff4c301a51",
+      "bytes": 3145396
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-player-final-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "8465141b33d1307dba9c145862b9ac063d4637f6de9a8544bfa19f55343c5063",
+      "bytes": 3215144
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-player-focused-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "7f209577efec8b92f5038adc8efd220959640e7732039c6b5c9ecf2957b8e8a9",
+      "bytes": 128624
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-player-focused-final-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "2c43b6eb6ecfb49f7a20cc5afed6e1377e7f1d3e1e46f61bdbbb863a31ca0349",
+      "bytes": 131646
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-player-timeout-check-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "0263a0744ecfa3f44653d1827300b72fb9c91a052dd9cd5aa6932ea9d5829fc2",
+      "bytes": 884
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-queue-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "c5d33f6accedd714622fe0434f9a6ec795908a7090267d18518d2c7fc99975ab",
+      "bytes": 1170
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-queue-handoff-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "8d6d8ac821a8409cb0893d73f8b03134bed32f68e3068cddeb12c50635633e52",
+      "bytes": 1258
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-remaining-fixtures-control-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "c5efd2095424d604af0de0acf76ca7dd84dcdfb44ff8e72708893d2e910dbb26",
+      "bytes": 70708
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-remaining-fixtures-control-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "86ccb5cd441be5d3d0043ec65a9df555bbd66d6b5f7ee80ccc5f78dbda94030f",
+      "bytes": 3058
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-remaining-fixtures-repaired-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "a0d66fdb8bab1dc3f5082913b7b87aa6436c6d2cb62c36d2361e54177bd06abd",
+      "bytes": 7222
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-remaining-fixtures-review-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "b9472d5cf6b6608bfbc9cd2ab489a466dcdbb4795c231d10845587c43faaf6e7",
+      "bytes": 2468
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-specs-20261104.mjs",
+      "kind": "added_this_round",
+      "sha256": "9a894c208dc473b1e0243d365bca18151d80f123cfe3d96c411f11b18a9fe33a",
+      "bytes": 48021
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-supply-control-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "09b1c1dad9cd3665d39e6c2f75365c984bbe042884265de46240aad1e520138c",
+      "bytes": 49364
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-supply-control-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "9531b1c0657129663bc9a7aad93982c323caa0eb27ff2ed72274f5e6c6f71b5a",
+      "bytes": 1402
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-supply-fixture-review-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "50e705927453e07827c9313bd1b4a90ac65522647341ad57e39946e1c1d02193",
+      "bytes": 1691
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-supply-repaired-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "3104dbd42fc33b3fcd880f3e2035ade5a689e9daa735034761244d96ed249333",
+      "bytes": 808
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-typecheck-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "bytes": 1504
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-typecheck-after-n2-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "bytes": 1504
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-typecheck-final-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "bytes": 1504
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-typecheck-handoff-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "d594b3f3033085d1ab158b360fc4af46e913cabb5fa0b99ebbd45978c662b627",
+      "bytes": 3704
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-typecheck-initial-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "a25976297a62e51a4919f49d4a872635249d30ed94562ba73197044bf0801a6d",
+      "bytes": 7508
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-typecheck-locked-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "bytes": 1504
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-validation-complete-lock-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "9440a662b789d8ed38c8d2443e23f206205a3f33d6894f45a902c944ce1888ae",
+      "bytes": 734599
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-validation-complete-window-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "98edef930d0aebdcdcc3dc5d1016000db6d6ed4aaa3d5d4aed6a773dd9000236",
+      "bytes": 1399
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-validation-final-lock-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "8a922b968a3bae4cba468df0392fd929769438043bd97a844c8636384cb4ab1c",
+      "bytes": 733832
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-validation-handoff-lock-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "2c087f8755d0814e30fa899a4882537f464e786f628c572bc9f5c43b0d9111a5",
+      "bytes": 737968
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-validation-handoff-window-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "ef890e4d220cab39a49195be597a1f4a11076b3a024479ccacf7652cab1fc35e",
+      "bytes": 1204
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-validation-locked-lock-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "ff4e487f44cadfbfe047d1b144be21b039ef9ebfebab0a282555c71508f33be8",
+      "bytes": 734841
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-validation-status-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "51a294646c76d9ea01fc28ea34c715305994ad3d49a2f24d38dd95a699695bad",
+      "bytes": 2644
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-validation-window-check-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "8d7c57b95a5dbcc7c672d0704961728587febcf1c293073fb06eea5dd2474a31",
+      "bytes": 2422
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-verification-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "51d3f1ee1632628abd38d1759f10aa483704d154fc14b635ae0bcdcb95398048",
+      "bytes": 36329
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-verification-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "d4ca888b7b22325e1476bc1fb799ed056b1fc8346f5dabb65af096c663db6412",
+      "bytes": 11554
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-verification-handoff-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "ec05e11ca944b3f89700c985823dda9434dfdc6565c50ccda7b670c8651e47a0",
+      "bytes": 11060
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-whole-bank-20261104.json",
+      "kind": "added_this_round",
+      "sha256": "71faa55e0b4e9fb7dc58fceb545aad3c5657e4b3157ad7ee84f5003860018ab1",
+      "bytes": 6734491
+    },
+    {
+      "path": "tools/question-quality/question-flags-round3-window-handoff-20261104.log",
+      "kind": "added_this_round",
+      "sha256": "63579867d15937ea308c2f0547c7b92c67d9e464f2cc2f69f1fc87baedf20922",
+      "bytes": 2100
+    },
+    {
+      "path": "tools/question-quality/queue-question-flags-round3-20261104.mjs",
+      "kind": "added_this_round",
+      "sha256": "c80ded2f79ad443821fcfb875c65ff1ab37f9164700ea010497a0b6c506cca31",
+      "bytes": 3833
+    },
+    {
+      "path": "tools/question-quality/repair-question-flags-round3-cohort-20261104.mjs",
+      "kind": "added_this_round",
+      "sha256": "8349bfcb5326d8a3c1600359f39953b442605e5481cdd5b8bac260b597a953ed",
+      "bytes": 4725
+    },
+    {
+      "path": "tools/question-quality/repair-question-flags-round3-remaining-fixtures-20261104.mjs",
+      "kind": "added_this_round",
+      "sha256": "555ba20e3f75fe4abd545c086fefa48535b49fde0aca873ae7dd25b704d7e7d3",
+      "bytes": 4759
+    },
+    {
+      "path": "tools/question-quality/repair-question-flags-round3-supply-20261104.mjs",
+      "kind": "added_this_round",
+      "sha256": "8491edb9f940a00e8f1c7e6a4a5107cf3e200528bef7504e9d50415eb2c7433a",
+      "bytes": 3243
+    },
+    {
+      "path": "tools/question-quality/report.mjs",
+      "kind": "modified_existing",
+      "sha256": "56bba4a257def477c07ae99b4de13690fdd9b0491eb321e06af04a7df7dfde42",
+      "bytes": 6751
+    },
+    {
+      "path": "tools/question-quality/responses-question-flags-round3-20261104.mjs",
+      "kind": "added_this_round",
+      "sha256": "5e857041d87b06c158183199f596f15439e5d23347ce3eceb84d871f716d2ad7",
+      "bytes": 20502
+    },
+    {
+      "path": "tools/question-quality/review-question-flags-round3-20261104.mjs",
+      "kind": "added_this_round",
+      "sha256": "43f4cc2891f2a47c683c7c28b868a8b7f263d14fae520fd5f1bafc95dbea1184",
+      "bytes": 14521
+    },
+    {
+      "path": "tools/question-quality/verify-question-flags-round3-20261104.mjs",
+      "kind": "added_this_round",
+      "sha256": "9f9803244d49f3cb6eb641a9ccbb95923e07e4fa26af03d197bd6531a8fa05d2",
+      "bytes": 6852
+    }
+  ],
+  "sourceHold": "F04 requires direct UKKA section alignment of its new comparative drug ranking before release acceptance. All clinical versions/claims remain needs_clinician_review.",
+  "fallbackPolicy": "Final independent rejection retains the currently live item; known live and pending round-two IDs are separate in the packet. Manager reconciles any intervening release; worker does not revert or ship."
+}

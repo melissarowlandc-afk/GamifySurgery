@@ -1,0 +1,169 @@
+{
+  "schemaVersion": 1,
+  "reviewedOn": "2026-11-04",
+  "linterVersion": "question-cue-lint.2026-11-04.v8",
+  "reviewStatus": "needs_clinician_review",
+  "independentAcceptance": false,
+  "newOwnerRuleFindings": 0,
+  "note": "Author dispositions are transparent proposals for independent review, never a lint suppression, editorial PASS, measured difficulty or clinical approval.",
+  "findings": [
+    {
+      "variantId": "question.n1.gastroparesis-obstruction.v1",
+      "findingId": "146bda6df141cdb7",
+      "rule": "key-only-word-overlap",
+      "evidence": [
+        {
+          "field": "presentation",
+          "text": "endoscopy",
+          "start": 89,
+          "end": 98
+        },
+        {
+          "field": "answerChoices.label",
+          "text": "endoscopy",
+          "start": 6,
+          "end": 15,
+          "choiceId": "choice.n1.gastroparesis-obstruction.structural"
+        }
+      ],
+      "disposition": "author_retains_for_independent_review",
+      "reason": "The prior incomplete outlet examination is decision-critical. Repeating its actual modality is clinically necessary; the patient must infer why its inadequate sampling leaves a structural question unresolved."
+    },
+    {
+      "variantId": "question.n1.gastroparesis-obstruction.v1",
+      "findingId": "deba2b8dcef2a073",
+      "rule": "unique-key-test-name",
+      "evidence": [
+        {
+          "field": "answerChoices.label",
+          "text": "Upper endoscopy",
+          "start": 0,
+          "end": 15,
+          "choiceId": "choice.n1.gastroparesis-obstruction.structural"
+        }
+      ],
+      "disposition": "author_retains_for_independent_review",
+      "reason": "All three alternatives are specific investigations: upper endoscopy, gastric emptying scintigraphy, and esophageal manometry. Distinct modality names are the decision, not an option-format category difference."
+    },
+    {
+      "variantId": "question.n1.aldosterone-overt-phenotype.v1",
+      "findingId": "223806541a81f707",
+      "rule": "key-only-word-overlap",
+      "evidence": [
+        {
+          "field": "chiefComplaint",
+          "text": "Adrenal",
+          "start": 0,
+          "end": 7
+        },
+        {
+          "field": "answerChoices.label",
+          "text": "adrenal",
+          "start": 8,
+          "end": 15,
+          "choiceId": "choice.n1.aldosterone-overt-phenotype.localization"
+        }
+      ],
+      "disposition": "author_retains_for_independent_review",
+      "reason": "All alternatives are adrenal pathways (functional sampling, suppression confirmation, or CT-directed surgery). The lexical matcher treats adrenalectomy as a different token from adrenal; the complaint supplies the organ, not the discriminating phenotype rule."
+    },
+    {
+      "variantId": "question.n1.celiac-gluten-withdrawal.v1",
+      "findingId": "7c0de75730d8ae55",
+      "rule": "key-only-word-overlap",
+      "evidence": [
+        {
+          "field": "presentation",
+          "text": "gluten",
+          "start": 270,
+          "end": 276
+        },
+        {
+          "field": "answerChoices.label",
+          "text": "Gluten",
+          "start": 0,
+          "end": 6,
+          "choiceId": "choice.n1.celiac-gluten-withdrawal.reassess"
+        }
+      ],
+      "disposition": "author_retains_for_independent_review",
+      "reason": "The exposure change is the shared limitation of both prior negative studies and must remain visible. All options are concrete diagnostic plans; matching the ingredient word does not establish whether to diagnose, stop, or obtain valid repeat evidence. Independent review must judge the clinical plan and difficulty."
+    },
+    {
+      "variantId": "question.n1.meckel-resection.v1",
+      "findingId": "e0005157145929e0",
+      "rule": "heterogeneous-option-category",
+      "evidence": [
+        {
+          "field": "answerChoices.label",
+          "text": "Perform segmental ileal resection",
+          "start": 0,
+          "end": 33,
+          "choiceId": "choice.n1.meckel-resection.segmental"
+        },
+        {
+          "field": "answerChoices.label",
+          "text": "Perform simple diverticulectomy",
+          "start": 0,
+          "end": 31,
+          "choiceId": "choice.n1.meckel-resection.diverticulectomy"
+        },
+        {
+          "field": "answerChoices.label",
+          "text": "Perform distal diverticular resection",
+          "start": 0,
+          "end": 37,
+          "choiceId": "choice.n1.meckel-resection.wedge-tip"
+        }
+      ],
+      "disposition": "author_retains_for_independent_review",
+      "reason": "All alternatives are bowel operations with parallel Perform grammar. The heuristic recognizes the -ectomy suffix but fails to categorize resection as a procedure. Extent, not semantic option type, is the intended comparison."
+    },
+    {
+      "variantId": "question.n1.mixing-study-followup.v1",
+      "findingId": "b6f7f24226e5ed92",
+      "rule": "unique-key-abbreviation",
+      "evidence": [
+        {
+          "field": "answerChoices.label",
+          "text": "VIII",
+          "start": 7,
+          "end": 11,
+          "choiceId": "choice.n1.mixing-study-followup.factor-assays"
+        }
+      ],
+      "disposition": "author_retains_for_independent_review",
+      "reason": "VIII is the conventional factor number, not a decorative abbreviation. All alternatives are laboratory investigation plans; changing the standard factor name would reduce clarity. Independent review must still judge the investigation ranking."
+    },
+    {
+      "variantId": "question.n1.postoperative-ascites-ct.v1",
+      "findingId": "ff47f1b8152478fd",
+      "rule": "heterogeneous-option-category",
+      "evidence": [
+        {
+          "field": "answerChoices.label",
+          "text": "Contrast-enhanced computed tomography",
+          "start": 0,
+          "end": 37,
+          "choiceId": "choice.n1.postoperative-ascites-ct.ct"
+        },
+        {
+          "field": "answerChoices.label",
+          "text": "Magnetic resonance cholangiopancreatography",
+          "start": 0,
+          "end": 43,
+          "choiceId": "choice.n1.postoperative-ascites-ct.mrcp"
+        },
+        {
+          "field": "answerChoices.label",
+          "text": "Abdominal ultrasonography with Doppler",
+          "start": 0,
+          "end": 38,
+          "choiceId": "choice.n1.postoperative-ascites-ct.ultrasound"
+        }
+      ],
+      "disposition": "author_retains_for_independent_review",
+      "reason": "All three alternatives are imaging studies. The heuristic fails to recognize fully spelled cholangiopancreatography while recognizing computed tomography and ultrasonography. No missing picture or test-versus-treatment contrast is used."
+    }
+  ]
+}

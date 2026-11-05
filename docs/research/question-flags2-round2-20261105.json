@@ -1,0 +1,2281 @@
+[
+  {
+    "id": "G01",
+    "title": "Reassess a changed blood-cell pattern before another ITP treatment",
+    "round": 2,
+    "status": "draft_awaiting_independent_review",
+    "reviewStatus": "needs_clinician_review",
+    "pipelinePassed": false,
+    "releaseReady": false,
+    "keyOrderNotice": "key shown first for review only; runtime answer choices are randomized",
+    "reviewDisplayNote": "Jamie Taylor is a review placeholder. Before is the reviewed round-one draft, except G03 and G04-R which bind directly to the flagged live source. The original G04 remains live. Source holds and self-checks do not authorize acceptance.",
+    "sourceView": "flags2-round2",
+    "caseId": "case.persistent-itp.hematology-followup",
+    "nodeId": "node.persistent-itp.hematology-followup.2",
+    "conceptId": "concept.itp.changed-lineage-pattern-before-treatment.v1",
+    "previousConceptId": "concept.persistent-itp.defer-elective-splenectomy",
+    "ownerNote": "I thought another version of this question was HIV/HCV first then bone marrow testing second",
+    "before": {
+      "variantId": "question.persistent-itp.defer-elective-splenectomy.v3.r1",
+      "Presentation": "Jamie Taylor, a 57-year-old woman, is seen for bruising five months after isolated thrombocytopenia was first documented. Platelets rose during corticosteroid treatment and fell again during tapering. Hemoglobin and leukocyte counts remain within laboratory reference ranges; smear review describes normal red-cell and white-cell morphology.",
+      "Current update": "The returned HIV and hepatitis-C serology is negative. Platelet counts since the relapse have remained above 30 × 10^9/L. Bruises have recurred, but there has been no mucosal or internal bleeding. Hematology is continuing treatment and follow-up; Jamie Taylor asks about an operation after the relapse.",
+      "Exhibit": null,
+      "Task": "Which plan should be recommended for Jamie Taylor's splenectomy consultation?",
+      "Options": [
+        "**KEY:** Continue treatment; reassess elective splenectomy when disease duration reaches a year",
+        "Arrange vaccination; schedule splenectomy after preoperative immunization is complete",
+        "Arrange marrow sampling; schedule splenectomy after the pathology report returns"
+      ]
+    },
+    "after": {
+      "variantId": "question.persistent-itp.defer-elective-splenectomy.v3.r2",
+      "Presentation": "Jamie Taylor, a 57-year-old woman, is seen five months after isolated thrombocytopenia was documented. Platelets rose during corticosteroid treatment and fell during tapering. At the initial assessment, hemoglobin, neutrophil count and red-cell morphology were within laboratory reference limits.",
+      "Current update": "HIV and hepatitis-C serology have returned negative. At this return visit, hemoglobin and the absolute neutrophil count are below their laboratory reference ranges. The smear describes macrocytic red cells and neutrophils with reduced granulation and fewer nuclear lobes. Vitamin B12 and folate are within reference ranges; the reticulocyte count is below range.",
+      "Exhibit": null,
+      "Task": "Which investigation should precede another treatment recommendation for Jamie Taylor's thrombocytopenia?",
+      "Options": [
+        "**KEY:** Marrow aspirate and core biopsy",
+        "Peripheral-blood flow cytometry assay",
+        "Peripheral-blood myeloid sequencing assay"
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Continue treatment; reassess elective splenectomy when disease duration reaches a year",
+          "This remains an early persistent course. In this nonemergency presentation, ongoing treatment and reassessment are preferable to committing to early elective splenectomy; the recorded ASH claim supports waiting at least a year when possible."
+        ],
+        [
+          "Arrange vaccination; schedule splenectomy after preoperative immunization is complete",
+          "Vaccination is relevant when an operation is selected, but completing it does not resolve whether elective splenectomy is appropriate at this early point. This choice turns preparation for surgery into its indication."
+        ],
+        [
+          "Arrange marrow sampling; schedule splenectomy after the pathology report returns",
+          "A marrow result would not itself resolve the early elective-surgery timing issue. This is not a claim that marrow evaluation is never appropriate: a separate indication requires its own assessment, and negative HIV/HCV results do not mandate a universal marrow-then-surgery sequence."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Marrow aspirate and core biopsy",
+          "The initial isolated platelet problem has become a multilineage cytopenia with altered cell morphology. Marrow assessment can examine production, morphology and tissue together before this is treated as another uncomplicated ITP relapse. The indication is the changed pattern, not the negative viral serology."
+        ],
+        [
+          "Peripheral-blood flow cytometry assay",
+          "Flow cytometry is a credible investigation of an abnormal blood-cell population. Here the reported changes concern multiple lineages and maturation, and a blood immunophenotype would not supply the marrow morphology and tissue assessment underlying the intended next step. This is not a claim that flow studies have no role in the subsequent workup."
+        ],
+        [
+          "Peripheral-blood myeloid sequencing assay",
+          "Molecular testing could contribute to classification, but a detected clone would not by itself establish the tissue/morphologic explanation of this changed cytopenia pattern. The near-miss is substituting a molecular result for the integrated marrow evaluation."
+        ]
+      ]
+    },
+    "inference": "Compare the current blood-cell pattern with the initially isolated thrombocytopenia. Then: Choose an investigation that evaluates the new production/morphology problem rather than substituting a blood immunophenotype or molecular clone for tissue assessment.",
+    "focus": "New anemia and neutropenia plus altered neutrophil morphology and a low reticulocyte count; the earlier isolated platelet pattern no longer describes the current record.",
+    "whatChanged": "Removed the continuing-treatment declaration, automatic surgery-after-preparation foils and calendar-date key. The follow-up now changes the diagnostic evidence; three specific investigations compete. Explicitly versioned the changed objective and retained the old timing card.",
+    "reviewResponse": {
+      "reviewPath": "docs/research/question-flags2-review-20261105.json",
+      "reviewId": "G01",
+      "priorVerdict": "REVISE",
+      "notes": [
+        {
+          "category": "cues",
+          "index": 1,
+          "note": {
+            "phrase": "Hematology is continuing treatment and follow-up",
+            "why": "Preselects continued medical care immediately before the key says 'Continue treatment'. A testwise reader can retain the explicitly stated plan rather than interpret the surgical indication."
+          },
+          "response": "Deleted the declaration of continued treatment; the update contains observed counts and morphology."
+        },
+        {
+          "category": "cues",
+          "index": 2,
+          "note": {
+            "phrase": "Continue treatment; reassess elective splenectomy when disease duration reaches a year",
+            "why": "The only noncommittal, reassessment-based choice contrasts with two choices that both commit to surgery after a preparatory step. This structural outlier permits a cautious-answer shortcut; the year threshold need not be known to prefer it."
+          },
+          "response": "Replaced all consultation-plan labels with three diagnostic investigations; no uniquely noncommittal key remains."
+        },
+        {
+          "category": "cues",
+          "index": 3,
+          "note": {
+            "phrase": "Bruises have recurred, but there has been no mucosal or internal bleeding.",
+            "why": "In this option set the reassuring severity contrast further favors the only defer-and-reassess option. These are necessary safety observations, not a recommendation to delete bleeding information; the competitors need repair."
+          },
+          "response": "Removed the reassuring bleeding contrast from this new investigation task; it does not decide among the offered studies."
+        },
+        {
+          "category": "fairness",
+          "index": 1,
+          "note": "Scope for this report: judgments use only each item's after Presentation, Current update, Exhibit, Task and Options. The standard and flags2 handoff supply review rules, owner concerns and declared limitations, not extra patient facts. Titles, keys, author rationales and self-checks are not evidence of successful reasoning. No network/source re-verification, runtime audit or review of unseen replacement versions was performed. Difficulty predictions are qualitative; clinical judgments remain needs_clinician_review.",
+          "response": "The packet self-check uses the full visible sequence; all source/currentness and clinical limits remain explicit."
+        },
+        {
+          "category": "fairness",
+          "index": 2,
+          "note": "One-best-answer: continued medical management with later reassessment is the strongest offered plan on the supplied stable course. Vaccination and marrow sampling do not themselves establish an indication to operate. No confident competing key identified among these three choices.",
+          "response": "Changed the scored decision: new lineage changes now require reassessment, not an inference that vaccination or marrow permits surgery."
+        },
+        {
+          "category": "fairness",
+          "index": 3,
+          "note": "Difficulty: the five-month course plus two surgery-after-preparation foils reduces the item to the familiar deferral rule. The serology, smear and platelet trajectory do not force a distinct second consequential inference before choosing the only defer option. Too easy for the requested PGY-2/3 target.",
+          "response": "The new data change the decision; interpreting their departure from the old isolated pattern precedes choosing the investigation."
+        },
+        {
+          "category": "fairness",
+          "index": 4,
+          "note": "Specificity/realism: an outpatient surgical consultation after steroid relapse is credible, but 'Continue treatment' never identifies the current treatment. Both wrong options conflate completing a preparatory action with committing to splenectomy, rather than presenting close competing plans.",
+          "response": "No unspecified ongoing regimen or drug sequence is keyed; all options are named diagnostic studies."
+        },
+        {
+          "category": "fairness",
+          "index": 5,
+          "note": "Importance: splenectomy timing and avoiding an automatic diagnostic-to-operative ladder are practically important general-surgery concepts and plausibly high-yield examination content; no current ABSITE blueprint verification is claimed.",
+          "response": "Keeps a practical pre-treatment diagnostic safety decision within the surgical consultation; no new ABSITE blueprint verification claimed."
+        },
+        {
+          "category": "fairness",
+          "index": 6,
+          "note": "Owner flag: partially resolved. These after fields no longer key marrow testing after negative HIV/HCV serology; marrow sampling remains part of an incorrect surgery sequence. The handoff reports a sibling audit, but the owner's unidentified prior encounter and consistency across its exact versions cannot be certified from this item.",
+          "response": "The eight isolated-ITP siblings remain exact. Marrow is now conditional on new abnormalities, not the next automatic rung after negative serology."
+        },
+        {
+          "category": "fairness",
+          "index": 7,
+          "note": "Evidence limitation: the handoff explicitly retains an ITP marrow-boundary and ASH bibliographic verification hold. This review does not validate an exact universal one-year rule or forbid marrow evaluation categorically.",
+          "response": "Removed the one-year threshold and retained a key-level source hold for the new marrow boundary/ranking."
+        },
+        {
+          "category": "suggestions",
+          "index": 1,
+          "note": "Remove the pre-answer declaration that hematology is continuing treatment; retain the observed course and necessary bleeding information.",
+          "response": "Removed the pre-answer treatment plan."
+        },
+        {
+          "category": "suggestions",
+          "index": 2,
+          "note": "Make all options parallel consultation recommendations, with comparable specificity and realistic timing. Replace at least one automatic surgery-after-preparation foil with a credible alternative medical/reassessment plan so 'choose the only cautious answer' no longer works.",
+          "response": "All three options now compare investigations at the same pre-treatment point; the two automatic surgery sequences are gone."
+        },
+        {
+          "category": "suggestions",
+          "index": 3,
+          "note": "If the intended distinction depends on ongoing treatment response or toxicity, state the relevant actual regimen and observed response using verified claims; do not invent a drug sequence or new numerical threshold.",
+          "response": "Avoided an unverified drug regimen/response hierarchy; actual observed lineage changes supply the discriminator instead."
+        },
+        {
+          "category": "suggestions",
+          "index": 4,
+          "note": "Keep 'reassess' distinct from automatic surgery at a calendar date, and resolve the recorded source hold before accepting exact timing or marrow-boundary teaching.",
+          "response": "No automatic surgery date is supplied. New clinical meaning and the unresolved marrow source boundary are recorded explicitly."
+        }
+      ]
+    },
+    "selfCheck": {
+      "reviewer": "author; not independent or clinical sign-off",
+      "cueAttack": "Neither marrow nor its components occur in the visible case or task. All options obtain diagnostic information; the key is not the sole defer-and-reassess plan. Blood flow and gene studies are genuine alternatives whose limits must be applied to the observed lineage change.",
+      "stageCategory": "Three named diagnostic investigations at the pre-treatment reassessment stage.",
+      "reasoningSteps": [
+        "Compare the current blood-cell pattern with the initially isolated thrombocytopenia.",
+        "Choose an investigation that evaluates the new production/morphology problem rather than substituting a blood immunophenotype or molecular clone for tissue assessment."
+      ],
+      "closestCredibleError": "Choose a peripheral-blood myeloid gene panel as a complete explanation of the changed counts after a presumed ITP relapse.",
+      "decidingFinding": "New anemia and neutropenia plus altered neutrophil morphology and a low reticulocyte count; the earlier isolated platelet pattern no longer describes the current record.",
+      "counterfactual": "If the counts and morphology still showed isolated thrombocytopenia, this item would not establish a new marrow indication. The retained timing/medical-management pathway would require its own assessment.",
+      "difficulty": "predicted moderate application for PGY-2/3; independent difficulty review required",
+      "oneBestAnswer": "The initial isolated platelet problem has become a multilineage cytopenia with altered cell morphology. Marrow assessment can examine production, morphology and tissue together before this is treated as another uncomplicated ITP relapse. The indication is the changed pattern, not the negative viral serology.",
+      "deletionTest": "Removing the new lineage and morphology observations removes the intended marrow discriminator. Negative serology retains the preceding-node chronology and supplies no marrow instruction.",
+      "clinicalAndSourceLimit": "Key hold: directly verify the ITP-consensus changed-cytopenia/marrow boundary and comparative workup with hematology before acceptance. The existing claim covers isolated-thrombocytopenia evaluation, not this full marrow-versus-flow-versus-sequencing ranking. No exact one-year rule or automatic HIV/HCV-to-marrow sequence is taught.",
+      "sourceUncertaintyIsNotDifficulty": true,
+      "manualReviewCompleted": true
+    },
+    "sourceVerificationHold": "Key hold: directly verify the ITP-consensus changed-cytopenia/marrow boundary and comparative workup with hematology before acceptance. The existing claim covers isolated-thrombocytopenia evaluation, not this full marrow-versus-flow-versus-sequencing ranking. No exact one-year rule or automatic HIV/HCV-to-marrow sequence is taught.",
+    "sourceHoldScope": "key",
+    "acceptanceAllowed": false,
+    "supportingEvidenceClaimIds": [
+      "claim.persistent-itp.hiv-hcv-secondary-evaluation",
+      "claim.flags2r2.20261105.changed-cytopenia-boundary",
+      "claim.flags2r2.20261105.marrow-versus-blood-studies"
+    ],
+    "conceptVersion": {
+      "id": "concept.itp.changed-lineage-pattern-before-treatment.v1",
+      "name": "Reassess changed cytopenias before another ITP treatment",
+      "objective": "Interpret a transition from isolated thrombocytopenia to multilineage and morphologic abnormalities, then select diagnostic reassessment before another ITP treatment.",
+      "reason": "Changes the scored objective from elective splenectomy timing to evaluation of a changed blood-cell pattern. Preserve the original timing card and the eight isolated-ITP siblings; negative serology is not a universal trigger for marrow examination.",
+      "previousConceptId": "concept.persistent-itp.defer-elective-splenectomy"
+    },
+    "lint": {
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [],
+      "after": [],
+      "beforeCount": 0,
+      "afterCount": 0,
+      "profileContexts": 5
+    },
+    "visibleHistory": {
+      "before": {
+        "chiefComplaint": "Splenectomy consultation",
+        "presentation": "{patientName}, a 57-year-old woman, is seen for bruising five months after isolated thrombocytopenia was first documented. Platelets rose during corticosteroid treatment and fell again during tapering. Hemoglobin and leukocyte counts remain within laboratory reference ranges; smear review describes normal red-cell and white-cell morphology.",
+        "stem": "Which plan should be recommended for {patientName}'s splenectomy consultation?",
+        "currentUpdate": "The returned HIV and hepatitis-C serology is negative. Platelet counts since the relapse have remained above 30 × 10^9/L. Bruises have recurred, but there has been no mucosal or internal bleeding. Hematology is continuing treatment and follow-up; {patientName} asks about an operation after the relapse.",
+        "priorResults[0]": "HIV and hepatitis-C testing are negative; the evaluation remains compatible with presumed primary ITP after the broader clinical review.",
+        "priorFeedback[0]": "HIV and hepatitis-C testing helps exclude secondary causes before concluding primary ITP, but negative serology alone does not establish the diagnosis."
+      },
+      "after": {
+        "chiefComplaint": "Splenectomy consultation",
+        "presentation": "{patientName}, a 57-year-old woman, is seen five months after isolated thrombocytopenia was documented. Platelets rose during corticosteroid treatment and fell during tapering. At the initial assessment, hemoglobin, neutrophil count and red-cell morphology were within laboratory reference limits.",
+        "stem": "Which investigation should precede another treatment recommendation for {patientName}'s thrombocytopenia?",
+        "currentUpdate": "HIV and hepatitis-C serology have returned negative. At this return visit, hemoglobin and the absolute neutrophil count are below their laboratory reference ranges. The smear describes macrocytic red cells and neutrophils with reduced granulation and fewer nuclear lobes. Vitamin B12 and folate are within reference ranges; the reticulocyte count is below range.",
+        "priorResults[0]": "HIV and hepatitis-C testing are negative; the evaluation remains compatible with presumed primary ITP after the broader clinical review.",
+        "priorFeedback[0]": "HIV and hepatitis-C testing helps exclude secondary causes before concluding primary ITP, but negative serology alone does not establish the diagnosis."
+      }
+    },
+    "encounterContinuity": {
+      "keyServiceBefore": null,
+      "keyServiceAfter": null,
+      "beforeGate": null,
+      "afterGate": null,
+      "earlierReferral": null
+    },
+    "fallback": {
+      "variantId": "question.persistent-itp.defer-elective-splenectomy.v3",
+      "conceptId": "concept.persistent-itp.defer-elective-splenectomy",
+      "policy": "Keep the current manifest-selected live version until independent review, source-hold resolution and manager acceptance."
+    }
+  },
+  {
+    "id": "G02",
+    "title": "Separate MH risk precautions from a requirement to finish testing first",
+    "round": 2,
+    "status": "draft_awaiting_independent_review",
+    "reviewStatus": "needs_clinician_review",
+    "pipelinePassed": false,
+    "releaseReady": false,
+    "keyOrderNotice": "key shown first for review only; runtime answer choices are randomized",
+    "reviewDisplayNote": "Jamie Taylor is a review placeholder. Before is the reviewed round-one draft, except G03 and G04-R which bind directly to the flagged live source. The original G04 remains live. Source holds and self-checks do not authorize acceptance.",
+    "sourceView": "flags2-round2",
+    "caseId": "case.gs028d.anesthesia.b-family-testing-record",
+    "nodeId": "node.gs028d.anesthesia.b-family-testing-record.1",
+    "conceptId": "concept.mh.nontriggering-plan-and-testing-sequence.v1",
+    "previousConceptId": "concept.mh.family-history-and-regimen-components.v1",
+    "ownerNote": "Too easy, answer choices should be more specific and not clearly wrong",
+    "before": {
+      "variantId": "question.malignant-hyperthermia-susceptibility.trigger-free-anesthesia-plan.v2.r1",
+      "Presentation": "Jamie Taylor, a 35-year-old woman, attends before colectomy. A sibling has a documented positive muscle-contracture test after an anaesthetic reaction. Jamie Taylor's earlier appendectomy record lists sevoflurane and an uncomplicated recovery; Jamie Taylor has not undergone susceptibility testing.",
+      "Current update": null,
+      "Exhibit": null,
+      "Task": "Which general-anaesthetic regimen should be proposed for Jamie Taylor?",
+      "Options": [
+        "**KEY:** Propofol infusion with remifentanil; rocuronium for intubation",
+        "Sevoflurane maintenance with fentanyl; cisatracurium for intubation",
+        "Propofol infusion with fentanyl; succinylcholine for intubation"
+      ]
+    },
+    "after": {
+      "variantId": "question.malignant-hyperthermia-susceptibility.trigger-free-anesthesia-plan.v2.r2",
+      "Presentation": "Jamie Taylor, a 35-year-old woman, attends before colectomy. A sibling has a positive muscle-contracture test after an anesthetic reaction. Jamie Taylor's previous appendectomy used sevoflurane with an uncomplicated recovery. A subsequent blood gene panel reported no pathogenic variant; no familial causative variant has been identified.",
+      "Current update": "The anesthesia worksheet lists propofol and remifentanil infusions with rocuronium, workstation preparation under the manufacturer's MH instructions, and the hospital's dantrolene response protocol. Jamie Taylor has not had muscle-contracture testing.",
+      "Exhibit": null,
+      "Task": "Which recommendation should be sent to Jamie Taylor's anesthesia team?",
+      "Options": [
+        "**KEY:** Plan propofol–remifentanil anesthesia; arrange contracture testing separately",
+        "Plan propofol–remifentanil anesthesia; administer prophylactic dantrolene",
+        "Plan propofol–remifentanil anesthesia after muscle-contracture testing"
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Propofol infusion with remifentanil; rocuronium for intubation",
+          "The first-degree family result warrants managing the patient as potentially susceptible until assessed. An uncomplicated previous exposure does not establish absence of susceptibility. This regimen avoids both volatile anaesthetics and succinylcholine."
+        ],
+        [
+          "Sevoflurane maintenance with fentanyl; cisatracurium for intubation",
+          "This is a familiar anaesthetic regimen and reproduces a drug previously tolerated, but sevoflurane remains an MH trigger. A prior uneventful anaesthetic does not clear the family-history risk."
+        ],
+        [
+          "Propofol infusion with fentanyl; succinylcholine for intubation",
+          "Intravenous maintenance can be suitable, but the induction/intubation component also matters: succinylcholine remains a trigger. A plan is not made trigger-free merely by replacing the maintenance agent."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Plan propofol–remifentanil anesthesia; arrange contracture testing separately",
+          "The uneventful exposure and negative panel do not clear susceptibility in this family. With the represented nontriggering plan and documented MH preparation, definitive susceptibility testing need not become a prerequisite to surgery."
+        ],
+        [
+          "Plan propofol–remifentanil anesthesia; administer prophylactic dantrolene",
+          "This retains an appropriate intravenous technique but adds prophylaxis as though familial risk requires pretreatment even with trigger avoidance and MH preparation. It confuses readiness to treat a crisis with routinely administering the rescue drug."
+        ],
+        [
+          "Plan propofol–remifentanil anesthesia after muscle-contracture testing",
+          "The family result and negative panel justify continued risk precautions, not necessarily delaying surgery until a definitive susceptibility test is completed. This is a credible sequencing error when an inconclusive genetic result is treated as a barrier to a nontriggering anesthetic."
+        ]
+      ]
+    },
+    "inference": "Interpret why the prior anesthetic and panel have not cleared the documented familial risk. Then: Apply that unresolved risk to the testing/prophylaxis sequence under the specified anesthetic preparation.",
+    "focus": "No identified familial causative variant, a positive first-degree contracture result, and a common intravenous plan with specified MH preparation.",
+    "whatChanged": "Kept the family/prior-exposure chronology, added the actual negative-panel limitation, and made all options use the same acceptable drug technique. The decision is now testing/prophylaxis sequence rather than spotting a volatile or depolarizing drug.",
+    "reviewResponse": {
+      "reviewPath": "docs/research/question-flags2-review-20261105.json",
+      "reviewId": "G02",
+      "priorVerdict": "REVISE",
+      "notes": [
+        {
+          "category": "fairness",
+          "index": 1,
+          "note": "Cue attack: no reliable knowledge-free key selection found. Options are comparable specific anesthetic regimens with parallel grammar and similar length. Repeated propofol points to two options, repeated fentanyl points to two wrong options, and prior sevoflurane exposure matches a distractor rather than the key; none uniquely assembles the answer. The sibling result and prior uncomplicated exposure are relevant competing clinical evidence, not gratuitous answer-rationale narration.",
+          "response": "Retained the parallel drug-plan strengths and removed trigger-class elimination as the sole discriminator."
+        },
+        {
+          "category": "fairness",
+          "index": 2,
+          "note": "One-best-answer: the propofol/remifentanil/rocuronium regimen is the intended and, on standard MH pharmacology, defensible best answer. The other regimens introduce a volatile agent or succinylcholine. I identify no confident competing key, but have not re-verified agent guidance offline.",
+          "response": "The intended key now depends on testing/prophylaxis sequence; it is held for direct MH guidance/clinician confirmation."
+        },
+        {
+          "category": "fairness",
+          "index": 3,
+          "note": "Difficulty: two real operations are present—interpret familial risk despite prior uneventful exposure, then identify a suitable regimen. Nevertheless, a typical PGY-2/3 who recognizes the two familiar trigger categories can dismiss both distractors immediately. Predicted easy, despite two-step structure; specificity alone has not met the owner's struggle target.",
+          "response": "All drug choices are acceptable within the common plan; interpreting an uninformative panel now changes the proposed sequencing."
+        },
+        {
+          "category": "fairness",
+          "index": 4,
+          "note": "Importance/realism: high practical perioperative safety value and plausible high-yield resident examination content. A pre-colectomy anesthesia discussion is realistic. The question reasonably compares regimens rather than claiming to prescribe every part of anesthesia preparation.",
+          "response": "Remains a realistic pre-colectomy team recommendation, not a complete anesthetic prescription or a clinic crisis protocol."
+        },
+        {
+          "category": "fairness",
+          "index": 5,
+          "note": "Owner flag: partially resolved for the exact re-queued v2. Choices are now specific and no longer involve ignoring records or treating a crisis in clinic. The 'too easy' component remains. This says nothing about the separately queued v4 sibling.",
+          "response": "Specific named actions remain; the new distinction addresses the easy-trigger-recognition criticism. The v4 sibling stays separate."
+        },
+        {
+          "category": "fairness",
+          "index": 6,
+          "note": "Evidence limitation: the handoff's prior-exposure, family-testing and named-agent verification hold remains unresolved. No clinical sign-off or release approval follows from this review.",
+          "response": "The prior hold is preserved and extended to the new sequencing/prophylaxis claim; no offline source verification is inferred."
+        },
+        {
+          "category": "suggestions",
+          "index": 1,
+          "note": "Keep the family result and prior exposure chronology; do not remove the safety information to manufacture difficulty.",
+          "response": "Retained the positive first-degree contracture result and prior uneventful exposure."
+        },
+        {
+          "category": "suggestions",
+          "index": 2,
+          "note": "For a resident application item, introduce a verified, consequential preoperative assessment or sequencing distinction and compare complete plans at that same stage. If all choices use acceptable drugs, an explicit clinical constraint must make one plan preferable; do not arbitrarily rank safe regimens.",
+          "response": "Compared complete preoperative plans with the same agents; the explicit unresolved-family-risk and preparation facts constrain the ranking."
+        },
+        {
+          "category": "suggestions",
+          "index": 3,
+          "note": "If preserving this exact trigger-recognition objective, seek an explicit safety/foundational exception rather than describing it as a challenging resident item. Resolve the recorded source hold either way.",
+          "response": "Did not claim a foundational exception. Changed the scored objective and retained its key-level source hold."
+        }
+      ]
+    },
+    "selfCheck": {
+      "reviewer": "author; not independent or clinical sign-off",
+      "cueAttack": "All options repeat the same agents. Two include contracture testing and two proceed using the intravenous plan; neither drug recognition nor choosing the most cautious plan selects the key. The task does not announce trigger avoidance, safety or a definitive-testing rule.",
+      "stageCategory": "Three complete preoperative recommendations using the same named maintenance agents.",
+      "reasoningSteps": [
+        "Interpret why the prior anesthetic and panel have not cleared the documented familial risk.",
+        "Apply that unresolved risk to the testing/prophylaxis sequence under the specified anesthetic preparation."
+      ],
+      "closestCredibleError": "Postpone until contracture testing because a negative genetic panel did not settle susceptibility.",
+      "decidingFinding": "No identified familial causative variant, a positive first-degree contracture result, and a common intravenous plan with specified MH preparation.",
+      "counterfactual": "If the operation required a triggering technique or the facility preparation were not established, this record would not support proceeding under the same plan. A conclusive specialist assessment excluding susceptibility would change the risk premise.",
+      "difficulty": "predicted moderate application for PGY-2/3; independent difficulty review required",
+      "oneBestAnswer": "The uneventful exposure and negative panel do not clear susceptibility in this family. With the represented nontriggering plan and documented MH preparation, definitive susceptibility testing need not become a prerequisite to surgery.",
+      "deletionTest": "The family result and uninformative panel distinguish unresolved risk from clearance; the worksheet defines the common anesthetic premise. These facts are not a unique availability permission for one option.",
+      "clinicalAndSourceLimit": "Key hold: align negative-panel/prior-exposure interpretation, named agents, preparation premise, surgery-before-testing and dantrolene-prophylaxis ranking directly with the recorded JSA/EMHG guidance before acceptance. No new dose, preparation duration, flush protocol or guarantee from a checklist is authored.",
+      "sourceUncertaintyIsNotDifficulty": true,
+      "manualReviewCompleted": true
+    },
+    "sourceVerificationHold": "Key hold: align negative-panel/prior-exposure interpretation, named agents, preparation premise, surgery-before-testing and dantrolene-prophylaxis ranking directly with the recorded JSA/EMHG guidance before acceptance. No new dose, preparation duration, flush protocol or guarantee from a checklist is authored.",
+    "sourceHoldScope": "key",
+    "acceptanceAllowed": false,
+    "supportingEvidenceClaimIds": [
+      "claim.gs028d.mh.trigger-free-plan",
+      "claim.flags2r2.20261105.mh-family-panel-boundary",
+      "claim.flags2r2.20261105.mh-testing-not-prerequisite",
+      "claim.flags2r2.20261105.mh-no-routine-prophylaxis",
+      "claim.flags2r2.20261105.mh-named-plan"
+    ],
+    "conceptVersion": {
+      "id": "concept.mh.nontriggering-plan-and-testing-sequence.v1",
+      "name": "Choose the surgical testing sequence under unresolved familial MH risk",
+      "objective": "Interpret family history and an uninformative genetic result, then distinguish nontriggering perioperative planning from prophylactic dantrolene or obligatory preoperative contracture testing.",
+      "reason": "The round-one objective compared trigger classes in drug regimens. This version compares preoperative testing/prophylaxis sequencing when every offered plan uses the same acceptable intravenous drugs; retain the original communication and trigger-recognition cards.",
+      "previousConceptId": "concept.mh.family-history-and-regimen-components.v1"
+    },
+    "lint": {
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [],
+      "after": [],
+      "beforeCount": 0,
+      "afterCount": 0,
+      "profileContexts": 5
+    },
+    "visibleHistory": {
+      "before": {
+        "chiefComplaint": "Colectomy anesthesia review",
+        "presentation": "{patientName}, a 35-year-old woman, attends before colectomy. A sibling has a documented positive muscle-contracture test after an anaesthetic reaction. {patientName}'s earlier appendectomy record lists sevoflurane and an uncomplicated recovery; {patientName} has not undergone susceptibility testing.",
+        "stem": "Which general-anaesthetic regimen should be proposed for {patientName}?"
+      },
+      "after": {
+        "chiefComplaint": "Colectomy anesthesia review",
+        "presentation": "{patientName}, a 35-year-old woman, attends before colectomy. A sibling has a positive muscle-contracture test after an anesthetic reaction. {patientName}'s previous appendectomy used sevoflurane with an uncomplicated recovery. A subsequent blood gene panel reported no pathogenic variant; no familial causative variant has been identified.",
+        "stem": "Which recommendation should be sent to {patientName}'s anesthesia team?",
+        "currentUpdate": "The anesthesia worksheet lists propofol and remifentanil infusions with rocuronium, workstation preparation under the manufacturer's MH instructions, and the hospital's dantrolene response protocol. {patientName} has not had muscle-contracture testing."
+      }
+    },
+    "encounterContinuity": {
+      "keyServiceBefore": null,
+      "keyServiceAfter": null,
+      "beforeGate": null,
+      "afterGate": null,
+      "earlierReferral": null
+    },
+    "fallback": {
+      "variantId": "question.malignant-hyperthermia-susceptibility.trigger-free-anesthesia-plan.v2",
+      "conceptId": "concept.malignant-hyperthermia-susceptibility.trigger-free-anesthesia-plan",
+      "policy": "Keep the current manifest-selected live version until independent review, source-hold resolution and manager acceptance."
+    }
+  },
+  {
+    "id": "G03",
+    "title": "Read the acquisition record before repeating a breast study or requesting images",
+    "round": 2,
+    "status": "draft_awaiting_independent_review",
+    "reviewStatus": "needs_clinician_review",
+    "pipelinePassed": false,
+    "releaseReady": false,
+    "keyOrderNotice": "key shown first for review only; runtime answer choices are randomized",
+    "reviewDisplayNote": "Jamie Taylor is a review placeholder. Before is the reviewed round-one draft, except G03 and G04-R which bind directly to the flagged live source. The original G04 remains live. Source holds and self-checks do not authorize acceptance.",
+    "sourceView": "flags2-round2",
+    "caseId": "case.gs028c.palpable-breast.paired-dense-focal",
+    "nodeId": "node.gs028c.palpable-breast.paired-dense-focal.1",
+    "conceptId": "concept.palpable-breast.acquisition-site-versus-retrieval.v1",
+    "previousConceptId": "concept.palpable-breast.negative-mammogram-targeted-us",
+    "ownerNote": "Too obvious to say in the question that something wasn't assessed with US when the US is the right answer",
+    "before": {
+      "variantId": "question.palpable-breast.negative-mammogram-targeted-us.v1",
+      "Presentation": "Jamie Taylor, a 44-year-old woman, has a reproducible focal lump in dense breast tissue. Diagnostic mammography is negative, and the exact palpable area has not been assessed with ultrasound.",
+      "Current update": null,
+      "Exhibit": null,
+      "Task": "Which imaging study should evaluate Jamie Taylor's persistent palpable breast finding after negative diagnostic mammography?",
+      "Options": [
+        "**KEY:** Targeted breast ultrasound",
+        "Repeat diagnostic mammography",
+        "Breast MRI",
+        "Contrast-enhanced chest CT"
+      ]
+    },
+    "after": {
+      "variantId": "question.palpable-breast.negative-mammogram-targeted-us.v1.r3",
+      "Presentation": "Jamie Taylor, a 44-year-old woman, returns with a persistent firm, mobile lump in the lower-inner left breast. The clinic diagram places its skin marker at 8 o'clock. A separate longstanding superficial lump is marked at 2 o'clock.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "table",
+        "caption": "Recorded breast-imaging acquisitions",
+        "columnHeaders": [
+          "Acquisition record",
+          "Reported observations"
+        ],
+        "rowHeaders": [
+          "Diagnostic mammography",
+          "Ultrasound accession: complete acquisition log"
+        ],
+        "cells": [
+          [
+            "Standard and spot-compression views include both skin markers",
+            "Heterogeneously dense tissue; no mass or distortion beneath either marker"
+          ],
+          [
+            "Left 2 o'clock: radial/antiradial sweeps and superficial-lump images; left axillary survey",
+            "Circumscribed superficial lesion at the 2 o'clock marker; no additional focal finding in the recorded sweeps"
+          ]
+        ]
+      },
+      "Task": "Which radiology request should be made at this visit for Jamie Taylor's persistent palpable finding?",
+      "Options": [
+        "**KEY:** Request targeted breast ultrasound",
+        "Request archived breast ultrasound images",
+        "Request spot-compression breast mammography"
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Targeted breast ultrasound",
+          "A persistent palpable finding after negative mammography requires targeted ultrasound of the exact clinical area."
+        ],
+        [
+          "Repeat diagnostic mammography",
+          "The completed diagnostic mammogram was negative and repeating it does not add the needed focal sonographic assessment."
+        ],
+        [
+          "Breast MRI",
+          "MRI is not the routine immediate substitute for targeted ultrasound in this scenario."
+        ],
+        [
+          "Contrast-enhanced chest CT",
+          "Chest CT is not a focused breast-mass characterization study."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Request targeted breast ultrasound",
+          "The complete acquisition record corresponds to the other marker, not the persistent lower-inner finding. Targeted imaging should be correlated with the current palpable site. This requests a different acquisition rather than simply repeating an adequate study."
+        ],
+        [
+          "Request archived breast ultrasound images",
+          "Retrieval is a credible near-miss when an acquisition exists but transferred images are missing. The complete recorded acquisition here addresses the other marker, so retrieving that accession would not supply the required clinical-site correlation."
+        ],
+        [
+          "Request spot-compression breast mammography",
+          "This would be reasonable if the mammographic acquisition did not cover the current marker. The supplied views already include it; the unresolved issue is targeted sonographic correlation with the actual clinical finding, not another mammographic view."
+        ]
+      ]
+    },
+    "inference": "Correlate the two examination markers with the acquired views rather than the word negative. Then: Choose a new site-specific acquisition instead of retrieval of the wrong site or repetition of already adequate mammographic coverage.",
+    "focus": "The complete ultrasound acquisition log maps to 2 o'clock while the current persistent thickening is marked at 8 o'clock; mammography includes both markers.",
+    "whatChanged": "Rewrote the exact flagged live v1 directly into a new version. Replaced the named ultrasound omission with two clinical markers and a complete acquisition log; replaced chest CT/MRI foils with credible retrieval and repeat-view requests.",
+    "reviewResponse": {
+      "reviewPath": "docs/research/question-flags2-review-20261105.json",
+      "reviewId": "G03",
+      "priorVerdict": "REVISE",
+      "notes": [
+        {
+          "category": "cues",
+          "index": 1,
+          "note": {
+            "phrase": "the exact palpable area has not been assessed with ultrasound",
+            "why": "Directly names the omitted test that appears only in the key. No medical knowledge is required to fill the announced gap."
+          },
+          "response": "Removed the sentence announcing the unperformed ultrasound; the learner compares the marker and complete acquisition record."
+        },
+        {
+          "category": "cues",
+          "index": 2,
+          "note": {
+            "phrase": "after negative diagnostic mammography",
+            "why": "Combined with the explicit ultrasound omission, the task frames the only repeat-test option as repeating completed work rather than making the learner interpret acquisition adequacy."
+          },
+          "response": "Replaced the summary negative label with actual views/observations and explicit clinical-site coverage."
+        },
+        {
+          "category": "cues",
+          "index": 3,
+          "note": {
+            "phrase": "Contrast-enhanced chest CT",
+            "why": "Anatomical/category outlier among three dedicated breast studies in a task explicitly asking about a focal breast finding. Ordinary word matching removes it without resolving a clinical issue."
+          },
+          "response": "Removed chest CT and routine MRI; every option is a current breast-radiology request."
+        },
+        {
+          "category": "fairness",
+          "index": 1,
+          "note": "One-best-answer: targeted ultrasound is a defensible next imaging choice among the listed options. A negative mammogram should not be read as resolving the persistent palpable finding. The task is narrow enough that lack of a biopsy option is not itself a second-key problem.",
+          "response": "Targeted ultrasound remains the intended next imaging request; no tissue-diagnosis claim is made for a clinically suspicious mass."
+        },
+        {
+          "category": "fairness",
+          "index": 2,
+          "note": "Difficulty: direct named-omission matching, not two-step interpretation. Too easy for PGY-2/3 residents.",
+          "response": "The item requires interpreting two-site acquisition adequacy before selecting acquisition, retrieval or another view."
+        },
+        {
+          "category": "fairness",
+          "index": 3,
+          "note": "Importance/realism: evaluation of a persistent palpable breast finding and imaging-clinical concordance are high-value surgical concepts. The outpatient setting is realistic; the distractor set does not reflect the closest practical errors.",
+          "response": "Keeps a practical persistent-finding correlation problem with actual radiology requests."
+        },
+        {
+          "category": "fairness",
+          "index": 4,
+          "note": "Owner flag: NOT resolved in the displayed after fields. They retain the exact ultrasound giveaway. The handoff says a frozen B2B36 round-two version addresses acquisition adequacy, but its after text is absent here. Coverage elsewhere is neither acceptance of this version nor evidence that the replacement is live.",
+          "response": "The exact live v1 is now directly revised. B2B36 remains unaccepted and is not used for coverage."
+        },
+        {
+          "category": "fairness",
+          "index": 5,
+          "note": "Verdict applies to the unchanged v1 text shown here, not to the unseen B2B36 rewrite. No confident clinical inaccuracy or equally defensible offered key identified.",
+          "response": "This is a new draft with a separate concept and imaging-alignment hold; no retrospective approval of v1 or B2B36."
+        },
+        {
+          "category": "suggestions",
+          "index": 1,
+          "note": "Do not rewrite or approve the frozen replacement on this report's authority. Reconcile the exact flagged variant with the independently reviewed B2B36 replacement and its eventual selection status.",
+          "response": "Followed the manager's new authorization to repair the flagged live variant directly; no B2B36 file/version changes."
+        },
+        {
+          "category": "suggestions",
+          "index": 2,
+          "note": "For any authorized repair, show what was actually acquired at the relevant site, with enough localization and protocol detail to distinguish retrieval, repeat targeted imaging or a genuinely different next action. Remove the sentence that names the missing answer.",
+          "response": "Provided a complete acquisition log, two marked sites and actual mammographic coverage, sufficient to distinguish new acquisition from retrieval."
+        },
+        {
+          "category": "suggestions",
+          "index": 3,
+          "note": "Replace chest CT with a credible same-stage competitor supported by the actual acquisition findings; do not add MRI as routine complexity.",
+          "response": "Replaced chest CT with archive retrieval and spot-compression requests at the same workup stage; no routine MRI complexity."
+        }
+      ]
+    },
+    "selfCheck": {
+      "reviewer": "author; not independent or clinical sign-off",
+      "cueAttack": "All labels are specific breast-radiology requests; ultrasound appears in two choices. The archive alternative contains the same shared modality words as the key, preventing a unique convergence combination. No option repeats a marker coordinate, no CT anatomical outlier remains, and no sentence announces an unperformed named test. The log is explicitly complete, not merely an incomplete image export.",
+      "stageCategory": "Three specific breast-radiology requests at the current imaging-correlation stage.",
+      "reasoningSteps": [
+        "Correlate the two examination markers with the acquired views rather than the word negative.",
+        "Choose a new site-specific acquisition instead of retrieval of the wrong site or repetition of already adequate mammographic coverage."
+      ],
+      "closestCredibleError": "Request missing archived ultrasound images on the assumption that a transfer problem explains the absent clinical-site correlation.",
+      "decidingFinding": "The complete ultrasound acquisition log maps to 2 o'clock while the current persistent thickening is marked at 8 o'clock; mammography includes both markers.",
+      "counterfactual": "If the log documented the current 8 o'clock acquisition and only the exported images were absent, retrieval could be preferable. A clinically suspicious mass would require a separate tissue-diagnosis decision.",
+      "difficulty": "predicted moderate application for PGY-2/3; independent difficulty review required",
+      "oneBestAnswer": "The complete acquisition record corresponds to the other marker, not the persistent lower-inner finding. Targeted imaging should be correlated with the current palpable site. This requests a different acquisition rather than simply repeating an adequate study.",
+      "deletionTest": "Without marker mapping or acquisition coverage, retrieval and new imaging cannot be ranked fairly. The mammographic observations define why the second imaging modality is relevant without interpreting the study as a universal exclusion.",
+      "clinicalAndSourceLimit": "One adequate recorded ACR guideline directly supports targeted ultrasound at the persistent mammographically occult clinical site. The complete two-site acquisition record supplies the logical distinction from archive retrieval; no inference is made from a missing export alone. Protocol realism and option ranking still need clinical review, but this is not a new unsupported imaging rule or a fresh source verification.",
+      "sourceUncertaintyIsNotDifficulty": true,
+      "manualReviewCompleted": true
+    },
+    "sourceVerificationHold": null,
+    "sourceHoldScope": null,
+    "acceptanceAllowed": false,
+    "supportingEvidenceClaimIds": [
+      "claim.gs028c.palpable.targeted-us",
+      "claim.flags2r2.20261105.breast-acquisition-site",
+      "claim.flags2r2.20261105.breast-repeat-versus-retrieve"
+    ],
+    "conceptVersion": {
+      "id": "concept.palpable-breast.acquisition-site-versus-retrieval.v1",
+      "name": "Distinguish wrong-site acquisition from missing breast images",
+      "objective": "Correlate a persistent examination finding with the complete imaging acquisition record, then choose a new targeted study rather than archive retrieval or repetition of an adequate mammographic acquisition.",
+      "reason": "Changes the scored objective from recalling ultrasound after mammography to interpreting clinical/acquisition concordance. Binds directly to the owner-flagged live v1; B2B36 is not used as a revision source or accepted coverage.",
+      "previousConceptId": "concept.palpable-breast.negative-mammogram-targeted-us"
+    },
+    "lint": {
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [
+        {
+          "id": "2be44d671808b182",
+          "rule": "key-only-word-overlap",
+          "severity": "advisory",
+          "message": "A substantive word appears in the context and key only; clinical relevance may justify it.",
+          "evidence": [
+            {
+              "field": "presentation",
+              "text": "ultrasound",
+              "start": 181,
+              "end": 191
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "ultrasound",
+              "start": 16,
+              "end": 26,
+              "choiceId": "correct_1"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028c.palpable-breast.paired-dense-focal",
+              "profileIds": [
+                "canonical",
+                "profile.gs028c.palpable-breast.paired-dense-focal.female.44"
+              ],
+              "ranges": [
+                {
+                  "start": 181,
+                  "end": 191
+                },
+                {
+                  "start": 16,
+                  "end": 26
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028c.palpable-breast.paired-dense-focal",
+              "profileIds": [
+                "profile.gs028c.palpable-breast.paired-dense-focal.female.58"
+              ],
+              "ranges": [
+                {
+                  "start": 181,
+                  "end": 191
+                },
+                {
+                  "start": 16,
+                  "end": 26
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "7e7d42da60889f95",
+          "rule": "key-test-name-in-context",
+          "severity": "advisory",
+          "message": "A named test/alias in the context identifies the keyed test.",
+          "evidence": [
+            {
+              "field": "presentation",
+              "text": "ultrasound",
+              "start": 181,
+              "end": 191
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "ultrasound",
+              "start": 16,
+              "end": 26,
+              "choiceId": "correct_1"
+            }
+          ],
+          "metrics": {
+            "aliasGroup": "Ultrasound"
+          },
+          "occurrences": [
+            {
+              "caseId": "case.gs028c.palpable-breast.paired-dense-focal",
+              "profileIds": [
+                "canonical",
+                "profile.gs028c.palpable-breast.paired-dense-focal.female.44"
+              ],
+              "ranges": [
+                {
+                  "start": 181,
+                  "end": 191
+                },
+                {
+                  "start": 16,
+                  "end": 26
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028c.palpable-breast.paired-dense-focal",
+              "profileIds": [
+                "profile.gs028c.palpable-breast.paired-dense-focal.female.58"
+              ],
+              "ranges": [
+                {
+                  "start": 181,
+                  "end": 191
+                },
+                {
+                  "start": 16,
+                  "end": 26
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "990266a1fab0e262",
+          "rule": "unexplained-negative-imaging",
+          "severity": "advisory",
+          "message": "Describe what imaging showed or failed to show at the relevant site. A bare negative label does not say whether there was no correlate, benign findings or an inadequate examination.",
+          "evidence": [
+            {
+              "field": "presentation",
+              "text": "mammography is negative",
+              "start": 101,
+              "end": 124
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028c.palpable-breast.paired-dense-focal",
+              "profileIds": [
+                "canonical",
+                "profile.gs028c.palpable-breast.paired-dense-focal.female.44"
+              ],
+              "ranges": [
+                {
+                  "start": 101,
+                  "end": 124
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028c.palpable-breast.paired-dense-focal",
+              "profileIds": [
+                "profile.gs028c.palpable-breast.paired-dense-focal.female.58"
+              ],
+              "ranges": [
+                {
+                  "start": 101,
+                  "end": 124
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "after": [],
+      "beforeCount": 3,
+      "afterCount": 0,
+      "profileContexts": 3
+    },
+    "visibleHistory": {
+      "before": {
+        "chiefComplaint": "Persistent breast lump",
+        "presentation": "{patientName}, a 44-year-old woman, has a reproducible focal lump in dense breast tissue. Diagnostic mammography is negative, and the exact palpable area has not been assessed with ultrasound.",
+        "stem": "Which imaging study should evaluate {patientName}'s persistent palpable breast finding after negative diagnostic mammography?"
+      },
+      "after": {
+        "chiefComplaint": "Persistent breast thickening",
+        "presentation": "{patientName}, a 44-year-old woman, returns with a persistent firm, mobile lump in the lower-inner left breast. The clinic diagram places its skin marker at 8 o'clock. A separate longstanding superficial lump is marked at 2 o'clock.",
+        "stem": "Which radiology request should be made at this visit for {patientName}'s persistent palpable finding?",
+        "exhibit.caption": "Recorded breast-imaging acquisitions",
+        "exhibit.columnHeaders[0]": "Acquisition record",
+        "exhibit.columnHeaders[1]": "Reported observations",
+        "exhibit.rowHeaders[0]": "Diagnostic mammography",
+        "exhibit.rowHeaders[1]": "Ultrasound accession: complete acquisition log",
+        "exhibit.cells[0][0]": "Standard and spot-compression views include both skin markers",
+        "exhibit.cells[0][1]": "Heterogeneously dense tissue; no mass or distortion beneath either marker",
+        "exhibit.cells[1][0]": "Left 2 o'clock: radial/antiradial sweeps and superficial-lump images; left axillary survey",
+        "exhibit.cells[1][1]": "Circumscribed superficial lesion at the 2 o'clock marker; no additional focal finding in the recorded sweeps"
+      }
+    },
+    "encounterContinuity": {
+      "keyServiceBefore": "service.ultrasound",
+      "keyServiceAfter": "service.ultrasound",
+      "beforeGate": {
+        "id": "gate.gs028c.dense-focal",
+        "resultTypeId": "service.ultrasound",
+        "pendingLabel": "Targeted breast ultrasound pending",
+        "resultNarrative": "Targeted ultrasound of the exact palpable area is negative, but the clinician still finds the same distinctly hard or irregular mass.",
+        "readiness": "all",
+        "allowedServiceRouteIds": [
+          "route.ultrasound.in_house",
+          "route.ultrasound.outsourced"
+        ]
+      },
+      "afterGate": {
+        "id": "gate.gs028c.dense-focal",
+        "resultTypeId": "service.ultrasound",
+        "pendingLabel": "Targeted breast ultrasound pending",
+        "resultNarrative": "Targeted ultrasound of the exact palpable area is negative, but the clinician still finds the same distinctly hard or irregular mass.",
+        "readiness": "all",
+        "allowedServiceRouteIds": [
+          "route.ultrasound.in_house",
+          "route.ultrasound.outsourced"
+        ]
+      },
+      "earlierReferral": null
+    },
+    "fallback": {
+      "variantId": "question.palpable-breast.negative-mammogram-targeted-us.v1",
+      "conceptId": "concept.palpable-breast.negative-mammogram-targeted-us",
+      "policy": "Keep the current manifest-selected live version until independent review, source-hold resolution and manager acceptance."
+    }
+  },
+  {
+    "id": "G04-R",
+    "title": "Do not infer pregnancy location from a falling blood result or a nondiagnostic abdominal scan",
+    "round": 2,
+    "status": "draft_awaiting_independent_review",
+    "reviewStatus": "needs_clinician_review",
+    "pipelinePassed": false,
+    "releaseReady": false,
+    "keyOrderNotice": "key shown first for review only; runtime answer choices are randomized",
+    "reviewDisplayNote": "Jamie Taylor is a review placeholder. Before is the reviewed round-one draft, except G03 and G04-R which bind directly to the flagged live source. The original G04 remains live. Source holds and self-checks do not authorize acceptance.",
+    "sourceView": "flags2-round2",
+    "caseId": "case.gs028f.gynecology.c1-late-period",
+    "nodeId": "node.gs028f.gynecology.c1-late-period.1",
+    "conceptId": "concept.early-pregnancy.location-before-disposition.v1",
+    "previousConceptId": "concept.gs028f.gynecology.pregnancy-testing-pelvic-pain",
+    "ownerNote": "This is too easy for a surgery resident",
+    "before": {
+      "variantId": "question.gs028f.gynecology.pregnancy-testing-pelvic-pain.v1",
+      "Presentation": "Jamie Taylor, a 24-year-old woman, visits the clinic with a new lower abdominal ache and a late menstrual period. Pregnancy is possible, but no pregnancy test has been performed. The patient is alert, has normal current vital signs and no syncope or severe pain; clinical assessment is underway.",
+      "Current update": null,
+      "Exhibit": null,
+      "Task": "Which laboratory test should assess possible pregnancy during this patient's pelvic-pain evaluation?",
+      "Options": [
+        "**KEY:** Serum hCG measurement",
+        "Complete blood count",
+        "Serum lipase testing",
+        "Serum creatinine testing"
+      ]
+    },
+    "after": {
+      "variantId": "question.gs028f.gynecology.pregnancy-testing-pelvic-pain.v1.r1",
+      "Presentation": "Jamie Taylor, a 24-year-old woman, returns with right lower abdominal pain and vaginal spotting. A home urine pregnancy test taken before the expected period was negative. Subsequent serum hCG was detected; its concentration has fallen on the interval sample but remains detectable. Pain is now more persistent and focal; circulation is currently stable.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "keyValue",
+        "caption": "Current examination and imaging record",
+        "items": [
+          {
+            "label": "Abdominal examination",
+            "value": "Right lower-quadrant tenderness; no generalized rigidity"
+          },
+          {
+            "label": "Transabdominal pelvic scan",
+            "value": "Uterine cavity seen without a gestational sac; adnexal structures not resolved separately"
+          },
+          {
+            "label": "Appendix on the abdominal scan",
+            "value": "Not visualized"
+          }
+        ]
+      },
+      "Task": "Which same-day diagnostic plan should be prioritized for Jamie Taylor?",
+      "Options": [
+        "**KEY:** Transvaginal ultrasonography with gynecologic assessment",
+        "Appendiceal MRI with general-surgical assessment",
+        "Diagnostic uterine aspiration with histopathologic assessment"
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Serum hCG measurement",
+          "The correct answer is “Serum hCG measurement.” Pregnancy status belongs in this evaluation because pregnancy is possible; the result must be interpreted with the clinical findings."
+        ],
+        [
+          "Complete blood count",
+          "This does not establish whether the patient is pregnant."
+        ],
+        [
+          "Serum lipase testing",
+          "This does not establish whether the patient is pregnant."
+        ],
+        [
+          "Serum creatinine testing",
+          "This does not establish whether the patient is pregnant."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Transvaginal ultrasonography with gynecologic assessment",
+          "The early home result, falling but detectable hCG and transabdominal scan do not establish pregnancy location. The new focal symptoms require prompt assessment of an early-pregnancy complication rather than a conclusion of completed miscarriage or a settled appendiceal diagnosis."
+        ],
+        [
+          "Appendiceal MRI with general-surgical assessment",
+          "Right lower-quadrant pain and a nonvisualized appendix make this a genuine competing pathway. They do not resolve the simultaneous unlocated pregnancy/spotting problem; the supplied pelvic acquisition cannot establish that a pregnancy complication has been excluded. This does not prohibit subsequent surgical imaging or assessment."
+        ],
+        [
+          "Diagnostic uterine aspiration with histopathologic assessment",
+          "Falling hCG and bleeding can tempt a diagnosis of failed intrauterine pregnancy. Neither hCG nor the supplied scan establishes an intrauterine location or makes uterine sampling the immediate first diagnostic procedure in this record."
+        ]
+      ]
+    },
+    "inference": "Interpret what the changing hCG and the actual scan do and do not establish about location. Then: Prioritize a same-day diagnostic pathway under the new focal symptoms, against plausible appendiceal and presumed-miscarriage interpretations.",
+    "focus": "Pregnancy is still biochemically evident, its location is unresolved by the actual acquisition, and the symptoms have become more persistent and focal.",
+    "whatChanged": "Replaced elementary hCG-assay identification with a separately versioned pregnancy-location/diagnostic-disposition decision. The alternatives represent appendiceal disease and presumed intrauterine pregnancy failure; all receive same-day assessment. Original G04 stays live until this replacement passes and the manager accepts it.",
+    "reviewResponse": {
+      "reviewPath": "docs/research/question-flags2-review-20261105.json",
+      "reviewId": "G04",
+      "priorVerdict": "FAIL",
+      "notes": [
+        {
+          "category": "cues",
+          "index": 1,
+          "note": {
+            "phrase": "Pregnancy is possible, but no pregnancy test has been performed.",
+            "why": "Announces the missing test category before the task asks for that exact category. The patient story supplies no additional inference."
+          },
+          "response": "Removed the announcement of an unperformed pregnancy test; the new record contains discordant actual results and symptom evolution."
+        },
+        {
+          "category": "cues",
+          "index": 2,
+          "note": {
+            "phrase": "Which laboratory test should assess possible pregnancy",
+            "why": "Direct assay-identification prompt. A reader with ordinary familiarity with pregnancy testing can match hCG without clinical reasoning; this is a recognition shortcut rather than literal key-word repetition."
+          },
+          "response": "Replaced assay identification with a same-day diagnostic pathway decision."
+        },
+        {
+          "category": "cues",
+          "index": 3,
+          "note": {
+            "phrase": "The patient is alert, has normal current vital signs and no syncope or severe pain; clinical assessment is underway.",
+            "why": "Reassuring/permission framing does not distinguish any of the four laboratory assays. It creates a clinical veneer around an unchanged identification task; it is not independently a key-selecting clue."
+          },
+          "response": "Replaced the generic reassurance sentence with current examination and acquisition observations that constrain the pathways."
+        },
+        {
+          "category": "fairness",
+          "index": 1,
+          "note": "One-best-answer: serum hCG is the unique pregnancy assay among the four options. No confident clinical error or competing listed key identified. FAIL denotes failure as a resident assessment, not an unsafe hCG key.",
+          "response": "Original hCG key remains historically preserved; the replacement tests an independently versioned clinical decision."
+        },
+        {
+          "category": "fairness",
+          "index": 2,
+          "note": "Difficulty: elementary assay recognition, with no two-step reasoning. The CBC, lipase and creatinine choices are not credible near-misses for the explicitly stated task.",
+          "response": "No CBC/lipase/creatinine foils remain; the three plans reflect location, appendiceal and presumed-miscarriage errors."
+        },
+        {
+          "category": "fairness",
+          "index": 3,
+          "note": "Importance: considering pregnancy in a patient with abdominal/pelvic pain is clinically important for general surgeons. Identifying the assay by name has low incremental educational value for PGY-2/3 residents and does not justify an independent challenging item.",
+          "response": "Pregnancy assessment remains in the curriculum through consequential interpretation and procedure priority."
+        },
+        {
+          "category": "fairness",
+          "index": 4,
+          "note": "Realism: the presentation could occur in clinic, but the testing decision is artificially elementary. Current normal vital signs should not be transformed into a claim that serious pathology is excluded; this item does not establish that.",
+          "response": "Stable current circulation is not used to exclude serious pathology; changing symptoms trigger same-day assessment in every option."
+        },
+        {
+          "category": "fairness",
+          "index": 5,
+          "note": "Owner flag: not resolved by the unchanged after version. The retirement/merge proposal addresses the underlying complaint appropriately but remains a proposal, not an applied repair.",
+          "response": "The owner's easy-assay flag is addressed by a new objective, not hidden assay terminology."
+        },
+        {
+          "category": "fairness",
+          "index": 6,
+          "note": "Retirement/merge assessment: AGREE. Remove this redundant assay-recognition assessment from fresh resident selection after manager acceptance, or merge the foundational reminder into a stronger separately reviewed early-pregnancy decision. Do not obscure the assay name or hide pregnancy possibility merely to make this objective harder. The handoff's suggested ectopic-disposition sibling is not reviewed or accepted here.",
+          "response": "Retirement/merge direction is recorded as conditional: original live item remains until a harder replacement passes and is accepted."
+        },
+        {
+          "category": "suggestions",
+          "index": 1,
+          "note": "Accept the retirement/merge direction while preserving historical versions, frozen encounters and existing FSRS records; this review applies no selection change.",
+          "response": "Preserved the old concept, source definition, exact timing/order records and live selection; no retirement or FSRS migration."
+        },
+        {
+          "category": "suggestions",
+          "index": 2,
+          "note": "Retain pregnancy assessment in the curriculum through a consequential interpretation/disposition item with the observations necessary to distinguish the competing actions.",
+          "response": "Added a consequential diagnostic/disposition item with pregnancy chronology, symptoms and actual scan limits."
+        },
+        {
+          "category": "suggestions",
+          "index": 3,
+          "note": "If a deliberate onboarding reminder is still needed, label and approve that purpose separately rather than counting this unchanged question as resident-level challenge. A changed clinical objective requires its own concept/version decision.",
+          "response": "No onboarding exception claimed; the replacement is a separately versioned application with a key-level source hold."
+        }
+      ]
+    },
+    "selfCheck": {
+      "reviewer": "author; not independent or clinical sign-off",
+      "cueAttack": "Every option obtains a specific diagnostic assessment today; urgency cannot select the key. No task asks which assay detects pregnancy, no unperformed test is named, and neither falling hCG nor an unvisualized appendix is labelled as a diagnosis.",
+      "stageCategory": "Three same-day diagnostic plans, each naming a procedure and the reviewing service; no option is routine delayed reassurance.",
+      "reasoningSteps": [
+        "Interpret what the changing hCG and the actual scan do and do not establish about location.",
+        "Prioritize a same-day diagnostic pathway under the new focal symptoms, against plausible appendiceal and presumed-miscarriage interpretations."
+      ],
+      "closestCredibleError": "Treat falling hCG and spotting as proof that the pregnancy was intrauterine and choose uterine sampling before its location is assessed.",
+      "decidingFinding": "Pregnancy is still biochemically evident, its location is unresolved by the actual acquisition, and the symptoms have become more persistent and focal.",
+      "counterfactual": "A demonstrated intrauterine location with evidence establishing pregnancy failure would change the aspiration comparison. A resolved pregnancy question with a persisting appendiceal concern could change the MRI priority.",
+      "difficulty": "predicted lower-moderate application for PGY-2/3; disposition/localization replaces assay recall; independent difficulty review required",
+      "oneBestAnswer": "The early home result, falling but detectable hCG and transabdominal scan do not establish pregnancy location. The new focal symptoms require prompt assessment of an early-pregnancy complication rather than a conclusion of completed miscarriage or a settled appendiceal diagnosis.",
+      "deletionTest": "The hCG chronology competes with the new symptoms, and the actual pelvic acquisition limits what may be concluded. Remove those facts and the procedure priority cannot be fairly chosen.",
+      "clinicalAndSourceLimit": "Key hold: verify the falling-hCG/location boundary, exact transvaginal acquisition and priority over the two offered diagnostic pathways directly with the recorded early-pregnancy guidance before acceptance. No hCG discriminatory threshold, repeat interval, methotrexate rule or definitive ectopic diagnosis is invented.",
+      "sourceUncertaintyIsNotDifficulty": true,
+      "manualReviewCompleted": true
+    },
+    "sourceVerificationHold": "Key hold: verify the falling-hCG/location boundary, exact transvaginal acquisition and priority over the two offered diagnostic pathways directly with the recorded early-pregnancy guidance before acceptance. No hCG discriminatory threshold, repeat interval, methotrexate rule or definitive ectopic diagnosis is invented.",
+    "sourceHoldScope": "key",
+    "acceptanceAllowed": false,
+    "supportingEvidenceClaimIds": [
+      "claim.gs028f.pregnancy.early-negative-limit",
+      "claim.gs028f.ectopic.symptoms-require-assessment",
+      "claim.gs028f.ectopic.hcg-does-not-locate",
+      "claim.flags2r2.20261105.pregnancy-falling-hcg-boundary",
+      "claim.flags2r2.20261105.pregnancy-localization-before-disposition",
+      "claim.flags2r2.20261105.pregnancy-modality-ranking"
+    ],
+    "conceptVersion": {
+      "id": "concept.early-pregnancy.location-before-disposition.v1",
+      "name": "Establish the early-pregnancy assessment pathway from discordant reassurance",
+      "objective": "Interpret early negative urine testing, persistent hCG, changing symptoms and limited pelvic acquisition, then prioritize the pregnancy-localization assessment before assigning a miscarriage or appendiceal disposition.",
+      "reason": "Manager agrees to retire/merge the redundant assay-recognition item only after a harder replacement passes. This new scored clinical objective is separately versioned; original hCG-testing concept/live v1 and all frozen encounters remain unchanged pending acceptance.",
+      "previousConceptId": "concept.gs028f.gynecology.pregnancy-testing-pelvic-pain"
+    },
+    "lint": {
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [],
+      "after": [],
+      "beforeCount": 0,
+      "afterCount": 0,
+      "profileContexts": 3
+    },
+    "visibleHistory": {
+      "before": {
+        "chiefComplaint": "Pelvic ache",
+        "presentation": "{patientName}, a 24-year-old woman, visits the clinic with a new lower abdominal ache and a late menstrual period. Pregnancy is possible, but no pregnancy test has been performed. The patient is alert, has normal current vital signs and no syncope or severe pain; clinical assessment is underway.",
+        "stem": "Which laboratory test should assess possible pregnancy during this patient's pelvic-pain evaluation?"
+      },
+      "after": {
+        "chiefComplaint": "Right lower abdominal pain",
+        "presentation": "{patientName}, a 24-year-old woman, returns with right lower abdominal pain and vaginal spotting. A home urine pregnancy test taken before the expected period was negative. Subsequent serum hCG was detected; its concentration has fallen on the interval sample but remains detectable. Pain is now more persistent and focal; circulation is currently stable.",
+        "stem": "Which same-day diagnostic plan should be prioritized for {patientName}?",
+        "exhibit.caption": "Current examination and imaging record",
+        "exhibit.items[0].label": "Abdominal examination",
+        "exhibit.items[0].value": "Right lower-quadrant tenderness; no generalized rigidity",
+        "exhibit.items[1].label": "Transabdominal pelvic scan",
+        "exhibit.items[1].value": "Uterine cavity seen without a gestational sac; adnexal structures not resolved separately",
+        "exhibit.items[2].label": "Appendix on the abdominal scan",
+        "exhibit.items[2].value": "Not visualized"
+      }
+    },
+    "encounterContinuity": {
+      "keyServiceBefore": "service.basic_labs",
+      "keyServiceAfter": null,
+      "beforeGate": null,
+      "afterGate": null,
+      "earlierReferral": null
+    },
+    "fallback": {
+      "variantId": "question.gs028f.gynecology.pregnancy-testing-pelvic-pain.v1",
+      "conceptId": "concept.gs028f.gynecology.pregnancy-testing-pelvic-pain",
+      "policy": "Keep original G04 live until this harder replacement passes independent review and the manager accepts retirement/merge and its exact version."
+    }
+  },
+  {
+    "id": "G05",
+    "title": "Resolve an inherited calcium pattern before operative localization",
+    "round": 2,
+    "status": "draft_awaiting_independent_review",
+    "reviewStatus": "needs_clinician_review",
+    "pipelinePassed": false,
+    "releaseReady": false,
+    "keyOrderNotice": "key shown first for review only; runtime answer choices are randomized",
+    "reviewDisplayNote": "Jamie Taylor is a review placeholder. Before is the reviewed round-one draft, except G03 and G04-R which bind directly to the flagged live source. The original G04 remains live. Source holds and self-checks do not authorize acceptance.",
+    "sourceView": "flags2-round2",
+    "caseId": "case.asymptomatic-phpt.incidental-calcium",
+    "nodeId": "node.asymptomatic-phpt.incidental-calcium.2",
+    "conceptId": "concept.phpt.inherited-calcium-before-localization.v1",
+    "previousConceptId": "concept.asymptomatic-phpt.age-based-surgery",
+    "ownerNote": "If she already meets criteria for parathyroidectomy why does she need DXA? Why not operate?",
+    "before": {
+      "variantId": "question.asymptomatic-phpt.age-based-surgery.v1.r1",
+      "Presentation": "Jamie Taylor, a 47-year-old woman, visits for confirmed primary hyperparathyroidism after repeat calcium and parathyroid-hormone testing. Creatinine is within laboratory reference limits; renal ultrasound shows no calculi, and there is no fragility-fracture history. The referral requests an operative opinion and a baseline skeletal assessment.",
+      "Current update": "The completed spine, hip and distal-radius bone-density measurements are within the age-appropriate reference range. Jamie Taylor has no hypercalcemic symptoms.",
+      "Exhibit": null,
+      "Task": "Which management recommendation should be made for Jamie Taylor?",
+      "Options": [
+        "**KEY:** Recommend parathyroidectomy through endocrine surgery",
+        "Recommend biochemical surveillance through endocrinology follow-up",
+        "Recommend cinacalcet therapy through endocrinology follow-up"
+      ]
+    },
+    "after": {
+      "variantId": "question.asymptomatic-phpt.age-based-surgery.v1.r2",
+      "Presentation": "Jamie Taylor, a 47-year-old woman, visits after repeat samples show calcium above the laboratory reference range and intact PTH within the reference range. An endocrine-surgery referral and baseline skeletal assessment were ordered at that visit. A prior DXA file contains the lumbar-spine acquisition. A right total hip replacement followed a high-energy injury; the left hip has native bone.",
+      "Current update": "The completed lumbar-spine, native-left-hip and one-third-radius density measurements are within age-appropriate reference ranges. A paired serum and complete 24-hour urine collection gives a calcium-to-creatinine clearance ratio below 0.01. Renal function and 25-hydroxyvitamin D are within reference ranges; there is no thiazide use. Earlier adult records show calcium in the same mildly elevated band, and the mother's records show a similar longstanding pattern.",
+      "Exhibit": null,
+      "Task": "Which investigation should guide Jamie Taylor's parathyroid planning next?",
+      "Options": [
+        "**KEY:** Calcium-sensing receptor gene assay",
+        "Parathyroid sestamibi scintigraphy",
+        "PTH-related peptide assay"
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Recommend parathyroidectomy through endocrine surgery",
+          "The patient remains younger than 50 in every retained presentation profile. That independent guideline criterion supports parathyroidectomy even when skeletal and renal assessment shows no complication. DXA characterizes baseline skeletal status; it does not create the age-based indication or have to become abnormal first."
+        ],
+        [
+          "Recommend biochemical surveillance through endocrinology follow-up",
+          "Monitoring is a genuine pathway when surgery is not selected, but normal organ assessment does not remove the independent age-based criterion in this patient. No contraindication or refusal of surgery has been introduced."
+        ],
+        [
+          "Recommend cinacalcet therapy through endocrinology follow-up",
+          "A named calcium-lowering medical pathway is more plausible than a generic bone-clinic foil. It does not replace discussion of an independently indicated operation in this represented, asymptomatic patient. This option teaches no medication dose or mandatory treatment algorithm."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Calcium-sensing receptor gene assay",
+          "The family/longitudinal pattern and low clearance ratio raise an inherited calcium-sensing disorder as a mimic of PHPT. The ratio supports that suspicion but does not confirm it. Genetic and family evaluation should clarify the disease before operative localization is treated as the remaining step. Normal DXA does not decide this distinction, and age under 50 is an operative criterion only after the relevant diagnosis is established. A negative CASR result would not exclude every suspected FHH case."
+        ],
+        [
+          "Parathyroid sestamibi scintigraphy",
+          "This is a credible next step if the clinician assumes that the biochemical pattern and young age have already settled PHPT and the need for localization. It would not resolve the inherited mimic raised by the urine/family record; localization is not a substitute for clarifying that diagnosis."
+        ],
+        [
+          "PTH-related peptide assay",
+          "A numerically reference-range intact PTH can tempt a different hypercalcemia workup. It does not exclude the recorded inherited calcium/PTH pattern, and this marker would not answer the family/genetic question supplied by the low urine ratio and longstanding familial findings."
+        ]
+      ]
+    },
+    "inference": "Integrate the calcium/PTH, complete low-ratio collection and longstanding familial pattern as evidence of an inherited mimic rather than established PHPT. Then: Choose genetic clarification before localization; do not use young age or normal DXA to settle the diagnosis.",
+    "focus": "Low clearance ratio under interpretable collection conditions plus a longstanding similar maternal pattern; the biochemical pattern alone has not established PHPT.",
+    "whatChanged": "Removed specialty destinations and cinacalcet. Replaced an ambiguous draft operative-ranking comparison during self-check with a sourced inherited-calcium differential. The header now records the provisional raw biochemical pattern and an already-placed referral; the new concept tests genetic clarification before operative localization.",
+    "reviewResponse": {
+      "reviewPath": "docs/research/question-flags2-review-20261105.json",
+      "reviewId": "G05",
+      "priorVerdict": "REVISE",
+      "notes": [
+        {
+          "category": "cues",
+          "index": 1,
+          "note": {
+            "phrase": "The referral requests an operative opinion and a baseline skeletal assessment.",
+            "why": "Operative framing primes the sole surgical option before a neutral management question. It is a weaker nudge rather than proof of surgery: an operative opinion can legitimately recommend surveillance. The sequencing clarification is useful, but should not be mistaken for a difficult inference."
+          },
+          "response": "Removed the operative-opinion nudge: all options are specific investigations and the raw initial pattern is not labelled a definitive diagnosis."
+        },
+        {
+          "category": "cues",
+          "index": 2,
+          "note": {
+            "phrase": "Recommend parathyroidectomy through endocrine surgery",
+            "why": "Only surgical action and only endocrine-surgery destination; both distractors share endocrinology follow-up. Coupled with the operative referral, specialty/setting matching offers a nonclinical shortcut. The destination labels add no discriminating medical information."
+          },
+          "response": "Removed specialty destinations and the uniquely surgical key; each label names a test at the same decision stage."
+        },
+        {
+          "category": "fairness",
+          "index": 1,
+          "note": "One-best-answer: on the age-based indication represented in the handoff, recommending parathyroidectomy is defensible despite normal skeletal assessment. Neither operative refusal nor a contraindication is supplied, so I do not infer one to make surveillance equally correct.",
+          "response": "Preserved the original rule for confirmed PHPT; the new separate objective requires establishing the diagnosis before applying that rule."
+        },
+        {
+          "category": "fairness",
+          "index": 2,
+          "note": "Difficulty: the diagnosis is given and the decisive age rule is a single recall-to-recommendation step. The normal skeletal result is a useful misconception check but does not require interpreting raw data, and deleting it still leaves the independent age indication. Too easy for the requested PGY-2/3 challenge.",
+          "response": "The low clearance ratio and longitudinal/family findings must be interpreted before selecting the next investigation; normal DXA is not the deciding feature."
+        },
+        {
+          "category": "fairness",
+          "index": 3,
+          "note": "Competitor quality: cinacalcet is named, but calcium burden, a reason to avoid surgery and a treatment goal that would make this a close competitor are absent. That makes it weak here rather than proving an alternative key. Do not invent a drug-initiation threshold.",
+          "response": "Removed cinacalcet and introduced no drug-initiation threshold or regimen."
+        },
+        {
+          "category": "fairness",
+          "index": 4,
+          "note": "Importance/realism: surgical indications for primary hyperparathyroidism and the distinction between baseline organ assessment and eligibility are high-yield, practical endocrine-surgery content. Concurrent operative assessment and skeletal characterization is a credible outpatient pathway.",
+          "response": "Keeps practical endocrine-surgery workup. Referral predates skeletal results, and later findings can change the presumed operative pathway."
+        },
+        {
+          "category": "fairness",
+          "index": 5,
+          "note": "Owner flag: resolved in the supplied paired wording at the conceptual level. G05-staging explicitly orders skeletal assessment alongside the operative consultation, and G05 recommends surgery despite a normal result. This removes the claim that DXA must first confer eligibility. Actual result-gate behavior or delay of referral cannot be certified from the after fields; full runtime resolution is unverified.",
+          "response": "The actual paired header records the referral before the retained DXA display gate; no abnormal DXA is required for consultation."
+        },
+        {
+          "category": "fairness",
+          "index": 6,
+          "note": "Evidence limitation: the handoff identifies one adequate guideline for the age/skeletal claims and a separate cinacalcet mapping needing confirmation. This offline review does not close that limitation or clinically approve the version.",
+          "response": "Reused directly relevant PARAT/Fifth Workshop facts with original dates. The ratio is a clue, not confirmation; genetic assessment and exact option ranking still need clinical review."
+        },
+        {
+          "category": "suggestions",
+          "index": 1,
+          "note": "Remove specialty destinations from all three options and compare equally specific actions; preserve the concurrent-assessment chronology without implying that a referral predetermines its recommendation.",
+          "response": "All labels are specific investigations without specialty destinations."
+        },
+        {
+          "category": "suggestions",
+          "index": 2,
+          "note": "Replace the unsupported cinacalcet temptation with a clinically credible competing management plan, or supply the verified patient-specific facts needed to make that pathway plausible but less appropriate.",
+          "response": "Removed the unverified medication foil; competitors represent premature localization and misreading a reference-range PTH."
+        },
+        {
+          "category": "suggestions",
+          "index": 3,
+          "note": "If retaining the narrow age-indication objective, acknowledge its foundational difficulty. For a harder separate version, use supported findings whose interpretation actually changes a management choice; do not manufacture a conflict by hiding operative risk or inventing a numerical criterion.",
+          "response": "Created a harder separate objective with supported inherited-pattern findings and an explicit concept version; no invented numerical criterion."
+        },
+        {
+          "category": "suggestions",
+          "index": 4,
+          "note": "Review both nodes together and verify that clinical referral proceeds without waiting for the game to display DXA results. Preserve the owner's resolved distinction during any difficulty repair.",
+          "response": "Reviewed both nodes and earlier feedback. The first-node skeletal discussion does not disclose the later inherited-calcium discriminator, and referral is already recorded."
+        }
+      ]
+    },
+    "selfCheck": {
+      "reviewer": "author; not independent or clinical sign-off",
+      "cueAttack": "Every option orders a named investigation. None uniquely repeats a family or genotype label from the case, and the gene name is not supplied in the stem. The key requires integrating urine, longitudinal and family data rather than selecting a noncommittal recommendation.",
+      "stageCategory": "Three specific investigations at the next etiologic/operative-workup decision; no option is generic caution or specialty destination.",
+      "reasoningSteps": [
+        "Integrate the calcium/PTH, complete low-ratio collection and longstanding familial pattern as evidence of an inherited mimic rather than established PHPT.",
+        "Choose genetic clarification before localization; do not use young age or normal DXA to settle the diagnosis."
+      ],
+      "closestCredibleError": "Order sestamibi localization because a young patient with calcium/PTH findings has already been assumed to have an operative PHPT indication.",
+      "decidingFinding": "Low clearance ratio under interpretable collection conditions plus a longstanding similar maternal pattern; the biochemical pattern alone has not established PHPT.",
+      "counterfactual": "If the inherited-pattern evidence were absent and PHPT established, localization planning could be appropriate. With an uninterpretable collection or renal/vitamin-D confounder, the ratio would need reassessment rather than being treated as genetic confirmation.",
+      "difficulty": "predicted moderate application for PGY-2/3; independent difficulty review required",
+      "oneBestAnswer": "The family/longitudinal pattern and low clearance ratio raise an inherited calcium-sensing disorder as a mimic of PHPT. The ratio supports that suspicion but does not confirm it. Genetic and family evaluation should clarify the disease before operative localization is treated as the remaining step. Normal DXA does not decide this distinction, and age under 50 is an operative criterion only after the relevant diagnosis is established. A negative CASR result would not exclude every suspected FHH case.",
+      "deletionTest": "Deleting the urine/family record removes the genetic-before-localization discriminator. Normal skeletal findings maintain continuity and the owner's sequencing lesson; they are not claimed to make this new differential difficult.",
+      "clinicalAndSourceLimit": "Recorded PARAT consensus and Fifth Workshop claims directly support the inherited pattern, the exact ratio boundary, its limitations and genetic/family evaluation. Duplicate source IDs for the Fifth Workshop are one publication, not independent corroboration. The new case is a provisional calcium–PTH workup, not a statement that confirmed PHPT should wait for an abnormal DXA. No fresh source access, genetic-test sensitivity, malignancy algorithm or empiric drug regimen is asserted.",
+      "sourceUncertaintyIsNotDifficulty": true,
+      "manualReviewCompleted": true
+    },
+    "sourceVerificationHold": null,
+    "sourceHoldScope": null,
+    "acceptanceAllowed": false,
+    "supportingEvidenceClaimIds": [
+      "claim.fhh.lifelong-mild-hypercalcemia-relative-hypocalciuria",
+      "claim.fhh.paired-urine-serum-calcium-creatinine-evaluation",
+      "claim.fhh.low-cccr-supports-but-does-not-confirm",
+      "claim.fhh.genetic-and-family-confirmation",
+      "claim.primary-hyperparathyroidism.biochemical-pattern",
+      "claim.asymptomatic-phpt.age-under-50-surgery",
+      "claim.flags2r2.20261105.phpt-fhh-ratio-boundary",
+      "claim.flags2r2.20261105.phpt-inherited-before-localization",
+      "claim.flags2r2.20261105.phpt-diagnosis-before-age-criterion"
+    ],
+    "conceptVersion": {
+      "id": "concept.phpt.inherited-calcium-before-localization.v1",
+      "name": "Clarify inherited hypercalcemia before operative localization",
+      "objective": "Interpret calcium/PTH, relative hypocalciuria and family/longitudinal findings, then pursue genetic clarification instead of assuming that young age establishes PHPT or that localization can establish its diagnosis.",
+      "reason": "Changes age-rule recall into a diagnostic-sequencing application that changes the operative pathway. Preserve the original age-based indication card. The new header records a provisional biochemical workup/referral and the later family/urine record raises an inherited mimic; DXA remains baseline characterization, not eligibility permission.",
+      "previousConceptId": "concept.asymptomatic-phpt.age-based-surgery"
+    },
+    "lint": {
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [],
+      "after": [],
+      "beforeCount": 0,
+      "afterCount": 0,
+      "profileContexts": 5
+    },
+    "visibleHistory": {
+      "before": {
+        "chiefComplaint": "High calcium follow-up",
+        "presentation": "{patientName}, a 47-year-old woman, visits for confirmed primary hyperparathyroidism after repeat calcium and parathyroid-hormone testing. Creatinine is within laboratory reference limits; renal ultrasound shows no calculi, and there is no fragility-fracture history. The referral requests an operative opinion and a baseline skeletal assessment.",
+        "stem": "Which management recommendation should be made for {patientName}?",
+        "currentUpdate": "The completed spine, hip and distal-radius bone-density measurements are within the age-appropriate reference range. {patientName} has no hypercalcemic symptoms.",
+        "priorResults[0]": "Three-site DXA at the lumbar spine, hip, and distal one-third radius shows age-appropriate normal bone density.",
+        "priorFeedback[0]": "The recorded Fifth Workshop recommendation includes the lumbar spine, hip and distal one-third radius. This assesses skeletal involvement while the independent operative indication is considered. This is a named quantitative bone-density modality, but it does not supply the standard three-site DXA assessment represented by the guideline. This is a named skeletal study, but it does not provide the specified baseline bone-density assessment at the guideline sites.",
+        "priorTeachingPoint[0]": "The recorded Fifth Workshop recommendation includes the lumbar spine, hip and distal one-third radius. This assesses skeletal involvement while the independent operative indication is considered."
+      },
+      "after": {
+        "chiefComplaint": "Calcium workup review",
+        "presentation": "{patientName}, a 47-year-old woman, visits after repeat samples show calcium above the laboratory reference range and intact PTH within the reference range. An endocrine-surgery referral and baseline skeletal assessment were ordered at that visit. A prior DXA file contains the lumbar-spine acquisition. A right total hip replacement followed a high-energy injury; the left hip has native bone.",
+        "stem": "Which investigation should guide {patientName}'s parathyroid planning next?",
+        "currentUpdate": "The completed lumbar-spine, native-left-hip and one-third-radius density measurements are within age-appropriate reference ranges. A paired serum and complete 24-hour urine collection gives a calcium-to-creatinine clearance ratio below 0.01. Renal function and 25-hydroxyvitamin D are within reference ranges; there is no thiazide use. Earlier adult records show calcium in the same mildly elevated band, and the mother's records show a similar longstanding pattern.",
+        "priorResults[0]": "Three-site DXA at the lumbar spine, hip, and distal one-third radius shows age-appropriate normal bone density.",
+        "priorFeedback[0]": "The native left hip supplies the intended hip measurement, and the distal one-third radius supplies the recommended forearm site for the PHPT workup. This completes the requested site assessment alongside the already-placed referral. The radial site is appropriate, but the proposed hip region contains the arthroplasty. It does not supply the intended native-hip assessment in this constructed record. The hip is suitable, but the forearm region is not the guideline-specified distal one-third radius. Selecting a native hip does not make different radial acquisition regions interchangeable. This combines the prosthetic hip region with a different radial region. Both components must be checked rather than choosing a familiar hip/forearm label.",
+        "priorTeachingPoint[0]": "The native left hip supplies the intended hip measurement, and the distal one-third radius supplies the recommended forearm site for the PHPT workup. This completes the requested site assessment alongside the already-placed referral."
+      }
+    },
+    "encounterContinuity": {
+      "keyServiceBefore": null,
+      "keyServiceAfter": null,
+      "beforeGate": null,
+      "afterGate": null,
+      "earlierReferral": "Endocrine-surgery referral is recorded at the biochemical-workup visit, before this skeletal acquisition/result gate. The gate is retained for game result display, not operative eligibility or confirmation of PHPT."
+    },
+    "fallback": {
+      "variantId": "question.asymptomatic-phpt.age-based-surgery.v1",
+      "conceptId": "concept.asymptomatic-phpt.age-based-surgery",
+      "policy": "Keep the current manifest-selected live version until independent review, source-hold resolution and manager acceptance."
+    }
+  },
+  {
+    "id": "G05-staging",
+    "title": "Complete skeletal acquisition using the native hip and the appropriate radial region",
+    "round": 2,
+    "status": "draft_awaiting_independent_review",
+    "reviewStatus": "needs_clinician_review",
+    "pipelinePassed": false,
+    "releaseReady": false,
+    "keyOrderNotice": "key shown first for review only; runtime answer choices are randomized",
+    "reviewDisplayNote": "Jamie Taylor is a review placeholder. Before is the reviewed round-one draft, except G03 and G04-R which bind directly to the flagged live source. The original G04 remains live. Source holds and self-checks do not authorize acceptance.",
+    "sourceView": "flags2-round2",
+    "caseId": "case.asymptomatic-phpt.incidental-calcium",
+    "nodeId": "node.asymptomatic-phpt.incidental-calcium.1",
+    "conceptId": "concept.phpt.native-hip-and-radial-acquisition.v1",
+    "previousConceptId": "concept.asymptomatic-phpt.three-site-dxa",
+    "ownerNote": "If she already meets criteria for parathyroidectomy why does she need DXA? Why not operate?",
+    "before": {
+      "variantId": "question.asymptomatic-phpt.three-site-dxa.v1.r1",
+      "Presentation": "Jamie Taylor, a 47-year-old woman, visits for confirmed primary hyperparathyroidism after repeat calcium and parathyroid-hormone testing. Creatinine is within laboratory reference limits; renal ultrasound shows no calculi, and there is no fragility-fracture history. The referral requests an operative opinion and a baseline skeletal assessment.",
+      "Current update": null,
+      "Exhibit": null,
+      "Task": "Which baseline skeletal study should be arranged alongside Jamie Taylor's operative consultation?",
+      "Options": [
+        "**KEY:** Dual-energy X-ray absorptiometry at spine, hip and distal forearm",
+        "Quantitative CT of the lumbar spine and hip",
+        "Radionuclide bone scintigraphy of the axial skeleton"
+      ]
+    },
+    "after": {
+      "variantId": "question.asymptomatic-phpt.three-site-dxa.v1.r2",
+      "Presentation": "Jamie Taylor, a 47-year-old woman, visits after repeat samples show calcium above the laboratory reference range and intact PTH within the reference range. An endocrine-surgery referral and baseline skeletal assessment were ordered at that visit. A prior DXA file contains the lumbar-spine acquisition. A right total hip replacement followed a high-energy injury; the left hip has native bone.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "table",
+        "caption": "Existing skeletal acquisition record",
+        "columnHeaders": [
+          "Record",
+          "Observation"
+        ],
+        "rowHeaders": [
+          "Lumbar DXA series",
+          "Pelvic radiograph"
+        ],
+        "cells": [
+          [
+            "L1–L4 acquired",
+            "Within the age-appropriate reference range"
+          ],
+          [
+            "Right femoral and acetabular prosthetic components; native left proximal femur",
+            "No left hip implant"
+          ]
+        ]
+      },
+      "Task": "Which additional DXA acquisition should be requested for Jamie Taylor's skeletal assessment?",
+      "Options": [
+        "**KEY:** Left hip and distal one-third radius",
+        "Right hip and distal one-third radius",
+        "Left hip and ultradistal radius",
+        "Right hip and ultradistal radius"
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Dual-energy X-ray absorptiometry at spine, hip and distal forearm",
+          "The recorded Fifth Workshop recommendation includes the lumbar spine, hip and distal one-third radius. This assesses skeletal involvement while the independent operative indication is considered."
+        ],
+        [
+          "Quantitative CT of the lumbar spine and hip",
+          "This is a named quantitative bone-density modality, but it does not supply the standard three-site DXA assessment represented by the guideline."
+        ],
+        [
+          "Radionuclide bone scintigraphy of the axial skeleton",
+          "This is a named skeletal study, but it does not provide the specified baseline bone-density assessment at the guideline sites."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Left hip and distal one-third radius",
+          "The native left hip supplies the intended hip measurement, and the distal one-third radius supplies the recommended forearm site for the PHPT workup. This completes the requested site assessment alongside the already-placed referral."
+        ],
+        [
+          "Right hip and distal one-third radius",
+          "The radial site is appropriate, but the proposed hip region contains the arthroplasty. It does not supply the intended native-hip assessment in this constructed record."
+        ],
+        [
+          "Left hip and ultradistal radius",
+          "The hip is suitable, but the forearm region is not the guideline-specified distal one-third radius. Selecting a native hip does not make different radial acquisition regions interchangeable."
+        ],
+        [
+          "Right hip and ultradistal radius",
+          "This combines the prosthetic hip region with a different radial region. Both components must be checked rather than choosing a familiar hip/forearm label."
+        ]
+      ]
+    },
+    "inference": "Identify which proposed hip acquisition corresponds to native bone. Then: Apply the PHPT forearm-site requirement to distinguish the two radial regions.",
+    "focus": "Right hip prosthetic components, native left proximal femur, a completed lumbar series, and the distinct radial regions offered.",
+    "whatChanged": "Removed the foundational label and weak alternative modalities. Added an actual lumbar acquisition/hardware record and four parallel two-site DXA orders. Used the precise one-third-radius region and recorded the changed acquisition objective. The referral predates this result gate.",
+    "reviewResponse": {
+      "reviewPath": "docs/research/question-flags2-review-20261105.json",
+      "reviewId": "G05-staging",
+      "priorVerdict": "REVISE",
+      "notes": [
+        {
+          "category": "cues",
+          "index": 1,
+          "note": {
+            "phrase": "Dual-energy X-ray absorptiometry at spine, hip and distal forearm",
+            "why": "The key is the only three-site plan and the only one including a peripheral site; compared with two-site CT and axial scintigraphy it invites 'choose the most comprehensive assessment'. Its somewhat longer wording is a weak completeness cue, not a sufficient standalone answer proof."
+          },
+          "response": "Every option now has the same two-site extent; no uniquely comprehensive key or peripheral-only outlier."
+        },
+        {
+          "category": "fairness",
+          "index": 1,
+          "note": "One-best-answer: three-site DXA is the intended standard baseline choice and the strongest of these modalities. The item is not unfair merely because other skeletal imaging exists; no patient-specific DXA limitation or alternative indication is provided.",
+          "response": "Retains the standard PHPT-workup sites but now asks how to complete a patient-specific acquisition, rather than choosing a modality."
+        },
+        {
+          "category": "fairness",
+          "index": 2,
+          "note": "Precision: 'distal forearm' is less exact than the distal one-third radius site recorded in the handoff/standard context. This is a specificity repair for an order-selection task, not a claim that every distal-forearm measurement is interchangeable.",
+          "response": "Uses the precise distal one-third radius, distinct from the ultradistal region in the competing orders."
+        },
+        {
+          "category": "fairness",
+          "index": 3,
+          "note": "Difficulty: the task already supplies both the baseline skeletal purpose and concurrency with operative consultation. The learner selects a familiar modality; there is no independent inference about whether surgery should proceed. Too easy for routine PGY-2/3 challenge, even though the handoff honestly labels it foundational.",
+          "response": "Two components must be interpreted: hardware/native side and radial acquisition region."
+        },
+        {
+          "category": "fairness",
+          "index": 4,
+          "note": "Importance/realism: baseline skeletal characterization in primary hyperparathyroidism is useful surgical preparation. Its practical relevance exceeds its challenge. The two alternative modalities are specific but weak substitutes for routine bone-density assessment in this patient.",
+          "response": "Keeps a useful baseline task with realistic acquisition questions; no invented bone-density cutoff."
+        },
+        {
+          "category": "fairness",
+          "index": 5,
+          "note": "Owner flag: the linked sequencing concern is resolved in the displayed words 'alongside Jamie Taylor's operative consultation'. This is not proof of runtime sequencing or of independent acceptance as a basic exception.",
+          "response": "The header records referral at the biochemical-workup visit before this DXA result, so neither task confers permission to refer."
+        },
+        {
+          "category": "fairness",
+          "index": 6,
+          "note": "Basic-purpose disposition: do not accept this as a hard item or silently grant a basic exception. A useful necessary staging action need not be a separately scored recall question; manager acceptance is still needed if retaining it as deliberate foundational content.",
+          "response": "Removed the basic-intent label; this is a newly versioned acquisition application, not an unapproved basic exception."
+        },
+        {
+          "category": "fairness",
+          "index": 7,
+          "note": "Pair-level limitation: G05 and G05-staging are assessed only from their after fields; this report makes no claim about unseen prior feedback, finite profiles, wait previews or actual service gating.",
+          "response": "The packet includes both nodes, earlier feedback, exact gates and timing. The pair-level sequence limitation is stated and tested."
+        },
+        {
+          "category": "suggestions",
+          "index": 1,
+          "note": "Use the precise supported skeletal sites in the order wording, including the distal one-third radius, without adding unsourced thresholds.",
+          "response": "Used distal one-third radius in all relevant orders and mapped the exact source claim."
+        },
+        {
+          "category": "suggestions",
+          "index": 2,
+          "note": "Prefer making routine baseline assessment unscored encounter context if the resident learning objective is the subsequent management decision; alternatively obtain explicit approval for this foundational role.",
+          "response": "Chose the permitted alternative of a harder scored acquisition task rather than silently making the existing gate unscored."
+        },
+        {
+          "category": "suggestions",
+          "index": 3,
+          "note": "If a scored harder skeletal-assessment version is desired, show an actual prior acquisition/site record and compare concrete orders that differ on a consequential adequacy issue. Version any changed objective and do not tell the learner which site was omitted.",
+          "response": "Provided an actual prior acquisition/hardware record; all new concrete orders differ in clinically consequential regions."
+        },
+        {
+          "category": "suggestions",
+          "index": 4,
+          "note": "Keep the concurrent operative consultation explicit wherever needed to prevent reintroducing the owner's sequencing complaint.",
+          "response": "Recorded that the operative referral was already placed; skeletal characterization is not an eligibility prerequisite."
+        }
+      ]
+    },
+    "selfCheck": {
+      "reviewer": "author; not independent or clinical sign-off",
+      "cueAttack": "Every plan is equally comprehensive and newly proposed. The stem supplies neither a missing named radial site nor a preferred hip interpretation. The balanced component matrix cannot assemble the key by convergence.",
+      "stageCategory": "A complete two-by-two matrix of additional hip/radius DXA regions; every option has two sites and each component appears twice.",
+      "reasoningSteps": [
+        "Identify which proposed hip acquisition corresponds to native bone.",
+        "Apply the PHPT forearm-site requirement to distinguish the two radial regions."
+      ],
+      "closestCredibleError": "Choose the native left hip but accept an ultradistal radial series as equivalent to the specified one-third-radius acquisition.",
+      "decidingFinding": "Right hip prosthetic components, native left proximal femur, a completed lumbar series, and the distinct radial regions offered.",
+      "counterfactual": "A left rather than right arthroplasty would reverse the hip component. A different disease-specific acquisition purpose could alter the radial comparison; it is not interchangeable merely because both are forearm DXA.",
+      "difficulty": "predicted moderate application for PGY-2/3; independent difficulty review required",
+      "oneBestAnswer": "The native left hip supplies the intended hip measurement, and the distal one-third radius supplies the recommended forearm site for the PHPT workup. This completes the requested site assessment alongside the already-placed referral.",
+      "deletionTest": "The hardware record determines the hip component; the PHPT context determines the radial component. All four plans are new acquisitions, not repeat-test foils.",
+      "clinicalAndSourceLimit": "Key hold: align the native-versus-prosthetic hip DXA selection and exact radial-region comparison with permitted densitometry guidance before acceptance. The recorded Fifth Workshop claim directly supports the three sites, but does not independently verify every hardware/ROI detail. The operative referral was already ordered, not conditional on DXA. This orders the regions of an already-requested baseline study during a provisional PHPT workup; it does not mandate DXA for confirmed FHH.",
+      "sourceUncertaintyIsNotDifficulty": true,
+      "manualReviewCompleted": true
+    },
+    "sourceVerificationHold": "Key hold: align the native-versus-prosthetic hip DXA selection and exact radial-region comparison with permitted densitometry guidance before acceptance. The recorded Fifth Workshop claim directly supports the three sites, but does not independently verify every hardware/ROI detail. The operative referral was already ordered, not conditional on DXA. This orders the regions of an already-requested baseline study during a provisional PHPT workup; it does not mandate DXA for confirmed FHH.",
+    "sourceHoldScope": "key",
+    "acceptanceAllowed": false,
+    "supportingEvidenceClaimIds": [
+      "claim.asymptomatic-phpt.three-site-dxa",
+      "claim.asymptomatic-phpt.age-under-50-surgery",
+      "claim.flags2r2.20261105.phpt-native-hip-acquisition",
+      "claim.flags2r2.20261105.phpt-radial-region",
+      "claim.flags2r2.20261105.phpt-parallel-referral"
+    ],
+    "conceptVersion": {
+      "id": "concept.phpt.native-hip-and-radial-acquisition.v1",
+      "name": "Select valid hip and radial DXA acquisition regions in PHPT",
+      "objective": "Interpret the acquired lumbar series and hip hardware record, then combine a valid native-hip site with the PHPT forearm region.",
+      "reason": "Replaces routine modality recall with acquisition adequacy in a patient-specific hardware context. Preserve the old three-site-baseline card and keep operative consultation independent of the game result gate.",
+      "previousConceptId": "concept.asymptomatic-phpt.three-site-dxa"
+    },
+    "lint": {
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [],
+      "after": [],
+      "beforeCount": 0,
+      "afterCount": 0,
+      "profileContexts": 5
+    },
+    "visibleHistory": {
+      "before": {
+        "chiefComplaint": "High calcium follow-up",
+        "presentation": "{patientName}, a 47-year-old woman, visits for confirmed primary hyperparathyroidism after repeat calcium and parathyroid-hormone testing. Creatinine is within laboratory reference limits; renal ultrasound shows no calculi, and there is no fragility-fracture history. The referral requests an operative opinion and a baseline skeletal assessment.",
+        "stem": "Which baseline skeletal study should be arranged alongside {patientName}'s operative consultation?"
+      },
+      "after": {
+        "chiefComplaint": "Calcium workup review",
+        "presentation": "{patientName}, a 47-year-old woman, visits after repeat samples show calcium above the laboratory reference range and intact PTH within the reference range. An endocrine-surgery referral and baseline skeletal assessment were ordered at that visit. A prior DXA file contains the lumbar-spine acquisition. A right total hip replacement followed a high-energy injury; the left hip has native bone.",
+        "stem": "Which additional DXA acquisition should be requested for {patientName}'s skeletal assessment?",
+        "exhibit.caption": "Existing skeletal acquisition record",
+        "exhibit.columnHeaders[0]": "Record",
+        "exhibit.columnHeaders[1]": "Observation",
+        "exhibit.rowHeaders[0]": "Lumbar DXA series",
+        "exhibit.rowHeaders[1]": "Pelvic radiograph",
+        "exhibit.cells[0][0]": "L1–L4 acquired",
+        "exhibit.cells[0][1]": "Within the age-appropriate reference range",
+        "exhibit.cells[1][0]": "Right femoral and acetabular prosthetic components; native left proximal femur",
+        "exhibit.cells[1][1]": "No left hip implant"
+      }
+    },
+    "encounterContinuity": {
+      "keyServiceBefore": "service.dxa",
+      "keyServiceAfter": "service.dxa",
+      "beforeGate": {
+        "id": "gate.asymptomatic-phpt.dxa.1",
+        "resultTypeId": "service.dxa",
+        "pendingLabel": "External DXA assessment pending",
+        "resultNarrative": "Three-site DXA at the lumbar spine, hip, and distal one-third radius shows age-appropriate normal bone density.",
+        "readiness": "all",
+        "allowedServiceRouteIds": [
+          "route.dxa.outsourced"
+        ]
+      },
+      "afterGate": {
+        "id": "gate.asymptomatic-phpt.dxa.1",
+        "resultTypeId": "service.dxa",
+        "pendingLabel": "External DXA assessment pending",
+        "resultNarrative": "Three-site DXA at the lumbar spine, hip, and distal one-third radius shows age-appropriate normal bone density.",
+        "readiness": "all",
+        "allowedServiceRouteIds": [
+          "route.dxa.outsourced"
+        ]
+      },
+      "earlierReferral": "Endocrine-surgery referral is recorded at the biochemical-workup visit, before this skeletal acquisition/result gate. The gate is retained for game result display, not operative eligibility or confirmation of PHPT."
+    },
+    "fallback": {
+      "variantId": "question.asymptomatic-phpt.three-site-dxa.v1",
+      "conceptId": "concept.asymptomatic-phpt.three-site-dxa",
+      "policy": "Keep the current manifest-selected live version until independent review, source-hold resolution and manager acceptance."
+    }
+  },
+  {
+    "id": "G06",
+    "title": "Use the testing population at collection, not the later referral setting",
+    "round": 2,
+    "status": "manager_accepted_exact_round1_pass",
+    "reviewStatus": "needs_clinician_review",
+    "pipelinePassed": true,
+    "releaseReady": false,
+    "keyOrderNotice": "key shown first for review only; runtime answer choices are randomized",
+    "reviewDisplayNote": "Before is the exact flagged live version at intake. Jamie Taylor is a review placeholder; new canonical/finite profiles retain their bound ages and sexes. A source hold or author self-check does not authorize release.",
+    "sourceView": "flags2-round1",
+    "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-lower-prevalence",
+    "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-lower-prevalence.1",
+    "conceptId": "concept.predictive-value.collection-population-denominator.v1",
+    "previousConceptId": "concept.statistics-ethics.predictive-value-prevalence",
+    "ownerNote": "Dont have this be so hypothetical",
+    "before": {
+      "variantId": "question.statistics-ethics.predictive-value-prevalence.v2.r1",
+      "Presentation": "Jamie Taylor, a 67-year-old man, visits after pancreatic-tail cancer surgery to discuss a nasal MRSA PCR result. The specimen was collected in the pre-admission clinic; its positive result was discussed during postoperative ICU care. The audit below used the same assay and independent reference culture for every participant in both cohorts.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "table",
+        "caption": "Constructed local audit for this clinical numeracy exercise; counts are not published assay performance or prevalence estimates.",
+        "columnHeaders": [
+          "PCR positive / culture positive",
+          "PCR positive / culture negative",
+          "PCR negative / culture positive",
+          "PCR negative / culture negative"
+        ],
+        "rowHeaders": [
+          "Pre-admission clinic specimens",
+          "ICU specimens"
+        ],
+        "cells": [
+          [
+            "45",
+            "19",
+            "5",
+            "931"
+          ],
+          [
+            "180",
+            "16",
+            "20",
+            "784"
+          ]
+        ]
+      },
+      "Task": "Using this audit, what approximate positive predictive value should be used for Jamie Taylor's reported PCR result?",
+      "Options": [
+        "**KEY:** About 70%",
+        "About 92%",
+        "About 90%",
+        "About 5%"
+      ]
+    },
+    "after": {
+      "variantId": "question.statistics-ethics.predictive-value-prevalence.v2.r1",
+      "Presentation": "Jamie Taylor, a 67-year-old man, visits after pancreatic-tail cancer surgery to discuss a nasal MRSA PCR result. The specimen was collected in the pre-admission clinic; its positive result was discussed during postoperative ICU care. The audit below used the same assay and independent reference culture for every participant in both cohorts.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "table",
+        "caption": "Constructed local audit for this clinical numeracy exercise; counts are not published assay performance or prevalence estimates.",
+        "columnHeaders": [
+          "PCR positive / culture positive",
+          "PCR positive / culture negative",
+          "PCR negative / culture positive",
+          "PCR negative / culture negative"
+        ],
+        "rowHeaders": [
+          "Pre-admission clinic specimens",
+          "ICU specimens"
+        ],
+        "cells": [
+          [
+            "45",
+            "19",
+            "5",
+            "931"
+          ],
+          [
+            "180",
+            "16",
+            "20",
+            "784"
+          ]
+        ]
+      },
+      "Task": "Using this audit, what approximate positive predictive value should be used for Jamie Taylor's reported PCR result?",
+      "Options": [
+        "**KEY:** About 70%",
+        "About 92%",
+        "About 90%",
+        "About 5%"
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** About 70%",
+          "The specimen belongs to the pre-admission cohort, regardless of the later ICU care. Among that cohort's positive tests, 45 of 64 agree with the reference culture: 45/(45+19), about 70%."
+        ],
+        [
+          "About 92%",
+          "This is 180/(180+16), the positive predictive value of the ICU cohort. Applying it to a specimen collected in pre-admission screening imports the wrong tested population."
+        ],
+        [
+          "About 90%",
+          "This is sensitivity, 45/(45+5), not the proportion of positive screens that represent reference-confirmed carriage. Both cohorts have that same sensitivity."
+        ],
+        [
+          "About 5%",
+          "This is the pre-admission cohort's reference-positive fraction, (45+5)/1000. It is the pretest prevalence in the constructed audit, not the result-conditioned fraction."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** About 70%",
+          "The specimen belongs to the pre-admission cohort, regardless of the later ICU care. Among that cohort's positive tests, 45 of 64 agree with the reference culture: 45/(45+19), about 70%."
+        ],
+        [
+          "About 92%",
+          "This is 180/(180+16), the positive predictive value of the ICU cohort. Applying it to a specimen collected in pre-admission screening imports the wrong tested population."
+        ],
+        [
+          "About 90%",
+          "This is sensitivity, 45/(45+5), not the proportion of positive screens that represent reference-confirmed carriage. Both cohorts have that same sensitivity."
+        ],
+        [
+          "About 5%",
+          "This is the pre-admission cohort's reference-positive fraction, (45+5)/1000. It is the pretest prevalence in the constructed audit, not the result-conditioned fraction."
+        ]
+      ]
+    },
+    "inference": "Identify the testing population at specimen collection rather than the later care setting. Then: Compute reference-positive cases among all positive screens for that cohort.",
+    "focus": "The specimen was collected in the pre-admission clinic; the positive-result row has 45 reference-positive and 19 reference-negative patients.",
+    "whatChanged": "No content changed. Exact independent G06 PASS accepted by the manager; preserves collection chronology, constructed audit, numeric options and feedback. Editorial acceptance is not Melissa Rowland clinical sign-off.",
+    "reviewResponse": {
+      "reviewPath": "docs/research/question-flags2-review-20261105.json",
+      "reviewId": "G06",
+      "priorVerdict": "PASS",
+      "notes": [
+        {
+          "category": "fairness",
+          "index": 1,
+          "note": "Cue attack: no exploitable wording, length, grammar, convergence or category outlier found. All four numeric options are parallel. The specimen-collection setting legitimately identifies the relevant cohort; it does not disclose the numeric key. The constructed-data caption disclaims empirical assay performance without teaching the calculation.",
+          "response": "Preserved the independently passed exact version. Its constructed arithmetic, original-specimen scope and source limitations are unchanged; no infection-treatment or performance claim added."
+        },
+        {
+          "category": "fairness",
+          "index": 2,
+          "note": "One-best-answer: pre-admission PPV is 45/(45+19) = 70.3125%, so about 70% is uniquely correct for the specified audit. About 92% comes from the ICU row, 180/(180+16); about 90% is sensitivity, 45/(45+5); about 5% is pre-admission reference-positive prevalence, (45+5)/1000. These are coherent competing denominator/cohort errors.",
+          "response": "Preserved the independently passed exact version. Its constructed arithmetic, original-specimen scope and source limitations are unchanged; no infection-treatment or performance claim added."
+        },
+        {
+          "category": "fairness",
+          "index": 3,
+          "note": "Difficulty: moderate, with two consequential steps—select the population at specimen collection rather than the later discussion setting, then condition on positive PCR results. A resident fluent in two-by-two tables may find it easy; the prediction is not measured difficulty. The exhibit is necessary.",
+          "response": "Preserved the independently passed exact version. Its constructed arithmetic, original-specimen scope and source limitations are unchanged; no infection-treatment or performance claim added."
+        },
+        {
+          "category": "fairness",
+          "index": 4,
+          "note": "Fairness boundary: this is an audit-based predictive-value exercise for the original nasal specimen. It does not estimate this patient's current postoperative colonization status, diagnose invasive MRSA infection or establish real-world assay performance. The task's 'Using this audit' qualifier and explicit constructed-data caption make the intended scope sufficiently clear.",
+          "response": "Preserved the independently passed exact version. Its constructed arithmetic, original-specimen scope and source limitations are unchanged; no infection-treatment or performance claim added."
+        },
+        {
+          "category": "fairness",
+          "index": 5,
+          "note": "Importance: diagnostic-test numeracy and selecting the appropriate reference population are useful to general-surgery residents and plausibly relevant examination skills. The specific MRSA percentage is not a fact to memorize and no management policy can be inferred from it.",
+          "response": "Preserved the independently passed exact version. Its constructed arithmetic, original-specimen scope and source limitations are unchanged; no infection-treatment or performance claim added."
+        },
+        {
+          "category": "fairness",
+          "index": 6,
+          "note": "Realism: a pre-admission result discussed later is plausible, although a post-cancer-surgery clinic visit centered on a screening PPV is somewhat contrived and the pancreatic-tail cancer detail is unnecessary to the calculation. This minor context issue does not compromise the key or require a new version to pass.",
+          "response": "Preserved the independently passed exact version. Its constructed arithmetic, original-specimen scope and source limitations are unchanged; no infection-treatment or performance claim added."
+        },
+        {
+          "category": "fairness",
+          "index": 7,
+          "note": "Owner flag: fully resolved for the exact re-queued v2's 'too hypothetical' concern at the item level. There is now a named patient's actual reported positive result, a specified collection time and a usable constructed audit. Fictional teaching data are transparently labelled. This does not resolve or accept the separately queued v3 sibling.",
+          "response": "Preserved the independently passed exact version. Its constructed arithmetic, original-specimen scope and source limitations are unchanged; no infection-treatment or performance claim added."
+        },
+        {
+          "category": "fairness",
+          "index": 8,
+          "note": "PASS is an editorial judgment of these exact after fields, not clinical sign-off, source re-verification, runtime approval or permission to promote a draft.",
+          "response": "Preserved the independently passed exact version. Its constructed arithmetic, original-specimen scope and source limitations are unchanged; no infection-treatment or performance claim added."
+        },
+        {
+          "category": "suggestions",
+          "index": 1,
+          "note": "Retain the two cohorts, collection/discussion chronology, numeric distractors and constructed-data label; they do substantive assessment work.",
+          "response": "Preserved the independently passed exact version. Its constructed arithmetic, original-specimen scope and source limitations are unchanged; no infection-treatment or performance claim added."
+        },
+        {
+          "category": "suggestions",
+          "index": 2,
+          "note": "Optional future polish: shorten the unrelated cancer/procedure detail, and phrase the target as the audit PPV for the original pre-admission specimen if user testing suggests learners interpret it as current infection risk.",
+          "response": "Preserved the independently passed exact version. Its constructed arithmetic, original-specimen scope and source limitations are unchanged; no infection-treatment or performance claim added."
+        },
+        {
+          "category": "suggestions",
+          "index": 3,
+          "note": "Do not add decolonization, prophylaxis or treatment claims to feedback without separately supported clinical review.",
+          "response": "Preserved the independently passed exact version. Its constructed arithmetic, original-specimen scope and source limitations are unchanged; no infection-treatment or performance claim added."
+        }
+      ]
+    },
+    "selfCheck": {
+      "reviewer": "author; not independent review or clinical sign-off",
+      "cueAttack": "Covered the key and removed action-rationale labels from the task. Tested the complete presentation, current observations, exhibit and earlier feedback; no key-only label/phrase or unique permission sentence remains. Actual knowledge of the deciding observation is required. Zero lexical findings does not establish difficulty or clinical validity.",
+      "stageCategory": "Four numerical estimates of the same conditional proportion.",
+      "reasoningSteps": [
+        "Identify the testing population at specimen collection rather than the later care setting.",
+        "Compute reference-positive cases among all positive screens for that cohort."
+      ],
+      "closestCredibleError": "Use the ICU predictive value because that is where the positive result was discussed, or use sensitivity as the probability after a positive result.",
+      "decidingFinding": "The specimen was collected in the pre-admission clinic; the positive-result row has 45 reference-positive and 19 reference-negative patients.",
+      "counterfactual": "A specimen collected in the ICU cohort would instead use 180/(180+16); a different denominator changes the answer despite identical constructed sensitivity/specificity.",
+      "difficulty": "predicted moderate application for independent PGY-2/3 review; no measured-difficulty claim",
+      "oneBestAnswer": "The specimen belongs to the pre-admission cohort, regardless of the later ICU care. Among that cohort's positive tests, 45 of 64 agree with the reference culture: 45/(45+19), about 70%.",
+      "deletionTest": "Collection chronology and reference-classification counts determine the cohort/denominator; pancreatic surgery maintains the original patient context, not a diagnostic hint.",
+      "remainingReview": "Only statistical definitions and arithmetic are taught. No empirical MRSA performance estimate, universal screening policy, infection diagnosis, decolonization regimen or individualized probability is asserted. Recorded CDC/FDA metadata reused offline; underlying reference dates retained.",
+      "sourceVerificationHold": null
+    },
+    "basicRecallIntentional": false,
+    "basicAccepted": false,
+    "sourceVerificationHold": null,
+    "supportingEvidenceClaimIds": [
+      "claim.gs028se.statistics.predictive-value-prevalence",
+      "claim.gs028se.statistics.sensitivity-specificity",
+      "claim.pancreatic-adenocarcinoma.body-tail-distal-pancreatectomy",
+      "claim.flags2.20261105.g06.application",
+      "claim.flags2.20261105.ppv-pre-admission",
+      "claim.flags2.20261105.ppv-intensive-care",
+      "claim.flags2.20261105.ppv-fixed-sensitivity",
+      "claim.flags2.20261105.ppv-fixed-specificity",
+      "claim.flags2.20261105.ppv-cohort-prevalence"
+    ],
+    "conceptVersion": {
+      "id": "concept.predictive-value.collection-population-denominator.v1",
+      "name": "Match a positive result to its collection population and denominator",
+      "objective": "Identify the relevant tested cohort from collection chronology, then calculate positive predictive value rather than sensitivity or pretest prevalence.",
+      "reason": "The old task asked only the direction of change under a supplied lower-prevalence label. This scores cohort selection and positive-result denominator calculation; retain the original direction-of-change concept."
+    },
+    "lint": {
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [],
+      "after": [],
+      "beforeCount": 0,
+      "afterCount": 0,
+      "profileContexts": 5
+    },
+    "visibleHistory": {
+      "before": {
+        "chiefComplaint": "Positive-test question",
+        "presentation": "{patientName}, a 67-year-old man, has resectable pancreatic tail cancer and is discussing operative planning. A recruiter describes a new screening blood test using hypothetical testing populations. Its brochure advertises 'Precision You Can Hug.' The patient asks whether a positive result means the same thing when fewer people being tested have cancer. The study supplies no prognosis or treatment recommendation.",
+        "stem": "How does the new investigational breast-cancer blood test's positive predictive value change between the hypothetical populations when sensitivity and specificity remain fixed as stated?",
+        "exhibit.caption": "Unnamed investigational pancreatic-cancer blood test: invented testing-population assumptions for practice. These comparisons supply no real test performance or personal disease probability.",
+        "exhibit.items[0].label": "Sensitivity",
+        "exhibit.items[0].value": "Same in the two hypothetical populations",
+        "exhibit.items[1].label": "Specificity",
+        "exhibit.items[1].value": "Same in the two hypothetical populations",
+        "exhibit.items[2].label": "Prevalence",
+        "exhibit.items[2].value": "Lower in population B than in population A"
+      },
+      "after": {
+        "chiefComplaint": "Preoperative result discussion",
+        "presentation": "{patientName}, a 67-year-old man, visits after pancreatic-tail cancer surgery to discuss a nasal MRSA PCR result. The specimen was collected in the pre-admission clinic; its positive result was discussed during postoperative ICU care. The audit below used the same assay and independent reference culture for every participant in both cohorts.",
+        "stem": "Using this audit, what approximate positive predictive value should be used for {patientName}'s reported PCR result?",
+        "exhibit.caption": "Constructed local audit for this clinical numeracy exercise; counts are not published assay performance or prevalence estimates.",
+        "exhibit.columnHeaders[0]": "PCR positive / culture positive",
+        "exhibit.columnHeaders[1]": "PCR positive / culture negative",
+        "exhibit.columnHeaders[2]": "PCR negative / culture positive",
+        "exhibit.columnHeaders[3]": "PCR negative / culture negative",
+        "exhibit.rowHeaders[0]": "Pre-admission clinic specimens",
+        "exhibit.rowHeaders[1]": "ICU specimens",
+        "exhibit.cells[0][0]": "45",
+        "exhibit.cells[0][1]": "19",
+        "exhibit.cells[0][2]": "5",
+        "exhibit.cells[0][3]": "931",
+        "exhibit.cells[1][0]": "180",
+        "exhibit.cells[1][1]": "16",
+        "exhibit.cells[1][2]": "20",
+        "exhibit.cells[1][3]": "784"
+      }
+    },
+    "encounterContinuity": {
+      "keyServiceBefore": null,
+      "keyServiceAfter": null,
+      "beforeGate": null,
+      "afterGate": null
+    },
+    "fallback": {
+      "variantId": "question.statistics-ethics.predictive-value-prevalence.v2",
+      "conceptId": "concept.statistics-ethics.predictive-value-prevalence",
+      "policy": "Keep the manifest-selected live tuple until independent review and manager acceptance; original cases, exact timing/order identities and FSRS concepts remain retained."
+    },
+    "sourceHoldScope": null,
+    "acceptanceAllowed": true,
+    "decisionPath": "docs/research/question-flags2-manager-decision-20261105.md"
+  },
+  {
+    "id": "G07",
+    "title": "Choose representative node tissue and specimen handling after a limited aspirate",
+    "round": 2,
+    "status": "draft_awaiting_independent_review",
+    "reviewStatus": "needs_clinician_review",
+    "pipelinePassed": false,
+    "releaseReady": false,
+    "keyOrderNotice": "key shown first for review only; runtime answer choices are randomized",
+    "reviewDisplayNote": "Jamie Taylor is a review placeholder. Before is the reviewed round-one draft, except G03 and G04-R which bind directly to the flagged live source. The original G04 remains live. Source holds and self-checks do not authorize acceptance.",
+    "sourceView": "flags2-round2",
+    "caseId": "case.gs028b.ptld.b-pathology-returned",
+    "nodeId": "node.gs028b.ptld.b-pathology-returned.1",
+    "conceptId": "concept.ptld.node-specimen-and-ancillary-handling.v1",
+    "previousConceptId": "concept.ptld.neck-node-target-and-tissue-adequacy.v1",
+    "ownerNote": "Needs to be more specific answer choices",
+    "before": {
+      "variantId": "question.ptld.tissue-diagnosis-coordination.v4.r1",
+      "Presentation": "Jamie Taylor, a 43-year-old woman with a liver transplant, visits with an enlarging left supraclavicular lymph node. Plasma testing detects EBV DNA. An outside needle aspirate contains scattered disrupted lymphoid cells and blood; its cell block has no intact tissue fragments.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "keyValue",
+        "caption": "Neck ultrasound observations",
+        "items": [
+          {
+            "label": "Peripheral portion of the node",
+            "value": "Solid tissue with internal Doppler flow"
+          },
+          {
+            "label": "Central portion of the node",
+            "value": "Fluid-like material and debris; no internal Doppler flow"
+          }
+        ]
+      },
+      "Task": "Which image-guided sampling request should be made next for Jamie Taylor's neck lymph node?",
+      "Options": [
+        "**KEY:** Core-needle biopsy with a peripheral solid-tissue target",
+        "Fine-needle aspiration with a peripheral solid-tissue target",
+        "Core-needle biopsy with a central fluid-region target",
+        "Fine-needle aspiration with a central fluid-region target"
+      ]
+    },
+    "after": {
+      "variantId": "question.ptld.tissue-diagnosis-coordination.v4.r2",
+      "Presentation": "Jamie Taylor, a 43-year-old woman with a liver transplant, visits for an enlarging left supraclavicular lymph node. It is mobile beneath the skin; ultrasound places it superficial to the major neck vessels. Plasma EBV DNA is detected.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "table",
+        "caption": "Prior sampling and laboratory record",
+        "columnHeaders": [
+          "Record",
+          "Observation"
+        ],
+        "rowHeaders": [
+          "Prior sampled target",
+          "Cytology/cell block",
+          "Flow cytometry"
+        ],
+        "cells": [
+          [
+            "The same left supraclavicular node; needle tip recorded in its solid portion",
+            "Mixed lymphoid cells and scattered large B cells; EBV RNA detected in some large cells"
+          ],
+          [
+            "Cell block",
+            "Scattered cell groups; no intact nodal tissue pattern in the sections"
+          ],
+          [
+            "Aspirate submitted for flow analysis",
+            "Predominantly nonviable cells; no interpretable clonality result"
+          ]
+        ]
+      },
+      "Task": "Which specimen plan should be requested next for Jamie Taylor's neck lymph node?",
+      "Options": [
+        "**KEY:** Excisional biopsy with fresh/fixed allocation",
+        "Core biopsy with fresh/fixed allocation",
+        "Excisional biopsy with formalin fixation",
+        "Core biopsy with formalin fixation"
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Core-needle biopsy with a peripheral solid-tissue target",
+          "The prior aspirate does not supply tissue architecture for classification. Sampling the solid, perfused portion with a core addresses both tissue adequacy and target selection; plasma EBV DNA cannot classify PTLD."
+        ],
+        [
+          "Fine-needle aspiration with a peripheral solid-tissue target",
+          "This targets a more representative part of the node, but repeats cytology when the unresolved question requires tissue for classification after the limited aspirate. The distinction is not a claim that FNA is never useful."
+        ],
+        [
+          "Core-needle biopsy with a central fluid-region target",
+          "This obtains a core in name but targets the fluid/debris component rather than the solid tissue needed for representative classification."
+        ],
+        [
+          "Fine-needle aspiration with a central fluid-region target",
+          "This would emphasize fluid/cellular material from the central component, leaving both the tissue-architecture and solid-target questions unresolved."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Excisional biopsy with fresh/fixed allocation",
+          "The accessible intact node can supply representative tissue for classification, while planned fresh and fixed portions allow the unresolved ancillary and histologic questions to be addressed. EBV detection and the limited aspirate do not classify the process."
+        ],
+        [
+          "Core biopsy with fresh/fixed allocation",
+          "This is the closest credible alternative and can be appropriate when excision is unsuitable. It corrects handling but provides a smaller specimen; the represented accessible node and unresolved tissue pattern favor the intended excisional plan."
+        ],
+        [
+          "Excisional biopsy with formalin fixation",
+          "This obtains intact tissue, but a wholly fixed specimen would not preserve a fresh sample for the unresolved flow-cytometry question. Choosing an excisional label does not by itself resolve specimen handling."
+        ],
+        [
+          "Core biopsy with formalin fixation",
+          "This combines a more limited tissue sample with fixation of the complete specimen. Both adequacy and the unresolved ancillary-study pathway require attention rather than a biopsy label in isolation."
+        ]
+      ]
+    },
+    "inference": "Interpret what the same-target aspirate and uninterpretable flow study leave unresolved despite EBV detection. Then: Select a representative new specimen and handling plan rather than solving only the needle label or only the laboratory allocation.",
+    "focus": "The prior sample was from the same solid node, lacked an intact nodal tissue pattern and produced no interpretable flow result; the node is mobile and superficial to the major vessels.",
+    "whatChanged": "Removed the two fluid-region foils and narrow image-guided-only task. Specified the prior target and actual cytology/ancillary findings. Compared excision/core and fresh/fixed allocation at the same specimen-planning stage; recorded the closest core alternative and retained its key-level hold.",
+    "reviewResponse": {
+      "reviewPath": "docs/research/question-flags2-review-20261105.json",
+      "reviewId": "G07",
+      "priorVerdict": "REVISE",
+      "notes": [
+        {
+          "category": "cues",
+          "index": 1,
+          "note": {
+            "phrase": "its cell block has no intact tissue fragments",
+            "why": "This is legitimate specimen information, but combined with a previously unsuccessful aspirate and only two possible methods it encourages 'do the other technique to get tissue'. A reader can favor core over repeat aspiration without understanding the transplant differential or classification requirement. Do not simply remove the adequacy observation."
+          },
+          "response": "The prior sample is now explicitly from the same solid target, and both methods obtain tissue; repeating aspiration is not the sole wrong-technique foil."
+        },
+        {
+          "category": "cues",
+          "index": 2,
+          "note": {
+            "phrase": "Solid tissue with internal Doppler flow",
+            "why": "Contrasts with fluid/debris and maps to 'peripheral solid-tissue target' in two options. This does not uniquely cue the key by itself, but ordinary solid-versus-debris reasoning eliminates both central-target choices and combines with the repeat-aspirate shortcut."
+          },
+          "response": "Removed peripheral-solid wording matches and compared methods/processing at a single node."
+        },
+        {
+          "category": "cues",
+          "index": 3,
+          "note": {
+            "phrase": "Fluid-like material and debris; no internal Doppler flow",
+            "why": "Makes the two central-region options look like sampling nonrepresentative waste rather than viable tissue. This is necessary target information, but the target half of the matrix contributes little challenge when both distractors depend on ignoring it."
+          },
+          "response": "Removed all fluid/debris targets; every offered plan targets representative solid nodal tissue."
+        },
+        {
+          "category": "fairness",
+          "index": 1,
+          "note": "One-best-answer: peripheral core sampling is a plausible best choice for tissue classification among these options, but the after fields never explicitly establish the unresolved classification/ancillary question or why repeat targeted aspiration cannot meet it. The broad task is simply the next image-guided sampling request.",
+          "response": "Specified the unresolved tissue pattern and uninterpretable flow result; named exactly which specimen-planning questions remain."
+        },
+        {
+          "category": "fairness",
+          "index": 2,
+          "note": "Closest competitor: fine-needle aspiration of the peripheral solid portion changes the sampled target. The original aspirate's target and ancillary studies are unspecified. Its absence of intact tissue fragments does not by itself demonstrate that every repeat aspiration strategy would fail; an aspirate and a histologic core supply different information. This is a source/clinical-review uncertainty, not a claim that repeat FNA is equally good in every suspected PTLD case.",
+          "response": "Removed repeat FNA as the unqualified wrong answer. A properly allocated core is the explicit closest competitor, with its exact ranking held for review."
+        },
+        {
+          "category": "fairness",
+          "index": 3,
+          "note": "Scope/realism: transplant history, an enlarging supraclavicular node and limited sampling form a credible surgical referral. Excisional sampling is a potentially relevant broader pathway, but the task explicitly limits choices to image-guided sampling. That restriction makes the local comparison answerable in principle; the setting should explain the actual procedural decision rather than silently teach core as universally preferable to excision.",
+          "response": "Included excision openly. Mobile/superficial anatomy supplies the actual method context instead of restricting the task to needles."
+        },
+        {
+          "category": "fairness",
+          "index": 4,
+          "note": "Exhibit: the key-value list provides usable observations but is a prose ultrasound report, not an image to interpret. It should not be credited as testing image-reading skill. The supplied fields do not promise an absent picture.",
+          "response": "The exhibit is accurately labelled a prior sampling/laboratory record, not a picture-reading task."
+        },
+        {
+          "category": "fairness",
+          "index": 5,
+          "note": "Difficulty: lower-moderate on intended reasoning—interpret prior specimen limitations, then combine tissue method with representative target. The balanced two-by-two matrix has no majority-component convergence or length/grammar outlier. Nevertheless, two central-target options are weak and the content-based shortcuts substantially reduce challenge; uncertainty about unstated pathology needs must not be counted as desirable difficulty.",
+          "response": "The new balanced matrix requires both method and handling; no obvious waste-target foils remain."
+        },
+        {
+          "category": "fairness",
+          "index": 6,
+          "note": "Importance: obtaining representative tissue for an enlarging node and understanding limitations of a blood EBV result are practically relevant to general surgery. The exact PTLD-specific method preference has narrower scope and requires confirmation; no current ABSITE blueprint support was verified.",
+          "response": "Retains practical representative sampling and EBV limitations; no fresh ABSITE scope verification claimed."
+        },
+        {
+          "category": "fairness",
+          "index": 7,
+          "note": "Owner flag: fully resolved narrowly for the exact v4's nonspecific-choice complaint. Every choice now names a needle method and target. The new sampling objective introduces adequacy and scope questions that remain unresolved, so specific options do not justify accepting the rewrite overall.",
+          "response": "Every option names a method and allocation, preserving the specific-choice improvement while addressing its clinical uncertainty."
+        },
+        {
+          "category": "fairness",
+          "index": 8,
+          "note": "Evidence limitation: the handoff explicitly says the old PTLD claim excluded technique and that general neck-core guidance does not independently establish this combined PTLD target/method preference. That hold remains open. No categorical PTLD biopsy rule is clinically approved here.",
+          "response": "Retained and expanded the key-level PTLD/hematopathology source hold; tests and self-checks cannot close it."
+        },
+        {
+          "category": "suggestions",
+          "index": 1,
+          "note": "Clarify the actual sampling decision and the pathology question that remains unresolved using observed prior specimen/ancillary findings and verified clinical criteria. Do not insert a teaching sentence saying that architecture requires a core.",
+          "response": "Added observed same-target cytology, cell-block and failed-flow findings; no teaching sentence gives the required biopsy label."
+        },
+        {
+          "category": "suggestions",
+          "index": 2,
+          "note": "State the prior sampled compartment when known so repeating aspiration at a different target is evaluated fairly. Ask clinician/pathology review to decide whether the proposed peripheral FNA remains a credible competitor under those exact facts.",
+          "response": "Named the prior solid target and made a well-planned core the closest competitor rather than assuming every repeat aspiration fails."
+        },
+        {
+          "category": "suggestions",
+          "index": 3,
+          "note": "Use a genuine image-guided planning context if that is the intended scope. If excision is a realistic competing next action, compare it explicitly with needle pathways at the same decision stage and supply a supported reason for ranking them.",
+          "response": "Replaced the artificial needle-only restriction with explicit excision/core choices and patient-specific accessibility observations."
+        },
+        {
+          "category": "suggestions",
+          "index": 4,
+          "note": "Reduce dependence on two obviously fluid/debris-target foils. Build the close distinction around a verified specimen-adequacy or processing decision, with equally credible targets, rather than making the answer the only plan that gets solid tissue after a failed aspirate.",
+          "response": "All targets are now equally solid; the decision is tissue adequacy plus handling, with balanced components."
+        },
+        {
+          "category": "suggestions",
+          "index": 5,
+          "note": "Resolve the recorded PTLD-specific source hold before acceptance; preserve the old coordination concept and do not infer diagnosis or treatment from EBV DNA alone.",
+          "response": "Retained the original coordination concept and an explicit key-level source hold; EBV detection is not used to diagnose or treat PTLD."
+        }
+      ]
+    },
+    "selfCheck": {
+      "reviewer": "author; not independent or clinical sign-off",
+      "cueAttack": "Both methods obtain solid tissue, both occur twice, and each handling plan occurs twice. There are no fluid/debris foils and the key is not uniquely comprehensive. No sentence states that a core or excision is required for architecture.",
+      "stageCategory": "A balanced two-by-two matrix of specimen method and laboratory allocation for the same node.",
+      "reasoningSteps": [
+        "Interpret what the same-target aspirate and uninterpretable flow study leave unresolved despite EBV detection.",
+        "Select a representative new specimen and handling plan rather than solving only the needle label or only the laboratory allocation."
+      ],
+      "closestCredibleError": "Choose a fresh-and-fixed core plan because it fixes the ancillary handling, without weighing the value of an intact accessible node for the unresolved classification.",
+      "decidingFinding": "The prior sample was from the same solid node, lacked an intact nodal tissue pattern and produced no interpretable flow result; the node is mobile and superficial to the major vessels.",
+      "counterfactual": "An inaccessible/deep target or a material excision risk could favor a core plan with appropriate ancillary allocation. Adequate existing classification would remove this reason to repeat sampling.",
+      "difficulty": "predicted moderate application for PGY-2/3; independent difficulty review required",
+      "oneBestAnswer": "The accessible intact node can supply representative tissue for classification, while planned fresh and fixed portions allow the unresolved ancillary and histologic questions to be addressed. EBV detection and the limited aspirate do not classify the process.",
+      "deletionTest": "The prior target removes the excuse that a new aspirate merely changes compartment. The failed ancillary result makes handling consequential; accessible-node anatomy makes the method comparison conditional rather than universal.",
+      "clinicalAndSourceLimit": "Key hold: directly verify accessible-node excision versus a well-planned core and the fresh/fixed tissue allocation with permitted PTLD/lymphoma guidance and hematopathology before acceptance. Existing PTLD/neck-core claims do not independently establish every technique or laboratory-processing preference. No universal core-versus-excision rule is claimed.",
+      "sourceUncertaintyIsNotDifficulty": true,
+      "manualReviewCompleted": true
+    },
+    "sourceVerificationHold": "Key hold: directly verify accessible-node excision versus a well-planned core and the fresh/fixed tissue allocation with permitted PTLD/lymphoma guidance and hematopathology before acceptance. Existing PTLD/neck-core claims do not independently establish every technique or laboratory-processing preference. No universal core-versus-excision rule is claimed.",
+    "sourceHoldScope": "key",
+    "acceptanceAllowed": false,
+    "supportingEvidenceClaimIds": [
+      "claim.ptld.tissue",
+      "claim.gs028f.neck.core-biopsy-alternative",
+      "claim.flags2r2.20261105.ptld-limited-aspirate-classification",
+      "claim.flags2r2.20261105.ptld-excision-versus-core",
+      "claim.flags2r2.20261105.ptld-fresh-fixed-handling"
+    ],
+    "conceptVersion": {
+      "id": "concept.ptld.node-specimen-and-ancillary-handling.v1",
+      "name": "Plan representative nodal tissue and ancillary handling after limited sampling",
+      "objective": "Interpret the prior same-target specimen and failed ancillary result, then combine a representative tissue method with processing that can answer the unresolved classification questions.",
+      "reason": "Changes round one's solid-versus-fluid target selection into tissue-method and handling planning. Both methods target the same solid node, prior target is explicit, and historical coordination/target cards remain intact.",
+      "previousConceptId": "concept.ptld.neck-node-target-and-tissue-adequacy.v1"
+    },
+    "lint": {
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [],
+      "after": [],
+      "beforeCount": 0,
+      "afterCount": 0,
+      "profileContexts": 5
+    },
+    "visibleHistory": {
+      "before": {
+        "chiefComplaint": "Enlarging neck node",
+        "presentation": "{patientName}, a 43-year-old woman with a liver transplant, visits with an enlarging left supraclavicular lymph node. Plasma testing detects EBV DNA. An outside needle aspirate contains scattered disrupted lymphoid cells and blood; its cell block has no intact tissue fragments.",
+        "stem": "Which image-guided sampling request should be made next for {patientName}'s neck lymph node?",
+        "exhibit.caption": "Neck ultrasound observations",
+        "exhibit.items[0].label": "Peripheral portion of the node",
+        "exhibit.items[0].value": "Solid tissue with internal Doppler flow",
+        "exhibit.items[1].label": "Central portion of the node",
+        "exhibit.items[1].value": "Fluid-like material and debris; no internal Doppler flow"
+      },
+      "after": {
+        "chiefComplaint": "Enlarging neck node",
+        "presentation": "{patientName}, a 43-year-old woman with a liver transplant, visits for an enlarging left supraclavicular lymph node. It is mobile beneath the skin; ultrasound places it superficial to the major neck vessels. Plasma EBV DNA is detected.",
+        "stem": "Which specimen plan should be requested next for {patientName}'s neck lymph node?",
+        "exhibit.caption": "Prior sampling and laboratory record",
+        "exhibit.columnHeaders[0]": "Record",
+        "exhibit.columnHeaders[1]": "Observation",
+        "exhibit.rowHeaders[0]": "Prior sampled target",
+        "exhibit.rowHeaders[1]": "Cytology/cell block",
+        "exhibit.rowHeaders[2]": "Flow cytometry",
+        "exhibit.cells[0][0]": "The same left supraclavicular node; needle tip recorded in its solid portion",
+        "exhibit.cells[0][1]": "Mixed lymphoid cells and scattered large B cells; EBV RNA detected in some large cells",
+        "exhibit.cells[1][0]": "Cell block",
+        "exhibit.cells[1][1]": "Scattered cell groups; no intact nodal tissue pattern in the sections",
+        "exhibit.cells[2][0]": "Aspirate submitted for flow analysis",
+        "exhibit.cells[2][1]": "Predominantly nonviable cells; no interpretable clonality result"
+      }
+    },
+    "encounterContinuity": {
+      "keyServiceBefore": null,
+      "keyServiceAfter": null,
+      "beforeGate": null,
+      "afterGate": null,
+      "earlierReferral": null
+    },
+    "fallback": {
+      "variantId": "question.ptld.tissue-diagnosis-coordination.v4",
+      "conceptId": "concept.ptld.tissue-diagnosis-coordination",
+      "policy": "Keep the current manifest-selected live version until independent review, source-hold resolution and manager acceptance."
+    }
+  }
+]

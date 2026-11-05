@@ -1,0 +1,634 @@
+{
+  "checkedOn": "2026-11-05",
+  "acceptedCount": 16,
+  "acceptedRows": [
+    {
+      "acceptanceId": "B2B01",
+      "caseId": "case.gs028e.mis-principles.c3-phrenic-pathway",
+      "nodeId": "node.gs028e.mis-principles.c3-phrenic-pathway.1",
+      "questionVariantId": "question.postlaparoscopy.benign-referred-shoulder-pain.v2.r6",
+      "conceptId": "concept.postlaparoscopy.shoulder-pain-biliary-localization.v2",
+      "sourceView": "batch2b-round2",
+      "decision": "docs/research/question-bank-batch2b-manager-decision-20261105.md"
+    },
+    {
+      "acceptanceId": "B2B02",
+      "caseId": "case.gs028e.immunology.c3-historical-kidney-event",
+      "nodeId": "node.gs028e.immunology.c3-historical-kidney-event.1",
+      "questionVariantId": "question.immunology.preformed-antibody-hyperacute-rejection.v1.r6",
+      "conceptId": "concept.transplant.class-ii-crossmatch-target-and-window.v1",
+      "sourceView": "batch2b-round2",
+      "decision": "docs/research/question-bank-batch2b-manager-decision-20261105.md"
+    },
+    {
+      "acceptanceId": "B2B06",
+      "caseId": "case.gs028b.differentiated-thyroid-cancer.a-completed-negative",
+      "nodeId": "node.gs028b.differentiated-thyroid-cancer.a-completed-negative.1",
+      "questionVariantId": "question.differentiated-thyroid-cancer.preoperative-nodal-ultrasound.v4.r5",
+      "conceptId": "concept.dtc.representative-node-target-and-assay.v1",
+      "sourceView": "batch2b-round2",
+      "decision": "docs/research/question-bank-batch2b-manager-decision-20261105.md"
+    },
+    {
+      "acceptanceId": "B2B08",
+      "caseId": "case.gs028b.post-neoadjuvant-breast.b-diffuse-residual",
+      "nodeId": "node.gs028b.post-neoadjuvant-breast.b-diffuse-residual.1",
+      "questionVariantId": "question.breast-cancer-after-neoadjuvant-therapy.breast-conservation-selection.v2.r2",
+      "conceptId": "concept.breast.inflammatory-phenotype-after-neoadjuvant-response.v1",
+      "sourceView": "batch2b-round2",
+      "decision": "docs/research/question-bank-batch2b-manager-decision-20261105.md"
+    },
+    {
+      "acceptanceId": "B2B09",
+      "caseId": "case.gs028c.acute-mesenteric-ischemia.b-guarding-and-shock",
+      "nodeId": "node.gs028c.acute-mesenteric-ischemia.b-guarding-and-shock.1",
+      "questionVariantId": "question.acute-mesenteric-ischemia.peritonitis-exploration.v3.r2",
+      "conceptId": "concept.mesenteric-ischaemia.post-revascularization-bowel-staging.v1",
+      "sourceView": "batch2b-round2",
+      "decision": "docs/research/question-bank-batch2b-manager-decision-20261105.md"
+    },
+    {
+      "acceptanceId": "B2B10",
+      "caseId": "case.gs028b.post-neoadjuvant-breast.a-residual-palpable",
+      "nodeId": "node.gs028b.post-neoadjuvant-breast.a-residual-palpable.1",
+      "questionVariantId": "question.breast-cancer-after-neoadjuvant-therapy.response-mapping.v2.r1",
+      "conceptId": "concept.breast-cancer-after-neoadjuvant-therapy.response-mapping",
+      "sourceView": "batch2b-round2",
+      "decision": "docs/research/question-bank-batch2b-manager-decision-20261105.md"
+    },
+    {
+      "acceptanceId": "B2B17",
+      "caseId": "case.gs028d.dialysis-access.b-arm-swelling",
+      "nodeId": "node.gs028d.dialysis-access.b-arm-swelling.1",
+      "questionVariantId": "question.dialysis-access.clinical-dysfunction-referral.v4.r2",
+      "conceptId": "concept.dialysis-access.symptomatic-central-outflow-assessment.v1",
+      "sourceView": "batch2b-round2",
+      "decision": "docs/research/question-bank-batch2b-manager-decision-20261105.md"
+    },
+    {
+      "acceptanceId": "B2B21",
+      "caseId": "case.gs028d.geriatrics.b-mobility-nutrition",
+      "nodeId": "node.gs028d.geriatrics.b-mobility-nutrition.1",
+      "questionVariantId": "question.postoperative-delirium.multicomponent-prevention-plan.v4.r2",
+      "conceptId": "concept.postoperative-delirium.benzodiazepine-withdrawal-exception.v1",
+      "sourceView": "batch2b-round2",
+      "decision": "docs/research/question-bank-batch2b-manager-decision-20261105.md"
+    },
+    {
+      "acceptanceId": "B2B23",
+      "caseId": "case.gs028c.mild-biliary-pancreatitis.b-discharge-rounds",
+      "nodeId": "node.gs028c.mild-biliary-pancreatitis.b-discharge-rounds.1",
+      "questionVariantId": "question.acute-pancreatitis.mild-biliary-chole-before-discharge.v3.r2",
+      "conceptId": "concept.biliary-pancreatitis.local-complication-before-cholecystectomy.v1",
+      "sourceView": "batch2b-round2",
+      "decision": "docs/research/question-bank-batch2b-manager-decision-20261105.md"
+    },
+    {
+      "acceptanceId": "B2B24",
+      "caseId": "case.gs028b.post-neoadjuvant-breast.paired-marker-residual",
+      "nodeId": "node.gs028b.post-neoadjuvant-breast.paired-marker-residual.1",
+      "questionVariantId": "question.breast-cancer-after-neoadjuvant-therapy.response-mapping.v1.r2",
+      "conceptId": "concept.breast-cancer-after-neoadjuvant-therapy.response-mapping",
+      "sourceView": "batch2b-round2",
+      "decision": "docs/research/question-bank-batch2b-manager-decision-20261105.md"
+    },
+    {
+      "acceptanceId": "B2B25",
+      "caseId": "case.gs028c.acute-cholecystitis.b-hida-confirmed",
+      "nodeId": "node.gs028c.acute-cholecystitis.b-hida-confirmed.1",
+      "questionVariantId": "question.cholecystitis.fit-patient-index-admission-cholecystectomy.v2.r2",
+      "conceptId": "concept.cholecystectomy.subtotal-type-from-remnant-tissue.v1",
+      "sourceView": "batch2b-round2",
+      "decision": "docs/research/question-bank-batch2b-manager-decision-20261105.md"
+    },
+    {
+      "acceptanceId": "B2B30",
+      "caseId": "case.gs028d.hyperkalaemia.a-dehydration-result",
+      "nodeId": "node.gs028d.hyperkalaemia.a-dehydration-result.1",
+      "questionVariantId": "question.hyperkalaemia.severe-community-result-transfer.v4.r2",
+      "conceptId": "concept.diabetic-ketoacidosis.ongoing-insulin-substrate.v1",
+      "sourceView": "batch2b-round2",
+      "decision": "docs/research/question-bank-batch2b-manager-decision-20261105.md"
+    },
+    {
+      "acceptanceId": "B2B33",
+      "caseId": "case.gs028d.acid-base.b-malnutrition-gap",
+      "nodeId": "node.gs028d.acid-base.b-malnutrition-gap.1",
+      "questionVariantId": "question.metabolic-acidosis.albumin-corrected-anion-gap.v2.r2",
+      "conceptId": "concept.acid-base.euglycaemic-risk-with-mixed-gas.v1",
+      "sourceView": "batch2b-round2",
+      "decision": "docs/research/question-bank-batch2b-manager-decision-20261105.md"
+    },
+    {
+      "acceptanceId": "B2B39",
+      "caseId": "case.bread-butter.perianal-abscess.perianal-swelling",
+      "nodeId": "node.bread-butter.perianal-abscess.perianal-swelling.1",
+      "questionVariantId": "question.perianal-abscess.prompt-drainage.v2.r2",
+      "conceptId": "concept.anorectal-fistula.tract-and-transplant-host-plan.v1",
+      "sourceView": "batch2b-round2",
+      "decision": "docs/research/question-bank-batch2b-manager-decision-20261105.md"
+    },
+    {
+      "acceptanceId": "B2B40",
+      "caseId": "case.bread-butter.perianal-abscess.painful-sitting",
+      "nodeId": "node.bread-butter.perianal-abscess.painful-sitting.1",
+      "questionVariantId": "question.perianal-abscess.prompt-drainage.v3.r2",
+      "conceptId": "concept.anorectal-fistula.function-before-low-tract-division.v1",
+      "sourceView": "batch2b-round2",
+      "decision": "docs/research/question-bank-batch2b-manager-decision-20261105.md"
+    },
+    {
+      "acceptanceId": "B2B42",
+      "caseId": "case.gs028b.preoperative-nutrition.b-oral-inadequate",
+      "nodeId": "node.gs028b.preoperative-nutrition.b-oral-inadequate.1",
+      "questionVariantId": "question.preoperative-nutrition.oral-enteral-first-line.v2.r2",
+      "conceptId": "concept.nutrition.gastric-versus-postpyloric-delivery.v1",
+      "sourceView": "batch2b-round2",
+      "decision": "docs/research/question-bank-batch2b-manager-decision-20261105.md"
+    }
+  ],
+  "conditionalHeldCount": 2,
+  "parkedReviseCount": 22,
+  "parked": [
+    {
+      "id": "B2B03",
+      "classification": "revise_backlog_keep_live",
+      "draftVariantId": "question.cirrhosis-perioperative-risk.multifactor-assessment.v3.r6",
+      "liveVariantId": "question.cirrhosis-perioperative-risk.multifactor-assessment.v3",
+      "caseId": "case.gs028b.cirrhosis-perioperative.a-portal-hypertension",
+      "nodeId": "node.gs028b.cirrhosis-perioperative.a-portal-hypertension.1"
+    },
+    {
+      "id": "B2B04",
+      "classification": "revise_backlog_keep_live",
+      "draftVariantId": "question.lymphangitis.heel-inguinal.v1.r6",
+      "liveVariantId": "question.lymphangitis.heel-inguinal.v1",
+      "caseId": "case.lymphangitis.heel-inguinal",
+      "nodeId": "node.lymphangitis.heel-inguinal.v1"
+    },
+    {
+      "id": "B2B07",
+      "classification": "revise_backlog_keep_live",
+      "draftVariantId": "question.statistics-ethics.capacity-refusal.v3.r2",
+      "liveVariantId": "question.statistics-ethics.capacity-refusal.v3",
+      "caseId": "case.gs028se.capacity-refusal-surrogate-decisions.a-capacity-refusal-3",
+      "nodeId": "node.gs028se.capacity-refusal-surrogate-decisions.a-capacity-refusal-3.1"
+    },
+    {
+      "id": "B2B11",
+      "classification": "revise_backlog_keep_live",
+      "draftVariantId": "question.cholecystitis.fit-patient-index-admission-cholecystectomy.v4.r2",
+      "liveVariantId": "question.cholecystitis.fit-patient-index-admission-cholecystectomy.v4",
+      "caseId": "case.gs028c.acute-cholecystitis.b-older-but-fit",
+      "nodeId": "node.gs028c.acute-cholecystitis.b-older-but-fit.1"
+    },
+    {
+      "id": "B2B12",
+      "classification": "revise_backlog_keep_live",
+      "draftVariantId": "question.mondor-disease.management.supportive-care.v1.p2e.confidentiality.v4.r2",
+      "liveVariantId": "question.mondor-disease.management.supportive-care.v1.p2e.confidentiality.v4",
+      "caseId": "case.gs028se.p2e.confidentiality.v4.mondor",
+      "nodeId": "node.gs028se.p2e.confidentiality.v4.mondor.2"
+    },
+    {
+      "id": "B2B13",
+      "classification": "revise_backlog_keep_live",
+      "draftVariantId": "question.pathologic-nipple-discharge.diagnostic-imaging.v4.r2",
+      "liveVariantId": "question.pathologic-nipple-discharge.diagnostic-imaging.v4",
+      "caseId": "case.gs028b.nipple-discharge.b-negative-first-line",
+      "nodeId": "node.gs028b.nipple-discharge.b-negative-first-line.1"
+    },
+    {
+      "id": "B2B14",
+      "classification": "revise_backlog_keep_live",
+      "draftVariantId": "question.appendicitis.stable-adult-ct.v4.r2",
+      "liveVariantId": "question.appendicitis.stable-adult-ct.v4",
+      "caseId": "case.gs028c.appendicitis.a-competing-diagnoses",
+      "nodeId": "node.gs028c.appendicitis.a-competing-diagnoses.1"
+    },
+    {
+      "id": "B2B15",
+      "classification": "revise_backlog_keep_live",
+      "draftVariantId": "question.cirrhosis-perioperative-risk.decompensation-optimization-boundary.v1.r2",
+      "liveVariantId": "question.cirrhosis-perioperative-risk.decompensation-optimization-boundary.v1",
+      "caseId": "case.gs028b.cirrhosis-perioperative.paired-single-albumin",
+      "nodeId": "node.gs028b.cirrhosis-perioperative.paired-single-albumin.2"
+    },
+    {
+      "id": "B2B16",
+      "classification": "revise_backlog_keep_live",
+      "draftVariantId": "question.cirrhosis-perioperative-risk.decompensation-optimization-boundary.v2.r2",
+      "liveVariantId": "question.cirrhosis-perioperative-risk.decompensation-optimization-boundary.v2",
+      "caseId": "case.gs028b.cirrhosis-perioperative.b-encephalopathy",
+      "nodeId": "node.gs028b.cirrhosis-perioperative.b-encephalopathy.1"
+    },
+    {
+      "id": "B2B18",
+      "classification": "revise_backlog_keep_live",
+      "draftVariantId": "question.hyperkalaemia.severe-community-result-transfer.v3.r2",
+      "liveVariantId": "question.hyperkalaemia.severe-community-result-transfer.v3",
+      "caseId": "case.gs028d.hyperkalaemia.a-dialysis-result",
+      "nodeId": "node.gs028d.hyperkalaemia.a-dialysis-result.1"
+    },
+    {
+      "id": "B2B19",
+      "classification": "revise_backlog_keep_live",
+      "draftVariantId": "question.palpable-breast.negative-mammogram-targeted-us.v4.r2",
+      "liveVariantId": "question.palpable-breast.negative-mammogram-targeted-us.v4",
+      "caseId": "case.gs028c.palpable-breast.a-discordant-exam",
+      "nodeId": "node.gs028c.palpable-breast.a-discordant-exam.1"
+    },
+    {
+      "id": "B2B20",
+      "classification": "revise_backlog_keep_live",
+      "draftVariantId": "question.perianal-abscess.prompt-drainage.v4.r2",
+      "liveVariantId": "question.perianal-abscess.prompt-drainage.v4",
+      "caseId": "case.bread-butter.perianal-abscess.draining-pain",
+      "nodeId": "node.bread-butter.perianal-abscess.draining-pain.1"
+    },
+    {
+      "id": "B2B22",
+      "classification": "revise_backlog_keep_live",
+      "draftVariantId": "question.acute-mesenteric-ischemia.peritonitis-exploration.v2.r2",
+      "liveVariantId": "question.acute-mesenteric-ischemia.peritonitis-exploration.v2",
+      "caseId": "case.gs028c.acute-mesenteric-ischemia.b-peritonitis-after-cta",
+      "nodeId": "node.gs028c.acute-mesenteric-ischemia.b-peritonitis-after-cta.1"
+    },
+    {
+      "id": "B2B26",
+      "classification": "revise_backlog_keep_live",
+      "draftVariantId": "question.cholecystitis.hida-after-equivocal-ultrasound.v3.r2",
+      "liveVariantId": "question.cholecystitis.hida-after-equivocal-ultrasound.v3",
+      "caseId": "case.gs028c.acute-cholecystitis.a-limited-ultrasound",
+      "nodeId": "node.gs028c.acute-cholecystitis.a-limited-ultrasound.1"
+    },
+    {
+      "id": "B2B29",
+      "classification": "revise_backlog_keep_live",
+      "draftVariantId": "question.hyperkalaemia.severe-community-result-transfer.v2.r2",
+      "liveVariantId": "question.hyperkalaemia.severe-community-result-transfer.v2",
+      "caseId": "case.gs028d.hyperkalaemia.a-raas-result",
+      "nodeId": "node.gs028d.hyperkalaemia.a-raas-result.1"
+    },
+    {
+      "id": "B2B31",
+      "classification": "revise_backlog_keep_live",
+      "draftVariantId": "question.immunology.preformed-antibody-hyperacute-rejection.v4.r2",
+      "liveVariantId": "question.immunology.preformed-antibody-hyperacute-rejection.v4",
+      "caseId": "case.gs028e.immunology.c3-injury-pathway",
+      "nodeId": "node.gs028e.immunology.c3-injury-pathway.1"
+    },
+    {
+      "id": "B2B34",
+      "classification": "revise_backlog_keep_live",
+      "draftVariantId": "question.metabolic-acidosis.albumin-corrected-anion-gap.v3.r2",
+      "liveVariantId": "question.metabolic-acidosis.albumin-corrected-anion-gap.v3",
+      "caseId": "case.gs028d.acid-base.b-sepsis-recovery-gap",
+      "nodeId": "node.gs028d.acid-base.b-sepsis-recovery-gap.1"
+    },
+    {
+      "id": "B2B35",
+      "classification": "revise_backlog_keep_live",
+      "draftVariantId": "question.metabolic-acidosis.confirm-with-blood-gas.v3.r2",
+      "liveVariantId": "question.metabolic-acidosis.confirm-with-blood-gas.v3",
+      "caseId": "case.gs028d.acid-base.a-tachypnea-low-bicarb",
+      "nodeId": "node.gs028d.acid-base.a-tachypnea-low-bicarb.1"
+    },
+    {
+      "id": "B2B36",
+      "classification": "revise_backlog_keep_live",
+      "draftVariantId": "question.palpable-breast.negative-mammogram-targeted-us.v1.r2",
+      "liveVariantId": "question.palpable-breast.negative-mammogram-targeted-us.v1",
+      "caseId": "case.gs028c.palpable-breast.paired-dense-focal",
+      "nodeId": "node.gs028c.palpable-breast.paired-dense-focal.1"
+    },
+    {
+      "id": "B2B37",
+      "classification": "revise_backlog_keep_live",
+      "draftVariantId": "question.palpable-breast.suspicious-mass-biopsy-despite-negative-imaging.v1.r2",
+      "liveVariantId": "question.palpable-breast.suspicious-mass-biopsy-despite-negative-imaging.v1",
+      "caseId": "case.gs028c.palpable-breast.paired-dense-focal",
+      "nodeId": "node.gs028c.palpable-breast.paired-dense-focal.2"
+    },
+    {
+      "id": "B2B38",
+      "classification": "revise_backlog_keep_live",
+      "draftVariantId": "question.perianal-abscess.prompt-drainage.v1.r2",
+      "liveVariantId": "question.perianal-abscess.prompt-drainage.v1",
+      "caseId": "case.bread-butter.perianal-abscess.tender-perianal-lump",
+      "nodeId": "node.bread-butter.perianal-abscess.tender-perianal-lump.1"
+    },
+    {
+      "id": "B2B41",
+      "classification": "revise_backlog_keep_live",
+      "draftVariantId": "question.preoperative-nutrition.nutritional-risk-screening.v2.r2",
+      "liveVariantId": "question.preoperative-nutrition.nutritional-risk-screening.v2",
+      "caseId": "case.gs028b.preoperative-nutrition.a-albumin-only",
+      "nodeId": "node.gs028b.preoperative-nutrition.a-albumin-only.1"
+    },
+    {
+      "id": "B2B32",
+      "classification": "source_held_pass_keep_live",
+      "draftVariantId": "question.metabolic-acidosis.albumin-corrected-anion-gap.v1.r2",
+      "liveVariantId": "question.metabolic-acidosis.albumin-corrected-anion-gap.v1",
+      "caseId": "case.gs028d.acid-base.b-cirrhosis-gap",
+      "nodeId": "node.gs028d.acid-base.b-cirrhosis-gap.1"
+    },
+    {
+      "id": "F13",
+      "classification": "source_held_pass_keep_live",
+      "draftVariantId": "question.preoperative-osa.validated-risk-screening.v4.r5",
+      "liveVariantId": "question.preoperative-osa.validated-risk-screening.v4",
+      "caseId": "case.gs028d.anesthesia.a-validated-not-impression",
+      "nodeId": "node.gs028d.anesthesia.a-validated-not-impression.1"
+    }
+  ],
+  "defaultCases": 1136,
+  "defaultNodes": 1449,
+  "managerManifestAcceptances": 61,
+  "newRegisteredConcepts": [
+    "concept.transplant.class-ii-crossmatch-target-and-window.v1",
+    "concept.breast.inflammatory-phenotype-after-neoadjuvant-response.v1",
+    "concept.mesenteric-ischaemia.post-revascularization-bowel-staging.v1",
+    "concept.dialysis-access.symptomatic-central-outflow-assessment.v1",
+    "concept.postoperative-delirium.benzodiazepine-withdrawal-exception.v1",
+    "concept.biliary-pancreatitis.local-complication-before-cholecystectomy.v1",
+    "concept.cholecystectomy.subtotal-type-from-remnant-tissue.v1",
+    "concept.diabetic-ketoacidosis.ongoing-insulin-substrate.v1",
+    "concept.acid-base.euglycaemic-risk-with-mixed-gas.v1",
+    "concept.anorectal-fistula.tract-and-transplant-host-plan.v1",
+    "concept.anorectal-fistula.function-before-low-tract-division.v1",
+    "concept.nutrition.gastric-versus-postpyloric-delivery.v1"
+  ],
+  "concurrentOtherNewConcepts": [
+    "concept.n3.ostomy-fluid-versus-calorie-replacement",
+    "concept.n3.ostomy-biochemical-followup-after-volume-recovery",
+    "concept.n3.postoperative-dribbling-with-bladder-distension",
+    "concept.n3.continence-anatomy-versus-stool-trigger",
+    "concept.n3.foot-culture-versus-clinical-infection",
+    "concept.n3.drain-presence-versus-prophylaxis-indication",
+    "concept.n3.swallowing-failure-versus-intestinal-failure",
+    "concept.n3.nutrition-support-versus-new-mechanical-obstruction",
+    "concept.n3.postdiverticulitis-examination-extent",
+    "concept.n3.recurrent-fistula-continence-reserve",
+    "concept.n3.appendicitis-response-versus-structural-risk",
+    "concept.n3.bilateral-carotid-symptom-attribution",
+    "concept.n3.venous-ulcer-with-competing-arterial-findings",
+    "concept.n3.claudication-activity-versus-treatment-exposure",
+    "concept.n3.lactation-drain-contact-boundary",
+    "concept.n3.postsplenectomy-nodule-function-before-targeting",
+    "concept.n3.dysphagia-biopsy-territory-after-negative-endoscopy",
+    "concept.n3.esophageal-dilation-versus-inflammatory-control",
+    "concept.n3.posttransplant-lesion-versus-viremia-response",
+    "concept.n3.rectal-response-assessment-timepoint",
+    "concept.n3.adrenal-uptake-versus-biopsy-safety",
+    "concept.n3.hereditary-thyroid-adrenal-operative-order",
+    "concept.n3.sharp-esophageal-object-despite-liquid-passage",
+    "concept.n3.delayed-regurgitation-proximal-anatomic-study",
+    "concept.n3.mesh-sinus-versus-superficial-response",
+    "concept.n3.chyle-leak-diet-composition-versus-calories",
+    "concept.n3.tumor-screen-versus-family-test-sequence",
+    "concept.n3.gastric-lymphoma-new-large-cell-process",
+    "concept.n3.pleural-source-versus-systemic-response",
+    "concept.n3.asplenia-standby-response-versus-emergency-plan",
+    "concept.n3.mesenteric-food-adaptation-versus-symptom-resolution",
+    "concept.n3.head-injury-rule-scope-and-anticoagulant-exposure",
+    "concept.n3.blunt-chest-injury-discordant-screening-results",
+    "concept.n3.blunt-chest-mechanism-versus-completed-screen",
+    "concept.n3.ards-weight-change-versus-tidal-volume-basis",
+    "concept.n3.incidental-gallstones-and-competing-pain-source",
+    "concept.n3.venous-intervention-versus-mandatory-stocking-trial",
+    "concept.n3.postrepair-pain-new-dynamic-finding",
+    "concept.n3.small-skin-cancer-with-adverse-histology",
+    "concept.n3.anal-cancer-distant-staging-versus-local-extent"
+  ],
+  "oldConceptsRetained": true,
+  "mixedCases": [
+    {
+      "caseId": "case.gs028b.post-neoadjuvant-breast.paired-marker-residual",
+      "acceptedNodeId": "node.gs028b.post-neoadjuvant-breast.paired-marker-residual.1",
+      "fallbackNodeIds": [
+        "node.gs028b.post-neoadjuvant-breast.paired-marker-residual.2"
+      ],
+      "clinicalConsistency": "The header and mapping gate remain noninflammatory, localized disease in the same conservation field; the retained second node still describes feasible margins, radiotherapy eligibility and the same conservation preference.",
+      "sequenceLimitation": "The accepted first update already establishes breast conservation for the bracketing task. The preserved old follow-up then repeats the local-treatment decision, so it is coherent but rehearsed/easy. This integration does not claim that old node passed independent review; queue a separately versioned follow-up improvement, without altering the current live fallback in this milestone.",
+      "decision": "Accept B2B24 as directed; preserve the old second node and exact gate bytes. No unaccepted B2b neighbor is imported."
+    }
+  ],
+  "flags2Frozen": [
+    {
+      "path": "packages/clinical-content/src/question-flags2-20261105-data.ts",
+      "before": "0f493b174cdf8e907f39b4d837af374ded33830db1d8f0639f9526c5bd85a30f",
+      "current": "0f493b174cdf8e907f39b4d837af374ded33830db1d8f0639f9526c5bd85a30f",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-20261105.test.ts",
+      "before": "91111fadbde42b73ee25f9775cecd0cdef1d0f9f288dbcb657ad7f7a6595791e",
+      "current": "91111fadbde42b73ee25f9775cecd0cdef1d0f9f288dbcb657ad7f7a6595791e",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-20261105.ts",
+      "before": "87aff1e97d9f7700d96566e3783340d74dd16d2f1e1ce777206c7a50b3df72c9",
+      "current": "87aff1e97d9f7700d96566e3783340d74dd16d2f1e1ce777206c7a50b3df72c9",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-evidence-20261105.ts",
+      "before": "3a7834e845c0dbcabfc10e6f8ab34b0cbf9125eb63e51dd01041fd2cb0138fc7",
+      "current": "3a7834e845c0dbcabfc10e6f8ab34b0cbf9125eb63e51dd01041fd2cb0138fc7",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-retained-input-20261105.ts",
+      "before": "5767a31ec81de754b26d983d9e94c827eff9a2d7d90e1132b56d46ea4ab9086d",
+      "current": "5767a31ec81de754b26d983d9e94c827eff9a2d7d90e1132b56d46ea4ab9086d",
+      "unchanged": true
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-flags2-before-20261105.json",
+      "before": "4a1ea1155c8404d35ac87fe4e3fda74c5451bd2602fe234e7328efd3987e45b1",
+      "current": "4a1ea1155c8404d35ac87fe4e3fda74c5451bd2602fe234e7328efd3987e45b1",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/question-flags2-20261105.json",
+      "before": "e040a64437a1eeb07e9e13e71be08280c881588354912c476df742ae4c2ae37f",
+      "current": "e040a64437a1eeb07e9e13e71be08280c881588354912c476df742ae4c2ae37f",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/question-flags2-handoff-20261105.md",
+      "before": "d51f72bca6804fa2a8322568b8651d3312e5a4242c0bd1b8eed39077c16a09bb",
+      "current": "d51f72bca6804fa2a8322568b8651d3312e5a4242c0bd1b8eed39077c16a09bb",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/sources-question-flags2-20261105.json",
+      "before": "f6e0c8f75e58f917db9913699963d37b36147dd2235cdf5d4d256ff1485a42e7",
+      "current": "f6e0c8f75e58f917db9913699963d37b36147dd2235cdf5d4d256ff1485a42e7",
+      "unchanged": true
+    }
+  ],
+  "digestReconciliation": [
+    {
+      "path": "tools/question-quality/fixtures/question-bank-batch2b-before-20261104.json",
+      "beforeSha256": "61509103e07f63bc9bcad8bea784d17ffc2a831ee25f6a1b690b5e2ea17922ea",
+      "currentSha256": "9c26ed58ea01ef718aeadbec783b5c837a32da41fa65698c074231ad42fddbc4",
+      "onlyAuthorizedScalarReplacements": true,
+      "unchangedSinceReconciliation": true
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-bank-batch2b-round2-before-20261104.json",
+      "beforeSha256": "38469e0b65ede1b9ac1885b2a1ba16d6616deddc772126e4c34180ba786f94fc",
+      "currentSha256": "e9d78b010325a62b8bd9a44d796d32c56d415af906a082ae1ce063d919245e35",
+      "onlyAuthorizedScalarReplacements": true,
+      "unchangedSinceReconciliation": true
+    }
+  ],
+  "nonOwnedManifest": {
+    "otherBytesPreservedAtInsertion": true,
+    "currentWithoutOwnBlocksMatchesInsertionBefore": true,
+    "existingNonN2RowsPreserved": true,
+    "currentN2Rows": [
+      {
+        "acceptanceId": "review.n2.sglt2-postoperative-restart.v2",
+        "caseId": "case.n2.sglt2-postoperative-restart.v1",
+        "nodeId": "node.n2.sglt2-postoperative-restart.v1",
+        "questionVariantId": "question.n2.sglt2-postoperative-restart.v2",
+        "conceptId": "concept.n2r2.sglt2-repeat-procedure-reconciliation",
+        "sourceView": "catalog",
+        "decision": "docs/research/question-new-manager-decision-20261105.md"
+      },
+      {
+        "acceptanceId": "review.n2.burn-feeding-perfusion-prerequisite.v3",
+        "caseId": "case.n2.burn-feeding-perfusion-prerequisite.v1",
+        "nodeId": "node.n2.burn-feeding-perfusion-prerequisite.v1",
+        "questionVariantId": "question.n2.burn-feeding-perfusion-prerequisite.v3",
+        "conceptId": "concept.n2.burn-feeding-perfusion-prerequisite",
+        "sourceView": "catalog",
+        "decision": "docs/research/question-new-manager-decision-20261105.md"
+      },
+      {
+        "acceptanceId": "review.n2.dialysis-isocaloric-protein-adjustment.v3",
+        "caseId": "case.n2.dialysis-isocaloric-protein-adjustment.v1",
+        "nodeId": "node.n2.dialysis-isocaloric-protein-adjustment.v1",
+        "questionVariantId": "question.n2.dialysis-isocaloric-protein-adjustment.v3",
+        "conceptId": "concept.n2.dialysis-isocaloric-protein-adjustment",
+        "sourceView": "catalog",
+        "decision": "docs/research/question-new-manager-decision-20261105.md"
+      },
+      {
+        "acceptanceId": "review.n2.af-bridging-versus-surgical-prophylaxis.v3",
+        "caseId": "case.n2.af-bridging-versus-surgical-prophylaxis.v1",
+        "nodeId": "node.n2.af-bridging-versus-surgical-prophylaxis.v1",
+        "questionVariantId": "question.n2.af-bridging-versus-surgical-prophylaxis.v3",
+        "conceptId": "concept.n2r3.heparin-order-indication-reconciliation",
+        "sourceView": "catalog",
+        "decision": "docs/research/question-new-manager-decision-20261105.md"
+      },
+      {
+        "acceptanceId": "review.n2.bile-leak-duct-continuity-boundary.v2",
+        "caseId": "case.n2.bile-leak-duct-continuity-boundary.v1",
+        "nodeId": "node.n2.bile-leak-duct-continuity-boundary.v1",
+        "questionVariantId": "question.n2.bile-leak-duct-continuity-boundary.v2",
+        "conceptId": "concept.n2r2.bile-leak-nonrepresented-duct-mapping",
+        "sourceView": "catalog",
+        "decision": "docs/research/question-new-manager-decision-20261105.md"
+      },
+      {
+        "acceptanceId": "review.n2.ercp-versus-gallbladder-source.v2",
+        "caseId": "case.n2.ercp-versus-gallbladder-source.v1",
+        "nodeId": "node.n2.ercp-versus-gallbladder-source.v1",
+        "questionVariantId": "question.n2.ercp-versus-gallbladder-source.v2",
+        "conceptId": "concept.n2.ercp-versus-gallbladder-source",
+        "sourceView": "catalog",
+        "decision": "docs/research/question-new-manager-decision-20261105.md"
+      },
+      {
+        "acceptanceId": "review.n2.hpylori-antibody-after-valid-cure-test.v2",
+        "caseId": "case.n2.hpylori-antibody-after-valid-cure-test.v1",
+        "nodeId": "node.n2.hpylori-antibody-after-valid-cure-test.v1",
+        "questionVariantId": "question.n2.hpylori-antibody-after-valid-cure-test.v2",
+        "conceptId": "concept.n2r2.h-pylori-cure-test-medication-calendar",
+        "sourceView": "catalog",
+        "decision": "docs/research/question-new-manager-decision-20261105.md"
+      },
+      {
+        "acceptanceId": "review.n2.malignant-polyp-local-versus-regional-risk.v2",
+        "caseId": "case.n2.malignant-polyp-local-versus-regional-risk.v1",
+        "nodeId": "node.n2.malignant-polyp-local-versus-regional-risk.v1",
+        "questionVariantId": "question.n2.malignant-polyp-local-versus-regional-risk.v2",
+        "conceptId": "concept.n2.malignant-polyp-local-versus-regional-risk",
+        "sourceView": "catalog",
+        "decision": "docs/research/question-new-manager-decision-20261105.md"
+      },
+      {
+        "acceptanceId": "review.n2.operative-wound-class-versus-later-ssi.v3",
+        "caseId": "case.n2.operative-wound-class-versus-later-ssi.v1",
+        "nodeId": "node.n2.operative-wound-class-versus-later-ssi.v1",
+        "questionVariantId": "question.n2.operative-wound-class-versus-later-ssi.v3",
+        "conceptId": "concept.n2r3.operative-class-outcome-dependent-audit",
+        "sourceView": "catalog",
+        "decision": "docs/research/question-new-manager-decision-20261105.md"
+      },
+      {
+        "acceptanceId": "review.n2.ventral-hernia-priority-change.v2",
+        "caseId": "case.n2.ventral-hernia-priority-change.v1",
+        "nodeId": "node.n2.ventral-hernia-priority-change.v1",
+        "questionVariantId": "question.n2.ventral-hernia-priority-change.v2",
+        "conceptId": "concept.n2r2.emergency-hernia-closure-and-bowel-reassessment",
+        "sourceView": "catalog",
+        "decision": "docs/research/question-new-manager-decision-20261105.md"
+      },
+      {
+        "acceptanceId": "review.n2.negative-predictive-value-denominator.v2",
+        "caseId": "case.n2.negative-predictive-value-denominator.v1",
+        "nodeId": "node.n2.negative-predictive-value-denominator.v1",
+        "questionVariantId": "question.n2.negative-predictive-value-denominator.v2",
+        "conceptId": "concept.n2r2.negative-result-population-and-protocol",
+        "sourceView": "catalog",
+        "decision": "docs/research/question-new-manager-decision-20261105.md"
+      },
+      {
+        "acceptanceId": "review.n2.positive-likelihood-ratio.v2",
+        "caseId": "case.n2.positive-likelihood-ratio.v1",
+        "nodeId": "node.n2.positive-likelihood-ratio.v1",
+        "questionVariantId": "question.n2.positive-likelihood-ratio.v2",
+        "conceptId": "concept.n2r2.positive-test-odds-and-investigation",
+        "sourceView": "catalog",
+        "decision": "docs/research/question-new-manager-decision-20261105.md"
+      },
+      {
+        "acceptanceId": "review.n2.mcnemar-paired-binary-outcomes.v3",
+        "caseId": "case.n2.mcnemar-paired-binary-outcomes.v1",
+        "nodeId": "node.n2.mcnemar-paired-binary-outcomes.v1",
+        "questionVariantId": "question.n2.mcnemar-paired-binary-outcomes.v3",
+        "conceptId": "concept.n2r2.linked-binary-analysis-and-pilot-decision",
+        "sourceView": "catalog",
+        "decision": "docs/research/question-new-manager-decision-20261105.md"
+      },
+      {
+        "acceptanceId": "review.n2.equivalence-margin-versus-null-test.v2",
+        "caseId": "case.n2.equivalence-margin-versus-null-test.v1",
+        "nodeId": "node.n2.equivalence-margin-versus-null-test.v1",
+        "questionVariantId": "question.n2.equivalence-margin-versus-null-test.v2",
+        "conceptId": "concept.n2r2.equivalence-and-safety-implementation",
+        "sourceView": "catalog",
+        "decision": "docs/research/question-new-manager-decision-20261105.md"
+      }
+    ],
+    "note": "Concurrent N2 changes belong to the N2 writer; these are preserved rather than overwritten."
+  },
+  "changedLevel5BoundInputs": [
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.ts",
+      "before": "e5b6fd29e3ba38f1f0ba99fb75e522d052a0e31410b1527984e2620d02a3d6f8",
+      "current": "f5cfb705808dc9c83e9ae3b708d3bac17eb19371bff134daca7bbd36d8dd1e0b"
+    }
+  ],
+  "clinicalApproval": false,
+  "deploy": false,
+  "noEvidenceWriteOrRebind": true
+}

@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "capturedOn": "2026-11-05",
+  "basis": "All capabilities assumed; routine patient encounters only, excluding employee discussions. Structural census, not a measured owner throughput or difficulty result.",
+  "live": [
+    {
+      "stage": 0,
+      "cases": 640,
+      "concepts": 198,
+      "unlocked": 198,
+      "variants": 687
+    },
+    {
+      "stage": 1,
+      "cases": 899,
+      "concepts": 331,
+      "unlocked": 133,
+      "variants": 1151
+    },
+    {
+      "stage": 2,
+      "cases": 964,
+      "concepts": 367,
+      "unlocked": 36,
+      "variants": 1254
+    },
+    {
+      "stage": 3,
+      "cases": 1044,
+      "concepts": 404,
+      "unlocked": 37,
+      "variants": 1352
+    },
+    {
+      "stage": 4,
+      "cases": 1076,
+      "concepts": 425,
+      "unlocked": 21,
+      "variants": 1384
+    }
+  ],
+  "hypotheticalAfterAllN3Accepted": [
+    {
+      "stage": 0,
+      "cases": 640,
+      "concepts": 198,
+      "unlocked": 198,
+      "variants": 687
+    },
+    {
+      "stage": 1,
+      "cases": 899,
+      "concepts": 331,
+      "unlocked": 133,
+      "variants": 1151
+    },
+    {
+      "stage": 2,
+      "cases": 964,
+      "concepts": 367,
+      "unlocked": 36,
+      "variants": 1254
+    },
+    {
+      "stage": 3,
+      "cases": 1060,
+      "concepts": 420,
+      "unlocked": 53,
+      "variants": 1368
+    },
+    {
+      "stage": 4,
+      "cases": 1116,
+      "concepts": 465,
+      "unlocked": 45,
+      "variants": 1424
+    }
+  ],
+  "hypotheticalLimitation": "Forty proposed identities require independent novelty/quality review and clinical sign-off; no N3 acceptance is authorized. Do not count these as shipped supply.",
+  "newConceptsByLevel": {
+    "3": 16,
+    "4": 24
+  },
+  "registered": {
+    "live": 598,
+    "catalog": 625
+  },
+  "manifest": {
+    "totalDirectedAcceptances": 62,
+    "n2": 14,
+    "n3": 0
+  },
+  "target": "Prior N0 planning target remains 75-100 fresh concepts per late level; it is an editorial reserve assumption, not a validated engagement threshold.",
+  "runtime": "The focused supply test consumes every unseen N3 identity, observes no selectable case while all reviews are future-due, then observes a due review. No timer or selection code changes."
+}

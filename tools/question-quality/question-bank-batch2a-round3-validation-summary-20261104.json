@@ -1,0 +1,207 @@
+{
+  "checkedAt": "2026-11-05T04:14:54.204Z",
+  "clinical": {
+    "path": "tools/question-quality/question-bank-batch2a-round3-clinical-deletion-final-20261104.log",
+    "files": "Test Files  2 failed | 106 passed (108)",
+    "tests": "Tests  4 failed | 981 passed (985)",
+    "duration": "Duration  132.61s (transform 3.79s, setup 0ms, import 111.24s, tests 11.11s, environment 7ms)",
+    "failures": [
+      "src/playable-patient-narrative.test.ts > playable one-patient narratives > anchors every admitted case to one patient with a brief story",
+      "src/question-bank-batch2b-20261104.test.ts > batch 2b versioned clinical applications > changes only thirty-nine targeted nodes and preserves all other nodes and cases",
+      "src/question-bank-batch2b-20261104.test.ts > batch 2b versioned clinical applications > retains old concepts and versions only materially different scored constructs",
+      "src/question-bank-batch2b-20261104.test.ts > batch 2b versioned clinical applications > retains every prior wait row and supplies exact timing for every new choice"
+    ]
+  },
+  "ownedClinical": {
+    "path": "tools/question-quality/question-bank-batch2a-round3-clinical-owned-final-20261104.log",
+    "files": "Test Files  5 passed (5)",
+    "tests": "Tests  76 passed (76)",
+    "duration": "Duration  11.09s (transform 2.05s, setup 0ms, import 9.26s, tests 1.29s, environment 0ms)",
+    "failures": []
+  },
+  "domain": {
+    "path": "tools/question-quality/question-bank-batch2a-round3-domain-final-20261104.log",
+    "files": "Test Files  2 failed | 194 passed (196)",
+    "tests": "Tests  27 failed | 4777 passed | 1 skipped (4805)",
+    "duration": "Duration  916.95s (transform 7.88s, setup 0ms, import 285.56s, tests 612.59s, environment 12ms)",
+    "failures": [
+      "tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > binds the actual run to its current game, balance, clinical and driver inputs and reconciles cash",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 5",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 6",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 7",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 8",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 9",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 5",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 6",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 7",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 8",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 9",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 5",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 6",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 7",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 8",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 9",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 5",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 6",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 7",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 8",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 9",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 5",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 6",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 7",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 8",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 9",
+      "tests/patient-supply.test.ts > routine patient supply > records the current clinical inventory and exact unseen-patient boundary by stage"
+    ]
+  },
+  "player": {
+    "path": "tools/question-quality/question-bank-batch2a-round3-player-final-20261104.log",
+    "files": "Test Files  1 failed | 362 passed (363)",
+    "tests": "Tests  1 failed | 3498 passed (3499)",
+    "duration": "Duration  701.26s (transform 16.84s, setup 0ms, import 508.80s, tests 854.86s, environment 34ms)",
+    "failures": [
+      "src/session/cloud/diagnosticWorkloadPerformance.test.ts > bounds the full account tick and chart projection on synthetic L3 diagnostic/staff pressure"
+    ]
+  },
+  "touchedPlayer": {
+    "path": "tools/question-quality/question-bank-batch2a-round3-player-deletion-final-20261104.log",
+    "files": "Test Files  4 passed (4)",
+    "tests": "Tests  62 passed (62)",
+    "duration": "Duration  39.32s (transform 5.35s, setup 0ms, import 12.74s, tests 26.17s, environment 0ms)",
+    "failures": []
+  },
+  "touchedDomain": {
+    "path": "tools/question-quality/question-bank-batch2a-round3-domain-deletion-final-20261104.log",
+    "files": "Test Files  4 passed (4)",
+    "tests": "Tests  23 passed (23)",
+    "duration": "Duration  9.59s (transform 2.68s, setup 0ms, import 8.85s, tests 325ms, environment 0ms)",
+    "failures": []
+  },
+  "initialClinical": {
+    "path": "tools/question-quality/question-bank-batch2a-round3-clinical-full-20261104.log",
+    "files": "Test Files  4 failed | 104 passed (108)",
+    "tests": "Tests  7 failed | 978 passed (985)",
+    "duration": "Duration  169.10s (transform 5.12s, setup 0ms, import 142.53s, tests 13.51s, environment 9ms)",
+    "failures": [
+      "src/pilot-content.test.ts > five-diagnosis pilot registry > does not make the keyed answer uniquely longest in the runtime release",
+      "src/playable-patient-narrative.test.ts > playable one-patient narratives > anchors every admitted case to one patient with a brief story",
+      "src/playable-patient-narrative.test.ts > playable one-patient narratives > keeps explicitly female stories attached to female chart identities",
+      "src/question-bank-batch2b-20261104.test.ts > batch 2b versioned clinical applications > changes only thirty-nine targeted nodes and preserves all other nodes and cases",
+      "src/question-bank-batch2b-20261104.test.ts > batch 2b versioned clinical applications > retains old concepts and versions only materially different scored constructs",
+      "src/question-bank-batch2b-20261104.test.ts > batch 2b versioned clinical applications > retains every prior wait row and supplies exact timing for every new choice",
+      "src/question-new-n1-round2-20261104.test.ts > N1 round-two exact independent-review revisions > revises exactly the 38 returned variants in its preserved assembly while preserving both PASS, all other cohorts and old definitions"
+    ]
+  },
+  "initialDomain": {
+    "path": "tools/question-quality/question-bank-batch2a-round3-domain-full-20261104.log",
+    "files": "Test Files  6 failed | 190 passed (196)",
+    "tests": "Tests  32 failed | 4772 passed | 1 skipped (4805)",
+    "duration": "Duration  952.92s (transform 8.10s, setup 0ms, import 288.61s, tests 645.45s, environment 13ms)",
+    "failures": [
+      "tests/gs028-20261007-batch.test.ts > GS-028 October 7 real gameplay admission > measures the real ordinary pools before and after admission",
+      "tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > measures the actual early ordinary pool delta of seventy-eight cases and twenty-one active concepts",
+      "tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > binds the actual run to its current game, balance, clinical and driver inputs and reconciles cash",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 5",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 6",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 7",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 8",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 9",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 5",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 6",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 7",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 8",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 9",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 5",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 6",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 7",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 8",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 9",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 5",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 6",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 7",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 8",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 9",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 5",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 6",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 7",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 8",
+      "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 9",
+      "tests/patient-supply.test.ts > routine patient supply > records the current clinical inventory and exact unseen-patient boundary by stage",
+      "tests/patient-supply.test.ts > routine patient supply > admits and completes patients in prepared day-six through day-eight states",
+      "tests/surgery-center-batch.test.ts > September 10 surgery-center production flows > runs all forty two-node encounters and all thirty-two gated services through reducer actions",
+      "tests/diagnostics/patient-supply.test.ts > GS-017 sustained patient supply diagnostic > runs normal ticks, arrivals, gates, and completions through day eight"
+    ]
+  },
+  "initialPlayer": {
+    "path": "tools/question-quality/question-bank-batch2a-round3-player-full-20261104.log",
+    "files": "Test Files  1 failed | 362 passed (363)",
+    "tests": "Tests  1 failed | 3498 passed (3499)",
+    "duration": "Duration  741.84s (transform 17.60s, setup 0ms, import 511.32s, tests 933.90s, environment 37ms)",
+    "failures": [
+      "src/session/cloud/diagnosticWorkloadPerformance.test.ts > bounds the full account tick and chart projection on synthetic L3 diagnostic/staff pressure"
+    ]
+  },
+  "linter": {
+    "tests": 33,
+    "passed": 33,
+    "failed": 0,
+    "log": "tools/question-quality/question-bank-batch2a-round3-lint-tests-20261104.log"
+  },
+  "typecheck": {
+    "workspaces": 7,
+    "passed": 6,
+    "failed": 1,
+    "details": [
+      {
+        "workspace": "@gamify-surgery/clinical-context-workbench",
+        "diagnostics": [],
+        "passed": true
+      },
+      {
+        "workspace": "@gamify-surgery/player",
+        "diagnostics": [
+          "src/App.tsx(206,7): error TS2322: Type '(tileX: number, tileY: number, orientation?: RoomOrientation | undefined) => SessionActionResult<boolean>' is not assignable to type '(tileX: number, tileY: number, orientation?: RoomOrientation | undefined) => boolean'.",
+          "src/App.tsx(238,7): error TS2322: Type '() => SessionActionResult<boolean>' is not assignable to type '() => boolean'.",
+          "src/App.tsx(239,7): error TS2322: Type '(roomInstanceId: string, location: GridPoint, seatId?: string | undefined) => SessionActionResult<boolean>' is not assignable to type '(roomInstanceId: string, location: GridPoint, seatId?: string | undefined) => boolean'.",
+          "src/App.tsx(242,7): error TS2322: Type '(destination: GridPoint) => SessionActionResult<boolean>' is not assignable to type '(destination: GridPoint) => boolean'.",
+          "src/App.tsx(263,7): error TS2322: Type '(action: ClinicAlertAction) => SessionActionResult<ClinicAlertActionResult>' is not assignable to type '(action: ClinicAlertAction) => ClinicAlertActionResult'.",
+          "src/mobile/build/MobileBuild.test.tsx(66,7): error TS2322: Type 'Mock<(x: number, y: number, orientation?: 0 | 90 | 180 | 270 | undefined) => SessionActionResult<boolean>>' is not assignable to type '((tileX: number, tileY: number, orientation?: RoomOrientation | undefined) => boolean) | undefined'.",
+          "src/mobile/levelFiveGoals.test.tsx(33,31): error TS2322: Type 'Mock<(action: ClinicAlertAction) => SessionActionResult<ClinicAlertActionResult>>' is not assignable to type '((action: ClinicAlertAction) => ClinicAlertActionResult) | undefined'.",
+          "src/mobile/mobileOwnerFeedback.test.tsx(46,60): error TS2322: Type '(destination: GridPoint) => SessionActionResult<boolean>' is not assignable to type '(destination: GridPoint) => boolean'.",
+          "src/mobile/mobileOwnerFeedback.test.tsx(47,7): error TS2322: Type '(roomInstanceId: string, location: GridPoint, seatId?: string | undefined) => SessionActionResult<boolean>' is not assignable to type '(roomInstanceId: string, location: GridPoint, seatId?: string | undefined) => boolean'.",
+          "src/mobile/mobileOwnerFeedback.test.tsx(47,57): error TS2322: Type '() => SessionActionResult<boolean>' is not assignable to type '() => boolean'.",
+          "src/session/usePrototypeSession.ts(2544,46): error TS2322: Type 'SessionAction<[cells: readonly GridPoint[]], boolean>' is not assignable to type '(cells: readonly GridPoint[]) => boolean'."
+        ],
+        "passed": false
+      },
+      {
+        "workspace": "@gamify-surgery/balance-config",
+        "diagnostics": [],
+        "passed": true
+      },
+      {
+        "workspace": "@gamify-surgery/clinical-authoring",
+        "diagnostics": [],
+        "passed": true
+      },
+      {
+        "workspace": "@gamify-surgery/clinical-content",
+        "diagnostics": [],
+        "passed": true
+      },
+      {
+        "workspace": "@gamify-surgery/clinical-research",
+        "diagnostics": [],
+        "passed": true
+      },
+      {
+        "workspace": "@gamify-surgery/game-domain",
+        "diagnostics": [],
+        "passed": true
+      }
+    ],
+    "log": "tools/question-quality/question-bank-batch2a-round3-typecheck-handoff-current-20261104.log",
+    "priorConcurrentFailureLog": "tools/question-quality/question-bank-batch2a-round3-typecheck-deletion-final-20261104.log",
+    "earlierAllSevenPassedLog": "tools/question-quality/question-bank-batch2a-round3-typecheck-handoff-20261104.log"
+  }
+}

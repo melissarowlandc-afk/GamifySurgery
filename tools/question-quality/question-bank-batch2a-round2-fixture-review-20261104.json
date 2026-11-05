@@ -1,0 +1,95 @@
+{
+  "checkedAt": "2026-11-05T00:06:27.579Z",
+  "control": "question-bank-batch2a-round2-fixture-control-20261104.json",
+  "reviews": [
+    {
+      "file": "packages/game-domain/tests/patient-supply.test.ts",
+      "assertionCallSitesBefore": 18,
+      "assertionCallSitesAfter": 18,
+      "assertionsAdded": 0,
+      "commandsAndDeadlinesUnchanged": true,
+      "onlyDocumentedExpectedValuesAndAddedExactGuard": true,
+      "replacements": [
+        [
+          "expect(release.concepts).toHaveLength(462 + 39);",
+          "expect(release.concepts).toHaveLength(462 + 39 + 6);"
+        ]
+      ]
+    },
+    {
+      "file": "packages/game-domain/tests/diagnostics/patient-supply.test.ts",
+      "assertionCallSitesBefore": 12,
+      "assertionCallSitesAfter": 12,
+      "assertionsAdded": 0,
+      "commandsAndDeadlinesUnchanged": true,
+      "onlyDocumentedExpectedValuesAndAddedExactGuard": true,
+      "replacements": []
+    },
+    {
+      "file": "packages/game-domain/tests/gs028-20261007-batch.test.ts",
+      "assertionCallSitesBefore": 91,
+      "assertionCallSitesAfter": 91,
+      "assertionsAdded": 0,
+      "commandsAndDeadlinesUnchanged": true,
+      "onlyDocumentedExpectedValuesAndAddedExactGuard": true,
+      "replacements": [
+        [
+          "expect(pools.map((item) => item.before)).toEqual([{ cases: 480, concepts: 144 }, { cases: 718, concepts: 258 }, { cases: 754, concepts: 275 }]);",
+          "expect(pools.map((item) => item.before)).toEqual([{\"cases\":480,\"concepts\":144},{\"cases\":718,\"concepts\":261},{\"cases\":754,\"concepts\":278}]);"
+        ],
+        [
+          "expect(pools.map((item) => item.after)).toEqual([{ cases: 558, concepts: 168 }, { cases: 796, concepts: 282 }, { cases: 832, concepts: 299 }]);",
+          "expect(pools.map((item) => item.after)).toEqual([{\"cases\":558,\"concepts\":168},{\"cases\":796,\"concepts\":285},{\"cases\":832,\"concepts\":302}]);"
+        ]
+      ]
+    },
+    {
+      "file": "packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+      "assertionCallSitesBefore": 131,
+      "assertionCallSitesAfter": 131,
+      "assertionsAdded": 0,
+      "commandsAndDeadlinesUnchanged": true,
+      "onlyDocumentedExpectedValuesAndAddedExactGuard": true,
+      "replacements": [
+        [
+          "expect(pools.map((item) => item.before)).toEqual([{ cases: 558, concepts: 168 }, { cases: 796, concepts: 282 }, { cases: 832, concepts: 299 }]);",
+          "expect(pools.map((item) => item.before)).toEqual([{\"cases\":558,\"concepts\":168},{\"cases\":796,\"concepts\":285},{\"cases\":832,\"concepts\":302}]);"
+        ],
+        [
+          "expect(pools.map((item) => item.after)).toEqual([{ cases: 636, concepts: 189 }, { cases: 874, concepts: 303 }, { cases: 910, concepts: 320 }]);",
+          "expect(pools.map((item) => item.after)).toEqual([{\"cases\":636,\"concepts\":189},{\"cases\":874,\"concepts\":306},{\"cases\":910,\"concepts\":323}]);"
+        ]
+      ]
+    },
+    {
+      "file": "packages/game-domain/tests/surgery-center-batch.test.ts",
+      "assertionCallSitesBefore": 40,
+      "assertionCallSitesAfter": 40,
+      "assertionsAdded": 0,
+      "commandsAndDeadlinesUnchanged": true,
+      "onlyDocumentedExpectedValuesAndAddedExactGuard": true,
+      "replacements": [
+        [
+          "    expect(reviewed).toEqual(expected);",
+          "    // Round two retains old cards, but this cohort now witnesses four new\n    // applied objectives instead of two prior scored constructs.\n    expected.delete(\"concept.achalasia.high-resolution-manometry.v3\");\n    expected.delete(\"concept.achalasia.physiology-directed-treatment.v1\");\n    expected.add(\"concept.achalasia.secondary-junction-lesion-assessment.v1\");\n    expected.add(\"concept.esophageal-physiology.reserve-before-junction-intervention.v1\");\n    expected.add(\"concept.groin-hernia.femoral-defect-repair-priority.v1\");\n    expected.add(\"concept.groin-ultrasound.symptom-provocation-protocol.v1\");\n    expect(reviewed).toEqual(expected);"
+        ]
+      ]
+    },
+    {
+      "file": "packages/game-domain/tests/gs028-20261003-batch.test.ts",
+      "assertionCallSitesBefore": 117,
+      "assertionCallSitesAfter": 118,
+      "assertionsAdded": 1,
+      "commandsAndDeadlinesUnchanged": true,
+      "onlyDocumentedExpectedValuesAndAddedExactGuard": true,
+      "replacements": [
+        [
+          "    expect(records).toHaveLength(19);",
+          "    // Retained flag-round-three F13 contributes one planned PSG preview.\n    expect(records).toHaveLength(20);\n    expect(records.filter(record => record.disposition.kind === \"not_executed\" && record.disposition.reason === \"future_planned\")).toEqual([{\n      caseId: \"case.gs028d.anesthesia.a-validated-not-impression\",\n      nodeId: \"node.gs028d.anesthesia.a-validated-not-impression.1\",\n      questionVariantId: \"question.preoperative-osa.validated-risk-screening.v4.r4\",\n      choiceId: \"choice.qf3.20261104.f13.d2\",\n      choiceLabel: \"Obtain diagnostic polysomnography before planning precautions\",\n      timingProfileId: \"timing.test.overnight_protocol\",\n      disposition: { kind: \"not_executed\", reason: \"future_planned\" },\n    }]);"
+        ]
+      ]
+    }
+  ],
+  "justification": "Exact old snapshots and cohort counts reproduce with the current domain/N1/N2 and retained prior clinical bank. Only six new constructs and ten version projections differ. Case/node counts are unchanged; three additional active concepts enter the early pools. Seeded unseen selection and the versioned contrast-study gate alter deterministic receipts, while all functional assertions and deadlines remain.",
+  "limitation": "The control is diagnostic, not a Vitest pass; actual files must pass their original deadlines. No source/evidence/routing/save or selector change."
+}

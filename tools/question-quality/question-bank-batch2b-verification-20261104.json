@@ -1,0 +1,330 @@
+{
+  "checkedAt": "2026-11-05T02:24:25.336Z",
+  "assemblyStatus": {
+    "kind": "combined_default_imported",
+    "reason": null
+  },
+  "passed": true,
+  "variants": 39,
+  "newConcepts": 7,
+  "newClaims": 39,
+  "unchangedCases": 1151,
+  "unchangedNodes": 1463,
+  "protectedFiles": [
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2a-20261104-data.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2a-20261104.test.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2a-20261104.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2a-evidence-20261104.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2a-round2-20261104-data.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2a-round2-20261104.test.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2a-round2-20261104.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2a-round2-evidence-20261104.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags-round2-20261104-data.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags-round2-20261104.test.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags-round2-20261104.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags-round2-evidence-20261104.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags-round3-20261104-data.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags-round3-20261104.test.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags-round3-20261104.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags-round3-evidence-20261104.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-20261102-data.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-20261102.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-evidence-20261102.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r3-20261102-data.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r3-20261102.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r3-evidence-20261102.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r4-20261102-data.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r4-20261102.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r4-evidence-20261102.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r5-20261102-data.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r5-20261102.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r5-evidence-20261102.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r6-20261102-data.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r6-20261102.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r6-evidence-20261102.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r7-20261102-data.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r7-20261102.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r7-evidence-20261102.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-batch1-20261102-data.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-batch1-20261102.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-clinical-approvals-20261102.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-pilot-20261102-round2.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-round3-batch1-evidence-20261102.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/game-domain/tests/question-bank-batch2a-bindings.test.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/game-domain/tests/question-bank-batch2a-round2-bindings.test.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/game-domain/tests/question-flags-round2-bindings.test.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/game-domain/tests/question-flags-round3-bindings.test.ts",
+      "unchanged": false
+    },
+    {
+      "path": "apps/player/public/clinical-exhibits/batch2a-b01-pressure.png",
+      "unchanged": true
+    },
+    {
+      "path": "apps/player/public/clinical-exhibits/batch2a-b03-pressure.png",
+      "unchanged": true
+    },
+    {
+      "path": "apps/player/public/clinical-exhibits/batch2a-r2-b04-pressure.png",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/question-bank-batch2a-20261104.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/question-bank-batch2a-round2-20261104.json",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/question-flags-round3-review-20261104.json",
+      "unchanged": true
+    }
+  ],
+  "retainedStageTestRepair": {
+    "path": "packages/game-domain/tests/question-flags-round3-bindings.test.ts",
+    "beforeSha256": "de8639e96b76e344b7176c38812d1946b2cc6bec7638f061a1cfb45cc5974c85",
+    "afterSha256": "08a028c37be9dca02069188025a3b055d441109566aae58f083f5f2b0d29a8be",
+    "change": "Only import SYNTHETIC_CLINICAL_RELEASE as live -> QUESTION_NEW_N1_PRE_RELEASE as live; all eighteen round-three exact records and label-drift/frozen-case assertions remain."
+  },
+  "calibrationIds": [
+    {
+      "id": "B02",
+      "verdict": "PASS",
+      "difficulty": "hard"
+    },
+    {
+      "id": "B25",
+      "verdict": "PASS",
+      "difficulty": "hard"
+    },
+    {
+      "id": "B34",
+      "verdict": "PASS",
+      "difficulty": "hard"
+    },
+    {
+      "id": "B35",
+      "verdict": "PASS",
+      "difficulty": "hard"
+    },
+    {
+      "id": "B35-context",
+      "verdict": "PASS",
+      "difficulty": "hard"
+    }
+  ],
+  "newCoverage": [
+    {
+      "conceptId": "concept.hyperacute-rejection.event-and-compatibility-review.v1",
+      "caseIds": [
+        "case.gs028e.immunology.c3-historical-kidney-event"
+      ],
+      "hasStandalone": true
+    },
+    {
+      "conceptId": "concept.dtc.representative-node-target-and-assay.v1",
+      "caseIds": [
+        "case.gs028b.differentiated-thyroid-cancer.a-completed-negative"
+      ],
+      "hasStandalone": true
+    },
+    {
+      "conceptId": "concept.palpable-breast.site-concordant-imaging.v1",
+      "caseIds": [
+        "case.gs028c.palpable-breast.paired-dense-focal",
+        "case.gs028c.palpable-breast.a-discordant-exam"
+      ],
+      "hasStandalone": true
+    },
+    {
+      "conceptId": "concept.perianal-abscess.source-control-and-antibiotic-selection.v1",
+      "caseIds": [
+        "case.bread-butter.perianal-abscess.tender-perianal-lump",
+        "case.bread-butter.perianal-abscess.perianal-swelling",
+        "case.bread-butter.perianal-abscess.painful-sitting",
+        "case.bread-butter.perianal-abscess.draining-pain"
+      ],
+      "hasStandalone": true
+    },
+    {
+      "conceptId": "concept.immunology.graft-evidence-to-review-focus.v1",
+      "caseIds": [
+        "case.gs028e.immunology.c3-injury-pathway"
+      ],
+      "hasStandalone": true
+    },
+    {
+      "conceptId": "concept.metabolic-acidosis.corrected-gap-directed-evaluation.v1",
+      "caseIds": [
+        "case.gs028d.acid-base.b-cirrhosis-gap",
+        "case.gs028d.acid-base.b-malnutrition-gap",
+        "case.gs028d.acid-base.b-sepsis-recovery-gap"
+      ],
+      "hasStandalone": true
+    },
+    {
+      "conceptId": "concept.preoperative-nutrition.risk-before-route-selection.v1",
+      "caseIds": [
+        "case.gs028b.preoperative-nutrition.a-albumin-only"
+      ],
+      "hasStandalone": true
+    }
+  ],
+  "newlyWithoutFreshCase": [
+    "concept.hyperacute-rejection.archived-crossmatch-provenance.v1",
+    "concept.dtc.cystic-node-repeat-sampling.v2"
+  ],
+  "deferredItems": [
+    {
+      "id": "B2B27",
+      "variantId": "question.cirrhosis-perioperative-risk.decompensation-optimization-boundary.v3",
+      "conceptId": "concept.cirrhosis-perioperative-risk.decompensation-optimization-boundary",
+      "disposition": "unchanged_proposed_merge_pending_manager_acceptance",
+      "reason": "These generic return-to-individualized-risk-assessment variants duplicate the active-decompensation/timing cases. The locally recorded broad claim does not establish a unique specific treatment/clearance choice. Do not invent an operation threshold or force a generic cautious key; merge/scope decision belongs to the manager."
+    },
+    {
+      "id": "B2B28",
+      "variantId": "question.cirrhosis-perioperative-risk.multifactor-assessment.v2",
+      "conceptId": "concept.cirrhosis-perioperative-risk.multifactor-assessment",
+      "disposition": "unchanged_proposed_merge_pending_manager_acceptance",
+      "reason": "These generic return-to-individualized-risk-assessment variants duplicate the active-decompensation/timing cases. The locally recorded broad claim does not establish a unique specific treatment/clearance choice. Do not invent an operation threshold or force a generic cautious key; merge/scope decision belongs to the manager."
+    },
+    {
+      "id": "B2B05",
+      "flagId": "F13",
+      "variantId": "question.preoperative-osa.validated-risk-screening.v4.r4",
+      "retainedLiveVariantId": "question.preoperative-osa.validated-risk-screening.v4",
+      "conceptId": "concept.osa.discordant-screen-documentation.v2",
+      "disposition": "keep_live_queued_supported_application_needed",
+      "reason": "Author cover-key/difficulty attack still selects suspected-risk communication without using the full case. Locally mapped SASM facts support screening/communication, but not a richer treatment, monitoring or surgical-delay discriminator. No network is authorized; retain the manager-kept live version and queue a supported deeper objective rather than relabel recall as moderate. No retirement is proposed."
+    }
+  ]
+}

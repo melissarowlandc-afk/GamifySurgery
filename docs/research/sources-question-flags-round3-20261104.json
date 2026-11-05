@@ -1,0 +1,2467 @@
+{
+  "compiledOn": "2026-11-04",
+  "policy": "Offline reuse of recorded bibliographic metadata/rights; no source prose, private inputs, emails or network. New applications have basis IDs and explicit source-alignment limitations.",
+  "claims": [
+    {
+      "contentVersion": "development-batch.2026-09-17.bread-and-butter.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.bread-butter.cutaneous-abscess.antibiotic-nuance",
+      "statement": "After drainage of an uncomplicated cutaneous abscess, adjunctive MRSA-active antibiotics offer modest benefits and adverse effects, so a universal no-antibiotic rule is not supported.",
+      "sourceIds": [
+        "source.bread-butter.bmjopen-abscess-meta-2018"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Local resistance, allergy, comorbidity, severity, immune status, and adverse-effect risk affect the separate antibiotic decision.",
+      "applicablePopulation": "Adults after drainage of an uncomplicated cutaneous abscess.",
+      "lastCheckedOn": "2026-09-17"
+    },
+    {
+      "contentVersion": "development-batch.2026-09-17.bread-and-butter.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.bread-butter.cutaneous-abscess.incision-drainage",
+      "statement": "A confirmed, clinically meaningful, uncomplicated cutaneous abscess is treated primarily with incision and drainage.",
+      "sourceIds": [
+        "source.bread-butter.idsa-ssti-2014",
+        "source.bread-butter.acep-sonoguide-abscess"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "high",
+      "limitation": "Very small collections, special sites, deep infection, vascular mimics, immunocompromise, and systemic illness require individualized management.",
+      "applicablePopulation": "Stable adults with a discrete superficial cutaneous abscess confirmed on ultrasound.",
+      "lastCheckedOn": "2026-09-17"
+    },
+    {
+      "contentVersion": "development-batch.2026-09-17.bread-and-butter.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.bread-butter.fibroadenoma.concordant-observation",
+      "statement": "A small, asymptomatic, core-proven fibroadenoma that is radiologically and pathologically concordant and lacks atypia or concern for phyllodes tumor can be managed without routine excision.",
+      "sourceIds": [
+        "source.bread-butter.asbrs-sbi-fibroepithelial-2025"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "high",
+      "limitation": "This does not apply to discordance, atypia, phyllodes concern, symptoms, substantial growth, or a patient preference for removal.",
+      "applicablePopulation": "Stable adults with an asymptomatic concordant fibroadenoma proven by core biopsy.",
+      "lastCheckedOn": "2026-09-17"
+    },
+    {
+      "contentVersion": "development-batch.2026-09-17.bread-and-butter.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.bread-butter.skin-infection.equivocal-ultrasound",
+      "statement": "When examination cannot distinguish cellulitis from a superficial abscess, targeted soft-tissue ultrasound can identify a drainable collection.",
+      "sourceIds": [
+        "source.bread-butter.acep-sonoguide-abscess"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "An obvious superficial abscess does not need imaging before drainage; operator skill, depth, anatomy, and vascular mimics affect interpretation.",
+      "applicablePopulation": "Stable adults with an equivocal superficial skin infection and no necrotizing, vascular, deep-space, breast, or perianal concern.",
+      "lastCheckedOn": "2026-09-17"
+    },
+    {
+      "contentVersion": "development-batch.2026-09-29.pre-endoscopy.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.cirrhosis.multifactor-risk",
+      "statement": "Perioperative risk in cirrhosis depends on liver severity, portal hypertension and decompensation, procedure type, comorbidity, and center experience; no one score or laboratory value captures the whole decision.",
+      "sourceIds": [
+        "source.cirrhosis.aga-2019"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "Single expert-review source; no fixed mortality estimate is taught.",
+      "applicablePopulation": "Adults with cirrhosis being considered for nonhepatic surgery.",
+      "lastCheckedOn": "2026-09-29"
+    },
+    {
+      "contentVersion": "development-batch.2026-09-29.pre-endoscopy.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.cirrhosis.optimize-decompensation",
+      "statement": "Active decompensation supports multidisciplinary optimization before proceeding with a nonurgent elective plan; deferral is an inferred case-specific boundary rather than an automatic prohibition.",
+      "sourceIds": [
+        "source.cirrhosis.aga-2019"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "moderate",
+      "limitation": "Urgent surgical emergencies require immediate assessment despite elevated risk.",
+      "applicablePopulation": "Adults with cirrhosis and a proposed nonurgent elective operation.",
+      "lastCheckedOn": "2026-09-29"
+    },
+    {
+      "contentVersion": "development-batch.2026-09-29.pre-endoscopy.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.dtc.extent",
+      "statement": "Initial thyroid surgical extent is individualized from tumor extent and laterality, nodal or distant disease, recurrence considerations, future treatment needs, and patient preferences.",
+      "sourceIds": [
+        "source.dtc.ata-2025",
+        "source.dtc.ata-summary-2025"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "No operation is selected from age alone or mandated for every DTC.",
+      "applicablePopulation": "Adults with confirmed differentiated thyroid cancer.",
+      "lastCheckedOn": "2026-09-29"
+    },
+    {
+      "contentVersion": "development-batch.2026-09-29.pre-endoscopy.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.dtc.preop-ultrasound",
+      "statement": "Malignant thyroid cytology or molecular findings warrant preoperative central and lateral neck ultrasonography to assess cervical nodes and gross local extension.",
+      "sourceIds": [
+        "source.dtc.ata-2025"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "No unchecked numeric node threshold is taught.",
+      "applicablePopulation": "Adults proceeding toward surgery for differentiated thyroid cancer confirmed by cytology or molecular findings.",
+      "lastCheckedOn": "2026-09-29"
+    },
+    {
+      "contentVersion": "development-batch.2026-09-13.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.early.bile-leak.ce-mrcp-anatomic-localization",
+      "statement": "After CT assesses postoperative collections, contrast-enhanced MRCP with a hepatobiliary agent can anatomically localize a suspected bile leak and evaluate duct continuity; scintigraphy can demonstrate active leakage but has limited spatial detail.",
+      "sourceIds": [
+        "source.wses.bile-duct-injury.2021"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "The dedicated hepatobiliary-contrast study is a distinct external service; this claim does not make MRCP the first test in an unstable patient.",
+      "applicablePopulation": "Stable post-cholecystectomy adults after CT excludes an uncontrolled collection.",
+      "lastCheckedOn": "2026-09-13"
+    },
+    {
+      "contentVersion": "development-batch.2026-09-13.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.early.bile-leak.minor-leak-ercp-stent",
+      "statement": "A persistent minor postoperative bile leak with preserved common-duct continuity can be referred for ERCP with transpapillary plastic-stent treatment.",
+      "sourceIds": [
+        "source.wses.bile-duct-injury.2021",
+        "source.esge.biliary-stenting.2018"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "high",
+      "limitation": "Excludes sepsis, peritonitis, uncontrolled collections, and complete common-bile-duct or common-hepatic-duct transection.",
+      "applicablePopulation": "Stable patients with a persistent minor post-cholecystectomy leak and preserved duct continuity.",
+      "lastCheckedOn": "2026-09-13"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-02.pre-endoscopy.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028c.dcis.axilla-mastectomy",
+      "statement": "Sentinel-node biopsy is ordinarily performed with mastectomy for pure DCIS because later lymphatic mapping may be unreliable.",
+      "sourceIds": [
+        "source.asbrs.axilla.2026"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Single current society source; standard setting without a planned delayed magnetic-tracer strategy.",
+      "applicablePopulation": "Adults undergoing mastectomy for pure DCIS.",
+      "lastCheckedOn": "2026-10-02"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-02.pre-endoscopy.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028c.dcis.axilla-omit-bcs",
+      "statement": "Routine axillary surgery is generally omitted for pure DCIS treated with uncomplicated breast-conserving surgery when invasion is not suspected.",
+      "sourceIds": [
+        "source.asbrs.axilla.2026"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Single current society source.",
+      "applicablePopulation": "Adults undergoing routine breast conservation for pure DCIS without concern for invasion.",
+      "lastCheckedOn": "2026-10-02"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-02.pre-endoscopy.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028c.dcis.axilla-risk-setting",
+      "statement": "Sentinel-node biopsy is appropriate when the planned DCIS operation will compromise later mapping or when occult invasion is meaningfully suspected.",
+      "sourceIds": [
+        "source.asbrs.axilla.2026"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Single current society source; case-specific judgment remains required.",
+      "applicablePopulation": "Adults undergoing DCIS surgery with threatened future mapping or concern for occult invasion.",
+      "lastCheckedOn": "2026-10-02"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-02.pre-endoscopy.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028c.palpable.biopsy",
+      "statement": "A clinically suspicious persistent palpable breast mass requires tissue diagnosis even when diagnostic mammography and targeted ultrasonography are negative.",
+      "sourceIds": [
+        "source.acr.palpable-breast-masses.2022"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Single current specialty guideline; biopsy technique depends on whether an imaging target exists and local specialist assessment.",
+      "applicablePopulation": "Adults with a persistently suspicious palpable breast mass despite negative mammography and targeted ultrasound.",
+      "lastCheckedOn": "2026-10-02"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-03.coverage-gaps.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028d.acidosis.blood-gas",
+      "statement": "When reduced plasma bicarbonate suggests metabolic acidosis, blood-gas assessment confirms the acidemia and identifies respiratory or mixed acid-base contributions.",
+      "sourceIds": [
+        "source.french-panel.metabolic-acidosis.2019"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "low",
+      "limitation": "R1.1 is expert opinion; arterial sampling is not claimed universally superior.",
+      "applicablePopulation": "Adults with reduced plasma bicarbonate and suspected metabolic acidosis.",
+      "lastCheckedOn": "2026-10-03"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-03.coverage-gaps.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028d.hyperkalaemia.mechanisms",
+      "statement": "In acute hyperkalaemia, intravenous calcium protects cardiac membrane physiology but does not lower serum potassium, whereas insulin with glucose shifts potassium into cells.",
+      "sourceIds": [
+        "source.ukka.hyperkalaemia.2026"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "low",
+      "limitation": "The July 2026 calcium recommendation is 2C after no evidence for or against outcome benefit; no dose, timing, or survival claim is taught.",
+      "applicablePopulation": "Adults receiving hospital treatment for acute hyperkalaemia.",
+      "lastCheckedOn": "2026-10-03"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-03.coverage-gaps.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028d.hyperkalaemia.severe-transfer",
+      "statement": "Under the current UKKA adult pathway, a confirmed community potassium concentration of at least 6.5 mmol/L warrants immediate hospital assessment and treatment.",
+      "sourceIds": [
+        "source.ukka.hyperkalaemia.2026"
+      ],
+      "evidenceCategory": "disposition",
+      "certainty": "moderate",
+      "limitation": "This is a UK guideline threshold, not a universal jurisdictional rule or an exact arrhythmia probability.",
+      "applicablePopulation": "Adults with confirmed severe hyperkalaemia detected in the community.",
+      "lastCheckedOn": "2026-10-03"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-03.coverage-gaps.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028d.osa.validated-screen",
+      "statement": "Validated preoperative screening can identify adults at increased probability of obstructive sleep apnoea for perioperative communication, but screening does not establish the diagnosis.",
+      "sourceIds": [
+        "source.sasm.osa-screening.2016"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "No proprietary questionnaire, item wording, score cutoff, or guaranteed outcome benefit is reproduced.",
+      "applicablePopulation": "Adults undergoing preoperative assessment.",
+      "lastCheckedOn": "2026-10-03"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.hyperacute_preformed",
+      "statement": "Documented hyperacute allograft rejection can be driven by recipient antibodies that were present before transplantation and recognize donor antigens.",
+      "sourceIds": [
+        "source.gs028e.hyperacute_matsuda2016",
+        "source.gs028e.ahrq_transplant2012"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "high",
+      "limitation": "Narrow mechanism from a transplant review plus an independent commissioned background cross-check. Early graft dysfunction alone does not prove rejection or this mechanism; no transplant timing threshold or treatment is inferred.",
+      "applicablePopulation": "Stable adults reviewing an outside-confirmed historical hyperacute allograft event.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.hyperacute_vascular",
+      "statement": "Preformed donor-specific antibodies can bind allograft endothelium and initiate complement-associated vascular injury and thrombosis in hyperacute rejection.",
+      "sourceIds": [
+        "source.gs028e.hyperacute_matsuda2016"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "moderate",
+      "limitation": "One adequately licensed review supplies this narrow vascular mechanism. No claim that all acute rejection is antibody-mediated or that T-cell and antibody mechanisms cannot coexist.",
+      "applicablePopulation": "Adults discussing a documented historical donor-specific antibody-mediated graft injury.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.laparoscopy.caval-compression-venous-return",
+      "statement": "Pneumoperitoneum pressure that compresses abdominal veins or the vena cava can reduce venous return and cardiac preload; this is a possible mechanism in the supplied compression context, not an inevitable effect of laparoscopy.",
+      "sourceIds": [
+        "source.jcm.laparoscopic-anesthesia-review.2020",
+        "source.jroboticsurg.pneumoperitoneum-acid-base-study.2026"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "high",
+      "limitation": "No numeric pressure threshold, automatic hypotension rule, or universal cardiac-output direction is inferred. Both pressure and other perioperative factors contribute to hemodynamic observations.",
+      "applicablePopulation": "Adults reviewing a completed laparoscopic operation with documented pressure-associated venous compression.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.laparoscopy.co2-load-respiratory-acidemia",
+      "statement": "Peritoneal CO2 absorption adds a CO2 load; when pulmonary elimination does not match that load, blood CO2 can rise and produce respiratory acidemia.",
+      "sourceIds": [
+        "source.jcm.laparoscopic-anesthesia-review.2020",
+        "source.jroboticsurg.pneumoperitoneum-acid-base-study.2026"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "high",
+      "limitation": "Ventilation and respiratory mechanics also affect blood CO2. The current observational study cannot establish every mechanistic contribution; these cases supply completed-care records rather than asking the clinic to select ventilator settings or manage live hypercarbia.",
+      "applicablePopulation": "Adults reviewing a resolved CO2-associated event in an outside anesthesia record.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.laparoscopy.diaphragm-phrenic-shoulder-pain",
+      "statement": "After laparoscopy, residual gas and diaphragmatic irritation can stimulate the phrenic sensory pathway and contribute to pain perceived at the shoulder even without a shoulder injury.",
+      "sourceIds": [
+        "source.sages.laparoscopic-gallbladder-patient-information.2026",
+        "source.gynecological-surgery.shoulder-pain-trial.2021"
+      ],
+      "evidenceCategory": "anatomy",
+      "certainty": "moderate",
+      "limitation": "Shoulder pain has multiple possible causes; the proposed phrenic/diaphragmatic mechanism is not proved for every episode. The trial is a gynecologic-population mechanism cross-check; no analgesic, gas-removal procedure or fixed pain duration is prescribed.",
+      "applicablePopulation": "Adults with a completed outside laparoscopic cholecystectomy and a fully reassuring clinic assessment.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.laparoscopy.peritoneal-co2-uptake",
+      "statement": "CO2 used to create pneumoperitoneum can cross peritoneal tissue into blood; absorbed CO2 is carried to the lungs for exhalation.",
+      "sourceIds": [
+        "source.jcm.laparoscopic-anesthesia-review.2020",
+        "source.jroboticsurg.pneumoperitoneum-acid-base-study.2026"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "high",
+      "limitation": "Physiology review plus current clinical observational cross-check. No absorption rate, pressure cutoff, or claim that every raised CO2 measurement has this sole cause is authored.",
+      "applicablePopulation": "Adults reviewing completed outside laparoscopic surgery with documented CO2 insufflation.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.laparoscopy.pressure-position-context",
+      "statement": "Pneumoperitoneum hemodynamics depend on pressure, circulating volume, and positioning; early compression of splanchnic veins may increase central filling, while head-up positioning can reduce venous return and head-down positioning can increase it.",
+      "sourceIds": [
+        "source.jcm.laparoscopic-anesthesia-review.2020",
+        "source.jroboticsurg.pneumoperitoneum-acid-base-study.2026"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "moderate",
+      "limitation": "The review directly supports phase/position distinctions, while the independent study corroborates pressure-associated effects rather than every position comparison. No universal preload outcome or operative management instruction is supplied.",
+      "applicablePopulation": "Adults discussing the hemodynamic context in an outside laparoscopy record.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.laparoscopy.shoulder-pain-reassurance-boundary",
+      "statement": "A mild improving shoulder symptom after laparoscopy may be discussed as referred pain only in a reassuring clinical context; breathing difficulty, severe or worsening abdominal pain, fever, persistent vomiting, jaundice, or concerning wound changes require renewed assessment rather than automatic gas-pain reassurance.",
+      "sourceIds": [
+        "source.sages.laparoscopic-gallbladder-patient-information.2026"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "high",
+      "limitation": "Single current professional-society patient guidance supports these warning features. No exact fever threshold or complete triage algorithm is authored; the stem supplies current benign findings and does not exclude all disease through wording alone.",
+      "applicablePopulation": "Adults discussing shoulder pain after outside laparoscopic gallbladder removal.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028e.t_cell_graft_comparison",
+      "statement": "Allograft rejection may involve T-cell-mediated or antibody-mediated pathways, and the pathways can coexist; a documented hyperacute preformed-antibody event should not be substituted with an unproven T-cell-only explanation.",
+      "sourceIds": [
+        "source.gs028e.hyperacute_matsuda2016"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "moderate",
+      "limitation": "Narrow comparator from the transplant review Abstract; does not classify all acute rejection as T-cell-only, infer a treatment or establish a new active diagnosis.",
+      "applicablePopulation": "Stable adults reviewing a confirmed historical transplant rejection mechanism.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028f.neck.adult-lateral-malignancy-evaluation",
+      "statement": "A persistent unexplained lateral neck mass in an adult requires evaluation for malignancy; a cystic appearance in an older adult does not establish a benign developmental cyst.",
+      "sourceIds": [
+        "source.gs028f.uk.head-neck-guidelines.2024"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "high",
+      "limitation": "Single independent multidisciplinary guideline directly supports the malignancy/cystic boundary. The cases are adults older than40 with persistent unexplained nonthyroid masses, not a thyroid-nodule, thyroglossal-duct or known benign-cyst objective. No precise duration threshold or definitive cancer diagnosis is inferred.",
+      "applicablePopulation": "Adults older than40 with a persistent unexplained lateral or cystic neck mass.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028f.neck.core-biopsy-alternative",
+      "statement": "Core needle biopsy may be appropriate for selected neck masses when the tissue or ancillary testing needed is not adequately supplied by fine-needle aspiration.",
+      "sourceIds": [
+        "source.gs028f.uk.head-neck-guidelines.2024"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "high",
+      "limitation": "Single guideline; core is acknowledged in feedback and is never an incorrect alternative to FNA. The cases do not ask for lymphoma-specific sampling or prescribe open biopsy after a fixed number of attempts.",
+      "applicablePopulation": "Specialist-assessed neck masses with technique selection based on pathology requirements.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028f.neck.imaging-versus-tissue-diagnosis",
+      "statement": "Cross-sectional neck imaging characterizes anatomy, whereas cell or tissue sampling supplies the material for a cytological or histological diagnosis of an undiagnosed suspicious neck mass.",
+      "sourceIds": [
+        "source.gs028f.uk.head-neck-guidelines.2024"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "high",
+      "limitation": "Single guideline's independently synthesized distinction between imaging and needle-sampling roles. A supplied CT description does not substitute for a tissue specimen; no universal sequence or guaranteed sampling result is claimed.",
+      "applicablePopulation": "Adults with an imaged but still undiagnosed suspicious cervical mass.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028f.neck.needle-before-open",
+      "statement": "After appropriate assessment of an undiagnosed at-risk adult neck mass, fine-needle aspiration is an appropriate initial needle-sampling approach; open incisional or excisional biopsy should not replace the initial needle approach.",
+      "sourceIds": [
+        "source.gs028f.uk.head-neck-guidelines.2024"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "high",
+      "limitation": "Single independent guideline. FNA is the best offered needle option, not universally preferable to core biopsy. The game action is specialist referral, not a fabricated local generic-FNA procedure or a complete cancer-workup sequence.",
+      "applicablePopulation": "Adults with an assessed, undiagnosed suspicious cervical mass requiring an initial needle sample.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.level3.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028g.laparoscopy-respiratory.diaphragm-compliance",
+      "statement": "Pneumoperitoneum can displace the diaphragm cephalad.",
+      "sourceIds": [
+        "source.gs028g.jimenez-ventilation-2024"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "moderate",
+      "limitation": "Single current physiology review; no exact pressure threshold, fixed ventilator setting or automatic diagnosis for sudden airway-pressure elevation is authored.",
+      "applicablePopulation": "Adult synthetic perioperative or postoperative clinic encounters; no onsite hospital operation is simulated.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.level3.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028g.laparoscopy-respiratory.diaphragm-compliance.fact2",
+      "statement": "Pneumoperitoneum-related mechanical restriction can reduce respiratory compliance and resting lung volume.",
+      "sourceIds": [
+        "source.gs028g.jimenez-ventilation-2024"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "moderate",
+      "limitation": "Single current physiology review; no exact pressure threshold, fixed ventilator setting or automatic diagnosis for sudden airway-pressure elevation is authored.",
+      "applicablePopulation": "Adult synthetic perioperative or postoperative clinic encounters; no onsite hospital operation is simulated.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.level3.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028g.laparoscopy-respiratory.diaphragm-compliance.fact3",
+      "statement": "Lower respiratory compliance can increase the pressure needed to deliver a given tidal volume.",
+      "sourceIds": [
+        "source.gs028g.jimenez-ventilation-2024"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "moderate",
+      "limitation": "Single current physiology review; no exact pressure threshold, fixed ventilator setting or automatic diagnosis for sudden airway-pressure elevation is authored.",
+      "applicablePopulation": "Adult synthetic perioperative or postoperative clinic encounters; no onsite hospital operation is simulated.",
+      "lastCheckedOn": "2026-10-07"
+    },
+    {
+      "contentVersion": "development-batch.2026-09-29.statistics-ethics.2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028se.perioperative-dnr.1",
+      "statement": "Perioperative DNR orders require individualized review with the patient or surrogate and responsible clinicians; automatic suspension bypasses self-determination.",
+      "sourceIds": [
+        "source.gs028se.asa-dnar-2023",
+        "source.gs028se.ama-dnar-5-4"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "moderate",
+      "limitation": "Ethical guidance does not replace jurisdiction-specific law or institutional policy.",
+      "applicablePopulation": "People in the stated fictional clinical situation.",
+      "lastCheckedOn": "2026-09-29"
+    },
+    {
+      "contentVersion": "development-batch.2026-09-29.statistics-ethics.2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028se.perioperative-dnr.2",
+      "statement": "The team should clarify requested interventions in the context of anesthesia, identify essential procedures, and document an agreed individualized plan.",
+      "sourceIds": [
+        "source.gs028se.asa-dnar-2023",
+        "source.gs028se.ama-dnar-5-4"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "moderate",
+      "limitation": "Ethical guidance does not replace jurisdiction-specific law or institutional policy.",
+      "applicablePopulation": "People in the stated fictional clinical situation.",
+      "lastCheckedOn": "2026-09-29"
+    },
+    {
+      "contentVersion": "development-batch.2026-09-29.statistics-ethics.2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028se.perioperative-dnr.3",
+      "statement": "Perioperative planning should document when the original directive will be reinstated so temporary modifications do not silently become indefinite.",
+      "sourceIds": [
+        "source.gs028se.asa-dnar-2023",
+        "source.gs028se.ama-dnar-5-4"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "moderate",
+      "limitation": "Ethical guidance does not replace jurisdiction-specific law or institutional policy.",
+      "applicablePopulation": "People in the stated fictional clinical situation.",
+      "lastCheckedOn": "2026-09-29"
+    },
+    {
+      "contentVersion": "development-batch.2026-09-29.statistics-ethics.2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.gs028se.perioperative-dnr.4",
+      "statement": "DNR concerns resuscitative efforts after arrest; it does not by itself prohibit other appropriate treatment consistent with patient goals.",
+      "sourceIds": [
+        "source.gs028se.asa-dnar-2023",
+        "source.gs028se.ama-dnar-5-4"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "moderate",
+      "limitation": "Ethical guidance does not replace jurisdiction-specific law or institutional policy.",
+      "applicablePopulation": "People in the stated fictional clinical situation.",
+      "lastCheckedOn": "2026-09-29"
+    },
+    {
+      "contentVersion": "clinical.owner-row-104.2026-08-21.1",
+      "reviewStatus": "clinically_approved",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": {
+        "reviewer": "Melissa Rowland, MD",
+        "reviewedOn": "2026-08-21",
+        "contentVersion": "clinical.owner-row-104.2026-08-21.1"
+      },
+      "id": "claim.lymphangitis.distal-entry-proximal-streak-regional-nodes",
+      "statement": "Acute lymphangitis can be recognized clinically when a distal skin entry site is accompanied by a tender erythematous streak extending proximally toward tender regional lymph nodes.",
+      "sourceIds": [
+        "source.msd-manual-professional.lymphangitis.2026"
+      ],
+      "evidenceCategory": "presentation",
+      "certainty": "moderate",
+      "limitation": "This narrow claim supports pattern recognition only; it does not establish an organism, severity, testing plan, treatment, prognosis, or disposition. MSD Manual Professional is the sole adequate targeted-verification source retained for this claim; an independent source has not yet been recorded.",
+      "applicablePopulation": "Patients represented in the approved outpatient clinic vignettes with a distal skin entry site, proximal tender streak, and regional nodal tenderness.",
+      "lastCheckedOn": "2026-08-21"
+    },
+    {
+      "contentVersion": "question-flags-round2.evidence.2026-11-04.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "lastCheckedOn": "2026-11-04",
+      "id": "claim.qf2.fixed-volume-peak-plateau-pattern",
+      "statement": "At unchanged tidal volume, inspiratory flow and PEEP, a matched increase in peak and plateau pressure with an unchanged peak-to-plateau difference supports increased elastic pressure requirements rather than an isolated increase in airway resistance.",
+      "sourceIds": [
+        "source.gs028g.jimenez-ventilation-2024"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "applicablePopulation": "The explicitly controlled or reported adult retrospective profiles in the round-two question-flag drafts.",
+      "limitation": "Qualitative physical application of the recorded diaphragm/compliance relation. It is not a newly verified ventilator algorithm, universal diagnosis or instruction to choose settings; the question explicitly supplies the acquisition controls.",
+      "basisClaimIds": [
+        "claim.gs028g.laparoscopy-respiratory.diaphragm-compliance",
+        "claim.gs028g.laparoscopy-respiratory.diaphragm-compliance.fact2"
+      ],
+      "verificationScope": "Offline application/physical inference from previously recorded claims. No source was newly retrieved; source access dates and reuse restrictions remain unchanged. Clinician/source-alignment review is pending."
+    },
+    {
+      "contentVersion": "question-flags-round2.evidence.2026-11-04.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "lastCheckedOn": "2026-11-04",
+      "id": "claim.qf2.qualitative-co2-acid-base-pattern",
+      "statement": "In the supplied qualitative record, higher arterial CO2 with lower pH and unchanged bicarbonate supports a respiratory CO2-load interpretation rather than a new primary fixed-acid process.",
+      "sourceIds": [
+        "source.jcm.laparoscopic-anesthesia-review.2020",
+        "source.jroboticsurg.pneumoperitoneum-acid-base-study.2026"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "applicablePopulation": "The explicitly controlled or reported adult retrospective profiles in the round-two question-flag drafts.",
+      "limitation": "A case-specific acid-base inference, not a numeric compensation rule, exclusion of every mixed disorder, or proof that peritoneal absorption is the sole cause in every operation.",
+      "basisClaimIds": [
+        "claim.gs028e.laparoscopy.co2-load-respiratory-acidemia",
+        "claim.gs028e.laparoscopy.peritoneal-co2-uptake"
+      ],
+      "verificationScope": "Offline application/physical inference from previously recorded claims. No source was newly retrieved; source access dates and reuse restrictions remain unchanged. Clinician/source-alignment review is pending."
+    },
+    {
+      "contentVersion": "question-flags-round2.evidence.2026-11-04.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "lastCheckedOn": "2026-11-04",
+      "id": "claim.qf2.sleep-questionnaire-domain-interpretation",
+      "statement": "A STOP-Bang OSA-probability report and an Epworth daytime-sleepiness report address different targets; a reassuring sleepiness report does not establish absence of OSA or turn a probability screen into a confirmed diagnosis.",
+      "sourceIds": [
+        "source.sasm.osa-screening.2016"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "applicablePopulation": "The explicitly controlled or reported adult retrospective profiles in the round-two question-flag drafts.",
+      "limitation": "Uses names and reported outputs only, without questionnaire items, scoring implementation, numeric cutoffs or diagnostic-study thresholds. The domain application requires anaesthesia/source-alignment review; no fresh verification is claimed.",
+      "basisClaimIds": [
+        "claim.gs028d.osa.validated-screen"
+      ],
+      "verificationScope": "Offline application/physical inference from previously recorded claims. No source was newly retrieved; source access dates and reuse restrictions remain unchanged. Clinician/source-alignment review is pending."
+    },
+    {
+      "contentVersion": "question-flags-round3.evidence.2026-11-04.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "lastCheckedOn": "2026-11-04",
+      "id": "claim.qf3.breast-sample-depth-provenance",
+      "statement": "A matching breast skin-site label does not establish representative sampling when the specimen and needle notch lie in superficial fat and the persistent clinical target lies beneath that plane; a visible clip is not a substitute for the unrepresented target.",
+      "basisClaimIds": [
+        "claim.qq20261102c.breast-core-target-discordance",
+        "claim.gs028c.palpable.biopsy"
+      ],
+      "sourceIds": [
+        "source.qq20261102c.breast-eusobi2020",
+        "source.qq20261102c.asbrs2024-archived",
+        "source.acr.palpable-breast-masses.2022"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "applicablePopulation": "Only the explicitly described synthetic adult question-flag round-three profiles.",
+      "limitation": "Case-specific provenance inference. Specialist assessment chooses a representative biopsy technique; it does not mandate biopsy of every benign palpable finding or declare all clips unreliable.",
+      "verificationScope": "Offline author synthesis/application from recorded claims and their existing source records; no fresh source retrieval, source-access-date change or clinical approval. Direct alignment of the application remains for independent clinical/source review."
+    },
+    {
+      "contentVersion": "question-flags-round3.evidence.2026-11-04.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "lastCheckedOn": "2026-11-04",
+      "id": "claim.qf3.cirrhosis-urgent-hernia-boundary",
+      "statement": "New pain, irreducibility, vomiting and bowel dilatation proximal to a hernia with distal collapse require urgent surgical assessment despite a prior elective cirrhosis-optimization plan.",
+      "basisClaimIds": [
+        "claim.cirrhosis.optimize-decompensation",
+        "claim.cirrhosis.multifactor-risk"
+      ],
+      "sourceIds": [
+        "source.cirrhosis.aga-2019"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "moderate",
+      "applicablePopulation": "Only the explicitly described synthetic adult question-flag round-three profiles.",
+      "limitation": "Application of the explicit urgent-emergency exception. The pattern does not establish bowel necrosis or a specific operation; no laboratory correction target is proposed.",
+      "verificationScope": "Offline author synthesis/application from recorded claims and their existing source records; no fresh source retrieval, source-access-date change or clinical approval. Direct alignment of the application remains for independent clinical/source review."
+    },
+    {
+      "contentVersion": "question-flags-round3.evidence.2026-11-04.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "lastCheckedOn": "2026-11-04",
+      "id": "claim.qf3.controlled-filling-elastic-load",
+      "statement": "In the supplied controlled record, smaller end-diastolic volume with similar ejection fraction supports reduced filling, while a higher plateau pressure during passive inspiratory holds at fixed delivered volume and measured total PEEP supports an increased elastic pressure requirement.",
+      "basisClaimIds": [
+        "claim.gs028e.laparoscopy.caval-compression-venous-return",
+        "claim.gs028g.laparoscopy-respiratory.diaphragm-compliance.fact3"
+      ],
+      "sourceIds": [
+        "source.jcm.laparoscopic-anesthesia-review.2020",
+        "source.jroboticsurg.pneumoperitoneum-acid-base-study.2026",
+        "source.gs028g.jimenez-ventilation-2024"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "applicablePopulation": "Only the explicitly described synthetic adult question-flag round-three profiles.",
+      "limitation": "Physical interpretation rather than proof of a unique cause or exclusion of mixed mechanisms. No new operative management, measured numeric range or ventilator setting is taught.",
+      "verificationScope": "Offline author synthesis/application from recorded claims and their existing source records; no fresh source retrieval, source-access-date change or clinical approval. Direct alignment of the application remains for independent clinical/source review."
+    },
+    {
+      "contentVersion": "question-flags-round3.evidence.2026-11-04.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "lastCheckedOn": "2026-11-04",
+      "id": "claim.qf3.dcis-specimen-operation-application",
+      "statement": "Removal of the breast gland with retention of the skin envelope is a mastectomy rather than a localized breast-conserving excision; the conventional pure-DCIS axillary staging distinction follows the gland operation.",
+      "basisClaimIds": [
+        "claim.gs028c.dcis.axilla-mastectomy",
+        "claim.gs028c.dcis.axilla-omit-bcs"
+      ],
+      "sourceIds": [
+        "source.asbrs.axilla.2026"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "applicablePopulation": "Only the explicitly described synthetic adult question-flag round-three profiles.",
+      "limitation": "Anatomical application of the recorded standard-operation rule. No delayed-tracer strategy or universal oncoplastic-operation rule is added.",
+      "verificationScope": "Offline author synthesis/application from recorded claims and their existing source records; no fresh source retrieval, source-access-date change or clinical approval. Direct alignment of the application remains for independent clinical/source review."
+    },
+    {
+      "contentVersion": "question-flags-round3.evidence.2026-11-04.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "lastCheckedOn": "2026-11-04",
+      "id": "claim.qf3.direction-versus-acidemia",
+      "statement": "A pH fall from above to within the laboratory reference interval is not demonstrated acidemia, even when arterial CO2 rises; direction of change and the later acid-base state are separate interpretations.",
+      "basisClaimIds": [
+        "claim.gs028d.acidosis.blood-gas",
+        "claim.qf2.qualitative-co2-acid-base-pattern"
+      ],
+      "sourceIds": [
+        "source.french-panel.metabolic-acidosis.2019",
+        "source.jcm.laparoscopic-anesthesia-review.2020",
+        "source.jroboticsurg.pneumoperitoneum-acid-base-study.2026"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "applicablePopulation": "Only the explicitly described synthetic adult question-flag round-three profiles.",
+      "limitation": "Reference-interval/definition inference without invented numeric values, a compensation formula, proof of CO2 source or a ventilator adjustment.",
+      "verificationScope": "Offline author synthesis/application from recorded claims and their existing source records; no fresh source retrieval, source-access-date change or clinical approval. Direct alignment of the application remains for independent clinical/source review."
+    },
+    {
+      "contentVersion": "question-flags-round3.evidence.2026-11-04.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "lastCheckedOn": "2026-11-04",
+      "id": "claim.qf3.dnr-baseline-support-endpoint",
+      "statement": "When the agreed temporary directive ends after reassessed return to the pre-anaesthetic cardiopulmonary condition, continuation of unchanged chronic baseline oxygen does not by itself extend the modification.",
+      "basisClaimIds": [
+        "claim.gs028se.perioperative-dnr.2",
+        "claim.gs028se.perioperative-dnr.3",
+        "claim.gs028se.perioperative-dnr.4"
+      ],
+      "sourceIds": [
+        "source.gs028se.asa-dnar-2023",
+        "source.gs028se.ama-dnar-5-4"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "applicablePopulation": "Only the explicitly described synthetic adult question-flag round-three profiles.",
+      "limitation": "Only the explicitly stipulated patient agreement; not an institutional default, oxygen target, recovery scale or jurisdiction-specific legal rule.",
+      "verificationScope": "Offline author synthesis/application from recorded claims and their existing source records; no fresh source retrieval, source-access-date change or clinical approval. Direct alignment of the application remains for independent clinical/source review."
+    },
+    {
+      "contentVersion": "question-flags-round3.evidence.2026-11-04.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "lastCheckedOn": "2026-11-04",
+      "id": "claim.qf3.hyperkalaemia-active-treatment-ranking",
+      "statement": "For the supplied severe hyperkalaemic hospital episode after calcium, insulin with glucose supplies the primary immediate intracellular-shift treatment; nebulized salbutamol is an adjunct and routine intravenous bicarbonate is not its preferred substitute in a non-acidemic record.",
+      "basisClaimIds": [
+        "claim.gs028d.hyperkalaemia.mechanisms",
+        "claim.gs028d.hyperkalaemia.severe-transfer"
+      ],
+      "sourceIds": [
+        "source.ukka.hyperkalaemia.2026"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "applicablePopulation": "Only the explicitly described synthetic adult question-flag round-three profiles.",
+      "limitation": "The mechanism/threshold basis is locally recorded, but this comparative drug-ranking synthesis requires direct UKKA section alignment before release acceptance. No dose, insulin safety protocol, repeat timing or renal-replacement threshold is inferred.",
+      "verificationScope": "Offline author synthesis/application from recorded claims and their existing source records; no fresh source retrieval, source-access-date change or clinical approval. Direct alignment of the application remains for independent clinical/source review."
+    },
+    {
+      "contentVersion": "question-flags-round3.evidence.2026-11-04.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "lastCheckedOn": "2026-11-04",
+      "id": "claim.qf3.neck-mural-sampling",
+      "statement": "A cyst-fluid sample without lesional cells does not represent a separate solid mural component; targeted needle sampling of that component can address the specific diagnostic deficit before open biopsy.",
+      "basisClaimIds": [
+        "claim.gs028f.neck.needle-before-open",
+        "claim.gs028f.neck.core-biopsy-alternative",
+        "claim.gs028f.neck.imaging-versus-tissue-diagnosis"
+      ],
+      "sourceIds": [
+        "source.gs028f.uk.head-neck-guidelines.2024"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "applicablePopulation": "Only the explicitly described synthetic adult question-flag round-three profiles.",
+      "limitation": "Sampling/representation application, not proof of malignancy, a guarantee of FNA adequacy or a universal preference for FNA over core.",
+      "verificationScope": "Offline author synthesis/application from recorded claims and their existing source records; no fresh source retrieval, source-access-date change or clinical approval. Direct alignment of the application remains for independent clinical/source review."
+    },
+    {
+      "contentVersion": "question-flags-round3.evidence.2026-11-04.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "lastCheckedOn": "2026-11-04",
+      "id": "claim.qf3.osa-risk-communication-sequence",
+      "statement": "A reassuring daytime-sleepiness report does not cancel a separate increased apnoea-probability assessment; that risk information can inform current perioperative communication before diagnostic confirmation.",
+      "basisClaimIds": [
+        "claim.gs028d.osa.validated-screen",
+        "claim.qf2.sleep-questionnaire-domain-interpretation"
+      ],
+      "sourceIds": [
+        "source.sasm.osa-screening.2016"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "applicablePopulation": "Only the explicitly described synthetic adult question-flag round-three profiles.",
+      "limitation": "Communication/assessment scope only. No diagnostic cutoff, CPAP prescription, required monitoring protocol or decision to delay surgery is derived.",
+      "verificationScope": "Offline author synthesis/application from recorded claims and their existing source records; no fresh source retrieval, source-access-date change or clinical approval. Direct alignment of the application remains for independent clinical/source review."
+    },
+    {
+      "contentVersion": "question-flags-round3.evidence.2026-11-04.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "lastCheckedOn": "2026-11-04",
+      "id": "claim.qf3.preimplantation-specimen-inference",
+      "statement": "Testing preimplantation recipient serum against donor targets can investigate whether donor-directed recipient reactivity predated implantation; a result confined to a postfailure sample cannot establish its earlier presence.",
+      "basisClaimIds": [
+        "claim.gs028e.hyperacute_preformed",
+        "claim.gs028e.hyperacute_vascular"
+      ],
+      "sourceIds": [
+        "source.gs028e.hyperacute_matsuda2016",
+        "source.gs028e.ahrq_transplant2012"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "applicablePopulation": "Only the explicitly described synthetic adult question-flag round-three profiles.",
+      "limitation": "Temporal/target inference only. It does not specify test performance, antigen identity, exclusion of a technical cause, a Banff diagnosis or treatment.",
+      "verificationScope": "Offline author synthesis/application from recorded claims and their existing source records; no fresh source retrieval, source-access-date change or clinical approval. Direct alignment of the application remains for independent clinical/source review."
+    },
+    {
+      "contentVersion": "question-flags-round3.evidence.2026-11-04.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "lastCheckedOn": "2026-11-04",
+      "id": "claim.qf3.recurrent-vein-map-scope",
+      "statement": "In a recurrent varicose-vein case with incompletely connected posterior and medial reflux findings, a superficial/deep reflux map can establish the anatomical contributions before another intervention target is selected.",
+      "basisClaimIds": [
+        "claim.varicose.reflux-duplex",
+        "claim.varicose.intervention-referral"
+      ],
+      "sourceIds": [
+        "source.varicose.svs-avf-avls-2022",
+        "source.varicose.svs-avf-avls-2023"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "applicablePopulation": "Only the explicitly described synthetic adult question-flag round-three profiles.",
+      "limitation": "Case-specific scope inference from the recorded SVS/AVF/AVLS sources; direct recurrent-mapping section alignment is pending. No acquisition-position or duration rule, iliac imaging indication or compulsory ablation is taught.",
+      "verificationScope": "Offline author synthesis/application from recorded claims and their existing source records; no fresh source retrieval, source-access-date change or clinical approval. Direct alignment of the application remains for independent clinical/source review."
+    },
+    {
+      "contentVersion": "question-flags-round3.evidence.2026-11-04.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "lastCheckedOn": "2026-11-04",
+      "id": "claim.qf3.soft-tissue-ultrasound-application",
+      "statement": "A discrete superficial cavity with mobile internal echoes and no internal flow, separate from deep fascia and a compressible adjacent vein, supports a focal collection rather than attributing the swelling to that vein.",
+      "basisClaimIds": [
+        "claim.bread-butter.skin-infection.equivocal-ultrasound",
+        "claim.bread-butter.cutaneous-abscess.incision-drainage"
+      ],
+      "sourceIds": [
+        "source.bread-butter.acep-sonoguide-abscess",
+        "source.bread-butter.idsa-ssti-2014"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "applicablePopulation": "Only the explicitly described synthetic adult question-flag round-three profiles.",
+      "limitation": "Qualitative sonographic application to the supplied stable superficial case, not a universal Doppler criterion or drainage technique for deep, vascular or plantar disease.",
+      "verificationScope": "Offline author synthesis/application from recorded claims and their existing source records; no fresh source retrieval, source-access-date change or clinical approval. Direct alignment of the application remains for independent clinical/source review."
+    },
+    {
+      "contentVersion": "question-flags-round3.evidence.2026-11-04.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "lastCheckedOn": "2026-11-04",
+      "id": "claim.qf3.thyroid-washout-provenance",
+      "statement": "Detectable thyroglobulin washout after a needle path through an intact thyroid requires cautious interpretation with node cytology and morphology; discordant findings can warrant representative repeat node sampling before an irreversible lateral-neck plan.",
+      "basisClaimIds": [
+        "claim.qq20261102c.thyroid-cystic-node-discordance",
+        "claim.dtc.extent"
+      ],
+      "sourceIds": [
+        "source.qq20261102c.ata2025",
+        "source.dtc.ata-2025",
+        "source.dtc.ata-summary-2025"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "applicablePopulation": "Only the explicitly described synthetic adult question-flag round-three profiles.",
+      "limitation": "Application of the recorded intact-thyroid limitation; endocrine source-alignment review is pending. Detectability is not authored as a diagnostic threshold and no required operation or extent is inferred.",
+      "verificationScope": "Offline author synthesis/application from recorded claims and their existing source records; no fresh source retrieval, source-access-date change or clinical approval. Direct alignment of the application remains for independent clinical/source review."
+    },
+    {
+      "contentVersion": "evidence.question-quality.2026-11-02.v7",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.qq20261102c.breast-core-target-discordance",
+      "statement": "Benign breast tissue that does not explain the suspicious imaging target warrants further representative histologic assessment.",
+      "sourceIds": [
+        "source.qq20261102c.breast-eusobi2020",
+        "source.qq20261102c.asbrs2024-archived"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "Repeat core, vacuum-assisted or surgical sampling may be appropriate. The missed-target case does not rank all possible techniques universally; skin sampling alone does not clear an unsampled parenchymal lesion.",
+      "applicablePopulation": "The identified synthetic adult clinical or employee teaching cases; observed values are constructed case inputs, not empirical patient/gameplay data.",
+      "lastCheckedOn": "2026-11-02"
+    },
+    {
+      "contentVersion": "evidence.question-quality.2026-11-02.v7",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.qq20261102c.thyroid-cystic-node-discordance",
+      "statement": "Suspicious cervical-node imaging can require targeted FNA and selected thyroglobulin washout despite a nondiagnostic cystic-fluid aspirate.",
+      "sourceIds": [
+        "source.qq20261102c.ata2025"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "Single adequate current primary guideline; washout interpretation with an intact thyroid has limitations. The fictional 12-mm short axis is an observation above the documented sampling criterion, not an invented criterion.",
+      "applicablePopulation": "The identified synthetic adult clinical or employee teaching cases; observed values are constructed case inputs, not empirical patient/gameplay data.",
+      "lastCheckedOn": "2026-11-02"
+    },
+    {
+      "contentVersion": "development-batch.2026-09-28.pre-endoscopy.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.varicose.conservative-boundary",
+      "statement": "Conservative care remains reasonable when preference, comorbidity, mobility, anatomy, or resources weigh against intervention.",
+      "sourceIds": [
+        "source.varicose.svs-avf-avls-2023"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "No universal garment or duration is prescribed.",
+      "applicablePopulation": "Adults with stable symptomatic varicose veins.",
+      "lastCheckedOn": "2026-09-28"
+    },
+    {
+      "contentVersion": "development-batch.2026-09-28.pre-endoscopy.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.varicose.intervention-referral",
+      "statement": "For symptomatic axial superficial reflux in an intervention candidate who wants treatment, specialist superficial venous intervention assessment is preferred to mandatory long-term compression.",
+      "sourceIds": [
+        "source.varicose.svs-avf-avls-2023"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "The exact procedure depends on specialist anatomy and assessment.",
+      "applicablePopulation": "Adults with symptomatic axial superficial reflux who are intervention candidates.",
+      "lastCheckedOn": "2026-09-28"
+    },
+    {
+      "contentVersion": "development-batch.2026-09-28.pre-endoscopy.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.varicose.reflux-duplex",
+      "statement": "Duplex ultrasound with reflux assessment is the diagnostic test of choice for evaluating symptomatic lower-extremity chronic venous reflux.",
+      "sourceIds": [
+        "source.varicose.svs-avf-avls-2022"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "The existing service must be labeled for reflux assessment, not only acute DVT compression.",
+      "applicablePopulation": "Adults with symptomatic varicose veins being evaluated for treatment.",
+      "lastCheckedOn": "2026-09-28"
+    }
+  ],
+  "sources": [
+    {
+      "contentVersion": "clinical.owner-row-030.2026-08-06.2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.acr.palpable-breast-masses.2022",
+      "title": "ACR Appropriateness Criteria: Palpable Breast Masses",
+      "completeCitation": "American College of Radiology. ACR Appropriateness Criteria: Palpable Breast Masses. Revised 2022.",
+      "organizationOrJournal": "American College of Radiology",
+      "authors": [
+        "American College of Radiology Appropriateness Criteria Expert Panel"
+      ],
+      "publicationYear": 2022,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://acsearch.acr.org/docs/69495/Narrative",
+      "accessedOn": "2026-08-06",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyrighted professional-society guidance",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Use for targeted factual verification and citation only; do not reproduce appropriateness tables or protected explanatory wording.",
+      "authorityAssessment": "Authoritative radiology-society guidance for initial imaging of a palpable breast mass within its stated variants.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.breast-mass.under-30.initial-ultrasound"
+      ],
+      "usedForClaimIdsThisRound": [
+        "claim.gs028c.palpable.biopsy",
+        "claim.qf3.breast-sample-depth-provenance"
+      ],
+      "verificationNote": "Existing source metadata/access date; no new retrieval or claim of currentness verification."
+    },
+    {
+      "contentVersion": "development-batch.2026-10-02.pre-endoscopy.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.asbrs.axilla.2026",
+      "title": "Management of the axilla",
+      "completeCitation": "American Society of Breast Surgeons. Management of the Axilla in Patients with Invasive and In-Situ Breast Cancer. February 24, 2026.",
+      "organizationOrJournal": "American Society of Breast Surgeons",
+      "authors": [
+        "American Society of Breast Surgeons"
+      ],
+      "publicationYear": 2026,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.breastsurgeons.org/docs/statements/asbrs-management-of-the-axilla-2026-02-24.pdf",
+      "accessedOn": "2026-10-02",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyrighted society guidance",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Current society consensus used only for targeted factual verification.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.gs028c.dcis.axilla-mastectomy",
+        "claim.gs028c.dcis.axilla-omit-bcs",
+        "claim.gs028c.dcis.axilla-risk-setting"
+      ],
+      "usedForClaimIdsThisRound": [
+        "claim.gs028c.dcis.axilla-mastectomy",
+        "claim.gs028c.dcis.axilla-omit-bcs",
+        "claim.gs028c.dcis.axilla-risk-setting",
+        "claim.qf3.dcis-specimen-operation-application"
+      ],
+      "verificationNote": "Existing source metadata/access date; no new retrieval or claim of currentness verification."
+    },
+    {
+      "contentVersion": "development-batch.2026-09-17.bread-and-butter.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.bread-butter.acep-sonoguide-abscess",
+      "title": "Abscess Evaluation",
+      "completeCitation": "American College of Emergency Physicians. Sonoguide: Abscess Evaluation. Updated July 23, 2020. Accessed September 17, 2026.",
+      "organizationOrJournal": "American College of Emergency Physicians",
+      "authors": [
+        "American College of Emergency Physicians"
+      ],
+      "publicationYear": 2020,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.acep.org/sonoguide/procedures/abscess-evaluation",
+      "accessedOn": "2026-09-17",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyrighted professional-society web guidance; targeted factual verification only",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "No videos, images, page prose, or procedural instructions reproduced; only original atomic synthesis stored.",
+      "authorityAssessment": "Emergency-medicine society guidance supporting ultrasound for equivocal abscess and drainage after confirmation.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.bread-butter.skin-infection.equivocal-ultrasound",
+        "claim.bread-butter.cutaneous-abscess.incision-drainage"
+      ],
+      "usedForClaimIdsThisRound": [
+        "claim.bread-butter.cutaneous-abscess.incision-drainage",
+        "claim.bread-butter.skin-infection.equivocal-ultrasound",
+        "claim.qf3.soft-tissue-ultrasound-application"
+      ],
+      "verificationNote": "Existing source metadata/access date; no new retrieval or claim of currentness verification."
+    },
+    {
+      "contentVersion": "development-batch.2026-09-17.bread-and-butter.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.bread-butter.asbrs-sbi-fibroepithelial-2025",
+      "title": "American Society of Breast Surgeons and Society of Breast Imaging 2025 Guidelines for the Management of Benign Breast Fibroepithelial Lesions",
+      "completeCitation": "Rosenberger LH, White RL, Tafra L, et al. American Society of Breast Surgeons and Society of Breast Imaging 2025 Guidelines for the Management of Benign Breast Fibroepithelial Lesions. JAMA Surg. 2025;160:1378-1385. doi:10.1001/jamasurg.2025.4392. PMID:41123921.",
+      "organizationOrJournal": "American Society of Breast Surgeons / Society of Breast Imaging / JAMA Surgery",
+      "authors": [
+        "Laura H Rosenberger",
+        "Richard L White",
+        "Lorraine Tafra",
+        "Judy C Boughey",
+        "Nathalie M Johnson",
+        "Helen A Pass",
+        "Susan Boolbol",
+        "Kris McNiff Landrum",
+        "Yiming Gao",
+        "Katharine Yao"
+      ],
+      "publicationYear": 2025,
+      "doi": "10.1001/jamasurg.2025.4392",
+      "pmid": "41123921",
+      "officialUrl": "https://pubmed.ncbi.nlm.nih.gov/41123921/",
+      "accessedOn": "2026-09-17",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyrighted professional-society guideline",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Targeted factual verification from the bibliographic abstract; no source prose, table, or algorithm reproduced.",
+      "authorityAssessment": "Current joint specialty-society guideline directly addressing concordant core-proven fibroadenoma management.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.bread-butter.fibroadenoma.concordant-observation"
+      ],
+      "usedForClaimIdsThisRound": [
+        "claim.bread-butter.fibroadenoma.concordant-observation"
+      ],
+      "verificationNote": "Existing source metadata/access date; no new retrieval or claim of currentness verification."
+    },
+    {
+      "contentVersion": "development-batch.2026-09-17.bread-and-butter.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.bread-butter.bmjopen-abscess-meta-2018",
+      "title": "Antibiotics for uncomplicated skin abscesses: systematic review and network meta-analysis",
+      "completeCitation": "Wang W, Chen W, Liu Y, Siemieniuk RAC, Li L, Martinez JPD, Guyatt GH, Sun X. Antibiotics for uncomplicated skin abscesses: systematic review and network meta-analysis. BMJ Open. 2018;8:e020991. doi:10.1136/bmjopen-2017-020991. PMID:29437689. PMCID:PMC5829937.",
+      "organizationOrJournal": "BMJ Open",
+      "authors": [
+        "Wang W",
+        "Chen W",
+        "Liu Y",
+        "Siemieniuk RAC",
+        "Li L",
+        "Martinez JPD",
+        "Guyatt GH",
+        "Sun X"
+      ],
+      "publicationYear": 2018,
+      "doi": "10.1136/bmjopen-2017-020991",
+      "pmid": "29437689",
+      "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5829937/",
+      "accessedOn": "2026-09-17",
+      "sourceClass": "systematic_review",
+      "licenseLabel": "Creative Commons Attribution-NonCommercial 4.0 International",
+      "reuseStatus": "cc_by_nc_4_0_restricted",
+      "reuseNotes": "Attributed original factual synthesis for noncommercial development; no source prose, tables, figures, or pooled estimates reproduced.",
+      "authorityAssessment": "Fourteen-trial synthesis supporting modest benefits and adverse effects of adjunctive MRSA-active antibiotics after drainage.",
+      "usageRole": "cross_check",
+      "evidenceClaimIds": [
+        "claim.bread-butter.cutaneous-abscess.antibiotic-nuance"
+      ],
+      "usedForClaimIdsThisRound": [
+        "claim.bread-butter.cutaneous-abscess.antibiotic-nuance"
+      ],
+      "verificationNote": "Existing source metadata/access date; no new retrieval or claim of currentness verification."
+    },
+    {
+      "contentVersion": "development-batch.2026-09-17.bread-and-butter.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.bread-butter.idsa-ssti-2014",
+      "title": "Practice Guidelines for the Diagnosis and Management of Skin and Soft Tissue Infections: 2014 Update",
+      "completeCitation": "Stevens DL, Bisno AL, Chambers HF, Dellinger EP, Goldstein EJC, Gorbach SL, Hirschmann JV, Kaplan SL, Montoya JG, Wade JC. Practice guidelines for the diagnosis and management of skin and soft tissue infections: 2014 update by the Infectious Diseases Society of America. Clin Infect Dis. 2014;59(2):e10-e52. doi:10.1093/cid/ciu296. PMID:24973422.",
+      "organizationOrJournal": "Clinical Infectious Diseases / Infectious Diseases Society of America",
+      "authors": [
+        "Stevens DL",
+        "Bisno AL",
+        "Chambers HF",
+        "Dellinger EP",
+        "Goldstein EJC",
+        "Gorbach SL",
+        "Hirschmann JV",
+        "Kaplan SL",
+        "Montoya JG",
+        "Wade JC"
+      ],
+      "publicationYear": 2014,
+      "doi": "10.1093/cid/ciu296",
+      "pmid": "24973422",
+      "officialUrl": "https://www.idsociety.org/practice-guideline/skin-and-soft-tissue-infections/",
+      "accessedOn": "2026-09-17",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyrighted professional-society guidance",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "The official page labels this guideline current. Original synthesis only; no source prose, tables, figures, or algorithms reproduced.",
+      "authorityAssessment": "Current IDSA guideline supporting incision and drainage as primary source control for cutaneous abscess.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.bread-butter.cutaneous-abscess.incision-drainage"
+      ],
+      "usedForClaimIdsThisRound": [
+        "claim.bread-butter.cutaneous-abscess.incision-drainage",
+        "claim.qf3.soft-tissue-ultrasound-application"
+      ],
+      "verificationNote": "Existing source metadata/access date; no new retrieval or claim of currentness verification."
+    },
+    {
+      "contentVersion": "development-batch.2026-09-29.pre-endoscopy.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.cirrhosis.aga-2019",
+      "title": "AGA perioperative cirrhosis clinical practice update",
+      "completeCitation": "Northup PG, Friedman LS, Kamath PS. AGA Clinical Practice Update on Surgical Risk Assessment and Perioperative Management in Cirrhosis: Expert Review. Clin Gastroenterol Hepatol. 2019;17(4):595-606. doi:10.1016/j.cgh.2018.09.043.",
+      "organizationOrJournal": "American Gastroenterological Association",
+      "authors": [
+        "Northup PG",
+        "Friedman LS",
+        "Kamath PS"
+      ],
+      "publicationYear": 2019,
+      "doi": "10.1016/j.cgh.2018.09.043",
+      "pmid": "30273751",
+      "officialUrl": "https://gastro.org/clinical-guidance/surgical-risk-assessment-and-perioperative-management-in-cirrhosis/",
+      "accessedOn": "2026-09-29",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyrighted guidance; targeted factual verification only",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Society expert review; no one score or fixed cutoff is taught.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.cirrhosis.multifactor-risk",
+        "claim.cirrhosis.optimize-decompensation"
+      ],
+      "usedForClaimIdsThisRound": [
+        "claim.cirrhosis.multifactor-risk",
+        "claim.cirrhosis.optimize-decompensation",
+        "claim.qf3.cirrhosis-urgent-hernia-boundary"
+      ],
+      "verificationNote": "Existing source metadata/access date; no new retrieval or claim of currentness verification."
+    },
+    {
+      "contentVersion": "development-batch.2026-09-29.pre-endoscopy.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.dtc.ata-2025",
+      "title": "2025 ATA differentiated thyroid cancer guideline",
+      "completeCitation": "Ringel MD, Sosa JA, et al. 2025 American Thyroid Association Management Guidelines for Adult Patients with Differentiated Thyroid Cancer. Thyroid. 2025;35(8):841-985. doi:10.1177/10507256251363120.",
+      "organizationOrJournal": "American Thyroid Association",
+      "authors": [
+        "Ringel MD",
+        "Sosa JA",
+        "et al."
+      ],
+      "publicationYear": 2025,
+      "doi": "10.1177/10507256251363120",
+      "pmid": null,
+      "officialUrl": "https://journals.sagepub.com/doi/pdf/10.1177/10507256251363120",
+      "accessedOn": "2026-09-29",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyrighted guidance; targeted factual verification only",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Current society guideline for preoperative nodal mapping and individualized surgical extent.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.dtc.preop-ultrasound",
+        "claim.dtc.lobectomy-boundary",
+        "claim.dtc.extent"
+      ],
+      "usedForClaimIdsThisRound": [
+        "claim.dtc.extent",
+        "claim.dtc.preop-ultrasound",
+        "claim.qf3.thyroid-washout-provenance"
+      ],
+      "verificationNote": "Existing source metadata/access date; no new retrieval or claim of currentness verification."
+    },
+    {
+      "contentVersion": "development-batch.2026-09-29.pre-endoscopy.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.dtc.ata-summary-2025",
+      "title": "ATA patient summary of 2025 DTC surgical recommendations",
+      "completeCitation": "American Thyroid Association. What are the key changes in the 2025 ATA guidelines for differentiated thyroid cancer? Clinical Thyroidology for the Public. December 2025;18(12):4-5.",
+      "organizationOrJournal": "American Thyroid Association",
+      "authors": [
+        "American Thyroid Association"
+      ],
+      "publicationYear": 2025,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.thyroid.org/patient-thyroid-information/ct-for-patients/december-2025/vol-18-issue-12-p-4-5/",
+      "accessedOn": "2026-09-29",
+      "sourceClass": "open_educational_resource",
+      "licenseLabel": "Copyrighted guidance; targeted factual verification only",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Official society summary directly supporting bounded initial surgical-extent examples.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.dtc.lobectomy-boundary",
+        "claim.dtc.extent"
+      ],
+      "usedForClaimIdsThisRound": [
+        "claim.dtc.extent",
+        "claim.qf3.thyroid-washout-provenance"
+      ],
+      "verificationNote": "Existing source metadata/access date; no new retrieval or claim of currentness verification."
+    },
+    {
+      "contentVersion": "development-batch.2026-09-13.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.esge.biliary-stenting.2018",
+      "title": "Endoscopic biliary stenting: indications, choice of stents, and results",
+      "completeCitation": "Dumonceau JM, Tringali A, Papanikolaou IS, Blero D, Mangiavillano B, Schmidt A, et al. Endoscopy. 2018;50:910-930. doi:10.1055/a-0659-9864.",
+      "organizationOrJournal": "European Society of Gastrointestinal Endoscopy",
+      "authors": [
+        "Dumonceau JM",
+        "Tringali A",
+        "Papanikolaou IS",
+        "Blero D",
+        "Mangiavillano B",
+        "Schmidt A",
+        "et al."
+      ],
+      "publicationYear": 2018,
+      "doi": "10.1055/a-0659-9864",
+      "pmid": null,
+      "officialUrl": "https://www.esge.com/endoscopic-biliary-stenting-indications-choice-of-stents-and-results-2017",
+      "accessedOn": "2026-09-13",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyrighted society and journal guidance",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Targeted factual corroboration only.",
+      "authorityAssessment": "Independent society corroboration for plastic-stent treatment of non-transection bile leaks.",
+      "usageRole": "cross_check",
+      "evidenceClaimIds": [
+        "claim.early.bile-leak.minor-leak-ercp-stent"
+      ],
+      "usedForClaimIdsThisRound": [
+        "claim.early.bile-leak.minor-leak-ercp-stent"
+      ],
+      "verificationNote": "Existing source metadata/access date; no new retrieval or claim of currentness verification."
+    },
+    {
+      "contentVersion": "development-batch.2026-10-03.coverage-gaps.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.french-panel.metabolic-acidosis.2019",
+      "title": "Diagnosis and management of metabolic acidosis: guidelines from a French expert panel",
+      "completeCitation": "Jung B, Martinez M, Claessens YE, Darmon M, Klouche K, Lautrette A, Levraut J, Maury E, Oberlin M, Terzi N, Viglino D, Yordanov Y, Claret PG, Bigé N; SRLF; SFMU. Diagnosis and management of metabolic acidosis: guidelines from a French expert panel. Ann Intensive Care. 2019;9:92. doi:10.1186/s13613-019-0563-2.",
+      "organizationOrJournal": "Annals of Intensive Care / SRLF / SFMU",
+      "authors": [
+        "Boris Jung",
+        "Mikaël Martinez",
+        "Yann-Erick Claessens",
+        "Michaël Darmon",
+        "Kada Klouche",
+        "Alexandre Lautrette",
+        "Jacques Levraut",
+        "Eric Maury",
+        "Mathieu Oberlin",
+        "Nicolas Terzi",
+        "Damien Viglino",
+        "Youri Yordanov",
+        "Pierre-Géraud Claret",
+        "Naïke Bigé",
+        "Société de Réanimation de Langue Française",
+        "Société Française de Médecine d'Urgence"
+      ],
+      "publicationYear": 2019,
+      "doi": "10.1186/s13613-019-0563-2",
+      "pmid": null,
+      "officialUrl": "https://link.springer.com/article/10.1186/s13613-019-0563-2",
+      "accessedOn": "2026-10-03",
+      "sourceClass": "peer_reviewed_guideline",
+      "licenseLabel": "Creative Commons Attribution 4.0 International; https://creativecommons.org/licenses/by/4.0/; attribution, source and license links, and change indication required; third-party material may have separate terms",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Formal multidisciplinary guideline; R1.1 is expert opinion and R1.3 is Grade 2+. Diagnostic physiology only; management currency is not inferred.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.gs028d.acidosis.blood-gas",
+        "claim.gs028d.acidosis.corrected-gap"
+      ],
+      "usedForClaimIdsThisRound": [
+        "claim.gs028d.acidosis.blood-gas",
+        "claim.qf3.direction-versus-acidemia"
+      ],
+      "verificationNote": "Existing source metadata/access date; no new retrieval or claim of currentness verification."
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.gs028e.ahrq_transplant2012",
+      "title": "The impact of pre-transplant red blood cell transfusions in renal allograft rejection",
+      "completeCitation": "Chen W, Lee S, Colby J, Kluger J, Ashaye A, Tongbram V, Baker E, Mather J, Coleman CI, White CM. The Impact of Pre-Transplant Red Blood Cell Transfusions in Renal Allograft Rejection. University of Connecticut/Hartford Hospital Evidence-based Practice Center for AHRQ; March 7, 2012. Project RENT0610. Executive Summary ES-1 / physical PDF p. 9; conditions of use, printed iii / physical p. 3. Accessed October 7, 2026.",
+      "organizationOrJournal": "University of Connecticut/Hartford Hospital Evidence-based Practice Center; Agency for Healthcare Research and Quality",
+      "authors": [
+        "Wendy Chen",
+        "Soyon Lee",
+        "Jennifer Colby",
+        "Jeffrey Kluger",
+        "Ajibade Ashaye",
+        "Vanita Tongbram",
+        "Erica Baker",
+        "Jeffrey Mather",
+        "Craig I. Coleman",
+        "C. Michael White"
+      ],
+      "publicationYear": 2012,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.cms.gov/Medicare/Coverage/DeterminationProcess/downloads/id78TA.pdf",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "systematic_review",
+      "licenseLabel": "Commissioned EPC report, not presumed government-authored public domain. Printed iii allows use as a basis for clinical/quality tools without implying AHRQ or HHS endorsement. Targeted original factual cross-check only.",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Older commissioned systematic review corroborates pre-existing anti-donor antibodies in hyperacute renal allograft rejection. Background mechanism only, not current transplant treatment, allocation or crossmatch management.",
+      "usageRole": "cross_check",
+      "evidenceClaimIds": [
+        "claim.gs028e.hyperacute_preformed"
+      ],
+      "usedForClaimIdsThisRound": [
+        "claim.gs028e.hyperacute_preformed",
+        "claim.qf3.preimplantation-specimen-inference"
+      ],
+      "verificationNote": "Existing source metadata/access date; no new retrieval or claim of currentness verification."
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.gs028e.hyperacute_matsuda2016",
+      "title": "Unraveling the Role of Allo-Antibodies and Transplant Injury",
+      "completeCitation": "Matsuda Y, Sarwal MM. Unraveling the Role of Allo-Antibodies and Transplant Injury. Front Immunol. 2016;7:432. Published October 21, 2016. doi:10.3389/fimmu.2016.00432. PMID:27818660. Abstract; The Role of Preformed DSA, Mechanisms of Onset of ABMR by Preformed DSA; accessed October 7, 2026.",
+      "organizationOrJournal": "Frontiers in Immunology",
+      "authors": [
+        "Yoshiko Matsuda",
+        "Minnie M. Sarwal"
+      ],
+      "publicationYear": 2016,
+      "doi": "10.3389/fimmu.2016.00432",
+      "pmid": "27818660",
+      "officialUrl": "https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2016.00432/full",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "narrative_review",
+      "licenseLabel": "Copyright © 2016 Matsuda and Sarwal. Article-specific Creative Commons Attribution 4.0, https://creativecommons.org/licenses/by/4.0/. Authors and original publication credited; no source expression reused.",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Peer-reviewed transplant review supports preformed donor-specific antibodies binding graft endothelium with complement-associated vascular injury. Its Abstract distinguishes T-cell and antibody pathways and recognizes coexistence. Narrow documented hyperacute mechanism only; not every early graft failure or acute rejection is assigned this mechanism.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.gs028e.hyperacute_preformed",
+        "claim.gs028e.hyperacute_vascular",
+        "claim.gs028e.t_cell_graft_comparison"
+      ],
+      "usedForClaimIdsThisRound": [
+        "claim.gs028e.hyperacute_preformed",
+        "claim.gs028e.hyperacute_vascular",
+        "claim.gs028e.t_cell_graft_comparison",
+        "claim.qf3.preimplantation-specimen-inference"
+      ],
+      "verificationNote": "Existing source metadata/access date; no new retrieval or claim of currentness verification."
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.gs028f.uk.head-neck-guidelines.2024",
+      "title": "Head and Neck Cancer: United Kingdom National Multidisciplinary Guidelines, Sixth Edition",
+      "completeCitation": "Homer JJ, Winter SC, editors, with the United Kingdom national multidisciplinary guideline author group. Head and Neck Cancer: United Kingdom National Multidisciplinary Guidelines, Sixth Edition. J Laryngol Otol. 2024;138(Suppl1):S1–S224. doi:10.1017/S0022215123001615. Neck lumps and needle-versus-open biopsy, printed S15–S16; imaging S16–S17; unknown primary S172–S174. Accessed October 7, 2026.",
+      "organizationOrJournal": "The Journal of Laryngology & Otology / United Kingdom multidisciplinary head-and-neck societies",
+      "authors": [
+        "J J Homer",
+        "S C Winter",
+        "United Kingdom National Multidisciplinary Guidelines author group"
+      ],
+      "publicationYear": 2024,
+      "doi": "10.1017/S0022215123001615",
+      "pmid": null,
+      "officialUrl": "https://discovery.ucl.ac.uk/10193598/1/head-and-neck-cancer-united-kingdom-national-multidisciplinary-guidelines-sixth-edition.pdf",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "peer_reviewed_guideline",
+      "licenseLabel": "CC BY 4.0, ©Authors2024, publisher-version institutional copy; https://creativecommons.org/licenses/by/4.0/ verified on printed S1. Credit: Homer, Winter and guideline author group, original journal and DOI. No source wording, illustrations, algorithms, tables or embedded third-party recommendations reproduced.",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Independent multidisciplinary guideline directly supports malignancy concern in adult lateral/cystic masses and needle sampling before initial open biopsy. Core biopsy may be appropriate, so FNA is only the best offered needle option. CT helps delineate tumor/nodal anatomy, but MRI/US can be appropriate and CT is not universally required before FNA. No AAO-HNS or NICE body/reprint is used. May2024 author-name corrigendum does not alter these clinical facts.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.gs028f.neck.adult-lateral-malignancy-evaluation",
+        "claim.gs028f.neck.core-biopsy-alternative",
+        "claim.gs028f.neck.imaging-versus-tissue-diagnosis",
+        "claim.gs028f.neck.needle-before-open",
+        "claim.gs028f.neck.selected-contrast-ct"
+      ],
+      "usedForClaimIdsThisRound": [
+        "claim.gs028f.neck.adult-lateral-malignancy-evaluation",
+        "claim.gs028f.neck.core-biopsy-alternative",
+        "claim.gs028f.neck.imaging-versus-tissue-diagnosis",
+        "claim.gs028f.neck.needle-before-open",
+        "claim.qf3.neck-mural-sampling"
+      ],
+      "verificationNote": "Existing source metadata/access date; no new retrieval or claim of currentness verification."
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.level3.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.gs028g.jimenez-ventilation-2024",
+      "title": "Current Concepts in Intraoperative Ventilation during Anesthesia for Laparoscopic and Robot–Assisted Surgery – a Narrative Review",
+      "completeCitation": "Jimenez-Santana JD, Díaz-Cambronero O, Schultz MJ, Mazzinari G. Current Concepts in Intraoperative Ventilation during Anesthesia for Laparoscopic and Robot–Assisted Surgery – a Narrative Review. Current Anesthesiology Reports. 2024;14:534–550. doi:10.1007/s40140-024-00648-7.",
+      "organizationOrJournal": "Current Anesthesiology Reports",
+      "authors": [
+        "Jose Daniel Jimenez-Santana",
+        "Oscar Díaz-Cambronero",
+        "Marcus J. Schultz",
+        "Guido Mazzinari"
+      ],
+      "publicationYear": 2024,
+      "doi": "10.1007/s40140-024-00648-7",
+      "pmid": null,
+      "officialUrl": "https://link.springer.com/article/10.1007/s40140-024-00648-7",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "narrative_review",
+      "licenseLabel": "CC BY 4.0; original factual synthesis with attribution",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Current peer-reviewed ventilation review supports CO2 absorption and diaphragm/compliance physiology; no fixed pressure, ventilation target or presumed explanation for unexplained acute deterioration.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.gs028g.laparoscopy-respiratory.co2-absorption",
+        "claim.gs028g.laparoscopy-respiratory.co2-absorption.fact2",
+        "claim.gs028g.laparoscopy-respiratory.co2-absorption.fact3",
+        "claim.gs028g.laparoscopy-respiratory.diaphragm-compliance",
+        "claim.gs028g.laparoscopy-respiratory.diaphragm-compliance.fact2",
+        "claim.gs028g.laparoscopy-respiratory.diaphragm-compliance.fact3",
+        "claim.gs028g.laparoscopy-respiratory.diaphragm-compliance.fact4"
+      ],
+      "usedForClaimIdsThisRound": [
+        "claim.gs028g.laparoscopy-respiratory.diaphragm-compliance",
+        "claim.gs028g.laparoscopy-respiratory.diaphragm-compliance.fact2",
+        "claim.gs028g.laparoscopy-respiratory.diaphragm-compliance.fact3",
+        "claim.qf2.fixed-volume-peak-plateau-pattern",
+        "claim.qf3.controlled-filling-elastic-load"
+      ],
+      "verificationNote": "Existing source metadata/access date; no new retrieval or claim of currentness verification."
+    },
+    {
+      "contentVersion": "development-batch.2026-09-29.statistics-ethics.2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.gs028se.ama-dnar-5-4",
+      "title": "Orders Not to Attempt Resuscitation (DNAR)",
+      "completeCitation": "American Medical Association. Code of Medical Ethics Opinion 5.4: Orders Not to Attempt Resuscitation (DNAR). Accessed 2026-09-29.",
+      "organizationOrJournal": "American Medical Association",
+      "authors": [
+        "American Medical Association"
+      ],
+      "publicationYear": null,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://code-medical-ethics.ama-assn.org/ethics-opinions/orders-not-attempt-resuscitation-dnar",
+      "accessedOn": "2026-09-29",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyrighted; targeted factual verification only",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Current ethics guidance: DNAR concerns resuscitation, not all care, and should be confirmed for surgery.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.gs028se.perioperative-dnr.1",
+        "claim.gs028se.perioperative-dnr.2",
+        "claim.gs028se.perioperative-dnr.3",
+        "claim.gs028se.perioperative-dnr.4"
+      ],
+      "usedForClaimIdsThisRound": [
+        "claim.gs028se.perioperative-dnr.1",
+        "claim.gs028se.perioperative-dnr.2",
+        "claim.gs028se.perioperative-dnr.3",
+        "claim.gs028se.perioperative-dnr.4",
+        "claim.qf3.dnr-baseline-support-endpoint"
+      ],
+      "verificationNote": "Existing source metadata/access date; no new retrieval or claim of currentness verification."
+    },
+    {
+      "contentVersion": "development-batch.2026-09-29.statistics-ethics.2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.gs028se.asa-dnar-2023",
+      "title": "Statement on Ethical Guidelines for the Anesthesia Care of Patients with Do-Not-Resuscitate Orders",
+      "completeCitation": "American Society of Anesthesiologists Committee on Ethics. Statement on Ethical Guidelines for the Anesthesia Care of Patients with Do-Not-Resuscitate Orders. Originally approved 2001; reaffirmed 2023. Accessed 2026-09-29.",
+      "organizationOrJournal": "American Society of Anesthesiologists",
+      "authors": [
+        "American Society of Anesthesiologists Committee on Ethics"
+      ],
+      "publicationYear": null,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.asahq.org/standards-and-practice-parameters/statement-on-ethical-guidelines-for-the-anesthesia-care-of-patients-with-do-not-resuscitate-orders",
+      "accessedOn": "2026-09-29",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyrighted; targeted factual verification only",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Current anesthesia ethics guidance against automatic suspension; supports documented perioperative review.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.gs028se.perioperative-dnr.1",
+        "claim.gs028se.perioperative-dnr.2",
+        "claim.gs028se.perioperative-dnr.3",
+        "claim.gs028se.perioperative-dnr.4"
+      ],
+      "usedForClaimIdsThisRound": [
+        "claim.gs028se.perioperative-dnr.1",
+        "claim.gs028se.perioperative-dnr.2",
+        "claim.gs028se.perioperative-dnr.3",
+        "claim.gs028se.perioperative-dnr.4",
+        "claim.qf3.dnr-baseline-support-endpoint"
+      ],
+      "verificationNote": "Existing source metadata/access date; no new retrieval or claim of currentness verification."
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.gynecological-surgery.shoulder-pain-trial.2021",
+      "title": "Effects of delayed suprapubic port removal on post-laparoscopic shoulder pain: a randomized controlled trial",
+      "completeCitation": "Chalermchockcharoenkit A, Hengrasmee P, Sophontanarak P, Sirimai K, Sutchritpongsa P, Srichaikul P. Effects of delayed suprapubic port removal on post-laparoscopic shoulder pain: a randomized controlled trial. Gynecological Surgery. 2021;18:8. Published May 11, 2021. doi:10.1186/s10397-021-01087-6. Introduction; accessed October 7, 2026.",
+      "organizationOrJournal": "Gynecological Surgery",
+      "authors": [
+        "Amphan Chalermchockcharoenkit",
+        "Pattaya Hengrasmee",
+        "Paiboon Sophontanarak",
+        "Korakot Sirimai",
+        "Pavit Sutchritpongsa",
+        "Pisutt Srichaikul"
+      ],
+      "publicationYear": 2021,
+      "doi": "10.1186/s10397-021-01087-6",
+      "pmid": null,
+      "officialUrl": "https://link.springer.com/article/10.1186/s10397-021-01087-6",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "randomized_trial",
+      "licenseLabel": "Creative Commons Attribution 4.0, https://creativecommons.org/licenses/by/4.0/; credited to the six named authors and Gynecological Surgery. Only original underlying-fact synthesis is authored; no trial expression or intervention protocol is adapted.",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Peer-reviewed trial introduction independently corroborates diaphragmatic/phrenic irritation as a proposed contributor to referred shoulder pain. The study population was adults undergoing gynecologic laparoscopy; it is a mechanism cross-check, not a universal cause or a cholecystectomy treatment recommendation.",
+      "usageRole": "cross_check",
+      "evidenceClaimIds": [
+        "claim.gs028e.laparoscopy.diaphragm-phrenic-shoulder-pain"
+      ],
+      "usedForClaimIdsThisRound": [
+        "claim.gs028e.laparoscopy.diaphragm-phrenic-shoulder-pain"
+      ],
+      "verificationNote": "Existing source metadata/access date; no new retrieval or claim of currentness verification."
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.jcm.laparoscopic-anesthesia-review.2020",
+      "title": "Do Small Incisions Need Only Minimal Anesthesia? Anesthetic Management in Laparoscopic and Robotic Surgery",
+      "completeCitation": "Hottenrott S, Schlesinger T, Helmer P, Meybohm P, Alkatout I, Kranke P. Do Small Incisions Need Only Minimal Anesthesia?—Anesthetic Management in Laparoscopic and Robotic Surgery. Journal of Clinical Medicine. 2020;9(12):4058. Published December 15, 2020. doi:10.3390/jcm9124058. Sections 3.1 and 3.4, pp. 3–4; accessed October 7, 2026.",
+      "organizationOrJournal": "Journal of Clinical Medicine",
+      "authors": [
+        "Sebastian Hottenrott",
+        "Tobias Schlesinger",
+        "Philipp Helmer",
+        "Patrick Meybohm",
+        "Ibrahim Alkatout",
+        "Peter Kranke"
+      ],
+      "publicationYear": 2020,
+      "doi": "10.3390/jcm9124058",
+      "pmid": null,
+      "officialUrl": "https://mdpi-res.com/d_attachment/jcm/jcm-09-04058/article_deploy/jcm-09-04058.pdf",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "narrative_review",
+      "licenseLabel": "Article-specific Creative Commons Attribution 4.0 notice verified on PDF p. 15, https://creativecommons.org/licenses/by/4.0/; credited to the six named authors and Journal of Clinical Medicine. Original underlying-fact synthesis only. The publisher HTML and general terms/open-access pages were unavailable during checking; general site terms were not asserted to have been read.",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Peer-reviewed physiology review directly supports absorption/exhalation of insufflated CO2 and context-dependent pressure/position effects on venous return. The older review is cross-checked with a current independent clinical study; no numeric pressure limit, ventilator setting or operating-room treatment protocol is authored.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.gs028e.laparoscopy.caval-compression-venous-return",
+        "claim.gs028e.laparoscopy.co2-load-respiratory-acidemia",
+        "claim.gs028e.laparoscopy.peritoneal-co2-uptake",
+        "claim.gs028e.laparoscopy.pressure-position-context"
+      ],
+      "usedForClaimIdsThisRound": [
+        "claim.gs028e.laparoscopy.caval-compression-venous-return",
+        "claim.gs028e.laparoscopy.co2-load-respiratory-acidemia",
+        "claim.gs028e.laparoscopy.peritoneal-co2-uptake",
+        "claim.gs028e.laparoscopy.pressure-position-context",
+        "claim.qf2.qualitative-co2-acid-base-pattern",
+        "claim.qf3.controlled-filling-elastic-load",
+        "claim.qf3.direction-versus-acidemia"
+      ],
+      "verificationNote": "Existing source metadata/access date; no new retrieval or claim of currentness verification."
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.jroboticsurg.pneumoperitoneum-acid-base-study.2026",
+      "title": "Acid–base balance and respiratory mechanics during robotic-assisted surgery: an observational study",
+      "completeCitation": "Pitimada M, Chiumello D, Monte A, Fratti I, Festa F, Pozzi T, Coppola S. Acid–base balance and respiratory mechanics during robotic-assisted surgery: an observational study. Journal of Robotic Surgery. 2026;20:440. Published April 21, 2026. doi:10.1007/s11701-026-03392-8. Introduction and discussion: acid-base equilibrium and gas exchange; accessed October 7, 2026.",
+      "organizationOrJournal": "Journal of Robotic Surgery",
+      "authors": [
+        "Matteo Pitimada",
+        "Davide Chiumello",
+        "Alessandro Monte",
+        "Isabella Fratti",
+        "Federica Festa",
+        "Tommaso Pozzi",
+        "Silvia Coppola"
+      ],
+      "publicationYear": 2026,
+      "doi": "10.1007/s11701-026-03392-8",
+      "pmid": null,
+      "officialUrl": "https://link.springer.com/article/10.1007/s11701-026-03392-8",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "observational_study",
+      "licenseLabel": "Creative Commons Attribution 4.0 International, https://creativecommons.org/licenses/by/4.0/; credited to the seven named authors and Journal of Robotic Surgery. Original underlying-fact synthesis only; no source expression, data tables, images or ventilation protocol is reproduced.",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Current peer-reviewed observational study corroborates peritoneal CO2 absorption with increased arterial CO2/respiratory acidemia and pressure-associated hemodynamic effects. Colorectal/gynecological surgical population and observational design limit universal mechanistic inference; no renal, numeric outcome or treatment claim is extrapolated.",
+      "usageRole": "cross_check",
+      "evidenceClaimIds": [
+        "claim.gs028e.laparoscopy.caval-compression-venous-return",
+        "claim.gs028e.laparoscopy.co2-load-respiratory-acidemia",
+        "claim.gs028e.laparoscopy.peritoneal-co2-uptake",
+        "claim.gs028e.laparoscopy.pressure-position-context"
+      ],
+      "usedForClaimIdsThisRound": [
+        "claim.gs028e.laparoscopy.caval-compression-venous-return",
+        "claim.gs028e.laparoscopy.co2-load-respiratory-acidemia",
+        "claim.gs028e.laparoscopy.peritoneal-co2-uptake",
+        "claim.gs028e.laparoscopy.pressure-position-context",
+        "claim.qf2.qualitative-co2-acid-base-pattern",
+        "claim.qf3.controlled-filling-elastic-load",
+        "claim.qf3.direction-versus-acidemia"
+      ],
+      "verificationNote": "Existing source metadata/access date; no new retrieval or claim of currentness verification."
+    },
+    {
+      "contentVersion": "clinical.owner-row-104.2026-08-21.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.msd-manual-professional.lymphangitis.2026",
+      "title": "Lymphangitis",
+      "completeCitation": "Passarelli PJ. Lymphangitis. MSD Manual Professional Edition. Reviewed May 2026 by Brenda L. Tesini, MD. Accessed 2026-08-21. https://www.msdmanuals.com/professional/infectious-diseases/bacterial-skin-infections/lymphangitis",
+      "organizationOrJournal": "MSD Manual Professional Edition",
+      "authors": [
+        "Patrick James Passarelli, MD",
+        "Brenda L. Tesini, MD"
+      ],
+      "publicationYear": 2026,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.msdmanuals.com/professional/infectious-diseases/bacterial-skin-infections/lymphangitis",
+      "accessedOn": "2026-08-21",
+      "sourceClass": "open_educational_resource",
+      "licenseLabel": "MSD Manual copyrighted; targeted factual verification only",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Use only for targeted factual verification and citation. Do not reproduce source prose, illustrations, or page structure.",
+      "authorityAssessment": "Clinician-authored and peer-reviewed professional reference retained as the sole adequate targeted-verification source for the approved recognition phenotype.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.lymphangitis.distal-entry-proximal-streak-regional-nodes"
+      ],
+      "usedForClaimIdsThisRound": [
+        "claim.lymphangitis.distal-entry-proximal-streak-regional-nodes"
+      ],
+      "verificationNote": "Existing source metadata/access date; no new retrieval or claim of currentness verification."
+    },
+    {
+      "contentVersion": "evidence.question-quality.2026-11-02.v7",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.qq20261102c.asbrs2024-archived",
+      "title": "ASBrS archived high-risk lesion resource guide",
+      "completeCitation": "American Society of Breast Surgeons. Resource Guide: Surgical Management of Benign or High-Risk Lesions. 2024. Archived version, accessed November 2, 2026.",
+      "organizationOrJournal": "American Society of Breast Surgeons",
+      "authors": [
+        "American Society of Breast Surgeons"
+      ],
+      "publicationYear": 2024,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.breastsurgeons.org/docs/statements/asbrs-high-risk-lesions.pdf",
+      "accessedOn": "2026-11-02",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyright ASBrS; archived guidance, no reuse license",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Full archived PDF read; alternate rg-high-risk-lesions URL served the same edition. No source table, gauge, lesion threshold or expression adapted.",
+      "authorityAssessment": "Cross-check only of the general discordance principle and repeat-core/vacuum/excision alternatives. The visible Archived label is preserved; this is not represented as current comprehensive lesion-management guidance.",
+      "usageRole": "cross_check",
+      "evidenceClaimIds": [
+        "claim.qq20261102c.breast-core-target-discordance"
+      ],
+      "usedForClaimIdsThisRound": [
+        "claim.qf3.breast-sample-depth-provenance",
+        "claim.qq20261102c.breast-core-target-discordance"
+      ],
+      "verificationNote": "Existing source metadata/access date; no new retrieval or claim of currentness verification."
+    },
+    {
+      "contentVersion": "evidence.question-quality.2026-11-02.v7",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.qq20261102c.ata2025",
+      "title": "2025 American Thyroid Association Management Guidelines for Adult Patients with Differentiated Thyroid Cancer",
+      "completeCitation": "Ringel MD, Sosa JA, Baloch Z, Bischoff L, Bloom G, Brent GA, et al. 2025 American Thyroid Association Management Guidelines for Adult Patients with Differentiated Thyroid Cancer. Thyroid. 2025;35(8):841-985. doi:10.1177/10507256251363120.",
+      "organizationOrJournal": "American Thyroid Association / Thyroid",
+      "authors": [
+        "Matthew D Ringel",
+        "Julie Ann Sosa",
+        "Zubair Baloch",
+        "Lindsay Bischoff",
+        "Gary Bloom",
+        "Gregory A Brent",
+        "et al."
+      ],
+      "publicationYear": 2025,
+      "doi": "10.1177/10507256251363120",
+      "pmid": null,
+      "officialUrl": "https://thyca.org/wp-content/uploads/DTCGuidelines.pdf",
+      "accessedOn": "2026-11-02",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyright American Thyroid Association; targeted verification only",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Targeted factual verification and independently written synthesis only. No source prose, tables, figures, algorithms, examples or full text retained. Public access is not permission to copy or to ingest a prohibited corpus; no reusable rights are assumed.",
+      "authorityAssessment": "Full primary guideline rechecked through the public ThyCa PDF. Supports suspicious cystic-node assessment, targeted FNA and selected thyroglobulin washout; intact-thyroid limitations preserved. Same publication as source.qq20261102a.ata2025; a new record ID does not create independent evidence.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.qq20261102c.thyroid-cystic-node-discordance"
+      ],
+      "usedForClaimIdsThisRound": [
+        "claim.qf3.thyroid-washout-provenance",
+        "claim.qq20261102c.thyroid-cystic-node-discordance"
+      ],
+      "verificationNote": "Existing source metadata/access date; no new retrieval or claim of currentness verification."
+    },
+    {
+      "contentVersion": "evidence.question-quality.2026-11-02.v7",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.qq20261102c.breast-eusobi2020",
+      "title": "EUSOBI image-guided breast biopsy recommendations",
+      "completeCitation": "Bick U, Trimboli RM, Athanasiou A, Balleyguier C, Baltzer PAT, Bernathova M, et al.; European Society of Breast Imaging. Image-guided breast biopsy and localisation: recommendations for information to women and referring physicians by the European Society of Breast Imaging. Insights Imaging. 2020;11:12. doi:10.1186/s13244-019-0803-x.",
+      "organizationOrJournal": "European Society of Breast Imaging / Insights into Imaging",
+      "authors": [
+        "Bick U",
+        "Trimboli RM",
+        "Athanasiou A",
+        "Balleyguier C",
+        "Baltzer PAT",
+        "Bernathova M",
+        "European Society of Breast Imaging"
+      ],
+      "publicationYear": 2020,
+      "doi": "10.1186/s13244-019-0803-x",
+      "pmid": "32025985",
+      "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7002629/",
+      "accessedOn": "2026-11-02",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "CC BY 4.0; copyright the authors",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "https://creativecommons.org/licenses/by/4.0/ . Original synthesis with citation only; no source prose, patient images or figures copied.",
+      "authorityAssessment": "Full primary society recommendations directly support checking target/specimen concordance and further histology after discordance; multiple repeat techniques may be appropriate.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.qq20261102c.breast-core-target-discordance"
+      ],
+      "usedForClaimIdsThisRound": [
+        "claim.qf3.breast-sample-depth-provenance",
+        "claim.qq20261102c.breast-core-target-discordance"
+      ],
+      "verificationNote": "Existing source metadata/access date; no new retrieval or claim of currentness verification."
+    },
+    {
+      "contentVersion": "development-batch.2026-10-07.variety.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.sages.laparoscopic-gallbladder-patient-information.2026",
+      "title": "Patient information for laparoscopic gallbladder removal",
+      "completeCitation": "Society of American Gastrointestinal and Endoscopic Surgeons. Patient Information for Laparoscopic Gallbladder Removal (Cholecystectomy). Patient guidance revised May 6, 2026. Recovery and when-to-call sections; accessed October 7, 2026.",
+      "organizationOrJournal": "Society of American Gastrointestinal and Endoscopic Surgeons",
+      "authors": [
+        "Society of American Gastrointestinal and Endoscopic Surgeons"
+      ],
+      "publicationYear": 2026,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.sages.org/publications/patient-information/patient-information-for-laparoscopic-gallbladder-removal-cholecystectomy-from-sages/",
+      "accessedOn": "2026-10-07",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyrighted professional guidance or approved product labeling; targeted factual verification only, without reproducing protected expression.",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Current society patient guidance supports gas-associated shoulder pain after laparoscopic cholecystectomy and evaluation of warning symptoms. No brochure prose, numeric fever cutoff, expected duration or recovery schedule is reproduced.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.gs028e.laparoscopy.diaphragm-phrenic-shoulder-pain",
+        "claim.gs028e.laparoscopy.shoulder-pain-reassurance-boundary"
+      ],
+      "usedForClaimIdsThisRound": [
+        "claim.gs028e.laparoscopy.diaphragm-phrenic-shoulder-pain",
+        "claim.gs028e.laparoscopy.shoulder-pain-reassurance-boundary"
+      ],
+      "verificationNote": "Existing source metadata/access date; no new retrieval or claim of currentness verification."
+    },
+    {
+      "contentVersion": "development-batch.2026-10-03.coverage-gaps.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.sasm.osa-screening.2016",
+      "title": "SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA",
+      "completeCitation": "Chung F, Memtsoudis SG, Ramachandran SK, Nagappa M, Opperer M, Cozowicz C, Patrawala S, Lam D, Kumar A, Joshi GP, Fleetham J, Ayas N, Collop N, Doufas AG, Eikermann M, Englesakis M, Gali B, Gay P, Hernandez AV, Kaw R, Kezirian EJ, Malhotra A, Mokhlesi B, Parthasarathy S, Stierer T, Wappler F, Hillman DR, Auckley D. Society of Anesthesia and Sleep Medicine Guidelines on Preoperative Screening and Assessment of Adult Patients With Obstructive Sleep Apnea. Anesth Analg. 2016;123:452-473. doi:10.1213/ANE.0000000000001416.",
+      "organizationOrJournal": "Anesthesia & Analgesia / Society of Anesthesia and Sleep Medicine",
+      "authors": [
+        "F Chung",
+        "SG Memtsoudis",
+        "SK Ramachandran",
+        "M Nagappa",
+        "M Opperer",
+        "C Cozowicz",
+        "S Patrawala",
+        "D Lam",
+        "A Kumar",
+        "GP Joshi",
+        "J Fleetham",
+        "N Ayas",
+        "N Collop",
+        "AG Doufas",
+        "M Eikermann",
+        "M Englesakis",
+        "B Gali",
+        "P Gay",
+        "AV Hernandez",
+        "R Kaw",
+        "EJ Kezirian",
+        "A Malhotra",
+        "B Mokhlesi",
+        "S Parthasarathy",
+        "T Stierer",
+        "F Wappler",
+        "DR Hillman",
+        "D Auckley"
+      ],
+      "publicationYear": 2016,
+      "doi": "10.1213/ANE.0000000000001416",
+      "pmid": null,
+      "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4956681/",
+      "accessedOn": "2026-10-03",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International; https://creativecommons.org/licenses/by-nc-nd/4.0/; attributed noncommercial sharing only, with no adapted source content",
+      "reuseStatus": "cc_by_nc_4_0_restricted",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Specialist guideline; validated screening identifies risk but does not diagnose OSA. No questionnaire or scoring rubric reproduced.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.gs028d.osa.validated-screen"
+      ],
+      "usedForClaimIdsThisRound": [
+        "claim.gs028d.osa.validated-screen",
+        "claim.qf2.sleep-questionnaire-domain-interpretation",
+        "claim.qf3.osa-risk-communication-sequence"
+      ],
+      "verificationNote": "Existing source metadata/access date; no new retrieval or claim of currentness verification."
+    },
+    {
+      "contentVersion": "development-batch.2026-10-03.coverage-gaps.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.ukka.hyperkalaemia.2026",
+      "title": "Treatment of Acute Hyperkalaemia in Adults",
+      "completeCitation": "Alfonzo A, Harrison A, Baines R, Chu A, Mann S, MacRury M. Treatment of Acute Hyperkalaemia in Adults: UKKA Clinical Practice Guideline. Updated July 2026.",
+      "organizationOrJournal": "UK Kidney Association",
+      "authors": [
+        "Alfonzo A",
+        "Harrison A",
+        "Baines R",
+        "Chu A",
+        "Mann S",
+        "MacRury M"
+      ],
+      "publicationYear": 2026,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.ukkidney.org/sites/default/files/documents/FINAL%20VERSION%20-%20UKKA%20CLINICAL%20PRACTICE%20GUIDELINE%20-%20MANAGEMENT%20OF%20HYPERKALAEMIA%20IN%20ADULTS%20-%20UPDATED%20JULY%202026_0.pdf",
+      "accessedOn": "2026-10-03",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "UKKA copyright; targeted factual verification only",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Current UK kidney-society adult guideline. July 2026 calcium recommendation is weak 2C after ILCOR review; no outcome benefit is claimed.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.gs028d.hyperkalaemia.severe-transfer",
+        "claim.gs028d.hyperkalaemia.mechanisms"
+      ],
+      "usedForClaimIdsThisRound": [
+        "claim.gs028d.hyperkalaemia.mechanisms",
+        "claim.gs028d.hyperkalaemia.severe-transfer",
+        "claim.qf3.hyperkalaemia-active-treatment-ranking"
+      ],
+      "verificationNote": "Existing source metadata/access date; no new retrieval or claim of currentness verification."
+    },
+    {
+      "contentVersion": "development-batch.2026-09-28.pre-endoscopy.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.varicose.svs-avf-avls-2022",
+      "title": "SVS/AVF/AVLS varicose veins guideline Part I",
+      "completeCitation": "Gloviczki P, Lawrence PF, Wasan SM, et al. 2022 SVS/AVF/AVLS clinical practice guidelines for management of varicose veins, Part I: Duplex Scanning and Treatment of Superficial Truncal Reflux. J Vasc Surg Venous Lymphat Disord. 2023;11(2):231-261.e6. doi:10.1016/j.jvsv.2022.09.004.",
+      "organizationOrJournal": "SVS/AVF/AVLS",
+      "authors": [
+        "Gloviczki P",
+        "Lawrence PF",
+        "Wasan SM",
+        "et al."
+      ],
+      "publicationYear": 2023,
+      "doi": "10.1016/j.jvsv.2022.09.004",
+      "pmid": null,
+      "officialUrl": "https://doi.org/10.1016/j.jvsv.2022.09.004",
+      "accessedOn": "2026-09-28",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyrighted guidance; targeted factual verification only",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Multisociety guideline for reflux duplex and superficial truncal reflux.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.varicose.reflux-duplex"
+      ],
+      "usedForClaimIdsThisRound": [
+        "claim.qf3.recurrent-vein-map-scope",
+        "claim.varicose.reflux-duplex"
+      ],
+      "verificationNote": "Existing source metadata/access date; no new retrieval or claim of currentness verification."
+    },
+    {
+      "contentVersion": "development-batch.2026-09-28.pre-endoscopy.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.varicose.svs-avf-avls-2023",
+      "title": "SVS/AVF/AVLS varicose veins guideline Part II",
+      "completeCitation": "Gloviczki P, Lawrence PF, Wasan SM, et al. 2023 SVS/AVF/AVLS clinical practice guidelines for management of varicose veins, Part II. J Vasc Surg Venous Lymphat Disord. 2024;12(1):101670. doi:10.1016/j.jvsv.2023.08.011.",
+      "organizationOrJournal": "SVS/AVF/AVLS",
+      "authors": [
+        "Gloviczki P",
+        "Lawrence PF",
+        "Wasan SM",
+        "et al."
+      ],
+      "publicationYear": 2024,
+      "doi": "10.1016/j.jvsv.2023.08.011",
+      "pmid": null,
+      "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11523430/",
+      "accessedOn": "2026-09-28",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyrighted guidance; targeted factual verification only",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Multisociety guidance for preference-sensitive intervention and conservative care.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.varicose.intervention-referral",
+        "claim.varicose.conservative-boundary"
+      ],
+      "usedForClaimIdsThisRound": [
+        "claim.qf3.recurrent-vein-map-scope",
+        "claim.varicose.conservative-boundary",
+        "claim.varicose.intervention-referral"
+      ],
+      "verificationNote": "Existing source metadata/access date; no new retrieval or claim of currentness verification."
+    },
+    {
+      "contentVersion": "development-batch.2026-09-13.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.wses.bile-duct-injury.2021",
+      "title": "2020 WSES guidelines for the detection and management of bile duct injury during cholecystectomy",
+      "completeCitation": "de'Angelis N, Catena F, Memeo R, Coccolini F, Martínez-Pérez A, Romeo OM, et al. World Journal of Emergency Surgery. 2021;16:30. doi:10.1186/s13017-021-00369-w.",
+      "organizationOrJournal": "World Society of Emergency Surgery",
+      "authors": [
+        "de'Angelis N",
+        "Catena F",
+        "Memeo R",
+        "Coccolini F",
+        "Martínez-Pérez A",
+        "Romeo OM",
+        "et al."
+      ],
+      "publicationYear": 2021,
+      "doi": "10.1186/s13017-021-00369-w",
+      "pmid": null,
+      "officialUrl": "https://link.springer.com/article/10.1186/s13017-021-00369-w",
+      "accessedOn": "2026-09-13",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Creative Commons Attribution 4.0",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Original summaries with attribution; no source prose, tables, figures, or algorithms reproduced.",
+      "authorityAssessment": "Primary open society guideline supporting CT-first context, CE-MRCP anatomy, and step-up treatment of minor leaks.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.early.bile-leak.ce-mrcp-anatomic-localization",
+        "claim.early.bile-leak.minor-leak-ercp-stent"
+      ],
+      "usedForClaimIdsThisRound": [
+        "claim.early.bile-leak.ce-mrcp-anatomic-localization",
+        "claim.early.bile-leak.minor-leak-ercp-stent"
+      ],
+      "verificationNote": "Existing source metadata/access date; no new retrieval or claim of currentness verification."
+    }
+  ],
+  "mappings": [
+    {
+      "id": "F02",
+      "beforeClaimIds": [
+        "claim.gs028e.laparoscopy.diaphragm-phrenic-shoulder-pain",
+        "claim.gs028e.laparoscopy.shoulder-pain-reassurance-boundary",
+        "claim.early.bile-leak.ce-mrcp-anatomic-localization"
+      ],
+      "afterClaimIds": [
+        "claim.early.bile-leak.ce-mrcp-anatomic-localization",
+        "claim.early.bile-leak.minor-leak-ercp-stent"
+      ],
+      "limitation": "Both existing WSES-linked claims apply to this stable, drained, minor-leak setting. No universal endoscopic treatment of complete transection, stent duration or technical dose is authored.",
+      "hold": null
+    },
+    {
+      "id": "F03",
+      "beforeClaimIds": [
+        "claim.varicose.reflux-duplex",
+        "claim.varicose.intervention-referral",
+        "claim.varicose.conservative-boundary"
+      ],
+      "afterClaimIds": [
+        "claim.varicose.reflux-duplex",
+        "claim.varicose.intervention-referral",
+        "claim.qf3.recurrent-vein-map-scope"
+      ],
+      "limitation": "Qualitative application of the recorded venous guideline. The new mapping-scope claim has an explicit offline source-alignment limitation; no acquisition-position rule, reflux-duration threshold or mandatory procedure is invented.",
+      "hold": null
+    },
+    {
+      "id": "F04",
+      "beforeClaimIds": [
+        "claim.gs028d.hyperkalaemia.severe-transfer",
+        "claim.gs028d.hyperkalaemia.mechanisms"
+      ],
+      "afterClaimIds": [
+        "claim.gs028d.hyperkalaemia.severe-transfer",
+        "claim.gs028d.hyperkalaemia.mechanisms",
+        "claim.qf3.hyperkalaemia-active-treatment-ranking"
+      ],
+      "limitation": "The comparative active-drug claim is an offline synthesis linked to the already recorded UKKA source; direct section alignment and renal review remain explicit release-review requirements. No dose, repeat interval or dialysis threshold is authored.",
+      "hold": "Direct UKKA section alignment for the new active-drug comparative ranking is required before release acceptance; no network was authorized."
+    },
+    {
+      "id": "F05",
+      "beforeClaimIds": [
+        "claim.gs028f.neck.adult-lateral-malignancy-evaluation",
+        "claim.gs028f.neck.needle-before-open",
+        "claim.gs028f.neck.core-biopsy-alternative",
+        "claim.gs028f.neck.imaging-versus-tissue-diagnosis"
+      ],
+      "afterClaimIds": [
+        "claim.gs028f.neck.adult-lateral-malignancy-evaluation",
+        "claim.gs028f.neck.needle-before-open",
+        "claim.gs028f.neck.core-biopsy-alternative",
+        "claim.gs028f.neck.imaging-versus-tissue-diagnosis",
+        "claim.qf3.neck-mural-sampling"
+      ],
+      "limitation": "Single previously recorded UK multidisciplinary guideline supports the neck-mass and needle/core boundaries. The new target claim is a case-specific sampling inference, not a guaranteed result or complete cancer pathway. Scope hold is closed by the explicit owner/manager KEEP decision.",
+      "hold": null
+    },
+    {
+      "id": "F06",
+      "beforeClaimIds": [
+        "claim.gs028e.hyperacute_preformed",
+        "claim.gs028e.hyperacute_vascular",
+        "claim.gs028e.t_cell_graft_comparison"
+      ],
+      "afterClaimIds": [
+        "claim.gs028e.hyperacute_preformed",
+        "claim.gs028e.hyperacute_vascular",
+        "claim.gs028e.t_cell_graft_comparison",
+        "claim.qf3.preimplantation-specimen-inference"
+      ],
+      "limitation": "An investigation of a hypothesis, not a new crossmatch performance claim, antigen assignment, Banff diagnosis or transplant-treatment rule. Offline temporal/target inference is mapped separately to existing mechanism claims.",
+      "hold": null
+    },
+    {
+      "id": "F07",
+      "beforeClaimIds": [
+        "claim.cirrhosis.multifactor-risk",
+        "claim.cirrhosis.optimize-decompensation"
+      ],
+      "afterClaimIds": [
+        "claim.cirrhosis.multifactor-risk",
+        "claim.cirrhosis.optimize-decompensation",
+        "claim.qf3.cirrhosis-urgent-hernia-boundary"
+      ],
+      "limitation": "The recorded cirrhosis claim explicitly preserves immediate assessment for surgical emergencies. A separate draft application maps the supplied obstructive pattern; no mortality, platelet threshold, INR correction target or diagnosis of bowel viability is invented.",
+      "hold": null
+    },
+    {
+      "id": "F08",
+      "beforeClaimIds": [
+        "claim.lymphangitis.distal-entry-proximal-streak-regional-nodes",
+        "claim.bread-butter.skin-infection.equivocal-ultrasound"
+      ],
+      "afterClaimIds": [
+        "claim.lymphangitis.distal-entry-proximal-streak-regional-nodes",
+        "claim.bread-butter.skin-infection.equivocal-ultrasound",
+        "claim.bread-butter.cutaneous-abscess.incision-drainage",
+        "claim.bread-butter.cutaneous-abscess.antibiotic-nuance",
+        "claim.qf3.soft-tissue-ultrasound-application"
+      ],
+      "limitation": "Existing abscess claims support imaging and uncomplicated superficial source control. The new qualitative image interpretation is an offline application. No deep plantar drainage, venous procedure, antibiotic regimen or calf-versus-heel testing priority is inferred.",
+      "hold": null
+    },
+    {
+      "id": "F09",
+      "beforeClaimIds": [
+        "claim.gs028e.laparoscopy.caval-compression-venous-return",
+        "claim.gs028e.laparoscopy.pressure-position-context",
+        "claim.gs028g.laparoscopy-respiratory.diaphragm-compliance",
+        "claim.gs028g.laparoscopy-respiratory.diaphragm-compliance.fact2",
+        "claim.qf2.fixed-volume-peak-plateau-pattern"
+      ],
+      "afterClaimIds": [
+        "claim.gs028e.laparoscopy.caval-compression-venous-return",
+        "claim.gs028e.laparoscopy.pressure-position-context",
+        "claim.gs028g.laparoscopy-respiratory.diaphragm-compliance.fact2",
+        "claim.gs028g.laparoscopy-respiratory.diaphragm-compliance.fact3",
+        "claim.qf3.controlled-filling-elastic-load"
+      ],
+      "limitation": "A controlled-record physiology application with two integrated classifications, not a claim of a separate consequential management step. Anaesthesia/source-alignment review of the new qualitative filling/plateau inference is required; no numeric pressure, ventilator setting or treatment threshold is authored.",
+      "hold": null
+    },
+    {
+      "id": "F10",
+      "beforeClaimIds": [
+        "claim.gs028c.dcis.axilla-mastectomy",
+        "claim.gs028c.dcis.axilla-omit-bcs",
+        "claim.gs028c.dcis.axilla-risk-setting"
+      ],
+      "afterClaimIds": [
+        "claim.gs028c.dcis.axilla-mastectomy",
+        "claim.gs028c.dcis.axilla-omit-bcs",
+        "claim.gs028c.dcis.axilla-risk-setting",
+        "claim.qf3.dcis-specimen-operation-application"
+      ],
+      "limitation": "Existing ASBrS source supports the standard mastectomy/conservation distinction. The new anatomical application is explicitly mapped; no delayed magnetic-tracer strategy, invasive diagnosis or universal rule for every oncoplastic operation is added.",
+      "hold": null
+    },
+    {
+      "id": "F11",
+      "beforeClaimIds": [
+        "claim.gs028se.perioperative-dnr.1",
+        "claim.gs028se.perioperative-dnr.2",
+        "claim.gs028se.perioperative-dnr.3",
+        "claim.gs028se.perioperative-dnr.4"
+      ],
+      "afterClaimIds": [
+        "claim.gs028se.perioperative-dnr.1",
+        "claim.gs028se.perioperative-dnr.2",
+        "claim.gs028se.perioperative-dnr.3",
+        "claim.gs028se.perioperative-dnr.4",
+        "claim.qf3.dnr-baseline-support-endpoint"
+      ],
+      "limitation": "The patient-specific agreement is legitimate decision-critical evidence. This item does not impose a default DNR policy or prescribe an oxygen target. The future abscess task and chronology remain intact.",
+      "hold": null
+    },
+    {
+      "id": "F13",
+      "beforeClaimIds": [
+        "claim.gs028d.osa.validated-screen",
+        "claim.qf2.sleep-questionnaire-domain-interpretation"
+      ],
+      "afterClaimIds": [
+        "claim.gs028d.osa.validated-screen",
+        "claim.qf2.sleep-questionnaire-domain-interpretation",
+        "claim.qf3.osa-risk-communication-sequence"
+      ],
+      "limitation": "Offline application of the recorded SASM screening/communication claim and instrument-domain inference. No scoring item, numerical cutoff, delay-of-surgery rule or specific postoperative monitoring protocol is invented.",
+      "hold": null
+    },
+    {
+      "id": "F15",
+      "beforeClaimIds": [
+        "claim.gs028e.laparoscopy.pressure-position-context",
+        "claim.gs028e.laparoscopy.caval-compression-venous-return",
+        "claim.gs028e.laparoscopy.peritoneal-co2-uptake",
+        "claim.gs028e.laparoscopy.co2-load-respiratory-acidemia",
+        "claim.qf2.qualitative-co2-acid-base-pattern"
+      ],
+      "afterClaimIds": [
+        "claim.gs028e.laparoscopy.pressure-position-context",
+        "claim.gs028e.laparoscopy.caval-compression-venous-return",
+        "claim.qf2.qualitative-co2-acid-base-pattern",
+        "claim.gs028d.acidosis.blood-gas",
+        "claim.qf3.direction-versus-acidemia"
+      ],
+      "limitation": "No invented numerical gas or cutoff. The new claim is a bounded definition/record-interpretation inference with the existing blood-gas and CO2 claims as its basis. This is an integrated physiology interpretation, not two sequential treatment decisions or proof of a single CO2 source.",
+      "hold": null
+    },
+    {
+      "id": "F16",
+      "beforeClaimIds": [
+        "claim.dtc.preop-ultrasound",
+        "claim.dtc.extent",
+        "claim.qq20261102c.thyroid-cystic-node-discordance"
+      ],
+      "afterClaimIds": [
+        "claim.dtc.preop-ultrasound",
+        "claim.dtc.extent",
+        "claim.qq20261102c.thyroid-cystic-node-discordance",
+        "claim.qf3.thyroid-washout-provenance"
+      ],
+      "limitation": "The existing current ATA-linked claim expressly notes washout limitations with an intact thyroid. The new path/provenance inference requires endocrine/clinical source-alignment review. No detectable-equals-positive threshold, universal washout cutoff or required dissection extent is invented.",
+      "hold": null
+    },
+    {
+      "id": "F17",
+      "beforeClaimIds": [
+        "claim.gs028c.palpable.biopsy",
+        "claim.bread-butter.fibroadenoma.concordant-observation",
+        "claim.qq20261102c.breast-core-target-discordance"
+      ],
+      "afterClaimIds": [
+        "claim.gs028c.palpable.biopsy",
+        "claim.qq20261102c.breast-core-target-discordance",
+        "claim.qf3.breast-sample-depth-provenance"
+      ],
+      "limitation": "Existing ACR biopsy and EUSOBI/ASBrS discordance claims support representative tissue assessment. The new depth inference is a draft application, not a universal claim that all clips locate incorrectly or that every clinically benign lump needs biopsy.",
+      "hold": null
+    }
+  ]
+}

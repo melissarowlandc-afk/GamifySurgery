@@ -1,0 +1,1316 @@
+{
+  "checkedOn": "2026-11-04",
+  "status": "batch_stop_authored_integration_blocked_by_concurrent_lanes_review_and_source_alignment_pending",
+  "results": {
+    "clinical": {
+      "log": "tools/question-quality/question-bank-batch2a-clinical-final-20261104.log",
+      "files": "100 passed (100)",
+      "tests": "785 passed (785)",
+      "duration": "40.77s (transform 4.25s, setup 0ms, import 64.75s, tests 7.13s, environment 6ms)",
+      "failures": []
+    },
+    "domainFocused": {
+      "log": "tools/question-quality/question-bank-batch2a-domain-focused-20261104.log",
+      "files": "4 passed (4)",
+      "tests": "21 passed (21)",
+      "duration": "6.13s (transform 4.91s, setup 0ms, import 10.84s, tests 320ms, environment 0ms)",
+      "failures": []
+    },
+    "domainSupply": {
+      "log": "tools/question-quality/question-bank-batch2a-domain-supply-20261104.log",
+      "files": "2 passed (2)",
+      "tests": "5 passed (5)",
+      "duration": "26.74s (transform 4.40s, setup 0ms, import 6.57s, tests 30.84s, environment 0ms)",
+      "failures": []
+    },
+    "domainFixtureRepairs": {
+      "log": "tools/question-quality/question-bank-batch2a-domain-fixture-repairs-20261104.log",
+      "files": "3 passed (3)",
+      "tests": "700 passed (700)",
+      "duration": "48.81s (transform 3.36s, setup 0ms, import 6.24s, tests 78.71s, environment 0ms)",
+      "failures": []
+    },
+    "playerFocused": {
+      "log": "tools/question-quality/question-bank-batch2a-player-focused-final-20261104.log",
+      "files": "4 passed (4)",
+      "tests": "41 passed (41)",
+      "duration": "7.00s (transform 5.84s, setup 0ms, import 12.46s, tests 889ms, environment 1ms)",
+      "failures": []
+    },
+    "player": {
+      "log": "tools/question-quality/question-bank-batch2a-player-full-20261104.log",
+      "files": "336 passed (336)",
+      "tests": "3375 passed (3375)",
+      "duration": "598.72s (transform 15.43s, setup 0ms, import 381.85s, tests 776.87s, environment 28ms)",
+      "failures": []
+    },
+    "domainInitial": {
+      "log": "tools/question-quality/question-bank-batch2a-domain-full-20261104.log",
+      "files": "4 failed | 166 passed (170)",
+      "tests": "34 failed | 4349 passed | 1 skipped (4384)",
+      "duration": "1694.53s (transform 7.18s, setup 0ms, import 184.18s, tests 1494.80s, environment 10ms)",
+      "failures": [
+        {
+          "title": "FAIL  tests/gs028-20261007-batch.test.ts > GS-028 October 7 real gameplay admission > measures the real ordinary pools before and after admission",
+          "kind": "requires_review",
+          "error": "AssertionError: expected [ { cases: 480, concepts: 144 }, …(2) ] to deeply equal [ { cases: 480, concepts: 144 }, …(2)  ]",
+          "location": "❯ tests/gs028-20261007-batch.test.ts:425:46"
+        },
+        {
+          "title": "FAIL  tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > measures the actual early ordinary pool delta of seventy-eight cases and twenty-one active concepts",
+          "kind": "requires_review",
+          "error": "AssertionError: expected [ { cases: 558, concepts: 167 }, …(2) ] to deeply equal [ { cases: 558, concepts: 167 }, …(2)  ]",
+          "location": "❯ tests/gs028-20261007-variety2-batch.test.ts:612:46"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > binds the actual run to its current game, balance, clinical and driver inputs and reconciles cash",
+          "kind": "level5_input_binding",
+          "error": "AssertionError: packages/clinical-content/src/answer-choice-timing.ts: expected  '64c8b2dc402055d8495f85fd9289b44e9dc6f…' to be '7db1b1253c7d3064adb0602360925c0739bb6…' // Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:47:71"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after save/reload at integration-preparing",
+          "kind": "timeout",
+          "error": "Error: Test timed out in 30000ms. If this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".  ❯ tests/level-five-integration.test.ts:119:112",
+          "location": "❯ tests/level-five-integration.test.ts:119:112"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after save/reload at integration-running",
+          "kind": "timeout",
+          "error": "Error: Test timed out in 30000ms. If this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".  ❯ tests/level-five-integration.test.ts:119:112",
+          "location": "❯ tests/level-five-integration.test.ts:119:112"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after save/reload at integration-final",
+          "kind": "timeout",
+          "error": "Error: Test timed out in 30000ms. If this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".  ❯ tests/level-five-integration.test.ts:119:112",
+          "location": "❯ tests/level-five-integration.test.ts:119:112"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after save/reload at integration-finish",
+          "kind": "timeout",
+          "error": "Error: Test timed out in 30000ms. If this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".  ❯ tests/level-five-integration.test.ts:119:112",
+          "location": "❯ tests/level-five-integration.test.ts:119:112"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > continues normal operations, completes a genuinely lower retry and retains the higher best and first finish",
+          "kind": "timeout",
+          "error": "Error: Test timed out in 300000ms. If this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".  ❯ tests/level-five-integration.test.ts:143:3",
+          "location": "❯ tests/level-five-integration.test.ts:143:3"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 5",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '80968784844b7ff0548547b3edbd77e1b5a45…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 6",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '80968784844b7ff0548547b3edbd77e1b5a45…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 7",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '80968784844b7ff0548547b3edbd77e1b5a45…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 8",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '80968784844b7ff0548547b3edbd77e1b5a45…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 9",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '80968784844b7ff0548547b3edbd77e1b5a45…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 5",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '6d49e1ae285e7394ca29bf2d29471852cbdd9…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 6",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '6d49e1ae285e7394ca29bf2d29471852cbdd9…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 7",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '6d49e1ae285e7394ca29bf2d29471852cbdd9…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 8",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '6d49e1ae285e7394ca29bf2d29471852cbdd9…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 9",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '6d49e1ae285e7394ca29bf2d29471852cbdd9…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 5",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '739f72fa02a2d1bf594d74d1edebff2278751…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 6",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '739f72fa02a2d1bf594d74d1edebff2278751…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 7",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '739f72fa02a2d1bf594d74d1edebff2278751…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 8",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '739f72fa02a2d1bf594d74d1edebff2278751…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 9",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '739f72fa02a2d1bf594d74d1edebff2278751…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 5",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'feb2a973d82c427141c11cf0bac77aec39c66…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 6",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'feb2a973d82c427141c11cf0bac77aec39c66…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 7",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'feb2a973d82c427141c11cf0bac77aec39c66…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 8",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'feb2a973d82c427141c11cf0bac77aec39c66…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 9",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'feb2a973d82c427141c11cf0bac77aec39c66…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 5",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '3a3257a3afa40fc7d7f840ae68daad83c15f8…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 6",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '3a3257a3afa40fc7d7f840ae68daad83c15f8…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 7",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '3a3257a3afa40fc7d7f840ae68daad83c15f8…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 8",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '3a3257a3afa40fc7d7f840ae68daad83c15f8…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 9",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '3a3257a3afa40fc7d7f840ae68daad83c15f8…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/surgery-center-batch.test.ts > September 10 surgery-center production flows > runs all forty two-node encounters and all thirty-two gated services through reducer actions",
+          "kind": "requires_review",
+          "error": "AssertionError: expected Set{ …(26) } to deeply equal Set{ …(24) } - Expected",
+          "location": "❯ tests/surgery-center-batch.test.ts:166:22"
+        }
+      ]
+    },
+    "domain": {
+      "log": "tools/question-quality/question-bank-batch2a-domain-repaired-20261104.log",
+      "files": "3 failed | 167 passed (170)",
+      "tests": "29 failed | 4360 passed | 1 skipped (4390)",
+      "duration": "1295.44s (transform 6.04s, setup 0ms, import 158.89s, tests 1121.94s, environment 9ms)",
+      "failures": [
+        {
+          "title": "FAIL  tests/companions.test.ts > procedure companion phases > exits a bathroom with terminal_visit after snapshot reopen",
+          "kind": "requires_review",
+          "error": "AssertionError: expected { x: 39, y: 30 } to not deeply equal { x: 39, y: 30 } Compared values have no visual difference.",
+          "location": "❯ tests/companions.test.ts:265:32"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > binds the actual run to its current game, balance, clinical and driver inputs and reconciles cash",
+          "kind": "level5_input_binding",
+          "error": "AssertionError: packages/clinical-content/src/answer-choice-timing.ts: expected  '64c8b2dc402055d8495f85fd9289b44e9dc6f…' to be '7db1b1253c7d3064adb0602360925c0739bb6…' // Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:47:71"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 5",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '80968784844b7ff0548547b3edbd77e1b5a45…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 6",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '80968784844b7ff0548547b3edbd77e1b5a45…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 7",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '80968784844b7ff0548547b3edbd77e1b5a45…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 8",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '80968784844b7ff0548547b3edbd77e1b5a45…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 9",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '80968784844b7ff0548547b3edbd77e1b5a45…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 5",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '6d49e1ae285e7394ca29bf2d29471852cbdd9…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 6",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '6d49e1ae285e7394ca29bf2d29471852cbdd9…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 7",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '6d49e1ae285e7394ca29bf2d29471852cbdd9…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 8",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '6d49e1ae285e7394ca29bf2d29471852cbdd9…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 9",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '6d49e1ae285e7394ca29bf2d29471852cbdd9…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 5",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '739f72fa02a2d1bf594d74d1edebff2278751…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 6",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '739f72fa02a2d1bf594d74d1edebff2278751…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 7",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '739f72fa02a2d1bf594d74d1edebff2278751…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 8",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '739f72fa02a2d1bf594d74d1edebff2278751…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 9",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '739f72fa02a2d1bf594d74d1edebff2278751…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 5",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'feb2a973d82c427141c11cf0bac77aec39c66…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 6",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'feb2a973d82c427141c11cf0bac77aec39c66…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 7",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'feb2a973d82c427141c11cf0bac77aec39c66…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 8",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'feb2a973d82c427141c11cf0bac77aec39c66…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 9",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'feb2a973d82c427141c11cf0bac77aec39c66…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 5",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '3a3257a3afa40fc7d7f840ae68daad83c15f8…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 6",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '3a3257a3afa40fc7d7f840ae68daad83c15f8…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 7",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '3a3257a3afa40fc7d7f840ae68daad83c15f8…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 8",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '3a3257a3afa40fc7d7f840ae68daad83c15f8…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 9",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '3a3257a3afa40fc7d7f840ae68daad83c15f8…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/receptionist-water-refill.test.ts > receptionist water-cooler work > keeps an active employee purchase ahead of refill, then starts in the first idle gap",
+          "kind": "requires_review",
+          "error": "AssertionError: expected { kind: 'refill_water', …(2) } to be null - Expected:",
+          "location": "❯ tests/receptionist-water-refill.test.ts:84:45"
+        },
+        {
+          "title": "FAIL  tests/receptionist-water-refill.test.ts > receptionist water-cooler work > a real hire promptly refills and physically returns to the desk, also after reload",
+          "kind": "requires_review",
+          "error": "AssertionError: expected undefined to be 'refill_water' // Object.is equality - Expected:",
+          "location": "❯ tests/receptionist-water-refill.test.ts:98:52"
+        }
+      ]
+    },
+    "lint": {
+      "log": "tools/question-quality/question-bank-batch2a-lint-tests-20261104.log",
+      "tests": "33",
+      "pass": "33",
+      "fail": "0"
+    },
+    "typecheck": {
+      "log": "tools/question-quality/question-bank-batch2a-typecheck-current-integration-20261104.log",
+      "workspaces": [
+        "@gamify-surgery/clinical-context-workbench",
+        "@gamify-surgery/player",
+        "@gamify-surgery/balance-config",
+        "@gamify-surgery/clinical-authoring",
+        "@gamify-surgery/clinical-content",
+        "@gamify-surgery/clinical-research",
+        "@gamify-surgery/game-domain"
+      ],
+      "errors": true,
+      "errorLines": [
+        "src/facility/restroomRecoveryPresentation.test.ts(25,12): error TS18048: 'actor.location' is possibly 'undefined'."
+      ]
+    },
+    "typecheckAfterFixtures": {
+      "log": "tools/question-quality/question-bank-batch2a-typecheck-after-fixtures-20261104.log",
+      "workspaces": [
+        "@gamify-surgery/clinical-context-workbench",
+        "@gamify-surgery/player",
+        "@gamify-surgery/balance-config",
+        "@gamify-surgery/clinical-authoring",
+        "@gamify-surgery/clinical-content",
+        "@gamify-surgery/clinical-research",
+        "@gamify-surgery/game-domain"
+      ],
+      "errors": true,
+      "errorLines": [
+        "src/facility/phlebotomyPresentation.ts(39,3): error TS2322: Type '(ApprovedRoomDrawRecord | { renderSizeTiles: number[]; destinationTopLeftTiles: number[]; worldLocalGround: (0.83 | 1.08 | 1.3 | 1.34 | 1.5 | 1.7 | 1.95 | 2.2)[]; ... 16 more ...; foregroundSupportIds?: readonly string[] | undefined; })[]' is not assignable to type 'readonly ApprovedRoomDrawRecord[]'."
+      ]
+    },
+    "typecheckBeforeConcurrentArt": {
+      "log": "tools/question-quality/question-bank-batch2a-typecheck-final-20261104.log",
+      "workspaces": [
+        "@gamify-surgery/clinical-context-workbench",
+        "@gamify-surgery/player",
+        "@gamify-surgery/balance-config",
+        "@gamify-surgery/clinical-authoring",
+        "@gamify-surgery/clinical-content",
+        "@gamify-surgery/clinical-research",
+        "@gamify-surgery/game-domain"
+      ],
+      "errors": false
+    }
+  },
+  "domainFailureCategories": {
+    "level5_input_binding": 1,
+    "legacy_loaded_state_hash": 25,
+    "timeout": 0,
+    "requires_review": 3
+  },
+  "validationInputLock": "tools/question-quality/question-bank-batch2a-validation-domain-repaired-lock-20261104.json",
+  "windowChanges": [
+    {
+      "path": "apps/player/src/facility/FacilityScene.ts",
+      "previous": "0e5cc4ef84c6d3a3a1a8c8b270b507c504f0207809a9e47bf49394b1729b49bb",
+      "current": "a9ce2ee44d7f2a4879ca554bb9543de0dcb568c7c63adbd6f26db3a9060f8f93"
+    },
+    {
+      "path": "apps/player/src/facility/approvedRoomPresentation.test.ts",
+      "previous": "a832ddd989ee22658eb122b4729033e121c8f66a30a8ab7e1f177b787dfffcca",
+      "current": "4b7b9578ca1ee63be0df01119a97fbe589a637609327b5ccd8b3952c67ee0764"
+    },
+    {
+      "path": "apps/player/src/facility/approvedRoomPresentation.ts",
+      "previous": "ea08793d45fa2c62a25bed986797a0cab6a127f584bd316b31abf505e84332e4",
+      "current": "418e0286e75d1025fbcf3b7ec822278522f0a364e7be09340747668ac8318a88"
+    },
+    {
+      "path": "apps/player/src/facility/backlessRollingStools.test.ts",
+      "previous": "03729e7838562236a0c75b5c4236288b903cb25b02deefb2df18b1ac61295092",
+      "current": "d7723980a35e4bf22149033816d37e529725f020d0bacc71ced81b038ee98356"
+    },
+    {
+      "path": "apps/player/src/facility/furnitureSeatLayering.test.ts",
+      "previous": "beffc8917fe5f9753b478c34a34a1890721488aa662abddef14ffba024b585c8",
+      "current": "4d76e266a633dc27b28d60fe231f75d70fb4f482010a4d8e4034636db3764383"
+    },
+    {
+      "path": "packages/game-domain/src/patient-amenities.ts",
+      "previous": "bb68111e2ad99087f7cafa2c0d04331221d9c449dbc58acbbb8ac93af1886f1d",
+      "current": "6010f28a097e37291a1940d68961579c301d088b353dea93244ba0c94c0e0e99"
+    },
+    {
+      "path": "packages/game-domain/src/procedure-companions.ts",
+      "previous": "b14f513d5cf95215a4f4dd753e6ff785ad08c3e4809947e736b822c745ba5f7d",
+      "current": "eef7ed35ad3963276a08c539968912ad9d4e99e6d964cd07ab10be94e9791bbb"
+    },
+    {
+      "path": "packages/game-domain/src/reducer.ts",
+      "previous": "9ef61e771a6355875a7de9a528944e97104e5a6582eaa214f0bcfe23e5e422d6",
+      "current": "fb30915e3c0bf99b7beac99bfa82a40c107ae516958af196fdfd53bbba36715d"
+    },
+    {
+      "path": "packages/game-domain/src/retail-operations.ts",
+      "previous": "34011b67347d16b374185dc081d0596685c3eebbd42be12ce89aeaf5429295f5",
+      "current": "6afb0724762579737a96f2ca110a0735e4fe5c04b457a05b7be4140b307a99fe"
+    },
+    {
+      "path": "packages/game-domain/tests/companions.test.ts",
+      "previous": "cde38133a269fc920890b3a7881e8e4e7f9e63c78c58f6c1ac5ed89a1db8d0f6",
+      "current": "1577e42db1a16a1b946f4324cdcfc54f66c4c3c6d86a8f2853aa8cc63fd39059"
+    },
+    {
+      "path": "packages/game-domain/tests/receptionist-water-refill.test.ts",
+      "previous": "93fa2ad0e66644698f6f64d54bec6e61d387f8e65217c1bbcd76de54a821d430",
+      "current": "8a506e313772b6fd4ad0996e1308c6f95e34a7bb7232d3ac89989ad6de324361"
+    }
+  ],
+  "ownedDomainWindowChanges": [],
+  "playerValidationInputLock": "tools/question-quality/question-bank-batch2a-validation-final-lock-20261104.json",
+  "playerWindowChanges": [
+    {
+      "path": "apps/player/src/facility/FacilityScene.ts",
+      "previous": "0e5cc4ef84c6d3a3a1a8c8b270b507c504f0207809a9e47bf49394b1729b49bb",
+      "current": "a9ce2ee44d7f2a4879ca554bb9543de0dcb568c7c63adbd6f26db3a9060f8f93"
+    },
+    {
+      "path": "apps/player/src/facility/approvedRoomPresentation.test.ts",
+      "previous": "a832ddd989ee22658eb122b4729033e121c8f66a30a8ab7e1f177b787dfffcca",
+      "current": "4b7b9578ca1ee63be0df01119a97fbe589a637609327b5ccd8b3952c67ee0764"
+    },
+    {
+      "path": "apps/player/src/facility/approvedRoomPresentation.ts",
+      "previous": "ea08793d45fa2c62a25bed986797a0cab6a127f584bd316b31abf505e84332e4",
+      "current": "418e0286e75d1025fbcf3b7ec822278522f0a364e7be09340747668ac8318a88"
+    },
+    {
+      "path": "apps/player/src/facility/backlessRollingStools.test.ts",
+      "previous": "03729e7838562236a0c75b5c4236288b903cb25b02deefb2df18b1ac61295092",
+      "current": "d7723980a35e4bf22149033816d37e529725f020d0bacc71ced81b038ee98356"
+    },
+    {
+      "path": "apps/player/src/facility/furnitureSeatLayering.test.ts",
+      "previous": "beffc8917fe5f9753b478c34a34a1890721488aa662abddef14ffba024b585c8",
+      "current": "4d76e266a633dc27b28d60fe231f75d70fb4f482010a4d8e4034636db3764383"
+    },
+    {
+      "path": "packages/game-domain/src/patient-amenities.ts",
+      "previous": "bb68111e2ad99087f7cafa2c0d04331221d9c449dbc58acbbb8ac93af1886f1d",
+      "current": "6010f28a097e37291a1940d68961579c301d088b353dea93244ba0c94c0e0e99"
+    },
+    {
+      "path": "packages/game-domain/src/procedure-companions.ts",
+      "previous": "b14f513d5cf95215a4f4dd753e6ff785ad08c3e4809947e736b822c745ba5f7d",
+      "current": "eef7ed35ad3963276a08c539968912ad9d4e99e6d964cd07ab10be94e9791bbb"
+    },
+    {
+      "path": "packages/game-domain/src/reducer.ts",
+      "previous": "9ef61e771a6355875a7de9a528944e97104e5a6582eaa214f0bcfe23e5e422d6",
+      "current": "fb30915e3c0bf99b7beac99bfa82a40c107ae516958af196fdfd53bbba36715d"
+    },
+    {
+      "path": "packages/game-domain/src/retail-operations.ts",
+      "previous": "34011b67347d16b374185dc081d0596685c3eebbd42be12ce89aeaf5429295f5",
+      "current": "6afb0724762579737a96f2ca110a0735e4fe5c04b457a05b7be4140b307a99fe"
+    },
+    {
+      "path": "packages/game-domain/tests/companions.test.ts",
+      "previous": "cde38133a269fc920890b3a7881e8e4e7f9e63c78c58f6c1ac5ed89a1db8d0f6",
+      "current": "1577e42db1a16a1b946f4324cdcfc54f66c4c3c6d86a8f2853aa8cc63fd39059"
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261007-batch.test.ts",
+      "previous": "dbf851c039bcad8d8a2b1d5dc8f7c354a6c68127ce4de2c96a4fe1a1fab8a351",
+      "current": "2b2b79b32f6156aa9b1ec9dd43bcfc1f3fedfdb0a7a0463cb555a4be10334aea"
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+      "previous": "6693bdf58ecacd7825955e0f065d60c7422e42aa446432d6306ae40272b23488",
+      "current": "5cf9998910111a6869c95b73b000ba0492fc5d377cd4272b4de63ef3ec8397fc"
+    },
+    {
+      "path": "packages/game-domain/tests/receptionist-water-refill.test.ts",
+      "previous": "93fa2ad0e66644698f6f64d54bec6e61d387f8e65217c1bbcd76de54a821d430",
+      "current": "8a506e313772b6fd4ad0996e1308c6f95e34a7bb7232d3ac89989ad6de324361"
+    },
+    {
+      "path": "packages/game-domain/tests/surgery-center-batch.test.ts",
+      "previous": "4b151e91e6a6ab29ef1742ff46bbfdd5558bc54ec509fe7769da3bf6e8481c59",
+      "current": "ed3271f91c6d1b2edb15621f2686b3e05968f38ed2650097bd6bd2159c77111a"
+    }
+  ],
+  "ownedPlayerWindowChanges": [
+    {
+      "path": "packages/game-domain/tests/gs028-20261007-batch.test.ts",
+      "previous": "dbf851c039bcad8d8a2b1d5dc8f7c354a6c68127ce4de2c96a4fe1a1fab8a351",
+      "current": "2b2b79b32f6156aa9b1ec9dd43bcfc1f3fedfdb0a7a0463cb555a4be10334aea"
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+      "previous": "6693bdf58ecacd7825955e0f065d60c7422e42aa446432d6306ae40272b23488",
+      "current": "5cf9998910111a6869c95b73b000ba0492fc5d377cd4272b4de63ef3ec8397fc"
+    },
+    {
+      "path": "packages/game-domain/tests/surgery-center-batch.test.ts",
+      "previous": "4b151e91e6a6ab29ef1742ff46bbfdd5558bc54ec509fe7769da3bf6e8481c59",
+      "current": "ed3271f91c6d1b2edb15621f2686b3e05968f38ed2650097bd6bd2159c77111a"
+    }
+  ],
+  "protectedChanges": [
+    {
+      "path": "packages/game-domain/src/patient-amenities.ts",
+      "entry": "bb68111e2ad99087f7cafa2c0d04331221d9c449dbc58acbbb8ac93af1886f1d",
+      "current": "6010f28a097e37291a1940d68961579c301d088b353dea93244ba0c94c0e0e99",
+      "ownership": "external shared-tree change; preserve and report"
+    },
+    {
+      "path": "packages/game-domain/src/procedure-companions.ts",
+      "entry": "b14f513d5cf95215a4f4dd753e6ff785ad08c3e4809947e736b822c745ba5f7d",
+      "current": "eef7ed35ad3963276a08c539968912ad9d4e99e6d964cd07ab10be94e9791bbb",
+      "ownership": "external shared-tree change; preserve and report"
+    },
+    {
+      "path": "packages/game-domain/src/reducer.ts",
+      "entry": "9ef61e771a6355875a7de9a528944e97104e5a6582eaa214f0bcfe23e5e422d6",
+      "current": "fb30915e3c0bf99b7beac99bfa82a40c107ae516958af196fdfd53bbba36715d",
+      "ownership": "external shared-tree change; preserve and report"
+    },
+    {
+      "path": "packages/game-domain/src/retail-operations.ts",
+      "entry": "34011b67347d16b374185dc081d0596685c3eebbd42be12ce89aeaf5429295f5",
+      "current": "6afb0724762579737a96f2ca110a0735e4fe5c04b457a05b7be4140b307a99fe",
+      "ownership": "external shared-tree change; preserve and report"
+    },
+    {
+      "path": "packages/game-domain/tests/companions.test.ts",
+      "entry": "cde38133a269fc920890b3a7881e8e4e7f9e63c78c58f6c1ac5ed89a1db8d0f6",
+      "current": "1577e42db1a16a1b946f4324cdcfc54f66c4c3c6d86a8f2853aa8cc63fd39059",
+      "ownership": "external shared-tree change; preserve and report"
+    },
+    {
+      "path": "packages/game-domain/tests/receptionist-water-refill.test.ts",
+      "entry": "93fa2ad0e66644698f6f64d54bec6e61d387f8e65217c1bbcd76de54a821d430",
+      "current": "8a506e313772b6fd4ad0996e1308c6f95e34a7bb7232d3ac89989ad6de324361",
+      "ownership": "external shared-tree change; preserve and report"
+    },
+    {
+      "path": "apps/player/src/facility/approvedRoomPresentation.test.ts",
+      "entry": "a832ddd989ee22658eb122b4729033e121c8f66a30a8ab7e1f177b787dfffcca",
+      "current": "4b7b9578ca1ee63be0df01119a97fbe589a637609327b5ccd8b3952c67ee0764",
+      "ownership": "external shared-tree change; preserve and report"
+    },
+    {
+      "path": "apps/player/src/facility/approvedRoomPresentation.ts",
+      "entry": "ea08793d45fa2c62a25bed986797a0cab6a127f584bd316b31abf505e84332e4",
+      "current": "418e0286e75d1025fbcf3b7ec822278522f0a364e7be09340747668ac8318a88",
+      "ownership": "external shared-tree change; preserve and report"
+    },
+    {
+      "path": "apps/player/src/facility/backlessRollingStools.test.ts",
+      "entry": "03729e7838562236a0c75b5c4236288b903cb25b02deefb2df18b1ac61295092",
+      "current": "d7723980a35e4bf22149033816d37e529725f020d0bacc71ced81b038ee98356",
+      "ownership": "external shared-tree change; preserve and report"
+    },
+    {
+      "path": "apps/player/src/facility/FacilityScene.ts",
+      "entry": "0e5cc4ef84c6d3a3a1a8c8b270b507c504f0207809a9e47bf49394b1729b49bb",
+      "current": "a9ce2ee44d7f2a4879ca554bb9543de0dcb568c7c63adbd6f26db3a9060f8f93",
+      "ownership": "external shared-tree change; preserve and report"
+    },
+    {
+      "path": "apps/player/src/facility/furnitureSeatLayering.test.ts",
+      "entry": "beffc8917fe5f9753b478c34a34a1890721488aa662abddef14ffba024b585c8",
+      "current": "4d76e266a633dc27b28d60fe231f75d70fb4f482010a4d8e4034636db3764383",
+      "ownership": "external shared-tree change; preserve and report"
+    }
+  ],
+  "concurrentExternalAdditions": [
+    {
+      "path": "packages/game-domain/src/restroom-recovery.ts",
+      "current": "556ebd817e39d3fccdc7dd802e860ceaf9317fecfee4602d72ccace953f7432b",
+      "ownership": "concurrent external addition; not edited by this worker"
+    },
+    {
+      "path": "packages/game-domain/tests/restroom-recovery.test.ts",
+      "current": "a6a0240f73feeec1c661979af295b9ac217bbfa78d2561297889adaa3011191b",
+      "ownership": "concurrent external addition; not edited by this worker"
+    },
+    {
+      "path": "packages/game-domain/tests/waiting-chart-attendance.fixture.ts",
+      "current": "02d02619c4e2180997c7b08b1086dd8b49cb75d60efc41968384509b08621679",
+      "ownership": "concurrent external addition; not edited by this worker"
+    },
+    {
+      "path": "packages/game-domain/tests/waiting-chart-attendance.test.ts",
+      "current": "7e635b4d773c82309ca08a3efb612d4082af77d42bdc87651a94dcfb71655987",
+      "ownership": "concurrent external addition; not edited by this worker"
+    },
+    {
+      "path": "apps/player/src/art/characterPhlebotomyQa.before.json",
+      "current": "ca1f5b7058576c1f499cde9489806d52c5699e68f2c9484d8d7ab63bd32ec0d7",
+      "ownership": "concurrent external addition; not edited by this worker"
+    },
+    {
+      "path": "apps/player/src/art/characterPhlebotomyQa.ts",
+      "current": "e1b521d0bd41e8072deedddb5ffbcbf3d3e076302fac60f304c306268eac4307",
+      "ownership": "concurrent external addition; not edited by this worker"
+    },
+    {
+      "path": "apps/player/src/art/characterPhlebotomyQaModel.ts",
+      "current": "eb8a020bdc7f0268d10494c2caad5320050aa58a63562f58fe4d52dec1cd1658",
+      "ownership": "concurrent external addition; not edited by this worker"
+    },
+    {
+      "path": "apps/player/src/facility/phlebotomyPresentation.test.ts",
+      "current": "38ad306518a774b0a7b9ad0486db51cc4de562676bef6312b8a0e2c7e51ea3f3",
+      "ownership": "concurrent external addition; not edited by this worker"
+    },
+    {
+      "path": "apps/player/src/facility/phlebotomyPresentation.ts",
+      "current": "6e99e8815ded8169b0d0407426c26d229a9f8ae27102e8233c936d1a5269792f",
+      "ownership": "concurrent external addition; not edited by this worker"
+    },
+    {
+      "path": "apps/player/src/facility/restroomRecoveryPresentation.test.ts",
+      "current": "a282a06e13a0e1e57c96db352a6728577483407a321ace6f9c100ee61ccd024d",
+      "ownership": "concurrent external addition; not edited by this worker"
+    },
+    {
+      "path": "apps/player/src/facility/waitingChartAttendancePresentation.test.ts",
+      "current": "c2b45103940b5994f073dcd8bd00822237a513161a4875b96d9b4357683763d0",
+      "ownership": "concurrent external addition; not edited by this worker"
+    }
+  ],
+  "files": [
+    {
+      "path": "apps/player/public/clinical-exhibits/batch2a-b01-pressure.png",
+      "kind": "added_this_batch",
+      "sha256": "1f677fda73366997819c2781a5ee6f76ef725e97e286447ad8c402b1e4642200",
+      "bytes": 30582
+    },
+    {
+      "path": "apps/player/public/clinical-exhibits/batch2a-b03-pressure.png",
+      "kind": "added_this_batch",
+      "sha256": "d3a8b05ff54d17ec6734eca0eda4ac022f36b4f848126e5bbefd59ad51d22173",
+      "bytes": 32140
+    },
+    {
+      "path": "apps/player/src/mobile/MobileChart.tsx",
+      "kind": "modified_this_batch",
+      "sha256": "b679b653a8c285bafa67f8e78a57ded9e1c504ab2e9e4d99912e8535eb794981",
+      "bytes": 14663
+    },
+    {
+      "path": "apps/player/src/ui/ChartPanel.tsx",
+      "kind": "modified_this_batch",
+      "sha256": "658ec7269612aa07e110bfa1a7800f256e01adb5f41db266a96884642a5a6706",
+      "bytes": 36495
+    },
+    {
+      "path": "apps/player/src/ui/ClinicalImageExhibit.test.tsx",
+      "kind": "added_this_batch",
+      "sha256": "275f4d9bf0741383dc6bce52631952312c7fbca092dd80574a214778d849daca",
+      "bytes": 2691
+    },
+    {
+      "path": "apps/player/src/ui/ClinicalImageExhibit.tsx",
+      "kind": "added_this_batch",
+      "sha256": "c403e359e3037738d812aa10adb5dbc221aca8ba68a608aceb98023dbbc26768",
+      "bytes": 632
+    },
+    {
+      "path": "docs/clinical/question-authoring-standard.md",
+      "kind": "modified_this_batch",
+      "sha256": "ea42f31ccebe27f674a2df2f37b7ffc0a9578f034559a34e312e57d423cb72d7",
+      "bytes": 44064
+    },
+    {
+      "path": "docs/execplans/question-bank-program-20261104.md",
+      "kind": "added_this_batch",
+      "sha256": "055fa2c74bba4334c441e3dc7fce09e56698068ca694fa485272f4ed813dd1dd",
+      "bytes": 14274
+    },
+    {
+      "path": "docs/research/question-bank-batch2a-20261104.json",
+      "kind": "added_this_batch",
+      "sha256": "3bb15dd678f4d8e660c921a6de13b9ce270a52ed0391b7330a2d6ac350258f70",
+      "bytes": 213982
+    },
+    {
+      "path": "docs/research/question-bank-batch2a-cue-audit-20261104.md",
+      "kind": "added_this_batch",
+      "sha256": "04a5103582878651955d99ff72be206578d3a94f7d3c327835b6f9bcf545c561",
+      "bytes": 9152
+    },
+    {
+      "path": "docs/research/question-bank-batch2a-handoff-20261104.md",
+      "kind": "added_this_batch",
+      "sha256": "8482d8101d3785ee58619af743ee89a463c7fb367afbe2d596a3e3c90b912a07",
+      "bytes": 27983
+    },
+    {
+      "path": "docs/research/question-bank-batch2b-proposal-20261104.md",
+      "kind": "added_this_batch",
+      "sha256": "a7388c29ef0a4825be6e86e46ed0bcccf8a9cf54ff465bc0ab79c6bb4680d1dd",
+      "bytes": 9706
+    },
+    {
+      "path": "docs/research/question-bank-program-queue-20261104.json",
+      "kind": "added_this_batch",
+      "sha256": "c1c641590095f8601008cb390ee8ba41e3533d04d52d89e4c18c475256443b94",
+      "bytes": 1072215
+    },
+    {
+      "path": "docs/research/question-bank-retire-merge-proposals-20261104.md",
+      "kind": "added_this_batch",
+      "sha256": "4b74dccd31e90e752144ee6ffe3f263ff4d7c2f07007f925d0cfb197ad26c787",
+      "bytes": 3126
+    },
+    {
+      "path": "docs/research/sources-question-bank-batch2a-20261104.json",
+      "kind": "added_this_batch",
+      "sha256": "7b98955681ae62159684061b5afe7e4aff283845820d46b8bde561c3e7d6df7c",
+      "bytes": 137871
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+      "kind": "modified_this_batch",
+      "sha256": "5c67c6a4e0cbdfc1e2beba1df2d987d18204d9235f38d6342d14db95dd9dc409",
+      "bytes": 3544
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "kind": "modified_this_batch",
+      "sha256": "64c8b2dc402055d8495f85fd9289b44e9dc6fa9d7b5d0704fb799bd8bfeb6b9c",
+      "bytes": 189934
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "kind": "modified_this_batch",
+      "sha256": "631cd547564e7319e6215939f16901eead900aea836f44631240449c10df435c",
+      "bytes": 4979
+    },
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2a-20261104-data.ts",
+      "kind": "added_this_batch",
+      "sha256": "e639ddfb34f817ec12ba760910951dcbc81a2464f3da1918470f8173e4849324",
+      "bytes": 91074
+    },
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2a-20261104.test.ts",
+      "kind": "added_this_batch",
+      "sha256": "bd3e3c3af63db62eb9c614435888b9b2f3a2dd05fa6e003013472ecf7bbfe4d3",
+      "bytes": 7847
+    },
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2a-20261104.ts",
+      "kind": "added_this_batch",
+      "sha256": "3bf51ef4423bd2a0b7e75c100bbcb06af615218e57f92786f09c3ada972940e1",
+      "bytes": 2812
+    },
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2a-evidence-20261104.ts",
+      "kind": "added_this_batch",
+      "sha256": "77e3695047de700a5f16bd3a92f7dc162dd79ef20a12c87657cd8ef44b17c74e",
+      "bytes": 4461
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags-round2-20261104.test.ts",
+      "kind": "modified_this_batch",
+      "sha256": "a42c6113aea0c939efce63763ba79ed6cdb4e1fef9a83e71585c472ce5345a9b",
+      "bytes": 5720
+    },
+    {
+      "path": "packages/clinical-content/src/schema.ts",
+      "kind": "modified_this_batch",
+      "sha256": "c4d1640ba549c49b6a3dc7bfdf9155504611dd04c756865bc9f5fa0fd40015c7",
+      "bytes": 29034
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "kind": "modified_this_batch",
+      "sha256": "f4087dd2674b942d7f018fee696c7a846c2c35ff002eb1e83d1f2b51d36870af",
+      "bytes": 60792
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "kind": "modified_this_batch",
+      "sha256": "52dbc97240511ec5bab5f4fde92a3456a02cbeab2810848fdb761c7131520d3d",
+      "bytes": 95564
+    },
+    {
+      "path": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+      "kind": "modified_this_batch",
+      "sha256": "ee98d1798b415573fd771dc94f83db6aa23b3e7136159ba747aefe37df0a0bbb",
+      "bytes": 15858
+    },
+    {
+      "path": "packages/game-domain/tests/diagnostics/patient-supply.test.ts",
+      "kind": "modified_this_batch",
+      "sha256": "5937d82f2134a83558cfa9d4af40d7922e647174479d037a24b28099b0ec6ecc",
+      "bytes": 21612
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261007-batch.test.ts",
+      "kind": "modified_this_batch",
+      "sha256": "2b2b79b32f6156aa9b1ec9dd43bcfc1f3fedfdb0a7a0463cb555a4be10334aea",
+      "bytes": 32686
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+      "kind": "modified_this_batch",
+      "sha256": "5cf9998910111a6869c95b73b000ba0492fc5d377cd4272b4de63ef3ec8397fc",
+      "bytes": 46805
+    },
+    {
+      "path": "packages/game-domain/tests/patient-supply.test.ts",
+      "kind": "modified_this_batch",
+      "sha256": "9a52a2e370e12835cbb986761acd0c575312e8c54eb2491215a32f2a0c5b2987",
+      "bytes": 22801
+    },
+    {
+      "path": "packages/game-domain/tests/question-flags-round2-bindings.test.ts",
+      "kind": "modified_this_batch",
+      "sha256": "4d5704db9fdbd79c9041b7561e1017559026c6bd0252e00b856c819cb5b43f1d",
+      "bytes": 2665
+    },
+    {
+      "path": "packages/game-domain/tests/surgery-center-batch.test.ts",
+      "kind": "modified_this_batch",
+      "sha256": "ed3271f91c6d1b2edb15621f2686b3e05968f38ed2650097bd6bd2159c77111a",
+      "bytes": 17451
+    },
+    {
+      "path": "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+      "kind": "modified_this_batch",
+      "sha256": "a7d786469665313550687b97878e2698164e1a5aa64792f9ce2639efbd09c13f",
+      "bytes": 20722
+    },
+    {
+      "path": "tools/question-quality/author-question-bank-batch2a-20261104.mjs",
+      "kind": "added_this_batch",
+      "sha256": "74304339e3546038ed5258a566ec61834220cb26f0a8458a16a4dbcf8ef38479",
+      "bytes": 6267
+    },
+    {
+      "path": "tools/question-quality/bank.mjs",
+      "kind": "modified_this_batch",
+      "sha256": "59d4ee423c403b8d584181e686efbb2491c6939f993a82a34dfb064fb295e3b4",
+      "bytes": 10312
+    },
+    {
+      "path": "tools/question-quality/capture-question-bank-batch2a-20261104.mjs",
+      "kind": "added_this_batch",
+      "sha256": "068ae367d2d2c3be8013efd51730d4b31aead1b1ab3828ebeacd6e85e31e2c5b",
+      "bytes": 3377
+    },
+    {
+      "path": "tools/question-quality/compare-question-bank-batch2a-supply-20261104.mjs",
+      "kind": "added_this_batch",
+      "sha256": "7973ecb77e86ada42a824c4053b39797391b8f9ed354b76bf971592829ab7720",
+      "bytes": 5815
+    },
+    {
+      "path": "tools/question-quality/draw-question-bank-batch2a-20261104.ps1",
+      "kind": "added_this_batch",
+      "sha256": "a743383b8e8cbb310a4e3ef32e7e4b042849d862e2aa030f40dff6a7e059dc2f",
+      "bytes": 5660
+    },
+    {
+      "path": "tools/question-quality/evidence-question-bank-batch2a-20261104.mjs",
+      "kind": "added_this_batch",
+      "sha256": "a41f07f20caf6a5836cf9b0b90ae15ccba684cebd413d3706989d7fe5b89e59e",
+      "bytes": 2661
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-bank-batch2a-before-20261104.json",
+      "kind": "added_this_batch",
+      "sha256": "afcfb4cdb331467023c9717c08b348baa15b1c43f6fcd74ae596cd294ba4e046",
+      "bytes": 25593654
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-bank-batch2a-domain-fixtures-before-20261104.json",
+      "kind": "added_this_batch",
+      "sha256": "e124832900c7e4d86f278d705a2a9760a69d711774c91b9c680e5a5ba803b6ef",
+      "bytes": 99319
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-bank-batch2a-tests-before-20261104.json",
+      "kind": "added_this_batch",
+      "sha256": "9d6e7eac4dac01caf6fcec6f0608e6c556d58148fa1b08514bbbfe52480053ae",
+      "bytes": 46542
+    },
+    {
+      "path": "tools/question-quality/handoff-question-bank-batch2a-20261104.mjs",
+      "kind": "added_this_batch",
+      "sha256": "b2548ceb441340e57b56b115af316c5b56d0bff3a8a8686f8ad7b38b90af01b2",
+      "bytes": 29771
+    },
+    {
+      "path": "tools/question-quality/legacy-question-bank-batch2a-20261104.mjs",
+      "kind": "added_this_batch",
+      "sha256": "329a051302569ba9e27b60646d8046cfaac1fb9296516242dda5d25398bb4056",
+      "bytes": 2914
+    },
+    {
+      "path": "tools/question-quality/lint.mjs",
+      "kind": "modified_this_batch",
+      "sha256": "9001747ca5b2b7bdab183ce4c8f22b85abe60cc3acf120ee0e448ba30caf321c",
+      "bytes": 21717
+    },
+    {
+      "path": "tools/question-quality/lint.test.mjs",
+      "kind": "modified_this_batch",
+      "sha256": "f812c954ff611d530ae3bfdb33a87626d5df9ef845ecf1128d3c38f41b3910b6",
+      "bytes": 25943
+    },
+    {
+      "path": "tools/question-quality/lock-question-bank-batch2a-validation-20261104.mjs",
+      "kind": "added_this_batch",
+      "sha256": "cc848053f182d4226ae5561d083aa31c8c84807ea8aa295c4c1c60c45ff0a95a",
+      "bytes": 2336
+    },
+    {
+      "path": "tools/question-quality/orders-question-bank-batch2a-20261104.mjs",
+      "kind": "added_this_batch",
+      "sha256": "1314ca98a096ab4d82d929d0627d04758b09fa736ed3ab8f6227245c693dd929",
+      "bytes": 2771
+    },
+    {
+      "path": "tools/question-quality/owner-flag-rules-20261104.mjs",
+      "kind": "modified_this_batch",
+      "sha256": "8a83ea1dd34a6387e27a04c2637a6975a61d9ad02cc772119f3d2720256cc9e2",
+      "bytes": 6303
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-clinical-final-20261104.log",
+      "kind": "added_this_batch",
+      "sha256": "d5530543663fc42faab6ab9f56422879e0f23542d015c93a206e82b3625721cb",
+      "bytes": 2330
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-clinical-focused-20261104.log",
+      "kind": "added_this_batch",
+      "sha256": "34435b8a6d7b8f6f9d90db861f357f4374e1fa4141f0f5959833bf4ffc0946c4",
+      "bytes": 1098
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-clinical-focused-initial-20261104.log",
+      "kind": "added_this_batch",
+      "sha256": "c6599a08e2a67f052ea557349718500580e3c30bf7bdf313c9b869853400cf7a",
+      "bytes": 7172
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-clinical-initial-20261104.log",
+      "kind": "added_this_batch",
+      "sha256": "7e184f4e508bffce1495cd71cec277ac2378713205a289555fb7487e15693642",
+      "bytes": 6372
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-domain-failures-20261104.json",
+      "kind": "added_this_batch",
+      "sha256": "0ff1c5d8d7939344d347685f339b2b7d173862318aea90e1811a5aaad90fcd65",
+      "bytes": 14277
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-domain-fixture-repairs-20261104.log",
+      "kind": "added_this_batch",
+      "sha256": "c9c33f09d614a285314882f95b935aec9112bce13ce6e0b362886a8c1fc745f6",
+      "bytes": 2360
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-domain-fixture-review-20261104.json",
+      "kind": "added_this_batch",
+      "sha256": "b2bee0434646a56e4eaedcb5ca917ba3705453a93ab5e1ef4b2ac37fef7fc66e",
+      "bytes": 2501
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-domain-focused-20261104.log",
+      "kind": "added_this_batch",
+      "sha256": "3fa84b4e5121c480ad45949ce7ee1645a002c57ca1bbe36bd1fb303efd3cf7f4",
+      "bytes": 1116
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-domain-focused-initial-20261104.log",
+      "kind": "added_this_batch",
+      "sha256": "c699563cc1923e8721eaeaffb8b0c0dbf2dfc63c943c8531f643894e22faa08d",
+      "bytes": 8090
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-domain-full-20261104.log",
+      "kind": "added_this_batch",
+      "sha256": "70088181fce949222913dba586cd41be8c92a443d1122e960ce43fe82b92a4d3",
+      "bytes": 42768
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-domain-initial-failures-20261104.json",
+      "kind": "added_this_batch",
+      "sha256": "e142bc0079af9dac7d5f497ee975b4f7e6ddab15068308c7b0fb1ff278322259",
+      "bytes": 16776
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-domain-repaired-20261104.log",
+      "kind": "added_this_batch",
+      "sha256": "fc0e70429db5bb43d12849d2608a967371a274107d0bcbdbb4b9f9a502ab2d6c",
+      "bytes": 35450
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-domain-supply-20261104.log",
+      "kind": "added_this_batch",
+      "sha256": "7081aaba9cad42a1c0b18b17d7dc082d9acd006bd8d934fd26420199e1fe1ae7",
+      "bytes": 874
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-legacy-diagnosis-20261104.json",
+      "kind": "added_this_batch",
+      "sha256": "0323591f9a0747e2c124bfa535867f4a36d6eb7d1a1230213865cbbbda273958",
+      "bytes": 13301
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-lint-20261104.json",
+      "kind": "added_this_batch",
+      "sha256": "25be2b7d15f8db560051ca1dac40cd50dfc9e1564edfa160fc4947bdb7000aee",
+      "bytes": 141993
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-lint-tests-20261104.log",
+      "kind": "added_this_batch",
+      "sha256": "5ea930a923da4aa5d028ef7ab7836e969c4a9c369ad520d191fa581f29c44ce8",
+      "bytes": 8088
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-owned-files-20261104.json",
+      "kind": "added_this_batch",
+      "sha256": null,
+      "bytes": null
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-player-focused-final-20261104.log",
+      "kind": "added_this_batch",
+      "sha256": "f7333b3c12a0d95d0ca2f3f8063da46271d8ec9fd113da6b7c743d8fd676377e",
+      "bytes": 1062
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-player-focused-initial-20261104.log",
+      "kind": "added_this_batch",
+      "sha256": "6844abe82e248707a17c95a42821073a36421eab1bab8e53503319845d4a9e89",
+      "bytes": 1060
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-player-full-20261104.log",
+      "kind": "added_this_batch",
+      "sha256": "6d53c784afe1cdd4606be64d29cfbb0667d6ba41cd1d5af4535bae33522f4318",
+      "bytes": 3330096
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-snapshot-change-review-20261104.json",
+      "kind": "added_this_batch",
+      "sha256": "a59af46f720b9349a6634f4f84f6991433b964e549f79e51c73dbd432fc2e268",
+      "bytes": 61595
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-specs-20261104.mjs",
+      "kind": "added_this_batch",
+      "sha256": "6ea07895984a7de5d70c4bfebf4916ac4ec121cbe42914fb2f1c88cde45ddc8b",
+      "bytes": 26765
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-supply-candidate-20261104.json",
+      "kind": "added_this_batch",
+      "sha256": "513ad32981ca21b8a6801366df47d56265d9ed5c1037e36f7276318936b4ff6e",
+      "bytes": 62280
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-supply-capture-20261104.log",
+      "kind": "added_this_batch",
+      "sha256": "4f938d58118a04391dbc55abd2a82c7bb8df64af903bfb1d93be3b7e85f1ead9",
+      "bytes": 1556
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-typecheck-after-fixtures-20261104.log",
+      "kind": "added_this_batch",
+      "sha256": "ac92a72e94aef117b1e2b8b21556385134fdbec92a1099f9d40138925a2fefff",
+      "bytes": 5398
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-typecheck-authored-20261104.log",
+      "kind": "added_this_batch",
+      "sha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "bytes": 1504
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-typecheck-current-integration-20261104.log",
+      "kind": "added_this_batch",
+      "sha256": "9a2767082d0cac747a352764853c4b171682b4ea1d869072262a7d23bea75df0",
+      "bytes": 3168
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-typecheck-final-20261104.log",
+      "kind": "added_this_batch",
+      "sha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "bytes": 1504
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-typecheck-initial-20261104.log",
+      "kind": "added_this_batch",
+      "sha256": "87c9c0e509d92e6e51e8ab50d7e104bc1492fe39a207a1f69fc8bad5f369d8c7",
+      "bytes": 5842
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-typecheck-prevalidation-20261104.log",
+      "kind": "added_this_batch",
+      "sha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "bytes": 1504
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-validation-domain-repaired-lock-20261104.json",
+      "kind": "added_this_batch",
+      "sha256": "09b577b79a2a62b79f6e3db50a66c2f4b2fb64dea00b38a179e9d5ec9053e4a5",
+      "bytes": 203194
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-validation-final-lock-20261104.json",
+      "kind": "added_this_batch",
+      "sha256": "8f1431e8bf95c67da660e3fd73998a8f251ffc1292c7d6117db6a7a01830dea0",
+      "bytes": 202778
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-verification-20261104.json",
+      "kind": "added_this_batch",
+      "sha256": "cc435bb46da43681ab8db1410be36a251736c55569a5d0c24685933df19690c4",
+      "bytes": 25917
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-whole-bank-20261104.json",
+      "kind": "added_this_batch",
+      "sha256": "17e92713b7d8032a402dd0077c8c464bbff0ad88e2d0f806737add1aa1458bcd",
+      "bytes": 6598709
+    },
+    {
+      "path": "tools/question-quality/question-bank-batch2a-whole-bank-cli-20261104.log",
+      "kind": "added_this_batch",
+      "sha256": "53c7c26766f449b3e264858e89357cd042155657b278cf6a6cc18758fd10e2bb",
+      "bytes": 3716
+    },
+    {
+      "path": "tools/question-quality/report.mjs",
+      "kind": "modified_this_batch",
+      "sha256": "2ad3c644b794e27ffdace2d7c89190e75a0fa86ced00807fcacd2862e2d757b5",
+      "bytes": 6703
+    },
+    {
+      "path": "tools/question-quality/review-question-bank-batch2a-20261104.mjs",
+      "kind": "added_this_batch",
+      "sha256": "f69e190ae7e05853bab0fb4c3edf504109a29650576843098f3c596e579f55b0",
+      "bytes": 21108
+    },
+    {
+      "path": "tools/question-quality/review-question-bank-batch2a-domain-fixtures-20261104.mjs",
+      "kind": "added_this_batch",
+      "sha256": "ec606ceaaca908dc2af3696abe1d3108fdf12a42c4a798df3bd58ddaad1f9fc1",
+      "bytes": 2890
+    },
+    {
+      "path": "tools/question-quality/review-question-bank-batch2a-snapshots-20261104.mjs",
+      "kind": "added_this_batch",
+      "sha256": "f034354cbb7170b1ca878dc8bb493ce24cf3027844e5a183359d31c9e153a67b",
+      "bytes": 3321
+    },
+    {
+      "path": "tools/question-quality/verify-question-bank-batch2a-20261104.mjs",
+      "kind": "added_this_batch",
+      "sha256": "af2e80229294b4dfd88ebe65725e59e41ace06f13ffb9f15d8ad2e2646dc3d5e",
+      "bytes": 9612
+    }
+  ],
+  "note": "Self hash omitted. Completed commands do not imply a green or stable final tree. Outside-lane changes/errors are preserved and explicitly reported; no test assertion or deadline weakened. No Git, installation, network, evidence rebind or publication."
+}

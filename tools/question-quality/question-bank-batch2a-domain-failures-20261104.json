@@ -1,0 +1,188 @@
+{
+  "checkedOn": "2026-11-04",
+  "log": "tools/question-quality/question-bank-batch2a-domain-repaired-20261104.log",
+  "tests": "29 failed | 4360 passed | 1 skipped (4390)",
+  "categories": {
+    "level5_input_binding": 1,
+    "legacy_loaded_state_hash": 25,
+    "timeout": 0,
+    "requires_review": 3
+  },
+  "failures": [
+    {
+      "title": "FAIL  tests/companions.test.ts > procedure companion phases > exits a bathroom with terminal_visit after snapshot reopen",
+      "kind": "requires_review",
+      "error": "AssertionError: expected { x: 39, y: 30 } to not deeply equal { x: 39, y: 30 } Compared values have no visual difference.",
+      "location": "❯ tests/companions.test.ts:265:32"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > binds the actual run to its current game, balance, clinical and driver inputs and reconciles cash",
+      "kind": "level5_input_binding",
+      "error": "AssertionError: packages/clinical-content/src/answer-choice-timing.ts: expected  '64c8b2dc402055d8495f85fd9289b44e9dc6f…' to be '7db1b1253c7d3064adb0602360925c0739bb6…' // Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:47:71"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 5",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected '80968784844b7ff0548547b3edbd77e1b5a45…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 6",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected '80968784844b7ff0548547b3edbd77e1b5a45…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 7",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected '80968784844b7ff0548547b3edbd77e1b5a45…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 8",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected '80968784844b7ff0548547b3edbd77e1b5a45…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 9",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected '80968784844b7ff0548547b3edbd77e1b5a45…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 5",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected '6d49e1ae285e7394ca29bf2d29471852cbdd9…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 6",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected '6d49e1ae285e7394ca29bf2d29471852cbdd9…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 7",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected '6d49e1ae285e7394ca29bf2d29471852cbdd9…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 8",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected '6d49e1ae285e7394ca29bf2d29471852cbdd9…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 9",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected '6d49e1ae285e7394ca29bf2d29471852cbdd9…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 5",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected '739f72fa02a2d1bf594d74d1edebff2278751…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 6",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected '739f72fa02a2d1bf594d74d1edebff2278751…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 7",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected '739f72fa02a2d1bf594d74d1edebff2278751…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 8",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected '739f72fa02a2d1bf594d74d1edebff2278751…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 9",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected '739f72fa02a2d1bf594d74d1edebff2278751…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 5",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected 'feb2a973d82c427141c11cf0bac77aec39c66…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 6",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected 'feb2a973d82c427141c11cf0bac77aec39c66…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 7",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected 'feb2a973d82c427141c11cf0bac77aec39c66…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 8",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected 'feb2a973d82c427141c11cf0bac77aec39c66…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 9",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected 'feb2a973d82c427141c11cf0bac77aec39c66…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 5",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected '3a3257a3afa40fc7d7f840ae68daad83c15f8…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 6",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected '3a3257a3afa40fc7d7f840ae68daad83c15f8…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 7",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected '3a3257a3afa40fc7d7f840ae68daad83c15f8…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 8",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected '3a3257a3afa40fc7d7f840ae68daad83c15f8…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 9",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected '3a3257a3afa40fc7d7f840ae68daad83c15f8…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/receptionist-water-refill.test.ts > receptionist water-cooler work > keeps an active employee purchase ahead of refill, then starts in the first idle gap",
+      "kind": "requires_review",
+      "error": "AssertionError: expected { kind: 'refill_water', …(2) } to be null - Expected:",
+      "location": "❯ tests/receptionist-water-refill.test.ts:84:45"
+    },
+    {
+      "title": "FAIL  tests/receptionist-water-refill.test.ts > receptionist water-cooler work > a real hire promptly refills and physically returns to the desk, also after reload",
+      "kind": "requires_review",
+      "error": "AssertionError: expected undefined to be 'refill_water' // Object.is equality - Expected:",
+      "location": "❯ tests/receptionist-water-refill.test.ts:98:52"
+    }
+  ],
+  "limitation": "The recorded input guard and legacy initial-state hashes are different failures. Legacy continuation assertions after a failed initial hash do not execute; this worker neither rebinds nor refreshes evidence."
+}

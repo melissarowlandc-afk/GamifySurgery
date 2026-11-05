@@ -1,0 +1,122 @@
+{
+  "updatedAt": "2026-11-05T02:24:25.500Z",
+  "rows": 1497,
+  "changedRows": 52,
+  "unchangedRows": 1445,
+  "frozenBatch2aRowsExact": true,
+  "keptLiveFlags": [
+    "F02",
+    "F06",
+    "F07",
+    "F08",
+    "F13",
+    "F16"
+  ],
+  "holdFlags": [
+    "F04",
+    "F14"
+  ],
+  "deferredItems": [
+    {
+      "id": "B2B27",
+      "variantId": "question.cirrhosis-perioperative-risk.decompensation-optimization-boundary.v3",
+      "conceptId": "concept.cirrhosis-perioperative-risk.decompensation-optimization-boundary",
+      "disposition": "unchanged_proposed_merge_pending_manager_acceptance",
+      "reason": "These generic return-to-individualized-risk-assessment variants duplicate the active-decompensation/timing cases. The locally recorded broad claim does not establish a unique specific treatment/clearance choice. Do not invent an operation threshold or force a generic cautious key; merge/scope decision belongs to the manager."
+    },
+    {
+      "id": "B2B28",
+      "variantId": "question.cirrhosis-perioperative-risk.multifactor-assessment.v2",
+      "conceptId": "concept.cirrhosis-perioperative-risk.multifactor-assessment",
+      "disposition": "unchanged_proposed_merge_pending_manager_acceptance",
+      "reason": "These generic return-to-individualized-risk-assessment variants duplicate the active-decompensation/timing cases. The locally recorded broad claim does not establish a unique specific treatment/clearance choice. Do not invent an operation threshold or force a generic cautious key; merge/scope decision belongs to the manager."
+    },
+    {
+      "id": "B2B05",
+      "flagId": "F13",
+      "variantId": "question.preoperative-osa.validated-risk-screening.v4.r4",
+      "retainedLiveVariantId": "question.preoperative-osa.validated-risk-screening.v4",
+      "conceptId": "concept.osa.discordant-screen-documentation.v2",
+      "disposition": "keep_live_queued_supported_application_needed",
+      "reason": "Author cover-key/difficulty attack still selects suspected-risk communication without using the full case. Locally mapped SASM facts support screening/communication, but not a richer treatment, monitoring or surgical-delay discriminator. No network is authorized; retain the manager-kept live version and queue a supported deeper objective rather than relabel recall as moderate. No retirement is proposed."
+    }
+  ],
+  "totals": {
+    "liveVariants": 1497,
+    "selected": 11,
+    "frozenPendingFlagReview": 0,
+    "originalCandidates": 179,
+    "remainingOriginalCandidates": 167,
+    "byPriority": {
+      "1": 28,
+      "2": 181,
+      "3": 1288
+    },
+    "byState": {
+      "flag_manager_accepted_pending_release_reconciliation": 9,
+      "batch2b_awaiting_independent_review": 39,
+      "source_verification_hold_keep_live": 1,
+      "queued_supported_application_needed": 1,
+      "batch2a_round2_awaiting_independent_review": 10,
+      "deferred_keep_live_until_exact_criteria_verified": 1,
+      "batch2a_review1_pass_basic_frozen": 1,
+      "owner_reviewed_frozen_no_new_change_note": 163,
+      "proposed_merge_pending_manager_acceptance": 2,
+      "queued": 1191,
+      "n1_new_drafts_awaiting_separate_review": 40,
+      "n2_new_drafts_awaiting_separate_review": 39
+    },
+    "flagRound3AwaitingIndependentReview": 0,
+    "flagReview2PassFrozen": 2,
+    "newContentSeparateReview": 79,
+    "batch2aRound2AwaitingIndependentReview": 10,
+    "batch2aReview1PassFrozen": 1,
+    "batch2bAwaitingIndependentReview": 39,
+    "flagManagerAcceptedPendingReconciliation": 9,
+    "flagKeptLiveRequeued": 6,
+    "flagKeptLiveRewrittenInBatch2b": 5,
+    "flagKeptLiveDeferredF13": 1
+  },
+  "nextForty": [
+    "question.preoperative-osa.validated-risk-screening.v1",
+    "question.prosthetic-mesh-infection.specialist-source-control-evaluation.v1",
+    "question.spigelian-hernia.elective-repair-referral.v4",
+    "question.spontaneous-pneumothorax.recurrence-prevention-referral.v4",
+    "question.statistics-ethics.qi-versus-research.v1",
+    "question.acute-mesenteric-ischemia.peritonitis-exploration.v1",
+    "question.breast-cancer-after-neoadjuvant-therapy.response-mapping.v4",
+    "question.gs028f.esophagus.confirmed-sharp-object-emergency-referral.v2",
+    "question.gs028f.head-neck.initial-fna-not-open-biopsy.v3",
+    "question.hidradenitis-suppurativa.multimodal-specialist-planning.v1",
+    "question.hidradenitis-suppurativa.multimodal-specialist-planning.v1.p2e.research-consent.v4",
+    "question.immunology.preformed-antibody-hyperacute-rejection.v2",
+    "question.immunology.preformed-antibody-hyperacute-rejection.v3",
+    "question.malignant-polyp.low-risk-endoscopic-excision.v1",
+    "question.metabolic-acidosis.albumin-corrected-anion-gap.v4",
+    "question.palpable-breast.suspicious-mass-biopsy-despite-negative-imaging.v2",
+    "question.palpable-breast.suspicious-mass-biopsy-despite-negative-imaging.v3",
+    "question.postherniorrhaphy-pain.targeted-block-specialist-evaluation.v3",
+    "question.postoperative-delirium.multicomponent-prevention-plan.v1",
+    "question.preoperative-nutrition.nutritional-risk-screening.v4",
+    "question.spontaneous-pneumothorax.recurrence-prevention-referral.v3",
+    "question.statistics-ethics.research-consent.v3",
+    "question.acute-mesenteric-ischemia.peritonitis-exploration.v4",
+    "question.gs028f.esophagus.confirmed-sharp-object-emergency-referral.v1",
+    "question.gs028f.esophagus.confirmed-sharp-object-emergency-referral.v3",
+    "question.gs028f.head-neck.initial-fna-not-open-biopsy.v1",
+    "question.gs028f.head-neck.initial-fna-not-open-biopsy.v2",
+    "question.malignant-hyperthermia-susceptibility.trigger-free-anesthesia-plan.v4",
+    "question.malignant-polyp.low-risk-endoscopic-excision.v2",
+    "question.postoperative-retention.catheter-decompression.v1",
+    "question.postoperative-retention.catheter-decompression.v2",
+    "question.postoperative-retention.catheter-decompression.v3",
+    "question.postoperative-retention.catheter-decompression.v4",
+    "question.statistics-ethics.predictive-value-prevalence.v3",
+    "question.superficial-incisional-ssi.open-drain.v1",
+    "question.superficial-incisional-ssi.open-drain.v2",
+    "question.superficial-incisional-ssi.open-drain.v3",
+    "question.superficial-incisional-ssi.open-drain.v4",
+    "question.achalasia.manometric-recognition.v4.r4",
+    "question.differentiated-thyroid-cancer.individualized-surgical-extent.v3"
+  ]
+}

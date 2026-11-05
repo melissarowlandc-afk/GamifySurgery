@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { applyGameEvidenceCommand, createInitialGameState, PROTOTYPE_DOMAIN_CONTEXT, serializeGameState } from "@gamify-surgery/game-domain";
+import { QUESTION_FLAGS_PRE_REVISION_RELEASE } from "@gamify-surgery/clinical-content";
 import { MemoryCloudCache } from "./cache";
 import { CloudSyncCoordinator } from "./coordinator";
 import { MemoryCloudEntryStore } from "./entryStorage";
@@ -35,7 +36,11 @@ const load = (copy: CloudConfirmed) => loadCloudEvidenceCheckpoint({ ...copy, ex
 
 describe("explicit separate account campaign for a divergent local branch", () => {
   it("retains real retired encounters which no longer exist in the playable state", async () => {
-    const h = await syncHarness(), state = createInitialGameState(undefined, { campaignId: "branch.retirement" });
+    // Format-two retirement evidence uses the complete released historical
+    // stage. Later catalog history growth must not turn its embedded original
+    // source into an unrelated string-capacity fixture.
+    const retirementContext = { ...PROTOTYPE_DOMAIN_CONTEXT, clinicalRelease: QUESTION_FLAGS_PRE_REVISION_RELEASE };
+    const h = await syncHarness(), state = createInitialGameState(retirementContext, { campaignId: "branch.retirement" });
     const template = Object.values(state.encounters)[0]!; state.encounters = {};
     for (let index = 0; index < 12; index++) {
       const id = `branch.retired.${index}`;
@@ -47,8 +52,8 @@ describe("explicit separate account campaign for a divergent local branch", () =
     state.nextFinancialPostingTick = Number.MAX_SAFE_INTEGER; state.serviceAppointmentsEnabled = false;
     state.openChartEncounterId = null; state.attendedEncounterId = null;
     const serializedState = serializeGameState(state), campaign = codecTestCampaign(serializedState);
-    const initial = await prepareCloudEvidenceImport({ serializedState, campaign, operationId: "retired.import" });
-    const next = applyGameEvidenceCommand(initial.checkpoint, { type: "ADVANCE_TICK", operationId: "retired.tick", advancedAtRealMs: 60_000 });
+    const initial = await prepareCloudEvidenceImport({ serializedState, campaign, operationId: "retired.import" }, retirementContext);
+    const next = applyGameEvidenceCommand(initial.checkpoint, { type: "ADVANCE_TICK", operationId: "retired.tick", advancedAtRealMs: 60_000 }, retirementContext);
     const retired = next.checkpoint.evidence.records.filter(row => row.kind === "retired-encounter");
     expect(retired.length).toBeGreaterThan(0); expect(Object.keys(next.state.encounters).length).toBeLessThan(12);
     const encoded = await encodeCloudEvidenceCheckpoint({ checkpoint: next.checkpoint, campaign, operationId: "retired.encode", expectedRevision: "1", source: initial.sourceRecovery });

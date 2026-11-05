@@ -1,0 +1,288 @@
+{
+  "checkedOn": "2026-11-04",
+  "frozenCases": 1094,
+  "frozenNodes": 1407,
+  "changedNodes": 16,
+  "conceptsBefore": 398,
+  "conceptsAfter": 412,
+  "oldApprovalsPreserved": 11,
+  "retainedRoundOneDefinitions": 16,
+  "timingRowsBefore": 1783,
+  "timingRowsAfter": 1799,
+  "exactRowsBefore": 335,
+  "exactRowsAfter": 357,
+  "originalRegistryBytesPreservedOutsideAppend": true,
+  "timingBefore": {
+    "timedChoices": 1468,
+    "terminalTimedKeys": 139
+  },
+  "timingAfter": {
+    "timedChoices": 1478,
+    "terminalTimedKeys": 143
+  },
+  "responses": 177,
+  "changedExistingFiles": [
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+      "entry": "4ee5f55538756327f5b82874f2d3adfbc6d465d4b88dc3fc76b685b26b018ca7",
+      "current": "5bb3e0a817fce009ae71c096150746fcf32823719b4b5b00bf0598108026017d",
+      "ownership": "this round"
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "entry": "5d36bf0e7ab6aff318833db24b39161f6a1224574f07cb6c2fa14f6483ee3d37",
+      "current": "6019fffc14ddafda42e6790e4712dd5b21b65af6b7fcca088b6b1380164001e5",
+      "ownership": "this round"
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "entry": "391fdfe1bc342e909527662783c132164ab6399cbdc4bc04ae0b6c39b74f37ba",
+      "current": "227c93a817c6fc49971366218827a8d9acd444d4066c7bd7cc41f2c2b8db68bb",
+      "ownership": "this round"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags-20261104.test.ts",
+      "entry": "f9eaed6db282784a80ed923e05a4d44122c2f189be3e5b31e4c96c4df76750d4",
+      "current": "5c92ba99d2a8f4fa36be56a75f0ff9c9e7b62f31c974a7963af52f5cedd43a4d",
+      "ownership": "this round"
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "entry": "80ae658cef8b0ec1e2e03357594bf34bbb19525451460af46b26dab4fd880a4b",
+      "current": "b4cc3c8f874e51cdeeaa5fd0f2049bd899cdbc7c5b49b557e7e79f9237f43103",
+      "ownership": "this round"
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "entry": "03441a4b28d3e7bdaa6c7b2a667f9fbfb5f4687368450813db395e5c8cc718c3",
+      "current": "31eb2ff9b150900af08f0ae1f0e50cdb5508e6388fb84d7c6dc586267abd75ec",
+      "ownership": "this round"
+    },
+    {
+      "path": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+      "entry": "8d3c43830f9e379dd07177a674ef38eafd855a0b3c363e133a4a76a10a327170",
+      "current": "cd0f9384982d1142c20996dc052e14ef22051ddf44a53efd4ad920e731fcfcd7",
+      "ownership": "this round"
+    },
+    {
+      "path": "packages/game-domain/tests/diagnostics/patient-supply.test.ts",
+      "entry": "4418ffff6d63a465e01a8e41afb8e23358c0c434b627e586146a804c8743bed6",
+      "current": "f8a4aad021550d0ff0fe008e7368347589a3e1372ef96e93be9d197e8f723912",
+      "ownership": "this round"
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20260928-batch.test.ts",
+      "entry": "2100aabed7cd41cde815b2b5e3e7fd06d692c2113feea37d49209b9e92587426",
+      "current": "577f993550d64209a7feb5522ef3cfa81a972aa6af47c6cbbef088e0789c8b05",
+      "ownership": "this round"
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261002-batch.test.ts",
+      "entry": "a8b3bbdb9f2c720c90b1b56b96e1b0ccc70881c263c81fab4dcb3711e031e2a4",
+      "current": "26efb2b3c8cc6266c12dc53034cea900b842c5d4a9b5b52d92e6ddd533d08f21",
+      "ownership": "this round"
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261003-batch.test.ts",
+      "entry": "f5f9281a9a1c12c678272031f280b6ce77285c2b3c601be0cd717ee223caa2aa",
+      "current": "91b04bacd4284b2c1766e27792434cad1a3ba2cd590928d53f8d494837b831d5",
+      "ownership": "this round"
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261007-batch.test.ts",
+      "entry": "11fc01f553df2d82ee9d96ab467836468e2eb40b912607e38dd0f0a9b431b4e0",
+      "current": "dbf851c039bcad8d8a2b1d5dc8f7c354a6c68127ce4de2c96a4fe1a1fab8a351",
+      "ownership": "this round"
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+      "entry": "933bd323ab79a76716acbcbb137d3302b8f5ff548050e8d025c2b9c9f1b4b030",
+      "current": "6693bdf58ecacd7825955e0f065d60c7422e42aa446432d6306ae40272b23488",
+      "ownership": "this round"
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-statistics-ethics-batch.test.ts",
+      "entry": "d934207998c74ff7c896778e27344e2618bfb13603f339a8ea8b652e8d6ecee3",
+      "current": "440737e150561605cc4047cecba3c273bbc01ff6a91257de70a71dcf3bf8c246",
+      "ownership": "this round"
+    },
+    {
+      "path": "packages/game-domain/tests/patient-supply.test.ts",
+      "entry": "52159fe9ca9759106fa078473487fb84395aa8408596ecd2f47f25a8deb6d812",
+      "current": "2eacb3b2d8145ae09eada551cd1eb55bc68c230601fcd6da86958bc93893bd25",
+      "ownership": "this round"
+    },
+    {
+      "path": "packages/game-domain/tests/question-flags-bindings.test.ts",
+      "entry": "17786e59a309854066edd14eff546b162199866e7dff24bcce4d9046b0413872",
+      "current": "c97dc359df40e507b51ef73a052cbc231e25f460131d28c6a133bfed55e31a04",
+      "ownership": "this round"
+    },
+    {
+      "path": "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+      "entry": "4890ce68a6a4322d2c5e56b1277696f819118f751aeb2f39a8c1ec905571c9ac",
+      "current": "71e3385981e61527d676ddbb1a1f22bbfcf62ddc7af92ddb8f219f45dc4c26b7",
+      "ownership": "this round"
+    },
+    {
+      "path": "docs/clinical/question-authoring-standard.md",
+      "entry": "21ba59970708dcf8e7ee57e8f02548057161e555801ae5e8c66fbfbe747daeca",
+      "current": "104c9e5d12abd3ee44aaa613a8858fcbfc19b666a71a6e190b6494b1b73bf0f3",
+      "ownership": "this round"
+    },
+    {
+      "path": "tools/question-quality/lint.mjs",
+      "entry": "73b6e9368457ada59c88b505b1dc2d4219c9e15131fe2b37498a296144f9debf",
+      "current": "3823dc26c5a35958888721e3ed0ec9c0e57f7ed5d0997ef09c018ba192b36f57",
+      "ownership": "this round"
+    },
+    {
+      "path": "tools/question-quality/lint.test.mjs",
+      "entry": "a21a29eac1fc53c7aabf97b3e63dbb87c57ab363745b864e9ba75bfaf51ad98b",
+      "current": "fe82fc7d6b69a7840260f0bbecc9db2b0479d6e2b27615c5e9f985e08eb56c88",
+      "ownership": "this round"
+    },
+    {
+      "path": "tools/question-quality/report.mjs",
+      "entry": "a539115c76e9a07258f39871806aaed88eed906bd46d3843abf5e93f7be76e27",
+      "current": "b29491b29da858bdaec30338d0f62af381e77fb94d1ac26ba93fd09a6e3624a8",
+      "ownership": "this round"
+    }
+  ],
+  "protectedChanges": [],
+  "ownedExisting": [
+    "packages/clinical-content/src/answer-choice-timing.ts",
+    "packages/clinical-content/src/index.ts",
+    "packages/clinical-content/src/synthetic-content.ts",
+    "packages/clinical-content/src/answer-choice-timing.test.ts",
+    "packages/clinical-content/src/question-flags-20261104.test.ts",
+    "packages/game-domain/src/test-choice-orders.ts",
+    "packages/game-domain/tests/approved-clinical-admission.test.ts",
+    "packages/game-domain/tests/gs028-20260928-batch.test.ts",
+    "packages/game-domain/tests/gs028-statistics-ethics-batch.test.ts",
+    "packages/game-domain/tests/gs028-20261002-batch.test.ts",
+    "packages/game-domain/tests/gs028-20261003-batch.test.ts",
+    "packages/game-domain/tests/gs028-20261007-batch.test.ts",
+    "packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+    "packages/game-domain/tests/patient-supply.test.ts",
+    "packages/game-domain/tests/diagnostics/patient-supply.test.ts",
+    "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+    "packages/game-domain/tests/question-flags-bindings.test.ts",
+    "tools/question-quality/lint.mjs",
+    "tools/question-quality/lint.test.mjs",
+    "tools/question-quality/report.mjs",
+    "docs/clinical/question-authoring-standard.md"
+  ],
+  "boundInputs": {
+    "recordedInputCount": 409,
+    "currentInputCount": 414,
+    "changedThisRound": [
+      {
+        "path": "packages/clinical-content/src/answer-choice-timing.ts",
+        "entry": "5d36bf0e7ab6aff318833db24b39161f6a1224574f07cb6c2fa14f6483ee3d37",
+        "current": "6019fffc14ddafda42e6790e4712dd5b21b65af6b7fcca088b6b1380164001e5",
+        "recorded": "7db1b1253c7d3064adb0602360925c0739bb65c719603507c3fa09a6732ba245"
+      },
+      {
+        "path": "packages/clinical-content/src/index.ts",
+        "entry": "391fdfe1bc342e909527662783c132164ab6399cbdc4bc04ae0b6c39b74f37ba",
+        "current": "227c93a817c6fc49971366218827a8d9acd444d4066c7bd7cc41f2c2b8db68bb",
+        "recorded": "a57ffcec34d75e2e337790f1ac0d71e4bfdc8f79d53cdb28596e00ead60413e4"
+      },
+      {
+        "path": "packages/clinical-content/src/synthetic-content.ts",
+        "entry": "80ae658cef8b0ec1e2e03357594bf34bbb19525451460af46b26dab4fd880a4b",
+        "current": "b4cc3c8f874e51cdeeaa5fd0f2049bd899cdbc7c5b49b557e7e79f9237f43103",
+        "recorded": "6d9870d53383af7da6ee7547ba702410a2545882876faa1696c0e1217fae311c"
+      },
+      {
+        "path": "packages/game-domain/src/test-choice-orders.ts",
+        "entry": "03441a4b28d3e7bdaa6c7b2a667f9fbfb5f4687368450813db395e5c8cc718c3",
+        "current": "31eb2ff9b150900af08f0ae1f0e50cdb5508e6388fb84d7c6dc586267abd75ec",
+        "recorded": "522c3fbd3b3503f4b6d74f38e7dbd994b98727a3037b0374f86e58dbf5a41639"
+      }
+    ],
+    "addedThisRound": [
+      {
+        "path": "packages/clinical-content/src/question-flags-round2-20261104.ts",
+        "current": "8932e60db6762df66810ba0992766d2bc21ce9ffdc1bc0c0c8cc7c3e0322257d"
+      },
+      {
+        "path": "packages/clinical-content/src/question-flags-round2-20261104-data.ts",
+        "current": "8b845ae0b85a328c5a5b384a7be17e885423b8372a0ddaa31a76c5b1e08deac9"
+      },
+      {
+        "path": "packages/clinical-content/src/question-flags-round2-evidence-20261104.ts",
+        "current": "592d67134c988dd8aff00cb3b24591605bd6afd71e1d342f3398125adcb10f80"
+      }
+    ],
+    "cumulativeFlagAdditions": [
+      {
+        "path": "packages/clinical-content/src/question-flags-20261104.ts",
+        "current": "9131f7f1be7b2c2c20ffc1d7d72634ff69f1511620c66fe2dbfbf74d8fac556e"
+      },
+      {
+        "path": "packages/clinical-content/src/question-flags-20261104-data.ts",
+        "current": "0fa520db3a9c3bdedc3bbfc136e8ec1d23f2f259191712a848a05d7344dfdc78"
+      },
+      {
+        "path": "packages/clinical-content/src/question-flags-round2-20261104.ts",
+        "current": "8932e60db6762df66810ba0992766d2bc21ce9ffdc1bc0c0c8cc7c3e0322257d"
+      },
+      {
+        "path": "packages/clinical-content/src/question-flags-round2-20261104-data.ts",
+        "current": "8b845ae0b85a328c5a5b384a7be17e885423b8372a0ddaa31a76c5b1e08deac9"
+      },
+      {
+        "path": "packages/clinical-content/src/question-flags-round2-evidence-20261104.ts",
+        "current": "592d67134c988dd8aff00cb3b24591605bd6afd71e1d342f3398125adcb10f80"
+      }
+    ],
+    "allRecordedDifferences": [
+      {
+        "path": "packages/clinical-content/src/answer-choice-timing.ts",
+        "recorded": "7db1b1253c7d3064adb0602360925c0739bb65c719603507c3fa09a6732ba245",
+        "current": "6019fffc14ddafda42e6790e4712dd5b21b65af6b7fcca088b6b1380164001e5",
+        "changedSinceRoundTwoEntry": true
+      },
+      {
+        "path": "packages/clinical-content/src/index.ts",
+        "recorded": "a57ffcec34d75e2e337790f1ac0d71e4bfdc8f79d53cdb28596e00ead60413e4",
+        "current": "227c93a817c6fc49971366218827a8d9acd444d4066c7bd7cc41f2c2b8db68bb",
+        "changedSinceRoundTwoEntry": true
+      },
+      {
+        "path": "packages/clinical-content/src/synthetic-content.ts",
+        "recorded": "6d9870d53383af7da6ee7547ba702410a2545882876faa1696c0e1217fae311c",
+        "current": "b4cc3c8f874e51cdeeaa5fd0f2049bd899cdbc7c5b49b557e7e79f9237f43103",
+        "changedSinceRoundTwoEntry": true
+      },
+      {
+        "path": "packages/game-domain/src/reducer.ts",
+        "recorded": "8bcc7a5990e8d3aa025edbee5dde54bcda83294fb30c0636a6679a57a0f1b474",
+        "current": "9ef61e771a6355875a7de9a528944e97104e5a6582eaa214f0bcfe23e5e422d6",
+        "changedSinceRoundTwoEntry": false
+      },
+      {
+        "path": "packages/game-domain/src/test-choice-orders.ts",
+        "recorded": "522c3fbd3b3503f4b6d74f38e7dbd994b98727a3037b0374f86e58dbf5a41639",
+        "current": "31eb2ff9b150900af08f0ae1f0e50cdb5508e6388fb84d7c6dc586267abd75ec",
+        "changedSinceRoundTwoEntry": true
+      },
+      {
+        "path": "packages/game-domain/src/waiting-destinations.ts",
+        "recorded": "cfac0f00fee09602e959575dfb561d000ccb14c6f4468e12a03cee2a1e3cc8c0",
+        "current": "50ea90e5fc64e829604252ccc893ffffec900cc8fb3ea115b6c9ec6ca509bb46",
+        "changedSinceRoundTwoEntry": false
+      }
+    ],
+    "newSinceRecorded": [
+      "packages/clinical-content/src/question-flags-20261104-data.ts",
+      "packages/clinical-content/src/question-flags-20261104.ts",
+      "packages/clinical-content/src/question-flags-round2-20261104-data.ts",
+      "packages/clinical-content/src/question-flags-round2-20261104.ts",
+      "packages/clinical-content/src/question-flags-round2-evidence-20261104.ts"
+    ],
+    "note": "Read-only audit; rebind and behavioral refresh belong to the manager. No evidence or Level 4/5 tests edited."
+  }
+}

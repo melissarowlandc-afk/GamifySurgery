@@ -1,0 +1,678 @@
+{
+  "generatedAt": "2026-11-05T02:24:25.567Z",
+  "policy": "Exact native outputs from separate input windows. Do not aggregate these into a green shared-tree gate. No assertions, deadlines or outside-lane source are changed by this reader.",
+  "reports": {
+    "clinical-full": {
+      "path": "tools/question-quality/question-bank-batch2b-clinical-full-20261104.log",
+      "exists": true,
+      "sha256": "a479f77e5de71cd32e954eb0a32771137c64d71b3a09c2f9d7f87705917be945",
+      "completed": true,
+      "summary": [
+        "Test Files  1 failed | 105 passed (106)",
+        "Tests  1 failed | 933 passed (934)",
+        "Duration  131.34s (transform 5.05s, setup 0ms, import 109.50s, tests 10.82s, environment 7ms)"
+      ],
+      "failures": [
+        {
+          "header": "FAIL  src/pilot-content.test.ts > five-diagnosis pilot registry > does not make the keyed answer uniquely longest in the runtime release",
+          "diagnostic": "AssertionError: expected [ …(23) ] to deeply equal [ …(12) ]"
+        }
+      ]
+    },
+    "clinical-handoff": {
+      "path": "tools/question-quality/question-bank-batch2b-clinical-handoff-20261104.log",
+      "exists": true,
+      "sha256": "605c593415154d044a7d52e3677c0bffc4c213c9ec4229b22b6f6a577ea339ee",
+      "completed": true,
+      "summary": [
+        "Test Files  106 passed (106)",
+        "Tests  934 passed (934)",
+        "Duration  143.40s (transform 6.71s, setup 0ms, import 119.04s, tests 12.57s, environment 8ms)"
+      ],
+      "failures": []
+    },
+    "clinical-final-metadata": {
+      "path": "tools/question-quality/question-bank-batch2b-clinical-final-metadata-20261104.log",
+      "exists": true,
+      "sha256": "d5c19f635c1f0cd47ed121c12279b4e2866a43b61889fab1f368a8fd6d9e299e",
+      "completed": true,
+      "summary": [
+        "Test Files  106 passed (106)",
+        "Tests  934 passed (934)",
+        "Duration  173.24s (transform 8.80s, setup 0ms, import 144.76s, tests 14.50s, environment 11ms)"
+      ],
+      "failures": []
+    },
+    "domain-full": {
+      "path": "tools/question-quality/question-bank-batch2b-domain-full-20261104.log",
+      "exists": true,
+      "sha256": "032bd3aecb779996dc5032d11edab9119f99958225306605ae516b5ea3734dbd",
+      "completed": true,
+      "summary": [
+        "Test Files  8 failed | 181 passed (189)",
+        "Tests  41 failed | 4671 passed | 1 skipped (4713)",
+        "Duration  946.91s (transform 8.32s, setup 0ms, import 291.88s, tests 635.04s, environment 14ms)"
+      ],
+      "failures": [
+        {
+          "header": "FAIL  tests/bread-butter-20260917-batch.test.ts > September 17 bread-and-butter production flows > runs case 24 through every authored node with one FSRS review per node",
+          "diagnostic": "AssertionError: expected [] to have a length of 1 but got +0"
+        },
+        {
+          "header": "FAIL  tests/bread-butter-20260917-batch.test.ts > September 17 bread-and-butter production flows > runs case 25 through every authored node with one FSRS review per node",
+          "diagnostic": "AssertionError: expected [] to have a length of 1 but got +0"
+        },
+        {
+          "header": "FAIL  tests/bread-butter-20260917-batch.test.ts > September 17 bread-and-butter production flows > runs case 26 through every authored node with one FSRS review per node",
+          "diagnostic": "AssertionError: expected [] to have a length of 1 but got +0"
+        },
+        {
+          "header": "FAIL  tests/bread-butter-20260917-batch.test.ts > September 17 bread-and-butter production flows > runs case 27 through every authored node with one FSRS review per node",
+          "diagnostic": "AssertionError: expected [] to have a length of 1 but got +0"
+        },
+        {
+          "header": "FAIL  tests/gs028-20261002-batch.test.ts > GS-028 October 2 batch admission > admits all twenty objectives, seventy-eight cases, and their exact timed orders",
+          "diagnostic": "AssertionError: expected [ { …(7) }, { …(7) }, { …(7) }, …(41) ] to have a length of 33 but got 44"
+        },
+        {
+          "header": "FAIL  tests/gs028-20261002-batch.test.ts > GS-028 October 2 batch admission > runs paired ultrasound case 'case.gs028c.palpable-breast.paired-de…' in house, preserves the gate, then refers without an invented biopsy service",
+          "diagnostic": "AssertionError: expected 'Palpation-directed core sampling thro…' to be 'Breast-specialist biopsy referral' //"
+        },
+        {
+          "header": "FAIL  tests/gs028-20261002-batch.test.ts > GS-028 October 2 batch admission > executes terminal ultrasound order 'correct_4' onsite exactly once",
+          "diagnostic": "AssertionError: expected { diagnosticTiming: { …(12) }, …(13) } to match object { …(9) }"
+        },
+        {
+          "header": "FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > admits all twenty objectives, seventy-eight cases, and their exact timed orders",
+          "diagnostic": "AssertionError: expected [ { …(7) }, { …(7) }, { …(7) }, …(25) ] to have a length of 20 but got 28"
+        },
+        {
+          "header": "FAIL  tests/gs028-20261007-batch.test.ts > GS-028 October 7 real gameplay admission > binds two executable gates, one planned correct procedure and seven non-executed distractors",
+          "diagnostic": "AssertionError: expected [ { …(7) }, { …(7) }, { …(7) }, …(8) ] to have a length of 10 but got 11"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > binds the actual run to its current game, balance, clinical and driver inputs and reconciles cash",
+          "diagnostic": "AssertionError: packages/clinical-content/src/answer-choice-timing.ts: expected"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 5",
+          "diagnostic": "AssertionError: expected 'd4f4b253b7b66c3a900f2f83d396fbb5851bd…' to be '92728e650dc9a0f02b005470db49ab566769a…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 6",
+          "diagnostic": "AssertionError: expected 'd4f4b253b7b66c3a900f2f83d396fbb5851bd…' to be '92728e650dc9a0f02b005470db49ab566769a…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 7",
+          "diagnostic": "AssertionError: expected 'd4f4b253b7b66c3a900f2f83d396fbb5851bd…' to be '92728e650dc9a0f02b005470db49ab566769a…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 8",
+          "diagnostic": "AssertionError: expected 'd4f4b253b7b66c3a900f2f83d396fbb5851bd…' to be '92728e650dc9a0f02b005470db49ab566769a…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 9",
+          "diagnostic": "AssertionError: expected 'd4f4b253b7b66c3a900f2f83d396fbb5851bd…' to be '92728e650dc9a0f02b005470db49ab566769a…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 5",
+          "diagnostic": "AssertionError: expected '85cfcce405ce4cf55d097ffb43c6c6c6b5095…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 6",
+          "diagnostic": "AssertionError: expected '85cfcce405ce4cf55d097ffb43c6c6c6b5095…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 7",
+          "diagnostic": "AssertionError: expected '85cfcce405ce4cf55d097ffb43c6c6c6b5095…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 8",
+          "diagnostic": "AssertionError: expected '85cfcce405ce4cf55d097ffb43c6c6c6b5095…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 9",
+          "diagnostic": "AssertionError: expected '85cfcce405ce4cf55d097ffb43c6c6c6b5095…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 5",
+          "diagnostic": "AssertionError: expected '0ffcbdc21ba3046a29d89f124b65fb110da54…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 6",
+          "diagnostic": "AssertionError: expected '0ffcbdc21ba3046a29d89f124b65fb110da54…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 7",
+          "diagnostic": "AssertionError: expected '0ffcbdc21ba3046a29d89f124b65fb110da54…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 8",
+          "diagnostic": "AssertionError: expected '0ffcbdc21ba3046a29d89f124b65fb110da54…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 9",
+          "diagnostic": "AssertionError: expected '0ffcbdc21ba3046a29d89f124b65fb110da54…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 5",
+          "diagnostic": "AssertionError: expected '29ed6e8f91ef048fac556b8f6a081aaa4f2e8…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 6",
+          "diagnostic": "AssertionError: expected '29ed6e8f91ef048fac556b8f6a081aaa4f2e8…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 7",
+          "diagnostic": "AssertionError: expected '29ed6e8f91ef048fac556b8f6a081aaa4f2e8…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 8",
+          "diagnostic": "AssertionError: expected '29ed6e8f91ef048fac556b8f6a081aaa4f2e8…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 9",
+          "diagnostic": "AssertionError: expected '29ed6e8f91ef048fac556b8f6a081aaa4f2e8…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 5",
+          "diagnostic": "AssertionError: expected '50123190437b7a8983d9c95b939779380ef74…' to be '3d3603171902d39a439090f0026ae33ac7654…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 6",
+          "diagnostic": "AssertionError: expected '50123190437b7a8983d9c95b939779380ef74…' to be '3d3603171902d39a439090f0026ae33ac7654…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 7",
+          "diagnostic": "AssertionError: expected '50123190437b7a8983d9c95b939779380ef74…' to be '3d3603171902d39a439090f0026ae33ac7654…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 8",
+          "diagnostic": "AssertionError: expected '50123190437b7a8983d9c95b939779380ef74…' to be '3d3603171902d39a439090f0026ae33ac7654…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 9",
+          "diagnostic": "AssertionError: expected '50123190437b7a8983d9c95b939779380ef74…' to be '3d3603171902d39a439090f0026ae33ac7654…' //"
+        },
+        {
+          "header": "FAIL  tests/patient-supply.test.ts > routine patient supply > records the current clinical inventory and exact unseen-patient boundary by stage",
+          "diagnostic": "Error: Test timed out in 10000ms."
+        },
+        {
+          "header": "FAIL  tests/question-flags-round3-bindings.test.ts > question flags final round: exact fresh and frozen orders > resolves each new test by the complete identity and rejects label drift",
+          "diagnostic": "AssertionError: expected 23 to be 18 // Object.is equality"
+        },
+        {
+          "header": "FAIL  tests/service-procedure-operations.test.ts > mapped in-clinic procedure operations > performs case.bread-butter.perianal-abscess.tender-perianal-lump only after the exact final correct action",
+          "diagnostic": "AssertionError: expected -1 to be greater than or equal to 0"
+        },
+        {
+          "header": "FAIL  tests/service-procedure-operations.test.ts > mapped in-clinic procedure operations > reloads a frozen legacy income.minor_procedure_simple operation with its original work duration",
+          "diagnostic": "AssertionError: expected -1 to be greater than or equal to 0"
+        },
+        {
+          "header": "FAIL  tests/service-procedure-operations.test.ts > mapped in-clinic procedure operations > reloads a frozen legacy income.minor_procedure_sampling operation with its original work duration",
+          "diagnostic": "AssertionError: expected -1 to be greater than or equal to 0"
+        },
+        {
+          "header": "FAIL  tests/service-procedure-operations.test.ts > mapped in-clinic procedure operations > reloads a frozen legacy income.minor_procedure_complex operation with its original work duration",
+          "diagnostic": "AssertionError: expected -1 to be greater than or equal to 0"
+        }
+      ]
+    },
+    "domain-final-focused": {
+      "path": "tools/question-quality/question-bank-batch2b-domain-final-focused-20261104.log",
+      "exists": true,
+      "sha256": "8469b9c5bee73292a96d7346984fa5edd55ccb5b12e3ea234b7fadb0911c22f7",
+      "completed": true,
+      "summary": [
+        "Test Files  1 failed | 7 passed (8)",
+        "Tests  1 failed | 970 passed (971)",
+        "Duration  80.56s (transform 8.14s, setup 0ms, import 30.84s, tests 48.14s, environment 1ms)"
+      ],
+      "failures": [
+        {
+          "header": "FAIL  tests/gs028-20261002-batch.test.ts > GS-028 October 2 batch admission > runs paired ultrasound case 'case.gs028c.palpable-breast.paired-sc…' in house, preserves the gate, then refers without an invented biopsy service",
+          "diagnostic": "AssertionError: expected 'Breast-specialist biopsy referral' to be 'Palpation-directed core sampling thro…' //"
+        }
+      ]
+    },
+    "domain-repaired": {
+      "path": "tools/question-quality/question-bank-batch2b-domain-repaired-20261104.log",
+      "exists": true,
+      "sha256": "c9af7f1356416d998de7c970bc27f81beeaffd576c6d860e5a032c25d54ca653",
+      "completed": true,
+      "summary": [
+        "Test Files  2 failed | 191 passed (193)",
+        "Tests  27 failed | 4688 passed | 1 skipped (4716)",
+        "Duration  1037.65s (transform 14.20s, setup 0ms, import 289.70s, tests 728.67s, environment 13ms)"
+      ],
+      "failures": [
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > binds the actual run to its current game, balance, clinical and driver inputs and reconciles cash",
+          "diagnostic": "AssertionError: packages/clinical-content/src/answer-choice-timing.ts: expected"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 5",
+          "diagnostic": "AssertionError: expected 'd4f4b253b7b66c3a900f2f83d396fbb5851bd…' to be '92728e650dc9a0f02b005470db49ab566769a…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 6",
+          "diagnostic": "AssertionError: expected 'd4f4b253b7b66c3a900f2f83d396fbb5851bd…' to be '92728e650dc9a0f02b005470db49ab566769a…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 7",
+          "diagnostic": "AssertionError: expected 'd4f4b253b7b66c3a900f2f83d396fbb5851bd…' to be '92728e650dc9a0f02b005470db49ab566769a…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 8",
+          "diagnostic": "AssertionError: expected 'd4f4b253b7b66c3a900f2f83d396fbb5851bd…' to be '92728e650dc9a0f02b005470db49ab566769a…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 9",
+          "diagnostic": "AssertionError: expected 'd4f4b253b7b66c3a900f2f83d396fbb5851bd…' to be '92728e650dc9a0f02b005470db49ab566769a…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 5",
+          "diagnostic": "AssertionError: expected '85cfcce405ce4cf55d097ffb43c6c6c6b5095…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 6",
+          "diagnostic": "AssertionError: expected '85cfcce405ce4cf55d097ffb43c6c6c6b5095…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 7",
+          "diagnostic": "AssertionError: expected '85cfcce405ce4cf55d097ffb43c6c6c6b5095…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 8",
+          "diagnostic": "AssertionError: expected '85cfcce405ce4cf55d097ffb43c6c6c6b5095…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 9",
+          "diagnostic": "AssertionError: expected '85cfcce405ce4cf55d097ffb43c6c6c6b5095…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 5",
+          "diagnostic": "AssertionError: expected '0ffcbdc21ba3046a29d89f124b65fb110da54…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 6",
+          "diagnostic": "AssertionError: expected '0ffcbdc21ba3046a29d89f124b65fb110da54…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 7",
+          "diagnostic": "AssertionError: expected '0ffcbdc21ba3046a29d89f124b65fb110da54…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 8",
+          "diagnostic": "AssertionError: expected '0ffcbdc21ba3046a29d89f124b65fb110da54…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 9",
+          "diagnostic": "AssertionError: expected '0ffcbdc21ba3046a29d89f124b65fb110da54…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 5",
+          "diagnostic": "AssertionError: expected '29ed6e8f91ef048fac556b8f6a081aaa4f2e8…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 6",
+          "diagnostic": "AssertionError: expected '29ed6e8f91ef048fac556b8f6a081aaa4f2e8…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 7",
+          "diagnostic": "AssertionError: expected '29ed6e8f91ef048fac556b8f6a081aaa4f2e8…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 8",
+          "diagnostic": "AssertionError: expected '29ed6e8f91ef048fac556b8f6a081aaa4f2e8…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 9",
+          "diagnostic": "AssertionError: expected '29ed6e8f91ef048fac556b8f6a081aaa4f2e8…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 5",
+          "diagnostic": "AssertionError: expected '50123190437b7a8983d9c95b939779380ef74…' to be '3d3603171902d39a439090f0026ae33ac7654…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 6",
+          "diagnostic": "AssertionError: expected '50123190437b7a8983d9c95b939779380ef74…' to be '3d3603171902d39a439090f0026ae33ac7654…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 7",
+          "diagnostic": "AssertionError: expected '50123190437b7a8983d9c95b939779380ef74…' to be '3d3603171902d39a439090f0026ae33ac7654…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 8",
+          "diagnostic": "AssertionError: expected '50123190437b7a8983d9c95b939779380ef74…' to be '3d3603171902d39a439090f0026ae33ac7654…' //"
+        },
+        {
+          "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 9",
+          "diagnostic": "AssertionError: expected '50123190437b7a8983d9c95b939779380ef74…' to be '3d3603171902d39a439090f0026ae33ac7654…' //"
+        },
+        {
+          "header": "FAIL  tests/patient-supply.test.ts > routine patient supply > records the current clinical inventory and exact unseen-patient boundary by stage",
+          "diagnostic": "Error: Test timed out in 10000ms."
+        }
+      ]
+    },
+    "domain-repaired-focused": {
+      "path": "tools/question-quality/question-bank-batch2b-domain-repaired-focused-20261104.log",
+      "exists": true,
+      "sha256": "44e4e9ed5b84d715f98765a9baa19c06466912353d3acd241cfec175b3965d97",
+      "completed": true,
+      "summary": [
+        "Test Files  8 passed (8)",
+        "Tests  971 passed (971)",
+        "Duration  53.05s (transform 3.70s, setup 0ms, import 17.47s, tests 34.56s, environment 1ms)"
+      ],
+      "failures": []
+    },
+    "domain-inventory-isolated": {
+      "path": "tools/question-quality/question-bank-batch2b-domain-inventory-isolated-20261104.log",
+      "exists": true,
+      "sha256": "13858117c18318aedd89fdf7fb66f9624769921e452710f8b1c8e17e978e44c0",
+      "completed": true,
+      "summary": [
+        "Test Files  1 passed (1)",
+        "Tests  1 passed | 3 skipped (4)",
+        "Duration  12.12s (transform 2.32s, setup 0ms, import 3.47s, tests 8.57s, environment 0ms)"
+      ],
+      "failures": []
+    },
+    "player-focused": {
+      "path": "tools/question-quality/question-bank-batch2b-player-focused-20261104.log",
+      "exists": true,
+      "sha256": "b762f81e4ae4a37bc6946c7ef819b4894d3331195f9e4f85f5f4bb576b69fff1",
+      "completed": true,
+      "summary": [
+        "Test Files  3 passed (3)",
+        "Tests  59 passed (59)",
+        "Duration  51.55s (transform 10.27s, setup 0ms, import 18.20s, tests 32.93s, environment 0ms)"
+      ],
+      "failures": []
+    },
+    "player-full": {
+      "path": "tools/question-quality/question-bank-batch2b-player-full-20261104.log",
+      "exists": true,
+      "sha256": "313df5f3583c97d90fabf7329bf19f85cc70922383a620868c24e0de2351fec4",
+      "completed": true,
+      "summary": [
+        "Test Files  6 failed | 349 passed (355)",
+        "Tests  8 failed | 3462 passed (3470)",
+        "Duration  835.34s (transform 31.93s, setup 0ms, import 555.30s, tests 1071.81s, environment 34ms)"
+      ],
+      "failures": [
+        {
+          "header": "FAIL  src/competition/rankChanges.test.ts > game-day competition rank changes > retains the last known rank through offline reads and retries without an invented alert",
+          "diagnostic": "AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use"
+        },
+        {
+          "header": "FAIL  src/playtime/beta1Integration.test.tsx > Beta 1 real adapter integration with a mocked Supabase client > runs invite/password/sign-in/notice/play/count/comment/sign-out/re-sign-in/deletion in desktop",
+          "diagnostic": "AssertionError: expected +0 to be 60000 // Object.is equality"
+        },
+        {
+          "header": "FAIL  src/playtime/beta1Integration.test.tsx > Beta 1 real adapter integration with a mocked Supabase client > runs invite/password/sign-in/notice/play/count/comment/sign-out/re-sign-in/deletion in phone",
+          "diagnostic": "AssertionError: expected +0 to be 60000 // Object.is equality"
+        },
+        {
+          "header": "FAIL  src/playtime/casualModeAccess.test.tsx > server-assigned casual account mode > restores remembered false across a remount, retries offline and replaces it with server data",
+          "diagnostic": "AssertionError: expected \"vi.fn()\" to be called 3 times, but got 2 times"
+        },
+        {
+          "header": "FAIL  src/playtime/casualModeAccess.test.tsx > server-assigned casual account mode > restores remembered true across a remount, retries offline and replaces it with server data",
+          "diagnostic": "AssertionError: expected \"vi.fn()\" to be called 3 times, but got 2 times"
+        },
+        {
+          "header": "FAIL  src/session/cloud/diagnosticWorkloadPerformance.test.ts > bounds the full account tick and chart projection on synthetic L3 diagnostic/staff pressure",
+          "diagnostic": "AssertionError: 1x tick + overview: expected 69.81660000002012 to be less than 16"
+        },
+        {
+          "header": "FAIL  src/session/cloud/requestLoad.test.ts > polls read-only metadata at most twice per five minutes and never polls hidden",
+          "diagnostic": "AssertionError: expected [ …(51) ] to have a length of 27 but got 51"
+        },
+        {
+          "header": "FAIL  src/session/cloud/supabaseTransport.test.ts > Supabase protocol-3 sealed-page adapter (offline RPC contract tests) > bounds a suspended/hung RPC so a fresh retry can recover without waiting forever",
+          "diagnostic": "AssertionError: expected CloudSyncError: Cloud save unavailable (n… { …(2) } to match object { code: 'throttled' }"
+        }
+      ]
+    },
+    "player-isolated": {
+      "path": "tools/question-quality/question-bank-batch2b-player-isolated-20261104.log",
+      "exists": true,
+      "sha256": "5f02d7eb01ff36dc86eb374958e843ce552948178caf1416bf3d79a9c46c3e13",
+      "completed": true,
+      "summary": [
+        "Test Files  3 failed | 2 passed (5)",
+        "Tests  5 failed | 60 passed (65)",
+        "Duration  16.28s (transform 4.13s, setup 0ms, import 12.64s, tests 3.06s, environment 0ms)"
+      ],
+      "failures": [
+        {
+          "header": "FAIL  src/competition/rankChanges.test.ts > game-day competition rank changes > retains the last known rank through offline reads and retries without an invented alert",
+          "diagnostic": "AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use"
+        },
+        {
+          "header": "FAIL  src/playtime/beta1Integration.test.tsx > Beta 1 real adapter integration with a mocked Supabase client > runs invite/password/sign-in/notice/play/count/comment/sign-out/re-sign-in/deletion in desktop",
+          "diagnostic": "AssertionError: expected +0 to be 60000 // Object.is equality"
+        },
+        {
+          "header": "FAIL  src/playtime/beta1Integration.test.tsx > Beta 1 real adapter integration with a mocked Supabase client > runs invite/password/sign-in/notice/play/count/comment/sign-out/re-sign-in/deletion in phone",
+          "diagnostic": "AssertionError: expected +0 to be 60000 // Object.is equality"
+        },
+        {
+          "header": "FAIL  src/playtime/casualModeAccess.test.tsx > server-assigned casual account mode > restores remembered false across a remount, retries offline and replaces it with server data",
+          "diagnostic": "AssertionError: expected \"vi.fn()\" to be called 3 times, but got 2 times"
+        },
+        {
+          "header": "FAIL  src/playtime/casualModeAccess.test.tsx > server-assigned casual account mode > restores remembered true across a remount, retries offline and replaces it with server data",
+          "diagnostic": "AssertionError: expected \"vi.fn()\" to be called 3 times, but got 2 times"
+        }
+      ]
+    },
+    "player-performance-isolated": {
+      "path": "tools/question-quality/question-bank-batch2b-player-performance-isolated-20261104.log",
+      "exists": true,
+      "sha256": "3341186d1b939d15f4dc90b5352df5507d59912459ff39ffc806b8384be17c6f",
+      "completed": true,
+      "summary": [
+        "Test Files  1 failed (1)",
+        "Tests  1 failed (1)",
+        "Duration  9.55s (transform 2.55s, setup 0ms, import 3.72s, tests 5.75s, environment 0ms)"
+      ],
+      "failures": [
+        {
+          "header": "FAIL  src/session/cloud/diagnosticWorkloadPerformance.test.ts > bounds the full account tick and chart projection on synthetic L3 diagnostic/staff pressure",
+          "diagnostic": "AssertionError: 1x tick + overview: expected 60.075300000000425 to be less than 16"
+        }
+      ]
+    },
+    "lint-tests-final": {
+      "path": "tools/question-quality/question-bank-batch2b-lint-tests-final-20261104.log",
+      "exists": true,
+      "sha256": "585d665cf35dae6bc441cc7b191279dbcf9d64544bf8f838fb28e275d0cfc33d",
+      "completed": true,
+      "summary": [
+        "ℹ tests 33",
+        "ℹ pass 33",
+        "ℹ fail 0",
+        "ℹ duration_ms 2637.1739"
+      ],
+      "failures": []
+    },
+    "typecheck-handoff": {
+      "path": "tools/question-quality/question-bank-batch2b-typecheck-handoff-20261104.log",
+      "exists": true,
+      "sha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "completed": true,
+      "summary": [],
+      "failures": [],
+      "workspaces": [
+        "@gamify-surgery/clinical-context-workbench",
+        "@gamify-surgery/player",
+        "@gamify-surgery/balance-config",
+        "@gamify-surgery/clinical-authoring",
+        "@gamify-surgery/clinical-content",
+        "@gamify-surgery/clinical-research",
+        "@gamify-surgery/game-domain"
+      ],
+      "typeErrors": [],
+      "passedWorkspaces": [
+        "@gamify-surgery/clinical-context-workbench",
+        "@gamify-surgery/player",
+        "@gamify-surgery/balance-config",
+        "@gamify-surgery/clinical-authoring",
+        "@gamify-surgery/clinical-content",
+        "@gamify-surgery/clinical-research",
+        "@gamify-surgery/game-domain"
+      ],
+      "failedWorkspaces": []
+    },
+    "typecheck-final": {
+      "path": "tools/question-quality/question-bank-batch2b-typecheck-final-20261104.log",
+      "exists": true,
+      "sha256": "db436839af1c35f96f069c7bec7f24f2face6a8940f3a5f00305ad2289f8f81f",
+      "completed": true,
+      "summary": [],
+      "failures": [],
+      "workspaces": [
+        "@gamify-surgery/clinical-context-workbench",
+        "@gamify-surgery/player",
+        "@gamify-surgery/balance-config",
+        "@gamify-surgery/clinical-authoring",
+        "@gamify-surgery/clinical-content",
+        "@gamify-surgery/clinical-research",
+        "@gamify-surgery/game-domain"
+      ],
+      "typeErrors": [
+        {
+          "workspace": "@gamify-surgery/player",
+          "line": "src/session/cloud/supabaseTransport.test.ts(17,41): error TS2741: Property 'takeover' is missing in type '{ campaignId: string; expectedRevision: string; expectedWriterGeneration: string; writerToken: string; operationId: string; }' but required in type '{ campaignId: string; expectedRevision: string; operationId: string; takeover: boolean; expectedWriterGeneration?: string | undefined; writerToken?: string | undefined; }'."
+        },
+        {
+          "workspace": "@gamify-surgery/player",
+          "line": "src/session/cloud/supabaseTransport.test.ts(27,37): error TS2741: Property 'takeover' is missing in type '{ campaignId: string; expectedRevision: string; expectedWriterGeneration: string; writerToken: string; operationId: string; }' but required in type '{ campaignId: string; expectedRevision: string; operationId: string; takeover: boolean; expectedWriterGeneration?: string | undefined; writerToken?: string | undefined; }'."
+        },
+        {
+          "workspace": "@gamify-surgery/game-domain",
+          "line": "src/incrementalEvidenceValues.test.ts(41,60): error TS2345: Argument of type '({ id: string; n: number; nested?: undefined; } | { n?: undefined; id: string; nested: { a: number; z: number; }; })[]' is not assignable to parameter of type '{ id: string; nested: { z: number; a: number; }; }[]'."
+        },
+        {
+          "workspace": "@gamify-surgery/game-domain",
+          "line": "src/incrementalEvidenceValues.test.ts(42,55): error TS2345: Argument of type '({ id: string; n: number; nested?: undefined; } | { n?: undefined; id: string; nested: { a: number; z: number; }; })[]' is not assignable to parameter of type '{ id: string; nested: { z: number; a: number; }; }[]'."
+        },
+        {
+          "workspace": "@gamify-surgery/game-domain",
+          "line": "tests/bread-butter-20260917-batch.test.ts(236,44): error TS2345: Argument of type 'number' is not assignable to parameter of type '0 | 1 | 2'."
+        },
+        {
+          "workspace": "@gamify-surgery/game-domain",
+          "line": "tests/bread-butter-20260917-batch.test.ts(331,39): error TS2345: Argument of type 'number' is not assignable to parameter of type '0 | 1 | 2'."
+        },
+        {
+          "workspace": "@gamify-surgery/game-domain",
+          "line": "tests/bread-butter-20260917-batch.test.ts(410,49): error TS2345: Argument of type 'number' is not assignable to parameter of type '0 | 1 | 2'."
+        },
+        {
+          "workspace": "@gamify-surgery/game-domain",
+          "line": "tests/bread-butter-20260917-batch.test.ts(545,40): error TS2345: Argument of type 'number' is not assignable to parameter of type '0 | 1 | 2'."
+        }
+      ],
+      "passedWorkspaces": [
+        "@gamify-surgery/clinical-context-workbench",
+        "@gamify-surgery/balance-config",
+        "@gamify-surgery/clinical-authoring",
+        "@gamify-surgery/clinical-content",
+        "@gamify-surgery/clinical-research"
+      ],
+      "failedWorkspaces": [
+        "@gamify-surgery/player",
+        "@gamify-surgery/game-domain"
+      ]
+    },
+    "typecheck-repaired": {
+      "path": "tools/question-quality/question-bank-batch2b-typecheck-repaired-20261104.log",
+      "exists": true,
+      "sha256": "f1885b61c18acc74badaba0565372f8a7f79ad2c9d73a90ee62d2d6b2a127712",
+      "completed": true,
+      "summary": [],
+      "failures": [],
+      "workspaces": [
+        "@gamify-surgery/clinical-context-workbench",
+        "@gamify-surgery/player",
+        "@gamify-surgery/balance-config",
+        "@gamify-surgery/clinical-authoring",
+        "@gamify-surgery/clinical-content",
+        "@gamify-surgery/clinical-research",
+        "@gamify-surgery/game-domain"
+      ],
+      "typeErrors": [
+        {
+          "workspace": "@gamify-surgery/player",
+          "line": "src/session/cloud/supabaseTransport.test.ts(17,41): error TS2741: Property 'takeover' is missing in type '{ campaignId: string; expectedRevision: string; expectedWriterGeneration: string; writerToken: string; operationId: string; }' but required in type '{ campaignId: string; expectedRevision: string; operationId: string; takeover: boolean; expectedWriterGeneration?: string | undefined; writerToken?: string | undefined; }'."
+        },
+        {
+          "workspace": "@gamify-surgery/player",
+          "line": "src/session/cloud/supabaseTransport.test.ts(27,37): error TS2741: Property 'takeover' is missing in type '{ campaignId: string; expectedRevision: string; expectedWriterGeneration: string; writerToken: string; operationId: string; }' but required in type '{ campaignId: string; expectedRevision: string; operationId: string; takeover: boolean; expectedWriterGeneration?: string | undefined; writerToken?: string | undefined; }'."
+        },
+        {
+          "workspace": "@gamify-surgery/game-domain",
+          "line": "src/incrementalEvidenceValues.test.ts(41,60): error TS2345: Argument of type '({ id: string; n: number; nested?: undefined; } | { n?: undefined; id: string; nested: { a: number; z: number; }; })[]' is not assignable to parameter of type '{ id: string; nested: { z: number; a: number; }; }[]'."
+        },
+        {
+          "workspace": "@gamify-surgery/game-domain",
+          "line": "src/incrementalEvidenceValues.test.ts(42,55): error TS2345: Argument of type '({ id: string; n: number; nested?: undefined; } | { n?: undefined; id: string; nested: { a: number; z: number; }; })[]' is not assignable to parameter of type '{ id: string; nested: { z: number; a: number; }; }[]'."
+        }
+      ],
+      "passedWorkspaces": [
+        "@gamify-surgery/clinical-context-workbench",
+        "@gamify-surgery/balance-config",
+        "@gamify-surgery/clinical-authoring",
+        "@gamify-surgery/clinical-content",
+        "@gamify-surgery/clinical-research"
+      ],
+      "failedWorkspaces": [
+        "@gamify-surgery/player",
+        "@gamify-surgery/game-domain"
+      ]
+    },
+    "typecheck-post-worker": {
+      "path": "tools/question-quality/question-bank-batch2b-typecheck-post-worker-20261104.log",
+      "exists": true,
+      "sha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "completed": true,
+      "summary": [],
+      "failures": [],
+      "workspaces": [
+        "@gamify-surgery/clinical-context-workbench",
+        "@gamify-surgery/player",
+        "@gamify-surgery/balance-config",
+        "@gamify-surgery/clinical-authoring",
+        "@gamify-surgery/clinical-content",
+        "@gamify-surgery/clinical-research",
+        "@gamify-surgery/game-domain"
+      ],
+      "typeErrors": [],
+      "passedWorkspaces": [
+        "@gamify-surgery/clinical-context-workbench",
+        "@gamify-surgery/player",
+        "@gamify-surgery/balance-config",
+        "@gamify-surgery/clinical-authoring",
+        "@gamify-surgery/clinical-content",
+        "@gamify-surgery/clinical-research",
+        "@gamify-surgery/game-domain"
+      ],
+      "failedWorkspaces": []
+    },
+    "cli-lint-final": {
+      "path": "tools/question-quality/question-bank-batch2b-cli-lint-final-20261104.log",
+      "exists": true,
+      "sha256": "fd8a7036458559a78b8892a84a72fa71d4738b50560b5530ac41e7c8652f95bf",
+      "completed": false,
+      "summary": [],
+      "failures": []
+    }
+  }
+}

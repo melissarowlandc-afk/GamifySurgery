@@ -1,0 +1,582 @@
+[
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/approved-clinical-admission.test.ts > approved clinical admission boundaries > keeps the unapproved  prototype runtime release limited to explicitly admitted concepts",
+    "error": "AssertionError: expected [ …(398) ] to deeply equal [ …(396) ]",
+    "detail": "\n FAIL  tests/approved-clinical-admission.test.ts > approved clinical admission boundaries > keeps the unapproved \r\nprototype runtime release limited to explicitly admitted concepts\r\nAssertionError: expected [ …(398) ] to deeply equal [ …(396) ]\r\n\r\n- Expected\r\n+ Received\r\n\r\n@@ -393,6 +393,8 @@\r\n    \"concept.soft-tissue-mass.extremity-mri.v3\",\r\n    \"concept.inguinal-hernia.symptomatic-elective-repair.v3\",\r\n    \"concept.pigmented-skin-lesion.complete-diagnostic-biopsy.v4\",\r\n    \"concept.pigmented-skin-lesion.partial-depth-nodal-planning.v1\",\r\n    \"concept.soft-tissue-mass.extremity-mri.v4\",\r\n+   \"concept.varicose-veins.axial-trunk-referral-target.v1\",\r\n+   \"concept.dcis.sentinel-node-mastectomy.v1\",\r\n  ]\r\n\r\n ❯ tests/approved-clinical-admission.test.ts:160:7\r\n    158|         (concept) => concept.id,\r\n    159|       ),\r\n    160|     ).toEqual([\r\n       |       ^\r\n    161|       \"concept.ventral-hernia.elective-pulmonary-optimization\",\r\n    162|       \"concept.breast-mass.under-30-initial-ultrasound\",\r\n\r\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/58]⎯\r\n"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/gs028-20261002-batch.test.ts > GS-028 October 2 batch admission > admits all twenty objectives,  seventy-eight cases, and their exact timed orders",
+    "error": "AssertionError: expected [ { …(7) }, { …(7) }, { …(7) }, …(29) ] to have a length of 27 but got 32",
+    "detail": "\n FAIL  tests/gs028-20261002-batch.test.ts > GS-028 October 2 batch admission > admits all twenty objectives, \r\nseventy-eight cases, and their exact timed orders\r\nAssertionError: expected [ { …(7) }, { …(7) }, { …(7) }, …(29) ] to have a length of 27 but got 32\r\n\r\n- Expected\r\n+ Received\r\n\r\n- 27\r\n+ 32\r\n\r\n ❯ tests/gs028-20261002-batch.test.ts:245:21\r\n\r\n\r\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/58]⎯\r\n"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/gs028-20261002-batch.test.ts > GS-028 October 2 batch admission > selects each new objective  independently when all other new objectives are learned and not due",
+    "error": "AssertionError: expected { clinicalCase: { …(20) }, …(2) } to match object { kind: 'new_concept', …(1) }",
+    "detail": "\n FAIL  tests/gs028-20261002-batch.test.ts > GS-028 October 2 batch admission > selects each new objective \r\nindependently when all other new objectives are learned and not due\r\nAssertionError: expected { clinicalCase: { …(20) }, …(2) } to match object { kind: 'new_concept', …(1) }\r\n(21 matching properties omitted from actual)\r\n\r\n- Expected\r\n+ Received\r\n\r\n  {\r\n    \"kind\": \"new_concept\",\r\n-   \"selectedConceptId\": \"concept.dcis.margin-bcs-wbrt\",\r\n+   \"selectedConceptId\": \"concept.dcis.sentinel-node-mastectomy.v1\",\r\n  }\r\n\r\n ❯ tests/gs028-20261002-batch.test.ts:408:25\r\n    406|       }\r\n    407|       const selection = selectRoutineClinicalCase(state, GS028_2026100…\r\n    408|       expect(selection).toMatchObject({ kind: \"new_concept\", selectedC…\r\n       |                         ^\r\n    409|       expect(selection?.clinicalCase.decisionNodes).toHaveLength(1);\r\n    410|       expect(selection?.clinicalCase.decisionNodes[0]?.primaryConceptI…\r\n\r\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/58]⎯\r\n"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/gs028-20261002-batch.test.ts > GS-028 October 2 batch admission > prioritizes due new objectives and  returns none when all twenty are not due",
+    "error": "AssertionError: expected { clinicalCase: { …(20) }, …(2) } to be null",
+    "detail": "\n FAIL  tests/gs028-20261002-batch.test.ts > GS-028 October 2 batch admission > prioritizes due new objectives and \r\nreturns none when all twenty are not due\r\nAssertionError: expected { clinicalCase: { …(20) }, …(2) } to be null\r\n\r\n- Expected:\r\nnull\r\n\r\n+ Received:\r\n{\r\n  \"clinicalCase\": {\r\n    \"approvedInstantiationProfiles\": [\r\n      {\r\n        \"chiefComplaint\": \"DCIS surgical planning\",\r\n        \"id\": \"profile.gs028c.dcis.b-oncoplastic-mapping.female.43\",\r\n        \"presentation\": \"{patientName}, a 43-year-old woman, has DCIS in separated regions of one breast and is \r\nscheduled for a simple mastectomy. Image-guided breast samples contain DCIS without identified invasion. Examination \r\nand axillary ultrasound identify no abnormal lymph nodes.\",\r\n        \"prototypeDemographics\": {\r\n          \"ageYears\": 43,\r\n          \"sexLabel\": \"Female\",\r\n        },\r\n        \"prototypeVitalSigns\": {\r\n          \"diastolicBloodPressureMmHg\": 74,\r\n          \"heartRateBpm\": 76,\r\n          \"oxygenSaturationPercent\": 99,\r\n          \"systolicBloodPressureMmHg\": 118,\r\n          \"temperatureF\": 98.4,\r\n        },\r\n      },\r\n      {\r\n        \"chiefComplaint\": \"DCIS surgical planning\",\r\n        \"id\": \"profile.gs028c.dcis.b-oncoplastic-mapping.female.59\",\r\n        \"presentation\": \"{patientName}, a 59-year-old woman, has DCIS in separated regions of one breast and is \r\nscheduled for a simple mastectomy. Image-guided breast samples contain DCIS without identified invasion. Examination \r\nand axillary ultrasound identify no abnormal lymph nodes.\",\r\n        \"prototypeDemographics\": {\r\n          \"ageYears\": 59,\r\n          \"sexLabel\": \"Female\",\r\n        },\r\n        \"prototypeVitalSigns\": {\r\n          \"diastolicBloodPressureMmHg\": 74,\r\n          \"heartRateBpm\": 76,\r\n          \"oxygenSaturationPercent\": 99,\r\n          \"systolicBloodPressureMmHg\": 118,\r\n          \"temperatureF\": 98.4,\r\n        },\r\n      },"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > admits all twenty objectives,  seventy-eight cases, and their exact timed orders",
+    "error": "AssertionError: expected [ { …(7) }, { …(7) }, { …(7) }, …(17) ] to have a length of 19 but got 20",
+    "detail": "\n FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > admits all twenty objectives, \r\nseventy-eight cases, and their exact timed orders\r\nAssertionError: expected [ { …(7) }, { …(7) }, { …(7) }, …(17) ] to have a length of 19 but got 20\r\n\r\n- Expected\r\n+ Received\r\n\r\n- 19\r\n+ 20\r\n\r\n ❯ tests/gs028-20261003-batch.test.ts:247:21\r\n    245|     for (const item of GS028_20261003_CASES) expect(PROTOTYPE_DOMAIN_C…\r\n    246|     const records = EXACT_TEST_CHOICE_ORDER_RECORDS.filter((record) =>…\r\n    247|     expect(records).toHaveLength(19);\r\n       |                     ^\r\n    248|     expect(records.filter((record) => record.disposition.kind === \"res…\r\n    249|     expect(records.filter((record) => record.disposition.kind === \"ter…\r\n\r\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/58]⎯\r\n"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node correctly and  idempotently through case 32",
+    "error": "AssertionError: expected [ 'choice.qf20261104.f04.d1', …(2) ] to deeply equal [ 'correct_1', 'd1_1', 'd2_1', 'd3_1' ]",
+    "detail": "\n FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node correctly and \r\nidempotently through case 32\r\nAssertionError: expected [ 'choice.qf20261104.f04.d1', …(2) ] to deeply equal [ 'correct_1', 'd1_1', 'd2_1', 'd3_1' ]\r\n\r\n- Expected\r\n+ Received\r\n\r\n  [\r\n+   \"choice.qf20261104.f04.d1\",\r\n+   \"choice.qf20261104.f04.d2\",\r\n    \"correct_1\",\r\n-   \"d1_1\",\r\n-   \"d2_1\",\r\n-   \"d3_1\",\r\n  ]\r\n\r\n ❯ complete tests/gs028-20261003-batch.test.ts:191:71\r\n    189|     const { question, choice, command } = answerCommand(state, encount…\r\n    190|     expect(question.node.id).toBe(authored.id);\r\n    191|     expect(question.node.answerChoices.map((item) => item.id).sort()).…\r\n       |                                                                       ^\r\n    192|     const xpBeforeAnswer = state.clinicalXp;\r\n    193|     state = gameReducer(state, command);\r\n ❯ tests/gs028-20261003-batch.test.ts:298:86\r\n\r\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/58]⎯\r\n"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node correctly and  idempotently through case 49",
+    "error": "AssertionError: expected [ 'choice.qf20261104.f13.d1', …(2) ] to deeply equal [ 'correct_4', 'd1_4', 'd2_4', 'd3_4' ]",
+    "detail": "\n FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node correctly and \r\nidempotently through case 49\r\nAssertionError: expected [ 'choice.qf20261104.f13.d1', …(2) ] to deeply equal [ 'correct_4', 'd1_4', 'd2_4', 'd3_4' ]\r\n\r\n- Expected\r\n+ Received\r\n\r\n  [\r\n+   \"choice.qf20261104.f13.d1\",\r\n+   \"choice.qf20261104.f13.d2\",\r\n    \"correct_4\",\r\n-   \"d1_4\",\r\n-   \"d2_4\",\r\n-   \"d3_4\",\r\n  ]\r\n\r\n ❯ complete tests/gs028-20261003-batch.test.ts:191:71\r\n    189|     const { question, choice, command } = answerCommand(state, encount…\r\n    190|     expect(question.node.id).toBe(authored.id);\r\n    191|     expect(question.node.answerChoices.map((item) => item.id).sort()).…\r\n       |                                                                       ^\r\n    192|     const xpBeforeAnswer = state.clinicalXp;\r\n    193|     state = gameReducer(state, command);\r\n ❯ tests/gs028-20261003-batch.test.ts:298:86\r\n\r\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/58]⎯\r\n"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node through wrong choice  path 32 for case { id: 'case.gs028d.hyperkalaemia.a-renal-result', displayName: 'Acute hyperkalaemia',",
+    "error": "shared following block",
+    "detail": "\n FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node through wrong choice \r\npath 32 for case { id: 'case.gs028d.hyperkalaemia.a-renal-result', displayName: 'Acute hyperkalaemia', \r\npatientPresentationVariantId: 'presentation.gs028d.hyperkalaemia.a-renal-result', releasePointId: \r\n'release.l0.clinic_evaluation', patientDisplayName: '{patientName}', prototypeDemographics: { ageYears: 52, sexLabel: \r\n'Female' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, \r\ntemperatureF: 99.1, oxygenSaturationPercent: 97 }, chiefComplaint: 'Critical potassium result', presentation: \r\n'{patientName}, a 52-year-old woman with advanced kidney disease, returns to clinic when an outside laboratory calls \r\nwith a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.', \r\napprovedInstantiationProfiles: [ { id: 'profile.gs028d.hyperkalaemia.a-renal-result.female.52', prototypeDemographics: \r\n{ ageYears: 52, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, \r\ndiastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, presentation: '{patientName}, a \r\n52-year-old woman with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of \r\n6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.' }, { id: \r\n'profile.gs028d.hyperkalaemia.a-renal-result.male.52', prototypeDemographics: { ageYears: 52, sexLabel: 'Male' }, \r\nprototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, \r\ntemperatureF: 99.1, oxygenSaturationPercent: 97 }, presentation: '{patientName}, a 52-year-old man with advanced \r\nkidney disease, returns to clinic when an outside laboratory calls with a potas"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node through wrong choice  path 32 for case { id: 'case.gs028d.hyperkalaemia.a-renal-result', displayName: 'Acute hyperkalaemia',",
+    "error": "AssertionError: expected [ 'choice.qf20261104.f04.d1', …(2) ] to deeply equal [ 'correct_1', 'd1_1', 'd2_1', 'd3_1' ]",
+    "detail": "\n FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node through wrong choice \r\npath 32 for case { id: 'case.gs028d.hyperkalaemia.a-renal-result', displayName: 'Acute hyperkalaemia', \r\npatientPresentationVariantId: 'presentation.gs028d.hyperkalaemia.a-renal-result', releasePointId: \r\n'release.l0.clinic_evaluation', patientDisplayName: '{patientName}', prototypeDemographics: { ageYears: 52, sexLabel: \r\n'Female' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, \r\ntemperatureF: 99.1, oxygenSaturationPercent: 97 }, chiefComplaint: 'Critical potassium result', presentation: \r\n'{patientName}, a 52-year-old woman with advanced kidney disease, returns to clinic when an outside laboratory calls \r\nwith a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.', \r\napprovedInstantiationProfiles: [ { id: 'profile.gs028d.hyperkalaemia.a-renal-result.female.52', prototypeDemographics: \r\n{ ageYears: 52, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, \r\ndiastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, presentation: '{patientName}, a \r\n52-year-old woman with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of \r\n6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.' }, { id: \r\n'profile.gs028d.hyperkalaemia.a-renal-result.male.52', prototypeDemographics: { ageYears: 52, sexLabel: 'Male' }, \r\nprototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, \r\ntemperatureF: 99.1, oxygenSaturationPercent: 97 }, presentation: '{patientName}, a 52-year-old man with advanced \r\nkidney disease, returns to clinic when an outside laboratory calls with a potas"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node through wrong choice  path 32 for case { id: 'case.gs028d.hyperkalaemia.a-renal-result', displayName: 'Acute hyperkalaemia',",
+    "error": "Error: encounter.gs028d.wrong.2.32 lacks a wrong answer.",
+    "detail": "\n FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node through wrong choice \r\npath 32 for case { id: 'case.gs028d.hyperkalaemia.a-renal-result', displayName: 'Acute hyperkalaemia', \r\npatientPresentationVariantId: 'presentation.gs028d.hyperkalaemia.a-renal-result', releasePointId: \r\n'release.l0.clinic_evaluation', patientDisplayName: '{patientName}', prototypeDemographics: { ageYears: 52, sexLabel: \r\n'Female' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, \r\ntemperatureF: 99.1, oxygenSaturationPercent: 97 }, chiefComplaint: 'Critical potassium result', presentation: \r\n'{patientName}, a 52-year-old woman with advanced kidney disease, returns to clinic when an outside laboratory calls \r\nwith a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.', \r\napprovedInstantiationProfiles: [ { id: 'profile.gs028d.hyperkalaemia.a-renal-result.female.52', prototypeDemographics: \r\n{ ageYears: 52, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, \r\ndiastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, presentation: '{patientName}, a \r\n52-year-old woman with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of \r\n6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.' }, { id: \r\n'profile.gs028d.hyperkalaemia.a-renal-result.male.52', prototypeDemographics: { ageYears: 52, sexLabel: 'Male' }, \r\nprototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, \r\ntemperatureF: 99.1, oxygenSaturationPercent: 97 }, presentation: '{patientName}, a 52-year-old man with advanced \r\nkidney disease, returns to clinic when an outside laboratory calls with a potas"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node through wrong choice  path 49 for case { id: 'case.gs028d.anesthesia.a-validated-not-impression', displayName: 'Preanesthetic planning',",
+    "error": "shared following block",
+    "detail": "\n FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node through wrong choice \r\npath 49 for case { id: 'case.gs028d.anesthesia.a-validated-not-impression', displayName: 'Preanesthetic planning', \r\npatientPresentationVariantId: 'presentation.gs028d.anesthesia.a-validated-not-impression', releasePointId: \r\n'release.l0.clinic_evaluation', patientDisplayName: '{patientName}', prototypeDemographics: { ageYears: 46, sexLabel: \r\n'Female' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, \r\ntemperatureF: 98.4, oxygenSaturationPercent: 99 }, chiefComplaint: 'Preop sleep concern', presentation: \r\n'{patientName}, a 46-year-old woman, has several possible OSA features before major surgery, and the clinic note \r\ncurrently records only an informal impression.', approvedInstantiationProfiles: [ { id: \r\n'profile.gs028d.anesthesia.a-validated-not-impression.female.46', prototypeDemographics: { ageYears: 46, sexLabel: \r\n'Female' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, \r\ntemperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 46-year-old woman, has several \r\npossible OSA features before major surgery, and the clinic note currently records only an informal impression.' }, { \r\nid: 'profile.gs028d.anesthesia.a-validated-not-impression.male.46', prototypeDemographics: { ageYears: 46, sexLabel: \r\n'Male' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, \r\ntemperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 46-year-old man, has several \r\npossible OSA features before major surgery, and the clinic note currently records only an informal impression.' }, { \r\nid: 'profile.gs028d.anesthesia.a-validated-not-impression.female."
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node through wrong choice  path 49 for case { id: 'case.gs028d.anesthesia.a-validated-not-impression', displayName: 'Preanesthetic planning',",
+    "error": "AssertionError: expected [ 'choice.qf20261104.f13.d1', …(2) ] to deeply equal [ 'correct_4', 'd1_4', 'd2_4', 'd3_4' ]",
+    "detail": "\n FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node through wrong choice \r\npath 49 for case { id: 'case.gs028d.anesthesia.a-validated-not-impression', displayName: 'Preanesthetic planning', \r\npatientPresentationVariantId: 'presentation.gs028d.anesthesia.a-validated-not-impression', releasePointId: \r\n'release.l0.clinic_evaluation', patientDisplayName: '{patientName}', prototypeDemographics: { ageYears: 46, sexLabel: \r\n'Female' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, \r\ntemperatureF: 98.4, oxygenSaturationPercent: 99 }, chiefComplaint: 'Preop sleep concern', presentation: \r\n'{patientName}, a 46-year-old woman, has several possible OSA features before major surgery, and the clinic note \r\ncurrently records only an informal impression.', approvedInstantiationProfiles: [ { id: \r\n'profile.gs028d.anesthesia.a-validated-not-impression.female.46', prototypeDemographics: { ageYears: 46, sexLabel: \r\n'Female' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, \r\ntemperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 46-year-old woman, has several \r\npossible OSA features before major surgery, and the clinic note currently records only an informal impression.' }, { \r\nid: 'profile.gs028d.anesthesia.a-validated-not-impression.male.46', prototypeDemographics: { ageYears: 46, sexLabel: \r\n'Male' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, \r\ntemperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 46-year-old man, has several \r\npossible OSA features before major surgery, and the clinic note currently records only an informal impression.' }, { \r\nid: 'profile.gs028d.anesthesia.a-validated-not-impression.female."
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node through wrong choice  path 49 for case { id: 'case.gs028d.anesthesia.a-validated-not-impression', displayName: 'Preanesthetic planning',",
+    "error": "Error: encounter.gs028d.wrong.2.49 lacks a wrong answer.",
+    "detail": "\n FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node through wrong choice \r\npath 49 for case { id: 'case.gs028d.anesthesia.a-validated-not-impression', displayName: 'Preanesthetic planning', \r\npatientPresentationVariantId: 'presentation.gs028d.anesthesia.a-validated-not-impression', releasePointId: \r\n'release.l0.clinic_evaluation', patientDisplayName: '{patientName}', prototypeDemographics: { ageYears: 46, sexLabel: \r\n'Female' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, \r\ntemperatureF: 98.4, oxygenSaturationPercent: 99 }, chiefComplaint: 'Preop sleep concern', presentation: \r\n'{patientName}, a 46-year-old woman, has several possible OSA features before major surgery, and the clinic note \r\ncurrently records only an informal impression.', approvedInstantiationProfiles: [ { id: \r\n'profile.gs028d.anesthesia.a-validated-not-impression.female.46', prototypeDemographics: { ageYears: 46, sexLabel: \r\n'Female' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, \r\ntemperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 46-year-old woman, has several \r\npossible OSA features before major surgery, and the clinic note currently records only an informal impression.' }, { \r\nid: 'profile.gs028d.anesthesia.a-validated-not-impression.male.46', prototypeDemographics: { ageYears: 46, sexLabel: \r\n'Male' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, \r\ntemperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 46-year-old man, has several \r\npossible OSA features before major surgery, and the clinic note currently records only an informal impression.' }, { \r\nid: 'profile.gs028d.anesthesia.a-validated-not-impression.female."
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > keeps external or specialist test  'choice.qf20261104.f04.d1' outside clinic execution",
+    "error": "AssertionError: expected 'correct_1' to be 'choice.qf20261104.f04.d1' // Object.is equality",
+    "detail": "\n FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > keeps external or specialist test \r\n'choice.qf20261104.f04.d1' outside clinic execution\r\nAssertionError: expected 'correct_1' to be 'choice.qf20261104.f04.d1' // Object.is equality\r\n\r\nExpected: \"choice.qf20261104.f04.d1\"\r\nReceived: \"correct_1\"\r\n\r\n ❯ tests/gs028-20261003-batch.test.ts:423:32\r\n    421|       state = readyAtNode(state, encounterId, record.nodeId, `${encoun…\r\n    422|       const answer = answerCommand(state, encounterId, true, `${encoun…\r\n    423|       expect(answer.choice.id).toBe(record.choiceId);\r\n       |                                ^\r\n    424|       const context = allRoutesAvailableContext();\r\n    425|       if (/\\b(?:CT|LDCT)\\b/.test(record.choiceLabel)) {\r\n\r\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/58]⎯\r\n"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/gs028-20261007-batch.test.ts > GS-028 October 7 real gameplay admission > measures the real ordinary  pools before and after admission",
+    "error": "AssertionError: expected [ { cases: 480, concepts: 136 }, …(2) ] to deeply equal [ { cases: 480, concepts: 135 }, …(2) ",
+    "detail": "\n FAIL  tests/gs028-20261007-batch.test.ts > GS-028 October 7 real gameplay admission > measures the real ordinary \r\npools before and after admission\r\nAssertionError: expected [ { cases: 480, concepts: 136 }, …(2) ] to deeply equal [ { cases: 480, concepts: 135 }, …(2) \r\n]\r\n\r\n- Expected\r\n+ Received\r\n\r\n  [\r\n    {\r\n      \"cases\": 480,\r\n-     \"concepts\": 135,\r\n+     \"concepts\": 136,\r\n    },\r\n    {\r\n      \"cases\": 718,\r\n-     \"concepts\": 246,\r\n+     \"concepts\": 248,\r\n    },\r\n    {\r\n      \"cases\": 754,\r\n-     \"concepts\": 263,\r\n+     \"concepts\": 265,\r\n    },\r\n  ]\r\n\r\n ❯ tests/gs028-20261007-batch.test.ts:411:46\r\n    409|     // Round-four clinical-objective versions add three/four active co…\r\n    410|     // to the pre-existing stage-1/2 pool; this unchanged batch still …\r\n    411|     expect(pools.map((item) => item.before)).toEqual([{ cases: 480, co…\r\n       |                                              ^\r\n    412|     expect(pools.map((item) => item.after)).toEqual([{ cases: 558, con…\r\n    413|   });\r\n\r\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/58]⎯\r\n"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/gs028-20261007-batch.test.ts > GS-028 October 7 real gameplay admission > covers all eighty actual nodes  and every current authored choice",
+    "error": "AssertionError: expected 316 to be 319 // Object.is equality",
+    "detail": "\n FAIL  tests/gs028-20261007-batch.test.ts > GS-028 October 7 real gameplay admission > covers all eighty actual nodes \r\nand every current authored choice\r\nAssertionError: expected 316 to be 319 // Object.is equality\r\n\r\n- Expected\r\n+ Received\r\n\r\n- 319\r\n+ 316\r\n\r\n ❯ tests/gs028-20261007-batch.test.ts:418:80\r\n    416|     expect(coverage.size).toBe(80);\r\n    417|     for (const node of cases.flatMap((item) => item.decisionNodes)) ex…\r\n    418|     expect([...coverage.values()].reduce((total, ids) => total + ids.s…\r\n       |                                                                                ^\r\n    419|   });\r\n    420| });\r\n\r\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/58]⎯\r\n"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > binds every one of  twenty-six testing choices with exactly five executable correct orders",
+    "error": "AssertionError: expected [ { …(7) }, { …(7) }, { …(7) }, …(26) ] to have a length of 26 but got 29",
+    "detail": "\n FAIL  tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > binds every one of \r\ntwenty-six testing choices with exactly five executable correct orders\r\nAssertionError: expected [ { …(7) }, { …(7) }, { …(7) }, …(26) ] to have a length of 26 but got 29\r\n\r\n- Expected\r\n+ Received\r\n\r\n- 26\r\n+ 29\r\n\r\n ❯ tests/gs028-20261007-variety2-batch.test.ts:374:19\r\n    372| describe(\"GS-028 second October 7 actual gameplay\", () => {\r\n    373|   it(\"binds every one of twenty-six testing choices with exactly five …\r\n    374|     expect(exact).toHaveLength(26);\r\n       |                   ^\r\n    375|     expect(exact.filter((item) => item.disposition.kind === \"terminal_…\r\n    376|     expect(exact.filter((item) => item.disposition.kind === \"result_ga…\r\n\r\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/58]⎯\r\n"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > completes every correct  node, saves and departs in case 21",
+    "error": "AssertionError: node.gs028f.neck-mass.c2-completed-needle-record.1/correct_4: expected { kind: 'test', …(8) } to be ",
+    "detail": "\n FAIL  tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > completes every correct \r\nnode, saves and departs in case 21\r\nAssertionError: node.gs028f.neck-mass.c2-completed-needle-record.1/correct_4: expected { kind: 'test', …(8) } to be \r\nnull\r\n\r\n- Expected:\r\nnull\r\n\r\n+ Received:\r\n{\r\n  \"answerChoiceId\": \"correct_4\",\r\n  \"diagnosticTiming\": {\r\n    \"careComplete\": {\r\n      \"afterPhaseIds\": [\r\n        \"diagnostic.1.patient_return\",\r\n      ],\r\n      \"forecastAtTick\": 180,\r\n      \"reachedAtTick\": null,\r\n    },\r\n    \"createdAtTick\": 21,\r\n    \"encounterId\": \"encounter.gs028f.flow.21.correct\",\r\n    \"execution\": \"preview_only\",\r\n    \"orderId\": \r\n\"diagnostic.encounter.gs028f.flow.21.correct.node.gs028f.neck-mass.c2-completed-needle-record.1.correct_4\",\r\n    \"periopNurseAttentionQuote\": {\r\n      \"trainingPercent\": 0,\r\n      \"version\": \"periop-nurse-attention.v1\",\r\n    },\r\n    \"phases\": [\r\n      {\r\n        \"completedAtTick\": null,\r\n        \"componentId\": null,\r\n        \"dependsOn\": [],\r\n        \"durationMinutes\": 0,\r\n        \"forecast\": {\r\n          \"employeePaths\": [],\r\n          \"endsAtTick\": 41,\r\n          \"founderPath\": [],\r\n          \"patientPath\": [\r\n            {\r\n              \"x\": 37,\r\n              \"y\": 31,\r\n            },\r\n            {\r\n              \"x\": 36,\r\n              \"y\": 31,\r\n            },\r\n            {\r\n              \"x\": 35,\r\n              \"y\": 31,\r\n            },\r\n            {\r\n              \"x\": 35,\r\n              \"y\": 32,\r\n            },\r\n            {\r\n              \"x\": 34,\r\n              \"y\": 32,\r\n            },\r\n            {\r\n              \"x\": 33,\r\n              \"y\": 32,\r\n            },\r\n            {\r\n              \"x\": 32,\r\n              \"y\": 32,\r\n            },\r\n            {\r\n              \"x\": 31,\r\n              \"y\": 32,\r\n            },\r\n            {\r\n              \"x\": 30,\r\n              \"y\": 32,\r\n       "
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > completes wrong choice  21/0 exactly once with supported corrected-forward work",
+    "error": "AssertionError: node.gs028f.neck-mass.c2-completed-needle-record.1/choice.qf20261104.f05.d2: expected { kind: 'test', ",
+    "detail": "\n FAIL  tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > completes wrong choice \r\n21/0 exactly once with supported corrected-forward work\r\nAssertionError: node.gs028f.neck-mass.c2-completed-needle-record.1/choice.qf20261104.f05.d2: expected { kind: 'test', \r\n…(8) } to be null\r\n\r\n- Expected:\r\nnull\r\n\r\n+ Received:\r\n{\r\n  \"answerChoiceId\": \"choice.qf20261104.f05.d2\",\r\n  \"diagnosticTiming\": {\r\n    \"careComplete\": {\r\n      \"afterPhaseIds\": [\r\n        \"diagnostic.1.patient_return\",\r\n      ],\r\n      \"forecastAtTick\": 180,\r\n      \"reachedAtTick\": null,\r\n    },\r\n    \"createdAtTick\": 21,\r\n    \"encounterId\": \"encounter.gs028f.flow.21.0\",\r\n    \"execution\": \"preview_only\",\r\n    \"orderId\": \r\n\"diagnostic.encounter.gs028f.flow.21.0.node.gs028f.neck-mass.c2-completed-needle-record.1.choice.qf20261104.f05.d2\",\r\n    \"periopNurseAttentionQuote\": {\r\n      \"trainingPercent\": 0,\r\n      \"version\": \"periop-nurse-attention.v1\",\r\n    },\r\n    \"phases\": [\r\n      {\r\n        \"completedAtTick\": null,\r\n        \"componentId\": null,\r\n        \"dependsOn\": [],\r\n        \"durationMinutes\": 0,\r\n        \"forecast\": {\r\n          \"employeePaths\": [],\r\n          \"endsAtTick\": 41,\r\n          \"founderPath\": [],\r\n          \"patientPath\": [\r\n            {\r\n              \"x\": 37,\r\n              \"y\": 31,\r\n            },\r\n            {\r\n              \"x\": 36,\r\n              \"y\": 31,\r\n            },\r\n            {\r\n              \"x\": 35,\r\n              \"y\": 31,\r\n            },\r\n            {\r\n              \"x\": 35,\r\n              \"y\": 32,\r\n            },\r\n            {\r\n              \"x\": 34,\r\n              \"y\": 32,\r\n            },\r\n            {\r\n              \"x\": 33,\r\n              \"y\": 32,\r\n            },\r\n            {\r\n              \"x\": 32,\r\n              \"y\": 32,\r\n            },\r\n            {\r\n              \"x\": 31,\r\n              \"y\": 32,\r\n            },\r\n            {\r\n  "
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > completes wrong choice  21/1 exactly once with supported corrected-forward work",
+    "error": "AssertionError: node.gs028f.neck-mass.c2-completed-needle-record.1/choice.qf20261104.f05.d2: expected { kind: 'test', ",
+    "detail": "\n FAIL  tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > completes wrong choice \r\n21/1 exactly once with supported corrected-forward work\r\nAssertionError: node.gs028f.neck-mass.c2-completed-needle-record.1/choice.qf20261104.f05.d2: expected { kind: 'test', \r\n…(8) } to be null\r\n\r\n- Expected:\r\nnull\r\n\r\n+ Received:\r\n{\r\n  \"answerChoiceId\": \"choice.qf20261104.f05.d2\",\r\n  \"diagnosticTiming\": {\r\n    \"careComplete\": {\r\n      \"afterPhaseIds\": [\r\n        \"diagnostic.1.patient_return\",\r\n      ],\r\n      \"forecastAtTick\": 179,\r\n      \"reachedAtTick\": null,\r\n    },\r\n    \"createdAtTick\": 20,\r\n    \"encounterId\": \"encounter.gs028f.flow.21.1\",\r\n    \"execution\": \"preview_only\",\r\n    \"orderId\": \r\n\"diagnostic.encounter.gs028f.flow.21.1.node.gs028f.neck-mass.c2-completed-needle-record.1.choice.qf20261104.f05.d2\",\r\n    \"periopNurseAttentionQuote\": {\r\n      \"trainingPercent\": 0,\r\n      \"version\": \"periop-nurse-attention.v1\",\r\n    },\r\n    \"phases\": [\r\n      {\r\n        \"completedAtTick\": null,\r\n        \"componentId\": null,\r\n        \"dependsOn\": [],\r\n        \"durationMinutes\": 0,\r\n        \"forecast\": {\r\n          \"employeePaths\": [],\r\n          \"endsAtTick\": 40,\r\n          \"founderPath\": [],\r\n          \"patientPath\": [\r\n            {\r\n              \"x\": 37,\r\n              \"y\": 31,\r\n            },\r\n            {\r\n              \"x\": 36,\r\n              \"y\": 31,\r\n            },\r\n            {\r\n              \"x\": 35,\r\n              \"y\": 31,\r\n            },\r\n            {\r\n              \"x\": 35,\r\n              \"y\": 32,\r\n            },\r\n            {\r\n              \"x\": 34,\r\n              \"y\": 32,\r\n            },\r\n            {\r\n              \"x\": 33,\r\n              \"y\": 32,\r\n            },\r\n            {\r\n              \"x\": 32,\r\n              \"y\": 32,\r\n            },\r\n            {\r\n              \"x\": 31,\r\n              \"y\": 32,\r\n            },\r\n            {\r\n  "
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > completes wrong choice  21/2 exactly once with supported corrected-forward work",
+    "error": "AssertionError: node.gs028f.neck-mass.c2-completed-needle-record.1/choice.qf20261104.f05.d1: expected { kind: 'test', ",
+    "detail": "\n FAIL  tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > completes wrong choice \r\n21/2 exactly once with supported corrected-forward work\r\nAssertionError: node.gs028f.neck-mass.c2-completed-needle-record.1/choice.qf20261104.f05.d1: expected { kind: 'test', \r\n…(8) } to be null\r\n\r\n- Expected:\r\nnull\r\n\r\n+ Received:\r\n{\r\n  \"answerChoiceId\": \"choice.qf20261104.f05.d1\",\r\n  \"diagnosticTiming\": {\r\n    \"careComplete\": {\r\n      \"afterPhaseIds\": [\r\n        \"diagnostic.1.patient_return\",\r\n      ],\r\n      \"forecastAtTick\": 179,\r\n      \"reachedAtTick\": null,\r\n    },\r\n    \"createdAtTick\": 20,\r\n    \"encounterId\": \"encounter.gs028f.flow.21.2\",\r\n    \"execution\": \"preview_only\",\r\n    \"orderId\": \r\n\"diagnostic.encounter.gs028f.flow.21.2.node.gs028f.neck-mass.c2-completed-needle-record.1.choice.qf20261104.f05.d1\",\r\n    \"periopNurseAttentionQuote\": {\r\n      \"trainingPercent\": 0,\r\n      \"version\": \"periop-nurse-attention.v1\",\r\n    },\r\n    \"phases\": [\r\n      {\r\n        \"completedAtTick\": null,\r\n        \"componentId\": null,\r\n        \"dependsOn\": [],\r\n        \"durationMinutes\": 0,\r\n        \"forecast\": {\r\n          \"employeePaths\": [],\r\n          \"endsAtTick\": 40,\r\n          \"founderPath\": [],\r\n          \"patientPath\": [\r\n            {\r\n              \"x\": 37,\r\n              \"y\": 31,\r\n            },\r\n            {\r\n              \"x\": 36,\r\n              \"y\": 31,\r\n            },\r\n            {\r\n              \"x\": 35,\r\n              \"y\": 31,\r\n            },\r\n            {\r\n              \"x\": 35,\r\n              \"y\": 32,\r\n            },\r\n            {\r\n              \"x\": 34,\r\n              \"y\": 32,\r\n            },\r\n            {\r\n              \"x\": 33,\r\n              \"y\": 32,\r\n            },\r\n            {\r\n              \"x\": 32,\r\n              \"y\": 32,\r\n            },\r\n            {\r\n              \"x\": 31,\r\n              \"y\": 32,\r\n            },\r\n            {\r\n  "
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > measures the actual  early ordinary pool delta of seventy-eight cases and twenty concepts",
+    "error": "AssertionError: expected [ { cases: 558, concepts: 156 }, …(2) ] to deeply equal [ { cases: 558, concepts: 155 }, …(2) ",
+    "detail": "\n FAIL  tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > measures the actual \r\nearly ordinary pool delta of seventy-eight cases and twenty concepts\r\nAssertionError: expected [ { cases: 558, concepts: 156 }, …(2) ] to deeply equal [ { cases: 558, concepts: 155 }, …(2) \r\n]\r\n\r\n- Expected\r\n+ Received\r\n\r\n  [\r\n    {\r\n      \"cases\": 558,\r\n-     \"concepts\": 155,\r\n+     \"concepts\": 156,\r\n    },\r\n    {\r\n      \"cases\": 796,\r\n-     \"concepts\": 266,\r\n+     \"concepts\": 268,\r\n    },\r\n    {\r\n      \"cases\": 832,\r\n-     \"concepts\": 283,\r\n+     \"concepts\": 285,\r\n    },\r\n  ]\r\n\r\n ❯ tests/gs028-20261007-variety2-batch.test.ts:606:46\r\n    604|     // Round-four clinical-objective versions add three/four active co…\r\n    605|     // to the pre-existing stage-1/2 pool; this unchanged batch still …\r\n    606|     expect(pools.map((item) => item.before)).toEqual([{ cases: 558, co…\r\n       |                                              ^\r\n    607|     expect(pools.map((item) => item.after)).toEqual([{ cases: 636, con…\r\n    608|   });\r\n\r\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/58]⎯\r\n"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > covers all eighty  actual nodes and all three distractors plus the key in each",
+    "error": "AssertionError: expected 79 to be 80 // Object.is equality",
+    "detail": "\n FAIL  tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > covers all eighty \r\nactual nodes and all three distractors plus the key in each\r\nAssertionError: expected 79 to be 80 // Object.is equality\r\n\r\n- Expected\r\n+ Received\r\n\r\n- 80\r\n+ 79\r\n\r\n ❯ tests/gs028-20261007-variety2-batch.test.ts:611:27\r\n    609|\r\n    610|   it(\"covers all eighty actual nodes and all three distractors plus th…\r\n    611|     expect(coverage.size).toBe(80);\r\n       |                           ^\r\n    612|     for (const node of cases.flatMap((item) => item.decisionNodes)) ex…\r\n    613|     expect([...coverage.values()].reduce((total, ids) => total + ids.s…\r\n\r\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/58]⎯\r\n"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > binds the actual run to its  current game, balance, clinical and driver inputs and reconciles cash",
+    "error": "AssertionError: packages/clinical-content/src/answer-choice-timing.ts: expected ",
+    "detail": "\n FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > binds the actual run to its \r\ncurrent game, balance, clinical and driver inputs and reconciles cash\r\nAssertionError: packages/clinical-content/src/answer-choice-timing.ts: expected \r\n'5d36bf0e7ab6aff318833db24b39161f6a122…' to be '7db1b1253c7d3064adb0602360925c0739bb6…' // Object.is equality\r\n\r\nExpected: \"7db1b1253c7d3064adb0602360925c0739bb65c719603507c3fa09a6732ba245\"\r\nReceived: \"5d36bf0e7ab6aff318833db24b39161f6a1224574f07cb6c2fa14f6483ee3d37\"\r\n\r\n ❯ tests/level-five-integration.test.ts:47:71\r\n     45|           .replace(\"        nextFacilityLevel: 5,\\n      },\\n      LEV…\r\n     46|       }\r\n     47|       expect(createHash(\"sha256\").update(source).digest(\"hex\"), file).…\r\n       |                                                                       ^\r\n     48|     }\r\n     49|     expect(run.commandsReconciled).toBeGreaterThan(20_000);\r\n\r\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/58]⎯\r\n"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after  save/reload at integration-preparing",
+    "error": "shared following block",
+    "detail": "\n FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after \r\nsave/reload at integration-preparing"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after  save/reload at integration-running",
+    "error": "shared following block",
+    "detail": "\n FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after \r\nsave/reload at integration-running"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after  save/reload at integration-final",
+    "error": "shared following block",
+    "detail": "\n FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after \r\nsave/reload at integration-final"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after  save/reload at integration-finish",
+    "error": "Error: Test timed out in 30000ms.",
+    "detail": "\n FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after \r\nsave/reload at integration-finish\r\nError: Test timed out in 30000ms.\r\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\r\n ❯ tests/level-five-integration.test.ts:119:112\r\n    117|   });\r\n    118|\r\n    119|   it.each([\"integration-preparing\", \"integration-running\", \"integratio…\r\n       |                                                                                                               \r\n ^\r\n    120|     // Use the unnormalized continuous-play checkpoint, not a QA facto…\r\n    121|     // has already passed through the reader and could conceal a clock…\r\n\r\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/58]⎯\r\n"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > continues normal operations,  completes a genuinely lower retry and retains the higher best and first finish",
+    "error": "Error: Test timed out in 300000ms.",
+    "detail": "\n FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > continues normal operations, \r\ncompletes a genuinely lower retry and retains the higher best and first finish\r\nError: Test timed out in 300000ms.\r\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\r\n ❯ tests/level-five-integration.test.ts:143:3\r\n    141|   }, hostedTime(30_000));\r\n    142|\r\n    143|   it(\"continues normal operations, completes a genuinely lower retry a…\r\n       |   ^\r\n    144|     const opening = stateOf(\"integration-repeat\"), first = structuredC…\r\n    145|     const journey = new LevelFiveIntegrationJourney(context, opening);…\r\n\r\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/58]⎯\r\n"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches  the actual pre-M9 load and next 120 minutes for level +0/schema 5",
+    "error": "shared following block",
+    "detail": "\n FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches \r\nthe actual pre-M9 load and next 120 minutes for level +0/schema 5"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches  the actual pre-M9 load and next 120 minutes for level +0/schema 6",
+    "error": "shared following block",
+    "detail": "\n FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches \r\nthe actual pre-M9 load and next 120 minutes for level +0/schema 6"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches  the actual pre-M9 load and next 120 minutes for level +0/schema 7",
+    "error": "shared following block",
+    "detail": "\n FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches \r\nthe actual pre-M9 load and next 120 minutes for level +0/schema 7"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches  the actual pre-M9 load and next 120 minutes for level +0/schema 8",
+    "error": "shared following block",
+    "detail": "\n FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches \r\nthe actual pre-M9 load and next 120 minutes for level +0/schema 8"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches  the actual pre-M9 load and next 120 minutes for level +0/schema 9",
+    "error": "AssertionError: expected '7eb7a4e93c022d23819b2acf59d96ea794f9c…' to be '92728e650dc9a0f02b005470db49ab566769a…' // ",
+    "detail": "\n FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches \r\nthe actual pre-M9 load and next 120 minutes for level +0/schema 9\r\nAssertionError: expected '7eb7a4e93c022d23819b2acf59d96ea794f9c…' to be '92728e650dc9a0f02b005470db49ab566769a…' // \r\nObject.is equality\r\n\r\nExpected: \"92728e650dc9a0f02b005470db49ab566769aeb51b04f7f4efb2e76c798d4667\"\r\nReceived: \"7eb7a4e93c022d23819b2acf59d96ea794f9c954d62fcbe23ba8320ee320ecab\"\r\n\r\n ❯ tests/level-five-integration.test.ts:183:78\r\n    181|     const raw = JSON.parse(row.serializedInput); raw.schemaVersion = r…\r\n    182|     let state = deserializeGameState(JSON.stringify(raw));\r\n    183|     expect(createHash(\"sha256\").update(JSON.stringify(state)).digest(\"…\r\n       |                                                                              ^\r\n    184|     expect(state).not.toHaveProperty(\"levelFive\");\r\n    185|     state = gameReducer(state, { type: \"SET_PAUSED\", paused: false, op…\r\n\r\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/58]⎯\r\n"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches  the actual pre-M9 load and next 120 minutes for level 1/schema 5",
+    "error": "shared following block",
+    "detail": "\n FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches \r\nthe actual pre-M9 load and next 120 minutes for level 1/schema 5"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches  the actual pre-M9 load and next 120 minutes for level 1/schema 6",
+    "error": "shared following block",
+    "detail": "\n FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches \r\nthe actual pre-M9 load and next 120 minutes for level 1/schema 6"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches  the actual pre-M9 load and next 120 minutes for level 1/schema 7",
+    "error": "shared following block",
+    "detail": "\n FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches \r\nthe actual pre-M9 load and next 120 minutes for level 1/schema 7"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches  the actual pre-M9 load and next 120 minutes for level 1/schema 8",
+    "error": "shared following block",
+    "detail": "\n FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches \r\nthe actual pre-M9 load and next 120 minutes for level 1/schema 8"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches  the actual pre-M9 load and next 120 minutes for level 1/schema 9",
+    "error": "AssertionError: expected '71a4dfd29c45122a201226a34902e169aeefa…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' // ",
+    "detail": "\n FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches \r\nthe actual pre-M9 load and next 120 minutes for level 1/schema 9\r\nAssertionError: expected '71a4dfd29c45122a201226a34902e169aeefa…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' // \r\nObject.is equality\r\n\r\nExpected: \"5b2c0785dfcbc2ddad65e3f56683dae5e7f9aef754d8c60947ffe9333fc94c28\"\r\nReceived: \"71a4dfd29c45122a201226a34902e169aeefa3a9c4618bd00e261c53c395ac33\"\r\n\r\n ❯ tests/level-five-integration.test.ts:183:78\r\n    181|     const raw = JSON.parse(row.serializedInput); raw.schemaVersion = r…\r\n    182|     let state = deserializeGameState(JSON.stringify(raw));\r\n    183|     expect(createHash(\"sha256\").update(JSON.stringify(state)).digest(\"…\r\n       |                                                                              ^\r\n    184|     expect(state).not.toHaveProperty(\"levelFive\");\r\n    185|     state = gameReducer(state, { type: \"SET_PAUSED\", paused: false, op…\r\n\r\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[26/58]⎯\r\n"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches  the actual pre-M9 load and next 120 minutes for level 2/schema 5",
+    "error": "shared following block",
+    "detail": "\n FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches \r\nthe actual pre-M9 load and next 120 minutes for level 2/schema 5"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches  the actual pre-M9 load and next 120 minutes for level 2/schema 6",
+    "error": "shared following block",
+    "detail": "\n FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches \r\nthe actual pre-M9 load and next 120 minutes for level 2/schema 6"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches  the actual pre-M9 load and next 120 minutes for level 2/schema 7",
+    "error": "shared following block",
+    "detail": "\n FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches \r\nthe actual pre-M9 load and next 120 minutes for level 2/schema 7"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches  the actual pre-M9 load and next 120 minutes for level 2/schema 8",
+    "error": "shared following block",
+    "detail": "\n FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches \r\nthe actual pre-M9 load and next 120 minutes for level 2/schema 8"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches  the actual pre-M9 load and next 120 minutes for level 2/schema 9",
+    "error": "AssertionError: expected 'b3838b10d5896925a8febd399b9a444836a6d…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' // ",
+    "detail": "\n FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches \r\nthe actual pre-M9 load and next 120 minutes for level 2/schema 9\r\nAssertionError: expected 'b3838b10d5896925a8febd399b9a444836a6d…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' // \r\nObject.is equality\r\n\r\nExpected: \"a157ed60cc08d3cddd0428b11ac11f87121e4e78225e09680e758d57dc2541a2\"\r\nReceived: \"b3838b10d5896925a8febd399b9a444836a6d96b7330d103b08b9b138e8de272\"\r\n\r\n ❯ tests/level-five-integration.test.ts:183:78\r\n    181|     const raw = JSON.parse(row.serializedInput); raw.schemaVersion = r…\r\n    182|     let state = deserializeGameState(JSON.stringify(raw));\r\n    183|     expect(createHash(\"sha256\").update(JSON.stringify(state)).digest(\"…\r\n       |                                                                              ^\r\n    184|     expect(state).not.toHaveProperty(\"levelFive\");\r\n    185|     state = gameReducer(state, { type: \"SET_PAUSED\", paused: false, op…\r\n\r\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[27/58]⎯\r\n"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches  the actual pre-M9 load and next 120 minutes for level 3/schema 5",
+    "error": "shared following block",
+    "detail": "\n FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches \r\nthe actual pre-M9 load and next 120 minutes for level 3/schema 5"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches  the actual pre-M9 load and next 120 minutes for level 3/schema 6",
+    "error": "shared following block",
+    "detail": "\n FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches \r\nthe actual pre-M9 load and next 120 minutes for level 3/schema 6"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches  the actual pre-M9 load and next 120 minutes for level 3/schema 7",
+    "error": "shared following block",
+    "detail": "\n FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches \r\nthe actual pre-M9 load and next 120 minutes for level 3/schema 7"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches  the actual pre-M9 load and next 120 minutes for level 3/schema 8",
+    "error": "shared following block",
+    "detail": "\n FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches \r\nthe actual pre-M9 load and next 120 minutes for level 3/schema 8"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches  the actual pre-M9 load and next 120 minutes for level 3/schema 9",
+    "error": "AssertionError: expected 'e8b9c242086dc2fc1c3a479dc62c6e434523c…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' // ",
+    "detail": "\n FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches \r\nthe actual pre-M9 load and next 120 minutes for level 3/schema 9\r\nAssertionError: expected 'e8b9c242086dc2fc1c3a479dc62c6e434523c…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' // \r\nObject.is equality\r\n\r\nExpected: \"259feb3aba6e3d09bb369cc458620cd3d78f21379d2df289ed72737e9959dfd1\"\r\nReceived: \"e8b9c242086dc2fc1c3a479dc62c6e434523cade79fbb9e54cdcd6343c62b826\"\r\n\r\n ❯ tests/level-five-integration.test.ts:183:78\r\n    181|     const raw = JSON.parse(row.serializedInput); raw.schemaVersion = r…\r\n    182|     let state = deserializeGameState(JSON.stringify(raw));\r\n    183|     expect(createHash(\"sha256\").update(JSON.stringify(state)).digest(\"…\r\n       |                                                                              ^\r\n    184|     expect(state).not.toHaveProperty(\"levelFive\");\r\n    185|     state = gameReducer(state, { type: \"SET_PAUSED\", paused: false, op…\r\n\r\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[28/58]⎯\r\n"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches  the actual pre-M9 load and next 120 minutes for level 4/schema 5",
+    "error": "shared following block",
+    "detail": "\n FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches \r\nthe actual pre-M9 load and next 120 minutes for level 4/schema 5"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches  the actual pre-M9 load and next 120 minutes for level 4/schema 6",
+    "error": "shared following block",
+    "detail": "\n FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches \r\nthe actual pre-M9 load and next 120 minutes for level 4/schema 6"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches  the actual pre-M9 load and next 120 minutes for level 4/schema 7",
+    "error": "shared following block",
+    "detail": "\n FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches \r\nthe actual pre-M9 load and next 120 minutes for level 4/schema 7"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches  the actual pre-M9 load and next 120 minutes for level 4/schema 8",
+    "error": "shared following block",
+    "detail": "\n FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches \r\nthe actual pre-M9 load and next 120 minutes for level 4/schema 8"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches  the actual pre-M9 load and next 120 minutes for level 4/schema 9",
+    "error": "AssertionError: expected 'ff7650e7a8683300be715a2261947582ea882…' to be '3d3603171902d39a439090f0026ae33ac7654…' // ",
+    "detail": "\n FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches \r\nthe actual pre-M9 load and next 120 minutes for level 4/schema 9\r\nAssertionError: expected 'ff7650e7a8683300be715a2261947582ea882…' to be '3d3603171902d39a439090f0026ae33ac7654…' // \r\nObject.is equality\r\n\r\nExpected: \"3d3603171902d39a439090f0026ae33ac76543bb696d772f25ad68d20f5fcf6d\"\r\nReceived: \"ff7650e7a8683300be715a2261947582ea8820d9ea651f33f088a152ab835121\"\r\n\r\n ❯ tests/level-five-integration.test.ts:183:78\r\n    181|     const raw = JSON.parse(row.serializedInput); raw.schemaVersion = r…\r\n    182|     let state = deserializeGameState(JSON.stringify(raw));\r\n    183|     expect(createHash(\"sha256\").update(JSON.stringify(state)).digest(\"…\r\n       |                                                                              ^\r\n    184|     expect(state).not.toHaveProperty(\"levelFive\");\r\n    185|     state = gameReducer(state, { type: \"SET_PAUSED\", paused: false, op…\r\n\r\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[29/58]⎯\r\n"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/level-four-integration.test.ts > Level 4 M9 integrated launch > preserves arrival count/times and  flow-explained scored selections for 24 hours with APPs on/off",
+    "error": "Error: Test timed out in 120000ms.",
+    "detail": "\n FAIL  tests/level-four-integration.test.ts > Level 4 M9 integrated launch > preserves arrival count/times and \r\nflow-explained scored selections for 24 hours with APPs on/off\r\nError: Test timed out in 120000ms.\r\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\r\n ❯ tests/level-four-integration.test.ts:326:3\r\n    324|   }, hostedTime(30_000));\r\n    325|\r\n    326|   it(\"preserves arrival count/times and flow-explained scored selectio…\r\n       |   ^\r\n    327|     let on = createLevelFourIntegrationState(\"level-four-m9-fairness\");\r\n    328|     on.nextRoutineArrivalTick = 1;\r\n\r\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[30/58]⎯\r\n"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/patient-supply.test.ts > routine patient supply > records the current clinical inventory and exact  unseen-patient boundary by stage",
+    "error": "AssertionError: expected [ Array(398) ] to have a length of 396 but got 398",
+    "detail": "\n FAIL  tests/patient-supply.test.ts > routine patient supply > records the current clinical inventory and exact \r\nunseen-patient boundary by stage\r\nAssertionError: expected [ Array(398) ] to have a length of 396 but got 398\r\n\r\n- Expected\r\n+ Received\r\n\r\n- 396\r\n+ 398\r\n\r\n ❯ tests/patient-supply.test.ts:234:30\r\n    232|     const release = PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease;\r\n    233|     // Three round-six constructs retain all 389 entry definitions and…\r\n    234|     expect(release.concepts).toHaveLength(396);\r\n       |                              ^\r\n    235|     // The current old bank includes the concurrent interpreter pairin…\r\n    236|     // 1,008 existing cases, 62 Level-3 cases, 20 L4 pediatric variants\r\n\r\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[31/58]⎯\r\n"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/patient-supply.test.ts > routine patient supply > admits and completes patients in prepared day-six  through day-eight states",
+    "error": "Error: Snapshot `routine patient supply > admits and completes patients in prepared day-six through day-eight states ",
+    "detail": "\n FAIL  tests/patient-supply.test.ts > routine patient supply > admits and completes patients in prepared day-six \r\nthrough day-eight states\r\nError: Snapshot `routine patient supply > admits and completes patients in prepared day-six through day-eight states \r\n1` mismatched\r\n\r\n- Expected\r\n+ Received\r\n\r\n@@ -1,16 +1,16 @@\r\n  [\r\n    {\r\n      \"answerCorrectly\": false,\r\n-     \"answerCount\": 2,\r\n+     \"answerCount\": 1,\r\n      \"arrivalTick\": 3000,\r\n      \"dayNumber\": 6,\r\n      \"resolutionReason\": \"completed\",\r\n    },\r\n    {\r\n      \"answerCorrectly\": true,\r\n-     \"answerCount\": 1,\r\n+     \"answerCount\": 2,\r\n      \"arrivalTick\": 3600,\r\n      \"dayNumber\": 7,\r\n      \"resolutionReason\": \"completed\",\r\n    },\r\n    {\r\n\r\n ❯ tests/patient-supply.test.ts:523:26\r\n    521|     }\r\n    522|\r\n    523|     expect(observations).toMatchInlineSnapshot(`\r\n       |                          ^\r\n    524|       [\r\n    525|         {\r\n\r\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[32/58]⎯\r\n"
+  },
+  {
+    "header": "",
+    "error": "shared following block",
+    "detail": "\r"
+  },
+  {
+    "header": "FAIL  tests/diagnostics/patient-supply.test.ts > GS-017 sustained patient supply diagnostic > runs normal ticks,  arrivals, gates, and completions through day eight",
+    "error": "Error: Snapshot `GS-017 sustained patient supply diagnostic > runs normal ticks, arrivals, gates, and completions ",
+    "detail": "\n FAIL  tests/diagnostics/patient-supply.test.ts > GS-017 sustained patient supply diagnostic > runs normal ticks, \r\narrivals, gates, and completions through day eight\r\nError: Snapshot `GS-017 sustained patient supply diagnostic > runs normal ticks, arrivals, gates, and completions \r\nthrough day eight 1` mismatched\r\n\r\n- Expected\r\n+ Received\r\n\r\n  {\r\n-   \"answers\": 131,\r\n+   \"answers\": 128,\r\n    \"arrivalsByDay\": [\r\n      13,\r\n      11,\r\n-     10,\r\n+     9,\r\n      12,\r\n-     12,\r\n+     11,\r\n-     12,\r\n+     13,\r\n      13,\r\n      12,\r\n    ],\r\n-   \"completed\": 94,\r\n+   \"completed\": 93,\r\n    \"dueReviews\": 0,\r\n    \"facilityTick\": 4800,\r\n-   \"lastArrivalTick\": 4750,\r\n+   \"lastArrivalTick\": 4771,\r\n-   \"nextRoutineArrivalTick\": 4808,\r\n+   \"nextRoutineArrivalTick\": 4810,\r\n    \"nextSelectionKind\": \"new_concept\",\r\n    \"pendingResults\": 1,\r\n-   \"scoredConcepts\": 131,\r\n+   \"scoredConcepts\": 128,\r\n-   \"totalArrivals\": 95,\r\n+   \"totalArrivals\": 94,\r\n    \"unresolved\": 1,\r\n    \"unseenAvailableConceptIds\": [\r\n-     \"concept.achalasia.high-resolution-manometry.v3\",\r\n+     \"concept.achalasia.high-resolution-manometry.v2\",\r\n      \"concept.acute-limb-ischemia.heparin-emergency-transfer\",\r\n-     \"concept.acute-limb-ischemia.viability-exam\",\r\n+     \"concept.acute-mesenteric-ischemia.peritonitis-exploration\",\r\n      \"concept.acute-mesenteric-ischemia.prompt-cta\",\r\n      \"concept.acute-pancreatitis.mild-biliary-chole-before-discharge\",\r\n      \"concept.acute-pancreatitis.selective-early-ct\",\r\n-     \"concept.anal-hsil.high-risk-hpv-association\",\r\n-     \"concept.appendicitis.stable-adult-ct\",\r\n+     \"concept.adrenal-incidentaloma.one-mg-dst\",\r\n+     \"concept.appendicitis.appendicolith-operative-pathway\",\r\n      \"concept.ards.permeability-edema-mechanism\",\r\n      \"concept.ards.predicted-body-weight-ventilation\",\r\n      \"concept.asplenia.fever-emergency-action\",\r\n      \"concept.asymptomatic-phpt.age-"
+  }
+]

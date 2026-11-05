@@ -119,7 +119,7 @@ describe("P2-E ethics before an existing clinical decision", () => {
   it("registers every reached node once and preserves management-only wait classifications", () => {
     let testingChoices = 0;
     for (const clinicalCase of paired) for (const node of clinicalCase.decisionNodes) {
-      const entries = ANSWER_CHOICE_TIMING_REGISTRY.filter(item => item.caseId === clinicalCase.id && item.nodeId === node.id);
+      const entries = ANSWER_CHOICE_TIMING_REGISTRY.filter(item => item.caseId === clinicalCase.id && item.nodeId === node.id && item.questionVariantId === node.questionVariantId);
       expect(entries).toHaveLength(1);
       expect(entries[0]!.questionVariantId).toBe(node.questionVariantId);
       if (entries[0]!.classification.kind === "test_choices") {

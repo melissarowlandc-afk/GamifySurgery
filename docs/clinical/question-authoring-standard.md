@@ -1,6 +1,6 @@
 # Question authoring standard
 
-Version: `question-authoring.2026-11-02.v10` (owner difficulty and pipeline decisions).
+Version: `question-authoring.2026-11-04.v14` (owner author self-review gate after N1 independent review).
 Owner approved the difficulty,
 option-count decisions on 2026-10-28. Clinical content,
 clinical evidence claims and AI-assisted revisions remain
@@ -24,6 +24,17 @@ to exact versions. This worker ships nothing; an author self-check never
 substitutes for independent adversarial review or manager acceptance. Drafts
 remain `needs_clinician_review`. The former mandatory pre-beta owner-review
 hold is superseded, not silently carried forward.
+
+**Standing owner program, 2026-11-04:** rewrite the whole bank using accumulated
+owner comments and voluntary in-game flags. The owner no longer reviews pages.
+Work in bounded batches, normally about forty variants: author, run advisory
+lint, regenerate a key-first review-only technical packet, validate, then stop
+and hand off to the manager for independent review and release. A technical
+packet is not an owner-page approval gate. The [program plan](../execplans/question-bank-program-20261104.md)
+records the queue and exact-version freezes. Existing owner-approved versions
+remain exact unless an owner's own note requests a change; make a new draft
+version rather than overwrite the approved definition. Melissa Rowland remains
+the named clinical sign-off; flags are editorial direction, not clinical approval.
 
 The [research synthesis](../research/question-writing-strategy-20261028.md),
 [40-item manual audit](../research/question-cue-audit-20261028.md) and
@@ -181,6 +192,139 @@ retain the warning signs. Manager/independent review must accept that exception
 instead of calling it a hard resident item.
 
 ## Information and negatives
+
+### Owner/tester flag lessons, 2026-11-04
+
+The accumulated owner review-page decisions add these requirements:
+
+- **Test important, practical decisions.** State what a surgery resident would
+  actually do differently after interpreting the finding. Do not manufacture
+  difficulty around an inconsequential report label or an artificial comparison.
+  If the objective adds little value or duplicates a useful decision elsewhere,
+  place it on the retire-or-merge proposal list for manager acceptance; do not
+  delete a concept or change FSRS membership yourself.
+- **Name the actual action or treatment in every option.** Replace generic
+  treatment assessment, management discussion or individualized planning with
+  the specific investigation, medicine, operation or referral being proposed.
+  The owner's examples include Heller myotomy and PPI therapy; those examples
+  are a wording lesson, not a rule that either is the key in an unspecified
+  patient. Supply the criteria that distinguish credible competitors, with
+  appropriate claims and sources. Do not rank equally defensible procedures
+  without a supported patient-specific reason.
+- **Prefer an exhibit the learner interprets.** When the objective depends on
+  a tracing, scan or image, show a usable exhibit instead of a prose conclusion.
+  Confirm the asset actually exists and renders; do not promise a picture that
+  is absent. A new independently drawn teaching schematic must be labelled as
+  constructed, supported by mapped facts and reviewed; it must not copy a
+  protected figure or pretend to be a patient's real diagnostic image. Its
+  description/caption must not name the diagnosis or rehearse the answer.
+  Keep essential accessibility observations available without supplying the
+  interpretation. A table can be appropriate when numerical comparison is the
+  actual task; decorative exhibits do not raise cognitive level.
+- **Delete framing that adds no decision information.** Sentences announcing
+  that a diary or examination follows, or that an existing exercise program
+  continues, must pass the same deletion test as clinical facts. Do not replace
+  them with another teaching sentence or a task that announces the key.
+- **Make the clinical story and action agree.** A reproducible defect with an
+  impulse or reducible protrusion cannot be treated as reassuring evidence
+  against a hernia. Distinguish a nondiagnostic resting examination from a
+  dynamic examination that demonstrates a defect. Use clinically realistic
+  acquisition and treatment pathways; do not make MRI a routine hernia step
+  simply to add complexity. State a real residual uncertainty if additional
+  testing is needed, and preserve urgency findings.
+- **Ask one concrete, specific task.** Name what decision the player must make
+  now and the relevant patient/site/stage. Do not ask a broad hormonal-workup
+  question with several indicated screens as mutually exclusive answers.
+  Abstract QI wording must identify a practical process, decision and meaningful
+  outcome; complexity of labels or tables is not clinical relevance.
+
+These rules supplement the existing raw-findings, no-cue, parallel-option and
+deletion checks. Clinical realism and practical importance require human review;
+a lexical lint warning or its absence cannot establish either.
+
+The independent flag review found that substituting raw terms for a diagnosis
+does not by itself create a resident application item. Before submission, name
+the consequential finding and the credible error it defeats. Change that finding
+in a counterfactual version: the decision should change. Require interpretation
+of the actual record followed by a decision; two successive labels for a familiar
+association are one recall chain. Preserve fairness when doing this.
+
+Compare actions at the same decision stage. A request to review more information
+must not compete with the treatment that may follow that review unless an actual
+unresolved discrepancy is supplied. Do not make the key the only cautious or
+comprehensive plan. Do not use a completed test as a disposable foil: repeating
+a test can be appropriate when the protocol, sampled target or adequacy differs,
+and those observations must be visible. In paired interpretations, balance the
+component frequencies across all options so convergence cannot select the key.
+
+Named instrument results may be legitimate data when the objective is interpreting
+what a reported measure establishes. Identify the instrument and its limits;
+do not substitute an author-written eligibility conclusion for raw eligibility
+findings, reproduce a proprietary instrument, or invent a score/cutoff. A risk
+screen is not a diagnosis. These applications still need independent difficulty
+review; an author's two-step description grants no pipeline PASS.
+
+Melissa Rowland is clinical sign-off; Dustin's flags are tester feedback, not
+clinical approval. Check the exact flagged variant against released rewrites.
+A repaired sibling does not resolve another version of the same concept.
+
+- **No “X alone” options.** Name the competing plan. Removing the word while
+  retaining an obviously incomplete caricature does not repair a distractor.
+- **No generic individualized/tailored/shared-decision answer beside specific
+  alternatives.** Describe the actual proposed investigation, procedure,
+  referral target or care plan in every choice. Individual judgment remains
+  appropriate clinical reasoning, but is not an answer-label shortcut.
+- **Delete feasibility permission that previews the key.** Statements that
+  transfer is immediately available, HIDA will not delay care, or the patient
+  can swallow and medicines are available can rehearse the keyed rationale.
+  Retain a genuine decision-critical constraint in neutral terms and compare
+  actions that remain reasonable under that constraint. Apply the deletion
+  test to each sentence, including preferences, case details and the task.
+- **Give findings rather than authored eligibility or diagnosis conclusions.**
+  Replace “meets biopsy criteria” with the measured/observed components needed
+  to apply a verified rule. Replace a named rejection mechanism with the
+  necessary timing, specimen and immune findings when interpretation is tested.
+  A known diagnosis may still be supplied for a genuinely different management
+  task. Raw detail must have adequate claim/source support; do not invent an
+  ultrasound cutoff or upgrade a general patient page into a verified criterion.
+- **Use clinically and anatomically credible competitors.** A shoulder-referral
+  item with phrenic versus remote limb nerves is not made difficult by four
+  choices. Compare real competing pathways, sites, procedures or resident
+  errors. Parallel labels and a clean lint report do not establish plausibility;
+  have a clinician check every distractor and the closest near-miss.
+- **Make the tested decision and anatomy explicit.** Say “neck lymph node” or
+  “cervical lymph node” when neck nodes are intended. State who obtained and
+  interpreted a report. Describe what imaging showed at the relevant site
+  instead of only saying “negative”; distinguish no correlate from a benign
+  correlate or an inadequate examination. Match the grammar of every option
+  to a complete task (an instruction task needs instructions, not noun fragments).
+
+The v6 advisory linter reports exact phrases for these rules, including a
+bounded shoulder/phrenic anatomical screen. It is not a clinical ontology and
+does not establish that remaining nerves, choices or criteria are valid.
+Wording checks may flag a legitimate constraint; disposition requires documented
+human review, not an automatic rewrite. Scan all finite presentations and prior
+visible feedback, while keeping post-answer rationale metadata separate.
+
+Source and scope checks are separate. A head/neck guideline does not establish
+ABSITE scope; use a permitted public ABS outline, never SCORE or recalled items.
+When network is excluded, reuse recorded verified claims with their actual
+access dates and limitations. Record a source-verification hold or propose
+retirement if the required criterion/scope cannot be established. Such a draft
+must not pass the release pipeline merely because tests pass. In particular,
+the manager supersedes the earlier author retirement proposals on 2026-11-04:
+**keep the exact live F14 thyroid-nodule FNA-selection version unchanged** until
+a permitted source supports the exact criteria, then rewrite in a later batch.
+Thyroid FNA selection remains core general-surgery content. **Keep neck-node
+initial evaluation and the round-two wording-clarity repairs**; the manager
+confirms it is general-surgery content. This is a scope decision, not a claim
+that a public ABS outline was newly retrieved. The sixteen round-two flag
+drafts are frozen while their independent review runs. Historical proposal
+records remain historical; no retirement, selector or FSRS change is applied.
+
+These lessons add no per-question correctness collection, answer-frequency
+input or analytics. Quality remains assured by this standard, advisory lint,
+owner/clinician review and voluntary question flags.
 
 The owner's 2026-11-02 lesson is to prefer concrete, specific clinical details
 over generic author summaries. Give the observed ultrasound components rather
@@ -524,3 +668,34 @@ Do not add decorative values or introduce gameplay analytics to target difficult
 The [round-six response ledger](../research/question-adversarial-round6-response-20261102.md)
 and [source ledger](../research/sources-question-adversarial-r6-20261102.md)
 record the changed objectives, indexed notes and limits of offline source reuse.
+
+## Owner author gate after N1 review, 2026-11-04
+
+The owner makes this a pre-handoff requirement for every authored or revised
+batch. The [N1 independent review](../research/question-new-n1-review-20261104.json)
+returned two PASS, 37 REVISE and one FAIL; a clean lexical report had not
+established resident difficulty or fairness. The author must manually apply
+the reviewer's rubric to each new or revised exact item and record the result:
+
+1. **Cover-the-key cue attack:** inspect wording overlap, length and specificity
+   outliers, convergence, negatives eliminating options, teaching sentences,
+   “alone,” generic/individualized answers and availability cues across every
+   visible field and finite profile.
+2. **One decision stage and category:** every option answers the same actual
+   decision, with specific named investigations, medicines, procedures or plans.
+3. **Two consequential steps:** interpret findings, then apply their meaning.
+   An author-supplied interpretation followed by matching a label is not enough.
+4. **Resident difficulty:** a PGY-2/3 should plausibly find the item moderate or
+   hard because of credible competing clinical errors, not ambiguity, obscure
+   unsupplied policy, decorative detail or unrelated objectives.
+5. **One defensible best answer:** supply the context and supported criteria
+   that resolve the closest alternative. State the counterfactual that changes
+   the decision and retain source/clinical uncertainty separately.
+
+Rewrite an item that fails before handing it off, and reapply all five checks
+to the new exact version. Record concrete attacks, reasoning and repairs;
+automatically assigning five successful booleans is not this manual review.
+Difficulty remains a qualitative author/reviewer prediction, never a measured
+correctness gate. Author self-checks confer no independent PASS or clinical
+approval. Preserve exact independent PASS versions and any batch frozen while
+its independent review is running; apply repairs only in the authorized lane.

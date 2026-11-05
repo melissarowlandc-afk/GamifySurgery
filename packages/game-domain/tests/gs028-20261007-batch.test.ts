@@ -1,23 +1,26 @@
 /// <reference types="node" />
+import { createClinicalAuthorStage } from "../../../tests/fixtures/clinical-author-stage";
+import { QUESTION_NEW_N2_ROUND3_PRE_RELEASE } from "@gamify-surgery/clinical-content";
 import { writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import {
   GS028_20261007_CASES as authoredCases,
-  SYNTHETIC_CLINICAL_RELEASE,
+  ANSWER_CHOICE_TIMING_REGISTRY,
+  QUESTION_NEW_N2_ROUND3_PRE_RELEASE as SYNTHETIC_CLINICAL_RELEASE,
   GS028_20261007_TESTED_CONCEPTS as concepts,
   GS028_20261007_VARIETY2_CASES,
   type SyntheticClinicalCase,
 } from "@gamify-surgery/clinical-content";
 import { afterAll, describe, expect, it } from "vitest";
-import {
-  PROTOTYPE_DOMAIN_CONTEXT, createInitialGameState, createPatientDisplayName,
-  deserializeGameState, deterministicInteger, RANDOM_STREAMS,
-  gameReducer, getAnswerChoiceServicePreview, getCurrentCapabilities,
+import { createPatientDisplayName, deterministicInteger, RANDOM_STREAMS, getAnswerChoiceServicePreview, getCurrentCapabilities,
   getCurrentQuestion, getEligibleServiceRoute, getRoomDefinition,
   getRoomNavigationAnchor, selectRoutineClinicalCase, serializeGameState,
   type ConceptReviewEvidence, type GameState,
 } from "../src";
 import { EXACT_TEST_CHOICE_ORDER_RECORDS } from "../src/test-choice-orders";
+
+// Retain the author-stage pool, frozen definitions and existing golden budgets.
+const { context: PROTOTYPE_DOMAIN_CONTEXT, createInitialGameState, deserializeGameState, gameReducer } = createClinicalAuthorStage(QUESTION_NEW_N2_ROUND3_PRE_RELEASE);
 
 // Exercise current revisions while keeping historical authored records available.
 const cases = authoredCases.map(original => SYNTHETIC_CLINICAL_RELEASE.cases.find(candidate => candidate.id === original.id)! as typeof original);
@@ -254,26 +257,39 @@ const pools = [0, 1, 2].map((stage) => {
 });
 
 describe("GS-028 October 7 real gameplay admission", () => {
-  it("binds exactly two correct external gates and six non-executed distractors", () => {
-    expect(exact).toHaveLength(8);
-    let correctCount = 0, wrongCount = 0;
+  it("binds two executable gates, one planned correct procedure and eight non-executed distractors", () => {
+    expect(exact).toHaveLength(11);
+    let correctCount = 0, wrongCount = 0, executableCount = 0, plannedCount = 0;
     for (const record of exact) {
       const node = cases.find((item) => item.id === record.caseId)!.decisionNodes.find((item) => item.id === record.nodeId)!;
       const choice = node.answerChoices.find((item) => item.id === record.choiceId)!;
       expect(record.choiceLabel).toBe(choice.label);
       expect(record.questionVariantId).toBe(node.questionVariantId);
-      expect(record.timingProfileId).toBe("timing.test.basic_labs");
+      const timing=ANSWER_CHOICE_TIMING_REGISTRY.find(t=>t.caseId===record.caseId&&t.nodeId===record.nodeId&&t.questionVariantId===record.questionVariantId)!;
+      expect(timing.classification.kind).toBe("test_choices");
+      if(timing.classification.kind==="test_choices")expect(timing.classification.choices.find(c=>c.choiceId===record.choiceId)!.timing).toEqual({kind:"test",timingProfileId:record.timingProfileId});
       if (choice.isCorrect) {
         correctCount += 1;
+        if(record.disposition.kind==="not_executed"){
+          plannedCount++;
+          expect(record.questionVariantId).toBe("question.postlaparoscopy.benign-referred-shoulder-pain.v2.r5");
+          expect(record.timingProfileId).toBe("timing.test.therapeutic_ercp");
+          expect(record.disposition).toEqual({kind:"not_executed",reason:"future_planned"});
+          expect(choice.serviceRequest).toBeNull();
+          continue;
+        }
+        executableCount++;
+        expect(record.timingProfileId).toBe("timing.test.basic_labs");
         expect(record.disposition).toMatchObject({ kind: "result_gate_route_override", serviceId: "service.basic_labs", allowedRouteIds: [OUTSIDE_ROUTE], allowOnsiteEquivalents: false });
         if (record.disposition.kind !== "result_gate_route_override") throw new Error("Missing gate override.");
         expect(record.disposition.externalRemainder).toMatch(/specialist.*coagulation.*laboratory/i);
       } else {
         wrongCount += 1;
-        expect(record.disposition).toEqual({ kind: "not_executed", reason: "external_only" });
+        expect(record.disposition).toEqual({ kind: "not_executed", reason:
+          record.questionVariantId === "question.postlaparoscopy.benign-referred-shoulder-pain.v2.r5" ? "future_planned" : "external_only" });
       }
     }
-    expect({ correctCount, wrongCount }).toEqual({ correctCount: 2, wrongCount: 6 });
+    expect({ correctCount, wrongCount, executableCount, plannedCount }).toEqual({ correctCount: 3, wrongCount: 8, executableCount: 2, plannedCount: 1 });
   });
 
   it.each(cases.map((item, index) => [index, item] as const))("completes every node correctly, saves and departs in case %s", (index, item) => complete(item, "correct", index));
@@ -406,16 +422,24 @@ describe("GS-028 October 7 real gameplay admission", () => {
   });
 
   it("measures the real ordinary pools before and after admission", () => {
-    // Round-four clinical-objective versions add three/four active constructs
-    // to the pre-existing stage-1/2 pool; this unchanged batch still adds 78/20.
-    expect(pools.map((item) => item.before)).toEqual([{ cases: 480, concepts: 135 }, { cases: 718, concepts: 246 }, { cases: 754, concepts: 263 }]);
-    expect(pools.map((item) => item.after)).toEqual([{ cases: 558, concepts: 155 }, { cases: 796, concepts: 266 }, { cases: 832, concepts: 283 }]);
+    // Historical case boundaries are unchanged; count current scored constructs
+    // independently from the retained original 20-item authoring catalog.
+    // Three new application constructs belong to this unchanged 78-case cohort.
+    // Batch 2a versions existing scored objectives outside this cohort; the
+    // same eligible pools gain one active construct, with no case-count delta.
+    // Flag round three versions F06's archived-test objective while its old
+    // mechanism remains in siblings: one more active concept, no new case.
+    expect(pools.map((item) => item.before)).toEqual([{"cases":480,"concepts":148},{"cases":718,"concepts":267},{"cases":754,"concepts":284}]);
+    expect(pools.map((item) => item.after)).toEqual([{"cases":558,"concepts":173},{"cases":796,"concepts":292},{"cases":832,"concepts":309}]);
   });
 
   it("covers all eighty actual nodes and every current authored choice", () => {
     expect(coverage.size).toBe(80);
     for (const node of cases.flatMap((item) => item.decisionNodes)) expect([...(coverage.get(node.id) ?? [])].sort()).toEqual(node.answerChoices.map((choice) => choice.id).sort());
-    expect([...coverage.values()].reduce((total, ids) => total + ids.size, 0)).toBe(319); // One three-option wound-healing revision.
+    // Final flag round: F06 adds one offered choice; F02 replaces an imaging
+    // distractor with a non-testing operation, retaining its outside ERCP key.
+    // Batch 2b: two revised four-choice nodes now have three credible choices.
+    expect([...coverage.values()].reduce((total, ids) => total + ids.size, 0)).toBe(316);
   });
 });
 

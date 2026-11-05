@@ -1,0 +1,58 @@
+{
+  "checkedOn": "2026-11-04",
+  "scope": "Two strictly necessary content-expectation repairs. No runtime, selector, routing, save, evidence or Level 4/5 test edits.",
+  "results": [
+    {
+      "file": "packages/game-domain/tests/gs028-20261007-batch.test.ts",
+      "assertionCallSites": 91,
+      "commandsAndDeadlinesUnchanged": true,
+      "explicitSwaps": [
+        [
+          "[{ cases: 558, concepts: 167 }, { cases: 796, concepts: 281 }, { cases: 832, concepts: 298 }]",
+          "[{ cases: 558, concepts: 168 }, { cases: 796, concepts: 282 }, { cases: 832, concepts: 299 }]"
+        ],
+        [
+          "binds two executable gates, one planned correct study and eight non-executed distractors",
+          "binds two executable gates, one planned correct procedure and seven non-executed distractors"
+        ],
+        [
+          "expect(exact).toHaveLength(11);",
+          "expect(exact).toHaveLength(10);"
+        ],
+        [
+          "expect(record.questionVariantId).toBe(\"question.postlaparoscopy.benign-referred-shoulder-pain.v2.r3\");",
+          "expect(record.questionVariantId).toBe(\"question.postlaparoscopy.benign-referred-shoulder-pain.v2.r4\");"
+        ],
+        [
+          "expect(record.timingProfileId).toBe(\"timing.test.hepatobiliary_contrast_mrcp\");",
+          "expect(record.timingProfileId).toBe(\"timing.test.ercp\");"
+        ],
+        [
+          "toEqual({ correctCount: 3, wrongCount: 8, executableCount: 2, plannedCount: 1 });",
+          "toEqual({ correctCount: 3, wrongCount: 7, executableCount: 2, plannedCount: 1 });"
+        ],
+        [
+          "expect([...coverage.values()].reduce((total, ids) => total + ids.size, 0)).toBe(317);",
+          "expect([...coverage.values()].reduce((total, ids) => total + ids.size, 0)).toBe(318);"
+        ]
+      ],
+      "reason": "F02 now plans ERCP rather than MRCP, with two timed procedure choices instead of three imaging choices; F06 adds a fourth offered choice and an active archived-test construct. No executable gate/route change."
+    },
+    {
+      "file": "packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+      "assertionCallSites": 131,
+      "commandsAndDeadlinesUnchanged": true,
+      "explicitSwaps": [
+        [
+          "[{ cases: 558, concepts: 167 }, { cases: 796, concepts: 281 }, { cases: 832, concepts: 298 }]",
+          "[{ cases: 558, concepts: 168 }, { cases: 796, concepts: 282 }, { cases: 832, concepts: 299 }]"
+        ],
+        [
+          "[{ cases: 636, concepts: 188 }, { cases: 874, concepts: 302 }, { cases: 910, concepts: 319 }]",
+          "[{ cases: 636, concepts: 189 }, { cases: 874, concepts: 303 }, { cases: 910, concepts: 320 }]"
+        ]
+      ],
+      "reason": "F06 changes one outside-cohort active construct on both sides. Exact 78-case / 21-concept cohort delta remains unchanged."
+    }
+  ]
+}

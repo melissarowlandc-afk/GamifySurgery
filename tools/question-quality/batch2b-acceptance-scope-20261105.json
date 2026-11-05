@@ -1,0 +1,141 @@
+{
+  "checkedAt": "2026-11-05T08:37:48.094Z",
+  "ownExistingPaths": [
+    "packages/clinical-content/src/question-ship-manifest.ts",
+    "packages/clinical-content/src/question-ship-manifest.test.ts",
+    "packages/clinical-content/src/playable-patient-narrative.test.ts",
+    "tools/question-quality/fixtures/question-bank-batch2b-before-20261104.json",
+    "tools/question-quality/fixtures/question-bank-batch2b-round2-before-20261104.json"
+  ],
+  "ownNewPaths": [
+    "packages/clinical-content/src/question-bank-batch2b-acceptance-20261105.test.ts",
+    "docs/execplans/question-bank-batch2b-acceptance-20261105.md",
+    "docs/research/question-bank-batch2b-manager-decision-20261105.md",
+    "docs/research/question-bank-batch2b-composed-preview-20261105.json",
+    "tools/question-quality/capture-batch2b-acceptance-20261105.mjs",
+    "tools/question-quality/integrate-batch2b-acceptance-20261105.mjs",
+    "tools/question-quality/review-batch2b-acceptance-20261105.mjs",
+    "tools/question-quality/finalize-batch2b-acceptance-20261105.mjs",
+    "tools/question-quality/fixtures/batch2b-acceptance-before-20261105.json",
+    "tools/question-quality/batch2b-acceptance-changes-20261105.json",
+    "tools/question-quality/batch2b-acceptance-controls-20261105.json",
+    "tools/question-quality/batch2b-acceptance-scope-20261105.json",
+    "tools/question-quality/batch2b-acceptance-validation-20261105.json",
+    "tools/question-quality/batch2b-acceptance-focused-20261105.log",
+    "tools/question-quality/batch2b-acceptance-typecheck-20261105.log",
+    "tools/question-quality/batch2b-acceptance-clinical-full-20261105.log",
+    "tools/question-quality/batch2b-acceptance-focused-final-20261105.log",
+    "tools/question-quality/batch2b-acceptance-typecheck-final-20261105.log",
+    "tools/question-quality/batch2b-acceptance-bindings-20261105.log",
+    "tools/question-quality/batch2b-acceptance-clinical-full-final-20261105.log"
+  ],
+  "currentThreadHandoff": "docs/handoffs/CURRENT_THREAD_HANDOFF.md",
+  "observedConcurrentChanges": [
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "before": "f8584771a56592198acd5de7049bf40de31afec054729837d168512535a36527",
+      "current": "119ac7da75cc42daba87153fd0ee4d37047e9d3ab6b5d07b39bb5c3b54c45c4b"
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "before": "096f4586bf76db034916d37fbe6973ed27bcef658b487e0dca56a53f7a010f7a",
+      "current": "4a7d1d3c85d687461b80477aa21bb6c5f9ededd82c7686fce2100718af555de0"
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n2-round3-20261104.test.ts",
+      "before": "4657a2d4e96d48589b76ee9acf1dbc8648bed669867139f2e36354fa883d2a57",
+      "current": "7947f05d068a4fe174ebf110891ea33cc6c4649c6bf45d197ec7a3b425709a27"
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "before": "62e1bf8a7715c10b6a4e0c997d0a084b59c59b79ece036e3a5d16fdb498caaf9",
+      "current": "74aa3029a2e1c072b795c877a51ba405cb457e8bf0584a4d91f2e96598850595"
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "before": "b3e1aeda06bc8349f420438c79c450cd8a31e98c3ec39250a6a3f91aa4559836",
+      "current": "308ecf40a5eb130fbcd6a55ca59b390508e76ec1d8c2a4367c05171e54d84d6d"
+    },
+    {
+      "path": "packages/game-domain/tests/routine-or-demand.test.ts",
+      "before": "485ddea01ab71c6f91900dc403788cc58f5d7a2ee885c2e8ff972f26c3f69cdb",
+      "current": "5cd19f3f57ee17152c97ce75c1c6b840762aab36bdd5b89db1cb6ff8c0cf4486"
+    }
+  ],
+  "caveat": "Observed changes in other lanes are recorded, not attributed to or edited by this worker. New concurrent files absent from intake are not enumerated by this hash comparison.",
+  "narrativeTestRepair": {
+    "path": "packages/clinical-content/src/playable-patient-narrative.test.ts",
+    "onlyChange": "Add the exact passive phrase is reviewed to STORY_CUE; patient/multi-patient/complete-task assertions and budgets unchanged.",
+    "before": "0de6b2f087b27444a73b40d18a4b2a6875bd41b342ab8fa6fc1a59c9f5d39037",
+    "current": "fb91a0865112c65cff80412813b8e140a56ff1f6e226653e856a3a1b979c1400"
+  },
+  "changedLevel5BoundInputs": [
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.ts",
+      "before": "e5b6fd29e3ba38f1f0ba99fb75e522d052a0e31410b1527984e2620d02a3d6f8",
+      "current": "f5cfb705808dc9c83e9ae3b708d3bac17eb19371bff134daca7bbd36d8dd1e0b"
+    }
+  ],
+  "manifestOtherBytesPreservedAtInsertion": true,
+  "manifestOtherBytesStillExact": true,
+  "flags2Frozen": [
+    {
+      "path": "packages/clinical-content/src/question-flags2-20261105-data.ts",
+      "before": "0f493b174cdf8e907f39b4d837af374ded33830db1d8f0639f9526c5bd85a30f",
+      "current": "0f493b174cdf8e907f39b4d837af374ded33830db1d8f0639f9526c5bd85a30f",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-20261105.test.ts",
+      "before": "91111fadbde42b73ee25f9775cecd0cdef1d0f9f288dbcb657ad7f7a6595791e",
+      "current": "91111fadbde42b73ee25f9775cecd0cdef1d0f9f288dbcb657ad7f7a6595791e",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-20261105.ts",
+      "before": "87aff1e97d9f7700d96566e3783340d74dd16d2f1e1ce777206c7a50b3df72c9",
+      "current": "87aff1e97d9f7700d96566e3783340d74dd16d2f1e1ce777206c7a50b3df72c9",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-evidence-20261105.ts",
+      "before": "3a7834e845c0dbcabfc10e6f8ab34b0cbf9125eb63e51dd01041fd2cb0138fc7",
+      "current": "3a7834e845c0dbcabfc10e6f8ab34b0cbf9125eb63e51dd01041fd2cb0138fc7",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-retained-input-20261105.ts",
+      "before": "5767a31ec81de754b26d983d9e94c827eff9a2d7d90e1132b56d46ea4ab9086d",
+      "current": "5767a31ec81de754b26d983d9e94c827eff9a2d7d90e1132b56d46ea4ab9086d",
+      "unchanged": true
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-flags2-before-20261105.json",
+      "before": "4a1ea1155c8404d35ac87fe4e3fda74c5451bd2602fe234e7328efd3987e45b1",
+      "current": "4a1ea1155c8404d35ac87fe4e3fda74c5451bd2602fe234e7328efd3987e45b1",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/question-flags2-20261105.json",
+      "before": "e040a64437a1eeb07e9e13e71be08280c881588354912c476df742ae4c2ae37f",
+      "current": "e040a64437a1eeb07e9e13e71be08280c881588354912c476df742ae4c2ae37f",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/question-flags2-handoff-20261105.md",
+      "before": "d51f72bca6804fa2a8322568b8651d3312e5a4242c0bd1b8eed39077c16a09bb",
+      "current": "d51f72bca6804fa2a8322568b8651d3312e5a4242c0bd1b8eed39077c16a09bb",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/sources-question-flags2-20261105.json",
+      "before": "f6e0c8f75e58f917db9913699963d37b36147dd2235cdf5d4d256ff1485a42e7",
+      "current": "f6e0c8f75e58f917db9913699963d37b36147dd2235cdf5d4d256ff1485a42e7",
+      "unchanged": true
+    }
+  ],
+  "digestKeysReconciled": 3,
+  "digestCaptureFiles": 2,
+  "noClinicalDefinitionChange": true,
+  "noEvidenceWriteOrRebind": true
+}

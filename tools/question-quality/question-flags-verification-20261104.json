@@ -1,0 +1,256 @@
+{
+  "checkedOn": "2026-11-04",
+  "frozenCases": 1094,
+  "frozenNodes": 1407,
+  "changedNodes": 16,
+  "conceptsBefore": 396,
+  "conceptsAfter": 398,
+  "timingsBefore": 1767,
+  "timingsAfter": 1783,
+  "approvalsPreserved": 11,
+  "exactOrdersBefore": 323,
+  "exactOrdersAfter": 335,
+  "originalRegistryBytesPreservedOutsideAppend": true,
+  "timingDelta": {
+    "before": {
+      "timedChoices": 1467,
+      "terminalTimedKeys": 138
+    },
+    "after": {
+      "timedChoices": 1468,
+      "terminalTimedKeys": 139
+    },
+    "reason": "Neck prospective biopsy previews +3; removed HIDA CT -1; removed breast mammography -1. DCIS SLNB deferral preview replaces limited-node-sampling preview; ALND remains no_test. Four new keyed tests are planned/outside-only non-execution."
+  },
+  "changedExistingFiles": [
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+      "entry": "ec810470e79d80b757ee86ab41d517e798b2f3c153fe24961bdf4661caf3e685",
+      "current": "4ee5f55538756327f5b82874f2d3adfbc6d465d4b88dc3fc76b685b26b018ca7",
+      "ownership": "this milestone"
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "entry": "7db1b1253c7d3064adb0602360925c0739bb65c719603507c3fa09a6732ba245",
+      "current": "5d36bf0e7ab6aff318833db24b39161f6a1224574f07cb6c2fa14f6483ee3d37",
+      "ownership": "this milestone"
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/ethics-clinical-pairings.test.ts",
+      "entry": "32b8063a9d6b98c12d64173959f1191d3ea94d90dc9949afbe2f747f0acf7f1b",
+      "current": "5e18c1ead30d583357f5c6d67d63cc2399b7865203282e8764ee2c512d70c225",
+      "ownership": "this milestone"
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "entry": "a57ffcec34d75e2e337790f1ac0d71e4bfdc8f79d53cdb28596e00ead60413e4",
+      "current": "391fdfe1bc342e909527662783c132164ab6399cbdc4bc04ae0b6c39b74f37ba",
+      "ownership": "this milestone"
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r7.test.ts",
+      "entry": "4536d865b92a3f213a10b0a068da0d448e988446508ac4ece706bf26886455aa",
+      "current": "efff6f1cd747bf67268dd1dd3bc11598d1a41fd1e2f805d743e034137796034f",
+      "ownership": "this milestone"
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "entry": "6d9870d53383af7da6ee7547ba702410a2545882876faa1696c0e1217fae311c",
+      "current": "80ae658cef8b0ec1e2e03357594bf34bbb19525451460af46b26dab4fd880a4b",
+      "ownership": "this milestone"
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "entry": "522c3fbd3b3503f4b6d74f38e7dbd994b98727a3037b0374f86e58dbf5a41639",
+      "current": "03441a4b28d3e7bdaa6c7b2a667f9fbfb5f4687368450813db395e5c8cc718c3",
+      "ownership": "this milestone"
+    },
+    {
+      "path": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+      "entry": "074e903b80fdae7c539205b0d4218e02043699848a28d4173d5358c7d26748af",
+      "current": "8d3c43830f9e379dd07177a674ef38eafd855a0b3c363e133a4a76a10a327170",
+      "ownership": "this milestone"
+    },
+    {
+      "path": "packages/game-domain/tests/diagnostics/patient-supply.test.ts",
+      "entry": "8301ca6cfea442f0e2b3ec847b88b852f3ecf17df0d8a3df0d90b4e43a66f574",
+      "current": "4418ffff6d63a465e01a8e41afb8e23358c0c434b627e586146a804c8743bed6",
+      "ownership": "this milestone"
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261002-batch.test.ts",
+      "entry": "9d220eeca8108fe8fffda32b4943b99e8c30217aacf828daf95f69ea48e11d0d",
+      "current": "a8b3bbdb9f2c720c90b1b56b96e1b0ccc70881c263c81fab4dcb3711e031e2a4",
+      "ownership": "this milestone"
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261003-batch.test.ts",
+      "entry": "fb302bddd5cc89a10613ccb7561ef089135eff85fa437de69d29272878caf05e",
+      "current": "f5f9281a9a1c12c678272031f280b6ce77285c2b3c601be0cd717ee223caa2aa",
+      "ownership": "this milestone"
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261007-batch.test.ts",
+      "entry": "ae4b85098cb242d5fbe544d097a2c367b26cfcbebd607144fd66f32563849b97",
+      "current": "11fc01f553df2d82ee9d96ab467836468e2eb40b912607e38dd0f0a9b431b4e0",
+      "ownership": "this milestone"
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+      "entry": "3c0be9e86b13ed5aafc41e98a61da1bdaefa20532867e30a87b50605136ce05e",
+      "current": "933bd323ab79a76716acbcbb137d3302b8f5ff548050e8d025c2b9c9f1b4b030",
+      "ownership": "this milestone"
+    },
+    {
+      "path": "packages/game-domain/tests/patient-supply.test.ts",
+      "entry": "2376cbdcb151b55fea84af9cfac8ebb40507069d9c8ee313d730fba131f80ef4",
+      "current": "52159fe9ca9759106fa078473487fb84395aa8408596ecd2f47f25a8deb6d812",
+      "ownership": "this milestone"
+    },
+    {
+      "path": "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+      "entry": "4823d9200ae407a85e1c8533e38e3a4184eec2dac384b81314780c0c3db52493",
+      "current": "4890ce68a6a4322d2c5e56b1277696f819118f751aeb2f39a8c1ec905571c9ac",
+      "ownership": "this milestone"
+    },
+    {
+      "path": "apps/player/src/session/cloud/coordinator.ts",
+      "entry": "38aaa87823b4644802ef9ff6164bf8bed11fd2cf52c33644a482d86d1da265ee",
+      "current": "f2ec3deb9b36ea02c1767d0c1adccf606876f2effe93dd8cca33aeecc106abd8",
+      "ownership": "external/shared tree; this worker did not edit"
+    },
+    {
+      "path": "apps/player/src/session/cloud/gameSession.ts",
+      "entry": "c8f4f4a006e3e015c6d47a8975063bfce7db58af4b59296a0ca4edee7027172e",
+      "current": "3d2992567cc52d89e3ed534e933f74412b0a2cfdfb22febe225b3942e4938a15",
+      "ownership": "external/shared tree; this worker did not edit"
+    },
+    {
+      "path": "apps/player/src/session/flagFreeze.test.tsx",
+      "entry": "7b1bc0bf4679cc4583d5b61ab61523eef2614fb28298b4918ef4022321688f52",
+      "current": "81b5df937b533df2d4db605845dc79b5f0fd9d4e6c5ce5009d5bb949ea77d76f",
+      "ownership": "this milestone"
+    },
+    {
+      "path": "tools/question-quality/lint.mjs",
+      "entry": "a3161fd50dcf81153dc1c839fc179724813fa34b33cbf9b4c5aa39b81fd1eb3d",
+      "current": "73b6e9368457ada59c88b505b1dc2d4219c9e15131fe2b37498a296144f9debf",
+      "ownership": "this milestone"
+    },
+    {
+      "path": "tools/question-quality/lint.test.mjs",
+      "entry": "0065834f9c5ed809c7d18266af399c35a6b7a0ad6bb6c6417ab02589a8736f95",
+      "current": "a21a29eac1fc53c7aabf97b3e63dbb87c57ab363745b864e9ba75bfaf51ad98b",
+      "ownership": "this milestone"
+    },
+    {
+      "path": "docs/clinical/question-authoring-standard.md",
+      "entry": "4362d0c0b9578a1f9e7229790ce34d0b6e28d65cb89d34349ccbb14abb6962d8",
+      "current": "21ba59970708dcf8e7ee57e8f02548057161e555801ae5e8c66fbfbe747daeca",
+      "ownership": "this milestone"
+    }
+  ],
+  "protectedChanges": [
+    {
+      "path": "apps/player/src/session/cloud/coordinator.ts",
+      "entry": "38aaa87823b4644802ef9ff6164bf8bed11fd2cf52c33644a482d86d1da265ee",
+      "current": "f2ec3deb9b36ea02c1767d0c1adccf606876f2effe93dd8cca33aeecc106abd8",
+      "ownership": "external/shared tree; this worker did not edit"
+    },
+    {
+      "path": "apps/player/src/session/cloud/gameSession.ts",
+      "entry": "c8f4f4a006e3e015c6d47a8975063bfce7db58af4b59296a0ca4edee7027172e",
+      "current": "3d2992567cc52d89e3ed534e933f74412b0a2cfdfb22febe225b3942e4938a15",
+      "ownership": "external/shared tree; this worker did not edit"
+    }
+  ],
+  "boundInputs": {
+    "changedThisMilestone": [
+      {
+        "path": "packages/clinical-content/src/answer-choice-timing.ts",
+        "entry": "7db1b1253c7d3064adb0602360925c0739bb65c719603507c3fa09a6732ba245",
+        "current": "5d36bf0e7ab6aff318833db24b39161f6a1224574f07cb6c2fa14f6483ee3d37",
+        "recorded": "7db1b1253c7d3064adb0602360925c0739bb65c719603507c3fa09a6732ba245"
+      },
+      {
+        "path": "packages/clinical-content/src/index.ts",
+        "entry": "a57ffcec34d75e2e337790f1ac0d71e4bfdc8f79d53cdb28596e00ead60413e4",
+        "current": "391fdfe1bc342e909527662783c132164ab6399cbdc4bc04ae0b6c39b74f37ba",
+        "recorded": "a57ffcec34d75e2e337790f1ac0d71e4bfdc8f79d53cdb28596e00ead60413e4"
+      },
+      {
+        "path": "packages/clinical-content/src/synthetic-content.ts",
+        "entry": "6d9870d53383af7da6ee7547ba702410a2545882876faa1696c0e1217fae311c",
+        "current": "80ae658cef8b0ec1e2e03357594bf34bbb19525451460af46b26dab4fd880a4b",
+        "recorded": "6d9870d53383af7da6ee7547ba702410a2545882876faa1696c0e1217fae311c"
+      },
+      {
+        "path": "packages/game-domain/src/test-choice-orders.ts",
+        "entry": "522c3fbd3b3503f4b6d74f38e7dbd994b98727a3037b0374f86e58dbf5a41639",
+        "current": "03441a4b28d3e7bdaa6c7b2a667f9fbfb5f4687368450813db395e5c8cc718c3",
+        "recorded": "522c3fbd3b3503f4b6d74f38e7dbd994b98727a3037b0374f86e58dbf5a41639"
+      }
+    ],
+    "addedThisMilestone": [
+      {
+        "path": "packages/clinical-content/src/question-flags-20261104.ts",
+        "current": "9131f7f1be7b2c2c20ffc1d7d72634ff69f1511620c66fe2dbfbf74d8fac556e"
+      },
+      {
+        "path": "packages/clinical-content/src/question-flags-20261104-data.ts",
+        "current": "0fa520db3a9c3bdedc3bbfc136e8ec1d23f2f259191712a848a05d7344dfdc78"
+      }
+    ],
+    "allRecordedDifferences": [
+      {
+        "path": "packages/clinical-content/src/answer-choice-timing.ts",
+        "recorded": "7db1b1253c7d3064adb0602360925c0739bb65c719603507c3fa09a6732ba245",
+        "current": "5d36bf0e7ab6aff318833db24b39161f6a1224574f07cb6c2fa14f6483ee3d37"
+      },
+      {
+        "path": "packages/clinical-content/src/index.ts",
+        "recorded": "a57ffcec34d75e2e337790f1ac0d71e4bfdc8f79d53cdb28596e00ead60413e4",
+        "current": "391fdfe1bc342e909527662783c132164ab6399cbdc4bc04ae0b6c39b74f37ba"
+      },
+      {
+        "path": "packages/clinical-content/src/synthetic-content.ts",
+        "recorded": "6d9870d53383af7da6ee7547ba702410a2545882876faa1696c0e1217fae311c",
+        "current": "80ae658cef8b0ec1e2e03357594bf34bbb19525451460af46b26dab4fd880a4b"
+      },
+      {
+        "path": "packages/game-domain/src/reducer.ts",
+        "recorded": "8bcc7a5990e8d3aa025edbee5dde54bcda83294fb30c0636a6679a57a0f1b474",
+        "current": "9ef61e771a6355875a7de9a528944e97104e5a6582eaa214f0bcfe23e5e422d6"
+      },
+      {
+        "path": "packages/game-domain/src/test-choice-orders.ts",
+        "recorded": "522c3fbd3b3503f4b6d74f38e7dbd994b98727a3037b0374f86e58dbf5a41639",
+        "current": "03441a4b28d3e7bdaa6c7b2a667f9fbfb5f4687368450813db395e5c8cc718c3"
+      },
+      {
+        "path": "packages/game-domain/src/waiting-destinations.ts",
+        "recorded": "cfac0f00fee09602e959575dfb561d000ccb14c6f4468e12a03cee2a1e3cc8c0",
+        "current": "50ea90e5fc64e829604252ccc893ffffec900cc8fb3ea115b6c9ec6ca509bb46"
+      }
+    ],
+    "newSinceRecorded": [
+      "packages/clinical-content/src/question-flags-20261104-data.ts",
+      "packages/clinical-content/src/question-flags-20261104.ts"
+    ],
+    "recordedInputCount": 409,
+    "currentInputCount": 411,
+    "note": "Read-only input audit. Manager performs the actual Level 5 rebind and any necessary behavioral refresh; no evidence was edited."
+  },
+  "holds": [
+    {
+      "id": "F05",
+      "source": null,
+      "scope": "The permitted local ledger supports clinical neck-mass evaluation but contains no verified public ABSITE content outline. General-surgery relevance is a clinical judgment, not confirmed exam scope. Propose retiring this item from the ABSITE-labelled track unless the manager supplies permitted public ABS scope verification; no SCORE or recalled items were read."
+    },
+    {
+      "id": "F14",
+      "source": "The permitted local ATA patient-page claim supports selected FNA after TSH/ultrasound, but explicitly does not establish ultrasound-category or size cutoffs. A fair replacement needs source-verified criteria-relevant findings. Network use is prohibited in this milestone. No new measurements, sonographic eligibility claim, current-source verification or clinical approval are invented. Manager action: supply a permitted verified profile/atomic mapping or retire/withhold the variant before the next release. The review packet shows unchanged before/after fields to make the unresolved state visible.",
+      "scope": null
+    }
+  ]
+}

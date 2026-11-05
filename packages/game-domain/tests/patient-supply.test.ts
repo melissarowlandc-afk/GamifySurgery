@@ -1,14 +1,20 @@
+import { createClinicalAuthorStage } from "../../../tests/fixtures/clinical-author-stage";
+import { QUESTION_NEW_N2_ROUND3_PRE_RELEASE } from "@gamify-surgery/clinical-content";
+import { QUESTION_NEW_N1_ROUND3_NEW_CONCEPT_VERSIONS } from "@gamify-surgery/clinical-content";
 import type { SyntheticClinicalCase } from "@gamify-surgery/clinical-content";
+import { QUESTION_NEW_N2_TESTED_CONCEPTS } from "@gamify-surgery/clinical-content";
+import { QUESTION_NEW_N1_ROUND2_NEW_CONCEPT_VERSIONS } from "@gamify-surgery/clinical-content";
 import { describe, expect, it } from "vitest";
+import { QUESTION_NEW_N2_ROUND2_NEW_CONCEPT_VERSIONS } from "@gamify-surgery/clinical-content";
 import {
-  PROTOTYPE_DOMAIN_CONTEXT,
-  createInitialGameState,
-  gameReducer,
   getCurrentQuestion,
   selectRoutineClinicalCase,
   type ConceptReviewEvidence,
   type GameState,
 } from "../src";
+
+// Retain the author-stage pool, frozen definitions and existing golden budgets.
+const { context: PROTOTYPE_DOMAIN_CONTEXT, createInitialGameState, gameReducer } = createClinicalAuthorStage(QUESTION_NEW_N2_ROUND3_PRE_RELEASE);
 // Hosted CI runners run these full-campaign checks up to ten times slower.
 const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
@@ -39,7 +45,7 @@ function uniqueConceptIds(clinicalCase: SyntheticClinicalCase): string[] {
 }
 
 function blankState(seed: string): GameState {
-  const state = createInitialGameState(undefined, {
+  const state = createInitialGameState(PROTOTYPE_DOMAIN_CONTEXT, {
     campaignId: `campaign.patient-supply.${seed}`,
     campaignSeed: seed,
     createdAtRealMs: 0,
@@ -231,13 +237,20 @@ describe("routine patient supply", () => {
   it("records the current clinical inventory and exact unseen-patient boundary by stage", () => {
     const release = PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease;
     // Three round-six constructs retain all 389 entry definitions and histories.
-    expect(release.concepts).toHaveLength(396);
+    // Two flag-driven construct versions retain all 396 earlier definitions.
+    // Fourteen application constructs retain all 398 earlier definitions.
+    // Batch 2a adds two changed scored constructs; all 412 prior IDs remain.
+    // Final flag round retains eight new constructs; N1 separately appends forty.
+    // N2 adds thirty-nine independent Level 3/4 identities with one case/node each.
+    // N1 round two retains old definitions and adds six proposed changed-meaning versions.
+    // N2 round two keeps 16 meanings and adds 21 proposed changed-meaning versions.
+    expect(release.concepts).toHaveLength(462 + 39 + 6 + 6 + 7 + 21 + 5 + 17);
     // The current old bank includes the concurrent interpreter pairing:
     // 1,008 existing cases, 62 Level-3 cases, 20 L4 pediatric variants
     // and 20 Variety-3 adult clinic/outside-plan variants.
     // The reused midline-recognition concept adds no second concept record.
-    expect(release.cases).toHaveLength(1008 + 62 + 20 + 20);
-    expect(release.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1423);
+    expect(release.cases).toHaveLength(1008 + 62 + 20 + 20 + 40 + 39);
+    expect(release.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1463 + 39);
 
     const noCapabilities = new Set<string>();
     const everyCapability = new Set(
@@ -270,6 +283,20 @@ describe("routine patient supply", () => {
     const routineConceptIds = new Set(
       stageTwoAllCases.flatMap((clinicalCase) => uniqueConceptIds(clinicalCase)),
     );
+    const n2Ids = new Set(QUESTION_NEW_N2_TESTED_CONCEPTS.map(concept => concept.id));
+    const n1RoundTwoIds = new Set(QUESTION_NEW_N1_ROUND2_NEW_CONCEPT_VERSIONS.map(concept => concept.id));
+    expect(n1RoundTwoIds.size).toBe(6);
+    for (const conceptId of n1RoundTwoIds) expect(routineConceptIds.has(conceptId)).toBe(false);
+    const n2RoundTwoIds = new Set(QUESTION_NEW_N2_ROUND2_NEW_CONCEPT_VERSIONS.map(concept => concept.id));
+    expect(n2RoundTwoIds.size).toBe(21);
+    for (const conceptId of n2RoundTwoIds) expect(routineConceptIds.has(conceptId)).toBe(false);
+    const n1RoundThreeIds = new Set(QUESTION_NEW_N1_ROUND3_NEW_CONCEPT_VERSIONS.map(concept => concept.id));
+    expect(n1RoundThreeIds.size).toBe(17);
+    for (const conceptId of n1RoundThreeIds) expect(routineConceptIds.has(conceptId)).toBe(false);
+    // Preserve the complete prior early-stage snapshot, with N2 explicitly
+    // checked outside that pool rather than duplicating 39 late-stage IDs in it.
+    expect(n2Ids.size).toBe(39);
+    for (const conceptId of n2Ids) expect(routineConceptIds.has(conceptId)).toBe(false);
     const conceptRecordCounts = new Map<string, number>();
     for (const concept of release.concepts) {
       conceptRecordCounts.set(
@@ -311,146 +338,209 @@ describe("routine patient supply", () => {
         seededPatientsUntilNotDue: stageTwoAllSupply.patientCount,
         patientBoundaryAcrossSeeds: unseenPatientBoundary(stageTwoAllCases, "stage-two-all-range"),
       },
-      conceptsWithoutRoutineCases: release.concepts
+      conceptsWithoutEarlyRoutineCasesBeforeN2AndN1RoundTwo: release.concepts
         .map((concept) => concept.id)
-        .filter((conceptId) => !routineConceptIds.has(conceptId))
+        // R3 identities are asserted outside the early pool above; keep the earlier
+        // historical snapshot separate from these new late-level versions.
+        .filter((conceptId) => !routineConceptIds.has(conceptId) && !n2Ids.has(conceptId) && !n1RoundTwoIds.has(conceptId) && !n2RoundTwoIds.has(conceptId) && !n1RoundThreeIds.has(conceptId))
         .sort(),
       duplicateConceptRecordIds: [...conceptRecordCounts.entries()]
         .filter(([, count]) => count > 1)
         .sort(([left], [right]) => left.localeCompare(right)),
     }).toMatchInlineSnapshot(`
-      {
-        "conceptsWithoutRoutineCases": [
-          "concept.achalasia.high-resolution-manometry",
-          "concept.colonic-lipoma.endoscopic-recognition",
-          "concept.colonic-lipoma.endoscopic-recognition.v2",
-          "concept.gs028g.hiv-perioperative.art-continuity",
-          "concept.gs028g.hiv-perioperative.booster-midazolam-interaction",
-          "concept.gs028g.hiv-perioperative.booster-midazolam-interaction.v2",
-          "concept.gs028g.incidental-gallbladder.completely-resected-t1a",
-          "concept.gs028g.incidental-gallbladder.t1a-depth",
-          "concept.gs028g.incisional-hernia.fascial-closure",
-          "concept.gs028g.incisional-hernia.retrorectus-plane",
-          "concept.gs028g.laparoscopy-respiratory.co2-absorption",
-          "concept.gs028g.laparoscopy-respiratory.diaphragm-compliance",
-          "concept.gs028g.merkel-cell.clinically-negative-node-staging",
-          "concept.gs028g.merkel-cell.integrated-diagnosis",
-          "concept.gs028g.mucocutaneous-separation.recognition",
-          "concept.gs028g.mucocutaneous-separation.superficial-care",
-          "concept.gs028g.neuromuscular-recovery.quantitative-assessment",
-          "concept.gs028g.neuromuscular-recovery.sugammadex-selectivity",
-          "concept.gs028g.peristomal-skin.effluent-irritation",
-          "concept.gs028g.peristomal-skin.restore-seal",
-          "concept.gs028g.postoperative-scapula.long-thoracic",
-          "concept.gs028g.postoperative-scapula.spinal-accessory",
-          "concept.gs028g.subtotal-cholecystectomy.remnant-classification",
-          "concept.gs028g.subtotal-cholecystectomy.safe-bailout",
-          "concept.inguinal-hernia.equivocal-exam-ultrasound",
-          "concept.inguinal-hernia.symptomatic-elective-repair",
-          "concept.inguinal-hernia.symptomatic-elective-repair.v2",
-          "concept.pediatric-clinic.acquired-testis-ascent-referral",
-          "concept.pediatric-clinic.concerning-neck-node-referral",
-          "concept.pediatric-clinic.developmental-assent-discussion",
-          "concept.pediatric-clinic.inguinal-hernia-referral",
-          "concept.pediatric-clinic.limited-pilonidal-conservative-care",
-          "concept.pediatric-clinic.pectus-carinatum-brace-assessment",
-          "concept.pediatric-clinic.reactive-neck-node-observation",
-          "concept.pediatric-clinic.symptomatic-pectus-excavatum-evaluation",
-          "concept.pediatric-clinic.true-retractile-testis-surveillance",
-          "concept.pigmented-skin-lesion.complete-diagnostic-biopsy",
-          "concept.pigmented-skin-lesion.complete-diagnostic-biopsy.v2",
-          "concept.pseudocyst.contrast-ct-characterization",
-          "concept.pseudocyst.symptomatic-endoscopic-drainage",
-          "concept.quality-improvement.pdsa-act-and-iterate",
-          "concept.soft-tissue-mass.extremity-mri.v3",
-          "concept.statistics-ethics.bias-confounding",
-          "concept.statistics-ethics.chi-square",
-          "concept.statistics-ethics.confidence-interval",
-          "concept.statistics-ethics.errors-power",
-          "concept.statistics-ethics.fisher-exact",
-          "concept.statistics-ethics.independent-t",
-          "concept.statistics-ethics.one-way-anova",
-          "concept.statistics-ethics.p-value",
-          "concept.statistics-ethics.p-value.v2",
-          "concept.statistics-ethics.paired-t",
-          "concept.statistics-ethics.qi-measures",
-          "concept.statistics-ethics.rank-sum",
-          "concept.statistics-ethics.risk-ratio-odds-ratio",
-          "concept.statistics-ethics.signed-rank",
-          "concept.statistics-ethics.study-design",
-          "concept.variety3.penicillin-label-structured-history",
-          "concept.variety3.surgical-hair-preparation",
-        ],
-        "duplicateConceptRecordIds": [],
-        "stageOne": {
-          "availableConcepts": 290,
-          "cases": 882,
-          "introducedConcepts": 285,
-          "patientBoundaryAcrossSeeds": {
-            "maximum": 226,
-            "minimum": 219,
-          },
-          "seededPatientsUntilNotDue": 221,
-          "strandedConceptIds": [
-            "concept.achalasia.high-resolution-manometry.v2",
-            "concept.colon-cancer.preoperative-cross-sectional-staging.v2",
-            "concept.fhh.biochemical-evaluation",
-            "concept.soft-tissue-mass.extremity-mri.v2",
-            "concept.soft-tissue-mass.extremity-mri.v4",
-          ],
-        },
-        "stageTwoAllCapabilities": {
-          "availableConcepts": 337,
-          "cases": 964,
-          "introducedConcepts": 329,
-          "patientBoundaryAcrossSeeds": {
-            "maximum": 255,
-            "minimum": 246,
-          },
-          "seededPatientsUntilNotDue": 252,
-          "strandedConceptIds": [
-            "concept.achalasia.high-resolution-manometry.v3",
-            "concept.breast-cyst.symptomatic-simple-aspiration",
-            "concept.colon-cancer.preoperative-cross-sectional-staging.v2",
-            "concept.felty-syndrome.splenectomy-for-refractory-infections",
-            "concept.inflammatory-breast-cancer.core-biopsy-confirmation.v2",
-            "concept.pigmented-skin-lesion.complete-diagnostic-biopsy.v3",
-            "concept.soft-tissue-mass.extremity-mri.v2",
-            "concept.soft-tissue-mass.extremity-mri.v4",
-          ],
-        },
-        "stageTwoExternal": {
-          "availableConcepts": 311,
-          "cases": 926,
-          "introducedConcepts": 306,
-          "patientBoundaryAcrossSeeds": {
-            "maximum": 242,
-            "minimum": 231,
-          },
-          "seededPatientsUntilNotDue": 232,
-          "strandedConceptIds": [
-            "concept.achalasia.high-resolution-manometry.v3",
-            "concept.colon-cancer.preoperative-cross-sectional-staging.v2",
-            "concept.inflammatory-breast-cancer.core-biopsy-confirmation.v2",
-            "concept.soft-tissue-mass.extremity-mri",
-            "concept.soft-tissue-mass.extremity-mri.v4",
-          ],
-        },
-        "stageZero": {
-          "availableConcepts": 175,
-          "cases": 636,
-          "introducedConcepts": 174,
-          "patientBoundaryAcrossSeeds": {
-            "maximum": 163,
-            "minimum": 157,
-          },
-          "seededPatientsUntilNotDue": 159,
-          "strandedConceptIds": [
-            "concept.felty-syndrome.splenectomy-for-refractory-infections",
-          ],
-        },
-      }
-    `);
+{
+  "conceptsWithoutEarlyRoutineCasesBeforeN2AndN1RoundTwo": [
+    "concept.achalasia.high-resolution-manometry",
+    "concept.achalasia.high-resolution-manometry.v3",
+    "concept.achalasia.physiology-directed-treatment.v1",
+    "concept.adrenal-incidentaloma.cortisol-etiologic-classification.v1",
+    "concept.breast-imaging.suspicious-calcification-pattern",
+    "concept.breast-imaging.suspicious-mass-morphology",
+    "concept.breast-mass.age-30-to-39.initial-diagnostic-imaging",
+    "concept.chylous-ascites.fluid-confirmation",
+    "concept.cirrhosis.new-fluid-elective-plan.v1",
+    "concept.colonic-lipoma.endoscopic-recognition",
+    "concept.colonic-lipoma.endoscopic-recognition.v2",
+    "concept.dtc.cystic-node-repeat-sampling.v1",
+    "concept.dtc.cystic-node-repeat-sampling.v2",
+    "concept.esophageal-physiology.reserve-before-junction-intervention.v1",
+    "concept.groin-ultrasound.symptom-provocation-protocol.v1",
+    "concept.gs028g.hiv-perioperative.art-continuity",
+    "concept.gs028g.hiv-perioperative.booster-midazolam-interaction",
+    "concept.gs028g.hiv-perioperative.booster-midazolam-interaction.v2",
+    "concept.gs028g.incidental-gallbladder.completely-resected-t1a",
+    "concept.gs028g.incidental-gallbladder.t1a-depth",
+    "concept.gs028g.incisional-hernia.fascial-closure",
+    "concept.gs028g.incisional-hernia.retrorectus-plane",
+    "concept.gs028g.laparoscopy-respiratory.co2-absorption",
+    "concept.gs028g.laparoscopy-respiratory.diaphragm-compliance",
+    "concept.gs028g.merkel-cell.clinically-negative-node-staging",
+    "concept.gs028g.merkel-cell.integrated-diagnosis",
+    "concept.gs028g.mucocutaneous-separation.recognition",
+    "concept.gs028g.mucocutaneous-separation.superficial-care",
+    "concept.gs028g.neuromuscular-recovery.quantitative-assessment",
+    "concept.gs028g.neuromuscular-recovery.sugammadex-selectivity",
+    "concept.gs028g.peristomal-skin.effluent-irritation",
+    "concept.gs028g.peristomal-skin.restore-seal",
+    "concept.gs028g.postoperative-scapula.long-thoracic",
+    "concept.gs028g.postoperative-scapula.spinal-accessory",
+    "concept.gs028g.subtotal-cholecystectomy.remnant-classification",
+    "concept.gs028g.subtotal-cholecystectomy.safe-bailout",
+    "concept.hyperacute-rejection.archived-crossmatch-provenance.v1",
+    "concept.inguinal-hernia.direct-operative-anatomy",
+    "concept.inguinal-hernia.equivocal-exam-ultrasound",
+    "concept.inguinal-hernia.symptomatic-elective-repair",
+    "concept.inguinal-hernia.symptomatic-elective-repair.v2",
+    "concept.laparoscopy.position-gas-integration.v1",
+    "concept.lymphangitis.distal-source-imaging.v1",
+    "concept.meckel-diverticulum.resection-extent",
+    "concept.n1.aldosterone-overt-phenotype-confirmation",
+    "concept.n1.burn-evolving-hand-depth-reassessment",
+    "concept.n1.celiac-hla-positive-boundary",
+    "concept.n1.celiac-iga-deficient-serology",
+    "concept.n1.celiac-restricted-diet-test-interpretation",
+    "concept.n1.gallbladder-muscle-invasion-referral",
+    "concept.n1.gastric-adjacent-organ-resection-assessment",
+    "concept.n1.gastric-emptying-structural-prerequisite",
+    "concept.n1.graves-symptom-versus-hormone-control",
+    "concept.n1.hcc-portal-hypertension-referral",
+    "concept.n1.lymphedema-new-tempo-venous-assessment",
+    "concept.n1.neck-mass-core-after-inadequate-fna",
+    "concept.n1.oxygen-saturation-missing-hemoglobin-assessment",
+    "concept.n1.perioperative-respiratory-acid-base-trajectory",
+    "concept.n1.post-ileus-nutrition-route-reassessment",
+    "concept.n1.provoked-dvt-filter-versus-anticoagulation",
+    "concept.n1.time-dependent-inhibitor-factor-assessment",
+    "concept.osa.discordant-screen-documentation.v1",
+    "concept.pediatric-clinic.acquired-testis-ascent-referral",
+    "concept.pediatric-clinic.concerning-neck-node-referral",
+    "concept.pediatric-clinic.developmental-assent-discussion",
+    "concept.pediatric-clinic.inguinal-hernia-referral",
+    "concept.pediatric-clinic.limited-pilonidal-conservative-care",
+    "concept.pediatric-clinic.pectus-carinatum-brace-assessment",
+    "concept.pediatric-clinic.reactive-neck-node-observation",
+    "concept.pediatric-clinic.symptomatic-pectus-excavatum-evaluation",
+    "concept.pediatric-clinic.true-retractile-testis-surveillance",
+    "concept.phyllodes.benign-complete-excision",
+    "concept.phyllodes.benign-positive-margin-management",
+    "concept.phyllodes.borderline-close-margin-management",
+    "concept.phyllodes.borderline-margin-target",
+    "concept.phyllodes.hematogenous-spread-pattern",
+    "concept.phyllodes.malignant-close-margin-management",
+    "concept.phyllodes.malignant-margin-target",
+    "concept.phyllodes.no-routine-axillary-staging",
+    "concept.phyllodes.suspicious-node-biopsy-exception",
+    "concept.pigmented-skin-lesion.complete-diagnostic-biopsy",
+    "concept.pigmented-skin-lesion.complete-diagnostic-biopsy.v2",
+    "concept.postlaparoscopy.shoulder-pain-biliary-localization.v1",
+    "concept.postoperative-ascites.cross-sectional-evaluation",
+    "concept.postoperative-chylous-ascites.initial-hospital-management",
+    "concept.postoperative-ileus.parenteral-nutrition-when-enteral-infeasible",
+    "concept.pseudocyst.contrast-ct-characterization",
+    "concept.pseudocyst.symptomatic-endoscopic-drainage",
+    "concept.quality-improvement.pdsa-act-and-iterate",
+    "concept.quality-improvement.source-by-method-next-pilot.v1",
+    "concept.severe-burn.early-enteral-nutrition",
+    "concept.soft-tissue-mass.extremity-mri.v3",
+    "concept.statistics-ethics.bias-confounding",
+    "concept.statistics-ethics.chi-square",
+    "concept.statistics-ethics.confidence-interval",
+    "concept.statistics-ethics.errors-power",
+    "concept.statistics-ethics.fisher-exact",
+    "concept.statistics-ethics.independent-t",
+    "concept.statistics-ethics.one-way-anova",
+    "concept.statistics-ethics.p-value",
+    "concept.statistics-ethics.p-value.v2",
+    "concept.statistics-ethics.paired-t",
+    "concept.statistics-ethics.qi-measures",
+    "concept.statistics-ethics.rank-sum",
+    "concept.statistics-ethics.risk-ratio-odds-ratio",
+    "concept.statistics-ethics.signed-rank",
+    "concept.statistics-ethics.study-design",
+    "concept.thoracic-trauma.right-thoracotomy-exposure",
+    "concept.trauma-vka.concurrent-iv-vitamin-k",
+    "concept.trauma-vka.four-factor-pcc-selection",
+    "concept.varicose-veins.axial-trunk-referral-target.v1",
+    "concept.varicose-veins.reflux-after-compression-study.v1",
+    "concept.variety3.penicillin-label-structured-history",
+    "concept.variety3.surgical-hair-preparation",
+    "concept.ventral-hernia.controlled-enterotomy-macroporous-synthetic-mesh-selection",
+  ],
+  "duplicateConceptRecordIds": [],
+  "stageOne": {
+    "availableConcepts": 317,
+    "cases": 882,
+    "introducedConcepts": 310,
+    "patientBoundaryAcrossSeeds": {
+      "maximum": 248,
+      "minimum": 243,
+    },
+    "seededPatientsUntilNotDue": 249,
+    "strandedConceptIds": [
+      "concept.achalasia.high-resolution-manometry.v2",
+      "concept.colon-cancer.preoperative-cross-sectional-staging",
+      "concept.felty-syndrome.splenectomy-for-refractory-infections",
+      "concept.fhh.biochemical-evaluation",
+      "concept.inguinal-hernia.recurrence-after-anterior-repair.v1",
+      "concept.soft-tissue-mass.extremity-mri",
+      "concept.soft-tissue-mass.extremity-mri.v2",
+    ],
+  },
+  "stageTwoAllCapabilities": {
+    "availableConcepts": 365,
+    "cases": 964,
+    "introducedConcepts": 354,
+    "patientBoundaryAcrossSeeds": {
+      "maximum": 282,
+      "minimum": 267,
+    },
+    "seededPatientsUntilNotDue": 273,
+    "strandedConceptIds": [
+      "concept.breast-cyst.symptomatic-simple-aspiration",
+      "concept.colon-cancer.preoperative-cross-sectional-staging.v2",
+      "concept.esophageal-physiology.integrated-pressure-report.v2",
+      "concept.groin-hernia.femoral-defect-repair-priority.v1",
+      "concept.groin-ultrasound.proximal-neck-localization.v2",
+      "concept.inflammatory-breast-cancer.core-biopsy-confirmation.v2",
+      "concept.inguinal-hernia.recurrence-after-anterior-repair.v1",
+      "concept.pigmented-skin-lesion.complete-diagnostic-biopsy.v4",
+      "concept.pigmented-skin-lesion.complete-diagnostic-biopsy.v5",
+      "concept.soft-tissue-mass.extremity-mri",
+      "concept.soft-tissue-mass.extremity-mri.v4",
+    ],
+  },
+  "stageTwoExternal": {
+    "availableConcepts": 338,
+    "cases": 926,
+    "introducedConcepts": 331,
+    "patientBoundaryAcrossSeeds": {
+      "maximum": 261,
+      "minimum": 255,
+    },
+    "seededPatientsUntilNotDue": 261,
+    "strandedConceptIds": [
+      "concept.colon-cancer.preoperative-cross-sectional-staging.v2",
+      "concept.esophageal-physiology.integrated-pressure-report.v2",
+      "concept.fhh.biochemical-evaluation",
+      "concept.inflammatory-breast-cancer.core-biopsy-confirmation",
+      "concept.inguinal-hernia.recurrence-after-anterior-repair.v1",
+      "concept.soft-tissue-mass.extremity-mri",
+      "concept.soft-tissue-mass.extremity-mri.v2",
+    ],
+  },
+  "stageZero": {
+    "availableConcepts": 194,
+    "cases": 636,
+    "introducedConcepts": 194,
+    "patientBoundaryAcrossSeeds": {
+      "maximum": 181,
+      "minimum": 173,
+    },
+    "seededPatientsUntilNotDue": 182,
+    "strandedConceptIds": [],
+  },
+}
+`);
   }, hostedTime(10_000));
 
   it("does not let an ineligible multistep case strand other eligible content", () => {
@@ -521,30 +611,30 @@ describe("routine patient supply", () => {
     }
 
     expect(observations).toMatchInlineSnapshot(`
-      [
-        {
-          "answerCorrectly": false,
-          "answerCount": 2,
-          "arrivalTick": 3000,
-          "dayNumber": 6,
-          "resolutionReason": "completed",
-        },
-        {
-          "answerCorrectly": true,
-          "answerCount": 1,
-          "arrivalTick": 3600,
-          "dayNumber": 7,
-          "resolutionReason": "completed",
-        },
-        {
-          "answerCorrectly": false,
-          "answerCount": 1,
-          "arrivalTick": 4200,
-          "dayNumber": 8,
-          "resolutionReason": "completed",
-        },
-      ]
-    `);
+[
+  {
+    "answerCorrectly": false,
+    "answerCount": 2,
+    "arrivalTick": 3000,
+    "dayNumber": 6,
+    "resolutionReason": "completed",
+  },
+  {
+    "answerCorrectly": true,
+    "answerCount": 2,
+    "arrivalTick": 3600,
+    "dayNumber": 7,
+    "resolutionReason": "completed",
+  },
+  {
+    "answerCorrectly": false,
+    "answerCount": 1,
+    "arrivalTick": 4200,
+    "dayNumber": 8,
+    "resolutionReason": "completed",
+  },
+]
+`);
     expect(observations.every((item) => item.answerCount > 0)).toBe(true);
     expect(observations.every((item) => item.resolutionReason === "completed")).toBe(true);
   }, hostedTime(30_000));

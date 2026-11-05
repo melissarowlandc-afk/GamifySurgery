@@ -1,0 +1,888 @@
+{
+  "checkedOn": "2026-11-05",
+  "scope": "Six new exact variants (five flagged items plus the necessary G05 first-node repair), all canonical and finite profiles including earlier results/feedback; unchanged decisions excluded.",
+  "linterVersion": "question-cue-lint.2026-11-04.v8",
+  "totals": {
+    "newVariants": 6,
+    "flaggedItemsRewritten": 5,
+    "cases": 5,
+    "profileContexts": 30,
+    "beforeFindings": 11,
+    "afterFindings": 0,
+    "variantsWithFindings": 0
+  },
+  "variants": [
+    {
+      "id": "G01",
+      "variantId": "question.persistent-itp.defer-elective-splenectomy.v3.r1",
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [
+        {
+          "id": "2153c593a15130ee",
+          "rule": "availability-permission-cue",
+          "severity": "advisory",
+          "message": "A feasibility/permission statement may supply the rationale for an offered action. Apply the deletion test; retain and neutrally phrase a genuine decision-critical constraint.",
+          "evidence": [
+            {
+              "field": "stem",
+              "text": "feasible medical care, which plan fits",
+              "start": 74,
+              "end": 112
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Defer elective splenectomy",
+              "start": 0,
+              "end": 26,
+              "choiceId": "defer_3"
+            }
+          ],
+          "metrics": {
+            "visibleHistory": false
+          },
+          "occurrences": [
+            {
+              "caseId": "case.persistent-itp.hematology-followup",
+              "profileIds": [
+                "canonical",
+                "profile.persistent-itp.hematology-followup.female.57",
+                "profile.persistent-itp.hematology-followup.male.57",
+                "profile.persistent-itp.hematology-followup.female.55",
+                "profile.persistent-itp.hematology-followup.male.55"
+              ],
+              "ranges": [
+                {
+                  "start": 74,
+                  "end": 112
+                },
+                {
+                  "start": 0,
+                  "end": 26
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "cbb7d99b1e98a432",
+          "rule": "option-length-disparity",
+          "severity": "advisory",
+          "message": "Option lengths differ; check necessary specificity and abbreviation effects.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "Arrange bone marrow evaluation before deciding on surgery",
+              "start": 0,
+              "end": 57,
+              "choiceId": "bone_marrow_3"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Defer elective splenectomy",
+              "start": 0,
+              "end": 26,
+              "choiceId": "defer_3"
+            }
+          ],
+          "metrics": {
+            "wordCounts": {
+              "defer_3": 3,
+              "immediate_3": 4,
+              "bone_marrow_3": 8,
+              "repeat_serology_3": 5
+            },
+            "ratio": 2.6666666666666665
+          },
+          "occurrences": [
+            {
+              "caseId": "case.persistent-itp.hematology-followup",
+              "profileIds": [
+                "canonical",
+                "profile.persistent-itp.hematology-followup.female.57",
+                "profile.persistent-itp.hematology-followup.male.57",
+                "profile.persistent-itp.hematology-followup.female.55",
+                "profile.persistent-itp.hematology-followup.male.55"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 57
+                },
+                {
+                  "start": 0,
+                  "end": 26
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "after": [],
+      "beforeCount": 2,
+      "afterCount": 0,
+      "profileContexts": 5
+    },
+    {
+      "id": "G02",
+      "variantId": "question.malignant-hyperthermia-susceptibility.trigger-free-anesthesia-plan.v2.r1",
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [
+        {
+          "id": "5e00ad6456732271",
+          "rule": "key-only-word-overlap",
+          "severity": "advisory",
+          "message": "A substantive word appears in the context and key only; clinical relevance may justify it.",
+          "evidence": [
+            {
+              "field": "stem",
+              "text": "planning",
+              "start": 62,
+              "end": 70
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "planning",
+              "start": 21,
+              "end": 29,
+              "choiceId": "correct_2"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028d.anesthesia.b-family-testing-record",
+              "profileIds": [
+                "canonical",
+                "profile.gs028d.anesthesia.b-family-testing-record.female.35"
+              ],
+              "ranges": [
+                {
+                  "start": 62,
+                  "end": 70
+                },
+                {
+                  "start": 21,
+                  "end": 29
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.anesthesia.b-family-testing-record",
+              "profileIds": [
+                "profile.gs028d.anesthesia.b-family-testing-record.male.35"
+              ],
+              "ranges": [
+                {
+                  "start": 62,
+                  "end": 70
+                },
+                {
+                  "start": 21,
+                  "end": 29
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.anesthesia.b-family-testing-record",
+              "profileIds": [
+                "profile.gs028d.anesthesia.b-family-testing-record.female.60"
+              ],
+              "ranges": [
+                {
+                  "start": 62,
+                  "end": 70
+                },
+                {
+                  "start": 21,
+                  "end": 29
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.anesthesia.b-family-testing-record",
+              "profileIds": [
+                "profile.gs028d.anesthesia.b-family-testing-record.male.60"
+              ],
+              "ranges": [
+                {
+                  "start": 62,
+                  "end": 70
+                },
+                {
+                  "start": 21,
+                  "end": 29
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "0ed5c699956e09c9",
+          "rule": "option-length-disparity",
+          "severity": "advisory",
+          "message": "Option lengths differ; check necessary specificity and abbreviation effects.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "Give crisis medication in clinic now",
+              "start": 0,
+              "end": 36,
+              "choiceId": "d3_2"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Request trigger-free planning",
+              "start": 0,
+              "end": 29,
+              "choiceId": "correct_2"
+            }
+          ],
+          "metrics": {
+            "wordCounts": {
+              "correct_2": 3,
+              "d1_2": 3,
+              "d2_2": 4,
+              "d3_2": 6
+            },
+            "ratio": 2
+          },
+          "occurrences": [
+            {
+              "caseId": "case.gs028d.anesthesia.b-family-testing-record",
+              "profileIds": [
+                "canonical",
+                "profile.gs028d.anesthesia.b-family-testing-record.female.35"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 36
+                },
+                {
+                  "start": 0,
+                  "end": 29
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.anesthesia.b-family-testing-record",
+              "profileIds": [
+                "profile.gs028d.anesthesia.b-family-testing-record.male.35"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 36
+                },
+                {
+                  "start": 0,
+                  "end": 29
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.anesthesia.b-family-testing-record",
+              "profileIds": [
+                "profile.gs028d.anesthesia.b-family-testing-record.female.60"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 36
+                },
+                {
+                  "start": 0,
+                  "end": 29
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.anesthesia.b-family-testing-record",
+              "profileIds": [
+                "profile.gs028d.anesthesia.b-family-testing-record.male.60"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 36
+                },
+                {
+                  "start": 0,
+                  "end": 29
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "after": [],
+      "beforeCount": 2,
+      "afterCount": 0,
+      "profileContexts": 5
+    },
+    {
+      "id": "G05",
+      "variantId": "question.asymptomatic-phpt.age-based-surgery.v1.r1",
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [
+        {
+          "id": "4a1c8506534b9387",
+          "rule": "option-absolute",
+          "severity": "advisory",
+          "message": "A categorical qualifier may offer a testwise rejection route; verify whether clinically necessary.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "only",
+              "start": 6,
+              "end": 10,
+              "choiceId": "bone_clinic_only_1"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Refer only for bone-health follow-up",
+              "start": 0,
+              "end": 36,
+              "choiceId": "bone_clinic_only_1"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.asymptomatic-phpt.incidental-calcium",
+              "profileIds": [
+                "canonical",
+                "profile.asymptomatic-phpt.incidental-calcium.female.47",
+                "profile.asymptomatic-phpt.incidental-calcium.male.47",
+                "profile.asymptomatic-phpt.incidental-calcium.female.46",
+                "profile.asymptomatic-phpt.incidental-calcium.male.46"
+              ],
+              "ranges": [
+                {
+                  "start": 6,
+                  "end": 10
+                },
+                {
+                  "start": 0,
+                  "end": 36
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ea13472821e0219a",
+          "rule": "option-explanation",
+          "severity": "advisory",
+          "message": "A causal/explanatory or rhetorical clause may reveal the intended judgment.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "because",
+              "start": 21,
+              "end": 28,
+              "choiceId": "observe_only_1"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Continue observation because no complication was found",
+              "start": 0,
+              "end": 54,
+              "choiceId": "observe_only_1"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.asymptomatic-phpt.incidental-calcium",
+              "profileIds": [
+                "canonical",
+                "profile.asymptomatic-phpt.incidental-calcium.female.47",
+                "profile.asymptomatic-phpt.incidental-calcium.male.47",
+                "profile.asymptomatic-phpt.incidental-calcium.female.46",
+                "profile.asymptomatic-phpt.incidental-calcium.male.46"
+              ],
+              "ranges": [
+                {
+                  "start": 21,
+                  "end": 28
+                },
+                {
+                  "start": 0,
+                  "end": 54
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "after": [],
+      "beforeCount": 2,
+      "afterCount": 0,
+      "profileContexts": 5
+    },
+    {
+      "id": "G05-staging",
+      "variantId": "question.asymptomatic-phpt.three-site-dxa.v1.r1",
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [
+        {
+          "id": "36b61d783c3c886b",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 36,
+              "end": 41,
+              "choiceId": "single_site_dxa_1"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Single-site DXA of the lumbar spine alone",
+              "start": 0,
+              "end": 41,
+              "choiceId": "single_site_dxa_1"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.asymptomatic-phpt.incidental-calcium",
+              "profileIds": [
+                "canonical",
+                "profile.asymptomatic-phpt.incidental-calcium.female.47",
+                "profile.asymptomatic-phpt.incidental-calcium.male.47",
+                "profile.asymptomatic-phpt.incidental-calcium.female.46",
+                "profile.asymptomatic-phpt.incidental-calcium.male.46"
+              ],
+              "ranges": [
+                {
+                  "start": 36,
+                  "end": 41
+                },
+                {
+                  "start": 0,
+                  "end": 41
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "9fb5563c1210275b",
+          "rule": "option-specificity-disparity",
+          "severity": "advisory",
+          "message": "One label carries several qualifiers while other labels do not.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "DXA of spine, hip, and distal radius",
+              "start": 0,
+              "end": 36,
+              "choiceId": "three_site_dxa_1"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": ",",
+              "start": 12,
+              "end": 13,
+              "choiceId": "three_site_dxa_1"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": ",",
+              "start": 17,
+              "end": 18,
+              "choiceId": "three_site_dxa_1"
+            }
+          ],
+          "metrics": {
+            "qualifierCount": 2
+          },
+          "occurrences": [
+            {
+              "caseId": "case.asymptomatic-phpt.incidental-calcium",
+              "profileIds": [
+                "canonical",
+                "profile.asymptomatic-phpt.incidental-calcium.female.47",
+                "profile.asymptomatic-phpt.incidental-calcium.male.47",
+                "profile.asymptomatic-phpt.incidental-calcium.female.46",
+                "profile.asymptomatic-phpt.incidental-calcium.male.46"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 36
+                },
+                {
+                  "start": 12,
+                  "end": 13
+                },
+                {
+                  "start": 17,
+                  "end": 18
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "after": [],
+      "beforeCount": 2,
+      "afterCount": 0,
+      "profileContexts": 5
+    },
+    {
+      "id": "G06",
+      "variantId": "question.statistics-ethics.predictive-value-prevalence.v2.r1",
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [],
+      "after": [],
+      "beforeCount": 0,
+      "afterCount": 0,
+      "profileContexts": 5
+    },
+    {
+      "id": "G07",
+      "variantId": "question.ptld.tissue-diagnosis-coordination.v4.r1",
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [
+        {
+          "id": "5244ff213c82a218",
+          "rule": "key-length-disparity",
+          "severity": "advisory",
+          "message": "The keyed label has a different length from the distractor median.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "Transplant-hematology planning",
+              "start": 0,
+              "end": 30,
+              "choiceId": "correct_4"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Independent medication changes in clinic",
+              "start": 0,
+              "end": 40,
+              "choiceId": "d1_4"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Repeat biopsy before reading pathology",
+              "start": 0,
+              "end": 38,
+              "choiceId": "d2_4"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Routine annual surveillance only",
+              "start": 0,
+              "end": 32,
+              "choiceId": "d3_4"
+            }
+          ],
+          "metrics": {
+            "keyWords": 2,
+            "distractorMedian": 5,
+            "ratio": 0.4
+          },
+          "occurrences": [
+            {
+              "caseId": "case.gs028b.ptld.b-pathology-returned",
+              "profileIds": [
+                "canonical",
+                "profile.gs028b.ptld.b-pathology-returned.female.43"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 30
+                },
+                {
+                  "start": 0,
+                  "end": 40
+                },
+                {
+                  "start": 0,
+                  "end": 38
+                },
+                {
+                  "start": 0,
+                  "end": 32
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.ptld.b-pathology-returned",
+              "profileIds": [
+                "profile.gs028b.ptld.b-pathology-returned.male.43"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 30
+                },
+                {
+                  "start": 0,
+                  "end": 40
+                },
+                {
+                  "start": 0,
+                  "end": 38
+                },
+                {
+                  "start": 0,
+                  "end": 32
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.ptld.b-pathology-returned",
+              "profileIds": [
+                "profile.gs028b.ptld.b-pathology-returned.female.68"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 30
+                },
+                {
+                  "start": 0,
+                  "end": 40
+                },
+                {
+                  "start": 0,
+                  "end": 38
+                },
+                {
+                  "start": 0,
+                  "end": 32
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.ptld.b-pathology-returned",
+              "profileIds": [
+                "profile.gs028b.ptld.b-pathology-returned.male.68"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 30
+                },
+                {
+                  "start": 0,
+                  "end": 40
+                },
+                {
+                  "start": 0,
+                  "end": 38
+                },
+                {
+                  "start": 0,
+                  "end": 32
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "4a58011eaec4e02a",
+          "rule": "option-absolute",
+          "severity": "advisory",
+          "message": "A categorical qualifier may offer a testwise rejection route; verify whether clinically necessary.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "only",
+              "start": 28,
+              "end": 32,
+              "choiceId": "d3_4"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Routine annual surveillance only",
+              "start": 0,
+              "end": 32,
+              "choiceId": "d3_4"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028b.ptld.b-pathology-returned",
+              "profileIds": [
+                "canonical",
+                "profile.gs028b.ptld.b-pathology-returned.female.43"
+              ],
+              "ranges": [
+                {
+                  "start": 28,
+                  "end": 32
+                },
+                {
+                  "start": 0,
+                  "end": 32
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.ptld.b-pathology-returned",
+              "profileIds": [
+                "profile.gs028b.ptld.b-pathology-returned.male.43"
+              ],
+              "ranges": [
+                {
+                  "start": 28,
+                  "end": 32
+                },
+                {
+                  "start": 0,
+                  "end": 32
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.ptld.b-pathology-returned",
+              "profileIds": [
+                "profile.gs028b.ptld.b-pathology-returned.female.68"
+              ],
+              "ranges": [
+                {
+                  "start": 28,
+                  "end": 32
+                },
+                {
+                  "start": 0,
+                  "end": 32
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.ptld.b-pathology-returned",
+              "profileIds": [
+                "profile.gs028b.ptld.b-pathology-returned.male.68"
+              ],
+              "ranges": [
+                {
+                  "start": 28,
+                  "end": 32
+                },
+                {
+                  "start": 0,
+                  "end": 32
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b4bea7fcbc6629ad",
+          "rule": "option-length-disparity",
+          "severity": "advisory",
+          "message": "Option lengths differ; check necessary specificity and abbreviation effects.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "Independent medication changes in clinic",
+              "start": 0,
+              "end": 40,
+              "choiceId": "d1_4"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Transplant-hematology planning",
+              "start": 0,
+              "end": 30,
+              "choiceId": "correct_4"
+            }
+          ],
+          "metrics": {
+            "wordCounts": {
+              "correct_4": 2,
+              "d1_4": 5,
+              "d2_4": 5,
+              "d3_4": 4
+            },
+            "ratio": 2.5
+          },
+          "occurrences": [
+            {
+              "caseId": "case.gs028b.ptld.b-pathology-returned",
+              "profileIds": [
+                "canonical",
+                "profile.gs028b.ptld.b-pathology-returned.female.43"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 40
+                },
+                {
+                  "start": 0,
+                  "end": 30
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.ptld.b-pathology-returned",
+              "profileIds": [
+                "profile.gs028b.ptld.b-pathology-returned.male.43"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 40
+                },
+                {
+                  "start": 0,
+                  "end": 30
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.ptld.b-pathology-returned",
+              "profileIds": [
+                "profile.gs028b.ptld.b-pathology-returned.female.68"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 40
+                },
+                {
+                  "start": 0,
+                  "end": 30
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.ptld.b-pathology-returned",
+              "profileIds": [
+                "profile.gs028b.ptld.b-pathology-returned.male.68"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 40
+                },
+                {
+                  "start": 0,
+                  "end": 30
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "after": [],
+      "beforeCount": 3,
+      "afterCount": 0,
+      "profileContexts": 5
+    }
+  ]
+}

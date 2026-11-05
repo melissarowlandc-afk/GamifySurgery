@@ -15,6 +15,113 @@ test("reports key-only phrases and exact reconstructable spans",()=>{
   for(const f of r.findings)for(const e of f.evidence){const original=e.choiceId?cs.find(c=>c.id===e.choiceId).label:fields[e.field];assert.equal(original.slice(e.start,e.end),e.text);}
   assert(!has(lint(["Plasma assay","Urine assay","Saliva assay"],{stem:"Which assay?"}),"key-only-word-overlap"));
 });
+
+test("owner rule flags X alone in either key or distractor, with exact spans",()=>{
+  const r=lint(["Compression stockings alone","Endovenous ablation","Foam sclerotherapy"]);
+  const f=r.findings.find(f=>f.rule==="option-alone");assert(f);assert.equal(f.evidence[0].text,"alone");
+  assert.equal(f.evidence[0].choiceId,"choice0");
+  assert(has(lint(["Hospital assessment","Diet advice alone","Repeat potassium"]),"option-alone"));
+  assert(!has(lint(["Compression stockings","Endovenous ablation","Foam sclerotherapy"]),"option-alone"));
+});
+
+test("owner rule compares generic individualization with concrete options",()=>{
+  for(const term of ["Individualized vascular consultation","Tailored management","Shared-decision planning","Shared decision making"])
+    assert(has(lint([term,"Endovenous ablation","Compression stockings"]),"option-generic-individualization"),term);
+  assert(!has(lint(["Tailored management","Individualized management","Shared planning"]),"option-generic-individualization"));
+  assert(!has(lint(["Individualized endovenous ablation","Foam sclerotherapy","Compression stockings"]),"option-generic-individualization"));
+});
+
+test("owner rule asks for a named treatment while retaining exact candidate spans",()=>{
+  const r=lint(["Esophageal treatment assessment","Laparoscopic Heller myotomy","Oral omeprazole therapy"]);
+  const f=r.findings.find(f=>f.rule==="unnamed-treatment-action");assert(f);
+  assert.equal(f.evidence[0].text,"treatment assessment");assert.equal(f.evidence[0].choiceId,"choice0");
+  for(const label of ["Management discussion","Treatment planning"])assert(has(lint([label,"Myotomy","Omeprazole"]),"unnamed-treatment-action"));
+  assert(!has(lint(["Repeat diagnostic manometry","Laparoscopic Heller myotomy","Oral omeprazole therapy"]),"unnamed-treatment-action"));
+});
+
+test("image inventory checks visible descriptions and captions, excluding the asset path",()=>{
+  const cs={presentation:"{patientName} has dysphagia.",decisionNodes:[{stem:"Which interpretation?",exhibit:{kind:"image",caption:"Pressure tracing",assetPath:"clinical-exhibits/achalasia-key.png",description:"The junction relaxes slowly."}}]};
+  const fields=preAnswerFields(cs,0);
+  assert.equal(fields["exhibit.caption"],"Pressure tracing");assert.equal(fields["exhibit.description"],"The junction relaxes slowly.");
+  assert(!Object.hasOwn(fields,"exhibit.assetPath"));assert(!Object.values(fields).some(v=>String(v).includes("achalasia-key")));
+  assert(has(lint(["Slow junction relaxation","Absent body contraction","Normal propagation"],fields),"key-only-word-overlap"));
+});
+
+test("investigation categories recognize full modality names and physiological/pathological studies",()=>{
+  const task={stem:"Which investigation should be arranged?"};
+  assert(!has(lint(["Repeat high-resolution manometry","Obtain a timed barium esophagram","Obtain pH-impedance monitoring"],task),"heterogeneous-option-category"));
+  assert(!has(lint(["Obtain ultrasonography","Obtain magnetic resonance imaging","Obtain computed tomography"],task),"heterogeneous-option-category"));
+  assert(!has(lint(["Perform an excisional biopsy","Perform a punch biopsy","Request deeper histological sections"],task),"heterogeneous-option-category"));
+  assert(has(lint(["Obtain ultrasound","Obtain computed tomography","Achalasia"],task),"heterogeneous-option-category"));
+});
+
+test("owner availability cues are found in presentation, task, update and exhibit without using feedback metadata",()=>{
+  for(const phrase of ["The patient is available for immediate transfer.","HIDA is available and won't delay care.","She can swallow and medicines are available."]){
+    for(const field of ["presentation","stem","currentUpdate","exhibit.caption"]){
+      const r=lint(["Hospital assessment","Repeat potassium","Diet advice"],{[field]:phrase});
+      const findings=r.findings.filter(f=>f.rule==="availability-permission-cue");assert(findings.length,phrase);
+      for(const f of findings){const e=f.evidence[0];assert.equal(e.field,field);assert.equal(phrase.slice(e.start,e.end),e.text);}
+    }
+  }
+  assert(!has(lint(["Alpha plan","Beta plan","Gamma plan"],{presentation:"She brings the completed ultrasound report."}),"availability-permission-cue"));
+});
+
+test("owner findings rule flags supplied eligibility and named rejection but permits a supplied diagnosis for management",()=>{
+  for(const phrase of ["The nodule meets biopsy criteria.","Suspicious features meeting biopsy criteria.","The ultrasound is inconclusive."])
+    assert(has(lint(["Thyroid FNA","Thyroid scan","Repeat ultrasound"],{presentation:phrase}),"supplied-clinical-conclusion"),phrase);
+  const presentation="The team diagnosed hyperacute antibody-mediated rejection.";
+  assert(has(lint(["Preformed antibodies","New antibodies","Activated T cells"],{presentation,stem:"Which immune effector explains this?"}),"supplied-clinical-conclusion"));
+  assert(!has(lint(["Plan A","Plan B","Plan C"],{presentation,stem:"Which management plan is appropriate?"}),"supplied-clinical-conclusion"));
+  assert(!has(lint(["Thyroid FNA","Thyroid scan","Repeat ultrasound"],{presentation:"Ultrasound shows a solid hypoechoic nodule with irregular margins."}),"supplied-clinical-conclusion"));
+});
+
+test("owner clarity rules distinguish bare negative imaging and unqualified cervical from actual findings and explicit sites",()=>{
+  for(const presentation of ["Mammography and ultrasound are negative.","She has negative imaging."])
+    assert(has(lint(["Biopsy referral","Breast MRI","Repeat ultrasound"],{presentation}),"unexplained-negative-imaging"));
+  assert(!has(lint(["Biopsy referral","Breast MRI","Repeat ultrasound"],{presentation:"At the palpable site, ultrasound shows no solid or cystic correlate."}),"unexplained-negative-imaging"));
+  assert(has(lint(["FNA","Open biopsy","Observation"],{presentation:"The lateral cervical mass persists."}),"ambiguous-cervical-term"));
+  for(const presentation of ["The lateral neck mass persists.","The cervical lymph node persists.","Cervical spine imaging is complete.","A uterine cervical lesion is present."])
+    assert(!has(lint(["FNA","Open biopsy","Observation"],{presentation}),"ambiguous-cervical-term"),presentation);
+});
+
+test("bounded anatomy screen detects the actual remote nerve distractors without claiming to validate new choices",()=>{
+  assert(has(lint(["Phrenic nerve","Median nerve","Ulnar nerve","Sciatic nerve"],{presentation:"Shoulder pain after laparoscopy."}),"nerve-competitor-plausibility"));
+  assert(!has(lint(["Phrenic nerve","Vagus nerve","Supraclavicular nerves","Suprascapular nerve"],{presentation:"Shoulder pain after laparoscopy."}),"nerve-competitor-plausibility"));
+});
+
+test("owner's actual flagged records trigger each new targeted rule and reconstruct source spans",()=>{
+  const snapshot=JSON.parse(readFileSync(new URL("fixtures/question-flags-before-20261104.json",import.meta.url),"utf8"));
+  const examples=[
+    ["question.cirrhosis-perioperative-risk.multifactor-assessment.v3","option-alone"],
+    ["question.varicose-veins.intervention-referral-after-axial-reflux.v4","option-generic-individualization"],
+    ["question.hyperkalaemia.severe-community-result-transfer.v1","availability-permission-cue"],
+    ["question.thyroid-nodule.fna-selection.v2","supplied-clinical-conclusion"],
+    ["question.palpable-breast.suspicious-mass-biopsy-despite-negative-imaging.v4","unexplained-negative-imaging"],
+    ["question.gs028f.head-neck.initial-fna-not-open-biopsy.v4","ambiguous-cervical-term"],
+    ["question.postlaparoscopy.benign-referred-shoulder-pain.v2","nerve-competitor-plausibility"],
+  ];
+  for(const [id,rule]of examples){
+    const cs=snapshot.release.cases.find(c=>c.decisionNodes.some(n=>n.questionVariantId===id)),index=cs.decisionNodes.findIndex(n=>n.questionVariantId===id),n=cs.decisionNodes[index],fields=preAnswerFields(cs,index);
+    const f=lintQuestion({variantId:id,fields,choices:n.answerChoices}).findings.find(f=>f.rule===rule);assert(f,id);
+    for(const e of f.evidence){const source=e.choiceId?n.answerChoices.find(c=>c.id===e.choiceId).label:fields[e.field];assert.equal(source.slice(e.start,e.end),e.text);}
+  }
+});
+
+test("round-one draft contexts remove owner-rule giveaways; the live held FNA remains explicit",async()=>{
+  await import("../economy-audit/source-loader.mjs");
+  const c=await import("../../packages/clinical-content/src/index.ts");
+  const ownerRules=new Set(["option-alone","option-generic-individualization","availability-permission-cue","supplied-clinical-conclusion","unexplained-negative-imaging","ambiguous-cervical-term","nerve-competitor-plausibility"]);
+  for(const r of c.QUESTION_FLAG_REVISIONS){
+    const cs=c.QUESTION_FLAGS_ROUND1_RELEASE.cases.find(cs=>cs.id===r.caseId),i=cs.decisionNodes.findIndex(n=>n.id===r.nodeId),n=cs.decisionNodes[i];
+    for(const profile of [null,...(cs.approvedInstantiationProfiles??[])]){
+      const result=lintQuestion({variantId:n.questionVariantId,choices:n.answerChoices,fields:preAnswerFields(cs,i,profile)});
+      assert.deepEqual(result.findings.filter(f=>ownerRules.has(f.rule)),[],r.auditId+" / "+(profile?.id??"canonical"));
+    }
+  }
+  const cs=c.SYNTHETIC_CLINICAL_RELEASE.cases.find(cs=>cs.id==="case.thyroid-nodule.incidental-imaging"),n=cs.decisionNodes[0];
+  assert.equal(n.questionVariantId,"question.thyroid-nodule.fna-selection.v2");
+  assert(has(lintQuestion({variantId:n.questionVariantId,choices:n.answerChoices,fields:preAnswerFields(cs,0)}),"supplied-clinical-conclusion"));
+});
 test("detects length and qualifier disparity without requiring a long key",()=>{
   const r=lint(["A compact label","A longer alternative with several clauses before assessment after treatment","Another label"]);
   assert(has(r,"option-length-disparity"));assert(has(r,"key-length-disparity"));assert(has(r,"option-specificity-disparity"));
@@ -42,6 +149,14 @@ test("convergence and near duplicate report the competing option evidence",()=>{
   assert(!has(lint(["From extracellular fluid into cells","From cells into extracellular fluid","From circulating blood into urine"]),"convergence"));
   const r=lint(["Arrange prompt specialist referral","Arrange prompt specialist referral now","Provide routine reassessment"]);
   assert(has(r,"near-duplicate-options"));assert(r.findings.find(f=>f.rule==="near-duplicate-options").evidence.every(e=>e.choiceId));
+});
+test("a complete balanced component matrix does not uniquely converge on the key",()=>{
+  const full=["Venous restriction and reduced compliance","Venous pooling and reduced compliance","Venous restriction and increased resistance","Venous pooling and increased resistance"];
+  assert(!has(lint(full),"convergence"));
+  const incomplete=["Venous restriction and reduced compliance","Venous pooling and reduced compliance","Venous restriction and increased resistance"];
+  const r=lint(incomplete);assert(has(r,"convergence"));
+  assert(r.findings.find(f=>f.rule==="convergence").metrics.optionCoverage.every(c=>typeof c.sharedComponentDensity==="number"));
+  assert(has(lint(["Posterior pelvic repair","Posterior mesh repair","Anterior pelvic procedure","Lateral access procedure"]),"convergence"));
 });
 test("diagnosis disclosure is conditional on task and metadata",()=>{
   const labels=["Merkel cell carcinoma","Small cell carcinoma","Cutaneous malignant melanoma"], concept={conceptType:"diagnosis",diagnosisNames:["cutaneous neuroendocrine carcinoma"]};

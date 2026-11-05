@@ -1,0 +1,235 @@
+{
+  "date": "2026-11-05",
+  "authority": "Manager instruction: review three supersedes review two; source-held keys are not accepted.",
+  "reviewSource": "docs/research/question-new-n2-review3-20261104.json",
+  "sourceHoldLedger": "docs/research/sources-question-new-n2-round3-20261104.json",
+  "candidatePassCount": 19,
+  "roundThreePassCount": 10,
+  "acceptedCount": 14,
+  "parkedReviseCount": 20,
+  "sourceHeldPassCount": 5,
+  "nonDecidingHeldDetailsRemoved": 0,
+  "clinicalApproval": false,
+  "clinicalReviewStatus": "needs_clinician_review",
+  "mapping": [
+    {
+      "id": "review.n2.sugammadex-recovery-endpoints.v3",
+      "slug": "sugammadex-recovery-endpoints",
+      "key": "Await recovery from the depolarizing agent",
+      "classification": "hold_on_key",
+      "accepted": false,
+      "heldClaimIds": [
+        "claim.n2r3.depolarizing-ratio-amplitude"
+      ],
+      "claimIds": [
+        "claim.n2.2771c9286d4c",
+        "claim.n2.a752906bf151",
+        "claim.n2r3.depolarizing-ratio-amplitude"
+      ],
+      "reason": "The key requires phase-I depolarizing-block interpretation and reversal limits not established by the recorded rocuronium/sugammadex mechanism or quantitative-monitoring atoms.",
+      "itemEdited": false,
+      "nonDecidingDetailRemoved": null
+    },
+    {
+      "id": "review.n2.refeeding-baseline-phosphate-attribution.v3",
+      "slug": "refeeding-baseline-phosphate-attribution",
+      "key": "Reduce intravenous and enteral carbohydrate",
+      "classification": "hold_on_key",
+      "accepted": false,
+      "heldClaimIds": [
+        "claim.n2r3.refeeding-combined-carbohydrate"
+      ],
+      "claimIds": [
+        "claim.n2r3.55c2d3c6076b",
+        "claim.n2.a2a9c29cbbcf",
+        "claim.n2r2.78d2ba5c0eb0",
+        "claim.n2r2.iv-dextrose-exposure",
+        "claim.n2r3.refeeding-combined-carbohydrate"
+      ],
+      "reason": "The key ranks carbohydrate reduction over advancement. Exposure recognition and thiamine facts do not directly support that management ranking.",
+      "itemEdited": false,
+      "nonDecidingDetailRemoved": null
+    },
+    {
+      "id": "review.n2.burn-feeding-perfusion-prerequisite.v3",
+      "slug": "burn-feeding-perfusion-prerequisite",
+      "key": "Assessment B with continued perfusion and tolerance surveillance",
+      "classification": "no_hold",
+      "accepted": true,
+      "heldClaimIds": [],
+      "claimIds": [
+        "claim.n2.72256312b855",
+        "claim.n2.84c927796922"
+      ],
+      "reason": "The key applies recorded adequate-resuscitation/enteral-contraindication boundaries to the supplied support/perfusion trajectory. No novel dose or universal perfusion cutoff is taught.",
+      "itemEdited": false,
+      "nonDecidingDetailRemoved": null
+    },
+    {
+      "id": "review.n2.dialysis-isocaloric-protein-adjustment.v3",
+      "slug": "dialysis-isocaloric-protein-adjustment",
+      "key": "1,610 kcal with 84 g protein",
+      "classification": "no_hold",
+      "accepted": true,
+      "heldClaimIds": [],
+      "claimIds": [
+        "claim.n2.5dd542d868e9",
+        "claim.n2.87c8a26c9b01"
+      ],
+      "reason": "The key uses the directly recorded chronic intermittent-KRT protein recommendation plus fictional reference-weight/energy-delivery inputs. No novel protein/energy threshold or formulation-ranking extension is used.",
+      "itemEdited": false,
+      "nonDecidingDetailRemoved": null
+    },
+    {
+      "id": "review.n2.vte-prophylaxis-to-treatment.v3",
+      "slug": "vte-prophylaxis-to-treatment",
+      "key": "Intravenous unfractionated heparin",
+      "classification": "hold_on_key",
+      "accepted": false,
+      "heldClaimIds": [
+        "claim.n2r3.vte-changing-renal-procedure"
+      ],
+      "claimIds": [
+        "claim.n2.8a0b2ca37037",
+        "claim.n2.9c12bef8ae65",
+        "claim.n2r3.vte-changing-renal-procedure"
+      ],
+      "reason": "The key ranks UFH against renally adjusted LMWH and apixaban during evolving renal injury; the duration/purpose atoms do not establish that agent choice.",
+      "itemEdited": false,
+      "nonDecidingDetailRemoved": null
+    },
+    {
+      "id": "review.n2.af-bridging-versus-surgical-prophylaxis.v3",
+      "slug": "af-bridging-versus-surgical-prophylaxis",
+      "key": "Stop therapeutic heparin; continue prophylactic enoxaparin",
+      "classification": "no_hold",
+      "accepted": true,
+      "heldClaimIds": [],
+      "claimIds": [
+        "claim.n2.c98ff508b25a",
+        "claim.n2.6f99845e8caa"
+      ],
+      "reason": "The key reconciles documented order indications using recorded nonvalvular-AF no-routine-bridge and postoperative prophylaxis facts; no new agent or bridge exception is inferred.",
+      "itemEdited": false,
+      "nonDecidingDetailRemoved": null
+    },
+    {
+      "id": "review.n2.marginal-ulcer-obstructive-escalation.v3",
+      "slug": "marginal-ulcer-obstructive-escalation",
+      "key": "Repeat graded endoscopic balloon dilation",
+      "classification": "hold_on_key",
+      "accepted": false,
+      "heldClaimIds": [
+        "claim.n2r3.recurrent-gj-graded-dilation"
+      ],
+      "claimIds": [
+        "claim.n2.c8b8cf1c24a2",
+        "claim.n2r2.gastrojejunal-stricture-dilation",
+        "claim.n2r3.recurrent-gj-graded-dilation"
+      ],
+      "reason": "The key prefers repeat graded gastrojejunal dilation over stenting/operation; direct priority and suitability verification is held.",
+      "itemEdited": false,
+      "nonDecidingDetailRemoved": null
+    },
+    {
+      "id": "review.n2.operative-wound-class-versus-later-ssi.v3",
+      "slug": "operative-wound-class-versus-later-ssi",
+      "key": "Reconstruct both periods from intraoperative findings",
+      "classification": "no_hold",
+      "accepted": true,
+      "heldClaimIds": [],
+      "claimIds": [
+        "claim.n2.cc57afd626e3",
+        "claim.n2.e690f51e53b0",
+        "claim.n2.4831cf651238",
+        "claim.n2r3.operation-time-outcome-separation"
+      ],
+      "reason": "The key combines recorded operation-time contamination definitions and measurement-bias facts with the explicitly constructed outcome-dependent coding rule. This is bounded logical synthesis, not a new clinical classification or treatment rule.",
+      "itemEdited": false,
+      "nonDecidingDetailRemoved": null
+    },
+    {
+      "id": "review.n2.tacrolimus-antibody-pathway-boundary.v3",
+      "slug": "tacrolimus-antibody-pathway-boundary",
+      "key": "Preimplantation serum with single-antigen bead antibody assay",
+      "classification": "hold_on_key",
+      "accepted": false,
+      "heldClaimIds": [
+        "claim.n2r3.preimplantation-specificity-assay"
+      ],
+      "claimIds": [
+        "claim.n2.e50a1962e942",
+        "claim.n2.b42555c8fb52",
+        "claim.n2.cca234e3627e",
+        "claim.n2r3.preimplantation-specificity-assay"
+      ],
+      "reason": "The key selects a specific antigen assay and stored sample for donor exclusions. The recorded rejection mechanism does not establish assay/sample suitability.",
+      "itemEdited": false,
+      "nonDecidingDetailRemoved": null
+    },
+    {
+      "id": "review.n2.mcnemar-paired-binary-outcomes.v3",
+      "slug": "mcnemar-paired-binary-outcomes",
+      "key": "McNemar analysis with checklist revision",
+      "classification": "no_hold",
+      "accepted": true,
+      "heldClaimIds": [],
+      "claimIds": [
+        "claim.n2.3e734c574c75",
+        "claim.n2.e474c0b307ac",
+        "claim.n2.4831cf651238",
+        "claim.n2r2.linked-record-net-change"
+      ],
+      "reason": "The key uses recorded paired-binary analysis plus exact net-change arithmetic and an explicitly fictional next-study trigger; no causal or clinical-effect estimate is claimed.",
+      "itemEdited": false,
+      "nonDecidingDetailRemoved": null
+    }
+  ],
+  "acceptedIds": [
+    "review.n2.sglt2-postoperative-restart.v2",
+    "review.n2.burn-feeding-perfusion-prerequisite.v3",
+    "review.n2.dialysis-isocaloric-protein-adjustment.v3",
+    "review.n2.af-bridging-versus-surgical-prophylaxis.v3",
+    "review.n2.bile-leak-duct-continuity-boundary.v2",
+    "review.n2.ercp-versus-gallbladder-source.v2",
+    "review.n2.hpylori-antibody-after-valid-cure-test.v2",
+    "review.n2.malignant-polyp-local-versus-regional-risk.v2",
+    "review.n2.operative-wound-class-versus-later-ssi.v3",
+    "review.n2.ventral-hernia-priority-change.v2",
+    "review.n2.negative-predictive-value-denominator.v2",
+    "review.n2.positive-likelihood-ratio.v2",
+    "review.n2.mcnemar-paired-binary-outcomes.v3",
+    "review.n2.equivalence-margin-versus-null-test.v2"
+  ],
+  "parkedReviseIds": [
+    "review.n2.naloxone-response-recurrence.v3",
+    "review.n2.oxygenation-versus-ventilation-monitoring.v3",
+    "review.n2.ventilator-elastic-versus-resistive-load.v3",
+    "review.n2.parenteral-response-versus-bowel-recovery.v3",
+    "review.n2.vitamin-c-indication-boundary.v3",
+    "review.n2.factor-assays-without-mixing-gate.v2",
+    "review.n2.prophylaxis-versus-ssi-source-control.v3",
+    "review.n2.serial-gcs-verbal-interference.v3",
+    "review.n2.dnr-versus-active-source-control.v3",
+    "review.n2.pancreatic-cyst-predates-pancreatitis.v3",
+    "review.n2.ulcer-posthemostasis-acid-suppression.v3",
+    "review.n2.gastric-wall-mass-specimen-provenance.v2",
+    "review.n2.fissure-sphincterotomy-continence-boundary.v3",
+    "review.n2.solid-meal-manometry-provocation.v3",
+    "review.n2.coverage-recipient-bed-versus-flap-supply.v3",
+    "review.n2.free-transfer-vascular-reconnection.v3",
+    "review.n2.contrast-local-extravasation-pattern.v3",
+    "review.n2.irreversible-ischemia-revascularization-boundary.v3",
+    "review.n2.number-needed-to-harm.v3",
+    "review.n2.case-mix-standardized-risk.v1"
+  ],
+  "sourceHeldPassIds": [
+    "review.n2.sugammadex-recovery-endpoints.v3",
+    "review.n2.refeeding-baseline-phosphate-attribution.v3",
+    "review.n2.vte-prophylaxis-to-treatment.v3",
+    "review.n2.marginal-ulcer-obstructive-escalation.v3",
+    "review.n2.tacrolimus-antibody-pathway-boundary.v3"
+  ],
+  "noN2Rewriting": true,
+  "externalRetrieval": false
+}

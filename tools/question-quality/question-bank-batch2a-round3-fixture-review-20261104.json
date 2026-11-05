@@ -1,0 +1,75 @@
+{
+  "checkedAt": "2026-11-05T04:01:35.159Z",
+  "reviews": [
+    {
+      "file": "packages/game-domain/tests/patient-supply.test.ts",
+      "assertionCallSitesBefore": 22,
+      "assertionCallSitesAfter": 22,
+      "deadlinesAndFunctionalAssertionsUnchanged": true,
+      "onlyMeasuredOwnDelta": true,
+      "replacements": [
+        [
+          "expect(release.concepts).toHaveLength(462 + 39 + 6 + 6 + 7 + 21);",
+          "expect(release.concepts).toHaveLength(462 + 39 + 6 + 6 + 7 + 21 + 5);"
+        ]
+      ]
+    },
+    {
+      "file": "packages/game-domain/tests/diagnostics/patient-supply.test.ts",
+      "assertionCallSitesBefore": 12,
+      "assertionCallSitesAfter": 12,
+      "deadlinesAndFunctionalAssertionsUnchanged": true,
+      "onlyMeasuredOwnDelta": true,
+      "replacements": []
+    },
+    {
+      "file": "packages/game-domain/tests/gs028-20261007-batch.test.ts",
+      "assertionCallSitesBefore": 91,
+      "assertionCallSitesAfter": 91,
+      "deadlinesAndFunctionalAssertionsUnchanged": true,
+      "onlyMeasuredOwnDelta": true,
+      "replacements": [
+        [
+          "expect(pools.map((item) => item.before)).toEqual([{\"cases\":480,\"concepts\":148},{\"cases\":718,\"concepts\":265},{\"cases\":754,\"concepts\":282}]);",
+          "expect(pools.map((item) => item.before)).toEqual([{\"cases\":480,\"concepts\":148},{\"cases\":718,\"concepts\":267},{\"cases\":754,\"concepts\":284}]);"
+        ],
+        [
+          "expect(pools.map((item) => item.after)).toEqual([{\"cases\":558,\"concepts\":173},{\"cases\":796,\"concepts\":290},{\"cases\":832,\"concepts\":307}]);",
+          "expect(pools.map((item) => item.after)).toEqual([{\"cases\":558,\"concepts\":173},{\"cases\":796,\"concepts\":292},{\"cases\":832,\"concepts\":309}]);"
+        ]
+      ]
+    },
+    {
+      "file": "packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+      "assertionCallSitesBefore": 131,
+      "assertionCallSitesAfter": 131,
+      "deadlinesAndFunctionalAssertionsUnchanged": true,
+      "onlyMeasuredOwnDelta": true,
+      "replacements": [
+        [
+          "expect(pools.map((item) => item.before)).toEqual([{\"cases\":558,\"concepts\":173},{\"cases\":796,\"concepts\":290},{\"cases\":832,\"concepts\":307}]);",
+          "expect(pools.map((item) => item.before)).toEqual([{\"cases\":558,\"concepts\":173},{\"cases\":796,\"concepts\":292},{\"cases\":832,\"concepts\":309}]);"
+        ],
+        [
+          "expect(pools.map((item) => item.after)).toEqual([{\"cases\":636,\"concepts\":194},{\"cases\":874,\"concepts\":311},{\"cases\":910,\"concepts\":328}]);",
+          "expect(pools.map((item) => item.after)).toEqual([{\"cases\":636,\"concepts\":194},{\"cases\":874,\"concepts\":313},{\"cases\":910,\"concepts\":330}]);"
+        ]
+      ]
+    },
+    {
+      "file": "packages/game-domain/tests/surgery-center-batch.test.ts",
+      "assertionCallSitesBefore": 40,
+      "assertionCallSitesAfter": 40,
+      "deadlinesAndFunctionalAssertionsUnchanged": true,
+      "onlyMeasuredOwnDelta": true,
+      "replacements": [
+        [
+          "    expect(reviewed).toEqual(expected);",
+          "    // Round three: actual cohort coverage follows four revised scored\n    // objectives. Old definitions and their existing histories stay retained.\n    expected.delete(\"concept.esophageal-physiology.reserve-before-junction-intervention.v1\");\n    expected.delete(\"concept.groin-ultrasound.symptom-provocation-protocol.v1\");\n    expected.add(\"concept.esophageal-physiology.integrated-pressure-report.v2\");\n    expected.add(\"concept.esophageal-physiology.reserve-acquisition-integrity.v1\");\n    expected.add(\"concept.groin-ultrasound.proximal-neck-localization.v2\");\n    expected.add(\"concept.inguinal-hernia.recurrence-after-anterior-repair.v1\");\n    expect(reviewed).toEqual(expected);"
+        ]
+      ]
+    }
+  ],
+  "justification": "Same current domain, N1/N2 and batch-2b on both sides; reverse only seven own nodes and remove five own concepts for the control. Active early-pool concepts increase by two, cases and nodes stay equal. Seeded patient selection and actual revised objective coverage change. One inventory snapshot already differs because it does not exclude the independent N2 round-two IDs; that external mismatch is deliberately retained, not hidden by a full refresh.",
+  "scope": "Expected values only; original commands, assertion counts, timings, routing, save formats and evidence remain."
+}

@@ -75,7 +75,8 @@ describe("September 17 bread-and-butter chart presentation", () => {
         expect(chart.presentation).toContain(`Bread Butter Patient ${caseIndex}`);
         expect(chart.presentation).not.toContain("{patientName}");
         expect(chart.presentation).toContain(`${demographics.ageYears}-year-old ${sexWord}`);
-        expect(choices).toHaveLength(4);
+        // Accepted three-choice rewrites retain exact per-version counts.
+        expect(choices).toHaveLength(node.questionVariantId === "question.perianal-abscess.prompt-drainage.v3.r2" ? 3 : 4);
         expect(choices.map((choice) => choice.id).sort())
           .toEqual(node.answerChoices.map((choice) => choice.id).sort());
         expect(timing).toBeDefined();

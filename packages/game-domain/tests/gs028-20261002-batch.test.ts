@@ -1,14 +1,19 @@
-import { GS028_20261002_CASES as authoredCases, SYNTHETIC_CLINICAL_RELEASE, GS028_20261002_TESTED_CONCEPTS } from "@gamify-surgery/clinical-content";
+import { createClinicalAuthorStage } from "../../../tests/fixtures/clinical-author-stage";
+import { QUESTION_NEW_N2_ROUND3_PRE_RELEASE } from "@gamify-surgery/clinical-content";
+import { GS028_20261002_CASES as authoredCases, QUESTION_NEW_N2_ROUND3_PRE_RELEASE as SYNTHETIC_CLINICAL_RELEASE, GS028_20261002_TESTED_CONCEPTS } from "@gamify-surgery/clinical-content";
 import { describe, expect, it } from "vitest";
-import {
-  PROTOTYPE_DOMAIN_CONTEXT, createInitialGameState, deserializeGameState,
-  gameReducer, getCurrentQuestion, getEligibleServiceRoute, getAnswerChoiceServicePreview,
+import { getCurrentQuestion, getEligibleServiceRoute, getAnswerChoiceServicePreview,
   selectRoutineClinicalCase, serializeGameState, advanceServiceOperations, startServiceOperation,
   type ConceptReviewEvidence, type GameState,
 } from "../src";
 import { EXACT_TEST_CHOICE_ORDER_RECORDS } from "../src/test-choice-orders";
 
+// Retain the author-stage pool, frozen definitions and existing golden budgets.
+const { context: PROTOTYPE_DOMAIN_CONTEXT, createInitialGameState, deserializeGameState, gameReducer } = createClinicalAuthorStage(QUESTION_NEW_N2_ROUND3_PRE_RELEASE);
+
 const GS028_20261002_CASES = authoredCases.map(original => SYNTHETIC_CLINICAL_RELEASE.cases.find(candidate => candidate.id === original.id)! as typeof original);
+// Include the new mastectomy objective when a fixture claims all other objectives are learned.
+const currentSelectionConcepts = SYNTHETIC_CLINICAL_RELEASE.concepts.filter(concept => GS028_20261002_CASES.some(c => c.decisionNodes.some(n => n.primaryConceptId === concept.id)));
 const REAL_MS = 1_800_000_000_000;
 type BatchCase = (typeof GS028_20261002_CASES)[number];
 
@@ -233,7 +238,8 @@ const pairedUltrasoundCases = GS028_20261002_CASES.filter((clinicalCase) =>
   clinicalCase.decisionNodes.length === 2 && clinicalCase.decisionNodes[0]?.resultGateAfter?.resultTypeId === "service.ultrasound",
 );
 const terminalUltrasoundRecords = EXACT_TEST_CHOICE_ORDER_RECORDS.filter((record) =>
-  record.caseId.startsWith("case.gs028c.") && record.disposition.kind === "terminal_service" && record.disposition.serviceId === "service.ultrasound",
+  record.caseId.startsWith("case.gs028c.") && record.disposition.kind === "terminal_service" && record.disposition.serviceId === "service.ultrasound" &&
+  GS028_20261002_CASES.some(c=>c.id===record.caseId&&c.decisionNodes.some(n=>n.id===record.nodeId&&n.questionVariantId===record.questionVariantId)),
 );
 
 describe("GS-028 October 2 batch admission", () => {
@@ -242,10 +248,16 @@ describe("GS-028 October 2 batch admission", () => {
     expect(GS028_20261002_CASES).toHaveLength(78);
     for (const item of GS028_20261002_CASES) expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter((candidate) => candidate.id === item.id)).toHaveLength(1);
     const records = EXACT_TEST_CHOICE_ORDER_RECORDS.filter(record => GS028_20261002_CASES.some(c => c.id === record.caseId && c.decisionNodes.some(n => n.id === record.nodeId && n.questionVariantId === record.questionVariantId)));
-    expect(records).toHaveLength(27);
+    // Five new incorrect preview records; the three old keyed versions stay archived.
+    // The new breast-target plan replaces one immediate imaging choice with
+    // interval surveillance. Final flag revisions retain 33 current exact testing identities.
+    // Batch 2b retains the old tuples and supplies eleven additional active previews.
+    expect(records).toHaveLength(44);
     expect(records.filter((record) => record.disposition.kind === "result_gate_route_override")).toHaveLength(2);
     expect(records.filter((record) => record.disposition.kind === "terminal_service")).toHaveLength(2);
     expect(records.filter((record) => record.disposition.kind === "not_executed" && record.disposition.reason === "external_only")).toHaveLength(12);
+    expect(records.filter((record) => record.disposition.kind === "not_executed" && record.disposition.reason === "future_planned")).toHaveLength(24);
+    expect(records.filter((record) => record.disposition.kind === "not_executed" && record.disposition.reason === "specialist_or_unsupported_service")).toHaveLength(4);
   });
 
   it.each(GS028_20261002_CASES.map((item, index) => [index, item] as const))(
@@ -305,7 +317,11 @@ describe("GS-028 October 2 batch admission", () => {
       ]);
 
       const second = answerCommand(state, encounterId, true, `${encounterId}.referral`, REAL_MS + 2);
-      expect(second.choice.label).toBe("Breast-specialist biopsy referral");
+      // B2B37 rewrites only the dense-focal variant; the screened companion
+      // retains its reviewed wording and exact expectation.
+      expect(second.choice.label).toBe(clinicalCase.id === "case.gs028c.palpable-breast.paired-dense-focal"
+        ? "Palpation-directed core sampling through the breast team"
+        : "Breast-specialist biopsy referral");
       expect(second.choice.serviceRequest).toBeNull();
       const receipts = state.serviceIncomeReceipts.filter((receipt) => receipt.actorId === encounterId);
       const operations = state.serviceOperations.filter((operation) => operation.actorId === encounterId);
@@ -399,9 +415,9 @@ describe("GS-028 October 2 batch admission", () => {
   });
 
   it("selects each new objective independently when all other new objectives are learned and not due", () => {
-    for (const target of GS028_20261002_TESTED_CONCEPTS) {
+    for (const target of currentSelectionConcepts) {
       const state = prepared(`independent.${target.id}`, 2);
-      for (const concept of GS028_20261002_TESTED_CONCEPTS) {
+      for (const concept of currentSelectionConcepts) {
         if (concept.id !== target.id) markReviewed(state, concept.id, REAL_MS + 86_400_000);
       }
       const selection = selectRoutineClinicalCase(state, GS028_20261002_CASES, REAL_MS);
@@ -411,10 +427,10 @@ describe("GS-028 October 2 batch admission", () => {
     }
   });
 
-  it("prioritizes due new objectives and returns none when all twenty are not due", () => {
-    for (const target of GS028_20261002_TESTED_CONCEPTS) {
+  it("prioritizes due new objectives and returns none when all current objectives are not due", () => {
+    for (const target of currentSelectionConcepts) {
       const state = prepared(`due.${target.id}`, 2);
-      for (const concept of GS028_20261002_TESTED_CONCEPTS) {
+      for (const concept of currentSelectionConcepts) {
         markReviewed(state, concept.id, concept.id === target.id ? REAL_MS - 1 : REAL_MS + 86_400_000);
       }
       const selection = selectRoutineClinicalCase(state, GS028_20261002_CASES, REAL_MS);
@@ -423,12 +439,12 @@ describe("GS-028 October 2 batch admission", () => {
       expect(selection?.clinicalCase.decisionNodes[0]?.primaryConceptId).toBe(target.id);
     }
     const noneDue = prepared("none-due", 2);
-    for (const concept of GS028_20261002_TESTED_CONCEPTS) markReviewed(noneDue, concept.id, REAL_MS + 86_400_000);
+    for (const concept of currentSelectionConcepts) markReviewed(noneDue, concept.id, REAL_MS + 86_400_000);
     expect(selectRoutineClinicalCase(noneDue, GS028_20261002_CASES, REAL_MS)).toBeNull();
   });
 
   it("blocks a new objective while its own encounter remains unresolved", () => {
-    for (const target of GS028_20261002_TESTED_CONCEPTS) {
+    for (const target of currentSelectionConcepts) {
       const clinicalCase = standaloneFor(target.id);
       const encounterId = `unresolved.${target.id}`;
       let state = prepared(encounterId, 2);

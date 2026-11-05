@@ -1,0 +1,448 @@
+[
+  {
+    "id": "F01",
+    "title": "DCIS: which inked surface is the final margin?",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Original flag fully resolved: yes. Review versus re-excision no longer competes as sequential parts of one plan; all options now describe treatment.",
+      "The keyed plan is defensible among the offered choices: the resident must distinguish the main specimen edge from the separately oriented final cavity boundary, then apply the pure-DCIS/irradiation margin rule. The main-specimen 1-mm distance is a credible temptation rather than the final margin.",
+      "No exploitable zero-knowledge wording, grammar, length, absolute or convergence cue identified. Whole-breast irradiation appears in both the key and the closest competitor; the planned irradiation does not distinguish those choices. Completed reconciliation and the mammographic observations provide decision context rather than permission for a uniquely available action.",
+      "Completion mastectomy is a weaker competitor than posterior re-excision, but the specimen interpretation still makes the closest alternative substantive. No decision-critical omission or confident clinical error identified within this focused margin question.",
+      "Review scope for all 16 entries: judgments use only Presentation, Current update, Exhibit, Task and Options in after; titles and author reasoning are not learner evidence. Flags and handoffs establish history only. Difficulty is a qualitative PGY-2/3 prediction. No network/source re-verification, runtime/profile/feedback audit or clinical sign-off was performed. All drafts remain needs_clinician_review. Held F14 is excluded from this array and verdict/difficulty counts; its existing hold is unchanged."
+    ],
+    "suggestions": [
+      "Retain the explicit specimen orientation and final external edge; do not simplify them back to a single margin summary.",
+      "Retain this exact version for independent clinical sign-off. If strengthening the mastectomy competitor, preserve the clear distinction between the original and final posterior boundaries and obtain a new review of the changed version."
+    ]
+  },
+  {
+    "id": "F02",
+    "title": "Shoulder pain after laparoscopy: the later course changes the question",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "MR cholangiography with a hepatobiliary contrast agent",
+        "why": "Potential semantic convergence: the key shares MR cholangiography with one distractor and hepatobiliary-agent/functional-leak assessment with the other. A testwise reader may favor the apparently combined approach. This is a partial heuristic rather than the exact repeated-component convergence seen in F06, and does not establish the key by itself."
+      },
+      {
+        "phrase": "establish the duct anatomy",
+        "why": "The task narrows the problem to anatomy, encouraging rejection of a functional scintigraphy study. This is partly legitimate scope definition, but it supplies the anatomy-versus-leak-detection distinction rather than requiring the resident to identify the unresolved question."
+      },
+      {
+        "phrase": "without a hepatobiliary contrast agent",
+        "why": "The paired with/without MR labels invite a more-complete-test heuristic. No patient-specific tradeoff in the supplied record makes the added agent a consequential choice rather than an apparent upgrade."
+      }
+    ],
+    "fairness": [
+      "Original flag fully resolved: yes for the isolated phrenic-nerve/anatomical-outlier problem. The original easy anatomy task has been replaced, rather than validated; the current imaging question has its own cue and specificity problems.",
+      "There is potential two-step reasoning: interpret the postoperative collection/drainage as a possible biliary complication, then choose a study for treatment planning. Moderate predicted difficulty reflects the imaging distinction, not the opening shoulder-pain history.",
+      "The broad request for duct anatomy does not clearly specify whether the unresolved need is duct continuity, anatomical mapping, active extravasation or localization of its source. Conventional MR cholangiography is also an anatomical study; I am not confident the visible goal alone makes the contrast-enhanced version uniquely best in every plausible reading.",
+      "I am not asserting that the keyed contrast study is clinically wrong. Its incremental advantage and the precise clinical question require clinician/source confirmation; no contrast eligibility or excretory-performance assumption should be silently supplied."
+    ],
+    "suggestions": [
+      "State the concrete unresolved treatment-planning question from the existing record, using verified observations rather than the name or benefit of the desired test.",
+      "Have the clinician establish why conventional MR cholangiography is inferior for that exact question. If it is equally defensible, replace it or change the task.",
+      "Remove the three-choice component-convergence structure. Use genuinely distinct, credible same-stage imaging strategies; do not add a fourth unsupported modality merely to balance words.",
+      "Remove the shoulder-pain preamble if it has no bearing on the revised decision; extra chronology should not be credited as an additional inference."
+    ]
+  },
+  {
+    "id": "F03",
+    "title": "Varicose-vein assessment after a compression ultrasound",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "supine probe-compression views",
+        "why": "The completed study shares its distinguishing word with 'deep-venous compression duplex study'. A reader can reject the repeated study by novelty without understanding reflux acquisition."
+      },
+      {
+        "phrase": "the femoral and popliteal veins compress fully, with no intraluminal material seen",
+        "why": "The completed reassuring deep-vein findings further dispose of the compression-study option. These observations are legitimate, but this option set makes them a near-explicit elimination rather than a close protocol decision."
+      },
+      {
+        "phrase": "Request a pelvic contrast CT venogram",
+        "why": "The only pelvis-focused CT request has no corresponding proximal finding in the supplied calf/ankle story. It is a weak location/modality outlier; definitive rejection requires clinical knowledge, but ordinary location matching also disfavors it."
+      }
+    ],
+    "fairness": [
+      "Original flag fully resolved: yes. The generic individualized answer has been replaced with specific investigations.",
+      "Reflux duplex is the defensible best answer among these choices. The prior compression examination does not establish a reflux map. No confident clinical inaccuracy or equal best distractor identified.",
+      "Too easy for PGY-2/3 residents. Deleting the entire outside-ultrasound record still leaves routine symptomatic varicose veins and the same obvious reflux study. Recognizing the previous protocol does not materially change the selected action, so it does not earn a substantive second step."
+    ],
+    "suggestions": [
+      "Build the decision around an actual supported protocol or anatomical uncertainty that changes what is requested, rather than an already-completed compression examination used as a foil.",
+      "Compare equally credible venous mapping requests for the demonstrated distribution and acquisition conditions. Supply the observations that distinguish their scope.",
+      "Replace pelvic CT unless verified proximal findings make it a real competitor. Keep concrete requests and avoid restoring a generic individualized plan."
+    ]
+  },
+  {
+    "id": "F04",
+    "title": "Potassium treatment after the ECG changes improve",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "After intravenous calcium the QRS complexes narrowed.",
+        "why": "This explicitly supplies success of calcium's ECG effect and makes 'another intravenous calcium dose' look like repeating a completed action. It is necessary treatment-response evidence, but strongly pre-eliminates that distractor."
+      },
+      {
+        "phrase": "The next potassium measurement was still 6.7 mmol/L.",
+        "why": "The unchanged abnormal number explicitly contrasts with the improved ECG and undermines observation. Combined with the previous sentence, an 'address what has not improved' heuristic strongly favors the only new active treatment."
+      }
+    ],
+    "fairness": [
+      "Original flag fully resolved: yes. Immediate-transfer availability/permission is absent.",
+      "Insulin with glucose is the defensible best offered next treatment in this stipulated hospital sequence. The item does not establish that this constitutes the complete management plan for advanced kidney disease; monitoring and potassium removal remain outside its narrow choice.",
+      "Too easy for PGY-2/3 residents: this is the familiar distinction between myocardial stabilization and potassium shifting, with both response components expressly supplied. Two observations do not make this a challenging two-step decision.",
+      "No confident clinical error identified in the keyed next action. Timing of the repeat value is unspecified, but the supplied unchanged potassium does not itself imply calcium was expected to lower it."
+    ],
+    "suggestions": [
+      "Retain the ECG and potassium response for safety and fairness; do not hide them to manufacture difficulty.",
+      "Either seek explicit acceptance as a basic emergency-treatment-sequence item, or use a sourced case where actual preceding therapies and response trajectories distinguish credible next active treatments.",
+      "Replace observation and routine repeat calcium as resident-level foils only if the revised record makes competing actions plausible. Do not invent a dose, timing interval, contraindication or dialysis threshold."
+    ]
+  },
+  {
+    "id": "F05",
+    "title": "A persistent neck lesion after a cyst-fluid aspirate",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Original flag fully resolved: partially. 'Lateral neck lump' removes the cervix/neck ambiguity. The owner's separate ABSITE-scope question remains unverified; the handoff's scope hold is not resolved by this rewrite.",
+      "The raw sample description supports an adequacy inference, followed by a decision to obtain a representative sample rather than equate cyst fluid with a benign diagnosis. Repeat image-guided needle assessment is a defensible best direction among the choices.",
+      "The keyed request is underspecified about how the repeat assessment will correct the fluid-only sample. Image guidance alone does not say that the mural solid component will be sampled; repeating aspiration of the centre could reproduce the same problem.",
+      "I do not identify an equally best open excision from the facts supplied, but a persistent adult cystic neck lesion requires clinician confirmation of the complete diagnostic pathway. The visible question should not imply that an unspecified repeat aspiration necessarily settles it.",
+      "No independent zero-knowledge grammar, length, convergence or lexical key cue identified. The solid component and absence of lesional cells are meaningful adequacy findings, not summary diagnoses."
+    ],
+    "suggestions": [
+      "Make the diagnostic request specify representative sampling of the observed mural tissue, with the exact needle technique/pathway confirmed by the clinician and existing permitted evidence.",
+      "Keep all choices as comparably specific sampling or follow-up plans so the improved key does not become the only detailed option.",
+      "Keep the ABSITE-labelled release hold explicit until permitted public scope verification or an owner decision on scope exists. An editorial improvement cannot close that part of the original flag."
+    ]
+  },
+  {
+    "id": "F06",
+    "title": "Graft failure: predict the archived immune interaction",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "Recipient serum collected before implantation binds donor endothelial cells",
+        "why": "Component convergence: recipient-origin material appears in two choices; serum/binding appears in two; donor targets appear in two; endothelial targets appear in two. The key uniquely assembles the majority components. A testwise reader can derive it without interpreting transplant pathology."
+      },
+      {
+        "phrase": "endothelial immunoglobulin and complement deposition",
+        "why": "The stem supplies both the tissue target and the humoral mechanism. 'Endothelial' also occurs in a distractor, so it is not a unique lexical key by itself, but the remaining choice becomes the elementary donor-versus-recipient direction of serum binding."
+      }
+    ],
+    "fairness": [
+      "Original flag fully resolved: yes for removal of the named rejection diagnosis. The record now supplies findings, and the previous pretransplant donor-binding answer sentence is absent.",
+      "The keyed result is the defensible prediction for the stipulated immediate graft event. Patent major vessels and the microvascular biopsy findings appropriately support interpretation; no confident clinical inaccuracy identified.",
+      "Too easy for PGY-2/3 residents. The task maps a highly characteristic humoral injury pattern to its standard immune direction; predicting the same mechanism in archived material is a recall chain, not a consequential second inference.",
+      "The reversed donor-serum option represents a different immune direction and the lymphocyte option a different effector mechanism, but neither is a close competitor once the entire characteristic record is supplied."
+    ],
+    "suggestions": [
+      "Remove component-majority convergence; compare coherent laboratory patterns with balanced components and independent clinically credible rationales.",
+      "Use a supported discordance between actual archived tests, their targets or collection times to require an inference that changes a subsequent investigation or conclusion.",
+      "Retain the clinical findings needed to distinguish technical vascular failure. Do not create apparent difficulty by stripping away safety/diagnostic context or merely renaming the same classic mechanism."
+    ]
+  },
+  {
+    "id": "F07",
+    "title": "Cirrhosis: a change before an elective hernia operation",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "Since the earlier assessment the abdomen has enlarged, with shifting dullness and free intraperitoneal fluid on ultrasound.",
+        "why": "The only newly changed problem maps directly to 'Control ascites'. The other options address a longstanding finding or future postoperative arrangements, permitting a 'treat the new abnormality' shortcut."
+      },
+      {
+        "phrase": "The platelet count remains at its longstanding reduced level.",
+        "why": "'Remains' and 'longstanding' contrast with the newly emphasized abdominal change and narratively demote the platelet alternative without giving the value needed to judge its actual significance."
+      }
+    ],
+    "fairness": [
+      "Original flag fully resolved: yes for removal of 'alone' and the old nonparallel risk-domain labels. The options now name specific plans.",
+      "Ascites assessment/management before elective repair is a defensible priority. Reducibility and absence of vomiting are necessary elective-versus-urgent context and should not be deleted as giveaways.",
+      "The task asks which plan to take to a conference, rather than which issue first changes the timing. Platelet management and postoperative-level planning can also be parts of a reasonable conference plan. An unspecified low platelet count cannot establish that platelet correction is needed, but also does not adequately rank it against the other proposals.",
+      "Too easy for PGY-2/3 residents on the intended reading: naming ascites from explicit free fluid and choosing to control it before elective surgery is a direct finding-to-action mapping. No separate difficult risk interpretation is required."
+    ],
+    "suggestions": [
+      "Specify the actual prioritized decision rather than asking generally what to bring to a conference.",
+      "Use clinician-verified observations that make the competing perioperative actions credible and rankable; include the platelet context if platelet correction remains a competitor, without inventing a cutoff.",
+      "Make the fluid assessment or response to prior management change the surgical plan. Do not simply substitute an ascites synonym for the diagnosis and count that as a second step."
+    ]
+  },
+  {
+    "id": "F08",
+    "title": "An ascending leg process: choose the source assessment",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "palpation does not reveal its contents",
+        "why": "This singles out the heel as the explicitly unanswered diagnostic question. It paraphrases the reason for imaging that site and favors the heel request before the resident weighs the ascending inflammation against the tender veins."
+      }
+    ],
+    "fairness": [
+      "Original flag fully resolved: partially. The old direct lymphangitis-label question is gone and the tender veins create a real competitor, but a new uncertainty-to-test cue and an underspecified ordering decision remain.",
+      "Interpreting the distal skin break/proximal inflammatory pattern and selecting a source-focused assessment could be meaningful two-step reasoning. Targeted heel ultrasound is a reasonable request for the tender swelling whose contents are uncertain.",
+      "The broad 'next' assessment task does not clearly establish why calf venous assessment must be deferred when the record also emphasizes tender varicosities. Coexisting superficial venous thrombosis is not ruled out by a wound-related inflammatory process. I cannot confidently rank the two requests from the supplied examination alone.",
+      "The groin option has little support beyond tender regional nodes; no focal nodal collection finding makes it a close imaging competitor. Uncertainty about ordering should not be counted as legitimate difficulty.",
+      "I am not asserting that venous ultrasound is mandatory or that the keyed heel study is incorrect; the missing distinction is which unresolved problem warrants priority in this exact presentation."
+    ],
+    "suggestions": [
+      "Supply the verified calf and heel examination observations that let a clinician prioritize the competing problems, including the actual venous distribution/findings when relevant.",
+      "Replace 'palpation does not reveal its contents' with concrete observed examination features, without claiming an unobserved collection.",
+      "Use a neutral but bounded decision whose alternatives address the same stage of care. Replace groin imaging unless actual findings make it a credible near-miss.",
+      "Have Melissa explicitly adjudicate whether source imaging is uniquely best before retaining the key."
+    ]
+  },
+  {
+    "id": "F09",
+    "title": "Pressure-associated circulatory and ventilator changes",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "The table remained flat.",
+        "why": "This necessary experimental control directly undercuts both 'Positional venous pooling' options. The balanced matrix therefore reduces to a single respiratory-physiology comparison; component balance does not restore a second difficult inference."
+      },
+      {
+        "phrase": "Both rise by the same amount",
+        "why": "This already supplies the arithmetic result repeated by 'Difference between peak and plateau: Unchanged'. The duplicate row rehearses the discriminator against airway resistance; it is not independent evidence."
+      }
+    ],
+    "fairness": [
+      "Original flag fully resolved: yes for intelligibility. The controlled change, observed variables and requested paired explanation are clear.",
+      "The keyed explanation is defensible as the best offered account: reversible lower filling with the pressure change and a parallel airway-pressure rise at fixed delivered volume/flow. These observations support an interpretation, not direct proof of a specific anatomical caval lesion.",
+      "The four-choice matrix eliminates majority-component convergence, but the task combines two parallel classifications rather than an interpretation followed by a consequential decision. The flat-table statement makes the circulatory half particularly weak.",
+      "Moderate at the low end for PGY-2/3 residents because peak-versus-plateau interpretation requires physiological knowledge. The table should not be represented as a hard integrated two-step question.",
+      "No confident clinical error or equally best distractor identified within the idealized record. Controls on position and ventilation are appropriate and should remain."
+    ],
+    "suggestions": [
+      "Keep the controls, but replace positional pooling with a clinician-supported circulatory competitor that remains plausible under those controls.",
+      "Remove the redundant peak-minus-plateau row, or supply raw comparable observations from which the learner derives the relation.",
+      "Make the combined findings determine a clinically consequential next adjustment or assessment if a true two-step objective is intended; all options should remain plausible until both observations are interpreted.",
+      "Do not manufacture challenge by removing the controls needed for causal interpretation."
+    ]
+  },
+  {
+    "id": "F10",
+    "title": "DCIS: reconcile the changed breast operation with axillary planning",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "current operative plan",
+        "why": "Placed after the explicit switch to mastectomy, this spotlights the changed operation as the deciding feature. It is a weak instructional scaffold, not a sufficient zero-medical-knowledge solution."
+      }
+    ],
+    "fairness": [
+      "Original flag fully resolved: yes. The unfamiliar threatened-mapping premise is absent and the operation is explicitly simple mastectomy.",
+      "The concurrent sentinel-node plan is the defensible best offered answer in the conventional setting described. The deferred option now clearly states its conditional, and the observed nodes do not exclude microscopic disease.",
+      "Too easy for PGY-2/3 residents: the known diagnosis and booked mastectomy invoke the familiar staging rule. Removing the earlier localized-excision plan leaves the same answer, so the chronology does not create a substantive additional inference.",
+      "No decisive length, grammar, convergence or nonmedical answer-matching cue found. The benign-appearing nodes are appropriate clinical context, not a reason to delete needed information.",
+      "This offline assessment does not establish a universal rule for special deferred-mapping protocols absent from the record. No such protocol should be assumed to rescue or challenge an option."
+    ],
+    "suggestions": [
+      "Retain the clear conditional options and raw nodal observations.",
+      "Use a verified operative/specimen distinction that the resident must interpret before applying the staging rule, rather than explicitly supplying a changed operation and recounting its prior plan.",
+      "If retaining this standard mastectomy-rule question, seek explicit acceptance as foundational staging instruction instead of calling it a difficult resident application."
+    ]
+  },
+  {
+    "id": "F11",
+    "title": "Perioperative directive: the recovery handover",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "ending when the acute cardiopulmonary effects of anaesthesia have resolved",
+        "why": "This states the decision rule directly. Applying a patient-specific agreement is legitimate, but the remaining text and choices turn it into straightforward verbal matching."
+      },
+      {
+        "phrase": "An infusion remains necessary for hypotension attributed by the anaesthetic team to the anaesthetic course.",
+        "why": "The supplied causal interpretation establishes that an anaesthetic cardiovascular effect remains. It nearly restates the key's rationale and removes the inference a resident might otherwise need to make."
+      },
+      {
+        "phrase": "until cardiovascular support ends",
+        "why": "Only the key uses a physiological endpoint, matching the explicitly agreed physiological endpoint. Both distractors use locations or administrative time boundaries, so a nonmedical reader can reject them by category."
+      }
+    ],
+    "fairness": [
+      "Original flag fully resolved: yes for a complete, grammatical task. It clearly asks which order to communicate in a conditional recovery scenario.",
+      "Continuing the temporary order at this handover is supported by the stipulated agreement and ongoing anaesthesia-attributed hypotension. The item does not require a jurisdiction-specific default rule.",
+      "The key's future stopping rule is narrower than the agreement: ending cardiovascular support does not by itself establish that all acute cardiopulmonary effects have resolved. Independent breathing is not proof that every pulmonary effect is absent. The current continuation decision is clear, but the exact order overstates its endpoint.",
+      "Too easy for PGY-2/3 residents. The case gives both the governing agreement and the authoritative attribution needed to apply it; this is a verbal rule application, not meaningful two-step reasoning."
+    ],
+    "suggestions": [
+      "Make the key continue the temporary order pending reassessment of the agreed cardiopulmonary recovery endpoint, rather than automatically terminate it when cardiovascular support stops.",
+      "For resident difficulty, compare specific orders at the same recovery stage that differ on a real, supported interpretation of the documented agreement and observations.",
+      "Preserve the patient's actual agreement and the hypothetical chronology; do not create difficulty by hiding preferences or substituting an assumed institutional DNR policy.",
+      "If the task remains straightforward application of an explicit instruction, request a foundational-purpose decision."
+    ]
+  },
+  {
+    "id": "F12",
+    "title": "Gallstones with a cholestatic laboratory pattern",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Original flag fully resolved: yes. HIDA availability/no-delay permission and the authored inconclusive label are absent.",
+      "MRCP is a defensible best next investigation among the offered choices. The learner must interpret the resolving pain, lack of inflammatory observations and persisting cholestatic enzymes, then choose further duct evaluation rather than a gallbladder-focused functional study or an invasive duct procedure.",
+      "No strong zero-knowledge wording, length, grammar or convergence cue identified. MRCP and ERCP share ductal terminology, so matching the common-duct phrase does not isolate the key.",
+      "The normal temperature/white count and specific gallbladder observations are legitimate evidence for ranking the competing clinical questions, not explicit statements that named distractors are wrong. No visible duct focus is not proof of absence of a duct stone.",
+      "No confidently equal best distractor or clinical inaccuracy identified in the offered set. Duct calibre, laboratory trajectory and other causes of enzyme abnormalities would matter in full clinical care, but their omission does not clearly overturn the preferred noninvasive study here. This is a moderate prediction, not a verified guideline-risk classification or a claim that MRCP is the only acceptable investigation outside these choices."
+    ],
+    "suggestions": [
+      "Retain the raw findings and neutral test labels; do not add a conclusion such as intermediate risk or an availability sentence.",
+      "Have clinical sign-off confirm the exact intended enzyme/workup context and ranking. Do not interpret this editorial PASS as a fresh source check or add unsupported exact thresholds."
+    ]
+  },
+  {
+    "id": "F13",
+    "title": "Discordant preoperative sleep questionnaires",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "No diagnostic sleep study has been performed.",
+        "why": "This directly undermines 'Confirmed OSA; communicate an established diagnosis'. It is necessary evidence-status information, but in this three-label set it removes one option by ordinary diagnostic-versus-confirmed language."
+      },
+      {
+        "phrase": "STOP-Bang is flagged by the reporting service",
+        "why": "The preinterpreted flag, reinforced by reported breathing pauses, makes 'OSA unlikely' unattractive. After the confirmed option is eliminated, the middle-certainty suspected label wins without knowing either instrument's domains."
+      },
+      {
+        "phrase": "Suspected OSA; communicate perioperative risk",
+        "why": "This is the sole uncertainty-preserving option between a confirmed diagnosis and an unlikely diagnosis. Combined with a flagged screen and no diagnostic study, it becomes the generic cautious-middle answer."
+      }
+    ],
+    "fairness": [
+      "Original flag fully resolved: yes for the literal 'alone' and generic method-category defects. The current problem is a new certainty-level shortcut, not a retained 'alone' label.",
+      "The suspected-OSA entry is the defensible best offered documentation. A sleepiness report within its reference range does not establish absence of OSA; screening does not establish a diagnosis.",
+      "Too easy for PGY-2/3 residents. The clinical story and the flagged instrument both point toward suspicion, and the absent diagnostic test explicitly limits certainty. Deleting the Epworth result still leaves the same answer; discordance does not earn a substantive second step.",
+      "The standard permits named instrument reports when interpreting what a measure establishes. Their use is not intrinsically a violation, and I am not recommending invented numerical scores or reproducing instrument content. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": [
+      "Keep the distinction between screening and diagnosis, but compare concrete perioperative assessment or communication plans that all acknowledge uncertainty.",
+      "Make the discrepant reports change a supported decision rather than merely place the key between two extreme certainty labels.",
+      "Use clinician-verified inputs/interpretation and do not invent a questionnaire cutoff. If this remains screening-versus-diagnosis recognition, seek explicit foundational acceptance."
+    ]
+  },
+  {
+    "id": "F15",
+    "title": "Position, venous return and the arterial gas record",
+    "verdict": "FAIL",
+    "difficulty": "moderate",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "with the insufflation pressure and minute ventilation held at the same settings",
+        "why": "The fixed-pressure statement, combined with the head-up/return-flat sequence, makes positional versus pressure-related attribution largely a controlled-variable matching exercise. These controls are necessary, but they weaken half of the matrix."
+      },
+      {
+        "phrase": "After head-up tilt",
+        "why": "The changed position and reversal match 'Positional venous pooling'. Coupled with 'Arterial CO2' being higher and the options' 'CO2-related' versus 'fixed-acid' wording, the key can be strongly favored by tracking changed words/variables without establishing the actual acid-base state."
+      }
+    ],
+    "fairness": [
+      "Original flag fully resolved: yes for clarity of the chronology and requested paired interpretation. The prior confusing direction-only wording is absent.",
+      "The relative gas observations do not establish acidemia. A lower pH may still be within the reference interval or remain alkalemic; a higher CO2 may likewise remain below or within its reference interval. No actual values or relation to reference intervals is supplied.",
+      "Every option asserts acidemia. Thus the literal keyed paired conclusion is not established by the visible record, even though positional pooling plus a CO2-associated acidifying change is the intended and most plausible relative interpretation. This is a validity failure, not acceptable difficulty.",
+      "The balanced four-option matrix fixes majority-component convergence, but it combines parallel haemodynamic and acid-base classifications rather than an interpretation followed by a clinical decision.",
+      "Predicted moderate for the intended PGY-2/3 physiology task; this estimate does not count the missing absolute acid-base information as legitimate challenge. I am confident in the distinction between lower pH and demonstrated acidemia, without asserting a new numeric threshold or a particular baseline.",
+      "Initial increased filling is unnecessary to the later paired task once the pre-tilt reference is established. The exact mechanism of the early response is not tested and should not be credited as another inference."
+    ],
+    "suggestions": [
+      "Before re-review, supply clinician-verified actual gas values or their relation to the laboratory reference intervals sufficient to establish the claimed acid-base state; do not invent numerical cutoffs.",
+      "Alternatively ask only for the direction/mechanism of the observed change and remove unsupported acidemia labels consistently from all options. Verify that this revised construct still meets the intended resident difficulty.",
+      "Use a consequence of the interpreted record to create a genuine second step, or accurately describe this as two parallel physiological classifications.",
+      "Preserve the pressure/ventilation controls and replace weak competing mechanisms instead of making causal attribution ambiguous."
+    ]
+  },
+  {
+    "id": "F16",
+    "title": "A cystic neck node before thyroid surgery",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "thyroid cytology reports papillary carcinoma",
+        "why": "The named thyroid primary maps to the unique 'thyroglobulin measurement' choice through disease/organ association. The thyro- word family also provides a partial lexical cue; knowing the exact adjunct is still medical knowledge."
+      },
+      {
+        "phrase": "Which repeat sampling request should be made",
+        "why": "The lead-in has already selected repeat sampling. Recognizing that the first sample is inadequate is therefore not required to choose among the options; all three repeat it."
+      },
+      {
+        "phrase": "flow-cytometric assessment",
+        "why": "Together with microbiological culture, this offers a different disease-domain test without corresponding lymphoid or infectious findings. Those are weaker competitors than alternative plans for the known thyroid-related nodal concern; rejecting them conclusively requires medical knowledge."
+      }
+    ],
+    "fairness": [
+      "Original flag fully resolved: yes for both tester wording concerns. The clinician discusses the radiologist's report and the anatomy is explicitly the neck.",
+      "Node aspiration with cytology and thyroglobulin measurement is the defensible best request among these choices. The previous fluid-only sample is not diagnostic reassurance; no confident competing best answer identified.",
+      "Too easy for PGY-2/3 residents. Deleting the prior aspiration sentence still leaves the same adjunct choice for a suspicious node in known papillary thyroid carcinoma. The task preselects the supposed first decision, leaving a single familiar tumour-to-marker association.",
+      "The node size and morphology are legitimate planning information, not an authored 'meets criteria' conclusion. This offline review does not independently verify the precise sampling criterion or test interpretation; that remains clinical sign-off."
+    ],
+    "suggestions": [
+      "Ask for a next plan without preselecting repeat sampling, and compare credible plans within the thyroid-node workup.",
+      "Make the previous specimen's adequacy or actual discordant results change the action, with all necessary verified observations present.",
+      "Replace unrelated assay-domain foils with clinician-supported near-misses. Keep the explicit report authorship and neck wording that resolved the tester flags.",
+      "Do not remove the known primary merely to obscure the appropriate marker; change the decision so that the diagnosis does not answer it by itself."
+    ]
+  },
+  {
+    "id": "F17",
+    "title": "A benign sample and a different palpable site",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "The prior biopsy diagram marks an ultrasound lesion at 2 o'clock in the same breast",
+        "why": "Against the twice-specified 4-o'clock finding, this makes the benign specimen's irrelevance a direct location mismatch. It is valid evidence, but almost no clinical interpretation is needed to discard the reassuring sample."
+      },
+      {
+        "phrase": "firm irregular 4-o'clock breast finding",
+        "why": "This classic concerning examination wording, followed by two modalities with no correlate, points directly toward tissue sampling. It is legitimate clinical evidence rather than a pure zero-knowledge cue, but it leaves little credible competition in this option set."
+      }
+    ],
+    "fairness": [
+      "Original flag fully resolved: yes. The report explicitly distinguishes absent imaging correlate at the examined site from a benign biopsy at a different site; ambiguous 'negative' wording is absent.",
+      "Examination-guided tissue sampling is the defensible best offered plan for the concerning palpable finding. MRI is not established as a necessary prerequisite by this record, and surveillance does not resolve the concern.",
+      "Two-step reasoning is present in a basic form: recognize that the benign sample does not address the current site and interpret the clinical/imaging mismatch, then select tissue assessment. Nevertheless this is likely easy for PGY-2/3 residents.",
+      "Deleting the entire 2-o'clock biopsy history leaves the same classic examination/imaging discordance and the same answer. The extra record discrepancy does not change the decision or substantially strengthen difficulty.",
+      "No confident clinical inaccuracy identified. Examination-guided sampling avoids inventing an image-visible target. Exact technique should remain subject to clinical assessment rather than be inferred from this editorial review."
+    ],
+    "suggestions": [
+      "Keep the explicit site-specific imaging descriptions that resolved the original tester flag.",
+      "Use a verified specimen/localization relationship whose interpretation actually changes the next step; avoid a trivially different clock position added to an otherwise unchanged biopsy indication.",
+      "Compare clinically credible next diagnostic strategies whose ranking depends on the actual examination, localization or sample adequacy. Do not weaken the concerning findings solely to make surveillance tempting and thereby create multiple best answers.",
+      "If retaining this clear discordance lesson, seek explicit acceptance for its foundational purpose rather than claiming resident-level struggle."
+    ]
+  }
+]

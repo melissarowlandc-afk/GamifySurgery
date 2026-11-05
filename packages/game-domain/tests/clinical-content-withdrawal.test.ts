@@ -1,3 +1,5 @@
+import { QUESTION_CATALOG_RELEASE } from "@gamify-surgery/clinical-content";
+import { QUESTION_NEW_N3_CASES } from "@gamify-surgery/clinical-content";
 import { describe, expect, it } from "vitest";
 import {
   ROW_029_CASES,
@@ -35,6 +37,8 @@ import {
   GS028_20261007_LEVEL3_CASES,
   PEDIATRIC_CLINIC_CASES,
   VARIETY3_CASES,
+  QUESTION_NEW_N1_CASES,
+  QUESTION_NEW_N2_CASES,
 } from "@gamify-surgery/clinical-content";
 import {
   PROTOTYPE_DOMAIN_CONTEXT,
@@ -72,7 +76,7 @@ describe("withdrawn AI-authored clinical pilot", () => {
       ),
     ).toBe(false);
     expect(
-      PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.map(
+      QUESTION_CATALOG_RELEASE.cases.map(
         (clinicalCase) => clinicalCase.id,
       ),
     ).toEqual([
@@ -117,6 +121,10 @@ describe("withdrawn AI-authored clinical pilot", () => {
       ...GS028_20261007_LEVEL3_CASES.map((clinicalCase) => clinicalCase.id),
       ...PEDIATRIC_CLINIC_CASES.map((clinicalCase) => clinicalCase.id),
       ...VARIETY3_CASES.map((clinicalCase) => clinicalCase.id),
+      ...QUESTION_NEW_N1_CASES.map((clinicalCase) => clinicalCase.id),
+      ...QUESTION_NEW_N2_CASES.map((clinicalCase) => clinicalCase.id),
+      // N3 is an explicit catalog append; default exclusion has separate coverage.
+      ...QUESTION_NEW_N3_CASES.map((clinicalCase) => clinicalCase.id),
     ]);
   });
 

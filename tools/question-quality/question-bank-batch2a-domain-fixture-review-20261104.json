@@ -1,0 +1,66 @@
+{
+  "checkedOn": "2026-11-04",
+  "scope": "Three fixture repairs only; no runtime, selector, routing, save or Level 4/5 test/evidence change.",
+  "results": [
+    {
+      "file": "packages/game-domain/tests/gs028-20261007-batch.test.ts",
+      "assertionCallSites": 91,
+      "commandsAndDeadlinesUnchanged": true,
+      "explicitExpectedChanges": [
+        [
+          "{ cases: 718, concepts: 257 }",
+          "{ cases: 718, concepts: 258 }"
+        ],
+        [
+          "{ cases: 754, concepts: 274 }",
+          "{ cases: 754, concepts: 275 }"
+        ],
+        [
+          "{ cases: 796, concepts: 280 }",
+          "{ cases: 796, concepts: 281 }"
+        ],
+        [
+          "{ cases: 832, concepts: 297 }",
+          "{ cases: 832, concepts: 298 }"
+        ]
+      ],
+      "reason": "The two new outside-cohort construct versions change one eligible active-concept count at these facility/capability configurations. Before/after case counts and cohort deltas remain exact."
+    },
+    {
+      "file": "packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+      "assertionCallSites": 131,
+      "commandsAndDeadlinesUnchanged": true,
+      "explicitExpectedChanges": [
+        [
+          "{ cases: 796, concepts: 280 }",
+          "{ cases: 796, concepts: 281 }"
+        ],
+        [
+          "{ cases: 832, concepts: 297 }",
+          "{ cases: 832, concepts: 298 }"
+        ],
+        [
+          "{ cases: 874, concepts: 301 }",
+          "{ cases: 874, concepts: 302 }"
+        ],
+        [
+          "{ cases: 910, concepts: 318 }",
+          "{ cases: 910, concepts: 319 }"
+        ]
+      ],
+      "reason": "The two new outside-cohort construct versions change one eligible active-concept count at these facility/capability configurations. Before/after case counts and cohort deltas remain exact."
+    },
+    {
+      "file": "packages/game-domain/tests/surgery-center-batch.test.ts",
+      "assertionCallSites": 40,
+      "commandsAndDeadlinesUnchanged": true,
+      "explicitExpectedChanges": [
+        [
+          "    expect(reviewed).toEqual(expected);",
+          "    expected.add(\"concept.achalasia.physiology-directed-treatment.v1\");\n    expected.add(\"concept.pigmented-skin-lesion.complete-diagnostic-biopsy.v5\");\n    expect(reviewed).toEqual(expected);"
+        ]
+      ],
+      "reason": "Both new scored constructs are witnessed by real answers in the same forty-case/32-gate cohort, while earlier objectives remain in other cases."
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "checkedOn": "2026-11-04",
+  "reviews": [
+    {
+      "file": "packages/game-domain/tests/patient-supply.test.ts",
+      "assertionCallSites": 16,
+      "commandsAndDeadlinesUnchanged": true,
+      "onlyDocumentedLiteralExpectationsSnapshotsAndComments": true,
+      "replacements": [
+        [
+          "expect(release.concepts).toHaveLength(414);",
+          "expect(release.concepts).toHaveLength(462);"
+        ],
+        [
+          "expect(release.cases).toHaveLength(1008 + 62 + 20 + 20);",
+          "expect(release.cases).toHaveLength(1008 + 62 + 20 + 20 + 40);"
+        ],
+        [
+          "expect(release.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1423);",
+          "expect(release.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1463);"
+        ]
+      ]
+    },
+    {
+      "file": "packages/game-domain/tests/gs028-20261002-batch.test.ts",
+      "assertionCallSites": 96,
+      "commandsAndDeadlinesUnchanged": true,
+      "onlyDocumentedLiteralExpectationsSnapshotsAndComments": true,
+      "replacements": [
+        [
+          "expect(records).toHaveLength(31);",
+          "expect(records).toHaveLength(33);"
+        ]
+      ]
+    },
+    {
+      "file": "packages/game-domain/tests/gs028-20261003-batch.test.ts",
+      "assertionCallSites": 117,
+      "commandsAndDeadlinesUnchanged": true,
+      "onlyDocumentedLiteralExpectationsSnapshotsAndComments": true,
+      "replacements": [
+        [
+          ")).toHaveLength(1008);",
+          ")).toHaveLength(1048);"
+        ],
+        [
+          ")).toHaveLength(1303);",
+          ")).toHaveLength(1343);"
+        ]
+      ]
+    },
+    {
+      "file": "packages/game-domain/tests/gs028-statistics-ethics-batch.test.ts",
+      "assertionCallSites": 35,
+      "commandsAndDeadlinesUnchanged": true,
+      "onlyDocumentedLiteralExpectationsSnapshotsAndComments": true,
+      "replacements": [
+        [
+          ")).toHaveLength(1008);",
+          ")).toHaveLength(1048);"
+        ],
+        [
+          ")).toHaveLength(1303);",
+          ")).toHaveLength(1343);"
+        ]
+      ]
+    }
+  ],
+  "control": "question-flags-round3-remaining-fixtures-control-20261104.json",
+  "scope": "Entry bank reproduces both original patient-supply snapshots. Same-N1 control isolates the eight new constructs from the separate forty-case append; all operational assertions and deadlines are retained. Final acceptance uses actual Vitest results, not the counterfactual harness."
+}

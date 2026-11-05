@@ -1,0 +1,57 @@
+{
+  "checkedAt": "2026-11-05T00:28:37.793Z",
+  "scope": "Owned projection applied to the captured valid pre-round-two synthetic release and parsed by the actual release schema. No later N1 stage is executed, edited, bypassed in production or claimed validated.",
+  "passed": true,
+  "variants": 10,
+  "concepts": 6,
+  "claims": 8,
+  "noteResponses": 121,
+  "unchangedCases": 1181,
+  "unchangedNodes": 1492,
+  "oldConcepts": 501,
+  "projectedConcepts": 507,
+  "protectedPaths": [
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2a-20261104.ts",
+      "sha256": "3bf51ef4423bd2a0b7e75c100bbcb06af615218e57f92786f09c3ada972940e1"
+    },
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2a-20261104-data.ts",
+      "sha256": "e639ddfb34f817ec12ba760910951dcbc81a2464f3da1918470f8173e4849324"
+    },
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2a-evidence-20261104.ts",
+      "sha256": "77e3695047de700a5f16bd3a92f7dc162dd79ef20a12c87657cd8ef44b17c74e"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags-round3-20261104.ts",
+      "sha256": "d32476015827e917e831564feafb40ef6ae60e85ea8d6c9fb643cf61707411e5"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags-round3-20261104-data.ts",
+      "sha256": "b47081a164cdde7e0b2a9e7df35b32dfd658bb0772a75544ac2c1862cf6e9da2"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags-round3-evidence-20261104.ts",
+      "sha256": "1c27f65bcc03a29d7769350230a14dc9b96bb04c95d8472ef19d971b93608889"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags-round2-20261104.ts",
+      "sha256": "8932e60db6762df66810ba0992766d2bc21ce9ffdc1bc0c0c8cc7c3e0322257d"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags-round2-20261104-data.ts",
+      "sha256": "8b845ae0b85a328c5a5b384a7be17e885423b8372a0ddaa31a76c5b1e08deac9"
+    },
+    {
+      "path": "apps/player/public/clinical-exhibits/batch2a-b01-pressure.png",
+      "sha256": "1f677fda73366997819c2781a5ee6f76ef725e97e286447ad8c402b1e4642200"
+    },
+    {
+      "path": "apps/player/public/clinical-exhibits/batch2a-b03-pressure.png",
+      "sha256": "d3a8b05ff54d17ec6734eca0eda4ac022f36b4f848126e5bbefd59ad51d22173"
+    }
+  ],
+  "versionCollisions": 0,
+  "defaultCombinedAssemblyStatus": "Check the separate current-bank import log; a later worker stage may block it."
+}

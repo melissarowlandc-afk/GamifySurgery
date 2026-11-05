@@ -1,0 +1,34 @@
+import fs from 'node:fs';
+import crypto from 'node:crypto';
+import assert from 'node:assert/strict';
+import '../economy-audit/source-loader.mjs';
+import {collectAuthoredMetadata} from './bank.mjs';
+const path='tools/question-quality/fixtures/question-bank-batch2b-before-20261104.json';
+assert(!fs.existsSync(path),'Immutable entry capture already exists');
+const base=JSON.parse(fs.readFileSync('tools/question-quality/fixtures/question-bank-batch2a-round2-before-20261104.json','utf8'));
+const c=await import('../../packages/clinical-content/src/question-bank-batch2a-round2-20261104.ts');
+const ev=await import('../../packages/clinical-content/src/question-bank-batch2a-round2-evidence-20261104.ts');
+const {validateSyntheticClinicalRelease}=await import('../../packages/clinical-content/src/schema.ts');
+const release=validateSyntheticClinicalRelease({...base.release,concepts:[...base.release.concepts,...c.QUESTION_BANK_BATCH2A_ROUND2_TESTED_CONCEPTS],cases:c.applyQuestionBankBatch2aRound2Revisions(base.release.cases)});
+const added=collectAuthoredMetadata({...c,...ev});
+const questions={...base.questions,...Object.fromEntries(added.questions)},claims={...base.claims,...Object.fromEntries(added.claims)},sources=base.sources,conceptMetadata={...base.conceptMetadata,...Object.fromEntries(added.concepts)};
+const flagPacket=JSON.parse(fs.readFileSync('docs/research/question-flags-round3-review-20261104.json','utf8'));
+const flagReview=JSON.parse(fs.readFileSync('docs/research/question-flags-adversarial-review3-20261104.json','utf8'));
+const flags=['F02','F06','F07','F08','F13','F16'];
+const proposal=fs.readFileSync('docs/research/question-bank-batch2b-proposal-20261104.md','utf8');
+const proposed=[...proposal.matchAll(/^\| \d+ \| (question\.[^ |]+) \|/gm)].map(m=>m[1]);assert.equal(proposed.length,40);
+const targetKeys=[...flags.map(flagId=>({flagId,packet:flagPacket.find(p=>p.id===flagId)})),...proposed.slice(0,34).map(variantId=>({variantId}))];
+const targets=targetKeys.map((t,i)=>{
+ const cs=t.flagId?release.cases.find(cs=>cs.id===t.packet.caseId):release.cases.find(cs=>cs.decisionNodes.some(n=>n.questionVariantId===t.variantId));assert(cs,'Missing target '+JSON.stringify(t));
+ const node=t.flagId?cs.decisionNodes.find(n=>n.id===t.packet.nodeId):cs.decisionNodes.find(n=>n.questionVariantId===t.variantId);assert(node);
+ return {id:'B2B'+String(i+1).padStart(2,'0'),flagId:t.flagId??null,originalProposalRank:t.flagId?null:proposed.indexOf(t.variantId)+1,caseId:cs.id,nodeId:node.id,variantId:node.questionVariantId,conceptId:node.primaryConceptId,cs,node,question:questions[node.questionVariantId]?.find(q=>q.answerChoices?.length),flagPacket:t.packet??null,flagReview:t.flagId?flagReview.find(r=>r.id===t.flagId):null};
+});assert.equal(new Set(targets.map(t=>t.caseId+'|'+t.nodeId)).size,40);
+const hashes={};function walk(dir){for(const e of fs.readdirSync(dir,{withFileTypes:true})){const p=dir+'/'+e.name;if(e.isDirectory()&&!['node_modules','dist','.git'].includes(e.name))walk(p);else if(e.isFile()&&/\.(ts|tsx|mjs|cjs|json|md|png|svg|sql)$/.test(p))hashes[p]=crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');}}
+for(const dir of ['packages/clinical-content/src','packages/game-domain/src','packages/game-domain/tests','packages/balance-config/src','tests/fixtures','tools/qa','apps/player/src','apps/player/public','supabase'])walk(dir);
+for(const p of ['docs/research/question-bank-batch2a-20261104.json','docs/research/question-bank-batch2a-round2-20261104.json','docs/research/question-flags-round3-review-20261104.json','docs/clinical/question-authoring-standard.md'])hashes[p]=crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
+const allCalibration=JSON.parse(fs.readFileSync('docs/research/question-batch1-20261102.json','utf8'));
+const calibrationReview=JSON.parse(fs.readFileSync('docs/research/question-batch1-adversarial-review7-20261102.json','utf8'));
+const calibration=allCalibration.filter(p=>['B02','B25','B34','B35'].includes(p.id));for(const p of calibration)assert.equal(calibrationReview.find(r=>r.id===p.id).verdict,'PASS');
+const snapshot={capturedAt:new Date().toISOString(),policy:'Offline authoring projection: captured valid 501-concept entry plus actual frozen batch-2a round-two module. The concurrent N1 round-two default import currently throws; it is neither bypassed in production nor claimed validated. No private feedback/email/source prose.',release,questions,claims,sources,conceptMetadata,approvals:base.approvals,targets,calibration,calibrationReview:calibrationReview.filter(r=>['B02','B25','B34','B35','B35-context'].includes(r.id)),deferredProposal:proposed.slice(34),files:hashes};
+const body=JSON.stringify(snapshot,null,2)+'\n';assert(!/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i.test(body),'Email-like field');fs.writeFileSync(path,body);
+console.log(JSON.stringify({path,targets:targets.length,concepts:release.concepts.length,cases:release.cases.length,files:Object.keys(hashes).length,priorityFlags:flags,deferredProposal:snapshot.deferredProposal}));

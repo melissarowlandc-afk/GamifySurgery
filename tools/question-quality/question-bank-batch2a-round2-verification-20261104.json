@@ -1,0 +1,279 @@
+{
+  "checkedAt": "2026-11-04T23:55:17.643Z",
+  "revisions": 10,
+  "newConcepts": 6,
+  "entryConcepts": 501,
+  "currentConcepts": 507,
+  "cases": 1189,
+  "unchangedCases": 1181,
+  "unchangedNodes": 1492,
+  "retainedTimingRows": 1903,
+  "newTimingRows": 10,
+  "entryOrderRows": 440,
+  "newOrderRows": 17,
+  "gates": 4,
+  "noteResponses": 121,
+  "protected": "B2A01 visible fields, all old source definitions/images, fourteen flag drafts, F01/F12/F14 and all earlier exact approval records; no change across this projection to current N1/N2 cases.",
+  "concurrentNewContentChanges": [
+    {
+      "caseId": "case.n2.pancreatic-cyst-predates-pancreatitis.v1",
+      "variants": [
+        "question.n2.pancreatic-cyst-predates-pancreatitis.v1"
+      ]
+    }
+  ],
+  "exactLevel5BoundInputsThisRound": [
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "change": "modified",
+      "sha256": "a01aa7e8817eb99a4e80b5bfa08d228efc9e7f141081aacf2e47c43046fe39db"
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "change": "modified",
+      "sha256": "dabdad1f3b85f362fcc8645c803c02ff2f146a5e96b77c59de3d476d1934e6e3"
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "change": "modified",
+      "sha256": "6fdbbbef32a551090b70bce1ea85a47bfeeff4c90ffd0ab4dee80edbc0902646"
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "change": "modified",
+      "sha256": "ee9c014c314e3cd3c3345a9f324fb518a562079bf3cc94acd531081e3c136dc7"
+    },
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2a-round2-20261104.ts",
+      "change": "added",
+      "sha256": "9a6af26f07cb6493c1406fc83b3405ea85caf1d75a2b6d6914f9fdf4d8344670"
+    },
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2a-round2-20261104-data.ts",
+      "change": "added",
+      "sha256": "99d9ffc9c1f2fa1374e64b9b27bb9fce46fce73ec5a6a8c70f9ddc37acb27b27"
+    },
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2a-round2-evidence-20261104.ts",
+      "change": "added",
+      "sha256": "15871c6cbb641c74d604a460789adfbdf2b1d802c785c67d538d68d22d78f7e0"
+    }
+  ],
+  "addedAssetOutsideLevel5SourceCollector": {
+    "path": "apps/player/public/clinical-exhibits/batch2a-r2-b04-pressure.png",
+    "sha256": "24cbb0f69c57ef337ef16e2295356a5d0ef48fbb12e7d8f404321e0897fd86a8"
+  },
+  "integrationHunks": [
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "restoredSha256": "e4c8c417af6a50bcd1e0590b333984ed8ced76603b8511e5600b861442c3c4d7",
+      "entrySha256": "e4c8c417af6a50bcd1e0590b333984ed8ced76603b8511e5600b861442c3c4d7",
+      "outsideOurHunksByteExact": true
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "restoredSha256": "ce9b7be14568f7f5cc24d03ba2a079b4db2d7f433bdbd7545b40f46f33ff4415",
+      "entrySha256": "ce9b7be14568f7f5cc24d03ba2a079b4db2d7f433bdbd7545b40f46f33ff4415",
+      "outsideOurHunksByteExact": true
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "restoredSha256": "dd2e637bb54b1c4de00787254701f30d7ff7ca73083463ed8b1786d13aa795c5",
+      "entrySha256": "dd2e637bb54b1c4de00787254701f30d7ff7ca73083463ed8b1786d13aa795c5",
+      "outsideOurHunksByteExact": true
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "restoredSha256": "637b6042332c210fc6cec73c451ec996084c9380a8f8e89953fa7a46c989f311",
+      "entrySha256": "637b6042332c210fc6cec73c451ec996084c9380a8f8e89953fa7a46c989f311",
+      "outsideOurHunksByteExact": true
+    }
+  ],
+  "changedEntryFiles": [
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+      "previous": "22465643ba225336b13120d0608a211d55755df4bfb919442d9bf8a3633323b9",
+      "current": "67ce590e214d00c314d7e56680ce5d52e1c46f79d33be03bcfa0af255574df96"
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "previous": "dd2e637bb54b1c4de00787254701f30d7ff7ca73083463ed8b1786d13aa795c5",
+      "current": "a01aa7e8817eb99a4e80b5bfa08d228efc9e7f141081aacf2e47c43046fe39db"
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "previous": "e4c8c417af6a50bcd1e0590b333984ed8ced76603b8511e5600b861442c3c4d7",
+      "current": "dabdad1f3b85f362fcc8645c803c02ff2f146a5e96b77c59de3d476d1934e6e3"
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n2-20261104.test.ts",
+      "previous": "bbde2b3e67bc97d28ce85ecfa2eed440d825927e97514550e1ac9da3d281f3bb",
+      "current": "9ca4700bbc5c1fa9ae2dc3caedd68b5f00907085269d3b19864e2e62453d7a3a"
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n2-abdominal.ts",
+      "previous": "de1d1dba22fa7e884d3d3f5483626f22bb5f4fafd1d793e30657d5b2a69d074b",
+      "current": "39a8af30fb38725c7d765b9a95d1ec232e6dcb5a6379aa819b2db20943aed1b2"
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n2-evidence-20261104.ts",
+      "previous": "b5bd7f00b969b5348b00389ccc9d70f615acd05a67bde7ded96e96bfce6437c2",
+      "current": "3d0a8c7c00467d21b43f2659d787f0e09c4758122de2531f8dc679ffbc80ed9f"
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "previous": "ce9b7be14568f7f5cc24d03ba2a079b4db2d7f433bdbd7545b40f46f33ff4415",
+      "current": "6fdbbbef32a551090b70bce1ea85a47bfeeff4c90ffd0ab4dee80edbc0902646"
+    },
+    {
+      "path": "packages/game-domain/src/care-room-access.ts",
+      "previous": "c521512b8f72fa12a9813055b685cb78313e590cfa51996df3b8d5ec7e8b332b",
+      "current": "ee355fdece91d18d1278c704a2dfce235a99ab00c7630ddfe14b9e971437a56d"
+    },
+    {
+      "path": "packages/game-domain/src/diagnostic-timing.ts",
+      "previous": "6d81945e698917387df0017d6469e0ccbb3d8d537249d4da02346f3ba5b7c647",
+      "current": "2a8e915812e9c5bc2e5b40fcea74bdff129aa5d4fbecfef633004cf9cda48668"
+    },
+    {
+      "path": "packages/game-domain/src/employee-training.ts",
+      "previous": "de0617dfceb32216c84964d251ccf4686d4304cd8869d65c234c2f38d543f0b5",
+      "current": "8f04b3f1f748047b8e71466b0070bccef4ea045682904f3c9fef7ccd2a4eef43"
+    },
+    {
+      "path": "packages/game-domain/src/facility-access-cache.ts",
+      "previous": "6d1d3e2378e9027b4cf725c6c4a8cf19147c0704cb9ee90dfd52fe815e6be42e",
+      "current": "e10fa45bb74d16882972daffef87836c0abffe5e5eb68fbccd9f367d2aeebc61"
+    },
+    {
+      "path": "packages/game-domain/src/guidance-tips.ts",
+      "previous": "3d158c8f992dd339721fe53b6c30eb75880ba7362b654f94f9d7eb7e6e243dcd",
+      "current": "521812ecb3908999819ae88948eeedbdddf95894205ea97de36a19d8089ea5fb"
+    },
+    {
+      "path": "packages/game-domain/src/index.ts",
+      "previous": "1389c04a3c49479ce6d0bdea427a290d791f437b62f9d271856517e0e0d4e879",
+      "current": "90fc224a8c04da1efb3f02e81f00b3da6d741c972dd28f9fc88965d6bc0e2433"
+    },
+    {
+      "path": "packages/game-domain/src/reducer.ts",
+      "previous": "a7ebca635a864d58c6f6d1b1006f13a78bf3c32153cd1d4e7283bacf5aece6b6",
+      "current": "faecb753107f4739df26d4ff94867e07808dfa7b99d4b5e8d581ff2f2b87e764"
+    },
+    {
+      "path": "packages/game-domain/src/selectors.ts",
+      "previous": "b58929fbf08ee88a45074336ec6614639a8565ac88148bf665c20a69ef8023fb",
+      "current": "7a2a03ef8f581705e90bb7588a47bb56a419cc41d62757b692f340746150f87c"
+    },
+    {
+      "path": "packages/game-domain/src/spatial.ts",
+      "previous": "0c881fa9585c42ec81032adaf6ef4ae0be53ddccb8f0f2fe58bc392257b2ac57",
+      "current": "2a7f0028d7f687d78eecfee54aee5e137e5fff5afb845a20b80235f716120c7a"
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "previous": "637b6042332c210fc6cec73c451ec996084c9380a8f8e89953fa7a46c989f311",
+      "current": "ee9c014c314e3cd3c3345a9f324fb518a562079bf3cc94acd531081e3c136dc7"
+    },
+    {
+      "path": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+      "previous": "6439ba6ba2007aa5de81dc50fe5f9380ada216a8bb970b32e3355d576e19bf7d",
+      "current": "d04cae86d5966af015d86d45534e2829d0a0c458a4db5ed4e231b7115e31a0c0"
+    },
+    {
+      "path": "packages/game-domain/tests/diagnostics/patient-supply.test.ts",
+      "previous": "220375aaf65c3591b9ac1a25ba65fe3cf8c3b1b32295d7f1fe613a6cfffc68ac",
+      "current": "e422ab139e75a60caf9aa293350ed518462f20594542f4d787d443a53175dcc8"
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261003-batch.test.ts",
+      "previous": "22796b3a1b1331c9c14c4c4e2fa5ceaa4c6a98e4e4722eedcfc3b42ceb42a04c",
+      "current": "1903a769529dfe794f4b2875e0f83bbe3443c946939a153fe6998d711ea975c2"
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261007-batch.test.ts",
+      "previous": "0386b8e6297a207c917e0959f247b8fbb27328d7c2523838be01e9b56cfa9bd3",
+      "current": "0558e77e5eb2d636147569e27ad48145c526a105f49f06ba11b584cea5f62d9c"
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+      "previous": "4be72ebd064e6e025bf36ac227cf03012b44ead63f07ade672dcc734662e2c2d",
+      "current": "13b4544d99ec411b6616c3ba0dc08dab970bf777f751551fb87fd7edf5b4d3e2"
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-statistics-ethics-batch.test.ts",
+      "previous": "625615ce511ce8c2f2130e34d9a8a9cb17b2670c5294644bcbfc21b538616da0",
+      "current": "52682a298685cf7a0abb4cb9e135c14290d97ed004f4ae131e528e0f8f47ba5d"
+    },
+    {
+      "path": "packages/game-domain/tests/patient-supply.test.ts",
+      "previous": "5742f162669afb9ccb60559d27df5ab9e58d194e38cd02c66d5458b7a4be69fe",
+      "current": "7f2bb8c54637ac52cee4c127527b230a465a807fa0bba1232c9326334e31653b"
+    },
+    {
+      "path": "packages/game-domain/tests/question-bank-batch2a-bindings.test.ts",
+      "previous": "2988221ebc269e26e11df727251d1649c4c37ccd984d04c5891698224b2bb6ef",
+      "current": "d93a0db6b5982913f142d6ef6bb68ea857f11391d50e91e0be802cb40fd24d98"
+    },
+    {
+      "path": "packages/game-domain/tests/question-new-n2-admission.test.ts",
+      "previous": "77784196f9dfc45ad0482e9e306b436b1378d9ae26565e5643c7eaa45f157185",
+      "current": "823e0e7a4ca82155e62b8556590511092ba7003927c565dbb87a9ca2d8edde77"
+    },
+    {
+      "path": "packages/game-domain/tests/surgery-center-batch.test.ts",
+      "previous": "ed3271f91c6d1b2edb15621f2686b3e05968f38ed2650097bd6bd2159c77111a",
+      "current": "e9cf317c0bde8ba7036a84765da4f110fa519e28eb715ad431bacfb8ffa3effd"
+    },
+    {
+      "path": "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+      "previous": "6f316140285d5f8737c5773e0d82b37c297829854c11cc276c73d20139124521",
+      "current": "c47937a8f0a52754f664b396d5427318b87b20bf4cab9716f28cbe90282e94f2"
+    },
+    {
+      "path": "tools/qa/tick-state-differential.mjs",
+      "previous": "98a6fe1d1fc894c5b4679aca4188fdc5707d9bc3c530fa27ebb030c6a352b127",
+      "current": "e6939dc725968e025ad5d00bf8c776cd87ea30f44e79b27896b83f6079079e83"
+    },
+    {
+      "path": "apps/player/src/session/cloud/codecTasks.ts",
+      "previous": "08666325df5d753cbc72546798af8c965aa1a338f3e9937252a1f851eed16139",
+      "current": "541279a3c29df332b270eec5d240a4363a79c476614c9efaa1975bc946a97aac"
+    },
+    {
+      "path": "apps/player/src/session/cloud/codecWorkerNative.test.ts",
+      "previous": "99c53af0a64f6eda74b6cb9cb22ce446aa774c5a7759de6194f774b9cb0d6405",
+      "current": "b7814cde78258b6fd3292322e64e71a7107d032cadd7ca6c1fdb1a5cb627496b"
+    },
+    {
+      "path": "apps/player/src/session/cloud/gameSession.ts",
+      "previous": "9454c397873d6b4e52d9066e045972b94971ddfbba259247140e879ace98df19",
+      "current": "f88a9f6216c35f19e8f26a2fda135bdc99d8d9ed6946435cc28ff1c21950fea8"
+    },
+    {
+      "path": "apps/player/src/session/cloud/journalCodec.ts",
+      "previous": "dd5aa040b2b52aed5ee8855655f546aa75a797d5442217b01cad218f644b5f65",
+      "current": "21b4da1c5b68beb61f15accb70bd59de363305c443be274343ed0b8d01db796b"
+    },
+    {
+      "path": "apps/player/src/session/cloud/tickPerformanceTestSupport.ts",
+      "previous": "022c0699e51cd4b930d888bfe37e8e9a2ec693f9a6eb4728b8d6a184c9ad9fa5",
+      "current": "802984dc74613b439e7bf8648b8a1acfcadc3ef4d1ea31c0b0a9d4fdf67f1497"
+    },
+    {
+      "path": "apps/player/src/session/cloud/verifiedCopyCache.test.ts",
+      "previous": "1fad99432e93a16a7fd1c4dd8a1e784a650f5106515c270ae1250b1e9f8d18eb",
+      "current": "e1ae961603222a254e45175b6860cdc5db98bc3bc35e5fb61ed80bbe6e7a91e3"
+    },
+    {
+      "path": "apps/player/src/session/cloud/verifiedCopyCache.ts",
+      "previous": "cb25743a871d79830ec4ec1bf168d3a30996aeb61a4ed27a963a6a1a56a3ff75",
+      "current": "f13d4cb395781226c2ce783420056e85a295809b117f826e9b6fd432f5283bc3"
+    },
+    {
+      "path": "apps/player/src/session/viewModels.ts",
+      "previous": "1665d80e8ff7248a6de82eeae08185e2a8e959cdd4a2ccde53175f06be39701c",
+      "current": "454f9d0ee5472c7d154c27503d0ec4129194d2f0c5ec4dcc0385133eb051dea2"
+    }
+  ]
+}

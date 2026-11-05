@@ -1,0 +1,4757 @@
+{
+  "checkedOn": "2026-11-04",
+  "linterVersion": "question-cue-lint.2026-11-04.v8",
+  "policy": "Same v8 advisory linter and unchanged finite contexts/history on both assembled banks. No answer correctness, timing analytics or player data.",
+  "before": {
+    "cases": 1110,
+    "nodeOccurrences": 1423,
+    "uniqueVariants": 1418,
+    "concepts": 400,
+    "profileContexts": 6039,
+    "variantsWithFindings": 949,
+    "findings": 2039,
+    "tutorialSequenceVariants": 3,
+    "missingAuthoredVersion": 0,
+    "missingEducationalTier": 153,
+    "approvalRecordOnlyMetadata": 40,
+    "variantsWithCompleteRationales": 254,
+    "variantsWithMultipleDefinitions": 0,
+    "byPriorityStage": {
+      "0": 687,
+      "1": 464,
+      "2": 163,
+      "3": 84,
+      "4": 20
+    },
+    "byOptionCount": {
+      "3": 134,
+      "4": 1284
+    },
+    "variantsByRule": {
+      "ambiguous-cervical-term": 19,
+      "availability-permission-cue": 15,
+      "case-detail-decision-cue": 9,
+      "case-detail-key-rationale-overlap": 37,
+      "convergence": 82,
+      "heterogeneous-option-category": 85,
+      "key-length-disparity": 52,
+      "key-only-phrase-overlap": 51,
+      "key-only-word-overlap": 327,
+      "key-test-name-in-context": 7,
+      "lead-in-decision-principle": 15,
+      "near-duplicate-options": 42,
+      "negative-aligned-to-distractor": 106,
+      "option-absolute": 94,
+      "option-alone": 120,
+      "option-explanation": 37,
+      "option-generic-individualization": 11,
+      "option-length-disparity": 294,
+      "option-scope-mismatch": 2,
+      "option-specificity-disparity": 22,
+      "supplied-clinical-conclusion": 18,
+      "unexplained-negative-imaging": 6,
+      "unique-key-abbreviation": 130,
+      "unique-key-test-name": 14,
+      "unnamed-treatment-action": 3
+    }
+  },
+  "after": {
+    "cases": 1110,
+    "nodeOccurrences": 1423,
+    "uniqueVariants": 1418,
+    "concepts": 402,
+    "profileContexts": 6039,
+    "variantsWithFindings": 949,
+    "findings": 2031,
+    "tutorialSequenceVariants": 3,
+    "missingAuthoredVersion": 0,
+    "missingEducationalTier": 153,
+    "approvalRecordOnlyMetadata": 40,
+    "variantsWithCompleteRationales": 255,
+    "variantsWithMultipleDefinitions": 0,
+    "byPriorityStage": {
+      "0": 687,
+      "1": 464,
+      "2": 163,
+      "3": 84,
+      "4": 20
+    },
+    "byOptionCount": {
+      "3": 135,
+      "4": 1283
+    },
+    "variantsByRule": {
+      "ambiguous-cervical-term": 19,
+      "availability-permission-cue": 15,
+      "case-detail-decision-cue": 9,
+      "case-detail-key-rationale-overlap": 36,
+      "convergence": 82,
+      "heterogeneous-option-category": 85,
+      "key-length-disparity": 52,
+      "key-only-phrase-overlap": 49,
+      "key-only-word-overlap": 326,
+      "key-test-name-in-context": 8,
+      "lead-in-decision-principle": 15,
+      "near-duplicate-options": 41,
+      "negative-aligned-to-distractor": 106,
+      "option-absolute": 94,
+      "option-alone": 120,
+      "option-explanation": 37,
+      "option-generic-individualization": 11,
+      "option-length-disparity": 294,
+      "option-scope-mismatch": 2,
+      "option-specificity-disparity": 22,
+      "supplied-clinical-conclusion": 18,
+      "unexplained-negative-imaging": 6,
+      "unique-key-abbreviation": 130,
+      "unique-key-test-name": 15,
+      "unnamed-treatment-action": 2
+    }
+  },
+  "ownerRulesBefore": {
+    "option-alone": {
+      "variants": 120,
+      "findings": 164
+    },
+    "option-generic-individualization": {
+      "variants": 11,
+      "findings": 11
+    },
+    "availability-permission-cue": {
+      "variants": 15,
+      "findings": 16
+    },
+    "supplied-clinical-conclusion": {
+      "variants": 18,
+      "findings": 24
+    },
+    "unexplained-negative-imaging": {
+      "variants": 6,
+      "findings": 10
+    },
+    "ambiguous-cervical-term": {
+      "variants": 19,
+      "findings": 24
+    },
+    "nerve-competitor-plausibility": {
+      "variants": 0,
+      "findings": 0
+    },
+    "unnamed-treatment-action": {
+      "variants": 3,
+      "findings": 8
+    }
+  },
+  "ownerRulesAfter": {
+    "option-alone": {
+      "variants": 120,
+      "findings": 164
+    },
+    "option-generic-individualization": {
+      "variants": 11,
+      "findings": 11
+    },
+    "availability-permission-cue": {
+      "variants": 15,
+      "findings": 16
+    },
+    "supplied-clinical-conclusion": {
+      "variants": 18,
+      "findings": 24
+    },
+    "unexplained-negative-imaging": {
+      "variants": 6,
+      "findings": 10
+    },
+    "ambiguous-cervical-term": {
+      "variants": 19,
+      "findings": 24
+    },
+    "nerve-competitor-plausibility": {
+      "variants": 0,
+      "findings": 0
+    },
+    "unnamed-treatment-action": {
+      "variants": 2,
+      "findings": 5
+    }
+  },
+  "selected": {
+    "items": 11,
+    "changedConstructs": 2,
+    "beforeFindings": 18,
+    "afterFindings": 14
+  },
+  "worstOffenders": [
+    {
+      "questionVariantId": "question.achalasia.manometric-recognition.v4.r4",
+      "conceptId": "concept.achalasia.manometric-recognition",
+      "stage": 1,
+      "findings": [
+        {
+          "id": "196079be0e4dd4bb",
+          "rule": "unnamed-treatment-action",
+          "severity": "advisory",
+          "message": "Owner rule: name the proposed treatment or action rather than a generic treatment/management assessment. An actual diagnostic assessment may be necessary; this lexical candidate requires clinical review.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "treatment planning",
+              "start": 41,
+              "end": 59,
+              "choiceId": "choice.qq20261102b.b04.d1"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Achalasia-pattern physiology; proceed to treatment planning after the mucosal endoscopy",
+              "start": 0,
+              "end": 87,
+              "choiceId": "choice.qq20261102b.b04.d1"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.achalasia.clinic-referral",
+              "profileIds": [
+                "canonical",
+                "profile.achalasia.clinic-referral.female.66"
+              ],
+              "ranges": [
+                {
+                  "start": 41,
+                  "end": 59
+                },
+                {
+                  "start": 0,
+                  "end": 87
+                }
+              ]
+            },
+            {
+              "caseId": "case.achalasia.clinic-referral",
+              "profileIds": [
+                "profile.achalasia.clinic-referral.male.66"
+              ],
+              "ranges": [
+                {
+                  "start": 41,
+                  "end": 59
+                },
+                {
+                  "start": 0,
+                  "end": 87
+                }
+              ]
+            },
+            {
+              "caseId": "case.achalasia.clinic-referral",
+              "profileIds": [
+                "profile.achalasia.clinic-referral.female.72"
+              ],
+              "ranges": [
+                {
+                  "start": 41,
+                  "end": 59
+                },
+                {
+                  "start": 0,
+                  "end": 87
+                }
+              ]
+            },
+            {
+              "caseId": "case.achalasia.clinic-referral",
+              "profileIds": [
+                "profile.achalasia.clinic-referral.male.72"
+              ],
+              "ranges": [
+                {
+                  "start": 41,
+                  "end": 59
+                },
+                {
+                  "start": 0,
+                  "end": 87
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "578bd793c4eeb5da",
+          "rule": "unnamed-treatment-action",
+          "severity": "advisory",
+          "message": "Owner rule: name the proposed treatment or action rather than a generic treatment/management assessment. An actual diagnostic assessment may be necessary; this lexical candidate requires clinical review.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "treatment planning",
+              "start": 80,
+              "end": 98,
+              "choiceId": "choice.qq20261102b.b04.d2"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Ineffective-motility physiology; investigate a secondary junction lesion before treatment planning",
+              "start": 0,
+              "end": 98,
+              "choiceId": "choice.qq20261102b.b04.d2"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.achalasia.clinic-referral",
+              "profileIds": [
+                "canonical",
+                "profile.achalasia.clinic-referral.female.66"
+              ],
+              "ranges": [
+                {
+                  "start": 80,
+                  "end": 98
+                },
+                {
+                  "start": 0,
+                  "end": 98
+                }
+              ]
+            },
+            {
+              "caseId": "case.achalasia.clinic-referral",
+              "profileIds": [
+                "profile.achalasia.clinic-referral.male.66"
+              ],
+              "ranges": [
+                {
+                  "start": 80,
+                  "end": 98
+                },
+                {
+                  "start": 0,
+                  "end": 98
+                }
+              ]
+            },
+            {
+              "caseId": "case.achalasia.clinic-referral",
+              "profileIds": [
+                "profile.achalasia.clinic-referral.female.72"
+              ],
+              "ranges": [
+                {
+                  "start": 80,
+                  "end": 98
+                },
+                {
+                  "start": 0,
+                  "end": 98
+                }
+              ]
+            },
+            {
+              "caseId": "case.achalasia.clinic-referral",
+              "profileIds": [
+                "profile.achalasia.clinic-referral.male.72"
+              ],
+              "ranges": [
+                {
+                  "start": 80,
+                  "end": 98
+                },
+                {
+                  "start": 0,
+                  "end": 98
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "777a48ad9f96b721",
+          "rule": "unnamed-treatment-action",
+          "severity": "advisory",
+          "message": "Owner rule: name the proposed treatment or action rather than a generic treatment/management assessment. An actual diagnostic assessment may be necessary; this lexical candidate requires clinical review.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "treatment planning",
+              "start": 44,
+              "end": 62,
+              "choiceId": "choice.qq20261102b.b04.d3"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Ineffective-motility physiology; proceed to treatment planning after the mucosal endoscopy",
+              "start": 0,
+              "end": 90,
+              "choiceId": "choice.qq20261102b.b04.d3"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.achalasia.clinic-referral",
+              "profileIds": [
+                "canonical",
+                "profile.achalasia.clinic-referral.female.66"
+              ],
+              "ranges": [
+                {
+                  "start": 44,
+                  "end": 62
+                },
+                {
+                  "start": 0,
+                  "end": 90
+                }
+              ]
+            },
+            {
+              "caseId": "case.achalasia.clinic-referral",
+              "profileIds": [
+                "profile.achalasia.clinic-referral.male.66"
+              ],
+              "ranges": [
+                {
+                  "start": 44,
+                  "end": 62
+                },
+                {
+                  "start": 0,
+                  "end": 90
+                }
+              ]
+            },
+            {
+              "caseId": "case.achalasia.clinic-referral",
+              "profileIds": [
+                "profile.achalasia.clinic-referral.female.72"
+              ],
+              "ranges": [
+                {
+                  "start": 44,
+                  "end": 62
+                },
+                {
+                  "start": 0,
+                  "end": 90
+                }
+              ]
+            },
+            {
+              "caseId": "case.achalasia.clinic-referral",
+              "profileIds": [
+                "profile.achalasia.clinic-referral.male.72"
+              ],
+              "ranges": [
+                {
+                  "start": 44,
+                  "end": 62
+                },
+                {
+                  "start": 0,
+                  "end": 90
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "e76f9f602e55fada",
+          "rule": "unnamed-treatment-action",
+          "severity": "advisory",
+          "message": "Owner rule: name the proposed treatment or action rather than a generic treatment/management assessment. An actual diagnostic assessment may be necessary; this lexical candidate requires clinical review.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "treatment planning",
+              "start": 77,
+              "end": 95,
+              "choiceId": "achalasia_4"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Achalasia-pattern physiology; investigate a secondary junction lesion before treatment planning",
+              "start": 0,
+              "end": 95,
+              "choiceId": "achalasia_4"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.achalasia.clinic-referral",
+              "profileIds": [
+                "canonical",
+                "profile.achalasia.clinic-referral.female.66"
+              ],
+              "ranges": [
+                {
+                  "start": 77,
+                  "end": 95
+                },
+                {
+                  "start": 0,
+                  "end": 95
+                }
+              ]
+            },
+            {
+              "caseId": "case.achalasia.clinic-referral",
+              "profileIds": [
+                "profile.achalasia.clinic-referral.male.66"
+              ],
+              "ranges": [
+                {
+                  "start": 77,
+                  "end": 95
+                },
+                {
+                  "start": 0,
+                  "end": 95
+                }
+              ]
+            },
+            {
+              "caseId": "case.achalasia.clinic-referral",
+              "profileIds": [
+                "profile.achalasia.clinic-referral.female.72"
+              ],
+              "ranges": [
+                {
+                  "start": 77,
+                  "end": 95
+                },
+                {
+                  "start": 0,
+                  "end": 95
+                }
+              ]
+            },
+            {
+              "caseId": "case.achalasia.clinic-referral",
+              "profileIds": [
+                "profile.achalasia.clinic-referral.male.72"
+              ],
+              "ranges": [
+                {
+                  "start": 77,
+                  "end": 95
+                },
+                {
+                  "start": 0,
+                  "end": 95
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questionVariantId": "question.perianal-abscess.prompt-drainage.v4",
+      "conceptId": "concept.perianal-abscess.prompt-drainage",
+      "stage": 0,
+      "findings": [
+        {
+          "id": "a3568c904f3167a6",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 26,
+              "end": 31,
+              "choiceId": "aspirate_4"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Perform needle aspiration alone",
+              "start": 0,
+              "end": 31,
+              "choiceId": "aspirate_4"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.bread-butter.perianal-abscess.draining-pain",
+              "profileIds": [
+                "canonical",
+                "profile.bread-butter.perianal-abscess.draining-pain.female.31"
+              ],
+              "ranges": [
+                {
+                  "start": 26,
+                  "end": 31
+                },
+                {
+                  "start": 0,
+                  "end": 31
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.draining-pain",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.draining-pain.male.31"
+              ],
+              "ranges": [
+                {
+                  "start": 26,
+                  "end": 31
+                },
+                {
+                  "start": 0,
+                  "end": 31
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.draining-pain",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.draining-pain.female.52"
+              ],
+              "ranges": [
+                {
+                  "start": 26,
+                  "end": 31
+                },
+                {
+                  "start": 0,
+                  "end": 31
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.draining-pain",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.draining-pain.male.52"
+              ],
+              "ranges": [
+                {
+                  "start": 26,
+                  "end": 31
+                },
+                {
+                  "start": 0,
+                  "end": 31
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b8f90056139235cc",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 22,
+              "end": 27,
+              "choiceId": "antibiotic_4"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Give oral antibiotics alone",
+              "start": 0,
+              "end": 27,
+              "choiceId": "antibiotic_4"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.bread-butter.perianal-abscess.draining-pain",
+              "profileIds": [
+                "canonical",
+                "profile.bread-butter.perianal-abscess.draining-pain.female.31"
+              ],
+              "ranges": [
+                {
+                  "start": 22,
+                  "end": 27
+                },
+                {
+                  "start": 0,
+                  "end": 27
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.draining-pain",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.draining-pain.male.31"
+              ],
+              "ranges": [
+                {
+                  "start": 22,
+                  "end": 27
+                },
+                {
+                  "start": 0,
+                  "end": 27
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.draining-pain",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.draining-pain.female.52"
+              ],
+              "ranges": [
+                {
+                  "start": 22,
+                  "end": 27
+                },
+                {
+                  "start": 0,
+                  "end": 27
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.draining-pain",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.draining-pain.male.52"
+              ],
+              "ranges": [
+                {
+                  "start": 22,
+                  "end": 27
+                },
+                {
+                  "start": 0,
+                  "end": 27
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "dc2821b8d18b0ca6",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 20,
+              "end": 25,
+              "choiceId": "compress_4"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Use warm compresses alone",
+              "start": 0,
+              "end": 25,
+              "choiceId": "compress_4"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.bread-butter.perianal-abscess.draining-pain",
+              "profileIds": [
+                "canonical",
+                "profile.bread-butter.perianal-abscess.draining-pain.female.31"
+              ],
+              "ranges": [
+                {
+                  "start": 20,
+                  "end": 25
+                },
+                {
+                  "start": 0,
+                  "end": 25
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.draining-pain",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.draining-pain.male.31"
+              ],
+              "ranges": [
+                {
+                  "start": 20,
+                  "end": 25
+                },
+                {
+                  "start": 0,
+                  "end": 25
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.draining-pain",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.draining-pain.female.52"
+              ],
+              "ranges": [
+                {
+                  "start": 20,
+                  "end": 25
+                },
+                {
+                  "start": 0,
+                  "end": 25
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.draining-pain",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.draining-pain.male.52"
+              ],
+              "ranges": [
+                {
+                  "start": 20,
+                  "end": 25
+                },
+                {
+                  "start": 0,
+                  "end": 25
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questionVariantId": "question.metabolic-acidosis.albumin-corrected-anion-gap.v1",
+      "conceptId": "concept.metabolic-acidosis.albumin-corrected-anion-gap",
+      "stage": 0,
+      "findings": [
+        {
+          "id": "8213c2b2abf5fd87",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 24,
+              "end": 29,
+              "choiceId": "d3_1"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Uncorrected osmolar gap alone",
+              "start": 0,
+              "end": 29,
+              "choiceId": "d3_1"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028d.acid-base.b-cirrhosis-gap",
+              "profileIds": [
+                "canonical",
+                "profile.gs028d.acid-base.b-cirrhosis-gap.female.49"
+              ],
+              "ranges": [
+                {
+                  "start": 24,
+                  "end": 29
+                },
+                {
+                  "start": 0,
+                  "end": 29
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.acid-base.b-cirrhosis-gap",
+              "profileIds": [
+                "profile.gs028d.acid-base.b-cirrhosis-gap.male.49"
+              ],
+              "ranges": [
+                {
+                  "start": 24,
+                  "end": 29
+                },
+                {
+                  "start": 0,
+                  "end": 29
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.acid-base.b-cirrhosis-gap",
+              "profileIds": [
+                "profile.gs028d.acid-base.b-cirrhosis-gap.female.67"
+              ],
+              "ranges": [
+                {
+                  "start": 24,
+                  "end": 29
+                },
+                {
+                  "start": 0,
+                  "end": 29
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.acid-base.b-cirrhosis-gap",
+              "profileIds": [
+                "profile.gs028d.acid-base.b-cirrhosis-gap.male.67"
+              ],
+              "ranges": [
+                {
+                  "start": 24,
+                  "end": 29
+                },
+                {
+                  "start": 0,
+                  "end": 29
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b0e9b03907d3350e",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 26,
+              "end": 31,
+              "choiceId": "d2_1"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Bicarbonate concentration alone",
+              "start": 0,
+              "end": 31,
+              "choiceId": "d2_1"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028d.acid-base.b-cirrhosis-gap",
+              "profileIds": [
+                "canonical",
+                "profile.gs028d.acid-base.b-cirrhosis-gap.female.49"
+              ],
+              "ranges": [
+                {
+                  "start": 26,
+                  "end": 31
+                },
+                {
+                  "start": 0,
+                  "end": 31
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.acid-base.b-cirrhosis-gap",
+              "profileIds": [
+                "profile.gs028d.acid-base.b-cirrhosis-gap.male.49"
+              ],
+              "ranges": [
+                {
+                  "start": 26,
+                  "end": 31
+                },
+                {
+                  "start": 0,
+                  "end": 31
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.acid-base.b-cirrhosis-gap",
+              "profileIds": [
+                "profile.gs028d.acid-base.b-cirrhosis-gap.female.67"
+              ],
+              "ranges": [
+                {
+                  "start": 26,
+                  "end": 31
+                },
+                {
+                  "start": 0,
+                  "end": 31
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.acid-base.b-cirrhosis-gap",
+              "profileIds": [
+                "profile.gs028d.acid-base.b-cirrhosis-gap.male.67"
+              ],
+              "ranges": [
+                {
+                  "start": 26,
+                  "end": 31
+                },
+                {
+                  "start": 0,
+                  "end": 31
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "d0c57ace8db8c6c0",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 22,
+              "end": 27,
+              "choiceId": "d1_1"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Uncorrected anion gap alone",
+              "start": 0,
+              "end": 27,
+              "choiceId": "d1_1"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028d.acid-base.b-cirrhosis-gap",
+              "profileIds": [
+                "canonical",
+                "profile.gs028d.acid-base.b-cirrhosis-gap.female.49"
+              ],
+              "ranges": [
+                {
+                  "start": 22,
+                  "end": 27
+                },
+                {
+                  "start": 0,
+                  "end": 27
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.acid-base.b-cirrhosis-gap",
+              "profileIds": [
+                "profile.gs028d.acid-base.b-cirrhosis-gap.male.49"
+              ],
+              "ranges": [
+                {
+                  "start": 22,
+                  "end": 27
+                },
+                {
+                  "start": 0,
+                  "end": 27
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.acid-base.b-cirrhosis-gap",
+              "profileIds": [
+                "profile.gs028d.acid-base.b-cirrhosis-gap.female.67"
+              ],
+              "ranges": [
+                {
+                  "start": 22,
+                  "end": 27
+                },
+                {
+                  "start": 0,
+                  "end": 27
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.acid-base.b-cirrhosis-gap",
+              "profileIds": [
+                "profile.gs028d.acid-base.b-cirrhosis-gap.male.67"
+              ],
+              "ranges": [
+                {
+                  "start": 22,
+                  "end": 27
+                },
+                {
+                  "start": 0,
+                  "end": 27
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questionVariantId": "question.metabolic-acidosis.albumin-corrected-anion-gap.v3",
+      "conceptId": "concept.metabolic-acidosis.albumin-corrected-anion-gap",
+      "stage": 0,
+      "findings": [
+        {
+          "id": "14b1f5e82bda3347",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 24,
+              "end": 29,
+              "choiceId": "d2_3"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Uncorrected osmolar gap alone",
+              "start": 0,
+              "end": 29,
+              "choiceId": "d2_3"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028d.acid-base.b-sepsis-recovery-gap",
+              "profileIds": [
+                "canonical",
+                "profile.gs028d.acid-base.b-sepsis-recovery-gap.female.45"
+              ],
+              "ranges": [
+                {
+                  "start": 24,
+                  "end": 29
+                },
+                {
+                  "start": 0,
+                  "end": 29
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.acid-base.b-sepsis-recovery-gap",
+              "profileIds": [
+                "profile.gs028d.acid-base.b-sepsis-recovery-gap.male.45"
+              ],
+              "ranges": [
+                {
+                  "start": 24,
+                  "end": 29
+                },
+                {
+                  "start": 0,
+                  "end": 29
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.acid-base.b-sepsis-recovery-gap",
+              "profileIds": [
+                "profile.gs028d.acid-base.b-sepsis-recovery-gap.female.72"
+              ],
+              "ranges": [
+                {
+                  "start": 24,
+                  "end": 29
+                },
+                {
+                  "start": 0,
+                  "end": 29
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.acid-base.b-sepsis-recovery-gap",
+              "profileIds": [
+                "profile.gs028d.acid-base.b-sepsis-recovery-gap.male.72"
+              ],
+              "ranges": [
+                {
+                  "start": 24,
+                  "end": 29
+                },
+                {
+                  "start": 0,
+                  "end": 29
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "54e812ddd4c54884",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 20,
+              "end": 25,
+              "choiceId": "d3_3"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Serum lactate level alone",
+              "start": 0,
+              "end": 25,
+              "choiceId": "d3_3"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028d.acid-base.b-sepsis-recovery-gap",
+              "profileIds": [
+                "canonical",
+                "profile.gs028d.acid-base.b-sepsis-recovery-gap.female.45"
+              ],
+              "ranges": [
+                {
+                  "start": 20,
+                  "end": 25
+                },
+                {
+                  "start": 0,
+                  "end": 25
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.acid-base.b-sepsis-recovery-gap",
+              "profileIds": [
+                "profile.gs028d.acid-base.b-sepsis-recovery-gap.male.45"
+              ],
+              "ranges": [
+                {
+                  "start": 20,
+                  "end": 25
+                },
+                {
+                  "start": 0,
+                  "end": 25
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.acid-base.b-sepsis-recovery-gap",
+              "profileIds": [
+                "profile.gs028d.acid-base.b-sepsis-recovery-gap.female.72"
+              ],
+              "ranges": [
+                {
+                  "start": 20,
+                  "end": 25
+                },
+                {
+                  "start": 0,
+                  "end": 25
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.acid-base.b-sepsis-recovery-gap",
+              "profileIds": [
+                "profile.gs028d.acid-base.b-sepsis-recovery-gap.male.72"
+              ],
+              "ranges": [
+                {
+                  "start": 20,
+                  "end": 25
+                },
+                {
+                  "start": 0,
+                  "end": 25
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "6e9f2d3f20253ea0",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 22,
+              "end": 27,
+              "choiceId": "d1_3"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Uncorrected anion gap alone",
+              "start": 0,
+              "end": 27,
+              "choiceId": "d1_3"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028d.acid-base.b-sepsis-recovery-gap",
+              "profileIds": [
+                "canonical",
+                "profile.gs028d.acid-base.b-sepsis-recovery-gap.female.45"
+              ],
+              "ranges": [
+                {
+                  "start": 22,
+                  "end": 27
+                },
+                {
+                  "start": 0,
+                  "end": 27
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.acid-base.b-sepsis-recovery-gap",
+              "profileIds": [
+                "profile.gs028d.acid-base.b-sepsis-recovery-gap.male.45"
+              ],
+              "ranges": [
+                {
+                  "start": 22,
+                  "end": 27
+                },
+                {
+                  "start": 0,
+                  "end": 27
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.acid-base.b-sepsis-recovery-gap",
+              "profileIds": [
+                "profile.gs028d.acid-base.b-sepsis-recovery-gap.female.72"
+              ],
+              "ranges": [
+                {
+                  "start": 22,
+                  "end": 27
+                },
+                {
+                  "start": 0,
+                  "end": 27
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.acid-base.b-sepsis-recovery-gap",
+              "profileIds": [
+                "profile.gs028d.acid-base.b-sepsis-recovery-gap.male.72"
+              ],
+              "ranges": [
+                {
+                  "start": 22,
+                  "end": 27
+                },
+                {
+                  "start": 0,
+                  "end": 27
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questionVariantId": "question.metabolic-acidosis.confirm-with-blood-gas.v3",
+      "conceptId": "concept.metabolic-acidosis.confirm-with-blood-gas",
+      "stage": 0,
+      "findings": [
+        {
+          "id": "27e824c3f6f151c5",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 17,
+              "end": 22,
+              "choiceId": "d1_3"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Chest radiograph alone",
+              "start": 0,
+              "end": 22,
+              "choiceId": "d1_3"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028d.acid-base.a-tachypnea-low-bicarb",
+              "profileIds": [
+                "canonical",
+                "profile.gs028d.acid-base.a-tachypnea-low-bicarb.female.28"
+              ],
+              "ranges": [
+                {
+                  "start": 17,
+                  "end": 22
+                },
+                {
+                  "start": 0,
+                  "end": 22
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.acid-base.a-tachypnea-low-bicarb",
+              "profileIds": [
+                "profile.gs028d.acid-base.a-tachypnea-low-bicarb.male.28"
+              ],
+              "ranges": [
+                {
+                  "start": 17,
+                  "end": 22
+                },
+                {
+                  "start": 0,
+                  "end": 22
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.acid-base.a-tachypnea-low-bicarb",
+              "profileIds": [
+                "profile.gs028d.acid-base.a-tachypnea-low-bicarb.female.46"
+              ],
+              "ranges": [
+                {
+                  "start": 17,
+                  "end": 22
+                },
+                {
+                  "start": 0,
+                  "end": 22
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.acid-base.a-tachypnea-low-bicarb",
+              "profileIds": [
+                "profile.gs028d.acid-base.a-tachypnea-low-bicarb.male.46"
+              ],
+              "ranges": [
+                {
+                  "start": 17,
+                  "end": 22
+                },
+                {
+                  "start": 0,
+                  "end": 22
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "3369cbd7d18ee32c",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 14,
+              "end": 19,
+              "choiceId": "d2_3"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Serum albumin alone",
+              "start": 0,
+              "end": 19,
+              "choiceId": "d2_3"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028d.acid-base.a-tachypnea-low-bicarb",
+              "profileIds": [
+                "canonical",
+                "profile.gs028d.acid-base.a-tachypnea-low-bicarb.female.28"
+              ],
+              "ranges": [
+                {
+                  "start": 14,
+                  "end": 19
+                },
+                {
+                  "start": 0,
+                  "end": 19
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.acid-base.a-tachypnea-low-bicarb",
+              "profileIds": [
+                "profile.gs028d.acid-base.a-tachypnea-low-bicarb.male.28"
+              ],
+              "ranges": [
+                {
+                  "start": 14,
+                  "end": 19
+                },
+                {
+                  "start": 0,
+                  "end": 19
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.acid-base.a-tachypnea-low-bicarb",
+              "profileIds": [
+                "profile.gs028d.acid-base.a-tachypnea-low-bicarb.female.46"
+              ],
+              "ranges": [
+                {
+                  "start": 14,
+                  "end": 19
+                },
+                {
+                  "start": 0,
+                  "end": 19
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.acid-base.a-tachypnea-low-bicarb",
+              "profileIds": [
+                "profile.gs028d.acid-base.a-tachypnea-low-bicarb.male.46"
+              ],
+              "ranges": [
+                {
+                  "start": 14,
+                  "end": 19
+                },
+                {
+                  "start": 0,
+                  "end": 19
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "faea2b8971725033",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 14,
+              "end": 19,
+              "choiceId": "d3_3"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Urine ketones alone",
+              "start": 0,
+              "end": 19,
+              "choiceId": "d3_3"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028d.acid-base.a-tachypnea-low-bicarb",
+              "profileIds": [
+                "canonical",
+                "profile.gs028d.acid-base.a-tachypnea-low-bicarb.female.28"
+              ],
+              "ranges": [
+                {
+                  "start": 14,
+                  "end": 19
+                },
+                {
+                  "start": 0,
+                  "end": 19
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.acid-base.a-tachypnea-low-bicarb",
+              "profileIds": [
+                "profile.gs028d.acid-base.a-tachypnea-low-bicarb.male.28"
+              ],
+              "ranges": [
+                {
+                  "start": 14,
+                  "end": 19
+                },
+                {
+                  "start": 0,
+                  "end": 19
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.acid-base.a-tachypnea-low-bicarb",
+              "profileIds": [
+                "profile.gs028d.acid-base.a-tachypnea-low-bicarb.female.46"
+              ],
+              "ranges": [
+                {
+                  "start": 14,
+                  "end": 19
+                },
+                {
+                  "start": 0,
+                  "end": 19
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.acid-base.a-tachypnea-low-bicarb",
+              "profileIds": [
+                "profile.gs028d.acid-base.a-tachypnea-low-bicarb.male.46"
+              ],
+              "ranges": [
+                {
+                  "start": 14,
+                  "end": 19
+                },
+                {
+                  "start": 0,
+                  "end": 19
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questionVariantId": "question.palpable-breast.suspicious-mass-biopsy-despite-negative-imaging.v1",
+      "conceptId": "concept.palpable-breast.suspicious-mass-biopsy-despite-negative-imaging",
+      "stage": 0,
+      "findings": [
+        {
+          "id": "1530dbfa53e52e3c",
+          "rule": "unexplained-negative-imaging",
+          "severity": "advisory",
+          "message": "Describe what imaging showed or failed to show at the relevant site. A bare negative label does not say whether there was no correlate, benign findings or an inadequate examination.",
+          "evidence": [
+            {
+              "field": "stem",
+              "text": "negative mammography",
+              "start": 110,
+              "end": 130
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028c.palpable-breast.paired-dense-focal",
+              "profileIds": [
+                "canonical",
+                "profile.gs028c.palpable-breast.paired-dense-focal.female.44"
+              ],
+              "ranges": [
+                {
+                  "start": 110,
+                  "end": 130
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028c.palpable-breast.paired-dense-focal",
+              "profileIds": [
+                "profile.gs028c.palpable-breast.paired-dense-focal.female.58"
+              ],
+              "ranges": [
+                {
+                  "start": 110,
+                  "end": 130
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "990266a1fab0e262",
+          "rule": "unexplained-negative-imaging",
+          "severity": "advisory",
+          "message": "Describe what imaging showed or failed to show at the relevant site. A bare negative label does not say whether there was no correlate, benign findings or an inadequate examination.",
+          "evidence": [
+            {
+              "field": "presentation",
+              "text": "mammography is negative",
+              "start": 101,
+              "end": 124
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028c.palpable-breast.paired-dense-focal",
+              "profileIds": [
+                "canonical",
+                "profile.gs028c.palpable-breast.paired-dense-focal.female.44"
+              ],
+              "ranges": [
+                {
+                  "start": 101,
+                  "end": 124
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028c.palpable-breast.paired-dense-focal",
+              "profileIds": [
+                "profile.gs028c.palpable-breast.paired-dense-focal.female.58"
+              ],
+              "ranges": [
+                {
+                  "start": 101,
+                  "end": 124
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "e5987cc7ef1afd61",
+          "rule": "unexplained-negative-imaging",
+          "severity": "advisory",
+          "message": "Describe what imaging showed or failed to show at the relevant site. A bare negative label does not say whether there was no correlate, benign findings or an inadequate examination.",
+          "evidence": [
+            {
+              "field": "priorFeedback[0]",
+              "text": "negative mammography",
+              "start": 36,
+              "end": 56
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028c.palpable-breast.paired-dense-focal",
+              "profileIds": [
+                "canonical",
+                "profile.gs028c.palpable-breast.paired-dense-focal.female.44"
+              ],
+              "ranges": [
+                {
+                  "start": 36,
+                  "end": 56
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028c.palpable-breast.paired-dense-focal",
+              "profileIds": [
+                "profile.gs028c.palpable-breast.paired-dense-focal.female.58"
+              ],
+              "ranges": [
+                {
+                  "start": 36,
+                  "end": 56
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questionVariantId": "question.perianal-abscess.prompt-drainage.v1",
+      "conceptId": "concept.perianal-abscess.prompt-drainage",
+      "stage": 0,
+      "findings": [
+        {
+          "id": "299f2fc3c9a950aa",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 22,
+              "end": 27,
+              "choiceId": "antibiotic_1"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Give oral antibiotics alone",
+              "start": 0,
+              "end": 27,
+              "choiceId": "antibiotic_1"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.bread-butter.perianal-abscess.tender-perianal-lump",
+              "profileIds": [
+                "canonical",
+                "profile.bread-butter.perianal-abscess.tender-perianal-lump.female.31"
+              ],
+              "ranges": [
+                {
+                  "start": 22,
+                  "end": 27
+                },
+                {
+                  "start": 0,
+                  "end": 27
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.tender-perianal-lump",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.tender-perianal-lump.male.31"
+              ],
+              "ranges": [
+                {
+                  "start": 22,
+                  "end": 27
+                },
+                {
+                  "start": 0,
+                  "end": 27
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.tender-perianal-lump",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.tender-perianal-lump.female.52"
+              ],
+              "ranges": [
+                {
+                  "start": 22,
+                  "end": 27
+                },
+                {
+                  "start": 0,
+                  "end": 27
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.tender-perianal-lump",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.tender-perianal-lump.male.52"
+              ],
+              "ranges": [
+                {
+                  "start": 22,
+                  "end": 27
+                },
+                {
+                  "start": 0,
+                  "end": 27
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "7477230a7e82cd19",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 20,
+              "end": 25,
+              "choiceId": "compress_1"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Use warm compresses alone",
+              "start": 0,
+              "end": 25,
+              "choiceId": "compress_1"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.bread-butter.perianal-abscess.tender-perianal-lump",
+              "profileIds": [
+                "canonical",
+                "profile.bread-butter.perianal-abscess.tender-perianal-lump.female.31"
+              ],
+              "ranges": [
+                {
+                  "start": 20,
+                  "end": 25
+                },
+                {
+                  "start": 0,
+                  "end": 25
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.tender-perianal-lump",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.tender-perianal-lump.male.31"
+              ],
+              "ranges": [
+                {
+                  "start": 20,
+                  "end": 25
+                },
+                {
+                  "start": 0,
+                  "end": 25
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.tender-perianal-lump",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.tender-perianal-lump.female.52"
+              ],
+              "ranges": [
+                {
+                  "start": 20,
+                  "end": 25
+                },
+                {
+                  "start": 0,
+                  "end": 25
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.tender-perianal-lump",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.tender-perianal-lump.male.52"
+              ],
+              "ranges": [
+                {
+                  "start": 20,
+                  "end": 25
+                },
+                {
+                  "start": 0,
+                  "end": 25
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a9e081ead8ee48d7",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 26,
+              "end": 31,
+              "choiceId": "aspirate_1"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Perform needle aspiration alone",
+              "start": 0,
+              "end": 31,
+              "choiceId": "aspirate_1"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.bread-butter.perianal-abscess.tender-perianal-lump",
+              "profileIds": [
+                "canonical",
+                "profile.bread-butter.perianal-abscess.tender-perianal-lump.female.31"
+              ],
+              "ranges": [
+                {
+                  "start": 26,
+                  "end": 31
+                },
+                {
+                  "start": 0,
+                  "end": 31
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.tender-perianal-lump",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.tender-perianal-lump.male.31"
+              ],
+              "ranges": [
+                {
+                  "start": 26,
+                  "end": 31
+                },
+                {
+                  "start": 0,
+                  "end": 31
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.tender-perianal-lump",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.tender-perianal-lump.female.52"
+              ],
+              "ranges": [
+                {
+                  "start": 26,
+                  "end": 31
+                },
+                {
+                  "start": 0,
+                  "end": 31
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.tender-perianal-lump",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.tender-perianal-lump.male.52"
+              ],
+              "ranges": [
+                {
+                  "start": 26,
+                  "end": 31
+                },
+                {
+                  "start": 0,
+                  "end": 31
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questionVariantId": "question.perianal-abscess.prompt-drainage.v2",
+      "conceptId": "concept.perianal-abscess.prompt-drainage",
+      "stage": 0,
+      "findings": [
+        {
+          "id": "678736981bb6eac5",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 26,
+              "end": 31,
+              "choiceId": "aspirate_2"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Perform needle aspiration alone",
+              "start": 0,
+              "end": 31,
+              "choiceId": "aspirate_2"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.bread-butter.perianal-abscess.perianal-swelling",
+              "profileIds": [
+                "canonical",
+                "profile.bread-butter.perianal-abscess.perianal-swelling.female.31"
+              ],
+              "ranges": [
+                {
+                  "start": 26,
+                  "end": 31
+                },
+                {
+                  "start": 0,
+                  "end": 31
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.perianal-swelling",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.perianal-swelling.male.31"
+              ],
+              "ranges": [
+                {
+                  "start": 26,
+                  "end": 31
+                },
+                {
+                  "start": 0,
+                  "end": 31
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.perianal-swelling",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.perianal-swelling.female.52"
+              ],
+              "ranges": [
+                {
+                  "start": 26,
+                  "end": 31
+                },
+                {
+                  "start": 0,
+                  "end": 31
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.perianal-swelling",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.perianal-swelling.male.52"
+              ],
+              "ranges": [
+                {
+                  "start": 26,
+                  "end": 31
+                },
+                {
+                  "start": 0,
+                  "end": 31
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "702e3004641367c2",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 20,
+              "end": 25,
+              "choiceId": "compress_2"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Use warm compresses alone",
+              "start": 0,
+              "end": 25,
+              "choiceId": "compress_2"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.bread-butter.perianal-abscess.perianal-swelling",
+              "profileIds": [
+                "canonical",
+                "profile.bread-butter.perianal-abscess.perianal-swelling.female.31"
+              ],
+              "ranges": [
+                {
+                  "start": 20,
+                  "end": 25
+                },
+                {
+                  "start": 0,
+                  "end": 25
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.perianal-swelling",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.perianal-swelling.male.31"
+              ],
+              "ranges": [
+                {
+                  "start": 20,
+                  "end": 25
+                },
+                {
+                  "start": 0,
+                  "end": 25
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.perianal-swelling",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.perianal-swelling.female.52"
+              ],
+              "ranges": [
+                {
+                  "start": 20,
+                  "end": 25
+                },
+                {
+                  "start": 0,
+                  "end": 25
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.perianal-swelling",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.perianal-swelling.male.52"
+              ],
+              "ranges": [
+                {
+                  "start": 20,
+                  "end": 25
+                },
+                {
+                  "start": 0,
+                  "end": 25
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "d4890de06bb8f196",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 22,
+              "end": 27,
+              "choiceId": "antibiotic_2"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Give oral antibiotics alone",
+              "start": 0,
+              "end": 27,
+              "choiceId": "antibiotic_2"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.bread-butter.perianal-abscess.perianal-swelling",
+              "profileIds": [
+                "canonical",
+                "profile.bread-butter.perianal-abscess.perianal-swelling.female.31"
+              ],
+              "ranges": [
+                {
+                  "start": 22,
+                  "end": 27
+                },
+                {
+                  "start": 0,
+                  "end": 27
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.perianal-swelling",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.perianal-swelling.male.31"
+              ],
+              "ranges": [
+                {
+                  "start": 22,
+                  "end": 27
+                },
+                {
+                  "start": 0,
+                  "end": 27
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.perianal-swelling",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.perianal-swelling.female.52"
+              ],
+              "ranges": [
+                {
+                  "start": 22,
+                  "end": 27
+                },
+                {
+                  "start": 0,
+                  "end": 27
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.perianal-swelling",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.perianal-swelling.male.52"
+              ],
+              "ranges": [
+                {
+                  "start": 22,
+                  "end": 27
+                },
+                {
+                  "start": 0,
+                  "end": 27
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questionVariantId": "question.perianal-abscess.prompt-drainage.v3",
+      "conceptId": "concept.perianal-abscess.prompt-drainage",
+      "stage": 0,
+      "findings": [
+        {
+          "id": "75c9de43f144d6fe",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 22,
+              "end": 27,
+              "choiceId": "antibiotic_3"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Give oral antibiotics alone",
+              "start": 0,
+              "end": 27,
+              "choiceId": "antibiotic_3"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.bread-butter.perianal-abscess.painful-sitting",
+              "profileIds": [
+                "canonical",
+                "profile.bread-butter.perianal-abscess.painful-sitting.female.31"
+              ],
+              "ranges": [
+                {
+                  "start": 22,
+                  "end": 27
+                },
+                {
+                  "start": 0,
+                  "end": 27
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.painful-sitting",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.painful-sitting.male.31"
+              ],
+              "ranges": [
+                {
+                  "start": 22,
+                  "end": 27
+                },
+                {
+                  "start": 0,
+                  "end": 27
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.painful-sitting",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.painful-sitting.female.52"
+              ],
+              "ranges": [
+                {
+                  "start": 22,
+                  "end": 27
+                },
+                {
+                  "start": 0,
+                  "end": 27
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.painful-sitting",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.painful-sitting.male.52"
+              ],
+              "ranges": [
+                {
+                  "start": 22,
+                  "end": 27
+                },
+                {
+                  "start": 0,
+                  "end": 27
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "d4fc0c3cd563d7f3",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 26,
+              "end": 31,
+              "choiceId": "aspirate_3"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Perform needle aspiration alone",
+              "start": 0,
+              "end": 31,
+              "choiceId": "aspirate_3"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.bread-butter.perianal-abscess.painful-sitting",
+              "profileIds": [
+                "canonical",
+                "profile.bread-butter.perianal-abscess.painful-sitting.female.31"
+              ],
+              "ranges": [
+                {
+                  "start": 26,
+                  "end": 31
+                },
+                {
+                  "start": 0,
+                  "end": 31
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.painful-sitting",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.painful-sitting.male.31"
+              ],
+              "ranges": [
+                {
+                  "start": 26,
+                  "end": 31
+                },
+                {
+                  "start": 0,
+                  "end": 31
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.painful-sitting",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.painful-sitting.female.52"
+              ],
+              "ranges": [
+                {
+                  "start": 26,
+                  "end": 31
+                },
+                {
+                  "start": 0,
+                  "end": 31
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.painful-sitting",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.painful-sitting.male.52"
+              ],
+              "ranges": [
+                {
+                  "start": 26,
+                  "end": 31
+                },
+                {
+                  "start": 0,
+                  "end": 31
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "f32fcce2190f20ef",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 20,
+              "end": 25,
+              "choiceId": "compress_3"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Use warm compresses alone",
+              "start": 0,
+              "end": 25,
+              "choiceId": "compress_3"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.bread-butter.perianal-abscess.painful-sitting",
+              "profileIds": [
+                "canonical",
+                "profile.bread-butter.perianal-abscess.painful-sitting.female.31"
+              ],
+              "ranges": [
+                {
+                  "start": 20,
+                  "end": 25
+                },
+                {
+                  "start": 0,
+                  "end": 25
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.painful-sitting",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.painful-sitting.male.31"
+              ],
+              "ranges": [
+                {
+                  "start": 20,
+                  "end": 25
+                },
+                {
+                  "start": 0,
+                  "end": 25
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.painful-sitting",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.painful-sitting.female.52"
+              ],
+              "ranges": [
+                {
+                  "start": 20,
+                  "end": 25
+                },
+                {
+                  "start": 0,
+                  "end": 25
+                }
+              ]
+            },
+            {
+              "caseId": "case.bread-butter.perianal-abscess.painful-sitting",
+              "profileIds": [
+                "profile.bread-butter.perianal-abscess.painful-sitting.male.52"
+              ],
+              "ranges": [
+                {
+                  "start": 20,
+                  "end": 25
+                },
+                {
+                  "start": 0,
+                  "end": 25
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questionVariantId": "question.spigelian-hernia.elective-repair-referral.v4",
+      "conceptId": "concept.spigelian-hernia.elective-repair-referral",
+      "stage": 0,
+      "findings": [
+        {
+          "id": "549bdfe66130ec91",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 39,
+              "end": 44,
+              "choiceId": "d3_4"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Choose observation from symptom status alone",
+              "start": 0,
+              "end": 44,
+              "choiceId": "d3_4"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028b.spigelian-hernia.b-technique-question",
+              "profileIds": [
+                "canonical",
+                "profile.gs028b.spigelian-hernia.b-technique-question.female.43"
+              ],
+              "ranges": [
+                {
+                  "start": 39,
+                  "end": 44
+                },
+                {
+                  "start": 0,
+                  "end": 44
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.spigelian-hernia.b-technique-question",
+              "profileIds": [
+                "profile.gs028b.spigelian-hernia.b-technique-question.male.43"
+              ],
+              "ranges": [
+                {
+                  "start": 39,
+                  "end": 44
+                },
+                {
+                  "start": 0,
+                  "end": 44
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.spigelian-hernia.b-technique-question",
+              "profileIds": [
+                "profile.gs028b.spigelian-hernia.b-technique-question.female.68"
+              ],
+              "ranges": [
+                {
+                  "start": 39,
+                  "end": 44
+                },
+                {
+                  "start": 0,
+                  "end": 44
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.spigelian-hernia.b-technique-question",
+              "profileIds": [
+                "profile.gs028b.spigelian-hernia.b-technique-question.male.68"
+              ],
+              "ranges": [
+                {
+                  "start": 39,
+                  "end": 44
+                },
+                {
+                  "start": 0,
+                  "end": 44
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "9fc1eee9bac6602c",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 37,
+              "end": 42,
+              "choiceId": "d2_4"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Select open repair from reducibility alone",
+              "start": 0,
+              "end": 42,
+              "choiceId": "d2_4"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028b.spigelian-hernia.b-technique-question",
+              "profileIds": [
+                "canonical",
+                "profile.gs028b.spigelian-hernia.b-technique-question.female.43"
+              ],
+              "ranges": [
+                {
+                  "start": 37,
+                  "end": 42
+                },
+                {
+                  "start": 0,
+                  "end": 42
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.spigelian-hernia.b-technique-question",
+              "profileIds": [
+                "profile.gs028b.spigelian-hernia.b-technique-question.male.43"
+              ],
+              "ranges": [
+                {
+                  "start": 37,
+                  "end": 42
+                },
+                {
+                  "start": 0,
+                  "end": 42
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.spigelian-hernia.b-technique-question",
+              "profileIds": [
+                "profile.gs028b.spigelian-hernia.b-technique-question.female.68"
+              ],
+              "ranges": [
+                {
+                  "start": 37,
+                  "end": 42
+                },
+                {
+                  "start": 0,
+                  "end": 42
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.spigelian-hernia.b-technique-question",
+              "profileIds": [
+                "profile.gs028b.spigelian-hernia.b-technique-question.male.68"
+              ],
+              "ranges": [
+                {
+                  "start": 37,
+                  "end": 42
+                },
+                {
+                  "start": 0,
+                  "end": 42
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "dfef9bc89fbe5548",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 36,
+              "end": 41,
+              "choiceId": "d1_4"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Select laparoscopy from hernia type alone",
+              "start": 0,
+              "end": 41,
+              "choiceId": "d1_4"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028b.spigelian-hernia.b-technique-question",
+              "profileIds": [
+                "canonical",
+                "profile.gs028b.spigelian-hernia.b-technique-question.female.43"
+              ],
+              "ranges": [
+                {
+                  "start": 36,
+                  "end": 41
+                },
+                {
+                  "start": 0,
+                  "end": 41
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.spigelian-hernia.b-technique-question",
+              "profileIds": [
+                "profile.gs028b.spigelian-hernia.b-technique-question.male.43"
+              ],
+              "ranges": [
+                {
+                  "start": 36,
+                  "end": 41
+                },
+                {
+                  "start": 0,
+                  "end": 41
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.spigelian-hernia.b-technique-question",
+              "profileIds": [
+                "profile.gs028b.spigelian-hernia.b-technique-question.female.68"
+              ],
+              "ranges": [
+                {
+                  "start": 36,
+                  "end": 41
+                },
+                {
+                  "start": 0,
+                  "end": 41
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.spigelian-hernia.b-technique-question",
+              "profileIds": [
+                "profile.gs028b.spigelian-hernia.b-technique-question.male.68"
+              ],
+              "ranges": [
+                {
+                  "start": 36,
+                  "end": 41
+                },
+                {
+                  "start": 0,
+                  "end": 41
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questionVariantId": "question.differentiated-thyroid-cancer.individualized-surgical-extent.v3",
+      "conceptId": "concept.differentiated-thyroid-cancer.individualized-surgical-extent",
+      "stage": 1,
+      "findings": [
+        {
+          "id": "ac303abe6597df09",
+          "rule": "ambiguous-cervical-term",
+          "severity": "advisory",
+          "message": "Qualify the anatomical site: for example, neck/cervical lymph node. This lexical check cannot determine the intended organ.",
+          "evidence": [
+            {
+              "field": "presentation",
+              "text": "cervical",
+              "start": 131,
+              "end": 139
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028b.differentiated-thyroid-cancer.b-nodal-disease",
+              "profileIds": [
+                "canonical",
+                "profile.gs028b.differentiated-thyroid-cancer.b-nodal-disease.female.43"
+              ],
+              "ranges": [
+                {
+                  "start": 131,
+                  "end": 139
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.differentiated-thyroid-cancer.b-nodal-disease",
+              "profileIds": [
+                "profile.gs028b.differentiated-thyroid-cancer.b-nodal-disease.male.43"
+              ],
+              "ranges": [
+                {
+                  "start": 129,
+                  "end": 137
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.differentiated-thyroid-cancer.b-nodal-disease",
+              "profileIds": [
+                "profile.gs028b.differentiated-thyroid-cancer.b-nodal-disease.female.68"
+              ],
+              "ranges": [
+                {
+                  "start": 131,
+                  "end": 139
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.differentiated-thyroid-cancer.b-nodal-disease",
+              "profileIds": [
+                "profile.gs028b.differentiated-thyroid-cancer.b-nodal-disease.male.68"
+              ],
+              "ranges": [
+                {
+                  "start": 129,
+                  "end": 137
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "c38208b4a03fa5d3",
+          "rule": "ambiguous-cervical-term",
+          "severity": "advisory",
+          "message": "Qualify the anatomical site: for example, neck/cervical lymph node. This lexical check cannot determine the intended organ.",
+          "evidence": [
+            {
+              "field": "chiefComplaint",
+              "text": "cervical",
+              "start": 12,
+              "end": 20
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028b.differentiated-thyroid-cancer.b-nodal-disease",
+              "profileIds": [
+                "canonical",
+                "profile.gs028b.differentiated-thyroid-cancer.b-nodal-disease.female.43"
+              ],
+              "ranges": [
+                {
+                  "start": 12,
+                  "end": 20
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.differentiated-thyroid-cancer.b-nodal-disease",
+              "profileIds": [
+                "profile.gs028b.differentiated-thyroid-cancer.b-nodal-disease.male.43"
+              ],
+              "ranges": [
+                {
+                  "start": 12,
+                  "end": 20
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.differentiated-thyroid-cancer.b-nodal-disease",
+              "profileIds": [
+                "profile.gs028b.differentiated-thyroid-cancer.b-nodal-disease.female.68"
+              ],
+              "ranges": [
+                {
+                  "start": 12,
+                  "end": 20
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.differentiated-thyroid-cancer.b-nodal-disease",
+              "profileIds": [
+                "profile.gs028b.differentiated-thyroid-cancer.b-nodal-disease.male.68"
+              ],
+              "ranges": [
+                {
+                  "start": 12,
+                  "end": 20
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "656d6db77cf60f5b",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 29,
+              "end": 34,
+              "choiceId": "d1_3"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Base surgery on primary size alone",
+              "start": 0,
+              "end": 34,
+              "choiceId": "d1_3"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028b.differentiated-thyroid-cancer.b-nodal-disease",
+              "profileIds": [
+                "canonical",
+                "profile.gs028b.differentiated-thyroid-cancer.b-nodal-disease.female.43"
+              ],
+              "ranges": [
+                {
+                  "start": 29,
+                  "end": 34
+                },
+                {
+                  "start": 0,
+                  "end": 34
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.differentiated-thyroid-cancer.b-nodal-disease",
+              "profileIds": [
+                "profile.gs028b.differentiated-thyroid-cancer.b-nodal-disease.male.43"
+              ],
+              "ranges": [
+                {
+                  "start": 29,
+                  "end": 34
+                },
+                {
+                  "start": 0,
+                  "end": 34
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.differentiated-thyroid-cancer.b-nodal-disease",
+              "profileIds": [
+                "profile.gs028b.differentiated-thyroid-cancer.b-nodal-disease.female.68"
+              ],
+              "ranges": [
+                {
+                  "start": 29,
+                  "end": 34
+                },
+                {
+                  "start": 0,
+                  "end": 34
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.differentiated-thyroid-cancer.b-nodal-disease",
+              "profileIds": [
+                "profile.gs028b.differentiated-thyroid-cancer.b-nodal-disease.male.68"
+              ],
+              "ranges": [
+                {
+                  "start": 29,
+                  "end": 34
+                },
+                {
+                  "start": 0,
+                  "end": 34
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questionVariantId": "question.acute-mesenteric-ischemia.peritonitis-exploration.v3",
+      "conceptId": "concept.acute-mesenteric-ischemia.peritonitis-exploration",
+      "stage": 0,
+      "findings": [
+        {
+          "id": "09f8702390507318",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 31,
+              "end": 36,
+              "choiceId": "d2_3"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Endovascular revascularization alone",
+              "start": 0,
+              "end": 36,
+              "choiceId": "d2_3"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028c.acute-mesenteric-ischemia.b-guarding-and-shock",
+              "profileIds": [
+                "canonical",
+                "profile.gs028c.acute-mesenteric-ischemia.b-guarding-and-shock.female.65"
+              ],
+              "ranges": [
+                {
+                  "start": 31,
+                  "end": 36
+                },
+                {
+                  "start": 0,
+                  "end": 36
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028c.acute-mesenteric-ischemia.b-guarding-and-shock",
+              "profileIds": [
+                "profile.gs028c.acute-mesenteric-ischemia.b-guarding-and-shock.male.65"
+              ],
+              "ranges": [
+                {
+                  "start": 31,
+                  "end": 36
+                },
+                {
+                  "start": 0,
+                  "end": 36
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028c.acute-mesenteric-ischemia.b-guarding-and-shock",
+              "profileIds": [
+                "profile.gs028c.acute-mesenteric-ischemia.b-guarding-and-shock.female.80"
+              ],
+              "ranges": [
+                {
+                  "start": 31,
+                  "end": 36
+                },
+                {
+                  "start": 0,
+                  "end": 36
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028c.acute-mesenteric-ischemia.b-guarding-and-shock",
+              "profileIds": [
+                "profile.gs028c.acute-mesenteric-ischemia.b-guarding-and-shock.male.80"
+              ],
+              "ranges": [
+                {
+                  "start": 31,
+                  "end": 36
+                },
+                {
+                  "start": 0,
+                  "end": 36
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "d5c3b81947aa624a",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 23,
+              "end": 28,
+              "choiceId": "d3_3"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Treat with antibiotics alone",
+              "start": 0,
+              "end": 28,
+              "choiceId": "d3_3"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028c.acute-mesenteric-ischemia.b-guarding-and-shock",
+              "profileIds": [
+                "canonical",
+                "profile.gs028c.acute-mesenteric-ischemia.b-guarding-and-shock.female.65"
+              ],
+              "ranges": [
+                {
+                  "start": 23,
+                  "end": 28
+                },
+                {
+                  "start": 0,
+                  "end": 28
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028c.acute-mesenteric-ischemia.b-guarding-and-shock",
+              "profileIds": [
+                "profile.gs028c.acute-mesenteric-ischemia.b-guarding-and-shock.male.65"
+              ],
+              "ranges": [
+                {
+                  "start": 23,
+                  "end": 28
+                },
+                {
+                  "start": 0,
+                  "end": 28
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028c.acute-mesenteric-ischemia.b-guarding-and-shock",
+              "profileIds": [
+                "profile.gs028c.acute-mesenteric-ischemia.b-guarding-and-shock.female.80"
+              ],
+              "ranges": [
+                {
+                  "start": 23,
+                  "end": 28
+                },
+                {
+                  "start": 0,
+                  "end": 28
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028c.acute-mesenteric-ischemia.b-guarding-and-shock",
+              "profileIds": [
+                "profile.gs028c.acute-mesenteric-ischemia.b-guarding-and-shock.male.80"
+              ],
+              "ranges": [
+                {
+                  "start": 23,
+                  "end": 28
+                },
+                {
+                  "start": 0,
+                  "end": 28
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questionVariantId": "question.cholecystitis.fit-patient-index-admission-cholecystectomy.v4",
+      "conceptId": "concept.cholecystitis.fit-patient-index-admission-cholecystectomy",
+      "stage": 0,
+      "findings": [
+        {
+          "id": "b118eddc5d906498",
+          "rule": "availability-permission-cue",
+          "severity": "advisory",
+          "message": "A feasibility/permission statement may supply the rationale for an offered action. Apply the deletion test; retain and neutrally phrase a genuine decision-critical constraint.",
+          "evidence": [
+            {
+              "field": "presentation",
+              "text": "hospital surgical team is available",
+              "start": 251,
+              "end": 286
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Same-admission cholecystectomy",
+              "start": 0,
+              "end": 30,
+              "choiceId": "correct_4"
+            }
+          ],
+          "metrics": {
+            "visibleHistory": false
+          },
+          "occurrences": [
+            {
+              "caseId": "case.gs028c.acute-cholecystitis.b-older-but-fit",
+              "profileIds": [
+                "canonical",
+                "profile.gs028c.acute-cholecystitis.b-older-but-fit.female.72"
+              ],
+              "ranges": [
+                {
+                  "start": 251,
+                  "end": 286
+                },
+                {
+                  "start": 0,
+                  "end": 30
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028c.acute-cholecystitis.b-older-but-fit",
+              "profileIds": [
+                "profile.gs028c.acute-cholecystitis.b-older-but-fit.male.72"
+              ],
+              "ranges": [
+                {
+                  "start": 249,
+                  "end": 284
+                },
+                {
+                  "start": 0,
+                  "end": 30
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028c.acute-cholecystitis.b-older-but-fit",
+              "profileIds": [
+                "profile.gs028c.acute-cholecystitis.b-older-but-fit.female.81"
+              ],
+              "ranges": [
+                {
+                  "start": 251,
+                  "end": 286
+                },
+                {
+                  "start": 0,
+                  "end": 30
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028c.acute-cholecystitis.b-older-but-fit",
+              "profileIds": [
+                "profile.gs028c.acute-cholecystitis.b-older-but-fit.male.81"
+              ],
+              "ranges": [
+                {
+                  "start": 249,
+                  "end": 284
+                },
+                {
+                  "start": 0,
+                  "end": 30
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "589b32a945a70247",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 12,
+              "end": 17,
+              "choiceId": "d1_4"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Antibiotics alone because of age",
+              "start": 0,
+              "end": 32,
+              "choiceId": "d1_4"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028c.acute-cholecystitis.b-older-but-fit",
+              "profileIds": [
+                "canonical",
+                "profile.gs028c.acute-cholecystitis.b-older-but-fit.female.72"
+              ],
+              "ranges": [
+                {
+                  "start": 12,
+                  "end": 17
+                },
+                {
+                  "start": 0,
+                  "end": 32
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028c.acute-cholecystitis.b-older-but-fit",
+              "profileIds": [
+                "profile.gs028c.acute-cholecystitis.b-older-but-fit.male.72"
+              ],
+              "ranges": [
+                {
+                  "start": 12,
+                  "end": 17
+                },
+                {
+                  "start": 0,
+                  "end": 32
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028c.acute-cholecystitis.b-older-but-fit",
+              "profileIds": [
+                "profile.gs028c.acute-cholecystitis.b-older-but-fit.female.81"
+              ],
+              "ranges": [
+                {
+                  "start": 12,
+                  "end": 17
+                },
+                {
+                  "start": 0,
+                  "end": 32
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028c.acute-cholecystitis.b-older-but-fit",
+              "profileIds": [
+                "profile.gs028c.acute-cholecystitis.b-older-but-fit.male.81"
+              ],
+              "ranges": [
+                {
+                  "start": 12,
+                  "end": 17
+                },
+                {
+                  "start": 0,
+                  "end": 32
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questionVariantId": "question.hyperkalaemia.severe-community-result-transfer.v3",
+      "conceptId": "concept.hyperkalaemia.severe-community-result-transfer",
+      "stage": 0,
+      "findings": [
+        {
+          "id": "7189088a877a23be",
+          "rule": "availability-permission-cue",
+          "severity": "advisory",
+          "message": "A feasibility/permission statement may supply the rationale for an offered action. Apply the deletion test; retain and neutrally phrase a genuine decision-critical constraint.",
+          "evidence": [
+            {
+              "field": "presentation",
+              "text": "available for immediate transfer",
+              "start": 213,
+              "end": 245
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Immediate hospital assessment",
+              "start": 0,
+              "end": 29,
+              "choiceId": "correct_3"
+            }
+          ],
+          "metrics": {
+            "visibleHistory": false
+          },
+          "occurrences": [
+            {
+              "caseId": "case.gs028d.hyperkalaemia.a-dialysis-result",
+              "profileIds": [
+                "canonical",
+                "profile.gs028d.hyperkalaemia.a-dialysis-result.female.39"
+              ],
+              "ranges": [
+                {
+                  "start": 213,
+                  "end": 245
+                },
+                {
+                  "start": 0,
+                  "end": 29
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.hyperkalaemia.a-dialysis-result",
+              "profileIds": [
+                "profile.gs028d.hyperkalaemia.a-dialysis-result.male.39"
+              ],
+              "ranges": [
+                {
+                  "start": 211,
+                  "end": 243
+                },
+                {
+                  "start": 0,
+                  "end": 29
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.hyperkalaemia.a-dialysis-result",
+              "profileIds": [
+                "profile.gs028d.hyperkalaemia.a-dialysis-result.female.73"
+              ],
+              "ranges": [
+                {
+                  "start": 213,
+                  "end": 245
+                },
+                {
+                  "start": 0,
+                  "end": 29
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.hyperkalaemia.a-dialysis-result",
+              "profileIds": [
+                "profile.gs028d.hyperkalaemia.a-dialysis-result.male.73"
+              ],
+              "ranges": [
+                {
+                  "start": 211,
+                  "end": 243
+                },
+                {
+                  "start": 0,
+                  "end": 29
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "d019a63f824434c8",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 15,
+              "end": 20,
+              "choiceId": "d3_3"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Dietary advice alone",
+              "start": 0,
+              "end": 20,
+              "choiceId": "d3_3"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028d.hyperkalaemia.a-dialysis-result",
+              "profileIds": [
+                "canonical",
+                "profile.gs028d.hyperkalaemia.a-dialysis-result.female.39"
+              ],
+              "ranges": [
+                {
+                  "start": 15,
+                  "end": 20
+                },
+                {
+                  "start": 0,
+                  "end": 20
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.hyperkalaemia.a-dialysis-result",
+              "profileIds": [
+                "profile.gs028d.hyperkalaemia.a-dialysis-result.male.39"
+              ],
+              "ranges": [
+                {
+                  "start": 15,
+                  "end": 20
+                },
+                {
+                  "start": 0,
+                  "end": 20
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.hyperkalaemia.a-dialysis-result",
+              "profileIds": [
+                "profile.gs028d.hyperkalaemia.a-dialysis-result.female.73"
+              ],
+              "ranges": [
+                {
+                  "start": 15,
+                  "end": 20
+                },
+                {
+                  "start": 0,
+                  "end": 20
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.hyperkalaemia.a-dialysis-result",
+              "profileIds": [
+                "profile.gs028d.hyperkalaemia.a-dialysis-result.male.73"
+              ],
+              "ranges": [
+                {
+                  "start": 15,
+                  "end": 20
+                },
+                {
+                  "start": 0,
+                  "end": 20
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questionVariantId": "question.postoperative-delirium.multicomponent-prevention-plan.v4",
+      "conceptId": "concept.postoperative-delirium.multicomponent-prevention-plan",
+      "stage": 0,
+      "findings": [
+        {
+          "id": "b9b0c44e8194fcae",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 12,
+              "end": 17,
+              "choiceId": "d2_4"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Rely on age alone to choose care",
+              "start": 0,
+              "end": 32,
+              "choiceId": "d2_4"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028d.geriatrics.b-mobility-nutrition",
+              "profileIds": [
+                "canonical",
+                "profile.gs028d.geriatrics.b-mobility-nutrition.female.68"
+              ],
+              "ranges": [
+                {
+                  "start": 12,
+                  "end": 17
+                },
+                {
+                  "start": 0,
+                  "end": 32
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.geriatrics.b-mobility-nutrition",
+              "profileIds": [
+                "profile.gs028d.geriatrics.b-mobility-nutrition.male.68"
+              ],
+              "ranges": [
+                {
+                  "start": 12,
+                  "end": 17
+                },
+                {
+                  "start": 0,
+                  "end": 32
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.geriatrics.b-mobility-nutrition",
+              "profileIds": [
+                "profile.gs028d.geriatrics.b-mobility-nutrition.female.80"
+              ],
+              "ranges": [
+                {
+                  "start": 12,
+                  "end": 17
+                },
+                {
+                  "start": 0,
+                  "end": 32
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.geriatrics.b-mobility-nutrition",
+              "profileIds": [
+                "profile.gs028d.geriatrics.b-mobility-nutrition.male.80"
+              ],
+              "ranges": [
+                {
+                  "start": 12,
+                  "end": 17
+                },
+                {
+                  "start": 0,
+                  "end": 32
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "d11cc6a3c6d36e39",
+          "rule": "option-generic-individualization",
+          "severity": "advisory",
+          "message": "A generic individualized/tailored/shared-decision label contrasts with concrete alternatives. State the actual proposed action in every option.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "Tailored non-drug bundle",
+              "start": 0,
+              "end": 24,
+              "choiceId": "correct_4"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Choose one universal intervention",
+              "start": 0,
+              "end": 33,
+              "choiceId": "d1_4"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Rely on age alone to choose care",
+              "start": 0,
+              "end": 32,
+              "choiceId": "d2_4"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Provide only a discharge handout",
+              "start": 0,
+              "end": 32,
+              "choiceId": "d3_4"
+            }
+          ],
+          "metrics": {
+            "genericChoiceIds": [
+              "correct_4"
+            ]
+          },
+          "occurrences": [
+            {
+              "caseId": "case.gs028d.geriatrics.b-mobility-nutrition",
+              "profileIds": [
+                "canonical",
+                "profile.gs028d.geriatrics.b-mobility-nutrition.female.68"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 24
+                },
+                {
+                  "start": 0,
+                  "end": 33
+                },
+                {
+                  "start": 0,
+                  "end": 32
+                },
+                {
+                  "start": 0,
+                  "end": 32
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.geriatrics.b-mobility-nutrition",
+              "profileIds": [
+                "profile.gs028d.geriatrics.b-mobility-nutrition.male.68"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 24
+                },
+                {
+                  "start": 0,
+                  "end": 33
+                },
+                {
+                  "start": 0,
+                  "end": 32
+                },
+                {
+                  "start": 0,
+                  "end": 32
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.geriatrics.b-mobility-nutrition",
+              "profileIds": [
+                "profile.gs028d.geriatrics.b-mobility-nutrition.female.80"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 24
+                },
+                {
+                  "start": 0,
+                  "end": 33
+                },
+                {
+                  "start": 0,
+                  "end": 32
+                },
+                {
+                  "start": 0,
+                  "end": 32
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.geriatrics.b-mobility-nutrition",
+              "profileIds": [
+                "profile.gs028d.geriatrics.b-mobility-nutrition.male.80"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 24
+                },
+                {
+                  "start": 0,
+                  "end": 33
+                },
+                {
+                  "start": 0,
+                  "end": 32
+                },
+                {
+                  "start": 0,
+                  "end": 32
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questionVariantId": "question.breast-cancer-after-neoadjuvant-therapy.response-mapping.v1",
+      "conceptId": "concept.breast-cancer-after-neoadjuvant-therapy.response-mapping",
+      "stage": 0,
+      "findings": [
+        {
+          "id": "45cafe14846e01a3",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 34,
+              "end": 39,
+              "choiceId": "d1_1"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Planning from current examination alone",
+              "start": 0,
+              "end": 39,
+              "choiceId": "d1_1"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028b.post-neoadjuvant-breast.paired-marker-residual",
+              "profileIds": [
+                "canonical",
+                "profile.gs028b.post-neoadjuvant-breast.paired-marker-residual.female.42"
+              ],
+              "ranges": [
+                {
+                  "start": 34,
+                  "end": 39
+                },
+                {
+                  "start": 0,
+                  "end": 39
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.post-neoadjuvant-breast.paired-marker-residual",
+              "profileIds": [
+                "profile.gs028b.post-neoadjuvant-breast.paired-marker-residual.female.58"
+              ],
+              "ranges": [
+                {
+                  "start": 34,
+                  "end": 39
+                },
+                {
+                  "start": 0,
+                  "end": 39
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "e6a4fbb481c868b0",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 31,
+              "end": 36,
+              "choiceId": "d3_1"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Planning from baseline imaging alone",
+              "start": 0,
+              "end": 36,
+              "choiceId": "d3_1"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028b.post-neoadjuvant-breast.paired-marker-residual",
+              "profileIds": [
+                "canonical",
+                "profile.gs028b.post-neoadjuvant-breast.paired-marker-residual.female.42"
+              ],
+              "ranges": [
+                {
+                  "start": 31,
+                  "end": 36
+                },
+                {
+                  "start": 0,
+                  "end": 36
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.post-neoadjuvant-breast.paired-marker-residual",
+              "profileIds": [
+                "profile.gs028b.post-neoadjuvant-breast.paired-marker-residual.female.58"
+              ],
+              "ranges": [
+                {
+                  "start": 31,
+                  "end": 36
+                },
+                {
+                  "start": 0,
+                  "end": 36
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questionVariantId": "question.cirrhosis-perioperative-risk.multifactor-assessment.v2",
+      "conceptId": "concept.cirrhosis-perioperative-risk.multifactor-assessment",
+      "stage": 0,
+      "findings": [
+        {
+          "id": "528d2957522ae6ec",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 32,
+              "end": 37,
+              "choiceId": "d1_2"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Clear surgery from compensation alone",
+              "start": 0,
+              "end": 37,
+              "choiceId": "d1_2"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028b.cirrhosis-perioperative.a-compensated",
+              "profileIds": [
+                "canonical",
+                "profile.gs028b.cirrhosis-perioperative.a-compensated.female.43"
+              ],
+              "ranges": [
+                {
+                  "start": 32,
+                  "end": 37
+                },
+                {
+                  "start": 0,
+                  "end": 37
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.cirrhosis-perioperative.a-compensated",
+              "profileIds": [
+                "profile.gs028b.cirrhosis-perioperative.a-compensated.male.43"
+              ],
+              "ranges": [
+                {
+                  "start": 32,
+                  "end": 37
+                },
+                {
+                  "start": 0,
+                  "end": 37
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.cirrhosis-perioperative.a-compensated",
+              "profileIds": [
+                "profile.gs028b.cirrhosis-perioperative.a-compensated.female.68"
+              ],
+              "ranges": [
+                {
+                  "start": 32,
+                  "end": 37
+                },
+                {
+                  "start": 0,
+                  "end": 37
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.cirrhosis-perioperative.a-compensated",
+              "profileIds": [
+                "profile.gs028b.cirrhosis-perioperative.a-compensated.male.68"
+              ],
+              "ranges": [
+                {
+                  "start": 32,
+                  "end": 37
+                },
+                {
+                  "start": 0,
+                  "end": 37
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a3ef26df40f1382a",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 34,
+              "end": 39,
+              "choiceId": "d3_2"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Estimate risk from platelet count alone",
+              "start": 0,
+              "end": 39,
+              "choiceId": "d3_2"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028b.cirrhosis-perioperative.a-compensated",
+              "profileIds": [
+                "canonical",
+                "profile.gs028b.cirrhosis-perioperative.a-compensated.female.43"
+              ],
+              "ranges": [
+                {
+                  "start": 34,
+                  "end": 39
+                },
+                {
+                  "start": 0,
+                  "end": 39
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.cirrhosis-perioperative.a-compensated",
+              "profileIds": [
+                "profile.gs028b.cirrhosis-perioperative.a-compensated.male.43"
+              ],
+              "ranges": [
+                {
+                  "start": 34,
+                  "end": 39
+                },
+                {
+                  "start": 0,
+                  "end": 39
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.cirrhosis-perioperative.a-compensated",
+              "profileIds": [
+                "profile.gs028b.cirrhosis-perioperative.a-compensated.female.68"
+              ],
+              "ranges": [
+                {
+                  "start": 34,
+                  "end": 39
+                },
+                {
+                  "start": 0,
+                  "end": 39
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.cirrhosis-perioperative.a-compensated",
+              "profileIds": [
+                "profile.gs028b.cirrhosis-perioperative.a-compensated.male.68"
+              ],
+              "ranges": [
+                {
+                  "start": 34,
+                  "end": 39
+                },
+                {
+                  "start": 0,
+                  "end": 39
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questionVariantId": "question.hyperkalaemia.severe-community-result-transfer.v2",
+      "conceptId": "concept.hyperkalaemia.severe-community-result-transfer",
+      "stage": 0,
+      "findings": [
+        {
+          "id": "63ee78fc44b20f38",
+          "rule": "availability-permission-cue",
+          "severity": "advisory",
+          "message": "A feasibility/permission statement may supply the rationale for an offered action. Apply the deletion test; retain and neutrally phrase a genuine decision-critical constraint.",
+          "evidence": [
+            {
+              "field": "presentation",
+              "text": "available for immediate transfer",
+              "start": 229,
+              "end": 261
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Immediate hospital assessment",
+              "start": 0,
+              "end": 29,
+              "choiceId": "correct_2"
+            }
+          ],
+          "metrics": {
+            "visibleHistory": false
+          },
+          "occurrences": [
+            {
+              "caseId": "case.gs028d.hyperkalaemia.a-raas-result",
+              "profileIds": [
+                "canonical",
+                "profile.gs028d.hyperkalaemia.a-raas-result.female.46"
+              ],
+              "ranges": [
+                {
+                  "start": 229,
+                  "end": 261
+                },
+                {
+                  "start": 0,
+                  "end": 29
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.hyperkalaemia.a-raas-result",
+              "profileIds": [
+                "profile.gs028d.hyperkalaemia.a-raas-result.male.46"
+              ],
+              "ranges": [
+                {
+                  "start": 227,
+                  "end": 259
+                },
+                {
+                  "start": 0,
+                  "end": 29
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.hyperkalaemia.a-raas-result",
+              "profileIds": [
+                "profile.gs028d.hyperkalaemia.a-raas-result.female.68"
+              ],
+              "ranges": [
+                {
+                  "start": 229,
+                  "end": 261
+                },
+                {
+                  "start": 0,
+                  "end": 29
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.hyperkalaemia.a-raas-result",
+              "profileIds": [
+                "profile.gs028d.hyperkalaemia.a-raas-result.male.68"
+              ],
+              "ranges": [
+                {
+                  "start": 227,
+                  "end": 259
+                },
+                {
+                  "start": 0,
+                  "end": 29
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "7d3adec5f6780719",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 15,
+              "end": 20,
+              "choiceId": "d3_2"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Dietary advice alone",
+              "start": 0,
+              "end": 20,
+              "choiceId": "d3_2"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028d.hyperkalaemia.a-raas-result",
+              "profileIds": [
+                "canonical",
+                "profile.gs028d.hyperkalaemia.a-raas-result.female.46"
+              ],
+              "ranges": [
+                {
+                  "start": 15,
+                  "end": 20
+                },
+                {
+                  "start": 0,
+                  "end": 20
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.hyperkalaemia.a-raas-result",
+              "profileIds": [
+                "profile.gs028d.hyperkalaemia.a-raas-result.male.46"
+              ],
+              "ranges": [
+                {
+                  "start": 15,
+                  "end": 20
+                },
+                {
+                  "start": 0,
+                  "end": 20
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.hyperkalaemia.a-raas-result",
+              "profileIds": [
+                "profile.gs028d.hyperkalaemia.a-raas-result.female.68"
+              ],
+              "ranges": [
+                {
+                  "start": 15,
+                  "end": 20
+                },
+                {
+                  "start": 0,
+                  "end": 20
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.hyperkalaemia.a-raas-result",
+              "profileIds": [
+                "profile.gs028d.hyperkalaemia.a-raas-result.male.68"
+              ],
+              "ranges": [
+                {
+                  "start": 15,
+                  "end": 20
+                },
+                {
+                  "start": 0,
+                  "end": 20
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questionVariantId": "question.hyperkalaemia.severe-community-result-transfer.v4",
+      "conceptId": "concept.hyperkalaemia.severe-community-result-transfer",
+      "stage": 0,
+      "findings": [
+        {
+          "id": "c4e76a5f14e3c4e2",
+          "rule": "availability-permission-cue",
+          "severity": "advisory",
+          "message": "A feasibility/permission statement may supply the rationale for an offered action. Apply the deletion test; retain and neutrally phrase a genuine decision-critical constraint.",
+          "evidence": [
+            {
+              "field": "presentation",
+              "text": "available for immediate transfer",
+              "start": 224,
+              "end": 256
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Immediate hospital assessment",
+              "start": 0,
+              "end": 29,
+              "choiceId": "correct_4"
+            }
+          ],
+          "metrics": {
+            "visibleHistory": false
+          },
+          "occurrences": [
+            {
+              "caseId": "case.gs028d.hyperkalaemia.a-dehydration-result",
+              "profileIds": [
+                "canonical",
+                "profile.gs028d.hyperkalaemia.a-dehydration-result.female.31"
+              ],
+              "ranges": [
+                {
+                  "start": 224,
+                  "end": 256
+                },
+                {
+                  "start": 0,
+                  "end": 29
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.hyperkalaemia.a-dehydration-result",
+              "profileIds": [
+                "profile.gs028d.hyperkalaemia.a-dehydration-result.male.31"
+              ],
+              "ranges": [
+                {
+                  "start": 222,
+                  "end": 254
+                },
+                {
+                  "start": 0,
+                  "end": 29
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.hyperkalaemia.a-dehydration-result",
+              "profileIds": [
+                "profile.gs028d.hyperkalaemia.a-dehydration-result.female.64"
+              ],
+              "ranges": [
+                {
+                  "start": 224,
+                  "end": 256
+                },
+                {
+                  "start": 0,
+                  "end": 29
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.hyperkalaemia.a-dehydration-result",
+              "profileIds": [
+                "profile.gs028d.hyperkalaemia.a-dehydration-result.male.64"
+              ],
+              "ranges": [
+                {
+                  "start": 222,
+                  "end": 254
+                },
+                {
+                  "start": 0,
+                  "end": 29
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "fae462172591daf4",
+          "rule": "option-alone",
+          "severity": "advisory",
+          "message": "Owner rule: replace an \"X alone\" label with the actual specific competing plan. Do not merely hide the same exclusion in a synonym.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "alone",
+              "start": 15,
+              "end": 20,
+              "choiceId": "d3_4"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Dietary advice alone",
+              "start": 0,
+              "end": 20,
+              "choiceId": "d3_4"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028d.hyperkalaemia.a-dehydration-result",
+              "profileIds": [
+                "canonical",
+                "profile.gs028d.hyperkalaemia.a-dehydration-result.female.31"
+              ],
+              "ranges": [
+                {
+                  "start": 15,
+                  "end": 20
+                },
+                {
+                  "start": 0,
+                  "end": 20
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.hyperkalaemia.a-dehydration-result",
+              "profileIds": [
+                "profile.gs028d.hyperkalaemia.a-dehydration-result.male.31"
+              ],
+              "ranges": [
+                {
+                  "start": 15,
+                  "end": 20
+                },
+                {
+                  "start": 0,
+                  "end": 20
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.hyperkalaemia.a-dehydration-result",
+              "profileIds": [
+                "profile.gs028d.hyperkalaemia.a-dehydration-result.female.64"
+              ],
+              "ranges": [
+                {
+                  "start": 15,
+                  "end": 20
+                },
+                {
+                  "start": 0,
+                  "end": 20
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028d.hyperkalaemia.a-dehydration-result",
+              "profileIds": [
+                "profile.gs028d.hyperkalaemia.a-dehydration-result.male.64"
+              ],
+              "ranges": [
+                {
+                  "start": 15,
+                  "end": 20
+                },
+                {
+                  "start": 0,
+                  "end": 20
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questionVariantId": "question.immunology.preformed-antibody-hyperacute-rejection.v4",
+      "conceptId": "concept.immunology.preformed-antibody-hyperacute-rejection",
+      "stage": 0,
+      "findings": [
+        {
+          "id": "3de842841ef2570e",
+          "rule": "supplied-clinical-conclusion",
+          "severity": "advisory",
+          "message": "The named rejection mechanism precedes an interpretation task. Present the observed timing, vascular injury and immune findings; do not infer rejection from timing alone.",
+          "evidence": [
+            {
+              "field": "stem",
+              "text": "hyperacute rejection",
+              "start": 80,
+              "end": 100
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028e.immunology.c3-injury-pathway",
+              "profileIds": [
+                "canonical",
+                "profile.gs028e.immunology.c3-injury-pathway.female.52"
+              ],
+              "ranges": [
+                {
+                  "start": 80,
+                  "end": 100
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028e.immunology.c3-injury-pathway",
+              "profileIds": [
+                "profile.gs028e.immunology.c3-injury-pathway.male.52"
+              ],
+              "ranges": [
+                {
+                  "start": 80,
+                  "end": 100
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028e.immunology.c3-injury-pathway",
+              "profileIds": [
+                "profile.gs028e.immunology.c3-injury-pathway.female.73"
+              ],
+              "ranges": [
+                {
+                  "start": 80,
+                  "end": 100
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028e.immunology.c3-injury-pathway",
+              "profileIds": [
+                "profile.gs028e.immunology.c3-injury-pathway.male.73"
+              ],
+              "ranges": [
+                {
+                  "start": 80,
+                  "end": 100
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "fcac6aba9a95dc24",
+          "rule": "supplied-clinical-conclusion",
+          "severity": "advisory",
+          "message": "The named rejection mechanism precedes an interpretation task. Present the observed timing, vascular injury and immune findings; do not infer rejection from timing alone.",
+          "evidence": [
+            {
+              "field": "presentation",
+              "text": "hyperacute rejection",
+              "start": 129,
+              "end": 149
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.gs028e.immunology.c3-injury-pathway",
+              "profileIds": [
+                "canonical",
+                "profile.gs028e.immunology.c3-injury-pathway.female.52"
+              ],
+              "ranges": [
+                {
+                  "start": 129,
+                  "end": 149
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028e.immunology.c3-injury-pathway",
+              "profileIds": [
+                "profile.gs028e.immunology.c3-injury-pathway.male.52"
+              ],
+              "ranges": [
+                {
+                  "start": 127,
+                  "end": 147
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028e.immunology.c3-injury-pathway",
+              "profileIds": [
+                "profile.gs028e.immunology.c3-injury-pathway.female.73"
+              ],
+              "ranges": [
+                {
+                  "start": 129,
+                  "end": 149
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028e.immunology.c3-injury-pathway",
+              "profileIds": [
+                "profile.gs028e.immunology.c3-injury-pathway.male.73"
+              ],
+              "ranges": [
+                {
+                  "start": 127,
+                  "end": 147
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

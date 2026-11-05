@@ -1,0 +1,29 @@
+{
+  "recordedAt": "2026-11-05T02:24:25.228Z",
+  "items": [
+    {
+      "id": "B2B27",
+      "variantId": "question.cirrhosis-perioperative-risk.decompensation-optimization-boundary.v3",
+      "conceptId": "concept.cirrhosis-perioperative-risk.decompensation-optimization-boundary",
+      "disposition": "unchanged_proposed_merge_pending_manager_acceptance",
+      "reason": "These generic return-to-individualized-risk-assessment variants duplicate the active-decompensation/timing cases. The locally recorded broad claim does not establish a unique specific treatment/clearance choice. Do not invent an operation threshold or force a generic cautious key; merge/scope decision belongs to the manager."
+    },
+    {
+      "id": "B2B28",
+      "variantId": "question.cirrhosis-perioperative-risk.multifactor-assessment.v2",
+      "conceptId": "concept.cirrhosis-perioperative-risk.multifactor-assessment",
+      "disposition": "unchanged_proposed_merge_pending_manager_acceptance",
+      "reason": "These generic return-to-individualized-risk-assessment variants duplicate the active-decompensation/timing cases. The locally recorded broad claim does not establish a unique specific treatment/clearance choice. Do not invent an operation threshold or force a generic cautious key; merge/scope decision belongs to the manager."
+    },
+    {
+      "id": "B2B05",
+      "flagId": "F13",
+      "variantId": "question.preoperative-osa.validated-risk-screening.v4.r4",
+      "retainedLiveVariantId": "question.preoperative-osa.validated-risk-screening.v4",
+      "conceptId": "concept.osa.discordant-screen-documentation.v2",
+      "disposition": "keep_live_queued_supported_application_needed",
+      "reason": "Author cover-key/difficulty attack still selects suspected-risk communication without using the full case. Locally mapped SASM facts support screening/communication, but not a richer treatment, monitoring or surgical-delay discriminator. No network is authorized; retain the manager-kept live version and queue a supported deeper objective rather than relabel recall as moderate. No retirement is proposed."
+    }
+  ],
+  "policy": "No deletion, retirement, FSRS change or new deferred-item version. F13 failed the author difficulty/deletion attack and remains queued; the two generic cirrhosis variants await a manager merge/scope decision."
+}

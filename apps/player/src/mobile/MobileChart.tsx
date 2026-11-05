@@ -1,3 +1,4 @@
+import { ClinicalImageExhibit } from "../ui/ClinicalImageExhibit";
 import { QuestionFlagControl } from "../ui/QuestionFlagControl";
 import type { SubmitQuestionReviewFlag } from "../session/questionReviewFlags";
 import { useEffect, useRef } from "react";
@@ -36,7 +37,7 @@ function Phases({ phases }: { phases: ChartPendingPhaseView[] }) {
 
 function Exhibit({ exhibit }: { exhibit: NonNullable<ChartDecisionStepView["exhibit"]> }) {
   return <figure className="mobile-chart-exhibit">
-    {exhibit.kind === "table" ? <div className="mobile-table-scroll" tabIndex={0} role="region" aria-label={exhibit.caption}>
+    {exhibit.kind === "image" ? <ClinicalImageExhibit exhibit={exhibit} /> : exhibit.kind === "table" ? <div className="mobile-table-scroll" tabIndex={0} role="region" aria-label={exhibit.caption}>
       <table><caption>{exhibit.caption}</caption><thead><tr><td aria-hidden="true" />
         {exhibit.columnHeaders.map((header, index) => <th scope="col" key={index}>{header}</th>)}
       </tr></thead><tbody>{exhibit.cells.map((cells, index) => <tr key={index}>

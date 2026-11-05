@@ -1,0 +1,308 @@
+[
+  {
+    "id": "B2A01",
+    "title": "Interpret a visible pressure tracing",
+    "verdict": "PASS",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "Achalasia",
+        "why": "Weak style cue: the key is the sole one-word option beside two multiword diagnoses. This makes it conspicuous but does not provide a reliable nonmedical route to the answer; the proper diagnostic names should not be padded."
+      }
+    ],
+    "fairness": [
+      "Review scope: all 11 items actually present in question-bank-batch2a-round2-20261104.json, not the separate sixteen flag drafts mentioned in the request. Content judgments use only after Presentation, Current update, Exhibit (including its referenced PNG), Task and Options. Titles, before fields, author rationales, inferred prior feedback and self-checks were not used to supply clinical facts. The standard, owner notes, original flag handoff, both author handoffs and first review were used to trace requirements and previous concerns.",
+      "Review limits: offline editorial review, not fresh clinical-source verification or clinical approval. Difficulty is a qualitative PGY-2/3 prediction. Every new clinical version remains needs_clinician_review until Melissa Rowland approves its exact version. Runtime randomization, wait estimates, sequence effects and in-game/mobile rendering are outside this after-fields review.",
+      "Original flag resolved: YES for the mapped picture concern; there is no separate in-game flag on this item. Owner b1-B01 note fully resolved: YES for 'There will be a picture?' The actual referenced local PNG was opened and inspected, not merely assumed to exist. It shows the described simultaneous responses and explicitly identifies itself as a constructed schematic.",
+      "One defensible best offered diagnosis: absent propagation throughout the stated series with elevated junction relaxation measurement supports achalasia rather than the offered neighboring diagnoses. These observations require medical interpretation; no reliable stem-to-key wording match or component convergence selects the answer.",
+      "Easy pattern recognition, not two substantive reasoning steps. PASS retains the exact frozen version's previously accepted foundational role; this would be too easy as an ordinary resident challenge item.",
+      "No confident clinical inaccuracy identified at the broad diagnosis level. The qualitative schematic is not a quantitative tracing and should not be used to infer unsupported subtype measurements."
+    ],
+    "suggestions": [
+      "Preserve this exact frozen foundational version and its image; do not relabel it moderate/hard or two-step.",
+      "Keep any later higher-difficulty application as a separately reviewed version. Confirm actual player-screen legibility in the integration lane; opening the PNG does not establish runtime rendering."
+    ]
+  },
+  {
+    "id": "B2A02",
+    "title": "Investigate the junction wall before treating the motor pattern",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Original flag resolved: YES for the mapped concrete-action concern; no separate in-game flag is recorded. Owner b1-B02 note fully resolved: YES at the wording level. All choices now name actual investigations rather than a generic treatment assessment. The owner's Heller/PPI examples do not require an operation to remain the key when the scored decision changes.",
+      "Moderate, toward the easier end for a resident familiar with secondary causes of an achalasia-like presentation. Interpret the structural and mucosal-sampling discrepancy, then prioritize investigation of a possible junction-wall lesion over further functional characterization. The discordant pressure findings make the functional studies credible, though the CT finding appropriately carries greater decision weight.",
+      "Endoscopic ultrasound with wall sampling is the best offered next procedure given continuing weight loss, passage resistance and eccentric cardia/junction thickening despite unrevealing mucosal samples. The alternatives assess real functional questions but do not resolve that structural concern. No equally strong offered alternative identified.",
+      "No reliable wording-only answer route found. Tissue sampling is unique to the key, but identifying why deeper structural evaluation takes priority requires the clinical distinction between mucosal sampling and a wall process. The normal mucosal samples are decision-relevant evidence, not a statement that malignancy has been excluded.",
+      "The initial absence of a fixed narrowing or intraluminal mass is compatible with later wall thickening and resistance; the chronology does not establish a contradiction. No confident clinical inaccuracy identified. Exact sampling technique and procedural details require clinician review; the item should not imply every wall abnormality receives an identical biopsy approach.",
+      "The prior Heller/PPI/nitrate source hold is not cleared by this PASS. This version asks a different question and does not score that held treatment ranking. No fresh source verification was performed."
+    ],
+    "suggestions": [
+      "Retain the structural-versus-functional investigation decision and concrete, comparably specific options.",
+      "Have clinical sign-off confirm the exact EUS sampling wording against the lesion described. Preserve the old treatment version's separate source hold rather than treating this editorial PASS as validation of it."
+    ]
+  },
+  {
+    "id": "B2A03",
+    "title": "Request the acquisition that can classify body motility",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "successive water swallows beginning before the preceding response has ended",
+        "why": "This describes overlapping observations in ordinary language. Against separated versus rapid/continuous acquisitions, a nonmedical reader can choose to separate them without understanding deglutitive inhibition or diagnostic manometry."
+      },
+      {
+        "phrase": "Separated single-water-swallow pressure series",
+        "why": "Only the key reverses the just-described overlap. Both distractors preserve rapid input, so the option set turns an acquisition-interpretation problem into a simple opposites/completion shortcut. The labels are similar in length and grammar; the problem is their relationship to the stem."
+      }
+    ],
+    "fairness": [
+      "Original flag resolved: PARTLY for the mapped practical-importance concern; no separate in-game flag is recorded. Owner b1-B02-context note fully resolved: NO. Requesting a usable diagnostic acquisition has practical relevance, but the new task again largely asks the learner to choose a swallow maneuver. It does not show a consequential interpretation or care decision that makes this specialist protocol detail important to the surgical resident.",
+      "Easy and below the routine PGY-2/3 challenge target. The inhibition/recovery observations could require physiology knowledge, but deleting them leaves the same separated-swallow answer available from the overlap sentence. Thus the proposed interpretation step is bypassable.",
+      "The key is defensible for baseline body-motility classification. Repeated rapid swallows and rapid drinking can answer different provocative questions, but are not equivalent replacements for the requested classification acquisition. No confident clinical inaccuracy or second equally good offered key identified.",
+      "The prior fairness problems are substantially repaired: an acquisition log now establishes what occurred, rather than equating missing saved images with an unperformed test; the retching/tolerance issue is gone; the task no longer requires an unsupported repeat-manometry-versus-barium sequence.",
+      "The complete task and parallel protocol labels are improvements. They resolve the previous sequencing ambiguity without establishing resident-level difficulty."
+    ],
+    "suggestions": [
+      "Make the request depend on distinguishing a missing baseline classification from a genuinely missing provocative assessment. Supply the actual acquired observations for both, and compare specific acquisitions that answer those different unresolved questions.",
+      "Require the inhibition/recovery finding to change the selected acquisition; verify that deleting it no longer leaves the answer unchanged. Do not merely replace 'successive' with a less familiar synonym.",
+      "If the desired objective remains basic acquisition recognition, seek explicit foundational-role acceptance through the manager. Otherwise connect the protocol decision to a clinically meaningful error using supported observations, without giving the interpretation in the task."
+    ]
+  },
+  {
+    "id": "B2A04",
+    "title": "Separate contractile reserve from an indication to disrupt the junction",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "the software-derived pressure-time-length integral of each recovery contraction is below that of the separated baseline contraction",
+        "why": "Below-baseline recovery maps directly to 'Reduced contraction reserve' in the options. The same observation is repeated in the image description and image footer, so the first answer component is heavily scaffolded rather than made harder by the added terminology."
+      },
+      {
+        "phrase": "junction relaxation measurements remain within the laboratory reference interval and there is no body-wide pressure column",
+        "why": "The explicit normal/absent-obstruction pattern is paired only with a test or a junction-disrupting treatment. It strongly favors further testing over dilation; the item offers no close investigation competitor once that polarity is recognized. These are necessary findings, but the options make them an elimination aid."
+      },
+      {
+        "phrase": "Qualitative traces; reserve is not measured from peak height in this drawing.",
+        "why": "Exact visible PNG footer. This pre-answer teaching sentence tells the learner which comparison to disregard, while the preceding software-integral footer supplies the preferred comparison. It rehearses the correction to the first review rather than leaving the learner to interpret a neutral exhibit."
+      }
+    ],
+    "fairness": [
+      "Original flag resolved: PARTLY for the mapped picture/wording request; no separate in-game flag is recorded. Owner b1-B03-context note fully resolved: NO. A real local image exists and the task asks for its interpretation, but the new Current update still supplies the comparison before the image; the image and description repeat it. The owner's request to replace the update with a picture is therefore only partly implemented.",
+      "Easy by cue attack despite specialist vocabulary. The two requested components are largely separate polarity choices; the reported reserve reduction does not itself explain why timed barium testing is preferable. Removing the reserve component leaves the same investigation-versus-dilation choice. This does not yet create two consequential reasoning steps.",
+      "The four options form a complete balanced matrix: each interpretation and each plan occurs twice. There is no component-frequency convergence, uniquely long key or grammatical mismatch. A lint convergence warning would not establish a defect here.",
+      "Within the offered plans, reduced reserve with further investigation is defensible; pneumatic dilation lacks demonstrated outflow obstruction in the visible record. Do not overstate this as proof of normal bolus clearance or as a universal barium-first algorithm. Other unoffered investigations may be reasonable, but no equally strong offered key is identified.",
+      "The previous peak-height problem is repaired by explicit separate integral analysis. The broad preserved-clearance claim is also removed. The actual PNG was visually inspected; its qualitative curves cannot independently establish the numerical integral comparison, so essential accessible laboratory observations must remain somewhere in the exhibit.",
+      "No confident clinical inaccuracy is asserted. The relation between reserve assessment and the exact next diagnostic plan still merits specialist sign-off."
+    ],
+    "suggestions": [
+      "Remove the duplicated Current update and the teaching footer. Keep one neutral laboratory-analysis annotation and equivalent accessible observations; do not conceal the integral result or imply it can be calculated from unscaled peak heights.",
+      "Compare credible next investigations or clinically supported treatment alternatives at the same stage, instead of letting an unsupported dilation option account for half the matrix.",
+      "Make the reserve result change the next action under a supported clinical context, or score a single useful interpretation without claiming two-step difficulty. Recheck the decision with the reserve information hidden: it should not remain identical if reserve is the purported consequential finding."
+    ]
+  },
+  {
+    "id": "B2A05",
+    "title": "Choose the treatment referral from competing groin findings",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "stock-handling limitation",
+        "why": "The task selects the 'Stock handling' row in advance. The hip findings are assigned to a separate examination/walking story, so the learner need not weigh the two complaints to identify the tested source of limitation."
+      },
+      {
+        "phrase": "The patient puts the crate down; the lump withdraws when supine",
+        "why": "With the task already pointing to this row, functional failure accompanying the lump makes active hernia treatment the obvious contrast to surveillance or treatment of the separate hip complaint. This is useful clinical evidence, but the current options allow the answer without much anatomical or management reasoning."
+      }
+    ],
+    "fairness": [
+      "Original flag resolved: YES in substance for the mapped concern; no separate in-game flag is recorded. Owner b1-B05-context note fully resolved: YES for removing the quoted exercise/diary sentences and aligning the answer with the observed symptomatic hernia. The new caption still contains dispensable framing, but it does not revive the former clinically contradictory plan.",
+      "Easy and too easy for the routine PGY-2/3 target. The arthritic hip is a credible coexisting diagnosis, but the task and row partition isolate the symptomatic reducible lump. Recognizing that lump and offering its routine referral does not produce a substantive two-step challenge here.",
+      "Elective inguinal hernia repair referral is the best offered plan for the described work-limiting episode. Location above and medial to the pubic tubercle repairs the earlier anatomical specificity gap. Absence of the lump during office cough is compatible with its intermittent activity-related appearance.",
+      "Hip-directed physiotherapy can also be appropriate for the patient's other complaint; it is not the best answer to this specifically scoped stock-handling task. Surveillance is a real competing policy in selected patients, but the displayed functional limitation makes it a weak competitor here. No equally strong offered key or confident clinical inaccuracy identified.",
+      "Previous novelty/repeat-imaging cues and the explicit relief-on-manual-reduction rationale are gone. There is no generic individualized option, permission cue or component-frequency construction that uniquely assembles the key."
+    ],
+    "suggestions": [
+      "Remove 'the rows describe the same review visit' from the caption; it adds framing rather than decision information.",
+      "Keep the anatomical and functional observations. Redesign the competing decision so interpretation of the combined record changes referral versus continued care, rather than naming the decisive activity in the task and separating the two pain sources into readily matched rows.",
+      "Do not restore unnecessary imaging after a demonstrated finding or delete the functional limitation solely to obscure the key. If no supported close management competitor exists for this simple objective, propose foundational acceptance or consolidation with the similar B2A07 decision through the manager."
+    ]
+  },
+  {
+    "id": "B2A06",
+    "title": "Select the dynamic acquisition for an intermittent groin finding",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "After standing and straining, a separate contour appears above the pubic tubercle.",
+        "why": "The maneuver is immediately restated by 'Standing strain' in the key. A nonmedical reader can request pictures in the condition that visibly produces the contour without interpreting the anatomy or prior study."
+      },
+      {
+        "phrase": "supine cough does not produce the photographed contour",
+        "why": "This negative makes the supine canal option unattractive through simple posture matching. Cough and strain are not identical maneuvers, so the sentence is not proof that a supine strain study cannot help; it nevertheless acts as a strong wording cue."
+      },
+      {
+        "phrase": "Standing strain; cine ultrasound of groin canals",
+        "why": "The key uniquely combines the successful posture/action with the nonvascular target. Both vein choices also switch to compression and Doppler, making target, maneuver and modality inseparable. Duplicating standing and canal terms across choices prevents simple frequency convergence but does not stop reconstruction of the answer from the stem."
+      }
+    ],
+    "fairness": [
+      "Original flag resolved: YES for the mapped MRI concern; no separate in-game flag is recorded. Owner b1-B06 note fully resolved: YES. The task now concerns a specific ultrasound request; no routine MRI requirement remains. This does not imply MRI is categorically inappropriate for every occult groin presentation.",
+      "Easy and below the routine PGY-2/3 target. The learner can select 'standing strain' by copying the demonstrated provocation. Determining that the earlier adductor study addressed a different target adds little once the current examination explicitly supplies the request.",
+      "Standing-strain canal imaging is the most defensible offered acquisition for the described contour. The acquisition worksheet correctly establishes what the prior examination actually assessed, resolving the saved-images-versus-complete-study problem from review one.",
+      "Supine strain canal imaging can be a legitimate component of a groin examination; standing and supine imaging need not be mutually exclusive complete protocols. The task should specify the deciding acquisition or addition rather than imply the key is a universally sufficient entire ultrasound request.",
+      "The vein studies are weak competitors without a recorded vascular concern. A contour alone need not prove a hernia, but the present facts do not give the learner a reason to favor venous compression/Doppler. No confident clinical inaccuracy or equally good offered single acquisition identified.",
+      "The clinical indication for more imaging remains less clear than the acquisition choice: the after fields describe a contour, not a definite palpable defect. Do not silently promote that into either a confirmed hernia or proof that further imaging is necessary."
+    ],
+    "suggestions": [
+      "Use neutral acquisition findings that create a genuine protocol or anatomical uncertainty. Compare closely plausible canal acquisitions, or supply a supported vascular competing finding if venous studies are retained.",
+      "Ask which additional acquisition resolves that uncertainty, acknowledging that a complete study can include multiple positions. Avoid scoring 'supine' as intrinsically wrong.",
+      "Do not merely rename 'standing strain' to hide the match. Change the decision so the observed anatomy or technical adequacy must be interpreted before choosing a maneuver. Retain the actual acquisition worksheet and do not revert to guessing the protocol from saved views."
+    ]
+  },
+  {
+    "id": "B2A07",
+    "title": "Read modified duty against the original work task",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "no global recovery rating is supplied",
+        "why": "This is editorial commentary in the exhibit caption. It alerts the learner not to interpret improved running and completed shifts as overall recovery, explicitly coaching the central functional inference before the answer."
+      },
+      {
+        "phrase": "Full stock task",
+        "why": "The label, together with the task's 'continuing work restriction', tells the learner which observation takes priority over the completed exercise rows. It is a weaker cue than the caption because task-specific function is legitimate evidence, but the paired labels reduce the intended need to detect modified-duty success."
+      }
+    ],
+    "fairness": [
+      "Original flag: NOT APPLICABLE. This is a continuity companion rather than a separately flagged variant. Owner note: NOT APPLICABLE; owner-reviews.json has no b1-B06-context-continuity entry. Resolution of the MRI note on B2A06 is not approval of this item.",
+      "Moderate at the low end, with two supported steps: distinguish successful modified duty from recovery of the original lifting function, then attribute the limiting episode using the ultrasound and activity observations rather than the persisting adductor discomfort. The caption and task labels make that reasoning easier than necessary.",
+      "The visible ultrasound now supplies a reducible inguinal protrusion, repairing review one's missing-result problem. Elective hernia repair referral is the best offered plan for pressure associated with the protrusion interrupting the usual stock task. Running improvement does not establish tolerance of the original work demand.",
+      "Adductor rehabilitation may remain appropriate concurrently, but it does not best address the described limiting episode. Surveillance with graded activity is concrete and distinct from referral; the earlier overlapping assessment/observation labels are repaired. No equally strong offered key or confident clinical inaccuracy identified.",
+      "The current visible version is substantially improved. REVISE is for avoidable pre-answer coaching, not a rejection of the functional outcome distinction or a demand to conceal the work modification."
+    ],
+    "suggestions": [
+      "Replace the caption with 'Current activity record' and omit 'no global recovery rating is supplied'.",
+      "Use neutral activity labels, such as the actual lifting task, instead of 'Full stock task'. Keep the rota's crate reassignment and the observed interruption; those are the evidence the learner should interpret.",
+      "Retain the concrete referrals and actual ultrasound result. Recheck whether the original-task observation and chronology add a distinct decision beyond B2A05; any consolidation belongs to the manager, with existing histories preserved."
+    ]
+  },
+  {
+    "id": "B2A08",
+    "title": "Use the canal anatomy before applying an observation plan",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "The abdomen is soft and not distended.",
+        "why": "This reassuring negative weakens urgent exploration. It helps eliminate one option but does not select planned repair over surveillance. It is legitimate urgency context and should not be removed merely to increase difficulty."
+      }
+    ],
+    "fairness": [
+      "Original flag resolved: YES for the mapped hernia-recognition concern; no separate in-game flag is recorded. Owner b1-B07-context note fully resolved: YES. The observed lesion is now treated as a hernia and the current anatomical findings determine the plan instead of being discounted as an unrelated contour.",
+      "Moderate with two meaningful steps: interpret the sac neck's relationship to the ligament and vein to identify femoral rather than inguinal anatomy, then apply that distinction to repair versus observation despite improved lifting function. The anatomy changes the management comparison, unlike the prior near-duplicate of B2A05.",
+      "Planned repair is the most defensible offered answer for the described reducible femoral-region hernia. Surveillance is a plausible error if the learner carries forward the earlier inguinal label; urgent exploration lacks evidence of an acute irreducible or obstructed process. No equally strong offered key identified.",
+      "The earlier report's label and current ultrasound location are explicitly chronologically distinguished. That is a discrepancy for the learner to resolve, not an unnoticed contradiction or a reason to invent an additional lesion.",
+      "The reassuring abdominal examination alone would not exclude incarceration or strangulation. Here the sac also enters on strain and withdraws at rest. No exact urgency interval, risk probability or unsupported numerical threshold is claimed; the precise repair timing remains a clinical decision.",
+      "Options have parallel verbs and comparable specificity; no generic individualized plan, key-only anatomy term, option-length shortcut or convergence selects planned repair. A nonmedical reader may eliminate urgency but still needs medical knowledge to rank repair against surveillance."
+    ],
+    "suggestions": [
+      "Retain the two anatomical relationships, reducibility observation and improved function; together they make the inguinal-surveillance error credible and resolvable.",
+      "Keep 'planned' distinct from an invented fixed waiting interval. Clinical sign-off should confirm the intended nonemergent repair wording for this exact profile."
+    ]
+  },
+  {
+    "id": "B2A09",
+    "title": "Choose a representative diagnostic specimen from the map",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "the fragment diagnosis is not relabelled",
+        "why": "This unnecessary caption tells the learner to retain the benign fragment diagnosis rather than reconsider it. It weakly coaches evidence interpretation, but does not choose between complete excision and a targeted deep punch; both respect that diagnosis."
+      }
+    ],
+    "fairness": [
+      "Original flag resolved: YES at the objective level for the mapped importance concern; no separate in-game flag is recorded. Owner b1-B12-context note fully resolved: YES. Choosing a representative next diagnostic specimen for an interval-changing residual lesion is a practical decision, rather than debating a report/request label.",
+      "Moderate at the lower end for PGY-2/3. First recognize that the valid benign lateral fragment does not establish the nature of the new unsampled medial focus; then choose complete diagnostic sampling over a second focal sample or observation. The targeted medial deep punch is a materially closer competitor than the prior wrong-block or superficial-biopsy foils.",
+      "Narrow-margin excision is the best offered diagnostic approach for the described small discrete residual upper-arm patch. The specimen map and interval change establish why the existing benign sample cannot settle the whole-lesion question. A side-edge melanocytic proliferation alone should not be taught as an automatic malignancy or excision indication.",
+      "A deep targeted punch is not inherently invalid and can be appropriate when complete sampling is unsuitable. The supplied small discrete patch and ordinary upper-arm site support the ranking here without the prohibited closure-feasibility assurance. The review does not infer an exact lesion diameter, closure technique or universal excision rule.",
+      "No equally strong offered key or confident clinical inaccuracy identified in this particular setting. 'Narrow-margin' should remain a diagnostic procedure, not an implied definitive melanoma excision or invented margin width. Clinician confirmation of the intended depth/completeness remains necessary.",
+      "The former classic-color and closure-permission cues are removed. Both biopsy options address the newly described medial area, and two options repeat 'residual patch', so simple location/phrase matching does not uniquely select the key."
+    ],
+    "suggestions": [
+      "Trim the caption to 'Specimen and interval record'; the fragment-diagnosis commentary is unnecessary even though it does not reveal the complete key.",
+      "Retain the mapped sample location, interval change and credible targeted-biopsy alternative. Keep the explanation explicit that the old fragment may be correctly diagnosed while the residual lesion is not fully assessed.",
+      "Have clinical sign-off confirm that the excision label communicates complete diagnostic sampling at appropriate depth without adding an unsupported numerical margin or a feasibility sentence."
+    ]
+  },
+  {
+    "id": "B2A10",
+    "title": "Choose a source-aware next medication-list pilot",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "reconciled reference list",
+        "why": "The named correct benchmark repeats the action in 'Reconcile hospital source lists before transfer'. This is a weak unique stem-to-key vocabulary match. A reference standard is legitimate and necessary, but the echo can supplement the intended process inference."
+      }
+    ],
+    "fairness": [
+      "Original flag resolved: YES for the mapped clarity/specificity concern; no separate in-game flag is recorded. Owner b1-B36 note fully resolved: YES. The task concerns a concrete medication-list transfer process, with explicit outcomes and specific proposed changes.",
+      "Moderate in intended reasoning: compare source and method effects in the crossed record, then choose a next process test. Unlike review one, more than one row is relevant and the alternatives are novel. Difficulty is provisional because the source of the omissions is not actually established by the displayed aggregates.",
+      "Fairness gap: four hospital lists with omissions under each method does not establish that the same lists or medicines were omitted, or that the medicines were absent from the hospital source records. The source could be incomplete, or hospital-specific formatting could cause distinct human transcription and software parsing errors. Even paired use of the same copied records does not make equal counts identical error sets.",
+      "The key is a reasonable next hypothesis to test, not a clinically false action. However, the visible record does not decisively rank upstream reconciliation above investigating or correcting transfer failures on the hospital documents. Parsing revision or staff retraining could be appropriate if the omitted medicines were present in the source. Do not claim a proven common upstream cause from equal marginal counts.",
+      "The question appropriately says 'test' rather than adopt or prove; that limits the overclaim but does not completely resolve an unconstrained single-best next-pilot ranking. The critical missing evidence is where the discrepancies arise relative to source and transfer, not a larger sample size or a new statistical threshold.",
+      "Median staff minutes do not change which of these three source-specific changes should be tested: none specifies a transfer-method choice or an efficiency tradeoff. The time column is presently decorative. Constructed values are correctly labelled illustrative; no gameplay analytics are involved.",
+      "The former as-needed synonym giveaway, unsupported duplicate-filter foil and completed-manual-comparison foil are repaired. There is no uniquely long key or generic individualized option."
+    ],
+    "suggestions": [
+      "Add a compact paired discrepancy audit showing whether each omitted medicine was present in the original hospital list and whether it appeared in each transferred output. Use observations, not an authored label such as 'source defect'. Include a genuine competing transfer discrepancy so the learner must localize the dominant problem.",
+      "Alternatively ask for the next diagnostic comparison and offer equally specific audits that distinguish upstream completeness from human and software transfer failures before selecting a corrective pilot.",
+      "Keep the reconciled reference standard clear; do not hide necessary benchmarking merely to evade word overlap. Revise the action set and data so evidence, not the repeated reconciliation word, determines the next step.",
+      "Remove the staff-time column unless an offered pilot creates a real accuracy/workload choice whose ranking depends on it. Do not convert the equal omission counts into a causal claim in feedback."
+    ]
+  },
+  {
+    "id": "B2A11",
+    "title": "Classify the cortisol pathway before attributing it to the nodule",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "Basal plasma corticotropin measurement",
+        "why": "Weak category/style cue: the key is the only basal measurement beside two dynamic challenge studies. This is a plausible 'start with the basic measurement' test-taking heuristic, not a reliable answer without endocrine knowledge. It is not a length cue or a reason to obscure the test's identity."
+      }
+    ],
+    "fairness": [
+      "Original in-game flag fully resolved: YES for flag 7436cbd5-9f93-4027-931b-66fb01598a72, 'I thought you did a lot of things for this. Is it asking what to do next?' The task now states the next etiologic step and restricts the question to cortisol rather than presenting parallel hormonal axes as exclusive options.",
+      "Owner b1-* note: NOT APPLICABLE; no separate b1 entry maps to this item. The actual in-game wording concern is assessed above and is not an approval of the new objective.",
+      "Easy and below the routine PGY-2/3 target. The supplied repeated nonsuppression result followed by selection of basal ACTH is principally a single sequencing rule. The task names the etiologic stage, and no option asks the learner to choose adrenal attribution versus another etiologic branch. Thus the proposed anti-anchoring inference is not independently required to answer.",
+      "Basal plasma corticotropin is the best offered study for establishing the etiologic branch in this scenario. High-dose suppression and CRH stimulation represent more specialized downstream questions; neither is an equally strong first substitute in the visible record. Their relative roles and exact application require endocrine sign-off rather than a newly asserted universal algorithm.",
+      "Repeated dexamethasone nonsuppression alone should not be described as proving that the adrenal nodule caused the finding. The record does not supply medication/exposure or assay-confounder assessment. This is a limitation on interpretation, not evidence of a specific unmentioned confounder or a reason to invent one to reject the key.",
+      "No confident clinical inaccuracy identified in the offered next-step ranking. Laboratory-relative wording avoids an invented numerical cutoff. The prior unique-dose cue is gone; repeating an overnight suppression study does not make a high-dose study the same test, so it should not be dismissed solely as a completed-test repeat.",
+      "There is no accepted foundational-role exception for this new version. Better stage clarity does not by itself establish two-step resident difficulty."
+    ],
+    "suggestions": [
+      "For a genuine application item, supply a supported result pattern or documented confounder that changes the next action and compare concrete investigations at the resulting decision stage. Require interpretation of that observation before selecting the study.",
+      "If the exact objective is simply remembering to obtain basal ACTH after abnormal cortisol suppression, keep the clear narrow task and seek explicit foundational-role acceptance rather than adding unrelated detail or claiming two-step difficulty.",
+      "Retain authentic test names and the limited cortisol scope. Do not add arbitrary doses, suppression thresholds, medication rules or an unsupported localization hierarchy to manufacture difficulty."
+    ]
+  }
+]

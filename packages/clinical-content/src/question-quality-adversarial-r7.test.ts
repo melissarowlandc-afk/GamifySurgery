@@ -1,11 +1,11 @@
 import {readFileSync} from "node:fs";
 import {describe,expect,it} from "vitest";
 import {
- SYNTHETIC_CLINICAL_RELEASE as live, QUESTION_QUALITY_PRE_ADVERSARIAL_R7_RELEASE as before,
+ QUESTION_FLAGS_PRE_REVISION_RELEASE as live, QUESTION_QUALITY_PRE_ADVERSARIAL_R7_RELEASE as before,
  QUESTION_QUALITY_CURRENT_REVISIONS as current, QUESTION_QUALITY_REVISIONS as pilot,
  QUESTION_QUALITY_ADVERSARIAL_R7_REVISIONS as revisions, QUESTION_QUALITY_ADVERSARIAL_R7_AUTHORING_CONCEPTS as versions,
  QUESTION_QUALITY_ADVERSARIAL_R7_CLAIMS as claims, QUESTION_QUALITY_ADVERSARIAL_R7_SOURCES as sources,
- ANSWER_CHOICE_TIMING_REGISTRY as timings, applyQuestionQualityAdversarialR7Revisions,
+ QUESTION_FLAGS_PRE_REVISION_TIMING_ENTRIES as timings, applyQuestionQualityAdversarialR7Revisions,
 } from "./index";
 import type {SyntheticClinicalCase,AnswerChoiceTimingRegistryEntry} from "./schema";
 import type {QuestionQualityRevision} from "./question-quality-pilot-20261028";

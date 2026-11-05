@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
+import { lintOwnerFlagRules } from "./owner-flag-rules-20261104.mjs";
 
-export const LINTER_VERSION = "question-cue-lint.2026-11-02.v5";
+export const LINTER_VERSION = "question-cue-lint.2026-11-04.v8";
 export const OPTION_LENGTH_RATIO_WARNING = 2;
 export const KEY_LENGTH_RATIO_WARNING = 1.5;
 export const NEAR_DUPLICATE_JACCARD_WARNING = 0.8;
@@ -60,7 +61,7 @@ function evidence(field, text, start=0, end=text.length, extra={}) {
 }
 function optionCategory(choice) {
   const s = choice.label;
-  if (/\b(?:test|assay|ultrasound|scintigraphy|MRI|MRCP|CT|EGD|radiograph|biopsy|mammograph|manometry|typing)\b/i.test(s) || choice.serviceRequest) return "investigation";
+  if (/\b(?:test|assay|ultrasound|ultrasonography|scintigraphy|MRI|MRCP|CT|EGD|radiograph|biopsy|mammograph|manometry|esophagram|typing|pH-impedance monitoring|magnetic resonance imaging|computed tomography|histological sections)\b/i.test(s) || choice.serviceRequest) return "investigation";
   if (/\b(?:ectomy|excision|repair|operation|drainage|surgery)\b/i.test(s) || /\b\w+ectomy\b/i.test(s)) return "procedure";
   if (/^(?:arrange|continue|use|start|stop|withhold|refer|discharge|observe|apply|resize|substitute|schedule|provide|discuss|avoid|order|repeat|monitor|optimize|leave)\b/i.test(s)) return "action";
   if (/^(?:from|increased?|decreased?|reduced?|absorption|inhibition|induction)\b/i.test(s)) return "mechanism";
@@ -86,6 +87,7 @@ export function lintQuestion({ variantId, concept={}, choices, fields, caseId, p
     if (!findings.some(f=>f.id===id)) findings.push({id,...body});
   };
   const oe=(c,start=0,end=c.label.length)=>evidence("answerChoices.label",c.label,start,end,{choiceId:c.id});
+  lintOwnerFlagRules({all,fields,key:keyRow,add,evidence,oe});
   // Narrow continuity check, not an anatomical inference engine. Two explicitly
   // different singular ulcer sites across the shared case/current update need
   // review; a list of alternatives or multifocal lesions is not diagnosed here.
@@ -199,11 +201,21 @@ export function lintQuestion({ variantId, concept={}, choices, fields, caseId, p
   for(const c of all) for(const word of new Set(c.words.map(t=>t.norm).filter(useful))) frequency.set(word,(frequency.get(word)||0)+1);
   const components=keyRow.words.filter(t=>(frequency.get(t.norm)||0)>=2&&(frequency.get(t.norm)||0)<all.length);
   const componentNames=[...new Set(components.map(t=>t.norm))];
+  const sharedDensity=c=>{
+    const words=[...new Set(c.words.map(t=>t.norm).filter(useful))];
+    return words.filter(w=>(frequency.get(w)||0)>=2&&(frequency.get(w)||0)<all.length).length/(words.length||1);
+  };
+  const pairs=all.map(c=>c.label.split(/\s+(?:with|and)\s+/i).map(canonical));
+  const balancedMatrix=all.length===4 && pairs.every(p=>p.length===2&&p.every(Boolean)) &&
+    new Set(pairs.map(p=>p[0])).size===2 && new Set(pairs.map(p=>p[1])).size===2 &&
+    new Set(pairs.map(p=>JSON.stringify(p))).size===4;
   // A key that uniquely combines components spread across alternatives can cue
   // convergence. One distractor sharing the entire component set is merely a
   // close/parallel alternative, not evidence of that unique combination.
-  if(componentNames.length>=2 && wrongRows.every(c=>componentNames.filter(w=>c.words.some(t=>t.norm===w)).length<componentNames.length))
-    add("convergence","The key combines components reused across options; inspect whether the combinations cue a shortlist.",components.map(t=>oe(keyRow,t.start,t.end)),{components:componentNames,optionCoverage:all.map(c=>({choiceId:c.id,components:componentNames.filter(w=>c.words.some(t=>t.norm===w))}))});
+  // A complete 2x2 combination set balances both component frequencies. This
+  // narrow exemption does not silence three-option or arbitrary four-option cues.
+  if(!balancedMatrix && componentNames.length>=2 && wrongRows.every(c=>componentNames.filter(w=>c.words.some(t=>t.norm===w)).length<componentNames.length))
+    add("convergence","The key combines components reused across options; inspect whether the combinations cue a shortlist.",components.map(t=>oe(keyRow,t.start,t.end)),{components:componentNames,optionCoverage:all.map(c=>({choiceId:c.id,sharedComponentDensity:sharedDensity(c),components:componentNames.filter(w=>c.words.some(t=>t.norm===w))}))});
 
   for(let i=0;i<all.length;i++)for(let j=i+1;j<all.length;j++){
     const a=new Set(all[i].words.map(t=>t.norm)),b=new Set(all[j].words.map(t=>t.norm)),union=new Set([...a,...b]);

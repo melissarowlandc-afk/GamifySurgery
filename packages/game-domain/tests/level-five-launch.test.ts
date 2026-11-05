@@ -60,8 +60,8 @@ describe("M10 ordinary Level 5 launch", () => {
     const report = state.levelFive!.inspection.lastReport!;
     expect(report.outcome).toBe("completed");
     expect(report.observedActiveMinutes).toBe(3000);
-    expect(report.qualifyingScoredPatientCount).toBe(54);
-    expect(report.rawTotalScore).toBe(62.4813653779166);
+    expect(report.qualifyingScoredPatientCount).toBe(51);
+    expect(report.rawTotalScore).toBe(62.304886301437534);
     expect(report.categories).toHaveLength(10);
     expect(state.levelFive!.progress.gameFinished!.firstCompletedReport).toEqual(report);
     expect(state.levelFive!.inspectionPresentation.actors).toHaveLength(0);

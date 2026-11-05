@@ -1,14 +1,13 @@
+import { createClinicalAuthorStage } from "../../../tests/fixtures/clinical-author-stage";
+import { QUESTION_NEW_N2_ROUND3_PRE_RELEASE } from "@gamify-surgery/clinical-content";
 import { describe, expect, it } from "vitest";
 import {
   SURGERY_CENTER_CASES,
   SURGERY_CENTER_TESTED_CONCEPTS,
-  SYNTHETIC_CLINICAL_RELEASE,
+  QUESTION_NEW_N2_ROUND3_PRE_RELEASE as SYNTHETIC_CLINICAL_RELEASE,
 } from "@gamify-surgery/clinical-content";
 import {
-  createInitialGameState,
   createPatientPixelAppearance,
-  deserializeGameState,
-  gameReducer,
   getCurrentCapabilities,
   getCurrentQuestion,
   getEligibleServiceRoute,
@@ -16,6 +15,9 @@ import {
   serializeGameState,
   type GameState,
 } from "../src";
+
+// Retain the author-stage pool, frozen definitions and existing golden budgets.
+const { context: PROTOTYPE_DOMAIN_CONTEXT, createInitialGameState, deserializeGameState, gameReducer } = createClinicalAuthorStage(QUESTION_NEW_N2_ROUND3_PRE_RELEASE);
 // Hosted CI runners run long simulations up to ten times slower.
 const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 
@@ -163,6 +165,26 @@ describe("September 10 surgery-center production flows", () => {
     expected.add("concept.inguinal-hernia.symptomatic-elective-repair.v3");
     expected.add("concept.pigmented-skin-lesion.complete-diagnostic-biopsy.v4");
     expected.add("concept.pigmented-skin-lesion.partial-depth-nodal-planning.v1");
+    // Batch 2a scores treatment selection and residual-lesion sampling as
+    // explicit new constructs; the other cases still witness the old IDs.
+    expected.add("concept.achalasia.physiology-directed-treatment.v1");
+    expected.add("concept.pigmented-skin-lesion.complete-diagnostic-biopsy.v5");
+    // Round two retains old cards, but this cohort now witnesses four new
+    // applied objectives instead of two prior scored constructs.
+    expected.delete("concept.achalasia.high-resolution-manometry.v3");
+    expected.delete("concept.achalasia.physiology-directed-treatment.v1");
+    expected.add("concept.achalasia.secondary-junction-lesion-assessment.v1");
+    expected.add("concept.esophageal-physiology.reserve-before-junction-intervention.v1");
+    expected.add("concept.groin-hernia.femoral-defect-repair-priority.v1");
+    expected.add("concept.groin-ultrasound.symptom-provocation-protocol.v1");
+    // Round three: actual cohort coverage follows four revised scored
+    // objectives. Old definitions and their existing histories stay retained.
+    expected.delete("concept.esophageal-physiology.reserve-before-junction-intervention.v1");
+    expected.delete("concept.groin-ultrasound.symptom-provocation-protocol.v1");
+    expected.add("concept.esophageal-physiology.integrated-pressure-report.v2");
+    expected.add("concept.esophageal-physiology.reserve-acquisition-integrity.v1");
+    expected.add("concept.groin-ultrasound.proximal-neck-localization.v2");
+    expected.add("concept.inguinal-hernia.recurrence-after-anterior-repair.v1");
     expect(reviewed).toEqual(expected);
   }, hostedTime(60_000));
 

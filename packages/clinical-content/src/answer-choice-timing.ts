@@ -7,6 +7,10 @@ import { QUESTION_QUALITY_ADVERSARIAL_R4_REVISIONS } from "./question-quality-ad
 import { QUESTION_QUALITY_ADVERSARIAL_R5_REVISIONS } from "./question-quality-adversarial-r5-20261102";
 import { QUESTION_QUALITY_ADVERSARIAL_R6_REVISIONS } from "./question-quality-adversarial-r6-20261102";
 import { QUESTION_QUALITY_ADVERSARIAL_R7_REVISIONS } from "./question-quality-adversarial-r7-20261102";
+import { QUESTION_FLAG_REVISIONS } from "./question-flags-20261104";
+import { QUESTION_FLAG_ROUND2_REVISIONS } from "./question-flags-round2-20261104";
+import { QUESTION_BANK_BATCH2A_REVISIONS } from "./question-bank-batch2a-20261104";
+import { QUESTION_FLAG_ROUND3_REVISIONS } from "./question-flags-round3-20261104";
 import { BOARD_EXPANSION_TIMING_ENTRIES } from "./development-batch/2026-09-11/board-expansion-batch";
 import { BOARD_EXPANSION_20260912_TIMING_ENTRIES } from "./development-batch/2026-09-12/board-expansion-batch";
 import { EARLY_LEVELS_20260913_TIMING_ENTRIES } from "./development-batch/2026-09-13/early-levels-batch";
@@ -5993,6 +5997,78 @@ export const QUESTION_QUALITY_PRE_ADVERSARIAL_R6_TIMING_ENTRIES = [...QUESTION_Q
 export const QUESTION_QUALITY_ADVERSARIAL_R6_TIMING_ENTRIES = questionQualityTimingRevisions(QUESTION_QUALITY_PRE_ADVERSARIAL_R6_TIMING_ENTRIES, QUESTION_QUALITY_ADVERSARIAL_R6_REVISIONS);
 export const QUESTION_QUALITY_PRE_ADVERSARIAL_R7_TIMING_ENTRIES = [...QUESTION_QUALITY_PRE_ADVERSARIAL_R6_TIMING_ENTRIES, ...QUESTION_QUALITY_ADVERSARIAL_R6_TIMING_ENTRIES];
 export const QUESTION_QUALITY_ADVERSARIAL_R7_TIMING_ENTRIES = questionQualityTimingRevisions(QUESTION_QUALITY_PRE_ADVERSARIAL_R7_TIMING_ENTRIES, QUESTION_QUALITY_ADVERSARIAL_R7_REVISIONS);
-export const ANSWER_CHOICE_TIMING_REGISTRY = [...QUESTION_QUALITY_PRE_ADVERSARIAL_R7_TIMING_ENTRIES, ...QUESTION_QUALITY_ADVERSARIAL_R7_TIMING_ENTRIES].map((entry) =>
+export const QUESTION_FLAGS_PRE_REVISION_TIMING_ENTRIES = [...QUESTION_QUALITY_PRE_ADVERSARIAL_R7_TIMING_ENTRIES, ...QUESTION_QUALITY_ADVERSARIAL_R7_TIMING_ENTRIES];
+export const QUESTION_FLAG_TIMING_ENTRIES = questionQualityTimingRevisions(QUESTION_FLAGS_PRE_REVISION_TIMING_ENTRIES, QUESTION_FLAG_REVISIONS);
+export const QUESTION_FLAGS_ROUND1_TIMING_ENTRIES = [...QUESTION_FLAGS_PRE_REVISION_TIMING_ENTRIES, ...QUESTION_FLAG_TIMING_ENTRIES];
+export const QUESTION_FLAG_ROUND2_TIMING_ENTRIES = questionQualityTimingRevisions(QUESTION_FLAGS_ROUND1_TIMING_ENTRIES, QUESTION_FLAG_ROUND2_REVISIONS);
+export const QUESTION_BANK_PRE_BATCH2A_TIMING_ENTRIES = [...QUESTION_FLAGS_ROUND1_TIMING_ENTRIES, ...QUESTION_FLAG_ROUND2_TIMING_ENTRIES];
+export const QUESTION_BANK_BATCH2A_TIMING_ENTRIES = questionQualityTimingRevisions(QUESTION_BANK_PRE_BATCH2A_TIMING_ENTRIES, QUESTION_BANK_BATCH2A_REVISIONS);
+export const QUESTION_FLAGS_PRE_ROUND3_TIMING_ENTRIES = [...QUESTION_BANK_PRE_BATCH2A_TIMING_ENTRIES, ...QUESTION_BANK_BATCH2A_TIMING_ENTRIES];
+export const QUESTION_FLAG_ROUND3_TIMING_ENTRIES = questionQualityTimingRevisions(QUESTION_FLAGS_PRE_ROUND3_TIMING_ENTRIES, QUESTION_FLAG_ROUND3_REVISIONS);
+// BEGIN N1 append — existing exact timing entries remain available for frozen visits.
+import { QUESTION_NEW_N1_TIMING_ENTRIES } from "./question-new-n1-20261104";
+// BEGIN N2 append — presentation estimates only; no added local execution.
+import { QUESTION_NEW_N2_TIMING_ENTRIES } from "./question-new-n2-20261104";
+// END N2 append.
+export const QUESTION_BANK_PRE_BATCH2A_ROUND2_TIMING_ENTRIES = [...QUESTION_FLAGS_PRE_ROUND3_TIMING_ENTRIES, ...QUESTION_FLAG_ROUND3_TIMING_ENTRIES, ...QUESTION_NEW_N1_TIMING_ENTRIES, ...QUESTION_NEW_N2_TIMING_ENTRIES].map((entry) =>
   answerChoiceTimingRegistryEntrySchema.parse(entry),
 );
+// END N1 append.
+
+// BEGIN BATCH2A ROUND2 timing — all preceding version-specific rows retained.
+import { QUESTION_BANK_BATCH2A_ROUND2_REVISIONS } from "./question-bank-batch2a-round2-20261104";
+export const QUESTION_BANK_BATCH2A_ROUND2_TIMING_ENTRIES = questionQualityTimingRevisions(QUESTION_BANK_PRE_BATCH2A_ROUND2_TIMING_ENTRIES, QUESTION_BANK_BATCH2A_ROUND2_REVISIONS);
+export const QUESTION_BANK_PRE_BATCH2A_ROUND3_TIMING_ENTRIES = [...QUESTION_BANK_PRE_BATCH2A_ROUND2_TIMING_ENTRIES, ...QUESTION_BANK_BATCH2A_ROUND2_TIMING_ENTRIES].map(entry => answerChoiceTimingRegistryEntrySchema.parse(entry));
+// BEGIN BATCH2A ROUND3 timing — preceding rows and frozen later blocks retained.
+import { QUESTION_BANK_BATCH2A_ROUND3_REVISIONS } from "./question-bank-batch2a-round3-20261104";
+export const QUESTION_BANK_BATCH2A_ROUND3_TIMING_ENTRIES = questionQualityTimingRevisions(QUESTION_BANK_PRE_BATCH2A_ROUND3_TIMING_ENTRIES, QUESTION_BANK_BATCH2A_ROUND3_REVISIONS);
+// END BATCH2A ROUND3 timing.
+
+export const QUESTION_NEW_N1_ROUND2_PRE_TIMING_ENTRIES = [...QUESTION_BANK_PRE_BATCH2A_ROUND3_TIMING_ENTRIES, ...QUESTION_BANK_BATCH2A_ROUND3_TIMING_ENTRIES].map(entry => answerChoiceTimingRegistryEntrySchema.parse(entry));
+// END BATCH2A ROUND2 timing.
+
+// BEGIN N1 ROUND2 append — retain every old exact estimate for frozen encounters.
+import { QUESTION_NEW_N1_ROUND2_TIMING_ENTRIES } from "./question-new-n1-round2-20261104";
+export const QUESTION_BANK_PRE_BATCH2B_TIMING_ENTRIES = [...QUESTION_NEW_N1_ROUND2_PRE_TIMING_ENTRIES,
+  ...QUESTION_NEW_N1_ROUND2_TIMING_ENTRIES].map(entry => answerChoiceTimingRegistryEntrySchema.parse(entry));
+// END N1 ROUND2 append.
+
+// BEGIN BATCH2B timing — retain every prior exact choice estimate.
+import { QUESTION_BANK_BATCH2B_REVISIONS } from "./question-bank-batch2b-20261104";
+export const QUESTION_BANK_BATCH2B_TIMING_ENTRIES = questionQualityTimingRevisions(QUESTION_BANK_PRE_BATCH2B_TIMING_ENTRIES, QUESTION_BANK_BATCH2B_REVISIONS);
+export const QUESTION_NEW_N2_ROUND2_PRE_TIMING_ENTRIES = [...QUESTION_BANK_PRE_BATCH2B_TIMING_ENTRIES, ...QUESTION_BANK_BATCH2B_TIMING_ENTRIES].map(entry => answerChoiceTimingRegistryEntrySchema.parse(entry));
+// END BATCH2B timing.
+
+// BEGIN N2 ROUND2 append — keep every prior exact version and timing estimate.
+import { QUESTION_NEW_N2_ROUND2_TIMING_ENTRIES } from "./question-new-n2-round2-20261104";
+export const QUESTION_NEW_N1_ROUND3_PRE_TIMING_ENTRIES = [...QUESTION_NEW_N2_ROUND2_PRE_TIMING_ENTRIES,
+  ...QUESTION_NEW_N2_ROUND2_TIMING_ENTRIES].map(entry => answerChoiceTimingRegistryEntrySchema.parse(entry));
+// END N2 ROUND2 append.
+
+// BEGIN N1 ROUND3 append — old exact timing rows remain available.
+import { QUESTION_NEW_N1_ROUND3_TIMING_ENTRIES } from "./question-new-n1-round3-20261104";
+export const QUESTION_BANK_BATCH2B_ROUND2_PRE_TIMING_ENTRIES = [...QUESTION_NEW_N1_ROUND3_PRE_TIMING_ENTRIES,
+  ...QUESTION_NEW_N1_ROUND3_TIMING_ENTRIES].map(entry => answerChoiceTimingRegistryEntrySchema.parse(entry));
+// END N1 ROUND3 append.
+
+// BEGIN BATCH2B ROUND2 candidate timing — all prior exact rows retained.
+import { QUESTION_BANK_BATCH2B_ROUND2_REVISIONS } from "./question-bank-batch2b-round2-20261104";
+export const QUESTION_BANK_BATCH2B_ROUND2_TIMING_ENTRIES = questionQualityTimingRevisions(QUESTION_BANK_BATCH2B_ROUND2_PRE_TIMING_ENTRIES, QUESTION_BANK_BATCH2B_ROUND2_REVISIONS);
+export const QUESTION_NEW_N2_ROUND3_PRE_TIMING_ENTRIES = [...QUESTION_BANK_BATCH2B_ROUND2_PRE_TIMING_ENTRIES, ...QUESTION_BANK_BATCH2B_ROUND2_TIMING_ENTRIES].map(entry => answerChoiceTimingRegistryEntrySchema.parse(entry));
+// END BATCH2B ROUND2 candidate timing. No gameplay collection or execution added.
+
+// BEGIN N2 ROUND3 timing append - retain every earlier frozen identity
+import { QUESTION_NEW_N2_ROUND3_TIMING_ENTRIES } from "./question-new-n2-round3-20261104";
+export const QUESTION_NEW_N3_PRE_TIMING_ENTRIES = [...QUESTION_NEW_N2_ROUND3_PRE_TIMING_ENTRIES,
+  ...QUESTION_NEW_N2_ROUND3_TIMING_ENTRIES].map(entry=>answerChoiceTimingRegistryEntrySchema.parse(entry));
+// END N2 ROUND3 timing append
+// BEGIN N3 timing append - retain all preceding exact identities for frozen encounters.
+import { QUESTION_NEW_N3_TIMING_ENTRIES } from "./question-new-n3-20261105";
+export const ANSWER_CHOICE_TIMING_REGISTRY = [...QUESTION_NEW_N3_PRE_TIMING_ENTRIES,
+  ...QUESTION_NEW_N3_TIMING_ENTRIES, ...QUESTION_FLAGS2_ACCEPTED_TIMING_ENTRIES].map(entry=>answerChoiceTimingRegistryEntrySchema.parse(entry));
+// END N3 timing append.
+
+// BEGIN FLAGS2 G06 exact timing append 20261105
+import { QUESTION_FLAGS2_ACCEPTED_TIMING_ENTRIES } from "./question-flags2-accepted-20261105";
+export { QUESTION_FLAGS2_ACCEPTED_TIMING_ENTRIES };
+// END FLAGS2 G06 exact timing append 20261105

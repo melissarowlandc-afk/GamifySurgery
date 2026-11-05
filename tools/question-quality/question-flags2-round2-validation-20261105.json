@@ -1,0 +1,108 @@
+{
+  "checkedAt": "2026-11-05T09:58:37.771Z",
+  "clinical": {
+    "command": "npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads --maxWorkers=2 src/question-flags2-20261105.test.ts src/question-flags2-round2-20261105.test.ts src/question-ship-manifest.test.ts src/answer-choice-timing.test.ts src/question-bank-batch2b-acceptance-20261105.test.ts",
+    "nativeExitCode": 0,
+    "testFiles": {
+      "passed": 5,
+      "failed": 0,
+      "total": 5
+    },
+    "tests": {
+      "passed": 80,
+      "failed": 0,
+      "total": 80
+    },
+    "log": "tools/question-quality/question-flags2-round2-clinical-final-20261105.log",
+    "durationSeconds": 6.95
+  },
+  "linter": {
+    "command": "npm.cmd run clinical:lint:test",
+    "nativeExitCode": 0,
+    "tests": {
+      "passed": 33,
+      "failed": 0,
+      "total": 33
+    },
+    "log": "tools/question-quality/question-flags2-round2-linter-tests-final-20261105.log"
+  },
+  "typecheck": {
+    "command": "npm.cmd run typecheck --workspace @gamify-surgery/clinical-content",
+    "nativeExitCode": 0,
+    "log": "tools/question-quality/question-flags2-round2-typecheck-final-20261105.log"
+  },
+  "cueLint": {
+    "command": "node tools/question-quality/review-question-flags2-round2-20261105.mjs --check --require-zero",
+    "totals": {
+      "newVariants": 7,
+      "cases": 6,
+      "profileContexts": 31,
+      "beforeFindings": 3,
+      "afterFindings": 0,
+      "variantsWithFindings": 0
+    },
+    "report": "tools/question-quality/question-flags2-round2-lint-20261105.json"
+  },
+  "focusedScope": "Round-one historical source, round-two source/packet/holds, manifest/projection, complete timing classification and prior batch2b acceptance regressions. No new full clinical/domain/player suite run or whole-tree-green claim.",
+  "intermediateTypecheck": "One initial test-only discriminated-union caption access error was fixed by narrowing the exhibit kind; final typecheck and all focused tests pass.",
+  "sourceRecords": 19,
+  "publicationIdentityKeys": 18,
+  "newAtomicClaims": 20,
+  "noteResponses": 86,
+  "acceptedIds": [
+    "G06"
+  ],
+  "unacceptedSourceHeldKeys": [
+    "G01",
+    "G02",
+    "G04-R",
+    "G05-staging",
+    "G07"
+  ],
+  "originalG04KeptLive": true,
+  "N3TimingWorkPreserved": true,
+  "runtimeSourceWindow": [
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.ts",
+      "before": "f5cfb705808dc9c83e9ae3b708d3bac17eb19371bff134daca7bbd36d8dd1e0b",
+      "current": "e29038894c101d0618970fb10c4367919e24a773725a8dd16ee781f4b82e7a3f"
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "before": "74aa3029a2e1c072b795c877a51ba405cb457e8bf0584a4d91f2e96598850595",
+      "current": "0dcec62fa1a9d7ef42b4400595d0e8d0d73b253d40817fda4b55ea3ee0e4c633"
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "before": "119ac7da75cc42daba87153fd0ee4d37047e9d3ab6b5d07b39bb5c3b54c45c4b",
+      "current": "2391e3a6440890af5698d66f6a0cb56c34fae9848466e3cacc96c2ca28f8d7e1"
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "before": "4a7d1d3c85d687461b80477aa21bb6c5f9ededd82c7686fce2100718af555de0",
+      "current": "41472b04a8d9e863a4e185b07b9224c1e5bc1235f587e94eddc55ef6c6daaeb3"
+    }
+  ],
+  "newRuntimeDependencies": [
+    {
+      "path": "packages/clinical-content/src/question-flags2-accepted-20261105.ts",
+      "sha256": "3316aba91ee34df1000e73bf177c593474ac1b029454e1c47246858019b08bc8"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-round2-20261105.ts",
+      "sha256": "a1c50dd25e3bbdd368bbd1d3a3563fb68457a5a6f5f4a053c1f536c65fe81324"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-round2-20261105-data.ts",
+      "sha256": "55a01666c87be8cb513feaeb9913257ce6eab17e9624ab16543b536d8f8eb85a"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-round2-evidence-20261105.ts",
+      "sha256": "ea217ce54f8639d9de211c37e6b867f351bffd54634e8fb1a591775ee55b7ef3"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-round2-retained-input-20261105.ts",
+      "sha256": "c5876291ebb8d08d7adf2c21d86dd438ada212a8bc9eb6e58e9572574a491bf9"
+    }
+  ]
+}

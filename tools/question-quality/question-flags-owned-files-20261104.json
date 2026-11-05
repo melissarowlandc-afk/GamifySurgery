@@ -1,0 +1,1392 @@
+{
+  "checkedOn": "2026-11-04",
+  "status": "validation_recorded_drafts_pending_review",
+  "results": {
+    "clinical": {
+      "log": "tools/question-quality/question-flags-clinical-bindings-20261104.log",
+      "files": "98 passed (98)",
+      "tests": "772 passed (772)",
+      "duration": "41.60s (transform 4.86s, setup 0ms, import 65.19s, tests 8.17s, environment 6ms)",
+      "failureHeaders": [],
+      "failures": []
+    },
+    "presentation": {
+      "log": "tools/question-quality/question-flags-player-bindings-20261104.log",
+      "files": "4 passed (4)",
+      "tests": "43 passed (43)",
+      "duration": "4.60s (transform 3.75s, setup 0ms, import 7.11s, tests 1.70s, environment 0ms)",
+      "failureHeaders": [],
+      "failures": []
+    },
+    "bindings": {
+      "log": "tools/question-quality/question-flags-domain-bindings-20261104.log",
+      "files": "2 passed (2)",
+      "tests": "11 passed (11)",
+      "duration": "4.50s (transform 2.04s, setup 0ms, import 4.11s, tests 180ms, environment 0ms)",
+      "failureHeaders": [],
+      "failures": []
+    },
+    "domainFocused": {
+      "log": "tools/question-quality/question-flags-domain-focused-final-20261104.log",
+      "files": "9 passed (9)",
+      "tests": "1227 passed (1227)",
+      "duration": "94.99s (transform 1.88s, setup 0ms, import 8.09s, tests 86.20s, environment 0ms)",
+      "failureHeaders": [],
+      "failures": []
+    },
+    "playerRepairs": {
+      "log": "tools/question-quality/question-flags-player-repairs-focused-20261104.log",
+      "files": "3 passed (3)",
+      "tests": "43 passed (43)",
+      "duration": "57.23s (transform 6.02s, setup 0ms, import 11.54s, tests 45.40s, environment 0ms)",
+      "failureHeaders": [],
+      "failures": []
+    },
+    "playerEntryControl": {
+      "log": "tools/question-quality/question-flags-player-timeout-entry-config-control-20261104.log",
+      "files": "2 passed (2)",
+      "tests": "4 passed | 3 skipped (7)",
+      "duration": "16.01s (transform 4.21s, setup 3.31s, import 3.78s, tests 8.75s, environment 0ms)",
+      "failureHeaders": [],
+      "failures": []
+    },
+    "playerInitial": {
+      "log": "tools/question-quality/question-flags-player-final-bindings-20261104.log",
+      "files": "3 failed | 331 passed (334)",
+      "tests": "5 failed | 3366 passed (3371)",
+      "duration": "1357.26s (transform 17.08s, setup 0ms, import 416.27s, tests 899.39s, environment 28ms)",
+      "failureHeaders": [
+        "FAIL  src/facility/levelFiveGiftRouteMotion.test.ts > samples actual gift queue/counter/return paths at 1x, through reload without routeMotion changes",
+        "FAIL  src/facility/levelFiveGiftRouteMotion.test.ts > samples actual gift queue/counter/return paths at 4x, through reload without routeMotion changes",
+        "FAIL  src/session/flagFreeze.test.tsx > reported hosted flag recovery boundaries > can flag the reported v4 frozen question in phone without changing the cloud campaign",
+        "FAIL  src/session/flagFreeze.test.tsx > reported hosted flag recovery boundaries > can flag the reported v4 frozen question in desktop without changing the cloud campaign",
+        "FAIL  src/session/periopNurseOwnerFeedback.test.ts > Owner peri-op feedback in an approved Level-2/3 clinic > shows all 3 nurses walking/checking/resting in the compiled Level-3 view"
+      ],
+      "failures": [
+        {
+          "title": "FAIL  src/facility/levelFiveGiftRouteMotion.test.ts > samples actual gift queue/counter/return paths at 1x, through reload without routeMotion changes",
+          "kind": "timeout",
+          "error": "Error: Test timed out in 5000ms. If this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".  ❯ src/facility/levelFiveGiftRouteMotion.test.ts:13:24",
+          "location": null
+        },
+        {
+          "title": "FAIL  src/facility/levelFiveGiftRouteMotion.test.ts > samples actual gift queue/counter/return paths at 4x, through reload without routeMotion changes",
+          "kind": "timeout",
+          "error": "Error: Test timed out in 5000ms. If this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".  ❯ src/facility/levelFiveGiftRouteMotion.test.ts:13:24",
+          "location": null
+        },
+        {
+          "title": "FAIL  src/session/flagFreeze.test.tsx > reported hosted flag recovery boundaries > can flag the reported v4 frozen question in phone without changing the cloud campaign",
+          "kind": "requires_review",
+          "error": "AssertionError: expected undefined to be defined  ❯ fixture src/session/flagFreeze.test.tsx:91:26      89|     const encounter = Object.values(state.encounters)[0]!;",
+          "location": null
+        },
+        {
+          "title": "FAIL  src/session/flagFreeze.test.tsx > reported hosted flag recovery boundaries > can flag the reported v4 frozen question in desktop without changing the cloud campaign",
+          "kind": "requires_review",
+          "error": "AssertionError: expected undefined to be defined  ❯ fixture src/session/flagFreeze.test.tsx:91:26      89|     const encounter = Object.values(state.encounters)[0]!;",
+          "location": null
+        },
+        {
+          "title": "FAIL  src/session/periopNurseOwnerFeedback.test.ts > Owner peri-op feedback in an approved Level-2/3 clinic > shows all 3 nurses walking/checking/resting in the compiled Level-3 view",
+          "kind": "timeout",
+          "error": "Error: Test timed out in 5000ms. If this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".  ❯ src/session/periopNurseOwnerFeedback.test.ts:16:37",
+          "location": null
+        }
+      ]
+    },
+    "domainInitial": {
+      "log": "tools/question-quality/question-flags-domain-final-bindings-20261104.log",
+      "files": "9 failed | 158 passed (167)",
+      "tests": "58 failed | 4316 passed | 1 skipped (4375)",
+      "duration": "1907.40s (transform 7.29s, setup 0ms, import 150.68s, tests 1742.42s, environment 9ms)",
+      "failureHeaders": [
+        "FAIL  tests/approved-clinical-admission.test.ts > approved clinical admission boundaries > keeps the unapproved prototype runtime release limited to explicitly admitted concepts",
+        "FAIL  tests/gs028-20261002-batch.test.ts > GS-028 October 2 batch admission > admits all twenty objectives, seventy-eight cases, and their exact timed orders",
+        "FAIL  tests/gs028-20261002-batch.test.ts > GS-028 October 2 batch admission > selects each new objective independently when all other new objectives are learned and not due",
+        "FAIL  tests/gs028-20261002-batch.test.ts > GS-028 October 2 batch admission > prioritizes due new objectives and returns none when all twenty are not due",
+        "FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > admits all twenty objectives, seventy-eight cases, and their exact timed orders",
+        "FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node correctly and idempotently through case 32",
+        "FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node correctly and idempotently through case 49",
+        "FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node through wrong choice path 32 for case { id: 'case.gs028d.hyperkalaemia.a-renal-result', displayName: 'Acute hyperkalaemia', patientPresentationVariantId: 'presentation.gs028d.hyperkalaemia.a-renal-result', releasePointId: 'release.l0.clinic_evaluation', patientDisplayName: '{patientName}', prototypeDemographics: { ageYears: 52, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, chiefComplaint: 'Critical potassium result', presentation: '{patientName}, a 52-year-old woman with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.', approvedInstantiationProfiles: [ { id: 'profile.gs028d.hyperkalaemia.a-renal-result.female.52', prototypeDemographics: { ageYears: 52, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, presentation: '{patientName}, a 52-year-old woman with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.' }, { id: 'profile.gs028d.hyperkalaemia.a-renal-result.male.52', prototypeDemographics: { ageYears: 52, sexLabel: 'Male' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, presentation: '{patientName}, a 52-year-old man with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.' }, { id: 'profile.gs028d.hyperkalaemia.a-renal-result.female.70', prototypeDemographics: { ageYears: 70, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, presentation: '{patientName}, a 70-year-old woman with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.' }, { id: 'profile.gs028d.hyperkalaemia.a-renal-result.male.70', prototypeDemographics: { ageYears: 70, sexLabel: 'Male' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, presentation: '{patientName}, a 70-year-old man with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.' } ], tutorialEligible: false, routineEligible: true, earliestFacilityStage: +0, requiredClinicalSetting: 'clinic', requiredCapabilityIds: [], rewardTierId: 'reward.clinic_basic', sourceLabels: [ 'Treatment of Acute Hyperkalaemia in Adults' ], decisionNodes: [ { id: 'node.gs028d.hyperkalaemia.a-renal-result.1', questionVariantId: 'question.hyperkalaemia.severe-community-result-transfer.v1', primaryConceptId: 'concept.hyperkalaemia.severe-community-result-transfer', stem: 'What is the safest next disposition under the current UKKA adult pathway?', answerChoices: [ { id: 'correct_1', label: 'Immediate hospital assessment', isCorrect: true, serviceRequest: null }, { id: 'd1_1', label: 'Routine follow-up next week', isCorrect: false, serviceRequest: null }, { id: 'd2_1', label: 'Repeat testing before any action', isCorrect: false, serviceRequest: null }, { id: 'd3_1', label: 'Dietary advice alone', isCorrect: false, serviceRequest: null } ], shuffleAnswers: true, explanation: 'Arrange immediate hospital assessment without creating an outpatient delay.', sourceLabels: [ 'Treatment of Acute Hyperkalaemia in Adults' ], resultGateAfter: null, terminalDispositions: [ { answerChoiceId: 'd1_1', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Routine follow-up next week.”', clinicalRationale: 'Arrange immediate hospital assessment without creating an outpatient delay.', sourceLabels: [ 'Treatment of Acute Hyperkalaemia in Adults' ] }, { answerChoiceId: 'd2_1', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Repeat testing before any action.”', clinicalRationale: 'Arrange immediate hospital assessment without creating an outpatient delay.', sourceLabels: [ 'Treatment of Acute Hyperkalaemia in Adults' ] }, { answerChoiceId: 'd3_1', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Dietary advice alone.”', clinicalRationale: 'Arrange immediate hospital assessment without creating an outpatient delay.', sourceLabels: [ 'Treatment of Acute Hyperkalaemia in Adults' ] } ] } ], learningSummary: 'Arrange immediate hospital assessment without creating an outpatient delay.' }",
+        "FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node through wrong choice path 32 for case { id: 'case.gs028d.hyperkalaemia.a-renal-result', displayName: 'Acute hyperkalaemia', patientPresentationVariantId: 'presentation.gs028d.hyperkalaemia.a-renal-result', releasePointId: 'release.l0.clinic_evaluation', patientDisplayName: '{patientName}', prototypeDemographics: { ageYears: 52, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, chiefComplaint: 'Critical potassium result', presentation: '{patientName}, a 52-year-old woman with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.', approvedInstantiationProfiles: [ { id: 'profile.gs028d.hyperkalaemia.a-renal-result.female.52', prototypeDemographics: { ageYears: 52, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, presentation: '{patientName}, a 52-year-old woman with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.' }, { id: 'profile.gs028d.hyperkalaemia.a-renal-result.male.52', prototypeDemographics: { ageYears: 52, sexLabel: 'Male' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, presentation: '{patientName}, a 52-year-old man with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.' }, { id: 'profile.gs028d.hyperkalaemia.a-renal-result.female.70', prototypeDemographics: { ageYears: 70, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, presentation: '{patientName}, a 70-year-old woman with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.' }, { id: 'profile.gs028d.hyperkalaemia.a-renal-result.male.70', prototypeDemographics: { ageYears: 70, sexLabel: 'Male' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, presentation: '{patientName}, a 70-year-old man with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.' } ], tutorialEligible: false, routineEligible: true, earliestFacilityStage: +0, requiredClinicalSetting: 'clinic', requiredCapabilityIds: [], rewardTierId: 'reward.clinic_basic', sourceLabels: [ 'Treatment of Acute Hyperkalaemia in Adults' ], decisionNodes: [ { id: 'node.gs028d.hyperkalaemia.a-renal-result.1', questionVariantId: 'question.hyperkalaemia.severe-community-result-transfer.v1', primaryConceptId: 'concept.hyperkalaemia.severe-community-result-transfer', stem: 'What is the safest next disposition under the current UKKA adult pathway?', answerChoices: [ { id: 'correct_1', label: 'Immediate hospital assessment', isCorrect: true, serviceRequest: null }, { id: 'd1_1', label: 'Routine follow-up next week', isCorrect: false, serviceRequest: null }, { id: 'd2_1', label: 'Repeat testing before any action', isCorrect: false, serviceRequest: null }, { id: 'd3_1', label: 'Dietary advice alone', isCorrect: false, serviceRequest: null } ], shuffleAnswers: true, explanation: 'Arrange immediate hospital assessment without creating an outpatient delay.', sourceLabels: [ 'Treatment of Acute Hyperkalaemia in Adults' ], resultGateAfter: null, terminalDispositions: [ { answerChoiceId: 'd1_1', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Routine follow-up next week.”', clinicalRationale: 'Arrange immediate hospital assessment without creating an outpatient delay.', sourceLabels: [ 'Treatment of Acute Hyperkalaemia in Adults' ] }, { answerChoiceId: 'd2_1', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Repeat testing before any action.”', clinicalRationale: 'Arrange immediate hospital assessment without creating an outpatient delay.', sourceLabels: [ 'Treatment of Acute Hyperkalaemia in Adults' ] }, { answerChoiceId: 'd3_1', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Dietary advice alone.”', clinicalRationale: 'Arrange immediate hospital assessment without creating an outpatient delay.', sourceLabels: [ 'Treatment of Acute Hyperkalaemia in Adults' ] } ] } ], learningSummary: 'Arrange immediate hospital assessment without creating an outpatient delay.' }",
+        "FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node through wrong choice path 32 for case { id: 'case.gs028d.hyperkalaemia.a-renal-result', displayName: 'Acute hyperkalaemia', patientPresentationVariantId: 'presentation.gs028d.hyperkalaemia.a-renal-result', releasePointId: 'release.l0.clinic_evaluation', patientDisplayName: '{patientName}', prototypeDemographics: { ageYears: 52, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, chiefComplaint: 'Critical potassium result', presentation: '{patientName}, a 52-year-old woman with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.', approvedInstantiationProfiles: [ { id: 'profile.gs028d.hyperkalaemia.a-renal-result.female.52', prototypeDemographics: { ageYears: 52, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, presentation: '{patientName}, a 52-year-old woman with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.' }, { id: 'profile.gs028d.hyperkalaemia.a-renal-result.male.52', prototypeDemographics: { ageYears: 52, sexLabel: 'Male' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, presentation: '{patientName}, a 52-year-old man with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.' }, { id: 'profile.gs028d.hyperkalaemia.a-renal-result.female.70', prototypeDemographics: { ageYears: 70, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, presentation: '{patientName}, a 70-year-old woman with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.' }, { id: 'profile.gs028d.hyperkalaemia.a-renal-result.male.70', prototypeDemographics: { ageYears: 70, sexLabel: 'Male' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, presentation: '{patientName}, a 70-year-old man with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.' } ], tutorialEligible: false, routineEligible: true, earliestFacilityStage: +0, requiredClinicalSetting: 'clinic', requiredCapabilityIds: [], rewardTierId: 'reward.clinic_basic', sourceLabels: [ 'Treatment of Acute Hyperkalaemia in Adults' ], decisionNodes: [ { id: 'node.gs028d.hyperkalaemia.a-renal-result.1', questionVariantId: 'question.hyperkalaemia.severe-community-result-transfer.v1', primaryConceptId: 'concept.hyperkalaemia.severe-community-result-transfer', stem: 'What is the safest next disposition under the current UKKA adult pathway?', answerChoices: [ { id: 'correct_1', label: 'Immediate hospital assessment', isCorrect: true, serviceRequest: null }, { id: 'd1_1', label: 'Routine follow-up next week', isCorrect: false, serviceRequest: null }, { id: 'd2_1', label: 'Repeat testing before any action', isCorrect: false, serviceRequest: null }, { id: 'd3_1', label: 'Dietary advice alone', isCorrect: false, serviceRequest: null } ], shuffleAnswers: true, explanation: 'Arrange immediate hospital assessment without creating an outpatient delay.', sourceLabels: [ 'Treatment of Acute Hyperkalaemia in Adults' ], resultGateAfter: null, terminalDispositions: [ { answerChoiceId: 'd1_1', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Routine follow-up next week.”', clinicalRationale: 'Arrange immediate hospital assessment without creating an outpatient delay.', sourceLabels: [ 'Treatment of Acute Hyperkalaemia in Adults' ] }, { answerChoiceId: 'd2_1', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Repeat testing before any action.”', clinicalRationale: 'Arrange immediate hospital assessment without creating an outpatient delay.', sourceLabels: [ 'Treatment of Acute Hyperkalaemia in Adults' ] }, { answerChoiceId: 'd3_1', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Dietary advice alone.”', clinicalRationale: 'Arrange immediate hospital assessment without creating an outpatient delay.', sourceLabels: [ 'Treatment of Acute Hyperkalaemia in Adults' ] } ] } ], learningSummary: 'Arrange immediate hospital assessment without creating an outpatient delay.' }",
+        "FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node through wrong choice path 49 for case { id: 'case.gs028d.anesthesia.a-validated-not-impression', displayName: 'Preanesthetic planning', patientPresentationVariantId: 'presentation.gs028d.anesthesia.a-validated-not-impression', releasePointId: 'release.l0.clinic_evaluation', patientDisplayName: '{patientName}', prototypeDemographics: { ageYears: 46, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, chiefComplaint: 'Preop sleep concern', presentation: '{patientName}, a 46-year-old woman, has several possible OSA features before major surgery, and the clinic note currently records only an informal impression.', approvedInstantiationProfiles: [ { id: 'profile.gs028d.anesthesia.a-validated-not-impression.female.46', prototypeDemographics: { ageYears: 46, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 46-year-old woman, has several possible OSA features before major surgery, and the clinic note currently records only an informal impression.' }, { id: 'profile.gs028d.anesthesia.a-validated-not-impression.male.46', prototypeDemographics: { ageYears: 46, sexLabel: 'Male' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 46-year-old man, has several possible OSA features before major surgery, and the clinic note currently records only an informal impression.' }, { id: 'profile.gs028d.anesthesia.a-validated-not-impression.female.68', prototypeDemographics: { ageYears: 68, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 68-year-old woman, has several possible OSA features before major surgery, and the clinic note currently records only an informal impression.' }, { id: 'profile.gs028d.anesthesia.a-validated-not-impression.male.68', prototypeDemographics: { ageYears: 68, sexLabel: 'Male' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 68-year-old man, has several possible OSA features before major surgery, and the clinic note currently records only an informal impression.' } ], tutorialEligible: false, routineEligible: true, earliestFacilityStage: +0, requiredClinicalSetting: 'clinic', requiredCapabilityIds: [], rewardTierId: 'reward.clinic_basic', sourceLabels: [ 'SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA', 'JSA guideline for management of malignant hyperthermia in 2025', 'Perioperative Management of MH Suspected or Susceptible Patients' ], decisionNodes: [ { id: 'node.gs028d.anesthesia.a-validated-not-impression.1', questionVariantId: 'question.preoperative-osa.validated-risk-screening.v4', primaryConceptId: 'concept.preoperative-osa.validated-risk-screening', stem: 'Which approach provides the most defensible preoperative risk classification?', answerChoices: [ { id: 'correct_4', label: 'Use validated OSA screening', isCorrect: true, serviceRequest: null }, { id: 'd1_4', label: 'Use age alone', isCorrect: false, serviceRequest: null }, { id: 'd2_4', label: 'Use body weight alone', isCorrect: false, serviceRequest: null }, { id: 'd3_4', label: 'Assign a diagnosis from appearance', isCorrect: false, serviceRequest: null } ], shuffleAnswers: true, explanation: 'A validated screen provides a consistent risk classification while remaining distinct from a diagnostic study.', sourceLabels: [ 'SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA', 'JSA guideline for management of malignant hyperthermia in 2025', 'Perioperative Management of MH Suspected or Susceptible Patients' ], resultGateAfter: null, terminalDispositions: [ { answerChoiceId: 'd1_4', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Use age alone.”', clinicalRationale: 'A validated screen provides a consistent risk classification while remaining distinct from a diagnostic study.', sourceLabels: [ 'SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA', 'JSA guideline for management of malignant hyperthermia in 2025', 'Perioperative Management of MH Suspected or Susceptible Patients' ] }, { answerChoiceId: 'd2_4', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Use body weight alone.”', clinicalRationale: 'A validated screen provides a consistent risk classification while remaining distinct from a diagnostic study.', sourceLabels: [ 'SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA', 'JSA guideline for management of malignant hyperthermia in 2025', 'Perioperative Management of MH Suspected or Susceptible Patients' ] }, { answerChoiceId: 'd3_4', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Assign a diagnosis from appearance.”', clinicalRationale: 'A validated screen provides a consistent risk classification while remaining distinct from a diagnostic study.', sourceLabels: [ 'SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA', 'JSA guideline for management of malignant hyperthermia in 2025', 'Perioperative Management of MH Suspected or Susceptible Patients' ] } ] } ], learningSummary: 'A validated screen provides a consistent risk classification while remaining distinct from a diagnostic study.' }",
+        "FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node through wrong choice path 49 for case { id: 'case.gs028d.anesthesia.a-validated-not-impression', displayName: 'Preanesthetic planning', patientPresentationVariantId: 'presentation.gs028d.anesthesia.a-validated-not-impression', releasePointId: 'release.l0.clinic_evaluation', patientDisplayName: '{patientName}', prototypeDemographics: { ageYears: 46, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, chiefComplaint: 'Preop sleep concern', presentation: '{patientName}, a 46-year-old woman, has several possible OSA features before major surgery, and the clinic note currently records only an informal impression.', approvedInstantiationProfiles: [ { id: 'profile.gs028d.anesthesia.a-validated-not-impression.female.46', prototypeDemographics: { ageYears: 46, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 46-year-old woman, has several possible OSA features before major surgery, and the clinic note currently records only an informal impression.' }, { id: 'profile.gs028d.anesthesia.a-validated-not-impression.male.46', prototypeDemographics: { ageYears: 46, sexLabel: 'Male' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 46-year-old man, has several possible OSA features before major surgery, and the clinic note currently records only an informal impression.' }, { id: 'profile.gs028d.anesthesia.a-validated-not-impression.female.68', prototypeDemographics: { ageYears: 68, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 68-year-old woman, has several possible OSA features before major surgery, and the clinic note currently records only an informal impression.' }, { id: 'profile.gs028d.anesthesia.a-validated-not-impression.male.68', prototypeDemographics: { ageYears: 68, sexLabel: 'Male' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 68-year-old man, has several possible OSA features before major surgery, and the clinic note currently records only an informal impression.' } ], tutorialEligible: false, routineEligible: true, earliestFacilityStage: +0, requiredClinicalSetting: 'clinic', requiredCapabilityIds: [], rewardTierId: 'reward.clinic_basic', sourceLabels: [ 'SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA', 'JSA guideline for management of malignant hyperthermia in 2025', 'Perioperative Management of MH Suspected or Susceptible Patients' ], decisionNodes: [ { id: 'node.gs028d.anesthesia.a-validated-not-impression.1', questionVariantId: 'question.preoperative-osa.validated-risk-screening.v4', primaryConceptId: 'concept.preoperative-osa.validated-risk-screening', stem: 'Which approach provides the most defensible preoperative risk classification?', answerChoices: [ { id: 'correct_4', label: 'Use validated OSA screening', isCorrect: true, serviceRequest: null }, { id: 'd1_4', label: 'Use age alone', isCorrect: false, serviceRequest: null }, { id: 'd2_4', label: 'Use body weight alone', isCorrect: false, serviceRequest: null }, { id: 'd3_4', label: 'Assign a diagnosis from appearance', isCorrect: false, serviceRequest: null } ], shuffleAnswers: true, explanation: 'A validated screen provides a consistent risk classification while remaining distinct from a diagnostic study.', sourceLabels: [ 'SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA', 'JSA guideline for management of malignant hyperthermia in 2025', 'Perioperative Management of MH Suspected or Susceptible Patients' ], resultGateAfter: null, terminalDispositions: [ { answerChoiceId: 'd1_4', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Use age alone.”', clinicalRationale: 'A validated screen provides a consistent risk classification while remaining distinct from a diagnostic study.', sourceLabels: [ 'SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA', 'JSA guideline for management of malignant hyperthermia in 2025', 'Perioperative Management of MH Suspected or Susceptible Patients' ] }, { answerChoiceId: 'd2_4', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Use body weight alone.”', clinicalRationale: 'A validated screen provides a consistent risk classification while remaining distinct from a diagnostic study.', sourceLabels: [ 'SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA', 'JSA guideline for management of malignant hyperthermia in 2025', 'Perioperative Management of MH Suspected or Susceptible Patients' ] }, { answerChoiceId: 'd3_4', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Assign a diagnosis from appearance.”', clinicalRationale: 'A validated screen provides a consistent risk classification while remaining distinct from a diagnostic study.', sourceLabels: [ 'SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA', 'JSA guideline for management of malignant hyperthermia in 2025', 'Perioperative Management of MH Suspected or Susceptible Patients' ] } ] } ], learningSummary: 'A validated screen provides a consistent risk classification while remaining distinct from a diagnostic study.' }",
+        "FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node through wrong choice path 49 for case { id: 'case.gs028d.anesthesia.a-validated-not-impression', displayName: 'Preanesthetic planning', patientPresentationVariantId: 'presentation.gs028d.anesthesia.a-validated-not-impression', releasePointId: 'release.l0.clinic_evaluation', patientDisplayName: '{patientName}', prototypeDemographics: { ageYears: 46, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, chiefComplaint: 'Preop sleep concern', presentation: '{patientName}, a 46-year-old woman, has several possible OSA features before major surgery, and the clinic note currently records only an informal impression.', approvedInstantiationProfiles: [ { id: 'profile.gs028d.anesthesia.a-validated-not-impression.female.46', prototypeDemographics: { ageYears: 46, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 46-year-old woman, has several possible OSA features before major surgery, and the clinic note currently records only an informal impression.' }, { id: 'profile.gs028d.anesthesia.a-validated-not-impression.male.46', prototypeDemographics: { ageYears: 46, sexLabel: 'Male' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 46-year-old man, has several possible OSA features before major surgery, and the clinic note currently records only an informal impression.' }, { id: 'profile.gs028d.anesthesia.a-validated-not-impression.female.68', prototypeDemographics: { ageYears: 68, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 68-year-old woman, has several possible OSA features before major surgery, and the clinic note currently records only an informal impression.' }, { id: 'profile.gs028d.anesthesia.a-validated-not-impression.male.68', prototypeDemographics: { ageYears: 68, sexLabel: 'Male' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 68-year-old man, has several possible OSA features before major surgery, and the clinic note currently records only an informal impression.' } ], tutorialEligible: false, routineEligible: true, earliestFacilityStage: +0, requiredClinicalSetting: 'clinic', requiredCapabilityIds: [], rewardTierId: 'reward.clinic_basic', sourceLabels: [ 'SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA', 'JSA guideline for management of malignant hyperthermia in 2025', 'Perioperative Management of MH Suspected or Susceptible Patients' ], decisionNodes: [ { id: 'node.gs028d.anesthesia.a-validated-not-impression.1', questionVariantId: 'question.preoperative-osa.validated-risk-screening.v4', primaryConceptId: 'concept.preoperative-osa.validated-risk-screening', stem: 'Which approach provides the most defensible preoperative risk classification?', answerChoices: [ { id: 'correct_4', label: 'Use validated OSA screening', isCorrect: true, serviceRequest: null }, { id: 'd1_4', label: 'Use age alone', isCorrect: false, serviceRequest: null }, { id: 'd2_4', label: 'Use body weight alone', isCorrect: false, serviceRequest: null }, { id: 'd3_4', label: 'Assign a diagnosis from appearance', isCorrect: false, serviceRequest: null } ], shuffleAnswers: true, explanation: 'A validated screen provides a consistent risk classification while remaining distinct from a diagnostic study.', sourceLabels: [ 'SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA', 'JSA guideline for management of malignant hyperthermia in 2025', 'Perioperative Management of MH Suspected or Susceptible Patients' ], resultGateAfter: null, terminalDispositions: [ { answerChoiceId: 'd1_4', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Use age alone.”', clinicalRationale: 'A validated screen provides a consistent risk classification while remaining distinct from a diagnostic study.', sourceLabels: [ 'SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA', 'JSA guideline for management of malignant hyperthermia in 2025', 'Perioperative Management of MH Suspected or Susceptible Patients' ] }, { answerChoiceId: 'd2_4', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Use body weight alone.”', clinicalRationale: 'A validated screen provides a consistent risk classification while remaining distinct from a diagnostic study.', sourceLabels: [ 'SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA', 'JSA guideline for management of malignant hyperthermia in 2025', 'Perioperative Management of MH Suspected or Susceptible Patients' ] }, { answerChoiceId: 'd3_4', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Assign a diagnosis from appearance.”', clinicalRationale: 'A validated screen provides a consistent risk classification while remaining distinct from a diagnostic study.', sourceLabels: [ 'SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA', 'JSA guideline for management of malignant hyperthermia in 2025', 'Perioperative Management of MH Suspected or Susceptible Patients' ] } ] } ], learningSummary: 'A validated screen provides a consistent risk classification while remaining distinct from a diagnostic study.' }",
+        "FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > keeps external or specialist test 'choice.qf20261104.f04.d1' outside clinic execution",
+        "FAIL  tests/gs028-20261007-batch.test.ts > GS-028 October 7 real gameplay admission > measures the real ordinary pools before and after admission",
+        "FAIL  tests/gs028-20261007-batch.test.ts > GS-028 October 7 real gameplay admission > covers all eighty actual nodes and every current authored choice",
+        "FAIL  tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > binds every one of twenty-six testing choices with exactly five executable correct orders",
+        "FAIL  tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > completes every correct node, saves and departs in case 21",
+        "FAIL  tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > completes wrong choice 21/0 exactly once with supported corrected-forward work",
+        "FAIL  tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > completes wrong choice 21/1 exactly once with supported corrected-forward work",
+        "FAIL  tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > completes wrong choice 21/2 exactly once with supported corrected-forward work",
+        "FAIL  tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > measures the actual early ordinary pool delta of seventy-eight cases and twenty concepts",
+        "FAIL  tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > covers all eighty actual nodes and all three distractors plus the key in each",
+        "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > binds the actual run to its current game, balance, clinical and driver inputs and reconciles cash",
+        "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after save/reload at integration-preparing",
+        "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after save/reload at integration-running",
+        "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after save/reload at integration-final",
+        "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after save/reload at integration-finish",
+        "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > continues normal operations, completes a genuinely lower retry and retains the higher best and first finish",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 5",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 6",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 7",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 8",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 9",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 5",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 6",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 7",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 8",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 9",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 5",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 6",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 7",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 8",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 9",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 5",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 6",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 7",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 8",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 9",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 5",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 6",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 7",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 8",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 9",
+        "FAIL  tests/level-four-integration.test.ts > Level 4 M9 integrated launch > preserves arrival count/times and flow-explained scored selections for 24 hours with APPs on/off",
+        "FAIL  tests/patient-supply.test.ts > routine patient supply > records the current clinical inventory and exact unseen-patient boundary by stage",
+        "FAIL  tests/patient-supply.test.ts > routine patient supply > admits and completes patients in prepared day-six through day-eight states",
+        "FAIL  tests/diagnostics/patient-supply.test.ts > GS-017 sustained patient supply diagnostic > runs normal ticks, arrivals, gates, and completions through day eight"
+      ],
+      "failures": [
+        {
+          "title": "FAIL  tests/approved-clinical-admission.test.ts > approved clinical admission boundaries > keeps the unapproved prototype runtime release limited to explicitly admitted concepts",
+          "kind": "requires_review",
+          "error": "AssertionError: expected [ …(398) ] to deeply equal [ …(396) ] - Expected",
+          "location": "❯ tests/approved-clinical-admission.test.ts:160:7"
+        },
+        {
+          "title": "FAIL  tests/gs028-20261002-batch.test.ts > GS-028 October 2 batch admission > admits all twenty objectives, seventy-eight cases, and their exact timed orders",
+          "kind": "requires_review",
+          "error": "AssertionError: expected [ { …(7) }, { …(7) }, { …(7) }, …(29) ] to have a length of 27 but got 32 - Expected",
+          "location": "❯ tests/gs028-20261002-batch.test.ts:245:21"
+        },
+        {
+          "title": "FAIL  tests/gs028-20261002-batch.test.ts > GS-028 October 2 batch admission > selects each new objective independently when all other new objectives are learned and not due",
+          "kind": "requires_review",
+          "error": "AssertionError: expected { clinicalCase: { …(20) }, …(2) } to match object { kind: 'new_concept', …(1) } (21 matching properties omitted from actual)",
+          "location": "❯ tests/gs028-20261002-batch.test.ts:408:25"
+        },
+        {
+          "title": "FAIL  tests/gs028-20261002-batch.test.ts > GS-028 October 2 batch admission > prioritizes due new objectives and returns none when all twenty are not due",
+          "kind": "requires_review",
+          "error": "AssertionError: expected { clinicalCase: { …(20) }, …(2) } to be null - Expected:",
+          "location": "❯ tests/gs028-20261002-batch.test.ts:427:79"
+        },
+        {
+          "title": "FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > admits all twenty objectives, seventy-eight cases, and their exact timed orders",
+          "kind": "requires_review",
+          "error": "AssertionError: expected [ { …(7) }, { …(7) }, { …(7) }, …(17) ] to have a length of 19 but got 20 - Expected",
+          "location": "❯ tests/gs028-20261003-batch.test.ts:247:21"
+        },
+        {
+          "title": "FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node correctly and idempotently through case 32",
+          "kind": "requires_review",
+          "error": "AssertionError: expected [ 'choice.qf20261104.f04.d1', …(2) ] to deeply equal [ 'correct_1', 'd1_1', 'd2_1', 'd3_1' ] - Expected",
+          "location": "❯ complete tests/gs028-20261003-batch.test.ts:191:71"
+        },
+        {
+          "title": "FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node correctly and idempotently through case 49",
+          "kind": "requires_review",
+          "error": "AssertionError: expected [ 'choice.qf20261104.f13.d1', …(2) ] to deeply equal [ 'correct_4', 'd1_4', 'd2_4', 'd3_4' ] - Expected",
+          "location": "❯ complete tests/gs028-20261003-batch.test.ts:191:71"
+        },
+        {
+          "title": "FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node through wrong choice path 32 for case { id: 'case.gs028d.hyperkalaemia.a-renal-result', displayName: 'Acute hyperkalaemia', patientPresentationVariantId: 'presentation.gs028d.hyperkalaemia.a-renal-result', releasePointId: 'release.l0.clinic_evaluation', patientDisplayName: '{patientName}', prototypeDemographics: { ageYears: 52, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, chiefComplaint: 'Critical potassium result', presentation: '{patientName}, a 52-year-old woman with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.', approvedInstantiationProfiles: [ { id: 'profile.gs028d.hyperkalaemia.a-renal-result.female.52', prototypeDemographics: { ageYears: 52, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, presentation: '{patientName}, a 52-year-old woman with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.' }, { id: 'profile.gs028d.hyperkalaemia.a-renal-result.male.52', prototypeDemographics: { ageYears: 52, sexLabel: 'Male' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, presentation: '{patientName}, a 52-year-old man with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.' }, { id: 'profile.gs028d.hyperkalaemia.a-renal-result.female.70', prototypeDemographics: { ageYears: 70, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, presentation: '{patientName}, a 70-year-old woman with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.' }, { id: 'profile.gs028d.hyperkalaemia.a-renal-result.male.70', prototypeDemographics: { ageYears: 70, sexLabel: 'Male' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, presentation: '{patientName}, a 70-year-old man with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.' } ], tutorialEligible: false, routineEligible: true, earliestFacilityStage: +0, requiredClinicalSetting: 'clinic', requiredCapabilityIds: [], rewardTierId: 'reward.clinic_basic', sourceLabels: [ 'Treatment of Acute Hyperkalaemia in Adults' ], decisionNodes: [ { id: 'node.gs028d.hyperkalaemia.a-renal-result.1', questionVariantId: 'question.hyperkalaemia.severe-community-result-transfer.v1', primaryConceptId: 'concept.hyperkalaemia.severe-community-result-transfer', stem: 'What is the safest next disposition under the current UKKA adult pathway?', answerChoices: [ { id: 'correct_1', label: 'Immediate hospital assessment', isCorrect: true, serviceRequest: null }, { id: 'd1_1', label: 'Routine follow-up next week', isCorrect: false, serviceRequest: null }, { id: 'd2_1', label: 'Repeat testing before any action', isCorrect: false, serviceRequest: null }, { id: 'd3_1', label: 'Dietary advice alone', isCorrect: false, serviceRequest: null } ], shuffleAnswers: true, explanation: 'Arrange immediate hospital assessment without creating an outpatient delay.', sourceLabels: [ 'Treatment of Acute Hyperkalaemia in Adults' ], resultGateAfter: null, terminalDispositions: [ { answerChoiceId: 'd1_1', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Routine follow-up next week.”', clinicalRationale: 'Arrange immediate hospital assessment without creating an outpatient delay.', sourceLabels: [ 'Treatment of Acute Hyperkalaemia in Adults' ] }, { answerChoiceId: 'd2_1', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Repeat testing before any action.”', clinicalRationale: 'Arrange immediate hospital assessment without creating an outpatient delay.', sourceLabels: [ 'Treatment of Acute Hyperkalaemia in Adults' ] }, { answerChoiceId: 'd3_1', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Dietary advice alone.”', clinicalRationale: 'Arrange immediate hospital assessment without creating an outpatient delay.', sourceLabels: [ 'Treatment of Acute Hyperkalaemia in Adults' ] } ] } ], learningSummary: 'Arrange immediate hospital assessment without creating an outpatient delay.' }",
+          "kind": "requires_review",
+          "error": "AssertionError: expected [ 'choice.qf20261104.f04.d1', …(2) ] to deeply equal [ 'correct_1', 'd1_1', 'd2_1', 'd3_1' ] - Expected",
+          "location": "❯ complete tests/gs028-20261003-batch.test.ts:191:71"
+        },
+        {
+          "title": "FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node through wrong choice path 32 for case { id: 'case.gs028d.hyperkalaemia.a-renal-result', displayName: 'Acute hyperkalaemia', patientPresentationVariantId: 'presentation.gs028d.hyperkalaemia.a-renal-result', releasePointId: 'release.l0.clinic_evaluation', patientDisplayName: '{patientName}', prototypeDemographics: { ageYears: 52, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, chiefComplaint: 'Critical potassium result', presentation: '{patientName}, a 52-year-old woman with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.', approvedInstantiationProfiles: [ { id: 'profile.gs028d.hyperkalaemia.a-renal-result.female.52', prototypeDemographics: { ageYears: 52, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, presentation: '{patientName}, a 52-year-old woman with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.' }, { id: 'profile.gs028d.hyperkalaemia.a-renal-result.male.52', prototypeDemographics: { ageYears: 52, sexLabel: 'Male' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, presentation: '{patientName}, a 52-year-old man with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.' }, { id: 'profile.gs028d.hyperkalaemia.a-renal-result.female.70', prototypeDemographics: { ageYears: 70, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, presentation: '{patientName}, a 70-year-old woman with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.' }, { id: 'profile.gs028d.hyperkalaemia.a-renal-result.male.70', prototypeDemographics: { ageYears: 70, sexLabel: 'Male' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, presentation: '{patientName}, a 70-year-old man with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.' } ], tutorialEligible: false, routineEligible: true, earliestFacilityStage: +0, requiredClinicalSetting: 'clinic', requiredCapabilityIds: [], rewardTierId: 'reward.clinic_basic', sourceLabels: [ 'Treatment of Acute Hyperkalaemia in Adults' ], decisionNodes: [ { id: 'node.gs028d.hyperkalaemia.a-renal-result.1', questionVariantId: 'question.hyperkalaemia.severe-community-result-transfer.v1', primaryConceptId: 'concept.hyperkalaemia.severe-community-result-transfer', stem: 'What is the safest next disposition under the current UKKA adult pathway?', answerChoices: [ { id: 'correct_1', label: 'Immediate hospital assessment', isCorrect: true, serviceRequest: null }, { id: 'd1_1', label: 'Routine follow-up next week', isCorrect: false, serviceRequest: null }, { id: 'd2_1', label: 'Repeat testing before any action', isCorrect: false, serviceRequest: null }, { id: 'd3_1', label: 'Dietary advice alone', isCorrect: false, serviceRequest: null } ], shuffleAnswers: true, explanation: 'Arrange immediate hospital assessment without creating an outpatient delay.', sourceLabels: [ 'Treatment of Acute Hyperkalaemia in Adults' ], resultGateAfter: null, terminalDispositions: [ { answerChoiceId: 'd1_1', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Routine follow-up next week.”', clinicalRationale: 'Arrange immediate hospital assessment without creating an outpatient delay.', sourceLabels: [ 'Treatment of Acute Hyperkalaemia in Adults' ] }, { answerChoiceId: 'd2_1', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Repeat testing before any action.”', clinicalRationale: 'Arrange immediate hospital assessment without creating an outpatient delay.', sourceLabels: [ 'Treatment of Acute Hyperkalaemia in Adults' ] }, { answerChoiceId: 'd3_1', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Dietary advice alone.”', clinicalRationale: 'Arrange immediate hospital assessment without creating an outpatient delay.', sourceLabels: [ 'Treatment of Acute Hyperkalaemia in Adults' ] } ] } ], learningSummary: 'Arrange immediate hospital assessment without creating an outpatient delay.' }",
+          "kind": "requires_review",
+          "error": "AssertionError: expected [ 'choice.qf20261104.f04.d1', …(2) ] to deeply equal [ 'correct_1', 'd1_1', 'd2_1', 'd3_1' ] - Expected",
+          "location": "❯ complete tests/gs028-20261003-batch.test.ts:191:71"
+        },
+        {
+          "title": "FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node through wrong choice path 32 for case { id: 'case.gs028d.hyperkalaemia.a-renal-result', displayName: 'Acute hyperkalaemia', patientPresentationVariantId: 'presentation.gs028d.hyperkalaemia.a-renal-result', releasePointId: 'release.l0.clinic_evaluation', patientDisplayName: '{patientName}', prototypeDemographics: { ageYears: 52, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, chiefComplaint: 'Critical potassium result', presentation: '{patientName}, a 52-year-old woman with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.', approvedInstantiationProfiles: [ { id: 'profile.gs028d.hyperkalaemia.a-renal-result.female.52', prototypeDemographics: { ageYears: 52, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, presentation: '{patientName}, a 52-year-old woman with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.' }, { id: 'profile.gs028d.hyperkalaemia.a-renal-result.male.52', prototypeDemographics: { ageYears: 52, sexLabel: 'Male' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, presentation: '{patientName}, a 52-year-old man with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.' }, { id: 'profile.gs028d.hyperkalaemia.a-renal-result.female.70', prototypeDemographics: { ageYears: 70, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, presentation: '{patientName}, a 70-year-old woman with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.' }, { id: 'profile.gs028d.hyperkalaemia.a-renal-result.male.70', prototypeDemographics: { ageYears: 70, sexLabel: 'Male' }, prototypeVitalSigns: { heartRateBpm: 108, systolicBloodPressureMmHg: 108, diastolicBloodPressureMmHg: 68, temperatureF: 99.1, oxygenSaturationPercent: 97 }, presentation: '{patientName}, a 70-year-old man with advanced kidney disease, returns to clinic when an outside laboratory calls with a potassium of 6.7 mmol/L. The sample is confirmed and the patient is available for immediate transfer.' } ], tutorialEligible: false, routineEligible: true, earliestFacilityStage: +0, requiredClinicalSetting: 'clinic', requiredCapabilityIds: [], rewardTierId: 'reward.clinic_basic', sourceLabels: [ 'Treatment of Acute Hyperkalaemia in Adults' ], decisionNodes: [ { id: 'node.gs028d.hyperkalaemia.a-renal-result.1', questionVariantId: 'question.hyperkalaemia.severe-community-result-transfer.v1', primaryConceptId: 'concept.hyperkalaemia.severe-community-result-transfer', stem: 'What is the safest next disposition under the current UKKA adult pathway?', answerChoices: [ { id: 'correct_1', label: 'Immediate hospital assessment', isCorrect: true, serviceRequest: null }, { id: 'd1_1', label: 'Routine follow-up next week', isCorrect: false, serviceRequest: null }, { id: 'd2_1', label: 'Repeat testing before any action', isCorrect: false, serviceRequest: null }, { id: 'd3_1', label: 'Dietary advice alone', isCorrect: false, serviceRequest: null } ], shuffleAnswers: true, explanation: 'Arrange immediate hospital assessment without creating an outpatient delay.', sourceLabels: [ 'Treatment of Acute Hyperkalaemia in Adults' ], resultGateAfter: null, terminalDispositions: [ { answerChoiceId: 'd1_1', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Routine follow-up next week.”', clinicalRationale: 'Arrange immediate hospital assessment without creating an outpatient delay.', sourceLabels: [ 'Treatment of Acute Hyperkalaemia in Adults' ] }, { answerChoiceId: 'd2_1', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Repeat testing before any action.”', clinicalRationale: 'Arrange immediate hospital assessment without creating an outpatient delay.', sourceLabels: [ 'Treatment of Acute Hyperkalaemia in Adults' ] }, { answerChoiceId: 'd3_1', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Dietary advice alone.”', clinicalRationale: 'Arrange immediate hospital assessment without creating an outpatient delay.', sourceLabels: [ 'Treatment of Acute Hyperkalaemia in Adults' ] } ] } ], learningSummary: 'Arrange immediate hospital assessment without creating an outpatient delay.' }",
+          "kind": "requires_review",
+          "error": "Error: encounter.gs028d.wrong.2.32 lacks a wrong answer.  ❯ answerCommand tests/gs028-20261003-batch.test.ts:120:35     118|   const question = getCurrentQuestion(state, encounterId);",
+          "location": "❯ answerCommand tests/gs028-20261003-batch.test.ts:120:35"
+        },
+        {
+          "title": "FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node through wrong choice path 49 for case { id: 'case.gs028d.anesthesia.a-validated-not-impression', displayName: 'Preanesthetic planning', patientPresentationVariantId: 'presentation.gs028d.anesthesia.a-validated-not-impression', releasePointId: 'release.l0.clinic_evaluation', patientDisplayName: '{patientName}', prototypeDemographics: { ageYears: 46, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, chiefComplaint: 'Preop sleep concern', presentation: '{patientName}, a 46-year-old woman, has several possible OSA features before major surgery, and the clinic note currently records only an informal impression.', approvedInstantiationProfiles: [ { id: 'profile.gs028d.anesthesia.a-validated-not-impression.female.46', prototypeDemographics: { ageYears: 46, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 46-year-old woman, has several possible OSA features before major surgery, and the clinic note currently records only an informal impression.' }, { id: 'profile.gs028d.anesthesia.a-validated-not-impression.male.46', prototypeDemographics: { ageYears: 46, sexLabel: 'Male' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 46-year-old man, has several possible OSA features before major surgery, and the clinic note currently records only an informal impression.' }, { id: 'profile.gs028d.anesthesia.a-validated-not-impression.female.68', prototypeDemographics: { ageYears: 68, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 68-year-old woman, has several possible OSA features before major surgery, and the clinic note currently records only an informal impression.' }, { id: 'profile.gs028d.anesthesia.a-validated-not-impression.male.68', prototypeDemographics: { ageYears: 68, sexLabel: 'Male' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 68-year-old man, has several possible OSA features before major surgery, and the clinic note currently records only an informal impression.' } ], tutorialEligible: false, routineEligible: true, earliestFacilityStage: +0, requiredClinicalSetting: 'clinic', requiredCapabilityIds: [], rewardTierId: 'reward.clinic_basic', sourceLabels: [ 'SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA', 'JSA guideline for management of malignant hyperthermia in 2025', 'Perioperative Management of MH Suspected or Susceptible Patients' ], decisionNodes: [ { id: 'node.gs028d.anesthesia.a-validated-not-impression.1', questionVariantId: 'question.preoperative-osa.validated-risk-screening.v4', primaryConceptId: 'concept.preoperative-osa.validated-risk-screening', stem: 'Which approach provides the most defensible preoperative risk classification?', answerChoices: [ { id: 'correct_4', label: 'Use validated OSA screening', isCorrect: true, serviceRequest: null }, { id: 'd1_4', label: 'Use age alone', isCorrect: false, serviceRequest: null }, { id: 'd2_4', label: 'Use body weight alone', isCorrect: false, serviceRequest: null }, { id: 'd3_4', label: 'Assign a diagnosis from appearance', isCorrect: false, serviceRequest: null } ], shuffleAnswers: true, explanation: 'A validated screen provides a consistent risk classification while remaining distinct from a diagnostic study.', sourceLabels: [ 'SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA', 'JSA guideline for management of malignant hyperthermia in 2025', 'Perioperative Management of MH Suspected or Susceptible Patients' ], resultGateAfter: null, terminalDispositions: [ { answerChoiceId: 'd1_4', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Use age alone.”', clinicalRationale: 'A validated screen provides a consistent risk classification while remaining distinct from a diagnostic study.', sourceLabels: [ 'SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA', 'JSA guideline for management of malignant hyperthermia in 2025', 'Perioperative Management of MH Suspected or Susceptible Patients' ] }, { answerChoiceId: 'd2_4', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Use body weight alone.”', clinicalRationale: 'A validated screen provides a consistent risk classification while remaining distinct from a diagnostic study.', sourceLabels: [ 'SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA', 'JSA guideline for management of malignant hyperthermia in 2025', 'Perioperative Management of MH Suspected or Susceptible Patients' ] }, { answerChoiceId: 'd3_4', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Assign a diagnosis from appearance.”', clinicalRationale: 'A validated screen provides a consistent risk classification while remaining distinct from a diagnostic study.', sourceLabels: [ 'SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA', 'JSA guideline for management of malignant hyperthermia in 2025', 'Perioperative Management of MH Suspected or Susceptible Patients' ] } ] } ], learningSummary: 'A validated screen provides a consistent risk classification while remaining distinct from a diagnostic study.' }",
+          "kind": "requires_review",
+          "error": "AssertionError: expected [ 'choice.qf20261104.f13.d1', …(2) ] to deeply equal [ 'correct_4', 'd1_4', 'd2_4', 'd3_4' ] - Expected",
+          "location": "❯ complete tests/gs028-20261003-batch.test.ts:191:71"
+        },
+        {
+          "title": "FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node through wrong choice path 49 for case { id: 'case.gs028d.anesthesia.a-validated-not-impression', displayName: 'Preanesthetic planning', patientPresentationVariantId: 'presentation.gs028d.anesthesia.a-validated-not-impression', releasePointId: 'release.l0.clinic_evaluation', patientDisplayName: '{patientName}', prototypeDemographics: { ageYears: 46, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, chiefComplaint: 'Preop sleep concern', presentation: '{patientName}, a 46-year-old woman, has several possible OSA features before major surgery, and the clinic note currently records only an informal impression.', approvedInstantiationProfiles: [ { id: 'profile.gs028d.anesthesia.a-validated-not-impression.female.46', prototypeDemographics: { ageYears: 46, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 46-year-old woman, has several possible OSA features before major surgery, and the clinic note currently records only an informal impression.' }, { id: 'profile.gs028d.anesthesia.a-validated-not-impression.male.46', prototypeDemographics: { ageYears: 46, sexLabel: 'Male' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 46-year-old man, has several possible OSA features before major surgery, and the clinic note currently records only an informal impression.' }, { id: 'profile.gs028d.anesthesia.a-validated-not-impression.female.68', prototypeDemographics: { ageYears: 68, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 68-year-old woman, has several possible OSA features before major surgery, and the clinic note currently records only an informal impression.' }, { id: 'profile.gs028d.anesthesia.a-validated-not-impression.male.68', prototypeDemographics: { ageYears: 68, sexLabel: 'Male' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 68-year-old man, has several possible OSA features before major surgery, and the clinic note currently records only an informal impression.' } ], tutorialEligible: false, routineEligible: true, earliestFacilityStage: +0, requiredClinicalSetting: 'clinic', requiredCapabilityIds: [], rewardTierId: 'reward.clinic_basic', sourceLabels: [ 'SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA', 'JSA guideline for management of malignant hyperthermia in 2025', 'Perioperative Management of MH Suspected or Susceptible Patients' ], decisionNodes: [ { id: 'node.gs028d.anesthesia.a-validated-not-impression.1', questionVariantId: 'question.preoperative-osa.validated-risk-screening.v4', primaryConceptId: 'concept.preoperative-osa.validated-risk-screening', stem: 'Which approach provides the most defensible preoperative risk classification?', answerChoices: [ { id: 'correct_4', label: 'Use validated OSA screening', isCorrect: true, serviceRequest: null }, { id: 'd1_4', label: 'Use age alone', isCorrect: false, serviceRequest: null }, { id: 'd2_4', label: 'Use body weight alone', isCorrect: false, serviceRequest: null }, { id: 'd3_4', label: 'Assign a diagnosis from appearance', isCorrect: false, serviceRequest: null } ], shuffleAnswers: true, explanation: 'A validated screen provides a consistent risk classification while remaining distinct from a diagnostic study.', sourceLabels: [ 'SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA', 'JSA guideline for management of malignant hyperthermia in 2025', 'Perioperative Management of MH Suspected or Susceptible Patients' ], resultGateAfter: null, terminalDispositions: [ { answerChoiceId: 'd1_4', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Use age alone.”', clinicalRationale: 'A validated screen provides a consistent risk classification while remaining distinct from a diagnostic study.', sourceLabels: [ 'SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA', 'JSA guideline for management of malignant hyperthermia in 2025', 'Perioperative Management of MH Suspected or Susceptible Patients' ] }, { answerChoiceId: 'd2_4', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Use body weight alone.”', clinicalRationale: 'A validated screen provides a consistent risk classification while remaining distinct from a diagnostic study.', sourceLabels: [ 'SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA', 'JSA guideline for management of malignant hyperthermia in 2025', 'Perioperative Management of MH Suspected or Susceptible Patients' ] }, { answerChoiceId: 'd3_4', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Assign a diagnosis from appearance.”', clinicalRationale: 'A validated screen provides a consistent risk classification while remaining distinct from a diagnostic study.', sourceLabels: [ 'SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA', 'JSA guideline for management of malignant hyperthermia in 2025', 'Perioperative Management of MH Suspected or Susceptible Patients' ] } ] } ], learningSummary: 'A validated screen provides a consistent risk classification while remaining distinct from a diagnostic study.' }",
+          "kind": "requires_review",
+          "error": "AssertionError: expected [ 'choice.qf20261104.f13.d1', …(2) ] to deeply equal [ 'correct_4', 'd1_4', 'd2_4', 'd3_4' ] - Expected",
+          "location": "❯ complete tests/gs028-20261003-batch.test.ts:191:71"
+        },
+        {
+          "title": "FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > runs every node through wrong choice path 49 for case { id: 'case.gs028d.anesthesia.a-validated-not-impression', displayName: 'Preanesthetic planning', patientPresentationVariantId: 'presentation.gs028d.anesthesia.a-validated-not-impression', releasePointId: 'release.l0.clinic_evaluation', patientDisplayName: '{patientName}', prototypeDemographics: { ageYears: 46, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, chiefComplaint: 'Preop sleep concern', presentation: '{patientName}, a 46-year-old woman, has several possible OSA features before major surgery, and the clinic note currently records only an informal impression.', approvedInstantiationProfiles: [ { id: 'profile.gs028d.anesthesia.a-validated-not-impression.female.46', prototypeDemographics: { ageYears: 46, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 46-year-old woman, has several possible OSA features before major surgery, and the clinic note currently records only an informal impression.' }, { id: 'profile.gs028d.anesthesia.a-validated-not-impression.male.46', prototypeDemographics: { ageYears: 46, sexLabel: 'Male' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 46-year-old man, has several possible OSA features before major surgery, and the clinic note currently records only an informal impression.' }, { id: 'profile.gs028d.anesthesia.a-validated-not-impression.female.68', prototypeDemographics: { ageYears: 68, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 68-year-old woman, has several possible OSA features before major surgery, and the clinic note currently records only an informal impression.' }, { id: 'profile.gs028d.anesthesia.a-validated-not-impression.male.68', prototypeDemographics: { ageYears: 68, sexLabel: 'Male' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 68-year-old man, has several possible OSA features before major surgery, and the clinic note currently records only an informal impression.' } ], tutorialEligible: false, routineEligible: true, earliestFacilityStage: +0, requiredClinicalSetting: 'clinic', requiredCapabilityIds: [], rewardTierId: 'reward.clinic_basic', sourceLabels: [ 'SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA', 'JSA guideline for management of malignant hyperthermia in 2025', 'Perioperative Management of MH Suspected or Susceptible Patients' ], decisionNodes: [ { id: 'node.gs028d.anesthesia.a-validated-not-impression.1', questionVariantId: 'question.preoperative-osa.validated-risk-screening.v4', primaryConceptId: 'concept.preoperative-osa.validated-risk-screening', stem: 'Which approach provides the most defensible preoperative risk classification?', answerChoices: [ { id: 'correct_4', label: 'Use validated OSA screening', isCorrect: true, serviceRequest: null }, { id: 'd1_4', label: 'Use age alone', isCorrect: false, serviceRequest: null }, { id: 'd2_4', label: 'Use body weight alone', isCorrect: false, serviceRequest: null }, { id: 'd3_4', label: 'Assign a diagnosis from appearance', isCorrect: false, serviceRequest: null } ], shuffleAnswers: true, explanation: 'A validated screen provides a consistent risk classification while remaining distinct from a diagnostic study.', sourceLabels: [ 'SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA', 'JSA guideline for management of malignant hyperthermia in 2025', 'Perioperative Management of MH Suspected or Susceptible Patients' ], resultGateAfter: null, terminalDispositions: [ { answerChoiceId: 'd1_4', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Use age alone.”', clinicalRationale: 'A validated screen provides a consistent risk classification while remaining distinct from a diagnostic study.', sourceLabels: [ 'SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA', 'JSA guideline for management of malignant hyperthermia in 2025', 'Perioperative Management of MH Suspected or Susceptible Patients' ] }, { answerChoiceId: 'd2_4', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Use body weight alone.”', clinicalRationale: 'A validated screen provides a consistent risk classification while remaining distinct from a diagnostic study.', sourceLabels: [ 'SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA', 'JSA guideline for management of malignant hyperthermia in 2025', 'Perioperative Management of MH Suspected or Susceptible Patients' ] }, { answerChoiceId: 'd3_4', kind: 'no_terminal_outcome', consequenceNarrative: 'The encounter recorded “Assign a diagnosis from appearance.”', clinicalRationale: 'A validated screen provides a consistent risk classification while remaining distinct from a diagnostic study.', sourceLabels: [ 'SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA', 'JSA guideline for management of malignant hyperthermia in 2025', 'Perioperative Management of MH Suspected or Susceptible Patients' ] } ] } ], learningSummary: 'A validated screen provides a consistent risk classification while remaining distinct from a diagnostic study.' }",
+          "kind": "requires_review",
+          "error": "Error: encounter.gs028d.wrong.2.49 lacks a wrong answer.  ❯ answerCommand tests/gs028-20261003-batch.test.ts:120:35     118|   const question = getCurrentQuestion(state, encounterId);",
+          "location": "❯ answerCommand tests/gs028-20261003-batch.test.ts:120:35"
+        },
+        {
+          "title": "FAIL  tests/gs028-20261003-batch.test.ts > GS-028 October 3 batch admission > keeps external or specialist test 'choice.qf20261104.f04.d1' outside clinic execution",
+          "kind": "requires_review",
+          "error": "AssertionError: expected 'correct_1' to be 'choice.qf20261104.f04.d1' // Object.is equality Expected: \"choice.qf20261104.f04.d1\"",
+          "location": "❯ tests/gs028-20261003-batch.test.ts:423:32"
+        },
+        {
+          "title": "FAIL  tests/gs028-20261007-batch.test.ts > GS-028 October 7 real gameplay admission > measures the real ordinary pools before and after admission",
+          "kind": "requires_review",
+          "error": "AssertionError: expected [ { cases: 480, concepts: 136 }, …(2) ] to deeply equal [ { cases: 480, concepts: 135 }, …(2)  ]",
+          "location": "❯ tests/gs028-20261007-batch.test.ts:411:46"
+        },
+        {
+          "title": "FAIL  tests/gs028-20261007-batch.test.ts > GS-028 October 7 real gameplay admission > covers all eighty actual nodes and every current authored choice",
+          "kind": "requires_review",
+          "error": "AssertionError: expected 316 to be 319 // Object.is equality - Expected",
+          "location": "❯ tests/gs028-20261007-batch.test.ts:418:80"
+        },
+        {
+          "title": "FAIL  tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > binds every one of twenty-six testing choices with exactly five executable correct orders",
+          "kind": "requires_review",
+          "error": "AssertionError: expected [ { …(7) }, { …(7) }, { …(7) }, …(26) ] to have a length of 26 but got 29 - Expected",
+          "location": "❯ tests/gs028-20261007-variety2-batch.test.ts:374:19"
+        },
+        {
+          "title": "FAIL  tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > completes every correct node, saves and departs in case 21",
+          "kind": "requires_review",
+          "error": "AssertionError: node.gs028f.neck-mass.c2-completed-needle-record.1/correct_4: expected { kind: 'test', …(8) } to be  null",
+          "location": "❯ assertPreviews tests/gs028-20261007-variety2-batch.test.ts:209:104"
+        },
+        {
+          "title": "FAIL  tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > completes wrong choice 21/0 exactly once with supported corrected-forward work",
+          "kind": "requires_review",
+          "error": "AssertionError: node.gs028f.neck-mass.c2-completed-needle-record.1/choice.qf20261104.f05.d2: expected { kind: 'test',  …(8) } to be null",
+          "location": "❯ assertPreviews tests/gs028-20261007-variety2-batch.test.ts:209:104"
+        },
+        {
+          "title": "FAIL  tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > completes wrong choice 21/1 exactly once with supported corrected-forward work",
+          "kind": "requires_review",
+          "error": "AssertionError: node.gs028f.neck-mass.c2-completed-needle-record.1/choice.qf20261104.f05.d2: expected { kind: 'test',  …(8) } to be null",
+          "location": "❯ assertPreviews tests/gs028-20261007-variety2-batch.test.ts:209:104"
+        },
+        {
+          "title": "FAIL  tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > completes wrong choice 21/2 exactly once with supported corrected-forward work",
+          "kind": "requires_review",
+          "error": "AssertionError: node.gs028f.neck-mass.c2-completed-needle-record.1/choice.qf20261104.f05.d1: expected { kind: 'test',  …(8) } to be null",
+          "location": "❯ assertPreviews tests/gs028-20261007-variety2-batch.test.ts:209:104"
+        },
+        {
+          "title": "FAIL  tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > measures the actual early ordinary pool delta of seventy-eight cases and twenty concepts",
+          "kind": "requires_review",
+          "error": "AssertionError: expected [ { cases: 558, concepts: 156 }, …(2) ] to deeply equal [ { cases: 558, concepts: 155 }, …(2)  ]",
+          "location": "❯ tests/gs028-20261007-variety2-batch.test.ts:606:46"
+        },
+        {
+          "title": "FAIL  tests/gs028-20261007-variety2-batch.test.ts > GS-028 second October 7 actual gameplay > covers all eighty actual nodes and all three distractors plus the key in each",
+          "kind": "requires_review",
+          "error": "AssertionError: expected 79 to be 80 // Object.is equality - Expected",
+          "location": "❯ tests/gs028-20261007-variety2-batch.test.ts:611:27"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > binds the actual run to its current game, balance, clinical and driver inputs and reconciles cash",
+          "kind": "level5_input_binding",
+          "error": "AssertionError: packages/clinical-content/src/answer-choice-timing.ts: expected  '5d36bf0e7ab6aff318833db24b39161f6a122…' to be '7db1b1253c7d3064adb0602360925c0739bb6…' // Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:47:71"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after save/reload at integration-preparing",
+          "kind": "timeout",
+          "error": "Error: Test timed out in 30000ms. If this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".  ❯ tests/level-five-integration.test.ts:119:112",
+          "location": "❯ tests/level-five-integration.test.ts:119:112"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after save/reload at integration-running",
+          "kind": "timeout",
+          "error": "Error: Test timed out in 30000ms. If this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".  ❯ tests/level-five-integration.test.ts:119:112",
+          "location": "❯ tests/level-five-integration.test.ts:119:112"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after save/reload at integration-final",
+          "kind": "timeout",
+          "error": "Error: Test timed out in 30000ms. If this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".  ❯ tests/level-five-integration.test.ts:119:112",
+          "location": "❯ tests/level-five-integration.test.ts:119:112"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > matches continued play after save/reload at integration-finish",
+          "kind": "timeout",
+          "error": "Error: Test timed out in 30000ms. If this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".  ❯ tests/level-five-integration.test.ts:119:112",
+          "location": "❯ tests/level-five-integration.test.ts:119:112"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > continues normal operations, completes a genuinely lower retry and retains the higher best and first finish",
+          "kind": "timeout",
+          "error": "Error: Test timed out in 300000ms. If this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".  ❯ tests/level-five-integration.test.ts:143:3",
+          "location": "❯ tests/level-five-integration.test.ts:143:3"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 5",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '7eb7a4e93c022d23819b2acf59d96ea794f9c…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 6",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '7eb7a4e93c022d23819b2acf59d96ea794f9c…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 7",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '7eb7a4e93c022d23819b2acf59d96ea794f9c…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 8",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '7eb7a4e93c022d23819b2acf59d96ea794f9c…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 9",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '7eb7a4e93c022d23819b2acf59d96ea794f9c…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 5",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '71a4dfd29c45122a201226a34902e169aeefa…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 6",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '71a4dfd29c45122a201226a34902e169aeefa…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 7",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '71a4dfd29c45122a201226a34902e169aeefa…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 8",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '71a4dfd29c45122a201226a34902e169aeefa…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 9",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '71a4dfd29c45122a201226a34902e169aeefa…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 5",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'b3838b10d5896925a8febd399b9a444836a6d…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 6",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'b3838b10d5896925a8febd399b9a444836a6d…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 7",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'b3838b10d5896925a8febd399b9a444836a6d…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 8",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'b3838b10d5896925a8febd399b9a444836a6d…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 9",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'b3838b10d5896925a8febd399b9a444836a6d…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 5",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'e8b9c242086dc2fc1c3a479dc62c6e434523c…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 6",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'e8b9c242086dc2fc1c3a479dc62c6e434523c…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 7",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'e8b9c242086dc2fc1c3a479dc62c6e434523c…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 8",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'e8b9c242086dc2fc1c3a479dc62c6e434523c…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 9",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'e8b9c242086dc2fc1c3a479dc62c6e434523c…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 5",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'ff7650e7a8683300be715a2261947582ea882…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 6",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'ff7650e7a8683300be715a2261947582ea882…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 7",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'ff7650e7a8683300be715a2261947582ea882…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 8",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'ff7650e7a8683300be715a2261947582ea882…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 9",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'ff7650e7a8683300be715a2261947582ea882…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-four-integration.test.ts > Level 4 M9 integrated launch > preserves arrival count/times and flow-explained scored selections for 24 hours with APPs on/off",
+          "kind": "timeout",
+          "error": "Error: Test timed out in 120000ms. If this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".  ❯ tests/level-four-integration.test.ts:326:3",
+          "location": "❯ tests/level-four-integration.test.ts:326:3"
+        },
+        {
+          "title": "FAIL  tests/patient-supply.test.ts > routine patient supply > records the current clinical inventory and exact unseen-patient boundary by stage",
+          "kind": "requires_review",
+          "error": "AssertionError: expected [ Array(398) ] to have a length of 396 but got 398 - Expected",
+          "location": "❯ tests/patient-supply.test.ts:234:30"
+        },
+        {
+          "title": "FAIL  tests/patient-supply.test.ts > routine patient supply > admits and completes patients in prepared day-six through day-eight states",
+          "kind": "requires_review",
+          "error": "Error: Snapshot `routine patient supply > admits and completes patients in prepared day-six through day-eight states  1` mismatched",
+          "location": "❯ tests/patient-supply.test.ts:523:26"
+        },
+        {
+          "title": "FAIL  tests/diagnostics/patient-supply.test.ts > GS-017 sustained patient supply diagnostic > runs normal ticks, arrivals, gates, and completions through day eight",
+          "kind": "requires_review",
+          "error": "Error: Snapshot `GS-017 sustained patient supply diagnostic > runs normal ticks, arrivals, gates, and completions  through day eight 1` mismatched",
+          "location": "❯ tests/diagnostics/patient-supply.test.ts:267:22"
+        }
+      ]
+    },
+    "player": {
+      "log": "tools/question-quality/question-flags-player-final-repaired-20261104.log",
+      "files": "334 passed (334)",
+      "tests": "3371 passed (3371)",
+      "duration": "479.36s (transform 11.68s, setup 0ms, import 283.56s, tests 644.24s, environment 24ms)",
+      "failureHeaders": [],
+      "failures": []
+    },
+    "domain": {
+      "log": "tools/question-quality/question-flags-domain-final-integrated-20261104.log",
+      "files": "1 failed | 166 passed (167)",
+      "tests": "26 failed | 4345 passed | 1 skipped (4372)",
+      "duration": "1190.47s (transform 5.31s, setup 0ms, import 135.33s, tests 1041.98s, environment 8ms)",
+      "failureHeaders": [
+        "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > binds the actual run to its current game, balance, clinical and driver inputs and reconciles cash",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 5",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 6",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 7",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 8",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 9",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 5",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 6",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 7",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 8",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 9",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 5",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 6",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 7",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 8",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 9",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 5",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 6",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 7",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 8",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 9",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 5",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 6",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 7",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 8",
+        "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 9"
+      ],
+      "failures": [
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > binds the actual run to its current game, balance, clinical and driver inputs and reconciles cash",
+          "kind": "level5_input_binding",
+          "error": "AssertionError: packages/clinical-content/src/answer-choice-timing.ts: expected  '5d36bf0e7ab6aff318833db24b39161f6a122…' to be '7db1b1253c7d3064adb0602360925c0739bb6…' // Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:47:71"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 5",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '7eb7a4e93c022d23819b2acf59d96ea794f9c…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 6",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '7eb7a4e93c022d23819b2acf59d96ea794f9c…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 7",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '7eb7a4e93c022d23819b2acf59d96ea794f9c…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 8",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '7eb7a4e93c022d23819b2acf59d96ea794f9c…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 9",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '7eb7a4e93c022d23819b2acf59d96ea794f9c…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 5",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '71a4dfd29c45122a201226a34902e169aeefa…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 6",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '71a4dfd29c45122a201226a34902e169aeefa…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 7",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '71a4dfd29c45122a201226a34902e169aeefa…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 8",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '71a4dfd29c45122a201226a34902e169aeefa…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 9",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected '71a4dfd29c45122a201226a34902e169aeefa…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 5",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'b3838b10d5896925a8febd399b9a444836a6d…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 6",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'b3838b10d5896925a8febd399b9a444836a6d…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 7",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'b3838b10d5896925a8febd399b9a444836a6d…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 8",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'b3838b10d5896925a8febd399b9a444836a6d…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 9",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'b3838b10d5896925a8febd399b9a444836a6d…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 5",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'e8b9c242086dc2fc1c3a479dc62c6e434523c…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 6",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'e8b9c242086dc2fc1c3a479dc62c6e434523c…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 7",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'e8b9c242086dc2fc1c3a479dc62c6e434523c…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 8",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'e8b9c242086dc2fc1c3a479dc62c6e434523c…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 9",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'e8b9c242086dc2fc1c3a479dc62c6e434523c…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 5",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'ff7650e7a8683300be715a2261947582ea882…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 6",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'ff7650e7a8683300be715a2261947582ea882…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 7",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'ff7650e7a8683300be715a2261947582ea882…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 8",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'ff7650e7a8683300be715a2261947582ea882…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        },
+        {
+          "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 9",
+          "kind": "legacy_loaded_state_hash",
+          "error": "AssertionError: expected 'ff7650e7a8683300be715a2261947582ea882…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+          "location": "❯ tests/level-five-integration.test.ts:183:78"
+        }
+      ]
+    },
+    "supplyControl": {
+      "path": "tools/question-quality/question-flags-supply-control-20261104.json",
+      "status": "passed",
+      "scenarios": 3
+    },
+    "snapshotReview": {
+      "path": "tools/question-quality/question-flags-snapshot-change-review-20261104.json",
+      "status": "reviewed",
+      "files": 2,
+      "snapshots": 3
+    },
+    "lint": {
+      "log": "tools/question-quality/question-flags-lint-tests-final-20261104.log",
+      "tests": "29",
+      "pass": "29",
+      "fail": "0"
+    },
+    "typecheck": {
+      "log": "tools/question-quality/question-flags-typecheck-final-20261104.log",
+      "workspaces": [
+        "@gamify-surgery/clinical-context-workbench",
+        "@gamify-surgery/player",
+        "@gamify-surgery/balance-config",
+        "@gamify-surgery/clinical-authoring",
+        "@gamify-surgery/clinical-content",
+        "@gamify-surgery/clinical-research",
+        "@gamify-surgery/game-domain"
+      ],
+      "errors": false
+    }
+  },
+  "sourceStateLock": "tools/question-quality/question-flags-final-integrated-lock-20261104.json",
+  "windowChanges": [],
+  "files": [
+    {
+      "path": "apps/player/src/session/flagFreeze.test.tsx",
+      "kind": "modified",
+      "sha256": "81b5df937b533df2d4db605845dc79b5f0fd9d4e6c5ce5009d5bb949ea77d76f",
+      "bytes": 34675
+    },
+    {
+      "path": "docs/clinical/question-authoring-standard.md",
+      "kind": "modified",
+      "sha256": "21ba59970708dcf8e7ee57e8f02548057161e555801ae5e8c66fbfbe747daeca",
+      "bytes": 37929
+    },
+    {
+      "path": "docs/execplans/question-flags-20261104.md",
+      "kind": "added",
+      "sha256": "e51051f3716db916293114d1f66674fd4135da5fe9ce4e4063861728b4115b6d",
+      "bytes": 10963
+    },
+    {
+      "path": "docs/research/question-flags-cue-audit-20261104.md",
+      "kind": "added",
+      "sha256": "ce0fae8d43b10c062ed8441e9e9ce6dcb60c4ba0c775ad598e0768c4226d5672",
+      "bytes": 42880
+    },
+    {
+      "path": "docs/research/question-flags-handoff-20261104.md",
+      "kind": "added",
+      "sha256": "3a33fccb498f62bed67f9bf8ecb01f9f9d9d0741de87ba5287206e2fc6dc1f01",
+      "bytes": 27897
+    },
+    {
+      "path": "docs/research/question-flags-review-20261104.json",
+      "kind": "added",
+      "sha256": "a6a0421c5ba7f6971949b3598e987352f2f767835e2ea06d51d22e80130fd2a4",
+      "bytes": 214883
+    },
+    {
+      "path": "docs/research/sources-question-flags-20261104.json",
+      "kind": "added",
+      "sha256": "fcf8c2fdc599b1b6a1302e5c280056e3ffbd2096385fdfb72613df5ed4016a78",
+      "bytes": 96344
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+      "kind": "modified",
+      "sha256": "4ee5f55538756327f5b82874f2d3adfbc6d465d4b88dc3fc76b685b26b018ca7",
+      "bytes": 3337
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "kind": "modified",
+      "sha256": "5d36bf0e7ab6aff318833db24b39161f6a1224574f07cb6c2fa14f6483ee3d37",
+      "bytes": 189176
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/ethics-clinical-pairings.test.ts",
+      "kind": "modified",
+      "sha256": "5e18c1ead30d583357f5c6d67d63cc2399b7865203282e8764ee2c512d70c225",
+      "bytes": 10752
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "kind": "modified",
+      "sha256": "391fdfe1bc342e909527662783c132164ab6399cbdc4bc04ae0b6c39b74f37ba",
+      "bytes": 4761
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags-20261104-data.ts",
+      "kind": "added",
+      "sha256": "0fa520db3a9c3bdedc3bbfc136e8ec1d23f2f259191712a848a05d7344dfdc78",
+      "bytes": 128482
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags-20261104.test.ts",
+      "kind": "added",
+      "sha256": "f9eaed6db282784a80ed923e05a4d44122c2f189be3e5b31e4c96c4df76750d4",
+      "bytes": 7423
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags-20261104.ts",
+      "kind": "added",
+      "sha256": "9131f7f1be7b2c2c20ffc1d7d72634ff69f1511620c66fe2dbfbf74d8fac556e",
+      "bytes": 2483
+    },
+    {
+      "path": "packages/clinical-content/src/question-quality-adversarial-r7.test.ts",
+      "kind": "modified",
+      "sha256": "efff6f1cd747bf67268dd1dd3bc11598d1a41fd1e2f805d743e034137796034f",
+      "bytes": 8640
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "kind": "modified",
+      "sha256": "80ae658cef8b0ec1e2e03357594bf34bbb19525451460af46b26dab4fd880a4b",
+      "bytes": 59928
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "kind": "modified",
+      "sha256": "03441a4b28d3e7bdaa6c7b2a667f9fbfb5f4687368450813db395e5c8cc718c3",
+      "bytes": 77463
+    },
+    {
+      "path": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+      "kind": "modified",
+      "sha256": "8d3c43830f9e379dd07177a674ef38eafd855a0b3c363e133a4a76a10a327170",
+      "bytes": 15617
+    },
+    {
+      "path": "packages/game-domain/tests/diagnostics/patient-supply.test.ts",
+      "kind": "modified",
+      "sha256": "4418ffff6d63a465e01a8e41afb8e23358c0c434b627e586146a804c8743bed6",
+      "bytes": 20947
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261002-batch.test.ts",
+      "kind": "modified",
+      "sha256": "a8b3bbdb9f2c720c90b1b56b96e1b0ccc70881c263c81fab4dcb3711e031e2a4",
+      "bytes": 31766
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261003-batch.test.ts",
+      "kind": "modified",
+      "sha256": "f5f9281a9a1c12c678272031f280b6ce77285c2b3c601be0cd717ee223caa2aa",
+      "bytes": 35024
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261007-batch.test.ts",
+      "kind": "modified",
+      "sha256": "11fc01f553df2d82ee9d96ab467836468e2eb40b912607e38dd0f0a9b431b4e0",
+      "bytes": 31442
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+      "kind": "modified",
+      "sha256": "933bd323ab79a76716acbcbb137d3302b8f5ff548050e8d025c2b9c9f1b4b030",
+      "bytes": 46391
+    },
+    {
+      "path": "packages/game-domain/tests/patient-supply.test.ts",
+      "kind": "modified",
+      "sha256": "52159fe9ca9759106fa078473487fb84395aa8408596ecd2f47f25a8deb6d812",
+      "bytes": 22429
+    },
+    {
+      "path": "packages/game-domain/tests/question-flags-bindings.test.ts",
+      "kind": "added",
+      "sha256": "17786e59a309854066edd14eff546b162199866e7dff24bcce4d9046b0413872",
+      "bytes": 2559
+    },
+    {
+      "path": "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+      "kind": "modified",
+      "sha256": "4890ce68a6a4322d2c5e56b1277696f819118f751aeb2f39a8c1ec905571c9ac",
+      "bytes": 20203
+    },
+    {
+      "path": "tools/question-quality/author-question-flags-20261104.mjs",
+      "kind": "added",
+      "sha256": "dd6aafedc205e2390845b2e624ce5bec3d7780230d9fadb949ab068a56368a55",
+      "bytes": 5570
+    },
+    {
+      "path": "tools/question-quality/compare-question-flags-supply-20261104.mjs",
+      "kind": "added",
+      "sha256": "b8f6367034ed27a3510e8755cc764de4139a0ad367c9d407fd82621342b3a856",
+      "bytes": 5815
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-flags-before-20261104.json",
+      "kind": "added",
+      "sha256": "c8a500d1df1f61952385e6a11f29581bec65b055955875e91f0e36b51f4e2087",
+      "bytes": 22647779
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-flags-integration-tests-before-20261104.json",
+      "kind": "added",
+      "sha256": "8a00c726d25bb0fd9b023ffafe7f02533fe3d76d944b1ce4e0bda11419773875",
+      "bytes": 208154
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-flags-orders-before-20261104.json",
+      "kind": "added",
+      "sha256": "0987163199604d5bc4a9fb43cf31847858a3c34a03c7510f99a1574f4f686246",
+      "bytes": 170425
+    },
+    {
+      "path": "tools/question-quality/handoff-question-flags-20261104.mjs",
+      "kind": "added",
+      "sha256": "8a13e1bca933640517a56a5837b44835993f6c8fe8cfdb71cbdee6543d79e85f",
+      "bytes": 24689
+    },
+    {
+      "path": "tools/question-quality/lint.mjs",
+      "kind": "modified",
+      "sha256": "73b6e9368457ada59c88b505b1dc2d4219c9e15131fe2b37498a296144f9debf",
+      "bytes": 20854
+    },
+    {
+      "path": "tools/question-quality/lint.test.mjs",
+      "kind": "modified",
+      "sha256": "a21a29eac1fc53c7aabf97b3e63dbb87c57ab363745b864e9ba75bfaf51ad98b",
+      "bytes": 22917
+    },
+    {
+      "path": "tools/question-quality/owner-flag-rules-20261104.mjs",
+      "kind": "added",
+      "sha256": "6cb600c38597430fa13ef277757b71938eedb81fe5efd2c39b9fa6b67842b13d",
+      "bytes": 5858
+    },
+    {
+      "path": "tools/question-quality/question-flags-capture-20261104.mjs",
+      "kind": "added",
+      "sha256": "61e5106d5d0ba53c46541b72ddc36348e772acbf1e9a7a82cd8af35c8c3bc2c3",
+      "bytes": 4056
+    },
+    {
+      "path": "tools/question-quality/question-flags-cli-summary-20261104.log",
+      "kind": "added",
+      "sha256": "1d08f469ed2e45f96cff3428a5665a7776b51dd7362a71e81d10f5e69e3a4e36",
+      "bytes": 3640
+    },
+    {
+      "path": "tools/question-quality/question-flags-cli-summary-bindings-20261104.log",
+      "kind": "added",
+      "sha256": "74073c470e248a7cf1a1f0889a65a6b1932a0fe3c7a160ca49c4371e37a20df2",
+      "bytes": 3640
+    },
+    {
+      "path": "tools/question-quality/question-flags-cli-summary-complete-20261104.log",
+      "kind": "added",
+      "sha256": "5ccfdec7bdfa9d76e4dce26e05b110f0e80df4c2e78b291565c03d3fc85c023d",
+      "bytes": 3640
+    },
+    {
+      "path": "tools/question-quality/question-flags-clinical-20261104.log",
+      "kind": "added",
+      "sha256": "3a20d509c8e321efdd0203c56274f681f7fb92e1494fc445850fb56748824643",
+      "bytes": 11814
+    },
+    {
+      "path": "tools/question-quality/question-flags-clinical-bindings-20261104.log",
+      "kind": "added",
+      "sha256": "eb21518dc0080be50d9d28ab8ce77d8bd50cb830fd70cfa6f83734862c2fb499",
+      "bytes": 2300
+    },
+    {
+      "path": "tools/question-quality/question-flags-clinical-complete-20261104.log",
+      "kind": "added",
+      "sha256": "dc788767a9e03e9df95257ff4341422ac9027674abc72b106482c2496cfea6d2",
+      "bytes": 2298
+    },
+    {
+      "path": "tools/question-quality/question-flags-clinical-final-20261104.log",
+      "kind": "added",
+      "sha256": "4e12bd4ecff24e9f4516d56388e086fb880cf4fb648391fcd3b6d35fd7c0a85a",
+      "bytes": 2298
+    },
+    {
+      "path": "tools/question-quality/question-flags-clinical-rerun-20261104.log",
+      "kind": "added",
+      "sha256": "a8de367e3411c972c2c88cad726e8b8a18d8cddd9bd1c754fb9f6b123f348fc7",
+      "bytes": 2298
+    },
+    {
+      "path": "tools/question-quality/question-flags-clinical-verified-20261104.log",
+      "kind": "added",
+      "sha256": "da1466571981ae0879d31c89b404f9ce2596d915c34e8d3b3abd1fa7404a0a7b",
+      "bytes": 2298
+    },
+    {
+      "path": "tools/question-quality/question-flags-domain-20261104.log",
+      "kind": "added",
+      "sha256": "e04fd5ab0ec33f32f5f0f16b56ef69c6566d42d555bdb8ca7a6169facec0cae5",
+      "bytes": 368
+    },
+    {
+      "path": "tools/question-quality/question-flags-domain-bindings-20261104.log",
+      "kind": "added",
+      "sha256": "87817b0a6058f50c9c3601bd4c700db580392a581e631aa74b4848667b78f049",
+      "bytes": 906
+    },
+    {
+      "path": "tools/question-quality/question-flags-domain-complete-20261104.log",
+      "kind": "added",
+      "sha256": "e04fd5ab0ec33f32f5f0f16b56ef69c6566d42d555bdb8ca7a6169facec0cae5",
+      "bytes": 368
+    },
+    {
+      "path": "tools/question-quality/question-flags-domain-current-fixtures-20261104.log",
+      "kind": "added",
+      "sha256": "be1f3b434b5f7bc01c4ae2b00d73b09ef95a017c78083c3a630b587a19e050a3",
+      "bytes": 10888
+    },
+    {
+      "path": "tools/question-quality/question-flags-domain-failures-20261104.json",
+      "kind": "added",
+      "sha256": "74912557a172aa2de555a5e035c6e440d138e72105555226581933378a0bc2b0",
+      "bytes": 73749
+    },
+    {
+      "path": "tools/question-quality/question-flags-domain-final-20261104.log",
+      "kind": "added",
+      "sha256": "e04fd5ab0ec33f32f5f0f16b56ef69c6566d42d555bdb8ca7a6169facec0cae5",
+      "bytes": 368
+    },
+    {
+      "path": "tools/question-quality/question-flags-domain-final-bindings-20261104.log",
+      "kind": "added",
+      "sha256": "9d58ff47a55c97d145778342a692b40eb8292050682108d717dd622fe26f122f",
+      "bytes": 286334
+    },
+    {
+      "path": "tools/question-quality/question-flags-domain-final-failures-20261104.json",
+      "kind": "added",
+      "sha256": "93510bd281f3231a952d014bd1ca4f930ca37086b7461d286ad440426bb6f241",
+      "bytes": 12990
+    },
+    {
+      "path": "tools/question-quality/question-flags-domain-final-integrated-20261104.log",
+      "kind": "added",
+      "sha256": "a2c4353b892ce8ed5625fc044ce96f718316d0ba23534816ad55474550135009",
+      "bytes": 30768
+    },
+    {
+      "path": "tools/question-quality/question-flags-domain-focused-final-20261104.log",
+      "kind": "added",
+      "sha256": "bc06c4792a969937a7f5090e44fb427b5f823ee2df4aa751782871e79794b35b",
+      "bytes": 3872
+    },
+    {
+      "path": "tools/question-quality/question-flags-domain-verified-20261104.log",
+      "kind": "added",
+      "sha256": "e04fd5ab0ec33f32f5f0f16b56ef69c6566d42d555bdb8ca7a6169facec0cae5",
+      "bytes": 368
+    },
+    {
+      "path": "tools/question-quality/question-flags-final-bindings-lock-20261104.json",
+      "kind": "added",
+      "sha256": "2c39775585347ff41932e07741218d179e71fd06e3190a5346dc987baacdadea",
+      "bytes": 142718
+    },
+    {
+      "path": "tools/question-quality/question-flags-final-integrated-lock-20261104.json",
+      "kind": "added",
+      "sha256": "4075fa84f00e62e6bd0869cc94a5646619d013ccfe4fba0c4ece048ca803139d",
+      "bytes": 142811
+    },
+    {
+      "path": "tools/question-quality/question-flags-handoff-progress-20261104.log",
+      "kind": "added",
+      "sha256": "ddefc46954dcbe5ec22420d75bfd265a29156ad5ce55735b7a1e38da1d69af14",
+      "bytes": 4194
+    },
+    {
+      "path": "tools/question-quality/question-flags-legacy-diagnosis-20261104.json",
+      "kind": "added",
+      "sha256": "c8cc42435198202979cf4f51d181c9482cb186943cb16bdcac63d636b492d7e3",
+      "bytes": 14664
+    },
+    {
+      "path": "tools/question-quality/question-flags-legacy-diagnosis-20261104.log",
+      "kind": "added",
+      "sha256": "c07037a1f82f2614c507e5128f4e7657504de42fd559338f1c8e7938b7ee93f3",
+      "bytes": 416
+    },
+    {
+      "path": "tools/question-quality/question-flags-legacy-diagnosis-20261104.mjs",
+      "kind": "added",
+      "sha256": "6e6fa72a0c5c1da27b0e467fa349adee98816a6b5d206e38b0923daff4b77839",
+      "bytes": 3097
+    },
+    {
+      "path": "tools/question-quality/question-flags-lint-20261104.json",
+      "kind": "added",
+      "sha256": "0bdf13425b97b4dbaa02d4fa38e59c1537069dc4368f7f96e3b53d937fd22db8",
+      "bytes": 762115
+    },
+    {
+      "path": "tools/question-quality/question-flags-lint-summary-20261104.log",
+      "kind": "added",
+      "sha256": "554d8a35a485e8e495339533c21e0cf9525c9d29d1d8896854b77c268f4682db",
+      "bytes": 8374
+    },
+    {
+      "path": "tools/question-quality/question-flags-lint-summary-final-20261104.log",
+      "kind": "added",
+      "sha256": "b29623a7df008e6a27e45acf768056a515d4411bbb7e461116c91bafefe6a3f8",
+      "bytes": 8372
+    },
+    {
+      "path": "tools/question-quality/question-flags-lint-tests-bindings-20261104.log",
+      "kind": "added",
+      "sha256": "a030376f6e1bbb3943ae9f6168fe5e7e7cae4129231592cb68c3f7fc8054c897",
+      "bytes": 7308
+    },
+    {
+      "path": "tools/question-quality/question-flags-lint-tests-complete-20261104.log",
+      "kind": "added",
+      "sha256": "90216a52a052ce00641c1e8673e3a61640c8327717b333af37aaaf921f7fd745",
+      "bytes": 7300
+    },
+    {
+      "path": "tools/question-quality/question-flags-lint-tests-final-20261104.log",
+      "kind": "added",
+      "sha256": "7adfa3ff916f0f39c69054a56befda9339cc98c5c45b71572722c8712ba0010a",
+      "bytes": 7300
+    },
+    {
+      "path": "tools/question-quality/question-flags-order-records-20261104.mjs",
+      "kind": "added",
+      "sha256": "122ef79e8b6719407d01166e62f78262737c760d1d1a33437e88f5aeddcc75ac",
+      "bytes": 3412
+    },
+    {
+      "path": "tools/question-quality/question-flags-owned-files-20261104.json",
+      "kind": "added",
+      "sha256": null,
+      "bytes": null
+    },
+    {
+      "path": "tools/question-quality/question-flags-packet-final-20261104.log",
+      "kind": "added",
+      "sha256": "b29623a7df008e6a27e45acf768056a515d4411bbb7e461116c91bafefe6a3f8",
+      "bytes": 8372
+    },
+    {
+      "path": "tools/question-quality/question-flags-player-bindings-20261104.log",
+      "kind": "added",
+      "sha256": "08da9885187fefa4cc8266f03077b4dedb5f1250b7d38ed323228f069804fdd1",
+      "bytes": 1150
+    },
+    {
+      "path": "tools/question-quality/question-flags-player-complete-20261104.log",
+      "kind": "added",
+      "sha256": "b31f132be3e5903a304b7c8f5c6b2ec95168f150d25c9519de5dd0b64abbf15c",
+      "bytes": 20240
+    },
+    {
+      "path": "tools/question-quality/question-flags-player-final-bindings-20261104.log",
+      "kind": "added",
+      "sha256": "a6e3b01939697d1610d4358432ee3a286fb62bdbff591e0aeb5d5405680a7fdf",
+      "bytes": 3204140
+    },
+    {
+      "path": "tools/question-quality/question-flags-player-final-repaired-20261104.log",
+      "kind": "added",
+      "sha256": "dd724122a93c6cb2dd61f59b667db8438c854854bda773b63e166cec274927b9",
+      "bytes": 3374982
+    },
+    {
+      "path": "tools/question-quality/question-flags-player-full-20261104.log",
+      "kind": "added",
+      "sha256": "18eb1bd4933f4b12d6ecac8db991e2ae4d4b816cd1f518cb1238ed341cb44092",
+      "bytes": 20236
+    },
+    {
+      "path": "tools/question-quality/question-flags-player-presentation-20261104.log",
+      "kind": "added",
+      "sha256": "9ffb09030e2876c6d4849179d75d099bba2267398d743da5ba62a33a66e0f4da",
+      "bytes": 1150
+    },
+    {
+      "path": "tools/question-quality/question-flags-player-repairs-focused-20261104.log",
+      "kind": "added",
+      "sha256": "5d174cf7ed95373213c7184168032320f5f3d8b0393b56c90cc90471d2f28a6c",
+      "bytes": 131634
+    },
+    {
+      "path": "tools/question-quality/question-flags-player-timeout-entry-config-control-20261104.log",
+      "kind": "added",
+      "sha256": "4114499d05ba1e8a6636023f13a0f547880874d2a76feb56e2a461ea2eefe262",
+      "bytes": 1788
+    },
+    {
+      "path": "tools/question-quality/question-flags-player-timeout-entry-control-20261104.log",
+      "kind": "added",
+      "sha256": "6be3e0a8af52eab857bd9b6a082df3b99469dd24e04894152c0cada44d67fad3",
+      "bytes": 4582
+    },
+    {
+      "path": "tools/question-quality/question-flags-player-verified-20261104.log",
+      "kind": "added",
+      "sha256": "4b80afeedc9186d7da659bbd1eed6e0273075700604da131c6223cfcc7e28568",
+      "bytes": 408172
+    },
+    {
+      "path": "tools/question-quality/question-flags-pre-final-cue-lock-20261104.json",
+      "kind": "added",
+      "sha256": "823d1789dd6a077298119c6d3c25eb208f8925492a613674dab22cc626c80a37",
+      "bytes": 142584
+    },
+    {
+      "path": "tools/question-quality/question-flags-scope-final-20261104.log",
+      "kind": "added",
+      "sha256": "9da4f50c51364794c53e64e862ca1a69bb766c527686c1474c0044c3b1e7d54d",
+      "bytes": 15882
+    },
+    {
+      "path": "tools/question-quality/question-flags-snapshot-change-review-20261104.json",
+      "kind": "added",
+      "sha256": "4fa43848a7e7f5be2bbeccd2e3851245a4ccf3d3a5fd3e91a932a76ac8b40f29",
+      "bytes": 60770
+    },
+    {
+      "path": "tools/question-quality/question-flags-specs-20261104.mjs",
+      "kind": "added",
+      "sha256": "69fb7c80cc4fc4e317b03b0195b4d544a06a198dae636d6b03fe7060600c61b2",
+      "bytes": 40443
+    },
+    {
+      "path": "tools/question-quality/question-flags-supply-candidate-20261104.json",
+      "kind": "added",
+      "sha256": "916c037d98ac1850b8ada89d8543db87a6088a4fed9e45bb7ce8139e244f6200",
+      "bytes": 62183
+    },
+    {
+      "path": "tools/question-quality/question-flags-supply-candidate-20261104.log",
+      "kind": "added",
+      "sha256": "5ed75aab607310e20d670eaf995dfed76c689dc0b354181a8ddf65c53ba27ffc",
+      "bytes": 1552
+    },
+    {
+      "path": "tools/question-quality/question-flags-supply-control-20261104.json",
+      "kind": "added",
+      "sha256": "86691378d0b1daec139123d619d64eeb4e62e4efa144e1ff2a64c5f9e320881d",
+      "bytes": 62102
+    },
+    {
+      "path": "tools/question-quality/question-flags-supply-control-20261104.log",
+      "kind": "added",
+      "sha256": "2335d10312dddec5627202ae6fc69b8ef9ccb7ac3a4f1849a0b4d1fd913189bf",
+      "bytes": 1546
+    },
+    {
+      "path": "tools/question-quality/question-flags-supply-snapshot-final-update-20261104.log",
+      "kind": "added",
+      "sha256": "f5cbbfc65cbed3e1d7ce71b601b7642de28d7c7f3aebf6139d2102cb940973e5",
+      "bytes": 950
+    },
+    {
+      "path": "tools/question-quality/question-flags-supply-snapshot-update-20261104.log",
+      "kind": "added",
+      "sha256": "af977e60446baf3b2574232eabe2dfad5569cc65c5551f112ecff7f8e3475bb3",
+      "bytes": 1168
+    },
+    {
+      "path": "tools/question-quality/question-flags-typecheck-20261104.log",
+      "kind": "added",
+      "sha256": "8d5390c9480f000531973611c424c8d0d7a2fb598e1c400fd71789a1ceecd647",
+      "bytes": 24328
+    },
+    {
+      "path": "tools/question-quality/question-flags-typecheck-bindings-20261104.log",
+      "kind": "added",
+      "sha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "bytes": 1504
+    },
+    {
+      "path": "tools/question-quality/question-flags-typecheck-complete-20261104.log",
+      "kind": "added",
+      "sha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "bytes": 1504
+    },
+    {
+      "path": "tools/question-quality/question-flags-typecheck-final-20261104.log",
+      "kind": "added",
+      "sha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "bytes": 1504
+    },
+    {
+      "path": "tools/question-quality/question-flags-typecheck-final-integration-20261104.log",
+      "kind": "added",
+      "sha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "bytes": 1504
+    },
+    {
+      "path": "tools/question-quality/question-flags-typecheck-rerun-20261104.log",
+      "kind": "added",
+      "sha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "bytes": 1504
+    },
+    {
+      "path": "tools/question-quality/question-flags-validation-lock-20261104.json",
+      "kind": "added",
+      "sha256": "4ed8f9e9b93ed002feb3285e9dee9c89d8a3d62331430f3376a2afd1a98a094d",
+      "bytes": 142584
+    },
+    {
+      "path": "tools/question-quality/question-flags-validation-samples-20261104.json",
+      "kind": "added",
+      "sha256": "13ce15da34b6732445c4d318f86688b5351d24ed476fe49649d685475b8e862f",
+      "bytes": 121
+    },
+    {
+      "path": "tools/question-quality/question-flags-verification-20261104.json",
+      "kind": "added",
+      "sha256": "92968358906bc226bd5a8d6abc285db95323d01ddd3f9276037b15f4483a4532",
+      "bytes": 12484
+    },
+    {
+      "path": "tools/question-quality/question-flags-verification-20261104.log",
+      "kind": "added",
+      "sha256": "9da4f50c51364794c53e64e862ca1a69bb766c527686c1474c0044c3b1e7d54d",
+      "bytes": 15882
+    },
+    {
+      "path": "tools/question-quality/question-flags-whole-bank-20261104.json",
+      "kind": "added",
+      "sha256": "1ad194cb97f134e46830113c2170b71d048e9d81843e71568039dfca73061342",
+      "bytes": 6593111
+    },
+    {
+      "path": "tools/question-quality/question-flags-whole-bank-cli-20261104.log",
+      "kind": "added",
+      "sha256": "74073c470e248a7cf1a1f0889a65a6b1932a0fe3c7a160ca49c4371e37a20df2",
+      "bytes": 3640
+    },
+    {
+      "path": "tools/question-quality/report.mjs",
+      "kind": "modified",
+      "sha256": "a539115c76e9a07258f39871806aaed88eed906bd46d3843abf5e93f7be76e27",
+      "bytes": 6606
+    },
+    {
+      "path": "tools/question-quality/review-question-flags-20261104.mjs",
+      "kind": "added",
+      "sha256": "d07acd63b726977562d4a1819386556478f2f7782391f024ad87d68ecda978b7",
+      "bytes": 14415
+    },
+    {
+      "path": "tools/question-quality/review-question-flags-snapshots-20261104.mjs",
+      "kind": "added",
+      "sha256": "a0fb55a0728f122bf0f31969fa3f19e51f6115f5f8f5e53e4c8c0aacc225d679",
+      "bytes": 2501
+    },
+    {
+      "path": "tools/question-quality/verify-question-flags-20261104.mjs",
+      "kind": "added",
+      "sha256": "45408f5e160cc0d6ef446309c4a61cccf9063834a859a3fdcae3ebe00a5ad432",
+      "bytes": 9535
+    }
+  ],
+  "note": "Self hash omitted to avoid recursion. Earlier failed/incomplete runs remain diagnostic evidence. The full final-repaired player and final-integrated domain logs are the final acceptance results; do not merge counts across attempts. No Git was used."
+}

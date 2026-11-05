@@ -47,7 +47,7 @@ export function authoredRationales(questions, choices) {
 }
 function exhibitFields(exhibit,prefix="exhibit"){
   const result={};
-  function visit(v,p){if(typeof v==="string")result[p]=v;else if(Array.isArray(v))v.forEach((a,i)=>visit(a,p+"["+i+"]"));else if(v&&typeof v==="object")for(const [k,a]of Object.entries(v))if(k!=="kind")visit(a,p+"."+k);}
+  function visit(v,p){if(typeof v==="string")result[p]=v;else if(Array.isArray(v))v.forEach((a,i)=>visit(a,p+"["+i+"]"));else if(v&&typeof v==="object")for(const [k,a]of Object.entries(v))if(k!=="kind"&&!(v.kind==="image"&&k==="assetPath"))visit(a,p+"."+k);}
   if(exhibit)visit(exhibit,prefix);
   return result;
 }

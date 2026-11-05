@@ -1,0 +1,76 @@
+{
+  "policy": "This milestone only. Read-only hashes; no evidence, driver, pinned input, snapshot or Level4/5 test mutation. Shared registry hashes also contain the separate new-content worker’s manifest/N1/N2 appends.",
+  "changedExisting": [
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "before": "9edf70caa1197d0cd4089bf6488f48f33a85270ed9224dc15152e775c41785e7",
+      "current": "f8584771a56592198acd5de7049bf40de31afec054729837d168512535a36527",
+      "recordedEvidence": "7db1b1253c7d3064adb0602360925c0739bb65c719603507c3fa09a6732ba245"
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "before": "fd5a0da52e79adc0a8af390f3c9c7e1c5ee5f6eca3ff996e5b6446fcc1d5fae2",
+      "current": "06cc6724feb7f7482791422e8908e25d605e197899fb9d44b7096e2dc3e03054",
+      "recordedEvidence": "a57ffcec34d75e2e337790f1ac0d71e4bfdc8f79d53cdb28596e00ead60413e4"
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "before": "f10e77a2c4d12f30dceaab3781bd437ddb393cc9e7717645798b14323f9a5e78",
+      "current": "2f4dca28602e803f2813cf9aea155f88546e5d5d9c05c1cb904ceafaf865c6ed",
+      "recordedEvidence": "6d9870d53383af7da6ee7547ba702410a2545882876faa1696c0e1217fae311c"
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "before": "914ab190c4c1d4ecc3955988ccf081f8f10ee13f01d07a273abb7d26640595fa",
+      "current": "b3e1aeda06bc8349f420438c79c450cd8a31e98c3ec39250a6a3f91aa4559836",
+      "recordedEvidence": "522c3fbd3b3503f4b6d74f38e7dbd994b98727a3037b0374f86e58dbf5a41639"
+    }
+  ],
+  "newBoundInputs": [
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2b-round2-20261104.ts",
+      "current": "358051fb4ad7441513e379f835cc6afd9d69a59aa2729a93fad594db55ea4dfe"
+    },
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2b-round2-20261104-data.ts",
+      "current": "32bad25a7d35431e7e8fb6c2f3868905097007c4e3512f2bb8b61430af4834df"
+    },
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2b-round2-evidence-20261104.ts",
+      "current": "31059c6bc53bce26f4d30fd2be26c35f37290a1599649644a112eceff21bfcb7"
+    },
+    {
+      "path": "packages/game-domain/src/question-bank-batch2b-round2-test-orders.ts",
+      "current": "da5b27859624e7087e2092ad6a24b00d8c019ea39c1d2c5434dbf1727e716246"
+    }
+  ],
+  "expectedEvidenceFailures": [
+    "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > binds the actual run to its current game, balance, clinical and driver inputs and reconciles cash",
+    "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 5",
+    "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 6",
+    "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 7",
+    "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 8",
+    "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 9",
+    "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 5",
+    "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 6",
+    "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 7",
+    "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 8",
+    "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 9",
+    "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 5",
+    "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 6",
+    "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 7",
+    "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 8",
+    "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 9",
+    "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 5",
+    "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 6",
+    "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 7",
+    "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 8",
+    "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 9",
+    "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 5",
+    "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 6",
+    "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 7",
+    "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 8",
+    "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 9"
+  ],
+  "excluded": "Tests, docs, question-quality tools and the PNG are outside the collector’s non-test TS/JSON package roots. Manager owns a genuine rebind and legacy behavioral refresh after integration."
+}

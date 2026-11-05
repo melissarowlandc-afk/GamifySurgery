@@ -1,0 +1,8689 @@
+// Generated offline by tools/question-new-n2-round3/build-evidence.mjs. No retrieval or clinical approval.
+import type {ClinicalSource,EvidenceClaim} from "./pilot-schema";
+export const QUESTION_NEW_N2_ROUND3_CLAIMS: EvidenceClaim[] = [
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.aa8322ea02c9",
+    "statement": "Surgical antimicrobial prophylaxis should be discontinued after incision closure; continuing it solely because a drain remains does not reduce surgical-site infection and adds antimicrobial harms.",
+    "sourceIds": [
+      "source.bread-butter.shea-ssi-2022-update"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "high",
+    "limitation": "This concerns prophylaxis only, not treatment for an established infection or another therapeutic indication. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Postoperative adults with a closed incision, no established infection, and a prophylactic antibiotic continued solely because a drain remains.",
+    "lastCheckedOn": "2026-09-17"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.c98ff508b25a",
+    "statement": "For a patient receiving warfarin for atrial fibrillation who requires interruption for elective surgery, routine therapeutic-dose heparin bridging is not recommended.",
+    "sourceIds": [
+      "source.bread-butter.chest-antithrombotic-2022"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "high",
+    "limitation": "Selected very-high-thromboembolic-risk situations require individualized consideration; this does not concern ordinary postoperative VTE prophylaxis or mechanical-valve cases. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Selected adults taking warfarin for nonvalvular atrial fibrillation without recent stroke, TIA, thrombosis, a mechanical valve, or another very-high-risk feature.",
+    "lastCheckedOn": "2026-09-17"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.6f99845e8caa",
+    "statement": "After major abdominal or pelvic cancer surgery, selected patients with high VTE risk and acceptable bleeding risk may receive extended postoperative pharmacologic prophylaxis for up to about four weeks; LMWH is an established option.",
+    "sourceIds": [
+      "source.bread-butter.seom-cancer-vte-2024",
+      "source.bread-butter.asco-cancer-vte-2023"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "high",
+    "limitation": "This is not universal for all cancer operations, and LMWH is not the only current agent; patient selection, renal function, and bleeding risk matter. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Selected high-VTE-risk adults after major abdominal or pelvic cancer surgery with adequate renal function and low bleeding risk.",
+    "lastCheckedOn": "2026-09-17"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.10b8e172c6d1",
+    "statement": "A localized superficial incisional surgical-site infection with purulence requires opening the involved incision and drainage, with removal of sutures or staples when needed for source control.",
+    "sourceIds": [
+      "source.bread-butter.idsa-ssti-2014-wound"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "moderate",
+    "limitation": "Systemic antibiotics depend on systemic response and operative site; deep, organ-space, and necrotizing infections require different care. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Stable adults with purulent superficial incisional infection, intact fascia, and no systemic toxicity.",
+    "lastCheckedOn": "2026-09-17"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.1a54f7843ea4",
+    "statement": "A patient with uncomplicated peptic ulcer disease who has not been evaluated for Helicobacter pylori should receive an active-infection test such as a urea breath test or stool antigen test rather than antibody serology.",
+    "sourceIds": [
+      "source.brief.acg-h-pylori-2024",
+      "source.brief.acg-peptic-ulcer-patient"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "high",
+    "limitation": "PPIs, antibiotics, and bismuth can reduce test sensitivity. The authored patients have completed appropriate medication holds and have no bleeding or acute complication. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Stable adults with a known uncomplicated duodenal ulcer who need initial H. pylori evaluation.",
+    "lastCheckedOn": "2026-09-17"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.f10e1c8fc24a",
+    "statement": "After H. pylori treatment, eradication should be confirmed with an active-infection test at least four weeks after antibiotics, with PPIs held for two weeks and antibiotics or bismuth held for four weeks.",
+    "sourceIds": [
+      "source.brief.acg-h-pylori-2024"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "high",
+    "limitation": "This is a future follow-up plan. The game visit does not simulate treatment completion or the washout interval, and serology is not a test of cure. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Adults with confirmed H. pylori infection for whom treatment and subsequent eradication confirmation are being planned.",
+    "lastCheckedOn": "2026-09-17"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.bf8c918b8353",
+    "statement": "After failed appropriate medical treatment, lateral internal sphincterotomy can be discussed for selected chronic anal fissure when baseline fecal incontinence and stated continence-risk history are absent.",
+    "sourceIds": [
+      "source.chronic-fissure.ascrs-cpg.2023",
+      "source.chronic-fissure.siucp.2023"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "high",
+    "limitation": "LIS requires individualized continence counseling and is not suitable for every patient. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Stable adults with chronic fissure persistent after documented medical treatment and no described continence risk.",
+    "lastCheckedOn": "2026-09-13"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.d90b80eae6dc",
+    "statement": "For a typical chronic anal fissure, topical calcium-channel-blocker treatment is an appropriate first-line pharmacologic option with comparable efficacy and fewer adverse effects than topical nitrates.",
+    "sourceIds": [
+      "source.chronic-fissure.ascrs-cpg.2023",
+      "source.chronic-fissure.siucp.2023"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "moderate",
+    "limitation": "No drug, concentration, schedule, duration, or individual contraindication is taught. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Stable adults with clinician-characterized chronic midline anal fissure.",
+    "lastCheckedOn": "2026-09-13"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.707bf04c2730",
+    "statement": "Localized resectable colon cancer is treated by resection of the tumor-bearing colon together with its regional lymphatic drainage.",
+    "sourceIds": [
+      "source.board-batch.ascrs-colon-2022",
+      "source.board-batch.nci-colon-2025"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "moderate",
+    "limitation": "Operation extent depends on anatomy and patient factors; this claim does not select disputed splenic-flexure techniques or adjuvant therapy without pathological stage. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Adults with localized resectable colon adenocarcinoma and no distant or adjacent-organ invasion on staging.",
+    "lastCheckedOn": "2026-09-11"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.695145c8addb",
+    "statement": "After CT assesses postoperative collections, contrast-enhanced MRCP with a hepatobiliary agent can anatomically localize a suspected bile leak and evaluate duct continuity; scintigraphy can demonstrate active leakage but has limited spatial detail.",
+    "sourceIds": [
+      "source.wses.bile-duct-injury.2021"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "The dedicated hepatobiliary-contrast study is a distinct external service; this claim does not make MRCP the first test in an unstable patient. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Stable post-cholecystectomy adults after CT excludes an uncontrolled collection.",
+    "lastCheckedOn": "2026-09-13"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.0d75556834ce",
+    "statement": "A persistent minor postoperative bile leak with preserved common-duct continuity can be referred for ERCP with transpapillary plastic-stent treatment.",
+    "sourceIds": [
+      "source.wses.bile-duct-injury.2021",
+      "source.esge.biliary-stenting.2018"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "high",
+    "limitation": "Excludes sepsis, peritonitis, uncontrolled collections, and complete common-bile-duct or common-hepatic-duct transection. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Stable patients with a persistent minor post-cholecystectomy leak and preserved duct continuity.",
+    "lastCheckedOn": "2026-09-13"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.48b019a0d1ac",
+    "statement": "A common-bile-duct stone confirmed on MRCP requires a therapeutic duct-clearance pathway; preoperative therapeutic ERCP is one accepted pathway when that sequence is selected locally.",
+    "sourceIds": [
+      "source.asge.choledocholithiasis.2019",
+      "source.esge.cbds.2019"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "high",
+    "limitation": "Postoperative ERCP and laparoscopic duct treatment are also valid according to local expertise; the cases explicitly select the preoperative endoscopic pathway. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Stable treatment candidates with a confirmed duct stone before planned cholecystectomy.",
+    "lastCheckedOn": "2026-09-13"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.1e7b4640104f",
+    "statement": "Contrast-enhanced CT can characterize a post-pancreatitis fluid collection before drainage planning; a mature encapsulated homogeneous fluid collection without solid debris after interstitial edematous pancreatitis is compatible with a pancreatic pseudocyst rather than walled-off necrosis.",
+    "sourceIds": [
+      "source.atlanta.pancreatitis-classification.2013",
+      "source.asge.pancreatic-fluid-collections.2016",
+      "source.ksge.pancreatic-fluid-collections.2021"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "high",
+    "limitation": "The case must exclude necrotizing pancreatitis, pseudoaneurysm, and suspicious neoplastic features; no diameter alone establishes a drainage indication. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Stable adults with persistent symptoms after resolved interstitial edematous acute pancreatitis.",
+    "lastCheckedOn": "2026-09-13"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.8b815ad3ac3c",
+    "statement": "A symptomatic mature pancreatic pseudocyst with suitable apposition to the stomach or duodenum can be referred for EUS-guided endoscopic drainage when appropriate expertise and backup are available.",
+    "sourceIds": [
+      "source.asge.pancreatic-fluid-collections.2016",
+      "source.ksge.pancreatic-fluid-collections.2021"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "moderate",
+    "limitation": "Symptoms, maturity, and suitable anatomy are required; this is an external specialist referral and size alone is not an indication. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Stable patients with a characterized symptomatic pseudocyst and suitable anatomy.",
+    "lastCheckedOn": "2026-09-13"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.ecf22ea6c86e",
+    "statement": "Neoadjuvant imatinib is a multidisciplinary option when an imatinib-sensitive, locally advanced GIST would benefit from shrinkage that reduces operative morbidity; size or high-risk features alone are insufficient.",
+    "sourceIds": [
+      "source.board.gist-geis-2023",
+      "source.board.gist-nci-pdq-2024"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "moderate",
+    "limitation": "No dose, duration, response interval, postoperative therapy, or universal size rule is taught. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Adults with tissue-confirmed, nonmetastatic, imatinib-sensitive GIST and a challenging but potentially improved resection after response.",
+    "lastCheckedOn": "2026-09-12"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.46105001554a",
+    "statement": "EUS-guided core tissue acquisition with molecular analysis is appropriate when a gastric subepithelial lesion is locally advanced and preoperative targeted treatment is being considered; routine biopsy is not required before every straightforward resection.",
+    "sourceIds": [
+      "source.board.gist-geis-2023",
+      "source.board.gist-nci-pdq-2024"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "Core sampling is selected because immediate planning needs histology and genotype; a limited core does not establish definitive mitotic-risk classification. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Stable adults with a nonmetastatic gastric subepithelial mass whose location would make immediate resection substantially morbid.",
+    "lastCheckedOn": "2026-09-12"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.bdbc82c17adc",
+    "statement": "A GCS total is the sum of eye, verbal, and motor scores only when all three components are testable; components should remain visible.",
+    "sourceIds": [
+      "source.gcs.faq-current",
+      "source.gcs.assessment-aid-current"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "No severity band, prognosis, or treatment threshold is taught. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Patients with all three GCS components testable.",
+    "lastCheckedOn": "2026-09-28"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.6a70c5e18d0b",
+    "statement": "Eye response scores are E4 spontaneous, E3 to sound, E2 to pressure, and E1 none.",
+    "sourceIds": [
+      "source.gcs.assessment-aid-current"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "Official source family; independent corroboration limited. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Patients undergoing GCS assessment.",
+    "lastCheckedOn": "2026-09-28"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.44b64dba34de",
+    "statement": "Motor response scores are M6 obeys commands, M5 localizes, M4 normal flexion, M3 abnormal flexion, M2 extension, and M1 none.",
+    "sourceIds": [
+      "source.gcs.assessment-aid-current"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "Official source family; independent corroboration limited. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Patients undergoing GCS assessment.",
+    "lastCheckedOn": "2026-09-28"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.8581be95d2ec",
+    "statement": "When an interference genuinely prevents verbal testing, document V-NT with the reason and do not substitute 1 or 0 or report a misleading total.",
+    "sourceIds": [
+      "source.gcs.faq-current",
+      "source.gcs.assessment-aid-current"
+    ],
+    "evidenceCategory": "safety_boundary",
+    "certainty": "moderate",
+    "limitation": "A tracheostomy does not automatically make speech untestable. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Patients with an actual interference to verbal-response testing.",
+    "lastCheckedOn": "2026-09-28"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.ec112ce49cac",
+    "statement": "An anesthetic, paralyzed acutely ischemic limb with absent arterial and venous Doppler signals is irreversibly damaged and should not undergo attempted revascularization.",
+    "sourceIds": [
+      "source.acc-aha.pad.2024"
+    ],
+    "evidenceCategory": "safety_boundary",
+    "certainty": "high",
+    "limitation": "Irreversibility requires the complete neurologic and Doppler pattern; absent pulses alone do not establish it. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Adults with suspected category III acute limb ischemia.",
+    "lastCheckedOn": "2026-10-02"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.53daaa464a9f",
+    "statement": "Acute limb ischemia with sensory loss extending beyond the toes, mild or moderate motor weakness, an absent arterial Doppler signal, and an audible venous signal is immediately threatened and requires immediate revascularization for salvage.",
+    "sourceIds": [
+      "source.acc-aha.pad.2024"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "high",
+    "limitation": "Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Adults with suspected acute limb ischemia.",
+    "lastCheckedOn": "2026-10-02"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.f6920342da46",
+    "statement": "Acute limb ischemia requires emergency assessment by a clinician able to determine viability and provide revascularization, with immediate transfer when that expertise is unavailable locally.",
+    "sourceIds": [
+      "source.acc-aha.pad.2024"
+    ],
+    "evidenceCategory": "disposition",
+    "certainty": "high",
+    "limitation": "Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Adults with suspected acute limb ischemia.",
+    "lastCheckedOn": "2026-10-02"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.87c8a26c9b01",
+    "statement": "Calories should not exceed assessed energy needs merely to force positive nitrogen balance in hospitalized kidney disease.",
+    "sourceIds": [
+      "source.espen.kidney-nutrition.2024"
+    ],
+    "evidenceCategory": "safety_boundary",
+    "certainty": "moderate",
+    "limitation": "Single current society guideline; energy needs and tolerance remain individualized. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Hospitalized adults with kidney disease receiving nutrition support.",
+    "lastCheckedOn": "2026-10-02"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.5dd542d868e9",
+    "statement": "A hospitalized adult without acute or critical illness who has kidney failure and receives conventional intermittent chronic KRT generally requires at least 1.2 g protein/kg/day using an appropriate reference weight.",
+    "sourceIds": [
+      "source.espen.kidney-nutrition.2024"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "moderate",
+    "limitation": "Single current society guideline; not a blanket outpatient, critical-care, or predialysis target. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Hospitalized adults without acute or critical illness who receive conventional intermittent chronic KRT and require nutrition support.",
+    "lastCheckedOn": "2026-10-02"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.c8b8cf1c24a2",
+    "statement": "Bleeding, perforation, obstruction, and refractory marginal ulcers require pathways beyond routine initial medical management.",
+    "sourceIds": [
+      "source.asmbs.marginal-ulcer.2024"
+    ],
+    "evidenceCategory": "safety_boundary",
+    "certainty": "moderate",
+    "limitation": "The authored cases explicitly exclude these complications. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Adults with a marginal ulcer after gastric bypass.",
+    "lastCheckedOn": "2026-10-02"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.7b74879c23ab",
+    "statement": "NSAID exposure should be stopped or replaced during treatment of a marginal ulcer after gastric bypass.",
+    "sourceIds": [
+      "source.asmbs.marginal-ulcer.2024"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "moderate",
+    "limitation": "Analgesic substitution is individualized. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Adults with a marginal ulcer after gastric bypass who use NSAIDs.",
+    "lastCheckedOn": "2026-10-02"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.73280797f130",
+    "statement": "PPI therapy is the initial medical treatment for an uncomplicated marginal ulcer after gastric bypass.",
+    "sourceIds": [
+      "source.asmbs.marginal-ulcer.2024"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "moderate",
+    "limitation": "Single society literature review that is not a standard of care. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Adults with an uncomplicated endoscopically confirmed marginal ulcer after gastric bypass.",
+    "lastCheckedOn": "2026-10-02"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.e1ad9578fe95",
+    "statement": "For mild acute gallstone pancreatitis, laparoscopic cholecystectomy should occur during the index admission, preferably before discharge, when the patient is clinically improving and no local complication requires delay.",
+    "sourceIds": [
+      "source.acg.acute-pancreatitis.2024",
+      "source.wses.severe-pancreatitis.2019"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "high",
+    "limitation": "This timing does not apply to severe pancreatitis or cases with persistent fluid collections or other complications that change operative timing. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Adults recovering from mild acute gallstone pancreatitis without necrosis, persistent organ failure, or operative contraindication.",
+    "lastCheckedOn": "2026-10-02"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.ab43dd10ecba",
+    "statement": "Lymphovascular invasion in a malignant colon polyp warrants oncologic segmental-resection assessment when the patient is fit.",
+    "sourceIds": [
+      "source.ascrs.colon-cancer.2022"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "moderate",
+    "limitation": "Single current society guideline. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Fit adults with LVI in a malignant colon polyp.",
+    "lastCheckedOn": "2026-10-02"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.cc57afd626e3",
+    "statement": "Gross gastrointestinal spillage during an operation without established infection or a pre-existing perforated viscus fits the contaminated class.",
+    "sourceIds": [
+      "source.gs028e.ukhsa_woundclass"
+    ],
+    "evidenceCategory": "definition",
+    "certainty": "high",
+    "limitation": "The authored scenario explicitly distinguishes an intraoperative spill from pre-existing perforation or purulent infection; this is not an antibiotic-selection rule. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Adults reviewing an operation with documented gross gastrointestinal spillage.",
+    "lastCheckedOn": "2026-10-07"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.1af25373f5a7",
+    "statement": "Contrast extravasation is escape of intravascular contrast into adjacent tissue and can produce local injection-site pain or swelling rather than isolated generalized warmth.",
+    "sourceIds": [
+      "source.acr.contrast-manual.2026.reaction-classification"
+    ],
+    "evidenceCategory": "definition",
+    "certainty": "high",
+    "limitation": "Single society source used to distinguish the supplied documented events; no severity, observation interval, or treatment algorithm is authored. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Adults reviewing a documented intravascular contrast event.",
+    "lastCheckedOn": "2026-10-07"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.8074aee0b69b",
+    "statement": "Urticaria following intravascular iodinated contrast is categorized as an allergic-like reaction, which does not by itself establish an IgE mechanism.",
+    "sourceIds": [
+      "source.acr.contrast-manual.2026.reaction-classification"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "high",
+    "limitation": "Single society classification source; no treatment algorithm, exposure challenge, severity inference, or allergy-testing recommendation is supplied. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Adults reviewing documented iodinated contrast-associated hives.",
+    "lastCheckedOn": "2026-10-07"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.e690f51e53b0",
+    "statement": "An operation encountering established purulent infection or a pre-existing perforated viscus fits the dirty/infected class.",
+    "sourceIds": [
+      "source.gs028e.ukhsa_woundclass"
+    ],
+    "evidenceCategory": "definition",
+    "certainty": "high",
+    "limitation": "Single official surveillance definition; no copied classification table, traumatic-wound time cutoff, postoperative probability or treatment algorithm is used. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Adults reviewing a prior operation with documented purulence or a perforated viscus.",
+    "lastCheckedOn": "2026-10-07"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.e50a1962e942",
+    "statement": "Documented hyperacute allograft rejection can be driven by recipient antibodies that were present before transplantation and recognize donor antigens.",
+    "sourceIds": [
+      "source.gs028e.hyperacute_matsuda2016",
+      "source.gs028e.ahrq_transplant2012"
+    ],
+    "evidenceCategory": "definition",
+    "certainty": "high",
+    "limitation": "Narrow mechanism from a transplant review plus an independent commissioned background cross-check. Early graft dysfunction alone does not prove rejection or this mechanism; no transplant timing threshold or treatment is inferred. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Stable adults reviewing an outside-confirmed historical hyperacute allograft event.",
+    "lastCheckedOn": "2026-10-07"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.b42555c8fb52",
+    "statement": "Preformed donor-specific antibodies can bind allograft endothelium and initiate complement-associated vascular injury and thrombosis in hyperacute rejection.",
+    "sourceIds": [
+      "source.gs028e.hyperacute_matsuda2016"
+    ],
+    "evidenceCategory": "definition",
+    "certainty": "moderate",
+    "limitation": "One adequately licensed review supplies this narrow vascular mechanism. No claim that all acute rejection is antibody-mediated or that T-cell and antibody mechanisms cannot coexist. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Adults discussing a documented historical donor-specific antibody-mediated graft injury.",
+    "lastCheckedOn": "2026-10-07"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.b88db50dcb99",
+    "statement": "For an unexplained isolated prolonged aPTT after specimen and anticoagulant interference have been assessed, a mixing study can initially help distinguish factor deficiency from an inhibitory substance when immediate FVIII activity testing is unavailable.",
+    "sourceIds": [
+      "source.gs028e.tiede_mixing2020",
+      "source.gs028e.czempik_mixing2020"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "Conditional laboratory workup, not routine preoperative screening or a universal mandatory next test. The cases supply repeated unexplained findings, reviewed interferences and unavailable immediate FVIII:C. Specific factor assays are pursued in parallel by the specialist. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Stable adults already referred for an outside specialist evaluation of an unexplained isolated prolonged aPTT.",
+    "lastCheckedOn": "2026-10-07"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.1d724576493f",
+    "statement": "Mixing studies are incompletely standardized, cannot by themselves establish or exclude acquired hemophilia A, and should not replace appropriate parallel factor assays.",
+    "sourceIds": [
+      "source.gs028e.tiede_mixing2020",
+      "source.gs028e.czempik_mixing2020"
+    ],
+    "evidenceCategory": "safety_boundary",
+    "certainty": "high",
+    "limitation": "No universal correction threshold or isolated-aPTT bleeding-risk estimate is inferred. Interpretation remains tied to the laboratory method and clinical context. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Adults with an outside specialist workup of an unexplained prolonged aPTT.",
+    "lastCheckedOn": "2026-10-07"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.b02be3363804",
+    "statement": "Initial correction followed by loss of correction after incubation can indicate a time-dependent inhibitor; immediate correction alone does not exclude that possibility.",
+    "sourceIds": [
+      "source.gs028e.tiede_mixing2020",
+      "source.gs028e.czempik_mixing2020"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "No exact incubation period, temperature, ratio or laboratory cutoff is authored. A qualitative pattern suggests a mechanism and requires appropriate factor/inhibitor assessment; it is not a definitive diagnosis. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Adults reviewing immediate versus incubated results from a specialist coagulation laboratory.",
+    "lastCheckedOn": "2026-10-07"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.2da3d15b9cbb",
+    "statement": "Naloxone reverses opioid effects by competing at opioid receptor sites as an antagonist rather than stimulating those receptors or chemically destroying the opioid.",
+    "sourceIds": [
+      "source.fda.naloxone-label.2023.s007.mechanism",
+      "source.fda.naloxone-emergency-counseling.2020"
+    ],
+    "evidenceCategory": "definition",
+    "certainty": "high",
+    "limitation": "This is a receptor-mechanism objective; no dose, formulation superiority or response guarantee is supplied. The 2023 label is not asserted to be the latest product label. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Adults discussing documented or planned opioid-overdose reversal.",
+    "lastCheckedOn": "2026-10-07"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.cbd22c96d3a1",
+    "statement": "Naloxone is a temporary reversal intervention and does not replace emergency medical assistance, airway or respiratory support when needed; opioid-related depression can recur after initial improvement.",
+    "sourceIds": [
+      "source.fda.naloxone-label.2023.s007.mechanism",
+      "source.fda.naloxone-emergency-counseling.2020"
+    ],
+    "evidenceCategory": "safety_boundary",
+    "certainty": "high",
+    "limitation": "Two FDA documents from one authority corroborate the boundary; this clinic does not conduct an opioid challenge or simulate advanced airway care. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Adults with known or suspected opioid toxicity or counseling about naloxone.",
+    "lastCheckedOn": "2026-10-07"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.bdffc2268d81",
+    "statement": "Type II and type III hypersensitivity involve non-IgE antibodies, including IgG or IgM, and complement; these broad antibody mechanisms differ from the IgE mast-cell and T-cell contact pathways.",
+    "sourceIds": [
+      "source.gs028e.fda_immunotoxicity"
+    ],
+    "evidenceCategory": "definition",
+    "certainty": "high",
+    "limitation": "Narrow comparator from the FDA glossary, Hypersensitivity. No specific cytotoxic target, immune-complex disease, frequency or management claim is inferred from this older source. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Adults comparing the established immune mechanism of a resolved reaction.",
+    "lastCheckedOn": "2026-10-07"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v2",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r2.2a207d5bfc33",
+    "statement": "U.S. empagliflozin labeling advises withholding the drug for at least three days when possible before surgery or a procedure associated with prolonged fasting.",
+    "sourceIds": [
+      "source.fda.empagliflozin-label.2025.s063",
+      "source.dailymed.empagliflozin-label.2026"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "high",
+    "limitation": "Exact interval is drug-specific and based on official U.S. labeling; the second source is a manufacturer-label cross-check, not an independent guideline. Emergency surgery and individualized specialist decisions are outside the scored scenario. Statement unchanged from the recorded catalog; original source/check dates retained, no external currentness verification. Exact revised-case application needs clinical review.",
+    "applicablePopulation": "Adults taking empagliflozin before elective surgery with sufficient planning time.",
+    "lastCheckedOn": "2026-10-07"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.e0d1e963f20a",
+    "statement": "Surgery, reduced caloric intake, acute illness, and inadequate insulin are recognized precipitating contexts for ketoacidosis during SGLT2-inhibitor therapy.",
+    "sourceIds": [
+      "source.fda.empagliflozin-label.2025.s063",
+      "source.fda.ertugliflozin-label.2026.s012",
+      "source.mhra.sglt2-ketoacidosis-safety.2016"
+    ],
+    "evidenceCategory": "presentation",
+    "certainty": "high",
+    "limitation": "Context raises concern but does not diagnose ketoacidosis without supporting clinical and laboratory evidence; no risk probability is authored. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Adults taking an SGLT2 inhibitor around illness, fasting or surgery.",
+    "lastCheckedOn": "2026-10-07"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.61695ed96d60",
+    "statement": "Empagliflozin and ertugliflozin labels condition postoperative resumption on clinical stability and return of oral intake rather than a fixed postoperative clock alone.",
+    "sourceIds": [
+      "source.fda.empagliflozin-label.2025.s063",
+      "source.dailymed.empagliflozin-label.2026",
+      "source.fda.ertugliflozin-label.2026.s012"
+    ],
+    "evidenceCategory": "safety_boundary",
+    "certainty": "high",
+    "limitation": "Resumption remains an individualized treating-team decision; these cases do not authorize restart during active ketoacidosis or prescribe a fixed restart time. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Adults discussing a perioperative empagliflozin or ertugliflozin plan.",
+    "lastCheckedOn": "2026-10-07"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.cca234e3627e",
+    "statement": "Allograft rejection may involve T-cell-mediated or antibody-mediated pathways, and the pathways can coexist; a documented hyperacute preformed-antibody event should not be substituted with an unproven T-cell-only explanation.",
+    "sourceIds": [
+      "source.gs028e.hyperacute_matsuda2016"
+    ],
+    "evidenceCategory": "safety_boundary",
+    "certainty": "moderate",
+    "limitation": "Narrow comparator from the transplant review Abstract; does not classify all acute rejection as T-cell-only, infer a treatment or establish a new active diagnosis. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Stable adults reviewing a confirmed historical transplant rejection mechanism.",
+    "lastCheckedOn": "2026-10-07"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.39e090dfc4f0",
+    "statement": "Hemoglobin in red blood cells carries oxygen, and its blood concentration is a separate quantity from the percentage oxygen saturation.",
+    "sourceIds": [
+      "source.gs028f.nhlbi_anemia2025",
+      "source.gs028f.fda_oximetry2024"
+    ],
+    "evidenceCategory": "definition",
+    "certainty": "high",
+    "limitation": "NHLBI December 2025 CBC explanation verifies hemoglobin carriage; FDA background verifies saturation's proportional meaning. Original qualitative comparison, without a numeric anemia threshold, race-specific reference range, transfusion indication or claim about cardiac output. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Adults with a supplied outside hemoglobin result and saturation reading.",
+    "lastCheckedOn": "2026-10-07"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.c3c167a7739f",
+    "statement": "Pulse-oximeter SpO2 estimates the proportion of hemoglobin oxygen-binding capacity occupied by oxygen, expressed as a percentage.",
+    "sourceIds": [
+      "source.gs028f.fda_oximetry2024",
+      "source.gs028f.fda_oximeter2025"
+    ],
+    "evidenceCategory": "definition",
+    "certainty": "high",
+    "limitation": "FDA 2024 executive-summary Introduction supplies the hemoglobin-fraction explanation; FDA 2025 consumer page independently confirms the percentage estimate. SpO2 is an estimate with device limitations, not a direct measurement of blood oxygen content or tissue delivery. No formula or fixed normal threshold. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Adults interpreting an ordinary supplied pulse-oximeter reading.",
+    "lastCheckedOn": "2026-10-07"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.c83fc3058af5",
+    "statement": "A free flap carries its vessels with the transferred tissue, with those vessels reconnected at the recipient site to establish perfusion.",
+    "sourceIds": [
+      "source.gs028f.khare.grafts-flaps.2026",
+      "source.gs028f.nci.breast-reconstruction-flaps"
+    ],
+    "evidenceCategory": "anatomy",
+    "certainty": "high",
+    "limitation": "Independent sources corroborate free-flap vascular transfer. Being detached during transfer does not make it a skin graft when the supplied record documents vessel reconnection; no onsite microsurgical capability is implied. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Adults reviewing a completed outside free-flap reconstruction.",
+    "lastCheckedOn": "2026-10-07"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.c88fb3c62612",
+    "statement": "A skin graft is transferred without its own connected blood supply and depends on the recipient bed for support and subsequent vascularization.",
+    "sourceIds": [
+      "source.gs028f.khare.grafts-flaps.2026"
+    ],
+    "evidenceCategory": "definition",
+    "certainty": "high",
+    "limitation": "Single current peer-reviewed review for the graft definition. No exact stages, timing of vascularization, selection rule or graft-survival guarantee is used. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Adults reviewing documented skin-graft reconstruction.",
+    "lastCheckedOn": "2026-10-07"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.5fcd9dfc70c9",
+    "statement": "A pedicled flap moves tissue while retaining a vascular connection that supplies the transferred tissue.",
+    "sourceIds": [
+      "source.gs028f.khare.grafts-flaps.2026",
+      "source.gs028f.nci.breast-reconstruction-flaps"
+    ],
+    "evidenceCategory": "anatomy",
+    "certainty": "high",
+    "limitation": "Current review and independent federal fact sheet support the vascular principle. No named flap design, operative instruction or outcome ranking is inferred. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Adults discussing a documented pedicled tissue transfer.",
+    "lastCheckedOn": "2026-10-07"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.ddb68fa706b9",
+    "statement": "The graft-versus-flap distinction concerns transfer of the tissue's blood supply, whereas donor-recipient relationship, tissue thickness and donor location describe separate aspects of reconstruction.",
+    "sourceIds": [
+      "source.gs028f.khare.grafts-flaps.2026",
+      "source.gs028f.nci.breast-reconstruction-flaps"
+    ],
+    "evidenceCategory": "definition",
+    "certainty": "high",
+    "limitation": "Original comparison of independently verified definitions, not a copied classification table. It does not claim that perfusion is the sole factor in choosing a reconstruction. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Adults comparing supplied reconstructive reports.",
+    "lastCheckedOn": "2026-10-07"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.149ce209d4ee",
+    "statement": "A high-risk nutrition-restart plan includes close clinical and electrolyte monitoring; planned thiamine supplementation does not replace that monitoring.",
+    "sourceIds": [
+      "source.gs028f.auspen_refeeding2025"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "moderate",
+    "limitation": "AuSPEN 2025 summary and treatment discussion are the sole direct management source. A qualitative multidisciplinary-care principle, not a bedside feeding protocol or a guarantee of avoiding complications. No monitoring frequency, numeric target, prophylactic electrolyte dose or universal feeding rate. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Adults receiving an expert-coordinated high-risk nutrition-restart plan.",
+    "lastCheckedOn": "2026-10-07"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.a2a9c29cbbcf",
+    "statement": "A low serum phosphate concentration has causes other than refeeding, so that result alone does not establish refeeding syndrome.",
+    "sourceIds": [
+      "source.gs028f.auspen_refeeding2025"
+    ],
+    "evidenceCategory": "safety_boundary",
+    "certainty": "moderate",
+    "limitation": "AuSPEN 2025 risk and diagnosis discussion supports this limit. No particular diagnostic definition, percentage fall, timing rule or alternative-cause algorithm is adopted. The mechanism cases supply the outside team's assessment and relevant course. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Adults with low phosphate interpreted in a clinical context.",
+    "lastCheckedOn": "2026-10-07"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v2",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r2.78d2ba5c0eb0",
+    "statement": "For adults identified as at risk of refeeding syndrome, the AuSPEN consensus recommends planned thiamine supplementation before restarting nutrition.",
+    "sourceIds": [
+      "source.gs028f.auspen_refeeding2025"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "moderate",
+    "limitation": "Single adequate directly verified management source: AuSPEN 2025 section 3.4.1. Expert consensus explicitly reports no specific evidence evaluating thiamine's preventive role; benefit is not guaranteed. Original underlying-fact synthesis under conservative CC BY-NC-ND targeted-verification status. Dose, route, duration, feeding rate and NICE recommendations are excluded. Statement unchanged from the recorded catalog; original source/check dates retained, no external currentness verification. Exact revised-case application needs clinical review.",
+    "applicablePopulation": "Adults already assessed by a specialist nutrition team as at risk during a monitored nutrition restart.",
+    "lastCheckedOn": "2026-10-07"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.fe0ef6f0a1ad",
+    "statement": "Calcineurin phosphatase is the key enzyme inhibited by the tacrolimus–FKBP12 complex in the drug's immunosuppressive mechanism.",
+    "sourceIds": [
+      "source.gs028f.prograf2023"
+    ],
+    "evidenceCategory": "definition",
+    "certainty": "high",
+    "limitation": "Exact label section 12.1 supports the principal pathway. This does not assert that tacrolimus has only one molecular interaction or prescribe any change in transplant medicines. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Adults with specialist-managed tacrolimus immunosuppression.",
+    "lastCheckedOn": "2026-10-07"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.154178be8123",
+    "statement": "The calcineurin-inhibiting action of tacrolimus suppresses T-lymphocyte activation and proliferation.",
+    "sourceIds": [
+      "source.gs028f.prograf2023"
+    ],
+    "evidenceCategory": "definition",
+    "certainty": "high",
+    "limitation": "Sole verified mechanism source is the product label; qualitative immune effect only. No claim of guaranteed rejection prevention, selective depletion of every T cell or control of an individual patient's graft course. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Adults reviewing tacrolimus's immune mechanism.",
+    "lastCheckedOn": "2026-10-07"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.a752906bf151",
+    "statement": "Quantitative neuromuscular monitoring should inform anesthetic recovery assessment.",
+    "sourceIds": [
+      "source.gs028g.motamed-neuromuscular-monitoring-2023"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "Single peer-reviewed narrative review; no numeric extubation threshold, device calibration protocol or individualized extubation decision is authored. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Adult synthetic perioperative or postoperative clinic encounters; no onsite hospital operation is simulated.",
+    "lastCheckedOn": "2026-10-07"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.2771c9286d4c",
+    "statement": "Sugammadex complexes rocuronium and vecuronium to reduce free neuromuscular blocker.",
+    "sourceIds": [
+      "source.gs028g.dailymed-sugammadex-2026",
+      "source.gs028g.motamed-neuromuscular-monitoring-2023"
+    ],
+    "evidenceCategory": "definition",
+    "certainty": "moderate",
+    "limitation": "Drug-label mechanism corroborated by a narrative review. No dose, renal-impairment policy, universal reversal strategy or administration order is taught. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Adult synthetic perioperative or postoperative clinic encounters; no onsite hospital operation is simulated.",
+    "lastCheckedOn": "2026-10-07"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.5ab0df92101d",
+    "statement": "Sugammadex blockade reversal does not reverse hypnotic or opioid sedation.",
+    "sourceIds": [
+      "source.gs028g.dailymed-sugammadex-2026",
+      "source.gs028g.motamed-neuromuscular-monitoring-2023"
+    ],
+    "evidenceCategory": "definition",
+    "certainty": "moderate",
+    "limitation": "Drug-label mechanism corroborated by a narrative review. No dose, renal-impairment policy, universal reversal strategy or administration order is taught. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Adult synthetic perioperative or postoperative clinic encounters; no onsite hospital operation is simulated.",
+    "lastCheckedOn": "2026-10-07"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.9405168985f2",
+    "statement": "Perioperative DNR orders require individualized review with the patient or surrogate and responsible clinicians; automatic suspension bypasses self-determination.",
+    "sourceIds": [
+      "source.gs028se.asa-dnar-2023",
+      "source.gs028se.ama-dnar-5-4"
+    ],
+    "evidenceCategory": "safety_boundary",
+    "certainty": "moderate",
+    "limitation": "Ethical guidance does not replace jurisdiction-specific law or institutional policy. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "People in the stated fictional clinical situation.",
+    "lastCheckedOn": "2026-09-29"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.8d37e3fdc0bb",
+    "statement": "The team should clarify requested interventions in the context of anesthesia, identify essential procedures, and document an agreed individualized plan.",
+    "sourceIds": [
+      "source.gs028se.asa-dnar-2023",
+      "source.gs028se.ama-dnar-5-4"
+    ],
+    "evidenceCategory": "safety_boundary",
+    "certainty": "moderate",
+    "limitation": "Ethical guidance does not replace jurisdiction-specific law or institutional policy. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "People in the stated fictional clinical situation.",
+    "lastCheckedOn": "2026-09-29"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v2",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r2.20ec0ea2d818",
+    "statement": "Perioperative planning should document when the original directive will be reinstated so temporary modifications do not silently become indefinite.",
+    "sourceIds": [
+      "source.gs028se.asa-dnar-2023",
+      "source.gs028se.ama-dnar-5-4"
+    ],
+    "evidenceCategory": "safety_boundary",
+    "certainty": "moderate",
+    "limitation": "Ethical guidance does not replace jurisdiction-specific law or institutional policy. Statement unchanged from the recorded catalog; original source/check dates retained, no external currentness verification. Exact revised-case application needs clinical review.",
+    "applicablePopulation": "People in the stated fictional clinical situation.",
+    "lastCheckedOn": "2026-09-29"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.e1fab33f6912",
+    "statement": "Absolute risk reduction is the comparator risk minus intervention risk, and number needed to treat is the reciprocal of that absolute difference with outcome and time horizon stated.",
+    "sourceIds": [
+      "source.cochrane.chapter-15.2026"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "All values are fictional teaching data; NNT interpretation depends on the stated comparator, outcome, and follow-up horizon. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Fictional educational and quality-improvement datasets with the assumptions stated in each question.",
+    "lastCheckedOn": "2026-09-29"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.4831cf651238",
+    "statement": "Confounding mixes an exposure effect with another associated factor, while selection and measurement processes can introduce systematic bias; larger samples do not remove those systematic errors.",
+    "sourceIds": [
+      "source.cdc.field-epi-analysis.2026"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "The brief fictional patterns identify a primary concern and do not exclude additional problems in a real study. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Fictional educational and quality-improvement datasets with the assumptions stated in each question.",
+    "lastCheckedOn": "2026-09-29"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.3e734c574c75",
+    "statement": "McNemar testing is for paired binary responses, so it does not fit independent, continuous, ordinal, or multi-category observations in these exercises.",
+    "sourceIds": [
+      "source.nist.mcnemar.2026"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "This boundary distinguishes the data structure only; it does not teach extensions or continuity corrections. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Fictional statistical-method exercises that include McNemar testing as a competing analysis.",
+    "lastCheckedOn": "2026-09-29"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.e474c0b307ac",
+    "statement": "Fisher exact testing provides an exact analysis of a two-by-two categorical table when sparse expected counts make a chi-square approximation unreliable.",
+    "sourceIds": [
+      "source.nist.fisher-exact.2026"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "The exercises are confined to sparse two-by-two tables and do not generalize the method to every categorical analysis. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Fictional educational and quality-improvement datasets with the assumptions stated in each question.",
+    "lastCheckedOn": "2026-09-29"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.ea3b56279aaf",
+    "statement": "A p-value is the probability, under a specified null model, of data at least as incompatible with that model as the observed data; it is not the probability that the null is true.",
+    "sourceIds": [
+      "source.nist.p-values.2026"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "The examples address interpretation only and do not establish clinical importance, absence of bias, or a decision threshold. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Fictional educational and quality-improvement datasets with the assumptions stated in each question.",
+    "lastCheckedOn": "2026-09-29"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.cc09f9ba1740",
+    "statement": "Positive predictive value uses all positive test results as its denominator and depends on prevalence in the tested population as well as on sensitivity and specificity.",
+    "sourceIds": [
+      "source.cdc.test-accuracy.2026",
+      "source.fda.predictive-values.2026"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "The direction exercises assume sensitivity, specificity, and the testing process remain fixed while prevalence changes. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Fictional educational and quality-improvement datasets with the assumptions stated in each question.",
+    "lastCheckedOn": "2026-09-29"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.bf4203993008",
+    "statement": "Sensitivity is the proportion testing positive among reference-positive cases, while specificity is the proportion testing negative among reference-negative cases.",
+    "sourceIds": [
+      "source.cdc.test-accuracy.2026"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "The fictional reference classification is treated as correct solely for teaching the denominators. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Fictional educational and quality-improvement datasets with the assumptions stated in each question.",
+    "lastCheckedOn": "2026-09-29"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.cfa015b055d8",
+    "statement": "A directly standardized risk for specified strata is the sum of each observed stratum-specific risk multiplied by its common reference weight; the same weights must be used for each group being compared.",
+    "sourceIds": [
+      "source.cdc.field-epi-analysis.2026"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "Author mathematical mapping from recorded definitions: The exercise explicitly defines its common mixture. Its event probability is the weighted sum of the conditional stratum probabilities, by counting the expected events in that constructed mixture. No new source verification or empirical clinical probability is claimed. Independently review the derivation and application. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Constructed teaching datasets with complete stated denominators, comparator, horizon and protocol assumptions; not clinical event-rate guidance.",
+    "lastCheckedOn": "2026-11-04"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.2f7b539b6ebe",
+    "statement": "For the specified two-one-sided-tests equivalence procedure at alpha 0.05, equivalence is supported when the corresponding 90% confidence interval lies wholly within both prespecified equivalence bounds.",
+    "sourceIds": [
+      "source.qq20261102a.nist-p",
+      "source.qq20261102a.nist-ci",
+      "source.qq20261102a.lakens2017",
+      "source.qq20261102b.nist-p",
+      "source.qq20261102b.nist-ci"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "Author mathematical mapping from recorded definitions: Apply the prior recorded TOST/90%-interval limitation to both supplied protocol boundaries; this is not an ordinary zero-effect significance test. No new source verification or empirical clinical probability is claimed. Independently review the derivation and application. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Constructed teaching datasets with complete stated denominators, comparator, horizon and protocol assumptions; not clinical event-rate guidance.",
+    "lastCheckedOn": "2026-11-04"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.889064151d42",
+    "statement": "In a completely reference-classified cohort, the proportion without the condition among negative tests is TN/(TN+FN).",
+    "sourceIds": [
+      "source.cdc.test-accuracy.2026",
+      "source.fda.predictive-values.2026"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "Author mathematical mapping from recorded definitions: Condition on the test-negative column, count reference-negative members and divide by the full column total. No new source verification or empirical clinical probability is claimed. Independently review the derivation and application. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Constructed teaching datasets with complete stated denominators, comparator, horizon and protocol assumptions; not clinical event-rate guidance.",
+    "lastCheckedOn": "2026-11-04"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.c2a2cbdaec48",
+    "statement": "For an adverse event with a higher intervention risk than comparator risk over the same horizon, number needed to harm is the reciprocal of that absolute risk increase.",
+    "sourceIds": [
+      "source.cochrane.chapter-15.2026"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "Author mathematical mapping from recorded definitions: Apply the recorded reciprocal absolute-risk-difference construction to an excess harmful outcome, preserving comparator and horizon rather than converting its direction into a benefit. No new source verification or empirical clinical probability is claimed. Independently review the derivation and application. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Constructed teaching datasets with complete stated denominators, comparator, horizon and protocol assumptions; not clinical event-rate guidance.",
+    "lastCheckedOn": "2026-11-04"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.02709278d0d4",
+    "statement": "The ratio P(test positive | condition)/P(test positive | no condition) equals sensitivity/(1-specificity), the positive likelihood ratio.",
+    "sourceIds": [
+      "source.cdc.test-accuracy.2026"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "Author mathematical mapping from recorded definitions: The recorded definitions give sensitivity as the first conditional probability and specificity as the negative probability without the condition; its complement gives the second probability. No new source verification or empirical clinical probability is claimed. Independently review the derivation and application. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Constructed teaching datasets with complete stated denominators, comparator, horizon and protocol assumptions; not clinical event-rate guidance.",
+    "lastCheckedOn": "2026-11-04"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v2",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r2.acquired-bleeding-factor-priority",
+    "statement": "A newly acquired isolated aPTT prolongation with new spontaneous skin or muscle bleeding and no earlier operative bleeding warrants prompt factor-specific investigation, including FVIII activity and inhibitor assessment; a mixing screen is not a definitive diagnosis.",
+    "sourceIds": [
+      "source.gs028e.tiede_mixing2020",
+      "source.gs028e.czempik_mixing2020"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "Independent synthesis of the previously recorded acquired-hemophilia/mixing guidance applied to the constructed new-bleeding phenotype. The exact phenotype-to-panel priority was not newly checked against the external guideline and remains an explicit source/clinician hold. No source was retrieved or externally rechecked in this round. Author application remains pending independent and clinical review.",
+    "applicablePopulation": "Only the explicitly scoped constructed N2 round-two teaching cases; not an observed clinical rate, bedside algorithm or validated study protocol.",
+    "lastCheckedOn": "2026-11-04"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v2",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r2.benefit-harm-protocol",
+    "statement": "NNT and NNH describe different between-group absolute outcome differences over a specified horizon; satisfying a hypothetical benefit requirement does not establish that a separately prespecified added-harm requirement is satisfied.",
+    "sourceIds": [
+      "source.cochrane.chapter-15.2026"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "Constructed 30-day differences: benefit 0.09-0.06=0.03, ceil(1/0.03)=34; harm 0.08-0.03=0.05, 1/0.05=20. Compare both with the supplied fictional committee conditions. No actual outcome frequency or universal benefit/harm value judgment is asserted. No source was retrieved or externally rechecked in this round. Author application remains pending independent and clinical review.",
+    "applicablePopulation": "Only the explicitly scoped constructed N2 round-two teaching cases; not an observed clinical rate, bedside algorithm or validated study protocol.",
+    "lastCheckedOn": "2026-11-04"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v2",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r2.coverage-perfusion-map",
+    "statement": "A graft depends on support across its recipient bed; bleeding at a wound rim does not establish equivalent support over exposed central cortex without periosteum. A proposed pedicled flap also needs its own feeding route to remain connected, not merely enough tissue reach.",
+    "sourceIds": [
+      "source.gs028f.khare.grafts-flaps.2026",
+      "source.gs028f.nci.breast-reconstruction-flaps"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "moderate",
+    "limitation": "Apply recorded graft-bed and retained-pedicle facts to a fictional surface and vessel map. The exposed-cortex application and exact coverage suitability require targeted verification; no named anatomic flap, perfusion cutoff or universal shin reconstruction algorithm is asserted. No source was retrieved or externally rechecked in this round. Author application remains pending independent and clinical review.",
+    "applicablePopulation": "Only the explicitly scoped constructed N2 round-two teaching cases; not an observed clinical rate, bedside algorithm or validated study protocol.",
+    "lastCheckedOn": "2026-11-04"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v2",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r2.dual-endpoint-protocol",
+    "statement": "When a fictional study protocol requires both recovery equivalence and a separate safety confidence bound, meeting the recovery criterion does not resolve an unmet safety condition; a nonsignificant harm null test is not a substitute for that bound.",
+    "sourceIds": [
+      "source.qq20261102a.nist-p",
+      "source.qq20261102a.nist-ci",
+      "source.qq20261102a.lakens2017",
+      "source.qq20261102b.nist-p",
+      "source.qq20261102b.nist-ci"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "Compare each constructed interval with its own supplied rule: recovery 90% CI lies within the stated TOST bounds; safety 95% upper limit exceeds the separate limit. Safety estimate +0.4 points and symmetric normal-approximation 95% CI [-2.4,+3.2] imply SE=2.8/1.96 and z=0.28, yielding a two-sided null p approximately 0.78. The margins, estimates and adoption rule are fictional protocol inputs, not source-endorsed clinical thresholds. No source was retrieved or externally rechecked in this round. Author application remains pending independent and clinical review.",
+    "applicablePopulation": "Only the explicitly scoped constructed N2 round-two teaching cases; not an observed clinical rate, bedside algorithm or validated study protocol.",
+    "lastCheckedOn": "2026-11-04"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v2",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r2.extravasation-progressive-local-injury",
+    "statement": "Progressive pain with sensory change or skin injury after contrast extravasation warrants urgent surgical assessment; a palpable pulse does not by itself settle local tissue viability.",
+    "sourceIds": [
+      "source.acr.contrast-manual.2026.reaction-classification"
+    ],
+    "evidenceCategory": "safety_boundary",
+    "certainty": "moderate",
+    "limitation": "New severity-to-assessment synthesis directed to the recorded ACR Manual extravasation chapter. The prior atomic claim verified event classification rather than management, so this exact escalation application requires a targeted check before approval. No volume threshold, time interval or mandatory operation is inferred. No source was retrieved or externally rechecked in this round. Author application remains pending independent and clinical review.",
+    "applicablePopulation": "Only the explicitly scoped constructed N2 round-two teaching cases; not an observed clinical rate, bedside algorithm or validated study protocol.",
+    "lastCheckedOn": "2026-11-04"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v2",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r2.free-flap-complete-circuit",
+    "statement": "A vessel-bearing free transfer needs both arterial inflow and venous return; an accessible recipient end that is separated from its source or return by a ligature does not complete the represented circulation.",
+    "sourceIds": [
+      "source.gs028f.khare.grafts-flaps.2026",
+      "source.gs028f.nci.breast-reconstruction-flaps"
+    ],
+    "evidenceCategory": "anatomy",
+    "certainty": "moderate",
+    "limitation": "Trace the explicit continuity of a constructed artery and vein. The two connections instantiate the recorded circulation principle without a new vessel-size, anatomic selection or technical anastomotic rule. No source was retrieved or externally rechecked in this round. Author application remains pending independent and clinical review.",
+    "applicablePopulation": "Only the explicitly scoped constructed N2 round-two teaching cases; not an observed clinical rate, bedside algorithm or validated study protocol.",
+    "lastCheckedOn": "2026-11-04"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v2",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r2.gastrojejunal-stricture-dilation",
+    "statement": "A symptomatic fixed gastrojejunal anastomotic stricture after Roux-en-Y gastric bypass can require endoscopic balloon dilation; surgical revision is reserved for selected cases such as failure or unsuitability of endoscopic management.",
+    "sourceIds": [
+      "source.asmbs.marginal-ulcer.2024"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "moderate",
+    "limitation": "New short named-intervention synthesis using the previously recorded bariatric marginal-ulcer guideline source. That exact intervention sequence was not newly checked externally; verify active-ulcer status, procedural suitability and first-dilation versus revision ranking before approval. No balloon diameter, number of sessions, drug dose or treatment interval is authored. No source was retrieved or externally rechecked in this round. Author application remains pending independent and clinical review.",
+    "applicablePopulation": "Only the explicitly scoped constructed N2 round-two teaching cases; not an observed clinical rate, bedside algorithm or validated study protocol.",
+    "lastCheckedOn": "2026-11-04"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v2",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r2.graft-mechanism-investigation",
+    "statement": "In a constructed graft-injury record, complement-dependent injury transferred by cell-free recipient serum collected before implantation to donor cells supports prioritizing a donor-reactive antibody investigation; tacrolimus administration does not negate that finding.",
+    "sourceIds": [
+      "source.gs028e.hyperacute_matsuda2016",
+      "source.gs028e.ahrq_transplant2012",
+      "source.gs028f.prograf2023"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "Apply the recorded antibody target, timing, vascular mechanism and drug-pathway limits to explicit experiment controls and biopsy observations. Focused-investigation ranking is an unverified case application; it is not a complete formal rejection diagnosis, clinical assay-validation claim or treatment prescription. No source was retrieved or externally rechecked in this round. Author application remains pending independent and clinical review.",
+    "applicablePopulation": "Only the explicitly scoped constructed N2 round-two teaching cases; not an observed clinical rate, bedside algorithm or validated study protocol.",
+    "lastCheckedOn": "2026-11-04"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v2",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r2.iv-dextrose-exposure",
+    "statement": "A documented dextrose infusion is a carbohydrate exposure even before oral or enteral feeding; specimen chronology relative to that infusion must be considered when interpreting a nutrition-restart record.",
+    "sourceIds": [
+      "source.gs028f.zhang_refeeding2023",
+      "source.gs028f.auspen_refeeding2025"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "Dextrose identifies carbohydrate in the administration record. Apply the recorded carbohydrate-exposure and monitoring facts to its stated chronology. No universal biochemical syndrome threshold, replacement regimen or feeding-rate rule follows. No source was retrieved or externally rechecked in this round. Author application remains pending independent and clinical review.",
+    "applicablePopulation": "Only the explicitly scoped constructed N2 round-two teaching cases; not an observed clinical rate, bedside algorithm or validated study protocol.",
+    "lastCheckedOn": "2026-11-04"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v2",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r2.linked-record-net-change",
+    "statement": "For the same records classified correct or incorrect twice, the change in the proportion correct is the improved count minus the worsened count divided by the number with both assessments; it is not the improved count by itself.",
+    "sourceIds": [
+      "source.nist.mcnemar.2026",
+      "source.cdc.field-epi-analysis.2026"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "After-correct minus before-correct cancels the unchanged-correct cell: (a+c)-(a+b)=c-b. Here (12-5)/100=7 percentage points. The separate 10-point next-study trigger is fictional; no significance, causality or rollout efficacy is inferred. No source was retrieved or externally rechecked in this round. Author application remains pending independent and clinical review.",
+    "applicablePopulation": "Only the explicitly scoped constructed N2 round-two teaching cases; not an observed clinical rate, bedside algorithm or validated study protocol.",
+    "lastCheckedOn": "2026-11-04"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v2",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r2.lmwh-treatment-purpose",
+    "statement": "A prophylactic low-molecular-weight-heparin prescription and a therapeutic anticoagulation prescription have different purposes; a new treatment-requiring proximal DVT during prophylaxis does not itself demonstrate failure of therapeutic anticoagulation.",
+    "sourceIds": [
+      "source.board.dvt-ash-2014",
+      "source.board.dvt-nhlbi-treatment-2022",
+      "source.bread-butter.seom-cancer-vte-2024",
+      "source.bread-butter.asco-cancer-vte-2023"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "moderate",
+    "limitation": "Apply the recorded prevention-versus-treatment distinction to the named heparin class in the constructed medication record. No molecule, dose, therapeutic-failure rescue algorithm or resumption interval is added. Exact class/indication application requires targeted verification before approval. No source was retrieved or externally rechecked in this round. Author application remains pending independent and clinical review.",
+    "applicablePopulation": "Only the explicitly scoped constructed N2 round-two teaching cases; not an observed clinical rate, bedside algorithm or validated study protocol.",
+    "lastCheckedOn": "2026-11-04"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v2",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r2.lr-odds-protocol",
+    "statement": "Under stated test-transport assumptions, post-test odds equal pretest odds multiplied by the relevant likelihood ratio, and probability equals odds divided by one plus odds; the resulting probability may then be applied to an explicitly fictional study rule.",
+    "sourceIds": [
+      "source.cdc.test-accuracy.2026",
+      "source.qq20261102a.dhsc-odds"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "Bayes odds identity: P(D|+)/P(not D|+) = [P(+|D)/P(+|not D)]*[P(D)/P(not D)]. With the constructed rates LR+=5, odds 1/4 become 5/4 and probability 5/9. All priors, validation counts and the 50% action threshold are fictional, not patient estimates or clinical cutoffs. No source was retrieved or externally rechecked in this round. Author application remains pending independent and clinical review.",
+    "applicablePopulation": "Only the explicitly scoped constructed N2 round-two teaching cases; not an observed clinical rate, bedside algorithm or validated study protocol.",
+    "lastCheckedOn": "2026-11-04"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v2",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r2.negative-cohort-protocol",
+    "statement": "For a specified tested cohort, the complement of negative predictive value is the reference-positive fraction among negative tests; that cohort-specific quantity can be compared with an explicitly hypothetical protocol action threshold without claiming it is a validated individual risk.",
+    "sourceIds": [
+      "source.cdc.test-accuracy.2026",
+      "source.fda.predictive-values.2026"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "NPV=TN/(TN+FN), so 1-NPV=FN/(TN+FN). Match the stated order population, then compare this fraction with the fictional protocol. Counts, screen characteristics and 5% criterion are constructed inputs, not a clinical validation or guideline. No source was retrieved or externally rechecked in this round. Author application remains pending independent and clinical review.",
+    "applicablePopulation": "Only the explicitly scoped constructed N2 round-two teaching cases; not an observed clinical rate, bedside algorithm or validated study protocol.",
+    "lastCheckedOn": "2026-11-04"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v2",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r2.temporary-closure-reassessment",
+    "statement": "During ongoing emergency abdominal resuscitation, unresolved bowel viability and physiologic deterioration reproduced by fascial approximation can support temporary abdominal closure with planned reassessment rather than immediate definitive wall reconstruction.",
+    "sourceIds": [
+      "source.ehs.emergency-ventral-incisional-hernia.2026",
+      "source.wses.complicated-abdominal-wall-hernia.2017",
+      "source.sages.laparoscopic-ventral-hernia.2016",
+      "source.ehs.emergency-ventral.2026",
+      "source.wses.emergency-hernia.2017"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "moderate",
+    "limitation": "New closure-stage teaching point directed to the recorded EHS/WSES emergency-hernia guideline sources. The earlier mesh safety boundary explicitly does not prescribe the alternative; the temporary-closure indication and ranking therefore require separate targeted source/clinician verification before approval. No pressure or timing cutoff is authored. No source was retrieved or externally rechecked in this round. Author application remains pending independent and clinical review.",
+    "applicablePopulation": "Only the explicitly scoped constructed N2 round-two teaching cases; not an observed clinical rate, bedside algorithm or validated study protocol.",
+    "lastCheckedOn": "2026-11-04"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v2",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r2.testable-gcs-change",
+    "statement": "An intubation-related inability to test verbal response does not negate a separately observed change in a testable motor component; that motor change should be communicated for clinical reassessment while verbal interference is documented.",
+    "sourceIds": [
+      "source.gcs.faq-current",
+      "source.gcs.assessment-aid-current"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "Apply the recorded component mapping and testability limits to the two constructed examinations. No CT, operation, prognosis or total-score management cutoff is inferred. No source was retrieved or externally rechecked in this round. Author application remains pending independent and clinical review.",
+    "applicablePopulation": "Only the explicitly scoped constructed N2 round-two teaching cases; not an observed clinical rate, bedside algorithm or validated study protocol.",
+    "lastCheckedOn": "2026-11-04"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v2",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r2.e2f4cca1859a",
+    "statement": "When the gastrointestinal tract functions, oral intake and oral supplements are preferred first, with enteral nutrition used when oral intake is inadequate.",
+    "sourceIds": [
+      "source.nutrition.espen-practical-2021"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "moderate",
+    "limitation": "Route choice remains individualized. Statement unchanged from the recorded catalog; original source/check dates retained, no external currentness verification. Exact revised-case application needs clinical review.",
+    "applicablePopulation": "Nutritionally at-risk adult surgical patients with a functional gastrointestinal tract.",
+    "lastCheckedOn": "2026-09-29"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v2",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r2.e757fd75ecb1",
+    "statement": "Parenteral nutrition is reserved for situations in which oral and enteral routes are infeasible, contraindicated, or insufficient.",
+    "sourceIds": [
+      "source.nutrition.espen-practical-2021"
+    ],
+    "evidenceCategory": "safety_boundary",
+    "certainty": "moderate",
+    "limitation": "No fixed timing, formulation, or dose is taught. Statement unchanged from the recorded catalog; original source/check dates retained, no external currentness verification. Exact revised-case application needs clinical review.",
+    "applicablePopulation": "Adult surgical patients needing nutrition support.",
+    "lastCheckedOn": "2026-09-29"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.d2b48d8aa3de",
+    "statement": "Nutritional status should be assessed before major surgery with a structured clinical process; albumin alone is not treated as a nutrition diagnosis.",
+    "sourceIds": [
+      "source.nutrition.espen-practical-2021"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "Single older permitted guideline; no proprietary screening tool or exact cutoff is reproduced. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Adults preparing for major surgery.",
+    "lastCheckedOn": "2026-09-29"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.5b7bf51076d4",
+    "statement": "A body or tail pancreatic cyst without main-duct communication supports a mucinous cystic neoplasm pattern rather than proving histology or cancer.",
+    "sourceIds": [
+      "source.board.acg-pancreatic-cyst-2018"
+    ],
+    "evidenceCategory": "definition",
+    "certainty": "moderate",
+    "limitation": "One adequate supporting guideline source was used. Management requires individualized risk assessment; cyst-fluid CEA can help classify mucinous lesions but does not identify high-grade dysplasia or pancreatic cancer. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Stable adults with a returned pancreatic MRI/MRCP pattern compatible with mucinous cystic neoplasm.",
+    "lastCheckedOn": "2026-09-11"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.1ff20d71a599",
+    "statement": "MRI/MRCP is a preferred noninvasive study for assessing communication between a pancreatic cyst and the main pancreatic duct.",
+    "sourceIds": [
+      "source.board.acg-pancreatic-cyst-2018"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "One adequate supporting guideline source was used. Imaging does not definitively establish cyst subtype or malignancy. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Stable adults with an indeterminate pancreatic cyst who can undergo MRI/MRCP.",
+    "lastCheckedOn": "2026-09-11"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v2",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r2.2f251a75ceb4",
+    "statement": "A conventional combination pathway for an actively bleeding peptic ulcer uses dilute epinephrine injection for temporary control followed by contact thermal or mechanical hemostasis.",
+    "sourceIds": [
+      "source.acg.upper-gastrointestinal-ulcer-bleeding-guideline.2021",
+      "source.esge.peptic-ulcer-bleeding-guideline.2026"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "high",
+    "limitation": "This is a conventional pathway, not a claim that every actively bleeding ulcer must receive epinephrine or that selected contemporary OTS-clip or hemostatic-forceps monotherapy is never appropriate. Statement unchanged from the recorded catalog; original source/check dates retained, no external currentness verification. Exact revised-case application needs clinical review.",
+    "applicablePopulation": "Appropriately stabilized adults undergoing hospital endoscopy for an actively bleeding peptic ulcer when the conventional epinephrine-combination pathway is selected.",
+    "lastCheckedOn": "2026-08-10"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v2",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r2.e55b4be019b7",
+    "statement": "Epinephrine injection should not be used as the sole definitive endoscopic treatment for a high-risk bleeding peptic ulcer; when epinephrine is selected, it must be paired with a definitive hemostatic modality.",
+    "sourceIds": [
+      "source.acg.upper-gastrointestinal-ulcer-bleeding-guideline.2021",
+      "source.esge.peptic-ulcer-bleeding-guideline.2026"
+    ],
+    "evidenceCategory": "safety_boundary",
+    "certainty": "high",
+    "limitation": "This claim does not require epinephrine in every hemostatic plan and does not make an accepted thermal, mechanical, or selected advanced modality inadequate merely because injection was omitted. Statement unchanged from the recorded catalog; original source/check dates retained, no external currentness verification. Exact revised-case application needs clinical review.",
+    "applicablePopulation": "Adults receiving endoscopic hemostasis for a peptic ulcer with active bleeding or a nonbleeding visible vessel when epinephrine injection is under consideration.",
+    "lastCheckedOn": "2026-08-10"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.dda382649df0",
+    "statement": "Peptic ulcers with active spurting, active oozing, or a nonbleeding visible vessel are high-risk endoscopic findings for which endoscopic hemostasis is indicated.",
+    "sourceIds": [
+      "source.acg.upper-gastrointestinal-ulcer-bleeding-guideline.2021",
+      "source.esge.peptic-ulcer-bleeding-guideline.2026"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "high",
+    "limitation": "This claim assumes the patient has been appropriately assessed and stabilized for endoscopy; it does not define pre-endoscopy resuscitation, transfusion, medication, or disposition decisions. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Adults undergoing upper endoscopy for suspected or confirmed nonvariceal peptic-ulcer bleeding.",
+    "lastCheckedOn": "2026-08-10"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v2",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r2.863516fa7332",
+    "statement": "Current guidance recognizes selected advanced monotherapy options, including over-the-scope clipping for certain high-risk actively bleeding ulcers and hemostatic forceps with soft coagulation, so generic clip or cautery monotherapy cannot be labeled universally wrong.",
+    "sourceIds": [
+      "source.esge.peptic-ulcer-bleeding-guideline.2026"
+    ],
+    "evidenceCategory": "safety_boundary",
+    "certainty": "moderate",
+    "limitation": "The exact choice depends on lesion characteristics, device type, technical competence, local resources, and recommendation strength; these advanced options are boundaries for distractor authoring rather than scored content in this package. Statement unchanged from the recorded catalog; original source/check dates retained, no external currentness verification. Exact revised-case application needs clinical review.",
+    "applicablePopulation": "Adults undergoing expert endoscopic hemostasis for high-risk peptic-ulcer bleeding.",
+    "lastCheckedOn": "2026-08-10"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.9c12bef8ae65",
+    "statement": "New unilateral swelling and tenderness after major surgery warrants prompt venous duplex/compression ultrasound; a noncompressible proximal vein supports proximal DVT.",
+    "sourceIds": [
+      "source.board.dvt-cdc-2024",
+      "source.board.dvt-nhlbi-diagnosis-2022"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "Game timing is editorial simulation, not a recommended delay. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Stable postoperative adults with new unilateral leg symptoms and no chest symptoms or threatened limb.",
+    "lastCheckedOn": "2026-09-12"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.8a0b2ca37037",
+    "statement": "A first uncomplicated proximal DVT provoked by resolved major surgery generally receives therapeutic anticoagulation for three months when bleeding risk allows; routine IVC filter is not needed when anticoagulation is possible.",
+    "sourceIds": [
+      "source.board.dvt-ash-2014",
+      "source.board.dvt-nhlbi-treatment-2022"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "moderate",
+    "limitation": "Excludes cancer, prior VTE, persistent risks, active bleeding, and contraindications. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Stable adults with first major-surgery-provoked proximal DVT and low bleeding risk.",
+    "lastCheckedOn": "2026-09-12"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.d585be062067",
+    "statement": "Parenteral nutrition supplies nutrients while oral and enteral feeding are infeasible; it does not directly restore bowel motility, replace evaluation for obstruction, or prevent resumption of enteral feeding when gastrointestinal function returns.",
+    "sourceIds": [
+      "source.espen.clinical-nutrition-surgery.2025",
+      "source.vather-bissett.prolonged-postoperative-ileus.2013"
+    ],
+    "evidenceCategory": "safety_boundary",
+    "certainty": "moderate",
+    "limitation": "Ongoing ileus management and reassessment are outside this single nutritional-support concept. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Hospitalized adults receiving parenteral nutrition because prolonged postoperative ileus prevents adequate oral or enteral feeding.",
+    "lastCheckedOn": "2026-08-06"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.c1bd8baa573c",
+    "statement": "Parenteral nutrition is appropriate nutritional support in the approved presentation when prolonged postoperative ileus prevents adequate oral or enteral nutrition beyond seven days and mechanical obstruction has been excluded.",
+    "sourceIds": [
+      "source.espen.clinical-nutrition-surgery.2025",
+      "source.vather-bissett.prolonged-postoperative-ileus.2013"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "moderate",
+    "limitation": "This scope does not establish a universal instruction to delay nutrition until day seven. Malnutrition, high metabolic risk, critical illness, expected duration, and partial enteral tolerance can change timing and whether supplemental or total parenteral nutrition is used. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Hospitalized adults with persistent severe postoperative ileus who cannot use the gastrointestinal route for adequate nutrition.",
+    "lastCheckedOn": "2026-08-06"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "lastCheckedOn": "2026-11-04",
+    "id": "claim.n2.456c6686c997",
+    "statement": "At unchanged tidal volume, inspiratory flow and PEEP, a matched increase in peak and plateau pressure with an unchanged peak-to-plateau difference supports increased elastic pressure requirements rather than an isolated increase in airway resistance.",
+    "sourceIds": [
+      "source.gs028g.jimenez-ventilation-2024"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "applicablePopulation": "The explicitly controlled or reported adult retrospective profiles in the round-two question-flag drafts.",
+    "limitation": "Qualitative physical application of the recorded diaphragm/compliance relation. It is not a newly verified ventilator algorithm, universal diagnosis or instruction to choose settings; the question explicitly supplies the acquisition controls. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added."
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v2",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "lastCheckedOn": "2026-11-04",
+    "id": "claim.n2r2.19f587fdd650",
+    "statement": "In the supplied controlled record, smaller end-diastolic volume with similar ejection fraction supports reduced filling, while a higher plateau pressure during passive inspiratory holds at fixed delivered volume and measured total PEEP supports an increased elastic pressure requirement.",
+    "sourceIds": [
+      "source.jcm.laparoscopic-anesthesia-review.2020",
+      "source.jroboticsurg.pneumoperitoneum-acid-base-study.2026",
+      "source.gs028g.jimenez-ventilation-2024"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "applicablePopulation": "Only the explicitly described synthetic adult question-flag round-three profiles.",
+    "limitation": "Physical interpretation rather than proof of a unique cause or exclusion of mixed mechanisms. No new operative management, measured numeric range or ventilator setting is taught. Statement unchanged from the recorded catalog; original source/check dates retained, no external currentness verification. Exact revised-case application needs clinical review."
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v2",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "lastCheckedOn": "2026-11-04",
+    "id": "claim.n2r2.007f238850f9",
+    "statement": "When the agreed temporary directive ends after reassessed return to the pre-anaesthetic cardiopulmonary condition, continuation of unchanged chronic baseline oxygen does not by itself extend the modification.",
+    "sourceIds": [
+      "source.gs028se.asa-dnar-2023",
+      "source.gs028se.ama-dnar-5-4"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "moderate",
+    "applicablePopulation": "Only the explicitly described synthetic adult question-flag round-three profiles.",
+    "limitation": "Only the explicitly stipulated patient agreement; not an institutional default, oxygen target, recovery scale or jurisdiction-specific legal rule. Statement unchanged from the recorded catalog; original source/check dates retained, no external currentness verification. Exact revised-case application needs clinical review."
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.9439df93c6d6",
+    "statement": "A peptic ulcer with a nonbleeding visible vessel warrants endoscopic hemostasis followed by appropriate proton-pump inhibitor treatment.",
+    "sourceIds": [
+      "source.qq20261102.esge-ulcer-2026"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "moderate",
+    "limitation": "One current freely available society guideline is used for this added combined-plan claim; existing ACG evidence supports the hemostasis indication separately. No exact drug dose, duration or deadline is authored. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Adults with peptic-ulcer bleeding and a nonbleeding visible vessel.",
+    "lastCheckedOn": "2026-11-02"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.4a6198e86f78",
+    "statement": "Adverse invasive-polyp histology or incomplete resection can warrant oncologic regional resection despite a clear-looking scar.",
+    "sourceIds": [
+      "source.qq20261102a.ascrs-colon"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "moderate",
+    "limitation": "One verified primary guideline for this added scope: lymphovascular invasion, poor differentiation, involved deep margin and fragmentation are separately constructed case findings. Individual pedunculated/sessile risk and operative fitness require review; normal CT nodes do not prove microscopic negativity. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "The adult synthetic clinical scenarios identified in the associated question mappings.",
+    "lastCheckedOn": "2026-11-02"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.600714349549",
+    "statement": "Testing against no effect and evaluating a prespecified meaningful effect or equivalence margin are different statistical questions.",
+    "sourceIds": [
+      "source.qq20261102a.nist-p",
+      "source.qq20261102a.nist-ci",
+      "source.qq20261102a.lakens2017"
+    ],
+    "evidenceCategory": "definition",
+    "certainty": "moderate",
+    "limitation": "B26/B27/B31/B39 numbers, targets and intervals are constructed protocol inputs, not clinical thresholds or observed treatment effects. TOST .05 uses a 90% CI, not a substituted 95% CI; arithmetic/rounding is separately validated. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Explicitly fictional study datasets; methodology only, not observed intervention effects.",
+    "lastCheckedOn": "2026-11-02"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v2",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r2.6d0e9fa10739",
+    "statement": "For a fixed covariate profile, multiply baseline odds by the conditional odds ratio, then convert resulting odds to risk as odds/(1+odds).",
+    "sourceIds": [
+      "source.qq20261102a.dhsc-odds"
+    ],
+    "evidenceCategory": "definition",
+    "certainty": "moderate",
+    "limitation": "Algebraic derivation from definitions, not a causal/marginal prediction. With baseline .40 and OR .60 the risk is 2/7, approximately 29%; all values are fictional inputs. Statement unchanged from the recorded catalog; original source/check dates retained, no external currentness verification. Exact revised-case application needs clinical review.",
+    "applicablePopulation": "Explicitly fictional study datasets; methodology only, not observed intervention effects.",
+    "lastCheckedOn": "2026-11-02"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v2",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r2.9737180b84fa",
+    "statement": "Re-sedation can follow flumazenil reversal of midazolam, so apparent immediate recovery does not remove the need for further monitoring.",
+    "sourceIds": [
+      "source.qq20261102a.bsg-sedation"
+    ],
+    "evidenceCategory": "safety_boundary",
+    "certainty": "moderate",
+    "limitation": "One primary specialist guideline. No exact observation period or dose authored; prior benzodiazepine/opioid exposure and individual risk require review. Statement unchanged from the recorded catalog; original source/check dates retained, no external currentness verification. Exact revised-case application needs clinical review.",
+    "applicablePopulation": "The adult synthetic clinical scenarios identified in the associated question mappings.",
+    "lastCheckedOn": "2026-11-02"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.7e424a1ff493",
+    "statement": "Pulse oximetry does not establish adequate ventilation during procedural sedation.",
+    "sourceIds": [
+      "source.qq20261102b.bsg-sedation"
+    ],
+    "evidenceCategory": "safety_boundary",
+    "certainty": "moderate",
+    "limitation": "One primary specialist guideline. The fictional capnography/chest observations are not a numerical toxicity threshold. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "The identified adult synthetic teaching cases; constructed observations are not observed patient data.",
+    "lastCheckedOn": "2026-11-02"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.bfe7a6f48cfd",
+    "statement": "Sedation-associated respiratory depression calls for assessment and support of ventilation, with reversal or additional anesthesia support as clinically needed.",
+    "sourceIds": [
+      "source.qq20261102b.bsg-sedation"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "moderate",
+    "limitation": "One primary specialist guideline. No reversal dose, saturation target, peak-effect time or universal rescue sequence authored. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "The identified adult synthetic teaching cases; constructed observations are not observed patient data.",
+    "lastCheckedOn": "2026-11-02"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.213458238919",
+    "statement": "Null-effect testing and comparison of a confidence interval with a separately defined effect target answer different statistical questions.",
+    "sourceIds": [
+      "source.qq20261102b.nist-p",
+      "source.qq20261102b.nist-ci"
+    ],
+    "evidenceCategory": "definition",
+    "certainty": "moderate",
+    "limitation": "The endpoint, benefit direction and whole-interval confirmation/exclusion rule are explicitly fictional protocol inputs. No source is represented as prescribing a clinical benefit cutoff; interval exclusion is not impossibility. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "The identified adult synthetic teaching cases; constructed observations are not observed patient data.",
+    "lastCheckedOn": "2026-11-02"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.3febc19ab337",
+    "statement": "Adequate separated-swallow protocols and selected provocative maneuvers help determine whether manometry addresses the patient's obstructive symptoms.",
+    "sourceIds": [
+      "source.qq20261102c.acg-physiology2020",
+      "source.qq20261102c.chicago"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "The technical protocol and symptom challenge need specialist review; no new quantitative threshold, fluid volume or meal recipe is authored. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "The identified synthetic adult clinical or employee teaching cases; observed values are constructed case inputs, not empirical patient/gameplay data.",
+    "lastCheckedOn": "2026-11-02"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.2dcec9ca69eb",
+    "statement": "A rapid-drink manometry challenge assesses esophageal outflow under liquid loading rather than replacing the ordinary separated-swallow peristaltic assessment.",
+    "sourceIds": [
+      "source.qq20261102d.acg2020",
+      "source.qq20261102d.chicago2021"
+    ],
+    "limitation": "Existing primary-source verification reused offline. This is a protocol-purpose distinction, not a universal preference over other corroborating studies or an invented quantitative criterion. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "applicablePopulation": "The identified synthetic adult teaching cases; constructed observations are not patient data or clinical thresholds.",
+    "lastCheckedOn": "2026-11-02"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.ea086984184b",
+    "statement": "A rapid-swallow manometry sequence assesses inhibition and post-sequence contractile reserve; it is not interchangeable with separated baseline swallows for esophageal-body classification.",
+    "sourceIds": [
+      "source.qq20261102d.acg2020",
+      "source.qq20261102d.chicago2021"
+    ],
+    "limitation": "Previously verified primary physiology guidance and classification consensus reused offline. Interpretation depends on adequate acquisition; no exact swallow count, volume, interval or pressure cutoff is introduced. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "applicablePopulation": "The identified synthetic adult teaching cases; constructed observations are not patient data or clinical thresholds.",
+    "lastCheckedOn": "2026-11-02"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.57cdab035105",
+    "statement": "A standardized solid-meal manometry challenge can investigate food-associated obstructive symptoms that an ordinary water-swallow series has not explained.",
+    "sourceIds": [
+      "source.qq20261102d.acg2020",
+      "source.qq20261102d.chicago2021"
+    ],
+    "limitation": "Previously verified primary sources reused offline. Choice of meal and protocol needs specialist review; no recipe, diagnostic cutoff or universal test hierarchy is authored. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "applicablePopulation": "The identified synthetic adult teaching cases; constructed observations are not patient data or clinical thresholds.",
+    "lastCheckedOn": "2026-11-02"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v2",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r2.8b03fc3aabde",
+    "statement": "After technically adequate rapid-swallow testing, failure of the post-sequence contraction to augment baseline supports reduced contractile reserve, distinct from inhibition during the sequence and from the outflow assessment made during rapid drinking.",
+    "sourceIds": [
+      "source.qq20261102e.acg2020",
+      "source.qq20261102e.chicago2021"
+    ],
+    "limitation": "Previously verified primary physiology guidance reused offline. Qualitative laboratory-referenced observations and repeatability require motility review. No numerical criterion, diagnostic subtype or cause of all symptoms is inferred from these responses alone. Statement unchanged from the recorded catalog; original source/check dates retained, no external currentness verification. Exact revised-case application needs clinical review.",
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "applicablePopulation": "The named synthetic adult teaching cases; constructed observations are not empirical patient or gameplay data.",
+    "lastCheckedOn": "2026-11-02"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.72256312b855",
+    "statement": "The approved early-enteral-nutrition rule requires adequate resuscitation and no enteral contraindication; ongoing shock, incomplete resuscitation, suspected intestinal ischemia, or mechanical obstruction falls outside this teaching scenario.",
+    "sourceIds": [
+      "source.jsbi.burn-care-guideline.2022",
+      "source.east.trauma-nutritional-support.2004"
+    ],
+    "evidenceCategory": "safety_boundary",
+    "certainty": "moderate",
+    "limitation": "Falling outside the approved scenario does not itself specify parenteral nutrition or another intervention; those decisions require separately authored clinical content. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Patients with extensive burns being assessed for initiation of enteral nutritional support.",
+    "lastCheckedOn": "2026-08-06"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.84c927796922",
+    "statement": "For an extensively burned patient who has been adequately resuscitated and has no enteral contraindication, enteral nutrition should begin as soon as feasible within the first 24 hours after injury.",
+    "sourceIds": [
+      "source.jsbi.burn-care-guideline.2022",
+      "source.east.trauma-nutritional-support.2004",
+      "source.naeini.burn-nutrition-umbrella-review.2024"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "moderate",
+    "limitation": "The evidence supports early feeding but does not establish eight hours as a universal cutoff. The exact start depends on resuscitation, hemodynamic status, access, contraindications, and clinical feasibility. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Patients with extensive burns who are adequately resuscitated, hemodynamically stable, unable to meet nutritional needs orally, and without a contraindication to enteral nutrition.",
+    "lastCheckedOn": "2026-08-06"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v2",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r2.4b2bd6d4bf88",
+    "statement": "Unstable physiology, uncertain bowel viability, an unrecognized or delayed enterotomy, incomplete source control, or persistent gross enteric or feculent spillage falls outside the approved macroporous-synthetic-mesh selection rule.",
+    "sourceIds": [
+      "source.ehs.emergency-ventral-incisional-hernia.2026",
+      "source.wses.complicated-abdominal-wall-hernia.2017",
+      "source.sages.laparoscopic-ventral-hernia.2016"
+    ],
+    "evidenceCategory": "safety_boundary",
+    "certainty": "moderate",
+    "limitation": "Falling outside this scope does not by itself prescribe tissue repair, biologic mesh, staged reconstruction, or abandonment; those operative decisions require separately authored content. Statement unchanged from the recorded catalog; original source/check dates retained, no external currentness verification. Exact revised-case application needs clinical review.",
+    "applicablePopulation": "Adults with an enterotomy or gastrointestinal contamination encountered during ventral or incisional hernia repair.",
+    "lastCheckedOn": "2026-08-06"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.e551a9978155",
+    "statement": "Acute irreducibility, bowel-obstruction features, escalating pain with peritoneal findings, or systemic deterioration moves an incisional-hernia presentation out of elective optimization and into urgent surgical-capable evaluation.",
+    "sourceIds": [
+      "source.ehs.emergency-ventral.2026",
+      "source.wses.emergency-hernia.2017"
+    ],
+    "evidenceCategory": "safety_boundary",
+    "certainty": "moderate",
+    "limitation": "The feature set is a safety boundary rather than a validated score; no single feature independently confirms strangulation. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "Adults with a primary ventral or incisional hernia and possible acute complication.",
+    "lastCheckedOn": "2026-07-30"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.1d94861b6f4e",
+    "statement": "Vitamin C, or ascorbate, is a required cofactor for prolyl and lysyl hydroxylase activity during collagen biosynthesis.",
+    "sourceIds": [
+      "source.nih-ods.vitamin-c-health-professional.2025",
+      "source.guo-dipietro.wound-healing-factors.2010"
+    ],
+    "evidenceCategory": "definition",
+    "certainty": "high",
+    "limitation": "The biochemical role applies to collagen biosynthesis broadly and should not be taught as unique to type III collagen. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "General human collagen biosynthesis and perioperative wound-healing education.",
+    "lastCheckedOn": "2026-08-06"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.5aa2710c7ac3",
+    "statement": "Inadequate vitamin C impairs proline and lysine hydroxylation, compromising normal collagen maturation and stability and contributing to impaired wound healing.",
+    "sourceIds": [
+      "source.nih-ods.vitamin-c-health-professional.2025",
+      "source.guo-dipietro.wound-healing-factors.2010"
+    ],
+    "evidenceCategory": "safety_boundary",
+    "certainty": "high",
+    "limitation": "This mechanism does not establish that vitamin C deficiency is the cause of every impaired wound or that supplementation improves healing in every patient. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review.",
+    "applicablePopulation": "General human collagen biosynthesis and perioperative wound-healing education.",
+    "lastCheckedOn": "2026-08-06"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2.544a3a1d14f1",
+    "statement": "The established biochemical requirement for vitamin C does not by itself justify routine high-dose supplementation as a universal treatment for every well-nourished postoperative patient.",
+    "sourceIds": [
+      "source.bechara.vitamin-c-tissue-healing-review.2022"
+    ],
+    "evidenceCategory": "safety_boundary",
+    "certainty": "moderate",
+    "limitation": "Clinical supplementation evidence varies across populations and wound types; this concept teaches mechanism and does not prescribe a dose or treatment protocol. Offline reuse: source verification and currentness have not been refreshed for N2. The exact clinical application, decision boundary and option ranking require review. Only one recorded source publication supports this atomic claim; no independent management cross-check has been added.",
+    "applicablePopulation": "Postoperative patients without a separately established vitamin C deficiency or condition-specific supplementation indication.",
+    "lastCheckedOn": "2026-08-06"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r3.55c2d3c6076b",
+    "statement": "After substantial undernutrition, carbohydrate reintroduction can increase insulin and promote cellular uptake of phosphate, contributing to a fall in serum phosphate during refeeding.",
+    "sourceIds": [
+      "source.gs028f.zhang_refeeding2023"
+    ],
+    "evidenceCategory": "definition",
+    "certainty": "high",
+    "limitation": "The original 2023 cohort report's Introduction is the sole direct mechanism source in this packet. Stable physiology, not its neurocritical risk model or management algorithm. No exact intake, interval, phosphate threshold or claim that every postfeeding fall has this cause. Unchanged recorded statement; original last-check date retained. Exact new application and currentness unverified.",
+    "applicablePopulation": "Adults with a supplied compatible outside refeeding course after substantial undernutrition.",
+    "lastCheckedOn": "2026-10-07"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r3.capnography-sampling-events",
+    "statement": "When nasal expired-gas recording intermittently disappears during mouth opening, synchronized oral-nasal gas sampling can distinguish a route-related signal gap from a ventilation pause.",
+    "sourceIds": [
+      "source.qq20261102b.bsg-sedation"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "low",
+    "limitation": "Sampling route and temporal-resolution details are new. Verify combined-route acquisition and limitations of the proposed between-event/slow-trend alternatives. Offline author synthesis, not external verification; original source dates are unchanged. Named clinician review required.",
+    "applicablePopulation": "The explicitly bounded fictional N2 round-three record; no empirical rate, medication dose, washout period or universal clinical cutoff.",
+    "lastCheckedOn": "2026-11-05"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r3.contained-pelvic-source-control",
+    "statement": "In the constructed stable localized postoperative course, a contained pelvic collection with a represented safe catheter route can be approached with image-guided drainage rather than opening an unrelated superficial pocket.",
+    "sourceIds": [
+      "source.bread-butter.idsa-ssti-2014-wound",
+      "source.asge.pancreatic-fluid-collections.2016",
+      "source.ksge.pancreatic-fluid-collections.2021"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "low",
+    "limitation": "The recorded drainage atoms concern different compartments. They do NOT verify anastomotic-leak management; obtain direct permitted colorectal/source-control guidance and verify operative-versus-percutaneous ranking. Offline author synthesis, not external verification; original source dates are unchanged. Named clinician review required.",
+    "applicablePopulation": "The explicitly bounded fictional N2 round-three record; no empirical rate, medication dose, washout period or universal clinical cutoff.",
+    "lastCheckedOn": "2026-11-05"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r3.current-perioperative-request",
+    "statement": "A patient demonstrating decision-specific understanding may request reconsideration of a temporary perioperative airway permission before its previously agreed endpoint.",
+    "sourceIds": [
+      "source.gs028se.asa-dnar-2023",
+      "source.gs028se.ama-dnar-5-4"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "low",
+    "limitation": "Current capacity, modification of prior permission and documentation scope require direct professional ethics/clinical verification. No jurisdiction-specific legal conclusion is asserted. Offline author synthesis, not external verification; original source dates are unchanged. Named clinician review required.",
+    "applicablePopulation": "The explicitly bounded fictional N2 round-three record; no empirical rate, medication dose, washout period or universal clinical cutoff.",
+    "lastCheckedOn": "2026-11-05"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r3.delivered-supplemental-nutrition",
+    "statement": "A supplemental parenteral prescription must account for nutrients actually delivered enterally rather than assume the larger ordered contribution was achieved.",
+    "sourceIds": [
+      "source.nutrition.espen-practical-2021",
+      "source.espen.kidney-nutrition.2024"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "low",
+    "limitation": "This is a new delivery-reconciliation application; directly verify the exact reduction strategy rather than infer a universal PN taper percentage. Offline author synthesis, not external verification; original source dates are unchanged. Named clinician review required.",
+    "applicablePopulation": "The explicitly bounded fictional N2 round-three record; no empirical rate, medication dose, washout period or universal clinical cutoff.",
+    "lastCheckedOn": "2026-11-05"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r3.depolarizing-ratio-amplitude",
+    "statement": "After succinylcholine, marked depression of absolute twitch amplitude can coexist with a near-baseline fourth/first twitch ratio; the ratio by itself need not establish motor recovery.",
+    "sourceIds": [
+      "source.gs028g.motamed-neuromuscular-monitoring-2023",
+      "source.gs028g.dailymed-sugammadex-2026"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "low",
+    "limitation": "The source atoms do not establish this depolarizing-monitor pattern. Verify phase-I interpretation and all reversal alternatives, including the neostigmine boundary, directly. Offline author synthesis, not external verification; original source dates are unchanged. Named clinician review required.",
+    "applicablePopulation": "The explicitly bounded fictional N2 round-three record; no empirical rate, medication dose, washout period or universal clinical cutoff.",
+    "lastCheckedOn": "2026-11-05"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r3.extravasation-pulse-assessment",
+    "statement": "A palpable arterial pulse does not by itself exclude threatened local compartments in the constructed progressive contrast-extravasation course.",
+    "sourceIds": [
+      "source.acr.contrast-manual.2026.reaction-classification"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "low",
+    "limitation": "The prior escalation atom itself carried a hold. Directly verify the pulse/compartment distinction and the priority among proposed assessments; no pressure or volume cutoff is inferred. Offline author synthesis, not external verification; original source dates are unchanged. Named clinician review required.",
+    "applicablePopulation": "The explicitly bounded fictional N2 round-three record; no empirical rate, medication dose, washout period or universal clinical cutoff.",
+    "lastCheckedOn": "2026-11-05"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r3.fissure-sphincter-preserving-flap",
+    "statement": "A sphincter-preserving advancement-flap discussion can be appropriate for a persistent chronic fissure with limited continence reserve after nonoperative treatment.",
+    "sourceIds": [
+      "source.chronic-fissure.ascrs-cpg.2023",
+      "source.chronic-fissure.siucp.2023"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "low",
+    "limitation": "The recorded atom restricts LIS selection but does not verify advancement-flap priority over repeat botulinum. Obtain direct colorectal guideline support for the exact options. Offline author synthesis, not external verification; original source dates are unchanged. Named clinician review required.",
+    "applicablePopulation": "The explicitly bounded fictional N2 round-three record; no empirical rate, medication dose, washout period or universal clinical cutoff.",
+    "lastCheckedOn": "2026-11-05"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r3.focal-motor-change",
+    "statement": "A newly lateralized loss of command following can require urgent structural neurologic assessment even when the GCS best-motor component is unchanged.",
+    "sourceIds": [
+      "source.gcs.assessment-aid-current",
+      "source.gcs.faq-current"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "low",
+    "limitation": "The component-scoring atoms do not establish the exact urgent imaging priority. Verify the current trauma assessment pathway and alternative timing. Offline author synthesis, not external verification; original source dates are unchanged. Named clinician review required.",
+    "applicablePopulation": "The explicitly bounded fictional N2 round-three record; no empirical rate, medication dose, washout period or universal clinical cutoff.",
+    "lastCheckedOn": "2026-11-05"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r3.free-flap-outflow-salvage",
+    "statement": "New swelling, purple color, rapid refill, dark prick bleeding and a changed venous signal despite arterial signal persistence can indicate an urgent free-flap outflow concern.",
+    "sourceIds": [
+      "source.gs028f.khare.grafts-flaps.2026",
+      "source.gs028f.nci.breast-reconstruction-flaps"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "low",
+    "limitation": "The recorded free-transfer circulation atom does not verify the signs, exploration priority or leech/observation limits. Directly verify all three before accepting the new salvage item. Offline author synthesis, not external verification; original source dates are unchanged. Named clinician review required.",
+    "applicablePopulation": "The explicitly bounded fictional N2 round-three record; no empirical rate, medication dose, washout period or universal clinical cutoff.",
+    "lastCheckedOn": "2026-11-05"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r3.limb-salvage-active-bleeding",
+    "statement": "A salvageable immediately threatened limb with a current intracranial hemorrhage requires considering a nonlytic urgent revascularization route rather than treating severe ischemia as proof of irreversible damage.",
+    "sourceIds": [
+      "source.acc-aha.pad.2024"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "low",
+    "limitation": "Viability is recorded, but the active intracranial bleeding contraindication and exact operative-versus-catheter priority need direct vascular/drug guidance. No historical bleeding time cutoff is claimed. Offline author synthesis, not external verification; original source dates are unchanged. Named clinician review required.",
+    "applicablePopulation": "The explicitly bounded fictional N2 round-three record; no empirical rate, medication dose, washout period or universal clinical cutoff.",
+    "lastCheckedOn": "2026-11-05"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r3.naloxone-infusion-boundary",
+    "statement": "Repeated respiratory depression after transient responses to naloxone boluses can prompt titrated continuous naloxone rather than repeated larger peaks during continued respiratory support.",
+    "sourceIds": [
+      "source.fda.naloxone-label.2023.s007.mechanism",
+      "source.fda.naloxone-emergency-counseling.2020"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "low",
+    "limitation": "The recorded atom establishes temporary reversal and recurrence, not infusion selection. Verify infusion suitability and the analgesia/antagonism tradeoff in permitted drug/anesthesia guidance. Offline author synthesis, not external verification; original source dates are unchanged. Named clinician review required.",
+    "applicablePopulation": "The explicitly bounded fictional N2 round-three record; no empirical rate, medication dose, washout period or universal clinical cutoff.",
+    "lastCheckedOn": "2026-11-05"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r3.operation-time-outcome-separation",
+    "statement": "Replacing an operative contamination class only for patients who later develop infection makes class-stratified infection comparisons depend on the outcome; reconstructing the original operation-time class preserves the intended stratification variable.",
+    "sourceIds": [
+      "source.gs028e.ukhsa_woundclass",
+      "source.cdc.field-epi-analysis.2026"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "moderate",
+    "limitation": "Bounded logical application to the explicit fictional coding rule; no clinical performance estimate, treatment effect or new wound-class threshold. Offline author synthesis, not external verification; original source dates are unchanged. Named clinician review required.",
+    "applicablePopulation": "The explicitly bounded fictional N2 round-three record; no empirical rate, medication dose, washout period or universal clinical cutoff.",
+    "lastCheckedOn": "2026-11-05"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r3.preimplantation-specificity-assay",
+    "statement": "For the constructed pre-existing serum-reactivity question, antigen-specific antibody characterization of stored preimplantation serum can add target information not supplied by a functional donor-cell result after treatment has changed the later sample.",
+    "sourceIds": [
+      "source.gs028e.hyperacute_matsuda2016",
+      "source.gs028e.ahrq_transplant2012",
+      "source.gs028f.prograf2023"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "low",
+    "limitation": "Assay specificity, pre/post-plasma-exchange sample limitations and future unacceptable-antigen allocation use require direct transplant laboratory guidance; the recorded mechanism atom is not sufficient. Offline author synthesis, not external verification; original source dates are unchanged. Named clinician review required.",
+    "applicablePopulation": "The explicitly bounded fictional N2 round-three record; no empirical rate, medication dose, washout period or universal clinical cutoff.",
+    "lastCheckedOn": "2026-11-05"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r3.prepared-recipient-bed",
+    "statement": "Definitive skin-graft suitability depends on the recipient surface at coverage, which can differ after staged preparation from an earlier bare-cortex finding.",
+    "sourceIds": [
+      "source.gs028f.khare.grafts-flaps.2026",
+      "source.gs028f.nci.breast-reconstruction-flaps"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "low",
+    "limitation": "The generic recipient dependence atom does not establish graft suitability over prepared tibial cortex or every structural exception. Directly verify this current-bed ranking with reconstructive guidance. Offline author synthesis, not external verification; original source dates are unchanged. Named clinician review required.",
+    "applicablePopulation": "The explicitly bounded fictional N2 round-three record; no empirical rate, medication dose, washout period or universal clinical cutoff.",
+    "lastCheckedOn": "2026-11-05"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r3.protein-composition-volume",
+    "statement": "For the constructed patient whose combined intake meets the assessed energy plan but not its protein amount, with meal displacement after added volume, replacing some carbohydrate contribution with a reviewed protein module can address the composition mismatch.",
+    "sourceIds": [
+      "source.nutrition.espen-practical-2021"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "low",
+    "limitation": "Composition/volume prescription priority and named whey/glucose-polymer module examples extend the screening/route atoms. Verify the exact proposed substitution with dietetic guidance; fictional observed intake is not a universal target threshold. Offline author synthesis, not external verification; original source dates are unchanged. Named clinician review required.",
+    "applicablePopulation": "The explicitly bounded fictional N2 round-three record; no empirical rate, medication dose, washout period or universal clinical cutoff.",
+    "lastCheckedOn": "2026-11-05"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r3.recurrent-gj-graded-dilation",
+    "statement": "Recurrence after one deliberately limited balloon session does not by itself establish failure of a completed endoscopic treatment strategy for a gastrojejunal narrowing.",
+    "sourceIds": [
+      "source.asmbs.marginal-ulcer.2024"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "low",
+    "limitation": "Verify the repeat-dilation priority and the actual suitability boundaries for stent and operation in the recorded bariatric guidance; no session count or diameter rule is inferred. Offline author synthesis, not external verification; original source dates are unchanged. Named clinician review required.",
+    "applicablePopulation": "The explicitly bounded fictional N2 round-three record; no empirical rate, medication dose, washout period or universal clinical cutoff.",
+    "lastCheckedOn": "2026-11-05"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r3.refeeding-combined-carbohydrate",
+    "statement": "When metabolic deterioration follows intravenous carbohydrate before enteral formula delivery, reassessment of the carbohydrate prescription must include the intravenous source rather than change the formula route in isolation.",
+    "sourceIds": [
+      "source.gs028f.zhang_refeeding2023",
+      "source.gs028f.auspen_refeeding2025"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "low",
+    "limitation": "Exposure recognition is recorded, but the exact reduce-versus-advance management ranking is not. Verify it against permitted refeeding guidance, preserving disagreements and avoiding a universal phosphate trigger. Offline author synthesis, not external verification; original source dates are unchanged. Named clinician review required.",
+    "applicablePopulation": "The explicitly bounded fictional N2 round-three record; no empirical rate, medication dose, washout period or universal clinical cutoff.",
+    "lastCheckedOn": "2026-11-05"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r3.ulcer-rescue-sequence",
+    "statement": "In the constructed stabilized rebleeding course after initial successful ulcer hemostasis, a repeat endoscopic attempt precedes the represented catheter or operative rescue options.",
+    "sourceIds": [
+      "source.qq20261102c.esge-ulcer2026"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "low",
+    "limitation": "Repeat endoscopy is recorded; the precise priority over embolization/operation and the chosen stabilization context need direct verification. Offline author synthesis, not external verification; original source dates are unchanged. Named clinician review required.",
+    "applicablePopulation": "The explicitly bounded fictional N2 round-three record; no empirical rate, medication dose, washout period or universal clinical cutoff.",
+    "lastCheckedOn": "2026-11-05"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r3.vte-changing-renal-procedure",
+    "statement": "A rapidly changing renal course and a pending invasive procedure can favor intravenous unfractionated heparin as an initially titratable therapeutic anticoagulant for acute venous thrombosis.",
+    "sourceIds": [
+      "source.board.dvt-ash-2014",
+      "source.board.dvt-nhlbi-treatment-2022",
+      "source.bread-butter.seom-cancer-vte-2024",
+      "source.bread-butter.asco-cancer-vte-2023"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "low",
+    "limitation": "Initial-agent priority and alternatives in evolving renal injury are not established by the recorded duration/purpose atoms. Verify UFH, adjusted enoxaparin and apixaban comparisons and ordinary eligibility requirements. Offline author synthesis, not external verification; original source dates are unchanged. Named clinician review required.",
+    "applicablePopulation": "The explicitly bounded fictional N2 round-three record; no empirical rate, medication dose, washout period or universal clinical cutoff.",
+    "lastCheckedOn": "2026-11-05"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r3.d54862b5cf6a",
+    "statement": "Opioid exposure can accompany an achalasia-like spastic pattern, and assessment off opioids is advised when feasible.",
+    "sourceIds": [
+      "source.qq20261102b.chicago"
+    ],
+    "evidenceCategory": "evaluation",
+    "certainty": "low",
+    "limitation": "Conditional, low-grade consensus guidance. Withdrawal must be coordinated; no abrupt cessation, fixed washout or universal reversibility is claimed. Unchanged recorded statement; original last-check date retained. Exact new application and currentness unverified.",
+    "applicablePopulation": "The identified adult synthetic teaching cases; constructed observations are not observed patient data.",
+    "lastCheckedOn": "2026-11-02"
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "claim.n2r3.49a69d44d485",
+    "statement": "Recurrent peptic-ulcer bleeding after initial successful hemostasis can warrant repeat endoscopic therapy, with consideration of an OTS clip.",
+    "sourceIds": [
+      "source.qq20261102c.esge-ulcer2026"
+    ],
+    "evidenceCategory": "management",
+    "certainty": "moderate",
+    "limitation": "One adequate current full primary guideline. Actual resuscitation/access and prior course matter; not a universal requirement to repeat endoscopy despite any instability or contraindication. Unchanged recorded statement; original last-check date retained. Exact new application and currentness unverified.",
+    "applicablePopulation": "The identified synthetic adult clinical or employee teaching cases; observed values are constructed case inputs, not empirical patient/gameplay data.",
+    "lastCheckedOn": "2026-11-02"
+  }
+];
+export const QUESTION_NEW_N2_ROUND3_SOURCES: ClinicalSource[] = [
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.acc-aha.pad.2024",
+    "title": "2024 multisociety lower-extremity PAD guideline",
+    "completeCitation": "Gornik HL, Aronow HD, Goodney PP, et al. 2024 ACC/AHA Multisociety Guideline for the Management of Lower Extremity Peripheral Artery Disease. Circulation. 2024.",
+    "organizationOrJournal": "American Heart Association",
+    "authors": [
+      "Gornik HL",
+      "Aronow HD",
+      "Goodney PP",
+      "et al."
+    ],
+    "publicationYear": 2024,
+    "doi": "10.1161/CIR.0000000000001251",
+    "pmid": null,
+    "officialUrl": "https://professional.heart.org/en/guidelines-statements/2024-accahaaacvprapmaabcscaisvmsvnsvssirvess-guideline-for-the-management-ofcir0000000000001251",
+    "accessedOn": "2026-10-02",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Copyrighted society guidance",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current US multisociety vascular guideline.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.ec112ce49cac",
+      "claim.n2.53daaa464a9f",
+      "claim.n2.f6920342da46",
+      "claim.n2r3.limb-salvage-active-bleeding"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.acg.acute-pancreatitis.2024",
+    "title": "ACG guideline: acute pancreatitis",
+    "completeCitation": "Tenner S, Vege SS, Sheth SG, et al. American College of Gastroenterology Guidelines: Management of Acute Pancreatitis. Am J Gastroenterol. 2024;119:419-437.",
+    "organizationOrJournal": "American Journal of Gastroenterology",
+    "authors": [
+      "Tenner S",
+      "Vege SS",
+      "Sheth SG",
+      "et al."
+    ],
+    "publicationYear": 2024,
+    "doi": "10.14309/ajg.0000000000002645",
+    "pmid": null,
+    "officialUrl": "https://webfiles.gi.org/links/journals/AJG-Clinical-Guidelines-Highlights-Acute-Pancreatitis-2024-FINAL.pdf",
+    "accessedOn": "2026-10-02",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Copyrighted society guidance",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current ACG guideline highlight used for targeted facts.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.e1ad9578fe95"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.acg.upper-gastrointestinal-ulcer-bleeding-guideline.2021",
+    "title": "ACG Clinical Guideline: Upper Gastrointestinal and Ulcer Bleeding",
+    "completeCitation": "Laine L, Barkun AN, Saltzman JR, Martel M, Leontiadis GI. ACG Clinical Guideline: Upper Gastrointestinal and Ulcer Bleeding. American Journal of Gastroenterology. 2021;116(5):899-917. doi:10.14309/ajg.0000000000001245.",
+    "organizationOrJournal": "American College of Gastroenterology; American Journal of Gastroenterology",
+    "authors": [
+      "Loren Laine",
+      "Alan N. Barkun",
+      "John R. Saltzman",
+      "Myriam Martel",
+      "Grigorios I. Leontiadis"
+    ],
+    "publicationYear": 2021,
+    "doi": "10.14309/ajg.0000000000001245",
+    "pmid": "33929377",
+    "officialUrl": "https://pubmed.ncbi.nlm.nih.gov/33929377/",
+    "accessedOn": "2026-08-10",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Copyrighted professional-society guideline; targeted factual verification only",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Use independently written factual synthesis for targeted guideline verification; do not reproduce recommendations, tables, figures, algorithms, or protected explanatory wording. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current ACG upper-GI and ulcer-bleeding guideline supporting treatment of active bleeding and nonbleeding visible vessels, accepted hemostatic modalities, and the rule that epinephrine is not definitive monotherapy.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2r2.2f251a75ceb4",
+      "claim.n2r2.e55b4be019b7",
+      "claim.n2.dda382649df0"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.acr.contrast-manual.2026.reaction-classification",
+    "title": "ACR Manual on Contrast Media: reaction classification",
+    "completeCitation": "American College of Radiology Committee on Drugs and Contrast Media. ACR Manual on Contrast Media. Current web manual with 2026 revision history; accessed October 7, 2026. Extravasation, printed p. 21 (physical PDF p. 24); Allergic-Like and Physiologic Reactions to Intravascular Iodinated Contrast Media, printed pp. 26–31, including delayed cutaneous events on p. 29; acute reaction categories, printed p. 101 (physical PDF p. 104).",
+    "organizationOrJournal": "American College of Radiology",
+    "authors": [
+      "American College of Radiology Committee on Drugs and Contrast Media"
+    ],
+    "publicationYear": 2026,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://www.acr.org/Clinical-Resources/Clinical-Tools-and-Reference/Contrast-Manual",
+    "accessedOn": "2026-10-07",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Copyrighted professional guidance or approved product labeling; targeted factual verification only, without reproducing protected expression.",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current professional-society consensus manual used only to verify reaction categories. No table, reaction algorithm, exact incidence, prophylaxis rule, or drug treatment is reproduced.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.1af25373f5a7",
+      "claim.n2.8074aee0b69b",
+      "claim.n2r2.extravasation-progressive-local-injury",
+      "claim.n2r3.extravasation-pulse-assessment"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.ascrs.colon-cancer.2022",
+    "title": "ASCRS colon cancer guideline",
+    "completeCitation": "Vogel JD, Felder SI, Bhama AR, et al. The American Society of Colon and Rectal Surgeons Clinical Practice Guidelines for the Management of Colon Cancer. Dis Colon Rectum. 2022;65:148-177.",
+    "organizationOrJournal": "American Society of Colon and Rectal Surgeons",
+    "authors": [
+      "Vogel JD",
+      "Felder SI",
+      "Bhama AR",
+      "et al."
+    ],
+    "publicationYear": 2022,
+    "doi": "10.1097/DCR.0000000000002323",
+    "pmid": null,
+    "officialUrl": "https://www.ascrsu.com/ascrs/view/ASCRS-Evidence-Based-Guidelines-and-Expert-Consensus/3982018/all/Management_of_Colon_Cancer__2022_",
+    "accessedOn": "2026-10-02",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Copyrighted society guidance",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current ASCRS clinical practice guideline.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.ab43dd10ecba"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.asge.choledocholithiasis.2019",
+    "title": "ASGE guideline on the role of endoscopy in the evaluation and management of choledocholithiasis",
+    "completeCitation": "Buxbaum JL, Abbas Fehmi SM, Sultan S, Fishman DS, Qumseya BJ, Cortessis VK, et al.; ASGE Standards of Practice Committee. Gastrointestinal Endoscopy. 2019;89(6):1075-1105.e15. doi:10.1016/j.gie.2018.10.001.",
+    "organizationOrJournal": "American Society for Gastrointestinal Endoscopy",
+    "authors": [
+      "Buxbaum JL",
+      "Abbas Fehmi SM",
+      "Sultan S",
+      "Fishman DS",
+      "Qumseya BJ",
+      "Cortessis VK",
+      "et al."
+    ],
+    "publicationYear": 2019,
+    "doi": "10.1016/j.gie.2018.10.001",
+    "pmid": "30979521",
+    "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8594622/",
+    "accessedOn": "2026-09-13",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Copyrighted society and journal guidance available in PubMed Central",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Underlying facts independently synthesized from the successfully reviewed full text; no guideline prose, tables, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Primary U.S. society guidance for risk-stratified evaluation and duct-stone management.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.48b019a0d1ac"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.asge.pancreatic-fluid-collections.2016",
+    "title": "The role of endoscopy in the diagnosis and treatment of inflammatory pancreatic fluid collections",
+    "completeCitation": "ASGE Standards of Practice Committee; Muthusamy VR, Chandrasekhara V, Acosta RD, Bruining DH, Chathadi KV, Eloubeidi MA, et al. Gastrointestinal Endoscopy. 2016;83(3):481-488. doi:10.1016/j.gie.2015.11.027.",
+    "organizationOrJournal": "American Society for Gastrointestinal Endoscopy",
+    "authors": [
+      "Muthusamy VR",
+      "Chandrasekhara V",
+      "Acosta RD",
+      "Bruining DH",
+      "Chathadi KV",
+      "Eloubeidi MA",
+      "et al."
+    ],
+    "publicationYear": 2016,
+    "doi": "10.1016/j.gie.2015.11.027",
+    "pmid": null,
+    "officialUrl": "https://www.asge.org/home/resources/publications/guidelines/2016_inflammatory_pancreatic_fluid_collections",
+    "accessedOn": "2026-09-13",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Copyrighted society and journal guidance",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Targeted factual verification only; no source prose reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "U.S. society guidance for diagnosis and endoscopic treatment of inflammatory pancreatic fluid collections.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.1e7b4640104f",
+      "claim.n2.8b815ad3ac3c",
+      "claim.n2r3.contained-pelvic-source-control"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.asmbs.marginal-ulcer.2024",
+    "title": "ASMBS marginal-ulcer treatment review",
+    "completeCitation": "Vosburg RW, Nimeri A, Azagury D, et al. ASMBS literature review on the treatment of marginal ulcers after metabolic and bariatric surgery. Surg Obes Relat Dis. 2024.",
+    "organizationOrJournal": "American Society for Metabolic and Bariatric Surgery",
+    "authors": [
+      "Vosburg RW",
+      "Nimeri A",
+      "Azagury D",
+      "et al."
+    ],
+    "publicationYear": 2024,
+    "doi": "10.1016/j.soard.2024.10.003",
+    "pmid": null,
+    "officialUrl": "https://asmbs.org/resources/asmbs-literature-review-on-the-treatment-of-marginal-ulcers-after-metabolic-and-bariatric-surgery/",
+    "accessedOn": "2026-10-02",
+    "sourceClass": "narrative_review",
+    "licenseLabel": "Open access under an unspecified Creative Commons license on the official page",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current society literature review; exact Creative Commons flavor was not independently established, and the review is not a standard of care.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.c8b8cf1c24a2",
+      "claim.n2.7b74879c23ab",
+      "claim.n2.73280797f130",
+      "claim.n2r2.gastrojejunal-stricture-dilation",
+      "claim.n2r3.recurrent-gj-graded-dilation"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.atlanta.pancreatitis-classification.2013",
+    "title": "Classification of acute pancreatitis—2012: revision of the Atlanta classification",
+    "completeCitation": "Banks PA, Bollen TL, Dervenis C, Gooszen HG, Johnson CD, Sarr MG, Tsiotos GG, Vege SS. Gut. 2013;62(1):102-111. doi:10.1136/gutjnl-2012-302779.",
+    "organizationOrJournal": "Acute Pancreatitis Classification Working Group / Gut",
+    "authors": [
+      "Banks PA",
+      "Bollen TL",
+      "Dervenis C",
+      "Gooszen HG",
+      "Johnson CD",
+      "Sarr MG",
+      "Tsiotos GG",
+      "Vege SS"
+    ],
+    "publicationYear": 2013,
+    "doi": "10.1136/gutjnl-2012-302779",
+    "pmid": null,
+    "officialUrl": "https://gut.bmj.com/content/62/1/102",
+    "accessedOn": "2026-09-13",
+    "sourceClass": "peer_reviewed_guideline",
+    "licenseLabel": "Copyrighted journal material",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Targeted factual verification and independent synthesis only. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "International consensus definitions distinguish pseudocyst from walled-off necrosis.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.1e7b4640104f"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.bechara.vitamin-c-tissue-healing-review.2022",
+    "title": "A Systematic Review on the Role of Vitamin C in Tissue Healing",
+    "completeCitation": "Bechara N, Flood VM, Gunton JE. A Systematic Review on the Role of Vitamin C in Tissue Healing. Antioxidants (Basel). 2022;11(8):1605. doi:10.3390/antiox11081605.",
+    "organizationOrJournal": "Antioxidants",
+    "authors": [
+      "Nada Bechara",
+      "Victoria M. Flood",
+      "Jenny E. Gunton"
+    ],
+    "publicationYear": 2022,
+    "doi": "10.3390/antiox11081605",
+    "pmid": "36009324",
+    "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9405326/",
+    "accessedOn": "2026-08-06",
+    "sourceClass": "systematic_review",
+    "licenseLabel": "Creative Commons Attribution 4.0 International",
+    "reuseStatus": "cc_by_4_0",
+    "reuseNotes": "Use with attribution; preserve independently written synthesis and do not reproduce source tables or extended prose. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Human-study systematic review supporting a cautious supplementation boundary because populations, interventions, baseline status, and healing outcomes are heterogeneous.",
+    "usageRole": "cross_check",
+    "evidenceClaimIds": [
+      "claim.n2.544a3a1d14f1"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.board-batch.ascrs-colon-2022",
+    "title": "ASCRS Clinical Practice Guidelines for the Management of Colon Cancer",
+    "completeCitation": "Vogel JD, Felder SI, Bhama AR, et al. ASCRS Clinical Practice Guidelines for the Management of Colon Cancer. Diseases of the Colon & Rectum. 2022;65:148-177. doi:10.1097/DCR.0000000000002323. Accessed 2026-09-11.",
+    "organizationOrJournal": "American Society of Colon and Rectal Surgeons / Diseases of the Colon & Rectum",
+    "authors": [
+      "J. D. Vogel",
+      "S. I. Felder",
+      "A. R. Bhama",
+      "American Society of Colon and Rectal Surgeons"
+    ],
+    "publicationYear": 2022,
+    "doi": "10.1097/DCR.0000000000002323",
+    "pmid": null,
+    "officialUrl": "https://www.ascrsu.com/ascrs/view/ASCRS-Toolkit/2851068/all/Management_",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Copyrighted society guidance; targeted factual verification only",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, or marks reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Direct society guideline support for cross-sectional staging and regional lymphovascular resection.",
+    "usageRole": "evidence",
+    "accessedOn": "2026-09-11",
+    "evidenceClaimIds": [
+      "claim.n2.707bf04c2730"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.board-batch.nci-colon-2025",
+    "title": "Colon Cancer Treatment (PDQ), Health Professional Version",
+    "completeCitation": "PDQ Adult Treatment Editorial Board. Colon Cancer Treatment (PDQ), Health Professional Version. National Cancer Institute. Updated February 12, 2025. Accessed 2026-09-11.",
+    "organizationOrJournal": "National Cancer Institute",
+    "authors": [
+      "PDQ Adult Treatment Editorial Board"
+    ],
+    "publicationYear": 2025,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://www.cancer.gov/types/colorectal/hp/colon-treatment-pdq",
+    "sourceClass": "government_guidance",
+    "licenseLabel": "US federal factual material; public-domain conditions apply",
+    "reuseStatus": "public_domain_conditions_apply",
+    "reuseNotes": "Use original factual synthesis; exclude third-party content, images, and marks. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Independent government evidence summary supporting surgical resection of localized colon cancer.",
+    "usageRole": "cross_check",
+    "accessedOn": "2026-09-11",
+    "evidenceClaimIds": [
+      "claim.n2.707bf04c2730"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.board.acg-pancreatic-cyst-2018",
+    "title": "ACG Clinical Guideline: Diagnosis and Management of Pancreatic Cysts",
+    "completeCitation": "Elta GH, Enestvedt BK, Sauer BG, Lennon AM. ACG Clinical Guideline: Diagnosis and Management of Pancreatic Cysts. American Journal of Gastroenterology. 2018;113(4):464-479. doi:10.1038/ajg.2018.14. Accessed 2026-09-11.",
+    "organizationOrJournal": "American College of Gastroenterology / American Journal of Gastroenterology",
+    "authors": [
+      "Grace H. Elta",
+      "Brintha K. Enestvedt",
+      "Bryan G. Sauer",
+      "Anne Marie Lennon"
+    ],
+    "publicationYear": 2018,
+    "doi": "10.1038/ajg.2018.14",
+    "pmid": "29485131",
+    "officialUrl": "https://acgcdn.gi.org/wp-content/uploads/2018/04/ACG-Pancreatic-Cysts-Guideline-Summary.pdf",
+    "accessedOn": "2026-09-11",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Copyrighted society guidance; targeted factual verification only",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only. No source prose, tables, figures, algorithms, or marks are reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Directly checked MRI/MRCP duct-assessment guidance, MCN pattern features, and the limitation of cyst-fluid CEA.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.5b7bf51076d4",
+      "claim.n2.1ff20d71a599"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.board.dvt-ash-2014",
+    "title": "Choosing Wisely recommendation on duration of anticoagulation",
+    "completeCitation": "American Society of Hematology. Choosing Wisely recommendation 6. 2014 expansion. Accessed 2026-09-12.",
+    "organizationOrJournal": "American Society of Hematology",
+    "authors": [
+      "American Society of Hematology"
+    ],
+    "publicationYear": 2014,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/choosing-wisely",
+    "accessedOn": "2026-09-12",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Copyrighted professional-society recommendation",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Targeted factual verification only; independently written content. N1 reuses locally recorded atomic synthesis and bibliographic metadata only; no source text, table, figure or excerpt was retrieved or copied. Access date is inherited; N1 did not refresh it. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Supports finite three-month treatment after first VTE caused by resolved major transient surgery risk.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2r2.lmwh-treatment-purpose",
+      "claim.n2.8a0b2ca37037",
+      "claim.n2r3.vte-changing-renal-procedure"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.board.dvt-cdc-2024",
+    "title": "Testing and Diagnosis for Venous Thromboembolism",
+    "completeCitation": "Centers for Disease Control and Prevention. Testing and Diagnosis for Venous Thromboembolism. May 15, 2024. Accessed 2026-09-12.",
+    "organizationOrJournal": "Centers for Disease Control and Prevention",
+    "authors": [
+      "Centers for Disease Control and Prevention"
+    ],
+    "publicationYear": 2024,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://www.cdc.gov/blood-clots/testing-diagnosis/index.html",
+    "accessedOn": "2026-09-12",
+    "sourceClass": "government_guidance",
+    "licenseLabel": "U.S. government material; conditions apply",
+    "reuseStatus": "public_domain_conditions_apply",
+    "reuseNotes": "Original factual synthesis only. N1 reuses locally recorded atomic synthesis and bibliographic metadata only; no source text, table, figure or excerpt was retrieved or copied. Access date is inherited; N1 did not refresh it. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Direct support for ultrasound evaluation of suspected DVT.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.9c12bef8ae65"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.board.dvt-nhlbi-diagnosis-2022",
+    "title": "Venous Thromboembolism: Deep Vein Thrombosis (DVT)",
+    "completeCitation": "National Heart, Lung, and Blood Institute. Venous Thromboembolism: Deep Vein Thrombosis (DVT). Updated September 19, 2022. Accessed 2026-09-12.",
+    "organizationOrJournal": "National Heart, Lung, and Blood Institute",
+    "authors": [
+      "National Heart, Lung, and Blood Institute"
+    ],
+    "publicationYear": 2022,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://www.nhlbi.nih.gov/health/deep-vein-thrombosis",
+    "accessedOn": "2026-09-12",
+    "sourceClass": "government_guidance",
+    "licenseLabel": "U.S. government material; conditions apply",
+    "reuseStatus": "public_domain_conditions_apply",
+    "reuseNotes": "Original factual synthesis only; explicitly copyrighted third-party video excluded. N1 reuses locally recorded atomic synthesis and bibliographic metadata only; no source text, table, figure or excerpt was retrieved or copied. Access date is inherited; N1 did not refresh it. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Cross-check for postoperative risk, characteristic symptoms, and compression-ultrasound findings.",
+    "usageRole": "cross_check",
+    "evidenceClaimIds": [
+      "claim.n2.9c12bef8ae65"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.board.dvt-nhlbi-treatment-2022",
+    "title": "Venous Thromboembolism: Treatment",
+    "completeCitation": "National Heart, Lung, and Blood Institute. Venous Thromboembolism: Treatment. Updated September 20, 2022. Accessed 2026-09-12.",
+    "organizationOrJournal": "National Heart, Lung, and Blood Institute",
+    "authors": [
+      "National Heart, Lung, and Blood Institute"
+    ],
+    "publicationYear": 2022,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://www.nhlbi.nih.gov/health/venous-thromboembolism/treatment",
+    "accessedOn": "2026-09-12",
+    "sourceClass": "government_guidance",
+    "licenseLabel": "U.S. government material; conditions apply",
+    "reuseStatus": "public_domain_conditions_apply",
+    "reuseNotes": "Original factual synthesis only. N1 reuses locally recorded atomic synthesis and bibliographic metadata only; no source text, table, figure or excerpt was retrieved or copied. Access date is inherited; N1 did not refresh it. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Cross-check for anticoagulation as treatment and the filter boundary when anticoagulation is possible.",
+    "usageRole": "cross_check",
+    "evidenceClaimIds": [
+      "claim.n2r2.lmwh-treatment-purpose",
+      "claim.n2.8a0b2ca37037",
+      "claim.n2r3.vte-changing-renal-procedure"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.board.gist-geis-2023",
+    "title": "2023 GEIS Guidelines for gastrointestinal stromal tumors",
+    "completeCitation": "Serrano C, Martín-Broto J, Asencio-Pascual JM, López-Guerrero JA, Rubió-Casadevall J, Bagué S, García-del-Muro X, Fernández-Hernández JA, Herrero L, López-Pousa A, Poveda A, Martínez-Marín V; GEIS. 2023 GEIS Guidelines for gastrointestinal stromal tumors. Therapeutic Advances in Medical Oncology. 2023;15:17588359231192388. doi:10.1177/17588359231192388. Accessed 2026-09-12.",
+    "organizationOrJournal": "Spanish Group for Sarcoma Research / Therapeutic Advances in Medical Oncology",
+    "authors": [
+      "C Serrano",
+      "J Martín-Broto",
+      "JM Asencio-Pascual",
+      "JA López-Guerrero",
+      "J Rubió-Casadevall",
+      "S Bagué",
+      "X García-del-Muro",
+      "JA Fernández-Hernández",
+      "L Herrero",
+      "A López-Pousa",
+      "A Poveda",
+      "V Martínez-Marín"
+    ],
+    "publicationYear": 2023,
+    "doi": "10.1177/17588359231192388",
+    "pmid": "37655207",
+    "officialUrl": "https://grupogeis.org/documentos/guias-geis/2023-GEIS-guidelines-for-GIST.pdf",
+    "accessedOn": "2026-09-12",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Creative Commons Attribution-NonCommercial 4.0",
+    "reuseStatus": "cc_by_nc_4_0_restricted",
+    "reuseNotes": "CC BY-NC 4.0; original factual synthesis with attribution, without copied prose or algorithms. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Primary multidisciplinary sarcoma-society guideline for tissue acquisition, molecular testing, and selected neoadjuvant planning.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.ecf22ea6c86e",
+      "claim.n2.46105001554a"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.board.gist-nci-pdq-2024",
+    "title": "Gastrointestinal Stromal Tumors Treatment (PDQ®), Health Professional Version",
+    "completeCitation": "PDQ Adult Treatment Editorial Board. Gastrointestinal Stromal Tumors Treatment (PDQ®), Health Professional Version. National Cancer Institute. Latest displayed update December 13, 2024. Accessed 2026-09-12.",
+    "organizationOrJournal": "National Cancer Institute",
+    "authors": [
+      "PDQ Adult Treatment Editorial Board"
+    ],
+    "publicationYear": 2024,
+    "doi": null,
+    "pmid": "26389157",
+    "officialUrl": "https://www.cancer.gov/types/soft-tissue-sarcoma/hp/gist-treatment-pdq",
+    "accessedOn": "2026-09-12",
+    "sourceClass": "government_guidance",
+    "licenseLabel": "NCI text reuse permitted with credit; PDQ trademark restrictions apply",
+    "reuseStatus": "public_domain_conditions_apply",
+    "reuseNotes": "No images or PDQ branding reused; independent factual cross-check only. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Peer-reviewed federal evidence summary cross-checks selective morbidity-reducing neoadjuvant use and mutation sensitivity.",
+    "usageRole": "cross_check",
+    "evidenceClaimIds": [
+      "claim.n2.ecf22ea6c86e",
+      "claim.n2.46105001554a"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.bread-butter.asco-cancer-vte-2023",
+    "title": "Venous Thromboembolism Prophylaxis and Treatment in Patients With Cancer: ASCO Guideline Update",
+    "completeCitation": "Key NS, Khorana AA, Kuderer NM, Bohlke K, Lee AYY, Arcelus JI, Wong SL, Balaban EP, Flowers CR, Gates LE, Kakkar AK, Tempero MA, Gupta S, Lyman GH, Falanga A. Venous Thromboembolism Prophylaxis and Treatment in Patients With Cancer: ASCO Guideline Update. J Clin Oncol. 2023;41(16):3063-3071. doi:10.1200/JCO.23.00294. PMID:37075273.",
+    "organizationOrJournal": "Journal of Clinical Oncology / American Society of Clinical Oncology",
+    "authors": [
+      "Key NS",
+      "Khorana AA",
+      "Kuderer NM",
+      "Bohlke K",
+      "Lee AYY",
+      "Arcelus JI",
+      "Wong SL",
+      "Balaban EP",
+      "Flowers CR",
+      "Gates LE",
+      "Kakkar AK",
+      "Tempero MA",
+      "Gupta S",
+      "Lyman GH",
+      "Falanga A"
+    ],
+    "publicationYear": 2023,
+    "doi": "10.1200/JCO.23.00294",
+    "pmid": "37075273",
+    "officialUrl": "https://ascopubs.org/doi/10.1200/JCO.23.00294",
+    "accessedOn": "2026-09-17",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Copyrighted professional-society guideline",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Targeted independently phrased fact only; no article prose, tables, or tools reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current ASCO focused update cross-checking extended prophylaxis and current agent options after cancer surgery.",
+    "usageRole": "cross_check",
+    "evidenceClaimIds": [
+      "claim.n2.6f99845e8caa",
+      "claim.n2r2.lmwh-treatment-purpose",
+      "claim.n2r3.vte-changing-renal-procedure"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.bread-butter.chest-antithrombotic-2022",
+    "title": "Perioperative Management of Antithrombotic Therapy: An American College of Chest Physicians Clinical Practice Guideline",
+    "completeCitation": "Douketis JD, Spyropoulos AC, Murad MH, Arcelus JI, Dager WE, Dunn AS, Fargo RA, Levy JH, Samama CM, Shah SH, Sherwood MW, Tafur AJ, Tang LV, Moores LK. Perioperative Management of Antithrombotic Therapy: An American College of Chest Physicians Clinical Practice Guideline. Chest. 2022;162(5):e207-e243. doi:10.1016/j.chest.2022.07.025. PMID:35964704.",
+    "organizationOrJournal": "CHEST / American College of Chest Physicians",
+    "authors": [
+      "Douketis JD",
+      "Spyropoulos AC",
+      "Murad MH",
+      "Arcelus JI",
+      "Dager WE",
+      "Dunn AS",
+      "Fargo RA",
+      "Levy JH",
+      "Samama CM",
+      "Shah SH",
+      "Sherwood MW",
+      "Tafur AJ",
+      "Tang LV",
+      "Moores LK"
+    ],
+    "publicationYear": 2022,
+    "doi": "10.1016/j.chest.2022.07.025",
+    "pmid": "35964704",
+    "officialUrl": "https://journal.chestnet.org/article/S0012-3692%2822%2901359-9/fulltext",
+    "accessedOn": "2026-09-17",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Copyrighted professional-society guideline",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Targeted independently phrased fact only; no recommendation prose, tables, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current CHEST guideline directly supporting no routine therapeutic-dose bridging for atrial fibrillation when warfarin is interrupted.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.c98ff508b25a"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.bread-butter.idsa-ssti-2014-wound",
+    "title": "Practice Guidelines for the Diagnosis and Management of Skin and Soft Tissue Infections: 2014 Update",
+    "completeCitation": "Stevens DL, Bisno AL, Chambers HF, Dellinger EP, Goldstein EJC, Gorbach SL, Hirschmann JV, Kaplan SL, Montoya JG, Wade JC. Practice guidelines for the diagnosis and management of skin and soft tissue infections: 2014 update by the Infectious Diseases Society of America. Clin Infect Dis. 2014;59(2):e10-e52. doi:10.1093/cid/ciu296. PMID:24973422.",
+    "organizationOrJournal": "Clinical Infectious Diseases / Infectious Diseases Society of America",
+    "authors": [
+      "Stevens DL",
+      "Bisno AL",
+      "Chambers HF",
+      "Dellinger EP",
+      "Goldstein EJC",
+      "Gorbach SL",
+      "Hirschmann JV",
+      "Kaplan SL",
+      "Montoya JG",
+      "Wade JC"
+    ],
+    "publicationYear": 2014,
+    "doi": "10.1093/cid/ciu296",
+    "pmid": "24973422",
+    "officialUrl": "https://www.idsociety.org/practice-guideline/skin-and-soft-tissue-infections/",
+    "accessedOn": "2026-09-17",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Copyrighted professional-society guidance",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original synthesis only; no source prose, tables, figures, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current IDSA guidance directly supporting suture removal and incision and drainage for superficial incisional infection.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.10b8e172c6d1",
+      "claim.n2r3.contained-pelvic-source-control"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.bread-butter.seom-cancer-vte-2024",
+    "title": "SEOM clinical guidelines on venous thromboembolism and cancer (2023)",
+    "completeCitation": "Ortega Moran L, Pelegrin Mateo FJ, Porta Balanya R, Rogado Revuelta J, Ros Martinez S, Berros Fombella JP, Brozos Vazquez EM, Luque Caro N, Munoz Langa J, Salgado Fernandez M. SEOM clinical guidelines on venous thromboembolism (VTE) and cancer (2023). Clin Transl Oncol. 2024;26(11):2877-2901. doi:10.1007/s12094-024-03605-2. PMID:39110395. PMCID:PMC11467034.",
+    "organizationOrJournal": "Clinical & Translational Oncology / Spanish Society of Medical Oncology",
+    "authors": [
+      "Ortega Moran L",
+      "Pelegrin Mateo FJ",
+      "Porta Balanya R",
+      "Rogado Revuelta J",
+      "Ros Martinez S",
+      "Berros Fombella JP",
+      "Brozos Vazquez EM",
+      "Luque Caro N",
+      "Munoz Langa J",
+      "Salgado Fernandez M"
+    ],
+    "publicationYear": 2024,
+    "doi": "10.1007/s12094-024-03605-2",
+    "pmid": "39110395",
+    "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11467034/",
+    "accessedOn": "2026-09-17",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Creative Commons Attribution 4.0 International",
+    "reuseStatus": "cc_by_4_0",
+    "reuseNotes": "Attributed independently written fact only; no guideline prose, tables, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current society guideline defining selected high-risk major abdominal or pelvic cancer surgery for extended prophylaxis up to four weeks.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.6f99845e8caa",
+      "claim.n2r2.lmwh-treatment-purpose",
+      "claim.n2r3.vte-changing-renal-procedure"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.bread-butter.shea-ssi-2022-update",
+    "title": "Strategies to Prevent Surgical Site Infections in Acute-Care Hospitals: 2022 Update",
+    "completeCitation": "Calderwood MS, Anderson DJ, Bratzler DW, Dellinger EP, Garcia-Houchins S, Maragakis LL, Nyquist AC, Perkins KM, Preas MA, Saiman L, Schaffzin JK, Schweizer M, Yokoe DS, Kaye KS. Strategies to Prevent Surgical Site Infections in Acute-Care Hospitals: 2022 Update. Infect Control Hosp Epidemiol. 2023;44(5):695-720. doi:10.1017/ice.2023.67. PMID:37137483. PMCID:PMC10867741.",
+    "organizationOrJournal": "Infection Control & Hospital Epidemiology / SHEA, IDSA, APIC, AHA, and The Joint Commission",
+    "authors": [
+      "Calderwood MS",
+      "Anderson DJ",
+      "Bratzler DW",
+      "Dellinger EP",
+      "Garcia-Houchins S",
+      "Maragakis LL",
+      "Nyquist AC",
+      "Perkins KM",
+      "Preas MA",
+      "Saiman L",
+      "Schaffzin JK",
+      "Schweizer M",
+      "Yokoe DS",
+      "Kaye KS"
+    ],
+    "publicationYear": 2023,
+    "doi": "10.1017/ice.2023.67",
+    "pmid": "37137483",
+    "officialUrl": "https://stacks.cdc.gov/view/cdc/155079",
+    "accessedOn": "2026-09-17",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Copyrighted journal author manuscript in CDC Stacks; public access is not public-domain status",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Targeted independently phrased fact only; no prose, tables, figures, or implementation sections reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current SHEA-sponsored multisociety update directly addressing prophylaxis after closure when drains remain.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.aa8322ea02c9"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.brief.acg-h-pylori-2024",
+    "title": "ACG Clinical Guideline: Treatment of Helicobacter pylori Infection",
+    "completeCitation": "Chey WD, Howden CW, Moss SF, Morgan DR, Greer KB, Grover S, Shah SC. ACG Clinical Guideline: Treatment of Helicobacter pylori Infection. Am J Gastroenterol. 2024;119:1730-1753. doi:10.14309/ajg.0000000000002968.",
+    "organizationOrJournal": "American College of Gastroenterology / American Journal of Gastroenterology",
+    "authors": [
+      "Chey WD",
+      "Howden CW",
+      "Moss SF",
+      "Morgan DR",
+      "Greer KB",
+      "Grover S",
+      "Shah SC"
+    ],
+    "publicationYear": 2024,
+    "doi": "10.14309/ajg.0000000000002968",
+    "pmid": null,
+    "officialUrl": "https://webfiles.gi.org/links/journals/ACG-Hpylori-Guidelines-Highlights-2024-FINAL.pdf",
+    "accessedOn": "2026-09-17",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Copyrighted professional-society guidance",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Targeted factual verification and citation only; no source table, algorithm, or phrasing reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current ACG guideline directly supporting active-infection testing and universal confirmation of eradication after treatment.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.1a54f7843ea4",
+      "claim.n2.f10e1c8fc24a"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.brief.acg-peptic-ulcer-patient",
+    "title": "Peptic Ulcer Disease",
+    "completeCitation": "American College of Gastroenterology. Peptic Ulcer Disease. Patient education page. Accessed September 17, 2026.",
+    "organizationOrJournal": "American College of Gastroenterology",
+    "authors": [
+      "American College of Gastroenterology"
+    ],
+    "publicationYear": null,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://gi.org/topics/peptic-ulcer-disease/",
+    "accessedOn": "2026-09-17",
+    "sourceClass": "open_educational_resource",
+    "licenseLabel": "Copyrighted professional-society patient education",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Targeted factual cross-check and citation only; no page prose or graphics reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Society patient-education cross-check for H. pylori as a peptic-ulcer cause and noninvasive testing.",
+    "usageRole": "cross_check",
+    "evidenceClaimIds": [
+      "claim.n2.1a54f7843ea4"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.cdc.field-epi-analysis.2026",
+    "title": "Analyzing and Interpreting Data",
+    "completeCitation": "Centers for Disease Control and Prevention. Field Epidemiology Manual: Analyzing and Interpreting Data. Accessed 2026-09-29.",
+    "organizationOrJournal": "Centers for Disease Control and Prevention",
+    "authors": [
+      "Centers for Disease Control and Prevention"
+    ],
+    "publicationYear": null,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://www.cdc.gov/field-epi-manual/php/chapters/analyze-interpret-data.html",
+    "accessedOn": "2026-09-29",
+    "sourceClass": "government_guidance",
+    "licenseLabel": "Targeted factual verification only; record-level reuse permission was not separately verified.",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Federal epidemiology reference for bias, confounding, and interpretation boundaries.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.4831cf651238",
+      "claim.n2.cfa015b055d8",
+      "claim.n2r2.linked-record-net-change",
+      "claim.n2r3.operation-time-outcome-separation"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.cdc.test-accuracy.2026",
+    "title": "Principles of Epidemiology: Lesson 5, Appendix A",
+    "completeCitation": "Centers for Disease Control and Prevention. Principles of Epidemiology: Lesson 5, Appendix A. Last reviewed 2012-05-18. Accessed 2026-09-29.",
+    "organizationOrJournal": "Centers for Disease Control and Prevention",
+    "authors": [
+      "Centers for Disease Control and Prevention"
+    ],
+    "publicationYear": 2012,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://archive.cdc.gov/www_cdc_gov/csels/dsepd/ss1978/lesson5/appendixa.html",
+    "accessedOn": "2026-09-29",
+    "sourceClass": "government_guidance",
+    "licenseLabel": "Targeted factual verification only; record-level reuse permission was not separately verified.",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Archived federal reference for sensitivity, specificity, and predictive-value denominators; older guidance is a limitation.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.cc09f9ba1740",
+      "claim.n2.bf4203993008",
+      "claim.n2.889064151d42",
+      "claim.n2.02709278d0d4",
+      "claim.n2r2.lr-odds-protocol",
+      "claim.n2r2.negative-cohort-protocol"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.chronic-fissure.ascrs-cpg.2023",
+    "title": "ASCRS Clinical Practice Guidelines for the Management of Anal Fissures",
+    "completeCitation": "Davids JS, Hawkins AT, Bhama AR, Feinberg AE, Grieco MJ, Lightner AL, Feingold DL, Paquette IM; ASCRS Clinical Practice Guidelines Committee. The American Society of Colon and Rectal Surgeons Clinical Practice Guidelines for the Management of Anal Fissures. Diseases of the Colon & Rectum. 2023;66(2):190-199. doi:10.1097/DCR.0000000000002664.",
+    "organizationOrJournal": "American Society of Colon and Rectal Surgeons",
+    "authors": [
+      "Davids JS",
+      "Hawkins AT",
+      "Bhama AR",
+      "Feinberg AE",
+      "Grieco MJ",
+      "Lightner AL",
+      "Feingold DL",
+      "Paquette IM"
+    ],
+    "publicationYear": 2023,
+    "doi": "10.1097/DCR.0000000000002664",
+    "pmid": "36321851",
+    "officialUrl": "https://www.ascrsu.com/ascrs/repview?name=3_2851088_PDF&type=784-162",
+    "accessedOn": "2026-09-13",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Copyrighted society guideline; targeted factual verification only",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Direct current guideline for topical CCB and selected LIS.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.bf8c918b8353",
+      "claim.n2.d90b80eae6dc",
+      "claim.n2r3.fissure-sphincter-preserving-flap"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.chronic-fissure.siucp.2023",
+    "title": "SIUCP guidelines for the management of anal fissure",
+    "completeCitation": "Brillantino A, Renzi A, Talento P, et al. The Italian Unitary Society of Colon-proctology guidelines for the management of anal fissure. BMC Surgery. 2023;23:311. doi:10.1186/s12893-023-02223-z.",
+    "organizationOrJournal": "BMC Surgery / SIUCP",
+    "authors": [
+      "Brillantino A",
+      "Renzi A",
+      "Talento P",
+      "et al."
+    ],
+    "publicationYear": 2023,
+    "doi": "10.1186/s12893-023-02223-z",
+    "pmid": null,
+    "officialUrl": "https://doi.org/10.1186/s12893-023-02223-z",
+    "accessedOn": "2026-09-13",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Creative Commons Attribution 4.0",
+    "reuseStatus": "cc_by_4_0",
+    "reuseNotes": "Original factual synthesis with attribution; no prose or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Independent guideline cross-check.",
+    "usageRole": "cross_check",
+    "evidenceClaimIds": [
+      "claim.n2.bf8c918b8353",
+      "claim.n2.d90b80eae6dc",
+      "claim.n2r3.fissure-sphincter-preserving-flap"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.cochrane.chapter-15.2026",
+    "title": "Chapter 15: Interpreting results and drawing conclusions",
+    "completeCitation": "Schünemann HJ, Vist GE, Higgins JPT, Santesso N, Deeks JJ, Glasziou P, Akl EA, Guyatt GH. Chapter 15: Interpreting results and drawing conclusions [last updated August 2023]. In: Cochrane Handbook for Systematic Reviews of Interventions, version 6.5. Cochrane; 2024. Accessed 2026-09-29.",
+    "organizationOrJournal": "Cochrane",
+    "authors": [
+      "Holger J Schünemann",
+      "Gunn E Vist",
+      "Julian PT Higgins",
+      "Nancy Santesso",
+      "Jonathan J Deeks",
+      "Paul Glasziou",
+      "Elie A Akl",
+      "Gordon H Guyatt"
+    ],
+    "publicationYear": 2024,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-15",
+    "accessedOn": "2026-09-29",
+    "sourceClass": "narrative_review",
+    "licenseLabel": "Copyrighted targeted factual verification only; original factual synthesis.",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Methods reference for absolute risk difference, NNT rounding, comparator, outcome, and time-horizon framing.",
+    "usageRole": "both",
+    "evidenceClaimIds": [
+      "claim.n2.e1fab33f6912",
+      "claim.n2.c2a2cbdaec48",
+      "claim.n2r2.benefit-harm-protocol"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.dailymed.empagliflozin-label.2026",
+    "title": "Jardiance (empagliflozin): current DailyMed label cross-check",
+    "completeCitation": "Cardinal Health 107, LLC, repackager of Boehringer Ingelheim Pharmaceuticals, Inc. Jardiance (empagliflozin): prescribing information, revised January 2026; DailyMed record updated February 17, 2026, set ID 5777b8a8-ada6-4950-8548-43a1de11f075. Sections 2.3 and 5.1; accessed October 7, 2026.",
+    "organizationOrJournal": "U.S. National Library of Medicine DailyMed / Boehringer Ingelheim Pharmaceuticals, Inc. / Cardinal Health 107, LLC",
+    "authors": [
+      "Boehringer Ingelheim Pharmaceuticals, Inc.",
+      "Cardinal Health 107, LLC"
+    ],
+    "publicationYear": 2026,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=5777b8a8-ada6-4950-8548-43a1de11f075",
+    "accessedOn": "2026-10-07",
+    "sourceClass": "government_guidance",
+    "licenseLabel": "Copyrighted professional guidance or approved product labeling; targeted factual verification only, without reproducing protected expression.",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current NIH-distributed structured product label corroborates unchanged drug-specific interruption and ketoacidosis language. This is repackaged manufacturer labeling, not an independent clinical guideline.",
+    "usageRole": "cross_check",
+    "evidenceClaimIds": [
+      "claim.n2r2.2a207d5bfc33",
+      "claim.n2.61695ed96d60"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.east.trauma-nutritional-support.2004",
+    "title": "Practice Management Guidelines for Nutritional Support of the Trauma Patient",
+    "completeCitation": "Jacobs DG, Jacobs DO, Kudsk KA, et al.; EAST Practice Management Guidelines Work Group. Practice management guidelines for nutritional support of the trauma patient. J Trauma. 2004;57(3):660-679.",
+    "organizationOrJournal": "Eastern Association for the Surgery of Trauma; Journal of Trauma",
+    "authors": [
+      "David G. Jacobs",
+      "Danny O. Jacobs",
+      "Kenneth A. Kudsk",
+      "Frederick A. Moore",
+      "EAST Practice Management Guidelines Work Group"
+    ],
+    "publicationYear": 2004,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://www.east.org/education-resources/practice-management-guidelines/details/nutritional-support-timing-early-versus-delayed-enteral-feedings-update-in-process",
+    "accessedOn": "2026-08-06",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Copyrighted professional-society guidance; targeted factual verification only",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Use only for targeted factual verification and citation. Do not reproduce protected recommendation wording, evidentiary tables, or extended prose. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Professional-society trauma nutrition guidance supporting early intragastric feeding in severe burns and identifying incomplete resuscitation as a safety boundary.",
+    "usageRole": "cross_check",
+    "evidenceClaimIds": [
+      "claim.n2.72256312b855",
+      "claim.n2.84c927796922"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.ehs.emergency-ventral-incisional-hernia.2026",
+    "title": "EHS Guidelines on the Management of Primary Ventral and Incisional Hernias Under Emergency Conditions",
+    "completeCitation": "Stabilini C, Theodorou A, Pawlak M, et al. EHS Guidelines on the Management of Primary Ventral and Incisional Hernias Under Emergency Conditions. J Abdom Wall Surg. 2026;5:16228. doi:10.3389/jaws.2026.16228.",
+    "organizationOrJournal": "European Hernia Society; Journal of Abdominal Wall Surgery",
+    "authors": [
+      "Cesare Stabilini",
+      "Alexis Theodorou",
+      "Maciej Pawlak",
+      "Stavros Antoniou",
+      "Eva Deerenberg",
+      "European Hernia Society guideline panel"
+    ],
+    "publicationYear": 2026,
+    "doi": "10.3389/jaws.2026.16228",
+    "pmid": "41938186",
+    "officialUrl": "https://www.frontierspartnerships.org/journals/journal-of-abdominal-wall-surgery/articles/10.3389/jaws.2026.16228/full",
+    "accessedOn": "2026-08-06",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Creative Commons Attribution 4.0 International",
+    "reuseStatus": "cc_by_4_0",
+    "reuseNotes": "Use with attribution for independently written factual synthesis. Do not reproduce guideline tables, algorithms, figures, or extended prose. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current European Hernia Society guidance conditionally favoring permanent macroporous synthetic mesh over other mesh types in selected emergency mesh-based primary ventral or incisional hernia repairs, with low to very-low evidence certainty.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2r2.temporary-closure-reassessment",
+      "claim.n2r2.4b2bd6d4bf88"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.ehs.emergency-ventral.2026",
+    "title": "EHS Guidelines on the Management of Primary Ventral and Incisional Hernias Under Emergency Conditions",
+    "completeCitation": "Stabilini C, Theodorou A, Pawlak M, et al. EHS Guidelines on the Management of Primary Ventral and Incisional Hernias Under Emergency Conditions. J Abdom Wall Surg. 2026;5:16228. doi:10.3389/jaws.2026.16228.",
+    "organizationOrJournal": "Journal of Abdominal Wall Surgery / European Hernia Society",
+    "authors": [
+      "Cesare Stabilini",
+      "Anastasios Theodorou",
+      "Mateusz Pawlak"
+    ],
+    "publicationYear": 2026,
+    "doi": "10.3389/jaws.2026.16228",
+    "pmid": "41938186",
+    "officialUrl": "https://www.frontierspartnerships.org/journals/journal-of-abdominal-wall-surgery/articles/10.3389/jaws.2026.16228/full",
+    "accessedOn": "2026-07-30",
+    "sourceClass": "peer_reviewed_guideline",
+    "licenseLabel": "CC BY 4.0",
+    "reuseStatus": "cc_by_4_0",
+    "reuseNotes": "Attribute the authors and original publication, link the license, and exclude the source algorithm, tables, figures, and separately credited material. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current EHS guideline defining the emergency spectrum for acutely complicated primary ventral and incisional hernias.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2r2.temporary-closure-reassessment",
+      "claim.n2.e551a9978155"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.esge.biliary-stenting.2018",
+    "title": "Endoscopic biliary stenting: indications, choice of stents, and results",
+    "completeCitation": "Dumonceau JM, Tringali A, Papanikolaou IS, Blero D, Mangiavillano B, Schmidt A, et al. Endoscopy. 2018;50:910-930. doi:10.1055/a-0659-9864.",
+    "organizationOrJournal": "European Society of Gastrointestinal Endoscopy",
+    "authors": [
+      "Dumonceau JM",
+      "Tringali A",
+      "Papanikolaou IS",
+      "Blero D",
+      "Mangiavillano B",
+      "Schmidt A",
+      "et al."
+    ],
+    "publicationYear": 2018,
+    "doi": "10.1055/a-0659-9864",
+    "pmid": null,
+    "officialUrl": "https://www.esge.com/endoscopic-biliary-stenting-indications-choice-of-stents-and-results-2017",
+    "accessedOn": "2026-09-13",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Copyrighted society and journal guidance",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Targeted factual corroboration only. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Independent society corroboration for plastic-stent treatment of non-transection bile leaks.",
+    "usageRole": "cross_check",
+    "evidenceClaimIds": [
+      "claim.n2.0d75556834ce"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.esge.cbds.2019",
+    "title": "Endoscopic management of common bile duct stones: ESGE guideline",
+    "completeCitation": "Manes G, Paspatis G, Aabakken L, Anderloni A, Arvanitakis M, Ah-Soune P, et al. Endoscopy. 2019;51(5):472-491. doi:10.1055/a-0862-0346.",
+    "organizationOrJournal": "European Society of Gastrointestinal Endoscopy",
+    "authors": [
+      "Manes G",
+      "Paspatis G",
+      "Aabakken L",
+      "Anderloni A",
+      "Arvanitakis M",
+      "Ah-Soune P",
+      "et al."
+    ],
+    "publicationYear": 2019,
+    "doi": "10.1055/a-0862-0346",
+    "pmid": null,
+    "officialUrl": "https://www.esge.com/endoscopic-management-of-common-bile-duct-stones-esge-guideline",
+    "accessedOn": "2026-09-13",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Copyrighted society and journal guidance",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Independent factual corroboration only. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Independent European society corroboration for MRCP/EUS evaluation and treatment of confirmed stones.",
+    "usageRole": "cross_check",
+    "evidenceClaimIds": [
+      "claim.n2.48b019a0d1ac"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.esge.peptic-ulcer-bleeding-guideline.2026",
+    "title": "Endoscopic diagnosis and management of peptic ulcer bleeding: European Society of Gastrointestinal Endoscopy (ESGE) Guideline - Update 2026",
+    "completeCitation": "Gralnek IM, Morris J, Laursen SB, et al. Endoscopic diagnosis and management of peptic ulcer bleeding: European Society of Gastrointestinal Endoscopy (ESGE) Guideline - Update 2026. Endoscopy. 2026;58(8):899-924. doi:10.1055/a-2863-8314.",
+    "organizationOrJournal": "European Society of Gastrointestinal Endoscopy; Endoscopy",
+    "authors": [
+      "Ian M. Gralnek",
+      "John Morris",
+      "Stig Borbjerg Laursen",
+      "Marine Camus",
+      "Georgios Tziatzios",
+      "Lynn K. Debels",
+      "Gaurav B. Nigam",
+      "Balint Eross",
+      "Martin Goetz",
+      "Nauzer Forbes",
+      "Tiago Curdia Goncalves",
+      "Krzysztof Kurek",
+      "Michael Bretthauer",
+      "Tony C. Tham"
+    ],
+    "publicationYear": 2026,
+    "doi": "10.1055/a-2863-8314",
+    "pmid": "42127996",
+    "officialUrl": "https://pubmed.ncbi.nlm.nih.gov/42127996/",
+    "accessedOn": "2026-08-10",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Free-to-read copyrighted professional-society guideline; targeted factual verification only",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Use independently written factual synthesis only; do not reproduce protected recommendation wording, tables, figures, or algorithms. PubMed lists a published correction (PMID 42173116); this package does not rely on formatting or conflict-of-interest details affected by that notice. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current ESGE peptic-ulcer-bleeding guideline supporting stigmata-specific hemostasis, monotherapy options for a nonbleeding visible vessel, conventional combination therapy for active bleeding, and selected advanced monotherapy boundaries that prevent overbroad distractors.",
+    "usageRole": "both",
+    "evidenceClaimIds": [
+      "claim.n2r2.2f251a75ceb4",
+      "claim.n2r2.e55b4be019b7",
+      "claim.n2.dda382649df0",
+      "claim.n2r2.863516fa7332"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.espen.clinical-nutrition-surgery.2025",
+    "title": "ESPEN guideline on clinical nutrition in surgery - Update 2025",
+    "completeCitation": "Weimann A, Bezmarevic M, Braga M, et al. ESPEN guideline on clinical nutrition in surgery - Update 2025. Clin Nutr. 2025;53:222-261. doi:10.1016/j.clnu.2025.08.029.",
+    "organizationOrJournal": "Clinical Nutrition / European Society for Clinical Nutrition and Metabolism",
+    "authors": [
+      "Arved Weimann",
+      "Mihailo Bezmarevic",
+      "Marco Braga",
+      "M. Isabel T. D. Correia",
+      "Pamela Funk-Debleds",
+      "Luca Gianotti",
+      "Chelsia Gillis",
+      "Martin Hübner",
+      "Jesus Fernando B. Inciong",
+      "Mohammad Shukri Jahit",
+      "Stanislaw Klek",
+      "Takayuki Kori",
+      "Alessandro Laviano",
+      "Olle Ljungqvist",
+      "Dileep N. Lobo",
+      "Carmelo Loinaz Segurola",
+      "Isacco Montroni",
+      "B. Ravinder Reddy",
+      "Nicole M. Saur",
+      "Anna Schweinlin",
+      "Han-Ping Shi",
+      "Hiroya Takeuchi",
+      "Dan L. Waitzberg",
+      "Ola Wallengren",
+      "Paul E. Wischmeyer",
+      "Dirk Ysebaert",
+      "Stephan C. Bischoff"
+    ],
+    "publicationYear": 2025,
+    "doi": "10.1016/j.clnu.2025.08.029",
+    "pmid": "40957230",
+    "officialUrl": "https://pubmed.ncbi.nlm.nih.gov/40957230/",
+    "accessedOn": "2026-08-06",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Copyright European Society for Clinical Nutrition and Metabolism and Elsevier; targeted factual verification only",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Use only for targeted factual verification and citation. Do not reproduce guideline prose, recommendation tables, decision flowcharts, or figures. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current professional-society guideline supporting early nutritional assessment and parenteral support when postoperative gastrointestinal dysfunction prevents adequate oral or enteral nutrition.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.d585be062067",
+      "claim.n2.c1bd8baa573c"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.espen.kidney-nutrition.2024",
+    "title": "ESPEN kidney-disease nutrition guideline",
+    "completeCitation": "Sabatino A, Fiaccadori E, Barazzoni R, et al. ESPEN practical guideline on clinical nutrition in hospitalized patients with acute or chronic kidney disease. Clin Nutr. 2024;43:2238-2254.",
+    "organizationOrJournal": "Clinical Nutrition / ESPEN",
+    "authors": [
+      "Sabatino A",
+      "Fiaccadori E",
+      "Barazzoni R",
+      "et al."
+    ],
+    "publicationYear": 2024,
+    "doi": "10.1016/j.clnu.2024.08.002",
+    "pmid": null,
+    "officialUrl": "https://www.espen.org/files/ESPEN-Guidelines/ESPEN_practical_guideline_on_clinical_nutrition_in_hospitalized_patients_with_acute_or_chronic_kidney_disease-text.pdf",
+    "accessedOn": "2026-10-02",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Open access under publisher Creative Commons terms",
+    "reuseStatus": "cc_by_4_0",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current ESPEN practical guideline; Recommendation 38 supports the protein minimum and Recommendation 37 supports avoiding calorie overfeeding.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.87c8a26c9b01",
+      "claim.n2.5dd542d868e9",
+      "claim.n2r3.delivered-supplemental-nutrition"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.fda.empagliflozin-label.2025.s063",
+    "title": "Jardiance (empagliflozin): FDA prescribing information",
+    "completeCitation": "Boehringer Ingelheim Pharmaceuticals, Inc. Jardiance (empagliflozin tablets): FDA-approved prescribing information, revised October 2025, NDA 204629/S-063, Reference ID 5683490. Sections 2.3 and 5.1; accessed October 7, 2026.",
+    "organizationOrJournal": "U.S. Food and Drug Administration / Boehringer Ingelheim Pharmaceuticals, Inc.",
+    "authors": [
+      "Boehringer Ingelheim Pharmaceuticals, Inc."
+    ],
+    "publicationYear": 2025,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2025/204629s063lbl.pdf",
+    "accessedOn": "2026-10-07",
+    "sourceClass": "government_guidance",
+    "licenseLabel": "Copyrighted professional guidance or approved product labeling; targeted factual verification only, without reproducing protected expression.",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "FDA-approved drug-specific labeling directly supports ketoacidosis recognition and the empagliflozin interruption interval. The dated label is cross-checked against the currently displayed NIH-hosted label; it is not asserted to be the globally latest FDA supplement.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2r2.2a207d5bfc33",
+      "claim.n2.e0d1e963f20a",
+      "claim.n2.61695ed96d60"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.fda.ertugliflozin-label.2026.s012",
+    "title": "Steglatro (ertugliflozin): FDA prescribing information",
+    "completeCitation": "Merck Sharp & Dohme LLC. Steglatro (ertugliflozin tablets): FDA-approved prescribing information, revised June 2026, NDA 209803/S-012, Reference ID 5809551. Sections 2.3 and 5.1; accessed October 7, 2026.",
+    "organizationOrJournal": "U.S. Food and Drug Administration / Merck Sharp & Dohme LLC",
+    "authors": [
+      "Merck Sharp & Dohme LLC"
+    ],
+    "publicationYear": 2026,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2026/209803s012lbl.pdf",
+    "accessedOn": "2026-10-07",
+    "sourceClass": "government_guidance",
+    "licenseLabel": "Copyrighted professional guidance or approved product labeling; targeted factual verification only, without reproducing protected expression.",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Recent FDA-approved ertugliflozin labeling directly supports the four-day minimum interruption when possible, which must not be collapsed into empagliflozin's three-day label interval.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.e0d1e963f20a",
+      "claim.n2.61695ed96d60"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.fda.naloxone-emergency-counseling.2020",
+    "title": "FDA naloxone counseling and emergency care guidance",
+    "completeCitation": "U.S. Food and Drug Administration. FDA recommends health care professionals discuss naloxone with all patients when prescribing opioid pain relievers or medicines to treat opioid use disorder. Drug Safety Communication, July 23, 2020. Mechanism and emergency-care sections; accessed October 7, 2026.",
+    "organizationOrJournal": "U.S. Food and Drug Administration",
+    "authors": [
+      "U.S. Food and Drug Administration"
+    ],
+    "publicationYear": 2020,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://www.fda.gov/drugs/drug-safety-communications/fda-recommends-health-care-professionals-discuss-naloxone-all-patients-when-prescribing-opioid-pain",
+    "accessedOn": "2026-10-07",
+    "sourceClass": "government_guidance",
+    "licenseLabel": "United States federal government guidance; third-party content, product labeling, logos, and marks retain their own rights. Only independently synthesized facts are used.",
+    "reuseStatus": "public_domain_conditions_apply",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Federal safety communication independently corroborates temporary opioid-effect blockade and emergency assistance even after initial improvement; access/dispensing details are outside this batch's claim scope.",
+    "usageRole": "cross_check",
+    "evidenceClaimIds": [
+      "claim.n2.2da3d15b9cbb",
+      "claim.n2.cbd22c96d3a1",
+      "claim.n2r3.naloxone-infusion-boundary"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.fda.naloxone-label.2023.s007.mechanism",
+    "title": "Narcan (naloxone): FDA mechanism and safety information",
+    "completeCitation": "Emergent Devices Inc. Narcan (naloxone hydrochloride) nasal spray: FDA-approved prescribing information, revised March 2023, NDA 208411/S-007, Reference ID 5147689. Sections 1, 5.1 and 12.1; accessed October 7, 2026.",
+    "organizationOrJournal": "U.S. Food and Drug Administration / Emergent Devices Inc.",
+    "authors": [
+      "Emergent Devices Inc."
+    ],
+    "publicationYear": 2023,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2023/208411s007lbl.pdf",
+    "accessedOn": "2026-10-07",
+    "sourceClass": "government_guidance",
+    "licenseLabel": "Copyrighted professional guidance or approved product labeling; targeted factual verification only, without reproducing protected expression.",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "FDA-approved label directly states competitive opioid receptor antagonism and need for emergency care. An older prescription-label document is used for the stable mechanism only; no dose, dispensing rule or current packaging claim is authored.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.2da3d15b9cbb",
+      "claim.n2.cbd22c96d3a1",
+      "claim.n2r3.naloxone-infusion-boundary"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.fda.predictive-values.2026",
+    "title": "Antibody (Serology) Testing for COVID-19: Information for Patients and Consumers",
+    "completeCitation": "U.S. Food and Drug Administration. Antibody (Serology) Testing for COVID-19: Information for Patients and Consumers. Section: What does predictive value mean? Accessed 2026-09-29.",
+    "organizationOrJournal": "U.S. Food and Drug Administration",
+    "authors": [
+      "U.S. Food and Drug Administration"
+    ],
+    "publicationYear": null,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://www.fda.gov/medical-devices/coronavirus-covid-19-and-medical-devices/antibody-serology-testing-covid-19-information-patients-and-consumers",
+    "accessedOn": "2026-09-29",
+    "sourceClass": "government_guidance",
+    "licenseLabel": "Targeted factual verification only; record-level reuse permission was not separately verified.",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Federal patient-facing cross-check that positive predictive value falls when prevalence is lower, holding test performance context constant; no COVID-19 clinical claim is reused.",
+    "usageRole": "cross_check",
+    "evidenceClaimIds": [
+      "claim.n2.cc09f9ba1740",
+      "claim.n2.889064151d42",
+      "claim.n2r2.negative-cohort-protocol"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.gcs.assessment-aid-current",
+    "title": "GCS Assessment Aid",
+    "completeCitation": "Institute of Neurological Sciences NHS Greater Glasgow and Clyde; Teasdale G. GCS Assessment Aid. Current official aid. Accessed September 28, 2026.",
+    "organizationOrJournal": "NHS Greater Glasgow and Clyde and University of Glasgow",
+    "authors": [
+      "Sir Graham Teasdale",
+      "Institute of Neurological Sciences NHS Greater Glasgow and Clyde"
+    ],
+    "publicationYear": null,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://www.glasgowcomascale.org/downloads/GCS-Assessment-Aid.pdf",
+    "accessedOn": "2026-09-28",
+    "sourceClass": "open_educational_resource",
+    "licenseLabel": "Copyrighted guidance; targeted factual verification only",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Official source for exact eye, verbal, and motor response-to-score mapping.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.bdbc82c17adc",
+      "claim.n2.6a70c5e18d0b",
+      "claim.n2.44b64dba34de",
+      "claim.n2.8581be95d2ec",
+      "claim.n2r2.testable-gcs-change",
+      "claim.n2r3.focal-motor-change"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.gcs.faq-current",
+    "title": "Glasgow Coma Scale FAQ",
+    "completeCitation": "University of Glasgow. Glasgow Coma Scale FAQ. Undated current site. Accessed September 28, 2026.",
+    "organizationOrJournal": "University of Glasgow",
+    "authors": [
+      "University of Glasgow"
+    ],
+    "publicationYear": null,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://www.glasgowcomascale.org/faq/",
+    "accessedOn": "2026-09-28",
+    "sourceClass": "open_educational_resource",
+    "licenseLabel": "Copyrighted guidance; targeted factual verification only",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Official interpretive source for complete totals and not-testable reporting.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.bdbc82c17adc",
+      "claim.n2.8581be95d2ec",
+      "claim.n2r2.testable-gcs-change",
+      "claim.n2r3.focal-motor-change"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.gs028e.ahrq_transplant2012",
+    "title": "The impact of pre-transplant red blood cell transfusions in renal allograft rejection",
+    "completeCitation": "Chen W, Lee S, Colby J, Kluger J, Ashaye A, Tongbram V, Baker E, Mather J, Coleman CI, White CM. The Impact of Pre-Transplant Red Blood Cell Transfusions in Renal Allograft Rejection. University of Connecticut/Hartford Hospital Evidence-based Practice Center for AHRQ; March 7, 2012. Project RENT0610. Executive Summary ES-1 / physical PDF p. 9; conditions of use, printed iii / physical p. 3. Accessed October 7, 2026.",
+    "organizationOrJournal": "University of Connecticut/Hartford Hospital Evidence-based Practice Center; Agency for Healthcare Research and Quality",
+    "authors": [
+      "Wendy Chen",
+      "Soyon Lee",
+      "Jennifer Colby",
+      "Jeffrey Kluger",
+      "Ajibade Ashaye",
+      "Vanita Tongbram",
+      "Erica Baker",
+      "Jeffrey Mather",
+      "Craig I. Coleman",
+      "C. Michael White"
+    ],
+    "publicationYear": 2012,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://www.cms.gov/Medicare/Coverage/DeterminationProcess/downloads/id78TA.pdf",
+    "accessedOn": "2026-10-07",
+    "sourceClass": "systematic_review",
+    "licenseLabel": "Commissioned EPC report, not presumed government-authored public domain. Printed iii allows use as a basis for clinical/quality tools without implying AHRQ or HHS endorsement. Targeted original factual cross-check only.",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Older commissioned systematic review corroborates pre-existing anti-donor antibodies in hyperacute renal allograft rejection. Background mechanism only, not current transplant treatment, allocation or crossmatch management.",
+    "usageRole": "cross_check",
+    "evidenceClaimIds": [
+      "claim.n2.e50a1962e942",
+      "claim.n2r2.graft-mechanism-investigation",
+      "claim.n2r3.preimplantation-specificity-assay"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.gs028e.czempik_mixing2020",
+    "title": "Isolated prolongation of activated partial thromboplastin time in intensive care unit patients",
+    "completeCitation": "Czempik PF, Żurawska E, Krzych ŁJ. Isolated prolongation of activated partial thromboplastin time in intensive care unit patients: a practical diagnostic algorithm and management options. Anaesthesiol Intensive Ther. 2020;52(2):165–170. Published June 28, 2020. doi:10.5114/ait.2020.96484. Printed p. 168 / physical PDF p. 4, mixing-study discussion following congenital causes; accessed October 7, 2026.",
+    "organizationOrJournal": "Anaesthesiology Intensive Therapy; Polish Society of Anaesthesiology and Intensive Therapy",
+    "authors": [
+      "Piotr F. Czempik",
+      "Elżbieta Żurawska",
+      "Łukasz J. Krzych"
+    ],
+    "publicationYear": 2020,
+    "doi": "10.5114/ait.2020.96484",
+    "pmid": null,
+    "officialUrl": "https://www.ait-journal.com/pdf-120403-121971",
+    "accessedOn": "2026-10-07",
+    "sourceClass": "narrative_review",
+    "licenseLabel": "Author institutional record confirms CC BY-NC-SA 4.0, https://creativecommons.org/licenses/by-nc-sa/4.0/, https://ppm.sum.edu.pl/info/article/SUMad15725785874be7b52463ed0a761ea2?lang=en. The schema lacks an SA category; conservative targeted factual verification only. Czempik, Żurawska and Krzych and original publication credited; no source expression adapted or redistributed.",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N1 reuses locally recorded atomic synthesis and bibliographic metadata only; no source text, table, figure or excerpt was retrieved or copied. Access date is inherited; N1 did not refresh it. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Independent society-journal review supports initial immediate/incubated correction-versus-inhibition patterns, laboratory-specific criteria and specimen/drug limitations. Its ICU algorithm is not generalized to all preoperative patients, and its local-laboratory statement does not establish this game's onsite capability.",
+    "usageRole": "both",
+    "evidenceClaimIds": [
+      "claim.n2.b88db50dcb99",
+      "claim.n2.1d724576493f",
+      "claim.n2.b02be3363804",
+      "claim.n2r2.acquired-bleeding-factor-priority"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.gs028e.fda_immunotoxicity",
+    "title": "Immunotoxicity Testing Guidance",
+    "completeCitation": "U.S. Food and Drug Administration, Center for Devices and Radiological Health, Molecular Biology Branch, Division of Life Sciences, Office of Science and Technology. Immunotoxicity Testing Guidance. Final guidance issued May 6, 1999; HTML content current as of March 27, 2018. Glossary, Hypersensitivity, and immunogenicity discussion following Table 3. Accessed October 7, 2026.",
+    "organizationOrJournal": "U.S. Food and Drug Administration",
+    "authors": [
+      "U.S. Food and Drug Administration, Center for Devices and Radiological Health"
+    ],
+    "publicationYear": 1999,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://www.fda.gov/regulatory-information/search-fda-guidance-documents/immunotoxicity-testing-guidance",
+    "accessedOn": "2026-10-07",
+    "sourceClass": "government_guidance",
+    "licenseLabel": "United States government-authored text; public-domain conditions and attribution apply. Third-party material, images, marks and product labeling are excluded; no source expression reproduced.",
+    "reuseStatus": "public_domain_conditions_apply",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Older federal device guidance corroborates stable type I IgE and type IV T-cell mechanisms, including latex-protein versus glove-chemical reactions, and supplies the narrow non-IgE IgG/IgM-complement comparator. It is not a current patient-management or device-testing protocol; no table or algorithm is reused.",
+    "usageRole": "both",
+    "evidenceClaimIds": [
+      "claim.n2.bdffc2268d81"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.gs028e.hyperacute_matsuda2016",
+    "title": "Unraveling the Role of Allo-Antibodies and Transplant Injury",
+    "completeCitation": "Matsuda Y, Sarwal MM. Unraveling the Role of Allo-Antibodies and Transplant Injury. Front Immunol. 2016;7:432. Published October 21, 2016. doi:10.3389/fimmu.2016.00432. PMID:27818660. Abstract; The Role of Preformed DSA, Mechanisms of Onset of ABMR by Preformed DSA; accessed October 7, 2026.",
+    "organizationOrJournal": "Frontiers in Immunology",
+    "authors": [
+      "Yoshiko Matsuda",
+      "Minnie M. Sarwal"
+    ],
+    "publicationYear": 2016,
+    "doi": "10.3389/fimmu.2016.00432",
+    "pmid": "27818660",
+    "officialUrl": "https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2016.00432/full",
+    "accessedOn": "2026-10-07",
+    "sourceClass": "narrative_review",
+    "licenseLabel": "Copyright © 2016 Matsuda and Sarwal. Article-specific Creative Commons Attribution 4.0, https://creativecommons.org/licenses/by/4.0/. Authors and original publication credited; no source expression reused.",
+    "reuseStatus": "cc_by_4_0",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Peer-reviewed transplant review supports preformed donor-specific antibodies binding graft endothelium with complement-associated vascular injury. Its Abstract distinguishes T-cell and antibody pathways and recognizes coexistence. Narrow documented hyperacute mechanism only; not every early graft failure or acute rejection is assigned this mechanism.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.e50a1962e942",
+      "claim.n2.b42555c8fb52",
+      "claim.n2.cca234e3627e",
+      "claim.n2r2.graft-mechanism-investigation",
+      "claim.n2r3.preimplantation-specificity-assay"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.gs028e.tiede_mixing2020",
+    "title": "International recommendations on the diagnosis and treatment of acquired hemophilia A",
+    "completeCitation": "Tiede A, Collins P, Knoebl P, Teitel J, Kessler C, Shima M, Di Minno G, d’Oiron R, Salaj P, Jiménez-Yuste V, Huth-Kühne A, Giangrande P. International recommendations on the diagnosis and treatment of acquired hemophilia A. Haematologica. 2020;105(7):1791–1801. doi:10.3324/haematol.2019.230771. PMID:32381574. Diagnosis, Mixing tests; accessed October 7, 2026.",
+    "organizationOrJournal": "Haematologica; Ferrata Storti Foundation",
+    "authors": [
+      "Andreas Tiede",
+      "Peter Collins",
+      "Paul Knoebl",
+      "Jerome Teitel",
+      "Craig Kessler",
+      "Midori Shima",
+      "Giovanni Di Minno",
+      "Roseline d’Oiron",
+      "Peter Salaj",
+      "Victor Jiménez-Yuste",
+      "Angela Huth-Kühne",
+      "Paul Giangrande"
+    ],
+    "publicationYear": 2020,
+    "doi": "10.3324/haematol.2019.230771",
+    "pmid": "32381574",
+    "officialUrl": "https://haematologica.org/article/view/9931",
+    "accessedOn": "2026-10-07",
+    "sourceClass": "peer_reviewed_guideline",
+    "licenseLabel": "Publisher default is CC BY-NC; article-specific license version not verified. Rights: https://haematologica.org/rights-and-permissions and /our-policies. Targeted guideline factual verification only; no expression, algorithm or commercial text mining.",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N1 reuses locally recorded atomic synthesis and bibliographic metadata only; no source text, table, figure or excerpt was retrieved or copied. Access date is inherited; N1 did not refresh it. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "International consensus guideline supports the conditional role of mixing tests when immediate FVIII:C is unavailable, parallel factor assays, time-dependent inhibitors and inability of mixing alone to establish or exclude acquired hemophilia A. No universal mandatory next-test rule or bleeding-risk prediction is authored.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.b88db50dcb99",
+      "claim.n2.1d724576493f",
+      "claim.n2.b02be3363804",
+      "claim.n2r2.acquired-bleeding-factor-priority"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.gs028e.ukhsa_woundclass",
+    "title": "Protocol for the Surveillance of Surgical Site Infection: wound class",
+    "completeCitation": "UK Health Security Agency. Protocol for the Surveillance of Surgical Site Infection. Version 6 (June 2013) r2, published January 2022. Publishing reference GOV-10188. London: UKHSA; 2022. Section 5.2.16, printed and physical PDF p. 50; copyright and license, p. 101. Accessed October 7, 2026.",
+    "organizationOrJournal": "UK Health Security Agency",
+    "authors": [
+      "UK Health Security Agency"
+    ],
+    "publicationYear": 2022,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://assets.publishing.service.gov.uk/media/61e989028fa8f505985ef463/Protocol_for_the_Surveillance_of_Surgical_Site_Infection.pdf",
+    "accessedOn": "2026-10-07",
+    "sourceClass": "government_guidance",
+    "licenseLabel": "© Crown copyright 2022. Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/; logo and third-party exclusions apply. Contains public sector information licensed under the Open Government Licence v3.0. The schema has no OGL category, so targeted factual verification is recorded conservatively; OGL is not public domain.",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current official linked surveillance protocol supports clean, clean-contaminated, contaminated and dirty/infected distinctions. Definitions only; no copied table, source-specific traumatic-wound time cutoff, infection probability or automatic antibiotic prescription.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.cc57afd626e3",
+      "claim.n2.e690f51e53b0",
+      "claim.n2r3.operation-time-outcome-separation"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.gs028f.auspen_refeeding2025",
+    "title": "AuSPEN consensus statements on refeeding syndrome",
+    "completeCitation": "Matthews-Rensch K, Blackwood K, Lawlis D, Breik L, McLean C, Nguyen T, Phillips S, Small K, Stewart T, Thatcher A, Venkat L, Brodie E, Cleeve B, Diamond L, Ng MY, Small A, Viner Smith E, Asrani V. The Australasian Society of Parenteral and Enteral Nutrition: Consensus statements on refeeding syndrome. Nutrition & Dietetics. 2025;82(2):128–142. Published March 16, 2025. doi:10.1111/1747-0080.70003. PMID:40090863. Accessed October 7, 2026.",
+    "organizationOrJournal": "Australasian Society of Parenteral and Enteral Nutrition; Nutrition & Dietetics",
+    "authors": [
+      "Kylie Matthews-Rensch",
+      "Kirrilee Blackwood",
+      "Deborah Lawlis",
+      "Lina Breik",
+      "Cameron McLean",
+      "Truc Nguyen",
+      "Sarah Phillips",
+      "Kimberly Small",
+      "Tim Stewart",
+      "Amber Thatcher",
+      "Leanne Venkat",
+      "Emily Brodie",
+      "Brydie Cleeve",
+      "Lauren Diamond",
+      "Mei Yuen Ng",
+      "Anna Small",
+      "Elizabeth Viner Smith",
+      "Varsha Asrani"
+    ],
+    "publicationYear": 2025,
+    "doi": "10.1111/1747-0080.70003",
+    "pmid": "40090863",
+    "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11973624/",
+    "accessedOn": "2026-10-07",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Article-specific CC BY-NC-ND 4.0, https://creativecommons.org/licenses/by-nc-nd/4.0/ verified in the actual article October 7, 2026. The schema lacks a BY-NC-ND category, so conservative targeted-verification status is used. Only underlying facts in original claims; no source prose, tables, figures or algorithm adaptations.",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Adult multidisciplinary 2025 society consensus, literature search through November 20, 2024. Section 3.4.1 recommends thiamine before nutrition and explicitly notes absence of specific evidence evaluating thiamine's preventive role. Section 3.5 and summary support close electrolyte/clinical monitoring; risk and diagnosis sections caution that phosphate decline has other causes. Recommendation is expert consensus with limited direct preventive evidence. No dose, duration, feeding rate, diagnostic threshold or claimed prevention certainty is imported; NICE content is excluded.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.149ce209d4ee",
+      "claim.n2.a2a9c29cbbcf",
+      "claim.n2r2.78d2ba5c0eb0",
+      "claim.n2r2.iv-dextrose-exposure",
+      "claim.n2r3.refeeding-combined-carbohydrate"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.gs028f.fda_oximeter2025",
+    "title": "FDA pulse oximeter basics",
+    "completeCitation": "US Food and Drug Administration. Pulse Oximeter Basics. Consumer Update. Content current March 26, 2025. Section What is a pulse oximeter? Accessed October 7, 2026.",
+    "organizationOrJournal": "US Food and Drug Administration",
+    "authors": [
+      "US Food and Drug Administration"
+    ],
+    "publicationYear": 2025,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://www.fda.gov/consumers/consumer-updates/pulse-oximeter-basics",
+    "accessedOn": "2026-10-07",
+    "sourceClass": "government_guidance",
+    "licenseLabel": "FDA government consumer text; FDA Website Policies https://www.fda.gov/about-fda/about-website/website-policies checked October 7, 2026, government text public domain unless otherwise noted. Agency attribution recorded; no image, logo or third-party copyrighted material reused.",
+    "reuseStatus": "public_domain_conditions_apply",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N1 reuses locally recorded atomic synthesis and bibliographic metadata only; no source text, table, figure or excerpt was retrieved or copied. Access date is inherited; N1 did not refresh it. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current March 26, 2025 official consumer explanation verifies SpO2 as a percentage estimate, pulse-rate display and occasional signal-strength display. Used for what an ordinary clip reading reports, not for an exact normal threshold, device clearance, anemia treatment, or reassurance that symptoms are safe. Device limitations are acknowledged; no demographic selection rule is adopted.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.c3c167a7739f"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.gs028f.fda_oximetry2024",
+    "title": "FDA pulse-oximetry executive summary: measurement background",
+    "completeCitation": "US Food and Drug Administration, Center for Devices and Radiological Health. FDA Executive Summary: Performance Evaluation of Pulse Oximeters Taking into Consideration Skin Pigmentation, Race and Ethnicity. Prepared for the Anesthesiology and Respiratory Therapy Devices Panel meeting, February 2, 2024. Introduction, printed page 1/physical page 4; Current Technology, printed pages 4–5/physical pages 7–8. Accessed October 7, 2026.",
+    "organizationOrJournal": "US Food and Drug Administration; Center for Devices and Radiological Health",
+    "authors": [
+      "US Food and Drug Administration, Center for Devices and Radiological Health"
+    ],
+    "publicationYear": 2024,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://www.fda.gov/media/175828/download",
+    "accessedOn": "2026-10-07",
+    "sourceClass": "government_guidance",
+    "licenseLabel": "FDA-authored government device-background text; FDA Website Policies, Linking to or Copying Information, https://www.fda.gov/about-fda/about-website/website-policies checked October 7, 2026 permits government text unless otherwise noted. Public-domain conditions apply; no third-party references, graphics or agency mark reused.",
+    "reuseStatus": "public_domain_conditions_apply",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N1 reuses locally recorded atomic synthesis and bibliographic metadata only; no source text, table, figure or excerpt was retrieved or copied. Access date is inherited; N1 did not refresh it. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Official 2024 advisory-panel background, not a clinical anemia-management guideline. Introduction verifies saturation as the proportion of hemoglobin oxygen capacity occupied; technology discussion identifies reduced oxygen-carrying ability in anemia. Original qualitative saturation-versus-carrier-quantity inference only. No device regulatory recommendation, race-based case selection, accuracy formula or transfusion decision is adopted.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.39e090dfc4f0",
+      "claim.n2.c3c167a7739f"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.gs028f.khare.grafts-flaps.2026",
+    "title": "Mastering grafts and flaps in dermatologic surgery: A narrative review",
+    "completeCitation": "Khare S, Sharma A, Vinay K. Mastering grafts and flaps in dermatologic surgery: A narrative review. Indian J Dermatol Venereol Leprol. 2026;92(4):476–484. doi:10.25259/IJDVL_66_2025. Published June27,2026; first online September11,2025. Abstract and Flaps section, targeted vascular-transfer definitions; accessed October7,2026.",
+    "organizationOrJournal": "Indian Journal of Dermatology, Venereology and Leprology",
+    "authors": [
+      "Shivansh Khare",
+      "Apoorva Sharma",
+      "Keshavamurthy Vinay"
+    ],
+    "publicationYear": 2026,
+    "doi": "10.25259/IJDVL_66_2025",
+    "pmid": "41100376",
+    "officialUrl": "https://ijdvl.com/mastering-grafts-and-flaps-in-dermatologic-surgery-a-narrative-review/",
+    "accessedOn": "2026-10-07",
+    "sourceClass": "narrative_review",
+    "licenseLabel": "©IJDVL2026, CC BY-NC-SA4.0 on actual publisher page, https://creativecommons.org/licenses/by-nc-sa/4.0/. Conservative targeted verification of underlying vascular definitions only; no copied or adapted source expression or licensed derivative/table/figure is distributed. Credit: Khare, Sharma, Vinay and original journal/DOI.",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current peer-reviewed reconstructive review supports the foundational graft-versus-flap blood-supply distinction. NCI independently corroborates pedicled/free vascular-transfer facts. No detailed operative recipe, exact healing time or unsupported outcome ranking is used.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.c83fc3058af5",
+      "claim.n2.c88fb3c62612",
+      "claim.n2.5fcd9dfc70c9",
+      "claim.n2.ddb68fa706b9",
+      "claim.n2r2.coverage-perfusion-map",
+      "claim.n2r2.free-flap-complete-circuit",
+      "claim.n2r3.free-flap-outflow-salvage",
+      "claim.n2r3.prepared-recipient-bed"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.gs028f.nci.breast-reconstruction-flaps",
+    "title": "Breast Reconstruction After Mastectomy",
+    "completeCitation": "National Cancer Institute. Breast Reconstruction After Mastectomy. Current official fact sheet, undated displayed page; accessed October 7, 2026. How do surgeons use tissue from a woman's own body to reconstruct the breast? section.",
+    "organizationOrJournal": "National Cancer Institute",
+    "authors": [
+      "National Cancer Institute"
+    ],
+    "publicationYear": null,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://www.cancer.gov/types/breast/treatment/surgery/breast-reconstruction",
+    "accessedOn": "2026-10-07",
+    "sourceClass": "government_guidance",
+    "licenseLabel": "U.S. government text. Credit: National Cancer Institute. Reuse policy checked at https://www.cancer.gov/policies/copyright-reuse; no third-party graphics or protected expression used.",
+    "reuseStatus": "public_domain_conditions_apply",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Federal fact sheet independently verifies that pedicled flaps retain attached vessels and free flaps have vessels reconnected at the recipient site. Only vascular-transfer principles are used; no selection, timing, cancer treatment or onsite reconstructive service is inferred.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.c83fc3058af5",
+      "claim.n2.5fcd9dfc70c9",
+      "claim.n2.ddb68fa706b9",
+      "claim.n2r2.coverage-perfusion-map",
+      "claim.n2r2.free-flap-complete-circuit",
+      "claim.n2r3.free-flap-outflow-salvage",
+      "claim.n2r3.prepared-recipient-bed"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.gs028f.nhlbi_anemia2025",
+    "title": "NHLBI anemia diagnosis: hemoglobin oxygen carriage",
+    "completeCitation": "National Heart, Lung, and Blood Institute. Anemia: Diagnosis. National Institutes of Health. Last updated December 18, 2025. Complete blood count section. Accessed October 7, 2026.",
+    "organizationOrJournal": "National Heart, Lung, and Blood Institute; National Institutes of Health",
+    "authors": [
+      "National Heart, Lung, and Blood Institute"
+    ],
+    "publicationYear": 2025,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://www.nhlbi.nih.gov/health/anemia/diagnosis",
+    "accessedOn": "2026-10-07",
+    "sourceClass": "government_guidance",
+    "licenseLabel": "Official NIH/NHLBI patient information. No article-specific open licence verified in this packet; conservative targeted factual verification is used rather than presuming every hosted element is public domain. Underlying hemoglobin-carriage facts only, with agency credit and no copied ranges, tables or graphics.",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N1 reuses locally recorded atomic synthesis and bibliographic metadata only; no source text, table, figure or excerpt was retrieved or copied. Access date is inherited; N1 did not refresh it. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Actual December 18, 2025 update independently verifies hemoglobin as an oxygen-carrying protein in red cells and blood hemoglobin measurement in anemia evaluation. This patient information is not a transfusion guideline. No numeric anemia threshold, treatment rule, race-adjusted reference range or acute critical-care protocol is imported.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.39e090dfc4f0"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.gs028f.prograf2023",
+    "title": "PROGRAF prescribing information: mechanism of action",
+    "completeCitation": "Astellas Pharma US, Inc. PROGRAF (tacrolimus) capsules, injection and granules: full prescribing information. DailyMed, National Library of Medicine. Updated August 25, 2023. Section 12.1, Mechanism of Action. Set ID 7f667de1-9dfa-4bd6-8ba0-15ee2d78873b. Accessed October 7, 2026.",
+    "organizationOrJournal": "Astellas Pharma US, Inc.; NLM DailyMed",
+    "authors": [
+      "Astellas Pharma US, Inc."
+    ],
+    "publicationYear": 2023,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=7f667de1-9dfa-4bd6-8ba0-15ee2d78873b",
+    "accessedOn": "2026-10-07",
+    "sourceClass": "open_educational_resource",
+    "licenseLabel": "Manufacturer-contributed prescribing information, not automatically public domain because hosted by NLM. NLM Web Policies, Copyright, https://www.nlm.nih.gov/web_policies.html#copyright checked October 7, 2026. Copyrighted targeted factual verification only; no label expression reproduced.",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current official DailyMed record for the named PROGRAF products, updated August 25, 2023. Manufacturer regulatory prescribing information is the sole direct mechanism source; the schema's public educational-resource class is not an open licence or a professional guideline. Section 12.1 directly verifies FKBP12 binding, calcineurin inhibition and suppression of T-cell activation. No medicine adjustment, formulation substitution, dosing or monitoring algorithm is inferred.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.fe0ef6f0a1ad",
+      "claim.n2.154178be8123",
+      "claim.n2r2.graft-mechanism-investigation",
+      "claim.n2r3.preimplantation-specificity-assay"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.gs028f.zhang_refeeding2023",
+    "title": "Refeeding physiology in a neurocritical cohort report",
+    "completeCitation": "Zhang W, Zhang S-X, Chen S-F, Yu T, Tang Y. Development and validation of risk prediction model for refeeding syndrome in neurocritical patients. Frontiers in Nutrition. 2023;10:1083483. Published February 15, 2023. doi:10.3389/fnut.2023.1083483. Accessed October 7, 2026. Mechanism background in Introduction.",
+    "organizationOrJournal": "Frontiers in Nutrition",
+    "authors": [
+      "Wei Zhang",
+      "Sheng-Xiang Zhang",
+      "Shu-Fan Chen",
+      "Tao Yu",
+      "Yun Tang"
+    ],
+    "publicationYear": 2023,
+    "doi": "10.3389/fnut.2023.1083483",
+    "pmid": null,
+    "officialUrl": "https://www.frontiersin.org/journals/nutrition/articles/10.3389/fnut.2023.1083483/full",
+    "accessedOn": "2026-10-07",
+    "sourceClass": "observational_study",
+    "licenseLabel": "Article-specific CC BY 4.0 verified in the actual publisher copyright notice October 7, 2026, https://creativecommons.org/licenses/by/4.0/. Authors and original article credited here. Claims/cards independently synthesize underlying physiology; no prose, predictive model, table or figure adapted.",
+    "reuseStatus": "cc_by_4_0",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "2023 observational neurocritical-care cohort. Its Introduction independently describes the insulin-associated intracellular phosphate uptake and catabolic-to-anabolic transition after feeding. Those stable background mechanisms alone are used; the cohort's risk model, incidence, thresholds and neurocritical-care management are not generalized to clinic patients. Not independent evidence for thiamine timing or efficacy.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2r2.iv-dextrose-exposure",
+      "claim.n2r3.55c2d3c6076b",
+      "claim.n2r3.refeeding-combined-carbohydrate"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.gs028g.dailymed-sugammadex-2026",
+    "title": "Sugammadex injection prescribing information",
+    "completeCitation": "Zydus Pharmaceuticals USA Inc. Sugammadex injection, solution: prescribing information. DailyMed. Updated July 2, 2026. Sections 1 and 12.1.",
+    "organizationOrJournal": "DailyMed / Zydus Pharmaceuticals USA Inc.",
+    "authors": [
+      "Zydus Pharmaceuticals USA Inc."
+    ],
+    "publicationYear": 2026,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=21028965-598b-4cfa-a614-5c28ed40306a",
+    "accessedOn": "2026-10-07",
+    "sourceClass": "government_guidance",
+    "licenseLabel": "Manufacturer label hosted by NLM; copyright is not inferred to be public domain; targeted fact verification",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current official drug labeling for pharmacologic selectivity; the government host does not make this a clinical practice guideline.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.2771c9286d4c",
+      "claim.n2.5ab0df92101d",
+      "claim.n2r3.depolarizing-ratio-amplitude"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.gs028g.jimenez-ventilation-2024",
+    "title": "Current Concepts in Intraoperative Ventilation during Anesthesia for Laparoscopic and Robot–Assisted Surgery – a Narrative Review",
+    "completeCitation": "Jimenez-Santana JD, Díaz-Cambronero O, Schultz MJ, Mazzinari G. Current Concepts in Intraoperative Ventilation during Anesthesia for Laparoscopic and Robot–Assisted Surgery – a Narrative Review. Current Anesthesiology Reports. 2024;14:534–550. doi:10.1007/s40140-024-00648-7.",
+    "organizationOrJournal": "Current Anesthesiology Reports",
+    "authors": [
+      "Jose Daniel Jimenez-Santana",
+      "Oscar Díaz-Cambronero",
+      "Marcus J. Schultz",
+      "Guido Mazzinari"
+    ],
+    "publicationYear": 2024,
+    "doi": "10.1007/s40140-024-00648-7",
+    "pmid": null,
+    "officialUrl": "https://link.springer.com/article/10.1007/s40140-024-00648-7",
+    "accessedOn": "2026-10-07",
+    "sourceClass": "narrative_review",
+    "licenseLabel": "CC BY 4.0; original factual synthesis with attribution",
+    "reuseStatus": "cc_by_4_0",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current peer-reviewed ventilation review supports CO2 absorption and diaphragm/compliance physiology; no fixed pressure, ventilation target or presumed explanation for unexplained acute deterioration.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.456c6686c997",
+      "claim.n2r2.19f587fdd650"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.gs028g.motamed-neuromuscular-monitoring-2023",
+    "title": "Intraoperative Monitoring of Neuromuscular Blockade",
+    "completeCitation": "Motamed C. Intraoperative Monitoring of Neuromuscular Blockade. Life. 2023;13(5):1184. Published May 15, 2023. doi:10.3390/life13051184.",
+    "organizationOrJournal": "Life",
+    "authors": [
+      "Cyrus Motamed"
+    ],
+    "publicationYear": 2023,
+    "doi": "10.3390/life13051184",
+    "pmid": null,
+    "officialUrl": "https://www.mdpi.com/2075-1729/13/5/1184",
+    "accessedOn": "2026-10-07",
+    "sourceClass": "narrative_review",
+    "licenseLabel": "CC BY 4.0; original factual synthesis with attribution; verified licensed article via Semantic Scholar mirror",
+    "reuseStatus": "cc_by_4_0",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Peer-reviewed anesthesia review supporting quantitative monitoring and limitations of clinical/qualitative recovery assessment; not an independent guideline.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.a752906bf151",
+      "claim.n2.2771c9286d4c",
+      "claim.n2.5ab0df92101d",
+      "claim.n2r3.depolarizing-ratio-amplitude"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.gs028se.ama-dnar-5-4",
+    "title": "Orders Not to Attempt Resuscitation (DNAR)",
+    "completeCitation": "American Medical Association. Code of Medical Ethics Opinion 5.4: Orders Not to Attempt Resuscitation (DNAR). Accessed 2026-09-29.",
+    "organizationOrJournal": "American Medical Association",
+    "authors": [
+      "American Medical Association"
+    ],
+    "publicationYear": null,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://code-medical-ethics.ama-assn.org/ethics-opinions/orders-not-attempt-resuscitation-dnar",
+    "accessedOn": "2026-09-29",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Copyrighted; targeted factual verification only",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current ethics guidance: DNAR concerns resuscitation, not all care, and should be confirmed for surgery.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.9405168985f2",
+      "claim.n2.8d37e3fdc0bb",
+      "claim.n2r2.20ec0ea2d818",
+      "claim.n2r2.007f238850f9",
+      "claim.n2r3.current-perioperative-request"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.gs028se.asa-dnar-2023",
+    "title": "Statement on Ethical Guidelines for the Anesthesia Care of Patients with Do-Not-Resuscitate Orders",
+    "completeCitation": "American Society of Anesthesiologists Committee on Ethics. Statement on Ethical Guidelines for the Anesthesia Care of Patients with Do-Not-Resuscitate Orders. Originally approved 2001; reaffirmed 2023. Accessed 2026-09-29.",
+    "organizationOrJournal": "American Society of Anesthesiologists",
+    "authors": [
+      "American Society of Anesthesiologists Committee on Ethics"
+    ],
+    "publicationYear": null,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://www.asahq.org/standards-and-practice-parameters/statement-on-ethical-guidelines-for-the-anesthesia-care-of-patients-with-do-not-resuscitate-orders",
+    "accessedOn": "2026-09-29",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Copyrighted; targeted factual verification only",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current anesthesia ethics guidance against automatic suspension; supports documented perioperative review.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.9405168985f2",
+      "claim.n2.8d37e3fdc0bb",
+      "claim.n2r2.20ec0ea2d818",
+      "claim.n2r2.007f238850f9",
+      "claim.n2r3.current-perioperative-request"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.guo-dipietro.wound-healing-factors.2010",
+    "title": "Factors Affecting Wound Healing",
+    "completeCitation": "Guo S, DiPietro LA. Factors Affecting Wound Healing. J Dent Res. 2010;89(3):219-229. doi:10.1177/0022034509359125.",
+    "organizationOrJournal": "Journal of Dental Research",
+    "authors": [
+      "S. Guo",
+      "Luisa A. DiPietro"
+    ],
+    "publicationYear": 2010,
+    "doi": "10.1177/0022034509359125",
+    "pmid": "20139336",
+    "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2903966/",
+    "accessedOn": "2026-08-06",
+    "sourceClass": "narrative_review",
+    "licenseLabel": "Open-access manuscript; publisher and article-specific reuse terms apply",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Use for targeted factual verification and independently written synthesis only; do not reproduce source prose, tables, or figures. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Peer-reviewed wound-healing review independently supporting vitamin C as a cofactor in proline and lysine hydroxylation during collagen synthesis.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.1d94861b6f4e",
+      "claim.n2.5aa2710c7ac3"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.jcm.laparoscopic-anesthesia-review.2020",
+    "title": "Do Small Incisions Need Only Minimal Anesthesia? Anesthetic Management in Laparoscopic and Robotic Surgery",
+    "completeCitation": "Hottenrott S, Schlesinger T, Helmer P, Meybohm P, Alkatout I, Kranke P. Do Small Incisions Need Only Minimal Anesthesia?—Anesthetic Management in Laparoscopic and Robotic Surgery. Journal of Clinical Medicine. 2020;9(12):4058. Published December 15, 2020. doi:10.3390/jcm9124058. Sections 3.1 and 3.4, pp. 3–4; accessed October 7, 2026.",
+    "organizationOrJournal": "Journal of Clinical Medicine",
+    "authors": [
+      "Sebastian Hottenrott",
+      "Tobias Schlesinger",
+      "Philipp Helmer",
+      "Patrick Meybohm",
+      "Ibrahim Alkatout",
+      "Peter Kranke"
+    ],
+    "publicationYear": 2020,
+    "doi": "10.3390/jcm9124058",
+    "pmid": null,
+    "officialUrl": "https://mdpi-res.com/d_attachment/jcm/jcm-09-04058/article_deploy/jcm-09-04058.pdf",
+    "accessedOn": "2026-10-07",
+    "sourceClass": "narrative_review",
+    "licenseLabel": "Article-specific Creative Commons Attribution 4.0 notice verified on PDF p. 15, https://creativecommons.org/licenses/by/4.0/; credited to the six named authors and Journal of Clinical Medicine. Original underlying-fact synthesis only. The publisher HTML and general terms/open-access pages were unavailable during checking; general site terms were not asserted to have been read.",
+    "reuseStatus": "cc_by_4_0",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N1 reuses locally recorded atomic synthesis and bibliographic metadata only; no source text, table, figure or excerpt was retrieved or copied. Access date is inherited; N1 did not refresh it. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Peer-reviewed physiology review directly supports absorption/exhalation of insufflated CO2 and context-dependent pressure/position effects on venous return. The older review is cross-checked with a current independent clinical study; no numeric pressure limit, ventilator setting or operating-room treatment protocol is authored.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2r2.19f587fdd650"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.jroboticsurg.pneumoperitoneum-acid-base-study.2026",
+    "title": "Acid–base balance and respiratory mechanics during robotic-assisted surgery: an observational study",
+    "completeCitation": "Pitimada M, Chiumello D, Monte A, Fratti I, Festa F, Pozzi T, Coppola S. Acid–base balance and respiratory mechanics during robotic-assisted surgery: an observational study. Journal of Robotic Surgery. 2026;20:440. Published April 21, 2026. doi:10.1007/s11701-026-03392-8. Introduction and discussion: acid-base equilibrium and gas exchange; accessed October 7, 2026.",
+    "organizationOrJournal": "Journal of Robotic Surgery",
+    "authors": [
+      "Matteo Pitimada",
+      "Davide Chiumello",
+      "Alessandro Monte",
+      "Isabella Fratti",
+      "Federica Festa",
+      "Tommaso Pozzi",
+      "Silvia Coppola"
+    ],
+    "publicationYear": 2026,
+    "doi": "10.1007/s11701-026-03392-8",
+    "pmid": null,
+    "officialUrl": "https://link.springer.com/article/10.1007/s11701-026-03392-8",
+    "accessedOn": "2026-10-07",
+    "sourceClass": "observational_study",
+    "licenseLabel": "Creative Commons Attribution 4.0 International, https://creativecommons.org/licenses/by/4.0/; credited to the seven named authors and Journal of Robotic Surgery. Original underlying-fact synthesis only; no source expression, data tables, images or ventilation protocol is reproduced.",
+    "reuseStatus": "cc_by_4_0",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N1 reuses locally recorded atomic synthesis and bibliographic metadata only; no source text, table, figure or excerpt was retrieved or copied. Access date is inherited; N1 did not refresh it. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current peer-reviewed observational study corroborates peritoneal CO2 absorption with increased arterial CO2/respiratory acidemia and pressure-associated hemodynamic effects. Colorectal/gynecological surgical population and observational design limit universal mechanistic inference; no renal, numeric outcome or treatment claim is extrapolated.",
+    "usageRole": "cross_check",
+    "evidenceClaimIds": [
+      "claim.n2r2.19f587fdd650"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.jsbi.burn-care-guideline.2022",
+    "title": "The Japanese Society for Burn Injuries (JSBI) Clinical Practice Guidelines for Management of Burn Care (3rd Edition)",
+    "completeCitation": "Sasaki J, Matsushima A, Ikeda H, et al. The Japanese Society for Burn Injuries (JSBI) Clinical Practice Guidelines for Management of Burn Care (3rd Edition). Acute Med Surg. 2022;9(1):e739. doi:10.1002/ams2.739.",
+    "organizationOrJournal": "Japanese Society for Burn Injuries; Acute Medicine & Surgery",
+    "authors": [
+      "Junichi Sasaki",
+      "Asako Matsushima",
+      "Hiroto Ikeda",
+      "Clinical Practice Guidelines Committee of the Japanese Society for Burn Injuries"
+    ],
+    "publicationYear": 2022,
+    "doi": "10.1002/ams2.739",
+    "pmid": "35493773",
+    "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9045063/",
+    "accessedOn": "2026-08-06",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Creative Commons Attribution-NonCommercial 4.0 International",
+    "reuseStatus": "cc_by_nc_4_0_restricted",
+    "reuseNotes": "Use with attribution for independently written noncommercial factual synthesis. Do not reproduce guideline tables, algorithms, figures, or extended prose. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current professional-society burn guideline recommending enteral nutrition as early as possible within 24 hours for patients with severe burns, subject to clinical feasibility and safety.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.72256312b855",
+      "claim.n2.84c927796922"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.ksge.pancreatic-fluid-collections.2021",
+    "title": "Clinical Practice Guidelines for the Endoscopic Management of Peripancreatic Fluid Collections",
+    "completeCitation": "Oh CH, Lee JK, Song TJ, Park JS, Lee JM, Son JH, et al. Clinical Endoscopy. 2021;54(4):505-521. doi:10.5946/ce.2021.185.",
+    "organizationOrJournal": "Korean Society of Gastrointestinal Endoscopy",
+    "authors": [
+      "Oh CH",
+      "Lee JK",
+      "Song TJ",
+      "Park JS",
+      "Lee JM",
+      "Son JH",
+      "et al."
+    ],
+    "publicationYear": 2021,
+    "doi": "10.5946/ce.2021.185",
+    "pmid": null,
+    "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8357592/",
+    "accessedOn": "2026-09-13",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Creative Commons Attribution-NonCommercial 3.0",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Noncommercial independent factual synthesis with attribution; no figures, tables, or prose reused. The source's CC BY-NC 3.0 license does not match the schema's CC BY-NC 4.0 enum, so the conservative copyrighted status is recorded. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Independent society corroboration for cross-sectional characterization and drainage of symptomatic collections.",
+    "usageRole": "cross_check",
+    "evidenceClaimIds": [
+      "claim.n2.1e7b4640104f",
+      "claim.n2.8b815ad3ac3c",
+      "claim.n2r3.contained-pelvic-source-control"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.mhra.sglt2-ketoacidosis-safety.2016",
+    "title": "SGLT2 inhibitors: updated advice on the risk of diabetic ketoacidosis",
+    "completeCitation": "Medicines and Healthcare products Regulatory Agency. SGLT2 inhibitors: updated advice on the risk of diabetic ketoacidosis. Drug Safety Update. April 18, 2016. Government safety guidance, accessed October 7, 2026.",
+    "organizationOrJournal": "Medicines and Healthcare products Regulatory Agency, United Kingdom",
+    "authors": [
+      "Medicines and Healthcare products Regulatory Agency"
+    ],
+    "publicationYear": 2016,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://www.gov.uk/drug-safety-update/sglt2-inhibitors-updated-advice-on-the-risk-of-diabetic-ketoacidosis",
+    "accessedOn": "2026-10-07",
+    "sourceClass": "government_guidance",
+    "licenseLabel": "UK Crown copyright, Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/; MHRA credited; no source expression adapted.",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Independent national regulator corroborates near-normal glucose presentations, ketone assessment and drug interruption in suspected ketoacidosis. This older source is not used for the U.S. drug-specific preoperative interval.",
+    "usageRole": "cross_check",
+    "evidenceClaimIds": [
+      "claim.n2.e0d1e963f20a"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.naeini.burn-nutrition-umbrella-review.2024",
+    "title": "Nutritional interventions in patients with burn injury: an umbrella review of systematic reviews and meta-analyses of randomised clinical trials",
+    "completeCitation": "Naeini F, Zeraattalab-Motlagh S, Rahimlou M, et al. Nutritional interventions in patients with burn injury: an umbrella review of systematic reviews and meta-analyses of randomised clinical trials. Br J Nutr. 2024;132(10):1317-1324. doi:10.1017/S0007114524002344.",
+    "organizationOrJournal": "British Journal of Nutrition",
+    "authors": [
+      "Fatemeh Naeini",
+      "Sheida Zeraattalab-Motlagh",
+      "Mehran Rahimlou",
+      "Mahsa Ranjbar",
+      "Amirhossein Hemmati",
+      "Sajedeh Habibi",
+      "Sajjad Moradi",
+      "Hamed Mohammadi"
+    ],
+    "publicationYear": 2024,
+    "doi": "10.1017/S0007114524002344",
+    "pmid": "39501634",
+    "officialUrl": "https://pubmed.ncbi.nlm.nih.gov/39501634/",
+    "accessedOn": "2026-08-06",
+    "sourceClass": "systematic_review",
+    "licenseLabel": "Publisher-controlled article; targeted factual verification only",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Use for targeted verification of the evidence direction and independently written synthesis only. Do not reproduce article prose, tables, or figures. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Recent umbrella review supporting clinical benefit from early enteral nutrition in adult burn populations while not establishing a universal eight-hour cutoff.",
+    "usageRole": "cross_check",
+    "evidenceClaimIds": [
+      "claim.n2.84c927796922"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.nih-ods.vitamin-c-health-professional.2025",
+    "title": "Vitamin C: Fact Sheet for Health Professionals",
+    "completeCitation": "National Institutes of Health, Office of Dietary Supplements. Vitamin C: Fact Sheet for Health Professionals. Updated July 31, 2025.",
+    "organizationOrJournal": "National Institutes of Health, Office of Dietary Supplements",
+    "authors": [
+      "National Institutes of Health Office of Dietary Supplements"
+    ],
+    "publicationYear": 2025,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://ods.od.nih.gov/factsheets/VitaminC-HealthProfessional/",
+    "accessedOn": "2026-08-06",
+    "sourceClass": "government_guidance",
+    "licenseLabel": "United States government health-information page; site policies and attribution requirements apply",
+    "reuseStatus": "public_domain_conditions_apply",
+    "reuseNotes": "Use independently written factual synthesis with attribution. Do not reproduce the complete fact sheet, tables, or source wording. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current NIH professional reference supporting vitamin C's required role in collagen biosynthesis and the relationship between collagen and wound healing.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.1d94861b6f4e",
+      "claim.n2.5aa2710c7ac3"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.nist.fisher-exact.2026",
+    "title": "Fisher Exact Test",
+    "completeCitation": "National Institute of Standards and Technology. Dataplot Reference Manual: Fisher Exact Test. Accessed 2026-09-29.",
+    "organizationOrJournal": "National Institute of Standards and Technology",
+    "authors": [
+      "National Institute of Standards and Technology"
+    ],
+    "publicationYear": null,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/fishexac.htm",
+    "accessedOn": "2026-09-29",
+    "sourceClass": "government_guidance",
+    "licenseLabel": "Targeted factual verification only; record-level reuse permission was not separately verified.",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Federal reference for Fisher exact testing in sparse two-by-two tables.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.e474c0b307ac"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.nist.mcnemar.2026",
+    "title": "McNemar Test",
+    "completeCitation": "National Institute of Standards and Technology. Dataplot Reference Manual: McNemar Test. Accessed 2026-09-29.",
+    "organizationOrJournal": "National Institute of Standards and Technology",
+    "authors": [
+      "National Institute of Standards and Technology"
+    ],
+    "publicationYear": null,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/mcnemar.htm",
+    "accessedOn": "2026-09-29",
+    "sourceClass": "government_guidance",
+    "licenseLabel": "Targeted factual verification only; record-level reuse permission was not separately verified.",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Federal methods reference for McNemar testing of paired binary responses.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.3e734c574c75",
+      "claim.n2r2.linked-record-net-change"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.nist.p-values.2026",
+    "title": "Critical values and p values",
+    "completeCitation": "National Institute of Standards and Technology. Engineering Statistics Handbook: Critical values and p values. Accessed 2026-09-29.",
+    "organizationOrJournal": "National Institute of Standards and Technology",
+    "authors": [
+      "National Institute of Standards and Technology"
+    ],
+    "publicationYear": null,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://www.itl.nist.gov/div898/handbook/prc/section1/prc131.htm",
+    "accessedOn": "2026-09-29",
+    "sourceClass": "government_guidance",
+    "licenseLabel": "Targeted factual verification only; record-level reuse permission was not separately verified.",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Federal reference for the null-conditional, at-least-as-extreme interpretation of p-values.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.ea3b56279aaf"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.nutrition.espen-practical-2021",
+    "title": "ESPEN practical guideline on clinical nutrition in surgery",
+    "completeCitation": "Weimann A, Braga M, Carli F, et al. ESPEN practical guideline: Clinical nutrition in surgery. Clin Nutr. 2021;40(7):4745-4761. doi:10.1016/j.clnu.2021.03.031.",
+    "organizationOrJournal": "European Society for Clinical Nutrition and Metabolism",
+    "authors": [
+      "Weimann A",
+      "Braga M",
+      "Carli F",
+      "et al."
+    ],
+    "publicationYear": 2021,
+    "doi": "10.1016/j.clnu.2021.03.031",
+    "pmid": null,
+    "officialUrl": "https://doi.org/10.1016/j.clnu.2021.03.031",
+    "accessedOn": "2026-09-29",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Copyrighted guidance; targeted factual verification only",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N1 reuses locally recorded atomic synthesis and bibliographic metadata only; no source text, table, figure or excerpt was retrieved or copied. Access date is inherited; N1 did not refresh it. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Copyrighted society practical guideline for screening and oral/enteral/parenteral route boundaries.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2r2.e2f4cca1859a",
+      "claim.n2r2.e757fd75ecb1",
+      "claim.n2.d2b48d8aa3de",
+      "claim.n2r3.delivered-supplemental-nutrition",
+      "claim.n2r3.protein-composition-volume"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.qq20261102.esge-ulcer-2026",
+    "title": "Endoscopic diagnosis and management of peptic ulcer bleeding: ESGE Guideline - Update 2026",
+    "completeCitation": "Gralnek IM, Morris J, Laursen SB, Camus M, Tziatzios G, Debels LK, et al. Endoscopic diagnosis and management of peptic ulcer bleeding: European Society of Gastrointestinal Endoscopy (ESGE) Guideline - Update 2026. Endoscopy. 2026;58(8):899-924. doi:10.1055/a-2863-8314.",
+    "organizationOrJournal": "European Society of Gastrointestinal Endoscopy / Endoscopy",
+    "authors": [
+      "Ian M Gralnek",
+      "John Morris",
+      "Stig Borbjerg Laursen",
+      "Marine Camus",
+      "Georgios Tziatzios",
+      "Lynn K Debels",
+      "et al."
+    ],
+    "publicationYear": 2026,
+    "doi": "10.1055/a-2863-8314",
+    "pmid": "42127996",
+    "officialUrl": "https://www.esge.com/assets/downloads/pdfs/guidelines/2026_a-2863-8314.pdf",
+    "accessedOn": "2026-11-02",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Copyright ESGE; freely readable professional guidance, all rights reserved",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Targeted verification of hemostasis/PPI and rescue embolization only. No article text, algorithm, tables, illustrations, appendices, exact regimen or dosing schedule stored or reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current direct society guideline supporting the nonbleeding-vessel plan and failed-endoscopy escalation boundary; the new combined-plan claims have one current source, with that limitation explicit.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.9439df93c6d6"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.qq20261102a.ascrs-colon",
+    "title": "The American Society of Colon and Rectal Surgeons Clinical Practice Guidelines for the Management of Colon Cancer",
+    "completeCitation": "Vogel JD, Felder SI, Bhama AR, Hawkins AT, Langenfeld SJ, Shaffer VO, et al. The American Society of Colon and Rectal Surgeons Clinical Practice Guidelines for the Management of Colon Cancer. Dis Colon Rectum. 2022;65(2):148-177. doi:10.1097/DCR.0000000000002323.",
+    "organizationOrJournal": "American Society of Colon and Rectal Surgeons / Diseases of the Colon and Rectum",
+    "authors": [
+      "Jon D Vogel",
+      "Scott I Felder",
+      "Anuradha R Bhama",
+      "Alexander T Hawkins",
+      "Sean J Langenfeld",
+      "Vaughn O Shaffer",
+      "et al."
+    ],
+    "publicationYear": 2022,
+    "doi": "10.1097/DCR.0000000000002323",
+    "pmid": null,
+    "officialUrl": "https://fascrs.org/ascrs/media/files/downloads/2022-Colon-Cancer-CPG.pdf",
+    "accessedOn": "2026-11-02",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Copyright ASCRS; targeted verification only",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Targeted factual verification and independently written synthesis only. No source prose, tables, figures, algorithms, examples or full text retained. Public access is not permission to copy or to ingest a prohibited corpus; no reusable rights are assumed. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Complete official PDF parsed via indexed source; direct request intermittently 404. Malignant-polyp histology/completeness and initial CT staging facts checked. Chest CT plus abdominal MRI is also valid and is deliberately not keyed wrong. AGA/ASGE independent guidance could not be retrieved; the new management claim has one verified guideline.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.4a6198e86f78"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.qq20261102a.bsg-sedation",
+    "title": "British Society of Gastroenterology guidelines on sedation in gastrointestinal endoscopy",
+    "completeCitation": "Sidhu R, Turnbull D, Haboubi H, Leeds JS, Healey C, Hebbar S, et al. British Society of Gastroenterology guidelines on sedation in gastrointestinal endoscopy. Gut. 2024;73:219-245. doi:10.1136/gutjnl-2023-330396.",
+    "organizationOrJournal": "British Society of Gastroenterology / Gut",
+    "authors": [
+      "Reena Sidhu",
+      "Duncan Turnbull",
+      "Haboubi H",
+      "John S Leeds",
+      "Chris Healey",
+      "Srisha Hebbar",
+      "et al."
+    ],
+    "publicationYear": 2024,
+    "doi": "10.1136/gutjnl-2023-330396",
+    "pmid": null,
+    "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10850688/",
+    "accessedOn": "2026-11-02",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Public guideline manuscript; reuse license not assumed; targeted verification only",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Targeted factual verification and independently written synthesis only. No source prose, tables, figures, algorithms, examples or full text retained. Public access is not permission to copy or to ingest a prohibited corpus; no reusable rights are assumed. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Full guideline checked: formal recovery/discharge assessment, responsible adult support, and re-sedation after flumazenil because midazolam action outlasts reversal. No exact observation/discharge duration authored.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2r2.9737180b84fa"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.qq20261102a.dhsc-odds",
+    "title": "Public Health Technical Guidance: Odds ratio and relative risk",
+    "completeCitation": "Department of Health and Social Care. Public Health Technical Guidance: Odds ratio and relative risk; and Proportions and odds. Undated live technical guidance. Accessed November 2, 2026.",
+    "organizationOrJournal": "UK Department of Health and Social Care",
+    "authors": [
+      "Department of Health and Social Care"
+    ],
+    "publicationYear": null,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://fingertips.phe.org.uk/static-reports/public-health-technical-guidance/Basic_statistics/Odds_ratios_relative_risk.html",
+    "accessedOn": "2026-11-02",
+    "sourceClass": "government_guidance",
+    "licenseLabel": "Government public-sector information; OGL and third-party conditions apply",
+    "reuseStatus": "public_domain_conditions_apply",
+    "reuseNotes": "Targeted factual verification and independently written synthesis only. No source prose, tables, figures, algorithms, examples or full text retained. Public access is not permission to copy or to ingest a prohibited corpus; no reusable rights are assumed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Government definitions of ratios/risk and linked odds definition support elementary conversions. Conditional covariate-profile baseline is explicit; no adjusted-to-marginal causal-risk claim is made.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2r2.lr-odds-protocol",
+      "claim.n2r2.6d0e9fa10739"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.qq20261102a.lakens2017",
+    "title": "Equivalence Tests: A Practical Primer for t Tests, Correlations, and Meta-Analyses",
+    "completeCitation": "Lakens D. Equivalence Tests: A Practical Primer for t Tests, Correlations, and Meta-Analyses. Soc Psychol Personal Sci. 2017;8(4):355-362. doi:10.1177/1948550617697177.",
+    "organizationOrJournal": "Social Psychological and Personality Science",
+    "authors": [
+      "Daniel Lakens"
+    ],
+    "publicationYear": 2017,
+    "doi": "10.1177/1948550617697177",
+    "pmid": null,
+    "officialUrl": "https://pure.tue.nl/ws/portalfiles/portal/80918653/lakeequi2017.pdf",
+    "accessedOn": "2026-11-02",
+    "sourceClass": "open_educational_resource",
+    "licenseLabel": "Copyright author/publisher; institutional private-research access; no CC license established",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Targeted factual verification and independently written synthesis only. No source prose, tables, figures, algorithms, examples or full text retained. Public access is not permission to copy or to ingest a prohibited corpus; no reusable rights are assumed. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Complete version-of-record PDF checked. TOST at alpha .05 uses a 90% interval within specified equivalence bounds; nonsignificance alone is not equivalence. No source spreadsheet, worked example or prose copied. The fictional protocol's margins are author-specified inputs, not medical thresholds.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.2f7b539b6ebe",
+      "claim.n2r2.dual-endpoint-protocol",
+      "claim.n2.600714349549"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.qq20261102a.nist-ci",
+    "title": "What are confidence intervals?",
+    "completeCitation": "National Institute of Standards and Technology. Engineering Statistics Handbook: What are confidence intervals? Accessed 2026-09-29.",
+    "organizationOrJournal": "National Institute of Standards and Technology",
+    "authors": [
+      "National Institute of Standards and Technology"
+    ],
+    "publicationYear": null,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://www.itl.nist.gov/div898/handbook/prc/section1/prc14.htm",
+    "accessedOn": "2026-11-02",
+    "sourceClass": "government_guidance",
+    "licenseLabel": "Targeted factual verification only; record-level reuse permission was not separately verified.",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Public primary government methodology for interval interpretation; no probability assigned to a fixed true value, no hard truth bounds inferred. Same publication as source.nist.confidence-intervals.2026; this recheck is not an independent second source.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.2f7b539b6ebe",
+      "claim.n2r2.dual-endpoint-protocol",
+      "claim.n2.600714349549"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.qq20261102a.nist-p",
+    "title": "Critical values and p values",
+    "completeCitation": "National Institute of Standards and Technology. Engineering Statistics Handbook: Critical values and p values. Accessed 2026-09-29.",
+    "organizationOrJournal": "National Institute of Standards and Technology",
+    "authors": [
+      "National Institute of Standards and Technology"
+    ],
+    "publicationYear": null,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://www.itl.nist.gov/div898/handbook/prc/section1/prc131.htm",
+    "accessedOn": "2026-11-02",
+    "sourceClass": "government_guidance",
+    "licenseLabel": "Targeted factual verification only; record-level reuse permission was not separately verified.",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Public primary government methodology rechecked: prespecified hypothesis testing; p is not an effect-size or equivalence decision. Same publication as source.nist.p-values.2026; this recheck is not an independent second source.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.2f7b539b6ebe",
+      "claim.n2r2.dual-endpoint-protocol",
+      "claim.n2.600714349549"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.qq20261102b.bsg-sedation",
+    "title": "British Society of Gastroenterology guidelines on sedation in gastrointestinal endoscopy",
+    "completeCitation": "Sidhu R, Turnbull D, Haboubi H, Leeds JS, Healey C, Hebbar S, et al. British Society of Gastroenterology guidelines on sedation in gastrointestinal endoscopy. Gut. 2024;73:219-245. doi:10.1136/gutjnl-2023-330396.",
+    "organizationOrJournal": "British Society of Gastroenterology / Gut",
+    "authors": [
+      "Reena Sidhu",
+      "Duncan Turnbull",
+      "Haboubi H",
+      "John S Leeds",
+      "Chris Healey",
+      "Srisha Hebbar",
+      "et al."
+    ],
+    "publicationYear": 2024,
+    "doi": "10.1136/gutjnl-2023-330396",
+    "pmid": null,
+    "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10850688/",
+    "accessedOn": "2026-11-02",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Public guideline manuscript; reuse license not assumed; targeted verification only",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Targeted factual verification and independently written synthesis only. No source prose, tables, figures, algorithms, examples or full text retained. Public access is not permission to copy or to ingest a prohibited corpus; no reusable rights are assumed. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current primary specialist guideline rechecked for oxygenation versus ventilation, management of respiratory depression, reversal and adult accompaniment. Same publication as source.qq20261102a.bsg-sedation; no independent second source is implied.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.7e424a1ff493",
+      "claim.n2.bfe7a6f48cfd",
+      "claim.n2r3.capnography-sampling-events"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.qq20261102b.chicago",
+    "title": "Esophageal motility disorders on high-resolution manometry: Chicago classification version 4.0",
+    "completeCitation": "Yadlapati R, Kahrilas PJ, Fox MR, Bredenoord AJ, Gyawali CP, Roman S, et al. Esophageal motility disorders on high-resolution manometry: Chicago classification version 4.0. Neurogastroenterol Motil. 2021;33(1):e14058. doi:10.1111/nmo.14058. PMID:33373111; PMCID:PMC8034247.",
+    "organizationOrJournal": "Neurogastroenterology and Motility / International High-Resolution Manometry Working Group",
+    "authors": [
+      "Rena Yadlapati",
+      "Peter J Kahrilas",
+      "Mark R Fox",
+      "Albert J Bredenoord",
+      "C Prakash Gyawali",
+      "Sabine Roman",
+      "et al."
+    ],
+    "publicationYear": 2021,
+    "doi": "10.1111/nmo.14058",
+    "pmid": "33373111",
+    "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8034247/",
+    "accessedOn": "2026-11-02",
+    "sourceClass": "peer_reviewed_guideline",
+    "licenseLabel": "Copyrighted expert consensus; public author manuscript, reusable license not established",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "PMC availability is not a reuse license. Targeted consensus-fact verification only; no table, threshold list, algorithm, protocol, trace, figure or source phrasing reproduced. Publisher direct fetch was blocked; the accessible author manuscript and bibliographic record were checked. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Primary 2021 consensus rechecked for primary/secondary-position criteria, failed-contraction threshold, supportive tests and opioid-associated spastic patterns. Same publication as source.qq20261102a.chicago; no independent second source is implied.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2r3.d54862b5cf6a"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.qq20261102b.nist-ci",
+    "title": "What are confidence intervals?",
+    "completeCitation": "National Institute of Standards and Technology. Engineering Statistics Handbook: What are confidence intervals? Accessed 2026-09-29.",
+    "organizationOrJournal": "National Institute of Standards and Technology",
+    "authors": [
+      "National Institute of Standards and Technology"
+    ],
+    "publicationYear": null,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://www.itl.nist.gov/div898/handbook/prc/section1/prc14.htm",
+    "accessedOn": "2026-11-02",
+    "sourceClass": "government_guidance",
+    "licenseLabel": "Targeted factual verification only; record-level reuse permission was not separately verified.",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Existing verified government methods reference reused for interval interpretation and limitations, not a posterior probability of the true effect. Same publication as source.qq20261102a.nist-ci; no independent second source is implied.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.2f7b539b6ebe",
+      "claim.n2r2.dual-endpoint-protocol",
+      "claim.n2.213458238919"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.qq20261102b.nist-p",
+    "title": "Critical values and p values",
+    "completeCitation": "National Institute of Standards and Technology. Engineering Statistics Handbook: Critical values and p values. Accessed 2026-09-29.",
+    "organizationOrJournal": "National Institute of Standards and Technology",
+    "authors": [
+      "National Institute of Standards and Technology"
+    ],
+    "publicationYear": null,
+    "doi": null,
+    "pmid": null,
+    "officialUrl": "https://www.itl.nist.gov/div898/handbook/prc/section1/prc131.htm",
+    "accessedOn": "2026-11-02",
+    "sourceClass": "government_guidance",
+    "licenseLabel": "Targeted factual verification only; record-level reuse permission was not separately verified.",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Existing verified government methods reference reused for null-model testing; the constructed protocol is not attributed to NIST as a clinical rule. Same publication as source.qq20261102a.nist-p; no independent second source is implied.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.2f7b539b6ebe",
+      "claim.n2r2.dual-endpoint-protocol",
+      "claim.n2.213458238919"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.qq20261102c.acg-physiology2020",
+    "title": "ACG esophageal physiologic testing guideline",
+    "completeCitation": "Gyawali CP, Carlson DA, Chen JW, Patel A, Wong RJ, Yadlapati RH. ACG Clinical Guidelines: Clinical Use of Esophageal Physiologic Testing. Am J Gastroenterol. 2020;115(9):1412-1428. doi:10.14309/ajg.0000000000000734.",
+    "organizationOrJournal": "American College of Gastroenterology / American Journal of Gastroenterology",
+    "authors": [
+      "Gyawali CP",
+      "Carlson DA",
+      "Chen JW",
+      "Patel A",
+      "Wong RJ",
+      "Yadlapati RH"
+    ],
+    "publicationYear": 2020,
+    "doi": "10.14309/ajg.0000000000000734",
+    "pmid": "32769426",
+    "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9468980/",
+    "accessedOn": "2026-11-02",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Public author manuscript; reusable license not established",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "No algorithms, protocol tables, source text or exact maneuver quantities copied. Factual verification of society guidance only. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Full primary guideline rechecked for assisted catheter placement, limitations of incomplete studies, provocative maneuvers and complementary FLIP use. Older technical guidance, combined with retained Chicago v4 rather than claimed new diagnostic cutoffs.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.3febc19ab337"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.qq20261102c.chicago",
+    "title": "Esophageal motility disorders on high-resolution manometry: Chicago classification version 4.0",
+    "completeCitation": "Yadlapati R, Kahrilas PJ, Fox MR, Bredenoord AJ, Gyawali CP, Roman S, et al. Esophageal motility disorders on high-resolution manometry: Chicago classification version 4.0. Neurogastroenterol Motil. 2021;33(1):e14058. doi:10.1111/nmo.14058. PMID:33373111; PMCID:PMC8034247.",
+    "organizationOrJournal": "Neurogastroenterology and Motility / International High-Resolution Manometry Working Group",
+    "authors": [
+      "Rena Yadlapati",
+      "Peter J Kahrilas",
+      "Mark R Fox",
+      "Albert J Bredenoord",
+      "C Prakash Gyawali",
+      "Sabine Roman",
+      "et al."
+    ],
+    "publicationYear": 2021,
+    "doi": "10.1111/nmo.14058",
+    "pmid": "33373111",
+    "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8034247/",
+    "accessedOn": "2026-11-02",
+    "sourceClass": "peer_reviewed_guideline",
+    "licenseLabel": "Copyrighted expert consensus; public author manuscript, reusable license not established",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "PMC availability is not a reuse license. Targeted consensus-fact verification only; no table, threshold list, algorithm, protocol, trace, figure or source phrasing reproduced. Publisher direct fetch was blocked; the accessible author manuscript and bibliographic record were checked. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Previously verified primary classification consensus retained for technically adequate primary/secondary-position protocols and deglutitive inhibition. The new failed-acquisition cases are clinical applications, not new normal ranges. Same publication as source.qq20261102b.chicago; a new record ID does not create independent evidence.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.3febc19ab337"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.qq20261102c.esge-ulcer2026",
+    "title": "ESGE peptic-ulcer bleeding guideline update",
+    "completeCitation": "Gralnek IM, Morris J, Laursen SB, Camus M, Tziatzios G, Debels LK, Nigam GB, Erőss B, Goetz M, Forbes N, Cúrdia Gonçalves T, Kurek K, Bretthauer M, Tham TC. Endoscopic diagnosis and management of peptic ulcer bleeding: ESGE Guideline-Update 2026. Endoscopy. 2026;58(8):899-924. doi:10.1055/a-2863-8314.",
+    "organizationOrJournal": "European Society of Gastrointestinal Endoscopy / Endoscopy",
+    "authors": [
+      "Gralnek IM",
+      "Morris J",
+      "Laursen SB",
+      "Camus M",
+      "Tziatzios G",
+      "Debels LK",
+      "Nigam GB",
+      "Erőss B",
+      "Goetz M",
+      "Forbes N",
+      "Cúrdia Gonçalves T",
+      "Kurek K",
+      "Bretthauer M",
+      "Tham TC"
+    ],
+    "publicationYear": 2026,
+    "doi": "10.1055/a-2863-8314",
+    "pmid": "42127996",
+    "officialUrl": "https://www.esge.com/assets/downloads/pdfs/guidelines/2026_a-2863-8314.pdf",
+    "accessedOn": "2026-11-02",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Copyright ESGE/Thieme 2026; all rights reserved",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Targeted factual verification, no algorithm/figure/table copied. Correction doi:10.1055/a-2881-7411 (PMID42173116) was identified; its separate PDF could not be retrieved. The actual recommendation text in the current official PDF was checked; no claim that every correction/supplement was independently adjudicated. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Current full official PDF checked for repeat hemostasis in recurrent bleeding, consideration of OTS clips and embolization after failed second hemostasis. This supersedes reliance on 2021 as the latest version.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2r3.ulcer-rescue-sequence",
+      "claim.n2r3.49a69d44d485"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.qq20261102d.acg2020",
+    "title": "ACG esophageal physiologic testing guideline",
+    "completeCitation": "Gyawali CP, Carlson DA, Chen JW, Patel A, Wong RJ, Yadlapati RH. ACG Clinical Guidelines: Clinical Use of Esophageal Physiologic Testing. Am J Gastroenterol. 2020;115(9):1412-1428. doi:10.14309/ajg.0000000000000734.",
+    "organizationOrJournal": "American College of Gastroenterology / American Journal of Gastroenterology",
+    "authors": [
+      "Gyawali CP",
+      "Carlson DA",
+      "Chen JW",
+      "Patel A",
+      "Wong RJ",
+      "Yadlapati RH"
+    ],
+    "publicationYear": 2020,
+    "doi": "10.14309/ajg.0000000000000734",
+    "pmid": "32769426",
+    "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9468980/",
+    "accessedOn": "2026-11-02",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Public author manuscript; reusable license not established",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "No algorithms, protocol tables, source text or exact maneuver quantities copied. Factual verification of society guidance only. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Full primary guideline rechecked for assisted catheter placement, limitations of incomplete studies, provocative maneuvers and complementary FLIP use. Older technical guidance, combined with retained Chicago v4 rather than claimed new diagnostic cutoffs. Round five reuses that already-recorded primary-source verification offline; no new web retrieval or independent corroborating source is claimed. The new source ID records a new atomic mapping, not a new publication.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.2dcec9ca69eb",
+      "claim.n2.ea086984184b",
+      "claim.n2.57cdab035105"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.qq20261102d.chicago2021",
+    "title": "Esophageal motility disorders on high-resolution manometry: Chicago classification version 4.0",
+    "completeCitation": "Yadlapati R, Kahrilas PJ, Fox MR, Bredenoord AJ, Gyawali CP, Roman S, et al. Esophageal motility disorders on high-resolution manometry: Chicago classification version 4.0. Neurogastroenterol Motil. 2021;33(1):e14058. doi:10.1111/nmo.14058. PMID:33373111; PMCID:PMC8034247.",
+    "organizationOrJournal": "Neurogastroenterology and Motility / International High-Resolution Manometry Working Group",
+    "authors": [
+      "Rena Yadlapati",
+      "Peter J Kahrilas",
+      "Mark R Fox",
+      "Albert J Bredenoord",
+      "C Prakash Gyawali",
+      "Sabine Roman",
+      "et al."
+    ],
+    "publicationYear": 2021,
+    "doi": "10.1111/nmo.14058",
+    "pmid": "33373111",
+    "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8034247/",
+    "accessedOn": "2026-11-02",
+    "sourceClass": "peer_reviewed_guideline",
+    "licenseLabel": "Copyrighted expert consensus; public author manuscript, reusable license not established",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "PMC availability is not a reuse license. Targeted consensus-fact verification only; no table, threshold list, algorithm, protocol, trace, figure or source phrasing reproduced. Publisher direct fetch was blocked; the accessible author manuscript and bibliographic record were checked. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Previously verified primary classification consensus retained for technically adequate primary/secondary-position protocols and deglutitive inhibition. The new failed-acquisition cases are clinical applications, not new normal ranges. Same publication as source.qq20261102b.chicago; a new record ID does not create independent evidence. Round five reuses that already-recorded primary-source verification offline; no new web retrieval or independent corroborating source is claimed. The new source ID records a new atomic mapping, not a new publication.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.2dcec9ca69eb",
+      "claim.n2.ea086984184b",
+      "claim.n2.57cdab035105"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.qq20261102e.acg2020",
+    "title": "ACG esophageal physiologic testing guideline",
+    "completeCitation": "Gyawali CP, Carlson DA, Chen JW, Patel A, Wong RJ, Yadlapati RH. ACG Clinical Guidelines: Clinical Use of Esophageal Physiologic Testing. Am J Gastroenterol. 2020;115(9):1412-1428. doi:10.14309/ajg.0000000000000734.",
+    "organizationOrJournal": "American College of Gastroenterology / American Journal of Gastroenterology",
+    "authors": [
+      "Gyawali CP",
+      "Carlson DA",
+      "Chen JW",
+      "Patel A",
+      "Wong RJ",
+      "Yadlapati RH"
+    ],
+    "publicationYear": 2020,
+    "doi": "10.14309/ajg.0000000000000734",
+    "pmid": "32769426",
+    "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9468980/",
+    "accessedOn": "2026-11-02",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Public author manuscript; reusable license not established",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "No algorithms, protocol tables, source text or exact maneuver quantities copied. Factual verification of society guidance only. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Full primary guideline rechecked for assisted catheter placement, limitations of incomplete studies, provocative maneuvers and complementary FLIP use. Older technical guidance, combined with retained Chicago v4 rather than claimed new diagnostic cutoffs. Round six reuses the existing targeted primary-source verification offline; no fresh retrieval or independent publication is inferred from this new mapping ID.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2r2.8b03fc3aabde"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.qq20261102e.chicago2021",
+    "title": "Esophageal motility disorders on high-resolution manometry: Chicago classification version 4.0",
+    "completeCitation": "Yadlapati R, Kahrilas PJ, Fox MR, Bredenoord AJ, Gyawali CP, Roman S, et al. Esophageal motility disorders on high-resolution manometry: Chicago classification version 4.0. Neurogastroenterol Motil. 2021;33(1):e14058. doi:10.1111/nmo.14058. PMID:33373111; PMCID:PMC8034247.",
+    "organizationOrJournal": "Neurogastroenterology and Motility / International High-Resolution Manometry Working Group",
+    "authors": [
+      "Rena Yadlapati",
+      "Peter J Kahrilas",
+      "Mark R Fox",
+      "Albert J Bredenoord",
+      "C Prakash Gyawali",
+      "Sabine Roman",
+      "et al."
+    ],
+    "publicationYear": 2021,
+    "doi": "10.1111/nmo.14058",
+    "pmid": "33373111",
+    "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8034247/",
+    "accessedOn": "2026-11-02",
+    "sourceClass": "peer_reviewed_guideline",
+    "licenseLabel": "Copyrighted expert consensus; public author manuscript, reusable license not established",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "PMC availability is not a reuse license. Targeted consensus-fact verification only; no table, threshold list, algorithm, protocol, trace, figure or source phrasing reproduced. Publisher direct fetch was blocked; the accessible author manuscript and bibliographic record were checked. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Previously verified primary classification consensus retained for technically adequate primary/secondary-position protocols and deglutitive inhibition. The new failed-acquisition cases are clinical applications, not new normal ranges. Same publication as source.qq20261102b.chicago; a new record ID does not create independent evidence. Round six reuses the existing targeted primary-source verification offline; no fresh retrieval or independent publication is inferred from this new mapping ID.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2r2.8b03fc3aabde"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.sages.laparoscopic-ventral-hernia.2016",
+    "title": "SAGES guidelines for laparoscopic ventral hernia repair",
+    "completeCitation": "Earle D, Roth JS, Saber A, et al.; SAGES Guidelines Committee. SAGES guidelines for laparoscopic ventral hernia repair. Surg Endosc. 2016;30(8):3163-3183. doi:10.1007/s00464-016-5072-x.",
+    "organizationOrJournal": "Society of American Gastrointestinal and Endoscopic Surgeons; Surgical Endoscopy",
+    "authors": [
+      "David Earle",
+      "J Scott Roth",
+      "Alan Saber",
+      "Steve Haggerty",
+      "William S Richardson",
+      "Dimitrios Stefanidis",
+      "SAGES Guidelines Committee"
+    ],
+    "publicationYear": 2016,
+    "doi": "10.1007/s00464-016-5072-x",
+    "pmid": "27405477",
+    "officialUrl": "https://www.sages.org/publications/guidelines/guidelines-for-laparoscopic-ventral-hernia-repair/",
+    "accessedOn": "2026-08-06",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Copyrighted professional-society guidance; targeted factual verification only",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Use only for targeted factual verification and citation. Do not reproduce protected recommendation wording or extended explanatory prose. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Enterotomy-specific professional guidance emphasizing individualized management based on operative findings, contamination, expertise, and patient factors rather than an automatic mesh rule.",
+    "usageRole": "cross_check",
+    "evidenceClaimIds": [
+      "claim.n2r2.temporary-closure-reassessment",
+      "claim.n2r2.4b2bd6d4bf88"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.vather-bissett.prolonged-postoperative-ileus.2013",
+    "title": "Management of prolonged post-operative ileus: evidence-based recommendations",
+    "completeCitation": "Vather R, Bissett I. Management of prolonged post-operative ileus: evidence-based recommendations. ANZ J Surg. 2013;83(5):319-324. doi:10.1111/ans.12102.",
+    "organizationOrJournal": "ANZ Journal of Surgery",
+    "authors": [
+      "Ryash Vather",
+      "Ian Bissett"
+    ],
+    "publicationYear": 2013,
+    "doi": "10.1111/ans.12102",
+    "pmid": "23418987",
+    "officialUrl": "https://pubmed.ncbi.nlm.nih.gov/23418987/",
+    "accessedOn": "2026-08-06",
+    "sourceClass": "narrative_review",
+    "licenseLabel": "Copyright Royal Australasian College of Surgeons and Wiley; targeted factual verification only",
+    "reuseStatus": "copyrighted_targeted_verification_only",
+    "reuseNotes": "Use only for targeted factual verification and independently written synthesis. Do not reproduce review prose, tables, or recommendation wording. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Ileus-specific evidence review supporting parenteral nutrition when adequate oral intake remains intolerable beyond seven postoperative days while acknowledging a variable evidence base.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.d585be062067",
+      "claim.n2.c1bd8baa573c"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.wses.bile-duct-injury.2021",
+    "title": "2020 WSES guidelines for the detection and management of bile duct injury during cholecystectomy",
+    "completeCitation": "de'Angelis N, Catena F, Memeo R, Coccolini F, Martínez-Pérez A, Romeo OM, et al. World Journal of Emergency Surgery. 2021;16:30. doi:10.1186/s13017-021-00369-w.",
+    "organizationOrJournal": "World Society of Emergency Surgery",
+    "authors": [
+      "de'Angelis N",
+      "Catena F",
+      "Memeo R",
+      "Coccolini F",
+      "Martínez-Pérez A",
+      "Romeo OM",
+      "et al."
+    ],
+    "publicationYear": 2021,
+    "doi": "10.1186/s13017-021-00369-w",
+    "pmid": null,
+    "officialUrl": "https://link.springer.com/article/10.1186/s13017-021-00369-w",
+    "accessedOn": "2026-09-13",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Creative Commons Attribution 4.0",
+    "reuseStatus": "cc_by_4_0",
+    "reuseNotes": "Original summaries with attribution; no source prose, tables, figures, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Primary open society guideline supporting CT-first context, CE-MRCP anatomy, and step-up treatment of minor leaks.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.695145c8addb",
+      "claim.n2.0d75556834ce"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.wses.complicated-abdominal-wall-hernia.2017",
+    "title": "2017 update of the WSES guidelines for emergency repair of complicated abdominal wall hernias",
+    "completeCitation": "Birindelli A, Sartelli M, Di Saverio S, et al. 2017 update of the WSES guidelines for emergency repair of complicated abdominal wall hernias. World J Emerg Surg. 2017;12:37. doi:10.1186/s13017-017-0149-y.",
+    "organizationOrJournal": "World Society of Emergency Surgery; World Journal of Emergency Surgery",
+    "authors": [
+      "Arianna Birindelli",
+      "Massimo Sartelli",
+      "Salomone Di Saverio",
+      "Federico Coccolini",
+      "Fausto Catena",
+      "World Society of Emergency Surgery guideline group"
+    ],
+    "publicationYear": 2017,
+    "doi": "10.1186/s13017-017-0149-y",
+    "pmid": "28804507",
+    "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5545868/",
+    "accessedOn": "2026-08-06",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Creative Commons Attribution 4.0 International",
+    "reuseStatus": "cc_by_4_0",
+    "reuseNotes": "Use with attribution for independently written factual synthesis. Do not reproduce recommendation tables, algorithms, figures, or extended prose. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Professional-society guidance supporting synthetic mesh in selected clean-contaminated abdominal-wall hernia repair after bowel intervention when gross enteric spillage is absent.",
+    "usageRole": "cross_check",
+    "evidenceClaimIds": [
+      "claim.n2r2.temporary-closure-reassessment",
+      "claim.n2r2.4b2bd6d4bf88"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.wses.emergency-hernia.2017",
+    "title": "2017 update of the WSES guidelines for emergency repair of complicated abdominal wall hernias",
+    "completeCitation": "Birindelli A, Sartelli M, Di Saverio S, et al. 2017 update of the WSES guidelines for emergency repair of complicated abdominal wall hernias. World J Emerg Surg. 2017;12:37. doi:10.1186/s13017-017-0149-y.",
+    "organizationOrJournal": "World Journal of Emergency Surgery / World Society of Emergency Surgery",
+    "authors": [
+      "Fausto Birindelli",
+      "Massimo Sartelli",
+      "Salomone Di Saverio"
+    ],
+    "publicationYear": 2017,
+    "doi": "10.1186/s13017-017-0149-y",
+    "pmid": "28804507",
+    "officialUrl": "https://wjes.biomedcentral.com/articles/10.1186/s13017-017-0149-y",
+    "accessedOn": "2026-07-30",
+    "sourceClass": "peer_reviewed_guideline",
+    "licenseLabel": "CC BY 4.0",
+    "reuseStatus": "cc_by_4_0",
+    "reuseNotes": "Use only as independent corroboration; attribute the authors and source, link the license, indicate changes, and exclude incorporated tables, figures, and classifications. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Older broad emergency guideline retained only as an independent cross-check for time-critical warning features.",
+    "usageRole": "cross_check",
+    "evidenceClaimIds": [
+      "claim.n2r2.temporary-closure-reassessment",
+      "claim.n2.e551a9978155"
+    ]
+  },
+  {
+    "contentVersion": "clinical.question-new-n2.2026-11-04.v3",
+    "reviewStatus": "needs_clinician_review",
+    "aiAssistedDrafting": true,
+    "lastClinicianReview": null,
+    "id": "source.wses.severe-pancreatitis.2019",
+    "title": "WSES severe acute pancreatitis guideline",
+    "completeCitation": "Leppäniemi A, Tolonen M, Tarasconi A, et al. 2019 WSES guidelines for the management of severe acute pancreatitis. World J Emerg Surg. 2019;14:27.",
+    "organizationOrJournal": "World Journal of Emergency Surgery",
+    "authors": [
+      "Leppäniemi A",
+      "Tolonen M",
+      "Tarasconi A",
+      "et al."
+    ],
+    "publicationYear": 2019,
+    "doi": "10.1186/s13017-019-0247-0",
+    "pmid": null,
+    "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6567462/",
+    "accessedOn": "2026-10-02",
+    "sourceClass": "professional_society_guideline",
+    "licenseLabel": "Creative Commons Attribution 4.0",
+    "reuseStatus": "cc_by_4_0",
+    "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed. N2 round two reuses bibliographic metadata and independently written atomic facts; original access dates retained. No source text, figure, table or algorithm retrieved/copied. New clinical extensions have explicit exact-source holds; local synthesis is not external verification. N2 round three retains actual access metadata and rights/authority assessments. No retrieval. New source-held applications list this record as a cross-check lead, not proof that the added point was verified.",
+    "authorityAssessment": "Open evidence-based guideline used as an independent cross-check.",
+    "usageRole": "evidence",
+    "evidenceClaimIds": [
+      "claim.n2.e1ad9578fe95"
+    ]
+  }
+];
+export const QUESTION_NEW_N2_ROUND3_CLAIM_PROVENANCE = [
+  {
+    "claimId": "claim.n2.aa8322ea02c9",
+    "inheritedClaimId": "claim.bread-butter.antimicrobial-prophylaxis.stop-at-closure",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-17",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1017/ice.2023.67"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.c98ff508b25a",
+    "inheritedClaimId": "claim.bread-butter.atrial-fibrillation.warfarin-no-routine-bridge",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-17",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1016/j.chest.2022.07.025"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.6f99845e8caa",
+    "inheritedClaimId": "claim.bread-butter.cancer-surgery.extended-vte-prophylaxis",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-17",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1007/s12094-024-03605-2",
+      "doi:10.1200/jco.23.00294"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.10b8e172c6d1",
+    "inheritedClaimId": "claim.bread-butter.superficial-incisional-ssi.open-drain",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-17",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1093/cid/ciu296"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.1a54f7843ea4",
+    "inheritedClaimId": "claim.brief.h-pylori.active-infection-testing",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-17",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.14309/ajg.0000000000002968",
+      "url:https://gi.org/topics/peptic-ulcer-disease/"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.f10e1c8fc24a",
+    "inheritedClaimId": "claim.brief.h-pylori.test-of-cure-plan",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-17",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.14309/ajg.0000000000002968"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.bf8c918b8353",
+    "inheritedClaimId": "claim.chronic-anal-fissure.selected-lis-after-medical-treatment",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-13",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1097/dcr.0000000000002664",
+      "doi:10.1186/s12893-023-02223-z"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.d90b80eae6dc",
+    "inheritedClaimId": "claim.chronic-anal-fissure.topical-ccb-first-line",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-13",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1097/dcr.0000000000002664",
+      "doi:10.1186/s12893-023-02223-z"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.707bf04c2730",
+    "inheritedClaimId": "claim.colon-cancer.oncologic-regional-resection",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-11",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1097/dcr.0000000000002323",
+      "url:https://www.cancer.gov/types/colorectal/hp/colon-treatment-pdq"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.695145c8addb",
+    "inheritedClaimId": "claim.early.bile-leak.ce-mrcp-anatomic-localization",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-13",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1186/s13017-021-00369-w"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.0d75556834ce",
+    "inheritedClaimId": "claim.early.bile-leak.minor-leak-ercp-stent",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-13",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1186/s13017-021-00369-w",
+      "doi:10.1055/a-0659-9864"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.48b019a0d1ac",
+    "inheritedClaimId": "claim.early.choledocholithiasis.confirmed-stone-therapy",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-13",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1016/j.gie.2018.10.001",
+      "doi:10.1055/a-0862-0346"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.1e7b4640104f",
+    "inheritedClaimId": "claim.early.pseudocyst.contrast-ct-characterization",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-13",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1136/gutjnl-2012-302779",
+      "doi:10.1016/j.gie.2015.11.027",
+      "doi:10.5946/ce.2021.185"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.8b815ad3ac3c",
+    "inheritedClaimId": "claim.early.pseudocyst.symptomatic-endoscopic-drainage",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-13",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1016/j.gie.2015.11.027",
+      "doi:10.5946/ce.2021.185"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.ecf22ea6c86e",
+    "inheritedClaimId": "claim.gastric-gist.mutation-guided-neoadjuvant-planning",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-12",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1177/17588359231192388",
+      "url:https://www.cancer.gov/types/soft-tissue-sarcoma/hp/gist-treatment-pdq"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.46105001554a",
+    "inheritedClaimId": "claim.gastric-gist.selected-eus-core-molecular-testing",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-12",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1177/17588359231192388",
+      "url:https://www.cancer.gov/types/soft-tissue-sarcoma/hp/gist-treatment-pdq"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.bdbc82c17adc",
+    "inheritedClaimId": "claim.gcs.complete-total",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-28",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://www.glasgowcomascale.org/faq/",
+      "url:https://www.glasgowcomascale.org/downloads/GCS-Assessment-Aid.pdf"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.6a70c5e18d0b",
+    "inheritedClaimId": "claim.gcs.eye-mapping",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-28",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://www.glasgowcomascale.org/downloads/GCS-Assessment-Aid.pdf"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.44b64dba34de",
+    "inheritedClaimId": "claim.gcs.motor-mapping",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-28",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://www.glasgowcomascale.org/downloads/GCS-Assessment-Aid.pdf"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.8581be95d2ec",
+    "inheritedClaimId": "claim.gcs.verbal-nt",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-28",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://www.glasgowcomascale.org/faq/",
+      "url:https://www.glasgowcomascale.org/downloads/GCS-Assessment-Aid.pdf"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.ec112ce49cac",
+    "inheritedClaimId": "claim.gs028c.ali.category-three",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-02",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1161/cir.0000000000001251"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.53daaa464a9f",
+    "inheritedClaimId": "claim.gs028c.ali.category-two-b",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-02",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1161/cir.0000000000001251"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.f6920342da46",
+    "inheritedClaimId": "claim.gs028c.ali.emergency-vascular-care",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-02",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1161/cir.0000000000001251"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.87c8a26c9b01",
+    "inheritedClaimId": "claim.gs028c.dialysis.no-overfeeding",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-02",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1016/j.clnu.2024.08.002"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.5dd542d868e9",
+    "inheritedClaimId": "claim.gs028c.dialysis.protein",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-02",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1016/j.clnu.2024.08.002"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.c8b8cf1c24a2",
+    "inheritedClaimId": "claim.gs028c.marginal-ulcer.complication-boundary",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-02",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1016/j.soard.2024.10.003"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.7b74879c23ab",
+    "inheritedClaimId": "claim.gs028c.marginal-ulcer.nsaid",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-02",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1016/j.soard.2024.10.003"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.73280797f130",
+    "inheritedClaimId": "claim.gs028c.marginal-ulcer.ppi",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-02",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1016/j.soard.2024.10.003"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.e1ad9578fe95",
+    "inheritedClaimId": "claim.gs028c.pancreatitis.index-admission-cholecystectomy",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-02",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.14309/ajg.0000000000002645",
+      "doi:10.1186/s13017-019-0247-0"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.ab43dd10ecba",
+    "inheritedClaimId": "claim.gs028c.polyp.adverse-lvi",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-02",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1097/dcr.0000000000002323"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.cc57afd626e3",
+    "inheritedClaimId": "claim.gs028e.contaminated",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-07",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://assets.publishing.service.gov.uk/media/61e989028fa8f505985ef463/Protocol_for_the_Surveillance_of_Surgical_Site_Infection.pdf"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.1af25373f5a7",
+    "inheritedClaimId": "claim.gs028e.contrast.extravasation-local-tissue-event",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-07",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://www.acr.org/Clinical-Resources/Clinical-Tools-and-Reference/Contrast-Manual"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.8074aee0b69b",
+    "inheritedClaimId": "claim.gs028e.contrast.urticaria-allergic-like",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-07",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://www.acr.org/Clinical-Resources/Clinical-Tools-and-Reference/Contrast-Manual"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.e690f51e53b0",
+    "inheritedClaimId": "claim.gs028e.dirty_infected",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-07",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://assets.publishing.service.gov.uk/media/61e989028fa8f505985ef463/Protocol_for_the_Surveillance_of_Surgical_Site_Infection.pdf"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.e50a1962e942",
+    "inheritedClaimId": "claim.gs028e.hyperacute_preformed",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-07",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.3389/fimmu.2016.00432",
+      "url:https://www.cms.gov/Medicare/Coverage/DeterminationProcess/downloads/id78TA.pdf"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.b42555c8fb52",
+    "inheritedClaimId": "claim.gs028e.hyperacute_vascular",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-07",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.3389/fimmu.2016.00432"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.b88db50dcb99",
+    "inheritedClaimId": "claim.gs028e.mixing_initial_workup",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-07",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.3324/haematol.2019.230771",
+      "doi:10.5114/ait.2020.96484"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.1d724576493f",
+    "inheritedClaimId": "claim.gs028e.mixing_limits",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-07",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.3324/haematol.2019.230771",
+      "doi:10.5114/ait.2020.96484"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.b02be3363804",
+    "inheritedClaimId": "claim.gs028e.mixing_time_dependent",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-07",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.3324/haematol.2019.230771",
+      "doi:10.5114/ait.2020.96484"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.2da3d15b9cbb",
+    "inheritedClaimId": "claim.gs028e.naloxone.competitive-opioid-antagonism",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-07",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://www.accessdata.fda.gov/drugsatfda_docs/label/2023/208411s007lbl.pdf",
+      "url:https://www.fda.gov/drugs/drug-safety-communications/fda-recommends-health-care-professionals-discuss-naloxone-all-patients-when-prescribing-opioid-pain"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.cbd22c96d3a1",
+    "inheritedClaimId": "claim.gs028e.naloxone.emergency-support-still-required",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-07",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://www.accessdata.fda.gov/drugsatfda_docs/label/2023/208411s007lbl.pdf",
+      "url:https://www.fda.gov/drugs/drug-safety-communications/fda-recommends-health-care-professionals-discuss-naloxone-all-patients-when-prescribing-opioid-pain"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.bdffc2268d81",
+    "inheritedClaimId": "claim.gs028e.non_ige_antibody_comparison",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-07",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://www.fda.gov/regulatory-information/search-fda-guidance-documents/immunotoxicity-testing-guidance"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2r2.2a207d5bfc33",
+    "inheritedClaimId": "claim.gs028e.sglt2.empagliflozin-preoperative-interruption",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "development-batch.2026-10-07.variety.1",
+    "inheritedLastCheckedOn": "2026-10-07",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Unchanged recorded statement under separate round-two draft metadata",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://www.accessdata.fda.gov/drugsatfda_docs/label/2025/204629s063lbl.pdf",
+      "url:https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.e0d1e963f20a",
+    "inheritedClaimId": "claim.gs028e.sglt2.ketoacidosis-precipitating-context",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-07",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://www.accessdata.fda.gov/drugsatfda_docs/label/2025/204629s063lbl.pdf",
+      "url:https://www.accessdata.fda.gov/drugsatfda_docs/label/2026/209803s012lbl.pdf",
+      "url:https://www.gov.uk/drug-safety-update/sglt2-inhibitors-updated-advice-on-the-risk-of-diabetic-ketoacidosis"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.61695ed96d60",
+    "inheritedClaimId": "claim.gs028e.sglt2.postoperative-restart-conditions",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-07",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://www.accessdata.fda.gov/drugsatfda_docs/label/2025/204629s063lbl.pdf",
+      "url:https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm",
+      "url:https://www.accessdata.fda.gov/drugsatfda_docs/label/2026/209803s012lbl.pdf"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.cca234e3627e",
+    "inheritedClaimId": "claim.gs028e.t_cell_graft_comparison",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-07",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.3389/fimmu.2016.00432"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.39e090dfc4f0",
+    "inheritedClaimId": "claim.gs028f.oxygen.hemoglobin-carriage",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-07",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://www.nhlbi.nih.gov/health/anemia/diagnosis",
+      "url:https://www.fda.gov/media/175828/download"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.c3c167a7739f",
+    "inheritedClaimId": "claim.gs028f.oxygen.saturation-fraction",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-07",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://www.fda.gov/media/175828/download",
+      "url:https://www.fda.gov/consumers/consumer-updates/pulse-oximeter-basics"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.c83fc3058af5",
+    "inheritedClaimId": "claim.gs028f.reconstruction.free-flap-reconnected-supply",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-07",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.25259/ijdvl_66_2025",
+      "url:https://www.cancer.gov/types/breast/treatment/surgery/breast-reconstruction"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.c88fb3c62612",
+    "inheritedClaimId": "claim.gs028f.reconstruction.graft-without-transferred-supply",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-07",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.25259/ijdvl_66_2025"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.5fcd9dfc70c9",
+    "inheritedClaimId": "claim.gs028f.reconstruction.pedicled-flap-supply",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-07",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.25259/ijdvl_66_2025",
+      "url:https://www.cancer.gov/types/breast/treatment/surgery/breast-reconstruction"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.ddb68fa706b9",
+    "inheritedClaimId": "claim.gs028f.reconstruction.perfusion-not-donor-identity",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-07",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.25259/ijdvl_66_2025",
+      "url:https://www.cancer.gov/types/breast/treatment/surgery/breast-reconstruction"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.149ce209d4ee",
+    "inheritedClaimId": "claim.gs028f.refeeding.monitoring-separate",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-07",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1111/1747-0080.70003"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.a2a9c29cbbcf",
+    "inheritedClaimId": "claim.gs028f.refeeding.phosphate-not-specific",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-07",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1111/1747-0080.70003"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2r2.78d2ba5c0eb0",
+    "inheritedClaimId": "claim.gs028f.refeeding.thiamine-before-intake",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "development-batch.2026-10-07.variety.2",
+    "inheritedLastCheckedOn": "2026-10-07",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Unchanged recorded statement under separate round-two draft metadata",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1111/1747-0080.70003"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.fe0ef6f0a1ad",
+    "inheritedClaimId": "claim.gs028f.tacrolimus.calcineurin",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-07",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.154178be8123",
+    "inheritedClaimId": "claim.gs028f.tacrolimus.t-cell-activation",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-07",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.a752906bf151",
+    "inheritedClaimId": "claim.gs028g.neuromuscular-recovery.quantitative-assessment.fact3",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-07",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.3390/life13051184"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.2771c9286d4c",
+    "inheritedClaimId": "claim.gs028g.neuromuscular-recovery.sugammadex-selectivity",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-07",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm",
+      "doi:10.3390/life13051184"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.5ab0df92101d",
+    "inheritedClaimId": "claim.gs028g.neuromuscular-recovery.sugammadex-selectivity.fact3",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-10-07",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm",
+      "doi:10.3390/life13051184"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.9405168985f2",
+    "inheritedClaimId": "claim.gs028se.perioperative-dnr.1",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-29",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://www.asahq.org/standards-and-practice-parameters/statement-on-ethical-guidelines-for-the-anesthesia-care-of-patients-with-do-not-resuscitate-orders",
+      "url:https://code-medical-ethics.ama-assn.org/ethics-opinions/orders-not-attempt-resuscitation-dnar"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.8d37e3fdc0bb",
+    "inheritedClaimId": "claim.gs028se.perioperative-dnr.2",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-29",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://www.asahq.org/standards-and-practice-parameters/statement-on-ethical-guidelines-for-the-anesthesia-care-of-patients-with-do-not-resuscitate-orders",
+      "url:https://code-medical-ethics.ama-assn.org/ethics-opinions/orders-not-attempt-resuscitation-dnar"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2r2.20ec0ea2d818",
+    "inheritedClaimId": "claim.gs028se.perioperative-dnr.3",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "development-batch.2026-09-29.statistics-ethics.2",
+    "inheritedLastCheckedOn": "2026-09-29",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Unchanged recorded statement under separate round-two draft metadata",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://www.asahq.org/standards-and-practice-parameters/statement-on-ethical-guidelines-for-the-anesthesia-care-of-patients-with-do-not-resuscitate-orders",
+      "url:https://code-medical-ethics.ama-assn.org/ethics-opinions/orders-not-attempt-resuscitation-dnar"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.e1fab33f6912",
+    "inheritedClaimId": "claim.gs028se.statistics.arr-nnt",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-29",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-15"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.4831cf651238",
+    "inheritedClaimId": "claim.gs028se.statistics.bias-confounding",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-29",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://www.cdc.gov/field-epi-manual/php/chapters/analyze-interpret-data.html"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.3e734c574c75",
+    "inheritedClaimId": "claim.gs028se.statistics.chi-square.mcnemar-boundary",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-29",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/mcnemar.htm"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.e474c0b307ac",
+    "inheritedClaimId": "claim.gs028se.statistics.fisher-exact",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-29",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/fishexac.htm"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.ea3b56279aaf",
+    "inheritedClaimId": "claim.gs028se.statistics.p-value",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-29",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://www.itl.nist.gov/div898/handbook/prc/section1/prc131.htm"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.cc09f9ba1740",
+    "inheritedClaimId": "claim.gs028se.statistics.predictive-value-prevalence",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-29",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://archive.cdc.gov/www_cdc_gov/csels/dsepd/ss1978/lesson5/appendixa.html",
+      "url:https://www.fda.gov/medical-devices/coronavirus-covid-19-and-medical-devices/antibody-serology-testing-covid-19-information-patients-and-consumers"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.bf4203993008",
+    "inheritedClaimId": "claim.gs028se.statistics.sensitivity-specificity",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-29",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://archive.cdc.gov/www_cdc_gov/csels/dsepd/ss1978/lesson5/appendixa.html"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.cfa015b055d8",
+    "inheritedClaimId": "claim.n2.derived.direct-standardization",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-11-04",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://www.cdc.gov/field-epi-manual/php/chapters/analyze-interpret-data.html"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.2f7b539b6ebe",
+    "inheritedClaimId": "claim.n2.derived.equivalence-interval-rule",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-11-04",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://www.itl.nist.gov/div898/handbook/prc/section1/prc131.htm",
+      "url:https://www.itl.nist.gov/div898/handbook/prc/section1/prc14.htm",
+      "doi:10.1177/1948550617697177"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.889064151d42",
+    "inheritedClaimId": "claim.n2.derived.negative-predictive-value",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-11-04",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://archive.cdc.gov/www_cdc_gov/csels/dsepd/ss1978/lesson5/appendixa.html",
+      "url:https://www.fda.gov/medical-devices/coronavirus-covid-19-and-medical-devices/antibody-serology-testing-covid-19-information-patients-and-consumers"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.c2a2cbdaec48",
+    "inheritedClaimId": "claim.n2.derived.number-needed-to-harm",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-11-04",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-15"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.02709278d0d4",
+    "inheritedClaimId": "claim.n2.derived.positive-likelihood-ratio",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-11-04",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://archive.cdc.gov/www_cdc_gov/csels/dsepd/ss1978/lesson5/appendixa.html"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2r2.acquired-bleeding-factor-priority",
+    "inheritedClaimId": "claim.n2r2.acquired-bleeding-factor-priority",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-04",
+    "synthesisKind": "clinical_extension_needs_targeted_verification",
+    "basisClaimIds": [
+      "claim.gs028e.mixing_initial_workup",
+      "claim.gs028e.mixing_limits",
+      "claim.gs028e.mixing_time_dependent"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.gs028e.mixing_initial_workup",
+        "recordId": "claim.n2.b88db50dcb99",
+        "lastCheckedOn": "2026-10-07",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      },
+      {
+        "id": "claim.gs028e.mixing_limits",
+        "recordId": "claim.n2.1d724576493f",
+        "lastCheckedOn": "2026-10-07",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      },
+      {
+        "id": "claim.gs028e.mixing_time_dependent",
+        "recordId": "claim.n2.b02be3363804",
+        "lastCheckedOn": "2026-10-07",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      }
+    ],
+    "derivation": "Independent synthesis of the previously recorded acquired-hemophilia/mixing guidance applied to the constructed new-bleeding phenotype. The exact phenotype-to-panel priority was not newly checked against the external guideline and remains an explicit source/clinician hold.",
+    "sourcePublicationKeys": [
+      "doi:10.3324/haematol.2019.230771",
+      "doi:10.5114/ait.2020.96484"
+    ],
+    "externalVerification": "No new retrieval or external check. Local synthesis date is not source currentness/access verification.",
+    "sourceHold": "Exact new clinical extension requires targeted source verification and clinician sign-off.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2r2.benefit-harm-protocol",
+    "inheritedClaimId": "claim.n2r2.benefit-harm-protocol",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-04",
+    "synthesisKind": "mathematical_protocol_synthesis",
+    "basisClaimIds": [
+      "claim.n2.derived.number-needed-to-harm",
+      "claim.gs028se.statistics.arr-nnt"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.n2.derived.number-needed-to-harm",
+        "recordId": "claim.n2.c2a2cbdaec48",
+        "lastCheckedOn": "2026-11-04",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      },
+      {
+        "id": "claim.gs028se.statistics.arr-nnt",
+        "recordId": "claim.n2.e1fab33f6912",
+        "lastCheckedOn": "2026-09-29",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      }
+    ],
+    "derivation": "Constructed 30-day differences: benefit 0.09-0.06=0.03, ceil(1/0.03)=34; harm 0.08-0.03=0.05, 1/0.05=20. Compare both with the supplied fictional committee conditions. No actual outcome frequency or universal benefit/harm value judgment is asserted.",
+    "sourcePublicationKeys": [
+      "url:https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-15"
+    ],
+    "externalVerification": "No new retrieval or external check. Local synthesis date is not source currentness/access verification.",
+    "sourceHold": "Exact constructed application still requires clinical/editorial review; mathematical identities are explicitly derived.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2r2.coverage-perfusion-map",
+    "inheritedClaimId": "claim.n2r2.coverage-perfusion-map",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-04",
+    "synthesisKind": "clinical_extension_needs_targeted_verification",
+    "basisClaimIds": [
+      "claim.gs028f.reconstruction.graft-without-transferred-supply",
+      "claim.gs028f.reconstruction.pedicled-flap-supply"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.gs028f.reconstruction.graft-without-transferred-supply",
+        "recordId": "claim.n2.c88fb3c62612",
+        "lastCheckedOn": "2026-10-07",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      },
+      {
+        "id": "claim.gs028f.reconstruction.pedicled-flap-supply",
+        "recordId": "claim.n2.5fcd9dfc70c9",
+        "lastCheckedOn": "2026-10-07",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      }
+    ],
+    "derivation": "Apply recorded graft-bed and retained-pedicle facts to a fictional surface and vessel map. The exposed-cortex application and exact coverage suitability require targeted verification; no named anatomic flap, perfusion cutoff or universal shin reconstruction algorithm is asserted.",
+    "sourcePublicationKeys": [
+      "doi:10.25259/ijdvl_66_2025",
+      "url:https://www.cancer.gov/types/breast/treatment/surgery/breast-reconstruction"
+    ],
+    "externalVerification": "No new retrieval or external check. Local synthesis date is not source currentness/access verification.",
+    "sourceHold": "Exact new clinical extension requires targeted source verification and clinician sign-off.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2r2.dual-endpoint-protocol",
+    "inheritedClaimId": "claim.n2r2.dual-endpoint-protocol",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-04",
+    "synthesisKind": "mathematical_protocol_synthesis",
+    "basisClaimIds": [
+      "claim.n2.derived.equivalence-interval-rule",
+      "claim.qq20261102a.null-test-versus-protocol-magnitude",
+      "claim.qq20261102b.specified-interval-decision-rule"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.n2.derived.equivalence-interval-rule",
+        "recordId": "claim.n2.2f7b539b6ebe",
+        "lastCheckedOn": "2026-11-04",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      },
+      {
+        "id": "claim.qq20261102a.null-test-versus-protocol-magnitude",
+        "recordId": "claim.n2.600714349549",
+        "lastCheckedOn": "2026-11-02",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      },
+      {
+        "id": "claim.qq20261102b.specified-interval-decision-rule",
+        "recordId": "claim.n2.213458238919",
+        "lastCheckedOn": "2026-11-02",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      }
+    ],
+    "derivation": "Compare each constructed interval with its own supplied rule: recovery 90% CI lies within the stated TOST bounds; safety 95% upper limit exceeds the separate limit. Safety estimate +0.4 points and symmetric normal-approximation 95% CI [-2.4,+3.2] imply SE=2.8/1.96 and z=0.28, yielding a two-sided null p approximately 0.78. The margins, estimates and adoption rule are fictional protocol inputs, not source-endorsed clinical thresholds.",
+    "sourcePublicationKeys": [
+      "url:https://www.itl.nist.gov/div898/handbook/prc/section1/prc131.htm",
+      "url:https://www.itl.nist.gov/div898/handbook/prc/section1/prc14.htm",
+      "doi:10.1177/1948550617697177"
+    ],
+    "externalVerification": "No new retrieval or external check. Local synthesis date is not source currentness/access verification.",
+    "sourceHold": "Exact constructed application still requires clinical/editorial review; mathematical identities are explicitly derived.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2r2.extravasation-progressive-local-injury",
+    "inheritedClaimId": "claim.n2r2.extravasation-progressive-local-injury",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-04",
+    "synthesisKind": "clinical_extension_needs_targeted_verification",
+    "basisClaimIds": [
+      "claim.gs028e.contrast.extravasation-local-tissue-event"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.gs028e.contrast.extravasation-local-tissue-event",
+        "recordId": "claim.n2.1af25373f5a7",
+        "lastCheckedOn": "2026-10-07",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      }
+    ],
+    "derivation": "New severity-to-assessment synthesis directed to the recorded ACR Manual extravasation chapter. The prior atomic claim verified event classification rather than management, so this exact escalation application requires a targeted check before approval. No volume threshold, time interval or mandatory operation is inferred.",
+    "sourcePublicationKeys": [
+      "url:https://www.acr.org/Clinical-Resources/Clinical-Tools-and-Reference/Contrast-Manual"
+    ],
+    "externalVerification": "No new retrieval or external check. Local synthesis date is not source currentness/access verification.",
+    "sourceHold": "Exact new clinical extension requires targeted source verification and clinician sign-off.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2r2.free-flap-complete-circuit",
+    "inheritedClaimId": "claim.n2r2.free-flap-complete-circuit",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-04",
+    "synthesisKind": "observation_bound_logical_synthesis",
+    "basisClaimIds": [
+      "claim.gs028f.reconstruction.free-flap-reconnected-supply",
+      "claim.gs028f.reconstruction.perfusion-not-donor-identity"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.gs028f.reconstruction.free-flap-reconnected-supply",
+        "recordId": "claim.n2.c83fc3058af5",
+        "lastCheckedOn": "2026-10-07",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      },
+      {
+        "id": "claim.gs028f.reconstruction.perfusion-not-donor-identity",
+        "recordId": "claim.n2.ddb68fa706b9",
+        "lastCheckedOn": "2026-10-07",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      }
+    ],
+    "derivation": "Trace the explicit continuity of a constructed artery and vein. The two connections instantiate the recorded circulation principle without a new vessel-size, anatomic selection or technical anastomotic rule.",
+    "sourcePublicationKeys": [
+      "doi:10.25259/ijdvl_66_2025",
+      "url:https://www.cancer.gov/types/breast/treatment/surgery/breast-reconstruction"
+    ],
+    "externalVerification": "No new retrieval or external check. Local synthesis date is not source currentness/access verification.",
+    "sourceHold": "Exact constructed application still requires clinical/editorial review; mathematical identities are explicitly derived.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2r2.gastrojejunal-stricture-dilation",
+    "inheritedClaimId": "claim.n2r2.gastrojejunal-stricture-dilation",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-04",
+    "synthesisKind": "clinical_extension_needs_targeted_verification",
+    "basisClaimIds": [
+      "claim.gs028c.marginal-ulcer.ppi",
+      "claim.gs028c.marginal-ulcer.complication-boundary"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.gs028c.marginal-ulcer.ppi",
+        "recordId": "claim.n2.73280797f130",
+        "lastCheckedOn": "2026-10-02",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      },
+      {
+        "id": "claim.gs028c.marginal-ulcer.complication-boundary",
+        "recordId": "claim.n2.c8b8cf1c24a2",
+        "lastCheckedOn": "2026-10-02",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      }
+    ],
+    "derivation": "New short named-intervention synthesis using the previously recorded bariatric marginal-ulcer guideline source. That exact intervention sequence was not newly checked externally; verify active-ulcer status, procedural suitability and first-dilation versus revision ranking before approval. No balloon diameter, number of sessions, drug dose or treatment interval is authored.",
+    "sourcePublicationKeys": [
+      "doi:10.1016/j.soard.2024.10.003"
+    ],
+    "externalVerification": "No new retrieval or external check. Local synthesis date is not source currentness/access verification.",
+    "sourceHold": "Exact new clinical extension requires targeted source verification and clinician sign-off.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2r2.graft-mechanism-investigation",
+    "inheritedClaimId": "claim.n2r2.graft-mechanism-investigation",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-04",
+    "synthesisKind": "observation_bound_logical_synthesis",
+    "basisClaimIds": [
+      "claim.gs028e.hyperacute_preformed",
+      "claim.gs028e.hyperacute_vascular",
+      "claim.gs028e.t_cell_graft_comparison",
+      "claim.gs028f.tacrolimus.t-cell-activation"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.gs028e.hyperacute_preformed",
+        "recordId": "claim.n2.e50a1962e942",
+        "lastCheckedOn": "2026-10-07",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      },
+      {
+        "id": "claim.gs028e.hyperacute_vascular",
+        "recordId": "claim.n2.b42555c8fb52",
+        "lastCheckedOn": "2026-10-07",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      },
+      {
+        "id": "claim.gs028e.t_cell_graft_comparison",
+        "recordId": "claim.n2.cca234e3627e",
+        "lastCheckedOn": "2026-10-07",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      },
+      {
+        "id": "claim.gs028f.tacrolimus.t-cell-activation",
+        "recordId": "claim.n2.154178be8123",
+        "lastCheckedOn": "2026-10-07",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      }
+    ],
+    "derivation": "Apply the recorded antibody target, timing, vascular mechanism and drug-pathway limits to explicit experiment controls and biopsy observations. Focused-investigation ranking is an unverified case application; it is not a complete formal rejection diagnosis, clinical assay-validation claim or treatment prescription.",
+    "sourcePublicationKeys": [
+      "doi:10.3389/fimmu.2016.00432",
+      "url:https://www.cms.gov/Medicare/Coverage/DeterminationProcess/downloads/id78TA.pdf",
+      "url:https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm"
+    ],
+    "externalVerification": "No new retrieval or external check. Local synthesis date is not source currentness/access verification.",
+    "sourceHold": "Exact constructed application still requires clinical/editorial review; mathematical identities are explicitly derived.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2r2.iv-dextrose-exposure",
+    "inheritedClaimId": "claim.n2r2.iv-dextrose-exposure",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-04",
+    "synthesisKind": "observation_bound_logical_synthesis",
+    "basisClaimIds": [
+      "claim.gs028f.refeeding.insulin-phosphate-shift",
+      "claim.gs028f.refeeding.phosphate-not-specific",
+      "claim.gs028f.refeeding.monitoring-separate"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.gs028f.refeeding.insulin-phosphate-shift",
+        "recordId": "claim.n2.55c2d3c6076b",
+        "lastCheckedOn": "2026-10-07",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      },
+      {
+        "id": "claim.gs028f.refeeding.phosphate-not-specific",
+        "recordId": "claim.n2.a2a9c29cbbcf",
+        "lastCheckedOn": "2026-10-07",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      },
+      {
+        "id": "claim.gs028f.refeeding.monitoring-separate",
+        "recordId": "claim.n2.149ce209d4ee",
+        "lastCheckedOn": "2026-10-07",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      }
+    ],
+    "derivation": "Dextrose identifies carbohydrate in the administration record. Apply the recorded carbohydrate-exposure and monitoring facts to its stated chronology. No universal biochemical syndrome threshold, replacement regimen or feeding-rate rule follows.",
+    "sourcePublicationKeys": [
+      "doi:10.3389/fnut.2023.1083483",
+      "doi:10.1111/1747-0080.70003"
+    ],
+    "externalVerification": "No new retrieval or external check. Local synthesis date is not source currentness/access verification.",
+    "sourceHold": "Exact constructed application still requires clinical/editorial review; mathematical identities are explicitly derived.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2r2.linked-record-net-change",
+    "inheritedClaimId": "claim.n2r2.linked-record-net-change",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-04",
+    "synthesisKind": "mathematical_protocol_synthesis",
+    "basisClaimIds": [
+      "claim.gs028se.statistics.chi-square.mcnemar-boundary",
+      "claim.gs028se.statistics.bias-confounding"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.gs028se.statistics.chi-square.mcnemar-boundary",
+        "recordId": "claim.n2.3e734c574c75",
+        "lastCheckedOn": "2026-09-29",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      },
+      {
+        "id": "claim.gs028se.statistics.bias-confounding",
+        "recordId": "claim.n2.4831cf651238",
+        "lastCheckedOn": "2026-09-29",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      }
+    ],
+    "derivation": "After-correct minus before-correct cancels the unchanged-correct cell: (a+c)-(a+b)=c-b. Here (12-5)/100=7 percentage points. The separate 10-point next-study trigger is fictional; no significance, causality or rollout efficacy is inferred.",
+    "sourcePublicationKeys": [
+      "url:https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/mcnemar.htm",
+      "url:https://www.cdc.gov/field-epi-manual/php/chapters/analyze-interpret-data.html"
+    ],
+    "externalVerification": "No new retrieval or external check. Local synthesis date is not source currentness/access verification.",
+    "sourceHold": "Exact constructed application still requires clinical/editorial review; mathematical identities are explicitly derived.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2r2.lmwh-treatment-purpose",
+    "inheritedClaimId": "claim.n2r2.lmwh-treatment-purpose",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-04",
+    "synthesisKind": "clinical_extension_needs_targeted_verification",
+    "basisClaimIds": [
+      "claim.postoperative-dvt.three-month-anticoagulation",
+      "claim.bread-butter.cancer-surgery.extended-vte-prophylaxis"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.postoperative-dvt.three-month-anticoagulation",
+        "recordId": "claim.n2.8a0b2ca37037",
+        "lastCheckedOn": "2026-09-12",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      },
+      {
+        "id": "claim.bread-butter.cancer-surgery.extended-vte-prophylaxis",
+        "recordId": "claim.n2.6f99845e8caa",
+        "lastCheckedOn": "2026-09-17",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      }
+    ],
+    "derivation": "Apply the recorded prevention-versus-treatment distinction to the named heparin class in the constructed medication record. No molecule, dose, therapeutic-failure rescue algorithm or resumption interval is added. Exact class/indication application requires targeted verification before approval.",
+    "sourcePublicationKeys": [
+      "url:https://www.hematology.org/education/clinicians/guidelines-and-quality-care/choosing-wisely",
+      "url:https://www.nhlbi.nih.gov/health/venous-thromboembolism/treatment",
+      "doi:10.1007/s12094-024-03605-2",
+      "doi:10.1200/jco.23.00294"
+    ],
+    "externalVerification": "No new retrieval or external check. Local synthesis date is not source currentness/access verification.",
+    "sourceHold": "Exact new clinical extension requires targeted source verification and clinician sign-off.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2r2.lr-odds-protocol",
+    "inheritedClaimId": "claim.n2r2.lr-odds-protocol",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-04",
+    "synthesisKind": "mathematical_protocol_synthesis",
+    "basisClaimIds": [
+      "claim.n2.derived.positive-likelihood-ratio",
+      "claim.qq20261102a.odds-to-risk-conversion",
+      "claim.gs028se.statistics.sensitivity-specificity"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.n2.derived.positive-likelihood-ratio",
+        "recordId": "claim.n2.02709278d0d4",
+        "lastCheckedOn": "2026-11-04",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      },
+      {
+        "id": "claim.qq20261102a.odds-to-risk-conversion",
+        "recordId": "claim.qq20261102a.odds-to-risk-conversion",
+        "lastCheckedOn": "2026-11-02",
+        "contentVersion": "evidence.question-quality.2026-11-02.v5"
+      },
+      {
+        "id": "claim.gs028se.statistics.sensitivity-specificity",
+        "recordId": "claim.n2.bf4203993008",
+        "lastCheckedOn": "2026-09-29",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      }
+    ],
+    "derivation": "Bayes odds identity: P(D|+)/P(not D|+) = [P(+|D)/P(+|not D)]*[P(D)/P(not D)]. With the constructed rates LR+=5, odds 1/4 become 5/4 and probability 5/9. All priors, validation counts and the 50% action threshold are fictional, not patient estimates or clinical cutoffs.",
+    "sourcePublicationKeys": [
+      "url:https://archive.cdc.gov/www_cdc_gov/csels/dsepd/ss1978/lesson5/appendixa.html",
+      "url:https://fingertips.phe.org.uk/static-reports/public-health-technical-guidance/Basic_statistics/Odds_ratios_relative_risk.html"
+    ],
+    "externalVerification": "No new retrieval or external check. Local synthesis date is not source currentness/access verification.",
+    "sourceHold": "Exact constructed application still requires clinical/editorial review; mathematical identities are explicitly derived.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2r2.negative-cohort-protocol",
+    "inheritedClaimId": "claim.n2r2.negative-cohort-protocol",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-04",
+    "synthesisKind": "mathematical_protocol_synthesis",
+    "basisClaimIds": [
+      "claim.n2.derived.negative-predictive-value",
+      "claim.gs028se.statistics.sensitivity-specificity",
+      "claim.gs028se.statistics.predictive-value-prevalence"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.n2.derived.negative-predictive-value",
+        "recordId": "claim.n2.889064151d42",
+        "lastCheckedOn": "2026-11-04",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      },
+      {
+        "id": "claim.gs028se.statistics.sensitivity-specificity",
+        "recordId": "claim.n2.bf4203993008",
+        "lastCheckedOn": "2026-09-29",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      },
+      {
+        "id": "claim.gs028se.statistics.predictive-value-prevalence",
+        "recordId": "claim.n2.cc09f9ba1740",
+        "lastCheckedOn": "2026-09-29",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      }
+    ],
+    "derivation": "NPV=TN/(TN+FN), so 1-NPV=FN/(TN+FN). Match the stated order population, then compare this fraction with the fictional protocol. Counts, screen characteristics and 5% criterion are constructed inputs, not a clinical validation or guideline.",
+    "sourcePublicationKeys": [
+      "url:https://archive.cdc.gov/www_cdc_gov/csels/dsepd/ss1978/lesson5/appendixa.html",
+      "url:https://www.fda.gov/medical-devices/coronavirus-covid-19-and-medical-devices/antibody-serology-testing-covid-19-information-patients-and-consumers"
+    ],
+    "externalVerification": "No new retrieval or external check. Local synthesis date is not source currentness/access verification.",
+    "sourceHold": "Exact constructed application still requires clinical/editorial review; mathematical identities are explicitly derived.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2r2.temporary-closure-reassessment",
+    "inheritedClaimId": "claim.n2r2.temporary-closure-reassessment",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-04",
+    "synthesisKind": "clinical_extension_needs_targeted_verification",
+    "basisClaimIds": [
+      "claim.ventral-hernia.enterotomy-mesh-selection-safety-boundary",
+      "claim.ventral-hernia.urgent-feature-boundary"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.ventral-hernia.enterotomy-mesh-selection-safety-boundary",
+        "recordId": "claim.ventral-hernia.enterotomy-mesh-selection-safety-boundary",
+        "lastCheckedOn": "2026-08-06",
+        "contentVersion": "clinical.owner-row-044.2026-08-06.1"
+      },
+      {
+        "id": "claim.ventral-hernia.urgent-feature-boundary",
+        "recordId": "claim.n2.e551a9978155",
+        "lastCheckedOn": "2026-07-30",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      }
+    ],
+    "derivation": "New closure-stage teaching point directed to the recorded EHS/WSES emergency-hernia guideline sources. The earlier mesh safety boundary explicitly does not prescribe the alternative; the temporary-closure indication and ranking therefore require separate targeted source/clinician verification before approval. No pressure or timing cutoff is authored.",
+    "sourcePublicationKeys": [
+      "doi:10.3389/jaws.2026.16228",
+      "doi:10.1186/s13017-017-0149-y",
+      "doi:10.1007/s00464-016-5072-x"
+    ],
+    "externalVerification": "No new retrieval or external check. Local synthesis date is not source currentness/access verification.",
+    "sourceHold": "Exact new clinical extension requires targeted source verification and clinician sign-off.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2r2.testable-gcs-change",
+    "inheritedClaimId": "claim.n2r2.testable-gcs-change",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-04",
+    "synthesisKind": "observation_bound_logical_synthesis",
+    "basisClaimIds": [
+      "claim.gcs.verbal-nt",
+      "claim.gcs.complete-total",
+      "claim.gcs.motor-mapping"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.gcs.verbal-nt",
+        "recordId": "claim.n2.8581be95d2ec",
+        "lastCheckedOn": "2026-09-28",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      },
+      {
+        "id": "claim.gcs.complete-total",
+        "recordId": "claim.n2.bdbc82c17adc",
+        "lastCheckedOn": "2026-09-28",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      },
+      {
+        "id": "claim.gcs.motor-mapping",
+        "recordId": "claim.n2.44b64dba34de",
+        "lastCheckedOn": "2026-09-28",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v1"
+      }
+    ],
+    "derivation": "Apply the recorded component mapping and testability limits to the two constructed examinations. No CT, operation, prognosis or total-score management cutoff is inferred.",
+    "sourcePublicationKeys": [
+      "url:https://www.glasgowcomascale.org/faq/",
+      "url:https://www.glasgowcomascale.org/downloads/GCS-Assessment-Aid.pdf"
+    ],
+    "externalVerification": "No new retrieval or external check. Local synthesis date is not source currentness/access verification.",
+    "sourceHold": "Exact constructed application still requires clinical/editorial review; mathematical identities are explicitly derived.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2r2.e2f4cca1859a",
+    "inheritedClaimId": "claim.nutrition.oral-enteral",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "development-batch.2026-09-29.pre-endoscopy.1",
+    "inheritedLastCheckedOn": "2026-09-29",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Unchanged recorded statement under separate round-two draft metadata",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1016/j.clnu.2021.03.031"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2r2.e757fd75ecb1",
+    "inheritedClaimId": "claim.nutrition.pn-boundary",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "development-batch.2026-09-29.pre-endoscopy.1",
+    "inheritedLastCheckedOn": "2026-09-29",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Unchanged recorded statement under separate round-two draft metadata",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1016/j.clnu.2021.03.031"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.d2b48d8aa3de",
+    "inheritedClaimId": "claim.nutrition.screen",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-29",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1016/j.clnu.2021.03.031"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.5b7bf51076d4",
+    "inheritedClaimId": "claim.pancreatic-cyst.mcn-pattern-recognition",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-11",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1038/ajg.2018.14"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.1ff20d71a599",
+    "inheritedClaimId": "claim.pancreatic-cyst.mrcp-duct-assessment",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-11",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1038/ajg.2018.14"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2r2.2f251a75ceb4",
+    "inheritedClaimId": "claim.peptic-ulcer-bleeding.active-bleed-conventional-combination",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.owner-row-049.2026-08-10.1",
+    "inheritedLastCheckedOn": "2026-08-10",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Unchanged recorded statement under separate round-two draft metadata",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.14309/ajg.0000000000001245",
+      "doi:10.1055/a-2863-8314"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2r2.e55b4be019b7",
+    "inheritedClaimId": "claim.peptic-ulcer-bleeding.epinephrine-not-monotherapy",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.owner-row-049.2026-08-10.1",
+    "inheritedLastCheckedOn": "2026-08-10",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Unchanged recorded statement under separate round-two draft metadata",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.14309/ajg.0000000000001245",
+      "doi:10.1055/a-2863-8314"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.dda382649df0",
+    "inheritedClaimId": "claim.peptic-ulcer-bleeding.high-risk-stigmata-require-hemostasis",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-08-10",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.14309/ajg.0000000000001245",
+      "doi:10.1055/a-2863-8314"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2r2.863516fa7332",
+    "inheritedClaimId": "claim.peptic-ulcer-bleeding.selected-advanced-monotherapy-boundary",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.owner-row-049.2026-08-10.1",
+    "inheritedLastCheckedOn": "2026-08-10",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Unchanged recorded statement under separate round-two draft metadata",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1055/a-2863-8314"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.9c12bef8ae65",
+    "inheritedClaimId": "claim.postoperative-dvt.prompt-venous-duplex",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-12",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://www.cdc.gov/blood-clots/testing-diagnosis/index.html",
+      "url:https://www.nhlbi.nih.gov/health/deep-vein-thrombosis"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.8a0b2ca37037",
+    "inheritedClaimId": "claim.postoperative-dvt.three-month-anticoagulation",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-09-12",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://www.hematology.org/education/clinicians/guidelines-and-quality-care/choosing-wisely",
+      "url:https://www.nhlbi.nih.gov/health/venous-thromboembolism/treatment"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.d585be062067",
+    "inheritedClaimId": "claim.postoperative-ileus.nutrition-not-motility-treatment",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-08-06",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1016/j.clnu.2025.08.029",
+      "doi:10.1111/ans.12102"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.c1bd8baa573c",
+    "inheritedClaimId": "claim.postoperative-ileus.parenteral-nutrition-support",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-08-06",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1016/j.clnu.2025.08.029",
+      "doi:10.1111/ans.12102"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.456c6686c997",
+    "inheritedClaimId": "claim.qf2.fixed-volume-peak-plateau-pattern",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-11-04",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1007/s40140-024-00648-7"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2r2.19f587fdd650",
+    "inheritedClaimId": "claim.qf3.controlled-filling-elastic-load",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "question-flags-round3.evidence.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-11-04",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Unchanged recorded statement under separate round-two draft metadata",
+    "inheritedAuxiliaryMetadata": {
+      "basisClaimIds": [
+        "claim.gs028e.laparoscopy.caval-compression-venous-return",
+        "claim.gs028g.laparoscopy-respiratory.diaphragm-compliance.fact3"
+      ],
+      "verificationScope": "Offline author synthesis/application from recorded claims and their existing source records; no fresh source retrieval, source-access-date change or clinical approval. Direct alignment of the application remains for independent clinical/source review."
+    },
+    "sourcePublicationKeys": [
+      "doi:10.3390/jcm9124058",
+      "doi:10.1007/s11701-026-03392-8",
+      "doi:10.1007/s40140-024-00648-7"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2r2.007f238850f9",
+    "inheritedClaimId": "claim.qf3.dnr-baseline-support-endpoint",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "question-flags-round3.evidence.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-11-04",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Unchanged recorded statement under separate round-two draft metadata",
+    "inheritedAuxiliaryMetadata": {
+      "basisClaimIds": [
+        "claim.gs028se.perioperative-dnr.2",
+        "claim.gs028se.perioperative-dnr.3",
+        "claim.gs028se.perioperative-dnr.4"
+      ],
+      "verificationScope": "Offline author synthesis/application from recorded claims and their existing source records; no fresh source retrieval, source-access-date change or clinical approval. Direct alignment of the application remains for independent clinical/source review."
+    },
+    "sourcePublicationKeys": [
+      "url:https://www.asahq.org/standards-and-practice-parameters/statement-on-ethical-guidelines-for-the-anesthesia-care-of-patients-with-do-not-resuscitate-orders",
+      "url:https://code-medical-ethics.ama-assn.org/ethics-opinions/orders-not-attempt-resuscitation-dnar"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.9439df93c6d6",
+    "inheritedClaimId": "claim.qq20261102.ulcer-initial-treatment",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-11-02",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1055/a-2863-8314"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.4a6198e86f78",
+    "inheritedClaimId": "claim.qq20261102a.malignant-polyp-adverse-features",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-11-02",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1097/dcr.0000000000002323"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.600714349549",
+    "inheritedClaimId": "claim.qq20261102a.null-test-versus-protocol-magnitude",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-11-02",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://www.itl.nist.gov/div898/handbook/prc/section1/prc131.htm",
+      "url:https://www.itl.nist.gov/div898/handbook/prc/section1/prc14.htm",
+      "doi:10.1177/1948550617697177"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2r2.6d0e9fa10739",
+    "inheritedClaimId": "claim.qq20261102a.odds-to-risk-conversion",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "evidence.question-quality.2026-11-02.v5",
+    "inheritedLastCheckedOn": "2026-11-02",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Unchanged recorded statement under separate round-two draft metadata",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://fingertips.phe.org.uk/static-reports/public-health-technical-guidance/Basic_statistics/Odds_ratios_relative_risk.html"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2r2.9737180b84fa",
+    "inheritedClaimId": "claim.qq20261102a.sedation-after-reversal",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "evidence.question-quality.2026-11-02.v5",
+    "inheritedLastCheckedOn": "2026-11-02",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Unchanged recorded statement under separate round-two draft metadata",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1136/gutjnl-2023-330396"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.7e424a1ff493",
+    "inheritedClaimId": "claim.qq20261102b.oxygenation-not-ventilation",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-11-02",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1136/gutjnl-2023-330396"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.bfe7a6f48cfd",
+    "inheritedClaimId": "claim.qq20261102b.sedation-ventilation-response",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-11-02",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1136/gutjnl-2023-330396"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.213458238919",
+    "inheritedClaimId": "claim.qq20261102b.specified-interval-decision-rule",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-11-02",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://www.itl.nist.gov/div898/handbook/prc/section1/prc131.htm",
+      "url:https://www.itl.nist.gov/div898/handbook/prc/section1/prc14.htm"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.3febc19ab337",
+    "inheritedClaimId": "claim.qq20261102c.hrm-protocol-and-provocation",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-11-02",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.14309/ajg.0000000000000734",
+      "doi:10.1111/nmo.14058"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.2dcec9ca69eb",
+    "inheritedClaimId": "claim.qq20261102d.hrm-rapid-drink-purpose",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-11-02",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.14309/ajg.0000000000000734",
+      "doi:10.1111/nmo.14058"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.ea086984184b",
+    "inheritedClaimId": "claim.qq20261102d.hrm-rapid-swallow-interpretation",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-11-02",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.14309/ajg.0000000000000734",
+      "doi:10.1111/nmo.14058"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.57cdab035105",
+    "inheritedClaimId": "claim.qq20261102d.hrm-solid-meal-provocation",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-11-02",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.14309/ajg.0000000000000734",
+      "doi:10.1111/nmo.14058"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2r2.8b03fc3aabde",
+    "inheritedClaimId": "claim.qq20261102e.hrm-reserve-versus-outflow",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "evidence.question-quality.2026-11-02.v9",
+    "inheritedLastCheckedOn": "2026-11-02",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Unchanged recorded statement under separate round-two draft metadata",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.14309/ajg.0000000000000734",
+      "doi:10.1111/nmo.14058"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.72256312b855",
+    "inheritedClaimId": "claim.severe-burn.early-enteral-nutrition-safety-boundary",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-08-06",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1002/ams2.739",
+      "url:https://www.east.org/education-resources/practice-management-guidelines/details/nutritional-support-timing-early-versus-delayed-enteral-feedings-update-in-process"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.84c927796922",
+    "inheritedClaimId": "claim.severe-burn.early-enteral-nutrition-within-24-hours",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-08-06",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.1002/ams2.739",
+      "url:https://www.east.org/education-resources/practice-management-guidelines/details/nutritional-support-timing-early-versus-delayed-enteral-feedings-update-in-process",
+      "doi:10.1017/s0007114524002344"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2r2.4b2bd6d4bf88",
+    "inheritedClaimId": "claim.ventral-hernia.enterotomy-mesh-selection-safety-boundary",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.owner-row-044.2026-08-06.1",
+    "inheritedLastCheckedOn": "2026-08-06",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Unchanged recorded statement under separate round-two draft metadata",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.3389/jaws.2026.16228",
+      "doi:10.1186/s13017-017-0149-y",
+      "doi:10.1007/s00464-016-5072-x"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.e551a9978155",
+    "inheritedClaimId": "claim.ventral-hernia.urgent-feature-boundary",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-07-30",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.3389/jaws.2026.16228",
+      "doi:10.1186/s13017-017-0149-y"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.1d94861b6f4e",
+    "inheritedClaimId": "claim.vitamin-c.collagen-proline-lysine-hydroxylation",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-08-06",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://ods.od.nih.gov/factsheets/VitaminC-HealthProfessional/",
+      "doi:10.1177/0022034509359125"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.5aa2710c7ac3",
+    "inheritedClaimId": "claim.vitamin-c.collagen-stability-and-wound-healing",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-08-06",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "url:https://ods.od.nih.gov/factsheets/VitaminC-HealthProfessional/",
+      "doi:10.1177/0022034509359125"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2.544a3a1d14f1",
+    "inheritedClaimId": "claim.vitamin-c.supplementation-not-universal-postoperative-treatment",
+    "statementUnchanged": true,
+    "inheritedContentVersion": "clinical.question-new-n2.2026-11-04.v1",
+    "inheritedLastCheckedOn": "2026-08-06",
+    "checkedLocallyOn": "2026-11-04",
+    "reuseKind": "Original N2 EvidenceClaim fields retained; auxiliary derivation kept in provenance",
+    "inheritedAuxiliaryMetadata": {},
+    "sourcePublicationKeys": [
+      "doi:10.3390/antiox11081605"
+    ],
+    "externalVerification": "Original access/check dates retained. No new retrieval.",
+    "reuseRound": "exact_round_two_record_retained"
+  },
+  {
+    "claimId": "claim.n2r3.55c2d3c6076b",
+    "inheritedClaimId": "claim.gs028f.refeeding.insulin-phosphate-shift",
+    "statementUnchanged": true,
+    "inheritedLastCheckedOn": "2026-10-07",
+    "inheritedContentVersion": "development-batch.2026-10-07.variety.2",
+    "checkedLocallyOn": "2026-11-05",
+    "externalVerification": "No new retrieval; original source dates retained."
+  },
+  {
+    "claimId": "claim.n2r3.capnography-sampling-events",
+    "inheritedClaimId": "claim.n2r3.capnography-sampling-events",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-05",
+    "basisClaimIds": [
+      "claim.qq20261102b.oxygenation-not-ventilation",
+      "claim.qq20261102b.sedation-ventilation-response"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.qq20261102b.oxygenation-not-ventilation",
+        "lastCheckedOn": "2026-11-02",
+        "contentVersion": "evidence.question-quality.2026-11-02.v6"
+      },
+      {
+        "id": "claim.qq20261102b.sedation-ventilation-response",
+        "lastCheckedOn": "2026-11-02",
+        "contentVersion": "evidence.question-quality.2026-11-02.v6"
+      }
+    ],
+    "sourceVerificationHold": true,
+    "method": "Sampling route and temporal-resolution details are new. Verify combined-route acquisition and limitations of the proposed between-event/slow-trend alternatives.",
+    "externalVerification": "No source retrieved; candidate source IDs are targeted cross-check leads, not verified support for the added details."
+  },
+  {
+    "claimId": "claim.n2r3.contained-pelvic-source-control",
+    "inheritedClaimId": "claim.n2r3.contained-pelvic-source-control",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-05",
+    "basisClaimIds": [
+      "claim.bread-butter.superficial-incisional-ssi.open-drain",
+      "claim.early.pseudocyst.symptomatic-endoscopic-drainage"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.bread-butter.superficial-incisional-ssi.open-drain",
+        "lastCheckedOn": "2026-09-17",
+        "contentVersion": "development-batch.2026-09-17.bread-and-butter.1"
+      },
+      {
+        "id": "claim.early.pseudocyst.symptomatic-endoscopic-drainage",
+        "lastCheckedOn": "2026-09-13",
+        "contentVersion": "development-batch.2026-09-13.1"
+      }
+    ],
+    "sourceVerificationHold": true,
+    "method": "The recorded drainage atoms concern different compartments. They do NOT verify anastomotic-leak management; obtain direct permitted colorectal/source-control guidance and verify operative-versus-percutaneous ranking.",
+    "externalVerification": "No source retrieved; candidate source IDs are targeted cross-check leads, not verified support for the added details."
+  },
+  {
+    "claimId": "claim.n2r3.current-perioperative-request",
+    "inheritedClaimId": "claim.n2r3.current-perioperative-request",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-05",
+    "basisClaimIds": [
+      "claim.gs028se.perioperative-dnr.1",
+      "claim.gs028se.perioperative-dnr.2",
+      "claim.gs028se.perioperative-dnr.3"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.gs028se.perioperative-dnr.1",
+        "lastCheckedOn": "2026-09-29",
+        "contentVersion": "development-batch.2026-09-29.statistics-ethics.2"
+      },
+      {
+        "id": "claim.gs028se.perioperative-dnr.2",
+        "lastCheckedOn": "2026-09-29",
+        "contentVersion": "development-batch.2026-09-29.statistics-ethics.2"
+      },
+      {
+        "id": "claim.gs028se.perioperative-dnr.3",
+        "lastCheckedOn": "2026-09-29",
+        "contentVersion": "development-batch.2026-09-29.statistics-ethics.2"
+      }
+    ],
+    "sourceVerificationHold": true,
+    "method": "Current capacity, modification of prior permission and documentation scope require direct professional ethics/clinical verification. No jurisdiction-specific legal conclusion is asserted.",
+    "externalVerification": "No source retrieved; candidate source IDs are targeted cross-check leads, not verified support for the added details."
+  },
+  {
+    "claimId": "claim.n2r3.delivered-supplemental-nutrition",
+    "inheritedClaimId": "claim.n2r3.delivered-supplemental-nutrition",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-05",
+    "basisClaimIds": [
+      "claim.nutrition.pn-boundary",
+      "claim.nutrition.oral-enteral",
+      "claim.gs028c.dialysis.no-overfeeding"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.nutrition.pn-boundary",
+        "lastCheckedOn": "2026-09-29",
+        "contentVersion": "development-batch.2026-09-29.pre-endoscopy.1"
+      },
+      {
+        "id": "claim.nutrition.oral-enteral",
+        "lastCheckedOn": "2026-09-29",
+        "contentVersion": "development-batch.2026-09-29.pre-endoscopy.1"
+      },
+      {
+        "id": "claim.gs028c.dialysis.no-overfeeding",
+        "lastCheckedOn": "2026-10-02",
+        "contentVersion": "development-batch.2026-10-02.pre-endoscopy.1"
+      }
+    ],
+    "sourceVerificationHold": true,
+    "method": "This is a new delivery-reconciliation application; directly verify the exact reduction strategy rather than infer a universal PN taper percentage.",
+    "externalVerification": "No source retrieved; candidate source IDs are targeted cross-check leads, not verified support for the added details."
+  },
+  {
+    "claimId": "claim.n2r3.depolarizing-ratio-amplitude",
+    "inheritedClaimId": "claim.n2r3.depolarizing-ratio-amplitude",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-05",
+    "basisClaimIds": [
+      "claim.gs028g.neuromuscular-recovery.quantitative-assessment.fact3",
+      "claim.gs028g.neuromuscular-recovery.sugammadex-selectivity"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.gs028g.neuromuscular-recovery.quantitative-assessment.fact3",
+        "lastCheckedOn": "2026-10-07",
+        "contentVersion": "development-batch.2026-10-07.level3.1"
+      },
+      {
+        "id": "claim.gs028g.neuromuscular-recovery.sugammadex-selectivity",
+        "lastCheckedOn": "2026-10-07",
+        "contentVersion": "development-batch.2026-10-07.level3.1"
+      }
+    ],
+    "sourceVerificationHold": true,
+    "method": "The source atoms do not establish this depolarizing-monitor pattern. Verify phase-I interpretation and all reversal alternatives, including the neostigmine boundary, directly.",
+    "externalVerification": "No source retrieved; candidate source IDs are targeted cross-check leads, not verified support for the added details."
+  },
+  {
+    "claimId": "claim.n2r3.extravasation-pulse-assessment",
+    "inheritedClaimId": "claim.n2r3.extravasation-pulse-assessment",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-05",
+    "basisClaimIds": [
+      "claim.gs028e.contrast.extravasation-local-tissue-event",
+      "claim.n2r2.extravasation-progressive-local-injury"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.gs028e.contrast.extravasation-local-tissue-event",
+        "lastCheckedOn": "2026-10-07",
+        "contentVersion": "development-batch.2026-10-07.variety.1"
+      },
+      {
+        "id": "claim.n2r2.extravasation-progressive-local-injury",
+        "lastCheckedOn": "2026-11-04",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v2"
+      }
+    ],
+    "sourceVerificationHold": true,
+    "method": "The prior escalation atom itself carried a hold. Directly verify the pulse/compartment distinction and the priority among proposed assessments; no pressure or volume cutoff is inferred.",
+    "externalVerification": "No source retrieved; candidate source IDs are targeted cross-check leads, not verified support for the added details."
+  },
+  {
+    "claimId": "claim.n2r3.fissure-sphincter-preserving-flap",
+    "inheritedClaimId": "claim.n2r3.fissure-sphincter-preserving-flap",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-05",
+    "basisClaimIds": [
+      "claim.chronic-anal-fissure.selected-lis-after-medical-treatment"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.chronic-anal-fissure.selected-lis-after-medical-treatment",
+        "lastCheckedOn": "2026-09-13",
+        "contentVersion": "development-batch.2026-09-13.1"
+      }
+    ],
+    "sourceVerificationHold": true,
+    "method": "The recorded atom restricts LIS selection but does not verify advancement-flap priority over repeat botulinum. Obtain direct colorectal guideline support for the exact options.",
+    "externalVerification": "No source retrieved; candidate source IDs are targeted cross-check leads, not verified support for the added details."
+  },
+  {
+    "claimId": "claim.n2r3.focal-motor-change",
+    "inheritedClaimId": "claim.n2r3.focal-motor-change",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-05",
+    "basisClaimIds": [
+      "claim.gcs.motor-mapping",
+      "claim.gcs.complete-total"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.gcs.motor-mapping",
+        "lastCheckedOn": "2026-09-28",
+        "contentVersion": "development-batch.2026-09-28.pre-endoscopy.1"
+      },
+      {
+        "id": "claim.gcs.complete-total",
+        "lastCheckedOn": "2026-09-28",
+        "contentVersion": "development-batch.2026-09-28.pre-endoscopy.1"
+      }
+    ],
+    "sourceVerificationHold": true,
+    "method": "The component-scoring atoms do not establish the exact urgent imaging priority. Verify the current trauma assessment pathway and alternative timing.",
+    "externalVerification": "No source retrieved; candidate source IDs are targeted cross-check leads, not verified support for the added details."
+  },
+  {
+    "claimId": "claim.n2r3.free-flap-outflow-salvage",
+    "inheritedClaimId": "claim.n2r3.free-flap-outflow-salvage",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-05",
+    "basisClaimIds": [
+      "claim.gs028f.reconstruction.free-flap-reconnected-supply"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.gs028f.reconstruction.free-flap-reconnected-supply",
+        "lastCheckedOn": "2026-10-07",
+        "contentVersion": "development-batch.2026-10-07.variety.2"
+      }
+    ],
+    "sourceVerificationHold": true,
+    "method": "The recorded free-transfer circulation atom does not verify the signs, exploration priority or leech/observation limits. Directly verify all three before accepting the new salvage item.",
+    "externalVerification": "No source retrieved; candidate source IDs are targeted cross-check leads, not verified support for the added details."
+  },
+  {
+    "claimId": "claim.n2r3.limb-salvage-active-bleeding",
+    "inheritedClaimId": "claim.n2r3.limb-salvage-active-bleeding",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-05",
+    "basisClaimIds": [
+      "claim.gs028c.ali.category-two-b",
+      "claim.gs028c.ali.category-three",
+      "claim.gs028c.ali.emergency-vascular-care"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.gs028c.ali.category-two-b",
+        "lastCheckedOn": "2026-10-02",
+        "contentVersion": "development-batch.2026-10-02.pre-endoscopy.1"
+      },
+      {
+        "id": "claim.gs028c.ali.category-three",
+        "lastCheckedOn": "2026-10-02",
+        "contentVersion": "development-batch.2026-10-02.pre-endoscopy.1"
+      },
+      {
+        "id": "claim.gs028c.ali.emergency-vascular-care",
+        "lastCheckedOn": "2026-10-02",
+        "contentVersion": "development-batch.2026-10-02.pre-endoscopy.1"
+      }
+    ],
+    "sourceVerificationHold": true,
+    "method": "Viability is recorded, but the active intracranial bleeding contraindication and exact operative-versus-catheter priority need direct vascular/drug guidance. No historical bleeding time cutoff is claimed.",
+    "externalVerification": "No source retrieved; candidate source IDs are targeted cross-check leads, not verified support for the added details."
+  },
+  {
+    "claimId": "claim.n2r3.naloxone-infusion-boundary",
+    "inheritedClaimId": "claim.n2r3.naloxone-infusion-boundary",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-05",
+    "basisClaimIds": [
+      "claim.gs028e.naloxone.emergency-support-still-required"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.gs028e.naloxone.emergency-support-still-required",
+        "lastCheckedOn": "2026-10-07",
+        "contentVersion": "development-batch.2026-10-07.variety.1"
+      }
+    ],
+    "sourceVerificationHold": true,
+    "method": "The recorded atom establishes temporary reversal and recurrence, not infusion selection. Verify infusion suitability and the analgesia/antagonism tradeoff in permitted drug/anesthesia guidance.",
+    "externalVerification": "No source retrieved; candidate source IDs are targeted cross-check leads, not verified support for the added details."
+  },
+  {
+    "claimId": "claim.n2r3.operation-time-outcome-separation",
+    "inheritedClaimId": "claim.n2r3.operation-time-outcome-separation",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-05",
+    "basisClaimIds": [
+      "claim.gs028e.contaminated",
+      "claim.gs028e.dirty_infected",
+      "claim.gs028se.statistics.bias-confounding"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.gs028e.contaminated",
+        "lastCheckedOn": "2026-10-07",
+        "contentVersion": "development-batch.2026-10-07.variety.1"
+      },
+      {
+        "id": "claim.gs028e.dirty_infected",
+        "lastCheckedOn": "2026-10-07",
+        "contentVersion": "development-batch.2026-10-07.variety.1"
+      },
+      {
+        "id": "claim.gs028se.statistics.bias-confounding",
+        "lastCheckedOn": "2026-09-29",
+        "contentVersion": "development-batch.2026-09-29.statistics-ethics.2"
+      }
+    ],
+    "sourceVerificationHold": false,
+    "method": "Bounded logical application to the explicit fictional coding rule; no clinical performance estimate, treatment effect or new wound-class threshold.",
+    "externalVerification": "No source retrieved; candidate source IDs are targeted cross-check leads, not verified support for the added details."
+  },
+  {
+    "claimId": "claim.n2r3.preimplantation-specificity-assay",
+    "inheritedClaimId": "claim.n2r3.preimplantation-specificity-assay",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-05",
+    "basisClaimIds": [
+      "claim.gs028e.hyperacute_preformed",
+      "claim.gs028e.hyperacute_vascular",
+      "claim.n2r2.graft-mechanism-investigation"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.gs028e.hyperacute_preformed",
+        "lastCheckedOn": "2026-10-07",
+        "contentVersion": "development-batch.2026-10-07.variety.1"
+      },
+      {
+        "id": "claim.gs028e.hyperacute_vascular",
+        "lastCheckedOn": "2026-10-07",
+        "contentVersion": "development-batch.2026-10-07.variety.1"
+      },
+      {
+        "id": "claim.n2r2.graft-mechanism-investigation",
+        "lastCheckedOn": "2026-11-04",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v2"
+      }
+    ],
+    "sourceVerificationHold": true,
+    "method": "Assay specificity, pre/post-plasma-exchange sample limitations and future unacceptable-antigen allocation use require direct transplant laboratory guidance; the recorded mechanism atom is not sufficient.",
+    "externalVerification": "No source retrieved; candidate source IDs are targeted cross-check leads, not verified support for the added details."
+  },
+  {
+    "claimId": "claim.n2r3.prepared-recipient-bed",
+    "inheritedClaimId": "claim.n2r3.prepared-recipient-bed",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-05",
+    "basisClaimIds": [
+      "claim.gs028f.reconstruction.graft-without-transferred-supply",
+      "claim.gs028f.reconstruction.perfusion-not-donor-identity"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.gs028f.reconstruction.graft-without-transferred-supply",
+        "lastCheckedOn": "2026-10-07",
+        "contentVersion": "development-batch.2026-10-07.variety.2"
+      },
+      {
+        "id": "claim.gs028f.reconstruction.perfusion-not-donor-identity",
+        "lastCheckedOn": "2026-10-07",
+        "contentVersion": "development-batch.2026-10-07.variety.2"
+      }
+    ],
+    "sourceVerificationHold": true,
+    "method": "The generic recipient dependence atom does not establish graft suitability over prepared tibial cortex or every structural exception. Directly verify this current-bed ranking with reconstructive guidance.",
+    "externalVerification": "No source retrieved; candidate source IDs are targeted cross-check leads, not verified support for the added details."
+  },
+  {
+    "claimId": "claim.n2r3.protein-composition-volume",
+    "inheritedClaimId": "claim.n2r3.protein-composition-volume",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-05",
+    "basisClaimIds": [
+      "claim.nutrition.screen",
+      "claim.nutrition.oral-enteral"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.nutrition.screen",
+        "lastCheckedOn": "2026-09-29",
+        "contentVersion": "development-batch.2026-09-29.pre-endoscopy.1"
+      },
+      {
+        "id": "claim.nutrition.oral-enteral",
+        "lastCheckedOn": "2026-09-29",
+        "contentVersion": "development-batch.2026-09-29.pre-endoscopy.1"
+      }
+    ],
+    "sourceVerificationHold": true,
+    "method": "Composition/volume prescription priority and named whey/glucose-polymer module examples extend the screening/route atoms. Verify the exact proposed substitution with dietetic guidance; fictional observed intake is not a universal target threshold.",
+    "externalVerification": "No source retrieved; candidate source IDs are targeted cross-check leads, not verified support for the added details."
+  },
+  {
+    "claimId": "claim.n2r3.recurrent-gj-graded-dilation",
+    "inheritedClaimId": "claim.n2r3.recurrent-gj-graded-dilation",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-05",
+    "basisClaimIds": [
+      "claim.n2r2.gastrojejunal-stricture-dilation"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.n2r2.gastrojejunal-stricture-dilation",
+        "lastCheckedOn": "2026-11-04",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v2"
+      }
+    ],
+    "sourceVerificationHold": true,
+    "method": "Verify the repeat-dilation priority and the actual suitability boundaries for stent and operation in the recorded bariatric guidance; no session count or diameter rule is inferred.",
+    "externalVerification": "No source retrieved; candidate source IDs are targeted cross-check leads, not verified support for the added details."
+  },
+  {
+    "claimId": "claim.n2r3.refeeding-combined-carbohydrate",
+    "inheritedClaimId": "claim.n2r3.refeeding-combined-carbohydrate",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-05",
+    "basisClaimIds": [
+      "claim.gs028f.refeeding.insulin-phosphate-shift",
+      "claim.n2r2.iv-dextrose-exposure"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.gs028f.refeeding.insulin-phosphate-shift",
+        "lastCheckedOn": "2026-10-07",
+        "contentVersion": "development-batch.2026-10-07.variety.2"
+      },
+      {
+        "id": "claim.n2r2.iv-dextrose-exposure",
+        "lastCheckedOn": "2026-11-04",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v2"
+      }
+    ],
+    "sourceVerificationHold": true,
+    "method": "Exposure recognition is recorded, but the exact reduce-versus-advance management ranking is not. Verify it against permitted refeeding guidance, preserving disagreements and avoiding a universal phosphate trigger.",
+    "externalVerification": "No source retrieved; candidate source IDs are targeted cross-check leads, not verified support for the added details."
+  },
+  {
+    "claimId": "claim.n2r3.ulcer-rescue-sequence",
+    "inheritedClaimId": "claim.n2r3.ulcer-rescue-sequence",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-05",
+    "basisClaimIds": [
+      "claim.qq20261102c.ulcer-rebleeding-repeat-endoscopy"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.qq20261102c.ulcer-rebleeding-repeat-endoscopy",
+        "lastCheckedOn": "2026-11-02",
+        "contentVersion": "evidence.question-quality.2026-11-02.v7"
+      }
+    ],
+    "sourceVerificationHold": true,
+    "method": "Repeat endoscopy is recorded; the precise priority over embolization/operation and the chosen stabilization context need direct verification.",
+    "externalVerification": "No source retrieved; candidate source IDs are targeted cross-check leads, not verified support for the added details."
+  },
+  {
+    "claimId": "claim.n2r3.vte-changing-renal-procedure",
+    "inheritedClaimId": "claim.n2r3.vte-changing-renal-procedure",
+    "statementUnchanged": false,
+    "checkedLocallyOn": "2026-11-05",
+    "basisClaimIds": [
+      "claim.postoperative-dvt.three-month-anticoagulation",
+      "claim.n2r2.lmwh-treatment-purpose"
+    ],
+    "basisChecks": [
+      {
+        "id": "claim.postoperative-dvt.three-month-anticoagulation",
+        "lastCheckedOn": "2026-09-12",
+        "contentVersion": "development-batch.2026-09-12.1"
+      },
+      {
+        "id": "claim.n2r2.lmwh-treatment-purpose",
+        "lastCheckedOn": "2026-11-04",
+        "contentVersion": "clinical.question-new-n2.2026-11-04.v2"
+      }
+    ],
+    "sourceVerificationHold": true,
+    "method": "Initial-agent priority and alternatives in evolving renal injury are not established by the recorded duration/purpose atoms. Verify UFH, adjusted enoxaparin and apixaban comparisons and ordinary eligibility requirements.",
+    "externalVerification": "No source retrieved; candidate source IDs are targeted cross-check leads, not verified support for the added details."
+  },
+  {
+    "claimId": "claim.n2r3.d54862b5cf6a",
+    "inheritedClaimId": "claim.qq20261102b.opioid-spastic-pattern",
+    "statementUnchanged": true,
+    "inheritedLastCheckedOn": "2026-11-02",
+    "inheritedContentVersion": "evidence.question-quality.2026-11-02.v6",
+    "checkedLocallyOn": "2026-11-05",
+    "externalVerification": "No new retrieval; original source dates retained."
+  },
+  {
+    "claimId": "claim.n2r3.49a69d44d485",
+    "inheritedClaimId": "claim.qq20261102c.ulcer-rebleeding-repeat-endoscopy",
+    "statementUnchanged": true,
+    "inheritedLastCheckedOn": "2026-11-02",
+    "inheritedContentVersion": "evidence.question-quality.2026-11-02.v7",
+    "checkedLocallyOn": "2026-11-05",
+    "externalVerification": "No new retrieval; original source dates retained."
+  }
+] as const;
+export const QUESTION_NEW_N2_ROUND3_SOURCE_HOLDS = [
+  {
+    "claimId": "claim.n2r3.capnography-sampling-events",
+    "limitation": "Sampling route and temporal-resolution details are new. Verify combined-route acquisition and limitations of the proposed between-event/slow-trend alternatives.",
+    "slugs": [
+      "oxygenation-versus-ventilation-monitoring"
+    ]
+  },
+  {
+    "claimId": "claim.n2r3.contained-pelvic-source-control",
+    "limitation": "The recorded drainage atoms concern different compartments. They do NOT verify anastomotic-leak management; obtain direct permitted colorectal/source-control guidance and verify operative-versus-percutaneous ranking.",
+    "slugs": [
+      "prophylaxis-versus-ssi-source-control"
+    ]
+  },
+  {
+    "claimId": "claim.n2r3.current-perioperative-request",
+    "limitation": "Current capacity, modification of prior permission and documentation scope require direct professional ethics/clinical verification. No jurisdiction-specific legal conclusion is asserted.",
+    "slugs": [
+      "dnr-versus-active-source-control"
+    ]
+  },
+  {
+    "claimId": "claim.n2r3.delivered-supplemental-nutrition",
+    "limitation": "This is a new delivery-reconciliation application; directly verify the exact reduction strategy rather than infer a universal PN taper percentage.",
+    "slugs": [
+      "parenteral-response-versus-bowel-recovery"
+    ]
+  },
+  {
+    "claimId": "claim.n2r3.depolarizing-ratio-amplitude",
+    "limitation": "The source atoms do not establish this depolarizing-monitor pattern. Verify phase-I interpretation and all reversal alternatives, including the neostigmine boundary, directly.",
+    "slugs": [
+      "sugammadex-recovery-endpoints"
+    ]
+  },
+  {
+    "claimId": "claim.n2r3.extravasation-pulse-assessment",
+    "limitation": "The prior escalation atom itself carried a hold. Directly verify the pulse/compartment distinction and the priority among proposed assessments; no pressure or volume cutoff is inferred.",
+    "slugs": [
+      "contrast-local-extravasation-pattern"
+    ]
+  },
+  {
+    "claimId": "claim.n2r3.fissure-sphincter-preserving-flap",
+    "limitation": "The recorded atom restricts LIS selection but does not verify advancement-flap priority over repeat botulinum. Obtain direct colorectal guideline support for the exact options.",
+    "slugs": [
+      "fissure-sphincterotomy-continence-boundary"
+    ]
+  },
+  {
+    "claimId": "claim.n2r3.focal-motor-change",
+    "limitation": "The component-scoring atoms do not establish the exact urgent imaging priority. Verify the current trauma assessment pathway and alternative timing.",
+    "slugs": [
+      "serial-gcs-verbal-interference"
+    ]
+  },
+  {
+    "claimId": "claim.n2r3.free-flap-outflow-salvage",
+    "limitation": "The recorded free-transfer circulation atom does not verify the signs, exploration priority or leech/observation limits. Directly verify all three before accepting the new salvage item.",
+    "slugs": [
+      "free-transfer-vascular-reconnection"
+    ]
+  },
+  {
+    "claimId": "claim.n2r3.limb-salvage-active-bleeding",
+    "limitation": "Viability is recorded, but the active intracranial bleeding contraindication and exact operative-versus-catheter priority need direct vascular/drug guidance. No historical bleeding time cutoff is claimed.",
+    "slugs": [
+      "irreversible-ischemia-revascularization-boundary"
+    ]
+  },
+  {
+    "claimId": "claim.n2r3.naloxone-infusion-boundary",
+    "limitation": "The recorded atom establishes temporary reversal and recurrence, not infusion selection. Verify infusion suitability and the analgesia/antagonism tradeoff in permitted drug/anesthesia guidance.",
+    "slugs": [
+      "naloxone-response-recurrence"
+    ]
+  },
+  {
+    "claimId": "claim.n2r3.preimplantation-specificity-assay",
+    "limitation": "Assay specificity, pre/post-plasma-exchange sample limitations and future unacceptable-antigen allocation use require direct transplant laboratory guidance; the recorded mechanism atom is not sufficient.",
+    "slugs": [
+      "tacrolimus-antibody-pathway-boundary"
+    ]
+  },
+  {
+    "claimId": "claim.n2r3.prepared-recipient-bed",
+    "limitation": "The generic recipient dependence atom does not establish graft suitability over prepared tibial cortex or every structural exception. Directly verify this current-bed ranking with reconstructive guidance.",
+    "slugs": [
+      "coverage-recipient-bed-versus-flap-supply"
+    ]
+  },
+  {
+    "claimId": "claim.n2r3.protein-composition-volume",
+    "limitation": "Composition/volume prescription priority and named whey/glucose-polymer module examples extend the screening/route atoms. Verify the exact proposed substitution with dietetic guidance; fictional observed intake is not a universal target threshold.",
+    "slugs": [
+      "vitamin-c-indication-boundary"
+    ]
+  },
+  {
+    "claimId": "claim.n2r3.recurrent-gj-graded-dilation",
+    "limitation": "Verify the repeat-dilation priority and the actual suitability boundaries for stent and operation in the recorded bariatric guidance; no session count or diameter rule is inferred.",
+    "slugs": [
+      "marginal-ulcer-obstructive-escalation"
+    ]
+  },
+  {
+    "claimId": "claim.n2r3.refeeding-combined-carbohydrate",
+    "limitation": "Exposure recognition is recorded, but the exact reduce-versus-advance management ranking is not. Verify it against permitted refeeding guidance, preserving disagreements and avoiding a universal phosphate trigger.",
+    "slugs": [
+      "refeeding-baseline-phosphate-attribution"
+    ]
+  },
+  {
+    "claimId": "claim.n2r3.ulcer-rescue-sequence",
+    "limitation": "Repeat endoscopy is recorded; the precise priority over embolization/operation and the chosen stabilization context need direct verification.",
+    "slugs": [
+      "ulcer-posthemostasis-acid-suppression"
+    ]
+  },
+  {
+    "claimId": "claim.n2r3.vte-changing-renal-procedure",
+    "limitation": "Initial-agent priority and alternatives in evolving renal injury are not established by the recorded duration/purpose atoms. Verify UFH, adjusted enoxaparin and apixaban comparisons and ordinary eligibility requirements.",
+    "slugs": [
+      "vte-prophylaxis-to-treatment"
+    ]
+  }
+] as const;

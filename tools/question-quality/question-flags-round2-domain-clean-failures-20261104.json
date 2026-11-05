@@ -1,0 +1,200 @@
+{
+  "checkedOn": "2026-11-04",
+  "log": "tools/question-quality/question-flags-round2-domain-clean-20261104.log",
+  "tests": "31 failed | 4346 passed | 1 skipped (4378)",
+  "categories": {
+    "level5_input_binding": 1,
+    "legacy_loaded_state_hash": 25,
+    "timeout": 0,
+    "requires_review": 5
+  },
+  "failures": [
+    {
+      "title": "FAIL  tests/gs028-20260928-batch.test.ts > GS-028 September 28 pre-Endoscopy batch > binds the three authored terminal test choices to exact executable terminal-service orders",
+      "kind": "requires_review",
+      "error": "AssertionError: expected [ { …(7) }, { …(7) }, { …(7) }, …(3) ] to have a length of 3 but got 6 - Expected",
+      "location": "❯ tests/gs028-20260928-batch.test.ts:301:21"
+    },
+    {
+      "title": "FAIL  tests/gs028-20260928-batch.test.ts > GS-028 September 28 pre-Endoscopy batch > executes terminal service { caseId: 'case.gs028.varicose-veins.b-limited-mobility', nodeId: 'node.gs028.varicose-veins.b-limited-mobility.1', questionVariantId: 'question.varicose-veins.intervention-referral-after-axial-reflux.v4.r3', choiceId: 'correct_4', choiceLabel: 'Request a venous reflux duplex study', timingProfileId: 'timing.test.ultrasound', disposition: { kind: 'not_executed', reason: 'external_only' } } through its real onsite lifecycle while wrong answers create no order",
+      "kind": "requires_review",
+      "error": "AssertionError: expected undefined to match object { …(7) } - Expected:",
+      "location": "❯ tests/gs028-20260928-batch.test.ts:321:71"
+    },
+    {
+      "title": "FAIL  tests/gs028-20260928-batch.test.ts > GS-028 September 28 pre-Endoscopy batch > executes terminal service { caseId: 'case.gs028.varicose-veins.b-limited-mobility', nodeId: 'node.gs028.varicose-veins.b-limited-mobility.1', questionVariantId: 'question.varicose-veins.intervention-referral-after-axial-reflux.v4.r3', choiceId: 'choice.qf2.20261104.f03.d1', choiceLabel: 'Request a deep-venous compression duplex study', timingProfileId: 'timing.test.ultrasound', disposition: { kind: 'not_executed', reason: 'external_only' } } through its real onsite lifecycle while wrong answers create no order",
+      "kind": "requires_review",
+      "error": "AssertionError: expected undefined to match object { …(7) } - Expected:",
+      "location": "❯ tests/gs028-20260928-batch.test.ts:321:71"
+    },
+    {
+      "title": "FAIL  tests/gs028-20260928-batch.test.ts > GS-028 September 28 pre-Endoscopy batch > executes terminal service { caseId: 'case.gs028.varicose-veins.b-limited-mobility', nodeId: 'node.gs028.varicose-veins.b-limited-mobility.1', questionVariantId: 'question.varicose-veins.intervention-referral-after-axial-reflux.v4.r3', choiceId: 'choice.qf2.20261104.f03.d2', choiceLabel: 'Request a pelvic contrast CT venogram', timingProfileId: 'timing.test.ct', disposition: { kind: 'not_executed', reason: 'external_only' } } through its real onsite lifecycle while wrong answers create no order",
+      "kind": "requires_review",
+      "error": "AssertionError: expected undefined to match object { …(7) } - Expected:",
+      "location": "❯ tests/gs028-20260928-batch.test.ts:321:71"
+    },
+    {
+      "title": "FAIL  tests/gs028-statistics-ethics-batch.test.ts > GS-028 statistics and ethics runtime admission > scores ordinary case { id: 'case.gs028se.p2e.perioperative-dnr.v4.perianal-abscess', displayName: 'Ethics and communication', patientPresentationVariantId: 'presentation.gs028se.perioperative-dnr-error-disclosure.a-perioperative-dnr-4', releasePointId: 'release.l0.clinic_evaluation', patientDisplayName: '{patientName}', prototypeDemographics: { ageYears: 58, sexLabel: 'Male' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, approvedInstantiationProfiles: [ { id: 'profile.gs028se.perioperative-dnr-error-disclosure.a-perioperative-dnr-4.male.58', prototypeDemographics: { ageYears: 58, sexLabel: 'Male' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 58-year-old man, has a superficial perianal abscess requiring drainage and an existing DNR order. A staff member proposes omitting routine treatment and comfort measures because of the order. The patient asks whether abscess treatment and other care can continue. No individualized decision to refuse those treatments has been expressed; the team is preparing care.' }, { id: 'profile.gs028se.perioperative-dnr-error-disclosure.a-perioperative-dnr-4.female.58', prototypeDemographics: { ageYears: 58, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 58-year-old woman, has a superficial perianal abscess requiring drainage and an existing DNR order. A staff member proposes omitting routine treatment and comfort measures because of the order. The patient asks whether abscess treatment and other care can continue. No individualized decision to refuse those treatments has been expressed; the team is preparing care.' }, { id: 'profile.gs028se.perioperative-dnr-error-disclosure.a-perioperative-dnr-4.male.77', prototypeDemographics: { ageYears: 77, sexLabel: 'Male' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 77-year-old man, has a superficial perianal abscess requiring drainage and an existing DNR order. A staff member proposes omitting routine treatment and comfort measures because of the order. The patient asks whether abscess treatment and other care can continue. No individualized decision to refuse those treatments has been expressed; the team is preparing care.' }, { id: 'profile.gs028se.perioperative-dnr-error-disclosure.a-perioperative-dnr-4.female.77', prototypeDemographics: { ageYears: 77, sexLabel: 'Female' }, prototypeVitalSigns: { heartRateBpm: 76, systolicBloodPressureMmHg: 118, diastolicBloodPressureMmHg: 74, temperatureF: 98.4, oxygenSaturationPercent: 99 }, presentation: '{patientName}, a 77-year-old woman, has a superficial perianal abscess requiring drainage and an existing DNR order. A staff member proposes omitting routine treatment and comfort measures because of the order. The patient asks whether abscess treatment and other care can continue. No individualized decision to refuse those treatments has been expressed; the team is preparing care.' } ], chiefComplaint: 'Abscess care preferences', presentation: '{patientName}, a 58-year-old man, has a superficial perianal abscess requiring drainage and an existing DNR order. A staff member proposes omitting routine treatment and comfort measures because of the order. The patient asks whether abscess treatment and other care can continue. No individualized decision to refuse those treatments has been expressed; the team is preparing care.', tutorialEligible: false, routineEligible: true, earliestFacilityStage: +0, requiredClinicalSetting: 'clinic', requiredCapabilityIds: [], rewardTierId: 'reward.clinic_basic', sourceLabels: [ 'Statement on Ethical Guidelines for the Anesthesia Care of Patients with Do-Not-Resuscitate Orders', 'Orders Not to Attempt Resuscitation (DNAR)', 'The American Society of Colon and Rectal Surgeons Clinical Practice Guidelines for the Management of Anorectal Abscess, Fistula-in-Ano, and Rectovaginal Fistula' ], decisionNodes: [ { id: 'node.gs028se.p2e.perioperative-dnr.v4.perianal-abscess.1', questionVariantId: 'question.statistics-ethics.perioperative-dnr.v4', primaryConceptId: 'concept.statistics-ethics.perioperative-dnr', stem: 'How should the team interpret {patientName}\\'s DNR order when a staff member proposes omitting abscess treatment and comfort care?', answerChoices: [ { id: 'key-4', label: 'Resuscitation after cardiopulmonary arrest', isCorrect: true, rationale: 'DNR alone concerns resuscitative efforts after cardiopulmonary arrest. Other care remains a separate decision guided by the patient\\'s goals.', serviceRequest: null }, { id: 'wrong-4-1', label: 'Resuscitation and anesthetic airway support', isCorrect: false, rationale: 'The order alone does not establish a blanket ban on anesthetic airway support. Perioperative interventions require their own individualized discussion.', serviceRequest: null }, { id: 'wrong-4-2', label: 'Resuscitation and treatment of a new infection', isCorrect: false, rationale: 'A DNR order alone does not decline appropriate treatment of infection. Adding that restriction silently expands its scope beyond resuscitation.', serviceRequest: null }, { id: 'wrong-4-3', label: 'Resuscitation and diagnostic testing', isCorrect: false, rationale: 'Diagnostic testing is not automatically prohibited by DNR status. It remains a separate care decision consistent with the patient\\'s goals.', serviceRequest: null } ], shuffleAnswers: true, explanation: 'DNR alone limits resuscitation after cardiopulmonary arrest. It does not by itself decline symptom treatment, diagnostic testing, or other appropriate care consistent with the patient\\'s goals.', teachingPoint: 'A DNR order concerns resuscitative efforts after cardiopulmonary arrest. By itself it does not prohibit other appropriate evaluation or treatment consistent with the patient\\'s goals. Remember to distinguish the scope of the order from separate decisions about other care. Any further limits need their own discussion rather than being silently inferred from those letters.', sourceLabels: [ 'Statement on Ethical Guidelines for the Anesthesia Care of Patients with Do-Not-Resuscitate Orders', 'Orders Not to Attempt Resuscitation (DNAR)', 'The American Society of Colon and Rectal Surgeons Clinical Practice Guidelines for the Management of Anorectal Abscess, Fistula-in-Ano, and Rectovaginal Fistula' ], resultGateAfter: null, terminalDispositions: [] }, { id: 'node.gs028se.p2e.perioperative-dnr.v4.perianal-abscess.2', questionVariantId: 'question.perianal-abscess.prompt-drainage.v1.p2e.perioperative-dnr.v4', primaryConceptId: 'concept.perianal-abscess.prompt-drainage', stem: 'Which treatment should the team arrange for {patientName}\\'s clinically evident, uncomplicated superficial perianal abscess when the patient wants treatment and the DNR order remains in place?', answerChoices: [ { id: 'drain_1', label: 'Arrange incision and drainage', isCorrect: true, serviceRequest: null, rationale: 'Arrange prompt incision and drainage for this clinically evident superficial perianal abscess rather than delaying source control.' }, { id: 'antibiotic_1', label: 'Arrange an oral antibiotic course', isCorrect: false, serviceRequest: null, rationale: 'Antibiotics alone do not provide source control for a drainable abscess.' }, { id: 'compress_1', label: 'Arrange warm-compress treatment', isCorrect: false, serviceRequest: null, rationale: 'Supportive measures alone do not replace drainage of this evident collection.' }, { id: 'aspirate_1', label: 'Arrange aspiration through a needle', isCorrect: false, serviceRequest: null, rationale: 'Needle aspiration alone is not the standard source-control procedure for a routine perianal abscess.' } ], shuffleAnswers: true, explanation: 'Arrange prompt incision and drainage for the evident superficial perianal collection. Antibiotics, compresses or needle aspiration alone do not replace the authored drainage plan.', sourceLabels: [ 'The American Society of Colon and Rectal Surgeons Clinical Practice Guidelines for the Management of Anorectal Abscess, Fistula-in-Ano, and Rectovaginal Fistula', 'Statement on Ethical Guidelines for the Anesthesia Care of Patients with Do-Not-Resuscitate Orders', 'Orders Not to Attempt Resuscitation (DNAR)' ], resultGateAfter: null, terminalDispositions: [ { answerChoiceId: 'antibiotic_1', kind: 'no_terminal_outcome', consequenceNarrative: 'Review the teaching point and choice rationales.', clinicalRationale: 'Arrange prompt incision and drainage for the evident superficial perianal collection. Antibiotics, compresses or needle aspiration alone do not replace the authored drainage plan.', sourceLabels: [ 'The American Society of Colon and Rectal Surgeons Clinical Practice Guidelines for the Management of Anorectal Abscess, Fistula-in-Ano, and Rectovaginal Fistula', 'Statement on Ethical Guidelines for the Anesthesia Care of Patients with Do-Not-Resuscitate Orders', 'Orders Not to Attempt Resuscitation (DNAR)' ] }, { answerChoiceId: 'compress_1', kind: 'no_terminal_outcome', consequenceNarrative: 'Review the teaching point and choice rationales.', clinicalRationale: 'Arrange prompt incision and drainage for the evident superficial perianal collection. Antibiotics, compresses or needle aspiration alone do not replace the authored drainage plan.', sourceLabels: [ 'The American Society of Colon and Rectal Surgeons Clinical Practice Guidelines for the Management of Anorectal Abscess, Fistula-in-Ano, and Rectovaginal Fistula', 'Statement on Ethical Guidelines for the Anesthesia Care of Patients with Do-Not-Resuscitate Orders', 'Orders Not to Attempt Resuscitation (DNAR)' ] }, { answerChoiceId: 'aspirate_1', kind: 'no_terminal_outcome', consequenceNarrative: 'Review the teaching point and choice rationales.', clinicalRationale: 'Arrange prompt incision and drainage for the evident superficial perianal collection. Antibiotics, compresses or needle aspiration alone do not replace the authored drainage plan.', sourceLabels: [ 'The American Society of Colon and Rectal Surgeons Clinical Practice Guidelines for the Management of Anorectal Abscess, Fistula-in-Ano, and Rectovaginal Fistula', 'Statement on Ethical Guidelines for the Anesthesia Care of Patients with Do-Not-Resuscitate Orders', 'Orders Not to Attempt Resuscitation (DNAR)' ] } ], currentUpdate: 'The team clarifies that {patientName}\\'s DNR order alone does not decline abscess treatment or comfort care. The patient wants the abscess addressed. Examination shows a tender, fluctuant superficial perianal collection with stable vital signs, without Crohn disease, recurrence, immune compromise or deep pelvic symptoms. The DNR order remains in place while the team discusses the separate treatment plan.', teachingPoint: 'Arrange prompt incision and drainage for this clinically evident superficial perianal abscess rather than delaying source control.' } ], learningSummary: 'Review the teaching points and choice rationales for this encounter.' } correctly and incorrectly exactly once",
+      "kind": "requires_review",
+      "error": "AssertionError: expected [] to have a length of 1 but got +0 - Expected",
+      "location": "❯ runOrdinaryCase tests/gs028-statistics-ethics-batch.test.ts:143:69"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > binds the actual run to its current game, balance, clinical and driver inputs and reconciles cash",
+      "kind": "level5_input_binding",
+      "error": "AssertionError: packages/clinical-content/src/answer-choice-timing.ts: expected  '6019fffc14ddafda42e6790e4712dd5b21b65…' to be '7db1b1253c7d3064adb0602360925c0739bb6…' // Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:47:71"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 5",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected 'b71479e210a0953290ad9f025afd3447fbf3e…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 6",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected 'b71479e210a0953290ad9f025afd3447fbf3e…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 7",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected 'b71479e210a0953290ad9f025afd3447fbf3e…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 8",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected 'b71479e210a0953290ad9f025afd3447fbf3e…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 9",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected 'b71479e210a0953290ad9f025afd3447fbf3e…' to be '92728e650dc9a0f02b005470db49ab566769a…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 5",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected 'a9fa4c4159fb683942aa1aee1e1a0d3b02865…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 6",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected 'a9fa4c4159fb683942aa1aee1e1a0d3b02865…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 7",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected 'a9fa4c4159fb683942aa1aee1e1a0d3b02865…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 8",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected 'a9fa4c4159fb683942aa1aee1e1a0d3b02865…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 9",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected 'a9fa4c4159fb683942aa1aee1e1a0d3b02865…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 5",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected 'cdb72b50b868e605355d0742dabf03238c1b4…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 6",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected 'cdb72b50b868e605355d0742dabf03238c1b4…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 7",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected 'cdb72b50b868e605355d0742dabf03238c1b4…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 8",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected 'cdb72b50b868e605355d0742dabf03238c1b4…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 9",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected 'cdb72b50b868e605355d0742dabf03238c1b4…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 5",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected 'b0e7b11f2c02f5fc667bbd4e8d9661a79871b…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 6",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected 'b0e7b11f2c02f5fc667bbd4e8d9661a79871b…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 7",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected 'b0e7b11f2c02f5fc667bbd4e8d9661a79871b…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 8",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected 'b0e7b11f2c02f5fc667bbd4e8d9661a79871b…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 9",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected 'b0e7b11f2c02f5fc667bbd4e8d9661a79871b…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 5",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected '4b15af99e2c03636b5e178f9958e6ca14709a…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 6",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected '4b15af99e2c03636b5e178f9958e6ca14709a…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 7",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected '4b15af99e2c03636b5e178f9958e6ca14709a…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 8",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected '4b15af99e2c03636b5e178f9958e6ca14709a…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    },
+    {
+      "title": "FAIL  tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 9",
+      "kind": "legacy_loaded_state_hash",
+      "error": "AssertionError: expected '4b15af99e2c03636b5e178f9958e6ca14709a…' to be '3d3603171902d39a439090f0026ae33ac7654…' //  Object.is equality",
+      "location": "❯ tests/level-five-integration.test.ts:183:78"
+    }
+  ],
+  "limitation": "The input guard and legacy loaded-state hashes are distinct. The separate load control covers initial synthetic states only; continuation assertions after a failing initial hash do not run. No Level 4/5 test or evidence was rewritten."
+}

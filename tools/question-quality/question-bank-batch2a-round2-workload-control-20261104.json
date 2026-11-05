@@ -1,0 +1,44 @@
+{
+  "checkedAt": "2026-11-05T00:09:00.366Z",
+  "scope": "Same current fixture and domain runtime in disposable contexts. No benchmark timing or test pass is inferred. Context restored; no cloud code, assertions, deadlines, storage or saves edited.",
+  "source": "tests/fixtures/diagnostic-workload.ts",
+  "sourceSha256": "16b6cba0e8543581e92e2ac678dc1afb8983329b5290a6daffb912049e815290",
+  "historyCounts": {
+    "before": 501,
+    "after": 507
+  },
+  "newHistoryIds": [
+    "concept.achalasia.secondary-junction-lesion-assessment.v1",
+    "concept.esophageal-physiology.reserve-before-junction-intervention.v1",
+    "concept.groin-ultrasound.symptom-provocation-protocol.v1",
+    "concept.groin-hernia.femoral-defect-repair-priority.v1",
+    "concept.quality-improvement.source-by-method-next-pilot.v1",
+    "concept.adrenal-incidentaloma.cortisol-etiologic-classification.v1"
+  ],
+  "normalizedStateByteExact": true,
+  "remainingDifferencePaths": [],
+  "activeCases": [
+    {
+      "caseId": "case.esophageal-dysphagia.bread-sticking",
+      "variants": [
+        "question.esophageal-dysphagia.upper-endoscopy.v1",
+        "question.barrett-esophagus.intestinal-metaplasia.v1"
+      ]
+    },
+    {
+      "caseId": "case.esophageal-dysphagia.bread-sticking",
+      "variants": [
+        "question.esophageal-dysphagia.upper-endoscopy.v1",
+        "question.barrett-esophagus.intestinal-metaplasia.v1"
+      ]
+    },
+    {
+      "caseId": "case.esophageal-dysphagia.bread-sticking",
+      "variants": [
+        "question.esophageal-dysphagia.upper-endoscopy.v1",
+        "question.barrett-esophagus.intestinal-metaplasia.v1"
+      ]
+    }
+  ],
+  "limitation": "Only the six additional empty histories differ if normalizedStateByteExact is true. That narrows the content delta but does not prove a cause for a wall-clock/GC performance-budget failure. The cloud/performance owner must diagnose the repeated 16-ms violation; no threshold or assertion is relaxed."
+}

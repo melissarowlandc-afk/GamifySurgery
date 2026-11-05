@@ -1,27 +1,33 @@
 /// <reference types="node" />
+import { createClinicalAuthorStage } from "../../../tests/fixtures/clinical-author-stage";
+import { QUESTION_NEW_N2_ROUND3_PRE_RELEASE } from "@gamify-surgery/clinical-content";
 import { writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { DIAGNOSTIC_TIMING_TABLE } from "@gamify-surgery/balance-config";
 import {
-  GS028_20261007_VARIETY2_CASES as cases,
+  GS028_20261007_VARIETY2_CASES as authoredCases,
+  QUESTION_NEW_N2_ROUND3_PRE_RELEASE as SYNTHETIC_CLINICAL_RELEASE,
+  ANSWER_CHOICE_TIMING_REGISTRY,
   GS028_20261007_VARIETY2_TESTED_CONCEPTS as concepts,
-  GS028_20261007_VARIETY2_TIMING_ENTRIES as timings,
   type SyntheticClinicalCase,
 } from "@gamify-surgery/clinical-content";
 import { afterAll, describe, expect, it } from "vitest";
-import {
-  PROTOTYPE_DOMAIN_CONTEXT, createInitialGameState, createPatientDisplayName,
-  deserializeGameState, deterministicInteger, RANDOM_STREAMS,
-  gameReducer, getAnswerChoiceServicePreview, getCurrentCapabilities,
+import { createPatientDisplayName, deterministicInteger, RANDOM_STREAMS, getAnswerChoiceServicePreview, getCurrentCapabilities,
   getCurrentQuestion, getDiagnosticOrderPlans, getEmployeeTrainingAvailability, getRoomDefinition,
   getRoomNavigationAnchor, selectRoutineClinicalCase, serializeGameState,
   type ConceptReviewEvidence, type DiagnosticOrderPhase, type GameState, type ServiceOperationState,
 } from "../src";
 import { EXACT_TEST_CHOICE_ORDER_RECORDS } from "../src/test-choice-orders";
 
+// Retain the author-stage pool, frozen definitions and existing golden budgets.
+const { context: PROTOTYPE_DOMAIN_CONTEXT, createInitialGameState, deserializeGameState, gameReducer } = createClinicalAuthorStage(QUESTION_NEW_N2_ROUND3_PRE_RELEASE);
+
+const cases = authoredCases.map(original => SYNTHETIC_CLINICAL_RELEASE.cases.find(c => c.id === original.id)!);
+const timings = ANSWER_CHOICE_TIMING_REGISTRY.filter(t => cases.some(c => c.id === t.caseId && c.decisionNodes.some(n => n.id === t.nodeId && n.questionVariantId === t.questionVariantId)));
+const wrongPaths = (c: SyntheticClinicalCase) => Array.from({length: Math.max(...c.decisionNodes.map(n => n.answerChoices.filter(a => !a.isCorrect).length))}, (_, i) => i as 0 | 1 | 2);
 const REAL_MS = 1_800_000_000_000;
 const paired = cases.filter((item) => item.decisionNodes.length === 2);
-const exact = EXACT_TEST_CHOICE_ORDER_RECORDS.filter((item) => item.caseId.startsWith("case.gs028f."));
+const exact = EXACT_TEST_CHOICE_ORDER_RECORDS.filter(record => cases.some(c=>c.id===record.caseId&&c.decisionNodes.some(n=>n.id===record.nodeId&&n.questionVariantId===record.questionVariantId)));
 const coverage = new Map<string, Set<string>>();
 const frozenProfiles = new Set<string>();
 const routingEvidence: unknown[] = [];
@@ -370,11 +376,11 @@ const pools = ([0, 1, 2] as const).map((stage) => {
 });
 
 describe("GS-028 second October 7 actual gameplay", () => {
-  it("binds every one of twenty-six testing choices with exactly five executable correct orders", () => {
-    expect(exact).toHaveLength(26);
+  it("binds every one of twenty-nine testing choices with exactly five executable correct orders", () => {
+    expect(exact).toHaveLength(29);
     expect(exact.filter((item) => item.disposition.kind === "terminal_service")).toHaveLength(3);
     expect(exact.filter((item) => item.disposition.kind === "result_gate_route_override")).toHaveLength(2);
-    expect(exact.filter((item) => item.disposition.kind === "not_executed")).toHaveLength(21);
+    expect(exact.filter((item) => item.disposition.kind === "not_executed")).toHaveLength(24);
     for (const record of exact) {
       const clinicalCase = cases.find((item) => item.id === record.caseId)!;
       const node = clinicalCase.decisionNodes.find((item) => item.id === record.nodeId)!;
@@ -394,7 +400,7 @@ describe("GS-028 second October 7 actual gameplay", () => {
   });
 
   it.each(cases.map((item, index) => [index, item] as const))("completes every correct node, saves and departs in case %s", (index, item) => complete(item, "correct", index));
-  it.each(cases.flatMap((item, index) => ([0, 1, 2] as const).map((path) => [index, path, item] as const)))("completes wrong choice %s/%s exactly once with supported corrected-forward work", (index, path, item) => complete(item, path, index));
+  it.each(cases.flatMap((item, index) => wrongPaths(item).map((path) => [index, path, item] as const)))("completes wrong choice %s/%s exactly once with supported corrected-forward work", (index, path, item) => complete(item, path, index));
 
   it.each(paired.flatMap((item) => (["offsite", "local_acquisition", "local_reading", "local_both", "no_technician", "no_reader", "busy_acquisition", "busy_reading", "away_acquisition", "away_reading"] as const)
     .map((mode) => [item.id, mode, item] as const)))("executes the actual CT pair %s with %s capacity", (_caseId, mode, clinicalCase) => {
@@ -600,17 +606,23 @@ describe("GS-028 second October 7 actual gameplay", () => {
     for (const key of ids) expect(state.learningHistories[key]).toMatchObject({ conceptId: key, card: { reps: 0, lastReviewAtMs: null }, reviews: [] });
   });
 
-  it("measures the actual early ordinary pool delta of seventy-eight cases and twenty concepts", () => {
-    // Round-four clinical-objective versions add three/four active constructs
-    // to the pre-existing stage-1/2 pool; this unchanged batch still adds 78/20.
-    expect(pools.map((item) => item.before)).toEqual([{ cases: 558, concepts: 155 }, { cases: 796, concepts: 266 }, { cases: 832, concepts: 283 }]);
-    expect(pools.map((item) => item.after)).toEqual([{ cases: 636, concepts: 175 }, { cases: 874, concepts: 286 }, { cases: 910, concepts: 303 }]);
+  it("measures the actual early ordinary pool delta of seventy-eight cases and twenty-one active concepts", () => {
+    // Historical case boundaries are unchanged; count current scored constructs
+    // independently from the retained original 20-item authoring catalog.
+    // Application constructs add twelve/thirteen active concepts overall;
+    // this cohort now contains its twenty originals plus one new neck construct.
+    // Batch 2a's outside-cohort versions add one eligible active construct on
+    // both sides; this cohort's exact 78-case / 21-concept delta stays intact.
+    // Flag round three versions F06's archived-test objective while its old
+    // mechanism remains in siblings: one more active concept, no new case.
+    expect(pools.map((item) => item.before)).toEqual([{"cases":558,"concepts":173},{"cases":796,"concepts":292},{"cases":832,"concepts":309}]);
+    expect(pools.map((item) => item.after)).toEqual([{"cases":636,"concepts":194},{"cases":874,"concepts":313},{"cases":910,"concepts":330}]);
   });
 
-  it("covers all eighty actual nodes and all three distractors plus the key in each", () => {
+  it("covers all eighty actual nodes and every current authored choice", () => {
     expect(coverage.size).toBe(80);
     for (const node of cases.flatMap((item) => item.decisionNodes)) expect([...(coverage.get(node.id) ?? [])].sort()).toEqual(node.answerChoices.map((choice) => choice.id).sort());
-    expect([...coverage.values()].reduce((total, ids) => total + ids.size, 0)).toBe(320);
+    expect([...coverage.values()].reduce((total, ids) => total + ids.size, 0)).toBe(319);
   });
 });
 
@@ -618,7 +630,7 @@ afterAll(() => {
   const directory = process.env.GS028_VARIETY2_EVIDENCE_DIR;
   if (!directory) return;
   writeFileSync(resolve(directory, "gameplay-evidence.json"), `${JSON.stringify({
-    actualReducer: true, casePathCount: cases.length * 4, nodeCount: coverage.size,
+    actualReducer: true, casePathCount: cases.reduce((total, c) => total + 1 + wrongPaths(c).length, 0), nodeCount: coverage.size,
     distinctChoiceSubmissions: [...coverage.values()].reduce((total, ids) => total + ids.size, 0),
     caseProfileCount: cases.reduce((total, item) => total + (item.approvedInstantiationProfiles?.length ?? 0), 0),
     instantiatedProfileCount: frozenProfiles.size, exactTestChoiceRecords: exact,

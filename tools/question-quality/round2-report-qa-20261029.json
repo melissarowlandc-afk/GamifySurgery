@@ -1,0 +1,48 @@
+{
+  "checkedOn": "2026-10-29",
+  "status": "passed",
+  "variants": 1418,
+  "advisorySignatures": 1894,
+  "sourceSpans": 17604,
+  "postAnswerSpans": 98,
+  "roundTwoPackets": 6,
+  "ownerApprovedDraftsUnchanged": 8,
+  "newVariantIdentities": 9,
+  "unmodifiedNonPilotCases": 1096,
+  "proposedUnmodifiedBatchVariants": 40,
+  "batchLevels": {
+    "1": 20,
+    "2": 20
+  },
+  "checkedUnchangedSnapshotFiles": [
+    "packages/clinical-content/src/answer-choice-timing.ts",
+    "packages/clinical-content/src/answer-choice-timing.test.ts",
+    "packages/game-domain/tests/gs028-20261007-batch.test.ts",
+    "packages/game-domain/tests/gs028-20261007-level3-batch.test.ts",
+    "apps/player/src/session/briefEarlyLevelsPresentation.test.ts",
+    "apps/player/src/session/pediatricChartsViewModels.test.ts",
+    "tools/question-quality/bank.mjs"
+  ],
+  "recordedInputs": 378,
+  "changedRecordedInputs": 4,
+  "otherRecordedInputsUnchanged": 374,
+  "addedRuntimeInputs": 6,
+  "protectedHashesUnchanged": 5,
+  "localLinks": 30,
+  "latestCueCounts": {
+    "A02": [
+      "heterogeneous-option-category",
+      "option-length-disparity"
+    ],
+    "A06": [
+      "near-duplicate-options"
+    ],
+    "A11": [
+      "option-length-disparity"
+    ],
+    "A25": [],
+    "A30": [],
+    "A40": []
+  },
+  "scope": "Authored synthetic content and serialized report integrity only; no player data or answer analytics."
+}

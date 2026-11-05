@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE} from "@gamify-surgery/clinical-content";
+import {QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE, QUESTION_BANK_PRE_BATCH2B_RELEASE, QUESTION_NEW_N2_ROUND2_PRE_RELEASE} from "@gamify-surgery/clinical-content";
 import {
   PROTOTYPE_DOMAIN_CONTEXT,
   advanceServiceOperations,
@@ -287,10 +287,16 @@ describe("mapped in-clinic procedure operations", () => {
     ["case.breast-cyst.under-30-painful-simple", "concept.breast-cyst.symptomatic-simple-aspiration", "income.procedure.breast_cyst_aspiration.v2", 150, 15],
     ["case.bread-butter.cutaneous-abscess.forearm-redness", "concept.cutaneous-abscess.incision-drainage", "income.procedure.cutaneous_abscess_drainage.v2", 100, 15],
     ["case.bread-butter.superficial-incisional-ssi.purulent-staple-line", "concept.superficial-incisional-ssi.open-drain", "income.procedure.superficial_incisional_infection_drainage.v2", 200, 15],
-    ["case.bread-butter.perianal-abscess.tender-perianal-lump", "concept.perianal-abscess.prompt-drainage", "income.procedure.perianal_abscess_drainage", 200, 15],
+    ["case.bread-butter.perianal-abscess.tender-perianal-lump", "concept.perianal-abscess.source-control-and-antibiotic-selection.v1", "income.procedure.perianal_abscess_drainage", 200, 15],
     ["case.internal-hemorrhoids.commute", "concept.internal-hemorrhoids.office-banding-selection", "income.procedure.office_internal_hemorrhoid_banding", 200, 30],
   ])("performs %s only after the exact final correct action", (caseId, conceptId, incomeLineId, fee, workMinutes) => {
-    let state = prepareQuestion(minorProcedureState(), caseId, conceptId);
+    // Exercise the new perianal version with its complete current timing group;
+    // other rows retain the markerless procedure-contract setup.
+    let state = prepareQuestion(minorProcedureState(), caseId, conceptId,
+      conceptId !== "concept.perianal-abscess.source-control-and-antibiotic-selection.v1",
+      conceptId === "concept.perianal-abscess.source-control-and-antibiotic-selection.v1"
+        ? { ...PROTOTYPE_DOMAIN_CONTEXT, clinicalRelease: QUESTION_NEW_N2_ROUND2_PRE_RELEASE }
+        : PROTOTYPE_DOMAIN_CONTEXT);
     const cashBefore = state.cash;
     state = submit(state, true);
     expect(state.serviceIncomeReceipts).toEqual([]);
@@ -534,6 +540,8 @@ describe("mapped in-clinic procedure operations", () => {
       minorProcedureState(),
       "case.bread-butter.perianal-abscess.tender-perianal-lump",
       "concept.perianal-abscess.prompt-drainage",
+      true,
+      { ...PROTOTYPE_DOMAIN_CONTEXT, clinicalRelease: QUESTION_BANK_PRE_BATCH2B_RELEASE },
     );
     expect(startEncounterProcedureOperation(
       state,

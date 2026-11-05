@@ -1,3 +1,4 @@
+import { QUESTION_NEW_N2_ROUND3_PRE_RELEASE } from "@gamify-surgery/clinical-content";
 import type { SyntheticClinicalCase } from "@gamify-surgery/clinical-content";
 import {
   QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE,
@@ -15,10 +16,17 @@ import {
 } from "../src";
 
 const REVIEWED_AT_MS = 1_800_000_000_000;
-const ordinaryCases = GS028_STATS_ETHICS_20260929_CASES.filter(
+// Admission uses today's stable-case binding, including explicitly versioned
+// scored objectives. Keep the original cohort/manifest assertions below.
+const runtimeCases = GS028_STATS_ETHICS_20260929_CASES.map((authored) => {
+  const current = PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.find((item) => item.id === authored.id);
+  if (!current) throw new Error(`Missing current statistics/ethics case ${authored.id}.`);
+  return current;
+});
+const ordinaryCases = runtimeCases.filter(
   (clinicalCase) => clinicalCase.participant?.kind !== "employee_discussion",
 );
-const employeeCases = GS028_STATS_ETHICS_20260929_CASES.filter(
+const employeeCases = runtimeCases.filter(
   (clinicalCase) => clinicalCase.participant?.kind === "employee_discussion",
 );
 
@@ -201,8 +209,9 @@ describe("GS-028 statistics and ethics runtime admission", () => {
     expect(ordinaryCases.filter(item => item.earliestFacilityStage <= 1)).toHaveLength(48);
     expect(ordinaryCases.every(item => item.requiredCapabilityIds.length === 0)).toBe(true);
     expect(QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE.concepts.filter(c => !c.id.startsWith("concept.gs028g.") && !c.id.startsWith("concept.pediatric-clinic.") && !c.id.startsWith("concept.variety3."))).toHaveLength(331);
-    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter(c => !c.id.startsWith("case.gs028g.") && !c.id.startsWith("case.pediatric-clinic.") && !c.id.startsWith("case.variety3."))).toHaveLength(1008);
-    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter(c => !c.id.startsWith("case.gs028g.") && !c.id.startsWith("case.pediatric-clinic.") && !c.id.startsWith("case.variety3.")).flatMap((item) => item.decisionNodes)).toHaveLength(1303);
+    // N1 adds forty and N2 adds thirty-nine single-node cases; flags replace in place.
+    expect(QUESTION_NEW_N2_ROUND3_PRE_RELEASE.cases.filter(c => !c.id.startsWith("case.gs028g.") && !c.id.startsWith("case.pediatric-clinic.") && !c.id.startsWith("case.variety3."))).toHaveLength(1048 + 39);
+    expect(QUESTION_NEW_N2_ROUND3_PRE_RELEASE.cases.filter(c => !c.id.startsWith("case.gs028g.") && !c.id.startsWith("case.pediatric-clinic.") && !c.id.startsWith("case.variety3.")).flatMap((item) => item.decisionNodes)).toHaveLength(1343 + 39);
     for (const concept of GS028_STATS_ETHICS_20260929_TESTED_CONCEPTS) {
       expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts.filter((item) => item.id === concept.id)).toHaveLength(1);
     }

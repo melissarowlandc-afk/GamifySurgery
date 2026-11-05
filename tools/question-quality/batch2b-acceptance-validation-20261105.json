@@ -1,0 +1,169 @@
+{
+  "checkedAt": "2026-11-05T08:37:48.095Z",
+  "acceptedIds": [
+    "B2B01",
+    "B2B02",
+    "B2B06",
+    "B2B08",
+    "B2B09",
+    "B2B10",
+    "B2B17",
+    "B2B21",
+    "B2B23",
+    "B2B24",
+    "B2B25",
+    "B2B30",
+    "B2B33",
+    "B2B39",
+    "B2B40",
+    "B2B42"
+  ],
+  "sourceHeldPassIds": [
+    "B2B32",
+    "F13"
+  ],
+  "parkedReviseIds": [
+    "B2B03",
+    "B2B04",
+    "B2B07",
+    "B2B11",
+    "B2B12",
+    "B2B13",
+    "B2B14",
+    "B2B15",
+    "B2B16",
+    "B2B18",
+    "B2B19",
+    "B2B20",
+    "B2B22",
+    "B2B26",
+    "B2B29",
+    "B2B31",
+    "B2B34",
+    "B2B35",
+    "B2B36",
+    "B2B37",
+    "B2B38",
+    "B2B41"
+  ],
+  "finalFocused": {
+    "name": "final focused manifest/2b/narrative",
+    "command": "npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads --maxWorkers=2 src/question-ship-manifest.test.ts src/question-bank-batch2b-20261104.test.ts src/question-bank-batch2b-round2-20261104.test.ts src/question-bank-batch2b-acceptance-20261105.test.ts src/playable-patient-narrative.test.ts",
+    "log": "tools/question-quality/batch2b-acceptance-focused-final-20261105.log",
+    "nativeExitCode": 0,
+    "tests": {
+      "passed": 91,
+      "failed": 0,
+      "skipped": 0,
+      "total": 91
+    },
+    "files": {
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "total": 5
+    },
+    "startAtLocal": "03:30:41",
+    "durationSeconds": 10.96,
+    "failures": []
+  },
+  "focusedDomainBindings": {
+    "name": "focused exact 2b domain bindings",
+    "command": "npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=2 tests/question-bank-batch2b-bindings.test.ts tests/question-bank-batch2b-round2-bindings.test.ts",
+    "log": "tools/question-quality/batch2b-acceptance-bindings-20261105.log",
+    "nativeExitCode": 0,
+    "tests": {
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "total": 6
+    },
+    "files": {
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "total": 2
+    },
+    "startAtLocal": "03:31:01",
+    "durationSeconds": 5.25,
+    "failures": []
+  },
+  "fullClinical": {
+    "name": "final full clinical",
+    "command": "npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads --maxWorkers=2",
+    "log": "tools/question-quality/batch2b-acceptance-clinical-full-final-20261105.log",
+    "nativeExitCode": 1,
+    "tests": {
+      "passed": 1170,
+      "failed": 1,
+      "skipped": 0,
+      "total": 1171
+    },
+    "files": {
+      "passed": 113,
+      "failed": 1,
+      "skipped": 0,
+      "total": 114
+    },
+    "startAtLocal": "03:31:14",
+    "durationSeconds": 165.55,
+    "failures": [
+      "src/answer-choice-timing.test.ts > admitted answer-choice timing classification > classifies every admitted "
+    ]
+  },
+  "initialFullClinical": {
+    "name": "initial full clinical",
+    "command": "npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads --maxWorkers=2",
+    "log": "tools/question-quality/batch2b-acceptance-clinical-full-20261105.log",
+    "nativeExitCode": 1,
+    "tests": {
+      "passed": 1169,
+      "failed": 2,
+      "skipped": 0,
+      "total": 1171
+    },
+    "files": {
+      "passed": 112,
+      "failed": 2,
+      "skipped": 0,
+      "total": 114
+    },
+    "startAtLocal": "03:26:53",
+    "durationSeconds": 116.76,
+    "failures": [
+      "src/answer-choice-timing.test.ts > admitted answer-choice timing classification > classifies every admitted ",
+      "src/playable-patient-narrative.test.ts > playable one-patient narratives > anchors every admitted case to one "
+    ]
+  },
+  "typecheck": {
+    "command": "npm.cmd run typecheck --workspace @gamify-surgery/clinical-content",
+    "log": "tools/question-quality/batch2b-acceptance-typecheck-final-20261105.log",
+    "nativeExitCode": 0
+  },
+  "digestReconciliation": {
+    "scalarKeys": 3,
+    "captureFiles": 2,
+    "proof": "Focused original/round-two guards pass; new acceptance test reverses only the three replacements and recovers both original capture hashes."
+  },
+  "composedPreview": {
+    "affectedCases": 16,
+    "nodes": 17,
+    "mixedCases": [
+      {
+        "caseId": "case.gs028b.post-neoadjuvant-breast.paired-marker-residual",
+        "acceptedNodeId": "node.gs028b.post-neoadjuvant-breast.paired-marker-residual.1",
+        "fallbackNodeIds": [
+          "node.gs028b.post-neoadjuvant-breast.paired-marker-residual.2"
+        ],
+        "clinicalConsistency": "The header and mapping gate remain noninflammatory, localized disease in the same conservation field; the retained second node still describes feasible margins, radiotherapy eligibility and the same conservation preference.",
+        "sequenceLimitation": "The accepted first update already establishes breast conservation for the bracketing task. The preserved old follow-up then repeats the local-treatment decision, so it is coherent but rehearsed/easy. This integration does not claim that old node passed independent review; queue a separately versioned follow-up improvement, without altering the current live fallback in this milestone.",
+        "decision": "Accept B2B24 as directed; preserve the old second node and exact gate bytes. No unaccepted B2b neighbor is imported."
+      }
+    ],
+    "manifestDiagnostics": [],
+    "controls": "tools/question-quality/batch2b-acceptance-controls-20261105.json"
+  },
+  "remainingFailure": "The shared timing test still expects 2130 archived rows after 40 question.n3.* rows were appended by the concurrent content lane (2170 actual). No live 2b timing tuple is missing or mismatched. Leave N3 timing/count integration to its owner; no count assertion changed here.",
+  "runtimeManifestHash": "f5cfb705808dc9c83e9ae3b708d3bac17eb19371bff134daca7bbd36d8dd1e0b",
+  "validationWindowCaveat": "The working tree is shared and was not frozen: new N3 timing rows appeared during this milestone. Native results describe the actual recorded runs, not a release-tree certification."
+}

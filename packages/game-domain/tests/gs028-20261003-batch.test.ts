@@ -1,24 +1,32 @@
+import { createClinicalAuthorStage } from "../../../tests/fixtures/clinical-author-stage";
+import { QUESTION_NEW_N2_ROUND3_PRE_RELEASE } from "@gamify-surgery/clinical-content";
 import {
   QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE,
   GS028_20261003_AUTHORING_CONCEPTS,
-  GS028_20261003_CASES,
+  GS028_20261003_CASES as authoredCases,
+  QUESTION_NEW_N2_ROUND3_PRE_RELEASE as SYNTHETIC_CLINICAL_RELEASE,
   GS028_20261003_CLAIMS,
   GS028_20261003_QUESTIONS,
   GS028_20261003_SOURCES,
   GS028_20261003_TESTED_CONCEPTS,
-  GS028_20261003_TIMING_ENTRIES,
+  ANSWER_CHOICE_TIMING_REGISTRY,
   type SyntheticClinicalCase,
 } from "@gamify-surgery/clinical-content";
 import { describe, expect, it } from "vitest";
-import {
-  PROTOTYPE_DOMAIN_CONTEXT, createInitialGameState, deserializeGameState,
-  gameReducer, getCurrentQuestion, getEligibleServiceRoute,
+import { getCurrentQuestion, getEligibleServiceRoute,
   getAnswerChoiceServicePreview,
   selectRoutineClinicalCase, serializeGameState,
   type ConceptReviewEvidence, type GameState,
 } from "../src";
 import { EXACT_TEST_CHOICE_ORDER_RECORDS } from "../src/test-choice-orders";
 
+// Retain the author-stage pool, frozen definitions and existing golden budgets.
+const { context: PROTOTYPE_DOMAIN_CONTEXT, createInitialGameState, deserializeGameState, gameReducer } = createClinicalAuthorStage(QUESTION_NEW_N2_ROUND3_PRE_RELEASE);
+
+const GS028_20261003_CASES = authoredCases.map(original => SYNTHETIC_CLINICAL_RELEASE.cases.find(c => c.id === original.id)! as typeof original);
+const currentSelectionConcepts = SYNTHETIC_CLINICAL_RELEASE.concepts.filter(c=>GS028_20261003_CASES.some(cs=>cs.decisionNodes.some(n=>n.primaryConceptId===c.id)));
+const currentExactRecords = EXACT_TEST_CHOICE_ORDER_RECORDS.filter(r=>GS028_20261003_CASES.some(cs=>cs.id===r.caseId&&cs.decisionNodes.some(n=>n.id===r.nodeId&&n.questionVariantId===r.questionVariantId)));
+const GS028_20261003_TIMING_ENTRIES = ANSWER_CHOICE_TIMING_REGISTRY.filter(t => GS028_20261003_CASES.some(c => c.id === t.caseId && c.decisionNodes.some(n => n.id === t.nodeId && n.questionVariantId === t.questionVariantId)));
 const REAL_MS = 1_800_000_000_000;
 type BatchCase = (typeof GS028_20261003_CASES)[number];
 
@@ -231,8 +239,8 @@ function complete(clinicalCase: BatchCase, correct: boolean, index: number, choi
 const pairedUltrasoundCases = GS028_20261003_CASES.filter((clinicalCase) =>
   clinicalCase.decisionNodes.length === 2 && clinicalCase.decisionNodes[0]?.resultGateAfter?.resultTypeId === "service.ultrasound",
 );
-const nonExecutedRecords = EXACT_TEST_CHOICE_ORDER_RECORDS.filter((record) =>
-  record.caseId.startsWith("case.gs028d.") && record.disposition.kind === "not_executed",
+const nonExecutedRecords = currentExactRecords.filter((record) =>
+  record.disposition.kind === "not_executed",
 );
 describe("GS-028 October 3 batch admission", () => {
   it("admits all twenty objectives, seventy-eight cases, and their exact timed orders", () => {
@@ -240,14 +248,29 @@ describe("GS-028 October 3 batch admission", () => {
     expect(GS028_20261003_CASES).toHaveLength(78);
     expect(GS028_20261003_CASES.flatMap((item) => item.decisionNodes)).toHaveLength(80);
     expect(QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE.concepts.filter(c => !c.id.startsWith("concept.gs028g.") && !c.id.startsWith("concept.pediatric-clinic.") && !c.id.startsWith("concept.variety3."))).toHaveLength(331);
-    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter(c => !c.id.startsWith("case.gs028g.") && !c.id.startsWith("case.pediatric-clinic.") && !c.id.startsWith("case.variety3."))).toHaveLength(1008);
-    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter(c => !c.id.startsWith("case.gs028g.") && !c.id.startsWith("case.pediatric-clinic.") && !c.id.startsWith("case.variety3.")).flatMap((item) => item.decisionNodes)).toHaveLength(1303);
+    // N1 adds forty and N2 adds thirty-nine single-node cases; flags replace in place.
+    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter(c => !c.id.startsWith("case.gs028g.") && !c.id.startsWith("case.pediatric-clinic.") && !c.id.startsWith("case.variety3."))).toHaveLength(1048 + 39);
+    expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter(c => !c.id.startsWith("case.gs028g.") && !c.id.startsWith("case.pediatric-clinic.") && !c.id.startsWith("case.variety3.")).flatMap((item) => item.decisionNodes)).toHaveLength(1343 + 39);
     for (const item of GS028_20261003_CASES) expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter((candidate) => candidate.id === item.id)).toHaveLength(1);
-    const records = EXACT_TEST_CHOICE_ORDER_RECORDS.filter((record) => record.caseId.startsWith("case.gs028d."));
-    expect(records).toHaveLength(19);
+    const records = currentExactRecords;
+    // The potassium version now reviews treatment, not a proposed repeat test;
+    // its previous timed identity remains in the retained round-one inventory.
+    // Retained flag-round-three F13 contributes one planned PSG preview.
+    // Three current acid-base plans add nine previews in place of one old study.
+    expect(records).toHaveLength(28);
+    expect(records.filter(record => record.disposition.kind === "not_executed" && record.disposition.reason === "future_planned")).toHaveLength(10);
+    expect(records.filter(record => record.questionVariantId === "question.preoperative-osa.validated-risk-screening.v4.r4" && record.disposition.kind === "not_executed" && record.disposition.reason === "future_planned")).toEqual([{
+      caseId: "case.gs028d.anesthesia.a-validated-not-impression",
+      nodeId: "node.gs028d.anesthesia.a-validated-not-impression.1",
+      questionVariantId: "question.preoperative-osa.validated-risk-screening.v4.r4",
+      choiceId: "choice.qf3.20261104.f13.d2",
+      choiceLabel: "Obtain diagnostic polysomnography before planning precautions",
+      timingProfileId: "timing.test.overnight_protocol",
+      disposition: { kind: "not_executed", reason: "future_planned" },
+    }]);
     expect(records.filter((record) => record.disposition.kind === "result_gate_route_override")).toHaveLength(2);
     expect(records.filter((record) => record.disposition.kind === "terminal_service")).toHaveLength(0);
-    expect(records.filter((record) => record.disposition.kind === "not_executed" && record.disposition.reason === "external_only")).toHaveLength(13);
+    expect(records.filter((record) => record.disposition.kind === "not_executed" && record.disposition.reason === "external_only")).toHaveLength(12);
     expect(records.filter((record) => record.disposition.kind === "not_executed" && record.disposition.reason === "specialist_or_unsupported_service")).toHaveLength(4);
   });
 
@@ -298,7 +321,7 @@ describe("GS-028 October 3 batch admission", () => {
     "runs every node correctly and idempotently through case %s", (index, item) => { complete(item, true, index); },
   );
   it.each(GS028_20261003_CASES.flatMap((item, index) =>
-    [0, 1, 2].map((choiceIndex) => [index, item, choiceIndex] as const),
+    Array.from({ length: Math.max(...item.decisionNodes.map(n => n.answerChoices.filter(c => !c.isCorrect).length)) }, (_, choiceIndex) => [index, item, choiceIndex] as const),
   ))(
     "runs every node through wrong choice path %s for case %s",
     (index, item, choiceIndex) => { complete(item, false, index, choiceIndex); },
@@ -419,7 +442,10 @@ describe("GS-028 October 3 batch admission", () => {
       const encounterId = `encounter.gs028d.external.${record.choiceId}`;
       let state = admit(prepared(`external.${record.choiceId}`, clinicalCase.earliestFacilityStage), clinicalCase, encounterId, `${encounterId}.admit`);
       state = readyAtNode(state, encounterId, record.nodeId, `${encounterId}.ready`);
-      const answer = answerCommand(state, encounterId, true, `${encounterId}.answer`, REAL_MS + 3);
+      const node = getCurrentQuestion(state, encounterId)!.node;
+      const selected = node.answerChoices.find(c => c.id === record.choiceId)!;
+      const choiceIndex = selected.isCorrect ? 0 : node.answerChoices.filter(c => !c.isCorrect).findIndex(c => c.id === selected.id);
+      const answer = answerCommand(state, encounterId, selected.isCorrect, `${encounterId}.answer`, REAL_MS + 3, choiceIndex);
       expect(answer.choice.id).toBe(record.choiceId);
       const context = allRoutesAvailableContext();
       if (/\b(?:CT|LDCT)\b/.test(record.choiceLabel)) {
@@ -545,9 +571,9 @@ describe("GS-028 October 3 batch admission", () => {
   });
 
   it("selects each new objective independently when all other new objectives are learned and not due", () => {
-    for (const target of GS028_20261003_TESTED_CONCEPTS) {
+    for (const target of currentSelectionConcepts) {
       const state = prepared(`independent.${target.id}`, 2);
-      for (const concept of GS028_20261003_TESTED_CONCEPTS) {
+      for (const concept of currentSelectionConcepts) {
         if (concept.id !== target.id) markReviewed(state, concept.id, REAL_MS + 86_400_000);
       }
       const selection = selectRoutineClinicalCase(state, GS028_20261003_CASES, REAL_MS);
@@ -557,10 +583,10 @@ describe("GS-028 October 3 batch admission", () => {
     }
   });
 
-  it("prioritizes due new objectives and returns none when all twenty are not due", () => {
-    for (const target of GS028_20261003_TESTED_CONCEPTS) {
+  it("prioritizes due current objectives and returns none when all current objectives are not due", () => {
+    for (const target of currentSelectionConcepts) {
       const state = prepared(`due.${target.id}`, 2);
-      for (const concept of GS028_20261003_TESTED_CONCEPTS) {
+      for (const concept of currentSelectionConcepts) {
         markReviewed(state, concept.id, concept.id === target.id ? REAL_MS - 1 : REAL_MS + 86_400_000);
       }
       const selection = selectRoutineClinicalCase(state, GS028_20261003_CASES, REAL_MS);
@@ -569,12 +595,12 @@ describe("GS-028 October 3 batch admission", () => {
       expect(selection?.clinicalCase.decisionNodes[0]?.primaryConceptId).toBe(target.id);
     }
     const noneDue = prepared("none-due", 2);
-    for (const concept of GS028_20261003_TESTED_CONCEPTS) markReviewed(noneDue, concept.id, REAL_MS + 86_400_000);
+    for (const concept of currentSelectionConcepts) markReviewed(noneDue, concept.id, REAL_MS + 86_400_000);
     expect(selectRoutineClinicalCase(noneDue, GS028_20261003_CASES, REAL_MS)).toBeNull();
   });
 
   it("blocks a new objective while its own encounter remains unresolved", () => {
-    for (const target of GS028_20261003_TESTED_CONCEPTS) {
+    for (const target of currentSelectionConcepts) {
       const clinicalCase = standaloneFor(target.id);
       const encounterId = `unresolved.${target.id}`;
       let state = prepared(encounterId, 2);

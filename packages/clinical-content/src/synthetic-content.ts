@@ -7,6 +7,10 @@ import { applyQuestionQualityAdversarialR4Revisions, QUESTION_QUALITY_ADVERSARIA
 import { applyQuestionQualityAdversarialR5Revisions, QUESTION_QUALITY_ADVERSARIAL_R5_TESTED_CONCEPTS } from "./question-quality-adversarial-r5-20261102";
 import { applyQuestionQualityAdversarialR6Revisions, QUESTION_QUALITY_ADVERSARIAL_R6_TESTED_CONCEPTS } from "./question-quality-adversarial-r6-20261102";
 import { applyQuestionQualityAdversarialR7Revisions, QUESTION_QUALITY_ADVERSARIAL_R7_TESTED_CONCEPTS } from "./question-quality-adversarial-r7-20261102";
+import { applyQuestionFlagRevisions, QUESTION_FLAG_TESTED_CONCEPTS } from "./question-flags-20261104";
+import { applyQuestionFlagRound2Revisions, QUESTION_FLAG_ROUND2_TESTED_CONCEPTS } from "./question-flags-round2-20261104";
+import { applyQuestionBankBatch2aRevisions, QUESTION_BANK_BATCH2A_TESTED_CONCEPTS } from "./question-bank-batch2a-20261104";
+import { applyQuestionFlagRound3Revisions, QUESTION_FLAG_ROUND3_TESTED_CONCEPTS } from "./question-flags-round3-20261104";
 import { applyPendingPatientPresentationRevisions } from "./patient-presentation-revisions";
 import { applyPatientLibraryWordingRepair } from "./patient-library-wording-repair";
 import {
@@ -1367,10 +1371,34 @@ export const QUESTION_QUALITY_PRE_ADVERSARIAL_R7_RELEASE = validateSyntheticClin
   cases: applyQuestionQualityAdversarialR6Revisions(QUESTION_QUALITY_PRE_ADVERSARIAL_R6_RELEASE.cases),
 });
 
-export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease({
+export const QUESTION_FLAGS_PRE_REVISION_RELEASE = validateSyntheticClinicalRelease({
   ...QUESTION_QUALITY_PRE_ADVERSARIAL_R7_RELEASE,
   concepts: [...QUESTION_QUALITY_PRE_ADVERSARIAL_R7_RELEASE.concepts, ...QUESTION_QUALITY_ADVERSARIAL_R7_TESTED_CONCEPTS],
   cases: applyQuestionQualityAdversarialR7Revisions(QUESTION_QUALITY_PRE_ADVERSARIAL_R7_RELEASE.cases),
+});
+
+export const QUESTION_FLAGS_ROUND1_RELEASE = validateSyntheticClinicalRelease({
+  ...QUESTION_FLAGS_PRE_REVISION_RELEASE,
+  concepts: [...QUESTION_FLAGS_PRE_REVISION_RELEASE.concepts, ...QUESTION_FLAG_TESTED_CONCEPTS],
+  cases: applyQuestionFlagRevisions(QUESTION_FLAGS_PRE_REVISION_RELEASE.cases),
+});
+
+export const QUESTION_BANK_PRE_BATCH2A_RELEASE = validateSyntheticClinicalRelease({
+  ...QUESTION_FLAGS_ROUND1_RELEASE,
+  concepts: [...QUESTION_FLAGS_ROUND1_RELEASE.concepts, ...QUESTION_FLAG_ROUND2_TESTED_CONCEPTS],
+  cases: applyQuestionFlagRound2Revisions(QUESTION_FLAGS_ROUND1_RELEASE.cases),
+});
+
+export const QUESTION_FLAGS_PRE_ROUND3_RELEASE = validateSyntheticClinicalRelease({
+  ...QUESTION_BANK_PRE_BATCH2A_RELEASE,
+  concepts: [...QUESTION_BANK_PRE_BATCH2A_RELEASE.concepts, ...QUESTION_BANK_BATCH2A_TESTED_CONCEPTS],
+  cases: applyQuestionBankBatch2aRevisions(QUESTION_BANK_PRE_BATCH2A_RELEASE.cases),
+});
+
+export const QUESTION_NEW_N1_PRE_RELEASE = validateSyntheticClinicalRelease({
+  ...QUESTION_FLAGS_PRE_ROUND3_RELEASE,
+  concepts: [...QUESTION_FLAGS_PRE_ROUND3_RELEASE.concepts, ...QUESTION_FLAG_ROUND3_TESTED_CONCEPTS],
+  cases: applyQuestionFlagRound3Revisions(QUESTION_FLAGS_PRE_ROUND3_RELEASE.cases),
 });
 
 /**
@@ -1413,3 +1441,120 @@ export const LEVEL_ONE_ROUTINE_CASE_IDS = [
 ] as const;
 
 export { LEVEL_TWO_ROUTINE_CASE_IDS };
+
+// BEGIN N1 append — preserve the complete existing rewrite pipeline above.
+import { QUESTION_NEW_N1_CASES, QUESTION_NEW_N1_TESTED_CONCEPTS } from "./question-new-n1-20261104";
+export const QUESTION_NEW_N2_PRE_RELEASE = validateSyntheticClinicalRelease({
+  ...QUESTION_NEW_N1_PRE_RELEASE,
+  concepts: [...QUESTION_NEW_N1_PRE_RELEASE.concepts, ...QUESTION_NEW_N1_TESTED_CONCEPTS],
+  cases: [...QUESTION_NEW_N1_PRE_RELEASE.cases, ...QUESTION_NEW_N1_CASES],
+});
+// END N1 append. New records are unapproved prototype drafts, with no clinical promotion.
+
+// BEGIN N2 append — retain the entire prior assembly and all frozen N1 definitions.
+import { QUESTION_NEW_N2_CASES, QUESTION_NEW_N2_TESTED_CONCEPTS } from "./question-new-n2-20261104";
+export const QUESTION_BANK_PRE_BATCH2A_ROUND2_RELEASE = validateSyntheticClinicalRelease({
+  ...QUESTION_NEW_N2_PRE_RELEASE,
+  concepts: [...QUESTION_NEW_N2_PRE_RELEASE.concepts, ...QUESTION_NEW_N2_TESTED_CONCEPTS],
+  cases: [...QUESTION_NEW_N2_PRE_RELEASE.cases, ...QUESTION_NEW_N2_CASES],
+});
+// END N2 append. New records remain unapproved prototype drafts.
+
+// BEGIN BATCH2A ROUND2 projection — prior release and new-content appends retained.
+import { applyQuestionBankBatch2aRound2Revisions, QUESTION_BANK_BATCH2A_ROUND2_TESTED_CONCEPTS } from "./question-bank-batch2a-round2-20261104";
+export const QUESTION_BANK_BATCH2A_ROUND2_RELEASE = validateSyntheticClinicalRelease({
+  ...QUESTION_BANK_PRE_BATCH2A_ROUND2_RELEASE,
+  concepts: [...QUESTION_BANK_PRE_BATCH2A_ROUND2_RELEASE.concepts, ...QUESTION_BANK_BATCH2A_ROUND2_TESTED_CONCEPTS],
+  cases: applyQuestionBankBatch2aRound2Revisions(QUESTION_BANK_PRE_BATCH2A_ROUND2_RELEASE.cases),
+});
+// Stable historical view for this batch's preservation and frozen-order tests.
+// BEGIN BATCH2A ROUND3 projection — preceding historical views and frozen later blocks retained.
+import { applyQuestionBankBatch2aRound3Revisions, QUESTION_BANK_BATCH2A_ROUND3_TESTED_CONCEPTS } from "./question-bank-batch2a-round3-20261104";
+export const QUESTION_BANK_PRE_BATCH2A_ROUND3_RELEASE = QUESTION_BANK_BATCH2A_ROUND2_RELEASE;
+export const QUESTION_BANK_BATCH2A_ROUND3_RELEASE = validateSyntheticClinicalRelease({
+  ...QUESTION_BANK_PRE_BATCH2A_ROUND3_RELEASE,
+  concepts: [...QUESTION_BANK_PRE_BATCH2A_ROUND3_RELEASE.concepts, ...QUESTION_BANK_BATCH2A_ROUND3_TESTED_CONCEPTS],
+  cases: applyQuestionBankBatch2aRound3Revisions(QUESTION_BANK_PRE_BATCH2A_ROUND3_RELEASE.cases),
+});
+// END BATCH2A ROUND3 projection. No frozen encounter or old concept is rewritten.
+
+export const QUESTION_NEW_N1_ROUND2_PRE_RELEASE = QUESTION_BANK_BATCH2A_ROUND3_RELEASE;
+// END BATCH2A ROUND2 projection.
+
+// BEGIN N1 ROUND2 append — fresh-case revision only; both PASS and all N2 versions frozen.
+import { applyQuestionNewN1Round2Revisions, QUESTION_NEW_N1_ROUND2_NEW_CONCEPT_VERSIONS } from "./question-new-n1-round2-20261104";
+export const QUESTION_BANK_PRE_BATCH2B_RELEASE = validateSyntheticClinicalRelease({
+  ...QUESTION_NEW_N1_ROUND2_PRE_RELEASE,
+  concepts: [...QUESTION_NEW_N1_ROUND2_PRE_RELEASE.concepts, ...QUESTION_NEW_N1_ROUND2_NEW_CONCEPT_VERSIONS],
+  cases: applyQuestionNewN1Round2Revisions(QUESTION_NEW_N1_ROUND2_PRE_RELEASE.cases),
+});
+// END N1 ROUND2 append. No saved encounter or clinical approval is rewritten.
+
+// BEGIN BATCH2B projection — earlier independently reviewed stages remain intact.
+import { applyQuestionBankBatch2bRevisions, QUESTION_BANK_BATCH2B_TESTED_CONCEPTS } from "./question-bank-batch2b-20261104";
+export const QUESTION_NEW_N2_ROUND2_PRE_RELEASE = validateSyntheticClinicalRelease({
+  ...QUESTION_BANK_PRE_BATCH2B_RELEASE,
+  concepts: [...QUESTION_BANK_PRE_BATCH2B_RELEASE.concepts, ...QUESTION_BANK_BATCH2B_TESTED_CONCEPTS],
+  cases: applyQuestionBankBatch2bRevisions(QUESTION_BANK_PRE_BATCH2B_RELEASE.cases),
+});
+// END BATCH2B projection. Existing frozen encounters and concept histories are retained.
+
+// BEGIN N2 ROUND2 append — fresh definitions only; frozen saves and N1 remain untouched.
+import { applyQuestionNewN2Round2Revisions, QUESTION_NEW_N2_ROUND2_NEW_CONCEPT_VERSIONS } from "./question-new-n2-round2-20261104";
+export const QUESTION_NEW_N1_ROUND3_PRE_RELEASE = validateSyntheticClinicalRelease({
+  ...QUESTION_NEW_N2_ROUND2_PRE_RELEASE,
+  concepts: [...QUESTION_NEW_N2_ROUND2_PRE_RELEASE.concepts, ...QUESTION_NEW_N2_ROUND2_NEW_CONCEPT_VERSIONS],
+  cases: applyQuestionNewN2Round2Revisions(QUESTION_NEW_N2_ROUND2_PRE_RELEASE.cases),
+});
+// END N2 ROUND2 append. No approval, encounter/history migration or release authorization.
+
+// BEGIN N1 ROUND3 append — fresh N1 revisions; prior assembly retained verbatim apart from export alias.
+import { applyQuestionNewN1Round3Revisions, QUESTION_NEW_N1_ROUND3_NEW_CONCEPT_VERSIONS } from "./question-new-n1-round3-20261104";
+export const QUESTION_NEW_N2_ROUND3_PRE_RELEASE = validateSyntheticClinicalRelease({
+  ...QUESTION_NEW_N1_ROUND3_PRE_RELEASE,
+  concepts: [...QUESTION_NEW_N1_ROUND3_PRE_RELEASE.concepts, ...QUESTION_NEW_N1_ROUND3_NEW_CONCEPT_VERSIONS],
+  cases: applyQuestionNewN1Round3Revisions(QUESTION_NEW_N1_ROUND3_PRE_RELEASE.cases),
+});
+// END N1 ROUND3 append. No frozen encounters, PASS fields or N2 definitions changed.
+
+// BEGIN BATCH2B ROUND2 candidate view — does not authorize any live replacement.
+import { createQuestionBankBatch2bRound2SourceView, withAcceptedQuestionBankBatch2bRound2Concepts } from "./question-bank-batch2b-round2-20261104";
+export const QUESTION_BANK_BATCH2B_ROUND2_SOURCE_RELEASE = validateSyntheticClinicalRelease(
+  createQuestionBankBatch2bRound2SourceView(QUESTION_NEW_N2_ROUND2_PRE_RELEASE),
+);
+// END BATCH2B ROUND2 candidate view. Ship-manifest acceptance is required separately.
+
+// BEGIN N2 ROUND3 catalog append and manager-acceptance live projection
+import { applyQuestionNewN2Round3Revisions, QUESTION_NEW_N2_ROUND3_NEW_CONCEPT_VERSIONS } from "./question-new-n2-round3-20261104";
+import { projectManagerAcceptedQuestions } from "./question-ship-projection";
+/** Complete current author catalog, including drafts excluded from fresh play. */
+export const QUESTION_NEW_N3_PRE_RELEASE = validateSyntheticClinicalRelease({
+  ...QUESTION_NEW_N2_ROUND3_PRE_RELEASE,
+  concepts: [...QUESTION_NEW_N2_ROUND3_PRE_RELEASE.concepts, ...QUESTION_NEW_N2_ROUND3_NEW_CONCEPT_VERSIONS],
+  cases: applyQuestionNewN2Round3Revisions(QUESTION_NEW_N2_ROUND3_PRE_RELEASE.cases),
+});
+// BEGIN N3 catalog-only append. Prior definitions and accepted rewrite helpers stay intact.
+import { QUESTION_NEW_N3_CASES, QUESTION_NEW_N3_TESTED_CONCEPTS, withAcceptedQuestionNewN3Concepts } from "./question-new-n3-20261105";
+/** Explicit draft preview; N3 has no acceptance in the ship manifest. */
+export const QUESTION_CATALOG_RELEASE = validateSyntheticClinicalRelease({
+  ...QUESTION_NEW_N3_PRE_RELEASE,
+  concepts: [...QUESTION_NEW_N3_PRE_RELEASE.concepts, ...QUESTION_NEW_N3_TESTED_CONCEPTS],
+  cases: [...QUESTION_NEW_N3_PRE_RELEASE.cases, ...QUESTION_NEW_N3_CASES],
+});
+// END N3 catalog-only append.
+// BEGIN FLAGS2 G06 accepted-source integration 20261105
+import { QUESTION_FLAGS2_ROUND1_SOURCE_RELEASE } from "./question-flags2-20261105";
+import { withAcceptedQuestionFlags2Concepts } from "./question-flags2-accepted-20261105";
+// END FLAGS2 G06 accepted-source integration 20261105
+/** Default runtime content: exact accepted rewrites/new items plus legacy fallback. */
+export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease(projectManagerAcceptedQuestions(withAcceptedQuestionFlags2Concepts(withAcceptedQuestionBankBatch2bRound2Concepts(withAcceptedQuestionNewN3Concepts(QUESTION_CATALOG_RELEASE, QUESTION_NEW_N3_PRE_RELEASE.concepts))), QUESTION_FLAGS_PRE_REVISION_RELEASE, {
+  "flags2-round1": QUESTION_FLAGS2_ROUND1_SOURCE_RELEASE,
+  legacy: QUESTION_FLAGS_PRE_REVISION_RELEASE,
+  "flags-round3": QUESTION_NEW_N1_PRE_RELEASE,
+  "batch2a-round3": QUESTION_BANK_BATCH2A_ROUND3_RELEASE,
+  "n1-round2": QUESTION_BANK_PRE_BATCH2B_RELEASE,
+  "n1-round3": QUESTION_NEW_N2_ROUND3_PRE_RELEASE,
+  "n2-round2": QUESTION_NEW_N1_ROUND3_PRE_RELEASE,
+  "batch2b-round2": QUESTION_BANK_BATCH2B_ROUND2_SOURCE_RELEASE,
+}));
+// END N2 ROUND3 catalog append and manager-acceptance live projection

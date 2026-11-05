@@ -1,0 +1,110 @@
+{
+  "checkedAt": "2026-11-05T02:22:34.865Z",
+  "lock": "tools/question-quality/question-bank-batch2b-validation-repaired-lock-20261104.json",
+  "inputs": 4917,
+  "currentInputs": 4926,
+  "changes": [
+    {
+      "path": "packages/clinical-content/src/question-new-n2-round2-perioperative.ts",
+      "previous": "e61183aa017d927e0b2cb6842ea1b367c6b5a4e5276163f54cd34d0c7cb1bf2a",
+      "current": "9be0449b8b9b790b5f0569d5c849e047a91c089dff7adbba6d16863badefc86e"
+    },
+    {
+      "path": "packages/game-domain/src/incrementalEvidenceValues.test.ts",
+      "previous": "d7cef1d69f8b7d782aa7ccb20b757417496cc1fb7858ca9f81d345f2e9e8c867",
+      "current": "60fcc314c5d599f2f602c176a759613570efd8f745715b19f730ba82a3454a37"
+    },
+    {
+      "path": "packages/game-domain/tests/bread-butter-20260917-batch.test.ts",
+      "previous": "e2ce2746fb14b254a23e7dd5398e5ea76b1351705032a873b56864c3ccbc1da3",
+      "current": "70eb5199b02e506edcdd83870073d5562c0f9d178d461da6974ab70b2d8ac59d"
+    },
+    {
+      "path": "apps/player/src/auth/AuthGate.tsx",
+      "previous": "2a7e09c2ead8b89a2d2a6fef1299c38211ab0d80439088104ebe3c36c138c5b4",
+      "current": "9e64d2f0ce78a07638020441e5a7ae256a3a90e5bf047affd691e7b00a128886"
+    },
+    {
+      "path": "apps/player/src/playtime/playtimeTracker.ts",
+      "previous": "0e28f35ea540b28d2a0489b60026006718711b077af45107440b1250e66320b8",
+      "current": "33c84ada156938208c11352b12eacb44458277c6d0cff98a95a91c07516428d5"
+    },
+    {
+      "path": "apps/player/src/playtime/UsageProvider.tsx",
+      "previous": "0f76d124298f70d3c03fabc0855183249dc8ef9c7b5fe1e53de829ab747feac5",
+      "current": "fbaa56482b90bcc900989af6c94389ab65fdd5bc2f02688120ee6b7756035786"
+    },
+    {
+      "path": "apps/player/src/session/cloud/coordinator.ts",
+      "previous": "551ac6ec75a07ce568239364fb3dd1b17ccefd7013306efa604609d67c5c8c26",
+      "current": "c18267db093cdd3c881f9cfb7556a3d408ba052fc8faff4ce19c20dfe1bdccf8"
+    },
+    {
+      "path": "apps/player/src/session/cloud/requestLoad.test.ts",
+      "previous": "5c41fb9ef6d0609a49ec8b71e1201b19b68f5aeb9f9c28cfed68ecca4f2858e1",
+      "current": "4654d7e2d840584c88fc4b7c48a80840ea6450b41a084b9d429771a492c6ca59"
+    },
+    {
+      "path": "apps/player/src/session/cloud/supabaseTransport.test.ts",
+      "previous": "50076415f36693c4e5656c83d852cfd0e911efce038d98c57be6e7f3a3acc4b3",
+      "current": "ca226d8eb9da684cf1fd8635d340a3196ff649f70a8a37269a7dc46906b22dd7"
+    },
+    {
+      "path": "apps/player/src/session/QuestionFlagProvider.requests.test.tsx",
+      "previous": "566074c63f2cbc8d356f851032ce45cd9e3700c099f42af7374e99a3ee997884",
+      "current": "8759b922b7899b13912bc9067f19df3f1c5662243199c622712c2ce88b25a70c"
+    },
+    {
+      "path": "supabase/tests/account_request_budget.sql",
+      "previous": "afb5ca067454b3383ba9f008de07560d5746f9acb2132e6d9c47568217af5103",
+      "current": "7dd3282323f523d2c79ea8538ca67c3b0ba01099a303b2ab717302b5165ecb1d"
+    }
+  ],
+  "added": [
+    {
+      "path": "packages/clinical-content/src/question-new-n2-round2-abdominal.ts",
+      "previous": null,
+      "current": "564e75c4f329b7108fa4000f948f66cb6c36f999988031210aed12a7e70534ae"
+    },
+    {
+      "path": "apps/player/src/session/cloud/networkRequestBudget.ts",
+      "previous": null,
+      "current": "06ace737fbefda6f512bf0a9f1355bd3bdefb7e4251aa6443979266aa493511c"
+    },
+    {
+      "path": "apps/player/src/session/cloud/operationalEngine.worker.ts",
+      "previous": null,
+      "current": "c0af52b21f3d6520dbaa9a8f6d0903ee6d8253be043733535b56093a0f15a072"
+    },
+    {
+      "path": "apps/player/src/session/cloud/operationalEngineClient.ts",
+      "previous": null,
+      "current": "22ba211c782513c47a3996579b3062a91d045bc94728f17a0bc8e6be5900ec2b"
+    },
+    {
+      "path": "apps/player/src/session/cloud/operationalEngineProcessor.test.ts",
+      "previous": null,
+      "current": "5aa99e634eaa85b2631482c4932c5fdfbefada9128ac72fb59459a1cdc3d2dda"
+    },
+    {
+      "path": "apps/player/src/session/cloud/operationalEngineProcessor.ts",
+      "previous": null,
+      "current": "34b152a54b06c43f5ed677584e4e981f30695f328faa0c4ae28e661a51f4d419"
+    },
+    {
+      "path": "apps/player/src/session/cloud/operationalEngineProtocol.ts",
+      "previous": null,
+      "current": "c43f1b61fecc647b22293c6e73fc42f0307e5374109982e3e89d7776756106c7"
+    },
+    {
+      "path": "apps/player/src/session/cloud/operationalStatePatch.test.ts",
+      "previous": null,
+      "current": "dfc806e09aada8bae2d80589f808012ef636bb0443a54995d48b7b89af3daba2"
+    },
+    {
+      "path": "apps/player/src/session/cloud/operationalStatePatch.ts",
+      "previous": null,
+      "current": "fc0087caf065162f990e6ac2457c9faccc08684052715de89b152a20d50859c2"
+    }
+  ]
+}

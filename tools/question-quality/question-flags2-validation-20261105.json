@@ -1,0 +1,51 @@
+{
+  "checkedOn": "2026-11-05",
+  "scope": "Focused results only, as requested; no full clinical/domain/player suite run or full-suite-green claim.",
+  "commands": [
+    {
+      "name": "Focused clinical source-view tests",
+      "command": "npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads --maxWorkers=2 src/question-flags2-20261105.test.ts",
+      "log": "tools/question-quality/question-flags2-clinical-complete-20261105.log",
+      "passed": 21,
+      "failed": 0,
+      "filesPassed": 1,
+      "observedExitCode": 0,
+      "logSha256": "f48cc8074244ccc77dc9bdd4b05b0f5534976775557bd24999aaea52327fb788"
+    },
+    {
+      "name": "Cue-linter tests (existing Node runner)",
+      "command": "npm.cmd run clinical:lint:test",
+      "log": "tools/question-quality/question-flags2-linter-tests-complete-20261105.log",
+      "passed": 33,
+      "failed": 0,
+      "observedExitCode": 0,
+      "logSha256": "003dec1a4681a01a29763a839e957322dfc6165b85eee8da93e5c25281819ed6"
+    },
+    {
+      "name": "Clinical-content typecheck",
+      "command": "npm.cmd run typecheck --workspace @gamify-surgery/clinical-content",
+      "log": "tools/question-quality/question-flags2-typecheck-complete-20261105.log",
+      "workspacesPassed": 1,
+      "workspacesFailed": 0,
+      "observedExitCode": 0,
+      "logSha256": "62d923fcc05655837b745a1e42c91ffada9f27a82c422de1fb3dead69d30f126"
+    }
+  ],
+  "lint": {
+    "newVariants": 6,
+    "flaggedItemsRewritten": 5,
+    "cases": 5,
+    "profileContexts": 30,
+    "beforeFindings": 11,
+    "afterFindings": 0,
+    "variantsWithFindings": 0
+  },
+  "finalRuntimeLock": "tools/question-quality/question-flags2-runtime-lock-final-20261105.json",
+  "reproductionCommands": [
+    "node tools/question-quality/build-question-flags2-20261105.mjs --check",
+    "node tools/question-quality/review-question-flags2-20261105.mjs --check --require-zero",
+    "node tools/question-quality/control-question-flags2-20261105.mjs --final"
+  ],
+  "initialOwnFailure": "The first typecheck found TS18048 in the new test optional-demographics access. Fixed the assertion to require demographics and age <50; final focused tests/typecheck pass. Earlier logs retained.",
+  "finalLockReason": "The initial lock predates an explicit mapping of the inherited pre-splenectomy vaccination distractor role to its existing CDC-supported atomic claim. No clinical wording changed for that mapping. The final lock and complete logs cover the added mapping, packet-shape checks and latest source view."
+}
