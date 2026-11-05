@@ -4,6 +4,7 @@ import { getApprovedRoomNavigation } from "./approved-room-layouts";
 import { mriOnsiteRoute } from "./mri-services";
 import { LEVEL_FIVE_ROOM_DEFINITIONS } from "./level-five-rooms";
 import { LEVEL_FIVE_STAGE_DEFINITION } from "./level-five-progression";
+import { STAFF_BREAK_POLICY } from "./staff-breaks";
 
 export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
   id: "balance.synthetic.prototype.v1",
@@ -1135,9 +1136,14 @@ export const PROTOTYPE_BALANCE_RELEASE = validatePrototypeBalanceRelease({
     trainingRoutineWorkloadContribution: 1,
     coffeeMoraleBonusPerDay: 2,
     levelThreeSupport: {
-      breakDurationMinutes: 30,
-      breakMoraleGain: 5,
-      breakCooldownMinutes: 240,
+      // Editorial staff-welfare weights; care always preempts optional breaks.
+      breakDurationMinutes: STAFF_BREAK_POLICY.durationMinutes,
+      breakMoraleGain: STAFF_BREAK_POLICY.moraleGain,
+      breakCooldownMinutes: STAFF_BREAK_POLICY.cooldownMinutes,
+      breakHighMoraleThreshold: STAFF_BREAK_POLICY.highMoraleThreshold,
+      breakHighMoraleCooldownMultiplier: STAFF_BREAK_POLICY.highMoraleCooldownMultiplier,
+      staffRoomMoraleBonusPerDay: STAFF_BREAK_POLICY.dailyMoraleGain,
+      staffRoomMoraleBonusPerUpgrade: STAFF_BREAK_POLICY.dailyMoraleGainPerUpgrade,
       maintenanceUseThreshold: 8,
       maintenanceGraceMinutes: 600,
       repairDurationMinutes: 30,

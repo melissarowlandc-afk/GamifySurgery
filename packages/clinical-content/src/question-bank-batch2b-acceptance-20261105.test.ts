@@ -9,6 +9,8 @@ import {
   SYNTHETIC_CLINICAL_RELEASE as live,
 } from "./index";
 import { QUESTION_SHIP_MANIFEST as manifest, type QuestionShipManifest } from "./question-ship-manifest";
+import { QUESTION_FLAGS2_ROUND3_SOURCE_RELEASE as acceptedFlags2 } from "./question-flags2-round3-20261105";
+import { beforeN3AcceptanceRelease } from "./question-new-n3-acceptance-test-support";
 
 const read = (path: string): string => readFileSync(new URL("../../../" + path, import.meta.url), "utf8");
 const sha = (text: string): string => createHash("sha256").update(text).digest("hex");
@@ -87,19 +89,23 @@ describe("batch 2b manager-directed exact-version acceptance", () => {
     }
   });
 
-  it("parks all twenty-two REVISE drafts at the exact intake live versions, including unresolved G03", () => {
+  it("parks all twenty-two REVISE drafts, preserving fallback except the later exact flags2 whole-case acceptance", () => {
     const revise = intake.review.filter(row => row.verdict === "REVISE");
     expect(revise).toHaveLength(22);
     for (const item of revise) {
       const packet = intake.packet.find(row => row.id === item.id)!;
-      expect(saved(nodeFor(live, packet.caseId, packet.nodeId)))
-        .toBe(saved(nodeFor(intake.release, packet.caseId, packet.nodeId)));
+      if(manifest.replacements.some(r=>r.replaces===packet.caseId)){
+        expect(live.cases.find(c=>c.id===packet.caseId)).toEqual(acceptedFlags2.cases.find(c=>c.id===packet.caseId));
+      }else{
+        expect(saved(nodeFor(live, packet.caseId, packet.nodeId)))
+          .toBe(saved(nodeFor(intake.release, packet.caseId, packet.nodeId)));
+      }
       expect(manifest.accepted.some(row => row.caseId === packet.caseId && row.nodeId === packet.nodeId &&
         row.questionVariantId === packet.after.variantId)).toBe(false);
     }
     const g03 = intake.packet.find(row => row.id === "B2B36")!;
     expect(nodeFor(live, g03.caseId, g03.nodeId).questionVariantId)
-      .toBe("question.palpable-breast.negative-mammogram-targeted-us.v1");
+      .toBe("question.palpable-breast.negative-mammogram-targeted-us.v1.r4");
   });
 
   it("preserves every historical legacy binding and existing non-N2 acceptance", () => {
@@ -110,7 +116,7 @@ describe("batch 2b manager-directed exact-version acceptance", () => {
     for (const old of intake.release.concepts) {
       expect(live.concepts.find(row => row.id === old.id)).toEqual(old);
     }
-    expect(live.cases).toHaveLength(intake.release.cases.length);
+    expect(beforeN3AcceptanceRelease(live).cases).toHaveLength(intake.release.cases.length);
   });
 
   it("composes B2B24 with the exact old second node and gate, without importing a neighboring draft", () => {

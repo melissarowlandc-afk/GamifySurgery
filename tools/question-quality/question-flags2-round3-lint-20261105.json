@@ -1,0 +1,92 @@
+{
+  "checkedOn": "2026-11-05",
+  "linterVersion": "question-cue-lint.2026-11-04.v8",
+  "scope": "Two supported new variants only, every canonical/finite profile, including the entire visible prior history. Five parked items have no after and are excluded from zero-lint totals. G06 is frozen.",
+  "totals": {
+    "newVariants": 2,
+    "parked": 5,
+    "profileContexts": 8,
+    "beforeFindings": 0,
+    "afterFindings": 0,
+    "variantsWithFindings": 0
+  },
+  "variants": [
+    {
+      "id": "G03",
+      "variantId": "question.palpable-breast.negative-mammogram-targeted-us.v1.r4",
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [],
+      "after": [],
+      "beforeCount": 0,
+      "afterCount": 0,
+      "profileContexts": 3
+    },
+    {
+      "id": "G05",
+      "variantId": "question.asymptomatic-phpt.age-based-surgery.v1.r3",
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [],
+      "after": [],
+      "beforeCount": 0,
+      "afterCount": 0,
+      "profileContexts": 5
+    }
+  ],
+  "wholeLiveBank": {
+    "scope": "Read-only inventory, not a zero-lint gate and no changes authorized outside these drafts.",
+    "totals": {
+      "cases": 1136,
+      "nodeOccurrences": 1449,
+      "uniqueVariants": 1444,
+      "concepts": 442,
+      "profileContexts": 6091,
+      "variantsWithFindings": 939,
+      "findings": 1988,
+      "tutorialSequenceVariants": 0,
+      "missingAuthoredVersion": 0,
+      "missingEducationalTier": 154,
+      "approvalRecordOnlyMetadata": 40,
+      "variantsWithCompleteRationales": 290,
+      "variantsWithMultipleDefinitions": 0,
+      "byPriorityStage": {
+        "0": 687,
+        "1": 464,
+        "2": 163,
+        "3": 98,
+        "4": 32
+      },
+      "byOptionCount": {
+        "3": 157,
+        "4": 1287
+      },
+      "variantsByRule": {
+        "ambiguous-cervical-term": 19,
+        "availability-permission-cue": 14,
+        "case-detail-decision-cue": 9,
+        "case-detail-key-rationale-overlap": 36,
+        "convergence": 83,
+        "heterogeneous-option-category": 84,
+        "key-length-disparity": 50,
+        "key-only-phrase-overlap": 49,
+        "key-only-word-overlap": 321,
+        "key-test-name-in-context": 7,
+        "lead-in-decision-principle": 13,
+        "near-duplicate-options": 42,
+        "negative-aligned-to-distractor": 104,
+        "option-absolute": 89,
+        "option-alone": 112,
+        "option-explanation": 36,
+        "option-generic-individualization": 10,
+        "option-length-disparity": 290,
+        "option-scope-mismatch": 2,
+        "option-specificity-disparity": 22,
+        "supplied-clinical-conclusion": 18,
+        "unexplained-negative-imaging": 6,
+        "unique-key-abbreviation": 131,
+        "unique-key-test-name": 15,
+        "unnamed-treatment-action": 2
+      }
+    }
+  },
+  "noteResponses": 93
+}

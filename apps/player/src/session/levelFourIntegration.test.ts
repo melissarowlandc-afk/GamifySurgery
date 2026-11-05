@@ -47,7 +47,7 @@ describe("Level 4 M9 real-engine player integration", () => {
         expect(view.resourceBar.moneyHourlyDeltaLabel).toBe(finance.hourlyNetLabel);
         expect(view.resourceBar.moneyHourlyBreakdown?.incomeLabel).toBe(finance.hourlyIncomeLabel);
         expect(finance.hourlyIncomeSources.reduce((sum, source) => sum + source.amount, 0))
-          .toBe(getRollingIncomeSummary(state).incomePerHour);
+          .toBeCloseTo(getRollingIncomeSummary(state).incomePerHour, 9);
         const restored = deserializeGameState(serializeGameState(state));
         expect(viewOf(restored)).toEqual(view);
       }

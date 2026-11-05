@@ -15,6 +15,7 @@ import { alertCadencePolicy } from "./alert-cadence";
 import { employeeDepartureRiskCadenceGroup } from "./departure-risk-alerts";
 import {
   getServiceIncomeLine,
+  LEGACY_STAFF_BREAK_DURATION_MINUTES,
   DIAGNOSTIC_READING_WORKSTATIONS,
   PROTOTYPE_ALERT_SCHEDULING,
   PROTOTYPE_AMBIENT_ALERT_DEFINITIONS,
@@ -3533,7 +3534,7 @@ function migrateVersionTwo(
     if (roomUpgradeBreakBenefit?.roomDefinitionId === "room.staff_gym" && (!rawFacilityTask ||
       next.facilityLevel < 5 || (rawFacilityTask.seatId !== "benchSeat" && rawFacilityTask.seatId !== "stretchSpot") ||
       typeof rawFacilityTask.supportDoorId !== "string" || !rawFacilityTask.supportDoorId ||
-      typeof rawFacilityTask.workMinutesRemaining !== "number" || rawFacilityTask.workMinutesRemaining > context.balanceRelease.environment.levelThreeSupport.breakDurationMinutes ||
+      typeof rawFacilityTask.workMinutesRemaining !== "number" || rawFacilityTask.workMinutesRemaining > Math.max(LEGACY_STAFF_BREAK_DURATION_MINUTES, context.balanceRelease.environment.levelThreeSupport.breakDurationMinutes) ||
       typeof candidate.lastBreakAtFacilityTick === "number" && candidate.lastBreakAtFacilityTick >= (rawFacilityTask.startedAtFacilityTick as number))) throw new Error("The saved gym break contract is invalid.");
     if ((roomUpgradeWork || roomUpgradeBreakBenefit) && (!rawFacilityTask ||
       typeof rawFacilityTask.startedAtFacilityTick !== "number" || !Number.isSafeInteger(rawFacilityTask.startedAtFacilityTick) ||

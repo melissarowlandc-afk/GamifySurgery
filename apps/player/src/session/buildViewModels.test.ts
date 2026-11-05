@@ -307,7 +307,7 @@ describe("approved room upgrade ladders in player views", () => {
     ["room.laboratory", "+6% paid laboratory-processing revenue", ["+6%", "+12%", "+18%", "+24%"], [450, 675, 990, 1350]],
     ["room.pharmacy", "+6% pharmacy sales revenue", ["+6%", "+12%", "+18%", "+24%"], [300, 450, 660, 900]],
     ["room.maintenance_workshop", "Repairs take 10% less time", ["10% less time", "20% less time", "30% less time", "40% less time"], [200, 300, 440, 600]],
-    ["room.staff_break", "+2 staff morale points per break", ["+2 points", "+4 points", "+6 points", "+8 points"], [225, 340, 495, 675]],
+    ["room.staff_break", "+2 staff morale points per break; +1 daily morale from the best operational staff room", ["+7 morale per completed break; +2 daily morale (best operational staff room)", "+9 morale per completed break; +3 daily morale (best operational staff room)", "+11 morale per completed break; +4 daily morale (best operational staff room)", "+13 morale per completed break; +5 daily morale (best operational staff room)"], [225, 340, 495, 675]],
     ["room.surgeon_office", "Quality reviews take 10% less time", ["10% less time", "20% less time", "30% less time", "40% less time"], [175, 265, 385, 525]],
     ["room.vending", "+6% vending revenue", ["+6%", "+12%", "+18%", "+24%"], [115, 170, 250, 340]],
     ["room.reading", "Scan reading takes 10% less time", ["10% less time", "20% less time", "30% less time", "40% less time"], [450, 675, 990, 1350]],
@@ -324,10 +324,12 @@ describe("approved room upgrade ladders in player views", () => {
       const view = createPrototypePlayerView(state, null, false, null, true, room.id);
       const selected = view.selectedRoomBuild!;
       const owned = view.ownedRooms.find((candidate) => candidate.id === room.id)!;
-      const expected = { perUpgradeLabel, currentLabel: level === 1 ? "Baseline" : totals[level - 2] };
+      const expected = { perUpgradeLabel, currentLabel: level === 1 ? (roomDefinitionId === "room.staff_break" ? "+5 morale per completed break; +1 daily morale (best operational staff room)" : "Baseline") : totals[level - 2] };
       expect(selected.benefit).toMatchObject(expected);
       expect(owned.benefit).toEqual(selected.benefit);
-      expect(owned.benefitSummary).toBe(perUpgradeLabel);
+      expect(owned.benefitSummary).toBe(roomDefinitionId === "room.staff_break"
+        ? `${expected.currentLabel} · Staff below 90 morale take 15-minute breaks for +5 morale. At 90-99 morale the cooldown doubles to 960 minutes; at 100 staff skip breaks. Care interrupts breaks; the usual 480-minute cooldown also covers interruptions. All staff gain +1 morale per operating day, plus +1 per upgrade, from the best operational Break Room or gym.`
+        : perUpgradeLabel);
       expect(selected.maxUpgradeLevel).toBe(5);
       expect(view.facility.rooms.find((candidate) => candidate.instanceId === room.id)?.upgradeMaxLevel).toBe(5);
       if (level < 5) {

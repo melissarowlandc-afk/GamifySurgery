@@ -13,11 +13,15 @@ import {
   QUESTION_FLAGS2_SOURCE_VIEW_NAME,
   applyQuestionFlags2Revisions,
 } from "./question-flags2-20261105";
-import {QUESTION_FLAGS_PRE_REVISION_RELEASE as legacy,SYNTHETIC_CLINICAL_RELEASE as live} from "./synthetic-content";
+import {QUESTION_FLAGS_PRE_REVISION_RELEASE as legacy,SYNTHETIC_CLINICAL_RELEASE as actualLive} from "./synthetic-content";
+import {beforeWholeCaseReplacementRelease} from "./question-ship-case-replacements-test-support";
 import {syntheticClinicalReleaseSchema,type SyntheticClinicalCase} from "./schema";
 import {QUESTION_SHIP_MANIFEST} from "./question-ship-manifest";
 
 const read=(path:string)=>JSON.parse(readFileSync(new URL("../../../"+path,import.meta.url),"utf8"));
+// This test freezes round one's release epoch; the helper first proves that
+// today's default differs only by the two exact manager-accepted whole cases.
+const live=beforeWholeCaseReplacementRelease(actualLive);
 const capture=read("tools/question-quality/fixtures/question-flags2-before-20261105.json") as {
   items:{id:string;variantId:string;clinicalCase:SyntheticClinicalCase}[];
   files:Record<string,string>;

@@ -106,7 +106,7 @@ describe("Build Mode upgrade benefit text", () => {
     ["room.reading", "Scan reading takes 10% less time", "30% less time", "40% less time"],
     ["room.bathroom", "10% slower cleanliness loss", "30% slower loss", "40% slower loss"],
     ["room.coffee_kiosk", "+1 staff morale point from daily coffee", "+3 points", "+4 points"],
-    ["room.staff_break", "+2 staff morale points per break", "+6 points", "+8 points"],
+    ["room.staff_break", "+2 staff morale points per break; +1 daily morale from the best operational staff room", "+11 morale per completed break; +4 daily morale (best operational staff room)", "+13 morale per completed break; +5 daily morale (best operational staff room)"],
   ])("describes the approved scope for %s", (roomDefinitionId, perUpgradeLabel, currentLabel, nextLabel) => {
     expect(describeRoomUpgradeBenefit({ ...base, roomDefinitionId, upgradeLevel: 4 })).toMatchObject({
       perUpgradeLabel, currentLabel, nextLabel,

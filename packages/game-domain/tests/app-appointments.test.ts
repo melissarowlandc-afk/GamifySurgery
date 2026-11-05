@@ -234,7 +234,7 @@ describe("autonomous appointments in clinic", () => {
     expect(() => deserializeGameState(serializeGameState(state), context)).toThrow("APP appointment revenue");
   });
 
-  it("takes real morale-restoring breaks without free wages or lost visitors", () => {
+  it("preempts an APP break for care without free wages, partial credit or lost visitors", () => {
     let state = fixture();
     state.serviceAppointmentsEnabled = false;
     state = gameReducer(state, { type: "PLACE_ROOM", operationId: "app.break.room", roomId: "room.app.break",
@@ -249,7 +249,9 @@ describe("autonomous appointments in clinic", () => {
     expect(wageDifference).toBe(-60);
     const id = startServiceOperation(state, "income.app_consult", "visitor", context)!;
     expect(id).toBeTruthy();
-    state = until(state, value => value.employees.find(row => row.id === employee.id)!.morale > morale, 100);
+    state = until(state, value => value.employees.find(row => row.id === employee.id)!.facilityTask?.kind !== "take_break", 100);
+    expect(state.employees.find(row => row.id === employee.id)!.morale).toBe(morale);
+    expect(state.employees.find(row => row.id === employee.id)!.lastBreakAtFacilityTick).not.toBeNull();
     state = until(state, value => visits(value).find(row => row.id === id)?.completedAtFacilityTick !== null, 150);
     expect(visits(state).find(row => row.id === id)?.cancelledAtFacilityTick).toBeNull();
   });

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import type { PrototypeShellProps } from "../../shellContract";
 import type { ServiceSetupActionView } from "../../ui/types";
 import { MobileEmployees, MobileStaffOverview } from "./MobileEmployees";
-import type { ManageBackRegistration } from "./MobileManageSheet";
+import { MobileManageCloseContext, type ManageBackRegistration } from "./MobileManageSheet";
 import { MobileServices } from "./MobileServices";
 import { MobileMoney } from "./MobileMoney";
 import { ClinicCompetitionPanel } from "../../competition/ClinicCompetitionPanel";
@@ -22,6 +22,7 @@ export type MobileManageProps = Pick<PrototypeShellProps,
   highlightedEmployeeId?: string | null;
   requestedTraining?: { employeeId: string; requestKey: number } | null;
   onDetailBackChange?: ManageBackRegistration;
+  onClose?: () => void;
   onSetupAction: (action: ServiceSetupActionView) => void;
 };
 
@@ -45,7 +46,7 @@ export function MobileManage(props: MobileManageProps) {
     <p>Pauses the clinic while you manage staff.</p>
   </div>;
 
-  return <section className="mobile-manage" aria-label="Management Mode">
+  return <MobileManageCloseContext.Provider value={props.onClose}><section className="mobile-manage" aria-label="Management Mode">
     <div inert={detailOpen} aria-hidden={detailOpen || undefined}>
     <div className="mobile-manage-heading"><span role="status">Clinic paused</span>
       <button type="button" onClick={props.onExitManagementMode}>Done</button>
@@ -70,5 +71,5 @@ export function MobileManage(props: MobileManageProps) {
           : <MobileMoney view={props.serviceIncome} resourceBar={props.resourceBar}
             advertising={props.advertising} onAdvertisingLevelChange={props.onAdvertisingLevelChange} onDetailBackChange={registerDetailBack} />}
     </div>
-  </section>;
+  </section></MobileManageCloseContext.Provider>;
 }

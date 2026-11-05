@@ -4,16 +4,21 @@ import { QUESTION_SHIP_MANIFEST as manifest, type QuestionShipManifest } from ".
 import { questionShipManifestIssues } from "./question-ship-manifest-validation";
 import { projectManagerAcceptedQuestions } from "./question-ship-projection";
 import { QUESTION_NEW_N3_PRE_RELEASE as authoringCatalog, SYNTHETIC_CLINICAL_RELEASE as live,
+ QUESTION_CATALOG_RELEASE as completeCatalog, QUESTION_NEW_N3_ROUND3_SOURCE_RELEASE as n3,
  QUESTION_FLAGS_PRE_REVISION_RELEASE as legacy, QUESTION_NEW_N1_PRE_RELEASE as flags,
  QUESTION_BANK_BATCH2A_ROUND3_RELEASE as batch2a, QUESTION_NEW_N2_ROUND3_PRE_RELEASE as n1,
  QUESTION_NEW_N1_ROUND3_PRE_RELEASE as n2, QUESTION_BANK_BATCH2B_ROUND2_SOURCE_RELEASE as batch2b } from "./synthetic-content";
 import { withAcceptedQuestionBankBatch2bRound2Concepts } from "./question-bank-batch2b-round2-20261104";
 import { withAcceptedQuestionFlags2Concepts } from "./question-flags2-accepted-20261105";
 import { QUESTION_FLAGS2_ROUND1_SOURCE_RELEASE as flags2 } from "./question-flags2-20261105";
+import { QUESTION_FLAGS2_ROUND3_SOURCE_RELEASE as flags2round3 } from "./question-flags2-round3-20261105";
+import { withAcceptedQuestionFlags2WholeCaseConcepts } from "./question-flags2-whole-case-accepted-20261105";
+import { withAcceptedQuestionNewN3Round2Concepts } from "./question-new-n3-round2-20261105";
 // Match the production registry: exact accepted rewrite meanings are appended;
 // unaccepted draft meanings are not added merely for this validation fixture.
-const catalog = withAcceptedQuestionFlags2Concepts(withAcceptedQuestionBankBatch2bRound2Concepts(authoringCatalog));
-const views = { legacy, "flags-round3": flags, "batch2a-round3": batch2a, "n1-round3": n1, "n2-round2": n2, "batch2b-round2": batch2b, "flags2-round1": flags2 };
+const n3Catalog = withAcceptedQuestionNewN3Round2Concepts(completeCatalog,authoringCatalog.concepts);
+const catalog = withAcceptedQuestionFlags2WholeCaseConcepts(withAcceptedQuestionFlags2Concepts(withAcceptedQuestionBankBatch2bRound2Concepts(n3Catalog)));
+const views = { legacy, "flags-round3": flags, "batch2a-round3": batch2a, "n1-round3": n1, "n2-round2": n2, "batch2b-round2": batch2b, "flags2-round1": flags2, "flags2-round3":flags2round3, "n3-round3":n3 };
 const readReview = (name: string) => JSON.parse(readFileSync(new URL("../../../docs/research/" + name, import.meta.url), "utf8")) as Array<{id: string; verdict: string}>;
 
 describe("projection-only manager shipping manifest", () => {
@@ -22,9 +27,9 @@ describe("projection-only manager shipping manifest", () => {
   expect(manifest.legacyBindings).toHaveLength(1423);
   // Separate exact-version tests pin the sixteen 2b rows and the single G06
   // row; every earlier lane retains its exact acceptance checks below.
-  expect(manifest.accepted.filter(row => !["batch2b-round2", "flags2-round1"].includes(row.sourceView))).toHaveLength(45);
-  expect(live.cases).toHaveLength(1136);
-  expect(catalog.cases).toHaveLength(1189);
+  expect(manifest.accepted.filter(row => !["batch2b-round2", "flags2-round1", "flags2-round3", "n3-round3"].includes(row.sourceView))).toHaveLength(45);
+  expect(live.cases).toHaveLength(1141);
+  expect(catalog.cases).toHaveLength(1229);
  });
  it("ships exactly twelve N1 review-three acceptances and parks all twenty-eight returned drafts", () => {
   const review = readReview("question-new-n1-review3-20261104.json");
@@ -72,6 +77,10 @@ describe("projection-only manager shipping manifest", () => {
    expect(node).toMatchObject({ questionVariantId: row.questionVariantId, primaryConceptId: row.conceptId });
   }
   for (const cs of legacy.cases) for (const node of cs.decisionNodes) {
+   if(manifest.replacements.some(row=>row.replaces===cs.id)){
+    expect(live.cases.find(row=>row.id===cs.id)).toEqual(flags2round3.cases.find(row=>row.id===cs.id));
+    continue;
+   }
    if (!manifest.accepted.some(row => row.caseId === cs.id && row.nodeId === node.id)) expect(live.cases.find(row => row.id === cs.id)!.decisionNodes.find(row => row.id === node.id)).toEqual(node);
   }
   const mixed = live.cases.find(cs => cs.id === "case.achalasia.night-regurgitation")!;

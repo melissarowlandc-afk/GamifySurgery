@@ -1,5 +1,6 @@
 import type { SyntheticClinicalCase, SyntheticClinicalRelease } from "./schema";
 import { QUESTION_SHIP_MANIFEST, type QuestionShipManifest } from "./question-ship-manifest";
+import { resolveQuestionShipCaseReplacements } from "./question-ship-case-replacements";
 
 /** The only runtime shipping boundary. Explicit catalogs remain usable.
  * Frozen encounters never pass through this projection. */
@@ -14,6 +15,9 @@ export function projectManagerAcceptedQuestions(
   const index = new Map(Object.entries({ ...views, catalog }).map(([name, release]) =>
     [name, new Map(release.cases.map(cs => [cs.id, cs]))]));
   const concepts = new Set(catalog.concepts.map(concept => concept.id));
+  const replacements=resolveQuestionShipCaseReplacements(catalog,legacy,views,manifest);
+  for(const issue of replacements.issues)
+    console.warn(`[question-ship] ${issue}; retaining legacy case and omitting unverifiable replacement.`);
   const rows = new Map<string, QuestionShipManifest["accepted"][number][]>();
   for (const row of manifest.accepted) {
     rows.set(row.caseId, [...(rows.get(row.caseId) ?? []), row]);
@@ -21,6 +25,19 @@ export function projectManagerAcceptedQuestions(
   const cases: SyntheticClinicalCase[] = [];
   for (const caseId of new Set([...legacyCases.keys(), ...rows.keys()])) {
     const fallback = legacyCases.get(caseId);
+    const replacement=replacements.byLegacy.get(caseId);
+    if(replacement){
+      // Use the complete accepted source, including its node list. Never merge
+      // retired neighbors into an explicitly approved one-node encounter.
+      cases.push(replacement);
+      continue;
+    }
+    if(replacements.blockedLegacyIds.has(caseId)||replacements.reservedTargetIds.has(caseId)){
+      // Also prevents a malformed whole-case relation from silently becoming a
+      // partial node override or an ordinary new-case acceptance.
+      if(fallback)cases.push(fallback);
+      continue;
+    }
     const overrides = rows.get(caseId) ?? [];
     if (!overrides.length) {
       if (fallback) cases.push(fallback);

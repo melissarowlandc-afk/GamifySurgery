@@ -1,0 +1,87 @@
+[
+  {
+    "id": "review.n3.recurrent-fistula-continence-reserve.v3",
+    "title": "Fistula operation and continence reserve",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [],
+    "fairness": [
+      "Scope: the supplied JSON has no literal 'after' fields or KEY-marked option strings. This review uses the three v3 clinicalCase presentations and decision-node stems, exhibits and option labels as the current visible items; none has a separate current update. Correct-answer flags identify the review keys only. Rationales, explanations and author self-checks are not evidence for the verdicts. Frozen v2 and parked items are outside this review.",
+      "Review-two comparison: the unequal MRI-versus-restricted-ultrasound comparison and the 'known defect'/'dedicated mapping' cues are gone. The revision takes the previously suggested alternative of testing an operation after providing a tract description. That repairs the earlier option-scope problem, but it does not establish resident-level difficulty.",
+      "The tract crosses the upper external sphincter despite a skin opening close to the verge. Loose seton placement with subsequent repair is a defensible best offered strategy for this recurrent tract. Normal current continence does not establish that sphincter division would be safe. No confidently identified clinical contradiction makes the key wrong. Cutting setons can have selected uses; the item should not teach that they are universally impermissible.",
+      "Too easy for the stated PGY-2/3 target: both alternatives divide sphincter, while the key is the familiar preservation strategy. The external opening and normal continence are potential novice traps, but neither is a close counterweight to the explicitly described upper-muscle crossing for a typical surgery resident. The longer anatomical description adds reading, not a second consequential decision. Operationally this remains recognition of substantial sphincter involvement followed by the standard broad treatment rule.",
+      "Cover-the-key attack: no strong nonmedical wording match, length outlier, grammatical cue, convergence pattern or option-specific negative was found. The options have similar form and length. The normal bowel-function and cavity observations are legitimate clinical data, not independent reasons to delete either distractor. The principal failure is weak clinical competition, rather than a demonstrated lexical giveaway.",
+      "Importance: high for practical colorectal surgery and general-surgery examination preparation. Avoiding continence injury while treating recurrent fistula is consequential. Realism: a draining recurrent fistula evaluated in colorectal clinic with MRI is plausible. A prose MRI report is usable, although an original labelled schematic would better test spatial interpretation if that is the intended objective.",
+      "This is an offline editorial assessment, not source verification or clinical approval. Difficulty is a qualitative prediction. The exact version remains needs_clinician_review pending Melissa Rowland's sign-off."
+    ],
+    "suggestions": [
+      "Retain the high-yield concept, but compare genuinely competing sphincter-preserving strategies at one defined treatment stage rather than offering two sphincter-dividing alternatives. For example, staged drainage versus a named definitive repair could work only if clinician-supported observations actually determine the sequence; the present record does not establish that comparison.",
+      "State the operative decision completely, such as the initial procedure versus definitive repair, and name the actual proposed procedure in each option. Do not use unspecified 'staged repair' as the only flexible plan against two fully specified techniques.",
+      "If anatomy interpretation remains central, provide a clinician-checked original schematic and make a particular anatomical relationship change the preferred action. Do not merely add more tract descriptors or invent a sphincter-percentage cutoff.",
+      "Alternatively seek explicit acceptance as a foundational operative-safety item; do not call this exact option set a difficult routine-resident question."
+    ]
+  },
+  {
+    "id": "review.n3.delayed-regurgitation-proximal-anatomic-study.v3",
+    "title": "Proximal swallowing investigation",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "Endoscopic swallowing observation, first bolus",
+        "why": "Beside the option 'Upper endoscopy (EGD)', the unspecified endoscopic label creates a partial repeat-test elimination shortcut: a reader may reject EGD because an 'endoscopic' examination has apparently already occurred. These are different examinations. This does not uniquely identify the key, but it can reduce the choices without understanding the clinical distinction. Name the actual swallowing examination and its route."
+      }
+    ],
+    "fairness": [
+      "Review-two comparison: the retained-food-compartment teaching sentence, advertised missing fluoroscopic field and saved-images-versus-acquired-images ambiguity are removed. The current decision instead depends on an observed temporal sequence. The previous endoscopy and incomplete image archive must not be imported into this version.",
+      "Two consequential steps are present: distinguish delayed retrograde return after initial pharyngeal clearance from difficulty with initial transfer, then select anatomical contrast evaluation before a pressure study or direct luminal examination. EGD remains a recognizable competing initial dysphagia investigation. Predicted difficulty is moderate, rather than hard, because the timed return carries most of the discrimination.",
+      "A fluoroscopic study of the pharyngoesophageal region is a defensible best offered investigation for the suspected proximal retention process. The observations do not by themselves prove a diverticulum or exclude a more distal source. The key should remain an investigation, not a declaration of the diagnosis.",
+      "Clinical-realism repair needed: 'no material enters the laryngeal vestibule during that swallow' overstates direct observation if this is a flexible endoscopic evaluation of swallowing. Swallow-related whiteout limits visualization during the swallow itself. Describe what was visible before and after it, rather than asserting uninterrupted exclusion of entry. The earlier phrase 'Dyed puree crosses the pharynx' should likewise be checked against the actual endoscopic view being represented.",
+      "The task is complete and the investigation labels are comparable in length and category. Apart from the potentially misleading shared endoscopy terminology, there is no strong key-only wording match, convergence, absolute in the choices, preference cue or unique specificity advantage. The delayed-return observation is necessary diagnostic evidence, not a teaching sentence to delete merely because it favors contrast assessment.",
+      "Importance: moderate-to-high for general-surgery foregut practice and examination preparation; selecting the initial investigation for suspected proximal structural disease is useful. Realism: referral through a swallowing clinic is plausible, but the report should identify the examination and reporting clinician. A prose record can support a test-selection question; do not imply that the learner has interpreted an actual video.",
+      "No external sources were consulted. The exact 40-second interval is treated as a fictional observation, not a verified diagnostic threshold. This editorial assessment does not validate its source mapping or clinically approve the version; it remains needs_clinician_review."
+    ],
+    "suggestions": [
+      "Identify the study explicitly as a flexible endoscopic evaluation of swallowing, if that is what was intended, and identify who performed or interpreted it. This separates it from EGD without adding a sentence telling the learner which test is missing.",
+      "Replace the assertion about what happened throughout the swallow with clinician-verified pre-swallow and post-swallow observations. For example, report whether dyed material was visible in the vestibule on the available views, while retaining the later return from below. Do not convert a limited view into proof that aspiration never occurred.",
+      "Retain the neutral next-investigation task and comparable choices. Have the clinician confirm that the named esophagram protocol adequately covers the suspected region; do not treat the observed point of re-entry as proof of the entire source location.",
+      "Preserve the temporal inference and avoid restoring the prior 'retained-food compartment' explanation or an artificial missing-image gap. This item needs a targeted acquisition-description repair, not a wholesale new clinical scenario."
+    ]
+  },
+  {
+    "id": "review.n3.postrepair-pain-new-dynamic-finding.v3",
+    "title": "Changed post-repair pain assessment",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "Dynamic inguinal and pelvic magnetic resonance imaging",
+        "why": "Only the key explicitly combines two anatomical territories. Against a hip-specific study and a single-nerve procedure, it reads as the broadest answer to a vignette deliberately containing several possible pain sources. A testwise reader can prefer the most inclusive label without resolving the clinical priority. This is a coverage/comprehensiveness cue, not a length outlier."
+      },
+      {
+        "phrase": "Internal rotation of the left hip also reproduces part of the deep pain.",
+        "why": "The qualifier 'part of' pre-limits the hip explanation. Paired with the broad inguinal-and-pelvic key and a hip-restricted competitor, it encourages 'choose the test covering everything' elimination. If partial reproduction was actually elicited, preserve the observation, but describe which symptom or location was reproduced rather than authoring an unexplained fractional attribution."
+      }
+    ],
+    "fairness": [
+      "Review-two comparison: the repeated failed-action distractors and the statement that burning pain is less prominent have been removed. All three offered procedures are now new in the visible history. The adequate dynamic ultrasound remains, appropriately, and 'inguinal and pelvic' improves the MRI's anatomical specificity. These are meaningful repairs.",
+      "Two-step reasoning remains possible: distinguish overlapping superficial sensory, hip-provoked and exertional groin observations without treating the ultrasound as conclusive, then select an investigation for the unresolved disabling complaint. Moderate potential remains, but the broadest-coverage shortcut weakens the intended discrimination.",
+      "Selected dynamic MRI is reasonable after persistent clinical concern and a relevant negative ultrasound; the record does not prove a recurrence. However, I cannot certify a unique best sequence from these observations. Hip rotation reproduces deep pain, while the reported contour change has not been observed. The question does not establish sufficiently why a hip-focused evaluation should rank behind the broader study in this patient. The broad study's label alone does not establish equivalent assessment of every hip or pelvic pain source.",
+      "The nearest hip alternative also needs a realism check: contrast MRI with arthrography is a specific diagnostic choice, not a generic hip assessment. The visible record provides no prior hip assessment or findings explaining why that acquisition is the credible competing next procedure. I am not asserting it is never appropriate; its indication and relative priority are unresolved here.",
+      "The nerve block is now a credible new investigation for reproduced cutaneous burning, rather than an explicitly failed repeat. It would not necessarily resolve the separate exertional ache. 'Deep pain interrupts lifting at work' legitimately establishes functional importance and should not simply be deleted to make the block more tempting. The task should identify that target rather than ambiguously asking about all of the patient's 'pain'.",
+      "Protocol repair is partial: 'dynamic' suggests provocation and the label now names the groin, but the visible choice does not state the relevant provocation or what the pelvic component actually evaluates. Review two specifically requested adequate groin coverage, dynamic acquisition and assessment of the competing musculoskeletal concern. A clinician should confirm a real protocol before the item claims that one study resolves both pathways.",
+      "Importance: high for general-surgery practice; avoiding reflex attribution of postrepair pain to a recurrence or a nerve is useful. The exact MRI-versus-arthrography sequencing is more specialized than the broader high-yield principle. Realism: a hernia-clinic reassessment two years after repair is plausible. The normal abdominal findings appropriately support outpatient investigation and do not eliminate any of these three diagnostic options.",
+      "No confidently established false diagnosis or unsafe key is identified; the problem is incomplete ranking support and presentation cues. Clinical guidance and protocols were not independently verified offline. The exact version remains needs_clinician_review."
+    ],
+    "suggestions": [
+      "Define the task around the work-limiting exertional ache or another explicitly chosen clinical target. Do not imply that one investigation must explain every sensory and musculoskeletal symptom.",
+      "Describe the actual hip-provoked symptom and its relation to the usual lifting pain. Supply only clinician-supported examination or prior-workup observations that genuinely determine whether a groin-focused or hip-focused pathway comes next; do not invent exclusions to force MRI.",
+      "Have a clinician specify the practical MRI coverage and provocation and confirm what competing pathology it can assess. Give competing investigations comparable protocol specificity, avoiding a uniquely broad 'covers everything' key.",
+      "Replace hip arthrography with a clinically credible investigation at this stage unless the visible record supports that particular acquisition. Preserve the technically relevant negative ultrasound rather than manufacturing inadequacy or bringing back an identical-repeat foil.",
+      "If the supplied findings do not support a single preferred diagnostic sequence, narrow the objective or withhold the item for clinical review instead of treating broader imaging as inherently superior."
+    ]
+  }
+]

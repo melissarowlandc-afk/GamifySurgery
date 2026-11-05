@@ -64,7 +64,7 @@ async function mount(initialState = initial()) {
       onEnterBuildMode: session.enterBuildMode, onExitBuildMode: session.exitBuildMode,
       onBeginPlacement: session.beginPlacement, onCancelPlacement: session.cancelPlacement, onRotatePlacement: session.rotatePlacement,
       onPlaceRoom: place, onSelectRoom: session.selectRoom, onBeginMoveSelectedRoom: session.beginMoveSelectedRoom,
-      onUpgradeSelectedRoom: session.upgradeSelectedRoom, onSellSelectedRoom: sell,
+      onUpgradeSelectedRoom: session.upgradeSelectedRoom, onUpgradeRoom: session.upgradeRoom, onSellSelectedRoom: sell,
       onPlaceDoor: session.placeDoor, onRemoveDoor: session.removeDoor, onUndoBuildAction: session.undoBuildAction,
     })} />;
   }
@@ -170,8 +170,9 @@ describe("native phone Build through the real shared session", () => {
     expect(art.attributes["aria-label"]).toContain("Waiting Room");
     const image = env.find(node => node.tagName === "IMG" && node.attributes.src === roomThumbnailAsset("room.waiting")!.src);
     expect(image.attributes.alt).toContain("freshly built room preview");
-    await env.click("My Rooms"); expect(env.element.textContent).toContain("Open Front Desk");
-    expect(env.element.textContent).toContain("construction"); expect(env.element.textContent).toContain("Unlock Level");
+    await env.click("My Rooms"); expect(env.button("Open Front Desk")).toBeDefined();
+    expect(env.element.textContent).toContain("Tier 1/1"); expect(env.element.textContent).toContain("Access ready");
+    expect(env.element.textContent).not.toContain("construction"); expect(env.element.textContent).not.toContain("Unlock Level");
     await env.click("Close Build"); expect(env.session.buildMode).toBe(true); // Close the catalog; Done owns guarded exit.
   });
   it("ghost previews do not write or mutate; ✓ dispatches exactly one placement command even before rerender", async () => {
@@ -362,6 +363,24 @@ describe("native phone Build through the real shared session", () => {
     await env.clickElement(upgrade); expect(env.session.state.rooms.find(candidate => candidate.id === room.id)?.upgradeLevel).toBe(2);
     expect(env.session.state.cash).toBe(before.cash - definition.upgradeCosts[0]!); expect(env.session.buildUndoCount).toBe(1);
     await env.click("Undo (1)"); expect(env.session.state).toBe(before);
+  });
+  it("upgrades directly from My Rooms in one tap, with exact full-refund Undo and no room-selection race", async () => {
+    const env = await mount(addWaiting(initial())); await env.click("Build"); await env.click("My Rooms");
+    const before = env.session.state;
+    const room = before.rooms.find(candidate => candidate.id === "phone.waiting")!;
+    await env.click("Upgrade Waiting Room");
+    expect(env.session.selectedRoomInstanceId).toBeNull();
+    expect(env.session.state.rooms.find(candidate => candidate.id === room.id)?.upgradeLevel).toBe(2);
+    expect(env.session.state.cash).toBe(before.cash - getRoomDefinition(room.roomDefinitionId)!.upgradeCosts[0]!);
+    expect(env.session.buildUndoCount).toBe(1); expect(env.button("My Rooms").attributes["aria-selected"]).toBe("true");
+    await env.click("Undo (1)"); expect(env.session.state).toBe(before);
+  });
+  it("closes a room and its catalog in one tap while keeping guarded Build Done and Undo available", async () => {
+    const env = await mount(addWaiting(initial())); await env.click("Build"); await env.click("My Rooms");
+    await env.click("Open Waiting Room"); await env.click("Close Waiting Room");
+    expect(allElements(env.element, node => node.attributes.class === "mobile-build-catalog")).toHaveLength(0);
+    expect(allElements(env.element, node => node.attributes.class === "mobile-build-room")).toHaveLength(0);
+    expect(env.session.buildMode).toBe(true); expect(env.button("Done")).toBeDefined(); expect(env.button("Undo")).toBeDefined();
   });
   it("room sale keeps the preview token, rejects a stale token, refunds the approved version and is undoable", async () => {
     const state = addWaiting(initial()); state.rooms.at(-1)!.roomDefinitionId = "room.reading";

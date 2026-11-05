@@ -1,4 +1,5 @@
 import {describe,expect,it} from "vitest";
+import {QUESTION_SHIP_MANIFEST as manifest} from "@gamify-surgery/clinical-content";
 import {QUESTION_NEW_N3_CASES as cases,QUESTION_NEW_N3_TIMING_ENTRIES as timings,QUESTION_CATALOG_RELEASE,SYNTHETIC_CLINICAL_RELEASE,type SyntheticClinicalCase} from "@gamify-surgery/clinical-content";
 import {createLevelFourRoomsQaContext,createLevelFourRoomsQaState} from "../../../tests/fixtures/level-four-rooms";
 import {applyFsrsReview,createNewFsrsCard,deserializeGameState,gameReducer,getClinicalCaseEligibilityIssue,
@@ -15,14 +16,18 @@ function reviewed(state:GameState,cs:SyntheticClinicalCase,dueAtMs:number){
   questionVariantId:n.questionVariantId,patientPresentationVariantId:cs.patientPresentationVariantId,primaryConceptId:conceptId,answerChoiceId:n.answerChoices[0]!.id,
   correct:true,rating:"Good",reviewedAtMs:1000,facilityTick:0,schedulerLog:update.log}]};
 }
-describe("N3 explicit draft supply with unchanged default runtime",()=>{
- it.each(cases.map(cs=>[cs.id,cs]as const))("admits %s in the explicit catalog at its stage and excludes it from default supply",(_id,cs)=>{
+describe("N3 explicit historical supply with exact manager-accepted default versions",()=>{
+ it.each(cases.map(cs=>[cs.id,cs]as const))("admits %s in the explicit catalog and defaults only to its exact accepted version",(_id,cs)=>{
   const ctx=context([cs]),state=vacant(cs.earliestFacilityStage as 3|4,ctx);
-  expect(SYNTHETIC_CLINICAL_RELEASE.cases.some(c=>c.id===cs.id)).toBe(false);
+  const accepted=manifest.accepted.find(row=>row.sourceView==="n3-round3"&&row.caseId===cs.id);
+  expect(SYNTHETIC_CLINICAL_RELEASE.cases.find(c=>c.id===cs.id)?.decisionNodes[0]!.questionVariantId).toBe(accepted?.questionVariantId);
   expect(getClinicalCaseEligibilityIssue({...state,facilityLevel:(cs.earliestFacilityStage-1) as GameState["facilityLevel"]},cs,ctx)).toContain(`Level ${cs.earliestFacilityStage}`);
   expect(getClinicalCaseEligibilityIssue(state,cs,ctx)).toBeNull();
   expect(selectRoutineClinicalCase(state,[cs],NOW)).toMatchObject({kind:"new_concept",clinicalCase:{id:cs.id}});
-  const absent=gameReducer(state,admission(cs),base);expect(absent.operationReceipts["n3.admit"]?.status).toBe("rejected");
+  const freshDefault=gameReducer(state,admission(cs),base);
+  expect(freshDefault.operationReceipts["n3.admit"]?.status).toBe(accepted?"applied":"rejected");
+  if(accepted)expect(freshDefault.encounters["encounter.n3"]!.frozenCase.decisionNodes[0])
+    .toMatchObject({questionVariantId:accepted.questionVariantId,primaryConceptId:accepted.conceptId});
   const admitted=gameReducer(state,admission(cs),ctx);expect(admitted.operationReceipts["n3.admit"]?.status).toBe("applied");
   const e=admitted.encounters["encounter.n3"]!,node=e.frozenCase.decisionNodes[0]!;
   expect(node.questionVariantId).toBe(cs.decisionNodes[0]!.questionVariantId);

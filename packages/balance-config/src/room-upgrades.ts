@@ -1,3 +1,5 @@
+import { STAFF_BREAK_POLICY } from "./staff-breaks";
+
 export const ROOM_UPGRADE_BASE_LEVEL = 1;
 export const ROOM_UPGRADE_MAXIMUM_LEVEL = 5;
 
@@ -175,10 +177,10 @@ function benefitDescription(definition: RoomUpgradeDefinition, amount: number): 
     case "examination_satisfaction_points": return `+${amount} satisfaction ${points} after ${definition.benefitSubject}`;
     case "recovery_satisfaction_points": return `+${amount} satisfaction ${points} after recovery`;
     case "daily_coffee_morale_points": return `+${amount} staff morale ${points} from daily coffee`;
-    case "break_morale_points": return `+${amount} staff morale ${points} per break`;
+    case "break_morale_points": return `+${amount} staff morale ${points} per break; +${amount / definition.amountPerUpgrade * STAFF_BREAK_POLICY.dailyMoraleGainPerUpgrade} daily morale from the best operational staff room`;
     case "founder_office_morale_points": return `+${amount} staff morale ${points}; improved office appearance`;
     case "garden_satisfaction_points": return `+${amount} satisfaction ${points} for visitors`;
-    case "gym_morale_points": return `+${amount} staff morale ${points} after gym use`;
+    case "gym_morale_points": return `+${amount} staff morale ${points} after gym use; +${amount / definition.amountPerUpgrade * STAFF_BREAK_POLICY.dailyMoraleGainPerUpgrade} daily morale from the best operational staff room`;
   }
 }
 

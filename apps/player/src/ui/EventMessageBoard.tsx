@@ -14,6 +14,7 @@ import type {
   NeedsYouItemView,
 } from "./types";
 import { NeedsYouTray } from "./NeedsYouTray";
+import { retainPresentationIds } from "../recentPresentationIds";
 
 interface EventMessageBoardProps {
   items: MessageBoardItemView[];
@@ -99,7 +100,8 @@ export function EventMessageBoard({
   }, []);
   // Seed every supplied ID, including rows outside the current display cap.
   // A remount therefore treats restored history as history rather than news.
-  const knownIdsRef = useRef(new Set(items.map((item) => item.id)));
+  const knownIdsRef = useRef<Set<string> | null>(null);
+  if (!knownIdsRef.current) knownIdsRef.current = new Set(items.map(item => item.id));
   const emphasisTimersRef = useRef(
     new Map<string, number>(),
   );
@@ -239,9 +241,9 @@ export function EventMessageBoard({
   useLayoutEffect(() => {
     const currentInputIds = new Set(items.map((item) => item.id));
     const genuinelyNewIds = [...currentInputIds].filter(
-      (id) => !knownIdsRef.current.has(id),
+      (id) => !knownIdsRef.current!.has(id),
     );
-    for (const id of currentInputIds) knownIdsRef.current.add(id);
+    knownIdsRef.current = retainPresentationIds(knownIdsRef.current!, currentInputIds);
     const visibleIds = new Set(listItems.map((item) => item.id));
     const mountedNewIds = genuinelyNewIds.filter((id) => visibleIds.has(id));
     const priorSnapshot = scrollSnapshotRef.current;

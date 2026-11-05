@@ -9101,3 +9101,23 @@ these native checks. Local work only; no backup was created. After acceptance,
 the manager owns the audited checkpoint reminder (owner may say "push to GitHub").
 Canonical launch/origin/profile pathways and existing saves are unchanged.
 
+
+## 2026-11-05 - Release port and Level 5 rebind 18 worker handoff
+
+Local GS-release-only work from user-stated 92f1da71. Ported the manager-accepted 69-row question projection, owner-corrected Break Room policy, phone space/one-tap UI and 13-path thermal presentation lane. Main tree was read-only. Dispositions: .local-dev/release-verify/port18-20261105.json. Default hash 77261db946b72dbf0f001e6ce11aab75928b561a19a8a17a874274f08b185a30 (1,141 cases / 1,452 nodes / 605 meanings); earlier approvals and frozen encounters preserved.
+
+Guarded native journey/lower: 30,501 commands / 6,790,515 closing cents / 471 completions / zero walkouts. Cash reconciles; all nine saves/three reports regenerate; inputHistory entry 18 preserves the complete previous map. Native drivers, Level 5 guard/assertions, save formats and codec/performance limits stay exact. Snapshot/journal old-break/G03/G05/N3 continuity and 25 legacy schema comparisons are proven.
+
+Latest full suites:
+
+- clinical-context-workbench: 43 passed / 0 failed / 0 skipped, 8 files.
+- player: 3584 passed / 1 failed / 0 skipped, 378 files.
+- balance-config: 164 passed / 0 failed / 0 skipped, 24 files.
+- clinical-authoring: 81 passed / 0 failed / 0 skipped, 7 files.
+- clinical-content: 1337 passed / 0 failed / 0 skipped, 121 files.
+- clinical-research: 83 passed / 0 failed / 0 skipped, 8 files.
+- game-domain: 5158 passed / 0 failed / 1 skipped, 197 files.
+
+Validation is NOT all green: unchanged player levelFourIntegration.test.ts:50 has the strict float comparison 48.595041322314046 vs 48.59504132231405. Isolated current run fails; captured original-source control passes 3/3. Do not classify it as a prior release failure or silently loosen it. Manager owns the precision decision. Root/boundary Git inventory blocked before spawn under No Git; manager reruns permitted root gates. Seven typechecks, player build, launcher, 33 lint tests and phone e2e TypeScript pass. No browser/device thermal acceptance was claimed.
+
+Full exact file lists, artifact/input hashes, totals, failures and command outputs: docs/execplans/gs028-stats-ethics-overhaul-20261007.md (rebind 18). Private receipts: .local-dev/release-port-rebind18-20261105/. One unrelated concurrent ui-density screenshot change is preserved and excluded from this lane. No Git, installs, external network, agents, commit, push or deploy; no new backup is claimed. Owner opening pathway unchanged. Stop here for manager review.

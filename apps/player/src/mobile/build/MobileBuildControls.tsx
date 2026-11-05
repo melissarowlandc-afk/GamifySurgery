@@ -18,7 +18,7 @@ export function MobileBuildControls({ props, build, onCatalog }: { props: Protot
     return () => observer.disconnect();
   }, [build.setControlsHeight]);
   const price = placement ? props.roomOptions.find(option => option.id === placement.definitionId)?.costLabel : null;
-  return <aside ref={ref} className="mobile-build-controls" aria-label="Build actions" data-phone-build-controls="true">
+  return <aside ref={ref} className={`mobile-build-controls${!placement && !hallway && !doors ? " is-idle" : ""}`} aria-label="Build actions" data-phone-build-controls="true">
     <div className="mobile-build-persistent">
       <button type="button" data-phone-anchor="build-catalog" onClick={onCatalog}>Room catalog</button>
       <button type="button" disabled={!props.buildUndoCount} onClick={build.undo} title={props.buildUndoLabel ?? undefined}>Undo{props.buildUndoCount ? ` (${props.buildUndoCount})` : ""}</button>

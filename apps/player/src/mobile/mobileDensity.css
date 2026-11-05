@@ -1,0 +1,189 @@
+/* Phone UI only. Keep the desktop and the facility renderer untouched. */
+.mobile-shell .mobile-sheet-heading { min-height: 48px; padding: 2px 8px; gap: 4px; flex-wrap: wrap; }
+.mobile-shell .mobile-sheet-heading h2 { min-width: 0; margin: 0; font-size: 18px; }
+.mobile-shell .mobile-sheet-heading-actions,
+.mobile-shell .mobile-sheet-heading-actions > .question-flag-control { display: contents; }
+.mobile-shell .mobile-sheet-heading-actions > button { order: 2; }
+.mobile-shell .mobile-sheet-heading-actions .cs-flag { min-width: 44px; min-height: 44px; padding: 4px 8px; }
+/* Nonmodal composer: answering, the clock, Close and the tabs remain reachable. */
+.mobile-shell .mobile-sheet-heading-actions .question-flag-composer {
+  position: absolute; z-index: 8; top: 52px; left: 8px; right: 8px;
+  width: auto; max-width: none; max-height: calc(100% - 60px); overflow: auto;
+  margin: 0; padding: 8px; color: var(--ink); background: var(--paper-raised);
+  border: var(--mobile-border); border-radius: 8px; box-shadow: 0 3px 8px #0003;
+  font-size: 14px; line-height: 1.35;
+}
+.mobile-shell .mobile-sheet-heading-actions .question-flag-receipt {
+  order: 3; flex: 1 0 100%; max-width: none; max-height: 90px; overflow: auto;
+  margin: 0; padding: 4px 6px; border: var(--mobile-border); border-radius: 6px;
+  background: var(--panel); color: var(--ink); font-size: 12px; font-weight: 400;
+}
+.mobile-shell .mobile-sheet-body,
+.mobile-shell .mobile-manage-detail-body { padding: 8px; overflow-wrap: break-word; }
+.mobile-shell .mobile-tab-bar button,
+.mobile-shell .mobile-session-link { min-height: 44px !important; }
+.mobile-shell .mobile-chart-scroll { padding: 8px; overflow-wrap: break-word; }
+.mobile-shell .mobile-chart-identity { gap: 4px 8px; padding-bottom: 6px; }
+.mobile-shell .mobile-chart-identity h3 { font-size: 18px; }
+.mobile-shell .mobile-chart-identity > .question-flag-control { flex: 0 0 auto; }
+.mobile-shell .mobile-chart-status { padding: 4px 6px; }
+.mobile-shell .mobile-chart-story { padding-block: 4px; }
+.mobile-shell .mobile-chart-story > p { margin-block: 6px; }
+.mobile-shell .mobile-chart-story p,
+.mobile-shell .mobile-question { line-height: 1.4; }
+.mobile-shell .mobile-vitals { gap: 4px 12px; margin-block: 6px; font-size: 14px; }
+.mobile-shell .mobile-decision-heading h3 { margin-block: 4px; }
+.mobile-shell .mobile-question { margin-block: 6px 8px; }
+.mobile-shell .mobile-answers { gap: 6px; }
+.mobile-shell .mobile-answer { gap: 3px; padding: 8px; }
+.mobile-shell .mobile-answer-wait { gap: 2px; padding-top: 2px; }
+.mobile-shell .mobile-chart-actions { gap: 4px; padding: 4px 8px; }
+.mobile-shell .mobile-chart-actions:has(> button:nth-child(2)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.mobile-shell .mobile-chart-actions button { min-height: 44px !important; font-size: 14px; }
+.mobile-shell .mobile-chart-phases { gap: 6px; margin-block: 6px; }
+.mobile-shell .mobile-chart-exhibit,
+.mobile-shell .mobile-feedback,
+.mobile-shell .mobile-chart-pending,
+.mobile-shell .mobile-chart-result,
+.mobile-shell .mobile-chart-outcome,
+.mobile-shell .mobile-chart-update { margin-block: 8px; padding: 8px; }
+.mobile-shell .mobile-chart-exhibit h4,
+.mobile-shell .mobile-chart-exhibit p { margin-block: 6px; }
+.mobile-shell .mobile-chart-exhibit summary { display: flex; align-items: center; }
+.mobile-shell .mobile-exhibit-column-label { font-size: 13px; }
+/* A single value column is a definition list; keep all labels and values intact. */
+.mobile-shell .mobile-chart-exhibit .mobile-label-values { margin: 0; }
+.mobile-shell .mobile-chart-exhibit .mobile-label-values > div {
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: 2px;
+  padding-block: 6px; border-top: var(--mobile-border);
+}
+.mobile-shell .mobile-label-values dt { font-weight: 700; }
+.mobile-shell .mobile-label-values dd { margin: 0; line-height: 1.4; }
+.mobile-shell .mobile-label-values,
+.mobile-shell .mobile-table-scroll { overflow-wrap: normal; word-break: normal; hyphens: manual; }
+.mobile-shell .mobile-table-scroll { overflow-x: auto; overscroll-behavior-x: contain; }
+.mobile-shell .mobile-table-scroll table { width: max-content; min-width: 100%; }
+.mobile-shell .mobile-table-scroll th,
+.mobile-shell .mobile-table-scroll td { min-width: 9rem; max-width: 22rem; padding: 6px; white-space: normal; overflow-wrap: normal; word-break: normal; }
+.mobile-shell .mobile-table-scroll caption { text-align: left; font-weight: 700; }
+
+/* Lists keep the clinical/status information, without the card-sized gutters. */
+.mobile-shell .mobile-patients h3,
+.mobile-shell .mobile-alerts h3,
+.mobile-shell .mobile-goals h3 { margin-bottom: 6px; font-size: 16px; }
+.mobile-shell .mobile-patient-folder + .mobile-patient-folder { margin-top: 12px; }
+.mobile-shell .mobile-card-stack { gap: 6px; }
+.mobile-shell .mobile-patient-card { gap: 4px; padding: 8px; }
+.mobile-shell .mobile-card-identity { gap: 6px; }
+.mobile-shell .mobile-card-identity strong { font-size: 16px; }
+.mobile-shell .mobile-patient-status { padding: 3px 6px; }
+.mobile-shell .mobile-card-meta { gap: 2px 8px; }
+.mobile-shell .mobile-empty { padding: 6px 8px; }
+.mobile-shell .mobile-need-card,
+.mobile-shell .mobile-feed-row { margin-block: 6px; padding: 8px; }
+.mobile-shell .mobile-need-card p,
+.mobile-shell .mobile-feed-row > p { margin-block: 4px; line-height: 1.35; }
+.mobile-shell .mobile-need-card > button { margin-top: 4px; }
+.mobile-shell .mobile-clinic-feed { margin-top: 12px; }
+.mobile-shell .mobile-feed-row h4 { margin-block: 4px; }
+.mobile-shell .mobile-goals > p { margin-block: 4px 8px; }
+.mobile-shell .mobile-goal-setup li { margin-top: 6px; }
+.mobile-shell .mobile-goals-advance { padding: 4px 0; bottom: -8px; }
+.mobile-shell .mobile-cash-explanation h3 { margin-block: 0 6px; }
+.mobile-shell .mobile-cash-explanation p,
+.mobile-shell .mobile-inspector-details p,
+.mobile-shell .mobile-quick-control p { margin-block: 6px; }
+.mobile-shell .mobile-quick-control progress { margin-top: 6px; }
+.mobile-shell .mobile-menu { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 6px; }
+.mobile-shell .mobile-menu > :not(button) { grid-column: 1 / -1; }
+.mobile-shell .mobile-menu fieldset { margin: 0; padding: 4px 6px 6px; }
+.mobile-shell .mobile-menu > p { margin-block: 4px; font-size: 12px; }
+.mobile-shell .mobile-menu button { font-size: 14px; }
+.mobile-shell .mobile-menu .beta-account { padding: 4px 8px; }
+.mobile-shell .help-topic-detail h3 { margin-block: 4px; font-size: 16px; }
+.mobile-shell .help-topic-detail p { margin-block: 6px; }
+
+/* Manage already has icon grids: recover its excess header and fact-row space. */
+.mobile-shell .mobile-manage-heading { margin-bottom: 4px; }
+.mobile-shell .mobile-manage-heading > span { padding: 3px 6px; }
+.mobile-shell .mobile-manage-overview { gap: 4px; margin-bottom: 4px; padding-bottom: 4px; }
+.mobile-shell .mobile-manage-segments { top: -8px; margin-bottom: 6px; padding: 2px; gap: 2px; }
+.mobile-shell .mobile-manage-segments button { min-height: 44px !important; padding: 4px 2px; font-size: 14px; }
+.mobile-shell .mobile-manage-tile { min-height: 80px !important; padding: 4px; }
+.mobile-shell .mobile-manage-portraits .mobile-manage-tile { min-height: 110px !important; }
+.mobile-shell .mobile-manage-card { padding: 8px; }
+.mobile-shell .mobile-manage h3 { font-size: 16px; }
+.mobile-shell .mobile-manage p { margin-block: 4px; }
+.mobile-shell .mobile-manage-facts { margin-block: 4px; }
+.mobile-shell .mobile-manage-facts > div { padding-block: 4px; gap: 6px; }
+.mobile-shell .mobile-manage-hire { margin-top: 6px; }
+.mobile-shell .mobile-employee { margin-top: 6px; }
+.mobile-shell .mobile-employee-toggle,
+.mobile-shell .mobile-employee-body { padding: 6px; }
+.mobile-shell .mobile-manage-subcard { margin-top: 6px; padding-top: 6px; }
+.mobile-shell .clinic-competition { padding: 2px; }
+.mobile-shell .competition-table-wrap table { table-layout: auto; min-width: 480px; }
+.mobile-shell .clinic-competition th,
+.mobile-shell .clinic-competition td { padding: 4px 6px; overflow-wrap: normal; word-break: normal; }
+
+/* Build: two columns of compact choices; inspect prose only when wanted. */
+.mobile-shell .mobile-sheet.is-bottom:has(.mobile-build-catalog),
+.mobile-shell .mobile-sheet.is-bottom:has(.mobile-build-room) { max-height: calc(100% - var(--mobile-build-control-height, 56px)); }
+.mobile-shell .mobile-build-catalog > p { margin-block: 0 4px; font-size: 14px; }
+.mobile-shell .mobile-build-tools,
+.mobile-shell .mobile-build-tabs { gap: 4px; margin-block: 4px; }
+.mobile-shell .mobile-build-tools button,
+.mobile-shell .mobile-build-tabs button { padding: 4px; font-size: 14px; }
+.mobile-shell .mobile-build-cards { gap: 6px; }
+.mobile-shell .mobile-build-cards.is-new { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+.mobile-shell .mobile-build-cards > .mobile-prestige-build-grid,
+.mobile-shell .mobile-build-cards > .mobile-earlier-build-rooms { grid-column: 1 / -1; }
+.mobile-shell .mobile-build-card { display: flex; min-width: 0; flex-direction: column; gap: 0; padding: 0; overflow: hidden; }
+.mobile-shell .mobile-build-card .mobile-build-choice {
+  display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; justify-items: center;
+  gap: 3px; width: 100%; min-height: 104px !important; margin: 0; padding: 6px;
+  border: 0; border-radius: 0; text-align: center; line-height: 1.2;
+}
+.mobile-shell .mobile-build-choice .mobile-room-thumbnail { width: 48px; height: 34px; }
+.mobile-shell .mobile-build-choice > strong { font-size: 14px; }
+.mobile-shell .mobile-build-choice > span,
+.mobile-shell .mobile-build-choice > small { font-size: 12px; }
+.mobile-shell .mobile-build-card-details { padding-inline: 6px; border-top: var(--mobile-border); font-size: 13px; }
+.mobile-shell .mobile-build-card-details > summary { display: flex; align-items: center; justify-content: center; font-size: 13px; }
+.mobile-shell .mobile-build-card-details > summary::before { content: "+ "; white-space: pre; }
+.mobile-shell .mobile-build-card-details[open] > summary::before { content: "− "; }
+.mobile-shell .mobile-build-card-details > p { font-size: 13px; margin-block: 4px 6px; }
+.mobile-shell .mobile-owned-build-card { display: flex; align-items: stretch; gap: 4px; min-width: 0; border: var(--mobile-border); border-radius: 8px; background: var(--paper-raised); }
+.mobile-shell .mobile-build-open { display: flex; flex: 1 1 auto; align-items: center; gap: 6px; min-width: 0; padding: 6px; border: 0; background: transparent; text-align: left; }
+.mobile-shell .mobile-build-open .mobile-room-thumbnail { flex: 0 0 48px; width: 48px; height: 34px; }
+.mobile-shell .mobile-build-open > span { display: grid; gap: 2px; min-width: 0; }
+.mobile-shell .mobile-build-open strong { font-size: 14px; }
+.mobile-shell .mobile-build-open small { font-size: 12px; line-height: 1.25; }
+.mobile-shell .mobile-build-quick-upgrade { display: flex; flex: 0 0 84px; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 4px; border-block: 0; border-right: 0; border-radius: 0 8px 8px 0; font-size: 13px; }
+.mobile-shell .mobile-prestige-owned-card { display: flex; min-width: 0; flex-direction: column; gap: 4px; }
+.mobile-shell .mobile-prestige-owned-card .mobile-build-quick-upgrade { flex: 0 0 auto; flex-direction: row; border: var(--mobile-border); border-radius: 8px; }
+.mobile-shell .mobile-build-controls { padding: 4px 8px; }
+.mobile-shell .mobile-build-persistent { gap: 4px; }
+.mobile-shell .mobile-build-controls p { margin-block: 4px; }
+.mobile-shell .mobile-build-controls > .mobile-build-hint { margin-bottom: 0; font-size: 12px; }
+.mobile-shell .mobile-build-controls.is-idle > .mobile-build-hint { display: none; }
+.mobile-shell .mobile-build-room-heading { gap: 6px; }
+.mobile-shell .mobile-build-room-heading p { margin-block: 2px; }
+.mobile-shell .mobile-build-benefit { margin-block: 6px; padding: 6px; }
+.mobile-shell .mobile-build-benefit p { margin-block: 4px; }
+.mobile-shell .mobile-build-room-actions { margin-block: 6px; gap: 4px; }
+.mobile-shell .mobile-build-room-actions button { min-height: 44px !important; padding: 6px; font-size: 14px; }
+.mobile-shell .mobile-build-tiers > summary { display: flex; align-items: center; }
+
+/* Existing campaign and save dialogs retain every safety control. */
+.mobile-shell .confirm-dialog,
+.mobile-shell .dialog-backdrop > .confirm-dialog { padding: 10px; }
+.mobile-shell .confirm-dialog h2,
+.mobile-shell .confirm-dialog h3 { margin-block: 0 6px; }
+.mobile-shell .confirm-dialog p { margin-block: 6px; }
+.mobile-shell .campaign-list { gap: 6px; }
+.mobile-shell .campaign-card { padding: 8px; }
+.mobile-shell .campaign-card dl { display: grid; gap: 4px; margin-block: 6px; }
+.mobile-shell .campaign-card dl > div { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 4px; }
+.mobile-shell .campaign-card dd { margin: 0; }
+.mobile-shell .confirm-dialog .dialog-actions { gap: 4px; bottom: -10px; margin-inline: -10px; padding: 6px 10px; }

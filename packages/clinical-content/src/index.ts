@@ -140,3 +140,20 @@ export * from "./question-new-n3-20261105";
 export * from "./question-flags2-round2-20261105";
 export { withAcceptedQuestionFlags2Concepts } from "./question-flags2-accepted-20261105";
 // END FLAGS2 round2 retained candidates and exact G06 integration 20261105
+
+// BEGIN FLAGS2 round3 retained candidates - no manifest acceptance.
+export * from "./question-flags2-round3-20261105";
+// END FLAGS2 round3 retained candidates.
+
+// BEGIN N3 ROUND2 exports - review drafts only; no manifest acceptance.
+export * from "./question-new-n3-round2-20261105";
+// END N3 ROUND2 exports.
+
+// BEGIN N3 ROUND3 explicit candidate exports - no default projection change.
+export * from "./question-new-n3-round3-20261105";
+export * from "./question-new-n3-round3-source-20261105";
+// END N3 ROUND3 explicit candidate exports.
+
+// BEGIN FLAGS2 whole-case accepted integration 20261105
+export * from "./question-flags2-whole-case-accepted-20261105";
+// END FLAGS2 whole-case accepted integration 20261105

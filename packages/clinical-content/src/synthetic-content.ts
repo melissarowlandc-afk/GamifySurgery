@@ -1534,20 +1534,45 @@ export const QUESTION_NEW_N3_PRE_RELEASE = validateSyntheticClinicalRelease({
   cases: applyQuestionNewN2Round3Revisions(QUESTION_NEW_N2_ROUND3_PRE_RELEASE.cases),
 });
 // BEGIN N3 catalog-only append. Prior definitions and accepted rewrite helpers stay intact.
-import { QUESTION_NEW_N3_CASES, QUESTION_NEW_N3_TESTED_CONCEPTS, withAcceptedQuestionNewN3Concepts } from "./question-new-n3-20261105";
+import { QUESTION_NEW_N3_CASES, QUESTION_NEW_N3_TESTED_CONCEPTS } from "./question-new-n3-20261105";
 /** Explicit draft preview; N3 has no acceptance in the ship manifest. */
-export const QUESTION_CATALOG_RELEASE = validateSyntheticClinicalRelease({
+export const QUESTION_NEW_N3_ROUND2_PRE_RELEASE = validateSyntheticClinicalRelease({
   ...QUESTION_NEW_N3_PRE_RELEASE,
   concepts: [...QUESTION_NEW_N3_PRE_RELEASE.concepts, ...QUESTION_NEW_N3_TESTED_CONCEPTS],
   cases: [...QUESTION_NEW_N3_PRE_RELEASE.cases, ...QUESTION_NEW_N3_CASES],
 });
 // END N3 catalog-only append.
+// BEGIN N3 ROUND2 catalog projection - retain the complete original stage and frozen PASS.
+import { applyQuestionNewN3Round2Revisions, QUESTION_NEW_N3_ROUND2_NEW_CONCEPT_VERSIONS, withAcceptedQuestionNewN3Round2Concepts } from "./question-new-n3-round2-20261105";
+export const QUESTION_CATALOG_RELEASE = validateSyntheticClinicalRelease({
+  ...QUESTION_NEW_N3_ROUND2_PRE_RELEASE,
+  concepts: [...QUESTION_NEW_N3_ROUND2_PRE_RELEASE.concepts, ...QUESTION_NEW_N3_ROUND2_NEW_CONCEPT_VERSIONS],
+  cases: applyQuestionNewN3Round2Revisions(QUESTION_NEW_N3_ROUND2_PRE_RELEASE.cases),
+});
+// END N3 ROUND2 catalog projection. No N3 manifest acceptance or save rewriting.
+// BEGIN N3 exact round-three source assembly - five frozen PASS rows accepted separately.
+import { QUESTION_NEW_N3_ROUND3_CASES, QUESTION_NEW_N3_ROUND3_NEW_CONCEPT_VERSIONS } from "./question-new-n3-round3-20261105";
+const n3Round3ActiveConcepts = new Set(QUESTION_NEW_N3_ROUND3_CASES.flatMap(cs => cs.decisionNodes.map(n => n.primaryConceptId)));
+/** Retained eight-case candidate view. The manifest admits only its five frozen v2 PASS cases.
+ * Construct beside the catalog to avoid a catalog/source import cycle. */
+export const QUESTION_NEW_N3_ROUND3_SOURCE_RELEASE = validateSyntheticClinicalRelease({
+  ...QUESTION_CATALOG_RELEASE,
+  concepts: [...QUESTION_CATALOG_RELEASE.concepts, ...QUESTION_NEW_N3_ROUND3_NEW_CONCEPT_VERSIONS].filter(c => n3Round3ActiveConcepts.has(c.id)),
+  cases: QUESTION_NEW_N3_ROUND3_CASES,
+});
+// END N3 exact round-three source assembly.
 // BEGIN FLAGS2 G06 accepted-source integration 20261105
 import { QUESTION_FLAGS2_ROUND1_SOURCE_RELEASE } from "./question-flags2-20261105";
 import { withAcceptedQuestionFlags2Concepts } from "./question-flags2-accepted-20261105";
 // END FLAGS2 G06 accepted-source integration 20261105
+// BEGIN FLAGS2 accepted whole-case source integration 20261105
+import { QUESTION_FLAGS2_ROUND3_SOURCE_RELEASE } from "./question-flags2-round3-20261105";
+import { withAcceptedQuestionFlags2WholeCaseConcepts } from "./question-flags2-whole-case-accepted-20261105";
+// END FLAGS2 accepted whole-case source integration 20261105
 /** Default runtime content: exact accepted rewrites/new items plus legacy fallback. */
-export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease(projectManagerAcceptedQuestions(withAcceptedQuestionFlags2Concepts(withAcceptedQuestionBankBatch2bRound2Concepts(withAcceptedQuestionNewN3Concepts(QUESTION_CATALOG_RELEASE, QUESTION_NEW_N3_PRE_RELEASE.concepts))), QUESTION_FLAGS_PRE_REVISION_RELEASE, {
+export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease(projectManagerAcceptedQuestions(withAcceptedQuestionFlags2WholeCaseConcepts(withAcceptedQuestionFlags2Concepts(withAcceptedQuestionBankBatch2bRound2Concepts(withAcceptedQuestionNewN3Round2Concepts(QUESTION_CATALOG_RELEASE, QUESTION_NEW_N3_PRE_RELEASE.concepts)))), QUESTION_FLAGS_PRE_REVISION_RELEASE, {
+  "n3-round3": QUESTION_NEW_N3_ROUND3_SOURCE_RELEASE,
+  "flags2-round3": QUESTION_FLAGS2_ROUND3_SOURCE_RELEASE,
   "flags2-round1": QUESTION_FLAGS2_ROUND1_SOURCE_RELEASE,
   legacy: QUESTION_FLAGS_PRE_REVISION_RELEASE,
   "flags-round3": QUESTION_NEW_N1_PRE_RELEASE,

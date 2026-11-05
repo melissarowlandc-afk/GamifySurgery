@@ -287,7 +287,7 @@ function evaluateSettledGuidanceTipCandidates(state: GameState, context: DomainC
     };
     if (futureDurationSubjects[effect.effectKind]) benefit = `${futureDurationSubjects[effect.effectKind]} with ${effect.amountPerUpgrade}% less baseline time`;
     if (effect.effectKind === "daily_coffee_morale_points") benefit = `+${effect.amountPerUpgrade} staff morale points at the next daily coffee award`;
-    if (effect.effectKind === "break_morale_points") benefit = `+${effect.amountPerUpgrade} staff morale points on future breaks`;
+    if (effect.effectKind === "break_morale_points" || effect.effectKind === "gym_morale_points") benefit = `+${effect.amountPerUpgrade} staff morale points on future completed breaks and +${context.balanceRelease.environment.levelThreeSupport.staffRoomMoraleBonusPerUpgrade} daily morale from the best operational staff room`;
     if (effect.effectKind === "cleanliness_decay_reduction_percent") benefit += " on future use";
     add(id, room.id, simple({ kind: "upgrade_room", roomId: room.id, expectedCost: cost }, `Upgrade ${definition.displayName} · ${money(cost)} (+${money(definition.upkeepPerUpgradeLevel)}/hour)`, rootKey),
       { speaker: definition.displayName, values: { room: definition.displayName, benefit }, priority: 1, optional: true,

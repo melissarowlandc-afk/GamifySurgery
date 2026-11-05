@@ -1,13 +1,15 @@
 import {describe,expect,it} from "vitest";
+import {beforeN3AcceptanceRelease,beforeN3AcceptanceManifest} from "./question-new-n3-acceptance-test-support";
 import {PROTOTYPE_BALANCE_RELEASE} from "@gamify-surgery/balance-config";
-import {QUESTION_CATALOG_RELEASE as catalog,QUESTION_NEW_N3_PRE_RELEASE as before,SYNTHETIC_CLINICAL_RELEASE as live} from "./synthetic-content";
+import {QUESTION_NEW_N3_ROUND2_PRE_RELEASE as catalog,QUESTION_NEW_N3_PRE_RELEASE as before,SYNTHETIC_CLINICAL_RELEASE as currentLive} from "./synthetic-content";
 import {QUESTION_NEW_N3_CASES as cases,QUESTION_NEW_N3_ITEMS as items,QUESTION_NEW_N3_QUESTIONS as questions,
  QUESTION_NEW_N3_AUTHORING_CONCEPTS as concepts,QUESTION_NEW_N3_TESTED_CONCEPTS as tested,QUESTION_NEW_N3_CLAIMS as claims,
  QUESTION_NEW_N3_SOURCES as sources,QUESTION_NEW_N3_CLAIM_PROVENANCE as provenance,QUESTION_NEW_N3_SELF_CHECKS as checks,
  QUESTION_NEW_N3_TIMING_ENTRIES as timing,withAcceptedQuestionNewN3Concepts} from "./question-new-n3-20261105";
 import {ANSWER_CHOICE_TIMING_REGISTRY,QUESTION_NEW_N3_PRE_TIMING_ENTRIES} from "./answer-choice-timing";
-import {QUESTION_SHIP_MANIFEST as manifest} from "./question-ship-manifest";
+import {QUESTION_SHIP_MANIFEST as currentManifest} from "./question-ship-manifest";
 import {validateSyntheticClinicalRelease} from "./schema";
+const live=beforeN3AcceptanceRelease(currentLive),manifest=beforeN3AcceptanceManifest(currentManifest);
 
 describe("N3 draft catalog and projection boundary",()=>{
  it("adds forty separate proposed objectives without changing any prior case or concept",()=>{

@@ -8551,3 +8551,398 @@ This list includes the port, the exact integration fixtures/pins, three generate
 | tools/question-quality/verify-question-flags-20261104.mjs | 45408f5e160cc0d6ef446309c4a61cccf9063834a859a3fdcae3ebe00a5ad432 |
 | tools/question-quality/verify-question-flags-round2-20261104.mjs | 8b411de2d8843ecf109c756811a59d963a9f4b06248c01c07336f0615eea99ee |
 | tools/question-quality/verify-question-flags-round3-20261104.mjs | 9f9803244d49f3cb6eb641a9ccbb95923e07e4fa26af03d197bd6531a8fa05d2 |
+
+## rebind 18 (release worktree, questions + Break Room + phone UI/performance)
+
+2026-11-05. Manager-assigned local release port in `C:/Users/rowla/Projects/GS-release`; user-stated starting HEAD `92f1da71`. The GamifySurgery tree was read-only. No Git, installs, external network, agents, browser, commit, push or deploy. The four accepted lanes and the guarded evidence rebind are complete locally. **Validation is not fully green: one unchanged player floating-point assertion remains for manager review.**
+
+### Port and source disposition
+
+The established contentdiff.py comparator was adapted only to the requested roots/exclusions; its original and adapted SHA-256 are recorded privately. All 173 differing scoped paths have one disposition: 93 copied, 5 hunk-ported, 75 excluded. Including public handoffs/provenance, directly required historical test dependencies and integration fixtures: **144 copied / 7 hunk-ported / 75 excluded**. Full path, reason, before/source/after hashes and byte counts: `.local-dev/release-verify/port18-20261105.json`. Python-written lists/JSON use LF without BOM. Four copied player files have only explicit source CRLF-to-LF normalization, recorded in the receipt.
+
+- Questions: exact whole-case G03/G05 and N3 round-three/acceptance sources, tests, explicit order appends and public decision/review/source records. No clinical prose edits.
+- Break Room: all 22 handoff source/test/fixture paths, with owner-corrected 15-minute/+5, 480/960-minute cooldown and +1 best-room daily policy.
+- Phone space: the 11 source/test/e2e paths plus public plan. The e2e spec is the captured current live version, including the manager’s receptionist-step removal. Release wait-snapshot behavior is retained.
+- Phone thermal: all 13 owner-manifest paths. Five existing copied files match the exact owned patch; new files match owner hashes before LF normalization. FacilityScene receives only the seven thermal hunks. Its original character filtering/geometry are retained; the identical two-prefix texture classifier is inlined in the registration hunk to avoid importing unrelated character work.
+- Excluded live changes include cloud/storage/diagnostics, incremental evidence/navigation/waiting changes, character art/proportions/filtering/QA, cosmetic ChartPanel import ordering and stale live evidence/pins. Release-only save-fixture fixes and the codec-headroom test are preserved.
+
+Required question-quality exception: **22 files / 13862318 bytes**, all directly read by ported preservation tests. This includes six capture/migration JSON fixtures (13,793,371 bytes), two lint/control JSON records and fourteen exact historical validation logs. One additional prior review JSON is required through the 62-file capture. Original captures and all file-hash assertions remain intact; no bulk question-quality tooling/fixture tree was ported. Every exception is individually listed in the disposition receipt.
+
+### Exact 69-row clinical projection
+
+The prior 62 acceptance rows remain exact, in their relative order. The only new rows are whole-case G03/G05 and the five N3 v2 PASS rows named in the manager decision. Both explicit replacement relations remain exact; all 1,423 legacy tuples are unchanged. Default: **1,141 cases / 1,452 decision nodes / 605 registered meanings**, SHA-256 `77261db946b72dbf0f001e6ce11aab75928b561a19a8a17a874274f08b185a30`. Manifest `question-ship.2026-11-05.v4`.
+
+All 1,134 unaffected earlier cases and all 598 earlier meaning objects are exact. The complete five N3 packet variants and authored cases match their frozen hashes; the eight-case source view is `0563b9812b4eaf1b28ac79dc307da695773d096f3929965c33810f80abff9cb9`. Three v3 repairs, pleural and the parked backlog remain excluded from fresh default admissions. All 69 authored accepted versions remain needs_clinician_review. Eleven earlier clinical approvals and 38 protected source/provenance files remain unchanged. Exact proof: `.local-dev/release-port-rebind18-20261105/accepted-69-verification.json`.
+
+### Save safety and generated legacy comparisons
+
+Captured genuine pre-port format-3 snapshots and committed one-row journals for open legacy two-node G03/G05, frozen N3 v1 and a real in-progress 30-minute gym break. The N3 v1 fixture uses the explicit pre-port catalog-only QA view, not an assertion that it was default-admitted. All eight format/scenario combinations load exactly, continue, complete and reopen again under the ported release. G03/G05 complete both original nodes; frozen IDs/choices and previous review arrays remain exact, and duplicate answers are idempotent. The saved break completes at its frozen +5 reward (60→65 morale), not the new duration. Official player coverage also includes all 19 ship/save compatibility tests and five accepted default N3 v2 snapshot completions.
+
+The established legacy generator adapter regenerates all 25 Level 0–4/schema 5–9 loads and 120-tick continuations from the same five original serialized inputs. Removing exactly seven new empty concept histories reproduces each previous load hash. Continuation changes are confined to newly admitted encounters; all input frozen encounters and all other fields remain exact. No broad allow-list, new injection or guard change. The original serialized inputs and prior fixture metadata/history remain exact.
+
+The new retained checkpoint includes a filed pediatric child. The diagnostic-workload test adapter now carries that encounter’s exact departed-family record; otherwise its copied historical encounter became an orphan. Strict persistence validation is unchanged. The first full pass’s six construction failures are retained in the logs; the fresh player rerun verifies the repair. Two strict Break Room presentation fixtures and the exact registry list were integrated; the registry retains full equality, inserting N3’s five IDs before the earlier B2B/G06 block and appending G03/G05. The initial wrong insertion order is preserved as a failed run, followed by a fresh full domain run.
+
+### Actual Level 5 run and reconciliation
+
+Both unchanged native generators ran inside GS-release through staging. Original seed `level-five-m9.integration.01`, funded Level 4 opening and all assertions were retained. verify-staged.mjs completed before publish-verified.mjs wrote canonical evidence; private receipts retain raw outputs and source hashes. Only liveCap 4→5 metadata and the provenance append differ from raw results. All 17 earlier inputHistory entries remain exact, with the complete previous inputs/artifactInputs appended as entry 18. Guard SHA-256 remains `812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909`.
+
+| Measure | Rebind 17 | Rebind 18 | Delta |
+| --- | ---: | ---: | ---: |
+| Commands | 26818 | 30501 | 3683 |
+| Closing cents | 5996736 | 6790515 | 793779 |
+| Opening cents | 1785500 | 1785500 | 0 |
+| Gross cents | 15217700 | 17456400 | 2238700 |
+| Stock cents | 282789 | 335899 | 53110 |
+| Paid operating cents | 9675675 | 11067486 | 1391811 |
+| Capital cents | 1048000 | 1048000 | 0 |
+| Level 4 advance tick | 4134 | 4156 | 22 |
+| 2,000 XP goal tick | 15219 | 14795 | -424 |
+| First answers | 532 | 614 | 82 |
+| Level 5 first answers | 443 | 525 | 82 |
+| Completed daily rounds | 36 | 41 | 5 |
+| Positive comfort uses | 659 | 1128 | 469 |
+| Retired receipts | 5205 | 6353 | 1148 |
+| Retired encounters | 407 | 459 | 52 |
+| Completed encounters | 417 | 471 | 54 |
+| Walkouts | 0 | 0 | 0 |
+| Inspection unlock tick | 15219 | 18644 | 3425 |
+
+`1,785,500 + 17,456,400 - 335,899 - 11,067,486 - 1,048,000 = 6,790,515 cents`. **30,501 commands / 6,790,515 closing cents / 471 completions / zero walkouts.** All three reports complete 3,000 active minutes, ten categories and the original sample requirements; report two improves best and report three preserves best/immutable first.
+
+Supplier savings before→after: `{"stockCents":2211,"upkeepSixtiethCents":709500}` → `{"stockCents":2501,"upkeepSixtiethCents":825840}`. Unlock witness before→after: `{"version":"level-five-inspection-unlock.v1","earnedAtFacilityTick":15219,"clinicalXp":2004,"displayedSatisfaction":91,"averageStaffMorale":100,"employedStaffCount":9}` → `{"version":"level-five-inspection-unlock.v1","earnedAtFacilityTick":18644,"clinicalXp":2708,"displayedSatisfaction":91,"averageStaffMorale":100,"employedStaffCount":9}`. Every raw numeric-field delta is retained in `.local-dev/release-port-rebind18-20261105/accepted-run-verification.json` (numericChanges; raw liveCap is the separately corrected metadata field).
+
+| Report | Previous score / sample | Current score / sample |
+| --- | --- | --- |
+| 1 | 62.304886301437534 / 51 | 62.002750872553335 / 49 |
+| 2 | 66.68920376175498 / 50 | 66.79094619665999 / 49 |
+| 3 | 45.32438743522438 / 49 | 45.363372018052374 / 47 |
+
+All nine checkpoint saves change. The two exact launch pins now use the verified first report (49 patients, 62.002750872553335; phone/desktop label 62.00). entryLarge’s existing threshold and all codec/performance/save budgets stay unchanged.
+
+| Checkpoint | Tick before→after | Closing-state cents before→after | Completed before→after |
+| --- | --- | --- | --- |
+| integration-l4 | 4134→4156 | 2734550→2725950 | 66→67 |
+| integration-build | 4134→4156 | 1686550→1677950 | 66→67 |
+| integration-preparing | 15220→18645 | 4117521→4931535 | 254→313 |
+| integration-running | 15357→18782 | 4135595→4972704 | 256→315 |
+| integration-final | 18276→21701 | 4781659→5531703 | 306→363 |
+| integration-finish | 18277→21702 | 4781659→5531703 | 306→363 |
+| integration-repeat-final | 21933→25358 | 5598451→6393552 | 367→423 |
+| integration-repeat | 21934→25359 | 5598451→6393552 | 367→423 |
+| integration-lower-repeat | 24991→28416 | 5996736→6790515 | 417→471 |
+
+The cited live-tree CHECK (28,312 / 6,256,310 / 441 / 0) is explicitly bound in the Break Room handoff to 291 retained pre-question clinical/test-choice hashes. The release-tree run binds 391 current clinical inputs and the accepted 69-row projection. Compared with rebind 17, XP is earned earlier but inspection unlock is 3,425 ticks later, and total elapsed ticks are exactly 3,425 later. The additional traffic, stock and paid operating costs reconcile above. This is not a same-duration profit comparison, and no separate causal attribution between the question and Break Room changes is claimed without a paired run. Evidence: `.local-dev/release-port-rebind18-20261105/run-delta-explanation.json`. All 108 earlier retained checkpoint encounters preserve their exact frozen definitions when loaded under the new release.
+
+### Evidence artifact SHA-256
+
+| Path | Before | After |
+| --- | --- | --- |
+| `tools/qa/level-five-integration-results-20261012.json` | `327615d06420d0424a3060d837b056a0875dfa494f1514d41efc658ea6a7aa89` | `b942f2458f64864ebbd8a1c26a91bf16dbedc28e34a70341baaabdc1187166e4` |
+| `tests/fixtures/level-five-integration-checkpoints-20261012.json` | `0a45ff87e2a92a03d48702453e9899fd57d8c04d12611bafb51c0c8ac38809b2` | `2d7df9fa212e10ea8b812c8ae3acc19c9525a760bf779b700ba118e188e83f85` |
+| `tests/fixtures/level-five-legacy-behavior-20261012.json` | `dc06e1557f59a72b9f4739dc11f25e6cbd63a709d3a2e41d83a72f2d55314ff2` | `ac9c3467b64f954562ed622c527248ae2f95cc1f47f0f95449be95128c58fd14` |
+
+Binding grows from 508 to 532 inputs: 18 existing hashes changed, 24 files added, no removal. Clinical inputs grow from 370 to 391. The lower-helper hash is unchanged. Complete preceding maps remain inside inputHistory; exact changed/new hashes follow.
+
+| Bound input | Previous SHA-256 | Current SHA-256 |
+| --- | --- | --- |
+| `packages/balance-config/src/guidance-tips.ts` | `044e6242578d5282081998aa3b42d87923eca848b1d88af6d4ea5a65732b4836` | `2563d44cc6921094320efcbaab996c9673f190dad60470706305f7944efeb9c3` |
+| `packages/balance-config/src/index.ts` | `249ea512e15e84f7fbb91f490f2e30372543253a6218a11a37e3f75c889a6d13` | `40333ab81d3d9e8df49348db629337369560bddb04020b26c63599cd33609470` |
+| `packages/balance-config/src/level-five-support.ts` | `6fed24fb78531c2dbbab8a589ed7ce574e0d8f4249bc6c94eb9d2f851000c239` | `9c4715b0a3288a113218041b31fdfae9574608868a093cc008d2a2f9bac7124a` |
+| `packages/balance-config/src/prototype-balance.ts` | `849cb187c29ec2fbeb422b8686de133972c409a3d2b053c7b39f6c5a40e8b475` | `c827dad8c2131370eb9a27d54c3adb3afdc2c227d215b56fb4f29a0ab1c0319e` |
+| `packages/balance-config/src/room-upgrades.ts` | `c8ad82d81330b36690213254c4ecd030bae45035f5b9301a7cc2819d39c3c260` | `c3212d71a3972f53ce400b9f6f9cee7e9c6a7e3280399aff03912fd8c87b040c` |
+| `packages/balance-config/src/schema.ts` | `8b258ec9aa51a1675a651df2b970aa7576b24722a23f4717a2cd8b1adc3fbc05` | `1df248c96b0ad9902d05f32d543ce9951d8b7f6469ce6bdc1699ae0485cf98d4` |
+| `packages/clinical-content/src/answer-choice-timing.ts` | `2391e3a6440890af5698d66f6a0cb56c34fae9848466e3cacc96c2ca28f8d7e1` | `7f2d9129e930cd1654dc71415a5b7c514341e13c8d994edc41214d94c65f4e54` |
+| `packages/clinical-content/src/index.ts` | `41472b04a8d9e863a4e185b07b9224c1e5bc1235f587e94eddc55ef6c6daaeb3` | `ee124fd210f55353e3568e3a701248b742fa09ed2f1af9c3dc06fc302f329905` |
+| `packages/clinical-content/src/question-ship-manifest-validation.ts` | `aa6d130a159f98cc98037749911f33b554bcc2fbd90c6467608754b09e3d5517` | `b5b4a869e64ae70eca8a024bd36b0886f13f667e005a0adcfc7bce3c72c73a11` |
+| `packages/clinical-content/src/question-ship-manifest.ts` | `e29038894c101d0618970fb10c4367919e24a773725a8dd16ee781f4b82e7a3f` | `243aed1d81250f7a7e5710c05849553fc3b998a7acb9bf1c39aeff100d37d3cf` |
+| `packages/clinical-content/src/question-ship-projection.ts` | `099b803a240828b1a432e2e13d8bc6ff15fad2b61a38e4ef026962b98da8a033` | `f21b1a1c7521c3706ff2fd7513fd4fe1e22db4f199a9fc8861a1fb1ea57f4aac` |
+| `packages/clinical-content/src/synthetic-content.ts` | `0dcec62fa1a9d7ef42b4400595d0e8d0d73b253d40817fda4b55ea3ee0e4c633` | `e93b4deae7bda1134869b80324d77c5698e075e65b97815eb4f991c8aba5ef81` |
+| `packages/game-domain/src/guidance-tips.ts` | `521812ecb3908999819ae88948eeedbdddf95894205ea97de36a19d8089ea5fb` | `a4fb4c518be2dc8950f14232cb07f187719af352f069f0fadfd0bdde4ea0ae85` |
+| `packages/game-domain/src/level-three-support.ts` | `9fc3ad536c6847099f92f19c03b5d7d35e67971cd3fa1c7b4aa25a3100fd7136` | `6348071b39894d312737929d0d67cefae8bcd0717357ee34ce019159cab35739` |
+| `packages/game-domain/src/persistence.ts` | `2489168f74e18a94f1acf86eedb9b4fd2480333527528dcd8e27d0f86dba0b50` | `38fff7eef07ff0be979bd52fc4fe5e3d89ddb4e8f093bb3d6da64d8dbc6e759e` |
+| `packages/game-domain/src/reducer.ts` | `305b0d21dfe964dde67cd645b0435306d242cbe56a0d406d10f01c85e34bc5f9` | `a90c4a7a711abe3d06cc6f7f1e1fbc74742c96092999018b8ea9ea1aee06c045` |
+| `packages/game-domain/src/room-upgrade-support.ts` | `98d9602cb2a1f54a40b2b06b033d7f06ffc92801ed836b773ab44dff0c190524` | `f06e77056974b39fd8f4712ab6a72a9f08553c1ec816b055c20b3929d5a025b5` |
+| `packages/game-domain/src/test-choice-orders.ts` | `308ecf40a5eb130fbcd6a55ca59b390508e76ec1d8c2a4367c05171e54d84d6d` | `0e692d44de8c72f1d2dd89a18debc05e78fd4da679b2e5b8b15964ef5e9198c1` |
+| `packages/balance-config/src/staff-breaks.ts` | new | `3f58e5fde0fbf982919956c063b6ec6819ebd4b503084c72c527eafcb7c935a7` |
+| `packages/clinical-content/src/question-flags2-round3-20261105-data.ts` | new | `e4e4a94d23ffdf04f37e9130edc1e27b6698c481232eba56aac31e10a2119af3` |
+| `packages/clinical-content/src/question-flags2-round3-20261105.ts` | new | `091c23056f38aab98a78b193a6d47f1cf4faf6e449844be6bf68374c1e370110` |
+| `packages/clinical-content/src/question-flags2-round3-evidence-20261105.ts` | new | `d0494466d8dcfd701c614ea7142ca2f1bed0e62c07da349af32624738f3e2b3a` |
+| `packages/clinical-content/src/question-flags2-round3-retained-input-20261105.ts` | new | `4521f3ceb55e980322b935e219b2daec42dddcf2ad83009c6f7ddd03f53177d8` |
+| `packages/clinical-content/src/question-flags2-whole-case-accepted-20261105.ts` | new | `5944767b8a5e02b5c5217af7735061a05ec4b582e35407f4535af2e8f4983ecf` |
+| `packages/clinical-content/src/question-new-n3-acceptance-test-support.ts` | new | `0e3594c8ff7a1d7a5fd259211ab3083bf364e29e989da0f56d5c71023cb62016` |
+| `packages/clinical-content/src/question-new-n3-round2-20261105.ts` | new | `16c622e73d76a8b12a6c676de202ae31d166eb2c922848bc06f0514e5b7b2569` |
+| `packages/clinical-content/src/question-new-n3-round2-evidence-20261105.ts` | new | `deadd0a0a794471864cff1ad4e4e496d6fa15e53a196f55f03811c892244e5b3` |
+| `packages/clinical-content/src/question-new-n3-round2-level3-nutrition.ts` | new | `e48a084228efc3b633918375681e4ffd1ee7920bc5e4bd0e9943dfcfc35da6ef` |
+| `packages/clinical-content/src/question-new-n3-round2-level3-specialty.ts` | new | `c3d0a8477c9e29730f914b035101f73430231d37e5e00b04a945bf7de3573074` |
+| `packages/clinical-content/src/question-new-n3-round2-level4-critical.ts` | new | `6c405ce8a5782a308fcc2821c2a6b94a4d9fbd0703ab41ffd6d39b5356d172e7` |
+| `packages/clinical-content/src/question-new-n3-round2-level4-foregut.ts` | new | `a741adb870e98505b51d4a5c0977f0e90f4b4aac71a571179b15fea9a895fb90` |
+| `packages/clinical-content/src/question-new-n3-round2-level4-oncology.ts` | new | `69a5548f6423980cdc67285dddeff3c5a1012a07343292f42d87ce250e4fd66d` |
+| `packages/clinical-content/src/question-new-n3-round2-types.ts` | new | `f2e7b415489c43dbb0f9f3b51a26858f9276536eb6e6102c83d605df643d46f5` |
+| `packages/clinical-content/src/question-new-n3-round3-20261105.ts` | new | `0c1802d56cf682b054fe98dfa401502988ccca485165020b4e19fd8c5fa39b1a` |
+| `packages/clinical-content/src/question-new-n3-round3-candidates.ts` | new | `6f30de1a26184bd62b8d459f48069d9834e0d8ff1fdf78b2e9494093257902ff` |
+| `packages/clinical-content/src/question-new-n3-round3-evidence-20261105.ts` | new | `c2a1692e6fe14a64ee950c6ce0479d6a03a49d25730fc38d173bbde78d4c342e` |
+| `packages/clinical-content/src/question-new-n3-round3-source-20261105.ts` | new | `5974fe0097e6df52b1cb60b751c76b4766a099172aa84b158348e7c1337af524` |
+| `packages/clinical-content/src/question-new-n3-round3-types.ts` | new | `215b29414460d7e31b4c1128cbc9900b82346b796ecde51380406754a9c26804` |
+| `packages/clinical-content/src/question-ship-case-replacements-test-support.ts` | new | `dd1a33f5759ddf2296d4930d7527e2bad9177602c6313a671688445312ec4bc7` |
+| `packages/clinical-content/src/question-ship-case-replacements.ts` | new | `47825c6e6b01e386b84151e0cec3bdf5c473c6c4301cb6f6ad26f789248097d8` |
+| `packages/game-domain/src/question-new-n3-round2-test-orders.ts` | new | `8c38ca13ccaa65a05b9b83b38410ef0e610acc1ffe349e9ae74c7bc4daaaf912` |
+| `packages/game-domain/src/question-new-n3-round3-test-orders.ts` | new | `4b11f7d10fe0e08d9a1f3fa4794d4e656aa92bb202cdd2b8ac518f614b9f730e` |
+
+### Exact validation and baseline comparison
+
+All Vitest commands use CI=true, threads and maxWorkers=2 unless the isolated proof says maxWorkers=1. Raw native outputs and process exit receipts are under `.local-dev/release-port-rebind18-20261105/`. The command-local preload handles only Vite’s literal net-use probe and rejects Git before spawn. Root scripts and application assertions were not modified.
+
+| Latest complete workspace suite | Files | Passed | Failed | Skipped |
+| --- | ---: | ---: | ---: | ---: |
+| clinical-context-workbench | 8 | 43 | 0 | 0 |
+| player | 378 | 3584 | 1 | 0 |
+| balance-config | 24 | 164 | 0 | 0 |
+| clinical-authoring | 7 | 81 | 0 | 0 |
+| clinical-content | 121 | 1337 | 0 | 0 |
+| clinical-research | 8 | 83 | 0 | 0 |
+| game-domain | 197 | 5158 | 0 | 1 |
+| Total | 743 | 10450 | 1 | 1 |
+
+Previous verified rebind-17 baseline: 727 files, 10,212 passed tests, zero failed and one optional skip. The current release’s codec-headroom test is additionally preserved. The initial all-workspaces invocation exits 1: player 3,578 passed/7 failed, clinical 1,336 passed/1 failed, domain 5,157 passed/1 failed/1 skipped. Six player failures were the retained-family fixture; clinical lacked an archived captured log; domain was my new-ID insertion order. Those fixture/dependency corrections are followed by complete fresh suites. The remaining player income comparison is not called pre-existing in the previous release baseline.
+
+| Native command | Exit / result |
+| --- | --- |
+| `node --disable-warning=ExperimentalWarning .local-dev/release-port-rebind18-20261105/stage-generator.mjs journey` | 0 (journey) |
+| `node --disable-warning=ExperimentalWarning .local-dev/release-port-rebind18-20261105/stage-generator.mjs lower` | 0 (lower) |
+| `npm.cmd test` | 1 (root-test) |
+| `npm.cmd run test --workspaces --if-present -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port-rebind18-20261105/workspace-json-reporter.mjs` | 1 (all-workspaces) |
+| `npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=../../.local-dev/release-port-rebind18-20261105/player-final.json` | 1 (player-final) |
+| `npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=../../.local-dev/release-port-rebind18-20261105/clinical-final.json` | 0 (clinical-final) |
+| `npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=../../.local-dev/release-port-rebind18-20261105/domain-final.json` | 0 (domain-final) |
+| `npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads --maxWorkers=1 src/question-flags2-round3-20261105.test.ts` | 0 (clinical-guard) |
+| `npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=1 src/session/levelFourIntegration.test.ts --reporter=default --reporter=json --outputFile=../../.local-dev/release-port-rebind18-20261105/level4-probe.json` | 1 (level4-probe) |
+| `npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=1 src/session/levelFourIntegration.test.ts --config ../../.local-dev/release-port-rebind18-20261105/level4-control.config.ts --reporter=default --reporter=json --outputFile=../../.local-dev/release-port-rebind18-20261105/level4-control.json` | 0 (level4-control) |
+| `npm.cmd run typecheck` | 0 (typecheck-final) |
+| `npm.cmd run test:boundaries` | 1 (boundaries) |
+| `npm.cmd run build --workspace @gamify-surgery/player` | 0 (player-build) |
+| `node scripts/verify-launcher-contract.mjs` | 0 (launcher) |
+| `npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 src/questionShipSaveCompatibility.test.ts src/session/buildViewModels.test.ts src/session/levelFiveRoomsViewModels.test.tsx src/session/staffBreakPolicyPresentation.test.ts src/facility/FacilityCanvas.lifecycle.test.tsx src/mobile/performance/frameBudget.test.ts src/mobile/performance/characterTextureBudget.test.ts src/recentPresentationIds.test.ts src/mobile/phoneSpace.test.tsx src/mobile/build/MobileBuild.test.tsx` | 1 (focused) |
+| `npm.cmd run clinical:lint:test` | 0 (lint) |
+| `node node_modules/typescript/bin/tsc --noEmit -p .local-dev/release-port-rebind18-20261105/tsconfig.phone-e2e.json` | 0 (e2e-types) |
+
+`all-workspaces` exact closing output:
+
+```text
+ Test Files  8 passed (8)
+      Tests  43 passed (43)
+   Duration  897ms (transform 271ms, setup 0ms, import 757ms, tests 389ms, environment 1ms)
+ Test Files  7 failed | 371 passed (378)
+      Tests  7 failed | 3578 passed (3585)
+   Duration  688.57s (transform 15.64s, setup 0ms, import 579.67s, tests 757.58s, environment 27ms)
+ Test Files  24 passed (24)
+      Tests  164 passed (164)
+   Duration  2.09s (transform 538ms, setup 0ms, import 2.23s, tests 149ms, environment 2ms)
+ Test Files  7 passed (7)
+      Tests  81 passed (81)
+   Duration  608ms (transform 127ms, setup 0ms, import 355ms, tests 278ms, environment 0ms)
+ Test Files  1 failed | 120 passed (121)
+      Tests  1 failed | 1336 passed (1337)
+   Duration  93.51s (transform 5.36s, setup 0ms, import 160.64s, tests 13.32s, environment 9ms)
+ Test Files  8 passed (8)
+      Tests  83 passed (83)
+   Duration  2.00s (transform 173ms, setup 0ms, import 465ms, tests 963ms, environment 0ms)
+ Test Files  1 failed | 196 passed (197)
+      Tests  1 failed | 5157 passed | 1 skipped (5159)
+   Duration  542.08s (transform 12.42s, setup 0ms, import 409.97s, tests 651.20s, environment 14ms)
+```
+
+`domain-final` exact closing output:
+
+```text
+ Test Files  197 passed (197)
+      Tests  5158 passed | 1 skipped (5159)
+   Duration  523.61s (transform 11.14s, setup 0ms, import 374.93s, tests 651.61s, environment 16ms)
+```
+
+`clinical-final` exact closing output:
+
+```text
+ Test Files  121 passed (121)
+      Tests  1337 passed (1337)
+   Duration  112.12s (transform 7.12s, setup 0ms, import 193.32s, tests 15.95s, environment 10ms)
+```
+
+`player-final` exact closing output:
+
+```text
+ Test Files  1 failed | 377 passed (378)
+      Tests  1 failed | 3584 passed (3585)
+   Duration  824.79s (transform 16.75s, setup 0ms, import 620.55s, tests 987.74s, environment 29ms)
+```
+
+Seven final workspace typechecks pass. Player production build passes: Vite 8.1.5, 1,026 transformed modules, 5.35 s; existing large-chunk/ineffective-import warnings remain. Linter: 33 passed, zero failed. Phone e2e isolated TypeScript check passes; no browser spec was run. Launcher protocol contract passes. Root npm test and test:boundaries both exit 1 solely at the unchanged tracked-file inventory: `Could not inspect tracked paths: Git blocked before spawn: manager required No Git.`. The manager must run that inventory/root gate in its permitted environment; no bypass or fake inventory was used.
+
+### Remaining failure / manager acceptance
+
+The unchanged `apps/player/src/session/levelFourIntegration.test.ts:50` sums per-source hourly income and compares with strict Object.is equality: actual 48.595041322314046 versus expected 48.59504132231405 (about 7.1e-15 difference; displayed Money/HUD labels agree). It fails in the full player run and isolated three-test rerun (two pass/one fail). A read-only Vite overlay of the captured original released source files reproduces the previous behavior and passes all three tests (17 original files actually loaded). The loaded original hashes are recorded in level4-control-loaded.json. This establishes an accepted-source-dependent rounding exposure, not a timeout or a blanket pre-existing-failure claim. The assertion, finance runtime, currency rules and budgets are untouched. Manager owns the precision/implementation decision; **do not describe this milestone’s validation as all green**.
+
+Phone geometry/touch/focus/browser acceptance and physical thermal/GPU behavior remain manager checks, as both source handoffs state. The native checks do not claim device thermal acceptance. No player origin/opening pathway changed. Work remains local and uncommitted; no backup/deployment is claimed.
+
+An unrelated concurrent file changed during the task and was preserved: `artifacts/screenshots/ui-density-extra-compact-wide-desktop.png`, `796c857ad6088ec4d011c813a39bbf1cf3e39cb9401652abae4853aa1d5749e4`→`654857d3315b88ddfc66ca1de94b48f4ca2e4fc22196d78895b9bdc074857b9b`. Its writer reference is the unrelated ui-density browser spec, which this thread did not run. It is excluded from this lane’s file count and was not restored or overwritten.
+
+### Exact files changed by this lane (157)
+
+- `apps/player/src/facility/FacilityCanvas.lifecycle.test.tsx`
+- `apps/player/src/facility/FacilityCanvas.tsx`
+- `apps/player/src/facility/FacilityScene.ts`
+- `apps/player/src/facility/earningsPopupPresentation.ts`
+- `apps/player/src/mobile/MobileChart.tsx`
+- `apps/player/src/mobile/MobileSheet.tsx`
+- `apps/player/src/mobile/MobileShell.tsx`
+- `apps/player/src/mobile/build/MobileBuild.test.tsx`
+- `apps/player/src/mobile/build/MobileBuildCatalog.tsx`
+- `apps/player/src/mobile/build/MobileBuildControls.tsx`
+- `apps/player/src/mobile/manage/MobileManage.tsx`
+- `apps/player/src/mobile/manage/MobileManageSheet.tsx`
+- `apps/player/src/mobile/mobileDensity.css`
+- `apps/player/src/mobile/performance/characterTextureBudget.test.ts`
+- `apps/player/src/mobile/performance/characterTextureBudget.ts`
+- `apps/player/src/mobile/performance/frameBudget.test.ts`
+- `apps/player/src/mobile/performance/frameBudget.ts`
+- `apps/player/src/mobile/performance/presentationPolicy.test.ts`
+- `apps/player/src/mobile/phoneSpace.test.tsx`
+- `apps/player/src/questionShipSaveCompatibility.test.ts`
+- `apps/player/src/recentPresentationIds.test.ts`
+- `apps/player/src/recentPresentationIds.ts`
+- `apps/player/src/session/buildModePresentation.test.ts`
+- `apps/player/src/session/buildModePresentation.ts`
+- `apps/player/src/session/buildViewModels.test.ts`
+- `apps/player/src/session/levelFiveLaunch.test.tsx`
+- `apps/player/src/session/levelFiveRoomsViewModels.test.tsx`
+- `apps/player/src/session/levelFiveSupportViewModels.test.tsx`
+- `apps/player/src/session/staffBreakPolicyPresentation.test.ts`
+- `apps/player/src/ui/ClinicHeadline.tsx`
+- `apps/player/src/ui/EventMessageBoard.tsx`
+- `docs/execplans/break-room-benefit-20261105.md`
+- `docs/execplans/gs028-stats-ethics-overhaul-20261007.md`
+- `docs/execplans/phone-space-and-taps-20261105.md`
+- `docs/execplans/question-flags2-round3-20261105.md`
+- `docs/execplans/question-new-n3-acceptance-20261105.md`
+- `docs/execplans/question-new-n3-round2-20261105.md`
+- `docs/execplans/question-new-n3-round3-20261105.md`
+- `docs/execplans/question-ship-case-replacements-20261105.md`
+- `docs/execplans/release-port-rebind18-20261105.md`
+- `docs/handoffs/CURRENT_THREAD_HANDOFF.md`
+- `docs/research/break-room-benefit-20261105.md`
+- `docs/research/question-flags2-review2-20261105.json`
+- `docs/research/question-flags2-round3-20261105.json`
+- `docs/research/question-flags2-round3-handoff-20261105.md`
+- `docs/research/question-flags2-round3-manager-decision-20261105.md`
+- `docs/research/question-new-n3-acceptance-handoff-20261105.md`
+- `docs/research/question-new-n3-acceptance-scope-20261105.json`
+- `docs/research/question-new-n3-acceptance-validation-20261105.json`
+- `docs/research/question-new-n3-manager-decision-20261105.md`
+- `docs/research/question-new-n3-review2-20261105.json`
+- `docs/research/question-new-n3-review3-20261105.json`
+- `docs/research/question-new-n3-round2-20261105.json`
+- `docs/research/question-new-n3-round2-calibration-20261105.md`
+- `docs/research/question-new-n3-round2-handoff-20261105.md`
+- `docs/research/question-new-n3-round3-20261105.json`
+- `docs/research/question-new-n3-round3-flags2-guard-integration-20261105.patch`
+- `docs/research/question-new-n3-round3-handoff-20261105.md`
+- `docs/research/question-new-n3-round3-planning-20261105.md`
+- `docs/research/question-ship-case-replacements-handoff-20261105.md`
+- `docs/research/question-ship-case-replacements-scope-20261105.json`
+- `docs/research/question-ship-case-replacements-validation-20261105.json`
+- `docs/research/sources-question-flags2-round3-20261105.json`
+- `packages/balance-config/src/guidance-tips.ts`
+- `packages/balance-config/src/index.ts`
+- `packages/balance-config/src/level-five-support.ts`
+- `packages/balance-config/src/prototype-balance.ts`
+- `packages/balance-config/src/room-upgrades.ts`
+- `packages/balance-config/src/schema.ts`
+- `packages/balance-config/src/staff-breaks.test.ts`
+- `packages/balance-config/src/staff-breaks.ts`
+- `packages/clinical-content/src/answer-choice-timing.test.ts`
+- `packages/clinical-content/src/answer-choice-timing.ts`
+- `packages/clinical-content/src/index.ts`
+- `packages/clinical-content/src/pilot-content.test.ts`
+- `packages/clinical-content/src/question-bank-batch2b-acceptance-20261105.test.ts`
+- `packages/clinical-content/src/question-flags2-20261105.test.ts`
+- `packages/clinical-content/src/question-flags2-round2-20261105.test.ts`
+- `packages/clinical-content/src/question-flags2-round3-20261105-data.ts`
+- `packages/clinical-content/src/question-flags2-round3-20261105.test.ts`
+- `packages/clinical-content/src/question-flags2-round3-20261105.ts`
+- `packages/clinical-content/src/question-flags2-round3-evidence-20261105.ts`
+- `packages/clinical-content/src/question-flags2-round3-retained-input-20261105.ts`
+- `packages/clinical-content/src/question-flags2-whole-case-accepted-20261105.ts`
+- `packages/clinical-content/src/question-new-n3-20261105.test.ts`
+- `packages/clinical-content/src/question-new-n3-acceptance-20261105.test.ts`
+- `packages/clinical-content/src/question-new-n3-acceptance-test-support.ts`
+- `packages/clinical-content/src/question-new-n3-round2-20261105.test.ts`
+- `packages/clinical-content/src/question-new-n3-round2-20261105.ts`
+- `packages/clinical-content/src/question-new-n3-round2-evidence-20261105.ts`
+- `packages/clinical-content/src/question-new-n3-round2-level3-nutrition.ts`
+- `packages/clinical-content/src/question-new-n3-round2-level3-specialty.ts`
+- `packages/clinical-content/src/question-new-n3-round2-level4-critical.ts`
+- `packages/clinical-content/src/question-new-n3-round2-level4-foregut.ts`
+- `packages/clinical-content/src/question-new-n3-round2-level4-oncology.ts`
+- `packages/clinical-content/src/question-new-n3-round2-types.ts`
+- `packages/clinical-content/src/question-new-n3-round3-20261105.test.ts`
+- `packages/clinical-content/src/question-new-n3-round3-20261105.ts`
+- `packages/clinical-content/src/question-new-n3-round3-candidates.ts`
+- `packages/clinical-content/src/question-new-n3-round3-evidence-20261105.ts`
+- `packages/clinical-content/src/question-new-n3-round3-source-20261105.ts`
+- `packages/clinical-content/src/question-new-n3-round3-types.ts`
+- `packages/clinical-content/src/question-ship-case-replacements-test-support.ts`
+- `packages/clinical-content/src/question-ship-case-replacements.test.ts`
+- `packages/clinical-content/src/question-ship-case-replacements.ts`
+- `packages/clinical-content/src/question-ship-manifest-validation.ts`
+- `packages/clinical-content/src/question-ship-manifest.test.ts`
+- `packages/clinical-content/src/question-ship-manifest.ts`
+- `packages/clinical-content/src/question-ship-projection.ts`
+- `packages/clinical-content/src/synthetic-content.ts`
+- `packages/game-domain/src/guidance-tips.ts`
+- `packages/game-domain/src/level-three-support.ts`
+- `packages/game-domain/src/persistence.ts`
+- `packages/game-domain/src/question-new-n3-round2-test-orders.ts`
+- `packages/game-domain/src/question-new-n3-round3-test-orders.ts`
+- `packages/game-domain/src/reducer.ts`
+- `packages/game-domain/src/room-upgrade-support.ts`
+- `packages/game-domain/src/test-choice-orders.ts`
+- `packages/game-domain/tests/app-appointments.test.ts`
+- `packages/game-domain/tests/approved-clinical-admission.test.ts`
+- `packages/game-domain/tests/board-expansion-batch.test.ts`
+- `packages/game-domain/tests/level-five-launch.test.ts`
+- `packages/game-domain/tests/level-five-support.test.ts`
+- `packages/game-domain/tests/question-new-n3-round2-supply.test.ts`
+- `packages/game-domain/tests/question-new-n3-round3-supply.test.ts`
+- `packages/game-domain/tests/question-new-n3-supply.test.ts`
+- `packages/game-domain/tests/room-upgrade-support.test.ts`
+- `packages/game-domain/tests/staff-break-policy.test.ts`
+- `packages/game-domain/tests/test-choice-order-inventory.test.ts`
+- `tests/e2e/phone-ui-space.spec.ts`
+- `tests/fixtures/break-room-benefit.ts`
+- `tests/fixtures/diagnostic-workload.ts`
+- `tests/fixtures/level-five-integration-checkpoints-20261012.json`
+- `tests/fixtures/level-five-legacy-behavior-20261012.json`
+- `tools/qa/level-five-integration-results-20261012.json`
+- `tools/question-quality/fixtures/question-flags2-round3-before-20261105.json`
+- `tools/question-quality/fixtures/question-new-n3-acceptance-before-20261105.json`
+- `tools/question-quality/fixtures/question-new-n3-acceptance-source-migration-20261105.json`
+- `tools/question-quality/fixtures/question-new-n3-acceptance-supplemental-before-20261105.json`
+- `tools/question-quality/fixtures/question-ship-case-replacements-before-20261105.json`
+- `tools/question-quality/fixtures/question-ship-case-replacements-source-migration-20261105.json`
+- `tools/question-quality/question-flags2-clinical-20261105.log`
+- `tools/question-quality/question-flags2-clinical-complete-20261105.log`
+- `tools/question-quality/question-flags2-clinical-final-20261105.log`
+- `tools/question-quality/question-flags2-linter-tests-20261105.log`
+- `tools/question-quality/question-flags2-linter-tests-complete-20261105.log`
+- `tools/question-quality/question-flags2-round2-clinical-20261105.log`
+- `tools/question-quality/question-flags2-round2-clinical-final-20261105.log`
+- `tools/question-quality/question-flags2-round2-linter-tests-20261105.log`
+- `tools/question-quality/question-flags2-round2-linter-tests-final-20261105.log`
+- `tools/question-quality/question-flags2-round2-typecheck-20261105.log`
+- `tools/question-quality/question-flags2-round2-typecheck-final-20261105.log`
+- `tools/question-quality/question-flags2-round3-controls-20261105.json`
+- `tools/question-quality/question-flags2-round3-lint-20261105.json`
+- `tools/question-quality/question-flags2-typecheck-20261105.log`
+- `tools/question-quality/question-flags2-typecheck-complete-20261105.log`
+- `tools/question-quality/question-flags2-typecheck-final-20261105.log`
+
+Full before/after per-file hashes, native logs, source/provenance proofs, raw staging and publication receipts are retained in the private task directory. Canonical evidence hashes are above. No other public path is claimed as this worker’s edit.

@@ -158,7 +158,7 @@ describe("accepted room upgrades in actual support work", () => {
   it.each(levels)("a completed break freezes one actual room's Level %s gain", (level) => {
     let state = breakFixture(level);
     support(state);
-    expect(employee(state, "employee.break").facilityTask).toMatchObject({ kind: "take_break", workMinutesRemaining: 30,
+    expect(employee(state, "employee.break").facilityTask).toMatchObject({ kind: "take_break", workMinutesRemaining: 15,
       roomUpgradeBreakBenefit: { roomInstanceId: "room.break.used", upgradeLevel: level, moraleGain: 5 + 2 * (level - 1) } });
     state.rooms.find((candidate) => candidate.id === "room.break.used")!.upgradeLevel = 5;
     state = reload(state);
@@ -363,7 +363,7 @@ describe("support clocks, completion witnesses and legacy compatibility", () => 
       let state = kind === "take_break" ? breakFixture() : kind === "repair_room" ? repairFixture() : qiFixture();
       const id = kind === "take_break" ? "employee.break" : kind === "repair_room" ? "employee.repair" : "employee.surgeon";
       state = tick(state);
-      expect(employee(state, id).facilityTask).toMatchObject({ kind, workMinutesRemaining: 30 });
+      expect(employee(state, id).facilityTask).toMatchObject({ kind, workMinutesRemaining: kind === "take_break" ? 15 : 30 });
       seated(state, id);
       employee(state, id).facilityTask!.workMinutesRemaining = 2;
       if (kind === "review_ambulatory_qi") state.levelThreeQiReviews[0]!.trainingWork!.remainingMinutes = 2;
@@ -458,6 +458,7 @@ describe("support clocks, completion witnesses and legacy compatibility", () => 
 
   it("clamps completed break and daily coffee gains at 100", () => {
     const breakState = breakFixture(5);
+    support(breakState); // Accept while below 100 morale; an in-flight gain still clamps.
     employee(breakState, "employee.break").morale = 99;
     support(breakState, 45);
     expect(employee(breakState, "employee.break").morale).toBe(100);

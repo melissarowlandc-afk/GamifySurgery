@@ -13,6 +13,7 @@ import { clampFacilityCamera, isValidFacilityCamera } from "./facilityCameraBoun
 import type { MobileMapSelection } from "../mobile/map/selection";
 import type { MobileBuildMapState } from "../mobile/build/types";
 import { MobileMapPresentationPolicy, mobileCanvasSize } from "../mobile/performance/presentationPolicy";
+import { PhoneFrameBudget, PHONE_ACTIVE_FPS } from "../mobile/performance/frameBudget";
 
 import {
   FacilityScene,
@@ -117,6 +118,7 @@ export function FacilityCanvas({
   if (mobileInput === true && !mobilePolicy.current) mobilePolicy.current = new MobileMapPresentationPolicy();
   if (mobileInput === true) mobilePolicy.current!.setCovered(mobileMapCovered === true);
   const gameRef = useRef<Phaser.Game | null>(null);
+  const phoneFrames = useRef<PhoneFrameBudget | null>(null);
   const bridgeRef = useRef<FacilitySceneBridge>({
     viewModel,
     onPlaceRoom,
@@ -148,11 +150,14 @@ export function FacilityCanvas({
   bridgeRef.current.onSelectedRoomRectChange = onSelectedRoomRectChange;
   bridgeRef.current.onAlertPinPositionsChange = setAlertPinPositions;
 
+  useEffect(() => { phoneFrames.current?.update(); });
+
   useEffect(() => {
     if (mobileInput !== true) return;
     const updateVisibility = () => {
       const hidden = document.visibilityState === "hidden";
       mobilePolicy.current!.setPageHidden(hidden);
+      phoneFrames.current?.update();
       setMobilePageHidden(hidden);
     };
     updateVisibility();
@@ -183,6 +188,7 @@ export function FacilityCanvas({
       parent: host,
       width,
       height,
+      ...(bridgeRef.current.mobileInput === true ? { fps: { target: PHONE_ACTIVE_FPS, limit: PHONE_ACTIVE_FPS } } : {}),
       backgroundColor: "#7e8476",
       pixelArt: true,
       antialias: false,
@@ -203,6 +209,19 @@ export function FacilityCanvas({
       },
       scene,
     });
+    const frameBudget = bridgeRef.current.mobileInput === true ? new PhoneFrameBudget(game, () => ({
+      hidden: bridgeRef.current.mobilePresentation?.hidden === true,
+      paused: bridgeRef.current.viewModel.paused || Boolean(bridgeRef.current.viewModel.buildMode),
+      model: bridgeRef.current.viewModel,
+    })) : null;
+    phoneFrames.current = frameBudget;
+    if (frameBudget) {
+      game.events.on(Phaser.Core.Events.POST_STEP, frameBudget.frame);
+      game.textures.on(Phaser.Textures.Events.ADD, frameBudget.interact);
+      for (const event of ["pointerdown", "pointermove", "pointerup", "wheel"])
+        game.canvas.addEventListener(event, frameBudget.interact, { passive: true, capture: true });
+      frameBudget.update();
+    }
     const renderWatchdog = renderLoopWatchdog(
       () => document.visibilityState !== "hidden" && scene.sys.isActive() && !bridgeRef.current.mobilePresentation?.hidden,
       () => wakePresentationLoop(game), Date.now, () => ({ paused: game.isPaused, running: game.loop.running }));
@@ -284,12 +303,21 @@ export function FacilityCanvas({
           // canvas bitmap. Always synchronize both dimensions after the host
           // observer fires so pointer-to-tile mapping remains exact.
           game.scale.resize(observedWidth, observedHeight);
+          frameBudget?.interact();
         }
       });
     });
     resizeObserver.observe(host);
 
     return () => {
+      frameBudget?.dispose();
+      if (phoneFrames.current === frameBudget) phoneFrames.current = null;
+      if (frameBudget) {
+        game.events.off(Phaser.Core.Events.POST_STEP, frameBudget.frame);
+        game.textures.off(Phaser.Textures.Events.ADD, frameBudget.interact);
+        for (const event of ["pointerdown", "pointermove", "pointerup", "wheel"])
+          game.canvas.removeEventListener(event, frameBudget.interact, true);
+      }
       game.events.off(Phaser.Core.Events.POST_STEP, renderWatchdog.frame);
       window.clearInterval(renderWatchdogTimer); renderWatchdog.dispose();
       game.events.off(Phaser.Core.Events.POST_STEP, reconcileCamera);
@@ -305,6 +333,9 @@ export function FacilityCanvas({
         delete proofHost.__facilityGaitSnapshot;
       }
       game.destroy(true);
+      // Phaser defers final destruction until its next step. A deliberately
+      // sleeping phone must get that step so textures/listeners are released.
+      if (game.isBooted && !game.loop.running) game.loop.wake();
       if (ownedCanvas.parentElement === host) {
         ownedCanvas.remove();
       }

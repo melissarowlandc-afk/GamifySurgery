@@ -1,0 +1,632 @@
+{
+  "checkedOn": "2026-11-05",
+  "decision": "docs/research/question-new-n3-manager-decision-20261105.md",
+  "scope": "Five exact frozen N3 review-two PASS acceptances only. No question edits, clinical approval, source-hold-dependent keys, domain runtime edits or rebind.",
+  "defaultBefore": {
+    "cases": 1136,
+    "nodes": 1447,
+    "uniqueQuestions": 1442,
+    "activeConcepts": 444,
+    "registeredConcepts": 600,
+    "sha256": "9d22fca317de853e1647bac1c4b2e727600627ccf9edb9acbe1e784ff927d98f"
+  },
+  "defaultAfter": {
+    "cases": 1141,
+    "nodes": 1452,
+    "uniqueQuestions": 1447,
+    "activeConcepts": 449,
+    "registeredConcepts": 605,
+    "sha256": "77261db946b72dbf0f001e6ce11aab75928b561a19a8a17a874274f08b185a30"
+  },
+  "unchangedDefaultCases": 1136,
+  "unchangedHistoricalConcepts": 600,
+  "accepted": [
+    {
+      "acceptanceId": "review.n3.bilateral-carotid-symptom-attribution.v2",
+      "caseId": "case.n3.bilateral-carotid-symptom-attribution.v1",
+      "nodeId": "node.n3.bilateral-carotid-symptom-attribution.v1",
+      "questionVariantId": "question.n3.bilateral-carotid-symptom-attribution.v2",
+      "conceptId": "concept.n3.bilateral-carotid-symptom-attribution",
+      "sourceView": "n3-round3",
+      "decision": "docs/research/question-new-n3-manager-decision-20261105.md",
+      "variantSha256": "cefd185d88d4a1c2e55d928bd172dd1fab020713ea364055413fe45db3d2ba3d",
+      "authoredCaseSha256": "581b65b6ac2e19c44749bbec6fd9bc8e5ed1e914665e90004aab1a84ab4bfa37",
+      "conceptSha256": "9eb03996a1806c69986b6a4683cc7a5dbb37a6b5a999899d2aa7242665d7b07a",
+      "reviewStatus": "needs_clinician_review",
+      "heldKeyClaims": [],
+      "clinicalApproval": false,
+      "existingExactOrders": []
+    },
+    {
+      "acceptanceId": "review.n3.postsplenectomy-nodule-function-before-targeting.v2",
+      "caseId": "case.n3.postsplenectomy-nodule-function-before-targeting.v1",
+      "nodeId": "node.n3.postsplenectomy-nodule-function-before-targeting.v1",
+      "questionVariantId": "question.n3.postsplenectomy-nodule-function-before-targeting.v2",
+      "conceptId": "concept.n3.postsplenectomy-nodule-function-before-targeting",
+      "sourceView": "n3-round3",
+      "decision": "docs/research/question-new-n3-manager-decision-20261105.md",
+      "variantSha256": "f88cf9ff5359299b4dc44dda89752b0c74c56c8e5eea627f0ab141953864c8f6",
+      "authoredCaseSha256": "3d77e53c925f24799f943280b5a579a60a16810720ca81ab62b1d273edb6c7ae",
+      "conceptSha256": "5970696c7fc169292952b95e9b3de4c55918b35b5e9adaabcd004445e91c23b2",
+      "reviewStatus": "needs_clinician_review",
+      "heldKeyClaims": [],
+      "clinicalApproval": false,
+      "existingExactOrders": [
+        {
+          "caseId": "case.n3.postsplenectomy-nodule-function-before-targeting.v1",
+          "nodeId": "node.n3.postsplenectomy-nodule-function-before-targeting.v1",
+          "questionVariantId": "question.n3.postsplenectomy-nodule-function-before-targeting.v2",
+          "choiceId": "choice.n3r2.postsplenectomy-nodule-function-before-targeting.rbc",
+          "choiceLabel": "Tc-99m heat-damaged red-cell scintigraphy",
+          "timingProfileId": "timing.test.nuclear_imaging",
+          "disposition": {
+            "kind": "not_executed",
+            "reason": "external_only"
+          }
+        },
+        {
+          "caseId": "case.n3.postsplenectomy-nodule-function-before-targeting.v1",
+          "nodeId": "node.n3.postsplenectomy-nodule-function-before-targeting.v1",
+          "questionVariantId": "question.n3.postsplenectomy-nodule-function-before-targeting.v2",
+          "choiceId": "choice.n3r2.postsplenectomy-nodule-function-before-targeting.eus",
+          "choiceLabel": "Endoscopic-ultrasound-guided core biopsy",
+          "timingProfileId": "timing.test.advanced_diagnostic",
+          "disposition": {
+            "kind": "not_executed",
+            "reason": "external_only"
+          }
+        },
+        {
+          "caseId": "case.n3.postsplenectomy-nodule-function-before-targeting.v1",
+          "nodeId": "node.n3.postsplenectomy-nodule-function-before-targeting.v1",
+          "questionVariantId": "question.n3.postsplenectomy-nodule-function-before-targeting.v2",
+          "choiceId": "choice.n3r2.postsplenectomy-nodule-function-before-targeting.mri",
+          "choiceLabel": "Pancreatic-protocol magnetic resonance imaging",
+          "timingProfileId": "timing.test.mri",
+          "disposition": {
+            "kind": "not_executed",
+            "reason": "external_only"
+          }
+        }
+      ]
+    },
+    {
+      "acceptanceId": "review.n3.dysphagia-biopsy-territory-after-negative-endoscopy.v2",
+      "caseId": "case.n3.dysphagia-biopsy-territory-after-negative-endoscopy.v1",
+      "nodeId": "node.n3.dysphagia-biopsy-territory-after-negative-endoscopy.v1",
+      "questionVariantId": "question.n3.dysphagia-biopsy-territory-after-negative-endoscopy.v2",
+      "conceptId": "concept.n3.dysphagia-biopsy-territory-after-negative-endoscopy",
+      "sourceView": "n3-round3",
+      "decision": "docs/research/question-new-n3-manager-decision-20261105.md",
+      "variantSha256": "f8dcf7df10db721f6ed9cfcffe7457206ffadd75fe8567c374fd7517b0a79ce9",
+      "authoredCaseSha256": "28da5b119f54be7141e385fa2d1d1f51383c22cad31835b82ec748dd5e5d6c15",
+      "conceptSha256": "20538f9e193a7afa955913525e4008907fb17c7ce61dde90b9449acc38972dd3",
+      "reviewStatus": "needs_clinician_review",
+      "heldKeyClaims": [],
+      "clinicalApproval": false,
+      "existingExactOrders": [
+        {
+          "caseId": "case.n3.dysphagia-biopsy-territory-after-negative-endoscopy.v1",
+          "nodeId": "node.n3.dysphagia-biopsy-territory-after-negative-endoscopy.v1",
+          "questionVariantId": "question.n3.dysphagia-biopsy-territory-after-negative-endoscopy.v2",
+          "choiceId": "choice.n3r2.dysphagia-biopsy-territory-after-negative-endoscopy.biopsies",
+          "choiceLabel": "Esophageal biopsy: six samples from two levels",
+          "timingProfileId": "timing.test.upper_endoscopy",
+          "disposition": {
+            "kind": "not_executed",
+            "reason": "external_only"
+          }
+        },
+        {
+          "caseId": "case.n3.dysphagia-biopsy-territory-after-negative-endoscopy.v1",
+          "nodeId": "node.n3.dysphagia-biopsy-territory-after-negative-endoscopy.v1",
+          "questionVariantId": "question.n3.dysphagia-biopsy-territory-after-negative-endoscopy.v2",
+          "choiceId": "choice.n3r2.dysphagia-biopsy-territory-after-negative-endoscopy.manometry",
+          "choiceLabel": "High-resolution esophageal manometry with provocative testing",
+          "timingProfileId": "timing.test.esophageal_manometry",
+          "disposition": {
+            "kind": "not_executed",
+            "reason": "external_only"
+          }
+        },
+        {
+          "caseId": "case.n3.dysphagia-biopsy-territory-after-negative-endoscopy.v1",
+          "nodeId": "node.n3.dysphagia-biopsy-territory-after-negative-endoscopy.v1",
+          "questionVariantId": "question.n3.dysphagia-biopsy-territory-after-negative-endoscopy.v2",
+          "choiceId": "choice.n3r2.dysphagia-biopsy-territory-after-negative-endoscopy.contrast",
+          "choiceLabel": "Timed barium esophagram with a tablet challenge",
+          "timingProfileId": "timing.test.contrast_swallow",
+          "disposition": {
+            "kind": "not_executed",
+            "reason": "external_only"
+          }
+        }
+      ]
+    },
+    {
+      "acceptanceId": "review.n3.tumor-screen-versus-family-test-sequence.v2",
+      "caseId": "case.n3.tumor-screen-versus-family-test-sequence.v1",
+      "nodeId": "node.n3.tumor-screen-versus-family-test-sequence.v1",
+      "questionVariantId": "question.n3.tumor-screen-versus-family-test-sequence.v2",
+      "conceptId": "concept.n3.tumor-screen-versus-family-test-sequence.v2",
+      "sourceView": "n3-round3",
+      "decision": "docs/research/question-new-n3-manager-decision-20261105.md",
+      "variantSha256": "ac2f0407f9a1a4af42445495bff871c4e566a66d062661edf5d8eadd1c7c2610",
+      "authoredCaseSha256": "e48cf9407571beece224c5d56fe1fdeffa4f89d3e2078bbcb06edaf6e8de43ea",
+      "conceptSha256": "f8a102f68a742cf76204596b7525c068e889f816a2f468b5bcde183ddc0ac409",
+      "reviewStatus": "needs_clinician_review",
+      "heldKeyClaims": [],
+      "clinicalApproval": false,
+      "existingExactOrders": [
+        {
+          "caseId": "case.n3.tumor-screen-versus-family-test-sequence.v1",
+          "nodeId": "node.n3.tumor-screen-versus-family-test-sequence.v1",
+          "questionVariantId": "question.n3.tumor-screen-versus-family-test-sequence.v2",
+          "choiceId": "choice.n3r2.tumor-screen-versus-family-test-sequence.constitutional",
+          "choiceLabel": "Arrange germline testing after genetic counseling",
+          "timingProfileId": "timing.test.genetic",
+          "disposition": {
+            "kind": "not_executed",
+            "reason": "external_only"
+          }
+        },
+        {
+          "caseId": "case.n3.tumor-screen-versus-family-test-sequence.v1",
+          "nodeId": "node.n3.tumor-screen-versus-family-test-sequence.v1",
+          "questionVariantId": "question.n3.tumor-screen-versus-family-test-sequence.v2",
+          "choiceId": "choice.n3r2.tumor-screen-versus-family-test-sequence.msi",
+          "choiceLabel": "Arrange microsatellite-instability testing on the tumor block",
+          "timingProfileId": "timing.test.tumor_mmr_ihc",
+          "disposition": {
+            "kind": "not_executed",
+            "reason": "external_only"
+          }
+        },
+        {
+          "caseId": "case.n3.tumor-screen-versus-family-test-sequence.v1",
+          "nodeId": "node.n3.tumor-screen-versus-family-test-sequence.v1",
+          "questionVariantId": "question.n3.tumor-screen-versus-family-test-sequence.v2",
+          "choiceId": "choice.n3r2.tumor-screen-versus-family-test-sequence.repeat_ihc",
+          "choiceLabel": "Arrange four-protein immunohistochemistry on another tumor block",
+          "timingProfileId": "timing.test.tumor_mmr_ihc",
+          "disposition": {
+            "kind": "not_executed",
+            "reason": "external_only"
+          }
+        }
+      ]
+    },
+    {
+      "acceptanceId": "review.n3.gastric-lymphoma-new-large-cell-process.v2",
+      "caseId": "case.n3.gastric-lymphoma-new-large-cell-process.v1",
+      "nodeId": "node.n3.gastric-lymphoma-new-large-cell-process.v1",
+      "questionVariantId": "question.n3.gastric-lymphoma-new-large-cell-process.v2",
+      "conceptId": "concept.n3.gastric-lymphoma-new-large-cell-process.v2",
+      "sourceView": "n3-round3",
+      "decision": "docs/research/question-new-n3-manager-decision-20261105.md",
+      "variantSha256": "70fb910e8aa9e70f228d04a125be08f880859e132e4687d8b202a3fa7eee09a6",
+      "authoredCaseSha256": "c0a73c140565409277e2dbc382c3eee17ad8e0699c71db73fabe13a1401f09fc",
+      "conceptSha256": "48a9eb30ea3158c86f70742a889ecb1fb31e676c42b75683c1a02b1b916364fb",
+      "reviewStatus": "needs_clinician_review",
+      "heldKeyClaims": [],
+      "clinicalApproval": false,
+      "existingExactOrders": [
+        {
+          "caseId": "case.n3.gastric-lymphoma-new-large-cell-process.v1",
+          "nodeId": "node.n3.gastric-lymphoma-new-large-cell-process.v1",
+          "questionVariantId": "question.n3.gastric-lymphoma-new-large-cell-process.v2",
+          "choiceId": "choice.n3r2.gastric-lymphoma-new-large-cell-process.repeat_biopsy",
+          "choiceLabel": "Repeat esophagogastroduodenoscopy with multiple tissue biopsies",
+          "timingProfileId": "timing.test.upper_endoscopy",
+          "disposition": {
+            "kind": "not_executed",
+            "reason": "external_only"
+          }
+        },
+        {
+          "caseId": "case.n3.gastric-lymphoma-new-large-cell-process.v1",
+          "nodeId": "node.n3.gastric-lymphoma-new-large-cell-process.v1",
+          "questionVariantId": "question.n3.gastric-lymphoma-new-large-cell-process.v2",
+          "choiceId": "choice.n3r2.gastric-lymphoma-new-large-cell-process.eus",
+          "choiceLabel": "Endoscopic ultrasound for wall depth and regional-node staging",
+          "timingProfileId": "timing.test.advanced_diagnostic",
+          "disposition": {
+            "kind": "not_executed",
+            "reason": "external_only"
+          }
+        },
+        {
+          "caseId": "case.n3.gastric-lymphoma-new-large-cell-process.v1",
+          "nodeId": "node.n3.gastric-lymphoma-new-large-cell-process.v1",
+          "questionVariantId": "question.n3.gastric-lymphoma-new-large-cell-process.v2",
+          "choiceId": "choice.n3r2.gastric-lymphoma-new-large-cell-process.pet",
+          "choiceLabel": "PET/CT for systemic lymphoma staging",
+          "timingProfileId": "timing.test.pet_ct",
+          "disposition": {
+            "kind": "not_executed",
+            "reason": "external_only"
+          }
+        }
+      ]
+    }
+  ],
+  "manifest": {
+    "beforeId": "question-ship.2026-11-05.v3",
+    "afterId": "question-ship.2026-11-05.v4",
+    "beforeAccepted": 64,
+    "afterAccepted": 69,
+    "legacyBindings": 1423,
+    "replacements": [
+      {
+        "replaces": "case.gs028c.palpable-breast.paired-dense-focal",
+        "with": "question.palpable-breast.negative-mammogram-targeted-us.v1.r4"
+      },
+      {
+        "replaces": "case.asymptomatic-phpt.incidental-calcium",
+        "with": "question.asymptomatic-phpt.age-based-surgery.v1.r3"
+      }
+    ],
+    "unchangedPriorRows": 64
+  },
+  "sourceView": {
+    "name": "n3-round3",
+    "exportName": "QUESTION_NEW_N3_ROUND3_SOURCE_RELEASE",
+    "cases": 8,
+    "beforeSha256": "0563b9812b4eaf1b28ac79dc307da695773d096f3929965c33810f80abff9cb9",
+    "afterSha256": "0563b9812b4eaf1b28ac79dc307da695773d096f3929965c33810f80abff9cb9"
+  },
+  "catalog": {
+    "unchanged": true,
+    "sha256": "3e0d1bb346abc1579e5c24400565c36c158d90304b60171b24b6a88f64b2ed40"
+  },
+  "timing": {
+    "unchanged": true,
+    "records": 2215,
+    "sha256": "3728af1d3c0c074476b9340e7b4fc555d07fadb4945be689e43d1177f06fdd97"
+  },
+  "excluded": {
+    "roundThreeRepairs": [
+      "question.n3.recurrent-fistula-continence-reserve.v3",
+      "question.n3.delayed-regurgitation-proximal-anatomic-study.v3",
+      "question.n3.postrepair-pain-new-dynamic-finding.v3"
+    ],
+    "parkedCaseIds": [
+      "case.n3.ostomy-fluid-versus-calorie-replacement.v1",
+      "case.n3.ostomy-biochemical-followup-after-volume-recovery.v1",
+      "case.n3.postoperative-dribbling-with-bladder-distension.v1",
+      "case.n3.continence-anatomy-versus-stool-trigger.v1",
+      "case.n3.foot-culture-versus-clinical-infection.v1",
+      "case.n3.drain-presence-versus-prophylaxis-indication.v1",
+      "case.n3.swallowing-failure-versus-intestinal-failure.v1",
+      "case.n3.nutrition-support-versus-new-mechanical-obstruction.v1",
+      "case.n3.postdiverticulitis-examination-extent.v1",
+      "case.n3.appendicitis-response-versus-structural-risk.v1",
+      "case.n3.venous-ulcer-with-competing-arterial-findings.v1",
+      "case.n3.claudication-activity-versus-treatment-exposure.v1",
+      "case.n3.lactation-drain-contact-boundary.v1",
+      "case.n3.esophageal-dilation-versus-inflammatory-control.v1",
+      "case.n3.posttransplant-lesion-versus-viremia-response.v1",
+      "case.n3.rectal-response-assessment-timepoint.v1",
+      "case.n3.adrenal-uptake-versus-biopsy-safety.v1",
+      "case.n3.hereditary-thyroid-adrenal-operative-order.v1",
+      "case.n3.sharp-esophageal-object-despite-liquid-passage.v1",
+      "case.n3.mesh-sinus-versus-superficial-response.v1",
+      "case.n3.chyle-leak-diet-composition-versus-calories.v1",
+      "case.n3.pleural-source-versus-systemic-response.v1",
+      "case.n3.asplenia-standby-response-versus-emergency-plan.v1",
+      "case.n3.mesenteric-food-adaptation-versus-symptom-resolution.v1",
+      "case.n3.head-injury-rule-scope-and-anticoagulant-exposure.v1",
+      "case.n3.blunt-chest-injury-discordant-screening-results.v1",
+      "case.n3.blunt-chest-mechanism-versus-completed-screen.v1",
+      "case.n3.ards-weight-change-versus-tidal-volume-basis.v1",
+      "case.n3.incidental-gallstones-and-competing-pain-source.v1",
+      "case.n3.venous-intervention-versus-mandatory-stocking-trial.v1",
+      "case.n3.small-skin-cancer-with-adverse-histology.v1",
+      "case.n3.anal-cancer-distant-staging-versus-local-extent.v1"
+    ]
+  },
+  "protectedUnchangedCount": 157,
+  "protectedUnchanged": [
+    "packages/clinical-content/src/question-new-n3-20261105.ts",
+    "packages/clinical-content/src/question-new-n3-evidence-20261105.ts",
+    "packages/clinical-content/src/question-new-n3-level3.ts",
+    "packages/clinical-content/src/question-new-n3-level4.ts",
+    "packages/clinical-content/src/question-new-n3-round2-20261105.ts",
+    "packages/clinical-content/src/question-new-n3-round2-evidence-20261105.ts",
+    "packages/clinical-content/src/question-new-n3-round2-level3-nutrition.ts",
+    "packages/clinical-content/src/question-new-n3-round2-level3-specialty.ts",
+    "packages/clinical-content/src/question-new-n3-round2-level4-critical.ts",
+    "packages/clinical-content/src/question-new-n3-round2-level4-foregut.ts",
+    "packages/clinical-content/src/question-new-n3-round2-level4-oncology.ts",
+    "packages/clinical-content/src/question-new-n3-round2-types.ts",
+    "packages/clinical-content/src/question-new-n3-round3-20261105.ts",
+    "packages/clinical-content/src/question-new-n3-round3-candidates.ts",
+    "packages/clinical-content/src/question-new-n3-round3-evidence-20261105.ts",
+    "packages/clinical-content/src/question-new-n3-round3-types.ts",
+    "packages/clinical-content/src/question-new-n3-types.ts",
+    "packages/game-domain/src/question-new-n3-round2-test-orders.ts",
+    "packages/game-domain/src/question-new-n3-round3-test-orders.ts",
+    "packages/game-domain/src/question-new-n3-test-orders.ts",
+    "apps/player/src/session/cloud/automaticResolution.test.ts",
+    "apps/player/src/session/cloud/automaticResolution.ts",
+    "apps/player/src/session/cloud/cache.test.ts",
+    "apps/player/src/session/cloud/cache.ts",
+    "apps/player/src/session/cloud/campaignPreview.ts",
+    "apps/player/src/session/cloud/checkDeadline.ts",
+    "apps/player/src/session/cloud/CloudAccount.test.tsx",
+    "apps/player/src/session/cloud/CloudAccount.tsx",
+    "apps/player/src/session/cloud/codec.fixtures.test.ts",
+    "apps/player/src/session/cloud/codec.test.ts",
+    "apps/player/src/session/cloud/codec.ts",
+    "apps/player/src/session/cloud/codec.worker.ts",
+    "apps/player/src/session/cloud/codecCache.ts",
+    "apps/player/src/session/cloud/codecCompression.test.ts",
+    "apps/player/src/session/cloud/codecCompression.ts",
+    "apps/player/src/session/cloud/codecEvidence.test.ts",
+    "apps/player/src/session/cloud/codecEvidence.ts",
+    "apps/player/src/session/cloud/codecEvidencePages.test.ts",
+    "apps/player/src/session/cloud/codecEvidencePages.ts",
+    "apps/player/src/session/cloud/codecGoldenVectors.json",
+    "apps/player/src/session/cloud/codecGoldenVectors.sql",
+    "apps/player/src/session/cloud/codecJson.ts",
+    "apps/player/src/session/cloud/codecOwnership.ts",
+    "apps/player/src/session/cloud/codecTasks.ts",
+    "apps/player/src/session/cloud/codecTestSupport.ts",
+    "apps/player/src/session/cloud/codecWire.ts",
+    "apps/player/src/session/cloud/codecWorker.test.ts",
+    "apps/player/src/session/cloud/codecWorker.ts",
+    "apps/player/src/session/cloud/codecWorkerMessageTestSupport.ts",
+    "apps/player/src/session/cloud/codecWorkerNative.test.ts",
+    "apps/player/src/session/cloud/codecWorkerNativeTestSupport.ts",
+    "apps/player/src/session/cloud/codecWorkerQueue.test.ts",
+    "apps/player/src/session/cloud/codecWorkerTestSupport.ts",
+    "apps/player/src/session/cloud/coordinator.test.ts",
+    "apps/player/src/session/cloud/coordinator.ts",
+    "apps/player/src/session/cloud/copySelection.ts",
+    "apps/player/src/session/cloud/diagnosticWorkloadPerformance.test.ts",
+    "apps/player/src/session/cloud/documentReopen.test.ts",
+    "apps/player/src/session/cloud/entryLarge.test.tsx",
+    "apps/player/src/session/cloud/entryPerformanceTestSupport.ts",
+    "apps/player/src/session/cloud/entryPreparation.test.ts",
+    "apps/player/src/session/cloud/entryStorage.ts",
+    "apps/player/src/session/cloud/entryTimings.test.ts",
+    "apps/player/src/session/cloud/entryTimings.ts",
+    "apps/player/src/session/cloud/fakeTransport.deleteCampaign.test.ts",
+    "apps/player/src/session/cloud/fakeTransport.ts",
+    "apps/player/src/session/cloud/gameSession.test.tsx",
+    "apps/player/src/session/cloud/gameSession.ts",
+    "apps/player/src/session/cloud/importCampaigns.test.ts",
+    "apps/player/src/session/cloud/importCampaigns.ts",
+    "apps/player/src/session/cloud/index.ts",
+    "apps/player/src/session/cloud/journalCodec.ts",
+    "apps/player/src/session/cloud/journalWarm.test.ts",
+    "apps/player/src/session/cloud/journalWarm.ts",
+    "apps/player/src/session/cloud/lifecycle.test.ts",
+    "apps/player/src/session/cloud/nativeOpeningProof.test.ts",
+    "apps/player/src/session/cloud/networkRequestBudget.ts",
+    "apps/player/src/session/cloud/olderCopies.ts",
+    "apps/player/src/session/cloud/openingDeadline.test.tsx",
+    "apps/player/src/session/cloud/openingDiagnostic.test.ts",
+    "apps/player/src/session/cloud/openingDiagnostic.ts",
+    "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+    "apps/player/src/session/cloud/operationalBuildController.test.tsx",
+    "apps/player/src/session/cloud/operationalController.test.tsx",
+    "apps/player/src/session/cloud/operationalControllerTestSupport.tsx",
+    "apps/player/src/session/cloud/operationalEngine.nativeWorker.testSupport.mjs",
+    "apps/player/src/session/cloud/operationalEngine.worker.ts",
+    "apps/player/src/session/cloud/operationalEngineClient.test.ts",
+    "apps/player/src/session/cloud/operationalEngineClient.ts",
+    "apps/player/src/session/cloud/operationalEngineDev.test.ts",
+    "apps/player/src/session/cloud/operationalEngineDifferential.test.ts",
+    "apps/player/src/session/cloud/operationalEngineDispatch.test.ts",
+    "apps/player/src/session/cloud/operationalEngineDispatch.ts",
+    "apps/player/src/session/cloud/operationalEngineNativeTestSupport.ts",
+    "apps/player/src/session/cloud/operationalEnginePerformance.test.ts",
+    "apps/player/src/session/cloud/operationalEngineProcessor.test.ts",
+    "apps/player/src/session/cloud/operationalEngineProcessor.ts",
+    "apps/player/src/session/cloud/operationalEngineProtocol.ts",
+    "apps/player/src/session/cloud/operationalEvidenceMirror.test.ts",
+    "apps/player/src/session/cloud/operationalEvidenceMirror.ts",
+    "apps/player/src/session/cloud/operationalFreeze.test.ts",
+    "apps/player/src/session/cloud/operationalFreeze.ts",
+    "apps/player/src/session/cloud/operationalSession.test.ts",
+    "apps/player/src/session/cloud/operationalSessionEngine.ts",
+    "apps/player/src/session/cloud/operationalSessionPerformance.test.tsx",
+    "apps/player/src/session/cloud/operationalSessionTestSupport.ts",
+    "apps/player/src/session/cloud/operationalSessionView.ts",
+    "apps/player/src/session/cloud/operationalStatePatch.test.ts",
+    "apps/player/src/session/cloud/operationalStatePatch.ts",
+    "apps/player/src/session/cloud/operationalViewProjection.ts",
+    "apps/player/src/session/cloud/orderedSessionWork.ts",
+    "apps/player/src/session/cloud/prepareSnapshotTick.test.ts",
+    "apps/player/src/session/cloud/prepareSnapshotTick.ts",
+    "apps/player/src/session/cloud/priorRecovery.test.ts",
+    "apps/player/src/session/cloud/progress.ts",
+    "apps/player/src/session/cloud/reopenSelection.test.ts",
+    "apps/player/src/session/cloud/reopenSelection.ts",
+    "apps/player/src/session/cloud/requestLoad.test.ts",
+    "apps/player/src/session/cloud/retainedCopies.ts",
+    "apps/player/src/session/cloud/savePolicy.test.ts",
+    "apps/player/src/session/cloud/scopeData.ts",
+    "apps/player/src/session/cloud/separateCampaign.test.ts",
+    "apps/player/src/session/cloud/snapshotCodec.test.ts",
+    "apps/player/src/session/cloud/snapshotCodec.ts",
+    "apps/player/src/session/cloud/snapshotConceptCompatibility.test.ts",
+    "apps/player/src/session/cloud/snapshotLearning.ts",
+    "apps/player/src/session/cloud/snapshotMeasurements.test.ts",
+    "apps/player/src/session/cloud/snapshotReopenOperations.test.ts",
+    "apps/player/src/session/cloud/snapshotRpcRoundTrip.test.ts",
+    "apps/player/src/session/cloud/snapshotSaves.test.ts",
+    "apps/player/src/session/cloud/snapshotSqlContract.test.ts",
+    "apps/player/src/session/cloud/snapshotTailBounds.test.ts",
+    "apps/player/src/session/cloud/storageGrowth.test.ts",
+    "apps/player/src/session/cloud/storageRecovery.test.ts",
+    "apps/player/src/session/cloud/storageRetry.ts",
+    "apps/player/src/session/cloud/supabaseTransport.deleteCampaign.test.ts",
+    "apps/player/src/session/cloud/supabaseTransport.test.ts",
+    "apps/player/src/session/cloud/supabaseTransport.ts",
+    "apps/player/src/session/cloud/syncFixtureSupport.ts",
+    "apps/player/src/session/cloud/syncTestSupport.ts",
+    "apps/player/src/session/cloud/tickPerformance.test.ts",
+    "apps/player/src/session/cloud/tickPerformanceTestSupport.ts",
+    "apps/player/src/session/cloud/transport.ts",
+    "apps/player/src/session/cloud/uploadRaces.test.ts",
+    "apps/player/src/session/cloud/verifiedCopyCache.test.ts",
+    "apps/player/src/session/cloud/verifiedCopyCache.ts",
+    "apps/player/src/session/cloud/verifiedEvidenceText.test.ts",
+    "apps/player/src/session/cloud/verifiedEvidenceText.ts",
+    "apps/player/src/session/cloud/watchdogs.test.ts",
+    "apps/player/src/session/cloud/writerIdentity.test.ts",
+    "apps/player/src/session/cloud/writerIdentity.ts",
+    "docs/research/question-new-n3-round3-20261105.json",
+    "docs/research/question-new-n3-review2-20261105.json",
+    "docs/research/question-new-n3-manager-decision-20261105.md",
+    "tools/question-quality/fixtures/question-ship-case-replacements-before-20261105.json",
+    "tools/question-quality/fixtures/question-ship-case-replacements-source-migration-20261105.json",
+    "tools/question-quality/fixtures/question-flags2-round3-before-20261105.json"
+  ],
+  "authorizedProtectedChanges": [
+    {
+      "path": "packages/clinical-content/src/question-new-n3-20261105.test.ts",
+      "beforeSha256": "f02044946514b3fca31d9e57f16cc139d10e6b4489ab40d4495a147c253fca26",
+      "afterSha256": "fe364c5506299cdd9800eedf7bf1fe5d9158243ee72718be2cc2f6ffff3bfa2d"
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n3-round2-20261105.test.ts",
+      "beforeSha256": "dcf877d760c92604660921a23dd550bebd2b52307e7f1498b8623afb77bfcb55",
+      "afterSha256": "a53627de2670a4835f044fe5a757f9625a0675bd3c7a53396fa114cecca824fd"
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n3-round3-20261105.test.ts",
+      "beforeSha256": "dc57e620b6fc636c2da12c40078b88eca62fbe087c95a3688f7142601fb15056",
+      "afterSha256": "3caf8773bcc69195a1905bfb4974078c435d3c048e97f1d8f4e8bd8d37f3e5d9"
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n3-round3-source-20261105.ts",
+      "beforeSha256": "1d80f2ac59b79157f83ae758c27c0e1620486e53a9bf48cea73464a772bfeed4",
+      "afterSha256": "5974fe0097e6df52b1cb60b751c76b4766a099172aa84b158348e7c1337af524"
+    }
+  ],
+  "existingChanges": [
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.ts",
+      "beforeSha256": "1ac690d5dfb7773becbfd78f998f0d5269f59289ba555f0c28e5059727285a19",
+      "afterSha256": "243aed1d81250f7a7e5710c05849553fc3b998a7acb9bf1c39aeff100d37d3cf"
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "beforeSha256": "4e9ee3b1e50b4d33c0b2569254eda75fc60c57f3c91be8f39c51a898d797804c",
+      "afterSha256": "e93b4deae7bda1134869b80324d77c5698e075e65b97815eb4f991c8aba5ef81"
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n3-round3-source-20261105.ts",
+      "beforeSha256": "1d80f2ac59b79157f83ae758c27c0e1620486e53a9bf48cea73464a772bfeed4",
+      "afterSha256": "5974fe0097e6df52b1cb60b751c76b4766a099172aa84b158348e7c1337af524"
+    },
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+      "beforeSha256": "b7ced2972ffdd31c96f1e2c30c329d17f2ddbca792d73e37702f9f53a6438c6a",
+      "afterSha256": "12e587e5ff318e96b5d11f822e1e891782155aa61236e87161d3a44315b81cfe"
+    },
+    {
+      "path": "packages/clinical-content/src/question-ship-case-replacements.test.ts",
+      "beforeSha256": "779c6878ef2dcd5d27f03804b3a6496934e8fae2b83acee494a6f823e79ce70e",
+      "afterSha256": "e65a420e506871f71055046ca8e6f57ffa1ecd21e0d4c947f37fa5eff6879036"
+    },
+    {
+      "path": "packages/clinical-content/src/question-ship-case-replacements-test-support.ts",
+      "beforeSha256": "7bda1dc88ea1e4c2ef514e12a1a9c10566f34d9eaf743d4cfecf565085f6317d",
+      "afterSha256": "dd1a33f5759ddf2296d4930d7527e2bad9177602c6313a671688445312ec4bc7"
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n3-20261105.test.ts",
+      "beforeSha256": "f02044946514b3fca31d9e57f16cc139d10e6b4489ab40d4495a147c253fca26",
+      "afterSha256": "fe364c5506299cdd9800eedf7bf1fe5d9158243ee72718be2cc2f6ffff3bfa2d"
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n3-round2-20261105.test.ts",
+      "beforeSha256": "dcf877d760c92604660921a23dd550bebd2b52307e7f1498b8623afb77bfcb55",
+      "afterSha256": "a53627de2670a4835f044fe5a757f9625a0675bd3c7a53396fa114cecca824fd"
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n3-round3-20261105.test.ts",
+      "beforeSha256": "dc57e620b6fc636c2da12c40078b88eca62fbe087c95a3688f7142601fb15056",
+      "afterSha256": "3caf8773bcc69195a1905bfb4974078c435d3c048e97f1d8f4e8bd8d37f3e5d9"
+    },
+    {
+      "path": "apps/player/src/questionShipSaveCompatibility.test.ts",
+      "beforeSha256": "491ea06eb684602c6c08449e1bdc70a0c6fb0d619b5a72221554712a450e7233",
+      "afterSha256": "c52f8acc976cca40b3ee9acc15ea49553a3312aedc6d9dcf7a7c7f192e1ec348"
+    },
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2b-acceptance-20261105.test.ts",
+      "beforeSha256": "e3d3dd3598e16b2788eeabd8f83b348d6cb510850dc667eb1450f01c5a19640a",
+      "afterSha256": "58dc233fb37dc52399132e3e7207484e2cb416cc300ec750d5e24d063355885e"
+    },
+    {
+      "path": "packages/clinical-content/src/pilot-content.test.ts",
+      "beforeSha256": "0e510df935a5a6fa03f9898207b23e6f339a6edd5066c7950c10ca92fa0294ce",
+      "afterSha256": "181a391742a9039615fde8439e01c039ac37b0bd49b1d5522e84c97cc2f15483"
+    },
+    {
+      "path": "packages/game-domain/tests/question-new-n3-supply.test.ts",
+      "beforeSha256": "bac222cc0deacde32ce4313600fa5fac9b84c7c9bbc77a4bb89c6995a847ff89",
+      "afterSha256": "e0fd0259679aecd39af39d7a1b6b47a141a548c7e32a6ec69e2616485a0262cb"
+    },
+    {
+      "path": "packages/game-domain/tests/question-new-n3-round2-supply.test.ts",
+      "beforeSha256": "5e9fb8b61699c36e1020a425ac527fdacd6440b8a1b1e33478d7a6a604ec08e2",
+      "afterSha256": "caac6948b635b8306815396d3a5cc3dc10e061f139c97336374f1f98b0935b8e"
+    },
+    {
+      "path": "packages/game-domain/tests/question-new-n3-round3-supply.test.ts",
+      "beforeSha256": "afe8ae0ae730078e80c20f8b5015ef8450bb8e2028f6cbb88497cbf244029491",
+      "afterSha256": "f9b7580ac9f869d7830a1afa8cdf882a13b358acf60cb11c5f55c93946372f21"
+    }
+  ],
+  "changedRuntimeInputs": [
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.ts",
+      "beforeSha256": "1ac690d5dfb7773becbfd78f998f0d5269f59289ba555f0c28e5059727285a19",
+      "afterSha256": "243aed1d81250f7a7e5710c05849553fc3b998a7acb9bf1c39aeff100d37d3cf"
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "beforeSha256": "4e9ee3b1e50b4d33c0b2569254eda75fc60c57f3c91be8f39c51a898d797804c",
+      "afterSha256": "e93b4deae7bda1134869b80324d77c5698e075e65b97815eb4f991c8aba5ef81"
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n3-round3-source-20261105.ts",
+      "beforeSha256": "1d80f2ac59b79157f83ae758c27c0e1620486e53a9bf48cea73464a772bfeed4",
+      "afterSha256": "5974fe0097e6df52b1cb60b751c76b4766a099172aa84b158348e7c1337af524"
+    }
+  ],
+  "newRuntimeFiles": [],
+  "levelFive": {
+    "evidencePath": "tools/qa/level-five-integration-results-20261012.json",
+    "evidenceSha256": "dead50020355be0bc328ff4557cd40199763097a8aa01baa3f8944d22492a8d5",
+    "rebound": false,
+    "changedExistingBoundInputs": [
+      {
+        "path": "packages/clinical-content/src/synthetic-content.ts",
+        "beforeSha256": "4e9ee3b1e50b4d33c0b2569254eda75fc60c57f3c91be8f39c51a898d797804c",
+        "afterSha256": "e93b4deae7bda1134869b80324d77c5698e075e65b97815eb4f991c8aba5ef81",
+        "recordedEvidenceSha256": "6d9870d53383af7da6ee7547ba702410a2545882876faa1696c0e1217fae311c"
+      }
+    ],
+    "modifiedRuntimeInputsNotCurrentlyListed": [
+      "packages/clinical-content/src/question-ship-manifest.ts",
+      "packages/clinical-content/src/question-new-n3-round3-source-20261105.ts"
+    ]
+  },
+  "knownAcceptedLengthException": {
+    "questionVariantId": "question.n3.gastric-lymphoma-new-large-cell-process.v2",
+    "keyCharacters": 63,
+    "longestDistractorCharacters": 62,
+    "exactCaseSha256": "c0a73c140565409277e2dbc382c3eee17ad8e0699c71db73fabe13a1401f09fc",
+    "reason": "Keep the explicitly frozen manager-accepted independent PASS version; all prior twelve exceptions and all other strict length checks remain."
+  },
+  "noDomainAdmissionCheckAdded": true,
+  "noSaveOrJournalFormatChanged": true,
+  "noClinicalAuthoring": true
+}

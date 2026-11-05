@@ -44,6 +44,18 @@ describe("September 11 board-expansion production flows", () => {
       const first = getCurrentQuestion(state, encounterId)!;
       expect(first.node.primaryConceptId).toBe(clinicalCase.decisionNodes[0]!.primaryConceptId);
       state = correct(state, encounterId, `board.${index}.first.answer`, index + 1);
+      if(clinicalCase.id==="case.asymptomatic-phpt.incidental-calcium"){
+        // Manager-accepted G05 replaces this entire fresh encounter. The old
+        // two-node gate is exercised by frozen snapshot/journal completion tests.
+        expect(clinicalCase.decisionNodes).toHaveLength(1);
+        expect(first.node.questionVariantId).toBe("question.asymptomatic-phpt.age-based-surgery.v1.r3");
+        expect(clinicalCase.decisionNodes[0]!.resultGateAfter).toBeNull();
+        expect(state.encounters[encounterId]!).toMatchObject({lifecycle:"resolved_summary_available",resolutionReason:"completed",pendingResult:null});
+        expect(state.encounters[encounterId]!.answers).toHaveLength(1);
+        expect(state.learningHistories[first.node.primaryConceptId]?.reviews).toHaveLength(1);
+        expect(getCurrentQuestion(state,encounterId)).toBeNull();
+        return;
+      }
       expect(state.encounters[encounterId]!.steps[0]!.status).toBe("feedback_pending");
       state = ack(state, encounterId, `board.${index}.first.ack`);
       const pending = state.encounters[encounterId]!.pendingResult!;

@@ -1,0 +1,34 @@
+*** Begin Patch
+*** Update File: packages/clinical-content/src/question-flags2-round3-20261105.test.ts
+@@
+-import {QUESTION_NEW_N3_ROUND2_TIMING_ENTRIES as concurrentN3Timings} from "./question-new-n3-round2-20261105";
++import {QUESTION_NEW_N3_ROUND2_TIMING_ENTRIES as concurrentN3Round2Timings} from "./question-new-n3-round2-20261105";
++import {QUESTION_NEW_N3_ROUND3_TIMING_ENTRIES as concurrentN3Round3Timings} from "./question-new-n3-round3-20261105";
++const concurrentN3Timings=[...concurrentN3Round2Timings,...concurrentN3Round3Timings];
+@@
+-const fileSha=(p:string)=>createHash("sha256").update(readFileSync(new URL("../../../"+p,import.meta.url))).digest("hex");
++const fileSha=(p:string)=>createHash("sha256").update(readFileSync(new URL("../../../"+p,import.meta.url))).digest("hex");
++// Retain the original capture; remove only the explicitly audited R3 append.
++const capturedConcurrentFileSha=(p:string)=>{
++  let source=readFileSync(new URL("../../../"+p,import.meta.url),"utf8");
++  if(p==="packages/clinical-content/src/answer-choice-timing.ts"){
++    const block=/\n\/\/ BEGIN N3 ROUND3 retained exact estimate append - explicit candidates only\.\nimport \{ QUESTION_NEW_N3_ROUND3_TIMING_ENTRIES \} from "\.\/question-new-n3-round3-20261105";\n\/\/ END N3 ROUND3 retained exact estimate append\.\n/;
++    expect(source.match(block)).not.toBeNull();
++    const addition=", ...QUESTION_NEW_N3_ROUND3_TIMING_ENTRIES";
++    expect(source.split(addition)).toHaveLength(2);
++    source=source.replace(addition,"").replace(block,"");
++  }
++  return createHash("sha256").update(source).digest("hex");
++};
+@@
+-expect(fileSha(change.path)).toBe(change.combinedCurrentSha256);
++expect(capturedConcurrentFileSha(change.path)).toBe(change.combinedCurrentSha256);
+@@
+-    expect([...index.matchAll(own)]).toHaveLength(1);
++    const n3r3=/\r?\n\/\/ BEGIN N3 ROUND3 explicit candidate exports - no default projection change\.\r?\nexport \* from "\.\/question-new-n3-round3-20261105";\r?\nexport \* from "\.\/question-new-n3-round3-source-20261105";\r?\n\/\/ END N3 ROUND3 explicit candidate exports\.\r?\n/g;
++    expect([...index.matchAll(n3r3)]).toHaveLength(1);
++    expect([...index.matchAll(own)]).toHaveLength(1);
+@@
+-index.replace(own,"").replace(n3,"")
++index.replace(own,"").replace(n3,"").replace(n3r3,"")
+*** End Patch

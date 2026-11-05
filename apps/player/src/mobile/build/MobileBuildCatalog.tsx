@@ -1,9 +1,18 @@
 import { useEffect, useState } from "react";
 import { getRoomDefinition, PROTOTYPE_DOMAIN_CONTEXT } from "@gamify-surgery/game-domain";
 import type { PrototypeShellProps } from "../../shellContract";
+import type { OwnedRoomBuildView } from "../../ui/types";
 import { roomBuildPurpose } from "../../session/buildModePresentation";
 import { EndoscopySetupChecklist } from "../../ui/RoomActionMenu";
 import { RoomThumbnail } from "./RoomThumbnail";
+
+function QuickUpgrade({ room, props }: { room: OwnedRoomBuildView; props: PrototypeShellProps }) {
+  return room.upgradeable && room.upgradeLevel < room.maxUpgradeLevel && props.onUpgradeRoom
+    ? <button type="button" className="mobile-build-quick-upgrade" aria-label={`Upgrade ${room.displayName}`}
+      disabled={!props.buildMode || !room.canUpgrade} onClick={() => props.onUpgradeRoom?.(room.id)}>
+      Upgrade<small>{room.nextUpgradeCostLabel}</small>
+    </button> : null;
+}
 
 export function MobileBuildCatalog({ props, onChoose, onOpenRoom, onDoors, onSetup, onPreviewRoom }: {
   props: PrototypeShellProps; onChoose: (id: string) => void; onOpenRoom: (id: string) => void; onDoors: () => void;
@@ -37,38 +46,42 @@ export function MobileBuildCatalog({ props, onChoose, onOpenRoom, onDoors, onSet
             {reason ? <small className="mobile-build-reason">{reason}</small> : null}
           </button>;
           return <article className="mobile-build-card" key={definition.id}>
-            <RoomThumbnail definitionId={definition.id} onVisible={onPreviewRoom} />
-            <div><h3>{definition.displayName}</h3><p>{option?.purpose ?? roomBuildPurpose(definition.id)}</p>
-              <p>{option?.footprintLabel ?? `${definition.width} × ${definition.height} tiles`}</p>
-              <p><strong>{option?.costLabel ?? `$${definition.constructionCost.toLocaleString()}`}</strong> · {option?.upkeepLabel ?? `$${definition.upkeepPerExpenseInterval}/hr upkeep`}</p>
-              <p>{option?.builtCountLabel ?? `${built}/${definition.maximumInstances ?? "no limit"} built`} · Unlock Level {definition.unlockFacilityLevel}</p>
-              {reason ? <p className="mobile-build-reason">{reason}</p> : null}
-              <button type="button" data-phone-anchor={definition.id === "room.examination" ? "exam-option" : undefined} data-build-room-option={definition.id} disabled={!props.buildMode || !option?.enabled}
-                onClick={() => onChoose(definition.id)}>Choose {definition.displayName}</button>
-            </div>
+            <button type="button" className="mobile-build-choice" aria-label={`Choose ${definition.displayName}`}
+              data-phone-anchor={definition.id === "room.examination" ? "exam-option" : undefined} data-build-room-option={definition.id}
+              disabled={!props.buildMode || !option?.enabled} onClick={() => onChoose(definition.id)}>
+              <RoomThumbnail definitionId={definition.id} onVisible={onPreviewRoom} />
+              <strong>{definition.displayName}</strong>
+              <span>{option?.costLabel ?? `$${definition.constructionCost.toLocaleString()}`} · {option?.footprintLabel ?? `${definition.width} × ${definition.height}`}</span>
+              <small>{option?.builtCountLabel ?? `${built}/${definition.maximumInstances ?? "no limit"} built`}</small>
+              {reason ? <small className="mobile-build-reason">{reason}</small> : null}
+            </button>
+            <details className="mobile-build-card-details"><summary aria-label={`Details about ${definition.displayName}`}>Details</summary>
+              <p>{option?.purpose ?? roomBuildPurpose(definition.id)}</p>
+              <p>{option?.upkeepLabel ?? `$${definition.upkeepPerExpenseInterval}/hr upkeep`} · Unlock Level {definition.unlockFacilityLevel}</p>
+            </details>
           </article>;
         }) : (props.ownedRooms ?? []).map(room => {
           const definition = getRoomDefinition(room.roomDefinitionId);
           const mapRoom = props.facility.rooms.find(candidate => candidate.instanceId === room.id);
-          const option = options.get(room.roomDefinitionId);
-          const built = props.facility.rooms.filter(candidate => candidate.definitionId === room.roomDefinitionId).length;
-          if (props.facility.levelFiveRoomArt && definition?.unlockFacilityLevel === 5) return <button
-            type="button" className="mobile-prestige-build-tile" key={room.id} data-build-owned-room={room.id}
+          if (props.facility.levelFiveRoomArt && definition?.unlockFacilityLevel === 5) return <article className="mobile-prestige-owned-card" key={room.id}><button
+            type="button" className="mobile-prestige-build-tile" data-build-owned-room={room.id}
             aria-label={`Open ${room.displayName}`} disabled={!props.buildMode} onClick={() => onOpenRoom(room.id)}>
             <RoomThumbnail definitionId={room.roomDefinitionId} upgradeLevel={room.upgradeLevel} onVisible={onPreviewRoom} />
             <strong>{room.displayName}</strong><span>Tier {room.upgradeLevel}/{room.maxUpgradeLevel}</span>
             <small>{room.benefit?.currentLabel ?? "No upgrades"}</small>
             <small>{room.accessProblem ? "No access yet" : "Access ready"} · ${definition.upkeepPerExpenseInterval}/hr upkeep</small>
-          </button>;
-          return <article className="mobile-build-card" key={room.id}>
-            <RoomThumbnail definitionId={room.roomDefinitionId} upgradeLevel={room.upgradeLevel} onVisible={onPreviewRoom} /><div>
-              <h3>{room.displayName}</h3><p>{mapRoom?.width ?? definition?.width} × {mapRoom?.height ?? definition?.height} tiles · Tier {room.upgradeLevel}/{room.maxUpgradeLevel}</p>
-              <p>{room.benefit?.currentLabel ?? "No upgrades"} · {room.accessProblem ? "No access yet" : "Access ready"}</p>
-              {definition ? <p>${definition.constructionCost.toLocaleString()} construction · {built}/{definition.maximumInstances ?? "no limit"} built · Unlock Level {definition.unlockFacilityLevel}</p> : null}
-              <p>{definition ? `$${definition.upkeepPerExpenseInterval + (room.upgradeLevel - 1) * definition.upkeepPerUpgradeLevel}/hr upkeep` : null}</p>
-              {option?.blockedReason ? <p className="mobile-build-reason">New room unavailable: {option.blockedReason}</p> : null}
-              <button type="button" data-phone-anchor={room.roomDefinitionId === "room.examination" ? "exam-owned" : "owned-room"} data-build-owned-room={room.id} disabled={!props.buildMode} onClick={() => onOpenRoom(room.id)}>Open {room.displayName}</button>
-            </div>
+          </button><QuickUpgrade room={room} props={props} /></article>;
+          return <article className="mobile-owned-build-card" key={room.id}>
+            <button type="button" className="mobile-build-open" aria-label={`Open ${room.displayName}`}
+              data-phone-anchor={room.roomDefinitionId === "room.examination" ? "exam-owned" : "owned-room"} data-build-owned-room={room.id}
+              disabled={!props.buildMode} onClick={() => onOpenRoom(room.id)}>
+              <RoomThumbnail definitionId={room.roomDefinitionId} upgradeLevel={room.upgradeLevel} onVisible={onPreviewRoom} />
+              <span><strong>{room.displayName}</strong><small>Tier {room.upgradeLevel}/{room.maxUpgradeLevel} · {mapRoom?.width ?? definition?.width} × {mapRoom?.height ?? definition?.height}</small>
+                <small>{room.benefit?.currentLabel ?? "No upgrades"} · {room.accessProblem ? "No access yet" : "Access ready"}</small>
+                {definition ? <small>${definition.upkeepPerExpenseInterval + (room.upgradeLevel - 1) * definition.upkeepPerUpgradeLevel}/hr upkeep</small> : null}
+              </span>
+            </button>
+            <QuickUpgrade room={room} props={props} />
           </article>;
         });
   return <div className="mobile-build-catalog" data-build-mode-panel="true">
@@ -83,12 +96,12 @@ export function MobileBuildCatalog({ props, onChoose, onOpenRoom, onDoors, onSet
       <button type="button" role="tab" aria-selected={tab === "new"} onClick={() => setTab("new")}>New Rooms</button>
       <button type="button" role="tab" aria-selected={tab === "owned"} onClick={() => setTab("owned")}>My Rooms</button>
     </div>
-    <div className="mobile-build-cards" role="tabpanel" aria-label={tab === "new" ? "New Rooms" : "My Rooms"}>
+    <div className={`mobile-build-cards is-${tab}`} role="tabpanel" aria-label={tab === "new" ? "New Rooms" : "My Rooms"}>
       {props.facility.levelFiveRoomArt ? <>
         <div className="mobile-prestige-build-grid" aria-label="Level 5 room tiles">{cards.filter(card => prestigeKeys.has(String(card.key)))}</div>
         {cards.some(card => !prestigeKeys.has(String(card.key))) ? <details className="mobile-earlier-build-rooms">
           <summary>Earlier rooms · {cards.filter(card => !prestigeKeys.has(String(card.key))).length}</summary>
-          <div className="mobile-build-cards">{cards.filter(card => !prestigeKeys.has(String(card.key)))}</div>
+          <div className={`mobile-build-cards is-${tab}`}>{cards.filter(card => !prestigeKeys.has(String(card.key)))}</div>
         </details> : null}
       </> : cards}
     </div>

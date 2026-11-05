@@ -6,13 +6,22 @@ export interface QuestionShipAcceptance {
   acceptanceId: string; caseId: string; nodeId: string; questionVariantId: string; conceptId: string;
   sourceView: string; decision: string;
 }
+/** Replace one whole legacy encounter in fresh supply. `with` names an exact
+ * accepted question variant whose complete retained source case is admitted.
+ * `replaces` is a legacy case ID or an exact question ID in that legacy case.
+ * Legacy bindings remain archived for frozen encounters and learning history. */
+export interface QuestionShipCaseReplacement {
+  replaces: string;
+  with: string;
+}
 export interface QuestionShipManifest {
   legacyBindings: readonly (readonly [string, string, string, string])[];
   accepted: readonly QuestionShipAcceptance[];
   headerSources: Readonly<Record<string, string>>;
+  replacements?: readonly QuestionShipCaseReplacement[];
 }
 export const QUESTION_SHIP_MANIFEST = {
-  id: "question-ship.2026-11-05.v2",
+  id: "question-ship.2026-11-05.v4",
   clinicalApproval: false,
   legacyDecision: "Carry forward the existing live bank before the owner-flag rewrite program; user-directed fallback on 2026-11-05. This does not independently accept prior drafts or grant clinical approval.",
   legacyBindings: [
@@ -8556,6 +8565,17 @@ export const QUESTION_SHIP_MANIFEST = {
   ]
 ] as const,
   accepted: [
+  // BEGIN N3 FROZEN REVIEW2 ACCEPTANCES 20261105
+  {"acceptanceId":"review.n3.bilateral-carotid-symptom-attribution.v2","caseId":"case.n3.bilateral-carotid-symptom-attribution.v1","nodeId":"node.n3.bilateral-carotid-symptom-attribution.v1","questionVariantId":"question.n3.bilateral-carotid-symptom-attribution.v2","conceptId":"concept.n3.bilateral-carotid-symptom-attribution","sourceView":"n3-round3","decision":"docs/research/question-new-n3-manager-decision-20261105.md"},
+  {"acceptanceId":"review.n3.postsplenectomy-nodule-function-before-targeting.v2","caseId":"case.n3.postsplenectomy-nodule-function-before-targeting.v1","nodeId":"node.n3.postsplenectomy-nodule-function-before-targeting.v1","questionVariantId":"question.n3.postsplenectomy-nodule-function-before-targeting.v2","conceptId":"concept.n3.postsplenectomy-nodule-function-before-targeting","sourceView":"n3-round3","decision":"docs/research/question-new-n3-manager-decision-20261105.md"},
+  {"acceptanceId":"review.n3.dysphagia-biopsy-territory-after-negative-endoscopy.v2","caseId":"case.n3.dysphagia-biopsy-territory-after-negative-endoscopy.v1","nodeId":"node.n3.dysphagia-biopsy-territory-after-negative-endoscopy.v1","questionVariantId":"question.n3.dysphagia-biopsy-territory-after-negative-endoscopy.v2","conceptId":"concept.n3.dysphagia-biopsy-territory-after-negative-endoscopy","sourceView":"n3-round3","decision":"docs/research/question-new-n3-manager-decision-20261105.md"},
+  {"acceptanceId":"review.n3.tumor-screen-versus-family-test-sequence.v2","caseId":"case.n3.tumor-screen-versus-family-test-sequence.v1","nodeId":"node.n3.tumor-screen-versus-family-test-sequence.v1","questionVariantId":"question.n3.tumor-screen-versus-family-test-sequence.v2","conceptId":"concept.n3.tumor-screen-versus-family-test-sequence.v2","sourceView":"n3-round3","decision":"docs/research/question-new-n3-manager-decision-20261105.md"},
+  {"acceptanceId":"review.n3.gastric-lymphoma-new-large-cell-process.v2","caseId":"case.n3.gastric-lymphoma-new-large-cell-process.v1","nodeId":"node.n3.gastric-lymphoma-new-large-cell-process.v1","questionVariantId":"question.n3.gastric-lymphoma-new-large-cell-process.v2","conceptId":"concept.n3.gastric-lymphoma-new-large-cell-process.v2","sourceView":"n3-round3","decision":"docs/research/question-new-n3-manager-decision-20261105.md"},
+  // END N3 FROZEN REVIEW2 ACCEPTANCES 20261105
+  // BEGIN FLAGS2 ROUND3 ACCEPTED ROWS 20261105
+  {"acceptanceId":"G03","caseId":"case.gs028c.palpable-breast.paired-dense-focal","nodeId":"node.gs028c.palpable-breast.paired-dense-focal.1","questionVariantId":"question.palpable-breast.negative-mammogram-targeted-us.v1.r4","conceptId":"concept.palpable-breast.completed-imaging-clinical-target.v1","sourceView":"flags2-round3","decision":"docs/research/question-flags2-round3-manager-decision-20261105.md"},
+  {"acceptanceId":"G05","caseId":"case.asymptomatic-phpt.incidental-calcium","nodeId":"node.asymptomatic-phpt.incidental-calcium.2","questionVariantId":"question.asymptomatic-phpt.age-based-surgery.v1.r3","conceptId":"concept.phpt.inherited-calcium-before-localization.v2","sourceView":"flags2-round3","decision":"docs/research/question-flags2-round3-manager-decision-20261105.md"},
+  // END FLAGS2 ROUND3 ACCEPTED ROWS 20261105
   // BEGIN FLAGS2 G06 ACCEPTANCE 20261105
   {
     "acceptanceId": "G06",
@@ -9119,7 +9139,24 @@ export const QUESTION_SHIP_MANIFEST = {
     "decision": "docs/research/question-new-manager-decision-20261105.md"
   }
 ] satisfies QuestionShipAcceptance[],
+  // BEGIN FLAGS2 WHOLE-CASE ACCEPTANCES 20261105
+  replacements: [
+    { replaces: "case.gs028c.palpable-breast.paired-dense-focal", with: "question.palpable-breast.negative-mammogram-targeted-us.v1.r4" },
+    { replaces: "case.asymptomatic-phpt.incidental-calcium", with: "question.asymptomatic-phpt.age-based-surgery.v1.r3" },
+  ] satisfies QuestionShipCaseReplacement[],
+  // END FLAGS2 WHOLE-CASE ACCEPTANCES 20261105
   headerSources: {
+  // BEGIN N3 FROZEN REVIEW2 HEADERS 20261105
+  "case.n3.bilateral-carotid-symptom-attribution.v1": "n3-round3",
+  "case.n3.postsplenectomy-nodule-function-before-targeting.v1": "n3-round3",
+  "case.n3.dysphagia-biopsy-territory-after-negative-endoscopy.v1": "n3-round3",
+  "case.n3.tumor-screen-versus-family-test-sequence.v1": "n3-round3",
+  "case.n3.gastric-lymphoma-new-large-cell-process.v1": "n3-round3",
+  // END N3 FROZEN REVIEW2 HEADERS 20261105
+  // BEGIN FLAGS2 WHOLE-CASE HEADERS 20261105
+  "case.gs028c.palpable-breast.paired-dense-focal": "flags2-round3",
+  "case.asymptomatic-phpt.incidental-calcium": "flags2-round3",
+  // END FLAGS2 WHOLE-CASE HEADERS 20261105
   // BEGIN FLAGS2 G06 HEADER 20261105
   "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-lower-prevalence": "flags2-round1",
   // END FLAGS2 G06 HEADER 20261105

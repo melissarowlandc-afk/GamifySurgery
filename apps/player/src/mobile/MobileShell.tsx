@@ -30,7 +30,7 @@ import { MobileBuildRoom } from "./build/MobileBuildRoom";
 import { MobileBuildControls, MobileBuildExitSheet } from "./build/MobileBuildControls";
 import { useMobileBuild } from "./build/useMobileBuild";
 import { MobilePatients } from "./MobilePatients";
-import { MobileChart, MobileTeamDiscussion } from "./MobileChart";
+import { MobileChart, MobileChartFlag, MobileTeamDiscussion, MobileTeamDiscussionFlag } from "./MobileChart";
 import { MobileAlerts } from "./MobileAlerts";
 import { MobileGoals, MobileGoalsChip } from "./MobileGoals";
 import { MobileInspection, MobileFinishedGamePage } from "./MobileInspection";
@@ -47,6 +47,7 @@ import "./mobileShell.css";
 import "./mobileScreens.css";
 import "./build/mobileBuild.css";
 import "./mobilePolish.css";
+import "./mobileDensity.css";
 
 const TABS: readonly { id: MobileTab; label: string; symbol: string }[] = [
   { id: "clinic", label: "Clinic", symbol: "⌂" },
@@ -91,7 +92,10 @@ export default function MobileShell(props: PrototypeShellProps) {
   const [highlightedRole, setHighlightedRole] = useState<string | null>(null);
   const [requestedTraining, setRequestedTraining] = useState<{ employeeId: string; requestKey: number } | null>(null);
   const manageDetailBack = useRef<(() => void) | null>(null);
-  const registerManageBack = useCallback((handler: (() => void) | null) => { manageDetailBack.current = handler; }, []);
+  const [manageDetailOpen, setManageDetailOpen] = useState(false);
+  const registerManageBack = useCallback((handler: (() => void) | null) => {
+    manageDetailBack.current = handler; setManageDetailOpen(Boolean(handler));
+  }, []);
   const inspectionDetailBack = useRef<(() => void) | null>(null);
   const registerInspectionBack = useCallback((handler: (() => void) | null) => { inspectionDetailBack.current = handler; }, []);
   const [mapHint, setMapHint] = useState<{ text: string } | null>(null);
@@ -359,16 +363,26 @@ export default function MobileShell(props: PrototypeShellProps) {
     try { setSaveResult(await props.onSaveAndPause()); setConfirmClear(false); navigator.replaceTop("save"); }
     finally { setLocalSaving(false); }
   };
-  const panel = (id: MobileSheetId): { title: string; kind?: "bottom"; content: ReactNode } | null => {
+  const closeSheet = () => {
+    // Close leaves the whole menu; Back still steps through its detail views.
+    if (top === "manage" && props.managementMode) { props.onExitManagementMode(); return; }
+    if (top === "goals" || top === "inspection") { navigator.dismiss(top); return; }
+    if (top === "room") { navigator.dismiss("room"); navigator.dismiss("build"); return; }
+    navigator.closeTop();
+  };
+  const panel = (id: MobileSheetId): { title: string; kind?: "bottom"; actions?: ReactNode; content: ReactNode } | null => {
     switch (id) {
       case "inspector": return null;
       case "patients": return { title: "Patients", content: <MobilePatients patients={props.patients} discussions={props.employeeDiscussionRows}
         onOpenDiscussion={openDiscussion} onOpen={openPatient} tutorialTargetEncounterId={props.tutorialTargetEncounterId}
         availabilityGuidance={props.patientAvailabilityGuidance} /> };
-      case "chart": return props.chart ? { title: "Patient chart", content: <MobileChart chart={props.chart}
+      case "chart": return props.chart ? { title: "Patient chart", actions: <MobileChartFlag chart={props.chart} onFlagQuestion={props.onFlagQuestion} />,
+        content: <MobileChart chart={props.chart} headerActionsProvided
         onClose={props.onCloseChart} onSubmitAnswer={props.onSubmitAnswer} onFlagQuestion={props.onFlagQuestion}
         onAcknowledgeTerminalFeedback={props.onAcknowledgeTerminalFeedback} onToggleSummary={props.onToggleSummary} onFileChart={props.onFileChart} /> } : null;
-      case "discussion": return props.employeeDiscussion ? { title: "Team discussion", content: <MobileTeamDiscussion discussion={props.employeeDiscussion} onFlagQuestion={props.onFlagQuestion}
+      case "discussion": return props.employeeDiscussion ? { title: "Team discussion",
+        actions: <MobileTeamDiscussionFlag discussion={props.employeeDiscussion} onFlagQuestion={props.onFlagQuestion} />,
+        content: <MobileTeamDiscussion discussion={props.employeeDiscussion} headerActionsProvided onFlagQuestion={props.onFlagQuestion}
         onClose={props.onCloseEmployeeDiscussion ?? (() => {})} onAnswer={props.onAnswerEmployeeDiscussion ?? (() => {})}
         onAcknowledge={props.onAcknowledgeEmployeeDiscussion ?? (() => {})} onFile={props.onFileEmployeeDiscussion ?? (() => {})} /> } : null;
       case "alerts": return { title: "Alerts", content: <><MobileAlerts key={campaignId} items={feed} needs={needs} failures={failures}
@@ -376,7 +390,7 @@ export default function MobileShell(props: PrototypeShellProps) {
           if (item.action) runAction(item.id, item.action);
           else if (item.targetType) handleTarget({ type: item.targetType, id: item.targetId });
         }} /><MobileGlp1ConsultInfo view={props.emergencyGlp1} /></> };
-      case "manage": return { title: "Manage", content: <MobileManage {...props} highlightedEmployeeId={highlightedEmployee}
+      case "manage": return { title: "Manage", content: <MobileManage {...props} onClose={closeSheet} highlightedEmployeeId={highlightedEmployee}
         competitionTutorial={{ campaignId: props.facility.campaignId ?? "", enabled: props.tutorialsEnabled }}
         highlightedRoleId={highlightedRole} requestedTraining={requestedTraining} onDetailBackChange={registerManageBack}
         onSetupAction={(action) => setSetupAction({ ...action, label: action.target === "room" ? "Build" : "Hire" })} /> };
@@ -487,7 +501,8 @@ export default function MobileShell(props: PrototypeShellProps) {
         {build.doorNotice.undo ? <button type="button" aria-label="Undo door removal" disabled={!props.buildUndoCount} onClick={build.undo}>Undo</button> : null}
       </div> : null}
       {props.buildMode ? <MobileBuildControls props={props} build={build} onCatalog={() => { build.exitDoors(); navigator.selectTab("build"); }} /> : null}
-      {visiblePanel ? <MobileSheet key={top} title={visiblePanel.title} kind={visiblePanel.kind} onClose={() => navigator.closeTop()}>{visiblePanel.content}</MobileSheet> : null}
+      {visiblePanel ? <MobileSheet key={top} title={visiblePanel.title} kind={visiblePanel.kind} actions={visiblePanel.actions}
+        headingInert={top === "manage" && manageDetailOpen} onClose={closeSheet}>{visiblePanel.content}</MobileSheet> : null}
       {props.buildMode && props.buildExitBlockedReason && build.exitOpen ? <MobileBuildExitSheet props={props} onClose={build.closeExit} /> : null}
       {top === "inspector" && mapSelection ? <MobileInspectorSheet selection={mapSelection} facility={props.facility} ownedRooms={props.ownedRooms}
         onDescribeCharacter={props.onDescribeCharacter} onPraiseEmployee={props.onPraiseEmployee}

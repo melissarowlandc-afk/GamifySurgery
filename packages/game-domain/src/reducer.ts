@@ -9,7 +9,7 @@ import { getAverageEffectiveStaffMorale, getEmployeeEffectiveMorale } from "./le
 import { getDisplayedClinicSatisfaction } from "./selectors";
 import { createLevelFiveState } from "./level-five-state";
 import { interruptGardenRestsForRoomSale } from "./patient-amenities";
-import { interruptGymBreaksForRoomSale } from "./level-three-support";
+import { getBestOperationalStaffRoomMoraleBonus, interruptGymBreaksForRoomSale } from "./level-three-support";
 import {
   FIRST_TUTORIAL_CASE_ID,
   SECOND_TUTORIAL_CASE_ID,
@@ -6940,6 +6940,17 @@ function maybeApplyCoffeeMorale(state: GameState, context: DomainContext): void 
   state.environment.coffeeMoraleAppliedDayNumber = dayNumber;
 }
 
+function maybeApplyStaffRoomMorale(state: GameState, context: DomainContext): void {
+  const dayMinutes = (context.balanceRelease.clock.dayEndHour - context.balanceRelease.clock.dayStartHour) * 60;
+  // This runs only inside one ADVANCE_TICK, at the operating-day boundary.
+  // No new saved witness is needed, and reopening a boundary save cannot pay
+  // the same award again. A room built mid-day begins earning next boundary.
+  if (state.facilityTick <= 0 || state.facilityTick % dayMinutes !== 0) return;
+  const gain = getBestOperationalStaffRoomMoraleBonus(state, context);
+  if (gain <= 0) return;
+  for (const employee of state.employees) employee.morale = clamp(employee.morale + gain, 0, 100);
+}
+
 function completeFounderActivity(
   state: GameState,
   context: DomainContext,
@@ -8894,6 +8905,7 @@ function reduceAdvanceTick(
     maybeAssignEvsTasks(next, context);
     advanceGlp1Automation(next, context);
     maybeApplyCoffeeMorale(next, context);
+    maybeApplyStaffRoomMorale(next, context);
   advanceRetailOperations(next, context);
   reconcilePediatricFamilies(next, context);
   maybeApplyUnstaffedCheckInOverdue(next, context);

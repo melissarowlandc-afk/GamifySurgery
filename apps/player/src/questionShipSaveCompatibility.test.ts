@@ -24,20 +24,22 @@ const NOW = 1_800_000_000_000, encounterId = "encounter.ship-save";
 const examples = [
   ["excluded", "case.n1.incidental-t1b.v1"],
   ["replaced", "case.n2.sglt2-postoperative-restart.v1"],
+  ["whole-case breast", "case.gs028c.palpable-breast.paired-dense-focal"],
+  ["whole-case calcium", "case.asymptomatic-phpt.incidental-calcium"],
 ] as const;
 
-function fixture(caseId: string) {
-  const cs = preGate.clinicalRelease.cases.find(cs => cs.id === caseId)!;
+function fixture(caseId: string, clinicalContext: DomainContext = preGate) {
+  const cs = clinicalContext.clinicalRelease.cases.find(cs => cs.id === caseId)!;
   const conceptId = cs.decisionNodes[0]!.primaryConceptId;
-  let state = createLevelFourRoomsQaState(preGate);
+  let state = createLevelFourRoomsQaState(clinicalContext);
   state.paused = false; state.nextRoutineArrivalTick = Number.MAX_SAFE_INTEGER;
   const apply = (command: GameCommand) => {
-    state = gameReducer(state, command, preGate);
+    state = gameReducer(state, command, clinicalContext);
     expect(state.operationReceipts[command.operationId]).toMatchObject({ status: "applied" });
   };
   apply({ type: "PLACE_ROOM", operationId: "ship-save.exam", roomDefinitionId: "room.examination", roomId: "room.ship-save.exam", x: 35, y: 24, orientation: 0 });
   apply({ type: "PLACE_DOOR", operationId: "ship-save.door", roomId: "room.ship-save.exam", doorId: "door.ship-save.exam", side: "south", offset: 1 });
-  const previous = applyFsrsReview(createNewFsrsCard(0), "Good", 1000, preGate.balanceRelease.learning);
+  const previous = applyFsrsReview(createNewFsrsCard(0), "Good", 1000, clinicalContext.balanceRelease.learning);
   state.learningHistories[conceptId] = { conceptId, card: previous.card, reviews: [{
     id: "review.ship-save.previous", encounterId: "encounter.ship-save.previous", decisionNodeId: cs.decisionNodes[0]!.id,
     questionVariantId: cs.decisionNodes[0]!.questionVariantId, patientPresentationVariantId: cs.patientPresentationVariantId,
@@ -52,18 +54,24 @@ function fixture(caseId: string) {
 function ready(state: GameState): boolean {
   const encounter = state.encounters[encounterId];
   return !!encounter && state.openChartEncounterId === encounterId &&
-    encounter.assignedRoomInstanceId === "room.ship-save.exam" && !encounter.patientMovement &&
+    encounter.assignedRoomInstanceId === (encounter.currentNodeIndex===0?"room.ship-save.exam":"room.instance.founder_desk") && !encounter.patientMovement &&
     getCurrentQuestion(state, encounterId, current) !== null;
 }
-function advanceToQuestion(read: () => GameState, execute: (command: GameCommand) => GameState, prefix: string) {
+async function advanceToQuestion(read: () => GameState, execute: (command: GameCommand) => GameState, prefix: string, durable?:()=>Promise<boolean>) {
   for (let tick = 0; tick < 240; tick++) {
     if (ready(read())) return;
     execute({ type: "ADVANCE_TICK", operationId: `${prefix}.tick.${tick}`, advancedAtRealMs: NOW });
     const encounter = read().encounters[encounterId]!;
     if (read().openChartEncounterId !== encounterId && encounter.checkInStatus === "checked_in" && !encounter.patientMovement)
       execute({ type: "OPEN_CHART", operationId: `${prefix}.open.${tick}`, encounterId });
+    // Real result waits span many commands. Let the actual journal drain at a
+    // bounded cadence instead of overrunning its existing backpressure limit.
+    if(durable&&tick%32===31)expect(await durable()).toBe(true);
   }
-  throw new Error("Historical encounter did not reach its ordinary answer step");
+  const state=read(),encounter=state.encounters[encounterId]!;
+  throw new Error("Historical encounter did not reach its ordinary answer step: "+JSON.stringify({tick:state.facilityTick,paused:state.paused,
+    lifecycle:encounter.lifecycle,pendingResult:encounter.pendingResult?{dueTick:encounter.pendingResult.dueTick,deliveredAtTick:encounter.pendingResult.deliveredAtTick}:null,movement:encounter.patientMovement?.kind,steps:encounter.steps.map(s=>s.status),
+    room:encounter.assignedRoomInstanceId,openChart:state.openChartEncounterId}));
 }
 async function rig(state: GameState) {
   const clock = new TestCloudClock(), cache = new MemoryCloudCache(), entryStore = new MemoryCloudEntryStore();
@@ -85,26 +93,73 @@ async function finish(session: CloudGameSession, conceptId: string, frozen: Game
     expect(session.syncView.failure).toBeNull();
     return state!;
   };
-  const previous = structuredClone(session.state.learningHistories[conceptId]!);
-  advanceToQuestion(() => session.state, execute, "ship-save.current");
-  const question = getCurrentQuestion(session.state, encounterId, current)!;
-  expect(question.node.questionVariantId).toBe(frozen.decisionNodes[0]!.questionVariantId);
-  const answer: GameCommand = { type: "SUBMIT_ANSWER", operationId: "ship-save.score", encounterId,
-    decisionNodeId: question.node.id, answerChoiceId: question.node.answerChoices.find(choice => choice.isCorrect)!.id, reviewedAtMs: NOW };
-  execute(answer);
+  expect(frozen.decisionNodes.some(n=>n.primaryConceptId===conceptId)).toBe(true);
+  const previous = structuredClone(session.state.learningHistories);
+  for(let index=0;index<frozen.decisionNodes.length;index++){
+    await advanceToQuestion(() => session.state, execute, `ship-save.current.${index}`,()=>session.durable());
+    const question = getCurrentQuestion(session.state, encounterId, current)!;
+    expect(question.node.questionVariantId).toBe(frozen.decisionNodes[index]!.questionVariantId);
+    const answer: GameCommand = { type: "SUBMIT_ANSWER", operationId: `ship-save.score.${index}`, encounterId,
+      decisionNodeId: question.node.id, answerChoiceId: question.node.answerChoices.find(choice => choice.isCorrect)!.id, reviewedAtMs: NOW+index };
+    execute(answer);
+    const history=session.state.learningHistories[question.node.primaryConceptId]!;
+    const earlier=previous[question.node.primaryConceptId]?.reviews??[];
+    expect(history.reviews.slice(0,-1)).toEqual(earlier);
+    expect(history.reviews.at(-1)).toMatchObject({primaryConceptId:question.node.primaryConceptId,questionVariantId:frozen.decisionNodes[index]!.questionVariantId,correct:true});
+    expect(history.reviews).toHaveLength(earlier.length+1);
+    expect(session.execute(answer,current)!.learningHistories[question.node.primaryConceptId]!.reviews).toHaveLength(history.reviews.length);
+    if(index<frozen.decisionNodes.length-1)
+      execute({type:"ACKNOWLEDGE_DECISION_FEEDBACK",operationId:`ship-save.feedback.${index}`,encounterId,decisionNodeId:question.node.id});
+  }
   expect(session.state.encounters[encounterId]!.frozenCase).toEqual(frozen);
-  expect(session.state.encounters[encounterId]!.answers).toHaveLength(1);
+  expect(session.state.encounters[encounterId]!.answers).toHaveLength(frozen.decisionNodes.length);
   expect(session.state.encounters[encounterId]!.resolutionReason).toBe("completed");
-  const history = session.state.learningHistories[conceptId]!;
-  expect(history.reviews.slice(0, -1)).toEqual(previous.reviews);
-  expect(history.reviews.at(-1)).toMatchObject({ primaryConceptId: conceptId, questionVariantId: question.node.questionVariantId, correct: true });
-  expect(history.reviews).toHaveLength(previous.reviews.length + 1);
-  expect(session.execute(answer, current)!.learningHistories[conceptId]!.reviews).toHaveLength(history.reviews.length);
+  for(const node of current.clinicalRelease.cases.find(c=>c.id===frozen.id)?.decisionNodes??[]){
+    if(!frozen.decisionNodes.some(old=>old.primaryConceptId===node.primaryConceptId))
+      expect(session.state.learningHistories[node.primaryConceptId]).toEqual(previous[node.primaryConceptId]);
+  }
   expect(session.canExecute).toBe(true); expect(session.needsReload).toBe(false);
   expect(await session.durable()).toBe(true);
 }
 
 describe("pre-gate questions survive projection-only shipping", () => {
+  it.each(SYNTHETIC_CLINICAL_RELEASE.cases.filter(cs=>cs.id.startsWith("case.n3.")).map(cs=>[cs.id] as const))
+  ("admits accepted N3 %s from the default and completes its exact format-three frozen save", async caseId=>{
+    const example=fixture(caseId,current);
+    const state=gameReducer(example.state,example.admission,current);
+    expect(state.operationReceipts[example.admission.operationId]).toMatchObject({status:"applied"});
+    const frozen=structuredClone(state.encounters[encounterId]!.frozenCase);
+    expect(frozen.decisionNodes).toHaveLength(1);
+    expect(frozen.decisionNodes[0]!.questionVariantId.endsWith(".v2")).toBe(true);
+    const authored=current.clinicalRelease.cases.find(cs=>cs.id===caseId)!.decisionNodes[0]!;
+    expect(frozen.decisionNodes[0]).toMatchObject({id:authored.id,questionVariantId:authored.questionVariantId,primaryConceptId:authored.primaryConceptId});
+    const orderedChoices=(choices:typeof authored.answerChoices)=>[...choices].sort((a,b)=>a.id.localeCompare(b.id));
+    expect(orderedChoices(frozen.decisionNodes[0]!.answerChoices)).toEqual(orderedChoices(authored.answerChoices));
+    expect(frozen.decisionNodes[0]!.stem).toBe(authored.stem.split("{patientName}").join(state.encounters[encounterId]!.patientDisplayName));
+    expect(state.learningHistories).toEqual(example.state.learningHistories);
+    const f=await rig(state);
+    let session=await CloudGameSession.create(await f.open(),undefined,undefined,{operational:false});
+    try{
+      expect(session.state.encounters[encounterId]!.frozenCase).toEqual(frozen);
+      expect(session.state.learningHistories).toEqual(state.learningHistories);
+      await finish(session,example.conceptId,frozen);
+      const completed=session.state;session.dispose();
+      session=await CloudGameSession.create(await f.open(),undefined,undefined,{operational:false});
+      expect(session.state).toEqual(completed);expect(session.canExecute).toBe(true);
+      expect(session.state.learningHistories[example.conceptId]!.reviews.at(-1)).toMatchObject({
+        questionVariantId:frozen.decisionNodes[0]!.questionVariantId,primaryConceptId:example.conceptId,correct:true,
+      });
+    }finally{session.dispose();}
+  });
+  it.each(examples.filter(([kind])=>kind.startsWith("whole-case")))("admits the fresh %s replacement without changing its legacy history",(_kind,caseId)=>{
+    const old=fixture(caseId),history=structuredClone(old.state.learningHistories[old.conceptId]);
+    const admitted=gameReducer(old.state,old.admission,current);
+    expect(admitted.operationReceipts[old.admission.operationId]).toMatchObject({status:"applied"});
+    expect(admitted.encounters[encounterId]!.frozenCase.decisionNodes).toHaveLength(1);
+    expect(admitted.encounters[encounterId]!.frozenCase.decisionNodes[0]!.questionVariantId)
+      .toBe(current.clinicalRelease.cases.find(c=>c.id===caseId)!.decisionNodes[0]!.questionVariantId);
+    expect(admitted.learningHistories[old.conceptId]).toEqual(history);
+  });
   for (const [kind, caseId] of examples) for (const phase of ["waiting", "in-progress"] as const) {
     it(`reopens format-three ${phase} ${kind} content without reset and scores its frozen concept`, async () => {
       const old = fixture(caseId);
@@ -112,7 +167,7 @@ describe("pre-gate questions survive projection-only shipping", () => {
       expect(state.operationReceipts[old.admission.operationId]).toMatchObject({ status: "applied" });
       if (kind === "excluded") expect(SYNTHETIC_CLINICAL_RELEASE.cases.some(cs => cs.id === caseId)).toBe(false);
       else expect(SYNTHETIC_CLINICAL_RELEASE.cases.find(cs => cs.id === caseId)!.decisionNodes[0]!.questionVariantId).not.toBe(old.cs.decisionNodes[0]!.questionVariantId);
-      if (phase === "in-progress") advanceToQuestion(() => state, command => state = gameReducer(state, command, preGate), "ship-save.old");
+      if (phase === "in-progress") await advanceToQuestion(() => state, command => state = gameReducer(state, command, preGate), "ship-save.old");
       else expect(state.encounters[encounterId]!.lifecycle).toBe("waiting_unopened");
       const frozen = structuredClone(state.encounters[encounterId]!.frozenCase), before = structuredClone(state);
       const f = await rig(state);

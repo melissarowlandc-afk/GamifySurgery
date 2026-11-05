@@ -1,0 +1,485 @@
+{
+  "checkedOn": "2026-11-05",
+  "scope": "Worker-owned source window. Prior flag bytes, live projection, manifest, earlier timing rows and G06 remain frozen. Separate concurrent N3 source/timing appends are isolated, not overwritten. No release-evidence rebind.",
+  "live": {
+    "id": "clinical.synthetic.prototype.v1",
+    "cases": 1136,
+    "nodes": 1449,
+    "sha256": "e55903f57c02a79d32172b439163e85ee6f577d56ca3b4f3ca4d1877bf24fc3a",
+    "conceptsSha256": "69837518cae816da24e9571c46fdc4f825227d3e14182b90ddbfa88e9432c9df",
+    "afterSha256": "e55903f57c02a79d32172b439163e85ee6f577d56ca3b4f3ca4d1877bf24fc3a"
+  },
+  "manifest": {
+    "beforeSha256": "4f4057335239ff672357a2457995d491f28a24660a6b777291a1c138529a3014",
+    "afterSha256": "4f4057335239ff672357a2457995d491f28a24660a6b777291a1c138529a3014",
+    "acceptedRows": 62
+  },
+  "globalTiming": {
+    "beforeSha256": "b2bbc3bf1780472e3f4996e42d1fe9e98b1d3ad5357522f1646d68e927268343",
+    "afterSha256": "0872fe7118ea3ab8edaf0421ed991141f436f67dc24fbab7460f45523d919dff",
+    "precedingRowsSha256": "b2bbc3bf1780472e3f4996e42d1fe9e98b1d3ad5357522f1646d68e927268343",
+    "concurrentN3Rows": 39
+  },
+  "priorFilesVerified": 62,
+  "priorFiles": [
+    {
+      "path": "packages/clinical-content/src/question-flags2-20261105-data.ts",
+      "beforeSha256": "0f493b174cdf8e907f39b4d837af374ded33830db1d8f0639f9526c5bd85a30f",
+      "afterSha256": "0f493b174cdf8e907f39b4d837af374ded33830db1d8f0639f9526c5bd85a30f"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-20261105.test.ts",
+      "beforeSha256": "0f4cf7fd88191e81c974757479d20bda4a910e33d26a7fdf7fbcdee83da246ef",
+      "afterSha256": "0f4cf7fd88191e81c974757479d20bda4a910e33d26a7fdf7fbcdee83da246ef"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-20261105.ts",
+      "beforeSha256": "87aff1e97d9f7700d96566e3783340d74dd16d2f1e1ce777206c7a50b3df72c9",
+      "afterSha256": "87aff1e97d9f7700d96566e3783340d74dd16d2f1e1ce777206c7a50b3df72c9"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-accepted-20261105.ts",
+      "beforeSha256": "3316aba91ee34df1000e73bf177c593474ac1b029454e1c47246858019b08bc8",
+      "afterSha256": "3316aba91ee34df1000e73bf177c593474ac1b029454e1c47246858019b08bc8"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-evidence-20261105.ts",
+      "beforeSha256": "3a7834e845c0dbcabfc10e6f8ab34b0cbf9125eb63e51dd01041fd2cb0138fc7",
+      "afterSha256": "3a7834e845c0dbcabfc10e6f8ab34b0cbf9125eb63e51dd01041fd2cb0138fc7"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-retained-input-20261105.ts",
+      "beforeSha256": "5767a31ec81de754b26d983d9e94c827eff9a2d7d90e1132b56d46ea4ab9086d",
+      "afterSha256": "5767a31ec81de754b26d983d9e94c827eff9a2d7d90e1132b56d46ea4ab9086d"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-round2-20261105-data.ts",
+      "beforeSha256": "55a01666c87be8cb513feaeb9913257ce6eab17e9624ab16543b536d8f8eb85a",
+      "afterSha256": "55a01666c87be8cb513feaeb9913257ce6eab17e9624ab16543b536d8f8eb85a"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-round2-20261105.test.ts",
+      "beforeSha256": "12c61884c91d7cc32a3e41d4b81f4d081c91691058b2edbb47c81f3046294170",
+      "afterSha256": "12c61884c91d7cc32a3e41d4b81f4d081c91691058b2edbb47c81f3046294170"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-round2-20261105.ts",
+      "beforeSha256": "a1c50dd25e3bbdd368bbd1d3a3563fb68457a5a6f5f4a053c1f536c65fe81324",
+      "afterSha256": "a1c50dd25e3bbdd368bbd1d3a3563fb68457a5a6f5f4a053c1f536c65fe81324"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-round2-evidence-20261105.ts",
+      "beforeSha256": "ea217ce54f8639d9de211c37e6b867f351bffd54634e8fb1a591775ee55b7ef3",
+      "afterSha256": "ea217ce54f8639d9de211c37e6b867f351bffd54634e8fb1a591775ee55b7ef3"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-round2-retained-input-20261105.ts",
+      "beforeSha256": "c5876291ebb8d08d7adf2c21d86dd438ada212a8bc9eb6e58e9572574a491bf9",
+      "afterSha256": "c5876291ebb8d08d7adf2c21d86dd438ada212a8bc9eb6e58e9572574a491bf9"
+    },
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.ts",
+      "beforeSha256": "e29038894c101d0618970fb10c4367919e24a773725a8dd16ee781f4b82e7a3f",
+      "afterSha256": "e29038894c101d0618970fb10c4367919e24a773725a8dd16ee781f4b82e7a3f"
+    },
+    {
+      "path": "packages/clinical-content/src/question-ship-projection.ts",
+      "beforeSha256": "099b803a240828b1a432e2e13d8bc6ff15fad2b61a38e4ef026962b98da8a033",
+      "afterSha256": "099b803a240828b1a432e2e13d8bc6ff15fad2b61a38e4ef026962b98da8a033"
+    },
+    {
+      "path": "tools/question-quality/build-question-flags2-20261105.mjs",
+      "beforeSha256": "8d8533406b16df277df226d07ad53f151edde9891b644dc1a40709410936cc74",
+      "afterSha256": "8d8533406b16df277df226d07ad53f151edde9891b644dc1a40709410936cc74"
+    },
+    {
+      "path": "tools/question-quality/build-question-flags2-round2-20261105.mjs",
+      "beforeSha256": "06ef91aa21ee8964209408c34488205d890a6d072d5d0db29c1ed3515d1737c5",
+      "afterSha256": "06ef91aa21ee8964209408c34488205d890a6d072d5d0db29c1ed3515d1737c5"
+    },
+    {
+      "path": "tools/question-quality/capture-question-flags2-20261105.mjs",
+      "beforeSha256": "94a01c471b48b4a9e1bcae9faea648e7e4b7e2308fe0f33fbc3395688ef05e1e",
+      "afterSha256": "94a01c471b48b4a9e1bcae9faea648e7e4b7e2308fe0f33fbc3395688ef05e1e"
+    },
+    {
+      "path": "tools/question-quality/capture-question-flags2-round2-20261105.mjs",
+      "beforeSha256": "82d1e12db95e0b6334ebc36680fa480a199ce729f0f245a290824920300ffe30",
+      "afterSha256": "82d1e12db95e0b6334ebc36680fa480a199ce729f0f245a290824920300ffe30"
+    },
+    {
+      "path": "tools/question-quality/control-question-flags2-20261105.mjs",
+      "beforeSha256": "747eb7d0cc02eb46e306eee7e87e5139682e86ede4a6c3aaba99aecfba8ed5fc",
+      "afterSha256": "747eb7d0cc02eb46e306eee7e87e5139682e86ede4a6c3aaba99aecfba8ed5fc"
+    },
+    {
+      "path": "tools/question-quality/control-question-flags2-round2-20261105.mjs",
+      "beforeSha256": "18989acac3dc53d98e255712d7782e469590568628a63b2e6fe6dd6a0c60a6f8",
+      "afterSha256": "18989acac3dc53d98e255712d7782e469590568628a63b2e6fe6dd6a0c60a6f8"
+    },
+    {
+      "path": "tools/question-quality/handoff-question-flags2-20261105.mjs",
+      "beforeSha256": "1275e8f6ebda661ac4411267363d725f46d25d0fd96bb64854f4e55ae36732be",
+      "afterSha256": "1275e8f6ebda661ac4411267363d725f46d25d0fd96bb64854f4e55ae36732be"
+    },
+    {
+      "path": "tools/question-quality/handoff-question-flags2-round2-20261105.mjs",
+      "beforeSha256": "95ede30c4061ddc9bbaf42178bb9a4459b7ad5a38e4bb2aef9cdce2a63f49b23",
+      "afterSha256": "95ede30c4061ddc9bbaf42178bb9a4459b7ad5a38e4bb2aef9cdce2a63f49b23"
+    },
+    {
+      "path": "tools/question-quality/integrate-question-flags2-g06-20261105.mjs",
+      "beforeSha256": "074de894c69c246aa07de5b28cf0bfb4a69a6edc4691f9fa63ef9b692e7aea80",
+      "afterSha256": "074de894c69c246aa07de5b28cf0bfb4a69a6edc4691f9fa63ef9b692e7aea80"
+    },
+    {
+      "path": "tools/question-quality/question-flags2-clinical-20261105.log",
+      "beforeSha256": "dec296397da967a6b342ca97d913187d4ecc9202a18628cd0158106a3854b235",
+      "afterSha256": "dec296397da967a6b342ca97d913187d4ecc9202a18628cd0158106a3854b235"
+    },
+    {
+      "path": "tools/question-quality/question-flags2-clinical-complete-20261105.log",
+      "beforeSha256": "f48cc8074244ccc77dc9bdd4b05b0f5534976775557bd24999aaea52327fb788",
+      "afterSha256": "f48cc8074244ccc77dc9bdd4b05b0f5534976775557bd24999aaea52327fb788"
+    },
+    {
+      "path": "tools/question-quality/question-flags2-clinical-final-20261105.log",
+      "beforeSha256": "a473a8ba2f4be0d365c45c84bfbb62dc1dcdf44caedf219fb26f09e8610c6d87",
+      "afterSha256": "a473a8ba2f4be0d365c45c84bfbb62dc1dcdf44caedf219fb26f09e8610c6d87"
+    },
+    {
+      "path": "tools/question-quality/question-flags2-controls-20261105.json",
+      "beforeSha256": "584ea03a773dfd4df627bef11bd40ec7a212827aa879b945a0bdd935f5a42318",
+      "afterSha256": "584ea03a773dfd4df627bef11bd40ec7a212827aa879b945a0bdd935f5a42318"
+    },
+    {
+      "path": "tools/question-quality/question-flags2-files-20261105.json",
+      "beforeSha256": "cf6e4feb39762071a9b24ad069fb477bd4ee377af16776eaf5cecb70c4c18808",
+      "afterSha256": "cf6e4feb39762071a9b24ad069fb477bd4ee377af16776eaf5cecb70c4c18808"
+    },
+    {
+      "path": "tools/question-quality/question-flags2-g06-integration-20261105.json",
+      "beforeSha256": "321df201fe5b9aaef445260db2adb9656307456e36201382a4fca77bc53fd6fb",
+      "afterSha256": "321df201fe5b9aaef445260db2adb9656307456e36201382a4fca77bc53fd6fb"
+    },
+    {
+      "path": "tools/question-quality/question-flags2-lint-20261105.json",
+      "beforeSha256": "11fc8981c330905b3041a353fc3c570d19fea6da6d0834c44e6004209c24daf2",
+      "afterSha256": "11fc8981c330905b3041a353fc3c570d19fea6da6d0834c44e6004209c24daf2"
+    },
+    {
+      "path": "tools/question-quality/question-flags2-linter-tests-20261105.log",
+      "beforeSha256": "e2d60b50c3f77b1e81bcf7d84f04791210fde331a985648a59963676fc77fbfd",
+      "afterSha256": "e2d60b50c3f77b1e81bcf7d84f04791210fde331a985648a59963676fc77fbfd"
+    },
+    {
+      "path": "tools/question-quality/question-flags2-linter-tests-complete-20261105.log",
+      "beforeSha256": "003dec1a4681a01a29763a839e957322dfc6165b85eee8da93e5c25281819ed6",
+      "afterSha256": "003dec1a4681a01a29763a839e957322dfc6165b85eee8da93e5c25281819ed6"
+    },
+    {
+      "path": "tools/question-quality/question-flags2-round2-clinical-20261105.log",
+      "beforeSha256": "6b15ee6ca9c83d91a558980aa4421d2d597c1e17636b4fcaa181227f0bf5040e",
+      "afterSha256": "6b15ee6ca9c83d91a558980aa4421d2d597c1e17636b4fcaa181227f0bf5040e"
+    },
+    {
+      "path": "tools/question-quality/question-flags2-round2-clinical-final-20261105.log",
+      "beforeSha256": "7b669a719434ca3e26349b1b9167e1e8126a13ae5d655c69f6351d695f03470b",
+      "afterSha256": "7b669a719434ca3e26349b1b9167e1e8126a13ae5d655c69f6351d695f03470b"
+    },
+    {
+      "path": "tools/question-quality/question-flags2-round2-controls-20261105.json",
+      "beforeSha256": "2ee4bcc0f76c140fff918c76400eeb01bfb8b833e0b11ada0c81ccc95dba0610",
+      "afterSha256": "2ee4bcc0f76c140fff918c76400eeb01bfb8b833e0b11ada0c81ccc95dba0610"
+    },
+    {
+      "path": "tools/question-quality/question-flags2-round2-files-20261105.json",
+      "beforeSha256": "a3b47c70fc502db9d4e25e68331cc5c01fd5170eefefacfdc3ed211e0a1107c9",
+      "afterSha256": "a3b47c70fc502db9d4e25e68331cc5c01fd5170eefefacfdc3ed211e0a1107c9"
+    },
+    {
+      "path": "tools/question-quality/question-flags2-round2-lint-20261105.json",
+      "beforeSha256": "efecff3f9bb576e3fc51bed171c29e1924e644fc9de3a49d5b4f07a7ad18a338",
+      "afterSha256": "efecff3f9bb576e3fc51bed171c29e1924e644fc9de3a49d5b4f07a7ad18a338"
+    },
+    {
+      "path": "tools/question-quality/question-flags2-round2-linter-tests-20261105.log",
+      "beforeSha256": "6897ac025b24c67fad2b99f03182d1090ad64e982a6579ef1a0b0b4a5b49cf46",
+      "afterSha256": "6897ac025b24c67fad2b99f03182d1090ad64e982a6579ef1a0b0b4a5b49cf46"
+    },
+    {
+      "path": "tools/question-quality/question-flags2-round2-linter-tests-final-20261105.log",
+      "beforeSha256": "981c5b08e631c16d1c85f3133cd970c1d9ef105cea577f2c551fa7b0b3be31bc",
+      "afterSha256": "981c5b08e631c16d1c85f3133cd970c1d9ef105cea577f2c551fa7b0b3be31bc"
+    },
+    {
+      "path": "tools/question-quality/question-flags2-round2-specs-20261105.mjs",
+      "beforeSha256": "5aa85e39321db13067e59adf62d2071c07866736d627b9abefcda18bd3349ddc",
+      "afterSha256": "5aa85e39321db13067e59adf62d2071c07866736d627b9abefcda18bd3349ddc"
+    },
+    {
+      "path": "tools/question-quality/question-flags2-round2-typecheck-20261105.log",
+      "beforeSha256": "2b53231313bb81b7d34cdd5be45bf75cdd74a94ccd451c1254bcb782f06f5ae2",
+      "afterSha256": "2b53231313bb81b7d34cdd5be45bf75cdd74a94ccd451c1254bcb782f06f5ae2"
+    },
+    {
+      "path": "tools/question-quality/question-flags2-round2-typecheck-final-20261105.log",
+      "beforeSha256": "62d923fcc05655837b745a1e42c91ffada9f27a82c422de1fb3dead69d30f126",
+      "afterSha256": "62d923fcc05655837b745a1e42c91ffada9f27a82c422de1fb3dead69d30f126"
+    },
+    {
+      "path": "tools/question-quality/question-flags2-round2-validation-20261105.json",
+      "beforeSha256": "c35747a727e01733ef57a8e68e6254311d5ddbb2dd7ccf9cb45c2f74a98d3088",
+      "afterSha256": "c35747a727e01733ef57a8e68e6254311d5ddbb2dd7ccf9cb45c2f74a98d3088"
+    },
+    {
+      "path": "tools/question-quality/question-flags2-runtime-lock-20261105.json",
+      "beforeSha256": "fceaf181b5086f2b847074fa947f54a777ea18866f81d63d3a97af9206d4a7c0",
+      "afterSha256": "fceaf181b5086f2b847074fa947f54a777ea18866f81d63d3a97af9206d4a7c0"
+    },
+    {
+      "path": "tools/question-quality/question-flags2-runtime-lock-final-20261105.json",
+      "beforeSha256": "80bdbf7eeea99352fee20d0d1595536e2cfedaa51d53814fb4a1305a84be104f",
+      "afterSha256": "80bdbf7eeea99352fee20d0d1595536e2cfedaa51d53814fb4a1305a84be104f"
+    },
+    {
+      "path": "tools/question-quality/question-flags2-specs-20261105.mjs",
+      "beforeSha256": "03ccdb283d983219722ccd376ae8f233bf616929e6714cf9af893eb4a85d9782",
+      "afterSha256": "03ccdb283d983219722ccd376ae8f233bf616929e6714cf9af893eb4a85d9782"
+    },
+    {
+      "path": "tools/question-quality/question-flags2-typecheck-20261105.log",
+      "beforeSha256": "89b9c49026abba1205762c15db1dc23bf53cf68cc37737a1c509bd7b4403f032",
+      "afterSha256": "89b9c49026abba1205762c15db1dc23bf53cf68cc37737a1c509bd7b4403f032"
+    },
+    {
+      "path": "tools/question-quality/question-flags2-typecheck-complete-20261105.log",
+      "beforeSha256": "62d923fcc05655837b745a1e42c91ffada9f27a82c422de1fb3dead69d30f126",
+      "afterSha256": "62d923fcc05655837b745a1e42c91ffada9f27a82c422de1fb3dead69d30f126"
+    },
+    {
+      "path": "tools/question-quality/question-flags2-typecheck-final-20261105.log",
+      "beforeSha256": "62d923fcc05655837b745a1e42c91ffada9f27a82c422de1fb3dead69d30f126",
+      "afterSha256": "62d923fcc05655837b745a1e42c91ffada9f27a82c422de1fb3dead69d30f126"
+    },
+    {
+      "path": "tools/question-quality/question-flags2-validation-20261105.json",
+      "beforeSha256": "0eaf64e4bc681d4a936bd4df1b35c800fffe782e58275595f1fd17e360440564",
+      "afterSha256": "0eaf64e4bc681d4a936bd4df1b35c800fffe782e58275595f1fd17e360440564"
+    },
+    {
+      "path": "tools/question-quality/review-question-flags2-20261105.mjs",
+      "beforeSha256": "b0031a944736fb5189bed221a1e9d26bbff16d26207a0bb58afcfd8f2d4adbe9",
+      "afterSha256": "b0031a944736fb5189bed221a1e9d26bbff16d26207a0bb58afcfd8f2d4adbe9"
+    },
+    {
+      "path": "tools/question-quality/review-question-flags2-round2-20261105.mjs",
+      "beforeSha256": "8f0c0e1a6fafbe1f3f6194ca74ef9f0449cb1848d8e435e7808f6c8f1707da31",
+      "afterSha256": "8f0c0e1a6fafbe1f3f6194ca74ef9f0449cb1848d8e435e7808f6c8f1707da31"
+    },
+    {
+      "path": "docs/research/question-flags2-20261105.json",
+      "beforeSha256": "e040a64437a1eeb07e9e13e71be08280c881588354912c476df742ae4c2ae37f",
+      "afterSha256": "e040a64437a1eeb07e9e13e71be08280c881588354912c476df742ae4c2ae37f"
+    },
+    {
+      "path": "docs/research/question-flags2-handoff-20261105.md",
+      "beforeSha256": "d51f72bca6804fa2a8322568b8651d3312e5a4242c0bd1b8eed39077c16a09bb",
+      "afterSha256": "d51f72bca6804fa2a8322568b8651d3312e5a4242c0bd1b8eed39077c16a09bb"
+    },
+    {
+      "path": "docs/research/question-flags2-manager-decision-20261105.md",
+      "beforeSha256": "a6cb9ecbd7683100f288939592202528e60a446f1037714bfed574fbb14a3a0d",
+      "afterSha256": "a6cb9ecbd7683100f288939592202528e60a446f1037714bfed574fbb14a3a0d"
+    },
+    {
+      "path": "docs/research/question-flags2-review-20261105.json",
+      "beforeSha256": "4008bd70971f98af79f2e4d619dff1a1c7111131415f8924e374bbda43829063",
+      "afterSha256": "4008bd70971f98af79f2e4d619dff1a1c7111131415f8924e374bbda43829063"
+    },
+    {
+      "path": "docs/research/question-flags2-review2-20261105.json",
+      "beforeSha256": "2338215a7466d1f58f80496e5db44b918d7cf8a0c3df9310b35e1de7679f3ba6",
+      "afterSha256": "2338215a7466d1f58f80496e5db44b918d7cf8a0c3df9310b35e1de7679f3ba6"
+    },
+    {
+      "path": "docs/research/question-flags2-round2-20261105.json",
+      "beforeSha256": "a065754c929bb7d31ce9565aa623b74324c0f7d6aac1fa7757b410c40c39c207",
+      "afterSha256": "a065754c929bb7d31ce9565aa623b74324c0f7d6aac1fa7757b410c40c39c207"
+    },
+    {
+      "path": "docs/research/question-flags2-round2-handoff-20261105.md",
+      "beforeSha256": "8419e467eab0b30a6febf6337ed5dcfb539a3e4cc07e71779dfdf98f06953191",
+      "afterSha256": "8419e467eab0b30a6febf6337ed5dcfb539a3e4cc07e71779dfdf98f06953191"
+    },
+    {
+      "path": "docs/research/sources-question-flags2-20261105.json",
+      "beforeSha256": "f6e0c8f75e58f917db9913699963d37b36147dd2235cdf5d4d256ff1485a42e7",
+      "afterSha256": "f6e0c8f75e58f917db9913699963d37b36147dd2235cdf5d4d256ff1485a42e7"
+    },
+    {
+      "path": "docs/research/sources-question-flags2-round2-20261105.json",
+      "beforeSha256": "2739b2261f09f615e0a829c0e3b6b612964b666e5a775e6e0d7849ac4b3e378e",
+      "afterSha256": "2739b2261f09f615e0a829c0e3b6b612964b666e5a775e6e0d7849ac4b3e378e"
+    },
+    {
+      "path": "docs/execplans/question-flags2-20261105.md",
+      "beforeSha256": "c7aef253e1e2929b40bc274ecaaf2af9c943c990d2820bbcd930de540f03877b",
+      "afterSha256": "c7aef253e1e2929b40bc274ecaaf2af9c943c990d2820bbcd930de540f03877b"
+    },
+    {
+      "path": "docs/execplans/question-flags2-round2-20261105.md",
+      "beforeSha256": "19d00feb56d7437783624551ada93e5d25188535252e15c40edf04ea2d8d84b3",
+      "afterSha256": "19d00feb56d7437783624551ada93e5d25188535252e15c40edf04ea2d8d84b3"
+    }
+  ],
+  "existingBoundInputsChanged": [
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "beforeSha256": "41472b04a8d9e863a4e185b07b9224c1e5bc1235f587e94eddc55ef6c6daaeb3",
+      "afterOurHunkOnlySha256": "c9698658b8a074969fca4931acd6a2fc176095de85322592069cba8ed26e6c24",
+      "combinedCurrentSha256": "1c2a9b330320800dea6ce35317c1fc3ac60d86735b6d22734f5a46f8304fb484",
+      "bothOwnedHunksRemovedSha256": "41472b04a8d9e863a4e185b07b9224c1e5bc1235f587e94eddc55ef6c6daaeb3"
+    }
+  ],
+  "concurrentOtherLaneChanges": [
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "kind": "Separate marked N3 round-two export append",
+      "owner": "N3 writer"
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "kind": "Exact N3 round-two import/spread append",
+      "owner": "N3 writer",
+      "beforeSha256": "2391e3a6440890af5698d66f6a0cb56c34fae9848466e3cacc96c2ca28f8d7e1",
+      "combinedCurrentSha256": "21542430912a981a04e2aed5a1d6afcafba9ebcbce9a51951b9fd5c651896e60",
+      "n3FragmentsRemovedSha256": "2391e3a6440890af5698d66f6a0cb56c34fae9848466e3cacc96c2ca28f8d7e1"
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "kind": "Exact N3 catalog-stage, marked projection and accepted-concept wrapper",
+      "owner": "N3 writer",
+      "beforeSha256": "0dcec62fa1a9d7ef42b4400595d0e8d0d73b253d40817fda4b55ea3ee0e4c633",
+      "combinedCurrentSha256": "c32b49d34012d3fe7d137def1a12d7945cd78a009569a953b8f797fac2e16e2f",
+      "n3FragmentsRemovedSha256": "0dcec62fa1a9d7ef42b4400595d0e8d0d73b253d40817fda4b55ea3ee0e4c633"
+    }
+  ],
+  "newTransitiveRuntimeDependencies": [
+    {
+      "path": "packages/clinical-content/src/question-flags2-round3-20261105.ts",
+      "sha256": "091c23056f38aab98a78b193a6d47f1cf4faf6e449844be6bf68374c1e370110"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-round3-20261105-data.ts",
+      "sha256": "e4e4a94d23ffdf04f37e9130edc1e27b6698c481232eba56aac31e10a2119af3"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-round3-evidence-20261105.ts",
+      "sha256": "d0494466d8dcfd701c614ea7142ca2f1bed0e62c07da349af32624738f3e2b3a"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-round3-retained-input-20261105.ts",
+      "sha256": "4521f3ceb55e980322b935e219b2daec42dddcf2ad83009c6f7ddd03f53177d8"
+    }
+  ],
+  "structuralCandidateChanges": [
+    {
+      "id": "G03",
+      "caseId": "case.gs028c.palpable-breast.paired-dense-focal",
+      "kind": "standalone_replacement_candidate",
+      "previousNodeIds": [
+        "node.gs028c.palpable-breast.paired-dense-focal.1",
+        "node.gs028c.palpable-breast.paired-dense-focal.2"
+      ],
+      "candidateNodeIds": [
+        "node.gs028c.palpable-breast.paired-dense-focal.1"
+      ],
+      "requiresManagerCompositionReview": true,
+      "reason": "Completed imaging is supplied before the new management task. The old ultrasound gate and repetitive downstream biopsy task must not execute in this draft."
+    },
+    {
+      "id": "G05",
+      "caseId": "case.asymptomatic-phpt.incidental-calcium",
+      "kind": "standalone_replacement_candidate",
+      "previousNodeIds": [
+        "node.asymptomatic-phpt.incidental-calcium.1",
+        "node.asymptomatic-phpt.incidental-calcium.2"
+      ],
+      "candidateNodeIds": [
+        "node.asymptomatic-phpt.incidental-calcium.2"
+      ],
+      "requiresManagerCompositionReview": true,
+      "reason": "The held DXA acquisition key is not part of this candidate. Completed baseline assessment is unscored and cannot gate referral or operative eligibility."
+    }
+  ],
+  "itpSiblingAudit": {
+    "scope": "Exact original four paired cases/eight variants in the frozen original-live intake, not a claim that every hematology workup has this sequence. The separate old ASH bibliography remains unresolved.",
+    "cases": [
+      {
+        "caseId": "case.persistent-itp.four-month",
+        "nodes": [
+          {
+            "nodeId": "node.persistent-itp.four-month.1",
+            "variantId": "question.persistent-itp.hiv-hcv-secondary-evaluation.v1",
+            "key": "HIV and HCV serology"
+          },
+          {
+            "nodeId": "node.persistent-itp.four-month.2",
+            "variantId": "question.persistent-itp.defer-elective-splenectomy.v1",
+            "key": "Defer elective splenectomy"
+          }
+        ]
+      },
+      {
+        "caseId": "case.persistent-itp.six-month",
+        "nodes": [
+          {
+            "nodeId": "node.persistent-itp.six-month.1",
+            "variantId": "question.persistent-itp.hiv-hcv-secondary-evaluation.v2",
+            "key": "HIV and HCV serology"
+          },
+          {
+            "nodeId": "node.persistent-itp.six-month.2",
+            "variantId": "question.persistent-itp.defer-elective-splenectomy.v2",
+            "key": "Defer elective splenectomy"
+          }
+        ]
+      },
+      {
+        "caseId": "case.persistent-itp.hematology-followup",
+        "nodes": [
+          {
+            "nodeId": "node.persistent-itp.hematology-followup.1",
+            "variantId": "question.persistent-itp.hiv-hcv-secondary-evaluation.v3",
+            "key": "HIV and HCV serology"
+          },
+          {
+            "nodeId": "node.persistent-itp.hematology-followup.2",
+            "variantId": "question.persistent-itp.defer-elective-splenectomy.v3",
+            "key": "Defer elective splenectomy"
+          }
+        ]
+      },
+      {
+        "caseId": "case.persistent-itp.stable-count",
+        "nodes": [
+          {
+            "nodeId": "node.persistent-itp.stable-count.1",
+            "variantId": "question.persistent-itp.hiv-hcv-secondary-evaluation.v4",
+            "key": "HIV and HCV serology"
+          },
+          {
+            "nodeId": "node.persistent-itp.stable-count.2",
+            "variantId": "question.persistent-itp.defer-elective-splenectomy.v4",
+            "key": "Defer elective splenectomy"
+          }
+        ]
+      }
+    ],
+    "marrowKeyPresent": false,
+    "ownerRecollectedEncounterIdentified": false
+  },
+  "noNewAcceptance": true,
+  "noExistingSourceEditsBeyondIndex": true
+}

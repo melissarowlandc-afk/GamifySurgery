@@ -1,3 +1,5 @@
+import { retainPresentationIds } from "../recentPresentationIds";
+
 export type EarningsReceiptActorKind =
   | "patient"
   | "employee"
@@ -148,7 +150,9 @@ export function reconcileEarningsPopups(
 
   return {
     campaignId: previous.campaignId,
-    observedTransactionKeys: [...observedTransactionKeys],
+    observedTransactionKeys: [...retainPresentationIds(observedTransactionKeys, [
+      ...receiptKeys, ...activePopups.map(popup => popup.transactionKey),
+    ])],
     activePopups,
     observedReceipts: input.receipts,
   };

@@ -1,4 +1,4 @@
-import { getRoomUpgradeDurationMultiplier, getRoomUpgradePoints, LEVEL_FIVE_SUPPORT_TUNING } from "@gamify-surgery/balance-config";
+import { getRoomUpgradeDurationMultiplier, getRoomUpgradePoints, LEGACY_GYM_BREAK_MORALE_GAIN, LEVEL_FIVE_SUPPORT_TUNING, PREVIEW_GYM_BREAK_MORALE_GAIN } from "@gamify-surgery/balance-config";
 import { isRoomOperationalForFacilityWork } from "./selectors";
 import type {
   DomainContext, EmployeeState, GameState, PlacedRoom, RoomUpgradeBreakBenefit,
@@ -140,7 +140,7 @@ export function normalizeRoomUpgradeBreakBenefit(value: unknown, targetRoomId: u
     typeof value.baselineMoraleGain !== "number" || !Number.isSafeInteger(value.baselineMoraleGain) || value.baselineMoraleGain < 0 ||
     typeof value.moraleGain !== "number" || !Number.isSafeInteger(value.moraleGain) ||
     value.roomDefinitionId !== undefined && value.roomDefinitionId !== "room.staff_gym" ||
-    value.roomDefinitionId === "room.staff_gym" && value.baselineMoraleGain !== LEVEL_FIVE_SUPPORT_TUNING.gymMorale ||
+    value.roomDefinitionId === "room.staff_gym" && value.baselineMoraleGain !== LEVEL_FIVE_SUPPORT_TUNING.gymMorale && value.baselineMoraleGain !== LEGACY_GYM_BREAK_MORALE_GAIN && value.baselineMoraleGain !== PREVIEW_GYM_BREAK_MORALE_GAIN ||
     value.moraleGain !== value.baselineMoraleGain + getRoomUpgradePoints(value.roomDefinitionId ?? "room.staff_break", value.upgradeLevel, value.roomDefinitionId ? "gym_morale_points" : "break_morale_points")) return invalid();
   return { version: "room-upgrade-break.v1", roomInstanceId: value.roomInstanceId, upgradeLevel: value.upgradeLevel,
     baselineMoraleGain: value.baselineMoraleGain, moraleGain: value.moraleGain,

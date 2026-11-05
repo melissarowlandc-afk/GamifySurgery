@@ -2210,11 +2210,31 @@ export const EXACT_TEST_CHOICE_ORDER_RECORDS: readonly ExactTestChoiceOrderRecor
   // BEGIN N3 exact-order append - external-only records, old identities retained.
   ...QUESTION_NEW_N3_TEST_ORDER_RECORDS,
   // END N3 exact-order append.
+  // BEGIN N3 ROUND2 exact-order append - retained versions remain available.
+  ...QUESTION_NEW_N3_ROUND2_TEST_ORDER_RECORDS,
+  // END N3 ROUND2 exact-order append.
+  // BEGIN N3 ROUND3 explicit candidate exact-order append.
+  ...QUESTION_NEW_N3_ROUND3_TEST_ORDER_RECORDS,
+  // END N3 ROUND3 explicit candidate exact-order append.
+  // BEGIN FLAGS2 accepted whole-case preview bindings 20261105
+  ...QUESTION_FLAGS2_WHOLE_CASE_TEST_ORDER_RECORDS,
+  // END FLAGS2 accepted whole-case preview bindings 20261105
 ];
 
 // BEGIN N3 exact-order append - external-only records, old identities retained.
 import { QUESTION_NEW_N3_TEST_ORDER_RECORDS } from "./question-new-n3-test-orders";
 // END N3 exact-order append.
+// BEGIN N3 ROUND2 exact-order append.
+import { QUESTION_NEW_N3_ROUND2_TEST_ORDER_RECORDS } from "./question-new-n3-round2-test-orders";
+// END N3 ROUND2 exact-order append.
+
+// BEGIN N3 ROUND3 explicit candidate exact-order append.
+import { QUESTION_NEW_N3_ROUND3_TEST_ORDER_RECORDS } from "./question-new-n3-round3-test-orders";
+// END N3 ROUND3 explicit candidate exact-order append.
+
+// BEGIN FLAGS2 accepted whole-case preview bindings 20261105
+import { QUESTION_FLAGS2_WHOLE_CASE_TEST_ORDER_RECORDS } from "@gamify-surgery/clinical-content";
+// END FLAGS2 accepted whole-case preview bindings 20261105
 
 const recordByExactKey = new Map(
   EXACT_TEST_CHOICE_ORDER_RECORDS.map((entry) => [

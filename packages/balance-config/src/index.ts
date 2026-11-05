@@ -12,6 +12,7 @@ export * from "./periop-nurse-attention";
 export * from "./procedural-staffing";
 export * from "./room-upgrades";
 export * from "./level-five-support";
+export * from "./staff-breaks";
 export * from "./level-five-gift-retail";
 export * from "./level-five-executive";
 export * from "./level-five-progression";

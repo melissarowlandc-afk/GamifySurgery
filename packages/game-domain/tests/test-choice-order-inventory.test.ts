@@ -1,4 +1,6 @@
+import { QUESTION_NEW_N3_ROUND3_CASES } from "@gamify-surgery/clinical-content";
 import { QUESTION_NEW_N1_ROUND3_PRE_RELEASE } from "@gamify-surgery/clinical-content";
+import { QUESTION_NEW_N3_CASES } from "@gamify-surgery/clinical-content";
 // Ship-gate integration: retained draft tuples remain inspectable, not admissible.
 import { QUESTION_CATALOG_RELEASE, QUESTION_NEW_N2_ROUND3_PRE_RELEASE, QUESTION_BANK_BATCH2B_ROUND2_SOURCE_RELEASE } from "@gamify-surgery/clinical-content";
 import { PROTOTYPE_BALANCE_RELEASE, getServiceIncomeForRoute } from "@gamify-surgery/balance-config";
@@ -113,7 +115,8 @@ describe("active-release test-choice order inventory", () => {
     const retainedDraftCases = [...priorDraftCases, ...ownerRoundOneCases, ...ownerRoundTwoCases].map(c => ({ ...c, decisionNodes: c.decisionNodes.filter(n => retainedDraftIds.has(n.questionVariantId)) })).filter(c => c.decisionNodes.length);
     // Round-two encounters retain their exact timed choices after the seven
     // round-three replacements. Validate those tuples against their real stage.
-    for (const clinicalCase of [...SYNTHETIC_CLINICAL_RELEASE.cases, ...QUESTION_CATALOG_RELEASE.cases, ...QUESTION_NEW_N2_ROUND3_PRE_RELEASE.cases, ...QUESTION_BANK_BATCH2B_ROUND2_SOURCE_RELEASE.cases, ...QUESTION_NEW_N1_ROUND3_PRE_RELEASE.cases, ...QUESTION_BANK_PRE_BATCH2A_ROUND3_RELEASE.cases, ...QUESTION_NEW_N1_ROUND2_PRE_RELEASE.cases, ...QUESTION_FLAGS_PRE_ROUND3_RELEASE.cases, ...QUESTION_FLAGS_ROUND1_RELEASE.cases, ...QUESTION_FLAGS_PRE_REVISION_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R7_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R6_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R5_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R3_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_RELEASE.cases, ...QUESTION_QUALITY_PRE_BATCH1_RELEASE.cases, ...legacyCases, ...retainedDraftCases]) {
+    // N3 v1 choices remain exact frozen inputs after the v2 catalog projection.
+    for (const clinicalCase of [...SYNTHETIC_CLINICAL_RELEASE.cases, ...QUESTION_CATALOG_RELEASE.cases, ...QUESTION_NEW_N3_CASES, ...QUESTION_NEW_N3_ROUND3_CASES, ...QUESTION_NEW_N2_ROUND3_PRE_RELEASE.cases, ...QUESTION_BANK_BATCH2B_ROUND2_SOURCE_RELEASE.cases, ...QUESTION_NEW_N1_ROUND3_PRE_RELEASE.cases, ...QUESTION_BANK_PRE_BATCH2A_ROUND3_RELEASE.cases, ...QUESTION_NEW_N1_ROUND2_PRE_RELEASE.cases, ...QUESTION_FLAGS_PRE_ROUND3_RELEASE.cases, ...QUESTION_FLAGS_ROUND1_RELEASE.cases, ...QUESTION_FLAGS_PRE_REVISION_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R7_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R6_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R5_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R3_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_RELEASE.cases, ...QUESTION_QUALITY_PRE_BATCH1_RELEASE.cases, ...legacyCases, ...retainedDraftCases]) {
       for (const node of clinicalCase.decisionNodes) {
         const timingEntry = ANSWER_CHOICE_TIMING_REGISTRY.find((entry) => entry.caseId === clinicalCase.id && entry.nodeId === node.id && entry.questionVariantId === node.questionVariantId);
         if (timingEntry?.classification.kind !== "test_choices") continue;

@@ -4,6 +4,7 @@ import { roomThumbnailStage } from "./roomThumbnailCapture";
 import { initializeCanvasRoomLighting } from "./canvasRoomLighting";
 import { serviceVisitorWaitingSupport } from "./serviceVisitorWaitingPresentation";
 import { isInspectorBitmapAsset, loadMobileInspectorBitmap } from "../mobile/performance/inspectorAssets";
+import { CharacterTextureBudget } from "../mobile/performance/characterTextureBudget";
 import { getRoomUpgradeDefinition } from "@gamify-surgery/balance-config";
 import type {
   CardinalDirection,
@@ -678,6 +679,9 @@ export class FacilityScene extends Phaser.Scene {
   private characterStillLoadRequested = false;
   private readonly pendingCharacterStills = new Map<string, import("../art/bitmapAssetManifest").BitmapAssetDescriptor>();
   private readonly failedCharacterStills = new Set<string>();
+  private readonly mobileCharacterTextures = new CharacterTextureBudget();
+  private readonly mobileCharacterUsedTextures = new Set<string>();
+  private readonly mobileCharacterFamilies = new Set<string>();
 
   public constructor(bridge: FacilitySceneBridge) {
     super({ key: "facility-scene" });
@@ -1048,6 +1052,10 @@ export class FacilityScene extends Phaser.Scene {
   private useSmoothDownscaledTextures(): void {
     const smooth = (texture: Phaser.Textures.Texture): void => {
       texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
+      if (this.bridge.mobileInput === true && (texture.key.startsWith("stitchin-time-art:character-still:") || texture.key.startsWith("stitchin-time-art:character:")) && !texture.key.includes("inspector")) {
+        const image = texture.getSourceImage?.() as { width?: number; height?: number } | undefined;
+        this.mobileCharacterTextures.register(texture.key, image?.width ?? 0, image?.height ?? 0);
+      }
     };
     for (const key of this.textures.getTextureKeys()) {
       smooth(this.textures.get(key));
@@ -1404,6 +1412,8 @@ export class FacilityScene extends Phaser.Scene {
         return;
       }
       if (frame?.resync) {
+        // A sleeping loop had no hidden frame in which to cancel old contacts.
+        this.mobileGestures?.cancel();
         this.cameras.main.setVisible(true);
         this.resyncMobilePresentation();
         mobileResynced = true;
@@ -6496,6 +6506,8 @@ export class FacilityScene extends Phaser.Scene {
 
   private drawCharacters(): void {
     if (this.bridge.mobileInput === true && this.bridge.mobilePresentation?.hidden) return;
+    this.mobileCharacterUsedTextures.clear();
+    this.mobileCharacterFamilies.clear();
     if (this.characterPresentationFrozen()) {
       // Atlas callbacks may redraw while paused without update() observing the
       // pause. Mark it so the next update also discards a stale resume delta.
@@ -6879,6 +6891,16 @@ export class FacilityScene extends Phaser.Scene {
       this.activeCharacterGraphics,
     );
     this.removeInactiveCharacterBitmapContainers();
+    if (this.bridge.mobileInput === true) {
+      // Pin desired/in-flight poses and any still displayed while its new pose
+      // loads. Trim only after removed actors' containers have been destroyed.
+      for (const asset of this.pendingCharacterStills.values()) this.mobileCharacterUsedTextures.add(getPhaserTextureKey(asset));
+      for (const container of this.characterBitmapContainers.values()) {
+        const actor = container.getByName("actor") as Phaser.GameObjects.Image | null;
+        if (actor?.texture) this.mobileCharacterUsedTextures.add(actor.texture.key);
+      }
+      this.mobileCharacterTextures.trim(this.mobileCharacterUsedTextures, key => { this.textures.remove(key); }, this.mobileCharacterFamilies);
+    }
     this.reconcileApprovedSideChairLayers();
     this.renderInspectBox();
   }
@@ -7508,6 +7530,11 @@ export class FacilityScene extends Phaser.Scene {
       : baseY;
     if (key && authoredLayers) {
       const textureKey = getPhaserTextureKey(authoredLayers.actor.atlas);
+      if (this.bridge.mobileInput === true) {
+        this.mobileCharacterUsedTextures.add(textureKey);
+        if (authoredLayers.actor.stillId) this.mobileCharacterFamilies.add(authoredLayers.actor.stillId);
+        this.mobileCharacterTextures.touch(textureKey, authoredLayers.actor.stillId);
+      }
       const textureReady = this.textures.exists(textureKey) || this.ensureCharacterStill(authoredLayers.actor.atlas);
       if (!textureReady) {
         const existing = this.characterBitmapContainers.get(key);

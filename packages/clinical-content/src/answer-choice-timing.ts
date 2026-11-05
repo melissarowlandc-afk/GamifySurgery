@@ -6065,10 +6065,22 @@ export const QUESTION_NEW_N3_PRE_TIMING_ENTRIES = [...QUESTION_NEW_N2_ROUND3_PRE
 // BEGIN N3 timing append - retain all preceding exact identities for frozen encounters.
 import { QUESTION_NEW_N3_TIMING_ENTRIES } from "./question-new-n3-20261105";
 export const ANSWER_CHOICE_TIMING_REGISTRY = [...QUESTION_NEW_N3_PRE_TIMING_ENTRIES,
-  ...QUESTION_NEW_N3_TIMING_ENTRIES, ...QUESTION_FLAGS2_ACCEPTED_TIMING_ENTRIES].map(entry=>answerChoiceTimingRegistryEntrySchema.parse(entry));
+  ...QUESTION_NEW_N3_TIMING_ENTRIES, ...QUESTION_FLAGS2_ACCEPTED_TIMING_ENTRIES,
+  ...QUESTION_NEW_N3_ROUND2_TIMING_ENTRIES, ...QUESTION_NEW_N3_ROUND3_TIMING_ENTRIES, ...QUESTION_FLAGS2_WHOLE_CASE_TIMING_ENTRIES].map(entry=>answerChoiceTimingRegistryEntrySchema.parse(entry));
 // END N3 timing append.
 
 // BEGIN FLAGS2 G06 exact timing append 20261105
 import { QUESTION_FLAGS2_ACCEPTED_TIMING_ENTRIES } from "./question-flags2-accepted-20261105";
 export { QUESTION_FLAGS2_ACCEPTED_TIMING_ENTRIES };
 // END FLAGS2 G06 exact timing append 20261105
+// BEGIN N3 ROUND2 exact timing append - earlier tuples retained, frozen PASS not duplicated.
+import { QUESTION_NEW_N3_ROUND2_TIMING_ENTRIES } from "./question-new-n3-round2-20261105";
+// END N3 ROUND2 exact timing append.
+
+// BEGIN N3 ROUND3 retained exact estimate append - explicit candidates only.
+import { QUESTION_NEW_N3_ROUND3_TIMING_ENTRIES } from "./question-new-n3-round3-20261105";
+// END N3 ROUND3 retained exact estimate append.
+
+// BEGIN FLAGS2 whole-case exact timing append 20261105
+import { QUESTION_FLAGS2_WHOLE_CASE_TIMING_ENTRIES } from "./question-flags2-whole-case-accepted-20261105";
+// END FLAGS2 whole-case exact timing append 20261105

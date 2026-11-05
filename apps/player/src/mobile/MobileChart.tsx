@@ -1,20 +1,34 @@
-import { ClinicalImageExhibit } from "../ui/ClinicalImageExhibit";
 import { QuestionFlagControl } from "../ui/QuestionFlagControl";
+import { ClinicalImageExhibit } from "../ui/ClinicalImageExhibit";
 import type { SubmitQuestionReviewFlag } from "../session/questionReviewFlags";
 import { useEffect, useRef } from "react";
 import { PixelAvatar } from "../ui/PixelAvatar";
-import { useQuestionWaitSnapshots } from "../ui/useQuestionWaitSnapshots";
 import { employeeDiscussionChartView } from "../ui/EmployeeDiscussionPanel";
+import { useQuestionWaitSnapshots } from "../ui/useQuestionWaitSnapshots";
 import type { AnswerChoiceView, ChartClinicalReviewView, ChartDecisionStepView, ChartPendingPhaseView, ChartView, EmployeeDiscussionView } from "../ui/types";
 
 interface MobileChartProps {
   chart: ChartView;
+  /** The enclosing phone sheet supplies the flag and Close controls. */
+  headerActionsProvided?: boolean;
   onClose: () => void;
   onSubmitAnswer: (choiceId: string) => void;
   onFlagQuestion: SubmitQuestionReviewFlag;
   onAcknowledgeTerminalFeedback: () => void;
   onToggleSummary: () => void;
   onFileChart: () => void;
+}
+
+export function MobileChartFlag({ chart, onFlagQuestion }: Pick<MobileChartProps, "chart" | "onFlagQuestion">) {
+  const step = mobileChartSteps(chart).find(candidate => candidate.current);
+  return step?.questionPrompt && step.questionVariantId
+    ? <QuestionFlagControl key={`${chart.id}.${step.questionVariantId}`} step={step} onSubmit={onFlagQuestion} compact /> : null;
+}
+
+export function MobileTeamDiscussionFlag({ discussion, onFlagQuestion }: {
+  discussion: EmployeeDiscussionView; onFlagQuestion: SubmitQuestionReviewFlag;
+}) {
+  return <MobileChartFlag chart={employeeDiscussionChartView(discussion)} onFlagQuestion={onFlagQuestion} />;
 }
 
 /** Same legacy compatibility and action precedence as the desktop chart. */
@@ -37,7 +51,13 @@ function Phases({ phases }: { phases: ChartPendingPhaseView[] }) {
 
 function Exhibit({ exhibit }: { exhibit: NonNullable<ChartDecisionStepView["exhibit"]> }) {
   return <figure className="mobile-chart-exhibit">
-    {exhibit.kind === "image" ? <ClinicalImageExhibit exhibit={exhibit} /> : exhibit.kind === "table" ? <div className="mobile-table-scroll" tabIndex={0} role="region" aria-label={exhibit.caption}>
+    {exhibit.kind === "image" ? <ClinicalImageExhibit exhibit={exhibit} /> : exhibit.kind === "table" && exhibit.columnHeaders.length === 1 ? <>
+      <figcaption>{exhibit.caption}</figcaption>
+      <p className="mobile-exhibit-column-label">{exhibit.columnHeaders[0]}</p>
+      <dl className="mobile-label-values">{exhibit.cells.map((cells, index) => <div key={index}>
+        <dt>{exhibit.rowHeaders[index]}</dt><dd>{cells[0]}</dd>
+      </div>)}</dl>
+    </> : exhibit.kind === "table" ? <div className="mobile-table-scroll" tabIndex={0} role="region" aria-label={exhibit.caption}>
       <table><caption>{exhibit.caption}</caption><thead><tr><td aria-hidden="true" />
         {exhibit.columnHeaders.map((header, index) => <th scope="col" key={index}>{header}</th>)}
       </tr></thead><tbody>{exhibit.cells.map((cells, index) => <tr key={index}>
@@ -57,7 +77,7 @@ function WaitEstimate({ choice }: { choice: AnswerChoiceView }) {
   </span> : null;
 }
 
-function Decision({ step, chart, onSubmitAnswer, onFlagQuestion }: Pick<MobileChartProps, "chart" | "onSubmitAnswer" | "onFlagQuestion"> & { step: ChartDecisionStepView }) {
+function Decision({ step, chart, onSubmitAnswer }: Pick<MobileChartProps, "chart" | "onSubmitAnswer"> & { step: ChartDecisionStepView }) {
   const answered = step.answerChoices.some((choice) => choice.selected);
   return <div className="mobile-decision-content">
     {step.resultBody && step.resultBody !== chart.pendingLabel ? <div className="mobile-chart-result" role="status">
@@ -67,7 +87,6 @@ function Decision({ step, chart, onSubmitAnswer, onFlagQuestion }: Pick<MobileCh
     </div> : null}
     {step.exhibit ? <Exhibit exhibit={step.exhibit} /> : null}
     <div className="mobile-decision-heading"><h3>{step.heading}</h3>{step.statusLabel ? <span>{step.statusLabel}</span> : null}
-      {step.current && step.questionPrompt && step.questionVariantId ? <QuestionFlagControl key={`${chart.id}.${step.questionVariantId}`} step={step} onSubmit={onFlagQuestion} /> : null}
     </div>
     {step.questionPrompt ? <p className="mobile-question">{step.questionPrompt}</p> : null}
     {step.questionPrompt ? <div className="mobile-answers" data-tutorial-anchor={step.current ? "current-answer-choices" : undefined}>
@@ -132,11 +151,13 @@ export function MobileChart(props: MobileChartProps) {
       : { label: chart.primaryActionLabel ?? (chart.pendingLabel ? "Return to clinic" : "Close chart"), run: onClose, anchor: undefined };
   const demographics = chart.subtitleLabel ?? ([chart.ageLabel, chart.sexLabel].filter(Boolean).join(" · ") || chart.patientDetails);
   const rewardLabels = [chart.reward?.moneyLabel, chart.reward?.xpLabel, chart.reward?.satisfactionLabel].filter(Boolean);
+  const redundantClose = props.headerActionsProvided && !chart.summaryAvailable && !chart.terminalFeedbackNeedsAcknowledgment && !chart.canFile && !chart.pendingLabel;
   return <article className="mobile-chart" data-phone-anchor="chart" aria-label={`${chart.patientName} ${chart.subjectKind === "team_discussion" ? "team discussion" : "chart"}`}>
     <div className="mobile-chart-scroll" ref={scrollRef} key={`${chart.id}.${summary ? "summary" : "front"}`}>
       <header className="mobile-chart-identity">
         <PixelAvatar avatar={chart.avatar} label={`${chart.patientName} portrait`} size="small" />
         <div><h3>{chart.patientName}</h3><p>{demographics}</p>{chart.chiefComplaint ? <strong>{chart.chiefComplaint}</strong> : null}</div>
+        {!props.headerActionsProvided ? <MobileChartFlag chart={chart} onFlagQuestion={props.onFlagQuestion} /> : null}
         <p className="mobile-chart-status">{chart.statusLabel}{chart.etaLabel ? ` · ${chart.etaLabel}` : ""}</p>
         {chart.patientSatisfactionLabel ? <p>Satisfaction {chart.patientSatisfactionLabel.replace(/^Satisfaction:?\s*/i, "")}</p> : null}
         {chart.executiveComfortLabel ? <p>{chart.executiveComfortLabel}</p> : null}
@@ -170,18 +191,19 @@ export function MobileChart(props: MobileChartProps) {
       </section> : null}
       {chart.summaryAvailable && chart.clinicalReview ? <Sources review={chart.clinicalReview} /> : null}
     </div>
-    <footer className="mobile-chart-actions">
+    {!redundantClose ? <footer className="mobile-chart-actions">
       {chart.summaryAvailable ? <button type="button" onClick={onToggleSummary} aria-pressed={summary} data-phone-anchor="summary-toggle" data-tutorial-anchor="flip-chart">
         {summary ? "Return to chart front" : "More disease information"}
       </button> : null}
       <button type="button" className="mobile-primary" onClick={primary.run} data-phone-anchor="primary" data-tutorial-anchor={primary.anchor}>{primary.label}</button>
-    </footer>
+    </footer> : null}
   </article>;
 }
 
-export function MobileTeamDiscussion({ discussion, onAnswer, onAcknowledge, onFile, onClose, onFlagQuestion = () => {} }: {
+export function MobileTeamDiscussion({ discussion, onAnswer, onAcknowledge, onFile, onClose, onFlagQuestion = () => {}, headerActionsProvided }: {
   discussion: EmployeeDiscussionView; onFlagQuestion?: SubmitQuestionReviewFlag; onAnswer: (id: string) => void; onAcknowledge: () => void; onFile: () => void; onClose: () => void;
+  headerActionsProvided?: boolean;
 }) {
-  return <MobileChart chart={employeeDiscussionChartView(discussion)} onClose={onClose} onSubmitAnswer={onAnswer}
+  return <MobileChart chart={employeeDiscussionChartView(discussion)} headerActionsProvided={headerActionsProvided} onClose={onClose} onSubmitAnswer={onAnswer}
     onFlagQuestion={onFlagQuestion} onAcknowledgeTerminalFeedback={onAcknowledge} onToggleSummary={() => {}} onFileChart={onFile} />;
 }

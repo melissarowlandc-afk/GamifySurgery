@@ -256,6 +256,12 @@ describe("approved clinical admission boundaries", () => {
       // N1 round three: 17 separate changed meanings; earlier histories are retained.
       ...QUESTION_NEW_N1_ROUND3_NEW_CONCEPT_VERSIONS.map(concept => concept.id),
       ...QUESTION_NEW_N2_ROUND3_NEW_CONCEPT_VERSIONS.map((concept) => concept.id),
+      // Exact five accepted N3 meanings precede the retained batch 2b registry.
+      "concept.n3.bilateral-carotid-symptom-attribution",
+      "concept.n3.postsplenectomy-nodule-function-before-targeting",
+      "concept.n3.dysphagia-biopsy-territory-after-negative-endoscopy",
+      "concept.n3.tumor-screen-versus-family-test-sequence.v2",
+      "concept.n3.gastric-lymphoma-new-large-cell-process.v2",
       // Manager-accepted batch 2b / G06 meanings; exact inventory additions.
       "concept.transplant.class-ii-crossmatch-target-and-window.v1",
       "concept.breast.inflammatory-phenotype-after-neoadjuvant-response.v1",
@@ -270,6 +276,8 @@ describe("approved clinical admission boundaries", () => {
       "concept.anorectal-fistula.function-before-low-tract-division.v1",
       "concept.nutrition.gastric-versus-postpyloric-delivery.v1",
       "concept.predictive-value.collection-population-denominator.v1",
+      "concept.palpable-breast.completed-imaging-clinical-target.v1",
+      "concept.phpt.inherited-calcium-before-localization.v2",
     ]);
   });
 

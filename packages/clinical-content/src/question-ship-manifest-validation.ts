@@ -1,5 +1,6 @@
 import type { SyntheticClinicalRelease } from "./schema";
 import { QUESTION_SHIP_MANIFEST, type QuestionShipManifest } from "./question-ship-manifest";
+import { resolveQuestionShipCaseReplacements } from "./question-ship-case-replacements";
 
 /** Build/test diagnostics only; not called by the live projection or exported
  * from the runtime barrel. */
@@ -16,6 +17,7 @@ export function questionShipManifestIssues(
     return [name, new Map(release.cases.map(cs => [cs.id, cs]))] as const;
   }));
   if (views.legacy !== legacy) issues.push("missing or changed legacy view");
+  issues.push(...resolveQuestionShipCaseReplacements(catalog,legacy,views,manifest).issues);
   const legacyKeys = new Set<string>();
   for (const [caseId, nodeId, variantId, conceptId] of manifest.legacyBindings) {
     const key = JSON.stringify([caseId, nodeId]);

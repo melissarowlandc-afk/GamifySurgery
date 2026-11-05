@@ -122,6 +122,17 @@ export function createDiagnosticWorkload(): { state: GameState; chartId: string 
     encounter.patientLocation === null && encounter.patientMovement === null &&
     (!encounter.pendingResult?.diagnosticTiming || !hasOutstandingDiagnosticWork(encounter.pendingResult.diagnosticTiming))));
   state.encounters = { ...historyClock(filed), ...state.encounters };
+  // A new retained run can include a filed pediatric child. Carry its departed
+  // family record with that historical encounter instead of creating an orphan
+  // when the synthetic operational geometry is combined with retained history.
+  for (const encounter of Object.values(filed)) {
+    if (encounter.pediatricFamilyId === undefined) continue;
+    const family = history.pediatricFamilies?.[encounter.pediatricFamilyId];
+    if (!family || family.phase !== "departed" || family.child.kind !== "encounter" || family.child.id !== encounter.id)
+      throw new Error("Synthetic retained pediatric history requires its exact departed family");
+    state.pediatricFamilies ??= {};
+    state.pediatricFamilies[family.id] = historyClock(family);
+  }
   state.serviceOperations.push(...historyClock(history.serviceOperations.filter(operation => (operation.status === "completed" || operation.status === "cancelled") && operation.clinicVisit?.pediatricFamilyId === undefined)));
   state.learningHistories = { ...state.learningHistories, ...historyClock(history.learningHistories) };
   state.schedulerPins = history.schedulerPins;

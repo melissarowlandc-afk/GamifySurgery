@@ -13,12 +13,17 @@ import {
 } from "./question-flags2-round2-20261105";
 import { QUESTION_FLAGS2_REVISIONS, QUESTION_FLAGS2_ROUND1_SOURCE_RELEASE as round1 } from "./question-flags2-20261105";
 import { QUESTION_FLAGS2_ACCEPTED_TIMING_ENTRIES } from "./question-flags2-accepted-20261105";
-import { SYNTHETIC_CLINICAL_RELEASE as live } from "./synthetic-content";
+import { SYNTHETIC_CLINICAL_RELEASE as actualLive } from "./synthetic-content";
 import { ANSWER_CHOICE_TIMING_REGISTRY } from "./answer-choice-timing";
-import { QUESTION_SHIP_MANIFEST as manifest, type QuestionShipManifest } from "./question-ship-manifest";
+import { QUESTION_SHIP_MANIFEST as actualManifest, type QuestionShipManifest } from "./question-ship-manifest";
+import {beforeWholeCaseReplacementRelease,beforeWholeCaseReplacementManifest} from "./question-ship-case-replacements-test-support";
 import { syntheticClinicalReleaseSchema, type SyntheticClinicalRelease, type AnswerChoiceTimingRegistryEntry } from "./schema";
 
 const read=(path:string)=>JSON.parse(readFileSync(new URL("../../../"+path,import.meta.url),"utf8"));
+// Preserve this round's historical epoch after checking the exact authorized
+// whole-case acceptance delta. Original captures and assertions stay intact.
+const live=beforeWholeCaseReplacementRelease(actualLive);
+const manifest=beforeWholeCaseReplacementManifest(actualManifest);
 const capture=read("tools/question-quality/fixtures/question-flags2-round2-before-20261105.json") as {
   release:SyntheticClinicalRelease;manifest:QuestionShipManifest;files:Record<string,string>;
   timings:AnswerChoiceTimingRegistryEntry[];review:Array<{id:string;cues:unknown[];fairness:unknown[];suggestions:unknown[]}>;

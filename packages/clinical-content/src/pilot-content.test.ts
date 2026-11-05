@@ -1,4 +1,6 @@
 import { describe, expect, it } from "vitest";
+import { createHash } from "node:crypto";
+import { QUESTION_SHIP_MANIFEST } from "./question-ship-manifest";
 import {
   getPilotChartReviewByCaseId,
   PILOT_CLINICAL_RELEASE,
@@ -67,8 +69,19 @@ describe("five-diagnosis pilot registry", () => {
     );
 
     expect(
-      violations.map((violation) => violation.questionVariantId).sort(),
+      violations.filter(v => v.questionVariantId !== "question.n3.gastric-lymphoma-new-large-cell-process.v2")
+        .map((violation) => violation.questionVariantId).sort(),
     ).toEqual([...IMMUTABLE_APPROVED_LENGTH_EXCEPTIONS].sort());
+    // Manager explicitly freezes this review-two PASS version. Pin the whole
+    // accepted case rather than editing its wording or expanding a broad budget.
+    const frozenId = "question.n3.gastric-lymphoma-new-large-cell-process.v2";
+    expect(QUESTION_SHIP_MANIFEST.accepted.find(row => row.questionVariantId === frozenId))
+      .toMatchObject({acceptanceId:"review.n3.gastric-lymphoma-new-large-cell-process.v2",sourceView:"n3-round3",
+        decision:"docs/research/question-new-n3-manager-decision-20261105.md"});
+    const frozenCase = PILOT_CLINICAL_RELEASE.cases.find(cs => cs.decisionNodes.some(n => n.questionVariantId === frozenId))!;
+    expect(createHash("sha256").update(JSON.stringify(frozenCase)).digest("hex"))
+      .toBe("c0a73c140565409277e2dbc382c3eee17ad8e0699c71db73fabe13a1401f09fc");
+    expect(violations.filter(v => v.questionVariantId === frozenId)).toHaveLength(1);
   });
 
   it("contains exactly the five requested families with Level 0 and Level 1 phenotypes", () => {

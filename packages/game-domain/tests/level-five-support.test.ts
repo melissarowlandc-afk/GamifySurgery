@@ -31,6 +31,17 @@ function gymFixture(level: RoomUpgradeLevel = 1): GameState {
   return state;
 }
 
+function twoGymContacts(): GameState {
+  const state = createLevelFiveStateQaState("support", context);
+  state.encounters = {}; state.patientAmenityTrips = [];
+  for (const employee of state.employees) {
+    employee.morale = 60; employee.facilityTask = null;
+    employee.path = [{ ...employee.location }]; employee.pathIndex = 0;
+  }
+  advanceLevelThreeSupport(state, context);
+  return state;
+}
+
 function supportMinutes(state: GameState, minutes: number): void {
   for (let i = 0; i < minutes; i++) { state.facilityTick++; advanceLevelThreeSupport(state, context); advanceEmployeeMovement(state, context); }
 }
@@ -237,11 +248,11 @@ describe("Gym: one shared break policy, contacts, payroll and cooldown", () => {
     const adult = createLevelFiveStateQaState("support", context).encounters[patientId]!;
     adult.checkInStatus = "awaiting_staff"; state.encounters[adult.id] = adult;
     supportMinutes(state, 1);
-    expect(employee.facilityTask).toBeNull(); expect(employee.morale).toBe(before); expect(employee.lastBreakAtFacilityTick).toBeNull();
+    expect(employee.facilityTask).toBeNull(); expect(employee.morale).toBe(before); expect(employee.lastBreakAtFacilityTick).toBe(state.facilityTick);
   });
   it.each(levels)("uses a real route, earns +5..+13 at tier %s and does not replay after load", tier => {
     let state = gymFixture(tier); const task = state.employees[0]!.facilityTask!, baseline = state.employees[0]!.morale;
-    expect(task).toMatchObject({ kind: "take_break", seatId: "benchSeat", workMinutesRemaining: 30, roomUpgradeBreakBenefit: { roomDefinitionId: "room.staff_gym", upgradeLevel: tier, moraleGain: 5 + (tier - 1) * 2 } });
+    expect(task).toMatchObject({ kind: "take_break", seatId: "benchSeat", workMinutesRemaining: 15, roomUpgradeBreakBenefit: { roomDefinitionId: "room.staff_gym", upgradeLevel: tier, moraleGain: 5 + (tier - 1) * 2 } });
     expect(state.employees[0]!.path.at(-1)).toEqual(getLevelFiveSupportTarget(gym(state), "benchSeat"));
     supportMinutes(state, 2); state = reload(state); gym(state).upgradeLevel = 5;
     for (let n = 0; n < 100 && state.employees[0]!.facilityTask; n++) supportMinutes(state, 1);
@@ -251,7 +262,7 @@ describe("Gym: one shared break policy, contacts, payroll and cooldown", () => {
     expect(state.employees[0]!.morale).toBe(baseline + 5 + (tier - 1) * 2);
     expect(state.employees[0]!.lastBreakAtFacilityTick).toBe(completedAt);
   });
-  it("does not offer an ordinary break before the same 240-minute cooldown and leaves its seven seats intact", () => {
+  it("does not offer an ordinary break before the same 480-minute cooldown and leaves its seven seats intact", () => {
     let state = gymFixture(1); supportMinutes(state, 100);
     const completed = state.employees[0]!.lastBreakAtFacilityTick!;
     state = gameReducer(state, { type: "PLACE_ROOM", operationId: "m3.break.room", roomId: "room.m3.break", roomDefinitionId: "room.staff_break", x: 14, y: 18 }, context);
@@ -260,13 +271,13 @@ describe("Gym: one shared break policy, contacts, payroll and cooldown", () => {
     state.rooms.push({ id: "room.m3.hall.link", roomDefinitionId: "room.hallway", x: 22, y: 21, orientation: 0, doorSide: null, upgradeLevel: 1 });
     state = gameReducer(state, { type: "PLACE_DOOR", operationId: "m3.break.door", doorId: "door.m3.break", roomId: "room.m3.break", side: "south", offset: 2 }, context);
     state.doors = state.doors.filter(door => door.roomId !== gym(state).id);
-    supportMinutes(state, Math.max(0, completed + 239 - state.facilityTick));
+    supportMinutes(state, Math.max(0, completed + 479 - state.facilityTick));
     expect(state.employees[0]!.facilityTask).toBeNull();
     supportMinutes(state, 1);
     expect(state.employees[0]!.facilityTask).toMatchObject({ kind: "take_break", targetId: "room.m3.break", roomUpgradeBreakBenefit: { baselineMoraleGain: 5 } });
   });
   it("shares two distinct contacts, cancels lost access without morale/cooldown and cannot duplicate claims on reload", () => {
-    let state = createLevelFiveStateQaState("support", context);
+    let state = twoGymContacts();
     expect(state.employees.map(employee => employee.facilityTask?.seatId)).toEqual(["benchSeat", "stretchSpot"]);
     const baseline = state.employees.map(employee => employee.morale);
     state.doors = state.doors.filter(door => door.roomId !== gym(state).id);
@@ -275,7 +286,7 @@ describe("Gym: one shared break policy, contacts, payroll and cooldown", () => {
     expect(state.employees.every(employee => employee.lastBreakAtFacilityTick === null && employee.facilityTask === null)).toBe(true);
   });
   it("rejects duplicate gym contacts, altered frozen gains and replayable completion tasks on reload", () => {
-    const state = createLevelFiveStateQaState("support", context), raw = JSON.parse(serializeGameState(state));
+    const state = twoGymContacts(), raw = JSON.parse(serializeGameState(state));
     raw.employees[1].facilityTask.seatId = raw.employees[0].facilityTask.seatId;
     raw.employees[1].path = raw.employees[0].path;
     expect(() => deserializeGameState(JSON.stringify(raw), context)).toThrow(/gym break reservation/);

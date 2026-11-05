@@ -56,11 +56,11 @@ const ROOM_BUILD_TYPES: ReadonlyArray<
   ["room.training", "support", "Lets you train employees."],
   ["room.coffee_kiosk", "support", "Daily coffee lifts staff morale."],
   ["room.maintenance_workshop", "support", "Home base for repairs."],
-  ["room.staff_break", "support", "Staff rest here between tasks."],
+  ["room.staff_break", "support", `Staff below ${PROTOTYPE_BALANCE_RELEASE.environment.levelThreeSupport.breakHighMoraleThreshold} morale take ${PROTOTYPE_BALANCE_RELEASE.environment.levelThreeSupport.breakDurationMinutes}-minute breaks for +${PROTOTYPE_BALANCE_RELEASE.environment.levelThreeSupport.breakMoraleGain} morale. At 90-99 morale the cooldown doubles to ${PROTOTYPE_BALANCE_RELEASE.environment.levelThreeSupport.breakCooldownMinutes * PROTOTYPE_BALANCE_RELEASE.environment.levelThreeSupport.breakHighMoraleCooldownMultiplier} minutes; at 100 staff skip breaks. Care interrupts breaks; the usual ${PROTOTYPE_BALANCE_RELEASE.environment.levelThreeSupport.breakCooldownMinutes}-minute cooldown also covers interruptions. All staff gain +${PROTOTYPE_BALANCE_RELEASE.environment.levelThreeSupport.staffRoomMoraleBonusPerDay} morale per operating day, plus +${PROTOTYPE_BALANCE_RELEASE.environment.levelThreeSupport.staffRoomMoraleBonusPerUpgrade} per upgrade, from the best operational Break Room or gym.`],
   ["room.surgeon_office", "support", "Quality reviews happen here."],
   ["room.founder_office", "support", `Ownership gives every employee +${LEVEL_FIVE_SUPPORT_TUNING.founderOwnershipMorale} morale, plus +2 per upgrade. Five appearance tiers.`],
   ["room.executive_office", "support", "One Executive home/desk. Daily seated management takes 30/28.5/27/25.5/24 raw minutes, quoted 30/29/27/26/24 at office tiers 1–5. Training strengthens morale, comfort, preparation and suppliers; office upgrades shorten only the round."],
-  ["room.staff_gym", "support", `Completed ${PROTOTYPE_BALANCE_RELEASE.environment.levelThreeSupport.breakDurationMinutes}-minute gym breaks give +${LEVEL_FIVE_SUPPORT_TUNING.gymMorale} morale, plus +2 per upgrade. Shares the ${PROTOTYPE_BALANCE_RELEASE.environment.levelThreeSupport.breakCooldownMinutes}-minute break cooldown.`],
+  ["room.staff_gym", "support", `Staff below ${PROTOTYPE_BALANCE_RELEASE.environment.levelThreeSupport.breakHighMoraleThreshold} morale take ${PROTOTYPE_BALANCE_RELEASE.environment.levelThreeSupport.breakDurationMinutes}-minute gym breaks for +${LEVEL_FIVE_SUPPORT_TUNING.gymMorale} morale, plus +2 per upgrade. At 90-99 morale the cooldown doubles to ${PROTOTYPE_BALANCE_RELEASE.environment.levelThreeSupport.breakCooldownMinutes * PROTOTYPE_BALANCE_RELEASE.environment.levelThreeSupport.breakHighMoraleCooldownMultiplier} minutes; at 100 staff skip breaks. Care interrupts breaks; shares the usual ${PROTOTYPE_BALANCE_RELEASE.environment.levelThreeSupport.breakCooldownMinutes}-minute break cooldown, including interruptions. All staff gain +${PROTOTYPE_BALANCE_RELEASE.environment.levelThreeSupport.staffRoomMoraleBonusPerDay} daily morale, plus +${PROTOTYPE_BALANCE_RELEASE.environment.levelThreeSupport.staffRoomMoraleBonusPerUpgrade} per upgrade, from the best operational Break Room or gym.`],
   ["room.indoor_garden", "patient", `Adult visitors earn +${LEVEL_FIVE_SUPPORT_TUNING.gardenSatisfaction} satisfaction after a ${LEVEL_FIVE_SUPPORT_TUNING.gardenRestMinutes}-minute rest, plus +2 per upgrade, once per visit. Care takes priority; pediatric families keep their paired flow.`],
   ["room.glp1_telehealth_suite", "services", "Remote GLP-1 weight-management visits."],
   ["room.pharmacy", "services", "Pharmacy sales to patients."],
@@ -178,7 +178,12 @@ export function describeRoomUpgradeBenefit(input: {
   const next = atMaximum ? null : getRoomUpgradeLevelBenefit(roomDefinitionId, upgradeLevel + 1);
   const supportBase = roomDefinitionId === "room.founder_office" ? LEVEL_FIVE_SUPPORT_TUNING.founderOwnershipMorale
     : roomDefinitionId === "room.indoor_garden" ? LEVEL_FIVE_SUPPORT_TUNING.gardenSatisfaction
-    : roomDefinitionId === "room.staff_gym" ? LEVEL_FIVE_SUPPORT_TUNING.gymMorale : 0;
+    : roomDefinitionId === "room.staff_gym" ? LEVEL_FIVE_SUPPORT_TUNING.gymMorale
+    : roomDefinitionId === "room.staff_break" ? PROTOTYPE_BALANCE_RELEASE.environment.levelThreeSupport.breakMoraleGain : 0;
+  const staffRoom = roomDefinitionId === "room.staff_break" || roomDefinitionId === "room.staff_gym";
+  const totalLabel = (effect: RoomUpgradeEffectKind, amount: number, tier: number) => staffRoom
+    ? `+${amount + supportBase} morale per completed break; +${PROTOTYPE_BALANCE_RELEASE.environment.levelThreeSupport.staffRoomMoraleBonusPerDay + getRoomUpgradePurchaseCount(tier) * PROTOTYPE_BALANCE_RELEASE.environment.levelThreeSupport.staffRoomMoraleBonusPerUpgrade} daily morale (best operational staff room)`
+    : roomUpgradeTotalLabel(effect, amount + supportBase);
   const upkeepLabel =
     upkeepPerLevel > 0
       ? atMaximum
@@ -187,8 +192,8 @@ export function describeRoomUpgradeBenefit(input: {
       : undefined;
   return {
     perUpgradeLabel,
-    currentLabel: roomDefinitionId === "room.executive_office" ? `${getExecutiveOfficeDuration(upgradeLevel).rawMinutes} raw → ${getExecutiveOfficeDuration(upgradeLevel).minutes} min per daily round` : roomUpgradeTotalLabel(current.effectKind, current.totalAmount + supportBase),
-    ...(next ? { nextLabel: roomDefinitionId === "room.executive_office" ? `${getExecutiveOfficeDuration(upgradeLevel + 1).rawMinutes} raw → ${getExecutiveOfficeDuration(upgradeLevel + 1).minutes} min per daily round` : roomUpgradeTotalLabel(next.effectKind, next.totalAmount + supportBase) } : {}),
+    currentLabel: roomDefinitionId === "room.executive_office" ? `${getExecutiveOfficeDuration(upgradeLevel).rawMinutes} raw → ${getExecutiveOfficeDuration(upgradeLevel).minutes} min per daily round` : totalLabel(current.effectKind, current.totalAmount, upgradeLevel),
+    ...(next ? { nextLabel: roomDefinitionId === "room.executive_office" ? `${getExecutiveOfficeDuration(upgradeLevel + 1).rawMinutes} raw → ${getExecutiveOfficeDuration(upgradeLevel + 1).minutes} min per daily round` : totalLabel(next.effectKind, next.totalAmount, upgradeLevel + 1) } : {}),
     ...(upkeepLabel ? { upkeepLabel } : {}),
     ...(roomDefinitionId === "room.gift_shop" ? { note: "Gift sales: each purchase adds 6% of base gross. Stock cost stays fixed unless accepted Executive supplier terms reduce it." }
       : supportBase || roomDefinitionId === "room.executive_office" ? { note: roomBuildPurpose(roomDefinitionId) } : {}),
