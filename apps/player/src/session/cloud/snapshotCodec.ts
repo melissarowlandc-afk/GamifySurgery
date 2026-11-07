@@ -1,13 +1,16 @@
 import { createGameEvidenceCheckpoint, importGameEvidence, serializeGameState, type GameState } from "@gamify-surgery/game-domain";
 import { assertCloudRevision, CLOUD_CAPACITY_LIMITS, readCloudCampaignMetadata, type CloudCampaignMetadata } from "./codec";
 import { compressCloudText, decompressCloudText, type CloudCompressedText } from "./codecCompression";
-import { CloudCodecError, codecObject, logicalJsonText, parseCodecJson, sameLogicalJson, sha256Utf8, utf8Bytes } from "./codecJson";
+import { CloudCodecError, codecObject, logicalJsonText, parseCodecJson, sha256Utf8, utf8Bytes, type CodecJson } from "./codecJson";
+import { equalParsedJson } from "./codecWorkerJsonEqual";
 import { assertMappedGameFields } from "./codecOwnership";
 import type { CloudPackedEvidence } from "./codecEvidence";
 import type { CloudConfirmed, SnapshotLineage } from "./transport";
 
 export const SNAPSHOT_BASELINE = "snapshot.v1";
-const canonical = (value: unknown) => logicalJsonText(parseCodecJson(JSON.stringify(value)));
+// Every caller below supplies already parsed/checked JSON. Re-parsing an entire
+// checked envelope kept another full object and text tree alive during opening.
+const canonical = (value: unknown) => logicalJsonText(value as CodecJson);
 let empty: Promise<CloudPackedEvidence> | undefined;
 /** Compatibility shape inside old cache/journal interfaces only. No header or
  * evidence is sent by protocol 4, and there are never any evidence pages. */
@@ -23,7 +26,9 @@ function currentSnapshotState(game: ReturnType<typeof codecObject>) {
   try {
     const checkpoint = createGameEvidenceCheckpoint(game as unknown as GameState);
     const state = importGameEvidence(checkpoint.snapshot, checkpoint.evidence);
-    if (!sameLogicalJson(game, parseCodecJson(serializeGameState(state)))) throw new CloudCodecError("domain_fidelity", "Loading this snapshot would alter saved progress.");
+    // importGameEvidence resolves plain JSON from the checked archive. Compare
+    // it directly: another serialize/strict-parse duplicated the entire clinic.
+    if (!equalParsedJson(game, state as unknown as CodecJson)) throw new CloudCodecError("domain_fidelity", "Loading this snapshot would alter saved progress.");
     return { state, checkpoint };
   } catch (error) {
     if (error instanceof CloudCodecError) throw error;
@@ -63,7 +68,7 @@ export async function loadCloudSnapshot(input: { snapshot: CloudCompressedText; 
   if (envelope.cloudFormatVersion !== 3 || Object.keys(envelope).length !== 4 || canonical(envelope) !== text)
     throw new CloudCodecError("unsupported_cloud_format", "Unsupported current-state snapshot.");
   const campaign = readCloudCampaignMetadata(envelope.campaign!), lineage = readSnapshotLineage(envelope.lineage);
-  if (input.lineage && canonical(lineage) !== canonical(input.lineage)) throw new CloudCodecError("snapshot_lineage", "Snapshot metadata differs from its checked payload.");
+  if (input.lineage && canonical(lineage) !== canonical(readSnapshotLineage(input.lineage))) throw new CloudCodecError("snapshot_lineage", "Snapshot metadata differs from its checked payload.");
   const game = codecObject(envelope.gameState!, "Current clinic"); assertMappedGameFields(game);
   if (campaign.campaignId !== input.expectedCampaignId || game.campaignId !== campaign.campaignId)
     throw new CloudCodecError("campaign_identity", "Snapshot belongs to another campaign.");

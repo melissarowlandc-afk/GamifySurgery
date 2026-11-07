@@ -38,8 +38,14 @@ describe("M2 native Level 5 approvals and asset registration", () => {
       expect(selectFacilityAssets({ mobile: false, facilityLevel, builtRoomIds: [] })).toBe(DESKTOP_FACILITY_ASSETS);
       expect(selectFacilityAssets({ mobile: true, facilityLevel, builtRoomIds: [] }).some(a => a.id.startsWith("level5:"))).toBe(false);
     }
-    for (const mobile of [false, true]) {
-      const selected = selectFacilityAssets({ mobile, facilityLevel: 5, builtRoomIds: [] });
+    expect(selectFacilityAssets({ mobile: true, facilityLevel: 5, builtRoomIds: [] }).some(a => a.id.startsWith("level5:"))).toBe(false);
+    const level5RoomIds = [...APPROVED_LEVEL5_ROOM_DATA.keys()];
+    for (const input of [
+      { mobile: false, builtRoomIds: [] },
+      { mobile: true, builtRoomIds: level5RoomIds },
+      { mobile: true, builtRoomIds: [], previewRoomIds: level5RoomIds },
+    ]) {
+      const selected = selectFacilityAssets({ ...input, facilityLevel: 5 });
       expect(selected).toEqual(expect.arrayContaining([...APPROVED_LEVEL5_BITMAP_ASSETS]));
     }
     for (const room of APPROVED_LEVEL5_ROOM_DATA.values()) {

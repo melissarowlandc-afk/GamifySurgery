@@ -1,4 +1,5 @@
 import { problemDiagnostics, technicalError } from "../../diagnostics/problemDiagnostics";
+import { beginPhoneCloudOpening } from "../../mobile/performance/phoneMemoryPolicy";
 import { CloudCodecError } from "./codecJson";
 import { handleCloudCodecMessage, unpackCodecFailure, type CloudCodecExecutor, type CloudCodecMessage, type CloudCodecReply, type CloudCodecResults, type CloudCodecTask } from "./codecTasks";
 
@@ -27,6 +28,7 @@ export class CloudCodecWorker implements CloudCodecExecutor {
   private lastResponse: number | null = null;
   private lastError: string | null = null;
   private restarts = 0;
+  private idleReleases = 0;
   private unregister: (() => void) | null = null;
   private readonly pending = new Map<number, { task: CloudCodecTask; posted: number; started: number | null; retries: number;
     resolve(value: unknown): void; reject(error: unknown): void; timer: ReturnType<typeof setTimeout> | null }>();
@@ -36,11 +38,12 @@ export class CloudCodecWorker implements CloudCodecExecutor {
     private readonly startupTimeoutMs = CLOUD_WORKER_STARTUP_TIMEOUT_MS,
     private readonly taskTimeoutMs = CLOUD_WORKER_TASK_TIMEOUT_MS) {}
 
-  get health() { return { alive: this.worker !== null, ready: this.ready, restarts: this.restarts, lastError: this.lastError,
+  get health() { return { alive: this.worker !== null, ready: this.ready, restarts: this.restarts, idleReleases: this.idleReleases, lastError: this.lastError,
     responseAge: this.lastResponse === null ? null : Date.now() - this.lastResponse,
     inFlight: [...this.pending.values()].slice(0, 12).map(p => [p.started === null ? `queued:${p.task.kind}` : p.task.kind,
       Date.now() - (p.started ?? p.posted), p.retries]) }; }
   run<T extends CloudCodecTask>(task: T): Promise<CloudCodecResults[T["kind"]]> {
+    if (["verify", "hydrate", "inspectCopy", "journalBind", "snapshotImport", "snapshotConvert"].includes(task.kind)) beginPhoneCloudOpening();
     const createWorker = this.createWorker;
     if (import.meta.env?.DEV || import.meta.env?.MODE === "test" || !createWorker) {
       try { task = structuredClone(task); }
@@ -144,6 +147,19 @@ export class CloudCodecWorker implements CloudCodecExecutor {
       try { this.ensureWorker(); for (const id of this.pending.keys()) this.post(id); }
       catch (nextError) { this.fail(nextError, false); }
     }
+  }
+  /** Drop only derived caches after every posted task has replied. Durable IDB
+   * and returned snapshots belong to the caller; no accepted work is cancelled. */
+  releaseIdle(): boolean {
+    if (this.pending.size) return false;
+    if (!this.worker) return true;
+    const worker = this.worker; this.worker = null; this.ready = false;
+    worker.onmessage = null; worker.onerror = null; worker.onmessageerror = null; worker.terminate();
+    if (this.startupTimer !== null) clearTimeout(this.startupTimer);
+    if (this.dequeueTimer !== null) clearTimeout(this.dequeueTimer);
+    this.startupTimer = null; this.dequeueTimer = null; this.idleReleases++;
+    problemDiagnostics.event("phone-memory", "codec-idle-release");
+    return true;
   }
   dispose(): void { this.fail(undefined, false); this.unregister?.(); this.unregister = null; }
 }

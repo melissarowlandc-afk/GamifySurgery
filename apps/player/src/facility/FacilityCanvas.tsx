@@ -14,6 +14,7 @@ import type { MobileMapSelection } from "../mobile/map/selection";
 import type { MobileBuildMapState } from "../mobile/build/types";
 import { MobileMapPresentationPolicy, mobileCanvasSize } from "../mobile/performance/presentationPolicy";
 import { PhoneFrameBudget, PHONE_ACTIVE_FPS } from "../mobile/performance/frameBudget";
+import { phoneMemoryProfile, markPhonePlaying } from "../mobile/performance/phoneMemoryPolicy";
 
 import {
   FacilityScene,
@@ -118,6 +119,7 @@ export function FacilityCanvas({
   if (mobileInput === true && !mobilePolicy.current) mobilePolicy.current = new MobileMapPresentationPolicy();
   if (mobileInput === true) mobilePolicy.current!.setCovered(mobileMapCovered === true);
   const gameRef = useRef<Phaser.Game | null>(null);
+  const [canvasNeeded, setCanvasNeeded] = useState(mobileInput !== true || mobileMapCovered !== true);
   const phoneFrames = useRef<PhoneFrameBudget | null>(null);
   const bridgeRef = useRef<FacilitySceneBridge>({
     viewModel,
@@ -151,6 +153,8 @@ export function FacilityCanvas({
   bridgeRef.current.onAlertPinPositionsChange = setAlertPinPositions;
 
   useEffect(() => { phoneFrames.current?.update(); });
+  useEffect(() => { if (mobileInput === true) markPhonePlaying(); }, [mobileInput]);
+  useEffect(() => { if (mobileInput !== true || mobileMapCovered !== true) setCanvasNeeded(true); }, [mobileInput, mobileMapCovered]);
 
   useEffect(() => {
     if (mobileInput !== true) return;
@@ -166,6 +170,7 @@ export function FacilityCanvas({
   }, [mobileInput]);
 
   useEffect(() => {
+    if (!canvasNeeded) return;
     const host = hostRef.current;
     if (!host) {
       return;
@@ -180,6 +185,7 @@ export function FacilityCanvas({
       canvas.remove();
     });
 
+    if (bridgeRef.current.mobileInput === true) phoneMemoryProfile(true);
     const scene = new FacilityScene(bridgeRef.current);
     const width = bridgeRef.current.mobileInput === true ? mobileCanvasSize(host.clientWidth, host.clientHeight).width : Math.max(1, Math.floor(host.clientWidth));
     const height = bridgeRef.current.mobileInput === true ? mobileCanvasSize(host.clientWidth, host.clientHeight).height : Math.max(1, Math.floor(host.clientHeight));
@@ -340,7 +346,7 @@ export function FacilityCanvas({
         ownedCanvas.remove();
       }
     };
-  }, []);
+  }, [canvasNeeded]);
 
   return (
     <div
@@ -352,6 +358,7 @@ export function FacilityCanvas({
         ariaLabel ?? `Top-down ${viewModel.facilityTitle} facility view`
       }
       data-testid="facility-canvas"
+      data-phone-memory-mode={mobileInput === true ? phoneMemoryProfile().mode : undefined}
     >{mobileInput === true && (mobileMapCovered || mobilePageHidden) ? null : <ClinicMapPins pins={viewModel.alertPins ?? []} positions={alertPinPositions} onAction={onAlertPinAction} />}</div>
   );
 }

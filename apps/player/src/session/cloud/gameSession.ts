@@ -1,4 +1,5 @@
 import { problemDiagnostics, showCommandProblem } from "../../diagnostics/problemDiagnostics";
+import { phoneMemoryProfile } from "../../mobile/performance/phoneMemoryPolicy";
 import { PROTOTYPE_DOMAIN_CONTEXT, createGameEvidenceCheckpoint, prepareGameEvidenceCheckpoint, prepareFacilityPathfinding, getRoomDefinition, applyGameEvidenceCommand, applyGameEvidenceBuildUndo, gameEvidenceDelta, type DomainContext, type GameCommand, type GameEvidenceCheckpoint, type GameEvidenceDelta, type GameState } from "@gamify-surgery/game-domain";
 import { isFirstScoredAnswer } from "../../playtime/scoredQuestionUsage";
 import type { QuestionUsageReceipt } from "../../playtime/usageTypes";
@@ -90,9 +91,9 @@ export class CloudGameSession {
   private legacyBaseSnapshot: CloudCompressedText | undefined;
   private readonly unsubscribeCheckpoint: () => void;
   private constructor(readonly coordinator: CloudSyncCoordinator, loaded: VerifiedSessionSnapshot, parentSnapshotHashes: readonly string[],
-    private readonly switchTo?: (campaignId: string) => Promise<void>, private readonly automaticReconnect?: (checked: boolean) => Promise<boolean>) {
+    private readonly switchTo?: (campaignId: string) => Promise<void>, private readonly automaticReconnect?: (checked: boolean) => Promise<boolean>, prepareSynchronous = true) {
     this.checkpoint = freezeJournalCheckpoint(loaded.checkpoint); this.current = loaded.state; this.campaign = loaded.campaign; this.source = loaded.source;
-    if (loaded.snapshotLineage) {
+    if (loaded.snapshotLineage && prepareSynchronous) {
       prepareGameEvidenceCheckpoint(this.checkpoint);
       prepareFacilityPathfinding(this.current.rooms, this.current.doors, id => getRoomDefinition(id));
     }
@@ -143,9 +144,10 @@ export class CloudGameSession {
     const playable = loaded.snapshotLineage && coordinator.view.canExecute && !coordinator.hasPriorRecovery
       ? completeSnapshotLearning(loaded.state) : loaded.state;
     const adapted = playable !== loaded.state;
+    const useEngine = options.operational !== false && (typeof Worker !== "undefined" || Boolean(options.operational?.createPort));
     const session = new CloudGameSession(coordinator, adapted ? { ...loaded, state: playable,
       checkpoint: createGameEvidenceCheckpoint(playable) } : loaded,
-      [openedSnapshot.uncompressedSha256, confirmed.snapshot.uncompressedSha256], switchTo, automaticReconnect);
+      [openedSnapshot.uncompressedSha256, confirmed.snapshot.uncompressedSha256], switchTo, automaticReconnect, !useEngine);
     const journal = coordinator.journal;
     if (journal && options.journal !== false && !coordinator.hasPriorRecovery && coordinator.view.canExecute) {
       try {
@@ -170,9 +172,13 @@ export class CloudGameSession {
       session.changeVersion++; session.dirty = true; session.queueLocal(); coordinator.noteLocalChange();
       problemDiagnostics.event("gameSession", "learning-catalog-adapted");
     }
-    if (options.operational !== false && (typeof Worker !== "undefined" || options.operational?.createPort)) {
+    if (useEngine) {
+      // In recovery mode do not overlap the just-used codec realm and engine
+      // startup heaps. IndexedDB and the verified returned seed remain intact.
+      if (phoneMemoryProfile().mode === "reduced") coordinator.codec.releaseIdle?.();
       session.engine = await OperationalSessionEngine.create(session.checkpoint, session.current, PROTOTYPE_DOMAIN_CONTEXT, Boolean(session.snapshotLineage),
-        { ...options.operational, diagnose: code => { problemDiagnostics.event("operational-engine", code); options.operational && options.operational.diagnose?.(code); } });
+        { ...options.operational, adoptSharedSeed: true, useBundledContext: true,
+          diagnose: code => { problemDiagnostics.event("operational-engine", code); options.operational && options.operational.diagnose?.(code); } });
     } else if (session.snapshotLineage) prepareSnapshotTick(session.checkpoint, session.current.paused, Date.now());
     return session;
   }

@@ -37,3 +37,14 @@ it("keeps a live identity's other walk/idle poses warm instead of repeatedly dec
   budget.trim(new Set(), key => removed.push(key), new Set());
   expect(removed).toEqual(["idle", "walk-a", "walk-b"]);
 });
+
+it("reduced mode bounds unused live-family poses while pinning displayed/loading sources", () => {
+  const budget = new CharacterTextureBudget(8 * 1024 * 1024, 32, false), removed: string[] = [];
+  for (let i = 0; i < 1054; i++) {
+    budget.register(`pose.${i}`, 160, 320); budget.touch(`pose.${i}`, "live.identity");
+    budget.trim(new Set([`pose.${i}`, "pose.0"]), key => removed.push(key), new Set(["live.identity"]));
+    expect(budget.size).toBeLessThanOrEqual(32);
+  }
+  expect(budget.retainedBytes).toBe(32 * 160 * 320 * 4);
+  expect(removed).not.toContain("pose.0"); expect(removed).toContain("pose.1");
+});

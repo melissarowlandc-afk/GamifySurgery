@@ -10,7 +10,7 @@ export interface OperationalViewRequest { revision: number; args: OperationalVie
 export interface OperationalViewReply { revision: number; asOfRealMs: number; patch?: OperationalStatePatch; computeMs: number; diffMs: number }
 
 export type OperationalEngineRequest = { id: number } & (
-  | { kind: "initialize"; checkpoint: GameEvidenceCheckpoint; visibleState: GameState; context?: DomainContext; atRealMs: number; projection?: OperationalViewRequest; snapshotOnly?: boolean }
+  | { kind: "initialize"; checkpoint: GameEvidenceCheckpoint; visibleState: GameState; context?: DomainContext; contextFlags?: OperationalContextFlags; atRealMs: number; projection?: OperationalViewRequest; snapshotOnly?: boolean }
   | { kind: "command"; expectedVersion: number; command: GameCommand; context?: DomainContext; contextFlags?: OperationalContextFlags; projection?: OperationalViewRequest }
   | { kind: "undo"; expectedVersion: number; target: GameState; operationId: string; projection?: OperationalViewRequest }
   | { kind: "project"; expectedVersion: number; projection: OperationalViewRequest }

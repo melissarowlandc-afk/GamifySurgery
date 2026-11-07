@@ -9,6 +9,10 @@ import { CLOUD_WORKER_STARTUP_TIMEOUT_MS } from "./codecWorker";
 type CommandEntry = { command: GameCommand; context: DomainContext };
 type Entry = CommandEntry | { target: GameState; operationId: string };
 export interface OperationalSessionOptions {
+  /** Only private app-session hydration may adopt/freeze the shared seed. */
+  adoptSharedSeed?: boolean;
+  /** App and worker load the same released catalogues; explicit contexts still travel. */
+  useBundledContext?: boolean;
   createPort?: () => OperationalEnginePort;
   timeoutMs?: number;
   startupTimeoutMs?: number;
@@ -59,6 +63,7 @@ export class OperationalSessionEngine {
     const checkpoint = this.fallback ?? this.baseline;
     try {
       const client = await OperationalEngineClient.create({ checkpoint, visibleState: this.visible, context: this.context,
+        adoptSharedSeed: this.options.adoptSharedSeed, useBundledContext: this.options.useBundledContext,
         atRealMs: this.now(), snapshotOnly: this.snapshotOnly,
         projection: { revision: 0, args: this.args, followOpenChart: true } }, this.options.createPort, this.options.timeoutMs ?? 5_000, 128,
         this.options.startupTimeoutMs ?? CLOUD_WORKER_STARTUP_TIMEOUT_MS);

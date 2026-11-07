@@ -4,6 +4,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { createInitialGameState, importGameEvidence, PROTOTYPE_DOMAIN_CONTEXT, serializeGameState, type GameState } from "@gamify-surgery/game-domain";
 import { AuthAccountContext } from "../../auth/AuthAccountContext";
 import { cleanupPhoneTests, phoneTestDom } from "../../mobile/screenTestUtils";
+import { PHONE_MEMORY_KEY } from "../../mobile/performance/phoneMemoryPolicy";
 import { scoredPatientFixture } from "../../playtime/usageTestFixtures";
 import { createFreshProfile } from "../prototypeStorage";
 import { usePrototypeSession, type PrototypeSession } from "../usePrototypeSession";
@@ -191,7 +192,7 @@ describe("cloud commands through the shared domain evidence boundary", () => {
     expect(checkpoint).toHaveBeenCalledExactlyOnceWith(event === "visibilitychange" ? "hidden" : "pagehide");
     expect(pause).not.toHaveBeenCalled(); expect(f.session.state.paused).toBe(false); expect(f.session.canExecute).toBe(true);
     expect(f.server.operationCount("account-a")).toBe(1);
-    expect(env.browser.localStorage.setItem).not.toHaveBeenCalled();
+    expect(vi.mocked(env.browser.localStorage.setItem).mock.calls.filter(([key]) => key !== PHONE_MEMORY_KEY)).toEqual([]);
   });
   it("restarts the real facility clock when iOS becomes visible without a visibility/focus event", async () => {
     const initial = createInitialGameState(); initial.paused = false;
@@ -271,7 +272,7 @@ describe("cloud commands through the shared domain evidence boundary", () => {
     expect(current.systemNotices.some(notice => notice.targetType === "save")).toBe(false);
     await act(async () => { current.undoBuildAction(); await f.session.durable(); await f.coordinator.checkpoint("purchase"); });
     expect(serializeGameState(current.state)).toBe(before);
-    expect(writes).not.toHaveBeenCalled();
+    expect(writes.mock.calls.filter(([key]) => key !== PHONE_MEMORY_KEY)).toEqual([]);
   });
   it("blocks actual commands/ticks in read-only, sync pause and revoked states", async () => {
     const f = await fixture(), before = serializeGameState(f.session.state);

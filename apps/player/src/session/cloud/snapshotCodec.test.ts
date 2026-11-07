@@ -1,10 +1,25 @@
 import { expect, it } from "vitest";
 import legacy from "../../../../../tests/fixtures/level-four-legacy-pre-m3.json";
-import { createInitialGameState, serializeGameState } from "@gamify-surgery/game-domain";
+import { createGameEvidenceCheckpoint, createInitialGameState, importGameEvidence, serializeGameState } from "@gamify-surgery/game-domain";
+import { createHash } from "node:crypto";
 import { prepareSnapshotImport, loadCloudSnapshot, encodeCloudSnapshot } from "./snapshotCodec";
 import { prepareCloudEvidenceImport, loadCloudEvidenceCheckpoint } from "./codecEvidence";
 import { codecTestCampaign } from "./codecTestSupport";
 import { compressCloudText, decompressCloudText } from "./codecCompression";
+import { logicalJsonText, parseCodecJson } from "./codecJson";
+
+it("keeps byte-exact canonical snapshot output while avoiding repeated parsing of checked objects", async () => {
+  const state = createInitialGameState(), campaign = codecTestCampaign(serializeGameState(state));
+  const lineage = { branchId: "public.memory.canonical", sequence: 7, parents: ["a".repeat(64)] };
+  const expected = logicalJsonText(parseCodecJson(JSON.stringify({ cloudFormatVersion: 3, campaign, lineage, gameState: JSON.parse(serializeGameState(state)) })));
+  const encoded = await encodeCloudSnapshot({ state, campaign, lineage });
+  expect(await decompressCloudText(encoded.snapshot)).toBe(expected);
+  const restored = await loadCloudSnapshot({ snapshot: encoded.snapshot, revision: "1", expectedRevision: "1", expectedCampaignId: state.campaignId });
+  const control = createGameEvidenceCheckpoint(JSON.parse(expected).gameState), oldState = importGameEvidence(control.snapshot, control.evidence);
+  const hash = (value: unknown) => createHash("sha256").update(JSON.stringify(value)).digest("hex");
+  expect(hash(restored.state)).toBe(hash(oldState));
+  expect(restored.state).toEqual(state);
+});
 
 it.each([8, 9] as const)("opens an exact older snapshot when the current question registry changes (schema %s)", async schemaVersion => {
   const state = createInitialGameState(), ids = Object.keys(state.learningHistories), absent = ids.at(-1)!;
@@ -48,6 +63,8 @@ it("checks scope, revision, canonical bytes, checksum and hash-bound lineage wit
   const text = serializeGameState(createInitialGameState()), campaign = codecTestCampaign(text);
   const encoded = await prepareSnapshotImport({ serializedState: text, campaign, branchId: "snapshot.integrity" });
   const input = { snapshot: encoded.snapshot, revision: "1", expectedRevision: "1", expectedCampaignId: campaign.campaignId };
+  const jsonLineage = { ...encoded.lineage, ignored: undefined };
+  expect((await loadCloudSnapshot({ ...input, lineage: jsonLineage })).snapshotLineage).toEqual(encoded.lineage);
   await expect(loadCloudSnapshot({ ...input, expectedRevision: "2" })).rejects.toMatchObject({ code: "revision_mismatch" });
   await expect(loadCloudSnapshot({ ...input, expectedCampaignId: "some.other.campaign" })).rejects.toMatchObject({ code: "campaign_identity" });
   await expect(loadCloudSnapshot({ ...input, lineage: { ...encoded.lineage, parents: ["0".repeat(64)] } })).rejects.toMatchObject({ code: "snapshot_lineage" });

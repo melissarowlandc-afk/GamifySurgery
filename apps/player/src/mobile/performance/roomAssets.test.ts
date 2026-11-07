@@ -18,23 +18,29 @@ describe("mobile facility art gating", () => {
     expect(DESKTOP_FACILITY_ASSETS).toEqual(original); expect(new Set(original.map(asset => asset.id)).size).toBe(199);
     for (const facilityLevel of [0, 4]) expect(selectFacilityAssets({ mobile: false, facilityLevel, builtRoomIds: [], previewRoomIds: ["room.mri"] })).toBe(DESKTOP_FACILITY_ASSETS);
   });
-  it("Level 0 loads environment/frontage/landscape plus built or unlocked room dependencies, withholding Level 4", () => {
+  it("loads environment/frontage/corridor plus built dependencies, withholding unlocked but unbuilt art", () => {
     const assets = selectFacilityAssets({ mobile: true, facilityLevel: 0, builtRoomIds: ["room.front_desk"] });
     expect(assets).toEqual(expect.arrayContaining([ENVIRONMENT_ATLAS_V1, LANDSCAPING_ATLAS_V1, ...Object.values(FRONTAGE_V2_ASSETS), ...mobileRoomAssets("room.front_desk")]));
     expect(ids(assets)).not.toEqual(ids(DESKTOP_FACILITY_ASSETS));
     expect(ids(assets)).not.toContain(mobileRoomAssets("room.mri").find(asset => asset.id.startsWith("level4:"))?.id);
-    for (const room of PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.roomDefinitions.filter(room => room.buildable && room.unlockFacilityLevel === 0))
-      expect(assets).toEqual(expect.arrayContaining([...mobileRoomAssets(room.id)]));
+    expect(assets).toEqual(expect.arrayContaining([...mobileRoomAssets("room.hallway")]));
+    expect(ids(assets)).not.toContain(mobileRoomAssets("room.mri").find(asset => asset.id.startsWith("level4:"))!.id);
   });
-  it("Level 4, first placement, preview and level-up each include their complete room dependencies", () => {
+  it("first placement and explicit preview load complete dependencies without loading every unlocked room on level-up", () => {
     const level4 = selectFacilityAssets({ mobile: true, facilityLevel: 4, builtRoomIds: [] });
-    for (const room of PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.roomDefinitions.filter(room => room.unlockFacilityLevel <= 4 && room.buildable))
-      expect(level4).toEqual(expect.arrayContaining([...mobileRoomAssets(room.id)]));
+    expect(level4).toEqual(selectFacilityAssets({ mobile: true, facilityLevel: 0, builtRoomIds: [] }));
     for (const key of ["builtRoomIds", "previewRoomIds"] as const) {
       const input = { mobile: true, facilityLevel: 0, builtRoomIds: [], [key]: ["room.mri"] };
       expect(selectFacilityAssets(input)).toEqual(expect.arrayContaining([...mobileRoomAssets("room.mri")]));
     }
     expect(level4.length).toBeLessThan(199);
+  });
+  it("keeps the large public Level4 blueprint below160MB of nominal decoded room sources", () => {
+    const builtRoomIds = ["room.front_desk", "room.hallway", "room.mri", "room.pediatric_waiting", "room.pediatric_examination", "room.wound_ostomy",
+      "room.examination", "room.waiting", "room.bathroom", "room.evs_closet", "room.maintenance_workshop", "room.staff_break", "room.coffee_kiosk"];
+    const assets = selectFacilityAssets({ mobile: true, facilityLevel: 4, builtRoomIds });
+    expect(assets.reduce((bytes, asset) => bytes + asset.nativeWidth * asset.nativeHeight * 4, 0)).toBeLessThan(160_000_000);
+    for (const definition of builtRoomIds) expect(assets).toEqual(expect.arrayContaining([...mobileRoomAssets(definition)]));
   });
   it("includes every approved draw and variant asset in each supported orientation, including borrowed decor crops", () => {
     for (const room of PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.roomDefinitions) {

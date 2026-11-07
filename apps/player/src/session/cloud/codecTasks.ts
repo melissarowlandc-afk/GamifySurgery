@@ -57,6 +57,8 @@ export interface CloudCodecResults {
 }
 export interface CloudCodecExecutor {
   run<T extends CloudCodecTask>(task: T): Promise<CloudCodecResults[T["kind"]]>;
+  /** Optional native-worker cache release; must refuse while any task is pending. */
+  releaseIdle?(): boolean;
 }
 
 async function verify(input: Parameters<typeof loadCloudEvidenceCheckpoint>[0]): Promise<CloudCodecResults["verify"]> {

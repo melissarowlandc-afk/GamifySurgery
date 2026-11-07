@@ -10,6 +10,11 @@ export interface CloudCompressedText {
 }
 export const CLOUD_COMPRESSION_LIMITS = Object.freeze({ compressedBytes: 6_000_000, decodedBytes: 6_000_000 });
 
+/** The transform can consume the owned bytes directly; Blob would copy them. */
+function byteStream(bytes: Uint8Array<ArrayBuffer>): ReadableStream<Uint8Array<ArrayBuffer>> {
+  return new ReadableStream({ start(controller) { controller.enqueue(bytes); controller.close(); } });
+}
+
 function base64(bytes: Uint8Array): string {
   let binary = "";
   for (let index = 0; index < bytes.length; index += 16_384) binary += String.fromCharCode(...bytes.subarray(index, index + 16_384));
@@ -19,7 +24,11 @@ function fromBase64(text: string, ceiling: number): Uint8Array<ArrayBuffer> {
   if (typeof text !== "string" || text.length > Math.ceil(ceiling / 3) * 4 || text.length % 4 !== 0 || !/^[A-Za-z0-9+/]*={0,2}$/.test(text)) {
     throw new CloudCodecError("compressed_shape", "Invalid or oversized compressed base64 text.");
   }
-  try { return Uint8Array.from(atob(text), character => character.charCodeAt(0)); }
+  try {
+    const binary = atob(text), bytes = new Uint8Array(binary.length);
+    for (let index = 0; index < binary.length; index++) bytes[index] = binary.charCodeAt(index);
+    return bytes;
+  }
   catch { throw new CloudCodecError("compressed_shape", "Invalid compressed base64 text."); }
 }
 
@@ -52,8 +61,8 @@ export async function compressCloudText(text: string, encoding: CloudCompression
   const uncompressedBytes = utf8Bytes(text);
   if (uncompressedBytes > CLOUD_COMPRESSION_LIMITS.decodedBytes) throw new CloudCodecError("decompression_size", "Decoded text exceeds the permitted byte limit.");
   const uncompressedSha256 = await sha256Utf8(text);
-  const input = new Uint8Array(new TextEncoder().encode(text));
-  const output = await boundedBytes(new Blob([input]).stream().pipeThrough(new CompressionStream(encoding)), CLOUD_COMPRESSION_LIMITS.compressedBytes);
+  const input = new TextEncoder().encode(text);
+  const output = await boundedBytes(byteStream(input).pipeThrough(new CompressionStream(encoding)), CLOUD_COMPRESSION_LIMITS.compressedBytes);
   const result = Object.freeze({ encoding, uncompressedSha256, uncompressedBytes, compressedBytes: output.byteLength, dataBase64: base64(output) });
   // Verify every emitted compressed object, rather than assuming a successful
   // compression operation establishes a durable/lossless write.
@@ -73,7 +82,7 @@ export async function decompressCloudText(value: CloudCompressedText, decodedCei
   if (input.byteLength !== value.compressedBytes) throw new CloudCodecError("compressed_size", "Compressed byte count does not match.");
   let decoded: Uint8Array<ArrayBuffer>;
   try {
-    decoded = await boundedBytes(new Blob([input]).stream().pipeThrough(new DecompressionStream(value.encoding)), Math.min(decodedCeiling, value.uncompressedBytes));
+    decoded = await boundedBytes(byteStream(input).pipeThrough(new DecompressionStream(value.encoding)), Math.min(decodedCeiling, value.uncompressedBytes));
   } catch (error) {
     if (error instanceof CloudCodecError) throw error;
     throw new CloudCodecError("decompression", "Compressed text could not be decoded losslessly.");

@@ -15,7 +15,7 @@ vi.mock("phaser", () => ({ default: { Scene: class {} } }));
 afterEach(async () => { await cleanupPhoneTests(); vi.restoreAllMocks(); });
 
 describe("mobile lazy art integration", () => {
-  it("loads only Level 0 at create, then missing preview and Level 4 assets; covered completions do no drawing", async () => {
+  it("loads built and preview art once without preloading unlocked rooms; covered completions do no drawing", async () => {
     vi.stubGlobal("Image", class {});
     const load = vi.spyOn(mobileBitmapCache, "load").mockResolvedValue({} as HTMLImageElement);
     const policy = new MobileMapPresentationPolicy(); policy.setCovered(true);
@@ -38,8 +38,9 @@ describe("mobile lazy art integration", () => {
     await vi.waitFor(() => expect(keys.size).toBe(preview.length));
     expect(load).toHaveBeenCalledTimes(preview.length);
     bridge.mobileFacilityLevel = 4; scene.ensureMobileAtlases();
-    const all = selectFacilityAssets({ mobile: true, facilityLevel: 4, builtRoomIds: ["room.front_desk"] });
+    const all = selectFacilityAssets({ mobile: true, facilityLevel: 4, builtRoomIds: ["room.front_desk"], previewRoomIds: ["room.mri"] });
     await vi.waitFor(() => expect(keys.size).toBe(all.length));
+    expect(all.map(asset => asset.id)).toEqual(preview.map(asset => asset.id));
     expect(load).toHaveBeenCalledTimes(all.length); expect(scene.drawWorld).not.toHaveBeenCalled();
     expect(new Set(addImage.mock.calls.map(([key]) => key)).size).toBe(all.length);
     expect(keys).toEqual(new Set(all.map(getPhaserTextureKey)));

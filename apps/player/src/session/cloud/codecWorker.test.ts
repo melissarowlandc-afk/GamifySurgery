@@ -9,6 +9,25 @@ import { CloudCacheError } from "./cache";
 
 afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 describe("cloud codec module worker boundary", () => {
+  it("releases only an idle realm and starts a fresh worker without replaying completed tasks", async () => {
+    vi.useFakeTimers();
+    const first = new FakeCloudCodecWorker(), next = new FakeCloudCodecWorker();
+    const codec = new CloudCodecWorker(vi.fn().mockReturnValueOnce(first).mockReturnValueOnce(next));
+    try {
+      const pending = codec.run({ kind: "hash", input: "public first" });
+      expect(codec.releaseIdle()).toBe(false); expect(first.terminated).toBe(false);
+      first.reply({ ready: true }); first.reply({ id: first.messages[0]!.id, result: "a".repeat(64) });
+      expect(await pending).toBe("a".repeat(64)); const late = first.onmessage!;
+      expect(codec.releaseIdle()).toBe(true); expect(first.terminated).toBe(true);
+      expect(codec.health).toMatchObject({ alive: false, idleReleases: 1, restarts: 0, lastError: null });
+      expect(vi.getTimerCount()).toBe(0);
+      const resumed = codec.run({ kind: "hash", input: "public next" });
+      expect(next.messages.map(m => m.task)).toEqual([{ kind: "hash", input: "public next" }]);
+      late({ data: { id: first.messages[0]!.id, result: "obsolete" } } as MessageEvent);
+      next.reply({ ready: true }); next.reply({ id: next.messages[0]!.id, result: "b".repeat(64) });
+      expect(await resumed).toBe("b".repeat(64));
+    } finally { codec.dispose(); vi.useRealTimers(); }
+  });
   it("settles an unsupported worker task with a classified rejection", async () => {
     const codec = new CloudCodecWorker(null);
     await expect(codec.run({ kind: "unsupported" } as unknown as Parameters<typeof codec.run>[0])).rejects.toMatchObject({ code: "worker_payload" });

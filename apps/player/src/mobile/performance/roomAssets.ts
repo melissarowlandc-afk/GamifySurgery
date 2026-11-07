@@ -1,4 +1,3 @@
-import { PROTOTYPE_DOMAIN_CONTEXT } from "@gamify-surgery/game-domain";
 import {
   APPROVED_GS015_ROOM_ATLASES, APPROVED_LEVEL5_BITMAP_ASSETS, ENVIRONMENT_ATLAS_V1, FRONTAGE_V2_ASSETS,
   LANDSCAPING_ATLAS_V1, ROOM_FIXTURE_ATLASES, type BitmapAssetDescriptor,
@@ -55,10 +54,10 @@ export function selectFacilityAssets(input: {
   mobile: boolean; facilityLevel: number; builtRoomIds: readonly string[]; previewRoomIds?: readonly string[];
 }): readonly BitmapAssetDescriptor[] {
   if (!input.mobile) return input.facilityLevel >= 5 ? allFacilityAssets : DESKTOP_FACILITY_ASSETS;
+  // Opening a clinic needs its built art, not every room unlocked at its level.
+  // Explicit preview requests and first placement load their own dependencies.
   const rooms = new Set([
-    ...PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.roomDefinitions
-      .filter(room => room.unlockFacilityLevel <= input.facilityLevel && (room.buildable || room.id === "room.front_desk"))
-      .map(room => room.id),
+    "room.hallway", // Corridor decor is also used outside placed room footprints.
     ...input.builtRoomIds, ...(input.previewRoomIds ?? []),
   ]);
   const ids = new Set([

@@ -1,6 +1,7 @@
 import { applyGameEvidenceBuildUndo, applyGameEvidenceCommand, createGameEvidenceCheckpoint, gameEvidenceDelta, GameEvidenceError,
-  importGameEvidence, prepareGameEvidenceCheckpoint, type DomainContext, type GameEvidenceCheckpoint, type GameEvidenceDelta, type GameState } from "@gamify-surgery/game-domain";
-import { logicalJsonText, type CodecJson } from "./codecJson";
+  importGameEvidence, prepareGameEvidenceCheckpoint, PROTOTYPE_DOMAIN_CONTEXT, type DomainContext, type GameEvidenceCheckpoint, type GameEvidenceDelta, type GameState } from "@gamify-surgery/game-domain";
+import { equalParsedJson } from "./codecWorkerJsonEqual";
+import type { CodecJson } from "./codecJson";
 import { operationalStatePatch } from "./operationalStatePatch";
 import type { OperationalEngineReply, OperationalEngineRequest, OperationalViewReply, OperationalViewRequest } from "./operationalEngineProtocol";
 import { createOperationalPlayerView } from "./operationalViewProjection";
@@ -41,18 +42,18 @@ export class OperationalEngineProcessor {
         if (this.checkpoint) throw new GameEvidenceError("engine-initialized");
         const checkpoint = freezeOperationalSnapshot(request.checkpoint);
         const hydrated = importGameEvidence(checkpoint.snapshot, checkpoint.evidence);
-        const json = (value: unknown) => logicalJsonText(JSON.parse(JSON.stringify(value)) as CodecJson);
-        if (json(hydrated) !== json(request.visibleState)) throw new GameEvidenceError("engine-visible-state");
+        if (!equalParsedJson(hydrated as unknown as CodecJson, request.visibleState as unknown as CodecJson)) {
+          // Keep the original JSON serialization semantics for generic callers
+          // with dates/undefined, without allocating text for normal JSON seeds.
+          const expected = JSON.stringify(hydrated), supplied = JSON.stringify(request.visibleState);
+          if (expected !== supplied && !equalParsedJson(JSON.parse(expected), JSON.parse(supplied))) throw new GameEvidenceError("engine-visible-state");
+        }
         prepareGameEvidenceCheckpoint(checkpoint);
-        // Opening-only, discarded branch: first real tick pays no cold adoption.
-        try {
-          let preview = checkpoint;
-          if (hydrated.paused) preview = applyGameEvidenceCommand(preview,
-            { type: "SET_PAUSED", paused: false, operationId: crypto.randomUUID() }, request.context).checkpoint;
-          applyGameEvidenceCommand(preview, { type: "ADVANCE_TICK", operationId: crypto.randomUUID(), advancedAtRealMs: request.atRealMs }, request.context);
-        } catch { /* Best-effort warming cannot change real command handling. */ }
+        // The first real tick runs off-main-thread. Do not allocate a discarded
+        // clinic/evidence branch while opening is already at its memory peak.
         const projection = request.projection ? this.project(request.visibleState, request.projection) : undefined;
-        this.checkpoint = checkpoint; this.visible = freezeOperationalSnapshot(request.visibleState); this.context = request.context;
+        this.checkpoint = checkpoint; this.visible = freezeOperationalSnapshot(request.visibleState);
+        this.context = { ...(request.context ?? PROTOTYPE_DOMAIN_CONTEXT), ...request.contextFlags };
         this.snapshotOnly = request.snapshotOnly === true;
         if (projection) this.view = projection.view;
         return { id: request.id, kind: "initialized", version: this.version, head: checkpoint.snapshot.head,

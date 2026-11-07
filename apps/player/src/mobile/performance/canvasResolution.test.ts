@@ -1,5 +1,11 @@
 import { describe, expect, it, vi } from "vitest";
 import { installMobileCanvasResolution } from "./canvasResolution";
+import { mobileCanvasSize } from "./presentationPolicy";
+
+it("reduces backing pixels by75% without changing logical map coordinates in the recovery profile", () => {
+  expect(mobileCanvasSize(390, 844, 3, 1)).toEqual({ width: 390, height: 844, pixelRatio: 1, backingWidth: 390, backingHeight: 844 });
+  expect(mobileCanvasSize(390, 844, 3, 2)).toMatchObject({ backingWidth: 780, backingHeight: 1688 });
+});
 
 describe("phone-only physical canvas resolution", () => {
   it("caps DPR3 at 2 while leaving logical dimensions, CSS box and pointer coordinates unchanged", () => {

@@ -5,6 +5,15 @@ import golden from "./codecGoldenVectors.json";
 
 afterEach(() => vi.unstubAllGlobals());
 describe("verified browser-native lossless compression", () => {
+  it.each(["gzip", "deflate"] as const)("matches the previous Blob-backed %s byte stream exactly", async encoding => {
+    const text = JSON.stringify({ public: "é😀 verified clinical software fixture ".repeat(25_000) });
+    const control = new Uint8Array(await new Response(new Blob([new TextEncoder().encode(text)]).stream().pipeThrough(new CompressionStream(encoding))).arrayBuffer());
+    let binary = "";
+    for (let i = 0; i < control.length; i += 16384) binary += String.fromCharCode(...control.subarray(i, i + 16384));
+    const actual = await compressCloudText(text, encoding);
+    expect(actual.dataBase64).toBe(btoa(binary));
+    expect(await decompressCloudText(actual)).toBe(text);
+  });
   it.each(["gzip", "deflate"] as const)("round-trips every golden uncompressed byte through %s", async encoding => {
     for (const vector of golden.vectors) {
       const packed = await compressCloudText(vector.storedText, encoding);

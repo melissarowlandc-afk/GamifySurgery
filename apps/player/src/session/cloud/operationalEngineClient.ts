@@ -1,4 +1,4 @@
-import type { DomainContext, GameCommand, GameEvidenceCheckpoint, GameEvidenceDelta, GameState } from "@gamify-surgery/game-domain";
+import { PROTOTYPE_DOMAIN_CONTEXT, type DomainContext, type GameCommand, type GameEvidenceCheckpoint, type GameEvidenceDelta, type GameState } from "@gamify-surgery/game-domain";
 import { applyOperationalStatePatch } from "./operationalStatePatch";
 import type { OperationalContextFlags, OperationalEngineReply, OperationalEngineRequest, OperationalEngineResult, OperationalViewReply, OperationalViewRequest } from "./operationalEngineProtocol";
 import type { PrototypePlayerView } from "../viewModels";
@@ -49,25 +49,35 @@ export class OperationalEngineClient {
   private serial: Promise<void> = Promise.resolve();
   private readonly pending = new Map<number, Waiting>();
   private constructor(private readonly port: OperationalEnginePort, state: GameState, checkpoint: GameEvidenceCheckpoint,
-    private readonly timeoutMs: number, private readonly queueLimit: number) {
-    this.current = freeze(structuredClone(state));
-    this.mirror = OperationalEvidenceMirror.create(checkpoint);
+    private readonly timeoutMs: number, private readonly queueLimit: number, adoptSharedSeed: boolean) {
+    this.current = freeze(adoptSharedSeed ? state : structuredClone(state));
+    this.mirror = OperationalEvidenceMirror.create(checkpoint, adoptSharedSeed);
     this.head = { ...checkpoint.snapshot.head }; this.records = checkpoint.evidence.records.length;
     port.onmessage = event => this.receive(event.data);
     port.onerror = event => { event.preventDefault?.(); this.fail("engine-worker"); };
     port.onmessageerror = () => this.fail("engine-payload");
   }
-  static async create(seed: { checkpoint: GameEvidenceCheckpoint; visibleState: GameState; context?: DomainContext; atRealMs: number; projection?: OperationalViewRequest; snapshotOnly?: boolean },
+  static async create(seed: { checkpoint: GameEvidenceCheckpoint; visibleState: GameState; context?: DomainContext; atRealMs: number; projection?: OperationalViewRequest; snapshotOnly?: boolean;
+      /** Internal session opt-ins; generic callers retain isolated seed copies. */
+      adoptSharedSeed?: boolean; useBundledContext?: boolean },
     createPort: () => OperationalEnginePort = () => new Worker(new URL("./operationalEngine.worker.ts", import.meta.url), { type: "module" }),
     timeoutMs = 60_000, queueLimit = 128, startupTimeoutMs = timeoutMs): Promise<OperationalEngineClient> {
     if (!finiteTime(timeoutMs) || timeoutMs === 0 || !finiteTime(startupTimeoutMs) || startupTimeoutMs === 0 || !Number.isSafeInteger(queueLimit) || queueLimit < 1) throw new OperationalEngineFailure("engine-options");
     const port = createPort(); let client: OperationalEngineClient;
-    try { client = new OperationalEngineClient(port, seed.visibleState, seed.checkpoint, timeoutMs, queueLimit); }
+    try { client = new OperationalEngineClient(port, seed.visibleState, seed.checkpoint, timeoutMs, queueLimit, seed.adoptSharedSeed === true); }
     catch (error) { port.terminate(); throw error; }
     client.snapshotOnly = seed.snapshotOnly === true;
     if (seed.projection) { client.projection = structuredClone(seed.projection); client.projectionRevision = seed.projection.revision; }
     let reply: OperationalEngineReply | OperationalEngineResult;
-    try { reply = await client.request({ kind: "initialize", ...seed }, startupTimeoutMs); }
+    const { adoptSharedSeed: _owned, useBundledContext, ...initialize } = seed;
+    const context = initialize.context;
+    const bundled = useBundledContext && context?.balanceRelease === PROTOTYPE_DOMAIN_CONTEXT.balanceRelease &&
+      context.clinicalRelease === PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease;
+    // The application binds identical released modules in both realms. Send
+    // session flags, not another multi-megabyte copy of their catalogues.
+    try { reply = await client.request({ kind: "initialize", ...initialize, ...(bundled ? { context: undefined,
+      contextFlags: structuredClone({ guidanceTipsDeliveryBlocked: context.guidanceTipsDeliveryBlocked,
+        guidanceAttentionBlocked: context.guidanceAttentionBlocked, guidanceBlockedTopicIds: context.guidanceBlockedTopicIds }) } : {}) }, startupTimeoutMs); }
     catch (error) { client.dispose(); throw error; }
     if (!("kind" in reply) || reply.kind !== "initialized" || reply.version !== 0 || !headShape(reply.head) || !sameHead(reply.head, client.head)) {
       client.fail("engine-initialize"); throw new OperationalEngineFailure("engine-initialize");

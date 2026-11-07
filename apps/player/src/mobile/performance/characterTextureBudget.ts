@@ -1,10 +1,14 @@
+import { phoneMemoryProfile } from "./phoneMemoryPolicy";
+
 /** Phone-only decoded texture lifetime. Live/queued textures are always pinned;
  * retired identities/poses compete for a bounded LRU instead of accumulating
  * the entire character catalogue. No character or gameplay data is changed. */
 export class CharacterTextureBudget {
   private readonly rows = new Map<string, { bytes: number; family?: string }>();
   private bytes = 0;
-  constructor(private readonly maxBytes = 24 * 1024 * 1024, private readonly maxTextures = 96) {}
+  constructor(private readonly maxBytes: number = phoneMemoryProfile().textureBytes,
+    private readonly maxTextures: number = phoneMemoryProfile().textureCount,
+    private readonly keepLiveFamilies = phoneMemoryProfile().keepLiveFamilies) {}
   get retainedBytes(): number { return this.bytes; }
   get size(): number { return this.rows.size; }
   register(key: string, width: number, height: number): void {
@@ -23,7 +27,7 @@ export class CharacterTextureBudget {
   trim(pinned: ReadonlySet<string>, remove: (key: string) => void, liveFamilies: ReadonlySet<string> = new Set()): void {
     if (this.bytes <= this.maxBytes && this.rows.size <= this.maxTextures) return;
     for (const [key, row] of this.rows) {
-      if (pinned.has(key) || row.family && liveFamilies.has(row.family)) continue;
+      if (pinned.has(key) || this.keepLiveFamilies && row.family && liveFamilies.has(row.family)) continue;
       remove(key); this.rows.delete(key); this.bytes -= row.bytes;
       if (this.bytes <= this.maxBytes && this.rows.size <= this.maxTextures) break;
     }

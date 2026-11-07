@@ -61,3 +61,13 @@ it("leaves the desktop frame configuration and interaction lifecycle unchanged",
   expect(game.loop.setFPSLimit).not.toHaveBeenCalled();
   await cleanupPhoneTests(); expect(game.destroy).toHaveBeenCalledWith(true); expect(game.loop.wake).not.toHaveBeenCalled();
 });
+
+it("defers an initially covered phone map until first reveal, then retains the same game across covers", async () => {
+  observer(); const env = phoneTestDom(), fixture = phoneFixture();
+  Object.assign(env.browser, { setInterval, clearInterval });
+  const render = (covered: boolean) => env.render(<FacilityCanvas mobileInput mobileMapCovered={covered} viewModel={fixture.facility} onPlaceRoom={() => true} />);
+  await render(true); expect(captured.games).toHaveLength(0);
+  await render(false); expect(captured.games).toHaveLength(1); const game = captured.games[0];
+  await render(true); await render(false); expect(captured.games).toHaveLength(1); expect(game.destroy).not.toHaveBeenCalled();
+  await cleanupPhoneTests(); expect(game.destroy).toHaveBeenCalledWith(true);
+});
