@@ -21,7 +21,7 @@ export interface QuestionShipManifest {
   replacements?: readonly QuestionShipCaseReplacement[];
 }
 export const QUESTION_SHIP_MANIFEST = {
-  id: "question-ship.2026-11-08.v6",
+  id: "question-ship.2026-11-08.v7",
   clinicalApproval: false,
   legacyDecision: "Carry forward the existing live bank before the owner-flag rewrite program; user-directed fallback on 2026-11-05. This does not independently accept prior drafts or grant clinical approval.",
   legacyBindings: [
@@ -9718,6 +9718,17 @@ export const QUESTION_SHIP_MANIFEST = {
     "decision": "docs/research/question-stats1-manager-decision-20261108.md"
   },
   // END STATS1 ACCEPTANCES 20261108
+  // BEGIN FLAGS4 ACCEPTANCE 20261108
+  {
+    "acceptanceId": "F4-01",
+    "caseId": "case.gs028f.nutrition.c1-metabolic-transition",
+    "nodeId": "node.gs028f.nutrition.c1-metabolic-transition.1",
+    "questionVariantId": "question.gs028f.nutrition.refeeding-insulin-phosphate-shift.v3.r2",
+    "conceptId": "concept.gs028f.nutrition.refeeding-insulin-phosphate-shift",
+    "sourceView": "flags4-accepted",
+    "decision": "docs/research/question-flags4-manager-decision-20261108.md"
+  },
+  // END FLAGS4 ACCEPTANCE 20261108
 ] satisfies QuestionShipAcceptance[],
   // BEGIN FLAGS2 WHOLE-CASE ACCEPTANCES 20261105
   replacements: [
@@ -9728,6 +9739,9 @@ export const QUESTION_SHIP_MANIFEST = {
   ] satisfies QuestionShipCaseReplacement[],
   // END FLAGS2 WHOLE-CASE ACCEPTANCES 20261105
   headerSources: {
+  // BEGIN FLAGS4 ACCEPTED HEADER 20261108
+  "case.gs028f.nutrition.c1-metabolic-transition": "flags4-accepted",
+  // END FLAGS4 ACCEPTED HEADER 20261108
   // BEGIN STATS1 ACCEPTED HEADERS 20261108
   "case.gs028se.independent-t-paired-t.a-two-teams": "stats1-accepted",
   "case.gs028se.independent-t-paired-t.a-two-cohorts": "stats1-accepted",

@@ -13,11 +13,34 @@
       "reason": "Excluded main-tree source remains exact at release entry or required absence."
     },
     {
+      "path": "apps/player/src/session/cloud/codecJson.ts",
+      "capturedMainSha256": "d490196e1988db2f39fc66df0589b768fd10930803afcbc568265e1910ceaf3d",
+      "releaseEntrySha256": "d490196e1988db2f39fc66df0589b768fd10930803afcbc568265e1910ceaf3d",
+      "requiredReleaseSha256": "0994becd5f0022d2489de303987a6bb6a4c590fb45aea958a0856dcac4267c7a",
+      "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+      "authorizedDeltas": [
+        {
+          "on": "2026-11-08",
+          "releaseBeforeSha256": "d490196e1988db2f39fc66df0589b768fd10930803afcbc568265e1910ceaf3d",
+          "previousRequirement": null,
+          "releaseAfterSha256": "0994becd5f0022d2489de303987a6bb6a4c590fb45aea958a0856dcac4267c7a"
+        }
+      ]
+    },
+    {
       "path": "apps/player/src/session/cloud/codecTasks.ts",
       "capturedMainSha256": "02da38b96c9aec89617df3c15e7a55f1be02311c2b2901ffb9e7fcd299fe95fc",
       "releaseEntrySha256": "e14545e511c98216936077fcb9486984453ba5e188be87fd8bb3fe252b2fc48d",
-      "requiredReleaseSha256": "e14545e511c98216936077fcb9486984453ba5e188be87fd8bb3fe252b2fc48d",
-      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+      "requiredReleaseSha256": "a0940aeb5763eb483ba5e53a16bf3c2929196140d3afb32aa68f541f569500b6",
+      "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+      "authorizedDeltas": [
+        {
+          "on": "2026-11-08",
+          "releaseBeforeSha256": "e14545e511c98216936077fcb9486984453ba5e188be87fd8bb3fe252b2fc48d",
+          "previousRequirement": "e14545e511c98216936077fcb9486984453ba5e188be87fd8bb3fe252b2fc48d",
+          "releaseAfterSha256": "a0940aeb5763eb483ba5e53a16bf3c2929196140d3afb32aa68f541f569500b6"
+        }
+      ]
     },
     {
       "path": "apps/player/src/session/cloud/codecWorker.test.ts",
@@ -30,8 +53,16 @@
       "path": "apps/player/src/session/cloud/codecWorker.ts",
       "capturedMainSha256": "713e787708446734970277645df5e4f96c68bfb373bb5f65d15876149fd3eab1",
       "releaseEntrySha256": "b94c39352ca1312981b45fa7aca6b6b2f37507cd85500902b63975ee902413f8",
-      "requiredReleaseSha256": "b94c39352ca1312981b45fa7aca6b6b2f37507cd85500902b63975ee902413f8",
-      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+      "requiredReleaseSha256": "2cfec1b07b79bc2657b97dccadfe484bcf4518c82fe9cf7f52f80a52b09e4221",
+      "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+      "authorizedDeltas": [
+        {
+          "on": "2026-11-08",
+          "releaseBeforeSha256": "b94c39352ca1312981b45fa7aca6b6b2f37507cd85500902b63975ee902413f8",
+          "previousRequirement": "b94c39352ca1312981b45fa7aca6b6b2f37507cd85500902b63975ee902413f8",
+          "releaseAfterSha256": "2cfec1b07b79bc2657b97dccadfe484bcf4518c82fe9cf7f52f80a52b09e4221"
+        }
+      ]
     },
     {
       "path": "apps/player/src/session/cloud/codecWorkerNative.test.ts",
@@ -65,15 +96,31 @@
       "path": "apps/player/src/session/cloud/gameSession.ts",
       "capturedMainSha256": "c51e1175226a2c9be2c9270df9afd8e6417c9e945bf84630403115b4e48d4e7f",
       "releaseEntrySha256": "0206398affa8453f213567f1844ca9c44dcbb34dcf16a6ff8e1c32bcdc3fed36",
-      "requiredReleaseSha256": "0206398affa8453f213567f1844ca9c44dcbb34dcf16a6ff8e1c32bcdc3fed36",
-      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+      "requiredReleaseSha256": "73ba55e590d2dfb654bc56d5ec50653adeff312212272211a3ab76b3744c7ad5",
+      "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+      "authorizedDeltas": [
+        {
+          "on": "2026-11-08",
+          "releaseBeforeSha256": "0206398affa8453f213567f1844ca9c44dcbb34dcf16a6ff8e1c32bcdc3fed36",
+          "previousRequirement": "0206398affa8453f213567f1844ca9c44dcbb34dcf16a6ff8e1c32bcdc3fed36",
+          "releaseAfterSha256": "73ba55e590d2dfb654bc56d5ec50653adeff312212272211a3ab76b3744c7ad5"
+        }
+      ]
     },
     {
       "path": "apps/player/src/session/cloud/journalCodec.ts",
       "capturedMainSha256": "21b4da1c5b68beb61f15accb70bd59de363305c443be274343ed0b8d01db796b",
       "releaseEntrySha256": "022da6f8661435bcfb38fb7d7549e1bb7ef657d8648feb247df5204b38accc49",
-      "requiredReleaseSha256": "022da6f8661435bcfb38fb7d7549e1bb7ef657d8648feb247df5204b38accc49",
-      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+      "requiredReleaseSha256": "aecdf78cfa2bfef4ee38ff7405e98088519243fc53f7ee50acf949a428ccd396",
+      "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+      "authorizedDeltas": [
+        {
+          "on": "2026-11-08",
+          "releaseBeforeSha256": "022da6f8661435bcfb38fb7d7549e1bb7ef657d8648feb247df5204b38accc49",
+          "previousRequirement": "022da6f8661435bcfb38fb7d7549e1bb7ef657d8648feb247df5204b38accc49",
+          "releaseAfterSha256": "aecdf78cfa2bfef4ee38ff7405e98088519243fc53f7ee50acf949a428ccd396"
+        }
+      ]
     },
     {
       "path": "apps/player/src/session/cloud/separateCampaign.test.ts",
@@ -86,8 +133,16 @@
       "path": "apps/player/src/session/cloud/snapshotCodec.ts",
       "capturedMainSha256": "3dc0c5b77ab776e396fe1d77ed6c0b07e8e3f516f4f209cafda106d4291dd18e",
       "releaseEntrySha256": "79bee1d92804cb540c96761444efa2558af60441fbcce10de681297b8d017a9b",
-      "requiredReleaseSha256": "79bee1d92804cb540c96761444efa2558af60441fbcce10de681297b8d017a9b",
-      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+      "requiredReleaseSha256": "6f427b6983a1064c2bf2eec30ed2d09159d39f9c11508112e0fd08636dcec106",
+      "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+      "authorizedDeltas": [
+        {
+          "on": "2026-11-08",
+          "releaseBeforeSha256": "79bee1d92804cb540c96761444efa2558af60441fbcce10de681297b8d017a9b",
+          "previousRequirement": "79bee1d92804cb540c96761444efa2558af60441fbcce10de681297b8d017a9b",
+          "releaseAfterSha256": "6f427b6983a1064c2bf2eec30ed2d09159d39f9c11508112e0fd08636dcec106"
+        }
+      ]
     },
     {
       "path": "apps/player/src/session/cloud/tickPerformanceTestSupport.ts",
@@ -95,6 +150,21 @@
       "releaseEntrySha256": "3774fe630bbd9ba4993355d7be645e039cd22b9e35346359e5d862e6f2e8d9a4",
       "requiredReleaseSha256": "3774fe630bbd9ba4993355d7be645e039cd22b9e35346359e5d862e6f2e8d9a4",
       "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "apps/player/src/session/cloud/verifiedCopyCache.ts",
+      "capturedMainSha256": "f13d4cb395781226c2ce783420056e85a295809b117f826e9b6fd432f5283bc3",
+      "releaseEntrySha256": "f13d4cb395781226c2ce783420056e85a295809b117f826e9b6fd432f5283bc3",
+      "requiredReleaseSha256": "0b46e358705008b5c63493cc46e38b3abe59edb79f196e652c54a8ea2dc52fad",
+      "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+      "authorizedDeltas": [
+        {
+          "on": "2026-11-08",
+          "releaseBeforeSha256": "f13d4cb395781226c2ce783420056e85a295809b117f826e9b6fd432f5283bc3",
+          "previousRequirement": null,
+          "releaseAfterSha256": "0b46e358705008b5c63493cc46e38b3abe59edb79f196e652c54a8ea2dc52fad"
+        }
+      ]
     },
     {
       "path": "apps/player/src/session/cloud/watchdogs.test.ts",
@@ -111,11 +181,130 @@
       "reason": "Excluded main-tree source remains exact at release entry or required absence."
     },
     {
+      "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+      "capturedMainSha256": "d90694e852366f715b58f4986dfcdd016aeda4cecea1126537e97214ac4e5c54",
+      "releaseEntrySha256": "0aa691598047da150b7e4cad758796686337ecba8561df505ee486f0c36d4294",
+      "requiredReleaseSha256": "fca3abd6ac40e7cb34eb82419aa76f33fbb35c9e61dadb6c60de3f12a5572dc6",
+      "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+      "authorizedDeltas": [
+        {
+          "on": "2026-11-08",
+          "releaseBeforeSha256": "0aa691598047da150b7e4cad758796686337ecba8561df505ee486f0c36d4294",
+          "previousRequirement": null,
+          "releaseAfterSha256": "fca3abd6ac40e7cb34eb82419aa76f33fbb35c9e61dadb6c60de3f12a5572dc6"
+        }
+      ]
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "capturedMainSha256": "37b65085cf5d41a543fea68ba3bed0f82ebd8277f345c53e2957d54a1647d63d",
+      "releaseEntrySha256": "b97c3af1eb6cd535cd7103bbbfd9846f65d51fc2d793fe624c7ad417d55cff28",
+      "requiredReleaseSha256": "bb55f3dbc7ae50ec77bcd18ab50b8dc213f57acf218657cdc693db434b43c8a9",
+      "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+      "authorizedDeltas": [
+        {
+          "on": "2026-11-08",
+          "releaseBeforeSha256": "b97c3af1eb6cd535cd7103bbbfd9846f65d51fc2d793fe624c7ad417d55cff28",
+          "previousRequirement": null,
+          "releaseAfterSha256": "bb55f3dbc7ae50ec77bcd18ab50b8dc213f57acf218657cdc693db434b43c8a9"
+        }
+      ]
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "capturedMainSha256": "f22453a850aa22d4ffba37f05710e8abfb43784547f46cbb28397a76e2181e6b",
+      "releaseEntrySha256": "8caff5c5f299afff6b27401b2bade3ea6d311390deecbe70052c789799f36fbb",
+      "requiredReleaseSha256": "0abfabbf84d18c022bcbb58b3454585afac1a28403cb9adec3e5994b7278d68b",
+      "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+      "authorizedDeltas": [
+        {
+          "on": "2026-11-08",
+          "releaseBeforeSha256": "8caff5c5f299afff6b27401b2bade3ea6d311390deecbe70052c789799f36fbb",
+          "previousRequirement": null,
+          "releaseAfterSha256": "0abfabbf84d18c022bcbb58b3454585afac1a28403cb9adec3e5994b7278d68b"
+        }
+      ]
+    },
+    {
       "path": "packages/clinical-content/src/question-flags3-20261107.test.ts",
       "capturedMainSha256": "ab63b178dda0d261bd5a9ba6c0dd7ce9813553c56b3b3e4c3bb3e89600f1107b",
       "releaseEntrySha256": "4e86634d37150709bd616d54f7b2375b3018406f4c76342f17f668f7a7e33cef",
-      "requiredReleaseSha256": "4e86634d37150709bd616d54f7b2375b3018406f4c76342f17f668f7a7e33cef",
-      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+      "requiredReleaseSha256": "a5b911b99150462b1b8ce392681fc2d118b09121d3ccc23b8b23f8df5b0350ca",
+      "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+      "authorizedDeltas": [
+        {
+          "on": "2026-11-08",
+          "releaseBeforeSha256": "4e86634d37150709bd616d54f7b2375b3018406f4c76342f17f668f7a7e33cef",
+          "previousRequirement": "4e86634d37150709bd616d54f7b2375b3018406f4c76342f17f668f7a7e33cef",
+          "releaseAfterSha256": "0f5faed2dce92943a8dacfc5a77a796d2905fc85dd3537670ebbf0ccfb69dfd8"
+        },
+        {
+          "on": "2026-11-08",
+          "releaseBeforeSha256": "4e86634d37150709bd616d54f7b2375b3018406f4c76342f17f668f7a7e33cef",
+          "previousRequirement": "0f5faed2dce92943a8dacfc5a77a796d2905fc85dd3537670ebbf0ccfb69dfd8",
+          "releaseAfterSha256": "a5b911b99150462b1b8ce392681fc2d118b09121d3ccc23b8b23f8df5b0350ca"
+        }
+      ]
+    },
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+      "capturedMainSha256": "45b33c956c8ef2f4df61a035d8d34cb70f63d0ff0348c9ff84ea9e8300107676",
+      "releaseEntrySha256": "74f0e5110974699c46aeb446c19a0cc60362f4d7096126e65d27a71cd377f8a5",
+      "requiredReleaseSha256": "5dfcaeabd30722082a60673316b3313914d0c16dc4c6c816f84159b5a57c4167",
+      "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+      "authorizedDeltas": [
+        {
+          "on": "2026-11-08",
+          "releaseBeforeSha256": "74f0e5110974699c46aeb446c19a0cc60362f4d7096126e65d27a71cd377f8a5",
+          "previousRequirement": null,
+          "releaseAfterSha256": "5dfcaeabd30722082a60673316b3313914d0c16dc4c6c816f84159b5a57c4167"
+        }
+      ]
+    },
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.ts",
+      "capturedMainSha256": "50dadc0a2daf64704b8aa599e23051692ad81bc9e3462772870cd18bb935a6c0",
+      "releaseEntrySha256": "af9a2c03dd1e46438f7ac0c463672a9840936ed7c8a7b091792e2912b79fca35",
+      "requiredReleaseSha256": "de5c8b1f5f808361fe240ac67dda478ac1a2ade09857dd80e4347f1ef4d8c3d8",
+      "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+      "authorizedDeltas": [
+        {
+          "on": "2026-11-08",
+          "releaseBeforeSha256": "af9a2c03dd1e46438f7ac0c463672a9840936ed7c8a7b091792e2912b79fca35",
+          "previousRequirement": null,
+          "releaseAfterSha256": "de5c8b1f5f808361fe240ac67dda478ac1a2ade09857dd80e4347f1ef4d8c3d8"
+        }
+      ]
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "capturedMainSha256": "819c38fce01be9684a8ef35e09c5bb64978dc710993862dbcf066b2c5f9392ed",
+      "releaseEntrySha256": "d5a603c617d3adc753351bd68511ab7495b2365f7bb32479ca9950a8e56d5458",
+      "requiredReleaseSha256": "96d50250444a0f41fa6b9b77f686b5c6b2fed7fa16821ab0500a3a4443b77762",
+      "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+      "authorizedDeltas": [
+        {
+          "on": "2026-11-08",
+          "releaseBeforeSha256": "d5a603c617d3adc753351bd68511ab7495b2365f7bb32479ca9950a8e56d5458",
+          "previousRequirement": null,
+          "releaseAfterSha256": "96d50250444a0f41fa6b9b77f686b5c6b2fed7fa16821ab0500a3a4443b77762"
+        }
+      ]
+    },
+    {
+      "path": "packages/game-domain/src/diagnostic-timing.ts",
+      "capturedMainSha256": "2a8e915812e9c5bc2e5b40fcea74bdff129aa5d4fbecfef633004cf9cda48668",
+      "releaseEntrySha256": "2a8e915812e9c5bc2e5b40fcea74bdff129aa5d4fbecfef633004cf9cda48668",
+      "requiredReleaseSha256": "499e069e78d1755c1f23e6ab6b29052ee072896248d792c019a1336301334d2b",
+      "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+      "authorizedDeltas": [
+        {
+          "on": "2026-11-08",
+          "releaseBeforeSha256": "2a8e915812e9c5bc2e5b40fcea74bdff129aa5d4fbecfef633004cf9cda48668",
+          "previousRequirement": null,
+          "releaseAfterSha256": "499e069e78d1755c1f23e6ab6b29052ee072896248d792c019a1336301334d2b"
+        }
+      ]
     },
     {
       "path": "packages/game-domain/src/facilityNavigation.ts",
@@ -226,8 +415,16 @@
       "path": "packages/game-domain/src/reducer.ts",
       "capturedMainSha256": "1831d01d1db5d02f9bc69be1cb6f48dc391359f6b67958cc35bfb803c06474bb",
       "releaseEntrySha256": "a90c4a7a711abe3d06cc6f7f1e1fbc74742c96092999018b8ea9ea1aee06c045",
-      "requiredReleaseSha256": "a90c4a7a711abe3d06cc6f7f1e1fbc74742c96092999018b8ea9ea1aee06c045",
-      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+      "requiredReleaseSha256": "d1ce8e5a99fcca2de26b7d0e485e2f7f8cd9885d909a2ff22a993b9954abb1da",
+      "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+      "authorizedDeltas": [
+        {
+          "on": "2026-11-08",
+          "releaseBeforeSha256": "a90c4a7a711abe3d06cc6f7f1e1fbc74742c96092999018b8ea9ea1aee06c045",
+          "previousRequirement": "a90c4a7a711abe3d06cc6f7f1e1fbc74742c96092999018b8ea9ea1aee06c045",
+          "releaseAfterSha256": "d1ce8e5a99fcca2de26b7d0e485e2f7f8cd9885d909a2ff22a993b9954abb1da"
+        }
+      ]
     },
     {
       "path": "packages/game-domain/src/routineAvailabilityReference.testSupport.ts",
@@ -261,8 +458,1300 @@
       "path": "tools/qa/level-five-integration-results-20261012.json",
       "capturedMainSha256": "dead50020355be0bc328ff4557cd40199763097a8aa01baa3f8944d22492a8d5",
       "releaseEntrySha256": "d35fda40e345ec9ff70a8797854acf66161cc7743f0a052cdbc5ba66ccffa505",
-      "requiredReleaseSha256": "30f42ea7e6d0f8a90653dd4415fe6fced59f4222b0842eeb0456394afbec3fd2",
-      "reason": "Local native Level 5 result regenerated and published only after guarded verification."
+      "requiredReleaseSha256": "2af0e6a514834a4ab1daa81bdc973123c8e3f8a1cf787b8ef8d2726bca648a97",
+      "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+      "authorizedDeltas": [
+        {
+          "on": "2026-11-08",
+          "releaseBeforeSha256": "30f42ea7e6d0f8a90653dd4415fe6fced59f4222b0842eeb0456394afbec3fd2",
+          "previousRequirement": "30f42ea7e6d0f8a90653dd4415fe6fced59f4222b0842eeb0456394afbec3fd2",
+          "releaseAfterSha256": "2af0e6a514834a4ab1daa81bdc973123c8e3f8a1cf787b8ef8d2726bca648a97"
+        }
+      ]
+    }
+  ],
+  "authorizationHistory": [
+    {
+      "on": "2026-11-08",
+      "milestone": "release-port23",
+      "priorFixtureSha256": "b2825597c26f63d8e6462f98e3347a06ecd92222162b1b4aa78e3a4bebaeb5fc",
+      "priorPaths": [
+        {
+          "path": "apps/player/src/session/cloud/cache.ts",
+          "capturedMainSha256": "8d89ade786fb2244234a3c4a8ad6d4df805c3dc9d96280465c09c37487a3aee8",
+          "releaseEntrySha256": "6059528ebdb77c9d10a52673c16bfcf3e0d201c5aecbcad334c328174accc76c",
+          "requiredReleaseSha256": "6059528ebdb77c9d10a52673c16bfcf3e0d201c5aecbcad334c328174accc76c",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "apps/player/src/session/cloud/codecTasks.ts",
+          "capturedMainSha256": "02da38b96c9aec89617df3c15e7a55f1be02311c2b2901ffb9e7fcd299fe95fc",
+          "releaseEntrySha256": "e14545e511c98216936077fcb9486984453ba5e188be87fd8bb3fe252b2fc48d",
+          "requiredReleaseSha256": "e14545e511c98216936077fcb9486984453ba5e188be87fd8bb3fe252b2fc48d",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "apps/player/src/session/cloud/codecWorker.test.ts",
+          "capturedMainSha256": "949eba8198e04b47e7adc19964e11a83c4162bc9a2590d974f468c6dab822c08",
+          "releaseEntrySha256": "a7fdef005f3396f6e03b721fe9620b34826f39b895d0dd1ffeec1aa753ddc499",
+          "requiredReleaseSha256": "a7fdef005f3396f6e03b721fe9620b34826f39b895d0dd1ffeec1aa753ddc499",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "apps/player/src/session/cloud/codecWorker.ts",
+          "capturedMainSha256": "713e787708446734970277645df5e4f96c68bfb373bb5f65d15876149fd3eab1",
+          "releaseEntrySha256": "b94c39352ca1312981b45fa7aca6b6b2f37507cd85500902b63975ee902413f8",
+          "requiredReleaseSha256": "b94c39352ca1312981b45fa7aca6b6b2f37507cd85500902b63975ee902413f8",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "apps/player/src/session/cloud/codecWorkerNative.test.ts",
+          "capturedMainSha256": "b7814cde78258b6fd3292322e64e71a7107d032cadd7ca6c1fdb1a5cb627496b",
+          "releaseEntrySha256": "03f6279df29508e3ebd09f45237bd913d758cadcedfe1794e35e525b1920b857",
+          "requiredReleaseSha256": "03f6279df29508e3ebd09f45237bd913d758cadcedfe1794e35e525b1920b857",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "apps/player/src/session/cloud/coordinator.ts",
+          "capturedMainSha256": "e1cd710a3c228da271b5b069d4efa4941bd799ca8472ef4329ad41353e3fd03e",
+          "releaseEntrySha256": "1216cb52b14cd030f8ee9c2592c123c1e21d16ce581c2a57e28ba8257f57d998",
+          "requiredReleaseSha256": "1216cb52b14cd030f8ee9c2592c123c1e21d16ce581c2a57e28ba8257f57d998",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "apps/player/src/session/cloud/entryStorage.ts",
+          "capturedMainSha256": "a01b6c9abcf932efb2666a45f473171eafc2d6e2b1902428b8d9238ee7f79956",
+          "releaseEntrySha256": "145c366632ec0f9d6210325f1b6312e6d31194e27d56fcc75fec24d5a2d56dd9",
+          "requiredReleaseSha256": "145c366632ec0f9d6210325f1b6312e6d31194e27d56fcc75fec24d5a2d56dd9",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "apps/player/src/session/cloud/gameSession.test.tsx",
+          "capturedMainSha256": "a784f70204cc3d07ea5268f82352186f1352062d0e4097ed7d704e0e6bb921d0",
+          "releaseEntrySha256": "30359b5246fad657539a2d83d4c9dc3f08a644e833b9d48bb06046c9d4d9545d",
+          "requiredReleaseSha256": "30359b5246fad657539a2d83d4c9dc3f08a644e833b9d48bb06046c9d4d9545d",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "apps/player/src/session/cloud/gameSession.ts",
+          "capturedMainSha256": "c51e1175226a2c9be2c9270df9afd8e6417c9e945bf84630403115b4e48d4e7f",
+          "releaseEntrySha256": "0206398affa8453f213567f1844ca9c44dcbb34dcf16a6ff8e1c32bcdc3fed36",
+          "requiredReleaseSha256": "0206398affa8453f213567f1844ca9c44dcbb34dcf16a6ff8e1c32bcdc3fed36",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "apps/player/src/session/cloud/journalCodec.ts",
+          "capturedMainSha256": "21b4da1c5b68beb61f15accb70bd59de363305c443be274343ed0b8d01db796b",
+          "releaseEntrySha256": "022da6f8661435bcfb38fb7d7549e1bb7ef657d8648feb247df5204b38accc49",
+          "requiredReleaseSha256": "022da6f8661435bcfb38fb7d7549e1bb7ef657d8648feb247df5204b38accc49",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "apps/player/src/session/cloud/separateCampaign.test.ts",
+          "capturedMainSha256": "11239e1e38d1a8a8933b74d83201bde040050bd2dd1cbd76d5cd8d34269fe254",
+          "releaseEntrySha256": "5c4787932548881460442e4d91a2e97426e5ee0995b17730cbe5b5f98194dfb4",
+          "requiredReleaseSha256": "5c4787932548881460442e4d91a2e97426e5ee0995b17730cbe5b5f98194dfb4",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "apps/player/src/session/cloud/snapshotCodec.ts",
+          "capturedMainSha256": "3dc0c5b77ab776e396fe1d77ed6c0b07e8e3f516f4f209cafda106d4291dd18e",
+          "releaseEntrySha256": "79bee1d92804cb540c96761444efa2558af60441fbcce10de681297b8d017a9b",
+          "requiredReleaseSha256": "79bee1d92804cb540c96761444efa2558af60441fbcce10de681297b8d017a9b",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "apps/player/src/session/cloud/tickPerformanceTestSupport.ts",
+          "capturedMainSha256": "802984dc74613b439e7bf8648b8a1acfcadc3ef4d1ea31c0b0a9d4fdf67f1497",
+          "releaseEntrySha256": "3774fe630bbd9ba4993355d7be645e039cd22b9e35346359e5d862e6f2e8d9a4",
+          "requiredReleaseSha256": "3774fe630bbd9ba4993355d7be645e039cd22b9e35346359e5d862e6f2e8d9a4",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "apps/player/src/session/cloud/watchdogs.test.ts",
+          "capturedMainSha256": "b65aa34ae783a4edbfdf197c1faa6ce85a900be129583b1b0672745b6f2a7c12",
+          "releaseEntrySha256": "b0ad5bcc798b40f3f6c44fd6f0cf72e045994d0c39b999b8084129d70edfd86c",
+          "requiredReleaseSha256": "b0ad5bcc798b40f3f6c44fd6f0cf72e045994d0c39b999b8084129d70edfd86c",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/balance-config/src/guidance-tips.ts",
+          "capturedMainSha256": "5148bcde642c4092883e847731628d9278a5eb9e8fc89534778744bb5efcadc2",
+          "releaseEntrySha256": "2563d44cc6921094320efcbaab996c9673f190dad60470706305f7944efeb9c3",
+          "requiredReleaseSha256": "2563d44cc6921094320efcbaab996c9673f190dad60470706305f7944efeb9c3",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/clinical-content/src/question-flags3-20261107.test.ts",
+          "capturedMainSha256": "ab63b178dda0d261bd5a9ba6c0dd7ce9813553c56b3b3e4c3bb3e89600f1107b",
+          "releaseEntrySha256": "4e86634d37150709bd616d54f7b2375b3018406f4c76342f17f668f7a7e33cef",
+          "requiredReleaseSha256": "4e86634d37150709bd616d54f7b2375b3018406f4c76342f17f668f7a7e33cef",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/facilityNavigation.ts",
+          "capturedMainSha256": "1f0a2a7ce80349228236d6f45a7eb643eaaaade1de3aa88fad58a88811001751",
+          "releaseEntrySha256": "e0e01ae9a2afa519fd7764f4092542b5789828774dd434feaa3c6c50df807338",
+          "requiredReleaseSha256": "e0e01ae9a2afa519fd7764f4092542b5789828774dd434feaa3c6c50df807338",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/facilityNavigationReference.testSupport.ts",
+          "capturedMainSha256": "241b15e93a44b8cb5074b03901137d43ba3b4ff3bc30640e9b8aa51ec9999a1e",
+          "releaseEntrySha256": "dc378df6455e072342e6d1a1426ac7dd1e2251b4297de9a2530565c70ce3f9b5",
+          "requiredReleaseSha256": "dc378df6455e072342e6d1a1426ac7dd1e2251b4297de9a2530565c70ce3f9b5",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalEvidenceOwnership.test.ts",
+          "capturedMainSha256": "616c33508875a7e69ebe46934c23ca82fd70259b89c71ef2f694207a5b8c55e9",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalEvidenceOwnership.ts",
+          "capturedMainSha256": "2f0c4d8c7fa23caef65468dd12d0303f6a5108e3cd1c204835c67afdb88c603e",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalEvidenceProjection.test.ts",
+          "capturedMainSha256": "eb95e035bf27416029d0ef55066917227e06842ffd2777cc4de6cd0f51ebd302",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalEvidenceProjection.ts",
+          "capturedMainSha256": "b1aa68e65c4b3eb637210f3135ff422a674ea1b23a3a4ef1d49e837df06e35f0",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalEvidenceReferences.test.ts",
+          "capturedMainSha256": "9df3c7c6403696b0c9ca9d6cfc963359eb4c647f440b608cded0e08430d1de7f",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalEvidenceReferences.ts",
+          "capturedMainSha256": "2ea432e4cf405850dea46fce33741c1c60df385b8e36cc40be0eaa41737d2414",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalEvidenceRetirement.test.ts",
+          "capturedMainSha256": "089222355f087c01507ba94601ac2bcff0711ee14d6fec1c1eb0490c1732a98a",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalEvidenceRetirement.ts",
+          "capturedMainSha256": "aeb02c98d83c96aea41180f7f920ddeaa766db5695662e11befc8115a38ecc29",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalEvidenceValues.test.ts",
+          "capturedMainSha256": "60fcc314c5d599f2f602c176a759613570efd8f745715b19f730ba82a3454a37",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalEvidenceValues.ts",
+          "capturedMainSha256": "5e3cd39b27f28f1cef1974789a408df1a59aa83420c51385681bf74c30c05eff",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalTickClone.test.ts",
+          "capturedMainSha256": "2fe9bd49de141c5a750cf0f3a4df13aba44398727e87a38fd304fe23b7e9bcb6",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalTickClone.ts",
+          "capturedMainSha256": "e0b58ddce91563977773f6f320085617e63c8765181711f05df7be817e31467f",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/readonlyProjectionMemo.ts",
+          "capturedMainSha256": "9066534fa172c45069968a0a0ae44a02dc7941a715e8f53bb6f2739694008915",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/reducer.ts",
+          "capturedMainSha256": "1831d01d1db5d02f9bc69be1cb6f48dc391359f6b67958cc35bfb803c06474bb",
+          "releaseEntrySha256": "a90c4a7a711abe3d06cc6f7f1e1fbc74742c96092999018b8ea9ea1aee06c045",
+          "requiredReleaseSha256": "a90c4a7a711abe3d06cc6f7f1e1fbc74742c96092999018b8ea9ea1aee06c045",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/routineAvailabilityReference.testSupport.ts",
+          "capturedMainSha256": "7064ddae64270833158cb506c062764487131b21b8bac0751be16944f31ecf13",
+          "releaseEntrySha256": "d7bff621b044a210088c5c8163569a24c0177c9fe6a615a2a1c022302b29cd46",
+          "requiredReleaseSha256": "d7bff621b044a210088c5c8163569a24c0177c9fe6a615a2a1c022302b29cd46",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/settledStateQueries.test.ts",
+          "capturedMainSha256": "9752297950997b33c170cdc6799e9ee9a0a1e09d26ea495dd838819352fb2988",
+          "releaseEntrySha256": "1636b5f35f24f72a7c2fed31a3d0d75f9ad956027a09a10e681a09fbf345934c",
+          "requiredReleaseSha256": "1636b5f35f24f72a7c2fed31a3d0d75f9ad956027a09a10e681a09fbf345934c",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/settledStateQueries.ts",
+          "capturedMainSha256": "7b0c86d34bebced6c58f5bb6581786f1196b3b4c8feaf0b73e3f495300bfb071",
+          "releaseEntrySha256": "8ed5e5e86d71af003552afc5640f806dc7f81855b980edd0ffd646fedae79385",
+          "requiredReleaseSha256": "8ed5e5e86d71af003552afc5640f806dc7f81855b980edd0ffd646fedae79385",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/waiting-destinations.ts",
+          "capturedMainSha256": "50ea90e5fc64e829604252ccc893ffffec900cc8fb3ea115b6c9ec6ca509bb46",
+          "releaseEntrySha256": "cfac0f00fee09602e959575dfb561d000ccb14c6f4468e12a03cee2a1e3cc8c0",
+          "requiredReleaseSha256": "cfac0f00fee09602e959575dfb561d000ccb14c6f4468e12a03cee2a1e3cc8c0",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "tools/qa/level-five-integration-results-20261012.json",
+          "capturedMainSha256": "dead50020355be0bc328ff4557cd40199763097a8aa01baa3f8944d22492a8d5",
+          "releaseEntrySha256": "d35fda40e345ec9ff70a8797854acf66161cc7743f0a052cdbc5ba66ccffa505",
+          "requiredReleaseSha256": "30f42ea7e6d0f8a90653dd4415fe6fced59f4222b0842eeb0456394afbec3fd2",
+          "reason": "Local native Level 5 result regenerated and published only after guarded verification."
+        }
+      ],
+      "deltas": [
+        {
+          "path": "apps/player/src/session/cloud/codecJson.ts",
+          "beforeSha256": "d490196e1988db2f39fc66df0589b768fd10930803afcbc568265e1910ceaf3d",
+          "afterSha256": "0994becd5f0022d2489de303987a6bb6a4c590fb45aea958a0856dcac4267c7a"
+        },
+        {
+          "path": "apps/player/src/session/cloud/codecTasks.ts",
+          "beforeSha256": "e14545e511c98216936077fcb9486984453ba5e188be87fd8bb3fe252b2fc48d",
+          "afterSha256": "a0940aeb5763eb483ba5e53a16bf3c2929196140d3afb32aa68f541f569500b6"
+        },
+        {
+          "path": "apps/player/src/session/cloud/codecWorker.ts",
+          "beforeSha256": "b94c39352ca1312981b45fa7aca6b6b2f37507cd85500902b63975ee902413f8",
+          "afterSha256": "2cfec1b07b79bc2657b97dccadfe484bcf4518c82fe9cf7f52f80a52b09e4221"
+        },
+        {
+          "path": "apps/player/src/session/cloud/gameSession.ts",
+          "beforeSha256": "0206398affa8453f213567f1844ca9c44dcbb34dcf16a6ff8e1c32bcdc3fed36",
+          "afterSha256": "73ba55e590d2dfb654bc56d5ec50653adeff312212272211a3ab76b3744c7ad5"
+        },
+        {
+          "path": "apps/player/src/session/cloud/journalCodec.ts",
+          "beforeSha256": "022da6f8661435bcfb38fb7d7549e1bb7ef657d8648feb247df5204b38accc49",
+          "afterSha256": "aecdf78cfa2bfef4ee38ff7405e98088519243fc53f7ee50acf949a428ccd396"
+        },
+        {
+          "path": "apps/player/src/session/cloud/snapshotCodec.ts",
+          "beforeSha256": "79bee1d92804cb540c96761444efa2558af60441fbcce10de681297b8d017a9b",
+          "afterSha256": "6f427b6983a1064c2bf2eec30ed2d09159d39f9c11508112e0fd08636dcec106"
+        },
+        {
+          "path": "apps/player/src/session/cloud/verifiedCopyCache.ts",
+          "beforeSha256": "f13d4cb395781226c2ce783420056e85a295809b117f826e9b6fd432f5283bc3",
+          "afterSha256": "0b46e358705008b5c63493cc46e38b3abe59edb79f196e652c54a8ea2dc52fad"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+          "beforeSha256": "0aa691598047da150b7e4cad758796686337ecba8561df505ee486f0c36d4294",
+          "afterSha256": "fca3abd6ac40e7cb34eb82419aa76f33fbb35c9e61dadb6c60de3f12a5572dc6"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.ts",
+          "beforeSha256": "b97c3af1eb6cd535cd7103bbbfd9846f65d51fc2d793fe624c7ad417d55cff28",
+          "afterSha256": "bb55f3dbc7ae50ec77bcd18ab50b8dc213f57acf218657cdc693db434b43c8a9"
+        },
+        {
+          "path": "packages/clinical-content/src/index.ts",
+          "beforeSha256": "8caff5c5f299afff6b27401b2bade3ea6d311390deecbe70052c789799f36fbb",
+          "afterSha256": "0abfabbf84d18c022bcbb58b3454585afac1a28403cb9adec3e5994b7278d68b"
+        },
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+          "beforeSha256": "74f0e5110974699c46aeb446c19a0cc60362f4d7096126e65d27a71cd377f8a5",
+          "afterSha256": "5dfcaeabd30722082a60673316b3313914d0c16dc4c6c816f84159b5a57c4167"
+        },
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.ts",
+          "beforeSha256": "af9a2c03dd1e46438f7ac0c463672a9840936ed7c8a7b091792e2912b79fca35",
+          "afterSha256": "de5c8b1f5f808361fe240ac67dda478ac1a2ade09857dd80e4347f1ef4d8c3d8"
+        },
+        {
+          "path": "packages/clinical-content/src/synthetic-content.ts",
+          "beforeSha256": "d5a603c617d3adc753351bd68511ab7495b2365f7bb32479ca9950a8e56d5458",
+          "afterSha256": "96d50250444a0f41fa6b9b77f686b5c6b2fed7fa16821ab0500a3a4443b77762"
+        },
+        {
+          "path": "packages/game-domain/src/diagnostic-timing.ts",
+          "beforeSha256": "2a8e915812e9c5bc2e5b40fcea74bdff129aa5d4fbecfef633004cf9cda48668",
+          "afterSha256": "499e069e78d1755c1f23e6ab6b29052ee072896248d792c019a1336301334d2b"
+        },
+        {
+          "path": "packages/game-domain/src/reducer.ts",
+          "beforeSha256": "a90c4a7a711abe3d06cc6f7f1e1fbc74742c96092999018b8ea9ea1aee06c045",
+          "afterSha256": "d1ce8e5a99fcca2de26b7d0e485e2f7f8cd9885d909a2ff22a993b9954abb1da"
+        },
+        {
+          "path": "packages/clinical-content/src/question-flags3-20261107.test.ts",
+          "beforeSha256": "4e86634d37150709bd616d54f7b2375b3018406f4c76342f17f668f7a7e33cef",
+          "afterSha256": "0f5faed2dce92943a8dacfc5a77a796d2905fc85dd3537670ebbf0ccfb69dfd8"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-08",
+      "milestone": "release-port23",
+      "priorFixtureSha256": "547e00d6fd5ec6c92d18e36b5559ab19c8e1ce25fa305b02796140be111dbbf8",
+      "priorPaths": [
+        {
+          "path": "apps/player/src/session/cloud/cache.ts",
+          "capturedMainSha256": "8d89ade786fb2244234a3c4a8ad6d4df805c3dc9d96280465c09c37487a3aee8",
+          "releaseEntrySha256": "6059528ebdb77c9d10a52673c16bfcf3e0d201c5aecbcad334c328174accc76c",
+          "requiredReleaseSha256": "6059528ebdb77c9d10a52673c16bfcf3e0d201c5aecbcad334c328174accc76c",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "apps/player/src/session/cloud/codecJson.ts",
+          "capturedMainSha256": "d490196e1988db2f39fc66df0589b768fd10930803afcbc568265e1910ceaf3d",
+          "releaseEntrySha256": "d490196e1988db2f39fc66df0589b768fd10930803afcbc568265e1910ceaf3d",
+          "requiredReleaseSha256": "0994becd5f0022d2489de303987a6bb6a4c590fb45aea958a0856dcac4267c7a",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "d490196e1988db2f39fc66df0589b768fd10930803afcbc568265e1910ceaf3d",
+              "previousRequirement": null,
+              "releaseAfterSha256": "0994becd5f0022d2489de303987a6bb6a4c590fb45aea958a0856dcac4267c7a"
+            }
+          ]
+        },
+        {
+          "path": "apps/player/src/session/cloud/codecTasks.ts",
+          "capturedMainSha256": "02da38b96c9aec89617df3c15e7a55f1be02311c2b2901ffb9e7fcd299fe95fc",
+          "releaseEntrySha256": "e14545e511c98216936077fcb9486984453ba5e188be87fd8bb3fe252b2fc48d",
+          "requiredReleaseSha256": "a0940aeb5763eb483ba5e53a16bf3c2929196140d3afb32aa68f541f569500b6",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "e14545e511c98216936077fcb9486984453ba5e188be87fd8bb3fe252b2fc48d",
+              "previousRequirement": "e14545e511c98216936077fcb9486984453ba5e188be87fd8bb3fe252b2fc48d",
+              "releaseAfterSha256": "a0940aeb5763eb483ba5e53a16bf3c2929196140d3afb32aa68f541f569500b6"
+            }
+          ]
+        },
+        {
+          "path": "apps/player/src/session/cloud/codecWorker.test.ts",
+          "capturedMainSha256": "949eba8198e04b47e7adc19964e11a83c4162bc9a2590d974f468c6dab822c08",
+          "releaseEntrySha256": "a7fdef005f3396f6e03b721fe9620b34826f39b895d0dd1ffeec1aa753ddc499",
+          "requiredReleaseSha256": "a7fdef005f3396f6e03b721fe9620b34826f39b895d0dd1ffeec1aa753ddc499",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "apps/player/src/session/cloud/codecWorker.ts",
+          "capturedMainSha256": "713e787708446734970277645df5e4f96c68bfb373bb5f65d15876149fd3eab1",
+          "releaseEntrySha256": "b94c39352ca1312981b45fa7aca6b6b2f37507cd85500902b63975ee902413f8",
+          "requiredReleaseSha256": "2cfec1b07b79bc2657b97dccadfe484bcf4518c82fe9cf7f52f80a52b09e4221",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "b94c39352ca1312981b45fa7aca6b6b2f37507cd85500902b63975ee902413f8",
+              "previousRequirement": "b94c39352ca1312981b45fa7aca6b6b2f37507cd85500902b63975ee902413f8",
+              "releaseAfterSha256": "2cfec1b07b79bc2657b97dccadfe484bcf4518c82fe9cf7f52f80a52b09e4221"
+            }
+          ]
+        },
+        {
+          "path": "apps/player/src/session/cloud/codecWorkerNative.test.ts",
+          "capturedMainSha256": "b7814cde78258b6fd3292322e64e71a7107d032cadd7ca6c1fdb1a5cb627496b",
+          "releaseEntrySha256": "03f6279df29508e3ebd09f45237bd913d758cadcedfe1794e35e525b1920b857",
+          "requiredReleaseSha256": "03f6279df29508e3ebd09f45237bd913d758cadcedfe1794e35e525b1920b857",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "apps/player/src/session/cloud/coordinator.ts",
+          "capturedMainSha256": "e1cd710a3c228da271b5b069d4efa4941bd799ca8472ef4329ad41353e3fd03e",
+          "releaseEntrySha256": "1216cb52b14cd030f8ee9c2592c123c1e21d16ce581c2a57e28ba8257f57d998",
+          "requiredReleaseSha256": "1216cb52b14cd030f8ee9c2592c123c1e21d16ce581c2a57e28ba8257f57d998",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "apps/player/src/session/cloud/entryStorage.ts",
+          "capturedMainSha256": "a01b6c9abcf932efb2666a45f473171eafc2d6e2b1902428b8d9238ee7f79956",
+          "releaseEntrySha256": "145c366632ec0f9d6210325f1b6312e6d31194e27d56fcc75fec24d5a2d56dd9",
+          "requiredReleaseSha256": "145c366632ec0f9d6210325f1b6312e6d31194e27d56fcc75fec24d5a2d56dd9",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "apps/player/src/session/cloud/gameSession.test.tsx",
+          "capturedMainSha256": "a784f70204cc3d07ea5268f82352186f1352062d0e4097ed7d704e0e6bb921d0",
+          "releaseEntrySha256": "30359b5246fad657539a2d83d4c9dc3f08a644e833b9d48bb06046c9d4d9545d",
+          "requiredReleaseSha256": "30359b5246fad657539a2d83d4c9dc3f08a644e833b9d48bb06046c9d4d9545d",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "apps/player/src/session/cloud/gameSession.ts",
+          "capturedMainSha256": "c51e1175226a2c9be2c9270df9afd8e6417c9e945bf84630403115b4e48d4e7f",
+          "releaseEntrySha256": "0206398affa8453f213567f1844ca9c44dcbb34dcf16a6ff8e1c32bcdc3fed36",
+          "requiredReleaseSha256": "73ba55e590d2dfb654bc56d5ec50653adeff312212272211a3ab76b3744c7ad5",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "0206398affa8453f213567f1844ca9c44dcbb34dcf16a6ff8e1c32bcdc3fed36",
+              "previousRequirement": "0206398affa8453f213567f1844ca9c44dcbb34dcf16a6ff8e1c32bcdc3fed36",
+              "releaseAfterSha256": "73ba55e590d2dfb654bc56d5ec50653adeff312212272211a3ab76b3744c7ad5"
+            }
+          ]
+        },
+        {
+          "path": "apps/player/src/session/cloud/journalCodec.ts",
+          "capturedMainSha256": "21b4da1c5b68beb61f15accb70bd59de363305c443be274343ed0b8d01db796b",
+          "releaseEntrySha256": "022da6f8661435bcfb38fb7d7549e1bb7ef657d8648feb247df5204b38accc49",
+          "requiredReleaseSha256": "aecdf78cfa2bfef4ee38ff7405e98088519243fc53f7ee50acf949a428ccd396",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "022da6f8661435bcfb38fb7d7549e1bb7ef657d8648feb247df5204b38accc49",
+              "previousRequirement": "022da6f8661435bcfb38fb7d7549e1bb7ef657d8648feb247df5204b38accc49",
+              "releaseAfterSha256": "aecdf78cfa2bfef4ee38ff7405e98088519243fc53f7ee50acf949a428ccd396"
+            }
+          ]
+        },
+        {
+          "path": "apps/player/src/session/cloud/separateCampaign.test.ts",
+          "capturedMainSha256": "11239e1e38d1a8a8933b74d83201bde040050bd2dd1cbd76d5cd8d34269fe254",
+          "releaseEntrySha256": "5c4787932548881460442e4d91a2e97426e5ee0995b17730cbe5b5f98194dfb4",
+          "requiredReleaseSha256": "5c4787932548881460442e4d91a2e97426e5ee0995b17730cbe5b5f98194dfb4",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "apps/player/src/session/cloud/snapshotCodec.ts",
+          "capturedMainSha256": "3dc0c5b77ab776e396fe1d77ed6c0b07e8e3f516f4f209cafda106d4291dd18e",
+          "releaseEntrySha256": "79bee1d92804cb540c96761444efa2558af60441fbcce10de681297b8d017a9b",
+          "requiredReleaseSha256": "6f427b6983a1064c2bf2eec30ed2d09159d39f9c11508112e0fd08636dcec106",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "79bee1d92804cb540c96761444efa2558af60441fbcce10de681297b8d017a9b",
+              "previousRequirement": "79bee1d92804cb540c96761444efa2558af60441fbcce10de681297b8d017a9b",
+              "releaseAfterSha256": "6f427b6983a1064c2bf2eec30ed2d09159d39f9c11508112e0fd08636dcec106"
+            }
+          ]
+        },
+        {
+          "path": "apps/player/src/session/cloud/tickPerformanceTestSupport.ts",
+          "capturedMainSha256": "802984dc74613b439e7bf8648b8a1acfcadc3ef4d1ea31c0b0a9d4fdf67f1497",
+          "releaseEntrySha256": "3774fe630bbd9ba4993355d7be645e039cd22b9e35346359e5d862e6f2e8d9a4",
+          "requiredReleaseSha256": "3774fe630bbd9ba4993355d7be645e039cd22b9e35346359e5d862e6f2e8d9a4",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "apps/player/src/session/cloud/verifiedCopyCache.ts",
+          "capturedMainSha256": "f13d4cb395781226c2ce783420056e85a295809b117f826e9b6fd432f5283bc3",
+          "releaseEntrySha256": "f13d4cb395781226c2ce783420056e85a295809b117f826e9b6fd432f5283bc3",
+          "requiredReleaseSha256": "0b46e358705008b5c63493cc46e38b3abe59edb79f196e652c54a8ea2dc52fad",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "f13d4cb395781226c2ce783420056e85a295809b117f826e9b6fd432f5283bc3",
+              "previousRequirement": null,
+              "releaseAfterSha256": "0b46e358705008b5c63493cc46e38b3abe59edb79f196e652c54a8ea2dc52fad"
+            }
+          ]
+        },
+        {
+          "path": "apps/player/src/session/cloud/watchdogs.test.ts",
+          "capturedMainSha256": "b65aa34ae783a4edbfdf197c1faa6ce85a900be129583b1b0672745b6f2a7c12",
+          "releaseEntrySha256": "b0ad5bcc798b40f3f6c44fd6f0cf72e045994d0c39b999b8084129d70edfd86c",
+          "requiredReleaseSha256": "b0ad5bcc798b40f3f6c44fd6f0cf72e045994d0c39b999b8084129d70edfd86c",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/balance-config/src/guidance-tips.ts",
+          "capturedMainSha256": "5148bcde642c4092883e847731628d9278a5eb9e8fc89534778744bb5efcadc2",
+          "releaseEntrySha256": "2563d44cc6921094320efcbaab996c9673f190dad60470706305f7944efeb9c3",
+          "requiredReleaseSha256": "2563d44cc6921094320efcbaab996c9673f190dad60470706305f7944efeb9c3",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+          "capturedMainSha256": "d90694e852366f715b58f4986dfcdd016aeda4cecea1126537e97214ac4e5c54",
+          "releaseEntrySha256": "0aa691598047da150b7e4cad758796686337ecba8561df505ee486f0c36d4294",
+          "requiredReleaseSha256": "fca3abd6ac40e7cb34eb82419aa76f33fbb35c9e61dadb6c60de3f12a5572dc6",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "0aa691598047da150b7e4cad758796686337ecba8561df505ee486f0c36d4294",
+              "previousRequirement": null,
+              "releaseAfterSha256": "fca3abd6ac40e7cb34eb82419aa76f33fbb35c9e61dadb6c60de3f12a5572dc6"
+            }
+          ]
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.ts",
+          "capturedMainSha256": "37b65085cf5d41a543fea68ba3bed0f82ebd8277f345c53e2957d54a1647d63d",
+          "releaseEntrySha256": "b97c3af1eb6cd535cd7103bbbfd9846f65d51fc2d793fe624c7ad417d55cff28",
+          "requiredReleaseSha256": "bb55f3dbc7ae50ec77bcd18ab50b8dc213f57acf218657cdc693db434b43c8a9",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "b97c3af1eb6cd535cd7103bbbfd9846f65d51fc2d793fe624c7ad417d55cff28",
+              "previousRequirement": null,
+              "releaseAfterSha256": "bb55f3dbc7ae50ec77bcd18ab50b8dc213f57acf218657cdc693db434b43c8a9"
+            }
+          ]
+        },
+        {
+          "path": "packages/clinical-content/src/index.ts",
+          "capturedMainSha256": "f22453a850aa22d4ffba37f05710e8abfb43784547f46cbb28397a76e2181e6b",
+          "releaseEntrySha256": "8caff5c5f299afff6b27401b2bade3ea6d311390deecbe70052c789799f36fbb",
+          "requiredReleaseSha256": "0abfabbf84d18c022bcbb58b3454585afac1a28403cb9adec3e5994b7278d68b",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "8caff5c5f299afff6b27401b2bade3ea6d311390deecbe70052c789799f36fbb",
+              "previousRequirement": null,
+              "releaseAfterSha256": "0abfabbf84d18c022bcbb58b3454585afac1a28403cb9adec3e5994b7278d68b"
+            }
+          ]
+        },
+        {
+          "path": "packages/clinical-content/src/question-flags3-20261107.test.ts",
+          "capturedMainSha256": "ab63b178dda0d261bd5a9ba6c0dd7ce9813553c56b3b3e4c3bb3e89600f1107b",
+          "releaseEntrySha256": "4e86634d37150709bd616d54f7b2375b3018406f4c76342f17f668f7a7e33cef",
+          "requiredReleaseSha256": "0f5faed2dce92943a8dacfc5a77a796d2905fc85dd3537670ebbf0ccfb69dfd8",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "4e86634d37150709bd616d54f7b2375b3018406f4c76342f17f668f7a7e33cef",
+              "previousRequirement": "4e86634d37150709bd616d54f7b2375b3018406f4c76342f17f668f7a7e33cef",
+              "releaseAfterSha256": "0f5faed2dce92943a8dacfc5a77a796d2905fc85dd3537670ebbf0ccfb69dfd8"
+            }
+          ]
+        },
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+          "capturedMainSha256": "45b33c956c8ef2f4df61a035d8d34cb70f63d0ff0348c9ff84ea9e8300107676",
+          "releaseEntrySha256": "74f0e5110974699c46aeb446c19a0cc60362f4d7096126e65d27a71cd377f8a5",
+          "requiredReleaseSha256": "5dfcaeabd30722082a60673316b3313914d0c16dc4c6c816f84159b5a57c4167",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "74f0e5110974699c46aeb446c19a0cc60362f4d7096126e65d27a71cd377f8a5",
+              "previousRequirement": null,
+              "releaseAfterSha256": "5dfcaeabd30722082a60673316b3313914d0c16dc4c6c816f84159b5a57c4167"
+            }
+          ]
+        },
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.ts",
+          "capturedMainSha256": "50dadc0a2daf64704b8aa599e23051692ad81bc9e3462772870cd18bb935a6c0",
+          "releaseEntrySha256": "af9a2c03dd1e46438f7ac0c463672a9840936ed7c8a7b091792e2912b79fca35",
+          "requiredReleaseSha256": "de5c8b1f5f808361fe240ac67dda478ac1a2ade09857dd80e4347f1ef4d8c3d8",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "af9a2c03dd1e46438f7ac0c463672a9840936ed7c8a7b091792e2912b79fca35",
+              "previousRequirement": null,
+              "releaseAfterSha256": "de5c8b1f5f808361fe240ac67dda478ac1a2ade09857dd80e4347f1ef4d8c3d8"
+            }
+          ]
+        },
+        {
+          "path": "packages/clinical-content/src/synthetic-content.ts",
+          "capturedMainSha256": "819c38fce01be9684a8ef35e09c5bb64978dc710993862dbcf066b2c5f9392ed",
+          "releaseEntrySha256": "d5a603c617d3adc753351bd68511ab7495b2365f7bb32479ca9950a8e56d5458",
+          "requiredReleaseSha256": "96d50250444a0f41fa6b9b77f686b5c6b2fed7fa16821ab0500a3a4443b77762",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "d5a603c617d3adc753351bd68511ab7495b2365f7bb32479ca9950a8e56d5458",
+              "previousRequirement": null,
+              "releaseAfterSha256": "96d50250444a0f41fa6b9b77f686b5c6b2fed7fa16821ab0500a3a4443b77762"
+            }
+          ]
+        },
+        {
+          "path": "packages/game-domain/src/diagnostic-timing.ts",
+          "capturedMainSha256": "2a8e915812e9c5bc2e5b40fcea74bdff129aa5d4fbecfef633004cf9cda48668",
+          "releaseEntrySha256": "2a8e915812e9c5bc2e5b40fcea74bdff129aa5d4fbecfef633004cf9cda48668",
+          "requiredReleaseSha256": "499e069e78d1755c1f23e6ab6b29052ee072896248d792c019a1336301334d2b",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "2a8e915812e9c5bc2e5b40fcea74bdff129aa5d4fbecfef633004cf9cda48668",
+              "previousRequirement": null,
+              "releaseAfterSha256": "499e069e78d1755c1f23e6ab6b29052ee072896248d792c019a1336301334d2b"
+            }
+          ]
+        },
+        {
+          "path": "packages/game-domain/src/facilityNavigation.ts",
+          "capturedMainSha256": "1f0a2a7ce80349228236d6f45a7eb643eaaaade1de3aa88fad58a88811001751",
+          "releaseEntrySha256": "e0e01ae9a2afa519fd7764f4092542b5789828774dd434feaa3c6c50df807338",
+          "requiredReleaseSha256": "e0e01ae9a2afa519fd7764f4092542b5789828774dd434feaa3c6c50df807338",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/facilityNavigationReference.testSupport.ts",
+          "capturedMainSha256": "241b15e93a44b8cb5074b03901137d43ba3b4ff3bc30640e9b8aa51ec9999a1e",
+          "releaseEntrySha256": "dc378df6455e072342e6d1a1426ac7dd1e2251b4297de9a2530565c70ce3f9b5",
+          "requiredReleaseSha256": "dc378df6455e072342e6d1a1426ac7dd1e2251b4297de9a2530565c70ce3f9b5",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalEvidenceOwnership.test.ts",
+          "capturedMainSha256": "616c33508875a7e69ebe46934c23ca82fd70259b89c71ef2f694207a5b8c55e9",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalEvidenceOwnership.ts",
+          "capturedMainSha256": "2f0c4d8c7fa23caef65468dd12d0303f6a5108e3cd1c204835c67afdb88c603e",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalEvidenceProjection.test.ts",
+          "capturedMainSha256": "eb95e035bf27416029d0ef55066917227e06842ffd2777cc4de6cd0f51ebd302",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalEvidenceProjection.ts",
+          "capturedMainSha256": "b1aa68e65c4b3eb637210f3135ff422a674ea1b23a3a4ef1d49e837df06e35f0",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalEvidenceReferences.test.ts",
+          "capturedMainSha256": "9df3c7c6403696b0c9ca9d6cfc963359eb4c647f440b608cded0e08430d1de7f",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalEvidenceReferences.ts",
+          "capturedMainSha256": "2ea432e4cf405850dea46fce33741c1c60df385b8e36cc40be0eaa41737d2414",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalEvidenceRetirement.test.ts",
+          "capturedMainSha256": "089222355f087c01507ba94601ac2bcff0711ee14d6fec1c1eb0490c1732a98a",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalEvidenceRetirement.ts",
+          "capturedMainSha256": "aeb02c98d83c96aea41180f7f920ddeaa766db5695662e11befc8115a38ecc29",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalEvidenceValues.test.ts",
+          "capturedMainSha256": "60fcc314c5d599f2f602c176a759613570efd8f745715b19f730ba82a3454a37",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalEvidenceValues.ts",
+          "capturedMainSha256": "5e3cd39b27f28f1cef1974789a408df1a59aa83420c51385681bf74c30c05eff",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalTickClone.test.ts",
+          "capturedMainSha256": "2fe9bd49de141c5a750cf0f3a4df13aba44398727e87a38fd304fe23b7e9bcb6",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalTickClone.ts",
+          "capturedMainSha256": "e0b58ddce91563977773f6f320085617e63c8765181711f05df7be817e31467f",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/readonlyProjectionMemo.ts",
+          "capturedMainSha256": "9066534fa172c45069968a0a0ae44a02dc7941a715e8f53bb6f2739694008915",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/reducer.ts",
+          "capturedMainSha256": "1831d01d1db5d02f9bc69be1cb6f48dc391359f6b67958cc35bfb803c06474bb",
+          "releaseEntrySha256": "a90c4a7a711abe3d06cc6f7f1e1fbc74742c96092999018b8ea9ea1aee06c045",
+          "requiredReleaseSha256": "d1ce8e5a99fcca2de26b7d0e485e2f7f8cd9885d909a2ff22a993b9954abb1da",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "a90c4a7a711abe3d06cc6f7f1e1fbc74742c96092999018b8ea9ea1aee06c045",
+              "previousRequirement": "a90c4a7a711abe3d06cc6f7f1e1fbc74742c96092999018b8ea9ea1aee06c045",
+              "releaseAfterSha256": "d1ce8e5a99fcca2de26b7d0e485e2f7f8cd9885d909a2ff22a993b9954abb1da"
+            }
+          ]
+        },
+        {
+          "path": "packages/game-domain/src/routineAvailabilityReference.testSupport.ts",
+          "capturedMainSha256": "7064ddae64270833158cb506c062764487131b21b8bac0751be16944f31ecf13",
+          "releaseEntrySha256": "d7bff621b044a210088c5c8163569a24c0177c9fe6a615a2a1c022302b29cd46",
+          "requiredReleaseSha256": "d7bff621b044a210088c5c8163569a24c0177c9fe6a615a2a1c022302b29cd46",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/settledStateQueries.test.ts",
+          "capturedMainSha256": "9752297950997b33c170cdc6799e9ee9a0a1e09d26ea495dd838819352fb2988",
+          "releaseEntrySha256": "1636b5f35f24f72a7c2fed31a3d0d75f9ad956027a09a10e681a09fbf345934c",
+          "requiredReleaseSha256": "1636b5f35f24f72a7c2fed31a3d0d75f9ad956027a09a10e681a09fbf345934c",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/settledStateQueries.ts",
+          "capturedMainSha256": "7b0c86d34bebced6c58f5bb6581786f1196b3b4c8feaf0b73e3f495300bfb071",
+          "releaseEntrySha256": "8ed5e5e86d71af003552afc5640f806dc7f81855b980edd0ffd646fedae79385",
+          "requiredReleaseSha256": "8ed5e5e86d71af003552afc5640f806dc7f81855b980edd0ffd646fedae79385",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/waiting-destinations.ts",
+          "capturedMainSha256": "50ea90e5fc64e829604252ccc893ffffec900cc8fb3ea115b6c9ec6ca509bb46",
+          "releaseEntrySha256": "cfac0f00fee09602e959575dfb561d000ccb14c6f4468e12a03cee2a1e3cc8c0",
+          "requiredReleaseSha256": "cfac0f00fee09602e959575dfb561d000ccb14c6f4468e12a03cee2a1e3cc8c0",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "tools/qa/level-five-integration-results-20261012.json",
+          "capturedMainSha256": "dead50020355be0bc328ff4557cd40199763097a8aa01baa3f8944d22492a8d5",
+          "releaseEntrySha256": "d35fda40e345ec9ff70a8797854acf66161cc7743f0a052cdbc5ba66ccffa505",
+          "requiredReleaseSha256": "30f42ea7e6d0f8a90653dd4415fe6fced59f4222b0842eeb0456394afbec3fd2",
+          "reason": "Local native Level 5 result regenerated and published only after guarded verification."
+        }
+      ],
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-flags3-20261107.test.ts",
+          "beforeSha256": "4e86634d37150709bd616d54f7b2375b3018406f4c76342f17f668f7a7e33cef",
+          "afterSha256": "a5b911b99150462b1b8ce392681fc2d118b09121d3ccc23b8b23f8df5b0350ca"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-08",
+      "milestone": "release-port23",
+      "priorFixtureSha256": "304946ef2c45f9ba6143e706a518e0adabcf04e6883a1203ad32fce74a74c8d2",
+      "priorPaths": [
+        {
+          "path": "apps/player/src/session/cloud/cache.ts",
+          "capturedMainSha256": "8d89ade786fb2244234a3c4a8ad6d4df805c3dc9d96280465c09c37487a3aee8",
+          "releaseEntrySha256": "6059528ebdb77c9d10a52673c16bfcf3e0d201c5aecbcad334c328174accc76c",
+          "requiredReleaseSha256": "6059528ebdb77c9d10a52673c16bfcf3e0d201c5aecbcad334c328174accc76c",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "apps/player/src/session/cloud/codecJson.ts",
+          "capturedMainSha256": "d490196e1988db2f39fc66df0589b768fd10930803afcbc568265e1910ceaf3d",
+          "releaseEntrySha256": "d490196e1988db2f39fc66df0589b768fd10930803afcbc568265e1910ceaf3d",
+          "requiredReleaseSha256": "0994becd5f0022d2489de303987a6bb6a4c590fb45aea958a0856dcac4267c7a",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "d490196e1988db2f39fc66df0589b768fd10930803afcbc568265e1910ceaf3d",
+              "previousRequirement": null,
+              "releaseAfterSha256": "0994becd5f0022d2489de303987a6bb6a4c590fb45aea958a0856dcac4267c7a"
+            }
+          ]
+        },
+        {
+          "path": "apps/player/src/session/cloud/codecTasks.ts",
+          "capturedMainSha256": "02da38b96c9aec89617df3c15e7a55f1be02311c2b2901ffb9e7fcd299fe95fc",
+          "releaseEntrySha256": "e14545e511c98216936077fcb9486984453ba5e188be87fd8bb3fe252b2fc48d",
+          "requiredReleaseSha256": "a0940aeb5763eb483ba5e53a16bf3c2929196140d3afb32aa68f541f569500b6",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "e14545e511c98216936077fcb9486984453ba5e188be87fd8bb3fe252b2fc48d",
+              "previousRequirement": "e14545e511c98216936077fcb9486984453ba5e188be87fd8bb3fe252b2fc48d",
+              "releaseAfterSha256": "a0940aeb5763eb483ba5e53a16bf3c2929196140d3afb32aa68f541f569500b6"
+            }
+          ]
+        },
+        {
+          "path": "apps/player/src/session/cloud/codecWorker.test.ts",
+          "capturedMainSha256": "949eba8198e04b47e7adc19964e11a83c4162bc9a2590d974f468c6dab822c08",
+          "releaseEntrySha256": "a7fdef005f3396f6e03b721fe9620b34826f39b895d0dd1ffeec1aa753ddc499",
+          "requiredReleaseSha256": "a7fdef005f3396f6e03b721fe9620b34826f39b895d0dd1ffeec1aa753ddc499",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "apps/player/src/session/cloud/codecWorker.ts",
+          "capturedMainSha256": "713e787708446734970277645df5e4f96c68bfb373bb5f65d15876149fd3eab1",
+          "releaseEntrySha256": "b94c39352ca1312981b45fa7aca6b6b2f37507cd85500902b63975ee902413f8",
+          "requiredReleaseSha256": "2cfec1b07b79bc2657b97dccadfe484bcf4518c82fe9cf7f52f80a52b09e4221",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "b94c39352ca1312981b45fa7aca6b6b2f37507cd85500902b63975ee902413f8",
+              "previousRequirement": "b94c39352ca1312981b45fa7aca6b6b2f37507cd85500902b63975ee902413f8",
+              "releaseAfterSha256": "2cfec1b07b79bc2657b97dccadfe484bcf4518c82fe9cf7f52f80a52b09e4221"
+            }
+          ]
+        },
+        {
+          "path": "apps/player/src/session/cloud/codecWorkerNative.test.ts",
+          "capturedMainSha256": "b7814cde78258b6fd3292322e64e71a7107d032cadd7ca6c1fdb1a5cb627496b",
+          "releaseEntrySha256": "03f6279df29508e3ebd09f45237bd913d758cadcedfe1794e35e525b1920b857",
+          "requiredReleaseSha256": "03f6279df29508e3ebd09f45237bd913d758cadcedfe1794e35e525b1920b857",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "apps/player/src/session/cloud/coordinator.ts",
+          "capturedMainSha256": "e1cd710a3c228da271b5b069d4efa4941bd799ca8472ef4329ad41353e3fd03e",
+          "releaseEntrySha256": "1216cb52b14cd030f8ee9c2592c123c1e21d16ce581c2a57e28ba8257f57d998",
+          "requiredReleaseSha256": "1216cb52b14cd030f8ee9c2592c123c1e21d16ce581c2a57e28ba8257f57d998",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "apps/player/src/session/cloud/entryStorage.ts",
+          "capturedMainSha256": "a01b6c9abcf932efb2666a45f473171eafc2d6e2b1902428b8d9238ee7f79956",
+          "releaseEntrySha256": "145c366632ec0f9d6210325f1b6312e6d31194e27d56fcc75fec24d5a2d56dd9",
+          "requiredReleaseSha256": "145c366632ec0f9d6210325f1b6312e6d31194e27d56fcc75fec24d5a2d56dd9",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "apps/player/src/session/cloud/gameSession.test.tsx",
+          "capturedMainSha256": "a784f70204cc3d07ea5268f82352186f1352062d0e4097ed7d704e0e6bb921d0",
+          "releaseEntrySha256": "30359b5246fad657539a2d83d4c9dc3f08a644e833b9d48bb06046c9d4d9545d",
+          "requiredReleaseSha256": "30359b5246fad657539a2d83d4c9dc3f08a644e833b9d48bb06046c9d4d9545d",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "apps/player/src/session/cloud/gameSession.ts",
+          "capturedMainSha256": "c51e1175226a2c9be2c9270df9afd8e6417c9e945bf84630403115b4e48d4e7f",
+          "releaseEntrySha256": "0206398affa8453f213567f1844ca9c44dcbb34dcf16a6ff8e1c32bcdc3fed36",
+          "requiredReleaseSha256": "73ba55e590d2dfb654bc56d5ec50653adeff312212272211a3ab76b3744c7ad5",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "0206398affa8453f213567f1844ca9c44dcbb34dcf16a6ff8e1c32bcdc3fed36",
+              "previousRequirement": "0206398affa8453f213567f1844ca9c44dcbb34dcf16a6ff8e1c32bcdc3fed36",
+              "releaseAfterSha256": "73ba55e590d2dfb654bc56d5ec50653adeff312212272211a3ab76b3744c7ad5"
+            }
+          ]
+        },
+        {
+          "path": "apps/player/src/session/cloud/journalCodec.ts",
+          "capturedMainSha256": "21b4da1c5b68beb61f15accb70bd59de363305c443be274343ed0b8d01db796b",
+          "releaseEntrySha256": "022da6f8661435bcfb38fb7d7549e1bb7ef657d8648feb247df5204b38accc49",
+          "requiredReleaseSha256": "aecdf78cfa2bfef4ee38ff7405e98088519243fc53f7ee50acf949a428ccd396",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "022da6f8661435bcfb38fb7d7549e1bb7ef657d8648feb247df5204b38accc49",
+              "previousRequirement": "022da6f8661435bcfb38fb7d7549e1bb7ef657d8648feb247df5204b38accc49",
+              "releaseAfterSha256": "aecdf78cfa2bfef4ee38ff7405e98088519243fc53f7ee50acf949a428ccd396"
+            }
+          ]
+        },
+        {
+          "path": "apps/player/src/session/cloud/separateCampaign.test.ts",
+          "capturedMainSha256": "11239e1e38d1a8a8933b74d83201bde040050bd2dd1cbd76d5cd8d34269fe254",
+          "releaseEntrySha256": "5c4787932548881460442e4d91a2e97426e5ee0995b17730cbe5b5f98194dfb4",
+          "requiredReleaseSha256": "5c4787932548881460442e4d91a2e97426e5ee0995b17730cbe5b5f98194dfb4",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "apps/player/src/session/cloud/snapshotCodec.ts",
+          "capturedMainSha256": "3dc0c5b77ab776e396fe1d77ed6c0b07e8e3f516f4f209cafda106d4291dd18e",
+          "releaseEntrySha256": "79bee1d92804cb540c96761444efa2558af60441fbcce10de681297b8d017a9b",
+          "requiredReleaseSha256": "6f427b6983a1064c2bf2eec30ed2d09159d39f9c11508112e0fd08636dcec106",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "79bee1d92804cb540c96761444efa2558af60441fbcce10de681297b8d017a9b",
+              "previousRequirement": "79bee1d92804cb540c96761444efa2558af60441fbcce10de681297b8d017a9b",
+              "releaseAfterSha256": "6f427b6983a1064c2bf2eec30ed2d09159d39f9c11508112e0fd08636dcec106"
+            }
+          ]
+        },
+        {
+          "path": "apps/player/src/session/cloud/tickPerformanceTestSupport.ts",
+          "capturedMainSha256": "802984dc74613b439e7bf8648b8a1acfcadc3ef4d1ea31c0b0a9d4fdf67f1497",
+          "releaseEntrySha256": "3774fe630bbd9ba4993355d7be645e039cd22b9e35346359e5d862e6f2e8d9a4",
+          "requiredReleaseSha256": "3774fe630bbd9ba4993355d7be645e039cd22b9e35346359e5d862e6f2e8d9a4",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "apps/player/src/session/cloud/verifiedCopyCache.ts",
+          "capturedMainSha256": "f13d4cb395781226c2ce783420056e85a295809b117f826e9b6fd432f5283bc3",
+          "releaseEntrySha256": "f13d4cb395781226c2ce783420056e85a295809b117f826e9b6fd432f5283bc3",
+          "requiredReleaseSha256": "0b46e358705008b5c63493cc46e38b3abe59edb79f196e652c54a8ea2dc52fad",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "f13d4cb395781226c2ce783420056e85a295809b117f826e9b6fd432f5283bc3",
+              "previousRequirement": null,
+              "releaseAfterSha256": "0b46e358705008b5c63493cc46e38b3abe59edb79f196e652c54a8ea2dc52fad"
+            }
+          ]
+        },
+        {
+          "path": "apps/player/src/session/cloud/watchdogs.test.ts",
+          "capturedMainSha256": "b65aa34ae783a4edbfdf197c1faa6ce85a900be129583b1b0672745b6f2a7c12",
+          "releaseEntrySha256": "b0ad5bcc798b40f3f6c44fd6f0cf72e045994d0c39b999b8084129d70edfd86c",
+          "requiredReleaseSha256": "b0ad5bcc798b40f3f6c44fd6f0cf72e045994d0c39b999b8084129d70edfd86c",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/balance-config/src/guidance-tips.ts",
+          "capturedMainSha256": "5148bcde642c4092883e847731628d9278a5eb9e8fc89534778744bb5efcadc2",
+          "releaseEntrySha256": "2563d44cc6921094320efcbaab996c9673f190dad60470706305f7944efeb9c3",
+          "requiredReleaseSha256": "2563d44cc6921094320efcbaab996c9673f190dad60470706305f7944efeb9c3",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+          "capturedMainSha256": "d90694e852366f715b58f4986dfcdd016aeda4cecea1126537e97214ac4e5c54",
+          "releaseEntrySha256": "0aa691598047da150b7e4cad758796686337ecba8561df505ee486f0c36d4294",
+          "requiredReleaseSha256": "fca3abd6ac40e7cb34eb82419aa76f33fbb35c9e61dadb6c60de3f12a5572dc6",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "0aa691598047da150b7e4cad758796686337ecba8561df505ee486f0c36d4294",
+              "previousRequirement": null,
+              "releaseAfterSha256": "fca3abd6ac40e7cb34eb82419aa76f33fbb35c9e61dadb6c60de3f12a5572dc6"
+            }
+          ]
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.ts",
+          "capturedMainSha256": "37b65085cf5d41a543fea68ba3bed0f82ebd8277f345c53e2957d54a1647d63d",
+          "releaseEntrySha256": "b97c3af1eb6cd535cd7103bbbfd9846f65d51fc2d793fe624c7ad417d55cff28",
+          "requiredReleaseSha256": "bb55f3dbc7ae50ec77bcd18ab50b8dc213f57acf218657cdc693db434b43c8a9",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "b97c3af1eb6cd535cd7103bbbfd9846f65d51fc2d793fe624c7ad417d55cff28",
+              "previousRequirement": null,
+              "releaseAfterSha256": "bb55f3dbc7ae50ec77bcd18ab50b8dc213f57acf218657cdc693db434b43c8a9"
+            }
+          ]
+        },
+        {
+          "path": "packages/clinical-content/src/index.ts",
+          "capturedMainSha256": "f22453a850aa22d4ffba37f05710e8abfb43784547f46cbb28397a76e2181e6b",
+          "releaseEntrySha256": "8caff5c5f299afff6b27401b2bade3ea6d311390deecbe70052c789799f36fbb",
+          "requiredReleaseSha256": "0abfabbf84d18c022bcbb58b3454585afac1a28403cb9adec3e5994b7278d68b",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "8caff5c5f299afff6b27401b2bade3ea6d311390deecbe70052c789799f36fbb",
+              "previousRequirement": null,
+              "releaseAfterSha256": "0abfabbf84d18c022bcbb58b3454585afac1a28403cb9adec3e5994b7278d68b"
+            }
+          ]
+        },
+        {
+          "path": "packages/clinical-content/src/question-flags3-20261107.test.ts",
+          "capturedMainSha256": "ab63b178dda0d261bd5a9ba6c0dd7ce9813553c56b3b3e4c3bb3e89600f1107b",
+          "releaseEntrySha256": "4e86634d37150709bd616d54f7b2375b3018406f4c76342f17f668f7a7e33cef",
+          "requiredReleaseSha256": "a5b911b99150462b1b8ce392681fc2d118b09121d3ccc23b8b23f8df5b0350ca",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "4e86634d37150709bd616d54f7b2375b3018406f4c76342f17f668f7a7e33cef",
+              "previousRequirement": "4e86634d37150709bd616d54f7b2375b3018406f4c76342f17f668f7a7e33cef",
+              "releaseAfterSha256": "0f5faed2dce92943a8dacfc5a77a796d2905fc85dd3537670ebbf0ccfb69dfd8"
+            },
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "4e86634d37150709bd616d54f7b2375b3018406f4c76342f17f668f7a7e33cef",
+              "previousRequirement": "0f5faed2dce92943a8dacfc5a77a796d2905fc85dd3537670ebbf0ccfb69dfd8",
+              "releaseAfterSha256": "a5b911b99150462b1b8ce392681fc2d118b09121d3ccc23b8b23f8df5b0350ca"
+            }
+          ]
+        },
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+          "capturedMainSha256": "45b33c956c8ef2f4df61a035d8d34cb70f63d0ff0348c9ff84ea9e8300107676",
+          "releaseEntrySha256": "74f0e5110974699c46aeb446c19a0cc60362f4d7096126e65d27a71cd377f8a5",
+          "requiredReleaseSha256": "5dfcaeabd30722082a60673316b3313914d0c16dc4c6c816f84159b5a57c4167",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "74f0e5110974699c46aeb446c19a0cc60362f4d7096126e65d27a71cd377f8a5",
+              "previousRequirement": null,
+              "releaseAfterSha256": "5dfcaeabd30722082a60673316b3313914d0c16dc4c6c816f84159b5a57c4167"
+            }
+          ]
+        },
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.ts",
+          "capturedMainSha256": "50dadc0a2daf64704b8aa599e23051692ad81bc9e3462772870cd18bb935a6c0",
+          "releaseEntrySha256": "af9a2c03dd1e46438f7ac0c463672a9840936ed7c8a7b091792e2912b79fca35",
+          "requiredReleaseSha256": "de5c8b1f5f808361fe240ac67dda478ac1a2ade09857dd80e4347f1ef4d8c3d8",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "af9a2c03dd1e46438f7ac0c463672a9840936ed7c8a7b091792e2912b79fca35",
+              "previousRequirement": null,
+              "releaseAfterSha256": "de5c8b1f5f808361fe240ac67dda478ac1a2ade09857dd80e4347f1ef4d8c3d8"
+            }
+          ]
+        },
+        {
+          "path": "packages/clinical-content/src/synthetic-content.ts",
+          "capturedMainSha256": "819c38fce01be9684a8ef35e09c5bb64978dc710993862dbcf066b2c5f9392ed",
+          "releaseEntrySha256": "d5a603c617d3adc753351bd68511ab7495b2365f7bb32479ca9950a8e56d5458",
+          "requiredReleaseSha256": "96d50250444a0f41fa6b9b77f686b5c6b2fed7fa16821ab0500a3a4443b77762",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "d5a603c617d3adc753351bd68511ab7495b2365f7bb32479ca9950a8e56d5458",
+              "previousRequirement": null,
+              "releaseAfterSha256": "96d50250444a0f41fa6b9b77f686b5c6b2fed7fa16821ab0500a3a4443b77762"
+            }
+          ]
+        },
+        {
+          "path": "packages/game-domain/src/diagnostic-timing.ts",
+          "capturedMainSha256": "2a8e915812e9c5bc2e5b40fcea74bdff129aa5d4fbecfef633004cf9cda48668",
+          "releaseEntrySha256": "2a8e915812e9c5bc2e5b40fcea74bdff129aa5d4fbecfef633004cf9cda48668",
+          "requiredReleaseSha256": "499e069e78d1755c1f23e6ab6b29052ee072896248d792c019a1336301334d2b",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "2a8e915812e9c5bc2e5b40fcea74bdff129aa5d4fbecfef633004cf9cda48668",
+              "previousRequirement": null,
+              "releaseAfterSha256": "499e069e78d1755c1f23e6ab6b29052ee072896248d792c019a1336301334d2b"
+            }
+          ]
+        },
+        {
+          "path": "packages/game-domain/src/facilityNavigation.ts",
+          "capturedMainSha256": "1f0a2a7ce80349228236d6f45a7eb643eaaaade1de3aa88fad58a88811001751",
+          "releaseEntrySha256": "e0e01ae9a2afa519fd7764f4092542b5789828774dd434feaa3c6c50df807338",
+          "requiredReleaseSha256": "e0e01ae9a2afa519fd7764f4092542b5789828774dd434feaa3c6c50df807338",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/facilityNavigationReference.testSupport.ts",
+          "capturedMainSha256": "241b15e93a44b8cb5074b03901137d43ba3b4ff3bc30640e9b8aa51ec9999a1e",
+          "releaseEntrySha256": "dc378df6455e072342e6d1a1426ac7dd1e2251b4297de9a2530565c70ce3f9b5",
+          "requiredReleaseSha256": "dc378df6455e072342e6d1a1426ac7dd1e2251b4297de9a2530565c70ce3f9b5",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalEvidenceOwnership.test.ts",
+          "capturedMainSha256": "616c33508875a7e69ebe46934c23ca82fd70259b89c71ef2f694207a5b8c55e9",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalEvidenceOwnership.ts",
+          "capturedMainSha256": "2f0c4d8c7fa23caef65468dd12d0303f6a5108e3cd1c204835c67afdb88c603e",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalEvidenceProjection.test.ts",
+          "capturedMainSha256": "eb95e035bf27416029d0ef55066917227e06842ffd2777cc4de6cd0f51ebd302",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalEvidenceProjection.ts",
+          "capturedMainSha256": "b1aa68e65c4b3eb637210f3135ff422a674ea1b23a3a4ef1d49e837df06e35f0",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalEvidenceReferences.test.ts",
+          "capturedMainSha256": "9df3c7c6403696b0c9ca9d6cfc963359eb4c647f440b608cded0e08430d1de7f",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalEvidenceReferences.ts",
+          "capturedMainSha256": "2ea432e4cf405850dea46fce33741c1c60df385b8e36cc40be0eaa41737d2414",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalEvidenceRetirement.test.ts",
+          "capturedMainSha256": "089222355f087c01507ba94601ac2bcff0711ee14d6fec1c1eb0490c1732a98a",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalEvidenceRetirement.ts",
+          "capturedMainSha256": "aeb02c98d83c96aea41180f7f920ddeaa766db5695662e11befc8115a38ecc29",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalEvidenceValues.test.ts",
+          "capturedMainSha256": "60fcc314c5d599f2f602c176a759613570efd8f745715b19f730ba82a3454a37",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalEvidenceValues.ts",
+          "capturedMainSha256": "5e3cd39b27f28f1cef1974789a408df1a59aa83420c51385681bf74c30c05eff",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalTickClone.test.ts",
+          "capturedMainSha256": "2fe9bd49de141c5a750cf0f3a4df13aba44398727e87a38fd304fe23b7e9bcb6",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/incrementalTickClone.ts",
+          "capturedMainSha256": "e0b58ddce91563977773f6f320085617e63c8765181711f05df7be817e31467f",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/readonlyProjectionMemo.ts",
+          "capturedMainSha256": "9066534fa172c45069968a0a0ae44a02dc7941a715e8f53bb6f2739694008915",
+          "releaseEntrySha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/reducer.ts",
+          "capturedMainSha256": "1831d01d1db5d02f9bc69be1cb6f48dc391359f6b67958cc35bfb803c06474bb",
+          "releaseEntrySha256": "a90c4a7a711abe3d06cc6f7f1e1fbc74742c96092999018b8ea9ea1aee06c045",
+          "requiredReleaseSha256": "d1ce8e5a99fcca2de26b7d0e485e2f7f8cd9885d909a2ff22a993b9954abb1da",
+          "reason": "Manager-authorized release port23: blocked-save forecast repair, exact F4-01 acceptance, strict source-guard integration or verified native Level5 metadata. No other delta permitted.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-08",
+              "releaseBeforeSha256": "a90c4a7a711abe3d06cc6f7f1e1fbc74742c96092999018b8ea9ea1aee06c045",
+              "previousRequirement": "a90c4a7a711abe3d06cc6f7f1e1fbc74742c96092999018b8ea9ea1aee06c045",
+              "releaseAfterSha256": "d1ce8e5a99fcca2de26b7d0e485e2f7f8cd9885d909a2ff22a993b9954abb1da"
+            }
+          ]
+        },
+        {
+          "path": "packages/game-domain/src/routineAvailabilityReference.testSupport.ts",
+          "capturedMainSha256": "7064ddae64270833158cb506c062764487131b21b8bac0751be16944f31ecf13",
+          "releaseEntrySha256": "d7bff621b044a210088c5c8163569a24c0177c9fe6a615a2a1c022302b29cd46",
+          "requiredReleaseSha256": "d7bff621b044a210088c5c8163569a24c0177c9fe6a615a2a1c022302b29cd46",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/settledStateQueries.test.ts",
+          "capturedMainSha256": "9752297950997b33c170cdc6799e9ee9a0a1e09d26ea495dd838819352fb2988",
+          "releaseEntrySha256": "1636b5f35f24f72a7c2fed31a3d0d75f9ad956027a09a10e681a09fbf345934c",
+          "requiredReleaseSha256": "1636b5f35f24f72a7c2fed31a3d0d75f9ad956027a09a10e681a09fbf345934c",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/settledStateQueries.ts",
+          "capturedMainSha256": "7b0c86d34bebced6c58f5bb6581786f1196b3b4c8feaf0b73e3f495300bfb071",
+          "releaseEntrySha256": "8ed5e5e86d71af003552afc5640f806dc7f81855b980edd0ffd646fedae79385",
+          "requiredReleaseSha256": "8ed5e5e86d71af003552afc5640f806dc7f81855b980edd0ffd646fedae79385",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "packages/game-domain/src/waiting-destinations.ts",
+          "capturedMainSha256": "50ea90e5fc64e829604252ccc893ffffec900cc8fb3ea115b6c9ec6ca509bb46",
+          "releaseEntrySha256": "cfac0f00fee09602e959575dfb561d000ccb14c6f4468e12a03cee2a1e3cc8c0",
+          "requiredReleaseSha256": "cfac0f00fee09602e959575dfb561d000ccb14c6f4468e12a03cee2a1e3cc8c0",
+          "reason": "Excluded main-tree source remains exact at release entry or required absence."
+        },
+        {
+          "path": "tools/qa/level-five-integration-results-20261012.json",
+          "capturedMainSha256": "dead50020355be0bc328ff4557cd40199763097a8aa01baa3f8944d22492a8d5",
+          "releaseEntrySha256": "d35fda40e345ec9ff70a8797854acf66161cc7743f0a052cdbc5ba66ccffa505",
+          "requiredReleaseSha256": "30f42ea7e6d0f8a90653dd4415fe6fced59f4222b0842eeb0456394afbec3fd2",
+          "reason": "Local native Level 5 result regenerated and published only after guarded verification."
+        }
+      ],
+      "deltas": [
+        {
+          "path": "tools/qa/level-five-integration-results-20261012.json",
+          "beforeSha256": "30f42ea7e6d0f8a90653dd4415fe6fced59f4222b0842eeb0456394afbec3fd2",
+          "afterSha256": "2af0e6a514834a4ab1daa81bdc973123c8e3f8a1cf787b8ef8d2726bca648a97"
+        }
+      ]
     }
   ]
 }

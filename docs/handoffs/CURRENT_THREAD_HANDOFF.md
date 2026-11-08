@@ -9252,3 +9252,32 @@ Private receipts/resume state: .local-dev/release-port22-20261108/.
 No owner origin/pathway change. Local/uncommitted for manager review; no push,
 install/network/agents/deploy/clinical approval.
 
+
+
+## Release port 23 / rebind 23 (2026-11-08, blocked-save repair + flags4)
+
+GS-release only. Accepted indefinite attendance / derived forecast blocked-save
+repair and F4-01 v3.r2 draft acceptance ported. 59 copied /4 hunk-ported /98
+excluded live versions; 71 public changes including coordination records. Active
+map pan/zoom, character/art and other unreleased lanes excluded. Dispositions:
+.local-dev/release-verify/port23-20261108.json. Strict historical source guards
+retain all840/844/1396 checks, immutable captures and13/13/48 required absences.
+
+Manifest134; default1141 cases/1452 nodes/606 meanings. One exact case/timing
+change, all133 prior rows and11 approvals retained; new version remains
+needs_clinician_review. Manifest SHA 0e70c49460b6f93ec6766f6f59ad10eb9e4b0e38d8745283d9fa35818d68c06c.
+
+Native journey +lower and separate exact old-content control: 26,531 commands /
+6,019,042 cents /412 completions /0 walkouts. All numbers, three reports and nine
+checkpoint bytes unchanged. Rebind23 updates only results binding/liveCap/history;
+553 inputs (411 clinical),22 history entries. Legacy evidence/launch pins/e2e
+unchanged. Synthetic266-command recovery and all4 F4 save/journal cases pass.
+
+Seven suites: 763 files /11130 passed /0 failed /1 existing skip.
+Seven typechecks,33 lint tests,boundary/launcher,player build pass. No browser
+claim; manager should check cloud recovery/Level2 and iPhone. Specific resident
+order remains unverified; no account/tester-save access. No origin/path change.
+
+Full paths/hashes/exact validation/open risks: GS028 port23 appendix. Receipts:
+.local-dev/release-port23-20261108/. Local/uncommitted; no push/install/network/
+agents/deploy/clinical approval. Manager owns release and backup.

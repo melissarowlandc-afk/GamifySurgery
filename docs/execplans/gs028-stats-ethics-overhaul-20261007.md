@@ -10842,3 +10842,412 @@ http://127.0.0.1:4173 in the intended persistent profile. No save migration.
 Work remains local and uncommitted for manager review; no push, install,
 network, agents, deploy or clinical approval. Manager owns release and backup.
 
+
+
+## Release port 23 / rebind 23 (2026-11-08, blocked-save repair + flags4)
+
+Manager brief: write only GS-release, entry is the just-pushed desktop map shade /
+density commit atop de270ecd; live GamifySurgery read-only. Ported exactly the
+manager-accepted unsafe-number blocked-save repair and single F4-01 acceptance.
+No commit, push, install, network, agent, browser, deploy or real account access.
+Active map pan/zoom perf, character/art and all other live lanes were excluded.
+
+### Scope and behavior
+
+Disposition receipt: `.local-dev/release-verify/port23-20261108.json`.
+**131 observed content-diff paths**, with the accepted provenance/authoring files
+reviewed separately: **59 copied / 4 hunk-ported / 98 excluded live versions**.
+The contentdiff helper changes only its local receipt output, preserving previous
+receipts. All 61 captured accepted live paths remained exact during the port.
+Final public diff: **71 paths**, including three additive coordination records.
+
+Blocked-save fix: encounter attendance remains an indefinite hold; the diagnostic
+calendar excludes held encounter/discussion attendance. Hydration/import/encode
+and verified journal preparation repair only invalid derived diagnostic forecasts
+and carrier deadlines. Original checksum/canonical bytes and contiguous journal
+rows are checked first and retained. Repair preserves frozen work, actual clocks,
+remaining work, cash, billing, resources, campaign IDs and learning history.
+Unknown/non-derived unsafe values and malformed contracts continue to fail strict
+validation. No save format, protocol, lease/fencing, timer or backup policy change.
+The value-free technical code
+`snapshot-diagnostic-forecast-number-repaired` crosses the structured-clone
+reply boundary, outside candidate hashes/account bytes. A repaired session becomes
+dirty for its existing quiet backup. Release iPhone-memory code/limits and all
+unrelated cloud files are preserved.
+
+Flags4: **F4-01 only**, v3.r2, remains **needs_clinician_review** with no named
+clinical approval. Manager accepts the independent REVISE/easy residual under
+the owner-note-resolution/no-FAIL rule; this does not relabel it PASS. Its exact
+reviewed source, ledger, packet and retained v3 are preserved. Reviewed r1 remains
+outside the default. One case/header/row and one appended no-test timing identity
+change; all 133 prior accepted rows, 1140 other cases, 606 meaning objects/order,
+1423 legacy tuples, three whole-case relations, catalog and 11 approvals are exact.
+
+Projection verified in this release: **134 rows /1141 cases /1452 nodes /606
+meanings /2284 timing rows**. JSON.stringify SHA-256:
+
+- Manifest: `0e70c49460b6f93ec6766f6f59ad10eb9e4b0e38d8745283d9fa35818d68c06c`.
+- Default: `db795ec578f8b5bfa77d1260b2e53c5a59f779f51edcba538fd8753bdb3de139`.
+- Timing: `bf4b96a2160a8c4855ef0ad6b7a1906d7328170ab53b15dbfa2661952db4ab43`.
+
+### Strict historical hash guards
+
+All **840 /844 /1396** existing protected-source checks execute, with exact
+**44 /46 /83** release pin rows and unchanged **13 /13 /48** required absences.
+Original captures and migration preimages were not refreshed or removed. Exact
+authorized deltas cover only the two runtime fixes, accepted F4 integration,
+strict test-hook integration and the verified native results file. Each prior
+pin map/hash is retained in authorizationHistory; every new requirement is a
+single path plus exact SHA-256. The flags4 acceptance test retains all nine
+source-migration checks, using one exact release-source pin for the older guard
+test whose stronger release loop must remain. No broad allow-list or weakened
+content/frozen/save/number assertion. Every other protected path remains strict.
+
+### Level 5 rebind 23 and old-content control
+
+Unchanged native journey and lower helper ran inside GS-release, redirected only
+to guarded staging. Original seed `level-five-m9.integration.01` and funded
+Level 4 opening; zero canonical writes during generation. A separate native run
+used the current fixed engine with the exact pre-port clinical object (SHA
+`1ab9a80611a3f4e09629b4f49f6e7b49fedb93a8102475620450417dfdca4813`).
+Both complete runs independently reconcile cash and match all old metrics,
+complete reports and all nine serialized checkpoint bytes.
+
+| Metric | Before | Ported run | Old-content control |
+| --- | ---: | ---: | ---: |
+| Commands | 26,531 | 26,531 | 26,531 |
+| Closing cents | 6,019,042 | 6,019,042 | 6,019,042 |
+| Completions | 412 | 412 | 412 |
+| Walkouts | 0 | 0 | 0 |
+| Unlock tick | 14,906 | 14,906 | 14,906 |
+| Final tick | 24,681 | 24,681 | 24,681 |
+
+Three full reports unchanged: raw scores **62.51688977024545 /
+66.84337234413047 /45.45219805372466**, with **51 /50 /49** qualifying patients.
+Best remains report 2, latest report 3, first finish report 1. All native run
+assertions, >20,000 commands, positive rounds/comfort/supplier savings, retirement,
+cash and best/latest/first-report assertions remain. Every old checkpoint's
+frozen cases, discussions and prior learning histories reload unchanged.
+All 25 Level0–4/schema5–9 load and 120-minute continuation comparisons are exact;
+legacy artifact, launch pins, workload fixture and e2e specs were not edited.
+
+No simulation or save delta needs attribution: the accepted hold/forecast repair
+and F4 change introduce no observed divergence for this complete seeded journey.
+The separate current-engine old-content control confirms the same result. This
+does not claim that the old unsafe-number bug could never affect another clinic.
+
+Only canonical results JSON changed. Native checkpoints were regenerated honestly
+and kept byte-identical. The sole native metadata correction is liveCap 4→5;
+all previous maps are appended intact to inputHistory (**21→22 entries**; port22
+was presentation-only). No replay-compatible exception or guard/assertion edit.
+Bound inputs **547→553**, clinical **405→411**. Thirteen hash deltas are seven
+existing paths (two domain, five clinical/test-support) and six new F4 modules.
+
+| Artifact | Before SHA-256 | After SHA-256 | Written |
+| --- | --- | --- | --- |
+| `tools/qa/level-five-integration-results-20261012.json` | `30f42ea7e6d0f8a90653dd4415fe6fced59f4222b0842eeb0456394afbec3fd2` | `2af0e6a514834a4ab1daa81bdc973123c8e3f8a1cf787b8ef8d2726bca648a97` | yes |
+| `tests/fixtures/level-five-integration-checkpoints-20261012.json` | `560a4a38c5d8d2cdadf3033666a88a2f5e7e75f64533def7b55d2dfa61469d32` | `560a4a38c5d8d2cdadf3033666a88a2f5e7e75f64533def7b55d2dfa61469d32` | no; regenerated byte-identical |
+
+| Changed binding | Previous SHA-256 | Current SHA-256 |
+| --- | --- | --- |
+| `packages/clinical-content/src/answer-choice-timing.ts` | `b97c3af1eb6cd535cd7103bbbfd9846f65d51fc2d793fe624c7ad417d55cff28` | `bb55f3dbc7ae50ec77bcd18ab50b8dc213f57acf218657cdc693db434b43c8a9` |
+| `packages/clinical-content/src/index.ts` | `8caff5c5f299afff6b27401b2bade3ea6d311390deecbe70052c789799f36fbb` | `0abfabbf84d18c022bcbb58b3454585afac1a28403cb9adec3e5994b7278d68b` |
+| `packages/clinical-content/src/question-ship-manifest.ts` | `af9a2c03dd1e46438f7ac0c463672a9840936ed7c8a7b091792e2912b79fca35` | `de5c8b1f5f808361fe240ac67dda478ac1a2ade09857dd80e4347f1ef4d8c3d8` |
+| `packages/clinical-content/src/question-stats1-acceptance-test-support.ts` | `ecb66d57ca95afded2cde3961adc0bc83eecabcad31c1b0b83fc84514a7e9af0` | `e3e17d8c7dff015115d2c9dc93656e0d86b046724fcab3c43cecbbd3c2384ff1` |
+| `packages/clinical-content/src/synthetic-content.ts` | `d5a603c617d3adc753351bd68511ab7495b2365f7bb32479ca9950a8e56d5458` | `96d50250444a0f41fa6b9b77f686b5c6b2fed7fa16821ab0500a3a4443b77762` |
+| `packages/game-domain/src/diagnostic-timing.ts` | `2a8e915812e9c5bc2e5b40fcea74bdff129aa5d4fbecfef633004cf9cda48668` | `499e069e78d1755c1f23e6ab6b29052ee072896248d792c019a1336301334d2b` |
+| `packages/game-domain/src/reducer.ts` | `a90c4a7a711abe3d06cc6f7f1e1fbc74742c96092999018b8ea9ea1aee06c045` | `d1ce8e5a99fcca2de26b7d0e485e2f7f8cd9885d909a2ff22a993b9954abb1da` |
+| `packages/clinical-content/src/question-flags4-20261108-data.ts` | `new` | `bcb477007574b37e116f84c97a191f2d455938649715e6d2825a657c0bf0af76` |
+| `packages/clinical-content/src/question-flags4-20261108.ts` | `new` | `c5578e9ac3cbe5ef9e8c11bd2e793265a72bc2283a0f2ac09d9daaad2ff71650` |
+| `packages/clinical-content/src/question-flags4-acceptance-test-support.ts` | `new` | `0238627f0923101a0c8740c82a820c5aaaba45089a3f48f36d64feae0ff7008f` |
+| `packages/clinical-content/src/question-flags4-accepted-20261108.ts` | `new` | `f0b95c18cd69e2b075a2cf96b4c909e0e531349fb1734c277d5284ff241c31a8` |
+| `packages/clinical-content/src/question-flags4-evidence-20261108.ts` | `new` | `4547dc50af71241dfcba888300eb116efe51d92feaee039bdfb5a5f76065dc5d` |
+| `packages/clinical-content/src/question-flags4-retained-input-20261108.ts` | `new` | `0e4536bb5258dc809bbaaa8303415cea8442b0f56c59f9686d83f2f9f0ae175e` |
+
+Guard unchanged: `812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909`.
+Proof/publication: `accepted-run-verification.json`,
+`publication-prepared.json`, `publication-receipt.json`,
+`content-only-control.json`, `checkpoint-deltas.json`,
+`legacy-verification.json` under `.local-dev/release-port23-20261108/`.
+
+### Validation
+
+CI=true; existing dependencies; all seven suites directly with threads,
+maxWorkers=2. Optional net-use EPERM preload affects only the Windows drive-map
+probe. No browser was launched. Compared with the previous green release port22
+baseline, there are no new failures. No timeout/budget increase or retry masking.
+
+| Workspace | Files | Passed | Failed | Skipped |
+| --- | ---: | ---: | ---: | ---: |
+| clinical-context-workbench | 8 | 43 | 0 | 0 |
+| player | 390 | 3935 | 0 | 0 |
+| balance-config | 24 | 164 | 0 | 0 |
+| clinical-authoring | 7 | 81 | 0 | 0 |
+| clinical-content | 127 | 1584 | 0 | 0 |
+| clinical-research | 8 | 83 | 0 | 0 |
+| game-domain | 199 | 5240 | 0 | 1 |
+| **Total** | **763** | **11130** | **0** | **1** |
+
+Exact native suite summaries:
+
+```text
+player:
+ Test Files  390 passed (390)
+      Tests  3935 passed (3935)
+   Start at  15:22:08
+   Duration  876.12s (transform 18.66s, setup 0ms, import 703.39s, tests 1004.34s, environment 30ms)
+
+domain:
+ Test Files  199 passed (199)
+      Tests  5240 passed | 1 skipped (5241)
+   Start at  15:22:07
+   Duration  557.18s (transform 14.73s, setup 0ms, import 438.50s, tests 651.78s, environment 16ms)
+
+other-workspaces:
+ Test Files  8 passed (8)
+      Tests  43 passed (43)
+   Start at  15:22:07
+   Duration  1.21s (transform 338ms, setup 0ms, import 958ms, tests 495ms, environment 1ms)
+ Test Files  24 passed (24)
+      Tests  164 passed (164)
+   Start at  15:22:09
+   Duration  2.56s (transform 615ms, setup 0ms, import 2.68s, tests 196ms, environment 2ms)
+ Test Files  7 passed (7)
+      Tests  81 passed (81)
+   Start at  15:22:12
+   Duration  706ms (transform 146ms, setup 0ms, import 435ms, tests 332ms, environment 0ms)
+ Test Files  127 passed (127)
+      Tests  1584 passed (1584)
+   Start at  15:22:13
+   Duration  118.34s (transform 7.75s, setup 0ms, import 200.08s, tests 22.03s, environment 9ms)
+ Test Files  8 passed (8)
+      Tests  83 passed (83)
+   Start at  15:24:12
+   Duration  2.45s (transform 206ms, setup 0ms, import 544ms, tests 1.23s, environment 0ms)
+```
+
+Required **266-command blocked-save recovery** passes in focused and full player
+runs: all committed rows recovered without rewriting source, campaign and
+learning identity retained, first command accepted, durable checkpoint and
+account reopen exact. **26 number-repair regressions** and **four F4 save/journal
+tests** pass. F4 cases cover accepted format3 completion, waiting/in-progress
+legacy v3 with original four-choice order/FSRS identity, and committed old-v3
+admission journal replay. Focused results: domain **1 file/4 tests**, clinical
+**5 files/237 tests**, player recovery/flags4 **3 files/30 tests**, all exit0.
+Synthetic repair measurement: tick3828, 209760 source bytes, invalid due tick
+9007199254744900→3910; local cold repair4.527ms. No device-performance claim.
+
+Seven workspace typechecks pass. Player build **1048 modules /4.57s**, exit0;
+existing large-chunk/dynamic-import/plugin-timing warnings remain. **33 lint
+tests pass**. Boundary/launcher pass with **7305 actual read-only tracked paths**
+through a cwd/pointer/index/inventory SHA-pinned bridge, because Node Git spawn
+is sandboxed. The boundary verifier and its assertions are unchanged.
+
+- `node --disable-warning=ExperimentalWarning .local-dev/release-port23-20261108/stage-generator.mjs journey` — exit 0; `.local-dev/release-port23-20261108/journey.log`.
+- `node --disable-warning=ExperimentalWarning .local-dev/release-port23-20261108/stage-generator.mjs lower` — exit 0; `.local-dev/release-port23-20261108/lower.log`.
+- `node --disable-warning=ExperimentalWarning .local-dev/release-port23-20261108/content-control.mjs` — exit 0; `.local-dev/release-port23-20261108/content-control.log`.
+- `node --disable-warning=ExperimentalWarning .local-dev/release-port23-20261108/check-legacy.mjs` — exit 0; `.local-dev/release-port23-20261108/check-legacy.log`.
+- `npm.cmd run test --workspace @gamify-surgery/game-domain -- tests/indefinite-attendance.test.ts --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=../../.local-dev/release-port23-20261108/focused-domain.json` — exit 0; `.local-dev/release-port23-20261108/focused-domain.log`.
+- `npm.cmd run test --workspace @gamify-surgery/clinical-content -- src/question-flags4-20261108.test.ts src/question-flags4-acceptance-20261108.test.ts src/question-flags3-20261107.test.ts src/question-stats1-20261108.test.ts src/question-stats1-acceptance-20261108.test.ts --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=../../.local-dev/release-port23-20261108/focused-clinical.json` — exit 0; `.local-dev/release-port23-20261108/focused-clinical.log`.
+- `npm.cmd run test --workspace @gamify-surgery/player -- src/session/cloud/unsafeNumberRecovery.test.ts src/session/cloud/unsafeNumberSession.test.ts src/questionFlags4SaveCompatibility.test.ts --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=../../.local-dev/release-port23-20261108/focused-recovery.json` — exit 0; `.local-dev/release-port23-20261108/focused-recovery.log`.
+- `npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port23-20261108/workspace-json-reporter.mjs` — exit 0; `.local-dev/release-port23-20261108/player.log`.
+- `npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port23-20261108/workspace-json-reporter.mjs` — exit 0; `.local-dev/release-port23-20261108/domain.log`.
+- `npm.cmd run test --workspace @gamify-surgery/clinical-context-workbench --workspace @gamify-surgery/balance-config --workspace @gamify-surgery/clinical-authoring --workspace @gamify-surgery/clinical-content --workspace @gamify-surgery/clinical-research -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port23-20261108/workspace-json-reporter.mjs` — exit 0; `.local-dev/release-port23-20261108/other-workspaces.log`.
+- `npm.cmd run typecheck` — exit 0; `.local-dev/release-port23-20261108/typecheck.log`.
+- `npm.cmd run build --workspace @gamify-surgery/player` — exit 0; `.local-dev/release-port23-20261108/player-build.log`.
+- `npm.cmd run test:boundaries` — exit 0; `.local-dev/release-port23-20261108/boundaries-inventory.log`.
+- `npm.cmd run clinical:lint:test` — exit 0; `.local-dev/release-port23-20261108/lint.log`.
+
+### Exact changed files
+
+68 source/test/provenance/evidence paths below, plus these three coordination
+records: `docs/execplans/release-port23-20261108.md`, this GS028 appendix and
+`docs/handoffs/CURRENT_THREAD_HANDOFF.md` (**71 public paths total**).
+Complete before/live/after dispositions are in the JSON receipt. Final hashes
+including coordination docs: `final-file-inventory.json` in private receipts.
+
+| Changed path | Disposition | Final SHA-256 |
+| --- | --- | --- |
+| `apps/player/src/questionFlags4SaveCompatibility.test.ts` | copied | `ea621194751a32f91d126d4000171104126a59ca244437fc13db084a7d9dd012` |
+| `apps/player/src/session/cloud/codecJson.ts` | copied | `0994becd5f0022d2489de303987a6bb6a4c590fb45aea958a0856dcac4267c7a` |
+| `apps/player/src/session/cloud/codecTasks.ts` | copied | `a0940aeb5763eb483ba5e53a16bf3c2929196140d3afb32aa68f541f569500b6` |
+| `apps/player/src/session/cloud/codecWorker.ts` | copied | `2cfec1b07b79bc2657b97dccadfe484bcf4518c82fe9cf7f52f80a52b09e4221` |
+| `apps/player/src/session/cloud/gameSession.ts` | copied | `73ba55e590d2dfb654bc56d5ec50653adeff312212272211a3ab76b3744c7ad5` |
+| `apps/player/src/session/cloud/journalCodec.ts` | copied | `aecdf78cfa2bfef4ee38ff7405e98088519243fc53f7ee50acf949a428ccd396` |
+| `apps/player/src/session/cloud/snapshotCodec.ts` | copied | `6f427b6983a1064c2bf2eec30ed2d09159d39f9c11508112e0fd08636dcec106` |
+| `apps/player/src/session/cloud/snapshotNumberRecovery.ts` | copied | `41ed6ef160c8d9574a72f0e6641e433748cf8ae315b6fa529f9fa8077c6d7d95` |
+| `apps/player/src/session/cloud/unsafeNumberRecovery.test.ts` | copied | `f0a2c30ce069fe6cb8a9e5ade8938dbd9734ac22b6f324b730128d04f1a2da7e` |
+| `apps/player/src/session/cloud/unsafeNumberSession.test.ts` | copied | `ca1dc8b9f7af1bebd2178f55755b22bec45e3c0d3b032acc0aeece0bdda76092` |
+| `apps/player/src/session/cloud/unsafeNumberTestSupport.ts` | copied | `ea2f55862ebfa9e491fd49da44234b933e02f80952e41bddb9d750f45a904237` |
+| `apps/player/src/session/cloud/verifiedCopyCache.ts` | copied | `0b46e358705008b5c63493cc46e38b3abe59edb79f196e652c54a8ea2dc52fad` |
+| `docs/execplans/question-flags4-acceptance-20261108.md` | copied | `49ddff7ea77d05ae684fa008536a98c4bb98380a32ad89f89e8e950dc7675518` |
+| `docs/execplans/unsafe-number-blocked-save-20261108.md` | copied | `3117a62ee1ea8778c523320ab6910470af7d463e573dc8af9d4c47a49ec53518` |
+| `docs/research/question-flags4-20261108.json` | copied | `c494547d69c0e6dc7aebf390b79290942b9b3fb7d5e46da768dfc6294bf40263` |
+| `docs/research/question-flags4-acceptance-files-20261108.json` | copied | `5da02addba4a4a31bc68243fecbeebe9257bc53431b510e56e15692834cf1937` |
+| `docs/research/question-flags4-acceptance-handoff-20261108.md` | copied | `3a8dafb4c120c67a95670fc214b285455ba52f42984f5d5bad56691524710377` |
+| `docs/research/question-flags4-acceptance-scope-20261108.json` | copied | `0509b62e3a56aa67b8767128ef9ab0bf829430274b588b1afea7ae9d56deae19` |
+| `docs/research/question-flags4-acceptance-validation-20261108.json` | copied | `7b571e5e298267850358475c8c9051766adcff1709e2c1b0422acd069f31c5b8` |
+| `docs/research/question-flags4-accepted-20261108.json` | copied | `df5f31ad99783f6896fd21ecb1d9779d0cd190073b3c18ed5b1dada53e1597bb` |
+| `docs/research/question-flags4-files-20261108.json` | copied | `f83c19a52277f2d0896b27c482d717f094c5a62e938e922bf5f2fa7a04441693` |
+| `docs/research/question-flags4-handoff-20261108.md` | copied | `035beacc7fa27fd2733d788b043a1dee67353e77e5bca616cab4dc26b70d16d4` |
+| `docs/research/question-flags4-manager-decision-20261108.md` | copied | `2209d24bbe00d80bd467d32ef961ab665aaa7c3ed0024f57886ad51882ff33a3` |
+| `docs/research/question-flags4-review-20261108.json` | copied | `a81001629f708fca0a90a729b86cf0be2e8960c305903cc3bc5a890a2c5c5668` |
+| `docs/research/question-flags4-validation-20261108.json` | copied | `4097877229cf7b18da9236ce090fe2003f176fc2e4f3d0a0f63c818fb904b469` |
+| `docs/research/sources-question-flags4-20261108.json` | copied | `95dbc88726e54203b285b0761b8c4d7fdf09e3713294e02a4ec3ab90e5c5b686` |
+| `docs/research/unsafe-number-blocked-save-20261108.md` | copied | `a22a015d9fd3765aa7037ec617b8225c983012230ae2817cc8f20053e74b7ef4` |
+| `packages/clinical-content/src/answer-choice-timing.test.ts` | copied | `fca3abd6ac40e7cb34eb82419aa76f33fbb35c9e61dadb6c60de3f12a5572dc6` |
+| `packages/clinical-content/src/answer-choice-timing.ts` | copied | `bb55f3dbc7ae50ec77bcd18ab50b8dc213f57acf218657cdc693db434b43c8a9` |
+| `packages/clinical-content/src/index.ts` | copied | `0abfabbf84d18c022bcbb58b3454585afac1a28403cb9adec3e5994b7278d68b` |
+| `packages/clinical-content/src/question-flags3-20261107.test.ts` | hunk-ported | `a5b911b99150462b1b8ce392681fc2d118b09121d3ccc23b8b23f8df5b0350ca` |
+| `packages/clinical-content/src/question-flags4-20261108-data.ts` | copied | `bcb477007574b37e116f84c97a191f2d455938649715e6d2825a657c0bf0af76` |
+| `packages/clinical-content/src/question-flags4-20261108.test.ts` | copied | `7641e72ba3e17d135082ad541999a5540d8eb7d7d46d877f4b9157a520357d50` |
+| `packages/clinical-content/src/question-flags4-20261108.ts` | copied | `c5578e9ac3cbe5ef9e8c11bd2e793265a72bc2283a0f2ac09d9daaad2ff71650` |
+| `packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts` | hunk-ported | `97cc942004be35ce3f3ab2a4f37dcaa9a873fdbd8d5bdd4e077b74dcc948e761` |
+| `packages/clinical-content/src/question-flags4-acceptance-test-support.ts` | copied | `0238627f0923101a0c8740c82a820c5aaaba45089a3f48f36d64feae0ff7008f` |
+| `packages/clinical-content/src/question-flags4-accepted-20261108.ts` | copied | `f0b95c18cd69e2b075a2cf96b4c909e0e531349fb1734c277d5284ff241c31a8` |
+| `packages/clinical-content/src/question-flags4-evidence-20261108.ts` | copied | `4547dc50af71241dfcba888300eb116efe51d92feaee039bdfb5a5f76065dc5d` |
+| `packages/clinical-content/src/question-flags4-retained-input-20261108.ts` | copied | `0e4536bb5258dc809bbaaa8303415cea8442b0f56c59f9686d83f2f9f0ae175e` |
+| `packages/clinical-content/src/question-ship-manifest.test.ts` | copied | `5dfcaeabd30722082a60673316b3313914d0c16dc4c6c816f84159b5a57c4167` |
+| `packages/clinical-content/src/question-ship-manifest.ts` | copied | `de5c8b1f5f808361fe240ac67dda478ac1a2ade09857dd80e4347f1ef4d8c3d8` |
+| `packages/clinical-content/src/question-stats1-20261108.test.ts` | hunk-ported | `5f1e5aa326d8f20a9703550359ed9357c1df940b09e908c4d7cae87922463eb0` |
+| `packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts` | hunk-ported | `eec467ca190404e7f8d7bb53f17ad92cba14eeb4f8178d04b7b9f4928af843e4` |
+| `packages/clinical-content/src/question-stats1-acceptance-test-support.ts` | copied | `e3e17d8c7dff015115d2c9dc93656e0d86b046724fcab3c43cecbbd3c2384ff1` |
+| `packages/clinical-content/src/synthetic-content.ts` | copied | `96d50250444a0f41fa6b9b77f686b5c6b2fed7fa16821ab0500a3a4443b77762` |
+| `packages/game-domain/src/diagnostic-timing.ts` | copied | `499e069e78d1755c1f23e6ab6b29052ee072896248d792c019a1336301334d2b` |
+| `packages/game-domain/src/reducer.ts` | copied | `d1ce8e5a99fcca2de26b7d0e485e2f7f8cd9885d909a2ff22a993b9954abb1da` |
+| `packages/game-domain/tests/indefinite-attendance.test.ts` | copied | `32bc83483d707e68e8b8ff3082af108f93f4e5c9aa7e04e8c479b15fbd6d4957` |
+| `tools/qa/level-five-integration-results-20261012.json` | native rebind | `2af0e6a514834a4ab1daa81bdc973123c8e3f8a1cf787b8ef8d2726bca648a97` |
+| `tools/question-quality/author-question-flags4-20261108.mjs` | copied | `7909788b7a30be59e8a7b9a7da8659458facd96df9cb9ef68b8ac7b00db9348d` |
+| `tools/question-quality/capture-question-flags4-20261108.mjs` | copied | `3f2d84efd7f58fbe8601f7ee81c5823d756ba3fb93a8c0e8790cdcccec336506` |
+| `tools/question-quality/capture-question-flags4-acceptance-20261108.mjs` | copied | `7be2e51863ec13c54f558741a49e0af87dff8dd5fab1654d5b3f33e95bfa3977` |
+| `tools/question-quality/fixtures/question-flags3-release-source-pins-20261107.json` | strict release guard delta | `56abdc80dd8625e6185c994b6f230955a001ef25f08e20aa64e501b7b794f21a` |
+| `tools/question-quality/fixtures/question-flags4-acceptance-before-20261108.json` | copied | `4e8bf2f0c3159a64667ae32e373d959faf505442a895cb0b66d0b3f0546ea141` |
+| `tools/question-quality/fixtures/question-flags4-acceptance-release-source-pins-20261108.json` | strict release guard delta | `b9b99624ad361782f74e06dc57f7ebf93499c9b1f4601608cac118cc257be5dd` |
+| `tools/question-quality/fixtures/question-flags4-acceptance-source-migration-20261108.json` | copied | `1ac03061b8e37cf8547a1f5b9cb40ecf1aa31a6bdc7d001b0cae2a828429eaa7` |
+| `tools/question-quality/fixtures/question-flags4-before-20261108.json` | copied | `918604f5b4870dd58e45471ea8467168a9c6814c208aa681ec94988a391990a4` |
+| `tools/question-quality/fixtures/question-stats1-acceptance-release-source-pins-20261108.json` | strict release guard delta | `f7169cdad9d175d81f818e46e6dba606b6abe82bd3b18de174de3388a61ffaa3` |
+| `tools/question-quality/fixtures/question-stats1-release-source-pins-20261108.json` | strict release guard delta | `9b1393678f4c8a80e92902af3a8e55b31dee338febf874bcdd88f8dd00b1bf04` |
+| `tools/question-quality/question-flags4-accepted-lint-20261108.json` | copied | `b41073a39d8da7c17e33a0b5d6edcfed0b1e83290cc412d7529d0cfc90be229d` |
+| `tools/question-quality/question-flags4-lint-20261108.json` | copied | `44bfc1ac52c29885f7fdad70e0e6a32f98aa4e81b9f236762c7e03a36bc9330f` |
+| `tools/question-quality/question-flags4-scope-20261108.json` | copied | `04fcaab7a4ebfd39824a8746aff7b720d01d04898b482eb41ac4216d2ad63fb4` |
+| `tools/question-quality/question-flags4-spec-20261108.mjs` | copied | `bc45cce9db55aebd2a43f02dfcbeb619dc61842d16de8a9e37f0b4b0e055e7b3` |
+| `tools/question-quality/record-question-flags4-acceptance-source-migration-20261108.mjs` | copied | `7d9414ed20b7f55304a5e1440e7bf2e425c0dbd110e168f5dc4dadf03aa63c71` |
+| `tools/question-quality/record-question-flags4-acceptance-validation-20261108.mjs` | copied | `f10f0d02ce2f574be3021cbe4b43d13f855a9970fdcec723894a66614401e51d` |
+| `tools/question-quality/record-question-flags4-validation-20261108.mjs` | copied | `a54e6702fcf103f11e59021b83fc0704007fec80051b28bed1cd357bfb46d197` |
+| `tools/question-quality/review-question-flags4-20261108.mjs` | copied | `cf5e1d1c15e775478a6091bbfb79a6c6eb334ca1c555744bf81ef1e19dfb7e77` |
+| `tools/question-quality/review-question-flags4-accepted-20261108.mjs` | copied | `aad5be0fba792c4500bf85413a6fedbf18067d2879f443c26d27e0c04c8c5c2e` |
+
+### Other observed live versions not shipped
+
+- `apps/player/character-phlebotomy.html` — Unaccepted character/art lane excluded.
+- `apps/player/character-proportions.html` — Unaccepted character/art lane excluded.
+- `apps/player/character-rooms.html` — Unaccepted character/art lane excluded.
+- `apps/player/src/art/characterBitmapArt.test.ts` — Unaccepted character/art lane excluded.
+- `apps/player/src/art/characterBitmapArt.ts` — Unaccepted character/art lane excluded.
+- `apps/player/src/art/characterPhlebotomyQa.before.json` — Unaccepted character/art lane excluded.
+- `apps/player/src/art/characterPhlebotomyQa.frames.json` — Unaccepted character/art lane excluded.
+- `apps/player/src/art/characterPhlebotomyQa.test.ts` — Unaccepted character/art lane excluded.
+- `apps/player/src/art/characterPhlebotomyQa.ts` — Unaccepted character/art lane excluded.
+- `apps/player/src/art/characterPhlebotomyQaModel.ts` — Unaccepted character/art lane excluded.
+- `apps/player/src/art/characterProportions.generated.json` — Unaccepted character/art lane excluded.
+- `apps/player/src/art/characterProportions.test.ts` — Unaccepted character/art lane excluded.
+- `apps/player/src/art/characterProportions.ts` — Unaccepted character/art lane excluded.
+- `apps/player/src/art/characterProportionsQa.ts` — Unaccepted character/art lane excluded.
+- `apps/player/src/art/characterRoomProportions.generated.json` — Unaccepted character/art lane excluded.
+- `apps/player/src/art/characterRoomProportions.test.ts` — Unaccepted character/art lane excluded.
+- `apps/player/src/art/characterRoomProportions.ts` — Unaccepted character/art lane excluded.
+- `apps/player/src/art/characterRoomQaModel.ts` — Unaccepted character/art lane excluded.
+- `apps/player/src/art/characterRoomsQa.ts` — Unaccepted character/art lane excluded.
+- `apps/player/src/diagnostics/problemDiagnostics.test.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `apps/player/src/diagnostics/problemDiagnostics.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `apps/player/src/facility/FacilityCanvas.tsx` — Active map pan/zoom performance or unrelated character/facility work excluded.
+- `apps/player/src/facility/FacilityScene.ts` — Active map pan/zoom performance or unrelated character/facility work excluded.
+- `apps/player/src/facility/approvedRoomPresentation.test.ts` — Active map pan/zoom performance or unrelated character/facility work excluded.
+- `apps/player/src/facility/backlessRollingStools.test.ts` — Active map pan/zoom performance or unrelated character/facility work excluded.
+- `apps/player/src/facility/characterPresentation.test.ts` — Active map pan/zoom performance or unrelated character/facility work excluded.
+- `apps/player/src/facility/characterPresentation.ts` — Active map pan/zoom performance or unrelated character/facility work excluded.
+- `apps/player/src/facility/characterRoomScaleIntegration.test.ts` — Active map pan/zoom performance or unrelated character/facility work excluded.
+- `apps/player/src/facility/facilityWorldSignature.ts` — Active map pan/zoom performance or unrelated character/facility work excluded.
+- `apps/player/src/facility/furnitureSeatLayering.test.ts` — Active map pan/zoom performance or unrelated character/facility work excluded.
+- `apps/player/src/facility/phlebotomyPresentation.test.ts` — Active map pan/zoom performance or unrelated character/facility work excluded.
+- `apps/player/src/facility/retainedCamera.test.ts` — Active map pan/zoom performance or unrelated character/facility work excluded.
+- `apps/player/src/facility/retainedCamera.ts` — Active map pan/zoom performance or unrelated character/facility work excluded.
+- `apps/player/src/facility/retainedCameraTestSupport.ts` — Active map pan/zoom performance or unrelated character/facility work excluded.
+- `apps/player/src/facility/staffIdleSupports.test.ts` — Active map pan/zoom performance or unrelated character/facility work excluded.
+- `apps/player/src/feedback/TesterFeedback.tsx` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `apps/player/src/mobile/MobileShell.tsx` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `apps/player/src/session/breadButterPresentation.test.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `apps/player/src/session/buildViewModels.test.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `apps/player/src/session/chartStructuredFields.test.tsx` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `apps/player/src/session/cloud/cache.ts` — Unrelated cloud/journal work; retain released iPhone memory integration.
+- `apps/player/src/session/cloud/codecWorker.test.ts` — Unrelated cloud/journal work; retain released iPhone memory integration.
+- `apps/player/src/session/cloud/codecWorkerNative.test.ts` — Unrelated cloud/journal work; retain released iPhone memory integration.
+- `apps/player/src/session/cloud/coordinator.ts` — Unrelated cloud/journal work; retain released iPhone memory integration.
+- `apps/player/src/session/cloud/entryStorage.ts` — Unrelated cloud/journal work; retain released iPhone memory integration.
+- `apps/player/src/session/cloud/gameSession.test.tsx` — Unrelated cloud/journal work; retain released iPhone memory integration.
+- `apps/player/src/session/cloud/releaseCodecHeadroom.test.ts` — Unrelated cloud/journal work; retain released iPhone memory integration.
+- `apps/player/src/session/cloud/separateCampaign.test.ts` — Unrelated cloud/journal work; retain released iPhone memory integration.
+- `apps/player/src/session/cloud/tickPerformanceTestSupport.ts` — Unrelated cloud/journal work; retain released iPhone memory integration.
+- `apps/player/src/session/cloud/watchdogs.test.ts` — Unrelated cloud/journal work; retain released iPhone memory integration.
+- `apps/player/src/session/diagnosticProjectionDifferential.test.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `apps/player/src/session/flagFreeze.test.tsx` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `apps/player/src/session/levelFiveLaunch.test.tsx` — Live evidence/pins excluded; release evidence regenerated only by guarded native staging.
+- `apps/player/src/session/levelFiveRoomsViewModels.test.tsx` — Live evidence/pins excluded; release evidence regenerated only by guarded native staging.
+- `apps/player/src/session/localJournal.test.ts` — Unrelated cloud/journal work; retain released iPhone memory integration.
+- `apps/player/src/session/localJournal.ts` — Unrelated cloud/journal work; retain released iPhone memory integration.
+- `apps/player/src/ui/ChartPanel.tsx` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `apps/player/src/ui/roomAccessFeedback.test.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `apps/player/src/ui/roomAccessTestSupport.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `packages/balance-config/src/guidance-tips.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `packages/game-domain/src/facilityNavigation.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `packages/game-domain/src/facilityNavigationReference.testSupport.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `packages/game-domain/src/incrementalEvidenceOwnership.test.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `packages/game-domain/src/incrementalEvidenceOwnership.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `packages/game-domain/src/incrementalEvidenceProjection.test.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `packages/game-domain/src/incrementalEvidenceProjection.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `packages/game-domain/src/incrementalEvidenceReferences.test.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `packages/game-domain/src/incrementalEvidenceReferences.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `packages/game-domain/src/incrementalEvidenceRetirement.test.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `packages/game-domain/src/incrementalEvidenceRetirement.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `packages/game-domain/src/incrementalEvidenceValues.test.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `packages/game-domain/src/incrementalEvidenceValues.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `packages/game-domain/src/incrementalTickClone.test.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `packages/game-domain/src/incrementalTickClone.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `packages/game-domain/src/readonlyProjectionMemo.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `packages/game-domain/src/routineAvailabilityReference.testSupport.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `packages/game-domain/src/settledStateQueries.test.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `packages/game-domain/src/settledStateQueries.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `packages/game-domain/src/waiting-destinations.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `packages/game-domain/tests/approved-clinical-admission.test.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `packages/game-domain/tests/level-five-launch.test.ts` — Live evidence/pins excluded; release evidence regenerated only by guarded native staging.
+- `packages/game-domain/tests/readonlyProjectionMemo.test.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `packages/game-domain/tests/routine-endoscopy-ready.fixture.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `packages/game-domain/tests/routine-endoscopy-ready.test.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `packages/game-domain/tests/waiting-chart-attendance.fixture.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `packages/game-domain/tests/waiting-chart-attendance.test.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `tests/e2e/clinic-biopsy-visitors-correction.spec.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `tests/e2e/floor-pattern-pan-stability.spec.ts` — Active map pan/zoom performance or unrelated character/facility work excluded.
+- `tests/e2e/helpers.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `tests/e2e/level-five.spec.ts` — Live evidence/pins excluded; release evidence regenerated only by guarded native staging.
+- `tests/e2e/map-pan-zoom-performance.spec.ts` — Active map pan/zoom performance or unrelated character/facility work excluded.
+- `tests/e2e/splitter-map-shade.spec.ts` — Active map pan/zoom performance or unrelated character/facility work excluded.
+- `tests/e2e/ui-density.spec.ts` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+- `tests/fixtures/diagnostic-workload.ts` — Live evidence/pins excluded; release evidence regenerated only by guarded native staging.
+- `tests/fixtures/level-five-integration-checkpoints-20261012.json` — Live evidence/pins excluded; release evidence regenerated only by guarded native staging.
+- `tests/fixtures/level-five-legacy-behavior-20261012.json` — Live evidence/pins excluded; release evidence regenerated only by guarded native staging.
+- `tools/qa/level-five-integration-results-20261012.json` — Live evidence/pins excluded; release evidence regenerated only by guarded native staging.
+- `tools/qa/tick-state-differential.mjs` — Outside the two accepted lanes; preserve release-specific source/tests/evidence.
+
+### Open risks and handback
+
+Manager should rerun cloud save/recovery browser checks and a synthetic Level2
+biopsy/anoscopy flow with another attendance hold, background/reload, first
+command, account backup and Save & Close. No tester account/save was accessed;
+the particular resident order remains unverified because the original report
+omits it. Unsupported/non-derived corruption remains blocked with its existing
+recovery path. Desktop Node tests do not establish iPhone rendering/memory or
+timing. Clinical sign-off remains with the owner; flags4 difficulty is recorded
+future work. No owner origin/profile/opening-path change or save reset.
+Work remains local/uncommitted for manager acceptance. Manager owns release,
+browser/device acceptance and any separately authorized GitHub backup.
+

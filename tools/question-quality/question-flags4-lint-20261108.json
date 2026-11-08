@@ -1,0 +1,259 @@
+{
+  "checkedOn": "2026-11-08",
+  "linterVersion": "question-cue-lint.2026-11-04.v8",
+  "scope": "Exact captured live case and assembled candidate case; canonical plus finite instantiation profiles and all visible pre-answer fields. No excluded/suppressed findings.",
+  "totals": {
+    "ownerFlags": 1,
+    "newVariants": 1,
+    "candidateCases": 1,
+    "beforeProfileContexts": 5,
+    "afterProfileContexts": 2,
+    "beforeFindings": 1,
+    "afterFindings": 0,
+    "suppressedFindings": 0
+  },
+  "before": {
+    "schemaVersion": 1,
+    "linterVersion": "question-cue-lint.2026-11-04.v8",
+    "releaseId": "clinical.flags4-retained-input.20261108.v1",
+    "scope": "Every case/node and canonical/finite profile in the assembled default release, including unapproved prototype content. Prior feedback is a visible-history cue candidate; future results/current feedback are excluded.",
+    "exposureBasis": "Structural priority proxy only: earlier entry stage, tutorial sequence, case-reference count, then cue findings. No player exposure data collected.",
+    "totals": {
+      "cases": 1,
+      "nodeOccurrences": 1,
+      "uniqueVariants": 1,
+      "concepts": 1,
+      "profileContexts": 5,
+      "variantsWithFindings": 1,
+      "findings": 1,
+      "tutorialSequenceVariants": 0,
+      "missingAuthoredVersion": 0,
+      "missingEducationalTier": 0,
+      "approvalRecordOnlyMetadata": 0,
+      "variantsWithCompleteRationales": 0,
+      "variantsWithMultipleDefinitions": 0,
+      "byPriorityStage": {
+        "0": 1
+      },
+      "byOptionCount": {
+        "4": 1
+      },
+      "variantsByRule": {
+        "near-duplicate-options": 1
+      }
+    },
+    "variants": [
+      {
+        "questionVariantId": "question.gs028f.nutrition.refeeding-insulin-phosphate-shift.v3",
+        "conceptId": "concept.gs028f.nutrition.refeeding-insulin-phosphate-shift",
+        "conceptName": "Explain refeeding-related phosphate shifts",
+        "conceptType": "applied_science",
+        "educationalTier": 0,
+        "facilityStages": [
+          0
+        ],
+        "optionCounts": [
+          4
+        ],
+        "authoredVersions": [
+          "development-batch.2026-10-07.variety.2"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.gs028f.nutrition.c1-metabolic-transition"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 5,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": false,
+        "definitionFingerprints": [
+          "6be0d19d9009b93ebb7e90639b84f47c4e9d88584b4664cb1fe012a251bc501d"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.gs028f.refeeding.anabolic-transition",
+          "claim.gs028f.refeeding.insulin-phosphate-shift"
+        ],
+        "findings": [
+          {
+            "id": "2793c86cd8baf349",
+            "rule": "near-duplicate-options",
+            "severity": "advisory",
+            "message": "Labels overlap substantially; small differences can be meaningful and need review.",
+            "evidence": [
+              {
+                "field": "answerChoices.label",
+                "text": "Catabolic metabolism toward anabolic metabolism",
+                "start": 0,
+                "end": 47,
+                "choiceId": "correct_3"
+              },
+              {
+                "field": "answerChoices.label",
+                "text": "Anabolic metabolism toward catabolic metabolism",
+                "start": 0,
+                "end": 47,
+                "choiceId": "d1_3"
+              }
+            ],
+            "metrics": {
+              "jaccard": 1,
+              "differingTerms": []
+            },
+            "occurrences": [
+              {
+                "caseId": "case.gs028f.nutrition.c1-metabolic-transition",
+                "profileIds": [
+                  "canonical",
+                  "profile.gs028f.nutrition.c1-metabolic-transition.female.31"
+                ],
+                "ranges": [
+                  {
+                    "start": 0,
+                    "end": 47
+                  },
+                  {
+                    "start": 0,
+                    "end": 47
+                  }
+                ]
+              },
+              {
+                "caseId": "case.gs028f.nutrition.c1-metabolic-transition",
+                "profileIds": [
+                  "profile.gs028f.nutrition.c1-metabolic-transition.male.31"
+                ],
+                "ranges": [
+                  {
+                    "start": 0,
+                    "end": 47
+                  },
+                  {
+                    "start": 0,
+                    "end": 47
+                  }
+                ]
+              },
+              {
+                "caseId": "case.gs028f.nutrition.c1-metabolic-transition",
+                "profileIds": [
+                  "profile.gs028f.nutrition.c1-metabolic-transition.female.58"
+                ],
+                "ranges": [
+                  {
+                    "start": 0,
+                    "end": 47
+                  },
+                  {
+                    "start": 0,
+                    "end": 47
+                  }
+                ]
+              },
+              {
+                "caseId": "case.gs028f.nutrition.c1-metabolic-transition",
+                "profileIds": [
+                  "profile.gs028f.nutrition.c1-metabolic-transition.male.58"
+                ],
+                "ranges": [
+                  {
+                    "start": 0,
+                    "end": 47
+                  },
+                  {
+                    "start": 0,
+                    "end": 47
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "wordingFingerprint": "fbcbc65fe164ccdeb3367a5c295953a8c0cfbaf2597a75e46e50c927aa7ec2d5",
+        "priorityStage": 0,
+        "caseReferenceCount": 1
+      }
+    ]
+  },
+  "after": {
+    "schemaVersion": 1,
+    "linterVersion": "question-cue-lint.2026-11-04.v8",
+    "releaseId": "clinical.flags4-retained-source.20261108.v1",
+    "scope": "Every case/node and canonical/finite profile in the assembled default release, including unapproved prototype content. Prior feedback is a visible-history cue candidate; future results/current feedback are excluded.",
+    "exposureBasis": "Structural priority proxy only: earlier entry stage, tutorial sequence, case-reference count, then cue findings. No player exposure data collected.",
+    "totals": {
+      "cases": 1,
+      "nodeOccurrences": 1,
+      "uniqueVariants": 1,
+      "concepts": 1,
+      "profileContexts": 2,
+      "variantsWithFindings": 0,
+      "findings": 0,
+      "tutorialSequenceVariants": 0,
+      "missingAuthoredVersion": 0,
+      "missingEducationalTier": 0,
+      "approvalRecordOnlyMetadata": 0,
+      "variantsWithCompleteRationales": 1,
+      "variantsWithMultipleDefinitions": 0,
+      "byPriorityStage": {
+        "0": 1
+      },
+      "byOptionCount": {
+        "3": 1
+      },
+      "variantsByRule": {}
+    },
+    "variants": [
+      {
+        "questionVariantId": "question.gs028f.nutrition.refeeding-insulin-phosphate-shift.v3.r1",
+        "conceptId": "concept.gs028f.nutrition.refeeding-insulin-phosphate-shift",
+        "conceptName": "Explain refeeding-related phosphate shifts",
+        "conceptType": "applied_science",
+        "educationalTier": 0,
+        "facilityStages": [
+          0
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "question-authoring.2026-11-08.flags4-r1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.gs028f.nutrition.c1-metabolic-transition"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "269019bd2894f6d01481b9a66e4f9a4463723906ab2b28f3a457c34df5568b24"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.flags4.20261108.anabolic-transition",
+          "claim.flags4.20261108.carbohydrate-phosphate-uptake",
+          "claim.flags4.20261108.diagnostic-boundary"
+        ],
+        "findings": [],
+        "wordingFingerprint": "fa4d3422c7652c879698a186e8b0f4e220bb94a9247d98f637b6c3c7362086d6",
+        "priorityStage": 0,
+        "caseReferenceCount": 1
+      }
+    ]
+  },
+  "warningDisposition": "Advisory lint is not clinical approval or an independent difficulty assessment."
+}

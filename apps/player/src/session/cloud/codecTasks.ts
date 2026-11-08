@@ -60,6 +60,9 @@ export interface CloudCodecExecutor {
   /** Optional native-worker cache release; must refuse while any task is pending. */
   releaseIdle?(): boolean;
 }
+// Reply-only technical metadata. Never add diagnostics to a candidate, its
+// immutable request hash or account save bytes.
+const numberRepairReports = new WeakMap<object, readonly string[]>();
 
 async function verify(input: Parameters<typeof loadCloudEvidenceCheckpoint>[0]): Promise<CloudCodecResults["verify"]> {
   const loaded = await verifiedCopies.read(input);
@@ -71,6 +74,7 @@ async function verify(input: Parameters<typeof loadCloudEvidenceCheckpoint>[0]):
 /** Codec and idempotent journal work shared by the worker/test boundary. No RPCs. */
 export async function runCloudCodecTask<T extends CloudCodecTask>(task: T): Promise<CloudCodecResults[T["kind"]]> {
   let result: unknown;
+  let numberRepairs: readonly string[] | undefined;
   switch (task.kind) {
     case "journalWarm": result = await warmJournalInWorker(task.input); break;
     case "journalBind": result = await bindJournalInWorker(task.input); break;
@@ -88,6 +92,7 @@ export async function runCloudCodecTask<T extends CloudCodecTask>(task: T): Prom
     case "snapshotEncode": {
       const encoded = await encodeCloudSnapshot({ state: task.input.state ?? importGameEvidence(task.input.checkpoint!.snapshot, task.input.checkpoint!.evidence),
         campaign: task.input.campaign, lineage: task.input.lineage });
+      numberRepairs = encoded.numberRepairs;
       result = { saveFormat: 3, lineage: encoded.lineage, campaign: task.input.campaign, snapshot: encoded.snapshot,
         evidence: { headerSha256: encoded.evidence.header.uncompressedSha256, fromRecord: 0, toRecord: 0, records: [] }, usageQuestions: [] }; break;
     }
@@ -169,6 +174,10 @@ export async function runCloudCodecTask<T extends CloudCodecTask>(task: T): Prom
     case "unpackCache": result = await unpackCloudCache(task.input.raw, task.input.scope); break;
     default: throw new CloudCodecError("worker_payload", "Save processing received an unsupported task. Reload the app and retry.");
   }
+  if (result && typeof result === "object") {
+    if ("numberRepairs" in result) numberRepairs = (result as { numberRepairs?: readonly string[] }).numberRepairs;
+    if (numberRepairs?.length) numberRepairReports.set(result, numberRepairs);
+  }
   return result as CloudCodecResults[T["kind"]];
 }
 
@@ -186,11 +195,13 @@ export function unpackCodecFailure(error: CloudCodecFailure): Error {
 }
 export interface CloudCodecMessage { id: number; task: CloudCodecTask }
 export type CloudCodecReply = { ready: true } | { id: number; started: true } | { id: number; heartbeat: true } |
-  { id: number; result: unknown } | { id: number; error: CloudCodecFailure };
+  { id: number; result: unknown; diagnosticCodes?: readonly string[] } | { id: number; error: CloudCodecFailure };
 
 export async function handleCloudCodecMessage(message: CloudCodecMessage): Promise<CloudCodecReply> {
   try {
-    const reply = { id: message.id, result: await runCloudCodecTask(message.task) };
+    const result = await runCloudCodecTask(message.task);
+    const diagnosticCodes = result && typeof result === "object" ? numberRepairReports.get(result) : undefined;
+    const reply = { id: message.id, result, ...(diagnosticCodes?.length ? { diagnosticCodes } : {}) };
     // The inline executor must exercise the return boundary too. Production's
     // postMessage performs this clone itself, without a second full copy here.
     return import.meta.env?.DEV || import.meta.env?.MODE === "test" ? structuredClone(reply) : reply;

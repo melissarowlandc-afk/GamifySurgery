@@ -817,7 +817,9 @@ function buildServiceCalendar(state: GameState, context: DomainContext, encounte
   const founder = state.environment.founderActivity;
   const preemptibleFounderKinds = ["return_to_front_desk", "wander_facility", "sit_in_chair", "visit_bathroom"];
   // Enact Plan releases attendance for this chart; it is not another queue item.
-  if (founder && !(founder.kind === "attend_encounter" && founder.targetId === encounterId) &&
+  // Older clinics decremented the indefinite encounter-attendance hold. Such
+  // counters are not work durations, including when another chart is quoted.
+  if (founder && founder.kind !== "attend_encounter" && founder.kind !== "attend_employee_discussion" &&
     !preemptibleFounderKinds.includes(founder.kind) && !trackedIds.has(founder.targetId)) {
     reserveFiniteWork("founder", founder.path, founder.pathIndex, founder.workMinutesRemaining);
   }

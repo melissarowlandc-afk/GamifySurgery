@@ -1,3 +1,4 @@
+import {beforeFlags4AcceptanceRelease,beforeFlags4AcceptanceManifest,beforeFlags4AcceptanceTimings,beforeFlags4AcceptanceSource} from "./question-flags4-acceptance-test-support";
 import {createHash} from "node:crypto";
 import {readFileSync} from "node:fs";
 import {expect} from "vitest";
@@ -24,6 +25,7 @@ const rows:QuestionShipAcceptance[]=revisions.map(r=>({acceptanceId:r.auditId,ca
 /** Historical test epoch only. Verify the complete exact new delta before
  * restoring the old epoch. No runtime admission, save or replay calls this. */
 export function beforeStats1AcceptanceRelease(release:SyntheticClinicalRelease):SyntheticClinicalRelease {
+ release=beforeFlags4AcceptanceRelease(release);
  if(digest(release)===before.default.sha256)return release;
  if(!release.cases.some(cs=>source.cases.some(s=>s.id===cs.id&&s.decisionNodes[0]!.questionVariantId===cs.decisionNodes[0]?.questionVariantId)))return release;
  expect(release.cases.map(cs=>cs.id),"stats1 adds/removes no live case or ordering").toEqual(before.default.caseIds);
@@ -36,6 +38,7 @@ export function beforeStats1AcceptanceRelease(release:SyntheticClinicalRelease):
  return restored;
 }
 export function beforeStats1AcceptanceManifest(manifest:QuestionShipManifest):typeof before.manifest {
+ manifest=beforeFlags4AcceptanceManifest(manifest);
  if(!manifest.accepted.some(r=>r.sourceView==="stats1-accepted"))return manifest as typeof before.manifest;
  const expected={...before.manifest,id:"question-ship.2026-11-08.v6",
   accepted:[...before.manifest.accepted.filter(r=>!retiredIds.has(r.acceptanceId)),...rows],
@@ -44,6 +47,7 @@ export function beforeStats1AcceptanceManifest(manifest:QuestionShipManifest):ty
  return structuredClone(before.manifest);
 }
 export function beforeStats1AcceptanceTimings(actual:readonly AnswerChoiceTimingRegistryEntry[]):AnswerChoiceTimingRegistryEntry[] {
+ actual=beforeFlags4AcceptanceTimings(actual);
  if(!actual.some(t=>timings.some(row=>row.questionVariantId===t.questionVariantId)))return [...actual];
  expect(actual,"all2219 old exact rows remain in order; append only64 accepted no-test rows").toEqual([...before.timing,...timings]);
  return structuredClone(before.timing);
@@ -60,6 +64,7 @@ export function beforeStats1PriorAcceptedTimings(actual:readonly AnswerChoiceTim
  return structuredClone(old);
 }
 export function beforeStats1AcceptanceSource(path:string,current:string):string {
+ current=beforeFlags4AcceptanceSource(path,current);
  const row=migration.files.find(r=>r.path===path);if(!row)return current;
  const sha=(s:string)=>createHash("sha256").update(s).digest("hex");
  expect(sha(current),path+" exact stats1 acceptance integration bytes").toBe(row.afterSha256);

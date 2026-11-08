@@ -167,3 +167,8 @@ export * from "./question-flags3-accepted-20261107";
 export * from "./question-stats1-20261108";
 export * from "./question-stats1-accepted-20261108";
 // END STATS1 accepted and retained source exports 20261108
+
+// BEGIN FLAGS4 accepted and retained source exports 20261108
+export * from "./question-flags4-20261108";
+export * from "./question-flags4-accepted-20261108";
+// END FLAGS4 accepted and retained source exports 20261108

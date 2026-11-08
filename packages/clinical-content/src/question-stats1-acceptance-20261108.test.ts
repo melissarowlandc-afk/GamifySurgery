@@ -1,9 +1,11 @@
 import {createHash} from "node:crypto";
 import {readFileSync,existsSync} from "node:fs";
 import {describe,expect,it} from "vitest";
-import {SYNTHETIC_CLINICAL_RELEASE as live,QUESTION_CATALOG_RELEASE as catalog} from "./synthetic-content";
-import {QUESTION_SHIP_MANIFEST as manifest} from "./question-ship-manifest";
-import {ANSWER_CHOICE_TIMING_REGISTRY as timing} from "./answer-choice-timing";
+import {SYNTHETIC_CLINICAL_RELEASE as actualLive,QUESTION_CATALOG_RELEASE as catalog} from "./synthetic-content";
+import {QUESTION_SHIP_MANIFEST as actualManifest} from "./question-ship-manifest";
+import {ANSWER_CHOICE_TIMING_REGISTRY as actualTiming} from "./answer-choice-timing";
+import {beforeFlags4AcceptanceRelease,beforeFlags4AcceptanceManifest,beforeFlags4AcceptanceTimings} from "./question-flags4-acceptance-test-support";
+const live=beforeFlags4AcceptanceRelease(actualLive),manifest=beforeFlags4AcceptanceManifest(actualManifest),timing=beforeFlags4AcceptanceTimings(actualTiming);
 import {QUESTION_STATS1_SOURCE_RELEASE as reviewed,QUESTION_STATS1_REVISIONS as oldRevisions,QUESTION_STATS1_RETAINED_INPUT as retained,
  QUESTION_STATS1_BASIS_CLAIMS as basis,QUESTION_STATS1_CLAIMS as originalClaims} from "./question-stats1-20261108";
 import {QUESTION_STATS1_ACCEPTED_SOURCE_RELEASE as source,QUESTION_STATS1_ACCEPTED_REVISIONS as revisions,
@@ -95,10 +97,10 @@ describe("stats1 exact manager acceptance and frozen identities",()=>{
  it("pins each authorized existing-source delta before preserving old capture assertions",()=>{
   // Release integration retains every original protected path check.
   const pinsPath="tools/question-quality/fixtures/question-stats1-acceptance-release-source-pins-20261108.json",pinBytes=readFileSync(new URL("../../../"+pinsPath,import.meta.url));
-  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("e6cd9e49f313780c663cea23344c7cb622c7c88257aa92842b4d107557d742f9");
+  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("f7169cdad9d175d81f818e46e6dba606b6abe82bd3b18de174de3388a61ffaa3");
   const pins=JSON.parse(pinBytes.toString("utf8")) as {capturedFixtureSha256:string;paths:Array<{path:string;capturedMainSha256:string;requiredReleaseSha256:string|null}>};
   expect(createHash("sha256").update(readFileSync(new URL("../../../tools/question-quality/fixtures/question-stats1-acceptance-before-20261108.json",import.meta.url))).digest("hex")).toBe(pins.capturedFixtureSha256);
-  expect(pins.paths).toHaveLength(74);
+  expect(pins.paths).toHaveLength(83);
   const releasePins=new Map(pins.paths.map(row=>[row.path,row]));
   for(const row of pins.paths)expect(before.files[row.path],row.path+" immutable main capture").toBe(row.capturedMainSha256);
   for(const[p,h]of Object.entries(before.files)){

@@ -1,0 +1,15 @@
+{
+  "version": "flags4-acceptance-release-source-pins.v1",
+  "capturePath": "tools/question-quality/fixtures/question-flags4-acceptance-before-20261108.json",
+  "capturedFixtureSha256": "4e8bf2f0c3159a64667ae32e373d959faf505442a895cb0b66d0b3f0546ea141",
+  "paths": [
+    {
+      "path": "packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts",
+      "capturedMainSha256": "034f6f69da950feca9e3c4fd928eeffb3b1a7d2069a6e2611b87da6d3df95635",
+      "mainAcceptedSha256": "100dababa898bd80133914633832da65537e0cfc38464d6e5b95d7318d42ad3b",
+      "releaseEntrySha256": "4080f4b98a7888897bd6b9609878294bbc35c7544e770e5e787e7e7447340c86",
+      "requiredReleaseSha256": "eec467ca190404e7f8d7bb53f17ad92cba14eeb4f8178d04b7b9f4928af843e4",
+      "reason": "Retain the release strict source-guard loop with accepted F4 clinical epoch adapter; current exact bytes pinned, immutable main source preimage preserved."
+    }
+  ]
+}

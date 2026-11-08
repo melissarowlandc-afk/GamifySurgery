@@ -143,10 +143,10 @@ export class CloudGameSession {
     // raw copies, checksums, lineage and every supplied review stay exact.
     const playable = loaded.snapshotLineage && coordinator.view.canExecute && !coordinator.hasPriorRecovery
       ? completeSnapshotLearning(loaded.state) : loaded.state;
-    const adapted = playable !== loaded.state;
+    const adapted = playable !== loaded.state || Boolean(loaded.numberRepairs?.length);
     const useEngine = options.operational !== false && (typeof Worker !== "undefined" || Boolean(options.operational?.createPort));
     const session = new CloudGameSession(coordinator, adapted ? { ...loaded, state: playable,
-      checkpoint: createGameEvidenceCheckpoint(playable) } : loaded,
+      checkpoint: playable !== loaded.state ? createGameEvidenceCheckpoint(playable) : loaded.checkpoint } : loaded,
       [openedSnapshot.uncompressedSha256, confirmed.snapshot.uncompressedSha256], switchTo, automaticReconnect, !useEngine);
     const journal = coordinator.journal;
     if (journal && options.journal !== false && !coordinator.hasPriorRecovery && coordinator.view.canExecute) {
@@ -170,7 +170,8 @@ export class CloudGameSession {
       // A small marker makes the durable adapted baseline eligible for the next
       // normal backup, without inventing a game command or a learning review.
       session.changeVersion++; session.dirty = true; session.queueLocal(); coordinator.noteLocalChange();
-      problemDiagnostics.event("gameSession", "learning-catalog-adapted");
+      if (playable !== loaded.state) problemDiagnostics.event("gameSession", "learning-catalog-adapted");
+      for (const code of loaded.numberRepairs ?? []) problemDiagnostics.event("codec-repair", code);
     }
     if (useEngine) {
       // In recovery mode do not overlap the just-used codec realm and engine

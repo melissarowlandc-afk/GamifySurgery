@@ -1,0 +1,145 @@
+{
+  "checkedOn": "2026-11-08",
+  "default": {
+    "beforeSha256": "1ab9a80611a3f4e09629b4f49f6e7b49fedb93a8102475620450417dfdca4813",
+    "afterSha256": "db795ec578f8b5bfa77d1260b2e53c5a59f779f51edcba538fd8753bdb3de139",
+    "cases": 1141,
+    "nodes": 1452,
+    "meanings": 606,
+    "activeConcepts": 450,
+    "changedCaseIds": [
+      "case.gs028f.nutrition.c1-metabolic-transition"
+    ],
+    "allOtherCasesAndMeaningsExact": true
+  },
+  "manifest": {
+    "id": "question-ship.2026-11-08.v7",
+    "beforeSha256": "8b3ec2e429e0c4b170c1a0170456b5b6e4e54f3be5582e80576d45aadc193c77",
+    "afterSha256": "0e70c49460b6f93ec6766f6f59ad10eb9e4b0e38d8745283d9fa35818d68c06c",
+    "acceptedRows": 134,
+    "priorAcceptedRows": 133,
+    "legacyBindings": 1423,
+    "wholeCaseRelations": 3,
+    "row": {
+      "acceptanceId": "F4-01",
+      "caseId": "case.gs028f.nutrition.c1-metabolic-transition",
+      "nodeId": "node.gs028f.nutrition.c1-metabolic-transition.1",
+      "questionVariantId": "question.gs028f.nutrition.refeeding-insulin-phosphate-shift.v3.r2",
+      "conceptId": "concept.gs028f.nutrition.refeeding-insulin-phosphate-shift",
+      "sourceView": "flags4-accepted",
+      "decision": "docs/research/question-flags4-manager-decision-20261108.md"
+    }
+  },
+  "catalogUnchanged": true,
+  "catalogSha256": "3e0d1bb346abc1579e5c24400565c36c158d90304b60171b24b6a88f64b2ed40",
+  "timing": {
+    "beforeSha256": "937dd59c71ca96e38e5b41002b6dda9fb5846d915302ab2e774a17ed48bc80ac",
+    "afterSha256": "bf4b96a2160a8c4855ef0ad6b7a1906d7328170ab53b15dbfa2661952db4ab43",
+    "priorRows": 2283,
+    "currentRows": 2284,
+    "allPriorRowsExact": true
+  },
+  "protectedSourcePaths": 1341,
+  "unchangedSourcePaths": 1332,
+  "changedFiles": [
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+      "beforeSha256": "0aa691598047da150b7e4cad758796686337ecba8561df505ee486f0c36d4294",
+      "afterSha256": "fca3abd6ac40e7cb34eb82419aa76f33fbb35c9e61dadb6c60de3f12a5572dc6"
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "beforeSha256": "b97c3af1eb6cd535cd7103bbbfd9846f65d51fc2d793fe624c7ad417d55cff28",
+      "afterSha256": "bb55f3dbc7ae50ec77bcd18ab50b8dc213f57acf218657cdc693db434b43c8a9"
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "beforeSha256": "8caff5c5f299afff6b27401b2bade3ea6d311390deecbe70052c789799f36fbb",
+      "afterSha256": "0abfabbf84d18c022bcbb58b3454585afac1a28403cb9adec3e5994b7278d68b"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags4-20261108.test.ts",
+      "beforeSha256": "61a608181b1c90084b7b182d36bda37e05c46691896bdc9d79aca8d42ce8546e",
+      "afterSha256": "7641e72ba3e17d135082ad541999a5540d8eb7d7d46d877f4b9157a520357d50"
+    },
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+      "beforeSha256": "74f0e5110974699c46aeb446c19a0cc60362f4d7096126e65d27a71cd377f8a5",
+      "afterSha256": "5dfcaeabd30722082a60673316b3313914d0c16dc4c6c816f84159b5a57c4167"
+    },
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.ts",
+      "beforeSha256": "af9a2c03dd1e46438f7ac0c463672a9840936ed7c8a7b091792e2912b79fca35",
+      "afterSha256": "de5c8b1f5f808361fe240ac67dda478ac1a2ade09857dd80e4347f1ef4d8c3d8"
+    },
+    {
+      "path": "packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts",
+      "beforeSha256": "034f6f69da950feca9e3c4fd928eeffb3b1a7d2069a6e2611b87da6d3df95635",
+      "afterSha256": "100dababa898bd80133914633832da65537e0cfc38464d6e5b95d7318d42ad3b"
+    },
+    {
+      "path": "packages/clinical-content/src/question-stats1-acceptance-test-support.ts",
+      "beforeSha256": "ecb66d57ca95afded2cde3961adc0bc83eecabcad31c1b0b83fc84514a7e9af0",
+      "afterSha256": "e3e17d8c7dff015115d2c9dc93656e0d86b046724fcab3c43cecbbd3c2384ff1"
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "beforeSha256": "d5a603c617d3adc753351bd68511ab7495b2365f7bb32479ca9950a8e56d5458",
+      "afterSha256": "96d50250444a0f41fa6b9b77f686b5c6b2fed7fa16821ab0500a3a4443b77762"
+    }
+  ],
+  "sourceView": "flags4-accepted",
+  "frozenPreservation": {
+    "reviewedSourceSha256": "c74ad1bafc355076c4483c60e919b740aaed9ebaa17c02f909a053519ac4b4d9",
+    "reviewedCaseSha256": "f01dabbda2aec34e5fd2dcfebb9ad64f310ad1e82b02650b8d22219124daf94e",
+    "reviewedNodeSha256": "e96d2b3474075d29083a415f8ee7c5f169b66884c6904d6942e7daeb08348a58",
+    "reviewedQuestionSha256": "7628045868eeb80ac2a0993dccbee34e76867951cad2b67a80b83a9f983e8bdc",
+    "acceptedSourceSha256": "ae92408582c12638d88fb8b1a4d86f96b150437eb4135488b23c162dbae95cbd",
+    "acceptedCaseSha256": "bf78cea4beb101646c67a97133b81cb87d6482be4fbc268b846d38c6a2853ffe",
+    "acceptedNodeSha256": "1838e5f43de94e7477e408afe5a55d79824e6246bbc66220c86df5b1adcc693c",
+    "acceptedQuestionSha256": "a2ce917b57eaa58d71f5a16feac7c95d9d650719b104d7c98fe244ec1d51c8d7",
+    "acceptedTimingSha256": "8cd0a5bdb0cd1a47a071b0e10fe8e2798220bc4a7cf98eda67dcf2b7d204e0b4",
+    "exactReviewedTask": true,
+    "exactReviewedOptions": true,
+    "exactReviewedExplanation": true,
+    "onlyContextDeletion": true
+  },
+  "existingLevelFiveInputsChanged": [
+    "packages/clinical-content/src/index.ts",
+    "packages/clinical-content/src/synthetic-content.ts",
+    "packages/clinical-content/src/answer-choice-timing.ts"
+  ],
+  "levelFiveInputHashes": [
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "beforeSha256": "8caff5c5f299afff6b27401b2bade3ea6d311390deecbe70052c789799f36fbb",
+      "afterSha256": "0abfabbf84d18c022bcbb58b3454585afac1a28403cb9adec3e5994b7278d68b",
+      "evidenceRecordedSha256": "a57ffcec34d75e2e337790f1ac0d71e4bfdc8f79d53cdb28596e00ead60413e4"
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "beforeSha256": "d5a603c617d3adc753351bd68511ab7495b2365f7bb32479ca9950a8e56d5458",
+      "afterSha256": "96d50250444a0f41fa6b9b77f686b5c6b2fed7fa16821ab0500a3a4443b77762",
+      "evidenceRecordedSha256": "6d9870d53383af7da6ee7547ba702410a2545882876faa1696c0e1217fae311c"
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "beforeSha256": "b97c3af1eb6cd535cd7103bbbfd9846f65d51fc2d793fe624c7ad417d55cff28",
+      "afterSha256": "bb55f3dbc7ae50ec77bcd18ab50b8dc213f57acf218657cdc693db434b43c8a9",
+      "evidenceRecordedSha256": "7db1b1253c7d3064adb0602360925c0739bb65c719603507c3fa09a6732ba245"
+    }
+  ],
+  "changedTransitiveRuntimeInputs": [
+    "packages/clinical-content/src/question-ship-manifest.ts"
+  ],
+  "newDefaultLoadedRuntimeInputs": [
+    "packages/clinical-content/src/question-flags4-accepted-20261108.ts",
+    "packages/clinical-content/src/question-flags4-20261108.ts",
+    "packages/clinical-content/src/question-flags4-20261108-data.ts",
+    "packages/clinical-content/src/question-flags4-evidence-20261108.ts",
+    "packages/clinical-content/src/question-flags4-retained-input-20261108.ts"
+  ],
+  "evidenceEdited": false,
+  "rebindPerformed": false,
+  "clinicalApproval": false
+}

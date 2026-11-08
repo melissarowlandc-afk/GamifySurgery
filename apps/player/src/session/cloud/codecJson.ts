@@ -41,7 +41,7 @@ function validText(text: string): void {
 }
 
 /** Reject duplicate keys and unsafe numbers BEFORE JSON.parse can discard/round them. */
-export function parseCodecJson(text: string): CodecJson {
+export function parseCodecJson(text: string, recovery?: { allowUnsafeNumber(path: readonly (string | number)[]): boolean }): CodecJson {
   if (typeof text !== "string" || text.length > CLOUD_JSON_LIMITS.maxTextBytes ||
     utf8Bytes(text) > CLOUD_JSON_LIMITS.maxTextBytes) {
     throw new CloudCodecError("json_size", "JSON text exceeds the codec processing limit.");
@@ -67,7 +67,7 @@ export function parseCodecJson(text: string): CodecJson {
     }
     return fail();
   };
-  const value = (depth: number): void => {
+  const value = (depth: number, path: readonly (string | number)[] = []): void => {
     whitespace();
     nodes += 1;
     if (depth > CLOUD_JSON_LIMITS.maxDepth || nodes > CLOUD_JSON_LIMITS.maxNodes) {
@@ -85,16 +85,17 @@ export function parseCodecJson(text: string): CodecJson {
         if (++entries > CLOUD_JSON_LIMITS.maxCollectionEntries) {
           throw new CloudCodecError("json_structure", "JSON collection exceeds the codec limit.");
         }
+        let key: string | number = entries - 1;
         if (object) {
           whitespace();
           if (text[offset] !== '"') return fail();
-          const key = string();
+          key = string();
           if (keys.has(key)) throw new CloudCodecError("duplicate_key", "Duplicate JSON object key.");
           keys.add(key);
           whitespace();
           if (text[offset++] !== ":") return fail();
         }
-        value(depth + 1);
+        value(depth + 1, recovery ? [...path, key] : path);
         whitespace();
         const separator = text[offset++];
         if (separator === end) return;
@@ -121,7 +122,7 @@ export function parseCodecJson(text: string): CodecJson {
     };
     if (!Number.isFinite(parsed) || Number.isInteger(parsed) && !Number.isSafeInteger(parsed) || Object.is(parsed, -0) ||
       decimal(number) !== decimal(JSON.stringify(parsed))) {
-      throw new CloudCodecError("unsafe_number", "JSON number cannot round-trip safely through JavaScript and JSONB.");
+      if (!recovery?.allowUnsafeNumber(path)) throw new CloudCodecError("unsafe_number", "JSON number cannot round-trip safely through JavaScript and JSONB.");
     }
     offset += number.length;
   };

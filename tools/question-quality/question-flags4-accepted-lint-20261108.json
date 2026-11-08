@@ -1,0 +1,86 @@
+{
+  "checkedOn": "2026-11-08",
+  "linterVersion": "question-cue-lint.2026-11-04.v8",
+  "totals": {
+    "cases": 1,
+    "variants": 1,
+    "profileContexts": 2,
+    "reviewedFindings": 0,
+    "acceptedFindings": 0,
+    "suppressed": 0
+  },
+  "report": {
+    "schemaVersion": 1,
+    "linterVersion": "question-cue-lint.2026-11-04.v8",
+    "releaseId": "clinical.flags4-accepted-source.20261108.v2",
+    "scope": "Every case/node and canonical/finite profile in the assembled default release, including unapproved prototype content. Prior feedback is a visible-history cue candidate; future results/current feedback are excluded.",
+    "exposureBasis": "Structural priority proxy only: earlier entry stage, tutorial sequence, case-reference count, then cue findings. No player exposure data collected.",
+    "totals": {
+      "cases": 1,
+      "nodeOccurrences": 1,
+      "uniqueVariants": 1,
+      "concepts": 1,
+      "profileContexts": 2,
+      "variantsWithFindings": 0,
+      "findings": 0,
+      "tutorialSequenceVariants": 0,
+      "missingAuthoredVersion": 0,
+      "missingEducationalTier": 0,
+      "approvalRecordOnlyMetadata": 0,
+      "variantsWithCompleteRationales": 1,
+      "variantsWithMultipleDefinitions": 0,
+      "byPriorityStage": {
+        "0": 1
+      },
+      "byOptionCount": {
+        "3": 1
+      },
+      "variantsByRule": {}
+    },
+    "variants": [
+      {
+        "questionVariantId": "question.gs028f.nutrition.refeeding-insulin-phosphate-shift.v3.r2",
+        "conceptId": "concept.gs028f.nutrition.refeeding-insulin-phosphate-shift",
+        "conceptName": "Explain refeeding-related phosphate shifts",
+        "conceptType": "applied_science",
+        "educationalTier": 0,
+        "facilityStages": [
+          0
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "question-authoring.2026-11-08.flags4-r2"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.gs028f.nutrition.c1-metabolic-transition"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "269019bd2894f6d01481b9a66e4f9a4463723906ab2b28f3a457c34df5568b24"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.flags4.20261108.anabolic-transition",
+          "claim.flags4.20261108.carbohydrate-phosphate-uptake",
+          "claim.flags4.20261108.diagnostic-boundary"
+        ],
+        "findings": [],
+        "wordingFingerprint": "fa4d3422c7652c879698a186e8b0f4e220bb94a9247d98f637b6c3c7362086d6",
+        "priorityStage": 0,
+        "caseReferenceCount": 1
+      }
+    ]
+  }
+}

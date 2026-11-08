@@ -7124,6 +7124,10 @@ function advanceFounderActivity(
     }
     return;
   }
+  // Attendance ends through chart/discussion actions, not elapsed work. Keep
+  // its indefinite hold exact so forecasts cannot mistake a decremented
+  // MAX_SAFE_INTEGER sentinel for a finite duty and overflow their clocks.
+  if (activity.kind === "attend_encounter") return;
   if (activity.kind === "attend_employee_discussion") {
     const discussion = getEmployeeDiscussions(state)[activity.targetId];
     if (discussion?.lifecycle === "active_traveling") {

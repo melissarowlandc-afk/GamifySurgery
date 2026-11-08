@@ -6,6 +6,7 @@ import { equalParsedJson } from "./codecWorkerJsonEqual";
 import { assertMappedGameFields } from "./codecOwnership";
 import type { CloudPackedEvidence } from "./codecEvidence";
 import type { CloudConfirmed, SnapshotLineage } from "./transport";
+import { parseSnapshotJson, repairSnapshotNumbers, serializeSnapshotState } from "./snapshotNumberRecovery";
 
 export const SNAPSHOT_BASELINE = "snapshot.v1";
 // Every caller below supplies already parsed/checked JSON. Re-parsing an entire
@@ -20,16 +21,17 @@ export const isSnapshotCopy = (copy: { saveFormat?: number; baselineId?: string 
 /** Match format-2 hydration: frozen state never resolves against today's
  * question registry or silently prunes retired FSRS entries. A fresh baseline
  * validates the existing domain contract without any transition archive. */
-function currentSnapshotState(game: ReturnType<typeof codecObject>) {
+function currentSnapshotState(game: ReturnType<typeof codecObject>, repairForecasts = false) {
   assertMappedGameFields(game);
   if (game.schemaVersion !== 8 && game.schemaVersion !== 9) throw new CloudCodecError("unsupported_game_schema", "Unsupported clinic snapshot schema.");
   try {
-    const checkpoint = createGameEvidenceCheckpoint(game as unknown as GameState);
+    const repaired = repairSnapshotNumbers(game as unknown as GameState, repairForecasts);
+    const checkpoint = createGameEvidenceCheckpoint(repaired.state);
     const state = importGameEvidence(checkpoint.snapshot, checkpoint.evidence);
     // importGameEvidence resolves plain JSON from the checked archive. Compare
     // it directly: another serialize/strict-parse duplicated the entire clinic.
-    if (!equalParsedJson(game, state as unknown as CodecJson)) throw new CloudCodecError("domain_fidelity", "Loading this snapshot would alter saved progress.");
-    return { state, checkpoint };
+    if (!equalParsedJson(repaired.state as unknown as CodecJson, state as unknown as CodecJson)) throw new CloudCodecError("domain_fidelity", "Loading this snapshot would alter saved progress.");
+    return { state, checkpoint, ...(repaired.numberRepairs ? { numberRepairs: repaired.numberRepairs } : {}) };
   } catch (error) {
     if (error instanceof CloudCodecError) throw error;
     throw new CloudCodecError("domain_validation", "The current clinic snapshot failed domain validation.");
@@ -47,13 +49,15 @@ export function readSnapshotLineage(value: unknown): SnapshotLineage {
 
 export async function encodeCloudSnapshot(input: { state: GameState; campaign: CloudCampaignMetadata; lineage: SnapshotLineage }) {
   const campaign = readCloudCampaignMetadata(parseCodecJson(JSON.stringify(input.campaign))), lineage = readSnapshotLineage(input.lineage);
-  const stateText = serializeGameState(input.state), state = codecObject(parseCodecJson(stateText), "Current clinic");
+  const repaired = repairSnapshotNumbers(input.state);
+  const stateText = serializeSnapshotState(repaired.state), state = codecObject(parseCodecJson(stateText), "Current clinic");
   assertMappedGameFields(state);
   if (state.campaignId !== campaign.campaignId) throw new CloudCodecError("campaign_identity", "Snapshot belongs to another campaign.");
   if (utf8Bytes(stateText) > CLOUD_CAPACITY_LIMITS.snapshotCeilingBytes) throw new CloudCodecError("capacity", "Current clinic exceeds the snapshot limit.");
   const text = canonical({ cloudFormatVersion: 3, campaign, lineage, gameState: state });
   const snapshot = await compressCloudText(text, "gzip"), evidence = await snapshotEvidence();
   return { snapshot, evidence, lineage, baselineId: SNAPSHOT_BASELINE, stateText,
+    ...(repaired.numberRepairs ? { numberRepairs: repaired.numberRepairs } : {}),
     sizes: { decodedGameBytes: utf8Bytes(stateText), snapshotRawBytes: utf8Bytes(text), snapshotStoredBytes: snapshot.compressedBytes } };
 }
 
@@ -64,7 +68,7 @@ export async function loadCloudSnapshot(input: { snapshot: CloudCompressedText; 
   expectedCampaignId: string; lineage?: SnapshotLineage }) {
   assertCloudRevision(input.revision); assertCloudRevision(input.expectedRevision);
   if (input.revision !== input.expectedRevision) throw new CloudCodecError("revision_mismatch", "Snapshot revision differs.");
-  const text = await decompressCloudText(input.snapshot), envelope = codecObject(parseCodecJson(text), "Snapshot envelope");
+  const text = await decompressCloudText(input.snapshot), parsed = parseSnapshotJson(text), envelope = codecObject(parsed.value, "Snapshot envelope");
   if (envelope.cloudFormatVersion !== 3 || Object.keys(envelope).length !== 4 || canonical(envelope) !== text)
     throw new CloudCodecError("unsupported_cloud_format", "Unsupported current-state snapshot.");
   const campaign = readCloudCampaignMetadata(envelope.campaign!), lineage = readSnapshotLineage(envelope.lineage);
@@ -72,8 +76,10 @@ export async function loadCloudSnapshot(input: { snapshot: CloudCompressedText; 
   const game = codecObject(envelope.gameState!, "Current clinic"); assertMappedGameFields(game);
   if (campaign.campaignId !== input.expectedCampaignId || game.campaignId !== campaign.campaignId)
     throw new CloudCodecError("campaign_identity", "Snapshot belongs to another campaign.");
-  const stateText = JSON.stringify(game), { state, checkpoint } = currentSnapshotState(game);
-  return { state, campaign, checkpoint, originalSource: game,
+  const stateText = JSON.stringify(game), { state, checkpoint, numberRepairs } = currentSnapshotState(game, parsed.repairForecasts);
+  // Every repaired value must pass the ordinary strict boundary as well.
+  if (numberRepairs) parseCodecJson(serializeGameState(state));
+  return { state, campaign, checkpoint, originalSource: game, ...(numberRepairs ? { numberRepairs } : {}),
     revision: input.revision, source: { sha256: await sha256Utf8(stateText), utf8Bytes: utf8Bytes(stateText), schemaVersion: state.schemaVersion },
     snapshotLineage: lineage };
 }
@@ -86,9 +92,10 @@ export async function snapshotCopy(state: GameState, campaign: CloudCampaignMeta
 }
 
 export async function prepareSnapshotImport(input: { serializedState: string; campaign: CloudCampaignMetadata; branchId: string }) {
-  const original = codecObject(parseCodecJson(input.serializedState), "Local clinic");
+  const parsed = parseSnapshotJson(input.serializedState), original = codecObject(parsed.value, "Local clinic");
   let state: GameState;
-  if (original.schemaVersion === 8 || original.schemaVersion === 9) state = currentSnapshotState(original).state;
+  let numberRepairs: readonly string[] | undefined;
+  if (original.schemaVersion === 8 || original.schemaVersion === 9) ({ state, numberRepairs } = currentSnapshotState(original, parsed.repairForecasts));
   else {
     // One-time compatibility with older local schemas uses the already tested
     // legacy adapter. Never substitute a fresh state or silently drop history.
@@ -98,5 +105,5 @@ export async function prepareSnapshotImport(input: { serializedState: string; ca
       expectedCampaignId: input.campaign.campaignId, expectedBaselineId: legacy.envelope.baselineId })).state;
   }
   const encoded = await encodeCloudSnapshot({ state, campaign: input.campaign, lineage: { branchId: input.branchId, sequence: 0, parents: [] } });
-  return { ...encoded, saveFormat: 3 as const, packedEvidence: encoded.evidence, envelope: { baselineId: SNAPSHOT_BASELINE } };
+  return { ...encoded, ...(numberRepairs ? { numberRepairs } : {}), saveFormat: 3 as const, packedEvidence: encoded.evidence, envelope: { baselineId: SNAPSHOT_BASELINE } };
 }

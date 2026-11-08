@@ -1,5 +1,6 @@
 import {QUESTION_FLAGS3_ACCEPTED_SOURCE_RELEASE as flags3, withAcceptedQuestionFlags3Concepts} from "./question-flags3-accepted-20261107";
 import {QUESTION_STATS1_ACCEPTED_SOURCE_RELEASE as stats1,withAcceptedQuestionStats1Concepts} from "./question-stats1-accepted-20261108";
+import {QUESTION_FLAGS4_ACCEPTED_SOURCE_RELEASE as flags4} from "./question-flags4-accepted-20261108";
 import {beforeFlags3AcceptanceManifest} from "./question-flags3-acceptance-test-support";
 import { describe, expect, it, vi } from "vitest";
 import { readFileSync } from "node:fs";
@@ -21,7 +22,7 @@ import { withAcceptedQuestionNewN3Round2Concepts } from "./question-new-n3-round
 // unaccepted draft meanings are not added merely for this validation fixture.
 const n3Catalog = withAcceptedQuestionNewN3Round2Concepts(completeCatalog,authoringCatalog.concepts);
 const catalog = withAcceptedQuestionFlags3Concepts(withAcceptedQuestionFlags2WholeCaseConcepts(withAcceptedQuestionStats1Concepts(withAcceptedQuestionFlags2Concepts(withAcceptedQuestionBankBatch2bRound2Concepts(n3Catalog)))));
-const views = { "stats1-accepted":stats1,"flags3-accepted":flags3, legacy, "flags-round3": flags, "batch2a-round3": batch2a, "n1-round3": n1, "n2-round2": n2, "batch2b-round2": batch2b, "flags2-round1": flags2, "flags2-round3":flags2round3, "n3-round3":n3 };
+const views = { "flags4-accepted":flags4,"stats1-accepted":stats1,"flags3-accepted":flags3, legacy, "flags-round3": flags, "batch2a-round3": batch2a, "n1-round3": n1, "n2-round2": n2, "batch2b-round2": batch2b, "flags2-round1": flags2, "flags2-round3":flags2round3, "n3-round3":n3 };
 const readReview = (name: string) => JSON.parse(readFileSync(new URL("../../../docs/research/" + name, import.meta.url), "utf8")) as Array<{id: string; verdict: string}>;
 
 describe("projection-only manager shipping manifest", () => {

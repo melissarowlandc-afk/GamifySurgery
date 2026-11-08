@@ -52,6 +52,7 @@ export class CloudCodecWorker implements CloudCodecExecutor {
     if (!createWorker) return handleCloudCodecMessage({ id: 0, task }).then(reply => {
       if ("error" in reply) throw unpackCodecFailure(reply.error);
       if (!("result" in reply)) throw new CloudCodecError("worker_payload", "Save processing returned no checkpoint.");
+      for (const code of reply.diagnosticCodes ?? []) problemDiagnostics.event("codec-repair", code);
       return reply.result as CloudCodecResults[T["kind"]];
     });
     this.unregister ??= problemDiagnostics.source("codec", () => this.health);
@@ -96,7 +97,11 @@ export class CloudCodecWorker implements CloudCodecExecutor {
       if ("error" in reply) {
         const error = unpackCodecFailure(reply.error); this.lastError = technicalError(error);
         problemDiagnostics.error("codec-task", error); waiting.reject(error);
-      } else { this.lastError = null; waiting.resolve(reply.result); }
+      } else {
+        this.lastError = null;
+        for (const code of reply.diagnosticCodes ?? []) problemDiagnostics.event("codec-repair", code);
+        waiting.resolve(reply.result);
+      }
     };
     worker.onerror = event => { event.preventDefault?.(); if (this.worker === worker) this.fail(); };
     worker.onmessageerror = () => { if (this.worker === worker) this.fail(); };

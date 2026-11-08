@@ -1,4 +1,4 @@
-import { importGameEvidence, restoreGameEvidenceJournal } from "@gamify-surgery/game-domain";
+import { createGameEvidenceCheckpoint, importGameEvidence, restoreGameEvidenceJournal } from "@gamify-surgery/game-domain";
 import { journalWorkerStore, journalQuotaRetry, journalRowText, type JournalAddress, type JournalHead, type JournalRead, type JournalSeed, type JournalStorage, type JournalWorkerAddress } from "../localJournal";
 import { CloudCacheError } from "./codecCache";
 import { encodeCloudEvidenceCheckpoint, loadCloudEvidenceCheckpoint } from "./codecEvidence";
@@ -7,6 +7,7 @@ import type { CloudCandidate, CloudConfirmed } from "./transport";
 import { cloudProgress } from "./progress";
 import { encodeCloudSnapshot, isSnapshotCopy } from "./snapshotCodec";
 import { verifiedCopies } from "./verifiedCopyCache";
+import { repairSnapshotNumbers } from "./snapshotNumberRecovery";
 
 export interface JournalPreparationInput {
   address?: JournalAddress;
@@ -26,6 +27,7 @@ export interface JournalPreparation {
   state?: ReturnType<typeof importGameEvidence>;
   writerGeneration?: string;
   profileOrder?: number;
+  numberRepairs?: readonly string[];
 }
 export async function rebaseJournalInWorker(input: { address: JournalWorkerAddress; owner: string; through: number; seed: JournalSeed }) {
   const store = journalWorkerStore(input.address), head = await store.head(input.address.key);
@@ -61,15 +63,27 @@ export async function prepareJournalInWorker(input: JournalPreparationInput): Pr
   if (await sha256Utf8(JSON.stringify(data.snapshot.seed)) !== data.snapshot.sha256) throw new CloudCacheError("checksum");
   for (const row of data.rows) if (await sha256Utf8(journalRowText(row)) !== row.sha256) throw new CloudCacheError("checksum");
   if (data.rows.length !== data.head.highWater - data.head.snapshotThrough || data.rows.some((r, i) => r.version !== data.head.snapshotThrough + i + 1)) throw new CloudCacheError("checksum");
-  const checkpoint = restoreGameEvidenceJournal(data.snapshot.seed.checkpoint, data.rows.flatMap(row => row.delta ? [row.delta] : []));
+  let checkpoint = restoreGameEvidenceJournal(data.snapshot.seed.checkpoint, data.rows.flatMap(row => row.delta ? [row.delta] : []));
   const last = data.rows.at(-1), prior = data.snapshot.seed;
   const seed: JournalSeed = { ...prior, checkpoint, campaign: last?.campaign ?? prior.campaign,
     writerGeneration: last?.writerGeneration ?? prior.writerGeneration,
     usageQuestions: (last?.usageQuestions ?? prior.usageQuestions).filter(r => !data.head.acknowledgedUsage?.includes(r.receipt_id)),
     ...(last?.profile === undefined ? {} : { profile: last.profile }) };
+  let numberRepairs: readonly string[] | undefined;
+  let nativeState: ReturnType<typeof importGameEvidence> | undefined;
+  if (seed.snapshotPolicy) {
+    const repaired = repairSnapshotNumbers(importGameEvidence(checkpoint.snapshot, checkpoint.evidence));
+    nativeState = repaired.state;
+    if (repaired.numberRepairs) {
+      numberRepairs = repaired.numberRepairs;
+      seed.snapshotPolicy = { ...seed.snapshotPolicy, lineage: { ...seed.snapshotPolicy.lineage,
+        sequence: seed.snapshotPolicy.lineage.sequence + checkpoint.snapshot.head.sequence } };
+      checkpoint = createGameEvidenceCheckpoint(repaired.state); seed.checkpoint = checkpoint;
+    }
+  }
   let base = input.base ?? seed.confirmed, candidate: CloudCandidate | null = null;
   if (input.encode !== false && base && seed.snapshotPolicy) {
-    const state = importGameEvidence(checkpoint.snapshot, checkpoint.evidence);
+    const state = nativeState!;
     const encoded = await encodeCloudSnapshot({ state, campaign: seed.campaign,
       lineage: { ...seed.snapshotPolicy.lineage, sequence: seed.snapshotPolicy.lineage.sequence + checkpoint.snapshot.head.sequence } });
     const loaded = isSnapshotCopy(base) ? await verifiedCopies.projection({ ...base, expectedRevision: base.revision,
@@ -105,9 +119,9 @@ export async function prepareJournalInWorker(input: JournalPreparationInput): Pr
     }
   }
   if (input.compact && store) await store.compact(input.address!.key, data.head.owner, data.head.highWater, seed, await sha256Utf8(JSON.stringify(seed)));
-  return { through: data.head.highWater, ...(seed.snapshotPolicy ? { snapshotOnly: true } : {}), base: store && input.encode === false && !input.local ? null : base,
+  return { through: data.head.highWater, ...(seed.snapshotPolicy ? { snapshotOnly: true } : {}), ...(numberRepairs ? { numberRepairs } : {}), base: store && input.encode === false && !input.local ? null : base,
     candidate, writerGeneration: seed.writerGeneration, profileOrder: data.head.profileOrder,
-    ...(!store || input.local ? { seed } : {}), ...(input.local ? { state: importGameEvidence(checkpoint.snapshot, checkpoint.evidence) } : {}) };
+    ...(!store || input.local ? { seed } : {}), ...(input.local ? { state: nativeState ?? importGameEvidence(checkpoint.snapshot, checkpoint.evidence) } : {}) };
 }
 
 export async function bindJournal(store: JournalStorage, key: string, owner: string, seed: JournalSeed,

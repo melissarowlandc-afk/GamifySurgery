@@ -8,11 +8,14 @@ import { readSnapshotLineage, SNAPSHOT_BASELINE } from "./snapshotCodec";
 
 type Input = Parameters<typeof loadCloudEvidenceCheckpoint>[0];
 type Loaded = Awaited<ReturnType<typeof loadCloudEvidenceCheckpoint>>;
-export type VerifiedSessionSnapshot = Pick<Loaded, "state" | "campaign" | "checkpoint" | "source" | "snapshotLineage">;
+export type VerifiedSessionSnapshot = Pick<Loaded, "state" | "campaign" | "checkpoint" | "source" | "snapshotLineage"> & { numberRepairs?: readonly string[] };
 type Projection = Pick<Loaded, "state" | "campaign" | "snapshotLineage"> & { sequence: number };
 const packed = (value: CloudCompressedText) => [value.encoding, value.uncompressedSha256, value.uncompressedBytes, value.compressedBytes, value.dataBase64];
-const sessionSnapshot = ({ state, campaign, checkpoint, source, snapshotLineage }: Loaded): VerifiedSessionSnapshot =>
-  ({ state, campaign, checkpoint, source, snapshotLineage });
+const sessionSnapshot = (loaded: Loaded): VerifiedSessionSnapshot => {
+  const { state, campaign, checkpoint, source, snapshotLineage } = loaded;
+  return { state, campaign, checkpoint, source, snapshotLineage,
+    ...("numberRepairs" in loaded && loaded.numberRepairs ? { numberRepairs: loaded.numberRepairs } : {}) };
+};
 /** Worker-local proofs key ACTUAL packed bytes, never their claimed hashes.
  * Keep only two hydrated current states; no decoded move archive is retained. */
 export class VerifiedCopyCache {
