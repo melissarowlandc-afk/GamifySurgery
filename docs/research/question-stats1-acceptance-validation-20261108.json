@@ -1,0 +1,232 @@
+{
+  "checkedOn": "2026-11-08",
+  "results": {
+    "domainBaseline": {
+      "cwd": "packages/game-domain",
+      "command": "npm.cmd test -- --pool=threads",
+      "preload": null,
+      "logPath": ".local-dev/question-stats1-acceptance-20261108/domain-baseline.log",
+      "logSha256": "86aaf4e8f35aa04d5a98a6a0e763047ed3c5931f0145a4ff88de4c189fe9ebe2",
+      "exitCode": 1,
+      "fileSummary": "3 failed | 202 passed (205)",
+      "testSummary": "28 failed | 5158 passed | 1 skipped (5187)",
+      "duration": "309.58s (transform 21.50s, setup 0ms, import 442.49s, tests 769.94s, environment 15ms)",
+      "failureTitles": [
+        "tests/approved-clinical-admission.test.ts > approved clinical admission boundaries > keeps the unapproved prototype runtime release limited to explicitly admitted concepts",
+        "tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > binds the actual run to its current game, balance, clinical and driver inputs and reconciles cash",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 5",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 6",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 7",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 8",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 9",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 5",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 6",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 7",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 8",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 9",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 5",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 6",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 7",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 8",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 9",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 5",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 6",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 7",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 8",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 9",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 5",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 6",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 7",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 8",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 9",
+        "tests/patient-supply.test.ts > routine patient supply > records the current clinical inventory and exact unseen-patient boundary by stage"
+      ]
+    },
+    "playerBaseline": {
+      "cwd": "apps/player",
+      "command": "npm.cmd test -- --pool=threads src/questionShipSaveCompatibility.test.ts src/session/cloud/separateCampaign.test.ts src/session/flagFreeze.test.tsx",
+      "preload": "tools/question-quality/adversarial-r5-player-preload-20261102.cjs",
+      "logPath": ".local-dev/question-stats1-acceptance-20261108/player-baseline.log",
+      "logSha256": "fde66f4b5d84999023cd7e83f6bf2874ac21522aaf5ad4c587dd54e7af2bd91e",
+      "exitCode": 1,
+      "fileSummary": "1 failed | 2 passed (3)",
+      "testSummary": "1 failed | 78 passed (79)",
+      "duration": "44.14s (transform 14.88s, setup 0ms, import 25.58s, tests 67.00s, environment 0ms)",
+      "failureTitles": [
+        "src/session/cloud/separateCampaign.test.ts > explicit separate account campaign for a divergent local branch > retains real retired encounters which no longer exist in the playable state"
+      ]
+    },
+    "clinical": {
+      "cwd": "packages/clinical-content",
+      "command": "npm.cmd test -- --pool=threads",
+      "preload": null,
+      "logPath": ".local-dev/question-stats1-acceptance-20261108/clinical-close.log",
+      "logSha256": "8c89c553358ae80492c2289185d12fc617fe1679ba5525b93749c79201bcc86e",
+      "exitCode": 0,
+      "fileSummary": "125 passed (125)",
+      "testSummary": "1566 passed (1566)",
+      "duration": "30.96s (transform 44.45s, setup 0ms, import 395.84s, tests 34.85s, environment 15ms)",
+      "failureTitles": []
+    },
+    "domain": {
+      "cwd": "packages/game-domain",
+      "command": "npm.cmd test -- --pool=threads",
+      "preload": null,
+      "logPath": ".local-dev/question-stats1-acceptance-20261108/domain-close.log",
+      "logSha256": "6cacbe35ed39eac376ce45a048f5ae3e98107c57dd36846fef5e78f54c1d2182",
+      "exitCode": 1,
+      "fileSummary": "3 failed | 202 passed (205)",
+      "testSummary": "28 failed | 5220 passed | 1 skipped (5249)",
+      "duration": "340.63s (transform 18.76s, setup 0ms, import 439.78s, tests 898.50s, environment 15ms)",
+      "failureTitles": [
+        "tests/approved-clinical-admission.test.ts > approved clinical admission boundaries > keeps the unapproved prototype runtime release limited to explicitly admitted concepts",
+        "tests/level-five-integration.test.ts > M9 connected Level 5 reducer journey > binds the actual run to its current game, balance, clinical and driver inputs and reconciles cash",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 5",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 6",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 7",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 8",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level +0/schema 9",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 5",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 6",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 7",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 8",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 1/schema 9",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 5",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 6",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 7",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 8",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 2/schema 9",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 5",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 6",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 7",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 8",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 3/schema 9",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 5",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 6",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 7",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 8",
+        "tests/level-five-integration.test.ts > M9 Level 0-4 intake behavior after the ordinary cap-5 switch > matches the actual pre-M9 load and next 120 minutes for level 4/schema 9",
+        "tests/patient-supply.test.ts > routine patient supply > records the current clinical inventory and exact unseen-patient boundary by stage"
+      ]
+    },
+    "patientSupplyFocused": {
+      "cwd": "packages/game-domain",
+      "command": "npm.cmd test -- --pool=threads tests/patient-supply.test.ts",
+      "preload": null,
+      "logPath": ".local-dev/question-stats1-acceptance-20261108/patient-supply-focused.log",
+      "logSha256": "bc09bdc4fac474b489ad8e750565750f6efa481349db704661beae015f53ee73",
+      "exitCode": 1,
+      "fileSummary": "1 failed (1)",
+      "testSummary": "1 failed | 3 passed (4)",
+      "duration": "18.19s (transform 4.45s, setup 0ms, import 7.13s, tests 10.96s, environment 0ms)",
+      "failureTitles": [
+        "tests/patient-supply.test.ts > routine patient supply > records the current clinical inventory and exact unseen-patient boundary by stage"
+      ]
+    },
+    "typecheck": {
+      "cwd": ".",
+      "command": "npm.cmd run typecheck",
+      "preload": null,
+      "logPath": ".local-dev/question-stats1-acceptance-20261108/typecheck-close.log",
+      "logSha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "exitCode": 0,
+      "fileSummary": null,
+      "testSummary": null,
+      "duration": null,
+      "failureTitles": [],
+      "workspaces": [
+        "@gamify-surgery/clinical-context-workbench",
+        "@gamify-surgery/player",
+        "@gamify-surgery/balance-config",
+        "@gamify-surgery/clinical-authoring",
+        "@gamify-surgery/clinical-content",
+        "@gamify-surgery/clinical-research",
+        "@gamify-surgery/game-domain"
+      ]
+    },
+    "player": {
+      "cwd": "apps/player",
+      "command": "npm.cmd test -- --pool=threads src/questionShipSaveCompatibility.test.ts src/questionStats1SaveCompatibility.test.ts src/session/cloud/separateCampaign.test.ts src/session/flagFreeze.test.tsx",
+      "preload": "tools/question-quality/adversarial-r5-player-preload-20261102.cjs",
+      "logPath": ".local-dev/question-stats1-acceptance-20261108/player-close.log",
+      "logSha256": "ea7b92aa123c92a784a991920b1f0b513194f899c96f98d67fa9858d32ca8dc9",
+      "exitCode": 1,
+      "fileSummary": "1 failed | 3 passed (4)",
+      "testSummary": "1 failed | 334 passed (335)",
+      "duration": "137.63s (transform 15.76s, setup 0ms, import 27.61s, tests 223.79s, environment 1ms)",
+      "failureTitles": [
+        "src/session/cloud/separateCampaign.test.ts > explicit separate account campaign for a divergent local branch > retains real retired encounters which no longer exist in the playable state"
+      ]
+    },
+    "lint": {
+      "cwd": ".",
+      "command": "npm.cmd run clinical:lint:test",
+      "preload": null,
+      "logPath": ".local-dev/question-stats1-acceptance-20261108/lint-tests.log",
+      "logSha256": "d9c517ea21fa19319ba8c7e4c6932533d74d0bd8954a78933c755e6369bdfc7c",
+      "exitCode": 0,
+      "fileSummary": null,
+      "testSummary": null,
+      "duration": null,
+      "failureTitles": [],
+      "tests": 33,
+      "passed": 33,
+      "failed": 0,
+      "durationMs": 2565.0111
+    }
+  },
+  "addedClinicalTests": 93,
+  "domainTestCountChange": {
+    "before": 5187,
+    "after": 5249,
+    "added": 62,
+    "reason": "question-ship-gate.test.ts parameterizes all non-review.n acceptance rows. Replacing two rows with64 adds62 executed data-driven acceptance cases; no domain file was edited."
+  },
+  "focusedCoverage": {
+    "originalShipSaveTests": 31,
+    "originalShipSaveFailures": 0,
+    "newStats1Tests": 256,
+    "newStats1Failures": 0,
+    "newPatientCaseTests": 48,
+    "newEmployeeCaseTests": 208,
+    "acceptedDefaultFormat3Completions": 64,
+    "legacyWaitingFormat3Completions": 64,
+    "legacyInProgressFormat3Completions": 64,
+    "legacyJournalCompletions": 64,
+    "proves": "Exact frozen question/concept IDs, full nodes and shuffled choice order, old histories, idempotent scoring, card ownership, completed reloads and durable journal state. Both patient admission and ordinary NP discussion scheduling are exercised. No codec limit,240-tick bound or timeout increased."
+  },
+  "knownFailures": {
+    "newDomainFailureTitles": [],
+    "newPlayerFailureTitles": [],
+    "baselineOnly": [],
+    "currentTimingFailures": [
+      "tests/patient-supply.test.ts > routine patient supply > records the current clinical inventory and exact unseen-patient boundary by stage"
+    ],
+    "domain": {
+      "registry": "Static fixture expects585 meanings; before and after this milestone actual606. No registry expectation or domain semantics changed.",
+      "sourceBinding": "First mismatch is the pre-existing balance guidance-tips.ts input. Three additional existing bound clinical inputs changed in this milestone; no evidence edit/rebind.",
+      "legacy": "25 pre-existing loaded-state SHA failures for Level0-4 x schema5-9. Exact same titles reproduce before acceptance. Manager owns evidence refresh.",
+      "timeout": "Patient-supply timed out at10000ms in both baseline and closing full runs. The unchanged file also has a focused diagnostic result in this receipt. No timeout extended or assertion altered."
+    },
+    "player": {
+      "error": "CloudCodecError: JSON string exceeds the codec limit at codecJson.ts:63, called by separateCampaign.test.ts:54. Exact same failure before and after; cloud/save code and limits untouched."
+    }
+  },
+  "integrationTestAdjustments": {
+    "historical": "Exact full-delta epoch adapters retain all old captures and assertions; cache immutable receipt parsing to avoid repeated parsing, without budget changes.",
+    "presentationOnlyStaffProfiles": "Retain42 PASS bytes. Only exact accepted stats staff cases may have one presentation-only profile with exactly id/chiefComplaint/presentation and no patient demographics or vitals.",
+    "roundingInstruction": "Pin frozen PASS S47 exact task; it legitimately has an imperative rounding instruction after its question.",
+    "rawCharacterLength": "Ten explicit accepted statistics versions have a uniquely longest key under the old literal character metric. Pin every whole-case hash and exact manifest decision, require each exception still to be a violation, retain all other old assertions and budgets. No linter rule was suppressed or changed."
+  },
+  "reproductionCommands": [
+    "node tools/question-quality/author-question-stats1-accepted-20261108.mjs --check",
+    "node tools/question-quality/integrate-question-stats1-accepted-20261108.mjs --check",
+    "node tools/question-quality/review-question-stats1-accepted-20261108.mjs --check",
+    "node tools/question-quality/record-question-stats1-acceptance-source-migration-20261108.mjs --check",
+    "node tools/question-quality/check-question-stats1-acceptance-20261108.mjs --check"
+  ],
+  "clinicalApproval": false,
+  "fullDomainOrPlayerGreen": false,
+  "deployPerformed": false,
+  "rebindPerformed": false
+}

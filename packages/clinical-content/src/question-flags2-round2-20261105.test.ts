@@ -12,9 +12,12 @@ import {
   applyQuestionFlags2Round2Revisions,
 } from "./question-flags2-round2-20261105";
 import { QUESTION_FLAGS2_REVISIONS, QUESTION_FLAGS2_ROUND1_SOURCE_RELEASE as round1 } from "./question-flags2-20261105";
-import { QUESTION_FLAGS2_ACCEPTED_TIMING_ENTRIES } from "./question-flags2-accepted-20261105";
+import { QUESTION_FLAGS2_ACCEPTED_TIMING_ENTRIES as currentG06Timings } from "./question-flags2-accepted-20261105";
 import { SYNTHETIC_CLINICAL_RELEASE as actualLive } from "./synthetic-content";
-import { ANSWER_CHOICE_TIMING_REGISTRY } from "./answer-choice-timing";
+import { ANSWER_CHOICE_TIMING_REGISTRY as actualGlobalTimings } from "./answer-choice-timing";
+import {beforeStats1PriorAcceptedTimings,beforeStats1AcceptanceTimings} from "./question-stats1-acceptance-test-support";
+const QUESTION_FLAGS2_ACCEPTED_TIMING_ENTRIES=beforeStats1PriorAcceptedTimings(currentG06Timings,"flags2-round1");
+const ANSWER_CHOICE_TIMING_REGISTRY=beforeStats1AcceptanceTimings(actualGlobalTimings);
 import { QUESTION_SHIP_MANIFEST as actualManifest, type QuestionShipManifest } from "./question-ship-manifest";
 import {beforeWholeCaseReplacementRelease,beforeWholeCaseReplacementManifest} from "./question-ship-case-replacements-test-support";
 import { syntheticClinicalReleaseSchema, type SyntheticClinicalRelease, type AnswerChoiceTimingRegistryEntry } from "./schema";

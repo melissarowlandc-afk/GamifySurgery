@@ -21,7 +21,7 @@ export interface QuestionShipManifest {
   replacements?: readonly QuestionShipCaseReplacement[];
 }
 export const QUESTION_SHIP_MANIFEST = {
-  id: "question-ship.2026-11-07.v5",
+  id: "question-ship.2026-11-08.v6",
   clinicalApproval: false,
   legacyDecision: "Carry forward the existing live bank before the owner-flag rewrite program; user-directed fallback on 2026-11-05. This does not independently accept prior drafts or grant clinical approval.",
   legacyBindings: [
@@ -8577,15 +8577,6 @@ export const QUESTION_SHIP_MANIFEST = {
   {"acceptanceId":"G05","caseId":"case.asymptomatic-phpt.incidental-calcium","nodeId":"node.asymptomatic-phpt.incidental-calcium.2","questionVariantId":"question.asymptomatic-phpt.age-based-surgery.v1.r3","conceptId":"concept.phpt.inherited-calcium-before-localization.v2","sourceView":"flags2-round3","decision":"docs/research/question-flags2-round3-manager-decision-20261105.md"},
   // END FLAGS2 ROUND3 ACCEPTED ROWS 20261105
   // BEGIN FLAGS2 G06 ACCEPTANCE 20261105
-  {
-    "acceptanceId": "G06",
-    "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-lower-prevalence",
-    "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-lower-prevalence.1",
-    "questionVariantId": "question.statistics-ethics.predictive-value-prevalence.v2.r1",
-    "conceptId": "concept.predictive-value.collection-population-denominator.v1",
-    "sourceView": "flags2-round1",
-    "decision": "docs/research/question-flags2-manager-decision-20261105.md"
-  },
   // END FLAGS2 G06 ACCEPTANCE 20261105
   // BEGIN BATCH2B REVIEW2 ACCEPTANCES 20261105
   {
@@ -9122,15 +9113,6 @@ export const QUESTION_SHIP_MANIFEST = {
   },
   // BEGIN FLAGS3 ACCEPTANCES 20261107
   {
-    "acceptanceId": "F3-01",
-    "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-characteristics-fixed",
-    "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-characteristics-fixed.1",
-    "questionVariantId": "question.statistics-ethics.predictive-value-prevalence.v4.r1",
-    "conceptId": "concept.statistics-ethics.predictive-value-prevalence",
-    "sourceView": "flags3-accepted",
-    "decision": "docs/research/question-flags3-manager-decision-20261107.md"
-  },
-  {
     "acceptanceId": "F3-02",
     "caseId": "case.achalasia.night-regurgitation",
     "nodeId": "node.achalasia.night-regurgitation.2",
@@ -9158,6 +9140,584 @@ export const QUESTION_SHIP_MANIFEST = {
     "decision": "docs/research/question-flags3-manager-decision-20261107.md"
   },
   // END FLAGS3 ACCEPTANCES 20261107
+  // BEGIN STATS1 ACCEPTANCES 20261108
+  {
+    "acceptanceId": "S01",
+    "caseId": "case.gs028se.independent-t-paired-t.a-two-teams",
+    "nodeId": "node.gs028se.independent-t-paired-t.a-two-teams.1",
+    "questionVariantId": "question.statistics-ethics.independent-t.v1.r2",
+    "conceptId": "concept.statistics-ethics.independent-t",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S02",
+    "caseId": "case.gs028se.independent-t-paired-t.a-two-cohorts",
+    "nodeId": "node.gs028se.independent-t-paired-t.a-two-cohorts.1",
+    "questionVariantId": "question.statistics-ethics.independent-t.v2.r2",
+    "conceptId": "concept.statistics-ethics.independent-t",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S03",
+    "caseId": "case.gs028se.independent-t-paired-t.a-two-shifts",
+    "nodeId": "node.gs028se.independent-t-paired-t.a-two-shifts.1",
+    "questionVariantId": "question.statistics-ethics.independent-t.v3.r2",
+    "conceptId": "concept.statistics-ethics.independent-t",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S04",
+    "caseId": "case.gs028se.independent-t-paired-t.a-two-scripts",
+    "nodeId": "node.gs028se.independent-t-paired-t.a-two-scripts.1",
+    "questionVariantId": "question.statistics-ethics.independent-t.v4.r2",
+    "conceptId": "concept.statistics-ethics.independent-t",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S05",
+    "caseId": "case.gs028se.independent-t-paired-t.b-same-rooms",
+    "nodeId": "node.gs028se.independent-t-paired-t.b-same-rooms.1",
+    "questionVariantId": "question.statistics-ethics.paired-t.v1.r1",
+    "conceptId": "concept.statistics-ethics.paired-t",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S06",
+    "caseId": "case.gs028se.independent-t-paired-t.b-same-trainees",
+    "nodeId": "node.gs028se.independent-t-paired-t.b-same-trainees.1",
+    "questionVariantId": "question.statistics-ethics.paired-t.v2.r1",
+    "conceptId": "concept.statistics-ethics.paired-t",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S07",
+    "caseId": "case.gs028se.independent-t-paired-t.b-matched-sites",
+    "nodeId": "node.gs028se.independent-t-paired-t.b-matched-sites.1",
+    "questionVariantId": "question.statistics-ethics.paired-t.v3.r1",
+    "conceptId": "concept.statistics-ethics.paired-t",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S08",
+    "caseId": "case.gs028se.independent-t-paired-t.b-same-workers",
+    "nodeId": "node.gs028se.independent-t-paired-t.b-same-workers.1",
+    "questionVariantId": "question.statistics-ethics.paired-t.v4.r1",
+    "conceptId": "concept.statistics-ethics.paired-t",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S09",
+    "caseId": "case.gs028se.one-way-anova-rank-sum.a-three-teams",
+    "nodeId": "node.gs028se.one-way-anova-rank-sum.a-three-teams.1",
+    "questionVariantId": "question.statistics-ethics.one-way-anova.v1.r2",
+    "conceptId": "concept.statistics-ethics.one-way-anova",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S10",
+    "caseId": "case.gs028se.one-way-anova-rank-sum.a-four-formats",
+    "nodeId": "node.gs028se.one-way-anova-rank-sum.a-four-formats.1",
+    "questionVariantId": "question.statistics-ethics.one-way-anova.v2.r2",
+    "conceptId": "concept.statistics-ethics.one-way-anova",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S11",
+    "caseId": "case.gs028se.one-way-anova-rank-sum.a-three-sites",
+    "nodeId": "node.gs028se.one-way-anova-rank-sum.a-three-sites.1",
+    "questionVariantId": "question.statistics-ethics.one-way-anova.v3.r2",
+    "conceptId": "concept.statistics-ethics.one-way-anova",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S12",
+    "caseId": "case.gs028se.one-way-anova-rank-sum.a-five-signs",
+    "nodeId": "node.gs028se.one-way-anova-rank-sum.a-five-signs.1",
+    "questionVariantId": "question.statistics-ethics.one-way-anova.v4.r2",
+    "conceptId": "concept.statistics-ethics.one-way-anova",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S13",
+    "caseId": "case.gs028se.one-way-anova-rank-sum.b-ordinal-teams",
+    "nodeId": "node.gs028se.one-way-anova-rank-sum.b-ordinal-teams.1",
+    "questionVariantId": "question.statistics-ethics.rank-sum.v1.r1",
+    "conceptId": "concept.statistics-ethics.rank-sum",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S14",
+    "caseId": "case.gs028se.one-way-anova-rank-sum.b-skewed-delays",
+    "nodeId": "node.gs028se.one-way-anova-rank-sum.b-skewed-delays.1",
+    "questionVariantId": "question.statistics-ethics.rank-sum.v2.r1",
+    "conceptId": "concept.statistics-ethics.rank-sum",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S15",
+    "caseId": "case.gs028se.one-way-anova-rank-sum.b-independent-likert",
+    "nodeId": "node.gs028se.one-way-anova-rank-sum.b-independent-likert.1",
+    "questionVariantId": "question.statistics-ethics.rank-sum.v3.r1",
+    "conceptId": "concept.statistics-ethics.rank-sum",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S16",
+    "caseId": "case.gs028se.one-way-anova-rank-sum.b-two-queues",
+    "nodeId": "node.gs028se.one-way-anova-rank-sum.b-two-queues.1",
+    "questionVariantId": "question.statistics-ethics.rank-sum.v4.r1",
+    "conceptId": "concept.statistics-ethics.rank-sum",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S17",
+    "caseId": "case.gs028se.signed-rank-chi-square.a-paired-workload",
+    "nodeId": "node.gs028se.signed-rank-chi-square.a-paired-workload.1",
+    "questionVariantId": "question.statistics-ethics.signed-rank.v1.r1",
+    "conceptId": "concept.statistics-ethics.signed-rank",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S18",
+    "caseId": "case.gs028se.signed-rank-chi-square.a-same-rooms-skewed",
+    "nodeId": "node.gs028se.signed-rank-chi-square.a-same-rooms-skewed.1",
+    "questionVariantId": "question.statistics-ethics.signed-rank.v2.r1",
+    "conceptId": "concept.statistics-ethics.signed-rank",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S19",
+    "caseId": "case.gs028se.signed-rank-chi-square.a-matched-dyads",
+    "nodeId": "node.gs028se.signed-rank-chi-square.a-matched-dyads.1",
+    "questionVariantId": "question.statistics-ethics.signed-rank.v3.r1",
+    "conceptId": "concept.statistics-ethics.signed-rank",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S20",
+    "caseId": "case.gs028se.signed-rank-chi-square.a-pre-post-counts",
+    "nodeId": "node.gs028se.signed-rank-chi-square.a-pre-post-counts.1",
+    "questionVariantId": "question.statistics-ethics.signed-rank.v4.r1",
+    "conceptId": "concept.statistics-ethics.signed-rank",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S21",
+    "caseId": "case.gs028se.signed-rank-chi-square.b-role-by-choice",
+    "nodeId": "node.gs028se.signed-rank-chi-square.b-role-by-choice.1",
+    "questionVariantId": "question.statistics-ethics.chi-square.v1.r2",
+    "conceptId": "concept.statistics-ethics.chi-square",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S22",
+    "caseId": "case.gs028se.signed-rank-chi-square.b-shift-by-response",
+    "nodeId": "node.gs028se.signed-rank-chi-square.b-shift-by-response.1",
+    "questionVariantId": "question.statistics-ethics.chi-square.v2.r1",
+    "conceptId": "concept.statistics-ethics.chi-square",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S23",
+    "caseId": "case.gs028se.signed-rank-chi-square.b-badge-by-completion",
+    "nodeId": "node.gs028se.signed-rank-chi-square.b-badge-by-completion.1",
+    "questionVariantId": "question.statistics-ethics.chi-square.v3.r1",
+    "conceptId": "concept.statistics-ethics.chi-square",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S24",
+    "caseId": "case.gs028se.signed-rank-chi-square.b-site-by-category",
+    "nodeId": "node.gs028se.signed-rank-chi-square.b-site-by-category.1",
+    "questionVariantId": "question.statistics-ethics.chi-square.v4.r1",
+    "conceptId": "concept.statistics-ethics.chi-square",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S25",
+    "caseId": "case.gs028se.fisher-exact-study-design.a-rare-event",
+    "nodeId": "node.gs028se.fisher-exact-study-design.a-rare-event.1",
+    "questionVariantId": "question.statistics-ethics.fisher-exact.v1.r2",
+    "conceptId": "concept.statistics-ethics.fisher-exact",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S26",
+    "caseId": "case.gs028se.fisher-exact-study-design.a-tiny-pilot",
+    "nodeId": "node.gs028se.fisher-exact-study-design.a-tiny-pilot.1",
+    "questionVariantId": "question.statistics-ethics.fisher-exact.v2.r5",
+    "conceptId": "concept.statistics-ethics.fisher-exact",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S27",
+    "caseId": "case.gs028se.fisher-exact-study-design.a-sparse-exposure",
+    "nodeId": "node.gs028se.fisher-exact-study-design.a-sparse-exposure.1",
+    "questionVariantId": "question.statistics-ethics.fisher-exact.v3.r2",
+    "conceptId": "concept.statistics-ethics.fisher-exact",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S28",
+    "caseId": "case.gs028se.fisher-exact-study-design.a-small-response",
+    "nodeId": "node.gs028se.fisher-exact-study-design.a-small-response.1",
+    "questionVariantId": "question.statistics-ethics.fisher-exact.v4.r2",
+    "conceptId": "concept.statistics-ethics.fisher-exact",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S29",
+    "caseId": "case.gs028se.fisher-exact-study-design.b-cohort-followup",
+    "nodeId": "node.gs028se.fisher-exact-study-design.b-cohort-followup.1",
+    "questionVariantId": "question.statistics-ethics.study-design.v1.r1",
+    "conceptId": "concept.statistics-ethics.study-design",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S30",
+    "caseId": "case.gs028se.fisher-exact-study-design.b-random-scripts",
+    "nodeId": "node.gs028se.fisher-exact-study-design.b-random-scripts.1",
+    "questionVariantId": "question.statistics-ethics.study-design.v2.r2",
+    "conceptId": "concept.statistics-ethics.study-design",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S31",
+    "caseId": "case.gs028se.fisher-exact-study-design.b-case-control",
+    "nodeId": "node.gs028se.fisher-exact-study-design.b-case-control.1",
+    "questionVariantId": "question.statistics-ethics.study-design.v3.r1",
+    "conceptId": "concept.statistics-ethics.study-design",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S32",
+    "caseId": "case.gs028se.fisher-exact-study-design.b-cross-sectional",
+    "nodeId": "node.gs028se.fisher-exact-study-design.b-cross-sectional.1",
+    "questionVariantId": "question.statistics-ethics.study-design.v4.r1",
+    "conceptId": "concept.statistics-ethics.study-design",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S33",
+    "caseId": "case.gs028se.bias-confounding-sensitivity-specificity.a-baseline-shift",
+    "nodeId": "node.gs028se.bias-confounding-sensitivity-specificity.a-baseline-shift.1",
+    "questionVariantId": "question.statistics-ethics.bias-confounding.v1.r1",
+    "conceptId": "concept.statistics-ethics.bias-confounding",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S34",
+    "caseId": "case.gs028se.bias-confounding-sensitivity-specificity.a-night-excluded",
+    "nodeId": "node.gs028se.bias-confounding-sensitivity-specificity.a-night-excluded.1",
+    "questionVariantId": "question.statistics-ethics.bias-confounding.v2.r1",
+    "conceptId": "concept.statistics-ethics.bias-confounding",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S35",
+    "caseId": "case.gs028se.bias-confounding-sensitivity-specificity.a-recall-timing",
+    "nodeId": "node.gs028se.bias-confounding-sensitivity-specificity.a-recall-timing.1",
+    "questionVariantId": "question.statistics-ethics.bias-confounding.v3.r1",
+    "conceptId": "concept.statistics-ethics.bias-confounding",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S36",
+    "caseId": "case.gs028se.bias-confounding-sensitivity-specificity.a-adjusted-model",
+    "nodeId": "node.gs028se.bias-confounding-sensitivity-specificity.a-adjusted-model.1",
+    "questionVariantId": "question.statistics-ethics.bias-confounding.v4.r1",
+    "conceptId": "concept.statistics-ethics.bias-confounding",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S37",
+    "caseId": "case.gs028se.bias-confounding-sensitivity-specificity.b-sensitivity-90",
+    "nodeId": "node.gs028se.bias-confounding-sensitivity-specificity.b-sensitivity-90.1",
+    "questionVariantId": "question.statistics-ethics.sensitivity-specificity.v1.r1",
+    "conceptId": "concept.statistics-ethics.sensitivity-specificity",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S38",
+    "caseId": "case.gs028se.bias-confounding-sensitivity-specificity.b-specificity-95",
+    "nodeId": "node.gs028se.bias-confounding-sensitivity-specificity.b-specificity-95.1",
+    "questionVariantId": "question.statistics-ethics.sensitivity-specificity.v2.r1",
+    "conceptId": "concept.statistics-ethics.sensitivity-specificity",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S39",
+    "caseId": "case.gs028se.bias-confounding-sensitivity-specificity.b-sensitivity-80",
+    "nodeId": "node.gs028se.bias-confounding-sensitivity-specificity.b-sensitivity-80.1",
+    "questionVariantId": "question.statistics-ethics.sensitivity-specificity.v3.r1",
+    "conceptId": "concept.statistics-ethics.sensitivity-specificity",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S40",
+    "caseId": "case.gs028se.bias-confounding-sensitivity-specificity.b-specificity-70",
+    "nodeId": "node.gs028se.bias-confounding-sensitivity-specificity.b-specificity-70.1",
+    "questionVariantId": "question.statistics-ethics.sensitivity-specificity.v4.r1",
+    "conceptId": "concept.statistics-ethics.sensitivity-specificity",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S41",
+    "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-higher-prevalence",
+    "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-higher-prevalence.1",
+    "questionVariantId": "question.statistics-ethics.predictive-value-prevalence.v1.r1",
+    "conceptId": "concept.statistics-ethics.predictive-value-prevalence",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S42",
+    "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-lower-prevalence",
+    "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-lower-prevalence.1",
+    "questionVariantId": "question.statistics-ethics.predictive-value-prevalence.v2.r2",
+    "conceptId": "concept.predictive-value.collection-population-denominator.v1",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S43",
+    "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-ppv-table",
+    "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-ppv-table.1",
+    "questionVariantId": "question.statistics-ethics.predictive-value-prevalence.v3.r1",
+    "conceptId": "concept.statistics-ethics.predictive-value-prevalence",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S44",
+    "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-characteristics-fixed",
+    "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-characteristics-fixed.1",
+    "questionVariantId": "question.statistics-ethics.predictive-value-prevalence.v4.r2",
+    "conceptId": "concept.statistics-ethics.predictive-value-prevalence",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S45",
+    "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-cohort-risk",
+    "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-cohort-risk.1",
+    "questionVariantId": "question.statistics-ethics.risk-ratio-odds-ratio.v1.r1",
+    "conceptId": "concept.statistics-ethics.risk-ratio-odds-ratio",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S46",
+    "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-case-control-or",
+    "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-case-control-or.1",
+    "questionVariantId": "question.statistics-ethics.risk-ratio-odds-ratio.v2.r1",
+    "conceptId": "concept.statistics-ethics.risk-ratio-odds-ratio",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S47",
+    "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-adjusted-odds",
+    "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-adjusted-odds.1",
+    "questionVariantId": "question.statistics-ethics.risk-ratio-odds-ratio.v3.r4",
+    "conceptId": "concept.statistics-ethics.risk-ratio-odds-ratio",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S48",
+    "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-rare-not-identical",
+    "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-rare-not-identical.1",
+    "questionVariantId": "question.statistics-ethics.risk-ratio-odds-ratio.v4.r5",
+    "conceptId": "concept.statistics-ethics.risk-ratio-odds-ratio",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S49",
+    "caseId": "case.gs028se.arr-nnt-p-value.a-arr-ten",
+    "nodeId": "node.gs028se.arr-nnt-p-value.a-arr-ten.1",
+    "questionVariantId": "question.statistics-ethics.arr-nnt.v1.r2",
+    "conceptId": "concept.statistics-ethics.arr-nnt",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S50",
+    "caseId": "case.gs028se.arr-nnt-p-value.a-arr-five",
+    "nodeId": "node.gs028se.arr-nnt-p-value.a-arr-five.1",
+    "questionVariantId": "question.statistics-ethics.arr-nnt.v2.r2",
+    "conceptId": "concept.statistics-ethics.arr-nnt",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S51",
+    "caseId": "case.gs028se.arr-nnt-p-value.a-arr-twenty",
+    "nodeId": "node.gs028se.arr-nnt-p-value.a-arr-twenty.1",
+    "questionVariantId": "question.statistics-ethics.arr-nnt.v3.r2",
+    "conceptId": "concept.statistics-ethics.arr-nnt",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S52",
+    "caseId": "case.gs028se.arr-nnt-p-value.a-arr-six",
+    "nodeId": "node.gs028se.arr-nnt-p-value.a-arr-six.1",
+    "questionVariantId": "question.statistics-ethics.arr-nnt.v4.r2",
+    "conceptId": "concept.statistics-ethics.arr-nnt",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S53",
+    "caseId": "case.gs028se.arr-nnt-p-value.b-p-003",
+    "nodeId": "node.gs028se.arr-nnt-p-value.b-p-003.1",
+    "questionVariantId": "question.statistics-ethics.p-value.v1.r5",
+    "conceptId": "concept.statistics-ethics.p-value",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S54",
+    "caseId": "case.gs028se.arr-nnt-p-value.b-p-040",
+    "nodeId": "node.gs028se.arr-nnt-p-value.b-p-040.1",
+    "questionVariantId": "question.statistics-ethics.p-value.v2.r8",
+    "conceptId": "concept.statistics-ethics.p-value.v2",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S55",
+    "caseId": "case.gs028se.arr-nnt-p-value.b-p-0001",
+    "nodeId": "node.gs028se.arr-nnt-p-value.b-p-0001.1",
+    "questionVariantId": "question.statistics-ethics.p-value.v3.r6",
+    "conceptId": "concept.statistics-ethics.p-value",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S56",
+    "caseId": "case.gs028se.arr-nnt-p-value.b-p-008",
+    "nodeId": "node.gs028se.arr-nnt-p-value.b-p-008.1",
+    "questionVariantId": "question.statistics-ethics.p-value.v4.r4",
+    "conceptId": "concept.statistics-ethics.p-value",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S57",
+    "caseId": "case.gs028se.confidence-interval-errors-power.a-ratio-crosses",
+    "nodeId": "node.gs028se.confidence-interval-errors-power.a-ratio-crosses.1",
+    "questionVariantId": "question.statistics-ethics.confidence-interval.v1.r4",
+    "conceptId": "concept.statistics-ethics.confidence-interval",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S58",
+    "caseId": "case.gs028se.confidence-interval-errors-power.a-difference-excludes",
+    "nodeId": "node.gs028se.confidence-interval-errors-power.a-difference-excludes.1",
+    "questionVariantId": "question.statistics-ethics.confidence-interval.v2.r1",
+    "conceptId": "concept.statistics-ethics.confidence-interval",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S59",
+    "caseId": "case.gs028se.confidence-interval-errors-power.a-precision-width",
+    "nodeId": "node.gs028se.confidence-interval-errors-power.a-precision-width.1",
+    "questionVariantId": "question.statistics-ethics.confidence-interval.v3.r2",
+    "conceptId": "concept.statistics-ethics.confidence-interval",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S60",
+    "caseId": "case.gs028se.confidence-interval-errors-power.a-repeated-sampling",
+    "nodeId": "node.gs028se.confidence-interval-errors-power.a-repeated-sampling.1",
+    "questionVariantId": "question.statistics-ethics.confidence-interval.v4.r1",
+    "conceptId": "concept.statistics-ethics.confidence-interval",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S61",
+    "caseId": "case.gs028se.confidence-interval-errors-power.b-type-one",
+    "nodeId": "node.gs028se.confidence-interval-errors-power.b-type-one.1",
+    "questionVariantId": "question.statistics-ethics.errors-power.v1.r1",
+    "conceptId": "concept.statistics-ethics.errors-power",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S62",
+    "caseId": "case.gs028se.confidence-interval-errors-power.b-type-two",
+    "nodeId": "node.gs028se.confidence-interval-errors-power.b-type-two.1",
+    "questionVariantId": "question.statistics-ethics.errors-power.v2.r1",
+    "conceptId": "concept.statistics-ethics.errors-power",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S63",
+    "caseId": "case.gs028se.confidence-interval-errors-power.b-power",
+    "nodeId": "node.gs028se.confidence-interval-errors-power.b-power.1",
+    "questionVariantId": "question.statistics-ethics.errors-power.v3.r1",
+    "conceptId": "concept.statistics-ethics.errors-power",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  {
+    "acceptanceId": "S64",
+    "caseId": "case.gs028se.confidence-interval-errors-power.b-post-hoc",
+    "nodeId": "node.gs028se.confidence-interval-errors-power.b-post-hoc.1",
+    "questionVariantId": "question.statistics-ethics.errors-power.v4.r1",
+    "conceptId": "concept.statistics-ethics.errors-power",
+    "sourceView": "stats1-accepted",
+    "decision": "docs/research/question-stats1-manager-decision-20261108.md"
+  },
+  // END STATS1 ACCEPTANCES 20261108
 ] satisfies QuestionShipAcceptance[],
   // BEGIN FLAGS2 WHOLE-CASE ACCEPTANCES 20261105
   replacements: [
@@ -9168,8 +9728,74 @@ export const QUESTION_SHIP_MANIFEST = {
   ] satisfies QuestionShipCaseReplacement[],
   // END FLAGS2 WHOLE-CASE ACCEPTANCES 20261105
   headerSources: {
+  // BEGIN STATS1 ACCEPTED HEADERS 20261108
+  "case.gs028se.independent-t-paired-t.a-two-teams": "stats1-accepted",
+  "case.gs028se.independent-t-paired-t.a-two-cohorts": "stats1-accepted",
+  "case.gs028se.independent-t-paired-t.a-two-shifts": "stats1-accepted",
+  "case.gs028se.independent-t-paired-t.a-two-scripts": "stats1-accepted",
+  "case.gs028se.independent-t-paired-t.b-same-rooms": "stats1-accepted",
+  "case.gs028se.independent-t-paired-t.b-same-trainees": "stats1-accepted",
+  "case.gs028se.independent-t-paired-t.b-matched-sites": "stats1-accepted",
+  "case.gs028se.independent-t-paired-t.b-same-workers": "stats1-accepted",
+  "case.gs028se.one-way-anova-rank-sum.a-three-teams": "stats1-accepted",
+  "case.gs028se.one-way-anova-rank-sum.a-four-formats": "stats1-accepted",
+  "case.gs028se.one-way-anova-rank-sum.a-three-sites": "stats1-accepted",
+  "case.gs028se.one-way-anova-rank-sum.a-five-signs": "stats1-accepted",
+  "case.gs028se.one-way-anova-rank-sum.b-ordinal-teams": "stats1-accepted",
+  "case.gs028se.one-way-anova-rank-sum.b-skewed-delays": "stats1-accepted",
+  "case.gs028se.one-way-anova-rank-sum.b-independent-likert": "stats1-accepted",
+  "case.gs028se.one-way-anova-rank-sum.b-two-queues": "stats1-accepted",
+  "case.gs028se.signed-rank-chi-square.a-paired-workload": "stats1-accepted",
+  "case.gs028se.signed-rank-chi-square.a-same-rooms-skewed": "stats1-accepted",
+  "case.gs028se.signed-rank-chi-square.a-matched-dyads": "stats1-accepted",
+  "case.gs028se.signed-rank-chi-square.a-pre-post-counts": "stats1-accepted",
+  "case.gs028se.signed-rank-chi-square.b-role-by-choice": "stats1-accepted",
+  "case.gs028se.signed-rank-chi-square.b-shift-by-response": "stats1-accepted",
+  "case.gs028se.signed-rank-chi-square.b-badge-by-completion": "stats1-accepted",
+  "case.gs028se.signed-rank-chi-square.b-site-by-category": "stats1-accepted",
+  "case.gs028se.fisher-exact-study-design.a-rare-event": "stats1-accepted",
+  "case.gs028se.fisher-exact-study-design.a-tiny-pilot": "stats1-accepted",
+  "case.gs028se.fisher-exact-study-design.a-sparse-exposure": "stats1-accepted",
+  "case.gs028se.fisher-exact-study-design.a-small-response": "stats1-accepted",
+  "case.gs028se.fisher-exact-study-design.b-cohort-followup": "stats1-accepted",
+  "case.gs028se.fisher-exact-study-design.b-random-scripts": "stats1-accepted",
+  "case.gs028se.fisher-exact-study-design.b-case-control": "stats1-accepted",
+  "case.gs028se.fisher-exact-study-design.b-cross-sectional": "stats1-accepted",
+  "case.gs028se.bias-confounding-sensitivity-specificity.a-baseline-shift": "stats1-accepted",
+  "case.gs028se.bias-confounding-sensitivity-specificity.a-night-excluded": "stats1-accepted",
+  "case.gs028se.bias-confounding-sensitivity-specificity.a-recall-timing": "stats1-accepted",
+  "case.gs028se.bias-confounding-sensitivity-specificity.a-adjusted-model": "stats1-accepted",
+  "case.gs028se.bias-confounding-sensitivity-specificity.b-sensitivity-90": "stats1-accepted",
+  "case.gs028se.bias-confounding-sensitivity-specificity.b-specificity-95": "stats1-accepted",
+  "case.gs028se.bias-confounding-sensitivity-specificity.b-sensitivity-80": "stats1-accepted",
+  "case.gs028se.bias-confounding-sensitivity-specificity.b-specificity-70": "stats1-accepted",
+  "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-higher-prevalence": "stats1-accepted",
+  "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-lower-prevalence": "stats1-accepted",
+  "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-ppv-table": "stats1-accepted",
+  "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-characteristics-fixed": "stats1-accepted",
+  "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-cohort-risk": "stats1-accepted",
+  "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-case-control-or": "stats1-accepted",
+  "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-adjusted-odds": "stats1-accepted",
+  "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-rare-not-identical": "stats1-accepted",
+  "case.gs028se.arr-nnt-p-value.a-arr-ten": "stats1-accepted",
+  "case.gs028se.arr-nnt-p-value.a-arr-five": "stats1-accepted",
+  "case.gs028se.arr-nnt-p-value.a-arr-twenty": "stats1-accepted",
+  "case.gs028se.arr-nnt-p-value.a-arr-six": "stats1-accepted",
+  "case.gs028se.arr-nnt-p-value.b-p-003": "stats1-accepted",
+  "case.gs028se.arr-nnt-p-value.b-p-040": "stats1-accepted",
+  "case.gs028se.arr-nnt-p-value.b-p-0001": "stats1-accepted",
+  "case.gs028se.arr-nnt-p-value.b-p-008": "stats1-accepted",
+  "case.gs028se.confidence-interval-errors-power.a-ratio-crosses": "stats1-accepted",
+  "case.gs028se.confidence-interval-errors-power.a-difference-excludes": "stats1-accepted",
+  "case.gs028se.confidence-interval-errors-power.a-precision-width": "stats1-accepted",
+  "case.gs028se.confidence-interval-errors-power.a-repeated-sampling": "stats1-accepted",
+  "case.gs028se.confidence-interval-errors-power.b-type-one": "stats1-accepted",
+  "case.gs028se.confidence-interval-errors-power.b-type-two": "stats1-accepted",
+  "case.gs028se.confidence-interval-errors-power.b-power": "stats1-accepted",
+  "case.gs028se.confidence-interval-errors-power.b-post-hoc": "stats1-accepted",
+  // END STATS1 ACCEPTED HEADERS 20261108
+
   // BEGIN FLAGS3 ACCEPTED HEADERS 20261107
-  "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-characteristics-fixed": "flags3-accepted",
   "case.inguinal-hernia.caregiving-strain": "flags3-accepted",
   // END FLAGS3 ACCEPTED HEADERS 20261107
   // BEGIN N3 FROZEN REVIEW2 HEADERS 20261105
@@ -9184,7 +9810,6 @@ export const QUESTION_SHIP_MANIFEST = {
   "case.asymptomatic-phpt.incidental-calcium": "flags2-round3",
   // END FLAGS2 WHOLE-CASE HEADERS 20261105
   // BEGIN FLAGS2 G06 HEADER 20261105
-  "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-lower-prevalence": "flags2-round1",
   // END FLAGS2 G06 HEADER 20261105
   // BEGIN BATCH2B REVIEW2 HEADERS 20261105
   "case.gs028e.mis-principles.c3-phrenic-pathway": "batch2b-round2",

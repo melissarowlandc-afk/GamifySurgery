@@ -1,5 +1,23 @@
 import { describe, expect, it } from "vitest";
 import { SYNTHETIC_CLINICAL_RELEASE } from "./synthetic-content";
+import {QUESTION_STATS1_ACCEPTED_SOURCE_RELEASE} from "./question-stats1-accepted-20261108";
+import type {SyntheticClinicalCase} from "./schema";
+
+// The owner-approved non-clinical statistics style retains exact reviewed
+// presentation-only staff profiles. They never introduce patient demographics.
+// Every other staff discussion keeps the original no-profile assertion.
+function expectStaffProfiles(clinicalCase:SyntheticClinicalCase):void {
+ const exact=QUESTION_STATS1_ACCEPTED_SOURCE_RELEASE.cases.find(c=>c.id===clinicalCase.id&&
+  c.participant?.kind==="employee_discussion"&&c.decisionNodes[0]!.questionVariantId===clinicalCase.decisionNodes[0]!.questionVariantId);
+ if(!exact){expect(clinicalCase.approvedInstantiationProfiles,clinicalCase.id).toBeUndefined();return;}
+ expect(clinicalCase.approvedInstantiationProfiles,clinicalCase.id).toEqual(exact.approvedInstantiationProfiles);
+ expect(clinicalCase.approvedInstantiationProfiles).toHaveLength(1);
+ for(const profile of clinicalCase.approvedInstantiationProfiles!){
+  expect(profile.prototypeDemographics).toBeUndefined();expect(profile.prototypeVitalSigns).toBeUndefined();
+  expect(profile.presentation).toBe(clinicalCase.presentation);expect(profile.chiefComplaint).toBe("Study data");
+  expect(Object.keys(profile).sort()).toEqual(["chiefComplaint","id","presentation"]);
+ }
+}
 
 const MULTI_PATIENT_FRAMING = [
   /\bwhich patient\b/i,
@@ -30,10 +48,7 @@ describe("playable one-patient narratives", () => {
         expect(clinicalCase.presentation, clinicalCase.id).toMatch(STORY_CUE);
         expect(clinicalCase.prototypeDemographics, clinicalCase.id).toBeUndefined();
         expect(clinicalCase.prototypeVitalSigns, clinicalCase.id).toBeUndefined();
-        expect(
-          clinicalCase.approvedInstantiationProfiles,
-          clinicalCase.id,
-        ).toBeUndefined();
+        expectStaffProfiles(clinicalCase);
         continue;
       }
       expect(clinicalCase.presentation, clinicalCase.id).toMatch(
@@ -82,10 +97,7 @@ describe("playable one-patient narratives", () => {
     for (const clinicalCase of SYNTHETIC_CLINICAL_RELEASE.cases) {
       if (clinicalCase.participant?.kind === "employee_discussion") {
         expect(clinicalCase.prototypeDemographics, clinicalCase.id).toBeUndefined();
-        expect(
-          clinicalCase.approvedInstantiationProfiles,
-          clinicalCase.id,
-        ).toBeUndefined();
+        expectStaffProfiles(clinicalCase);
         continue;
       }
       const profiles = clinicalCase.approvedInstantiationProfiles ?? [];

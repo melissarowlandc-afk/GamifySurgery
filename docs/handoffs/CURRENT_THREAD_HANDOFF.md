@@ -9195,3 +9195,37 @@ Full file/hash/timing/validation/exclusion handoff is appended in
 Private immutable receipts and resumability state are under
 `.local-dev/release-port20-20261107/`. Manager accepts/reviews; no worker
 implementation remains. No commit, push, install, network, agent or deployment.
+
+
+## Release port21 / rebind21 — 2026-11-08 (GS-release)
+
+Completed only manager-accepted stats1 from entry d0320cb1. Manifest133 rows
+(71 -2 +64), SHA8b3ec2e429e0c4b170c1a0170456b5b6e4e54f3be5582e80576d45aadc193c77;
+default1141/1452/606, SHA1ab9a80611a3f4e09629b4f49f6e7b49fedb93a8102475620450417dfdca4813.
+All606 meanings/order,1077 unrelated cases,69 prior rows,1423 legacy tuples,
+3 relations and11 approvals exact. All64 new versions remain needs_clinician_review;
+42 independent PASS exact,22 manager-directed repairs not relabelled PASS.
+
+55 copied /3 hunk-ported /154 live versions excluded;64 public paths change.
+Dispositions: .local-dev/release-verify/port21-20261108.json. No desktop/UI-density,
+character, cloud/iPhone-memory, domain runtime or balance code was ported.
+Original source captures preserved; strict37/74 release-epoch pins retain all
+844/1396 protected path checks, including13/48 required absences.
+
+Actual native journey +lower and full old-content control pass: **26,531 commands /
+6,019,042 cents /412 completions /0 walkouts**, every number/report/nine checkpoint
+byte unchanged. Only results binding/history is rewritten; history21,547 source
+pins (405 clinical), guard/drivers/assertions unchanged. All25 legacy schema
+loads/continuations exact; no checkpoint, legacy, launch-pin or workload edit.
+
+All256 stats compatibility tests and31 prior ship-save tests pass; retained old
+cases match actual release entry. Seven suites: **754 files /
+11050 passed /0 failed /1 existing skip**.
+Seven typechecks, boundary/launcher,33 lint tests and player build pass. Boundary
+uses7,249 actual read-only tracked paths through strict index/inventory hash pins
+because Node Git spawn is EPERM. No browser/device claim; larger source bundle
+and existing build warnings remain. Clinical sign-off still required.
+
+Full files/hashes/validation/exclusions: GS028 ExecPlan release port21 section.
+Receipts/resume state: .local-dev/release-port21-20261108/. Work remains local and
+uncommitted for manager acceptance; no push/install/network/agent/deploy.

@@ -1,15 +1,19 @@
 import {createHash} from "node:crypto";
 import {readFileSync} from "node:fs";
 import {describe, expect, it} from "vitest";
-import {SYNTHETIC_CLINICAL_RELEASE as live, QUESTION_CATALOG_RELEASE as catalog} from "./synthetic-content";
-import {QUESTION_SHIP_MANIFEST as manifest} from "./question-ship-manifest";
-import {ANSWER_CHOICE_TIMING_REGISTRY as timings} from "./answer-choice-timing";
+import {SYNTHETIC_CLINICAL_RELEASE as actualLive, QUESTION_CATALOG_RELEASE as catalog} from "./synthetic-content";
+import {QUESTION_SHIP_MANIFEST as actualManifest} from "./question-ship-manifest";
+import {ANSWER_CHOICE_TIMING_REGISTRY as actualTimings} from "./answer-choice-timing";
 import {QUESTION_FLAGS3_SOURCE_RELEASE as reviewed, QUESTION_FLAGS3_RETAINED_INPUT as old,
  QUESTION_FLAGS3_REVISIONS as reviewedRevisions} from "./question-flags3-20261107";
 import {QUESTION_FLAGS3_ACCEPTED_SOURCE_RELEASE as source, QUESTION_FLAGS3_ACCEPTED_REVISIONS as revisions,
- QUESTION_FLAGS3_ACCEPTED_QUESTIONS as questions, QUESTION_FLAGS3_ACCEPTED_TIMING_ENTRIES as addedTimings,
+ QUESTION_FLAGS3_ACCEPTED_QUESTIONS as questions, QUESTION_FLAGS3_ACCEPTED_TIMING_ENTRIES as actualAddedTimings,
  QUESTION_FLAGS3_ACCEPTED_TEST_ORDER_RECORDS as orders, QUESTION_FLAGS3_ACCEPTED_STATEMENT_MAPPINGS as mappings} from "./question-flags3-accepted-20261107";
 import {beforeFlags3AcceptanceRelease,beforeFlags3AcceptanceManifest,beforeFlags3AcceptanceTimings} from "./question-flags3-acceptance-test-support";
+import {beforeStats1AcceptanceRelease,beforeStats1AcceptanceManifest,beforeStats1AcceptanceTimings,beforeStats1PriorAcceptedTimings} from "./question-stats1-acceptance-test-support";
+// Historical flags3 acceptance still asserts its original exact default epoch.
+const live=beforeStats1AcceptanceRelease(actualLive),manifest=beforeStats1AcceptanceManifest(actualManifest),timings=beforeStats1AcceptanceTimings(actualTimings);
+const addedTimings=beforeStats1PriorAcceptedTimings(actualAddedTimings,"flags3-accepted");
 
 const read=(p:string)=>JSON.parse(readFileSync(new URL("../../../"+p,import.meta.url),"utf8"));
 const before=read("tools/question-quality/fixtures/question-flags3-acceptance-before-20261107.json") as {

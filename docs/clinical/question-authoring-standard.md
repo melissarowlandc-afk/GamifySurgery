@@ -1,6 +1,6 @@
 # Question authoring standard
 
-Version: `question-authoring.2026-11-04.v14` (owner author self-review gate after N1 independent review).
+Version: `question-authoring.2026-11-08.v15` (owner statistics house style).
 Owner approved the difficulty,
 option-count decisions on 2026-10-28. Clinical content,
 clinical evidence claims and AI-assisted revisions remain
@@ -46,6 +46,74 @@ records added facts, rights and a withheld source discrepancy.
 The adversarial-correction ledger, `docs/research/sources-question-adversarial-20261102.md`,
 records the subsequent targeted checks and atomic claims. These do not confer
 clinical approval.
+
+## Statistics items
+
+**Superseding owner direction, 2026-11-08 (Melissa Rowland, clinical sign-off):**
+"We need to seriously work on the stats questions. The stems are super long,
+confusing, and vague. I would rather pick out one concept to test in stats
+question and give minimal amount of info that helps the player get better at
+doing stats questions. Right now I'm just guessing whenever those questions
+come up because it is too exhausting."
+
+This statistics-specific direction takes precedence over the general two-step,
+moderate/hard construction and predicted-difficulty targets below. Focused,
+fair practice is intentional; do not add a clinical action, a protocol decision
+or a second statistical objective to manufacture difficulty. Do not classify a
+new item as independently passed or clinically approved from this exception.
+
+1. **One concept and one skill per node.** Ask for one quantity, interpretation,
+   study design or test choice. For example, compute NNT from two event rates;
+   choose a paired versus independent t procedure; or interpret a ratio CI
+   containing 1. No compound answers, secondary clinical decision, multi-part
+   chain or study trivia. Vary the common trap across variants of a concept.
+2. **Minimal information.** Target no more than 45 words before the task; the
+   hard cap is 60. Use short sentences and delete narrative padding, repeated
+   findings, invented audit backstories and unused values. Put necessary 2x2
+   data in a compact table. Report prose and exhibit word counts separately and
+   the combined pre-task count, including captions, labels and numbers: moving
+   a long vignette into an exhibit is not a brevity repair.
+3. **Concrete, complete tasks.** Name the exact requested quantity, such as
+   "What is the positive predictive value?" State units and define groups,
+   independence/pairing, outcome type, number of groups and distribution only
+   when the answer depends on them. Give all needed values once. Use small,
+   round constructed numbers and mental arithmetic with one correct result or
+   explicitly stated rounding. Label constructed data; never present fictional
+   values as measured clinical performance. Keep confidence level, effect scale,
+   null model, outcome and follow-up horizon when the inference needs them.
+4. **Teach the reusable method after answering.** Use 2-4 short lines showing
+   the rule/formula and worked values, followed by one line explaining the
+   closest credible error. For example: `PPV = TP / (TP + FP) = 40 / 50 = 80%`.
+   Test-selection feedback names the data structure and applicable assumption.
+   Do not put the rule, conclusion or worked answer before the choice.
+5. **Parallel options from real errors.** Use three or four same-category
+   choices with comparable specificity. Numerical alternatives should represent
+   credible denominator, inversion, scale or effect-measure mistakes. Do not
+   combine an action with a number, pad the set, use explanatory distractors,
+   create numerical outlier patterns or allow a wording shortcut. Randomize
+   runtime choices; mark review-only key-first displays explicitly.
+6. **Focused and fair difficulty.** A resident who knows the rule should finish
+   in under a minute; someone who misses it should learn a method from feedback.
+   This is authoring intent, not a timer, correctness-collection rule or measured
+   gate. The one-concept exception does not permit ambiguity, missing assumptions
+   or several defensible keys. Re-solve every calculation and test selection.
+7. **Keep the frame short.** Pure methods exercises need no invented clinical
+   diagnosis, patient symptoms or treatment implication. Non-clinical study or
+   employee discussions keep that identity. When the existing patient-encounter
+   engine requires a clinic frame, use one short named age/sex line and a 1-5
+   word complaint, with the statistical data in the exhibit. Preserve character
+   consistency and existing demographic constraints. A complete statistics task
+   need not repeat the patient's name when it asks about a study quantity.
+
+Use the existing permitted statistical-method source ledger and atomic claims.
+Add an adequately licensed/open source only for a support gap; no copied source
+prose or placeholder citations. Record constructed numerical applications and
+their algebra separately from empirical clinical claims. Preserve actual source
+access dates when reusing facts offline. Every new question version remains
+`needs_clinician_review`; preserve the stable concept for unchanged meaning and
+retain older definitions, encounters and FSRS cards. Manager acceptance through
+the ship manifest follows independent review; an authoring pass edits no live
+manifest. No per-question correctness analytics are introduced.
 
 ## The decision to test
 

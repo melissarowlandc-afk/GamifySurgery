@@ -93,7 +93,11 @@ describe("full patient-library wording repair", () => {
         );
       }
       for (const node of clinicalCase.decisionNodes) {
-        expect(node.stem, `${clinicalCase.id}/${node.id}`).toMatch(/\?$/);
+        if(node.questionVariantId==="question.statistics-ethics.risk-ratio-odds-ratio.v3.r4"){
+          // Frozen independent PASS: its complete question is followed by an
+          // explicit rounding instruction, as the owner statistics style asks.
+          expect(node.stem).toBe("What event probability does the model predict for group A? Round to the nearest whole percent.");
+        }else expect(node.stem, `${clinicalCase.id}/${node.id}`).toMatch(/\?$/);
         expect(node.stem, `${clinicalCase.id}/${node.id}`).not.toBe(
           "Which answer is appropriate?",
         );

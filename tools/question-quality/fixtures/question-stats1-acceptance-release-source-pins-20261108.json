@@ -1,0 +1,527 @@
+{
+  "version": "stats1-release-source-pins.v1",
+  "releaseHead": "d0320cb1",
+  "capturePath": "tools/question-quality/fixtures/question-stats1-acceptance-before-20261108.json",
+  "capturedFixtureSha256": "72f97da27e828ad7af89c6b4ef317dc7a110da888810b11100f4f31a592d906b",
+  "reason": "Preserve complete immutable main capture; every explicitly unported release input is checked against exact release bytes/absence.",
+  "paths": [
+    {
+      "path": "apps/player/src/session/cloud/cache.ts",
+      "capturedMainSha256": "8d89ade786fb2244234a3c4a8ad6d4df805c3dc9d96280465c09c37487a3aee8",
+      "releaseEntrySha256": "6059528ebdb77c9d10a52673c16bfcf3e0d201c5aecbcad334c328174accc76c",
+      "requiredReleaseSha256": "6059528ebdb77c9d10a52673c16bfcf3e0d201c5aecbcad334c328174accc76c",
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "apps/player/src/session/cloud/codecTasks.ts",
+      "capturedMainSha256": "02da38b96c9aec89617df3c15e7a55f1be02311c2b2901ffb9e7fcd299fe95fc",
+      "releaseEntrySha256": "e14545e511c98216936077fcb9486984453ba5e188be87fd8bb3fe252b2fc48d",
+      "requiredReleaseSha256": "e14545e511c98216936077fcb9486984453ba5e188be87fd8bb3fe252b2fc48d",
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "apps/player/src/session/cloud/codecWorker.test.ts",
+      "capturedMainSha256": "949eba8198e04b47e7adc19964e11a83c4162bc9a2590d974f468c6dab822c08",
+      "releaseEntrySha256": "a7fdef005f3396f6e03b721fe9620b34826f39b895d0dd1ffeec1aa753ddc499",
+      "requiredReleaseSha256": "a7fdef005f3396f6e03b721fe9620b34826f39b895d0dd1ffeec1aa753ddc499",
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "apps/player/src/session/cloud/codecWorker.ts",
+      "capturedMainSha256": "713e787708446734970277645df5e4f96c68bfb373bb5f65d15876149fd3eab1",
+      "releaseEntrySha256": "b94c39352ca1312981b45fa7aca6b6b2f37507cd85500902b63975ee902413f8",
+      "requiredReleaseSha256": "b94c39352ca1312981b45fa7aca6b6b2f37507cd85500902b63975ee902413f8",
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "apps/player/src/session/cloud/codecWorkerNative.test.ts",
+      "capturedMainSha256": "b7814cde78258b6fd3292322e64e71a7107d032cadd7ca6c1fdb1a5cb627496b",
+      "releaseEntrySha256": "03f6279df29508e3ebd09f45237bd913d758cadcedfe1794e35e525b1920b857",
+      "requiredReleaseSha256": "03f6279df29508e3ebd09f45237bd913d758cadcedfe1794e35e525b1920b857",
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "apps/player/src/session/cloud/coordinator.ts",
+      "capturedMainSha256": "e1cd710a3c228da271b5b069d4efa4941bd799ca8472ef4329ad41353e3fd03e",
+      "releaseEntrySha256": "1216cb52b14cd030f8ee9c2592c123c1e21d16ce581c2a57e28ba8257f57d998",
+      "requiredReleaseSha256": "1216cb52b14cd030f8ee9c2592c123c1e21d16ce581c2a57e28ba8257f57d998",
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "apps/player/src/session/cloud/entryStorage.ts",
+      "capturedMainSha256": "a01b6c9abcf932efb2666a45f473171eafc2d6e2b1902428b8d9238ee7f79956",
+      "releaseEntrySha256": "145c366632ec0f9d6210325f1b6312e6d31194e27d56fcc75fec24d5a2d56dd9",
+      "requiredReleaseSha256": "145c366632ec0f9d6210325f1b6312e6d31194e27d56fcc75fec24d5a2d56dd9",
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "apps/player/src/session/cloud/gameSession.test.tsx",
+      "capturedMainSha256": "a784f70204cc3d07ea5268f82352186f1352062d0e4097ed7d704e0e6bb921d0",
+      "releaseEntrySha256": "30359b5246fad657539a2d83d4c9dc3f08a644e833b9d48bb06046c9d4d9545d",
+      "requiredReleaseSha256": "30359b5246fad657539a2d83d4c9dc3f08a644e833b9d48bb06046c9d4d9545d",
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "apps/player/src/session/cloud/gameSession.ts",
+      "capturedMainSha256": "c51e1175226a2c9be2c9270df9afd8e6417c9e945bf84630403115b4e48d4e7f",
+      "releaseEntrySha256": "0206398affa8453f213567f1844ca9c44dcbb34dcf16a6ff8e1c32bcdc3fed36",
+      "requiredReleaseSha256": "0206398affa8453f213567f1844ca9c44dcbb34dcf16a6ff8e1c32bcdc3fed36",
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "apps/player/src/session/cloud/journalCodec.ts",
+      "capturedMainSha256": "21b4da1c5b68beb61f15accb70bd59de363305c443be274343ed0b8d01db796b",
+      "releaseEntrySha256": "022da6f8661435bcfb38fb7d7549e1bb7ef657d8648feb247df5204b38accc49",
+      "requiredReleaseSha256": "022da6f8661435bcfb38fb7d7549e1bb7ef657d8648feb247df5204b38accc49",
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "apps/player/src/session/cloud/separateCampaign.test.ts",
+      "capturedMainSha256": "11239e1e38d1a8a8933b74d83201bde040050bd2dd1cbd76d5cd8d34269fe254",
+      "releaseEntrySha256": "5c4787932548881460442e4d91a2e97426e5ee0995b17730cbe5b5f98194dfb4",
+      "requiredReleaseSha256": "5c4787932548881460442e4d91a2e97426e5ee0995b17730cbe5b5f98194dfb4",
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "apps/player/src/session/cloud/snapshotCodec.ts",
+      "capturedMainSha256": "3dc0c5b77ab776e396fe1d77ed6c0b07e8e3f516f4f209cafda106d4291dd18e",
+      "releaseEntrySha256": "79bee1d92804cb540c96761444efa2558af60441fbcce10de681297b8d017a9b",
+      "requiredReleaseSha256": "79bee1d92804cb540c96761444efa2558af60441fbcce10de681297b8d017a9b",
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "apps/player/src/session/cloud/tickPerformanceTestSupport.ts",
+      "capturedMainSha256": "802984dc74613b439e7bf8648b8a1acfcadc3ef4d1ea31c0b0a9d4fdf67f1497",
+      "releaseEntrySha256": "3774fe630bbd9ba4993355d7be645e039cd22b9e35346359e5d862e6f2e8d9a4",
+      "requiredReleaseSha256": "3774fe630bbd9ba4993355d7be645e039cd22b9e35346359e5d862e6f2e8d9a4",
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "apps/player/src/session/cloud/watchdogs.test.ts",
+      "capturedMainSha256": "b65aa34ae783a4edbfdf197c1faa6ce85a900be129583b1b0672745b6f2a7c12",
+      "releaseEntrySha256": "b0ad5bcc798b40f3f6c44fd6f0cf72e045994d0c39b999b8084129d70edfd86c",
+      "requiredReleaseSha256": "b0ad5bcc798b40f3f6c44fd6f0cf72e045994d0c39b999b8084129d70edfd86c",
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "docs/execplans/question-stats1-20261108.md",
+      "capturedMainSha256": "2d08044f6f1af371b0ee21de2e1f84be6b0934194250426c7b1b1aecaa5fafb8",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "docs/research/question-stats1-files-20261108.json",
+      "capturedMainSha256": "84f8c4ffc38f8b6dd852ea173fdd9466064a7deb02177cf76eff5e1376549776",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "docs/research/question-stats1-handoff-20261108.md",
+      "capturedMainSha256": "5aaa25feeca107140fc61f0e4c190ea5ef7b5df50cfa01c1bc6bca158c316b96",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "docs/research/question-stats1-integration-proposal-20261108.json",
+      "capturedMainSha256": "d9f562c30c38b14dc7f55dc4f8e7e398568d9fb80d8c6c246355b6725b0756b2",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "docs/research/question-stats1-preservation-20261108.json",
+      "capturedMainSha256": "6b280084aee593ff0d37f55c9a386e439fc68df6d2aad64185c4fbc81f847126",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "docs/research/question-stats1-scope-20261108.json",
+      "capturedMainSha256": "35803a359080df60cd0bf381f8d32db02c485cc71579766baeadd10f69a2d5dc",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "docs/research/question-stats1-validation-20261108.json",
+      "capturedMainSha256": "87f868358fb5b12eba33f0f65380c9d6c780c1f6979808faa2a130b870e1f772",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "packages/balance-config/src/guidance-tips.ts",
+      "capturedMainSha256": "5148bcde642c4092883e847731628d9278a5eb9e8fc89534778744bb5efcadc2",
+      "releaseEntrySha256": "2563d44cc6921094320efcbaab996c9673f190dad60470706305f7944efeb9c3",
+      "requiredReleaseSha256": "2563d44cc6921094320efcbaab996c9673f190dad60470706305f7944efeb9c3",
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags3-20261107.test.ts",
+      "capturedMainSha256": "ab63b178dda0d261bd5a9ba6c0dd7ce9813553c56b3b3e4c3bb3e89600f1107b",
+      "releaseEntrySha256": "4e86634d37150709bd616d54f7b2375b3018406f4c76342f17f668f7a7e33cef",
+      "requiredReleaseSha256": "4e86634d37150709bd616d54f7b2375b3018406f4c76342f17f668f7a7e33cef",
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "packages/clinical-content/src/question-stats1-20261108.test.ts",
+      "capturedMainSha256": "f80043fe4a6f2c3eba772ee6801f6475db35b18a46ce8d86cca5c9b7129aebb3",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": "a5824fabb0772bc1f4d2d4ef27cfe741a549a0d332dfde28960a0faaa108a260",
+      "reason": "Only the release source-guard adaptation below changes this accepted test; original main capture and all content assertions retained."
+    },
+    {
+      "path": "packages/game-domain/src/facilityNavigation.ts",
+      "capturedMainSha256": "1f0a2a7ce80349228236d6f45a7eb643eaaaade1de3aa88fad58a88811001751",
+      "releaseEntrySha256": "e0e01ae9a2afa519fd7764f4092542b5789828774dd434feaa3c6c50df807338",
+      "requiredReleaseSha256": "e0e01ae9a2afa519fd7764f4092542b5789828774dd434feaa3c6c50df807338",
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "packages/game-domain/src/facilityNavigationReference.testSupport.ts",
+      "capturedMainSha256": "241b15e93a44b8cb5074b03901137d43ba3b4ff3bc30640e9b8aa51ec9999a1e",
+      "releaseEntrySha256": "dc378df6455e072342e6d1a1426ac7dd1e2251b4297de9a2530565c70ce3f9b5",
+      "requiredReleaseSha256": "dc378df6455e072342e6d1a1426ac7dd1e2251b4297de9a2530565c70ce3f9b5",
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "packages/game-domain/src/incrementalEvidenceOwnership.test.ts",
+      "capturedMainSha256": "616c33508875a7e69ebe46934c23ca82fd70259b89c71ef2f694207a5b8c55e9",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "packages/game-domain/src/incrementalEvidenceOwnership.ts",
+      "capturedMainSha256": "2f0c4d8c7fa23caef65468dd12d0303f6a5108e3cd1c204835c67afdb88c603e",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "packages/game-domain/src/incrementalEvidenceProjection.test.ts",
+      "capturedMainSha256": "eb95e035bf27416029d0ef55066917227e06842ffd2777cc4de6cd0f51ebd302",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "packages/game-domain/src/incrementalEvidenceProjection.ts",
+      "capturedMainSha256": "b1aa68e65c4b3eb637210f3135ff422a674ea1b23a3a4ef1d49e837df06e35f0",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "packages/game-domain/src/incrementalEvidenceReferences.test.ts",
+      "capturedMainSha256": "9df3c7c6403696b0c9ca9d6cfc963359eb4c647f440b608cded0e08430d1de7f",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "packages/game-domain/src/incrementalEvidenceReferences.ts",
+      "capturedMainSha256": "2ea432e4cf405850dea46fce33741c1c60df385b8e36cc40be0eaa41737d2414",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "packages/game-domain/src/incrementalEvidenceRetirement.test.ts",
+      "capturedMainSha256": "089222355f087c01507ba94601ac2bcff0711ee14d6fec1c1eb0490c1732a98a",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "packages/game-domain/src/incrementalEvidenceRetirement.ts",
+      "capturedMainSha256": "aeb02c98d83c96aea41180f7f920ddeaa766db5695662e11befc8115a38ecc29",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "packages/game-domain/src/incrementalEvidenceValues.test.ts",
+      "capturedMainSha256": "60fcc314c5d599f2f602c176a759613570efd8f745715b19f730ba82a3454a37",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "packages/game-domain/src/incrementalEvidenceValues.ts",
+      "capturedMainSha256": "5e3cd39b27f28f1cef1974789a408df1a59aa83420c51385681bf74c30c05eff",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "packages/game-domain/src/incrementalTickClone.test.ts",
+      "capturedMainSha256": "2fe9bd49de141c5a750cf0f3a4df13aba44398727e87a38fd304fe23b7e9bcb6",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "packages/game-domain/src/incrementalTickClone.ts",
+      "capturedMainSha256": "e0b58ddce91563977773f6f320085617e63c8765181711f05df7be817e31467f",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "packages/game-domain/src/readonlyProjectionMemo.ts",
+      "capturedMainSha256": "9066534fa172c45069968a0a0ae44a02dc7941a715e8f53bb6f2739694008915",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "packages/game-domain/src/reducer.ts",
+      "capturedMainSha256": "1831d01d1db5d02f9bc69be1cb6f48dc391359f6b67958cc35bfb803c06474bb",
+      "releaseEntrySha256": "a90c4a7a711abe3d06cc6f7f1e1fbc74742c96092999018b8ea9ea1aee06c045",
+      "requiredReleaseSha256": "a90c4a7a711abe3d06cc6f7f1e1fbc74742c96092999018b8ea9ea1aee06c045",
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "packages/game-domain/src/routineAvailabilityReference.testSupport.ts",
+      "capturedMainSha256": "7064ddae64270833158cb506c062764487131b21b8bac0751be16944f31ecf13",
+      "releaseEntrySha256": "d7bff621b044a210088c5c8163569a24c0177c9fe6a615a2a1c022302b29cd46",
+      "requiredReleaseSha256": "d7bff621b044a210088c5c8163569a24c0177c9fe6a615a2a1c022302b29cd46",
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "packages/game-domain/src/settledStateQueries.test.ts",
+      "capturedMainSha256": "9752297950997b33c170cdc6799e9ee9a0a1e09d26ea495dd838819352fb2988",
+      "releaseEntrySha256": "1636b5f35f24f72a7c2fed31a3d0d75f9ad956027a09a10e681a09fbf345934c",
+      "requiredReleaseSha256": "1636b5f35f24f72a7c2fed31a3d0d75f9ad956027a09a10e681a09fbf345934c",
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "packages/game-domain/src/settledStateQueries.ts",
+      "capturedMainSha256": "7b0c86d34bebced6c58f5bb6581786f1196b3b4c8feaf0b73e3f495300bfb071",
+      "releaseEntrySha256": "8ed5e5e86d71af003552afc5640f806dc7f81855b980edd0ffd646fedae79385",
+      "requiredReleaseSha256": "8ed5e5e86d71af003552afc5640f806dc7f81855b980edd0ffd646fedae79385",
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "packages/game-domain/src/waiting-destinations.ts",
+      "capturedMainSha256": "50ea90e5fc64e829604252ccc893ffffec900cc8fb3ea115b6c9ec6ca509bb46",
+      "releaseEntrySha256": "cfac0f00fee09602e959575dfb561d000ccb14c6f4468e12a03cee2a1e3cc8c0",
+      "requiredReleaseSha256": "cfac0f00fee09602e959575dfb561d000ccb14c6f4468e12a03cee2a1e3cc8c0",
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "tools/qa/level-five-integration-results-20261012.json",
+      "capturedMainSha256": "dead50020355be0bc328ff4557cd40199763097a8aa01baa3f8944d22492a8d5",
+      "releaseEntrySha256": "d35fda40e345ec9ff70a8797854acf66161cc7743f0a052cdbc5ba66ccffa505",
+      "requiredReleaseSha256": "30f42ea7e6d0f8a90653dd4415fe6fced59f4222b0842eeb0456394afbec3fd2",
+      "reason": "Local native Level 5 result regenerated and published only after guarded verification."
+    },
+    {
+      "path": "tools/question-quality/author-question-flags3-20261107.mjs",
+      "capturedMainSha256": "0c7b1dea77f361e54e88eb7d6149b81302de64c66402211872828f386d32b679",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "tools/question-quality/author-question-stats1-20261108.mjs",
+      "capturedMainSha256": "7004f7a603e242fe06384ebaf9d0cf0782b67d0d025906c6a402159ec6e2713b",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "tools/question-quality/build-question-flags2-round3-20261105.mjs",
+      "capturedMainSha256": "a3b7f64072676f8e6ea7f134d2e5223ad4229b30fefee2939ebc0f60513dc826",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "tools/question-quality/capture-question-flags2-round3-20261105.mjs",
+      "capturedMainSha256": "eb457421a3e4849b43b0e9c7cd379e4246311f97becc2504321ec6a57ad5e246",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "tools/question-quality/capture-question-flags3-20261107.mjs",
+      "capturedMainSha256": "fe90ccfab4b04ec0da2e371042feb11e4f1261e76705882a8bde76b86054d199",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "tools/question-quality/capture-question-new-n3-acceptance-20261105.mjs",
+      "capturedMainSha256": "8cc067c66014629e3acec1d231ec0611d7e538d66a75076347b9fdce7294949b",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "tools/question-quality/capture-question-ship-case-replacements-20261105.mjs",
+      "capturedMainSha256": "ade665c20f2663a06436eb799a8540728a6c66af2eda9eb55a9d2fe896ae2dc3",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "tools/question-quality/capture-question-stats1-20261108.mjs",
+      "capturedMainSha256": "1051194dbaed304a34e0072859526e134e94f005f60b4e7aea7dfa9efc4d683a",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "tools/question-quality/check-question-new-n3-acceptance-20261105.mjs",
+      "capturedMainSha256": "0d57545765b6f8ea0c9ecd2feb0a070b2837de953ed1b8c00ed433e5c7a84619",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "tools/question-quality/check-question-ship-case-replacements-20261105.mjs",
+      "capturedMainSha256": "3dc5b69b1100a418068c6db417b09f878a34f40d63ba22d83eff16791c51722e",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "tools/question-quality/check-question-stats1-20261108.mjs",
+      "capturedMainSha256": "e18aee8ffc829ed2aea2fbf852a333299e369d7af47414b7526adcaff5cd11b0",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "tools/question-quality/control-question-flags2-round3-20261105.mjs",
+      "capturedMainSha256": "c041f415154874c198dc6f4378e319ad09ba59d0c6ab36ced06e3fa8e2c83b5d",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "tools/question-quality/finalize-question-flags2-round3-20261105.mjs",
+      "capturedMainSha256": "894ffa891b64735e21b99e870e73661904803e231cb9d8280d6420ee489a44f5",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "tools/question-quality/question-flags2-round3-files-20261105.json",
+      "capturedMainSha256": "827e781b004cf77ca87c1a788a86041866371a6cdf4139d04bfed737dfc33be4",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "tools/question-quality/question-flags2-round3-specs-20261105.mjs",
+      "capturedMainSha256": "8520592ea554ffc219f725597694ea9d71ea911d78ff518ec68fbfd3d3f0cf25",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "tools/question-quality/question-flags2-round3-validation-20261105.json",
+      "capturedMainSha256": "79753dff921f2d240994a037d99d6e778f0d7b3331c5884c3c836f045c24cebc",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "tools/question-quality/question-flags3-files-20261107.json",
+      "capturedMainSha256": "55dcfbd273812a8b4548c049a3eba90dc36d237364dff63589de8c777fef4f6c",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "tools/question-quality/question-flags3-scope-20261107.json",
+      "capturedMainSha256": "147f5c51a017e18ca62aed3ea37fe752bfe0da0bc5b8937005765868c46ea59d",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "tools/question-quality/question-flags3-specs-20261107.mjs",
+      "capturedMainSha256": "0c12a37693963d9103c0aea25ab0d8fdfc7b9ff7d6e55d2dee70fd77ca963270",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "tools/question-quality/question-stats1-specs-20261108.mjs",
+      "capturedMainSha256": "4bd98ba6fad1c273c4a3055a494be545fce17cb42f1b05bfe112369dcfee61c2",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "tools/question-quality/record-question-new-n3-acceptance-source-20261105.mjs",
+      "capturedMainSha256": "625ceb339c139d517fdc5b37f412eab1f3c21f9686c58c6602147cb3bbc0dda2",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "tools/question-quality/record-question-ship-case-replacements-source-20261105.mjs",
+      "capturedMainSha256": "6de9ea458e9f30319b9f892ab3342fbc3f46de3c2d7fdaf6d43dfed7874b3384",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "tools/question-quality/record-question-stats1-source-migration-20261108.mjs",
+      "capturedMainSha256": "3363a1917d03fa14211fed83f5a56172a3938e804608ac9aa5e94c9f20783768",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "tools/question-quality/record-question-stats1-validation-20261108.mjs",
+      "capturedMainSha256": "a754cad07afde6f016713f02e5eaf9d4a5f63415d18f429e07b0d4c20006db26",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "tools/question-quality/review-question-flags2-round3-20261105.mjs",
+      "capturedMainSha256": "f2cc02b35d3fe3ee73242da5391ccf2ad3762c4f88e2ad7d506b2ca5c811041e",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "tools/question-quality/review-question-flags3-20261107.mjs",
+      "capturedMainSha256": "697b4cfad511fdc857a4f7186e3f75a0b37db95d725fe79f50c355e3c0243628",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "tools/question-quality/review-question-stats1-20261108.mjs",
+      "capturedMainSha256": "087e64b26a9788330a83b90b680535692d271fe3260bc29edf79c5557f5a7a46",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "tools/question-quality/round2-validation-exits-20261029.json",
+      "capturedMainSha256": "e1c969ba9019e19472ff5f901b83573f3b05828c9f4cd4f4017ab636b12bee12",
+      "releaseEntrySha256": "5fe284b1c5ef5532cd0d10150c0e873f78293fa5b9b818dc262bb150711d2436",
+      "requiredReleaseSha256": "5fe284b1c5ef5532cd0d10150c0e873f78293fa5b9b818dc262bb150711d2436",
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    },
+    {
+      "path": "tools/question-quality/write-question-stats1-handoff-20261108.mjs",
+      "capturedMainSha256": "162134f53c347fef2e821d4b3a33b9a9de717f7f3aec6f0c7a1806ab1d19bc75",
+      "releaseEntrySha256": null,
+      "requiredReleaseSha256": null,
+      "reason": "Excluded main-tree source remains exact at release entry or required absence."
+    }
+  ]
+}

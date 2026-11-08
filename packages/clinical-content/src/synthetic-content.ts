@@ -1572,8 +1572,12 @@ import { withAcceptedQuestionFlags2WholeCaseConcepts } from "./question-flags2-w
 // BEGIN FLAGS3 accepted-source integration 20261107
 import { QUESTION_FLAGS3_ACCEPTED_SOURCE_RELEASE, withAcceptedQuestionFlags3Concepts } from "./question-flags3-accepted-20261107";
 // END FLAGS3 accepted-source integration 20261107
+// BEGIN STATS1 accepted-source integration 20261108
+import { QUESTION_STATS1_ACCEPTED_SOURCE_RELEASE, withAcceptedQuestionStats1Concepts } from "./question-stats1-accepted-20261108";
+// END STATS1 accepted-source integration 20261108
 /** Default runtime content: exact accepted rewrites/new items plus legacy fallback. */
-export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease(projectManagerAcceptedQuestions(withAcceptedQuestionFlags3Concepts(withAcceptedQuestionFlags2WholeCaseConcepts(withAcceptedQuestionFlags2Concepts(withAcceptedQuestionBankBatch2bRound2Concepts(withAcceptedQuestionNewN3Round2Concepts(QUESTION_CATALOG_RELEASE, QUESTION_NEW_N3_PRE_RELEASE.concepts))))), QUESTION_FLAGS_PRE_REVISION_RELEASE, {
+export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease(projectManagerAcceptedQuestions(withAcceptedQuestionFlags3Concepts(withAcceptedQuestionFlags2WholeCaseConcepts(withAcceptedQuestionStats1Concepts(withAcceptedQuestionFlags2Concepts(withAcceptedQuestionBankBatch2bRound2Concepts(withAcceptedQuestionNewN3Round2Concepts(QUESTION_CATALOG_RELEASE, QUESTION_NEW_N3_PRE_RELEASE.concepts)))))), QUESTION_FLAGS_PRE_REVISION_RELEASE, {
+  "stats1-accepted": QUESTION_STATS1_ACCEPTED_SOURCE_RELEASE,
   "flags3-accepted": QUESTION_FLAGS3_ACCEPTED_SOURCE_RELEASE,
   "n3-round3": QUESTION_NEW_N3_ROUND3_SOURCE_RELEASE,
   "flags2-round3": QUESTION_FLAGS2_ROUND3_SOURCE_RELEASE,

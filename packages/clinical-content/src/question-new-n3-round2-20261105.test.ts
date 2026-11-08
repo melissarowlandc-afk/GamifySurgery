@@ -20,6 +20,7 @@ import {projectManagerAcceptedQuestions} from "./question-ship-projection";
 import {withAcceptedQuestionNewN3Concepts} from "./question-new-n3-20261105";
 import {withAcceptedQuestionBankBatch2bRound2Concepts} from "./question-bank-batch2b-round2-20261104";
 import {withAcceptedQuestionFlags2Concepts} from "./question-flags2-accepted-20261105";
+import {withAcceptedQuestionStats1Concepts} from "./question-stats1-accepted-20261108";
 import {QUESTION_FLAGS2_ROUND1_SOURCE_RELEASE as flags2} from "./question-flags2-20261105";
 import {QUESTION_FLAGS_PRE_REVISION_RELEASE as legacy,QUESTION_NEW_N1_PRE_RELEASE as flags,
   QUESTION_BANK_BATCH2A_ROUND3_RELEASE as batch2a,QUESTION_NEW_N2_ROUND3_PRE_RELEASE as n1,
@@ -50,7 +51,7 @@ describe("N3 round-two exact-version and catalog boundary",()=>{
     expect(withAcceptedQuestionNewN3Round2Concepts(catalog,preN3.concepts,historicalManifest).concepts).toEqual(preN3.concepts);
   });
   it("keeps the entire default release equal to a pre-round-two reconstruction, including concurrent accepted rewrite helpers",()=>{
-    const preRoundTwo=withAcceptedQuestionFlags2Concepts(withAcceptedQuestionBankBatch2bRound2Concepts(withAcceptedQuestionNewN3Concepts(before,preN3.concepts)));
+    const preRoundTwo=withAcceptedQuestionStats1Concepts(withAcceptedQuestionFlags2Concepts(withAcceptedQuestionBankBatch2bRound2Concepts(withAcceptedQuestionNewN3Concepts(before,preN3.concepts))));
     expect(beforeWholeCaseReplacementRelease(live)).toEqual(projectManagerAcceptedQuestions(preRoundTwo,legacy,{legacy,"flags-round3":flags,"batch2a-round3":batch2a,
       "n1-round3":n1,"n2-round2":n2,"batch2b-round2":batch2b,"flags2-round1":flags2},beforeWholeCaseReplacementManifest(manifest)));
   });

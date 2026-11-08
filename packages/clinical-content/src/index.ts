@@ -162,3 +162,8 @@ export * from "./question-flags2-whole-case-accepted-20261105";
 export * from "./question-flags3-20261107";
 export * from "./question-flags3-accepted-20261107";
 // END FLAGS3 ACCEPTED EXPORTS 20261107
+
+// BEGIN STATS1 accepted and retained source exports 20261108
+export * from "./question-stats1-20261108";
+export * from "./question-stats1-accepted-20261108";
+// END STATS1 accepted and retained source exports 20261108

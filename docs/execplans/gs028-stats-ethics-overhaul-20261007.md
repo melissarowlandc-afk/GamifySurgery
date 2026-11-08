@@ -9908,3 +9908,652 @@ manager owns acceptance and any separately authorized checkpoint.
 Exact final source/evidence/doc hashes and the 53-path scope audit are in
 `.local-dev/release-port20-20261107/final-file-inventory.json` after this append.
 No unreviewed main-tree lane is claimed as shipped.
+
+
+## Release port 21 and Level 5 evidence rebind 21 (release worktree, stats1 overhaul) — 2026-11-08
+
+Completed the manager-accepted stats1 lane only in `C:/Users/rowla/Projects/GS-release`, entry HEAD
+identified by the manager as `d0320cb1`. The live tree was read-only.
+No unrelated desktop splitter/UI-density, character, cloud, iPhone-memory,
+balance, domain runtime, selector, timing-policy, save-format or codec edit was
+ported. No content was authored or clinically approved here. Local changes are
+uncommitted: no push, installs, network, agents, external messages or deployment.
+
+### Accepted projection, source and preservation
+
+The exact manager decision admits all64 stats1 items:42 independently reviewed
+PASS versions remain exact, and22 directed repaired versions are accepted after
+author self-check. Those22 are not relabelled independent PASS. All64 versions
+remain `needs_clinician_review`, with null clinical-review records.
+Melissa Rowland remains clinical sign-off.
+
+- Manifest `question-ship.2026-11-08.v6`: **133 accepted rows**, exactly
+  **71 - 2 + 64**. S42 supersedes G06 and S44 supersedes F3-01. All other69
+  prior acceptance rows,1,423 legacy tuples and3 whole-case relations stay exact.
+- Manifest object SHA-256:
+  `8b3ec2e429e0c4b170c1a0170456b5b6e4e54f3be5582e80576d45aadc193c77`.
+- Default object SHA-256:
+  `1ab9a80611a3f4e09629b4f49f6e7b49fedb93a8102475620450417dfdca4813`; **1,141 cases /1,452 nodes /606 meanings**,
+  450 active concept IDs and1,447 distinct active question IDs.
+- Only64 complete case bodies change; the other1,077 cases (including allfour
+  directed N2 statistics cases) and all606 meaning objects and registry order
+  remain exact. All18 statistics concept IDs are stable; no FSRS migration.
+- All11 clinical approvals and38 protected approval-source paths remain exact.
+  The ordinary draft catalog is unchanged. Required reviewed/retained source
+  definitions remain for accepted construction and frozen-version provenance;
+  only the64 exact accepted versions enter the new default projection.
+- Accepted source object SHA-256 `f00251d13e49ddd706400f6efd89333c95d6cb732220f12f1a06247db378fbd3`; reviewed source
+  `70163dd78bd9a0aa31bc8ade3714722a951d61ce5def1a86daccbbd0a4ca0b7f`. All64 accepted rows were independently
+  matched to the variant/concept pairs in the manager-decision Markdown.
+- Original2,219 timing rows stay byte-exact and in order.64 appended rows are
+  `no_test`, giving2,283; no domain service-order or gameplay timing change.
+  The G06 meaning and both retired timing tuples retain their original positions.
+- The authoring-standard v15 Statistics items section is copied exactly: one
+  skill, minimal constructed data and worked short feedback. The offline ledger
+  retains original source access dates,22 source records and21 basis claims;
+  23 repaired application/formula claims bring the archived/current claim set
+  to120. No retrieval, source prose or clinical-performance value was added.
+- The manager-accepted focused/easy intent and10 explicitly named literal
+  character-length residuals remain disclosed. Original scope-specific tests
+  pin every residual's whole accepted case; no broad budget was enlarged here.
+
+Verification: `accepted-133-verification.json` in
+`.local-dev/release-port21-20261108/`. Hashes above are of
+`JSON.stringify(object)`; raw file hashes are separate.
+
+### Scope, paths and excluded lanes
+
+The requested content-diff helper found145 differing source/test/asset paths.
+Its output was redirected to this task without overwriting older receipts.
+Required authoring-standard, ledger/review and immutable fixture dependencies
+were separately inspected and frozen before copying. The result is **55 copied /
+3 hunk-ported /154 live versions excluded**, including additional documentation
+and tool paths observed by the original source captures. Every path, disposition,
+reason, entry/source/final SHA and local regeneration action is recorded in
+`.local-dev/release-verify/port21-20261108.json`.
+
+Exactly **64 public source/evidence/documentation files** change. All other
+release files remain entry bytes or required absence. In particular, no file
+under `apps/player/src/session/cloud/` or `tests/e2e/` changes, and
+all desktop/mobile UI-density/splitter source remains at release entry.
+
+Two new source-guard loops needed narrow release integration. The original
+844-path and1,396-path main-tree captures remain unchanged. Separate SHA-pinned
+fixtures explicitly check37 and74 paths against exact release hashes, including
+13 and48 required absences. The second receipt also pins the first test's sole
+guard adaptation. All original protected paths are still checked; all remaining
+paths use the unchanged historical migration assertions. No path-wide allow-list
+or runtime file substitution was added. The final audit reconstructs the original
+accepted tests from only these guard/import hunks and proves every clinical,
+numeric, review, frozen-version and presentation assertion otherwise exact.
+The only generated-evidence source pin is the verified local results rebind.
+
+The two release fixtures are:
+
+- `tools/question-quality/fixtures/question-stats1-release-source-pins-20261108.json`: `b2825597c26f63d8e6462f98e3347a06ecd92222162b1b4aa78e3a4bebaeb5fc`.
+- `tools/question-quality/fixtures/question-stats1-acceptance-release-source-pins-20261108.json`: `e6cd9e49f313780c663cea23344c7cb622c7c88257aa92842b4d107557d742f9`.
+
+Exact changed-file list (all before/after hashes and byte sizes are in
+`final-file-inventory.json` after this append):
+
+- `apps/player/src/questionShipSaveCompatibility.test.ts`
+- `apps/player/src/questionStats1SaveCompatibility.test.ts`
+- `apps/player/src/session/chartStructuredFields.test.tsx`
+- `docs/clinical/question-authoring-standard.md`
+- `docs/execplans/gs028-stats-ethics-overhaul-20261007.md`
+- `docs/execplans/question-stats1-acceptance-20261108.md`
+- `docs/execplans/release-port21-20261108.md`
+- `docs/handoffs/CURRENT_THREAD_HANDOFF.md`
+- `docs/research/question-stats1-20261108.json`
+- `docs/research/question-stats1-acceptance-files-20261108.json`
+- `docs/research/question-stats1-acceptance-handoff-20261108.md`
+- `docs/research/question-stats1-acceptance-scope-20261108.json`
+- `docs/research/question-stats1-acceptance-validation-20261108.json`
+- `docs/research/question-stats1-accepted-20261108.json`
+- `docs/research/question-stats1-inventory-20261108.json`
+- `docs/research/question-stats1-manager-decision-20261108.md`
+- `docs/research/question-stats1-review-A-20261108.json`
+- `docs/research/question-stats1-review-B-20261108.json`
+- `docs/research/question-stats1-review-response-20261108.json`
+- `docs/research/sources-question-stats1-20261108.json`
+- `docs/research/sources-question-stats1-accepted-20261108.json`
+- `packages/clinical-content/src/answer-choice-timing.test.ts`
+- `packages/clinical-content/src/answer-choice-timing.ts`
+- `packages/clinical-content/src/index.ts`
+- `packages/clinical-content/src/patient-library-wording-repair.test.ts`
+- `packages/clinical-content/src/pilot-content.test.ts`
+- `packages/clinical-content/src/playable-patient-narrative.test.ts`
+- `packages/clinical-content/src/question-flags2-20261105.test.ts`
+- `packages/clinical-content/src/question-flags2-round2-20261105.test.ts`
+- `packages/clinical-content/src/question-flags2-round3-20261105.test.ts`
+- `packages/clinical-content/src/question-flags3-acceptance-20261107.test.ts`
+- `packages/clinical-content/src/question-flags3-acceptance-test-support.ts`
+- `packages/clinical-content/src/question-new-n3-round2-20261105.test.ts`
+- `packages/clinical-content/src/question-ship-manifest.test.ts`
+- `packages/clinical-content/src/question-ship-manifest.ts`
+- `packages/clinical-content/src/question-stats1-20261108-data.ts`
+- `packages/clinical-content/src/question-stats1-20261108.test.ts`
+- `packages/clinical-content/src/question-stats1-20261108.ts`
+- `packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts`
+- `packages/clinical-content/src/question-stats1-acceptance-test-support.ts`
+- `packages/clinical-content/src/question-stats1-accepted-20261108.ts`
+- `packages/clinical-content/src/question-stats1-accepted-data-20261108.ts`
+- `packages/clinical-content/src/question-stats1-evidence-20261108.ts`
+- `packages/clinical-content/src/question-stats1-retained-input-20261108.ts`
+- `packages/clinical-content/src/question-stats1-test-support.ts`
+- `packages/clinical-content/src/synthetic-content.ts`
+- `tools/qa/level-five-integration-results-20261012.json`
+- `tools/question-quality/author-question-stats1-accepted-20261108.mjs`
+- `tools/question-quality/capture-question-stats1-acceptance-20261108.mjs`
+- `tools/question-quality/check-question-stats1-acceptance-20261108.mjs`
+- `tools/question-quality/fixtures/question-stats1-acceptance-before-20261108.json`
+- `tools/question-quality/fixtures/question-stats1-acceptance-release-source-pins-20261108.json`
+- `tools/question-quality/fixtures/question-stats1-acceptance-runtime-migration-20261108.json`
+- `tools/question-quality/fixtures/question-stats1-acceptance-source-migration-20261108.json`
+- `tools/question-quality/fixtures/question-stats1-before-20261108.json`
+- `tools/question-quality/fixtures/question-stats1-release-source-pins-20261108.json`
+- `tools/question-quality/fixtures/question-stats1-source-migration-20261108.json`
+- `tools/question-quality/integrate-question-stats1-accepted-20261108.mjs`
+- `tools/question-quality/question-stats1-accepted-lint-20261108.json`
+- `tools/question-quality/question-stats1-lint-20261108.json`
+- `tools/question-quality/record-question-stats1-acceptance-source-migration-20261108.mjs`
+- `tools/question-quality/record-question-stats1-acceptance-validation-20261108.mjs`
+- `tools/question-quality/review-question-stats1-accepted-20261108.mjs`
+- `tools/question-quality/write-question-stats1-acceptance-handoff-20261108.mjs`
+
+Copied/hunk-ported final file hashes:
+
+| Path | Disposition | Release SHA-256 |
+|---|---|---|
+| `apps/player/src/questionShipSaveCompatibility.test.ts` | copied | `3c77eaddd147e021e21086521a8861107aeaa138352d8a17d3c4c4167bc26827` |
+| `apps/player/src/questionStats1SaveCompatibility.test.ts` | copied | `c6769c93fd8df34c3c066f49dcc9a892ba53aeef77d94fa9e22e9d9e67f184b8` |
+| `apps/player/src/session/chartStructuredFields.test.tsx` | hunk-ported | `c52d26a24c8ba04b592566848b8ac4b049c48115c68f4080056fe57d7b45451a` |
+| `docs/clinical/question-authoring-standard.md` | copied | `87689076b8ab2126973d5d7972ad300ad096c5ebabca999aee291f316256f671` |
+| `docs/execplans/question-stats1-acceptance-20261108.md` | copied | `289e82034ce46875c9f43e153642f866d626b62a2ec92449949fad1ee5cbf194` |
+| `docs/research/question-stats1-20261108.json` | copied | `239b8ffb2aba376d6441ff606e5db8a421df5960d1ed3d5b7500e63fffd62c67` |
+| `docs/research/question-stats1-acceptance-files-20261108.json` | copied | `9cdeea666a3914334de366a5b8f6868e4be893ffe58673d3102dfe2a90e75cb7` |
+| `docs/research/question-stats1-acceptance-handoff-20261108.md` | copied | `538562064a86d56dc3237e311e77025cde8800d35b5e2626c6280ee57244fd33` |
+| `docs/research/question-stats1-acceptance-scope-20261108.json` | copied | `67030e67fcf0cf12ea44634d810c3e45841704678fcb55b3d032fbf206f2c5e6` |
+| `docs/research/question-stats1-acceptance-validation-20261108.json` | copied | `160342ea77dc283e7729170ee2aa789d165d2a7a9a525726319e36e7dcc64a59` |
+| `docs/research/question-stats1-accepted-20261108.json` | copied | `eb5e10d25e0c6bbf9104e02e9dd99ebc342913f5182afdbf054c00fbf100b2be` |
+| `docs/research/question-stats1-inventory-20261108.json` | copied | `5473c26cb05389248cd85d4fdf5eb377c4b7982ce22d02d9d453076870e8919e` |
+| `docs/research/question-stats1-manager-decision-20261108.md` | copied | `09f1758e6d558c884aa0b50a4efd530888e6e12bf55a3cc861479b90068999a3` |
+| `docs/research/question-stats1-review-A-20261108.json` | copied | `1bc295d8c8ced5a3cf86bf56e63529ca8b307d30d6005d1e47d9b59d3e3091fb` |
+| `docs/research/question-stats1-review-B-20261108.json` | copied | `cdfeda7086638d4b92e4269b6ea0e43bd6b4356a6aa55d9257795f7226052787` |
+| `docs/research/question-stats1-review-response-20261108.json` | copied | `fcc3c3508a0b6674ad5fe041dda8664e1b28cca8542eb2f7ce168afff41b4e09` |
+| `docs/research/sources-question-stats1-20261108.json` | copied | `8ef70726c89ea133aa0ae174c1426d2e763aae876325eff03208dfa60d51cdbb` |
+| `docs/research/sources-question-stats1-accepted-20261108.json` | copied | `50ccb536b1e70f94115c316568660027d585535a478719dff07a3b0cf09524da` |
+| `packages/clinical-content/src/answer-choice-timing.test.ts` | copied | `0aa691598047da150b7e4cad758796686337ecba8561df505ee486f0c36d4294` |
+| `packages/clinical-content/src/answer-choice-timing.ts` | copied | `b97c3af1eb6cd535cd7103bbbfd9846f65d51fc2d793fe624c7ad417d55cff28` |
+| `packages/clinical-content/src/index.ts` | copied | `8caff5c5f299afff6b27401b2bade3ea6d311390deecbe70052c789799f36fbb` |
+| `packages/clinical-content/src/patient-library-wording-repair.test.ts` | copied | `54e21fc1ea1574f48bb858036e69362143dcf50b2c7cb5c7d4b30cb2db24af9b` |
+| `packages/clinical-content/src/pilot-content.test.ts` | copied | `c0409d92b0690259da1f7bebfc9fbd209a6d8e76c3cb90f9687db3ccfe84e362` |
+| `packages/clinical-content/src/playable-patient-narrative.test.ts` | copied | `ce9613f11027684b6728ec3d5b662313e5acabe83a33834cc1600174cf24fb25` |
+| `packages/clinical-content/src/question-flags2-20261105.test.ts` | copied | `6792a67f48fc3d8ddaa780f3d4813a9b18e0fce8b9bea47a933c700bcf113b19` |
+| `packages/clinical-content/src/question-flags2-round2-20261105.test.ts` | copied | `a31bf37a62f3004dc67801bf52903d997ac8b714a729b69b827ece979c328c01` |
+| `packages/clinical-content/src/question-flags2-round3-20261105.test.ts` | copied | `f809034cca468d405939b2b506f6e3e155b38decb8692aada2bcf8ea1d7937f0` |
+| `packages/clinical-content/src/question-flags3-acceptance-20261107.test.ts` | copied | `e5d3ab4f580d7994d300e1ce2e8963b37a2e6edfb8c4f1cd1008273d4d773093` |
+| `packages/clinical-content/src/question-flags3-acceptance-test-support.ts` | copied | `6576082034b11a2cd3391fe2adebbea9e7384e03582b700814779bbc7d730e84` |
+| `packages/clinical-content/src/question-new-n3-round2-20261105.test.ts` | copied | `4cae69dc16a7f21251f322a9c3ea705cb34484ae8ede4a8a703208f3d59e0c75` |
+| `packages/clinical-content/src/question-ship-manifest.test.ts` | copied | `74f0e5110974699c46aeb446c19a0cc60362f4d7096126e65d27a71cd377f8a5` |
+| `packages/clinical-content/src/question-ship-manifest.ts` | copied | `af9a2c03dd1e46438f7ac0c463672a9840936ed7c8a7b091792e2912b79fca35` |
+| `packages/clinical-content/src/question-stats1-20261108-data.ts` | copied | `836bb05f5c0841ddbd4fa6067541133723573f41ae26571be06cfb1d068db6d7` |
+| `packages/clinical-content/src/question-stats1-20261108.test.ts` | hunk-ported | `a5824fabb0772bc1f4d2d4ef27cfe741a549a0d332dfde28960a0faaa108a260` |
+| `packages/clinical-content/src/question-stats1-20261108.ts` | copied | `ae1843e5e1637f182486d33c3ce0b5da8db5cc6c251489932a004599a4d575b4` |
+| `packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts` | hunk-ported | `4080f4b98a7888897bd6b9609878294bbc35c7544e770e5e787e7e7447340c86` |
+| `packages/clinical-content/src/question-stats1-acceptance-test-support.ts` | copied | `ecb66d57ca95afded2cde3961adc0bc83eecabcad31c1b0b83fc84514a7e9af0` |
+| `packages/clinical-content/src/question-stats1-accepted-20261108.ts` | copied | `89dba296b51aa286be3b844b8788bece20a5950b559972adbdc06f85a78e1cbf` |
+| `packages/clinical-content/src/question-stats1-accepted-data-20261108.ts` | copied | `5b09dcf5792638e85ac640cc36e1758cfd33003290aff363a57a87d20c732e5a` |
+| `packages/clinical-content/src/question-stats1-evidence-20261108.ts` | copied | `b06451bc0ec128e5938e034481b9a349479aba6e53f0ed8e08302b6bfe451199` |
+| `packages/clinical-content/src/question-stats1-retained-input-20261108.ts` | copied | `7b932a99e74447da4e3d43957926137214ef13891dc7b84483dc3315153e3ddf` |
+| `packages/clinical-content/src/question-stats1-test-support.ts` | copied | `eaed3e5ff2170f4de2fa07da84307d11ff7e3878b6b851a96babcb9fb55823bc` |
+| `packages/clinical-content/src/synthetic-content.ts` | copied | `d5a603c617d3adc753351bd68511ab7495b2365f7bb32479ca9950a8e56d5458` |
+| `tools/question-quality/author-question-stats1-accepted-20261108.mjs` | copied | `b3044fd82af01ac79a2d3ad3935032d12101c95a0075cd7699a54eae615853db` |
+| `tools/question-quality/capture-question-stats1-acceptance-20261108.mjs` | copied | `a0d1f74c39dcae931c3c6c57c51b22ab6e767534b5506822eb176a4fd84c5791` |
+| `tools/question-quality/check-question-stats1-acceptance-20261108.mjs` | copied | `5e12891e79e218aeb0367a23dc7369d73ca36cb43618a75227e6a7d02858e9aa` |
+| `tools/question-quality/fixtures/question-stats1-acceptance-before-20261108.json` | copied | `72f97da27e828ad7af89c6b4ef317dc7a110da888810b11100f4f31a592d906b` |
+| `tools/question-quality/fixtures/question-stats1-acceptance-runtime-migration-20261108.json` | copied | `bb959b08330815c37127637c9950e85dc6373f33bf9f2f50988c91878fb3dad3` |
+| `tools/question-quality/fixtures/question-stats1-acceptance-source-migration-20261108.json` | copied | `72a5e21e41afbdf11fbb1a8910a4739f0e983e0608cdff684b40a10894369ed0` |
+| `tools/question-quality/fixtures/question-stats1-before-20261108.json` | copied | `db08238329644147f84d7061327bf959ea679da7cd4b685e85ca5d53bcca2914` |
+| `tools/question-quality/fixtures/question-stats1-source-migration-20261108.json` | copied | `de4c51c60a13b61025378df6d58492980d20b0aa8d79e51a3441aeaa4702ca37` |
+| `tools/question-quality/integrate-question-stats1-accepted-20261108.mjs` | copied | `481fc6336925642a8c0ced2e49a658682a39efe38847c930c4c0b5a8702095ac` |
+| `tools/question-quality/question-stats1-accepted-lint-20261108.json` | copied | `855d779757c95ebcde6b60f55740029c01b489eedfb451f744308f354f82ff7f` |
+| `tools/question-quality/question-stats1-lint-20261108.json` | copied | `9d29664222c3eab66acdfdae89cc0920676bae0b814687d67bc60755b8f0b169` |
+| `tools/question-quality/record-question-stats1-acceptance-source-migration-20261108.mjs` | copied | `f715a4b5a7f7fb2e2b756dd0caf4b3d1b444d995409d4cd2e1ac3b948266190e` |
+| `tools/question-quality/record-question-stats1-acceptance-validation-20261108.mjs` | copied | `0e8ab396843fee1d3abc2a5e984af54aaaa75650c91e6cc6976ff5f367818c27` |
+| `tools/question-quality/review-question-stats1-accepted-20261108.mjs` | copied | `ebb66c3006ddb6197e4046493e5118f3f1243fa6feba7f991de474eb8cd37fe6` |
+| `tools/question-quality/write-question-stats1-acceptance-handoff-20261108.mjs` | copied | `1ec7fd52a1d78006811c6961e275121ba6e2bb0b64ca6f921025888bb9487546` |
+
+### Frozen save, encounter and journal safety
+
+All **256 stats1 compatibility tests** pass:64 accepted-default format3
+reopen/completions,64 old waiting snapshots,64 old in-progress snapshots and64
+committed original admission/scheduling journals. This includes48 patient and208
+staff-discussion witnesses. All64 retained old complete cases first match the
+actual GS-release pre-port snapshot object hashes; these are not main-tree-only
+stand-ins. The tests use real admissions/NP discussion scheduling, with one real
+case isolated for deterministic selection and ordinary tutorial initialization.
+
+They verify old frozen case/node/question/concept IDs, shuffled choice order,
+prior reviews/cards, exactly-once scoring, completed reloads and durable journal
+state. Already-open encounters retain old wording. All31 prior ship-save checks
+also pass. No save/cloud implementation, format3, codec limit or240-tick readiness
+bound changes. Allnine old Level5 checkpoint encounters/discussions and prior
+learning histories also retain their frozen identities on load. Evidence:
+`save-safety-verification.json`, `accepted-133-verification.json`,
+`accepted-run-verification.json` and native focused/full player reports.
+
+### Actual Level5 run, unchanged numbers and old-content control
+
+The actual unchanged journey and lower helper ran inside GS-release with seed
+`level-five-m9.integration.01` and the original funded Level4 opening.
+Fresh staging redirected only the native artifact paths:29 journey writes and2
+lower-helper writes, zero canonical writes before the strict verifier. No partial
+journey was resumed. All existing native assertions remain: three3,000-minute
+reports/ten categories/at least20 qualifying patients, low/higher/lower scores,
+best/latest/immutable-first, rounds/comfort, supplier savings, retirement,
+cash reconciliation and more than20,000 commands. The guard and drivers remain
+byte-exact; no assertion was weakened.
+
+| Total | Before rebind20 | After rebind21 | Delta |
+|---|---:|---:|---:|
+| Commands | 26,531 | 26,531 | 0 |
+| Closing cents | 6,019,042 | 6,019,042 | 0 |
+| Completed encounters | 412 | 412 | 0 |
+| Walkouts | 0 | 0 | 0 |
+| Unlock tick | 14,906 | 14,906 | 0 |
+| Final facility tick | 24,681 | 24,681 | 0 |
+
+Every other recorded simulation field is also exactly unchanged. The strict
+verifier compares the complete native results object with the preceding native
+record after only input-map/liveCap/history metadata adjustment. Allthree entire
+reports and allnine checkpoint bytes are identical, not merely rounded scores.
+The snapshots contain no target stats1 frozen cases or target reviews; this
+journey therefore supplements the dedicated256 compatibility witnesses rather
+than replacing their coverage. See `journey-stats-coverage.json`.
+
+A separate complete run uses the same current engine, driver and seed, changing
+only `context.clinicalRelease` to the exact pre-port object. It restores
+every prior metric, allthree reports and allnine checkpoint bytes. It never
+writes canonical evidence. `content-only-control.json` records this proof.
+There is no numeric change to explain or compensate for.
+
+Cash reconciles exactly:
+`1,785,500 + 15,101,400 - 265,652 - 9,554,206 - 1,048,000 = 6,019,042` cents.
+First answers544, Level5 first answers455, rounds36, positive comfort uses958,
+retired encounters401 and retired receipts5,257 all remain unchanged.
+
+| Report | Prior/new full raw score | Prior/new qualifying patients |
+|---|---:|---:|
+| 1 | 62.51688977024545 | 51 |
+| 2 | 66.84337234413047 | 50 |
+| 3 | 45.45219805372466 | 49 |
+
+| Checkpoint (unchanged) | Tick | Serialized-state SHA-256 |
+|---|---:|---|
+| integration-l4 | 4078 | `893b32d65b88b20433576a5de64d5d7ad860618ca6f8e10e06012d65ed40adc3` |
+| integration-build | 4078 | `781e54e756059a92a2b03539a2db3961705c97fdce6cdc03c822662277066530` |
+| integration-preparing | 14907 | `135dcc8e3cc8032c89cde7e8d825dc6d72f30a969e6787f90c9c80636fb9ef1b` |
+| integration-running | 15044 | `e2317349aef7421e476326d14c6d995639f515a41b774e7ae11fcaddbb94d9f7` |
+| integration-final | 17963 | `dd91465be95ba8eb93360625a341f0bad211a825d7524d1dfd26cda49b2e7615` |
+| integration-finish | 17964 | `c692a1416b68642c67bb38c3f5b86d4f81ba0820cfc4a557fa2b9a693e186752` |
+| integration-repeat-final | 21620 | `d5d79f5d4e28c800bd768a9a5b98fadde10a0170e14e1b1b08e02ac5660d626a` |
+| integration-repeat | 21621 | `234ccca056b36e5e1a13c45483c55e0286d2ed24d232dedbc83b17f181e43d1d` |
+| integration-lower-repeat | 24681 | `e3d4bed1d6ac6109fb7dbd7d9befdede5e510f6449954d8716f488487d5ebd2d` |
+
+`verify-staged.mjs` passes before `publish-verified.mjs` writes only
+the canonical results JSON. The privately regenerated checkpoint file is
+byte-identical, so it is not rewritten. Launch pins, workload fixtures and e2e
+specs remain exact. Results preserve every earlier history entry and append the
+full previous input/artifact maps plus prior results hash: **20 to21** entries.
+Only the established raw liveCap4 to current liveCap5 metadata correction is
+applied. No replay-compatible input exception is introduced.
+
+| Artifact | Before file SHA-256 | After file SHA-256 | Rewritten |
+|---|---|---|---|
+| `tools/qa/level-five-integration-results-20261012.json` | `d35fda40e345ec9ff70a8797854acf66161cc7743f0a052cdbc5ba66ccffa505` | `30f42ea7e6d0f8a90653dd4415fe6fced59f4222b0842eeb0456394afbec3fd2` | yes |
+| `tests/fixtures/level-five-integration-checkpoints-20261012.json` | `560a4a38c5d8d2cdadf3033666a88a2f5e7e75f64533def7b55d2dfa61469d32` | `560a4a38c5d8d2cdadf3033666a88a2f5e7e75f64533def7b55d2dfa61469d32` | no |
+| `tests/fixtures/level-five-legacy-behavior-20261012.json` | `3addb62de20361e02821cc25d6f42de101988af9069439949121e48a532c3683` | `3addb62de20361e02821cc25d6f42de101988af9069439949121e48a532c3683` | no |
+
+The handoff's three already-bound files describe its older main-tree map. This
+release binds all non-test source .ts/.json files, including manifest/test-support
+dependencies: **five prior files change and eight are added**,539 to547 inputs,
+397 to405 clinical. Every other prior binding is exact. Actual old/new hashes:
+
+| Bound input | Entry SHA-256 | Current SHA-256 |
+|---|---|---|
+| `packages/clinical-content/src/answer-choice-timing.ts` | `37b65085cf5d41a543fea68ba3bed0f82ebd8277f345c53e2957d54a1647d63d` | `b97c3af1eb6cd535cd7103bbbfd9846f65d51fc2d793fe624c7ad417d55cff28` |
+| `packages/clinical-content/src/index.ts` | `f22453a850aa22d4ffba37f05710e8abfb43784547f46cbb28397a76e2181e6b` | `8caff5c5f299afff6b27401b2bade3ea6d311390deecbe70052c789799f36fbb` |
+| `packages/clinical-content/src/question-flags3-acceptance-test-support.ts` | `af6bf04b16f7c3b4d1dab9284761283b460e88afa9d47c0efad7ba77eacad737` | `6576082034b11a2cd3391fe2adebbea9e7384e03582b700814779bbc7d730e84` |
+| `packages/clinical-content/src/question-ship-manifest.ts` | `50dadc0a2daf64704b8aa599e23051692ad81bc9e3462772870cd18bb935a6c0` | `af9a2c03dd1e46438f7ac0c463672a9840936ed7c8a7b091792e2912b79fca35` |
+| `packages/clinical-content/src/question-stats1-20261108-data.ts` | `new` | `836bb05f5c0841ddbd4fa6067541133723573f41ae26571be06cfb1d068db6d7` |
+| `packages/clinical-content/src/question-stats1-20261108.ts` | `new` | `ae1843e5e1637f182486d33c3ce0b5da8db5cc6c251489932a004599a4d575b4` |
+| `packages/clinical-content/src/question-stats1-acceptance-test-support.ts` | `new` | `ecb66d57ca95afded2cde3961adc0bc83eecabcad31c1b0b83fc84514a7e9af0` |
+| `packages/clinical-content/src/question-stats1-accepted-20261108.ts` | `new` | `89dba296b51aa286be3b844b8788bece20a5950b559972adbdc06f85a78e1cbf` |
+| `packages/clinical-content/src/question-stats1-accepted-data-20261108.ts` | `new` | `5b09dcf5792638e85ac640cc36e1758cfd33003290aff363a57a87d20c732e5a` |
+| `packages/clinical-content/src/question-stats1-evidence-20261108.ts` | `new` | `b06451bc0ec128e5938e034481b9a349479aba6e53f0ed8e08302b6bfe451199` |
+| `packages/clinical-content/src/question-stats1-retained-input-20261108.ts` | `new` | `7b932a99e74447da4e3d43957926137214ef13891dc7b84483dc3315153e3ddf` |
+| `packages/clinical-content/src/question-stats1-test-support.ts` | `new` | `eaed3e5ff2170f4de2fa07da84307d11ff7e3878b6b851a96babcb9fb55823bc` |
+| `packages/clinical-content/src/synthetic-content.ts` | `819c38fce01be9684a8ef35e09c5bb64978dc710993862dbcf066b2c5f9392ed` | `d5a603c617d3adc753351bd68511ab7495b2365f7bb32479ca9950a8e56d5458` |
+
+### Legacy behavioral evidence
+
+The established25-schema /120-minute reducer generator was run privately using
+both captured old and current release contexts. All25 old loads and continuations
+first reproduce the existing artifact. All25 current loads and continuations
+then remain exact, including frozen encounters/discussions and serialized inputs.
+There is no new meaning/history because all606 concepts/order are preserved.
+The staged artifact SHA is identical to the canonical legacy artifact, so no
+fixture or comparison hash is edited. `legacy-diagnosis.json` retains the
+per-schema proof and established generator hash.
+
+### Validation commands and exact output
+
+CI=true; installed dependencies; PowerShell npm.cmd; threads/maxWorkers2. A
+process-local preload handles only the unavailable optional net-use drive probe.
+No runtime behavior, timeout, tick count or assertion is altered. Native logs,
+process exit/timestamp/command receipts and Vitest JSON are immutable under
+`.local-dev/release-port21-20261108/`.
+
+- `npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port21-20261108/workspace-json-reporter.mjs` — native exit 0.
+- `npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=../../.local-dev/release-port21-20261108/player-final.json` — native exit 0.
+- `npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=../../.local-dev/release-port21-20261108/clinical-verified.json` — native exit 0.
+- `npm.cmd run test --workspace @gamify-surgery/clinical-context-workbench --workspace @gamify-surgery/balance-config --workspace @gamify-surgery/clinical-authoring --workspace @gamify-surgery/clinical-content --workspace @gamify-surgery/clinical-research -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port21-20261108/workspace-json-reporter.mjs` — native exit 0.
+- `npm.cmd run typecheck` — native exit 0.
+- `npm.cmd run build --workspace @gamify-surgery/player` — native exit 0.
+- `npm.cmd run clinical:lint:test` — native exit 0.
+- `npm.cmd run test:boundaries` — native exit 0.
+- `npm.cmd run test --workspace @gamify-surgery/player -- src/session/chartStructuredFields.test.tsx --config ../../.local-dev/release-port21-20261108/legacy-chart-control.config.ts --pool=threads --maxWorkers=1 --reporter=default --reporter=json --outputFile=../../.local-dev/release-port21-20261108/chart-control.json` — native exit 0.
+- `npm.cmd run test --workspace @gamify-surgery/player -- src/session/chartStructuredFields.test.tsx --pool=threads --maxWorkers=1 --reporter=default --reporter=json --outputFile=../../.local-dev/release-port21-20261108/chart-final.json` — native exit 0.
+- `npm.cmd run test --workspace @gamify-surgery/player -- src/session/chartStructuredFields.test.tsx --config ../../.local-dev/release-port21-20261108/legacy-chart-control.config.ts --pool=threads --maxWorkers=1 --reporter=default --reporter=json --outputFile=../../.local-dev/release-port21-20261108/chart-final-control.json` — native exit 0.
+
+The initial focused release domain run was42 passed /1 failed (43),80.96s:
+only the expected recorded-input binding failed;25 legacy comparisons and the
+606-meaning inventory pass. The full final suites are:
+
+| Workspace | Test files | Passed | Failed | Skipped |
+|---|---:|---:|---:|---:|
+| clinical-context-workbench | 8 | 43 | 0 | 0 |
+| player | 384 | 3878 | 0 | 0 |
+| balance-config | 24 | 164 | 0 | 0 |
+| clinical-authoring | 7 | 81 | 0 | 0 |
+| clinical-content | 125 | 1566 | 0 | 0 |
+| clinical-research | 8 | 83 | 0 | 0 |
+| game-domain | 198 | 5235 | 0 | 1 |
+| **Total** | **754** | **11050** | **0** | **1** |
+
+Previous release rebind20 recorded 751 files /10528
+passed /0 failed /1 existing skip. No remaining
+release-tree failure is introduced. Added tests are111 reviewed +93 accepted
+clinical,256 player save witnesses and62 parameterized manifest domain rows.
+The main-tree acceptance handoff's stale inventory/legacy/binding and cloud-codec
+failure records remain preserved as historical main-tree results, not claimed
+as current release failures. The final native exit receipts above govern here.
+
+Full domain exact summary:
+```text
+ Test Files  198 passed (198)
+      Tests  5235 passed | 1 skipped (5236)
+   Duration  557.58s (transform 14.44s, setup 0ms, import 438.08s, tests 654.24s, environment 17ms)
+Native exit: 0
+```
+
+Full player exact summary:
+```text
+ Test Files  384 passed (384)
+      Tests  3878 passed (3878)
+   Duration  809.85s (transform 19.00s, setup 0ms, import 585.65s, tests 996.68s, environment 28ms)
+Native exit: 0
+```
+
+The initial complete player suite had383 files passed /1 failed,3,877 tests
+passed /1 failed (3,878),858.45s, native1. Its sole failure was the legacy team
+discussion feedback test comparing unescaped raw explanation text with HTML.
+The accepted explanation contains `->`, correctly emitted by React as
+`-&gt;`. The unchanged test passes6/6 with the actual pre-port clinical context.
+Only the two legacy feedback assertions in chartStructuredFields.test.tsx now
+require the exact SSR-escaped text via a React Fragment; all full text and
+negative exhibit/feedback assertions remain. No renderer or content changes.
+
+An initial worker correction incorrectly required a bare p tag while the
+patient chart adds paragraph attributes. Both5/6 focused error receipts are
+retained; the correction now preserves the original text-only assertion scope.
+The corrected tests pass6/6 under both current and pre-port content. Two
+premature suite reruns were interrupted via their owned tool sessions; no final
+suite claim is made for them. The final source is validated by player-final.json,
+clinical-verified.json and typecheck-verified receipts. No failure was a timeout
+or an existing release failure. The full final player suite above is native0.
+The local test hunk is independently reconstructed against its entry bytes by
+the final audit; every other statement in that file stays exact. This is the
+third hunk-port disposition, additional to the two clinical source-guard loops.
+
+Fresh full clinical suite after the rendering-test correction:
+```text
+ Test Files  125 passed (125)
+      Tests  1566 passed (1566)
+   Duration  105.13s (transform 7.21s, setup 0ms, import 178.38s, tests 19.44s, environment 8ms)
+Native exit: 0
+```
+
+Other five workspaces in command order:
+```text
+ Test Files  8 passed (8)
+      Tests  43 passed (43)
+   Duration  1.18s (transform 325ms, setup 0ms, import 936ms, tests 498ms, environment 0ms)
+ Test Files  24 passed (24)
+      Tests  164 passed (164)
+   Duration  2.49s (transform 627ms, setup 0ms, import 2.41s, tests 183ms, environment 1ms)
+ Test Files  7 passed (7)
+      Tests  81 passed (81)
+   Duration  722ms (transform 130ms, setup 0ms, import 414ms, tests 328ms, environment 1ms)
+ Test Files  125 passed (125)
+      Tests  1566 passed (1566)
+   Duration  116.79s (transform 7.42s, setup 0ms, import 198.22s, tests 20.26s, environment 10ms)
+ Test Files  8 passed (8)
+      Tests  83 passed (83)
+   Duration  2.19s (transform 188ms, setup 0ms, import 512ms, tests 1.05s, environment 0ms)
+Native exit: 0
+```
+
+Focused clinical:241 passed in5 files,9.93s. Focused player:335 passed in4 files,
+98.29s, including256 stats and31 ship-save. Final allseven typechecks pass,
+native0. Lint unit tests33 pass /0 fail,2231.6736ms, native0.
+
+Direct boundary invocation fails only at Node's `spawnSync git EPERM`.
+The exact read-only native-shell `git ls-files -z` succeeds with optional
+locks disabled. Its7,249 paths /519,005 bytes are retained verbatim, and a
+process-local bridge serves only that exact command to the unchanged verifier,
+refusing changed worktree/index/inventory hashes. Boundary and launcher output:
+
+```text
+Verified runtime dependency boundaries and 7249 tracked path(s).
+Verified launcher health contract gamify-surgery-player protocol 1.
+Native exit: 0
+```
+
+Inventory SHA-256 `37679bec105dbac902de8b5ad1a358e8eb118480459f23577503c4f7ffc8f3ac`; unchanged Git index SHA-256
+`af62f4fe8e21cfd04730b52e68570e8a1f432e62b85e538e60a89ca11b259c01`. No Git mutation or network occurred.
+
+Player build passes, native0: Vite8.1.5,1,040 modules,5.53s. Main bundle
+23,280.87kB /gzip3,838.42kB (prior22,433.72 /3,748.86: +847.15 /+89.56kB).
+Codec and operational workers14,462.11 /14,993.92kB. Existing large-chunk,
+ineffective-dynamic-import and plugin-timing warnings remain; no budget changes.
+
+### Other observed differences not shipped
+
+All154 excluded live versions, including captured historical tool/doc paths
+outside the contentdiff roots, are listed below. The one results path has the
+explicit local verified regeneration action; every other excluded release path
+remains entry bytes/absence. The live UI worker may keep editing those sources;
+this port uses the frozen accepted-lane snapshot and never writes the live tree.
+
+- `apps/player/character-phlebotomy.html` — Separate character/art lane; excluded.
+- `apps/player/character-proportions.html` — Separate character/art lane; excluded.
+- `apps/player/character-rooms.html` — Separate character/art lane; excluded.
+- `apps/player/src/AppShell.tsx` — Concurrent desktop splitter/UI-density lane or unrelated presentation work; not accepted for this release port.
+- `apps/player/src/art/characterBitmapArt.test.ts` — Separate character/art lane; excluded.
+- `apps/player/src/art/characterBitmapArt.ts` — Separate character/art lane; excluded.
+- `apps/player/src/art/characterPhlebotomyQa.before.json` — Separate character/art lane; excluded.
+- `apps/player/src/art/characterPhlebotomyQa.frames.json` — Separate character/art lane; excluded.
+- `apps/player/src/art/characterPhlebotomyQa.test.ts` — Separate character/art lane; excluded.
+- `apps/player/src/art/characterPhlebotomyQa.ts` — Separate character/art lane; excluded.
+- `apps/player/src/art/characterPhlebotomyQaModel.ts` — Separate character/art lane; excluded.
+- `apps/player/src/art/characterProportions.generated.json` — Separate character/art lane; excluded.
+- `apps/player/src/art/characterProportions.test.ts` — Separate character/art lane; excluded.
+- `apps/player/src/art/characterProportions.ts` — Separate character/art lane; excluded.
+- `apps/player/src/art/characterProportionsQa.ts` — Separate character/art lane; excluded.
+- `apps/player/src/art/characterRoomProportions.generated.json` — Separate character/art lane; excluded.
+- `apps/player/src/art/characterRoomProportions.test.ts` — Separate character/art lane; excluded.
+- `apps/player/src/art/characterRoomProportions.ts` — Separate character/art lane; excluded.
+- `apps/player/src/art/characterRoomQaModel.ts` — Separate character/art lane; excluded.
+- `apps/player/src/art/characterRoomsQa.ts` — Separate character/art lane; excluded.
+- `apps/player/src/diagnostics/problemDiagnostics.test.ts` — Separate cloud/storage/diagnostic lane; retain release iPhone memory fix and compatibility.
+- `apps/player/src/diagnostics/problemDiagnostics.ts` — Separate cloud/storage/diagnostic lane; retain release iPhone memory fix and compatibility.
+- `apps/player/src/facility/approvedRoomPresentation.test.ts` — Separate character/art lane; excluded.
+- `apps/player/src/facility/backlessRollingStools.test.ts` — Separate character/art lane; excluded.
+- `apps/player/src/facility/characterPresentation.test.ts` — Separate character/art lane; excluded.
+- `apps/player/src/facility/characterPresentation.ts` — Separate character/art lane; excluded.
+- `apps/player/src/facility/characterRoomScaleIntegration.test.ts` — Separate character/art lane; excluded.
+- `apps/player/src/facility/desktopMapShade.test.ts` — Concurrent desktop splitter/UI-density lane or unrelated presentation work; not accepted for this release port.
+- `apps/player/src/facility/desktopMapShade.ts` — Concurrent desktop splitter/UI-density lane or unrelated presentation work; not accepted for this release port.
+- `apps/player/src/facility/FacilityCanvas.lifecycle.test.tsx` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `apps/player/src/facility/FacilityCanvas.tsx` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `apps/player/src/facility/FacilityScene.ts` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `apps/player/src/facility/furnitureSeatLayering.test.ts` — Separate character/art lane; excluded.
+- `apps/player/src/facility/phlebotomyPresentation.test.ts` — Separate character/art lane; excluded.
+- `apps/player/src/facility/staffIdleSupports.test.ts` — Separate character/art lane; excluded.
+- `apps/player/src/facility/types.ts` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `apps/player/src/feedback/TesterFeedback.tsx` — Separate cloud/storage/diagnostic lane; retain release iPhone memory fix and compatibility.
+- `apps/player/src/main.tsx` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `apps/player/src/mobile/build/MobileBuildCatalog.tsx` — Concurrent desktop splitter/UI-density lane or unrelated presentation work; not accepted for this release port.
+- `apps/player/src/mobile/manage/manageSessionFlows.test.tsx` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `apps/player/src/mobile/manage/MobileManage.tsx` — Concurrent desktop splitter/UI-density lane or unrelated presentation work; not accepted for this release port.
+- `apps/player/src/mobile/mobileDensity.css` — Concurrent desktop splitter/UI-density lane or unrelated presentation work; not accepted for this release port.
+- `apps/player/src/mobile/MobileShell.tsx` — Concurrent desktop splitter/UI-density lane or unrelated presentation work; not accepted for this release port.
+- `apps/player/src/mobile/MobileTopBar.tsx` — Concurrent desktop splitter/UI-density lane or unrelated presentation work; not accepted for this release port.
+- `apps/player/src/mobile/phoneSpace.test.tsx` — Concurrent desktop splitter/UI-density lane or unrelated presentation work; not accepted for this release port.
+- `apps/player/src/session/breadButterPresentation.test.ts` — Retain release evidence, pins and compatibility. Any required regeneration is performed locally from verified release inputs, never copied from main.
+- `apps/player/src/session/buildViewModels.test.ts` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `apps/player/src/session/cloud/cache.ts` — Separate cloud/storage/diagnostic lane; retain release iPhone memory fix and compatibility.
+- `apps/player/src/session/cloud/codecTasks.ts` — Separate cloud/storage/diagnostic lane; retain release iPhone memory fix and compatibility.
+- `apps/player/src/session/cloud/codecWorker.test.ts` — Separate cloud/storage/diagnostic lane; retain release iPhone memory fix and compatibility.
+- `apps/player/src/session/cloud/codecWorker.ts` — Separate cloud/storage/diagnostic lane; retain release iPhone memory fix and compatibility.
+- `apps/player/src/session/cloud/codecWorkerNative.test.ts` — Separate cloud/storage/diagnostic lane; retain release iPhone memory fix and compatibility.
+- `apps/player/src/session/cloud/coordinator.ts` — Separate cloud/storage/diagnostic lane; retain release iPhone memory fix and compatibility.
+- `apps/player/src/session/cloud/entryStorage.ts` — Separate cloud/storage/diagnostic lane; retain release iPhone memory fix and compatibility.
+- `apps/player/src/session/cloud/gameSession.test.tsx` — Separate cloud/storage/diagnostic lane; retain release iPhone memory fix and compatibility.
+- `apps/player/src/session/cloud/gameSession.ts` — Separate cloud/storage/diagnostic lane; retain release iPhone memory fix and compatibility.
+- `apps/player/src/session/cloud/journalCodec.ts` — Separate cloud/storage/diagnostic lane; retain release iPhone memory fix and compatibility.
+- `apps/player/src/session/cloud/releaseCodecHeadroom.test.ts` — Separate cloud/storage/diagnostic lane; retain release iPhone memory fix and compatibility.
+- `apps/player/src/session/cloud/separateCampaign.test.ts` — Separate cloud/storage/diagnostic lane; retain release iPhone memory fix and compatibility.
+- `apps/player/src/session/cloud/snapshotCodec.ts` — Separate cloud/storage/diagnostic lane; retain release iPhone memory fix and compatibility.
+- `apps/player/src/session/cloud/tickPerformanceTestSupport.ts` — Separate cloud/storage/diagnostic lane; retain release iPhone memory fix and compatibility.
+- `apps/player/src/session/cloud/watchdogs.test.ts` — Separate cloud/storage/diagnostic lane; retain release iPhone memory fix and compatibility.
+- `apps/player/src/session/diagnosticProjectionDifferential.test.ts` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `apps/player/src/session/facilityCameraPreference.test.ts` — Separate cloud/storage/diagnostic lane; retain release iPhone memory fix and compatibility.
+- `apps/player/src/session/facilityCameraPreference.ts` — Separate cloud/storage/diagnostic lane; retain release iPhone memory fix and compatibility.
+- `apps/player/src/session/flagFreeze.test.tsx` — Retain release evidence, pins and compatibility. Any required regeneration is performed locally from verified release inputs, never copied from main.
+- `apps/player/src/session/levelFiveLaunch.test.tsx` — Retain release evidence, pins and compatibility. Any required regeneration is performed locally from verified release inputs, never copied from main.
+- `apps/player/src/session/levelFiveRoomsViewModels.test.tsx` — Retain release evidence, pins and compatibility. Any required regeneration is performed locally from verified release inputs, never copied from main.
+- `apps/player/src/session/localJournal.test.ts` — Separate cloud/storage/diagnostic lane; retain release iPhone memory fix and compatibility.
+- `apps/player/src/session/localJournal.ts` — Separate cloud/storage/diagnostic lane; retain release iPhone memory fix and compatibility.
+- `apps/player/src/styles/workspaceDensity.css` — Concurrent desktop splitter/UI-density lane or unrelated presentation work; not accepted for this release port.
+- `apps/player/src/ui/BuildPanel.tsx` — Concurrent desktop splitter/UI-density lane or unrelated presentation work; not accepted for this release port.
+- `apps/player/src/ui/ChartPanel.tsx` — Concurrent desktop splitter/UI-density lane or unrelated presentation work; not accepted for this release port.
+- `apps/player/src/ui/roomAccessFeedback.test.ts` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `apps/player/src/ui/roomAccessTestSupport.ts` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `apps/player/src/ui/StaffPanel.tsx` — Concurrent desktop splitter/UI-density lane or unrelated presentation work; not accepted for this release port.
+- `apps/player/src/ui/workspaceDensity.test.tsx` — Concurrent desktop splitter/UI-density lane or unrelated presentation work; not accepted for this release port.
+- `docs/execplans/question-stats1-20261108.md` — Historical authoring-only stats1 artifact outside required accepted-file/dependency closure; original full main capture retained unchanged and release absence pinned.
+- `docs/research/question-stats1-files-20261108.json` — Historical authoring-only stats1 artifact outside required accepted-file/dependency closure; original full main capture retained unchanged and release absence pinned.
+- `docs/research/question-stats1-handoff-20261108.md` — Historical authoring-only stats1 artifact outside required accepted-file/dependency closure; original full main capture retained unchanged and release absence pinned.
+- `docs/research/question-stats1-integration-proposal-20261108.json` — Historical authoring-only stats1 artifact outside required accepted-file/dependency closure; original full main capture retained unchanged and release absence pinned.
+- `docs/research/question-stats1-preservation-20261108.json` — Historical authoring-only stats1 artifact outside required accepted-file/dependency closure; original full main capture retained unchanged and release absence pinned.
+- `docs/research/question-stats1-scope-20261108.json` — Historical authoring-only stats1 artifact outside required accepted-file/dependency closure; original full main capture retained unchanged and release absence pinned.
+- `docs/research/question-stats1-validation-20261108.json` — Historical authoring-only stats1 artifact outside required accepted-file/dependency closure; original full main capture retained unchanged and release absence pinned.
+- `packages/balance-config/src/guidance-tips.ts` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `packages/clinical-content/src/question-flags3-20261107.test.ts` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `packages/game-domain/src/facilityNavigation.ts` — Separate runtime/performance/waiting/endoscopy lane; excluded.
+- `packages/game-domain/src/facilityNavigationReference.testSupport.ts` — Separate runtime/performance/waiting/endoscopy lane; excluded.
+- `packages/game-domain/src/incrementalEvidenceOwnership.test.ts` — Separate runtime/performance/waiting/endoscopy lane; excluded.
+- `packages/game-domain/src/incrementalEvidenceOwnership.ts` — Separate runtime/performance/waiting/endoscopy lane; excluded.
+- `packages/game-domain/src/incrementalEvidenceProjection.test.ts` — Separate runtime/performance/waiting/endoscopy lane; excluded.
+- `packages/game-domain/src/incrementalEvidenceProjection.ts` — Separate runtime/performance/waiting/endoscopy lane; excluded.
+- `packages/game-domain/src/incrementalEvidenceReferences.test.ts` — Separate runtime/performance/waiting/endoscopy lane; excluded.
+- `packages/game-domain/src/incrementalEvidenceReferences.ts` — Separate runtime/performance/waiting/endoscopy lane; excluded.
+- `packages/game-domain/src/incrementalEvidenceRetirement.test.ts` — Separate runtime/performance/waiting/endoscopy lane; excluded.
+- `packages/game-domain/src/incrementalEvidenceRetirement.ts` — Separate runtime/performance/waiting/endoscopy lane; excluded.
+- `packages/game-domain/src/incrementalEvidenceValues.test.ts` — Separate runtime/performance/waiting/endoscopy lane; excluded.
+- `packages/game-domain/src/incrementalEvidenceValues.ts` — Separate runtime/performance/waiting/endoscopy lane; excluded.
+- `packages/game-domain/src/incrementalTickClone.test.ts` — Separate runtime/performance/waiting/endoscopy lane; excluded.
+- `packages/game-domain/src/incrementalTickClone.ts` — Separate runtime/performance/waiting/endoscopy lane; excluded.
+- `packages/game-domain/src/readonlyProjectionMemo.ts` — Separate runtime/performance/waiting/endoscopy lane; excluded.
+- `packages/game-domain/src/reducer.ts` — Separate runtime/performance/waiting/endoscopy lane; excluded.
+- `packages/game-domain/src/routineAvailabilityReference.testSupport.ts` — Separate runtime/performance/waiting/endoscopy lane; excluded.
+- `packages/game-domain/src/settledStateQueries.test.ts` — Separate runtime/performance/waiting/endoscopy lane; excluded.
+- `packages/game-domain/src/settledStateQueries.ts` — Separate runtime/performance/waiting/endoscopy lane; excluded.
+- `packages/game-domain/src/waiting-destinations.ts` — Separate runtime/performance/waiting/endoscopy lane; excluded.
+- `packages/game-domain/tests/approved-clinical-admission.test.ts` — Retain release evidence, pins and compatibility. Any required regeneration is performed locally from verified release inputs, never copied from main.
+- `packages/game-domain/tests/level-five-launch.test.ts` — Retain release evidence, pins and compatibility. Any required regeneration is performed locally from verified release inputs, never copied from main.
+- `packages/game-domain/tests/readonlyProjectionMemo.test.ts` — Separate runtime/performance/waiting/endoscopy lane; excluded.
+- `packages/game-domain/tests/routine-endoscopy-ready.fixture.ts` — Separate runtime/performance/waiting/endoscopy lane; excluded.
+- `packages/game-domain/tests/routine-endoscopy-ready.test.ts` — Separate runtime/performance/waiting/endoscopy lane; excluded.
+- `packages/game-domain/tests/waiting-chart-attendance.fixture.ts` — Separate runtime/performance/waiting/endoscopy lane; excluded.
+- `packages/game-domain/tests/waiting-chart-attendance.test.ts` — Separate runtime/performance/waiting/endoscopy lane; excluded.
+- `tests/e2e/build-mode-usability.spec.ts` — Concurrent desktop splitter/UI-density lane or unrelated presentation work; not accepted for this release port.
+- `tests/e2e/management-mode.spec.ts` — Concurrent desktop splitter/UI-density lane or unrelated presentation work; not accepted for this release port.
+- `tests/e2e/phone-ui-space.spec.ts` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `tests/e2e/splitter-map-shade.spec.ts` — Concurrent desktop splitter/UI-density lane or unrelated presentation work; not accepted for this release port.
+- `tests/e2e/ui-density-helpers.ts` — Concurrent desktop splitter/UI-density lane or unrelated presentation work; not accepted for this release port.
+- `tests/e2e/ui-density-measurements.spec.ts` — Concurrent desktop splitter/UI-density lane or unrelated presentation work; not accepted for this release port.
+- `tests/e2e/ui-density.spec.ts` — Concurrent desktop splitter/UI-density lane or unrelated presentation work; not accepted for this release port.
+- `tests/fixtures/diagnostic-workload.ts` — Retain release evidence, pins and compatibility. Any required regeneration is performed locally from verified release inputs, never copied from main.
+- `tests/fixtures/level-five-integration-checkpoints-20261012.json` — Retain release evidence, pins and compatibility. Any required regeneration is performed locally from verified release inputs, never copied from main. Regenerated privately by both native helpers and proved byte-identical; canonical file not rewritten.
+- `tests/fixtures/level-five-legacy-behavior-20261012.json` — Retain release evidence, pins and compatibility. Any required regeneration is performed locally from verified release inputs, never copied from main.
+- `tools/qa/level-five-integration-results-20261012.json` — Retain release evidence, pins and compatibility. Any required regeneration is performed locally from verified release inputs, never copied from main. Regenerated locally from actual GS-release journey, verified before publication; main evidence was excluded.
+- `tools/qa/tick-state-differential.mjs` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `tools/question-quality/author-question-flags3-20261107.mjs` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `tools/question-quality/author-question-stats1-20261108.mjs` — Historical authoring-only stats1 artifact outside required accepted-file/dependency closure; original full main capture retained unchanged and release absence pinned.
+- `tools/question-quality/build-question-flags2-round3-20261105.mjs` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `tools/question-quality/capture-question-flags2-round3-20261105.mjs` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `tools/question-quality/capture-question-flags3-20261107.mjs` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `tools/question-quality/capture-question-new-n3-acceptance-20261105.mjs` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `tools/question-quality/capture-question-ship-case-replacements-20261105.mjs` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `tools/question-quality/capture-question-stats1-20261108.mjs` — Historical authoring-only stats1 artifact outside required accepted-file/dependency closure; original full main capture retained unchanged and release absence pinned.
+- `tools/question-quality/check-question-new-n3-acceptance-20261105.mjs` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `tools/question-quality/check-question-ship-case-replacements-20261105.mjs` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `tools/question-quality/check-question-stats1-20261108.mjs` — Historical authoring-only stats1 artifact outside required accepted-file/dependency closure; original full main capture retained unchanged and release absence pinned.
+- `tools/question-quality/control-question-flags2-round3-20261105.mjs` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `tools/question-quality/finalize-question-flags2-round3-20261105.mjs` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `tools/question-quality/question-flags2-round3-files-20261105.json` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `tools/question-quality/question-flags2-round3-specs-20261105.mjs` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `tools/question-quality/question-flags2-round3-validation-20261105.json` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `tools/question-quality/question-flags3-files-20261107.json` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `tools/question-quality/question-flags3-scope-20261107.json` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `tools/question-quality/question-flags3-specs-20261107.mjs` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `tools/question-quality/question-stats1-specs-20261108.mjs` — Historical authoring-only stats1 artifact outside required accepted-file/dependency closure; original full main capture retained unchanged and release absence pinned.
+- `tools/question-quality/record-question-new-n3-acceptance-source-20261105.mjs` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `tools/question-quality/record-question-ship-case-replacements-source-20261105.mjs` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `tools/question-quality/record-question-stats1-source-migration-20261108.mjs` — Historical authoring-only stats1 artifact outside required accepted-file/dependency closure; original full main capture retained unchanged and release absence pinned.
+- `tools/question-quality/record-question-stats1-validation-20261108.mjs` — Historical authoring-only stats1 artifact outside required accepted-file/dependency closure; original full main capture retained unchanged and release absence pinned.
+- `tools/question-quality/review-question-flags2-round3-20261105.mjs` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `tools/question-quality/review-question-flags3-20261107.mjs` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `tools/question-quality/review-question-stats1-20261108.mjs` — Historical authoring-only stats1 artifact outside required accepted-file/dependency closure; original full main capture retained unchanged and release absence pinned.
+- `tools/question-quality/round2-validation-exits-20261029.json` — Outside manager-accepted stats1 lane; preserve release entry bytes or absence.
+- `tools/question-quality/write-question-stats1-handoff-20261108.mjs` — Historical authoring-only stats1 artifact outside required accepted-file/dependency closure; original full main capture retained unchanged and release absence pinned.
+
+### Open risks and manager handoff
+
+No browser/device playtest or real tester storage was accessed. Synthetic
+format3/journal continuations pass; no iPhone memory or device performance
+acceptance is claimed for the larger content bundle. All64 still need clinician
+review; the22 directed repairs and10 exact literal-length residuals remain as
+accepted editorial intent. Historical main-tree scope/audit tools retain their
+original capture context; use these release provenance/native receipts for
+acceptance. Existing build warnings remain. Opening origins/pathways are unchanged.
+
+Full64-path old/new file SHA/byte and scope/LF audit is in
+`.local-dev/release-port21-20261108/final-file-inventory.json` after this
+append. Current-thread handoff and this task's ExecPlan are updated. Work stays
+local/uncommitted; manager owns review, acceptance and any separately authorized
+GitHub-backup checkpoint. No remaining worker implementation is pending.

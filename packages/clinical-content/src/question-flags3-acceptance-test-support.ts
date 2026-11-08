@@ -1,10 +1,13 @@
+import {beforeStats1Source} from "./question-stats1-test-support";
+import {beforeStats1AcceptanceRelease,beforeStats1AcceptanceManifest,beforeStats1AcceptanceTimings,beforeStats1PriorAcceptedTimings} from "./question-stats1-acceptance-test-support";
 import {createHash} from "node:crypto";
 import {readFileSync} from "node:fs";
 import {expect} from "vitest";
 import type {SyntheticClinicalRelease, AnswerChoiceTimingRegistryEntry} from "./schema";
 import type {QuestionShipManifest, QuestionShipAcceptance} from "./question-ship-manifest";
 import {QUESTION_FLAGS3_ACCEPTED_SOURCE_RELEASE as source, QUESTION_FLAGS3_ACCEPTED_REVISIONS as revisions,
- QUESTION_FLAGS3_ACCEPTED_TIMING_ENTRIES as timings} from "./question-flags3-accepted-20261107";
+ QUESTION_FLAGS3_ACCEPTED_TIMING_ENTRIES as actualFlags3Timings} from "./question-flags3-accepted-20261107";
+const timings=beforeStats1PriorAcceptedTimings(actualFlags3Timings,"flags3-accepted");
 
 const read=(path:string)=>JSON.parse(readFileSync(new URL("../../../"+path,import.meta.url),"utf8"));
 const before=read("tools/question-quality/fixtures/question-flags3-acceptance-before-20261107.json") as {
@@ -20,6 +23,7 @@ const newRows:QuestionShipAcceptance[]=revisions.map(r=>({acceptanceId:r.auditId
 /** Historical test epoch only: pin the complete exact accepted delta, then
  * restore the immutable prior epoch. Never used by runtime/save code. */
 export function beforeFlags3AcceptanceRelease(release:SyntheticClinicalRelease):SyntheticClinicalRelease {
+ release=beforeStats1AcceptanceRelease(release);
  if(digest(release)===before.default.sha256)return release;
  for(const cs of source.cases)expect(release.cases.find(c=>c.id===cs.id),cs.id+" exact accepted case").toEqual(cs);
  const ids=new Set(before.default.conceptIds);
@@ -32,6 +36,7 @@ export function beforeFlags3AcceptanceRelease(release:SyntheticClinicalRelease):
  return restored;
 }
 export function beforeFlags3AcceptanceManifest(manifest:QuestionShipManifest):QuestionShipManifest&{id:string;clinicalApproval:false} {
+ manifest=beforeStats1AcceptanceManifest(manifest);
  if(digest(manifest)===digest(before.manifest))return manifest as typeof before.manifest;
  const expected={...before.manifest,id:"question-ship.2026-11-07.v5",
   accepted:[...before.manifest.accepted.filter(r=>!oldIds.has(r.acceptanceId)),...newRows],
@@ -41,11 +46,13 @@ export function beforeFlags3AcceptanceManifest(manifest:QuestionShipManifest):Qu
  return structuredClone(before.manifest);
 }
 export function beforeFlags3AcceptanceTimings(actual:readonly AnswerChoiceTimingRegistryEntry[]):AnswerChoiceTimingRegistryEntry[] {
+ actual=beforeStats1AcceptanceTimings(actual);
  if(digest(actual)===digest(before.timing))return [...actual];
  expect(actual,"retain every prior timing row and append only the four accepted identities").toEqual([...before.timing,...timings]);
  return structuredClone(before.timing);
 }
 export function beforeFlags3AcceptanceSource(path:string,current:string):string {
+ current=beforeStats1Source(path,current);
  const receipt=read("tools/question-quality/fixtures/question-flags3-acceptance-source-migration-20261107.json") as {
   files:Array<{path:string;beforeSha256:string;afterSha256:string;beforeText:string}>;
  };

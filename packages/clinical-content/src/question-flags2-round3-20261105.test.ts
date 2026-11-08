@@ -1,4 +1,6 @@
-import {QUESTION_FLAGS3_ACCEPTED_TIMING_ENTRIES} from "./question-flags3-accepted-20261107";
+import {QUESTION_FLAGS3_ACCEPTED_TIMING_ENTRIES as currentFlags3Timings} from "./question-flags3-accepted-20261107";
+import {beforeStats1AcceptanceManifest,beforeStats1AcceptanceTimings,beforeStats1PriorAcceptedTimings} from "./question-stats1-acceptance-test-support";
+const QUESTION_FLAGS3_ACCEPTED_TIMING_ENTRIES=beforeStats1PriorAcceptedTimings(currentFlags3Timings,"flags3-accepted");
 import {createHash} from "node:crypto";
 import {readFileSync} from "node:fs";
 import {describe,expect,it} from "vitest";
@@ -15,8 +17,9 @@ import {
 } from "./question-flags2-round3-20261105";
 import {QUESTION_FLAGS2_ROUND2_SOURCE_RELEASE as round2} from "./question-flags2-round2-20261105";
 import {SYNTHETIC_CLINICAL_RELEASE as live} from "./synthetic-content";
-import {QUESTION_SHIP_MANIFEST as manifest} from "./question-ship-manifest";
-import {ANSWER_CHOICE_TIMING_REGISTRY as globalTimings} from "./answer-choice-timing";
+import {QUESTION_SHIP_MANIFEST as currentManifest} from "./question-ship-manifest";
+import {ANSWER_CHOICE_TIMING_REGISTRY as currentTimings} from "./answer-choice-timing";
+const manifest=beforeStats1AcceptanceManifest(currentManifest),globalTimings=beforeStats1AcceptanceTimings(currentTimings);
 import {QUESTION_NEW_N3_ROUND2_TIMING_ENTRIES as concurrentN3Round2Timings} from "./question-new-n3-round2-20261105";
 import {QUESTION_NEW_N3_ROUND3_TIMING_ENTRIES as concurrentN3Round3Timings} from "./question-new-n3-round3-20261105";
 import {QUESTION_FLAGS2_WHOLE_CASE_TIMING_ENTRIES} from "./question-flags2-whole-case-accepted-20261105";

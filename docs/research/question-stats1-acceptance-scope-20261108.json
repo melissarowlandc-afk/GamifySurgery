@@ -1,0 +1,292 @@
+{
+  "checkedOn": "2026-11-08",
+  "sourceView": "stats1-accepted",
+  "sourceViewSha256": "f00251d13e49ddd706400f6efd89333c95d6cb732220f12f1a06247db378fbd3",
+  "reviewedSourceSha256": "70163dd78bd9a0aa31bc8ade3714722a951d61ce5def1a86daccbbd0a4ca0b7f",
+  "accepted": 64,
+  "exactIndependentPass": 42,
+  "revisedByDirection": 22,
+  "clinicalApproval": false,
+  "allNeedsClinicianReview": true,
+  "stableConceptIds": 18,
+  "newConceptIds": [],
+  "before": {
+    "cases": 1141,
+    "nodes": 1452,
+    "registeredMeanings": 606,
+    "activeConcepts": 450,
+    "acceptedRows": 71,
+    "legacyBindings": 1423,
+    "wholeCaseRelations": 3,
+    "timingRows": 2219,
+    "liveSha256": "0fbd0efc0502cb47e463a07ea2c8a74e6ce992876f27442ec5597b17cc5273cf",
+    "manifestSha256": "c32128d1bebad68306fdfb28b893278548998fecb988a0c50dfb2377ebe413d6",
+    "timingSha256": "8fd21099e711c374553b039405e86d106fff65dd57870abdaad59873bb5aea0d"
+  },
+  "after": {
+    "cases": 1141,
+    "nodes": 1452,
+    "uniqueQuestions": 1447,
+    "activeConcepts": 450,
+    "registeredMeanings": 606,
+    "acceptedRows": 133,
+    "legacyBindings": 1423,
+    "wholeCaseRelations": 3,
+    "timingRows": 2283,
+    "liveSha256": "1ab9a80611a3f4e09629b4f49f6e7b49fedb93a8102475620450417dfdca4813",
+    "manifestSha256": "8b3ec2e429e0c4b170c1a0170456b5b6e4e54f3be5582e80576d45aadc193c77",
+    "timingSha256": "937dd59c71ca96e38e5b41002b6dda9fb5846d915302ab2e774a17ed48bc80ac",
+    "manifestVersion": "question-ship.2026-11-08.v6"
+  },
+  "exactDefaultCasesChanged": [
+    "case.gs028se.independent-t-paired-t.a-two-teams",
+    "case.gs028se.independent-t-paired-t.a-two-cohorts",
+    "case.gs028se.independent-t-paired-t.a-two-shifts",
+    "case.gs028se.independent-t-paired-t.a-two-scripts",
+    "case.gs028se.independent-t-paired-t.b-same-rooms",
+    "case.gs028se.independent-t-paired-t.b-same-trainees",
+    "case.gs028se.independent-t-paired-t.b-matched-sites",
+    "case.gs028se.independent-t-paired-t.b-same-workers",
+    "case.gs028se.one-way-anova-rank-sum.a-three-teams",
+    "case.gs028se.one-way-anova-rank-sum.a-four-formats",
+    "case.gs028se.one-way-anova-rank-sum.a-three-sites",
+    "case.gs028se.one-way-anova-rank-sum.a-five-signs",
+    "case.gs028se.one-way-anova-rank-sum.b-ordinal-teams",
+    "case.gs028se.one-way-anova-rank-sum.b-skewed-delays",
+    "case.gs028se.one-way-anova-rank-sum.b-independent-likert",
+    "case.gs028se.one-way-anova-rank-sum.b-two-queues",
+    "case.gs028se.signed-rank-chi-square.a-paired-workload",
+    "case.gs028se.signed-rank-chi-square.a-same-rooms-skewed",
+    "case.gs028se.signed-rank-chi-square.a-matched-dyads",
+    "case.gs028se.signed-rank-chi-square.a-pre-post-counts",
+    "case.gs028se.signed-rank-chi-square.b-role-by-choice",
+    "case.gs028se.signed-rank-chi-square.b-shift-by-response",
+    "case.gs028se.signed-rank-chi-square.b-badge-by-completion",
+    "case.gs028se.signed-rank-chi-square.b-site-by-category",
+    "case.gs028se.fisher-exact-study-design.a-rare-event",
+    "case.gs028se.fisher-exact-study-design.a-tiny-pilot",
+    "case.gs028se.fisher-exact-study-design.a-sparse-exposure",
+    "case.gs028se.fisher-exact-study-design.a-small-response",
+    "case.gs028se.fisher-exact-study-design.b-cohort-followup",
+    "case.gs028se.fisher-exact-study-design.b-random-scripts",
+    "case.gs028se.fisher-exact-study-design.b-case-control",
+    "case.gs028se.fisher-exact-study-design.b-cross-sectional",
+    "case.gs028se.bias-confounding-sensitivity-specificity.a-baseline-shift",
+    "case.gs028se.bias-confounding-sensitivity-specificity.a-night-excluded",
+    "case.gs028se.bias-confounding-sensitivity-specificity.a-recall-timing",
+    "case.gs028se.bias-confounding-sensitivity-specificity.a-adjusted-model",
+    "case.gs028se.bias-confounding-sensitivity-specificity.b-sensitivity-90",
+    "case.gs028se.bias-confounding-sensitivity-specificity.b-specificity-95",
+    "case.gs028se.bias-confounding-sensitivity-specificity.b-sensitivity-80",
+    "case.gs028se.bias-confounding-sensitivity-specificity.b-specificity-70",
+    "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-higher-prevalence",
+    "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-lower-prevalence",
+    "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-ppv-table",
+    "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-characteristics-fixed",
+    "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-cohort-risk",
+    "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-case-control-or",
+    "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-adjusted-odds",
+    "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-rare-not-identical",
+    "case.gs028se.arr-nnt-p-value.a-arr-ten",
+    "case.gs028se.arr-nnt-p-value.a-arr-five",
+    "case.gs028se.arr-nnt-p-value.a-arr-twenty",
+    "case.gs028se.arr-nnt-p-value.a-arr-six",
+    "case.gs028se.arr-nnt-p-value.b-p-003",
+    "case.gs028se.arr-nnt-p-value.b-p-040",
+    "case.gs028se.arr-nnt-p-value.b-p-0001",
+    "case.gs028se.arr-nnt-p-value.b-p-008",
+    "case.gs028se.confidence-interval-errors-power.a-ratio-crosses",
+    "case.gs028se.confidence-interval-errors-power.a-difference-excludes",
+    "case.gs028se.confidence-interval-errors-power.a-precision-width",
+    "case.gs028se.confidence-interval-errors-power.a-repeated-sampling",
+    "case.gs028se.confidence-interval-errors-power.b-type-one",
+    "case.gs028se.confidence-interval-errors-power.b-type-two",
+    "case.gs028se.confidence-interval-errors-power.b-power",
+    "case.gs028se.confidence-interval-errors-power.b-post-hoc"
+  ],
+  "unrelatedCasesUnchanged": 1077,
+  "allPriorMeaningsAndOrderUnchanged": true,
+  "allFourN2Exact": true,
+  "catalogUnchanged": true,
+  "legacyBindingsUnchanged": true,
+  "wholeCaseRelationsUnchanged": true,
+  "supersededAcceptances": [
+    "G06",
+    "F3-01"
+  ],
+  "otherAcceptedRowsUnchanged": 69,
+  "allPriorTimingRowsRetainedInOrder": true,
+  "protectedPaths": 1396,
+  "protectedUnchanged": 1378,
+  "existingFileChanges": [
+    {
+      "path": "apps/player/src/questionShipSaveCompatibility.test.ts",
+      "beforeSha256": "4ed5006b23979cd2f0af78161d2afb007e7c825f4d1ccf389710ce3ede9d1d39",
+      "afterSha256": "3c77eaddd147e021e21086521a8861107aeaa138352d8a17d3c4c4167bc26827"
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+      "beforeSha256": "d90694e852366f715b58f4986dfcdd016aeda4cecea1126537e97214ac4e5c54",
+      "afterSha256": "0aa691598047da150b7e4cad758796686337ecba8561df505ee486f0c36d4294"
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "beforeSha256": "37b65085cf5d41a543fea68ba3bed0f82ebd8277f345c53e2957d54a1647d63d",
+      "afterSha256": "b97c3af1eb6cd535cd7103bbbfd9846f65d51fc2d793fe624c7ad417d55cff28"
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "beforeSha256": "f22453a850aa22d4ffba37f05710e8abfb43784547f46cbb28397a76e2181e6b",
+      "afterSha256": "8caff5c5f299afff6b27401b2bade3ea6d311390deecbe70052c789799f36fbb"
+    },
+    {
+      "path": "packages/clinical-content/src/patient-library-wording-repair.test.ts",
+      "beforeSha256": "55cd605baf24572db21d4556afd9208eac9360e395a906cf248e84c49ad83475",
+      "afterSha256": "54e21fc1ea1574f48bb858036e69362143dcf50b2c7cb5c7d4b30cb2db24af9b"
+    },
+    {
+      "path": "packages/clinical-content/src/pilot-content.test.ts",
+      "beforeSha256": "181a391742a9039615fde8439e01c039ac37b0bd49b1d5522e84c97cc2f15483",
+      "afterSha256": "c0409d92b0690259da1f7bebfc9fbd209a6d8e76c3cb90f9687db3ccfe84e362"
+    },
+    {
+      "path": "packages/clinical-content/src/playable-patient-narrative.test.ts",
+      "beforeSha256": "fb91a0865112c65cff80412813b8e140a56ff1f6e226653e856a3a1b979c1400",
+      "afterSha256": "ce9613f11027684b6728ec3d5b662313e5acabe83a33834cc1600174cf24fb25"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-20261105.test.ts",
+      "beforeSha256": "11861280eb2cdeaa87d70854d7f6235d29405951dc52acdbe1e627bb9b3b7df9",
+      "afterSha256": "6792a67f48fc3d8ddaa780f3d4813a9b18e0fce8b9bea47a933c700bcf113b19"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-round2-20261105.test.ts",
+      "beforeSha256": "a5ccc257a25ba99a52e0a6ae771bba060912e4f64aec1500926c30a31fdfe2c3",
+      "afterSha256": "a31bf37a62f3004dc67801bf52903d997ac8b714a729b69b827ece979c328c01"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-round3-20261105.test.ts",
+      "beforeSha256": "06106c775b8b845999ffe325fb1f081b9c561591d04f9de054a5b23ee68396d3",
+      "afterSha256": "f809034cca468d405939b2b506f6e3e155b38decb8692aada2bcf8ea1d7937f0"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags3-acceptance-20261107.test.ts",
+      "beforeSha256": "ce8ca1e938e74d76e75a6aef45b00757b15691ef7e05f9c016f82c03d6d9d06c",
+      "afterSha256": "e5d3ab4f580d7994d300e1ce2e8963b37a2e6edfb8c4f1cd1008273d4d773093"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags3-acceptance-test-support.ts",
+      "beforeSha256": "9a084a6535ea1f3a98eab7eab07597b52a6b4c3e4f647eb374b088d0f22b3008",
+      "afterSha256": "6576082034b11a2cd3391fe2adebbea9e7384e03582b700814779bbc7d730e84"
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n3-round2-20261105.test.ts",
+      "beforeSha256": "a53627de2670a4835f044fe5a757f9625a0675bd3c7a53396fa114cecca824fd",
+      "afterSha256": "4cae69dc16a7f21251f322a9c3ea705cb34484ae8ede4a8a703208f3d59e0c75"
+    },
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+      "beforeSha256": "45b33c956c8ef2f4df61a035d8d34cb70f63d0ff0348c9ff84ea9e8300107676",
+      "afterSha256": "74f0e5110974699c46aeb446c19a0cc60362f4d7096126e65d27a71cd377f8a5"
+    },
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.ts",
+      "beforeSha256": "50dadc0a2daf64704b8aa599e23051692ad81bc9e3462772870cd18bb935a6c0",
+      "afterSha256": "af9a2c03dd1e46438f7ac0c463672a9840936ed7c8a7b091792e2912b79fca35"
+    },
+    {
+      "path": "packages/clinical-content/src/question-stats1-20261108.test.ts",
+      "beforeSha256": "f80043fe4a6f2c3eba772ee6801f6475db35b18a46ce8d86cca5c9b7129aebb3",
+      "afterSha256": "d42e28342831d50aed7c1c30da0258a02ca410a1329f8278e5c14c88f410d1ea"
+    },
+    {
+      "path": "packages/clinical-content/src/question-stats1-test-support.ts",
+      "beforeSha256": "4aaf45348bc68a4e01108966d420e108703f84d26336119aade153a5e4702200",
+      "afterSha256": "eaed3e5ff2170f4de2fa07da84307d11ff7e3878b6b851a96babcb9fb55823bc"
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "beforeSha256": "819c38fce01be9684a8ef35e09c5bb64978dc710993862dbcf066b2c5f9392ed",
+      "afterSha256": "d5a603c617d3adc753351bd68511ab7495b2365f7bb32479ca9950a8e56d5458"
+    }
+  ],
+  "runtimeFileChanges": [
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "beforeSha256": "37b65085cf5d41a543fea68ba3bed0f82ebd8277f345c53e2957d54a1647d63d",
+      "afterSha256": "b97c3af1eb6cd535cd7103bbbfd9846f65d51fc2d793fe624c7ad417d55cff28"
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "beforeSha256": "f22453a850aa22d4ffba37f05710e8abfb43784547f46cbb28397a76e2181e6b",
+      "afterSha256": "8caff5c5f299afff6b27401b2bade3ea6d311390deecbe70052c789799f36fbb"
+    },
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.ts",
+      "beforeSha256": "50dadc0a2daf64704b8aa599e23051692ad81bc9e3462772870cd18bb935a6c0",
+      "afterSha256": "af9a2c03dd1e46438f7ac0c463672a9840936ed7c8a7b091792e2912b79fca35"
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "beforeSha256": "819c38fce01be9684a8ef35e09c5bb64978dc710993862dbcf066b2c5f9392ed",
+      "afterSha256": "d5a603c617d3adc753351bd68511ab7495b2365f7bb32479ca9950a8e56d5458"
+    }
+  ],
+  "newDefaultDependencies": [
+    {
+      "path": "packages/clinical-content/src/question-stats1-accepted-20261108.ts",
+      "sha256": "89dba296b51aa286be3b844b8788bece20a5950b559972adbdc06f85a78e1cbf"
+    },
+    {
+      "path": "packages/clinical-content/src/question-stats1-accepted-data-20261108.ts",
+      "sha256": "5b09dcf5792638e85ac640cc36e1758cfd33003290aff363a57a87d20c732e5a"
+    },
+    {
+      "path": "packages/clinical-content/src/question-stats1-20261108.ts",
+      "sha256": "ae1843e5e1637f182486d33c3ce0b5da8db5cc6c251489932a004599a4d575b4"
+    },
+    {
+      "path": "packages/clinical-content/src/question-stats1-20261108-data.ts",
+      "sha256": "836bb05f5c0841ddbd4fa6067541133723573f41ae26571be06cfb1d068db6d7"
+    },
+    {
+      "path": "packages/clinical-content/src/question-stats1-evidence-20261108.ts",
+      "sha256": "b06451bc0ec128e5938e034481b9a349479aba6e53f0ed8e08302b6bfe451199"
+    },
+    {
+      "path": "packages/clinical-content/src/question-stats1-retained-input-20261108.ts",
+      "sha256": "7b932a99e74447da4e3d43957926137214ef13891dc7b84483dc3315153e3ddf"
+    }
+  ],
+  "levelFive": {
+    "evidencePath": "tools/qa/level-five-integration-results-20261012.json",
+    "evidenceUnchanged": true,
+    "boundInputChanges": [
+      {
+        "path": "packages/clinical-content/src/answer-choice-timing.ts",
+        "beforeSha256": "37b65085cf5d41a543fea68ba3bed0f82ebd8277f345c53e2957d54a1647d63d",
+        "afterSha256": "b97c3af1eb6cd535cd7103bbbfd9846f65d51fc2d793fe624c7ad417d55cff28",
+        "evidenceSha256": "7db1b1253c7d3064adb0602360925c0739bb65c719603507c3fa09a6732ba245"
+      },
+      {
+        "path": "packages/clinical-content/src/index.ts",
+        "beforeSha256": "f22453a850aa22d4ffba37f05710e8abfb43784547f46cbb28397a76e2181e6b",
+        "afterSha256": "8caff5c5f299afff6b27401b2bade3ea6d311390deecbe70052c789799f36fbb",
+        "evidenceSha256": "a57ffcec34d75e2e337790f1ac0d71e4bfdc8f79d53cdb28596e00ead60413e4"
+      },
+      {
+        "path": "packages/clinical-content/src/synthetic-content.ts",
+        "beforeSha256": "819c38fce01be9684a8ef35e09c5bb64978dc710993862dbcf066b2c5f9392ed",
+        "afterSha256": "d5a603c617d3adc753351bd68511ab7495b2365f7bb32479ca9950a8e56d5458",
+        "evidenceSha256": "6d9870d53383af7da6ee7547ba702410a2545882876faa1696c0e1217fae311c"
+      }
+    ],
+    "rebound": false
+  },
+  "saveFormatChanged": false,
+  "domainRuntimeChanged": false,
+  "projectionOnly": true,
+  "selectorChanged": false,
+  "gameplayAnalyticsAdded": false,
+  "shipDecision": "docs/research/question-stats1-manager-decision-20261108.md"
+}

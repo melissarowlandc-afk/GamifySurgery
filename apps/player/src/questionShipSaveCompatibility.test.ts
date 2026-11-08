@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { QUESTION_BANK_PRE_BATCH2A_ROUND2_RELEASE, SYNTHETIC_CLINICAL_RELEASE, QUESTION_FLAGS3_RETAINED_INPUT, QUESTION_FLAGS3_ACCEPTED_SOURCE_RELEASE } from "@gamify-surgery/clinical-content";
+import { QUESTION_BANK_PRE_BATCH2A_ROUND2_RELEASE, SYNTHETIC_CLINICAL_RELEASE, QUESTION_FLAGS3_RETAINED_INPUT, QUESTION_FLAGS3_ACCEPTED_SOURCE_RELEASE,QUESTION_STATS1_ACCEPTED_SOURCE_RELEASE } from "@gamify-surgery/clinical-content";
 import { applyFsrsReview, applyGameEvidenceCommand, createNewFsrsCard, gameEvidenceDelta,
   gameReducer, getCurrentQuestion, type DomainContext, type GameCommand, type GameState } from "@gamify-surgery/game-domain";
 import { createLevelFourRoomsQaContext, createLevelFourRoomsQaState } from "../../../tests/fixtures/level-four-rooms";
@@ -168,7 +168,9 @@ describe("pre-gate questions survive projection-only shipping", () => {
     expect(admitted.operationReceipts[old.admission.operationId]).toMatchObject({status:"applied"});
     expect(admitted.learningHistories).toEqual(previous);
     const frozen=structuredClone(admitted.encounters[encounterId]!.frozenCase);
-    const source=QUESTION_FLAGS3_ACCEPTED_SOURCE_RELEASE.cases.find(cs=>cs.id===caseId)!;
+    // Stats1 intentionally supersedes only the old flags3 statistics row.
+    // The other two flags3 cases stay exact; old frozen flags3 inputs remain below.
+    const source=QUESTION_STATS1_ACCEPTED_SOURCE_RELEASE.cases.find(cs=>cs.id===caseId)??QUESTION_FLAGS3_ACCEPTED_SOURCE_RELEASE.cases.find(cs=>cs.id===caseId)!;
     expect(frozen.decisionNodes.map(n=>[n.id,n.questionVariantId,n.primaryConceptId])).toEqual(source.decisionNodes.map(n=>[n.id,n.questionVariantId,n.primaryConceptId]));
     for(const [index,node] of frozen.decisionNodes.entries()){
       const original=source.decisionNodes[index]!;

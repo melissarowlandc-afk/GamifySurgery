@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { createHash } from "node:crypto";
+import {readFileSync} from "node:fs";
 import { QUESTION_SHIP_MANIFEST } from "./question-ship-manifest";
 import {
   getPilotChartReviewByCaseId,
@@ -33,6 +34,25 @@ const IMMUTABLE_APPROVED_LENGTH_EXCEPTIONS = new Set([
   "question.graves-rai-lactation-contraindication.v1",
   "question.graves-rai-pregnancy-contraindication.v1",
 ]);
+// Exact manager-directed focused statistics versions. A raw character count
+// treats conventional method names and inside/below/above as length cues;
+// retain the reviewed wording, explicitly enumerate every residual, and pin
+// its whole accepted case. This does not enlarge a family-wide budget.
+const STATS1_EXACT_LENGTH_EXCEPTIONS=new Set([
+ "question.statistics-ethics.bias-confounding.v1.r1",
+ "question.statistics-ethics.bias-confounding.v3.r1",
+ "question.statistics-ethics.confidence-interval.v1.r4",
+ "question.statistics-ethics.independent-t.v1.r2",
+ "question.statistics-ethics.independent-t.v2.r2",
+ "question.statistics-ethics.independent-t.v3.r2",
+ "question.statistics-ethics.independent-t.v4.r2",
+ "question.statistics-ethics.p-value.v1.r5",
+ "question.statistics-ethics.p-value.v2.r8",
+ "question.statistics-ethics.study-design.v4.r1",
+]);
+const stats1Packet=JSON.parse(readFileSync(new URL("../../../docs/research/question-stats1-accepted-20261108.json",import.meta.url),"utf8")) as Array<{
+ questionVariantId:string;frozenPreservation:{acceptedCaseSha256:string};
+}>;
 
 function generatedForEveryTemplate(seed = "pilot-test-seed") {
   return PILOT_REGISTRY.encounterTemplates.map((template) =>
@@ -69,7 +89,7 @@ describe("five-diagnosis pilot registry", () => {
     );
 
     expect(
-      violations.filter(v => v.questionVariantId !== "question.n3.gastric-lymphoma-new-large-cell-process.v2")
+      violations.filter(v => v.questionVariantId !== "question.n3.gastric-lymphoma-new-large-cell-process.v2"&&!STATS1_EXACT_LENGTH_EXCEPTIONS.has(v.questionVariantId))
         .map((violation) => violation.questionVariantId).sort(),
     ).toEqual([...IMMUTABLE_APPROVED_LENGTH_EXCEPTIONS].sort());
     // Manager explicitly freezes this review-two PASS version. Pin the whole
@@ -82,6 +102,15 @@ describe("five-diagnosis pilot registry", () => {
     expect(createHash("sha256").update(JSON.stringify(frozenCase)).digest("hex"))
       .toBe("c0a73c140565409277e2dbc382c3eee17ad8e0699c71db73fabe13a1401f09fc");
     expect(violations.filter(v => v.questionVariantId === frozenId)).toHaveLength(1);
+    expect(violations.filter(v=>STATS1_EXACT_LENGTH_EXCEPTIONS.has(v.questionVariantId)).map(v=>v.questionVariantId).sort())
+      .toEqual([...STATS1_EXACT_LENGTH_EXCEPTIONS].sort());
+    for(const id of STATS1_EXACT_LENGTH_EXCEPTIONS){
+      expect(QUESTION_SHIP_MANIFEST.accepted.find(row=>row.questionVariantId===id))
+        .toMatchObject({sourceView:"stats1-accepted",decision:"docs/research/question-stats1-manager-decision-20261108.md"});
+      const cs=PILOT_CLINICAL_RELEASE.cases.find(cs=>cs.decisionNodes.some(n=>n.questionVariantId===id))!;
+      expect(createHash("sha256").update(JSON.stringify(cs)).digest("hex"))
+        .toBe(stats1Packet.find(p=>p.questionVariantId===id)!.frozenPreservation.acceptedCaseSha256);
+    }
   });
 
   it("contains exactly the five requested families with Level 0 and Level 1 phenotypes", () => {
