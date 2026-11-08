@@ -276,18 +276,16 @@ export function BuildPanel({
       onClick={() =>
         room.selected ? onCancelPlacement() : selectPlacement(room.id)
       }
-      title={room.blockedReason}
+      title={[room.purpose, room.upkeepLabel, room.blockedReason].filter(Boolean).join(" · ")}
+      aria-description={[room.purpose, room.upkeepLabel].filter(Boolean).join(" · ")}
       aria-pressed={room.selected}
     >
       <RoomCatalogThumbnail definitionId={room.id} fallbackIcon={roomIconName(room.id)} className="pixel-room-icon" />
       <span>
         <strong>{room.displayName}</strong>
         {room.purpose ? <small className="build-card-purpose">{room.purpose}</small> : null}
-        <small>
-          {room.footprintLabel} - {room.costLabel}
-        </small>
-        <small>{room.upkeepLabel}</small>
-        <small>{room.builtCountLabel}</small>
+        <small className="build-card-facts">{room.costLabel} · {room.footprintLabel.replace(/\s*tiles$/, "")} · {room.builtCountLabel}</small>
+        <small className="build-card-upkeep">{room.upkeepLabel}</small>
         {room.blockedReason ? (
           <small className="blocked-reason">{room.blockedReason}</small>
         ) : null}
@@ -509,6 +507,7 @@ export function BuildPanel({
           </div>
         </header>
 
+        <div className="build-catalog-navigation">
         <nav className="build-tool-toolbar" aria-label="Build Mode tools">
           <strong className="build-tool-toolbar-label">Tools</strong>
           <button
@@ -611,6 +610,7 @@ export function BuildPanel({
               </span>
             ) : null}
           </button>
+        </div>
         </div>
 
         <div

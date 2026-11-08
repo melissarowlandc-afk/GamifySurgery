@@ -32,7 +32,8 @@ export function MobileTopBar({ resourceBar: view, paused, simulationSpeed, build
           style={{ "--mobile-progress": `${progress}%` } as CSSProperties}>
           <span>{view.levelLabel ?? view.facilityLevelLabel}</span>
         </span>
-        <small>{view.xpLabel} XP</small>
+        <span className="mobile-level-caption"><small>{view.xpLabel} XP</small>
+          {!cloudStatus ? <small className="cloud-local-status">Local only</small> : null}</span>
       </div>
       <button type="button" className="mobile-cash" onClick={onCash}
         aria-label={`Cash ${view.moneyLabel}. Net ${view.moneyHourlyDeltaLabel ?? view.moneyDeltaLabel}. Show income and costs per game hour.`}>
@@ -44,7 +45,10 @@ export function MobileTopBar({ resourceBar: view, paused, simulationSpeed, build
       </div>
     </div>
     <div className="mobile-clock-row">
-      <div className="mobile-clock"><small>Facility time</small><strong>{view.dayTimeLabel ?? view.facilityTimeLabel}</strong></div>
+      <div className="mobile-clock">
+        <span className="mobile-clock-label"><small>Facility time</small><strong>{view.dayTimeLabel ?? view.facilityTimeLabel}</strong></span>
+        {locked ? <small className="mobile-clock-lock" role="status">{lockReason}</small> : null}
+      </div>
       <div className="mobile-playback-controls" role="group" aria-label="Facility playback" data-phone-anchor="pause">
         <button type="button" className="mobile-pause" aria-label="Pause facility time" aria-pressed={paused}
           disabled={locked} title={locked ? lockReason : undefined} onClick={() => choosePaused(true)}>⏸ Pause</button>
@@ -56,9 +60,8 @@ export function MobileTopBar({ resourceBar: view, paused, simulationSpeed, build
         onClick={() => onSimulationSpeedChange(simulationSpeed === 1 ? 2 : simulationSpeed === 2 ? 4 : 1)}>{simulationSpeed}×</button>
       <button type="button" onClick={onMore} aria-label="More clinic options">More</button>
     </div>
-    {locked ? <small className="mobile-clock-lock" role="status">{lockReason}</small> : null}
     <ClinicalContentNotice />
-    {cloudStatus ?? <small className="cloud-local-status">Local only</small>}
+    {cloudStatus}
     <CommandProblemNotice shell="phone" />
   </header>;
 }

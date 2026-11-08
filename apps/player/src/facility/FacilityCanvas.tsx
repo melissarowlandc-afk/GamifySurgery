@@ -10,6 +10,7 @@ import { ClinicMapPins } from "./ClinicMapPins";
 import type { FacilityAlertPinPosition } from "./types";
 import Phaser from "phaser";
 import { clampFacilityCamera, isValidFacilityCamera } from "./facilityCameraBounds";
+import { facilityCameraSignature } from "./desktopMapShade";
 import type { MobileMapSelection } from "../mobile/map/selection";
 import type { MobileBuildMapState } from "../mobile/build/types";
 import { MobileMapPresentationPolicy, mobileCanvasSize } from "../mobile/performance/presentationPolicy";
@@ -78,6 +79,8 @@ const DEFAULT_STYLE: CSSProperties = {
   imageRendering: "pixelated",
   touchAction: "none",
 };
+
+export const DESKTOP_CAMERA_RESIZE_SETTLE_MS = 250;
 
 /**
  * React owns the lifecycle and passes a read-only projection into Phaser.
@@ -236,6 +239,9 @@ export function FacilityCanvas({
     const ownedCanvas = game.canvas;
     gameRef.current = game;
     let lastCameraLayoutSignature = "";
+    let desktopResizing = false;
+    let desktopSplitterHeld = false;
+    let cameraSettleTimer: number | null = null;
     const reconcileCamera = () => {
       if (bridgeRef.current.mobileInput === true && bridgeRef.current.mobilePresentation?.hidden) return;
       // Phaser may still be loading assets. Reconcile only after create/update
@@ -244,23 +250,36 @@ export function FacilityCanvas({
         host.clientWidth <= 0 || host.clientHeight <= 0) return;
       const model = bridgeRef.current.viewModel;
       if (!isValidFacilityCamera(model.camera)) return;
+      if (bridgeRef.current.mobileInput !== true && (desktopResizing || desktopSplitterHeld)) return;
+      // The scene has already normalized desktop pan against the frozen sizing
+      // reference. Re-clamping against today's pane would undo the shade rule.
+      const camera = bridgeRef.current.mobileInput === true
+        ? clampFacilityCamera(model.camera, model, game.scale, true)
+        : scene.getCameraPreference();
+      if (!camera || bridgeRef.current.mobileInput !== true && !camera.desktopViewport) return;
       const founderRoom = model.rooms.find((room) => room.isFounderRoom);
       const signature = JSON.stringify([
         model.campaignId, model.gridColumns, model.gridRows,
         game.scale.width, game.scale.height,
         founderRoom?.tileX, founderRoom?.width,
         model.camera.zoom, model.camera.panX, model.camera.panY,
+        facilityCameraSignature(camera),
       ]);
       if (signature === lastCameraLayoutSignature) return;
       lastCameraLayoutSignature = signature;
-      const camera = bridgeRef.current.mobileInput === true
-        ? clampFacilityCamera(model.camera, model, game.scale, true)
-        : clampFacilityCamera(model.camera, model, game.scale);
-      if (camera.zoom !== model.camera.zoom || camera.panX !== model.camera.panX ||
-        camera.panY !== model.camera.panY) {
+      if (facilityCameraSignature(camera) !== facilityCameraSignature(model.camera)) {
         bridgeRef.current.viewModel = { ...model, camera };
         bridgeRef.current.onCameraChange?.(camera);
       }
+    };
+    const settleResizeCamera = () => {
+      if (cameraSettleTimer !== null) window.clearTimeout(cameraSettleTimer);
+      cameraSettleTimer = window.setTimeout(() => {
+        cameraSettleTimer = null;
+        if (desktopSplitterHeld) return;
+        desktopResizing = false;
+        reconcileCamera();
+      }, DESKTOP_CAMERA_RESIZE_SETTLE_MS);
     };
     game.events.on(Phaser.Core.Events.POST_STEP, reconcileCamera);
     // The map-mounted gait proof is deliberately opt-in and development-only.
@@ -296,6 +315,10 @@ export function FacilityCanvas({
       }
       observedWidth = nextWidth;
       observedHeight = nextHeight;
+      if (bridgeRef.current.mobileInput !== true) {
+        desktopResizing = true;
+        if (cameraSettleTimer !== null) window.clearTimeout(cameraSettleTimer);
+      }
       if (resizeFrame !== null) {
         window.cancelAnimationFrame(resizeFrame);
       }
@@ -310,10 +333,42 @@ export function FacilityCanvas({
           // observer fires so pointer-to-tile mapping remains exact.
           game.scale.resize(observedWidth, observedHeight);
           frameBudget?.interact();
+          if (bridgeRef.current.mobileInput !== true) {
+            // The scene moves at the resize cadence; publish its small UI
+            // preference once after the drag, not a parent render per move.
+            settleResizeCamera();
+          }
         }
       });
     });
     resizeObserver.observe(host);
+    const flushResizeCamera = () => {
+      if (!desktopResizing) return;
+      if (cameraSettleTimer !== null) window.clearTimeout(cameraSettleTimer);
+      cameraSettleTimer = null; desktopResizing = false; desktopSplitterHeld = false;
+      reconcileCamera();
+    };
+    const flushHiddenCamera = () => { if (document.visibilityState === "hidden") flushResizeCamera(); };
+    const beginSplitterResize = (event: PointerEvent) => {
+      if (event.target instanceof HTMLElement && event.target.closest(".workspace-splitter")) desktopSplitterHeld = true;
+    };
+    const finishSplitterResize = () => {
+      if (!desktopSplitterHeld) return;
+      desktopSplitterHeld = false;
+      if (desktopResizing) settleResizeCamera();
+    };
+    const desktopLifecycle = bridgeRef.current.mobileInput !== true;
+    if (desktopLifecycle) {
+      // Capture runs before the session's existing bubble-phase preference
+      // flush, including an immediate reload before the 250ms settle timer.
+      window.addEventListener("pagehide", flushResizeCamera, true);
+      window.addEventListener("beforeunload", flushResizeCamera, true);
+      document.addEventListener("visibilitychange", flushHiddenCamera, true);
+      window.addEventListener("pointerdown", beginSplitterResize, true);
+      window.addEventListener("pointerup", finishSplitterResize, true);
+      window.addEventListener("pointercancel", finishSplitterResize, true);
+      window.addEventListener("blur", finishSplitterResize);
+    }
 
     return () => {
       frameBudget?.dispose();
@@ -328,6 +383,16 @@ export function FacilityCanvas({
       window.clearInterval(renderWatchdogTimer); renderWatchdog.dispose();
       game.events.off(Phaser.Core.Events.POST_STEP, reconcileCamera);
       resizeObserver.disconnect();
+      if (cameraSettleTimer !== null) window.clearTimeout(cameraSettleTimer);
+      if (desktopLifecycle) {
+        window.removeEventListener("pagehide", flushResizeCamera, true);
+        window.removeEventListener("beforeunload", flushResizeCamera, true);
+        document.removeEventListener("visibilitychange", flushHiddenCamera, true);
+        window.removeEventListener("pointerdown", beginSplitterResize, true);
+        window.removeEventListener("pointerup", finishSplitterResize, true);
+        window.removeEventListener("pointercancel", finishSplitterResize, true);
+        window.removeEventListener("blur", finishSplitterResize);
+      }
       if (resizeFrame !== null) {
         window.cancelAnimationFrame(resizeFrame);
       }

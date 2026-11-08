@@ -1,8 +1,42 @@
 import { mkdirSync } from "node:fs";
 import { expect, test, type Page } from "@playwright/test";
 import { installLevelOneVisualState, startClinic } from "./helpers";
+import { expectPhoneTargets, openDensityFixture, showClinicPanels } from "./ui-density-helpers";
 
 const SCREENSHOT_DIRECTORY = "artifacts/screenshots";
+
+test("native phone management retains pause gates, employee controls, confirmation and one-tap exit", async ({ page }, info) => {
+  test.skip(info.project.name !== "phone-chrome", "Native phone replacement for the obsolete desktop-panel selectors.");
+  await page.setViewportSize({ width: 390, height: 844 }); await openDensityFixture(page, true);
+  const play = page.getByRole("button", { name: "Resume facility time", exact: true });
+  await play.click(); await expect(play).toHaveAttribute("aria-pressed", "true");
+  await page.getByRole("button", { name: "Manage", exact: true }).click();
+  const manage = page.locator(".mobile-manage"); await expect(manage).toBeVisible();
+  await expect(play).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Pause facility time", exact: true })).toBeDisabled();
+  await expect(page.getByRole("button", { name: /^Facility speed/ })).toBeDisabled();
+  await expect(manage.getByRole("button", { name: "Done", exact: true })).toHaveCount(0);
+  await manage.locator(".mobile-manage-grid [data-staff-role-id]").first().click();
+  await manage.getByRole("button", { name: /^Employee details for / }).first().click();
+  await expect(manage.getByRole("button", { name: /^Increase .* salary$/ })).toBeVisible();
+  await manage.getByRole("button", { name: /^Fire / }).click();
+  const confirm = manage.getByRole("alertdialog", { name: /^Confirm firing / });
+  await expect(confirm).toBeVisible();
+  await expect(confirm.getByRole("button", { name: "Confirm Fire", exact: true })).toBeVisible();
+  await confirm.getByRole("button", { name: "Cancel", exact: true }).click();
+  await expect(confirm).toHaveCount(0);
+  await expectPhoneTargets(page); await expectNoHorizontalOverflow(page);
+  // The detail view's Close exits the complete menu in one tap, retaining the
+  // same shared-session pause restoration as desktop Done.
+  await manage.getByRole("button", { name: "Close Manage", exact: true }).click();
+  await expect(manage).toHaveCount(0); await expect(play).toBeEnabled();
+  await expect(play).toHaveAttribute("aria-pressed", "true");
+  await page.getByRole("button", { name: "Pause facility time", exact: true }).click();
+  await expect(play).toHaveAttribute("aria-pressed", "false");
+  await page.getByRole("button", { name: "Manage", exact: true }).click();
+  await page.getByRole("button", { name: "Close Manage", exact: true }).click();
+  await expect(play).toHaveAttribute("aria-pressed", "false");
+});
 
 test.beforeAll(() => mkdirSync(SCREENSHOT_DIRECTORY, { recursive: true }));
 
@@ -22,6 +56,7 @@ async function expectNoHorizontalOverflow(page: Page) {
 test("Management Mode keeps its desk controls, lifecycle, and containment across responsive layouts", async ({
   page,
 }, testInfo) => {
+  test.skip(testInfo.project.name === "phone-chrome", "Native phone pause/exit/controls are exercised below; the phone has no desktop desk.");
   await startManagementFixture(page, testInfo.project.name);
 
   const managementTrigger = page.getByRole("button", {
@@ -57,7 +92,7 @@ test("Management Mode keeps its desk controls, lifecycle, and containment across
   await page.getByRole("button", { name: "Resume facility time" }).click();
   await expect(page.locator(".facility-pause-indicator")).toHaveCount(0);
   await managementTrigger.click();
-  await expect(page.getByText("MANAGEMENT MODE", { exact: true })).toBeVisible();
+  await expect(page.locator("#management-mode-title")).toHaveText("Management Mode");
   await expect(
     page.getByText("Facility time is stopped while you manage staff.", {
       exact: true,
@@ -169,6 +204,7 @@ test("Management Mode keeps its desk controls, lifecycle, and containment across
 test("Management Mode yields its desk to charts and tracks the splitter", async ({
   page,
 }, testInfo) => {
+  test.skip(testInfo.project.name === "phone-chrome", "The native phone uses sheets; desktop splitter behavior is checked on desktop projects.");
   test.skip(
     testInfo.project.name !== "laptop-chrome" && testInfo.project.name !== "desktop-chrome",
     "Chart priority uses desktop workspace projects; splitter drag uses full-height desktop.",
@@ -212,7 +248,12 @@ test("Management Mode yields its desk to charts and tracks the splitter", async 
   }
   await expectNoHorizontalOverflow(page);
 
-  await page.locator(".patient-tab").first().click();
+  // Compact workspaces intentionally consolidate the side rails. Prove their
+  // visible reveal action works before using a chart tab; never force a click.
+  await showClinicPanels(page);
+  // Use the checked-in patient placed in the fixture's exam room, not whichever
+  // new arrival happens to sort first (unadmitted patients cannot open charts).
+  await page.locator('.patient-tab[data-patient-chart-id="encounter.visual.patient.3"]').click();
   const chart = page.locator(".chart-sheet");
   await expect(chart).toBeVisible();
   await expect(panel).toHaveCount(0);

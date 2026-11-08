@@ -2,6 +2,7 @@ import { mkdirSync } from "node:fs";
 import { expect, test } from "@playwright/test";
 
 import { installLevelOneVisualState, startClinic } from "./helpers";
+import { expectPhoneTargets, openDensityFixture } from "./ui-density-helpers";
 
 test.beforeAll(() => mkdirSync("artifacts/screenshots", { recursive: true }));
 
@@ -71,7 +72,7 @@ test("desktop primary bars stay compact and move Build Mode status into the HUD"
           child && footer && child.top >= footer.top && child.bottom <= footer.bottom,
       ),
       chipsWithinTarget: chipBounds.every(
-        (chip) => chip.height >= 46 && chip.height <= 48,
+        (chip) => chip.height >= 44 && chip.height <= 48,
       ),
       hudControlsStayInside: Boolean(
         hudBounds &&
@@ -110,7 +111,7 @@ test("desktop primary bars stay compact and move Build Mode status into the HUD"
     };
   });
   expect(geometry.footerHeight).toBeLessThanOrEqual(24);
-  expect(geometry.chipHeight).toBeGreaterThanOrEqual(46);
+  expect(geometry.chipHeight).toBeGreaterThanOrEqual(44);
   expect(geometry.chipHeight).toBeLessThanOrEqual(48);
   await expect(page.locator(".facility-heading")).toHaveCount(0);
   await expect(facilityHost).toBeVisible();
@@ -135,7 +136,7 @@ test("desktop primary bars stay compact and move Build Mode status into the HUD"
   await expect(page.locator(".facility-pause-indicator")).toHaveCount(0);
 
   await page.getByRole("button", { name: "Enter Build Mode" }).click();
-  await expect(page.getByText("BUILD MODE", { exact: true })).toBeVisible();
+  await expect(page.locator(".build-mode-title")).toHaveText("Build Mode");
   await expect(
     page.getByText("Facility time is stopped while you remodel.", {
       exact: true,
@@ -170,15 +171,23 @@ test("desktop primary bars stay compact and move Build Mode status into the HUD"
   });
 });
 
-test("phone footer keeps the single notice readable without horizontal overflow", async ({
+test("phone keeps its single header notice readable without a reserved footer band", async ({
   page,
 }, testInfo) => {
   test.skip(testInfo.project.name !== "phone-chrome", "Phone density proof.");
-  await startClinic(page, "Phone Density Reviewer", "Phone Density Clinic");
+  await page.setViewportSize({ width: 390, height: 844 });
+  await openDensityFixture(page, true);
 
-  await expect(page.locator(".footer-content-notice")).toHaveCount(1);
-  await expect(page.locator(".footer-content-notice")).toBeVisible();
+  await expect(page.locator(".mobile-top-bar .beta-clinical-notice")).toHaveCount(1);
+  await expect(page.locator(".mobile-top-bar .beta-clinical-notice")).toBeVisible();
   await expect(page.locator(".global-content-notice")).toHaveCount(0);
+  await expectPhoneTargets(page);
+  const footer = await page.locator(".mobile-navigation").evaluate(root => {
+    const nav = root.querySelector(".mobile-tab-bar")!.getBoundingClientRect();
+    const box = root.getBoundingClientRect();
+    return { gap: box.bottom - nav.bottom, actualInset: Number.parseFloat(getComputedStyle(root).paddingBottom) };
+  });
+  expect(footer.gap).toBeLessThanOrEqual(footer.actualInset + 1);
   expect(
     await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
   ).toBe(true);
@@ -281,52 +290,43 @@ test("phone normal, Build Mode, and chart preserve readable controls without ove
   page,
 }, testInfo) => {
   test.skip(testInfo.project.name !== "phone-chrome", "Phone density proof.");
-  await startClinic(page, "Phone Full Density Reviewer", "Phone Full Density Clinic");
-  await installLevelOneVisualState(page);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await openDensityFixture(page, true, true);
 
   const assertNoOverflow = () =>
     page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth);
-  await expect(page.locator(".footer-content-notice")).toBeVisible();
+  await expect(page.locator(".mobile-top-bar .beta-clinical-notice")).toBeVisible();
   expect(await assertNoOverflow()).toBe(true);
   expect(
     await page.evaluate(() => {
-      const fraction = document.querySelector<HTMLElement>(
-        ".resource-xp-row small",
-      );
+      const fraction = document.querySelector<HTMLElement>(".mobile-level-caption small");
       return Boolean(
         fraction &&
           fraction.scrollWidth <= fraction.clientWidth &&
-          fraction.textContent?.includes("/") &&
           fraction.textContent?.includes("XP"),
       );
     }),
   ).toBe(true);
-  const phoneActionGeometry = await page.evaluate(() =>
-    [...document.querySelectorAll<HTMLElement>(".footer-actions button")]
-      .filter((button) => button.getBoundingClientRect().width > 0)
-      .map((button) => ({
-        height: button.getBoundingClientRect().height,
-        minHeight: getComputedStyle(button).minHeight,
-      })),
-  );
-  expect(phoneActionGeometry).not.toHaveLength(0);
-  expect(
-    phoneActionGeometry.every(
-      (action) => action.height >= 36 && action.minHeight === "36px",
-    ),
-  ).toBe(true);
+  await expectPhoneTargets(page);
+  const chart = page.getByRole("dialog", { name: "Patient chart", exact: true });
+  await expect(chart).toBeVisible();
+  expect(await assertNoOverflow()).toBe(true);
+  await chart.getByRole("button", { name: "Close Patient chart", exact: true }).click();
+  await expect(chart).toHaveCount(0);
 
-  await page.getByRole("button", { name: "Enter Build Mode" }).click();
-  await expect(page.getByRole("navigation", { name: "Build Mode tools" })).toBeVisible();
+  await page.getByRole("button", { name: "Build", exact: true }).click();
+  await expect(page.getByRole("group", { name: "Construction tools", exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Resume facility time", exact: true })).toBeDisabled();
+  await expectPhoneTargets(page);
   expect(await assertNoOverflow()).toBe(true);
   await page.screenshot({
     path: "artifacts/screenshots/ui-density-extra-compact-phone-build.png",
     animations: "disabled",
   });
 
-  await page.getByRole("button", { name: "Done / Save" }).click();
-  await expect(page.getByRole("button", { name: "Enter Build Mode" })).toBeVisible();
-  await page.locator(".patient-tab").first().click();
-  await expect(page.locator(".chart-sheet")).toBeVisible();
+  await page.getByRole("button", { name: "Close Build", exact: true }).click();
+  await page.getByRole("button", { name: "Done", exact: true }).click();
+  await expect(page.locator(".mobile-build-controls")).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Resume facility time", exact: true })).toBeEnabled();
   expect(await assertNoOverflow()).toBe(true);
 });

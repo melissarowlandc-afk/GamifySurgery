@@ -7,6 +7,7 @@ async function startPhone(page: Page) {
   await page.addInitScript(() => localStorage.setItem("gamify-surgery.presentation-layout.v1", "phone"));
   await startClinic(page, "Phone UI Fixture", "Phone UI Clinic", false);
   await expect(page.locator(".mobile-shell")).toBeVisible();
+  await expect.poll(() => page.evaluate(() => document.fonts.status)).toBe("loaded");
 }
 
 async function visibleItems(page: Page, container: string, items: string) {
@@ -29,13 +30,13 @@ for (const viewport of [{ width: 390, height: 844 }, { width: 375, height: 667 }
     const choices = catalog.locator("[data-build-room-option]");
     const first = await choices.nth(0).boundingBox(), second = await choices.nth(1).boundingBox();
     expect(first).not.toBeNull(); expect(second).not.toBeNull();
-    expect(Math.abs(first!.y - second!.y)).toBeLessThanOrEqual(1);
-    expect(second!.x).toBeGreaterThan(first!.x + first!.width);
+    expect(second!.y).toBeGreaterThanOrEqual(first!.y + first!.height);
+    expect(Math.abs(first!.x - second!.x)).toBeLessThanOrEqual(1);
     const capacity = await visibleItems(page, ".mobile-sheet-body", "[data-build-room-option]");
-    expect(capacity).toBeGreaterThanOrEqual(viewport.height === 844 ? 4 : 2);
+    expect(capacity).toBeGreaterThanOrEqual(viewport.height === 844 ? 8 : 4);
     await info.attach("phone-visible-build-choices", { body: JSON.stringify({ viewport, visibleChoices: capacity }), contentType: "application/json" });
     await page.screenshot({ path: info.outputPath("build-compact.png"), animations: "disabled" });
-    const about = catalog.getByText("Details", { exact: true }).first();
+    const about = catalog.locator("summary[aria-label^='Details about']").first();
     await about.click(); await expect(about.locator("..")).toHaveAttribute("open", "");
     await about.click(); await page.getByRole("tab", { name: "My Rooms", exact: true }).click();
     await catalog.getByRole("button", { name: "Open Front Desk", exact: true }).click();

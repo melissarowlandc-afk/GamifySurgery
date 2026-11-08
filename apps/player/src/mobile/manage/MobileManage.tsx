@@ -48,9 +48,9 @@ export function MobileManage(props: MobileManageProps) {
 
   return <MobileManageCloseContext.Provider value={props.onClose}><section className="mobile-manage" aria-label="Management Mode">
     <div inert={detailOpen} aria-hidden={detailOpen || undefined}>
-    <div className="mobile-manage-heading"><span role="status">Clinic paused</span>
+    {!props.onClose ? <div className="mobile-manage-heading"><span role="status">Clinic paused</span>
       <button type="button" onClick={props.onExitManagementMode}>Done</button>
-    </div>
+    </div> : null}
     <MobileStaffOverview staffRoles={props.staffRoles} staffTraining={props.staffTraining} />
     <div className="mobile-manage-segments" role="tablist" aria-label="Management sections">
       {SECTIONS.map((name) => <button key={name} type="button" role="tab" data-phone-anchor={name === "Employees" ? "employees" : undefined} id={`mobile-manage-tab-${sectionId(name)}`}

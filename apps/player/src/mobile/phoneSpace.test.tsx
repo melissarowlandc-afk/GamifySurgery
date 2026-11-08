@@ -102,7 +102,9 @@ describe("phone space and single-tap controls", () => {
   it("scopes all density rules to the phone and reserves normal word wrapping and touch targets", () => {
     const css = readFileSync(new URL("./mobileDensity.css", import.meta.url), "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
     for (const rule of css.matchAll(/([^{}]+)\{[^{}]*\}/g)) {
-      for (const selector of rule[1]!.split(",")) expect(selector.trim()).toMatch(/^\.mobile-shell\s/);
+      // The shell itself owns the phone body-font floor; descendants stay
+      // scoped too. Do not accept similarly prefixed classes or global rules.
+      for (const selector of rule[1]!.split(",")) expect(selector.trim()).toMatch(/^\.mobile-shell(?:\s|$)/);
     }
     expect(css).toContain("overflow-wrap: normal; word-break: normal");
     expect(css).toContain("overflow-x: auto");

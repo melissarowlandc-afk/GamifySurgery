@@ -9229,3 +9229,26 @@ and existing build warnings remain. Clinical sign-off still required.
 Full files/hashes/validation/exclusions: GS028 ExecPlan release port21 section.
 Receipts/resume state: .local-dev/release-port21-20261108/. Work remains local and
 uncommitted for manager acceptance; no push/install/network/agent/deploy.
+
+## Release port 22 (2026-11-08, desktop splitter + UI density rounds 1–4)
+
+GS-release only. 33 accepted splitter/density files copied; seven camera-only
+hunks in FacilityScene; 94 other live versions excluded. 37 public paths total
+including coordination docs. All clinical/cloud/art/domain/balance work retained.
+Dispositions: .local-dev/release-verify/port22-20261108.json.
+
+Level 5: no rebind; 547 bindings (405 clinical), nine saves, three reports,
+results/guard/launch pins unchanged. 26,531 commands /6,019,042 cents /
+412 completions /0 walkouts. Focused Level 5 44/44 pass.
+
+Seven suites: 757 files /11077 passed /0 failed /1 existing skip.
+Seven typechecks, affected e2e typecheck, player build, boundary/launcher pass.
+All-e2e typecheck has the same 140 old diagnostics in 24 unchanged files as a
+byte-verified pre-port mirror. Boundary uses strict pinned actual tracked inventory
+after Node Git spawn EPERM. No browser claim; manager must run layout specs.
+
+Details, hashes, exact counts and all excluded paths: GS028 port22 handoff.
+Private receipts/resume state: .local-dev/release-port22-20261108/.
+No owner origin/pathway change. Local/uncommitted for manager review; no push,
+install/network/agents/deploy/clinical approval.
+

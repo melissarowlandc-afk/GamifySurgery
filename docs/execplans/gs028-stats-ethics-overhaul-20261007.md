@@ -10557,3 +10557,288 @@ Full64-path old/new file SHA/byte and scope/LF audit is in
 append. Current-thread handoff and this task's ExecPlan are updated. Work stays
 local/uncommitted; manager owns review, acceptance and any separately authorized
 GitHub-backup checkpoint. No remaining worker implementation is pending.
+
+## Release port 22 (2026-11-08, desktop splitter + UI density rounds 1–4)
+
+Manager brief: GS-release only, stated entry HEAD de270ecd; live tree read-only.
+Ported only desktop splitter map shade and UI density rounds 1–4. The scope is
+the accepted changed-file lists in the two copied research handoffs, including
+their later browser-fixture repairs. No clinical, domain, balance, cloud,
+iPhone-memory, art or unrelated live-tree change was shipped.
+
+Disposition receipt: `.local-dev/release-verify/port22-20261108.json`.
+Content-diff helper copied with only its receipt output redirected into this
+task, preserving the historical receipt. **124 observed paths**
+and four accepted docs were reviewed: **33 copied / 1 hunk-ported / 94 excluded**.
+`FacilityScene.ts` imports/projection/campaign signature/publication getter are
+the only seven hunks ported from that mixed file. Character sizing/filtering,
+seating, isolated occupied-room QA and access-modifier changes were excluded.
+MobileShell and WorkspaceSplitter text already matches; neither needed an edit.
+AppShell and other copied runtime/test diffs are wholly within accepted scope.
+The splitter e2e retains the manager's border-excluded host measurement verbatim.
+No assertions, timeout budgets, fonts, cash or gameplay checks were weakened by
+release integration; accepted round-4 fixture/selector repairs are preserved.
+
+### Level 5 — unchanged; no rebind
+
+Focused Level 5: **2 files / 44 passed**, exit 0; full domain and player launch
+checks also pass. All **547 bound source hashes**, including **405 clinical**,
+are identical to entry. All **537 clinical package files**, approvals, manifest,
+question tests and captures are byte unchanged. Input history remains 21 entries.
+All nine checkpoint saves, three reports, launch pins and workload fixture remain
+byte identical. Recorded totals: **26,531 commands / 6,019,042 closing cents /
+412 completions / 0 walkouts**, unlock tick 14,906, final tick 24,681.
+The checkpoint's retired + live completion/walkout counts and final cash were
+read directly and cross-checked by `audit.mjs`; no native journey regeneration
+or metadata/history correction was needed or performed.
+
+| Protected file | Unchanged SHA-256 |
+| --- | --- |
+| `tools/qa/level-five-integration-results-20261012.json` | `30f42ea7e6d0f8a90653dd4415fe6fced59f4222b0842eeb0456394afbec3fd2` |
+| `tests/fixtures/level-five-integration-checkpoints-20261012.json` | `560a4a38c5d8d2cdadf3033666a88a2f5e7e75f64533def7b55d2dfa61469d32` |
+| `tests/fixtures/level-five-legacy-behavior-20261012.json` | `3addb62de20361e02821cc25d6f42de101988af9069439949121e48a532c3683` |
+| `packages/game-domain/tests/level-five-integration.test.ts` | `812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909` |
+| `packages/game-domain/tests/level-five-launch.test.ts` | `5d03fe7c285265dbcd3bdf702d47b4726a6ce148e6242285822fe3bbc683625a` |
+| `apps/player/src/session/levelFiveLaunch.test.tsx` | `5cf9a200dea7f76bfae30edfaa561df9fc6bdcdeacfc40cd07194980dde0c36d` |
+| `tests/fixtures/diagnostic-workload.ts` | `a21f273bc9770967388e9d6d718adece4581765f40c36dbbc7d11650245a6318` |
+
+### Validation
+
+CI=true; installed dependencies; all seven workspace suites directly, threads,
+maxWorkers=2. No browser launched. Optional `net use` EPERM preload affects only
+Vite's optional Windows drive-map probe, not runtime or assertions.
+
+| Workspace | Files | Passed | Failed | Skipped |
+| --- | ---: | ---: | ---: | ---: |
+| clinical-context-workbench | 8 | 43 | 0 | 0 |
+| player | 387 | 3905 | 0 | 0 |
+| balance-config | 24 | 164 | 0 | 0 |
+| clinical-authoring | 7 | 81 | 0 | 0 |
+| clinical-content | 125 | 1566 | 0 | 0 |
+| clinical-research | 8 | 83 | 0 | 0 |
+| game-domain | 198 | 5235 | 0 | 1 |
+| **Total** | **757** | **11077** | **0** | **1** |
+
+Exact suite summaries from command logs:
+
+```text
+player:
+ Test Files  387 passed (387)
+      Tests  3905 passed (3905)
+   Start at  14:02:29
+   Duration  794.70s (transform 17.15s, setup 0ms, import 608.09s, tests 942.76s, environment 29ms)
+
+domain:
+ Test Files  198 passed (198)
+      Tests  5235 passed | 1 skipped (5236)
+   Start at  14:02:29
+   Duration  519.37s (transform 13.24s, setup 0ms, import 386.91s, tests 631.70s, environment 16ms)
+
+other-workspaces:
+ Test Files  8 passed (8)
+      Tests  43 passed (43)
+   Start at  14:02:29
+   Duration  1.23s (transform 367ms, setup 0ms, import 1.00s, tests 481ms, environment 1ms)
+ Test Files  24 passed (24)
+      Tests  164 passed (164)
+   Start at  14:02:31
+   Duration  2.40s (transform 729ms, setup 0ms, import 2.46s, tests 177ms, environment 1ms)
+ Test Files  7 passed (7)
+      Tests  81 passed (81)
+   Start at  14:02:33
+   Duration  684ms (transform 138ms, setup 0ms, import 395ms, tests 309ms, environment 0ms)
+ Test Files  125 passed (125)
+      Tests  1566 passed (1566)
+   Start at  14:02:34
+   Duration  115.54s (transform 6.98s, setup 0ms, import 196.27s, tests 20.30s, environment 9ms)
+ Test Files  8 passed (8)
+      Tests  83 passed (83)
+   Start at  14:04:30
+   Duration  2.18s (transform 188ms, setup 0ms, import 513ms, tests 1.02s, environment 1ms)
+```
+
+All seven workspace typechecks exit 0. Player build: **1,042 modules, 4.07s**,
+exit 0; existing oversized-chunk, ineffective-dynamic-import and plugin timing
+warnings remain. Boundary and launcher assertions execute unchanged and pass
+with **7,292 actual read-only tracked paths**. Direct Node Git inventory spawn
+returns EPERM; a successful native-shell `git ls-files -z` result is supplied
+through a process-local bridge pinned to the release cwd, pointer, index and
+inventory SHA-256. No Git mutation occurred.
+
+Affected e2e/measurement specs and transitive helpers: typecheck exit 0.
+An additional all-e2e typecheck exits 1 with **140 existing diagnostics in 24
+unchanged files**. A private byte-verified pre-port mirror (2,603 files,
+including the existing .d.mts declaration) reproduces the entire diagnostic
+output exactly after normalizing only the mirror path prefix. No new diagnostic
+or excluded e2e repair; details in `e2e-baseline-comparison.json`. The attempted
+legacy compiler API is unavailable in TypeScript 7; the native API's named pipe
+is denied by the sandbox, so the proof uses the actual installed native tsc CLI.
+The initial incomplete mirror had one extra missing-declaration error; adding
+the captured existing .d.mts file resolved that mirror-only artifact.
+
+- `npm.cmd run test --workspace @gamify-surgery/game-domain -- tests/level-five-integration.test.ts tests/level-five-launch.test.ts --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=../../.local-dev/release-port22-20261108/level-five.json` — exit 0; log `.local-dev/release-port22-20261108/level-five.log`.
+- `npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port22-20261108/workspace-json-reporter.mjs` — exit 0; log `.local-dev/release-port22-20261108/player.log`.
+- `npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port22-20261108/workspace-json-reporter.mjs` — exit 0; log `.local-dev/release-port22-20261108/domain.log`.
+- `npm.cmd run test --workspace @gamify-surgery/clinical-context-workbench --workspace @gamify-surgery/balance-config --workspace @gamify-surgery/clinical-authoring --workspace @gamify-surgery/clinical-content --workspace @gamify-surgery/clinical-research -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port22-20261108/workspace-json-reporter.mjs` — exit 0; log `.local-dev/release-port22-20261108/other-workspaces.log`.
+- `npm.cmd run typecheck` — exit 0; log `.local-dev/release-port22-20261108/typecheck.log`.
+- `npm.cmd run build --workspace @gamify-surgery/player` — exit 0; log `.local-dev/release-port22-20261108/player-build.log`.
+- `node node_modules/typescript/bin/tsc --noEmit -p .local-dev/release-port22-20261108/e2e-affected-tsconfig.json` — exit 0; log `.local-dev/release-port22-20261108/e2e-affected.log`.
+- `npm.cmd run test:boundaries` — exit 0; log `.local-dev/release-port22-20261108/boundaries-inventory.log`.
+
+Private logs, immutable command receipts, source/before snapshots, complete
+entry-mirror comparison and final audit: `.local-dev/release-port22-20261108/`.
+
+### Exact changed public files
+
+34 ported files below, plus these three additive coordination records:
+`docs/execplans/release-port22-20261108.md`, this GS028 handoff, and
+`docs/handoffs/CURRENT_THREAD_HANDOFF.md` — **37 public paths total**.
+Before/live/after hashes for every disposition are in the JSON receipt; final
+hashes including these coordination records are in `final-file-inventory.json`.
+
+| Ported path | Disposition | Lane | Release SHA-256 |
+| --- | --- | --- | --- |
+| `apps/player/src/AppShell.tsx` | copied | ui-density-rounds-1-4 | `d602922bce21debc9dc2e1529dce79da0203c98ab8f12ce1321736b30fd4a1ea` |
+| `apps/player/src/facility/FacilityCanvas.lifecycle.test.tsx` | copied | splitter-map-shade | `07298611dfa388f210ffb1e622b9751d73310086df6cae8997b5c068d11895b2` |
+| `apps/player/src/facility/FacilityCanvas.tsx` | copied | splitter-map-shade | `4e3b8727f01f2c704230ffeededf28f8c9024666f2abd535e0db7bdfdd99fdd6` |
+| `apps/player/src/facility/FacilityScene.ts` | hunk-ported | splitter-map-shade | `00dbf78f85eb2fbe2f98a3013162e1b53b5a5e74373337d369fc1dac80f5ecf3` |
+| `apps/player/src/facility/desktopMapShade.test.ts` | copied | splitter-map-shade | `da8eac54776b121e9e32eda9ff24114795f3a97decd7bf5ce748f41f0c26dfe7` |
+| `apps/player/src/facility/desktopMapShade.ts` | copied | splitter-map-shade | `b654e7ad0abc437cf3595e40661345e869c9f23fb2f657df2f54bd57c5a35c29` |
+| `apps/player/src/facility/types.ts` | copied | splitter-map-shade | `326cac4855a1d1a36a5c41784054461f7695eb321cdf8b962de1a3d276d59995` |
+| `apps/player/src/main.tsx` | copied | ui-density-rounds-1-4 | `eb8a6810c3321a861e79087cf9fd180df5d7f5d8b748618c3f791137987351eb` |
+| `apps/player/src/mobile/MobileTopBar.tsx` | copied | ui-density-rounds-1-4 | `f1e2d651d5107eb8b3f66c7942baf85cba7a15d3b6474e8b41d684a79bf23b50` |
+| `apps/player/src/mobile/build/MobileBuildCatalog.tsx` | copied | ui-density-rounds-1-4 | `13fb4f9e28a6caf1057b41f3c5f955b144ebe34a82bdccc2387a0bf93154753c` |
+| `apps/player/src/mobile/manage/MobileManage.tsx` | copied | ui-density-rounds-1-4 | `a26cf41bef900e85036510e5a70c726fd26104a4f527e62fe6c6dd511f9cfcb7` |
+| `apps/player/src/mobile/manage/manageSessionFlows.test.tsx` | copied | ui-density-rounds-1-4 | `f56d915dae979ffe6fdddd94d487d3f53ccc46b3078fdd1ddc116b0e77be86bc` |
+| `apps/player/src/mobile/mobileDensity.css` | copied | ui-density-rounds-1-4 | `0066c942067963edafa3048cbfa1dbed5afc17e6ba1f162f77748198c8872871` |
+| `apps/player/src/mobile/phoneSpace.test.tsx` | copied | ui-density-rounds-1-4 | `f8f43c3d31d67288074a6288aea9520617581b18495823d91475875a905ca888` |
+| `apps/player/src/session/facilityCameraPreference.test.ts` | copied | splitter-map-shade | `e2b554dcd7645259b8de674e9847b11798c77861b792e6106e1bbd8984a6dd2c` |
+| `apps/player/src/session/facilityCameraPreference.ts` | copied | splitter-map-shade | `32cd7bb6c87cc1cb29290b9ba0360afe76da5fcd687733caf6ec7acaa7b9fed6` |
+| `apps/player/src/styles/workspaceDensity.css` | copied | ui-density-rounds-1-4 | `ce387a348ebbc367ae052fdb8b23320454b3286e05b6891eeadaf6436b1dc400` |
+| `apps/player/src/ui/BuildPanel.tsx` | copied | ui-density-rounds-1-4 | `ddcd09ee087e5510bcdc621cd05b23699041fe3aab6566cff612229420ab0f10` |
+| `apps/player/src/ui/StaffPanel.tsx` | copied | ui-density-rounds-1-4 | `d1fe2d5f0e2444b15db914d100a577b6cb2cbfac852e493847277e6d0af2a9ea` |
+| `apps/player/src/ui/workspaceChartPriority.test.tsx` | copied | ui-density-rounds-1-4 | `a0a79f90387908c002416c97d5842dba68257a659a1585e555145da409184f71` |
+| `apps/player/src/ui/workspaceDensity.test.tsx` | copied | ui-density-rounds-1-4 | `8d31878e623b6f16a8a6b38bc62a88adff842b421891ab8aba1fa03a0a0b1ac4` |
+| `docs/execplans/splitter-map-shade-20261108.md` | copied | splitter-map-shade | `3d06368f743399b7fffb22a25d639fd60ed9ac6a24ce0ea786a01b6e8db66173` |
+| `docs/execplans/ui-density-20261108.md` | copied | ui-density-rounds-1-4 | `0f5c77fb4d5bdd341d38329e501e5858273d20ac63ffe01c45df2bd1d67a7976` |
+| `docs/research/splitter-map-shade-20261108.md` | copied | splitter-map-shade | `794b25d2eca4cd90238f1783c119e43b40824b1b740425bdd5617b3a0195e5f8` |
+| `docs/research/ui-density-20261108.md` | copied | ui-density-rounds-1-4 | `8cace0bfa649ee562c660a4fb9dc734f525162aad6b7132a006f99daa21a2ffc` |
+| `tests/e2e/build-mode-usability.spec.ts` | copied | ui-density-rounds-1-4 | `a562b92e8cc37b4614ce9c95134fbc4f5965cb0ce1902c6d90efb0a267d663dc` |
+| `tests/e2e/helpers.ts` | copied | ui-density-rounds-1-4 | `27f9c6c51e2866306739d181360f67c3f3116272aa6a3644bc445b2a7e497c14` |
+| `tests/e2e/management-mode.spec.ts` | copied | ui-density-rounds-1-4 | `486bd28f9bd58ce8c4b9254fdd61fb5f4173de7ecb89ce89bb95be01d67c09ae` |
+| `tests/e2e/phone-ui-space.spec.ts` | copied | ui-density-rounds-1-4 | `ea7972ff9bb4c15f9b1142d1b778c6acdd41efccb48fae1ae13e79349f868739` |
+| `tests/e2e/room-upgrades.spec.ts` | copied | ui-density-rounds-1-4 | `7065234ec07eba456c37aab5c090d895a984524c684c41973662d23d82089700` |
+| `tests/e2e/splitter-map-shade.spec.ts` | copied | splitter-map-shade | `3bc56e4bce075d0fd099b88e6b71792f8eebeb19ecf20c02de062b3315f27ed7` |
+| `tests/e2e/ui-density-helpers.ts` | copied | ui-density-rounds-1-4 | `c2a08ef3829cf47b5574fce0ffeec118540c31a0367695427ebff379d0cc68ef` |
+| `tests/e2e/ui-density-measurements.spec.ts` | copied | ui-density-rounds-1-4 | `bb3136d5ee0e3d8f5b0d3dcb14bc5f31ed89c044c1716b72d932176119b5d108` |
+| `tests/e2e/ui-density.spec.ts` | copied | ui-density-rounds-1-4 | `bb183a6bf3230635aadac9b21d78782214ea284798939e9f9fcb752e1cb74e4c` |
+
+### Other observed live versions not shipped
+
+- `apps/player/character-phlebotomy.html` — Unreleased character/art/QA presentation lane excluded.
+- `apps/player/character-proportions.html` — Unreleased character/art/QA presentation lane excluded.
+- `apps/player/character-rooms.html` — Unreleased character/art/QA presentation lane excluded.
+- `apps/player/src/art/characterBitmapArt.test.ts` — Unreleased character/art/QA presentation lane excluded.
+- `apps/player/src/art/characterBitmapArt.ts` — Unreleased character/art/QA presentation lane excluded.
+- `apps/player/src/art/characterPhlebotomyQa.before.json` — Unreleased character/art/QA presentation lane excluded.
+- `apps/player/src/art/characterPhlebotomyQa.frames.json` — Unreleased character/art/QA presentation lane excluded.
+- `apps/player/src/art/characterPhlebotomyQa.test.ts` — Unreleased character/art/QA presentation lane excluded.
+- `apps/player/src/art/characterPhlebotomyQa.ts` — Unreleased character/art/QA presentation lane excluded.
+- `apps/player/src/art/characterPhlebotomyQaModel.ts` — Unreleased character/art/QA presentation lane excluded.
+- `apps/player/src/art/characterProportions.generated.json` — Unreleased character/art/QA presentation lane excluded.
+- `apps/player/src/art/characterProportions.test.ts` — Unreleased character/art/QA presentation lane excluded.
+- `apps/player/src/art/characterProportions.ts` — Unreleased character/art/QA presentation lane excluded.
+- `apps/player/src/art/characterProportionsQa.ts` — Unreleased character/art/QA presentation lane excluded.
+- `apps/player/src/art/characterRoomProportions.generated.json` — Unreleased character/art/QA presentation lane excluded.
+- `apps/player/src/art/characterRoomProportions.test.ts` — Unreleased character/art/QA presentation lane excluded.
+- `apps/player/src/art/characterRoomProportions.ts` — Unreleased character/art/QA presentation lane excluded.
+- `apps/player/src/art/characterRoomQaModel.ts` — Unreleased character/art/QA presentation lane excluded.
+- `apps/player/src/art/characterRoomsQa.ts` — Unreleased character/art/QA presentation lane excluded.
+- `apps/player/src/diagnostics/problemDiagnostics.test.ts` — Outside accepted splitter/density handoff file lists; preserve release version.
+- `apps/player/src/diagnostics/problemDiagnostics.ts` — Outside accepted splitter/density handoff file lists; preserve release version.
+- `apps/player/src/facility/approvedRoomPresentation.test.ts` — Unreleased character/art/QA presentation lane excluded.
+- `apps/player/src/facility/backlessRollingStools.test.ts` — Unreleased character/art/QA presentation lane excluded.
+- `apps/player/src/facility/characterPresentation.test.ts` — Unreleased character/art/QA presentation lane excluded.
+- `apps/player/src/facility/characterPresentation.ts` — Unreleased character/art/QA presentation lane excluded.
+- `apps/player/src/facility/characterRoomScaleIntegration.test.ts` — Unreleased character/art/QA presentation lane excluded.
+- `apps/player/src/facility/furnitureSeatLayering.test.ts` — Unreleased character/art/QA presentation lane excluded.
+- `apps/player/src/facility/phlebotomyPresentation.test.ts` — Unreleased character/art/QA presentation lane excluded.
+- `apps/player/src/facility/staffIdleSupports.test.ts` — Unreleased character/art/QA presentation lane excluded.
+- `apps/player/src/feedback/TesterFeedback.tsx` — Outside accepted splitter/density handoff file lists; preserve release version.
+- `apps/player/src/mobile/MobileShell.tsx` — Text already equivalent; only live/release line endings differ; no change required.
+- `apps/player/src/session/breadButterPresentation.test.ts` — Outside accepted splitter/density handoff file lists; preserve release version.
+- `apps/player/src/session/buildViewModels.test.ts` — Outside accepted splitter/density handoff file lists; preserve release version.
+- `apps/player/src/session/chartStructuredFields.test.tsx` — Outside accepted splitter/density handoff file lists; preserve release version.
+- `apps/player/src/session/cloud/cache.ts` — Cloud/journal lane excluded; preserve release iPhone memory and recovery fixes.
+- `apps/player/src/session/cloud/codecTasks.ts` — Cloud/journal lane excluded; preserve release iPhone memory and recovery fixes.
+- `apps/player/src/session/cloud/codecWorker.test.ts` — Cloud/journal lane excluded; preserve release iPhone memory and recovery fixes.
+- `apps/player/src/session/cloud/codecWorker.ts` — Cloud/journal lane excluded; preserve release iPhone memory and recovery fixes.
+- `apps/player/src/session/cloud/codecWorkerNative.test.ts` — Cloud/journal lane excluded; preserve release iPhone memory and recovery fixes.
+- `apps/player/src/session/cloud/coordinator.ts` — Cloud/journal lane excluded; preserve release iPhone memory and recovery fixes.
+- `apps/player/src/session/cloud/entryStorage.ts` — Cloud/journal lane excluded; preserve release iPhone memory and recovery fixes.
+- `apps/player/src/session/cloud/gameSession.test.tsx` — Cloud/journal lane excluded; preserve release iPhone memory and recovery fixes.
+- `apps/player/src/session/cloud/gameSession.ts` — Cloud/journal lane excluded; preserve release iPhone memory and recovery fixes.
+- `apps/player/src/session/cloud/journalCodec.ts` — Cloud/journal lane excluded; preserve release iPhone memory and recovery fixes.
+- `apps/player/src/session/cloud/releaseCodecHeadroom.test.ts` — Cloud/journal lane excluded; preserve release iPhone memory and recovery fixes.
+- `apps/player/src/session/cloud/separateCampaign.test.ts` — Cloud/journal lane excluded; preserve release iPhone memory and recovery fixes.
+- `apps/player/src/session/cloud/snapshotCodec.ts` — Cloud/journal lane excluded; preserve release iPhone memory and recovery fixes.
+- `apps/player/src/session/cloud/tickPerformanceTestSupport.ts` — Cloud/journal lane excluded; preserve release iPhone memory and recovery fixes.
+- `apps/player/src/session/cloud/watchdogs.test.ts` — Cloud/journal lane excluded; preserve release iPhone memory and recovery fixes.
+- `apps/player/src/session/diagnosticProjectionDifferential.test.ts` — Outside accepted splitter/density handoff file lists; preserve release version.
+- `apps/player/src/session/flagFreeze.test.tsx` — Outside accepted splitter/density handoff file lists; preserve release version.
+- `apps/player/src/session/levelFiveLaunch.test.tsx` — Release-specific Level 5 evidence/pins; unchanged, no rebind authorized.
+- `apps/player/src/session/levelFiveRoomsViewModels.test.tsx` — Release-specific Level 5 evidence/pins; unchanged, no rebind authorized.
+- `apps/player/src/session/localJournal.test.ts` — Cloud/journal lane excluded; preserve release iPhone memory and recovery fixes.
+- `apps/player/src/session/localJournal.ts` — Cloud/journal lane excluded; preserve release iPhone memory and recovery fixes.
+- `apps/player/src/ui/ChartPanel.tsx` — Only unrelated import order differs; preserve release.
+- `apps/player/src/ui/roomAccessFeedback.test.ts` — Outside accepted splitter/density handoff file lists; preserve release version.
+- `apps/player/src/ui/roomAccessTestSupport.ts` — Outside accepted splitter/density handoff file lists; preserve release version.
+- `packages/balance-config/src/guidance-tips.ts` — Unreleased domain/balance lane or release-specific test evidence; outside presentation scope.
+- `packages/clinical-content/src/question-flags3-20261107.test.ts` — Clinical sources/tests excluded; preserve release-specific provenance guards.
+- `packages/clinical-content/src/question-stats1-20261108.test.ts` — Clinical sources/tests excluded; preserve release-specific provenance guards.
+- `packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts` — Clinical sources/tests excluded; preserve release-specific provenance guards.
+- `packages/game-domain/src/facilityNavigation.ts` — Unreleased domain/balance lane or release-specific test evidence; outside presentation scope.
+- `packages/game-domain/src/facilityNavigationReference.testSupport.ts` — Unreleased domain/balance lane or release-specific test evidence; outside presentation scope.
+- `packages/game-domain/src/incrementalEvidenceOwnership.test.ts` — Unreleased domain/balance lane or release-specific test evidence; outside presentation scope.
+- `packages/game-domain/src/incrementalEvidenceOwnership.ts` — Unreleased domain/balance lane or release-specific test evidence; outside presentation scope.
+- `packages/game-domain/src/incrementalEvidenceProjection.test.ts` — Unreleased domain/balance lane or release-specific test evidence; outside presentation scope.
+- `packages/game-domain/src/incrementalEvidenceProjection.ts` — Unreleased domain/balance lane or release-specific test evidence; outside presentation scope.
+- `packages/game-domain/src/incrementalEvidenceReferences.test.ts` — Unreleased domain/balance lane or release-specific test evidence; outside presentation scope.
+- `packages/game-domain/src/incrementalEvidenceReferences.ts` — Unreleased domain/balance lane or release-specific test evidence; outside presentation scope.
+- `packages/game-domain/src/incrementalEvidenceRetirement.test.ts` — Unreleased domain/balance lane or release-specific test evidence; outside presentation scope.
+- `packages/game-domain/src/incrementalEvidenceRetirement.ts` — Unreleased domain/balance lane or release-specific test evidence; outside presentation scope.
+- `packages/game-domain/src/incrementalEvidenceValues.test.ts` — Unreleased domain/balance lane or release-specific test evidence; outside presentation scope.
+- `packages/game-domain/src/incrementalEvidenceValues.ts` — Unreleased domain/balance lane or release-specific test evidence; outside presentation scope.
+- `packages/game-domain/src/incrementalTickClone.test.ts` — Unreleased domain/balance lane or release-specific test evidence; outside presentation scope.
+- `packages/game-domain/src/incrementalTickClone.ts` — Unreleased domain/balance lane or release-specific test evidence; outside presentation scope.
+- `packages/game-domain/src/readonlyProjectionMemo.ts` — Unreleased domain/balance lane or release-specific test evidence; outside presentation scope.
+- `packages/game-domain/src/reducer.ts` — Unreleased domain/balance lane or release-specific test evidence; outside presentation scope.
+- `packages/game-domain/src/routineAvailabilityReference.testSupport.ts` — Unreleased domain/balance lane or release-specific test evidence; outside presentation scope.
+- `packages/game-domain/src/settledStateQueries.test.ts` — Unreleased domain/balance lane or release-specific test evidence; outside presentation scope.
+- `packages/game-domain/src/settledStateQueries.ts` — Unreleased domain/balance lane or release-specific test evidence; outside presentation scope.
+- `packages/game-domain/src/waiting-destinations.ts` — Unreleased domain/balance lane or release-specific test evidence; outside presentation scope.
+- `packages/game-domain/tests/approved-clinical-admission.test.ts` — Unreleased domain/balance lane or release-specific test evidence; outside presentation scope.
+- `packages/game-domain/tests/level-five-launch.test.ts` — Unreleased domain/balance lane or release-specific test evidence; outside presentation scope.
+- `packages/game-domain/tests/readonlyProjectionMemo.test.ts` — Unreleased domain/balance lane or release-specific test evidence; outside presentation scope.
+- `packages/game-domain/tests/routine-endoscopy-ready.fixture.ts` — Unreleased domain/balance lane or release-specific test evidence; outside presentation scope.
+- `packages/game-domain/tests/routine-endoscopy-ready.test.ts` — Unreleased domain/balance lane or release-specific test evidence; outside presentation scope.
+- `packages/game-domain/tests/waiting-chart-attendance.fixture.ts` — Unreleased domain/balance lane or release-specific test evidence; outside presentation scope.
+- `packages/game-domain/tests/waiting-chart-attendance.test.ts` — Unreleased domain/balance lane or release-specific test evidence; outside presentation scope.
+- `tests/fixtures/diagnostic-workload.ts` — Release-specific Level 5 evidence/pins; unchanged, no rebind authorized.
+- `tests/fixtures/level-five-integration-checkpoints-20261012.json` — Release-specific Level 5 evidence/pins; unchanged, no rebind authorized.
+- `tests/fixtures/level-five-legacy-behavior-20261012.json` — Release-specific Level 5 evidence/pins; unchanged, no rebind authorized.
+- `tools/qa/level-five-integration-results-20261012.json` — Release-specific Level 5 evidence/pins; unchanged, no rebind authorized.
+- `tools/qa/tick-state-differential.mjs` — Outside accepted splitter/density handoff file lists; preserve release version.
+
+### Open risks / handback
+
+Manager browser/pointer/GPU acceptance remains necessary; unit/type checks do
+not prove physical rendering, target geometry, safe-area behavior or screenshots.
+Run the seven affected layout specs on the intended disposable QA profiles,
+including real splitter/reload/room picking and phone/compact/laptop menus.
+The broad old e2e type debt remains outside this accepted lane; all affected
+specs typecheck. Owner pathway is unchanged: START_GAME.cmd and
+http://127.0.0.1:4173 in the intended persistent profile. No save migration.
+Work remains local and uncommitted for manager review; no push, install,
+network, agents, deploy or clinical approval. Manager owns release and backup.
+

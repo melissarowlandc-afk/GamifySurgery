@@ -1,13 +1,15 @@
 import { expect, test } from "@playwright/test";
 import { mkdirSync } from "node:fs";
 import { join } from "node:path";
+import { readDurableLocalState } from "./ui-density-helpers";
 import {
   PROFILE_KEY,
   installLevelOneVisualState,
+  resumeLocalCampaign,
   startClinic,
 } from "./helpers";
 
-test("Build Mode exposes clear tools, upgrade confirmation, and every exit issue", async ({
+test("Build Mode exposes clear tools, upgrade controls, and every exit issue", async ({
   page,
 }, testInfo) => {
   test.skip(
@@ -82,22 +84,18 @@ test("Build Mode exposes clear tools, upgrade confirmation, and every exit issue
   );
 
   await page.reload();
-  const resume = page.getByRole("button", {
-    name: "Resume Build Test Surgical Clinic",
-  });
-  if (await resume.isVisible()) {
-    await resume.click();
-  }
-  await expect(page.getByTestId("facility-canvas")).toBeVisible();
+  await resumeLocalCampaign(page, "Build Test Surgical Clinic");
 
-  await page
-    .getByRole("button", {
-      name:
-        "A patient requested a more comfortable Examination Room. Upgrade Examination Room.",
-    })
-    .click();
-  // Owner-approved Build Mode revamp: the message opens the room menu on the
-  // map; upgrades are one click there and Undo refunds them.
+  // Retained historical guidance is readable history, not an active remedy.
+  // Use the ordinary owned-room entry to inspect the same upgrade controls.
+  await expect(page.locator('[data-message-id="event.test.show-exam-guidance"]')).toContainText(
+    "A patient requested a more comfortable Examination Room. Upgrade Examination Room.",
+  );
+  await expect(page.locator('[data-message-id="event.test.show-exam-guidance"]').getByRole("button")).toHaveCount(0);
+  await page.getByRole("button", { name: "Enter Build Mode", exact: true }).click();
+  await page.getByRole("tab", { name: /^My Rooms/ }).click();
+  await page.locator('.build-owned-row[data-room-instance-id="room.visual.examination"]')
+    .getByRole("button", { name: "Examination Room", exact: true }).click();
   const roomMenu = page.locator(".room-action-menu");
   await expect(
     page.getByRole("navigation", { name: "Build Mode tools" }),
@@ -150,31 +148,8 @@ test("Build Mode exposes clear tools, upgrade confirmation, and every exit issue
   await expect(hallwayTool).toHaveAttribute("aria-pressed", "true");
   await expect(doorsTool).toHaveAttribute("aria-pressed", "false");
 
-  const hallwayCount = () =>
-    page.evaluate((profileKey) => {
-      const profile = JSON.parse(
-        window.localStorage.getItem(profileKey) ?? "{}",
-      ) as {
-        activeCampaignId: string;
-        campaigns: Array<{
-          campaignId: string;
-          serializedState: string;
-        }>;
-      };
-      const campaign = profile.campaigns.find(
-        (candidate) =>
-          candidate.campaignId === profile.activeCampaignId,
-      );
-      if (!campaign) {
-        return 0;
-      }
-      const state = JSON.parse(campaign.serializedState) as {
-        rooms: Array<{ roomDefinitionId: string }>;
-      };
-      return state.rooms.filter(
-        (room) => room.roomDefinitionId === "room.hallway",
-      ).length;
-    }, PROFILE_KEY);
+  const hallwayCount = async () => (await readDurableLocalState(page)).rooms
+    .filter(room => room.roomDefinitionId === "room.hallway").length;
   const startingHallwayCount = await hallwayCount();
   const placementCanvas = page.locator(".facility-host canvas");
   const placementCanvasBox = await placementCanvas.boundingBox();
@@ -188,7 +163,10 @@ test("Build Mode exposes clear tools, upgrade confirmation, and every exit issue
         placementCanvasBox!.x + placementCanvasBox!.width * xRatio,
         placementCanvasBox!.y + placementCanvasBox!.height * yRatio,
       );
-      if ((await hallwayCount()) > startingHallwayCount) {
+      // The committed local journal drains asynchronously. The live catalog
+      // count is the immediate UI signal; durable recovery is asserted below.
+      const committedCount = await hallwayCount();
+      if (committedCount > startingHallwayCount || await page.getByRole("button", { name: /^Undo(?::|$)/ }).isEnabled()) {
         placedHallway = true;
         break;
       }
@@ -198,6 +176,7 @@ test("Build Mode exposes clear tools, upgrade confirmation, and every exit issue
     }
   }
   expect(placedHallway).toBe(true);
+  await expect.poll(hallwayCount).toBe(startingHallwayCount + 1);
   await expect(hallwayTool).toHaveAttribute("aria-pressed", "true");
 
   await page.getByRole("button", { name: "Done / Save" }).click();
@@ -207,9 +186,16 @@ test("Build Mode exposes clear tools, upgrade confirmation, and every exit issue
   await expect(invalidDialog).toContainText(
     "Examination Room needs a reachable door.",
   );
+  // Imaging Control is inert legacy space; X-ray has no adjacency requirement.
+  // The disconnected painted hallway is the fixture's other current violation.
+  await expect(invalidDialog).toContainText("Hallway needs a reachable door.");
   await expect(invalidDialog).toContainText(
-    "X-ray Room must share a wall and internal door with an Imaging Control Room.",
+    "Add a door between Examination Room and Front Desk",
   );
+  await expect(invalidDialog).toContainText(
+    "Move this room or build a hallway beside it, then add doors along the route to the Front Desk.",
+  );
+  await expect(invalidDialog.locator("li")).toHaveCount(2);
   expect(
     await invalidDialog.evaluate((dialog) => {
       const bounds = dialog.getBoundingClientRect();
@@ -234,7 +220,7 @@ test("Build Mode exposes clear tools, upgrade confirmation, and every exit issue
   await expect(invalidDialog).toBeHidden();
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   await expect(
-    page.getByText("BUILD MODE", { exact: true }),
+    page.locator(".build-mode-title"),
   ).toBeVisible();
   await expect(
     page.getByText("Facility time is stopped while you remodel.", {

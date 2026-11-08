@@ -334,6 +334,7 @@ export function AppShell({
   const [workspaceMapShare, setWorkspaceMapShare] = useState(() =>
     readWorkspaceMapShare(getWorkspaceStorage()),
   );
+  const [workspaceRailsOpen, setWorkspaceRailsOpen] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false);
   const [questionReviewQueueOpen, setQuestionReviewQueueOpen] =
     useState(false);
@@ -727,7 +728,7 @@ export function AppShell({
         managementMode ? " is-management-mode" : ""
       }${
         chart ? " has-open-chart" : ""
-      }`}
+      }${workspaceRailsOpen ? " has-workspace-rails" : ""}`}
     >
       <div className="game-display-title">Stitchin&apos; Time</div>
       <ResourceBar
@@ -751,7 +752,12 @@ export function AppShell({
       />
 
       <main className="game-grid game-grid-workspaces">
-        <aside className="left-column patient-rail-column">
+        {buildMode || managementMode ? <button type="button" className="workspace-rails-toggle"
+          aria-expanded={workspaceRailsOpen} aria-controls="desktop-patient-panel desktop-operations-panel"
+          onClick={() => setWorkspaceRailsOpen(open => !open)}>
+          {workspaceRailsOpen ? "Hide clinic panels" : "Show clinic panels"}
+        </button> : null}
+        <aside id="desktop-patient-panel" className="left-column patient-rail-column">
           {!buildMode ? (
             <>
               <EmergencyGlp1Panel
@@ -1072,7 +1078,7 @@ export function AppShell({
           </section>
         </section>
 
-        <aside className="right-column operations-column">
+        <aside id="desktop-operations-panel" className="right-column operations-column">
           {progression.facilityLevelLabel === "Level 0" ? <p className="first-shift-goal-note">Finish both introductory visits and connect an Examination Room to graduate. Mistakes still count as completed visits.</p> : null}
           <GoalsPanel
             view={progression}

@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { desktopMapShade, facilityCameraSignature } from "./desktopMapShade";
 import { mapSessionAction } from "../session/sessionActions";
 import { roomThumbnailStage } from "./roomThumbnailCapture";
 import { initializeCanvasRoomLighting } from "./canvasRoomLighting";
@@ -643,6 +644,7 @@ export class FacilityScene extends Phaser.Scene {
     panY: 0,
   };
   private lastRequestedCameraSignature = "";
+  private cameraCampaignId?: string;
   private mobileGestures?: MapTouchGestures;
   private mobileInputSignature = "";
   private phoneBuildInput?: PhoneBuildMapInput;
@@ -1456,7 +1458,8 @@ export class FacilityScene extends Phaser.Scene {
     if (this.bridge.mobileInput === true && this.bridge.mobilePresentation?.hidden) return;
     const width = Math.max(1, Math.floor(this.scale.width));
     const height = Math.max(1, Math.floor(this.scale.height));
-    const signature = getFacilityWorldSignature(this.bridge.viewModel);
+    const signature = getFacilityWorldSignature(this.bridge.viewModel) + (this.bridge.mobileInput === true ? ""
+      : `:${this.bridge.viewModel.campaignId ?? ""}:${facilityCameraSignature(this.bridge.viewModel.camera)}`);
 
     if (
       !force &&
@@ -1523,14 +1526,13 @@ export class FacilityScene extends Phaser.Scene {
       ),
     );
     const requestedCamera = this.bridge.viewModel.camera;
-    const requestedCameraSignature = requestedCamera
-      ? `${requestedCamera.zoom}:${requestedCamera.panX}:${requestedCamera.panY}`
-      : "";
+    const requestedCameraSignature = `${this.bridge.viewModel.campaignId ?? ""}:${facilityCameraSignature(requestedCamera)}`;
     if (
       requestedCamera &&
       requestedCameraSignature !== this.lastRequestedCameraSignature
     ) {
       this.cameraView = {
+        ...(this.bridge.mobileInput !== true && requestedCamera.desktopViewport ? { desktopViewport: requestedCamera.desktopViewport } : {}),
         zoom: Math.max(
           MINIMUM_CAMERA_ZOOM,
           Math.min(MAXIMUM_CAMERA_ZOOM, requestedCamera.zoom),
@@ -1539,6 +1541,12 @@ export class FacilityScene extends Phaser.Scene {
         panY: requestedCamera.panY,
       };
       this.lastRequestedCameraSignature = requestedCameraSignature;
+      this.cameraCampaignId = this.bridge.viewModel.campaignId;
+    }
+    if (this.bridge.mobileInput !== true) {
+      const projection = desktopMapShade(this.cameraView, this.bridge.viewModel, { width, height });
+      this.cameraView = projection.camera;
+      return projection.layout;
     }
     const normalizedZoom = Math.max(
       0,
@@ -8778,6 +8786,16 @@ export class FacilityScene extends Phaser.Scene {
     this.bridge.onCameraChange?.(camera);
     this.lastModelSignature = "";
     this.refreshLayout(true);
+  }
+
+  /** Small presentation preference, normalized by the most recently drawn layout. */
+  public getCameraPreference(): Readonly<FacilityCameraView> | null {
+    // A settled-resize timer may run before the next Phaser frame. Never
+    // publish the old projection over a new campaign or explicit camera input.
+    const requested = `${this.bridge.viewModel.campaignId ?? ""}:${facilityCameraSignature(this.bridge.viewModel.camera)}`;
+    const echoed = this.cameraCampaignId === this.bridge.viewModel.campaignId &&
+      facilityCameraSignature(this.bridge.viewModel.camera) === facilityCameraSignature(this.cameraView);
+    return requested === this.lastRequestedCameraSignature || echoed ? this.cameraView : null;
   }
 
   private roomAtPointer(

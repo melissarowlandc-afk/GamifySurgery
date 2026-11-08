@@ -3,10 +3,11 @@ import { join, resolve } from "node:path";
 import { expect, test, type Locator, type Page, type TestInfo } from "@playwright/test";
 import {
   PROTOTYPE_DOMAIN_CONTEXT, deserializeGameState, getDiagnosticOrderPlans, getFacilityAccessValidation,
-  getRadiologistReadingStation,
+  getRadiologistReadingStation, getRoomDefinition,
   getWorkloadSnapshot, serializeGameState, type GameState,
 } from "@gamify-surgery/game-domain";
-import { PROFILE_KEY, getProfile, startClinic } from "./helpers";
+import { PROFILE_KEY, getProfile, resumeLocalCampaign, startClinic } from "./helpers";
+import { readDurableLocalState } from "./ui-density-helpers";
 import {
   createRoomUpgradeScenario, getRoomUpgradeFrozenQuantities,
   roomUpgradeScenarioIds as ids,
@@ -16,6 +17,7 @@ const evidenceDirectory = resolve(
   process.env.GAMIFY_E2E_SCREENSHOT_DIR ?? ".local-dev/gs038-room-upgrades/browser",
 );
 const pageErrors = new WeakMap<Page, string[]>();
+const phonePages = new WeakSet<Page>();
 const ladders = {
   [ids.waiting]: {
     name: "Waiting Room A", prices: [110, 170, 250, 360],
@@ -48,7 +50,7 @@ type UpgradeRoomId = keyof typeof ladders;
 test.setTimeout(120_000);
 test.beforeAll(() => mkdirSync(evidenceDirectory, { recursive: true }));
 test.beforeEach(({ page }, info) => {
-  test.skip(!["desktop-chrome", "phone-chrome"].includes(info.project.name));
+  if (info.project.name === "phone-chrome") phonePages.add(page);
   const errors: string[] = [];
   pageErrors.set(page, errors);
   page.on("pageerror", (error) => errors.push(error.message));
@@ -56,9 +58,44 @@ test.beforeEach(({ page }, info) => {
 test.afterEach(({ page }) => expect(pageErrors.get(page) ?? []).toEqual([]));
 
 async function readState(page: Page): Promise<GameState> {
-  const profile = await getProfile(page);
-  const campaign = profile.campaigns.find((entry) => entry.campaignId === profile.activeCampaignId)!;
-  return deserializeGameState(campaign.serializedState);
+  return readDurableLocalState(page);
+}
+
+async function enterBuild(page: Page) {
+  await page.getByRole("button", { name: phonePages.has(page) ? "Build" : "Enter Build Mode", exact: true }).click();
+  await expect(page.locator(phonePages.has(page) ? ".mobile-build-catalog" : ".build-mode-panel")).toBeVisible();
+}
+
+async function enterManagement(page: Page) {
+  await page.getByRole("button", { name: phonePages.has(page) ? "Manage" : "Enter Management Mode", exact: true }).click();
+  await expect(page.locator(phonePages.has(page) ? ".mobile-manage" : ".management-panel")).toBeVisible();
+}
+
+async function exitManagement(page: Page) {
+  await page.locator(phonePages.has(page) ? ".mobile-manage" : ".management-panel")
+    .getByRole("button", { name: phonePages.has(page) ? "Close Manage" : "Done", exact: true }).click();
+}
+
+const menuFor = (page: Page) => page.locator(phonePages.has(page) ? ".mobile-build-room" : ".room-action-menu");
+
+async function closeRoomMenu(page: Page) {
+  if (phonePages.has(page)) {
+    await page.locator(".mobile-sheet:has(.mobile-build-room)").getByRole("button", { name: /^Close / }).click();
+    await page.getByRole("button", { name: "Room catalog", exact: true }).click();
+    await showMyRooms(page);
+    await expectWaitingCopy(page);
+  } else await menuFor(page).getByRole("button", { name: "Close room menu", exact: true }).click();
+}
+
+async function openAdmittedChart(page: Page) {
+  if (phonePages.has(page)) {
+    if (!await page.getByRole("dialog", { name: "Patients", exact: true }).isVisible()) {
+      await page.locator(".mobile-tab-bar").getByRole("button", { name: /^Patients(,|$)/ }).click();
+    }
+    await page.locator(`.mobile-patient-card[data-patient-id='${ids.admittedPatient}']`).click();
+  } else await page.locator(".patient-tab").filter({ hasText: "Upgrade Admitted Patient" }).click();
+  const chart = page.locator(phonePages.has(page) ? '.mobile-sheet[aria-label="Patient chart"]' : ".chart-sheet");
+  await expect(chart).toBeVisible(); return chart;
 }
 
 function readerAssignments(state: GameState) {
@@ -70,9 +107,7 @@ function readerAssignments(state: GameState) {
 }
 
 async function resumeCampaign(page: Page, name: string): Promise<void> {
-  const resume = page.getByRole("button", { name: `Resume ${name}`, exact: true });
-  if (await resume.isVisible()) await resume.click();
-  await expect(page.getByTestId("facility-canvas")).toBeVisible();
+  await resumeLocalCampaign(page, name);
   await expect.poll(() => page.evaluate(() => {
     const host = document.querySelector("[data-testid='facility-canvas']") as any;
     return Boolean(host?.__facilityGame);
@@ -146,7 +181,9 @@ async function expectPreserved(page: Page, baseline: Installed, patientUnchanged
 }
 
 function ownedRow(page: Page, roomId: string): Locator {
-  return page.locator(`.build-owned-row[data-room-instance-id='${roomId}']`);
+  return page.locator(phonePages.has(page)
+    ? `.mobile-owned-build-card:has([data-build-owned-room='${roomId}'])`
+    : `.build-owned-row[data-room-instance-id='${roomId}']`);
 }
 
 async function showMyRooms(page: Page) {
@@ -156,19 +193,29 @@ async function showMyRooms(page: Page) {
 
 async function expectWaitingCopy(page: Page) {
   const row = ownedRow(page, ids.waitingCopy);
-  await expect(row).toContainText("Now Baseline → Next +2 points");
-  await expect(row.getByRole("button", { name: "Upgrade Waiting Room B for $110", exact: true })).toBeEnabled();
+  await expect(row).toContainText(phonePages.has(page) ? "Tier 1/5" : "Now Baseline → Next +2 points");
+  const upgrade = row.getByRole("button", { name: phonePages.has(page) ? "Upgrade Waiting Room B" : "Upgrade Waiting Room B for $110", exact: true });
+  await expect(upgrade).toBeEnabled(); await expect(upgrade).toContainText("$110");
 }
 
 async function expectBenefit(container: Locator, roomId: UpgradeRoomId, purchases: number) {
   const ladder = ladders[roomId];
+  if (await container.evaluate(node => node.classList.contains("mobile-owned-build-card"))) {
+    // The native compact row exposes the current tier/benefit and next price;
+    // the room detail below separately checks the full per-upgrade/next copy.
+    await expect(container).toContainText(`Tier ${purchases + 1}/5`);
+    await expect(container).toContainText(ladder.totals[purchases]!);
+    if (purchases === 4) await expect(container.getByRole("button", { name: /^Upgrade / })).toHaveCount(0);
+    return;
+  }
   await expect(container).toContainText(ladder.benefit);
-  await expect(container).toContainText(`Now ${ladder.totals[purchases]}`);
-  if (purchases < 4) await expect(container).toContainText(`→ Next ${ladder.totals[purchases + 1]}`);
+  const escape = (text: string) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  await expect(container).toContainText(new RegExp(`Now:?\\s*${escape(ladder.totals[purchases]!)}`));
+  if (purchases < 4) await expect(container).toContainText(new RegExp(`→ Next:?\\s*${escape(ladder.totals[purchases + 1]!)}`));
   else {
     await expect(container).toContainText("MAX");
     await expect(container).not.toContainText("→ Next");
-    await expect(container.getByRole("button", { name: /^Upgrade / })).toHaveCount(0);
+    await expect(container.getByRole("button", { name: /^Upgrade to ★/ })).toHaveCount(0);
   }
 }
 
@@ -177,18 +224,19 @@ async function purchase(
   purchaseIndex: number, control: "row" | "menu",
 ) {
   const ladder = ladders[roomId];
-  const container = control === "row" ? ownedRow(page, roomId) : page.locator(".room-action-menu");
+  const container = control === "row" ? ownedRow(page, roomId) : menuFor(page);
   await expectBenefit(container, roomId, purchaseIndex);
   const price = ladder.prices[purchaseIndex]!;
   const priceLabel = `$${price.toLocaleString("en-US")}`;
   const button = container.getByRole("button", {
     name: control === "row"
-      ? `Upgrade ${ladder.name} for ${priceLabel}`
+      ? phonePages.has(page) ? `Upgrade ${ladder.name}` : `Upgrade ${ladder.name} for ${priceLabel}`
       : `Upgrade to ★${purchaseIndex + 2} · ${priceLabel}`,
     exact: true,
   });
   const before = await readState(page);
   await expect(button).toBeEnabled();
+  await expect(button).toContainText(priceLabel);
   await button.scrollIntoViewIfNeeded();
   await button.click();
   await expect.poll(async () => {
@@ -198,17 +246,27 @@ async function purchase(
   await expectBenefit(container, roomId, purchaseIndex + 1);
   if (purchaseIndex < 3) {
     const next = `$${ladder.prices[purchaseIndex + 1]!.toLocaleString("en-US")}`;
-    await expect(container.getByRole("button", {
-      name: control === "row" ? `Upgrade ${ladder.name} for ${next}` : `Upgrade to ★${purchaseIndex + 3} · ${next}`,
+    const nextButton = container.getByRole("button", {
+      name: control === "row" ? phonePages.has(page) ? `Upgrade ${ladder.name}` : `Upgrade ${ladder.name} for ${next}` : `Upgrade to ★${purchaseIndex + 3} · ${next}`,
       exact: true,
-    })).toBeEnabled();
+    });
+    await expect(nextButton).toBeEnabled();
+    await expect(nextButton).toContainText(next);
   }
   await expectPreserved(page, baseline);
-  await expectWaitingCopy(page);
+  // The native room sheet replaces the catalog rather than keeping two menus
+  // mounted. expectPreserved checks the untouched second room on every purchase;
+  // closeRoomMenu checks its complete visible summary again on returning.
+  if (!phonePages.has(page) || control === "row") await expectWaitingCopy(page);
 }
 
 /** Read-only camera/geometry framing; selection itself is an ordinary canvas click. */
 async function frameRoom(page: Page, roomId: string) {
+  await expect.poll(() => page.evaluate((id) => {
+    const scene = (document.querySelector("[data-testid='facility-canvas']") as any)
+      ?.__facilityGame?.scene?.getScene("facility-scene");
+    return Boolean(scene?.layout && scene.bridge?.viewModel?.rooms?.some((room: any) => room.instanceId === id));
+  }, roomId)).toBe(true);
   return page.evaluate((id) => {
     const scene = (document.querySelector("[data-testid='facility-canvas']") as any)
       ?.__facilityGame?.scene?.getScene("facility-scene");
@@ -230,9 +288,13 @@ async function frameRoom(page: Page, roomId: string) {
 }
 
 async function openMapMenu(page: Page, roomId: string) {
+  if (phonePages.has(page)) {
+    const catalog = page.locator('.mobile-sheet[aria-label="Build"]');
+    if (await catalog.isVisible()) await catalog.getByRole("button", { name: "Close Build", exact: true }).click();
+  }
   const point = await frameRoom(page, roomId);
   await page.getByTestId("facility-canvas").click({ position: point });
-  await expect(page.locator(".room-action-menu")).toBeVisible();
+  await expect(menuFor(page)).toBeVisible();
 }
 
 async function captureRoom(page: Page, info: TestInfo, roomId: string, label: string) {
@@ -268,8 +330,12 @@ async function captureRoom(page: Page, info: TestInfo, roomId: string, label: st
 }
 
 async function exitBuild(page: Page) {
-  await page.getByRole("button", { name: "Done / Save", exact: true }).click();
-  await expect(page.getByRole("button", { name: "Enter Build Mode", exact: true })).toBeVisible();
+  if (phonePages.has(page)) {
+    const sheet = page.locator(".mobile-sheet:has(.mobile-build-catalog), .mobile-sheet:has(.mobile-build-room)");
+    if (await sheet.isVisible()) await sheet.getByRole("button", { name: /^Close / }).click();
+  }
+  await page.getByRole("button", { name: phonePages.has(page) ? "Done" : "Done / Save", exact: true }).click();
+  await expect(page.getByRole("button", { name: phonePages.has(page) ? "Resume facility time" : "Enter Build Mode", exact: true })).toBeEnabled();
 }
 
 async function reloadAndCheck(page: Page, baseline: Installed, expectedCash: number) {
@@ -329,12 +395,12 @@ async function expectFourReaderPosts(page: Page, baseline: Installed) {
 test("satisfaction upgrades use ordinary list/menu controls, refund Undo and preserve the admitted patient across reload", async ({ page }, info) => {
   const baseline = await install(page, "GS038 satisfaction upgrades");
   await captureRoom(page, info, ids.waiting, "waiting-before");
-  await page.getByRole("button", { name: "Enter Build Mode", exact: true }).click();
+  await enterBuild(page);
   await showMyRooms(page);
   await expectWaitingCopy(page);
   const initialCash = (await readState(page)).cashCents;
   await purchase(page, baseline, ids.waiting, 0, "row");
-  await page.getByRole("button", { name: /^Undo(?::|$)/ }).click();
+  await page.getByRole("button", { name: phonePages.has(page) ? /^Undo \(\d+\)$/ : /^Undo(?::|$)/ }).click();
   await expect.poll(async () => {
     const state = await readState(page);
     return { level: state.rooms.find((room) => room.id === ids.waiting)!.upgradeLevel, cash: state.cashCents };
@@ -342,13 +408,13 @@ test("satisfaction upgrades use ordinary list/menu controls, refund Undo and pre
   await expectBenefit(ownedRow(page, ids.waiting), ids.waiting, 0);
   await expectPreserved(page, baseline);
   await openMapMenu(page, ids.waiting);
-  const menu = page.locator(".room-action-menu");
-  await expect(menu).toContainText("Level 1 of 5");
-  await expect(menu.getByRole("button", { name: "Edit doors for Waiting Room A", exact: true })).toBeVisible();
+  const menu = menuFor(page);
+  await expect(menu).toContainText(phonePages.has(page) ? "Tier 1/5" : "Level 1 of 5");
+  await expect(menu.getByRole("button", { name: phonePages.has(page) ? "Doors" : "Edit doors for Waiting Room A", exact: true })).toBeVisible();
   await expect(menu.getByRole("button", { name: "Move", exact: true })).toBeVisible();
   await expect(menu.getByRole("button", { name: /^Sell/ })).toBeVisible();
   for (let index = 0; index < 4; index++) await purchase(page, baseline, ids.waiting, index, "menu");
-  await menu.getByRole("button", { name: "Close room menu", exact: true }).click();
+  await closeRoomMenu(page);
   for (let index = 0; index < 4; index++) await purchase(page, baseline, ids.examination, index, "row");
   const finalCash = initialCash - (890 + 740) * 100;
   expect((await readState(page)).cashCents).toBe(finalCash);
@@ -357,12 +423,12 @@ test("satisfaction upgrades use ordinary list/menu controls, refund Undo and pre
   const restored = await reloadAndCheck(page, baseline, finalCash);
   expect(restored.rooms.find((room) => room.id === ids.examination)?.upgradeLevel).toBe(5);
   expect(restored.rooms.find((room) => room.id === ids.waiting)?.upgradeLevel).toBe(5);
-  await page.getByRole("button", { name: "Enter Build Mode", exact: true }).click();
+  await enterBuild(page);
   await showMyRooms(page);
   await expectBenefit(ownedRow(page, ids.examination), ids.examination, 4);
   await expectWaitingCopy(page);
   await openMapMenu(page, ids.waiting);
-  await expectBenefit(page.locator(".room-action-menu"), ids.waiting, 4);
+  await expectBenefit(menuFor(page), ids.waiting, 4);
   await page.screenshot({ path: join(evidenceDirectory, `${info.project.name}-satisfaction-max-reloaded.png`), animations: "disabled" });
 });
 
@@ -370,22 +436,31 @@ test("Reading, training and revenue purchases preserve old work and new chart or
   const baseline = await install(page, "GS038 work upgrades");
   await captureRoom(page, info, ids.reading, "reading-before");
   await expectFourReaderPosts(page, baseline);
-  await page.getByRole("button", { name: "Enter Management Mode", exact: true }).click();
-  const readerRole = page.locator("[data-staff-role-id='staff.radiologist']");
+  await enterManagement(page);
+  if (phonePages.has(page)) await page.locator(".mobile-manage-grid [data-staff-role-id='staff.radiologist']").click();
+  const readerRole = page.locator(phonePages.has(page) ? ".mobile-manage-card[data-staff-role-id='staff.radiologist']" : "[data-staff-role-id='staff.radiologist']");
   await expect(readerRole).toContainText("4/4");
-  await expect(readerRole.locator("[data-staff-role-hire]")).toBeDisabled();
+  await expect(readerRole.locator(phonePages.has(page) ? "[data-phone-anchor='hire']" : "[data-staff-role-hire]")).toBeDisabled();
   const originalCash = (await readState(page)).cashCents;
-  await page.locator(".management-panel").getByRole("button", { name: "Done", exact: true }).click();
+  await exitManagement(page);
   expect((await readState(page)).cashCents).toBe(originalCash);
-  await page.getByRole("button", { name: "Enter Build Mode", exact: true }).click();
-  const construction = page.locator("[data-room-definition-id='room.reading']");
+  await enterBuild(page);
+  const construction = phonePages.has(page)
+    ? page.locator(".mobile-build-card:has([data-build-room-option='room.reading'])")
+    : page.locator("[data-room-definition-id='room.reading']");
   await expect(construction).toContainText("$1,800");
-  await expect(construction).toContainText("$24 upkeep / hr");
+  const readingUpkeep = getRoomDefinition("room.reading")!.upkeepPerExpenseInterval;
+  // Old copy hardcoded $24 before the balance change to $6. Check the exact
+  // shipped rule, retaining every upgrade price below.
+  if (phonePages.has(page)) {
+    await construction.locator("summary[aria-label='Details about Radiology Reading Room']").click();
+  }
+  await expect(construction).toContainText(`$${readingUpkeep} upkeep / hr`);
   await expect(construction).toContainText("4 × 4 tiles · 4 reading positions");
   await showMyRooms(page);
   await openMapMenu(page, ids.reading);
   for (let index = 0; index < 4; index++) await purchase(page, baseline, ids.reading, index, "menu");
-  await page.locator(".room-action-menu").getByRole("button", { name: "Close room menu", exact: true }).click();
+  await closeRoomMenu(page);
   for (const roomId of [ids.training, ids.revenue] as const) {
     for (let index = 0; index < 4; index++) await purchase(page, baseline, roomId, index, "row");
   }
@@ -399,18 +474,21 @@ test("Reading, training and revenue purchases preserve old work and new chart or
     expect(restored.rooms.find((room) => room.id === roomId)?.upgradeLevel).toBe(5);
   }
   await expectFourReaderPosts(page, baseline);
-  await page.getByRole("button", { name: "Enter Management Mode", exact: true }).click();
-  const reception = page.locator("[data-staff-role-id='staff.receptionist']");
-  const toggle = reception.locator(".staff-role-toggle");
-  if (await toggle.getAttribute("aria-expanded") !== "true") await toggle.click();
-  await expect(page.locator(`[data-employee-id='${ids.trainingEmployee}'] .staff-training-status`))
+  await enterManagement(page);
+  if (phonePages.has(page)) {
+    await page.locator(".mobile-manage-grid [data-staff-role-id='staff.receptionist']").click();
+    await page.locator(`.mobile-manage-portraits [data-employee-id='${ids.trainingEmployee}']`).click();
+  } else {
+    const toggle = page.locator("[data-staff-role-id='staff.receptionist'] .staff-role-toggle");
+    if (await toggle.getAttribute("aria-expanded") !== "true") await toggle.click();
+  }
+  const trainingStatus = page.locator(`[data-employee-id='${ids.trainingEmployee}'] ${phonePages.has(page) ? ".mobile-manage-training" : ".staff-training-status"}`);
+  await expect(trainingStatus)
     .toContainText("Walking to training");
-  await expect(page.locator(`[data-employee-id='${ids.trainingEmployee}'] .staff-training-status`))
+  await expect(trainingStatus)
     .toContainText("1 hour session");
-  await page.locator(".management-panel").getByRole("button", { name: "Done", exact: true }).click();
-  await page.locator(".patient-tab").filter({ hasText: "Upgrade Admitted Patient" }).click();
-  const chart = page.locator(".chart-sheet");
-  await expect(chart).toBeVisible();
+  await exitManagement(page);
+  const chart = await openAdmittedChart(page);
   await chart.getByRole("button", { name: /Order targeted breast ultrasound/ }).click();
   const enact = chart.getByRole("button", { name: "Enact Plan", exact: true });
   if (await enact.isVisible()) await enact.click();
@@ -425,11 +503,17 @@ test("Reading, training and revenue purchases preserve old work and new chart or
     baseFee: 120, candidates: [{ roomInstanceId: ids.revenue, upgradeLevel: 5, multiplier: 1.24 }],
   });
   expect(accepted.cashCents).toBe(finalCash);
-  await page.locator(".patient-tab").filter({ hasText: "Upgrade Admitted Patient" }).click();
+  if (phonePages.has(page)) {
+    // Enact Plan returns the phone to Patients automatically. There is no chart
+    // left to close; assert that transition before reopening its pending order.
+    await expect(chart).toHaveCount(0);
+    await expect(page.getByRole("dialog", { name: "Patients", exact: true })).toBeVisible();
+  }
+  await openAdmittedChart(page);
   await expect(chart).toBeVisible();
-  const pendingInterpretation = chart.locator(".cs-phases li").filter({ hasText: "Interpretation" }).first();
+  const pendingInterpretation = chart.locator(phonePages.has(page) ? ".mobile-chart-phases li" : ".cs-phases li").filter({ hasText: "Interpretation" }).first();
   await expect(pendingInterpretation).toContainText("(onsite)");
-  await expect(pendingInterpretation.locator(".cs-phase-progress")).toContainText("min remaining");
+  await expect(pendingInterpretation.locator(phonePages.has(page) ? "span" : ".cs-phase-progress")).toContainText("min remaining");
   await pendingInterpretation.scrollIntoViewIfNeeded();
   await page.screenshot({ path: join(evidenceDirectory, `${info.project.name}-new-upgraded-order.png`), animations: "disabled" });
 });

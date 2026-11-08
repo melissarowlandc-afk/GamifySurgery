@@ -20,8 +20,10 @@ function profile(paused: boolean): LoadedPrototypeProfile {
 }
 
 describe("Manage pause/restoration through the real shared session", () => {
-  it.each([false, true])("matches desktop with an initially paused=%s clinic for Done, header, tab and browser Back", async (initiallyPaused) => {
-    for (const exit of ["desktop Done", "Done", "Close Manage", "Clinic", "browser Back"]) {
+  it.each([false, true])("matches desktop with an initially paused=%s clinic for desktop Done, phone Close, tab and browser Back", async (initiallyPaused) => {
+    // The native sheet's Close replaces its redundant inner Done row. All
+    // remaining exits still prove the exact shared-session pause contract.
+    for (const exit of ["desktop Done", "Close Manage", "Clinic", "browser Back"]) {
       const env = phoneTestDom(); Object.assign(env.doc, { visibilityState: "visible" });
       Object.assign(env.browser, { setInterval: vi.fn(() => 1), clearInterval: vi.fn() });
       const loaded = profile(initiallyPaused); let current: PrototypeSession | null = null;

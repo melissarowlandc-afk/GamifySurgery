@@ -308,6 +308,13 @@ export interface FacilityCameraView {
   zoom: number;
   panX: number;
   panY: number;
+  /** Desktop UI only: stable sizing/origin, independent of the desk splitter. */
+  desktopViewport?: {
+    width: number;
+    height: number;
+    /** Retains a bottom-edge translation when an oversized pane is covered. */
+    maxHeight: number;
+  };
 }
 
 /**

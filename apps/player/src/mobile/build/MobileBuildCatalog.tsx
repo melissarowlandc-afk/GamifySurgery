@@ -51,11 +51,10 @@ export function MobileBuildCatalog({ props, onChoose, onOpenRoom, onDoors, onSet
               disabled={!props.buildMode || !option?.enabled} onClick={() => onChoose(definition.id)}>
               <RoomThumbnail definitionId={definition.id} onVisible={onPreviewRoom} />
               <strong>{definition.displayName}</strong>
-              <span>{option?.costLabel ?? `$${definition.constructionCost.toLocaleString()}`} · {option?.footprintLabel ?? `${definition.width} × ${definition.height}`}</span>
-              <small>{option?.builtCountLabel ?? `${built}/${definition.maximumInstances ?? "no limit"} built`}</small>
+              <span className="mobile-build-choice-facts">{option?.costLabel ?? `$${definition.constructionCost.toLocaleString()}`} · {option?.footprintLabel ?? `${definition.width} × ${definition.height}`} · {option?.builtCountLabel ?? `${built}/${definition.maximumInstances ?? "no limit"} built`}</span>
               {reason ? <small className="mobile-build-reason">{reason}</small> : null}
             </button>
-            <details className="mobile-build-card-details"><summary aria-label={`Details about ${definition.displayName}`}>Details</summary>
+            <details className="mobile-build-card-details"><summary aria-label={`Details about ${definition.displayName}`}><span aria-hidden="true">ⓘ</span><span className="screen-reader-only">Details</span></summary>
               <p>{option?.purpose ?? roomBuildPurpose(definition.id)}</p>
               <p>{option?.upkeepLabel ?? `$${definition.upkeepPerExpenseInterval}/hr upkeep`} · Unlock Level {definition.unlockFacilityLevel}</p>
             </details>
@@ -85,17 +84,18 @@ export function MobileBuildCatalog({ props, onChoose, onOpenRoom, onDoors, onSet
           </article>;
         });
   return <div className="mobile-build-catalog" data-build-mode-panel="true">
-    <p>Available cash <strong>{props.resourceBar.moneyLabel}</strong> · Time paused</p>
     {!props.buildMode ? <button type="button" onClick={props.onEnterBuildMode}>Enter Build Mode</button> : null}
-    <div className="mobile-build-tools">
-      <button type="button" data-build-tool="hallway" disabled={!props.buildMode || !hallway?.enabled} onClick={() => onChoose("room.hallway")}>Build Hallway · {hallway?.costLabel ?? ""}/tile</button>
+    <div className="mobile-build-navigation">
+    <div className="mobile-build-tools" role="group" aria-label="Construction tools">
+      <button type="button" data-build-tool="hallway" aria-label={`Build Hallway · ${hallway?.costLabel ?? ""}/tile`} disabled={!props.buildMode || !hallway?.enabled} onClick={() => onChoose("room.hallway")}>Hallway<small>{hallway?.costLabel ?? ""}/tile</small></button>
       <button type="button" data-phone-anchor="doors" data-build-tool="doors" disabled={!props.buildMode} onClick={onDoors}>Doors · $0</button>
     </div>
-    {hallway?.blockedReason ? <p>{hallway.blockedReason}</p> : null}
     <div className="mobile-build-tabs" role="tablist" aria-label="Room catalog">
       <button type="button" role="tab" aria-selected={tab === "new"} onClick={() => setTab("new")}>New Rooms</button>
       <button type="button" role="tab" aria-selected={tab === "owned"} onClick={() => setTab("owned")}>My Rooms</button>
     </div>
+    </div>
+    {hallway?.blockedReason ? <p>{hallway.blockedReason}</p> : null}
     <div className={`mobile-build-cards is-${tab}`} role="tabpanel" aria-label={tab === "new" ? "New Rooms" : "My Rooms"}>
       {props.facility.levelFiveRoomArt ? <>
         <div className="mobile-prestige-build-grid" aria-label="Level 5 room tiles">{cards.filter(card => prestigeKeys.has(String(card.key)))}</div>

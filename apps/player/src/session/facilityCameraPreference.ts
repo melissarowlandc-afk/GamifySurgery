@@ -1,6 +1,7 @@
 import type { FacilityCameraView } from "../facility/types";
 import { setAuxiliaryItem } from "./storagePressure";
 import { isValidFacilityCamera } from "../facility/facilityCameraBounds";
+import { readDesktopCameraViewport } from "../facility/desktopMapShade";
 
 export const FACILITY_CAMERA_PREFERENCE_KEY = "gamify-surgery.prototype.facility-camera.v1";
 export const FACILITY_CAMERA_SAVE_DEBOUNCE_MS = 250;
@@ -21,7 +22,8 @@ export function facilityCameraPreferenceKey(campaignId: string): string {
 }
 
 function copyCamera(camera: FacilityCameraView): FacilityCameraView {
-  return { zoom: camera.zoom, panX: camera.panX, panY: camera.panY };
+  const desktopViewport = readDesktopCameraViewport(camera.desktopViewport);
+  return { zoom: camera.zoom, panX: camera.panX, panY: camera.panY, ...(desktopViewport ? { desktopViewport } : {}) };
 }
 
 export function readFacilityCameraPreference(

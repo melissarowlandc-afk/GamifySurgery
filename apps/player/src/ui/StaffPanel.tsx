@@ -100,6 +100,9 @@ export function StaffPanel({
   };
 
   const allEmployees = roles.flatMap((role) => role.employees);
+  // Put the actual roster before vacant/locked roles; retain catalogue order
+  // within each group and keep every role and hire action available below.
+  const orderedRoles = [...roles.filter(role => role.employees.length > 0), ...roles.filter(role => role.employees.length === 0)];
   const totalPayroll = payroll(allEmployees);
   const overallMorale = averageMorale(allEmployees);
 
@@ -128,7 +131,7 @@ export function StaffPanel({
             Employee roles unlock as the clinic develops.
           </p>
         ) : (
-          roles.map((role) => {
+          orderedRoles.map((role) => {
             const open = isOpen(role);
             const morale = averageMorale(role.employees);
             const rolePayroll = payroll(role.employees);
@@ -169,6 +172,14 @@ export function StaffPanel({
                       {role.employees.length === 0 ? <span>No staff yet</span> : null}
                     </span>
                   </button>
+                  {role.staffingGuidance || full && role.blockedReason ? (
+                    <details className="staff-role-guidance"><summary aria-label={`Staffing details for ${role.displayName}`}><span aria-hidden="true">ⓘ</span></summary>
+                      <div className="staff-guidance-content">
+                      {role.staffingGuidance ? <p className="staff-role-note">{role.staffingGuidance}</p> : null}
+                      {full && role.blockedReason ? <p className="staff-role-note">{role.blockedReason}</p> : null}
+                      </div>
+                    </details>
+                  ) : null}
                   <button
                     className="staff-hire-button"
                     type="button"
@@ -176,22 +187,19 @@ export function StaffPanel({
                     disabled={!role.canHire}
                     title={role.blockedReason}
                     aria-label={`Hire ${role.hiringCostLabel} (${role.displayName})`}
-                    aria-describedby={role.blockedReason && !role.canHire ? `${bodyId}-hire-reason` : undefined}
+                    aria-describedby={role.blockedReason && !role.canHire && !full ? `${bodyId}-hire-reason` : undefined}
                     data-staff-role-hire
                   >
                     Hire {role.hiringCostLabel}
                   </button>
                 </div>
 
-                {role.blockedReason && !role.canHire ? (
+                {role.blockedReason && !role.canHire && !full ? (
                   <p id={`${bodyId}-hire-reason`} className="staff-role-hire-reason">{role.blockedReason}</p>
                 ) : null}
 
                 {open ? (
                   <div className="staff-role-body" id={bodyId}>
-                    {role.staffingGuidance ? (
-                      <p className="staff-role-note">{role.staffingGuidance}</p>
-                    ) : null}
                     {role.employees.length > 0 || openSlots > 0 ? (
                       <div className="staff-card-grid">
                         {role.employees.map((employee) => (
@@ -296,7 +304,7 @@ function StaffMemberCard({
         </div>
       </div>
 
-      <div className="staff-stat-row">
+      <div className="staff-stat-row staff-morale-row">
         <span className="staff-stat-label">Morale</span>
         <strong className="staff-morale-value">{employee.moraleLabel}</strong>
         <span className="staff-morale-bar" aria-hidden="true">
@@ -304,7 +312,7 @@ function StaffMemberCard({
         </span>
       </div>
 
-      <div className="staff-stat-row">
+      <div className="staff-stat-row staff-salary-row">
         <span className="staff-stat-label">Salary</span>
         <button
           type="button"

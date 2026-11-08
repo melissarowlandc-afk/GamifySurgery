@@ -3,6 +3,17 @@ import { expect, type Locator, type Page } from "@playwright/test";
 export const PROFILE_KEY = "gamify-surgery.prototype.profile.v1";
 export const ACCESS_KEY = "gamify-surgery.prototype.access.v1";
 
+/** Local recovery is asynchronous; wait for either the clinic or its explicit
+ * Resume choice instead of checking the chooser before React has rendered it. */
+export async function resumeLocalCampaign(page: Page, name: string) {
+  const canvas = page.getByTestId("facility-canvas");
+  const resume = page.getByRole("button", { name: `Resume ${name}`, exact: true });
+  await expect.poll(async () => await canvas.isVisible() || await resume.isVisible()).toBe(true);
+  if (await resume.isVisible()) await resume.click();
+  await expect(canvas).toBeVisible();
+  await expect.poll(() => page.evaluate(() => document.fonts.status)).toBe("loaded");
+}
+
 export interface PersistedCampaign {
   campaignId: string;
   name: string;
@@ -432,6 +443,10 @@ export async function installLevelOneVisualState(
         patientSatisfaction: patient.satisfaction,
         patientLocation: patient.location,
         patientMovement: null,
+        // These visual patients are already waiting inside or in an exam room.
+        // Do not inherit the newly spawned source patient's check-in gate.
+        checkInStatus: "checked_in",
+        checkInWaitingSinceTick: null,
         assignedRoomInstanceId:
           patient.id.endsWith(".3")
             ? "room.visual.examination"
@@ -464,15 +479,9 @@ export async function installLevelOneVisualState(
     { profileKey: PROFILE_KEY, nextProfile: profile },
   );
   await page.goto("/?prototype-tools=0");
-  const resume = page.getByRole("button", {
-    name: `Resume ${active.name}`,
-  });
-  if (await resume.isVisible()) {
-    await resume.click();
-  }
-  await expect(page.getByTestId("facility-canvas")).toBeVisible();
+  await resumeLocalCampaign(page, active.name);
   await expect(page.locator(".facility-host canvas")).toBeVisible();
-  await page.waitForTimeout(300);
+  await expect.poll(() => page.locator(".facility-host canvas").evaluate(canvas => canvas.clientWidth > 0 && canvas.clientHeight > 0)).toBe(true);
 }
 
 /**

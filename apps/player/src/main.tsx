@@ -5,6 +5,7 @@ import "@fontsource/atkinson-hyperlegible/latin-700.css";
 import { App } from "./App";
 import "./styles/tokens.css";
 import "./styles/global.css";
+import "./styles/workspaceDensity.css";
 
 const rootElement = document.getElementById("root");
 if (!rootElement) {
