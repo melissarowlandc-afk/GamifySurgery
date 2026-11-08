@@ -1,0 +1,456 @@
+{
+  "checkedOn": "2026-11-07",
+  "decision": "docs/research/question-flags3-manager-decision-20261107.md",
+  "defaultBefore": {
+    "cases": 1141,
+    "nodes": 1452,
+    "uniqueQuestions": 1447,
+    "activeConcepts": 449,
+    "registeredMeanings": 605,
+    "sha256": "77261db946b72dbf0f001e6ce11aab75928b561a19a8a17a874274f08b185a30"
+  },
+  "defaultAfter": {
+    "cases": 1141,
+    "nodes": 1452,
+    "uniqueQuestions": 1447,
+    "activeConcepts": 450,
+    "registeredMeanings": 606,
+    "sha256": "0fbd0efc0502cb47e463a07ea2c8a74e6ce992876f27442ec5597b17cc5273cf"
+  },
+  "accepted": [
+    {
+      "acceptanceId": "F3-01",
+      "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-characteristics-fixed",
+      "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-characteristics-fixed.1",
+      "questionVariantId": "question.statistics-ethics.predictive-value-prevalence.v4.r1",
+      "conceptId": "concept.statistics-ethics.predictive-value-prevalence",
+      "sourceView": "flags3-accepted",
+      "decision": "docs/research/question-flags3-manager-decision-20261107.md",
+      "reviewedQuestionVariantId": "question.statistics-ethics.predictive-value-prevalence.v4.r1",
+      "reviewedNodeSha256": "b0eda5cd3092495a7f1808c2a3e4d82506b390cddc1cf846520f775fec062b50",
+      "acceptedNodeSha256": "b0eda5cd3092495a7f1808c2a3e4d82506b390cddc1cf846520f775fec062b50",
+      "acceptedQuestionSha256": "d5daa9c355b8747f6c1487d7b84baa06b729a94d5115040c023248d0cf0bf5d5",
+      "acceptedCaseSha256": "590cbe13f4c8690f70b20ad159ba118cb1362716ce6b4cfa6aabc743be3f97a1",
+      "exactReviewedNode": true,
+      "exactReviewedCase": true,
+      "holdStatus": "none",
+      "reviewStatus": "needs_clinician_review",
+      "exactOrders": []
+    },
+    {
+      "acceptanceId": "F3-02",
+      "caseId": "case.achalasia.night-regurgitation",
+      "nodeId": "node.achalasia.night-regurgitation.2",
+      "questionVariantId": "question.achalasia.manometric-recognition.v2.r7",
+      "conceptId": "concept.achalasia.secondary-junction-lesion-assessment.v1",
+      "sourceView": "flags3-accepted",
+      "decision": "docs/research/question-flags3-manager-decision-20261107.md",
+      "reviewedQuestionVariantId": "question.achalasia.manometric-recognition.v2.r7",
+      "reviewedNodeSha256": "aa53ceb04f7e202fa157a20a3264c5916106029ccbf00a2e208ef5b7cd1150d5",
+      "acceptedNodeSha256": "aa53ceb04f7e202fa157a20a3264c5916106029ccbf00a2e208ef5b7cd1150d5",
+      "acceptedQuestionSha256": "2ef0a09304a955da4e19653e1c8365939e6248fad0ddb0517baab2334a0686a1",
+      "acceptedCaseSha256": "c0228a2330760bf87ec3888ed9551b4a2a304ed4f44e72414694db634efeb303",
+      "exactReviewedNode": true,
+      "exactReviewedCase": true,
+      "holdStatus": "none",
+      "reviewStatus": "needs_clinician_review",
+      "exactOrders": [
+        {
+          "caseId": "case.achalasia.night-regurgitation",
+          "nodeId": "node.achalasia.night-regurgitation.2",
+          "questionVariantId": "question.achalasia.manometric-recognition.v2.r7",
+          "choiceId": "choice.flags3.20261107.f3-02.key",
+          "choiceLabel": "Endoscopic ultrasound with guided sampling",
+          "timingProfileId": "timing.test.endoscopy_with_sampling",
+          "disposition": {
+            "kind": "not_executed",
+            "reason": "future_planned"
+          }
+        },
+        {
+          "caseId": "case.achalasia.night-regurgitation",
+          "nodeId": "node.achalasia.night-regurgitation.2",
+          "questionVariantId": "question.achalasia.manometric-recognition.v2.r7",
+          "choiceId": "choice.flags3.20261107.f3-02.d1",
+          "choiceLabel": "Functional lumen imaging with distensibility measurement",
+          "timingProfileId": "timing.test.upper_endoscopy",
+          "disposition": {
+            "kind": "not_executed",
+            "reason": "future_planned"
+          }
+        },
+        {
+          "caseId": "case.achalasia.night-regurgitation",
+          "nodeId": "node.achalasia.night-regurgitation.2",
+          "questionVariantId": "question.achalasia.manometric-recognition.v2.r7",
+          "choiceId": "choice.flags3.20261107.f3-02.d2",
+          "choiceLabel": "Timed barium swallow with tablet passage",
+          "timingProfileId": "timing.test.contrast_swallow",
+          "disposition": {
+            "kind": "not_executed",
+            "reason": "future_planned"
+          }
+        }
+      ]
+    },
+    {
+      "acceptanceId": "F3-03-type",
+      "caseId": "case.inguinal-hernia.caregiving-strain",
+      "nodeId": "node.flags3.groin-ultrasound-classification.20261107",
+      "questionVariantId": "question.groin-hernia.ultrasound-type.v1",
+      "conceptId": "concept.groin-hernia.ultrasound-compartment-classification.v1",
+      "sourceView": "flags3-accepted",
+      "decision": "docs/research/question-flags3-manager-decision-20261107.md",
+      "reviewedQuestionVariantId": "question.groin-hernia.ultrasound-type.v1",
+      "reviewedNodeSha256": "84feab9bf398d45d0843bf24cda669d0e993817369e66595206eb9965e272d72",
+      "acceptedNodeSha256": "84feab9bf398d45d0843bf24cda669d0e993817369e66595206eb9965e272d72",
+      "acceptedQuestionSha256": "885d1759ceffd40b6cca0d26eda7fa88a1f2ec7a33f030b020c2ceb0f08d0ee7",
+      "acceptedCaseSha256": "08faf9f23cdf48f53b5d22df1abf57730ac2e05da6d68d2ad15c87a3992779bf",
+      "exactReviewedNode": true,
+      "exactReviewedCase": false,
+      "holdStatus": "none",
+      "reviewStatus": "needs_clinician_review",
+      "exactOrders": []
+    },
+    {
+      "acceptanceId": "F3-03",
+      "caseId": "case.inguinal-hernia.caregiving-strain",
+      "nodeId": "node.inguinal-hernia.caregiving-strain.2",
+      "questionVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v3.r12",
+      "conceptId": "concept.groin-hernia.femoral-defect-repair-priority.v1",
+      "sourceView": "flags3-accepted",
+      "decision": "docs/research/question-flags3-manager-decision-20261107.md",
+      "reviewedQuestionVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v3.r11",
+      "reviewedNodeSha256": "649fbd1bfd825722e59aa9ee15b0cca95dabc980765e07207af6a69df066692f",
+      "acceptedNodeSha256": "5664948a4b367a7140d8aa636497689f9836ecd5cc18dd329ec37ad1723ae563",
+      "acceptedQuestionSha256": "08deb5847e18beade0664cb0132fef5b0925cdf9955e46cb859d56e2adb2a2fa",
+      "acceptedCaseSha256": "08faf9f23cdf48f53b5d22df1abf57730ac2e05da6d68d2ad15c87a3992779bf",
+      "exactReviewedNode": false,
+      "exactReviewedCase": false,
+      "holdStatus": "none",
+      "reviewStatus": "needs_clinician_review",
+      "exactOrders": []
+    }
+  ],
+  "manifest": {
+    "beforeId": "question-ship.2026-11-05.v4",
+    "afterId": "question-ship.2026-11-07.v5",
+    "beforeAccepted": 69,
+    "afterAccepted": 71,
+    "beforeSha256": "8f1f6840174448e987ae008f98c50846e6f70c0c0bc5a86e5f73b3e07a7e02a3",
+    "afterSha256": "c32128d1bebad68306fdfb28b893278548998fecb988a0c50dfb2377ebe413d6",
+    "legacyBindings": 1423,
+    "replacements": [
+      {
+        "replaces": "case.gs028c.palpable-breast.paired-dense-focal",
+        "with": "question.palpable-breast.negative-mammogram-targeted-us.v1.r4"
+      },
+      {
+        "replaces": "case.asymptomatic-phpt.incidental-calcium",
+        "with": "question.asymptomatic-phpt.age-based-surgery.v1.r3"
+      },
+      {
+        "replaces": "case.inguinal-hernia.caregiving-strain",
+        "with": "question.inguinal-hernia.symptomatic-elective-repair.v3.r12"
+      }
+    ],
+    "supersededRows": [
+      {
+        "acceptanceId": "B2A02",
+        "caseId": "case.achalasia.night-regurgitation",
+        "nodeId": "node.achalasia.night-regurgitation.2",
+        "questionVariantId": "question.achalasia.manometric-recognition.v2.r6",
+        "conceptId": "concept.achalasia.secondary-junction-lesion-assessment.v1",
+        "sourceView": "batch2a-round3",
+        "decision": "docs/research/question-bank-batch2a-manager-decision-20261104.md"
+      },
+      {
+        "acceptanceId": "B2A08",
+        "caseId": "case.inguinal-hernia.caregiving-strain",
+        "nodeId": "node.inguinal-hernia.caregiving-strain.2",
+        "questionVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v3.r10",
+        "conceptId": "concept.groin-hernia.femoral-defect-repair-priority.v1",
+        "sourceView": "batch2a-round3",
+        "decision": "docs/research/question-bank-batch2a-manager-decision-20261104.md"
+      }
+    ],
+    "unchangedPriorRows": 67
+  },
+  "source": {
+    "name": "flags3-accepted",
+    "exportName": "QUESTION_FLAGS3_ACCEPTED_SOURCE_RELEASE",
+    "sha256": "12418fd9c79c7f7e85d46879ff6077a83349b833e5f317aeeefb1128129ff404",
+    "reviewedRoundOneSha256": "3be43217d9e9077b2ce47945e28e0d55b88c20e97a494e8bae4d1d91c53f2033",
+    "reviewedSourceUnchanged": true
+  },
+  "catalog": {
+    "unchanged": true,
+    "sha256": "3e0d1bb346abc1579e5c24400565c36c158d90304b60171b24b6a88f64b2ed40"
+  },
+  "timing": {
+    "before": 2215,
+    "after": 2219,
+    "beforeSha256": "3728af1d3c0c074476b9340e7b4fc555d07fadb4945be689e43d1177f06fdd97",
+    "afterSha256": "8fd21099e711c374553b039405e86d106fff65dd57870abdaad59873bb5aea0d",
+    "priorRowsExact": true,
+    "appended": [
+      {
+        "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-characteristics-fixed",
+        "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-characteristics-fixed.1",
+        "questionVariantId": "question.statistics-ethics.predictive-value-prevalence.v4.r1",
+        "classification": {
+          "kind": "no_test"
+        }
+      },
+      {
+        "caseId": "case.achalasia.night-regurgitation",
+        "nodeId": "node.achalasia.night-regurgitation.2",
+        "questionVariantId": "question.achalasia.manometric-recognition.v2.r7",
+        "classification": {
+          "kind": "test_choices",
+          "choices": [
+            {
+              "choiceId": "choice.flags3.20261107.f3-02.key",
+              "choiceLabel": "Endoscopic ultrasound with guided sampling",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.endoscopy_with_sampling"
+              }
+            },
+            {
+              "choiceId": "choice.flags3.20261107.f3-02.d1",
+              "choiceLabel": "Functional lumen imaging with distensibility measurement",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.upper_endoscopy"
+              }
+            },
+            {
+              "choiceId": "choice.flags3.20261107.f3-02.d2",
+              "choiceLabel": "Timed barium swallow with tablet passage",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.contrast_swallow"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "caseId": "case.inguinal-hernia.caregiving-strain",
+        "nodeId": "node.flags3.groin-ultrasound-classification.20261107",
+        "questionVariantId": "question.groin-hernia.ultrasound-type.v1",
+        "classification": {
+          "kind": "no_test"
+        }
+      },
+      {
+        "caseId": "case.inguinal-hernia.caregiving-strain",
+        "nodeId": "node.inguinal-hernia.caregiving-strain.2",
+        "questionVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v3.r12",
+        "classification": {
+          "kind": "no_test"
+        }
+      }
+    ]
+  },
+  "unchangedDefaultCases": 1138,
+  "unchangedHistoricalMeaningObjects": 605,
+  "protectedUnchangedCount": 1348,
+  "changedExistingFiles": [
+    {
+      "path": "apps/player/src/questionShipSaveCompatibility.test.ts",
+      "beforeSha256": "c52f8acc976cca40b3ee9acc15ea49553a3312aedc6d9dcf7a7c7f192e1ec348",
+      "afterSha256": "4ed5006b23979cd2f0af78161d2afb007e7c825f4d1ccf389710ce3ede9d1d39"
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+      "beforeSha256": "038ffe79733b2defa18e94b1f6f48ad2033b3bab319187802f46e65861589cbb",
+      "afterSha256": "d90694e852366f715b58f4986dfcdd016aeda4cecea1126537e97214ac4e5c54"
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "beforeSha256": "7f2d9129e930cd1654dc71415a5b7c514341e13c8d994edc41214d94c65f4e54",
+      "afterSha256": "37b65085cf5d41a543fea68ba3bed0f82ebd8277f345c53e2957d54a1647d63d"
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "beforeSha256": "ee124fd210f55353e3568e3a701248b742fa09ed2f1af9c3dc06fc302f329905",
+      "afterSha256": "f22453a850aa22d4ffba37f05710e8abfb43784547f46cbb28397a76e2181e6b"
+    },
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2b-acceptance-20261105.test.ts",
+      "beforeSha256": "58dc233fb37dc52399132e3e7207484e2cb416cc300ec750d5e24d063355885e",
+      "afterSha256": "6f67cf40c95aeed9da4af0a8dca516b10047a8dec6fbb8154d213973d1d9e2d1"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-round3-20261105.test.ts",
+      "beforeSha256": "f3d614eda5cb2728b08143d851dc72672d82a56630649ba313e7e7b336be420b",
+      "afterSha256": "06106c775b8b845999ffe325fb1f081b9c561591d04f9de054a5b23ee68396d3"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags3-20261107.test.ts",
+      "beforeSha256": "e99d855bfd131b0366b17aa2816bb55f6467d8d0e036e6b82b8bed2daced391b",
+      "afterSha256": "ab63b178dda0d261bd5a9ba6c0dd7ce9813553c56b3b3e4c3bb3e89600f1107b"
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n3-acceptance-20261105.test.ts",
+      "beforeSha256": "f3e0672538a681637955973ba391947e826b1a15d705e800a3cda20cea3a3da6",
+      "afterSha256": "804087e7c4dc4249981e152bd61c0b541c83b8f3a778d09a902b94daa39b1ad4"
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n3-acceptance-test-support.ts",
+      "beforeSha256": "0e3594c8ff7a1d7a5fd259211ab3083bf364e29e989da0f56d5c71023cb62016",
+      "afterSha256": "ed94177ebb121d1ecbae9b4574651355f0e1eeeee948e2729a415397b747644a"
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n3-round3-20261105.test.ts",
+      "beforeSha256": "3caf8773bcc69195a1905bfb4974078c435d3c048e97f1d8f4e8bd8d37f3e5d9",
+      "afterSha256": "f8b47fd1c2bd5f1eb972f9fb71fb365f5b2e39ecdec9420ff2e274e39b5a91fc"
+    },
+    {
+      "path": "packages/clinical-content/src/question-ship-case-replacements.test.ts",
+      "beforeSha256": "e65a420e506871f71055046ca8e6f57ffa1ecd21e0d4c947f37fa5eff6879036",
+      "afterSha256": "e1032f47478bbdf840af1fbbd93b0693df7284ca2478a0f177cffa809bccf00d"
+    },
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+      "beforeSha256": "12e587e5ff318e96b5d11f822e1e891782155aa61236e87161d3a44315b81cfe",
+      "afterSha256": "45b33c956c8ef2f4df61a035d8d34cb70f63d0ff0348c9ff84ea9e8300107676"
+    },
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.ts",
+      "beforeSha256": "243aed1d81250f7a7e5710c05849553fc3b998a7acb9bf1c39aeff100d37d3cf",
+      "afterSha256": "50dadc0a2daf64704b8aa599e23051692ad81bc9e3462772870cd18bb935a6c0"
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "beforeSha256": "e93b4deae7bda1134869b80324d77c5698e075e65b97815eb4f991c8aba5ef81",
+      "afterSha256": "819c38fce01be9684a8ef35e09c5bb64978dc710993862dbcf066b2c5f9392ed"
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "beforeSha256": "0e692d44de8c72f1d2dd89a18debc05e78fd4da679b2e5b8b15964ef5e9198c1",
+      "afterSha256": "cfb0739a97e9eeaa9c671fd4e1da458ec45b0aa2b731863534b42551d80f79e6"
+    },
+    {
+      "path": "tools/question-quality/capture-question-flags3-acceptance-20261107.mjs",
+      "beforeSha256": "77b4ad76ffb7d9f3bbf67d5caba49a27de4440e49996885e6e29e18842ecfed3",
+      "afterSha256": "79193cc940219c49148be61670381f19d10b90ff1b34911708bbc5b8cb48a06e"
+    }
+  ],
+  "changedRuntimeFiles": [
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "beforeSha256": "ee124fd210f55353e3568e3a701248b742fa09ed2f1af9c3dc06fc302f329905",
+      "afterSha256": "f22453a850aa22d4ffba37f05710e8abfb43784547f46cbb28397a76e2181e6b"
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "beforeSha256": "e93b4deae7bda1134869b80324d77c5698e075e65b97815eb4f991c8aba5ef81",
+      "afterSha256": "819c38fce01be9684a8ef35e09c5bb64978dc710993862dbcf066b2c5f9392ed"
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "beforeSha256": "7f2d9129e930cd1654dc71415a5b7c514341e13c8d994edc41214d94c65f4e54",
+      "afterSha256": "37b65085cf5d41a543fea68ba3bed0f82ebd8277f345c53e2957d54a1647d63d"
+    },
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.ts",
+      "beforeSha256": "243aed1d81250f7a7e5710c05849553fc3b998a7acb9bf1c39aeff100d37d3cf",
+      "afterSha256": "50dadc0a2daf64704b8aa599e23051692ad81bc9e3462772870cd18bb935a6c0"
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "beforeSha256": "0e692d44de8c72f1d2dd89a18debc05e78fd4da679b2e5b8b15964ef5e9198c1",
+      "afterSha256": "cfb0739a97e9eeaa9c671fd4e1da458ec45b0aa2b731863534b42551d80f79e6"
+    }
+  ],
+  "newlyLoadedRuntimeFiles": [
+    {
+      "path": "packages/clinical-content/src/question-flags3-accepted-20261107.ts",
+      "sha256": "4c4c2e1b2ccbd32dba5e6cfb056fe480d11091a48bdc75ec788fd2e57398d344"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags3-20261107.ts",
+      "sha256": "be252da89b3ceb215f8ab7de45f535272ab9ddd95caabf30bff6be4a1a2a3b35"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags3-20261107-data.ts",
+      "sha256": "2df687fec9495647dff2a235f48d7983ed1de89d060b14c1a731142f5ae82d8d"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags3-evidence-20261107.ts",
+      "sha256": "8e7cd9e640718d150ba30387d0efddda6117fa46fd6522c09c0b36752e0897a6"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags3-retained-input-20261107.ts",
+      "sha256": "c177ea2dba248474cae76e817614c052aa52fdecade6f50815d33e4d7a7afb35"
+    }
+  ],
+  "levelFive": {
+    "evidencePath": "tools/qa/level-five-integration-results-20261012.json",
+    "evidenceSha256": "dead50020355be0bc328ff4557cd40199763097a8aa01baa3f8944d22492a8d5",
+    "rebound": false,
+    "changedExistingBoundInputs": [
+      {
+        "path": "packages/clinical-content/src/index.ts",
+        "beforeSha256": "ee124fd210f55353e3568e3a701248b742fa09ed2f1af9c3dc06fc302f329905",
+        "afterSha256": "f22453a850aa22d4ffba37f05710e8abfb43784547f46cbb28397a76e2181e6b",
+        "recordedEvidenceSha256": "a57ffcec34d75e2e337790f1ac0d71e4bfdc8f79d53cdb28596e00ead60413e4"
+      },
+      {
+        "path": "packages/clinical-content/src/synthetic-content.ts",
+        "beforeSha256": "e93b4deae7bda1134869b80324d77c5698e075e65b97815eb4f991c8aba5ef81",
+        "afterSha256": "819c38fce01be9684a8ef35e09c5bb64978dc710993862dbcf066b2c5f9392ed",
+        "recordedEvidenceSha256": "6d9870d53383af7da6ee7547ba702410a2545882876faa1696c0e1217fae311c"
+      },
+      {
+        "path": "packages/clinical-content/src/answer-choice-timing.ts",
+        "beforeSha256": "7f2d9129e930cd1654dc71415a5b7c514341e13c8d994edc41214d94c65f4e54",
+        "afterSha256": "37b65085cf5d41a543fea68ba3bed0f82ebd8277f345c53e2957d54a1647d63d",
+        "recordedEvidenceSha256": "7db1b1253c7d3064adb0602360925c0739bb65c719603507c3fa09a6732ba245"
+      },
+      {
+        "path": "packages/game-domain/src/test-choice-orders.ts",
+        "beforeSha256": "0e692d44de8c72f1d2dd89a18debc05e78fd4da679b2e5b8b15964ef5e9198c1",
+        "afterSha256": "cfb0739a97e9eeaa9c671fd4e1da458ec45b0aa2b731863534b42551d80f79e6",
+        "recordedEvidenceSha256": "522c3fbd3b3503f4b6d74f38e7dbd994b98727a3037b0374f86e58dbf5a41639"
+      }
+    ],
+    "modifiedRuntimeFilesNotIndividuallyListed": [
+      "packages/clinical-content/src/question-ship-manifest.ts"
+    ]
+  },
+  "noDomainAcceptanceGateAdded": true,
+  "noSaveJournalOrFsrsFormatChange": true,
+  "clinicalApproval": false,
+  "lint": {
+    "cases": 3,
+    "nodeOccurrences": 5,
+    "uniqueVariants": 5,
+    "concepts": 5,
+    "profileContexts": 10,
+    "variantsWithFindings": 3,
+    "findings": 5,
+    "tutorialSequenceVariants": 0,
+    "missingAuthoredVersion": 0,
+    "missingEducationalTier": 0,
+    "approvalRecordOnlyMetadata": 0,
+    "variantsWithCompleteRationales": 5,
+    "variantsWithMultipleDefinitions": 0,
+    "byPriorityStage": {
+      "0": 1,
+      "1": 4
+    },
+    "byOptionCount": {
+      "3": 4,
+      "4": 1
+    },
+    "variantsByRule": {
+      "case-detail-key-rationale-overlap": 1,
+      "key-only-word-overlap": 2,
+      "unique-key-test-name": 1
+    }
+  }
+}

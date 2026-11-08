@@ -6066,7 +6066,7 @@ export const QUESTION_NEW_N3_PRE_TIMING_ENTRIES = [...QUESTION_NEW_N2_ROUND3_PRE
 import { QUESTION_NEW_N3_TIMING_ENTRIES } from "./question-new-n3-20261105";
 export const ANSWER_CHOICE_TIMING_REGISTRY = [...QUESTION_NEW_N3_PRE_TIMING_ENTRIES,
   ...QUESTION_NEW_N3_TIMING_ENTRIES, ...QUESTION_FLAGS2_ACCEPTED_TIMING_ENTRIES,
-  ...QUESTION_NEW_N3_ROUND2_TIMING_ENTRIES, ...QUESTION_NEW_N3_ROUND3_TIMING_ENTRIES, ...QUESTION_FLAGS2_WHOLE_CASE_TIMING_ENTRIES].map(entry=>answerChoiceTimingRegistryEntrySchema.parse(entry));
+  ...QUESTION_NEW_N3_ROUND2_TIMING_ENTRIES, ...QUESTION_NEW_N3_ROUND3_TIMING_ENTRIES, ...QUESTION_FLAGS2_WHOLE_CASE_TIMING_ENTRIES, ...QUESTION_FLAGS3_ACCEPTED_TIMING_ENTRIES].map(entry=>answerChoiceTimingRegistryEntrySchema.parse(entry));
 // END N3 timing append.
 
 // BEGIN FLAGS2 G06 exact timing append 20261105
@@ -6084,3 +6084,7 @@ import { QUESTION_NEW_N3_ROUND3_TIMING_ENTRIES } from "./question-new-n3-round3-
 // BEGIN FLAGS2 whole-case exact timing append 20261105
 import { QUESTION_FLAGS2_WHOLE_CASE_TIMING_ENTRIES } from "./question-flags2-whole-case-accepted-20261105";
 // END FLAGS2 whole-case exact timing append 20261105
+
+// BEGIN FLAGS3 exact accepted estimates 20261107
+import { QUESTION_FLAGS3_ACCEPTED_TIMING_ENTRIES } from "./question-flags3-accepted-20261107";
+// END FLAGS3 exact accepted estimates 20261107

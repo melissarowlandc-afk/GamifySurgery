@@ -2218,6 +2218,9 @@ export const EXACT_TEST_CHOICE_ORDER_RECORDS: readonly ExactTestChoiceOrderRecor
   // END N3 ROUND3 explicit candidate exact-order append.
   // BEGIN FLAGS2 accepted whole-case preview bindings 20261105
   ...QUESTION_FLAGS2_WHOLE_CASE_TEST_ORDER_RECORDS,
+  // BEGIN FLAGS3 exact accepted preview bindings 20261107
+  ...QUESTION_FLAGS3_ACCEPTED_TEST_ORDER_RECORDS,
+  // END FLAGS3 exact accepted preview bindings 20261107
   // END FLAGS2 accepted whole-case preview bindings 20261105
 ];
 
@@ -2268,3 +2271,7 @@ export function getExactTestChoiceOrderRecord(
     ? entry
     : null;
 }
+
+// BEGIN FLAGS3 exact accepted preview bindings 20261107
+import { QUESTION_FLAGS3_ACCEPTED_TEST_ORDER_RECORDS } from "@gamify-surgery/clinical-content";
+// END FLAGS3 exact accepted preview bindings 20261107

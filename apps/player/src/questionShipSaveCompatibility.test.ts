@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { QUESTION_BANK_PRE_BATCH2A_ROUND2_RELEASE, SYNTHETIC_CLINICAL_RELEASE } from "@gamify-surgery/clinical-content";
+import { QUESTION_BANK_PRE_BATCH2A_ROUND2_RELEASE, SYNTHETIC_CLINICAL_RELEASE, QUESTION_FLAGS3_RETAINED_INPUT, QUESTION_FLAGS3_ACCEPTED_SOURCE_RELEASE } from "@gamify-surgery/clinical-content";
 import { applyFsrsReview, applyGameEvidenceCommand, createNewFsrsCard, gameEvidenceDelta,
   gameReducer, getCurrentQuestion, type DomainContext, type GameCommand, type GameState } from "@gamify-surgery/game-domain";
 import { createLevelFourRoomsQaContext, createLevelFourRoomsQaState } from "../../../tests/fixtures/level-four-rooms";
@@ -20,15 +20,22 @@ import { TestCloudClock } from "./session/cloud/syncTestSupport";
 
 const current = createLevelFourRoomsQaContext();
 const preGate: DomainContext = { ...current, clinicalRelease: QUESTION_BANK_PRE_BATCH2A_ROUND2_RELEASE };
+// Exact flagged live definitions, retained independently of fresh projection.
+const beforeFlags3: DomainContext = {...current, clinicalRelease: {...current.clinicalRelease,
+  cases: current.clinicalRelease.cases.map(cs => QUESTION_FLAGS3_RETAINED_INPUT.cases.find(old => old.id === cs.id) ?? cs)}};
+const historicalContext = (caseId: string) => QUESTION_FLAGS3_RETAINED_INPUT.cases.some(cs => cs.id === caseId) ? beforeFlags3 : preGate;
 const NOW = 1_800_000_000_000, encounterId = "encounter.ship-save";
 const examples = [
   ["excluded", "case.n1.incidental-t1b.v1"],
   ["replaced", "case.n2.sglt2-postoperative-restart.v1"],
   ["whole-case breast", "case.gs028c.palpable-breast.paired-dense-focal"],
   ["whole-case calcium", "case.asymptomatic-phpt.incidental-calcium"],
+  ["flags3 statistics", "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-characteristics-fixed"],
+  ["flags3 dysphagia", "case.achalasia.night-regurgitation"],
+  ["flags3 hernia", "case.inguinal-hernia.caregiving-strain"],
 ] as const;
 
-function fixture(caseId: string, clinicalContext: DomainContext = preGate) {
+function fixture(caseId: string, clinicalContext: DomainContext = historicalContext(caseId)) {
   const cs = clinicalContext.clinicalRelease.cases.find(cs => cs.id === caseId)!;
   const conceptId = cs.decisionNodes[0]!.primaryConceptId;
   let state = createLevelFourRoomsQaState(clinicalContext);
@@ -53,8 +60,11 @@ function fixture(caseId: string, clinicalContext: DomainContext = preGate) {
 
 function ready(state: GameState): boolean {
   const encounter = state.encounters[encounterId];
+  // A no-gate classification/plan pair stays in its examination room. Existing
+  // result-gated encounters still return to the founder desk after that gate.
+  const returnedFromResult = encounter?.frozenCase.decisionNodes.slice(0,encounter.currentNodeIndex).some(n=>n.resultGateAfter);
   return !!encounter && state.openChartEncounterId === encounterId &&
-    encounter.assignedRoomInstanceId === (encounter.currentNodeIndex===0?"room.ship-save.exam":"room.instance.founder_desk") && !encounter.patientMovement &&
+    encounter.assignedRoomInstanceId === (returnedFromResult?"room.instance.founder_desk":"room.ship-save.exam") && !encounter.patientMovement &&
     getCurrentQuestion(state, encounterId, current) !== null;
 }
 async function advanceToQuestion(read: () => GameState, execute: (command: GameCommand) => GameState, prefix: string, durable?:()=>Promise<boolean>) {
@@ -151,6 +161,33 @@ describe("pre-gate questions survive projection-only shipping", () => {
       });
     }finally{session.dispose();}
   });
+  it.each(QUESTION_FLAGS3_ACCEPTED_SOURCE_RELEASE.cases.map(cs=>[cs.id] as const))
+  ("admits accepted flags3 %s, then reopens and completes its exact frozen format-three save",async caseId=>{
+    const old=fixture(caseId,beforeFlags3),previous=structuredClone(old.state.learningHistories);
+    const admitted=gameReducer(old.state,old.admission,current);
+    expect(admitted.operationReceipts[old.admission.operationId]).toMatchObject({status:"applied"});
+    expect(admitted.learningHistories).toEqual(previous);
+    const frozen=structuredClone(admitted.encounters[encounterId]!.frozenCase);
+    const source=QUESTION_FLAGS3_ACCEPTED_SOURCE_RELEASE.cases.find(cs=>cs.id===caseId)!;
+    expect(frozen.decisionNodes.map(n=>[n.id,n.questionVariantId,n.primaryConceptId])).toEqual(source.decisionNodes.map(n=>[n.id,n.questionVariantId,n.primaryConceptId]));
+    for(const [index,node] of frozen.decisionNodes.entries()){
+      const original=source.decisionNodes[index]!;
+      const ordered=(choices:typeof node.answerChoices)=>[...choices].sort((a,b)=>a.id.localeCompare(b.id));
+      expect(ordered(node.answerChoices)).toEqual(ordered(original.answerChoices));
+      expect(node.stem).toBe(original.stem.replaceAll("{patientName}",admitted.encounters[encounterId]!.patientDisplayName));
+    }
+    const f=await rig(admitted);
+    let session=await CloudGameSession.create(await f.open(),undefined,undefined,{operational:false});
+    try{
+      expect(session.state.encounters[encounterId]!.frozenCase).toEqual(frozen);
+      expect(session.state.learningHistories).toEqual(previous);
+      await finish(session,frozen.decisionNodes[0]!.primaryConceptId,frozen);
+      for(const id of Object.keys(previous))if(!frozen.decisionNodes.some(n=>n.primaryConceptId===id))expect(session.state.learningHistories[id]).toEqual(previous[id]);
+      const completed=session.state;session.dispose();
+      session=await CloudGameSession.create(await f.open(),undefined,undefined,{operational:false});
+      expect(session.state).toEqual(completed);expect(session.canExecute).toBe(true);
+    }finally{session.dispose();}
+  });
   it.each(examples.filter(([kind])=>kind.startsWith("whole-case")))("admits the fresh %s replacement without changing its legacy history",(_kind,caseId)=>{
     const old=fixture(caseId),history=structuredClone(old.state.learningHistories[old.conceptId]);
     const admitted=gameReducer(old.state,old.admission,current);
@@ -162,12 +199,12 @@ describe("pre-gate questions survive projection-only shipping", () => {
   });
   for (const [kind, caseId] of examples) for (const phase of ["waiting", "in-progress"] as const) {
     it(`reopens format-three ${phase} ${kind} content without reset and scores its frozen concept`, async () => {
-      const old = fixture(caseId);
-      let state = gameReducer(old.state, old.admission, preGate);
+      const oldContext = historicalContext(caseId), old = fixture(caseId,oldContext);
+      let state = gameReducer(old.state, old.admission, oldContext);
       expect(state.operationReceipts[old.admission.operationId]).toMatchObject({ status: "applied" });
       if (kind === "excluded") expect(SYNTHETIC_CLINICAL_RELEASE.cases.some(cs => cs.id === caseId)).toBe(false);
-      else expect(SYNTHETIC_CLINICAL_RELEASE.cases.find(cs => cs.id === caseId)!.decisionNodes[0]!.questionVariantId).not.toBe(old.cs.decisionNodes[0]!.questionVariantId);
-      if (phase === "in-progress") await advanceToQuestion(() => state, command => state = gameReducer(state, command, preGate), "ship-save.old");
+      else expect(SYNTHETIC_CLINICAL_RELEASE.cases.find(cs => cs.id === caseId)!.decisionNodes.map(n=>n.questionVariantId)).not.toEqual(old.cs.decisionNodes.map(n=>n.questionVariantId));
+      if (phase === "in-progress") await advanceToQuestion(() => state, command => state = gameReducer(state, command, oldContext), "ship-save.old");
       else expect(state.encounters[encounterId]!.lifecycle).toBe("waiting_unopened");
       const frozen = structuredClone(state.encounters[encounterId]!.frozenCase), before = structuredClone(state);
       const f = await rig(state);
@@ -185,7 +222,7 @@ describe("pre-gate questions survive projection-only shipping", () => {
     });
   }
   it.each(examples)("replays a committed pre-gate admission of %s content from the local journal without reselecting it", async (_kind, caseId) => {
-    const old = fixture(caseId), f = await rig(old.state);
+    const oldContext = historicalContext(caseId), old = fixture(caseId,oldContext), f = await rig(old.state);
     const coordinator = new CloudSyncCoordinator({ ...f.runtime, scope: f.scope, clock: f.clock, enabled: true });
     expect(await coordinator.open()).toBe(true); expect(await coordinator.startWriter()).toBe(true); expect(coordinator.resume()).toBe(true);
     const loaded = await loadCloudEvidenceCheckpoint({ ...f.copy, expectedRevision: "57", expectedCampaignId: old.state.campaignId, expectedBaselineId: f.copy.baselineId });
@@ -194,7 +231,7 @@ describe("pre-gate questions survive projection-only shipping", () => {
       confirmed: f.copy, usageQuestions: [], writerGeneration: coordinator.journalWriterGeneration,
       snapshotPolicy: { lineage: { ...loaded.snapshotLineage!, parents: [f.copy.snapshot.uncompressedSha256] } } }, cloudCodec);
     const drain = new LocalJournalDrain(f.cache.journal!, key, owner, head.highWater, error => { throw error; });
-    const committed = applyGameEvidenceCommand(loaded.checkpoint, old.admission, preGate);
+    const committed = applyGameEvidenceCommand(loaded.checkpoint, old.admission, oldContext);
     expect(committed.state.operationReceipts[old.admission.operationId]).toMatchObject({ status: "applied" });
     drain.accept({ delta: gameEvidenceDelta(loaded.checkpoint, committed.checkpoint), campaign: loaded.campaign, usageQuestions: [], writerGeneration: coordinator.journalWriterGeneration });
     expect(await drain.drain()).toBe(true); drain.stop(); coordinator.dispose();

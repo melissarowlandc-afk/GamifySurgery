@@ -1,3 +1,4 @@
+import {beforeFlags3AcceptanceTimings} from "./question-flags3-acceptance-test-support";
 import {describe,expect,it} from "vitest";
 import {beforeN3AcceptanceRelease,beforeN3AcceptanceManifest} from "./question-new-n3-acceptance-test-support";
 import {PROTOTYPE_BALANCE_RELEASE} from "@gamify-surgery/balance-config";
@@ -13,9 +14,10 @@ import {QUESTION_NEW_N3_ROUND3_ITEMS as items,QUESTION_NEW_N3_ROUND3_CASES as ca
  QUESTION_NEW_N3_ROUND3_CLAIMS as claims,QUESTION_NEW_N3_ROUND3_SOURCES as sources,
  QUESTION_NEW_N3_ROUND3_PARKED_CASE_IDS as parked,QUESTION_NEW_N3_ROUND3_NEW_CONCEPT_VERSIONS as meanings,
  applyQuestionNewN3Round3Revisions} from "./question-new-n3-round3-20261105";
-import {ANSWER_CHOICE_TIMING_REGISTRY as registry} from "./answer-choice-timing";
+import {ANSWER_CHOICE_TIMING_REGISTRY as actualRegistry} from "./answer-choice-timing";
 import {QUESTION_SHIP_MANIFEST as currentManifest} from "./question-ship-manifest";
 import {QUESTION_FLAGS2_WHOLE_CASE_TIMING_ENTRIES as acceptedFlags2Timing} from "./question-flags2-whole-case-accepted-20261105";
+const registry=beforeFlags3AcceptanceTimings(actualRegistry);
 const priorIndex=(slug:string)=>oldItems.findIndex(i=>i.slug===slug);
 const live=beforeN3AcceptanceRelease(currentLive),manifest=beforeN3AcceptanceManifest(currentManifest);
 describe("N3 final-round candidate source and exact version preservation",()=>{

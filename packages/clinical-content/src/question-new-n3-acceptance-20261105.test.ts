@@ -1,14 +1,17 @@
+import {beforeFlags3AcceptanceRelease,beforeFlags3AcceptanceManifest,beforeFlags3AcceptanceTimings} from "./question-flags3-acceptance-test-support";
 import {createHash} from "node:crypto";
 import {readFileSync} from "node:fs";
 import {describe,expect,it} from "vitest";
-import {SYNTHETIC_CLINICAL_RELEASE as live,QUESTION_CATALOG_RELEASE as catalog,
+import {SYNTHETIC_CLINICAL_RELEASE as actualLive,QUESTION_CATALOG_RELEASE as catalog,
  QUESTION_NEW_N3_ROUND3_SOURCE_RELEASE as source} from "./synthetic-content";
 import {QUESTION_NEW_N3_ROUND3_SOURCE_RELEASE as retainedExport} from "./question-new-n3-round3-source-20261105";
 import {QUESTION_NEW_N3_ROUND3_QUESTIONS as questions,QUESTION_NEW_N3_ROUND3_CASES as authoredCases,
  QUESTION_NEW_N3_ROUND3_PARKED_CASE_IDS as parked} from "./question-new-n3-round3-20261105";
-import {QUESTION_SHIP_MANIFEST as manifest} from "./question-ship-manifest";
-import {ANSWER_CHOICE_TIMING_REGISTRY as timing} from "./answer-choice-timing";
+import {QUESTION_SHIP_MANIFEST as actualManifest} from "./question-ship-manifest";
+import {ANSWER_CHOICE_TIMING_REGISTRY as actualTiming} from "./answer-choice-timing";
 import {beforeN3AcceptanceRelease,beforeN3AcceptanceManifest} from "./question-new-n3-acceptance-test-support";
+
+const live=beforeFlags3AcceptanceRelease(actualLive),manifest=beforeFlags3AcceptanceManifest(actualManifest),timing=beforeFlags3AcceptanceTimings(actualTiming);
 
 const ids=[
  "review.n3.bilateral-carotid-symptom-attribution.v2",

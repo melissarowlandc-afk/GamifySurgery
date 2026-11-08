@@ -21,7 +21,7 @@ export interface QuestionShipManifest {
   replacements?: readonly QuestionShipCaseReplacement[];
 }
 export const QUESTION_SHIP_MANIFEST = {
-  id: "question-ship.2026-11-05.v4",
+  id: "question-ship.2026-11-07.v5",
   clinicalApproval: false,
   legacyDecision: "Carry forward the existing live bank before the owner-flag rewrite program; user-directed fallback on 2026-11-05. This does not independently accept prior drafts or grant clinical approval.",
   legacyBindings: [
@@ -8824,15 +8824,6 @@ export const QUESTION_SHIP_MANIFEST = {
     "decision": "docs/research/question-bank-batch2a-manager-decision-20261104.md"
   },
   {
-    "acceptanceId": "B2A02",
-    "caseId": "case.achalasia.night-regurgitation",
-    "nodeId": "node.achalasia.night-regurgitation.2",
-    "questionVariantId": "question.achalasia.manometric-recognition.v2.r6",
-    "conceptId": "concept.achalasia.secondary-junction-lesion-assessment.v1",
-    "sourceView": "batch2a-round3",
-    "decision": "docs/research/question-bank-batch2a-manager-decision-20261104.md"
-  },
-  {
     "acceptanceId": "B2A04",
     "caseId": "case.achalasia.slow-meals",
     "nodeId": "node.achalasia.slow-meals.1",
@@ -8865,15 +8856,6 @@ export const QUESTION_SHIP_MANIFEST = {
     "nodeId": "node.inguinal-hernia.running-discomfort.2",
     "questionVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v2.r11",
     "conceptId": "concept.inguinal-hernia.symptomatic-elective-repair.v3",
-    "sourceView": "batch2a-round3",
-    "decision": "docs/research/question-bank-batch2a-manager-decision-20261104.md"
-  },
-  {
-    "acceptanceId": "B2A08",
-    "caseId": "case.inguinal-hernia.caregiving-strain",
-    "nodeId": "node.inguinal-hernia.caregiving-strain.2",
-    "questionVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v3.r10",
-    "conceptId": "concept.groin-hernia.femoral-defect-repair-priority.v1",
     "sourceView": "batch2a-round3",
     "decision": "docs/research/question-bank-batch2a-manager-decision-20261104.md"
   },
@@ -9137,15 +9119,59 @@ export const QUESTION_SHIP_MANIFEST = {
     "conceptId": "concept.n2r2.equivalence-and-safety-implementation",
     "sourceView": "catalog",
     "decision": "docs/research/question-new-manager-decision-20261105.md"
-  }
+  },
+  // BEGIN FLAGS3 ACCEPTANCES 20261107
+  {
+    "acceptanceId": "F3-01",
+    "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-characteristics-fixed",
+    "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-characteristics-fixed.1",
+    "questionVariantId": "question.statistics-ethics.predictive-value-prevalence.v4.r1",
+    "conceptId": "concept.statistics-ethics.predictive-value-prevalence",
+    "sourceView": "flags3-accepted",
+    "decision": "docs/research/question-flags3-manager-decision-20261107.md"
+  },
+  {
+    "acceptanceId": "F3-02",
+    "caseId": "case.achalasia.night-regurgitation",
+    "nodeId": "node.achalasia.night-regurgitation.2",
+    "questionVariantId": "question.achalasia.manometric-recognition.v2.r7",
+    "conceptId": "concept.achalasia.secondary-junction-lesion-assessment.v1",
+    "sourceView": "flags3-accepted",
+    "decision": "docs/research/question-flags3-manager-decision-20261107.md"
+  },
+  {
+    "acceptanceId": "F3-03-type",
+    "caseId": "case.inguinal-hernia.caregiving-strain",
+    "nodeId": "node.flags3.groin-ultrasound-classification.20261107",
+    "questionVariantId": "question.groin-hernia.ultrasound-type.v1",
+    "conceptId": "concept.groin-hernia.ultrasound-compartment-classification.v1",
+    "sourceView": "flags3-accepted",
+    "decision": "docs/research/question-flags3-manager-decision-20261107.md"
+  },
+  {
+    "acceptanceId": "F3-03",
+    "caseId": "case.inguinal-hernia.caregiving-strain",
+    "nodeId": "node.inguinal-hernia.caregiving-strain.2",
+    "questionVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v3.r12",
+    "conceptId": "concept.groin-hernia.femoral-defect-repair-priority.v1",
+    "sourceView": "flags3-accepted",
+    "decision": "docs/research/question-flags3-manager-decision-20261107.md"
+  },
+  // END FLAGS3 ACCEPTANCES 20261107
 ] satisfies QuestionShipAcceptance[],
   // BEGIN FLAGS2 WHOLE-CASE ACCEPTANCES 20261105
   replacements: [
     { replaces: "case.gs028c.palpable-breast.paired-dense-focal", with: "question.palpable-breast.negative-mammogram-targeted-us.v1.r4" },
     { replaces: "case.asymptomatic-phpt.incidental-calcium", with: "question.asymptomatic-phpt.age-based-surgery.v1.r3" },
+    // Flags3 replaces the old workup/plan node list with classification/plan.
+    { replaces: "case.inguinal-hernia.caregiving-strain", with: "question.inguinal-hernia.symptomatic-elective-repair.v3.r12" },
   ] satisfies QuestionShipCaseReplacement[],
   // END FLAGS2 WHOLE-CASE ACCEPTANCES 20261105
   headerSources: {
+  // BEGIN FLAGS3 ACCEPTED HEADERS 20261107
+  "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-characteristics-fixed": "flags3-accepted",
+  "case.inguinal-hernia.caregiving-strain": "flags3-accepted",
+  // END FLAGS3 ACCEPTED HEADERS 20261107
   // BEGIN N3 FROZEN REVIEW2 HEADERS 20261105
   "case.n3.bilateral-carotid-symptom-attribution.v1": "n3-round3",
   "case.n3.postsplenectomy-nodule-function-before-targeting.v1": "n3-round3",
@@ -9187,7 +9213,7 @@ export const QUESTION_SHIP_MANIFEST = {
   "case.gs028se.p2e.perioperative-dnr.v4.perianal-abscess": "flags-round3",
   "case.gs028e.mis-principles.c2-early-central-filling": "flags-round3",
   "case.gs028c.palpable-breast.b-surgeon-discordance": "flags-round3",
-  "case.achalasia.night-regurgitation": "batch2a-round3",
+  "case.achalasia.night-regurgitation": "flags3-accepted",
   "case.pigmented-skin-lesion.forearm-change": "batch2a-round3",
   "case.gs028se.pdsa-act-qi-measures.a-abandon-harm": "batch2a-round3",
   "case.adrenal-incidentaloma.small-adrenal-adenoma": "batch2a-round3",

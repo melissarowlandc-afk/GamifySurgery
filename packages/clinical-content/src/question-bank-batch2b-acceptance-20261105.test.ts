@@ -1,3 +1,4 @@
+import {beforeFlags3AcceptanceManifest} from "./question-flags3-acceptance-test-support";
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
@@ -111,7 +112,7 @@ describe("batch 2b manager-directed exact-version acceptance", () => {
   it("preserves every historical legacy binding and existing non-N2 acceptance", () => {
     expect(manifest.legacyBindings).toEqual(intake.manifest.legacyBindings);
     for (const old of intake.manifest.accepted.filter(row => !row.acceptanceId.startsWith("review.n2."))) {
-      expect(manifest.accepted.find(row => row.acceptanceId === old.acceptanceId)).toEqual(old);
+      expect(beforeFlags3AcceptanceManifest(manifest).accepted.find(row => row.acceptanceId === old.acceptanceId)).toEqual(old);
     }
     for (const old of intake.release.concepts) {
       expect(live.concepts.find(row => row.id === old.id)).toEqual(old);

@@ -1,3 +1,5 @@
+import {QUESTION_FLAGS3_ACCEPTED_SOURCE_RELEASE as flags3, withAcceptedQuestionFlags3Concepts} from "./question-flags3-accepted-20261107";
+import {beforeFlags3AcceptanceManifest} from "./question-flags3-acceptance-test-support";
 import { describe, expect, it, vi } from "vitest";
 import { readFileSync } from "node:fs";
 import { QUESTION_SHIP_MANIFEST as manifest, type QuestionShipManifest } from "./question-ship-manifest";
@@ -17,8 +19,8 @@ import { withAcceptedQuestionNewN3Round2Concepts } from "./question-new-n3-round
 // Match the production registry: exact accepted rewrite meanings are appended;
 // unaccepted draft meanings are not added merely for this validation fixture.
 const n3Catalog = withAcceptedQuestionNewN3Round2Concepts(completeCatalog,authoringCatalog.concepts);
-const catalog = withAcceptedQuestionFlags2WholeCaseConcepts(withAcceptedQuestionFlags2Concepts(withAcceptedQuestionBankBatch2bRound2Concepts(n3Catalog)));
-const views = { legacy, "flags-round3": flags, "batch2a-round3": batch2a, "n1-round3": n1, "n2-round2": n2, "batch2b-round2": batch2b, "flags2-round1": flags2, "flags2-round3":flags2round3, "n3-round3":n3 };
+const catalog = withAcceptedQuestionFlags3Concepts(withAcceptedQuestionFlags2WholeCaseConcepts(withAcceptedQuestionFlags2Concepts(withAcceptedQuestionBankBatch2bRound2Concepts(n3Catalog))));
+const views = { "flags3-accepted":flags3, legacy, "flags-round3": flags, "batch2a-round3": batch2a, "n1-round3": n1, "n2-round2": n2, "batch2b-round2": batch2b, "flags2-round1": flags2, "flags2-round3":flags2round3, "n3-round3":n3 };
 const readReview = (name: string) => JSON.parse(readFileSync(new URL("../../../docs/research/" + name, import.meta.url), "utf8")) as Array<{id: string; verdict: string}>;
 
 describe("projection-only manager shipping manifest", () => {
@@ -27,7 +29,7 @@ describe("projection-only manager shipping manifest", () => {
   expect(manifest.legacyBindings).toHaveLength(1423);
   // Separate exact-version tests pin the sixteen 2b rows and the single G06
   // row; every earlier lane retains its exact acceptance checks below.
-  expect(manifest.accepted.filter(row => !["batch2b-round2", "flags2-round1", "flags2-round3", "n3-round3"].includes(row.sourceView))).toHaveLength(45);
+  expect(beforeFlags3AcceptanceManifest(manifest).accepted.filter(row => !["batch2b-round2", "flags2-round1", "flags2-round3", "n3-round3"].includes(row.sourceView))).toHaveLength(45);
   expect(live.cases).toHaveLength(1141);
   expect(catalog.cases).toHaveLength(1229);
  });
@@ -70,22 +72,22 @@ describe("projection-only manager shipping manifest", () => {
   }
  });
  it("ships the exact directed flags and batch-2a versions, with legacy nodes for all other rewrites", () => {
-  expect(manifest.accepted.filter(row => /^F\d/.test(row.acceptanceId)).map(row => row.acceptanceId).sort()).toEqual(["F01","F03","F05","F09","F10","F11","F12","F15","F17"]);
-  expect(manifest.accepted.filter(row => /^B2A/.test(row.acceptanceId)).map(row => row.acceptanceId).sort()).toEqual(["B2A01","B2A02","B2A04","B2A05","B2A06","B2A07","B2A08","B2A09","B2A10","B2A11"]);
+  expect(manifest.accepted.filter(row => /^F\d\d$/.test(row.acceptanceId)).map(row => row.acceptanceId).sort()).toEqual(["F01","F03","F05","F09","F10","F11","F12","F15","F17"]);
+  expect(beforeFlags3AcceptanceManifest(manifest).accepted.filter(row => /^B2A/.test(row.acceptanceId)).map(row => row.acceptanceId).sort()).toEqual(["B2A01","B2A02","B2A04","B2A05","B2A06","B2A07","B2A08","B2A09","B2A10","B2A11"]);
   for (const row of manifest.accepted) {
    const node = live.cases.find(cs => cs.id === row.caseId)!.decisionNodes.find(node => node.id === row.nodeId)!;
    expect(node).toMatchObject({ questionVariantId: row.questionVariantId, primaryConceptId: row.conceptId });
   }
   for (const cs of legacy.cases) for (const node of cs.decisionNodes) {
    if(manifest.replacements.some(row=>row.replaces===cs.id)){
-    expect(live.cases.find(row=>row.id===cs.id)).toEqual(flags2round3.cases.find(row=>row.id===cs.id));
+    expect(live.cases.find(row=>row.id===cs.id)).toEqual(views[manifest.headerSources[cs.id] as keyof typeof views]!.cases.find(row=>row.id===cs.id));
     continue;
    }
    if (!manifest.accepted.some(row => row.caseId === cs.id && row.nodeId === node.id)) expect(live.cases.find(row => row.id === cs.id)!.decisionNodes.find(row => row.id === node.id)).toEqual(node);
   }
   const mixed = live.cases.find(cs => cs.id === "case.achalasia.night-regurgitation")!;
   expect(mixed.decisionNodes[0]).toEqual(legacy.cases.find(cs => cs.id === mixed.id)!.decisionNodes[0]);
-  expect(mixed.decisionNodes[1]!.questionVariantId).toBe("question.achalasia.manometric-recognition.v2.r6");
+  expect(mixed.decisionNodes[1]!.questionVariantId).toBe("question.achalasia.manometric-recognition.v2.r7");
  });
  it.each(["missing-view", "duplicate-node", "unknown-version", "changed-concept", "unknown-node"] as const)
  ("reports %s in tests while runtime warns and preserves the affected legacy case", kind => {

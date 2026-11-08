@@ -1,3 +1,4 @@
+import {beforeFlags3AcceptanceTimings} from "./question-flags3-acceptance-test-support";
 import {createHash} from "node:crypto";
 import {readFileSync} from "node:fs";
 import {describe,expect,it,vi} from "vitest";
@@ -9,13 +10,14 @@ import {QUESTION_FLAGS2_ROUND3_SOURCE_RELEASE as source,QUESTION_FLAGS2_ROUND3_R
 import {withAcceptedQuestionFlags2WholeCaseConcepts,QUESTION_FLAGS2_WHOLE_CASE_TIMING_ENTRIES as timings} from "./question-flags2-whole-case-accepted-20261105";
 import {SYNTHETIC_CLINICAL_RELEASE as currentLive,QUESTION_FLAGS_PRE_REVISION_RELEASE as legacy,
   QUESTION_NEW_N3_PRE_RELEASE as baseCatalog,QUESTION_CATALOG_RELEASE} from "./synthetic-content";
-import {ANSWER_CHOICE_TIMING_REGISTRY} from "./answer-choice-timing";
+import {ANSWER_CHOICE_TIMING_REGISTRY as actualTimings} from "./answer-choice-timing";
 import type {SyntheticClinicalRelease} from "./schema";
 
 const capture=JSON.parse(readFileSync(new URL("../../../tools/question-quality/fixtures/question-ship-case-replacements-before-20261105.json",import.meta.url),"utf8")) as {
   default:{cases:number;nodes:number;concepts:number;caseHashes:Record<string,string>;conceptHashes:Record<string,string>};
   manifest:{accepted:QuestionShipManifest["accepted"];legacyBindings:QuestionShipManifest["legacyBindings"]};timing:{count:number;sha256:string};
 };
+const ANSWER_CHOICE_TIMING_REGISTRY=beforeFlags3AcceptanceTimings(actualTimings);
 const digest=(x:unknown)=>createHash("sha256").update(JSON.stringify(x)).digest("hex");
 const live=beforeN3AcceptanceRelease(currentLive),manifest=beforeN3AcceptanceManifest(currentManifest);
 const clone=<T>(x:T):T=>JSON.parse(JSON.stringify(x)) as T;

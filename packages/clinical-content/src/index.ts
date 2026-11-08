@@ -157,3 +157,8 @@ export * from "./question-new-n3-round3-source-20261105";
 // BEGIN FLAGS2 whole-case accepted integration 20261105
 export * from "./question-flags2-whole-case-accepted-20261105";
 // END FLAGS2 whole-case accepted integration 20261105
+
+// BEGIN FLAGS3 ACCEPTED EXPORTS 20261107
+export * from "./question-flags3-20261107";
+export * from "./question-flags3-accepted-20261107";
+// END FLAGS3 ACCEPTED EXPORTS 20261107

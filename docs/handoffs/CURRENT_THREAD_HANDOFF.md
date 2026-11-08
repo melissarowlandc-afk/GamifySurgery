@@ -9155,3 +9155,43 @@ Immutable receipts and resumability state:
 `.local-dev/release-port19-20261105/`. No further worker milestone is open;
 manager reviews the scoped diff and receipts before acceptance. No commit,
 push or deployment was performed.
+
+
+## Release port 20 / rebind 20 — 2026-11-07 (GS-release)
+
+Completed only manager-accepted flags3 from entry HEAD 46e19b2f. Manifest is
+71 rows, SHA-256 c32128d1bebad68306fdfb28b893278548998fecb988a0c50dfb2377ebe413d6;
+default 1,141 cases / 1,452 nodes / 606 meanings, exact accepted hash. All other
+67 accepted rows, 1,423 legacy tuples, 605 prior meanings, 1,138 cases and
+11 approvals remain exact. Required historical r11 remains source/provenance
+only; current fresh management uses r12. No other draft lane or cloud/iPhone,
+selector, balance or save-format code was ported.
+
+Dispositions: 41 copied / 5 hunk-ported / 88 live versions excluded, plus native
+generated evidence/release-epoch fixture; exactly 53 public paths changed.
+`.local-dev/release-verify/port20-20261107.json` records every path/reason/hash.
+The strict release source guard retains all 840 original path checks, with 35
+explicit release-entry pins (13 files remain absent); main captures unchanged.
+
+Actual native journey + lower: **26,531 commands / 6,019,042 cents /
+412 completions / 0 walkouts**, versus 30,501 / 6,790,515 / 471 / 0. New concept
+pool changes the first seeded admission at tick 60; goals unlock 3,738 ticks
+earlier and the run is 3,735 ticks shorter. Completion rate per minute increases.
+Cash reconciles. Full counterfactual with only pre-port clinicalRelease restores
+all prior numbers/reports/nine checkpoint bytes. All nine new saves and three
+reports are honestly regenerated; history 20, source pins 539 (397 clinical).
+Guard/drivers/assertions unchanged; launch first-report pins are 51 / 62.51688977024545
+and label 62.51. Large-entry threshold unchanged (new native payload 5,035,511 B).
+
+All 31 ship-save tests (12 flags3 waiting/in-progress/journal/fresh cases) and
+25 regenerated legacy schema loads/continuations pass. Complete suites:
+**751 files / 10528 passed / 0 failed /
+1 existing skip**. Seven typechecks, player build, 33 lint tests
+and launcher contract pass. Boundary passes with 7,219 actual tracked paths through the strict native-inventory
+bridge; Node spawning itself remains sandbox-restricted. No browser/device claim.
+
+Full file/hash/timing/validation/exclusion handoff is appended in
+`docs/execplans/gs028-stats-ethics-overhaul-20261007.md` (release port 20).
+Private immutable receipts and resumability state are under
+`.local-dev/release-port20-20261107/`. Manager accepts/reviews; no worker
+implementation remains. No commit, push, install, network, agent or deployment.

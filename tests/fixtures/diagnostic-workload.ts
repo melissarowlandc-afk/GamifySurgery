@@ -108,7 +108,8 @@ export function createDiagnosticWorkload(): { state: GameState; chartId: string 
   // Public retained QA history supplies authentic FSRS/audit payload at account
   // save scale. No private state, copied owner names, invented reviews or byte
   // padding. Keep current operational geometry/actors/orders independent.
-  const retained = JSON.parse(readFileSync(new URL("./level-five-integration-checkpoints-20261012.json", import.meta.url), "utf8"))["integration-lower-repeat"];
+  const retainedCheckpoints = JSON.parse(readFileSync(new URL("./level-five-integration-checkpoints-20261012.json", import.meta.url), "utf8"));
+  const retained = retainedCheckpoints["integration-lower-repeat"];
   const history = deserializeGameState(JSON.stringify(retained));
   const clockOffset = history.facilityTick - state.facilityTick;
   const historyClock = <T,>(value: T, key = ""): T => {
@@ -133,7 +134,21 @@ export function createDiagnosticWorkload(): { state: GameState; chartId: string 
     state.pediatricFamilies ??= {};
     state.pediatricFamilies[family.id] = historyClock(family);
   }
-  state.serviceOperations.push(...historyClock(history.serviceOperations.filter(operation => (operation.status === "completed" || operation.status === "cancelled") && operation.clinicVisit?.pediatricFamilyId === undefined)));
+  // Keep the original 18-row historical pressure even when a shorter rebound
+  // journey retains fewer rows in its final snapshot. Earlier checkpoints are
+  // from the same real run; deduplicate authentic completed records, without
+  // inventing work or changing the nine active synthetic service chains.
+  const historicalServices: ServiceOperationState[] = [];
+  const historicalServiceIds = new Set<string>();
+  const serviceHistory = [history, ...Object.values(retainedCheckpoints).reverse()] as GameState[];
+  for (const snapshot of serviceHistory) for (const operation of snapshot.serviceOperations) {
+    if (historicalServices.length === 18) break;
+    if ((operation.status !== "completed" && operation.status !== "cancelled") ||
+        operation.clinicVisit?.pediatricFamilyId !== undefined || historicalServiceIds.has(operation.id)) continue;
+    historicalServices.push(operation); historicalServiceIds.add(operation.id);
+  }
+  if (historicalServices.length !== 18) throw new Error("Synthetic workload requires 18 unique real historical service records");
+  state.serviceOperations.push(...historyClock(historicalServices));
   state.learningHistories = { ...state.learningHistories, ...historyClock(history.learningHistories) };
   state.schedulerPins = history.schedulerPins;
   state.reviewIntents = historyClock(history.reviewIntents);

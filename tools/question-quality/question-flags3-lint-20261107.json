@@ -1,0 +1,491 @@
+{
+  "checkedOn": "2026-11-07",
+  "linterVersion": "question-cue-lint.2026-11-04.v8",
+  "scope": "All canonical/finite candidate contexts and prior visible feedback/results. Four new variants and one preserved first decision; no exclusions or suppressed findings.",
+  "totals": {
+    "ownerFlags": 3,
+    "newVariants": 4,
+    "candidateCases": 3,
+    "nodeOccurrences": 5,
+    "profileContexts": 10,
+    "newVariantContexts": 8,
+    "beforeFlaggedFindings": 4,
+    "newVariantFindings": 4,
+    "preservedContextFindings": 1,
+    "totalFindings": 5,
+    "suppressedFindings": 0
+  },
+  "variants": [
+    {
+      "questionVariantId": "question.statistics-ethics.predictive-value-prevalence.v4.r1",
+      "conceptId": "concept.statistics-ethics.predictive-value-prevalence",
+      "conceptName": "Relate positive predictive value to prevalence",
+      "conceptType": "applied_science",
+      "educationalTier": 1,
+      "facilityStages": [
+        0
+      ],
+      "optionCounts": [
+        4
+      ],
+      "authoredVersions": [
+        "question-authoring.2026-11-07.flags3-r1"
+      ],
+      "reviewStatuses": [
+        "needs_clinician_review"
+      ],
+      "caseIds": [
+        "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-characteristics-fixed"
+      ],
+      "nodeOccurrences": 1,
+      "profileContexts": 2,
+      "metadataOrigins": [
+        "authored_question"
+      ],
+      "tutorialSequence": false,
+      "tutorialEligible": false,
+      "educationalIntent": "unclassified_pending_review",
+      "rationaleComparisonAvailable": true,
+      "definitionFingerprints": [
+        "b33f61526a97e73f2c08325cb1112611d237d9fa3a07aea88db76ba5ba5daf79"
+      ],
+      "supportingEvidenceClaimIds": [
+        "claim.flags3.20261107.audit-alternative-denominators",
+        "claim.flags3.20261107.audit-calculation",
+        "claim.flags3.20261107.positive-result-denominator"
+      ],
+      "findings": [],
+      "wordingFingerprint": "8bb2cabde6ed425870e9a20db93115a93a531d8c5e6089009bd85cd4d4d1dd18",
+      "priorityStage": 0,
+      "caseReferenceCount": 1
+    },
+    {
+      "questionVariantId": "question.groin-hernia.ultrasound-type.v1",
+      "conceptId": "concept.groin-hernia.ultrasound-compartment-classification.v1",
+      "conceptName": "Classify a groin sac by ultrasound compartment",
+      "conceptType": "diagnosis",
+      "educationalTier": 1,
+      "facilityStages": [
+        1
+      ],
+      "optionCounts": [
+        3
+      ],
+      "authoredVersions": [
+        "question-authoring.2026-11-07.flags3-r1"
+      ],
+      "reviewStatuses": [
+        "needs_clinician_review"
+      ],
+      "caseIds": [
+        "case.inguinal-hernia.caregiving-strain"
+      ],
+      "nodeOccurrences": 1,
+      "profileContexts": 2,
+      "metadataOrigins": [
+        "authored_question"
+      ],
+      "tutorialSequence": false,
+      "tutorialEligible": false,
+      "educationalIntent": "unclassified_pending_review",
+      "rationaleComparisonAvailable": true,
+      "definitionFingerprints": [
+        "b91ee88f8da3596a387cef085a55ab85bcdfaeead69de0e06d713c532cc15026"
+      ],
+      "supportingEvidenceClaimIds": [
+        "claim.flags3.20261107.direct-comparator",
+        "claim.flags3.20261107.groin-compartment",
+        "claim.flags3.20261107.indirect-comparator"
+      ],
+      "findings": [
+        {
+          "id": "69424ed2a767eed0",
+          "rule": "case-detail-key-rationale-overlap",
+          "severity": "advisory",
+          "message": "A case-detail phrase repeats only the explicit keyed reason. Review for pre-answer teaching; raw decision-critical evidence may justify the overlap. Synonymous paraphrases still require human review.",
+          "evidence": [
+            {
+              "field": "exhibit.items[0].value",
+              "text": "Below the inguinal ligament",
+              "start": 0,
+              "end": 27
+            },
+            {
+              "field": "authoring.answerChoices.rationale",
+              "text": "below the inguinal ligament",
+              "start": 14,
+              "end": 41,
+              "choiceId": "choice.flags3.20261107.f3-03-type.key",
+              "postAnswerMetadata": true
+            }
+          ],
+          "metrics": {
+            "explicitRationalesCompared": 3
+          },
+          "occurrences": [
+            {
+              "caseId": "case.inguinal-hernia.caregiving-strain",
+              "profileIds": [
+                "canonical",
+                "profile.flags3.inguinal-hernia.caregiving-strain.20261107"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 27
+                },
+                {
+                  "start": 14,
+                  "end": 41
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ac4b207b3c09c64a",
+          "rule": "case-detail-key-rationale-overlap",
+          "severity": "advisory",
+          "message": "A case-detail phrase repeats only the explicit keyed reason. Review for pre-answer teaching; raw decision-critical evidence may justify the overlap. Synonymous paraphrases still require human review.",
+          "evidence": [
+            {
+              "field": "exhibit.items[1].label",
+              "text": "to the common femoral vein",
+              "start": 9,
+              "end": 35
+            },
+            {
+              "field": "authoring.answerChoices.rationale",
+              "text": "to the common femoral vein",
+              "start": 53,
+              "end": 79,
+              "choiceId": "choice.flags3.20261107.f3-03-type.key",
+              "postAnswerMetadata": true
+            }
+          ],
+          "metrics": {
+            "explicitRationalesCompared": 3
+          },
+          "occurrences": [
+            {
+              "caseId": "case.inguinal-hernia.caregiving-strain",
+              "profileIds": [
+                "canonical",
+                "profile.flags3.inguinal-hernia.caregiving-strain.20261107"
+              ],
+              "ranges": [
+                {
+                  "start": 9,
+                  "end": 35
+                },
+                {
+                  "start": 53,
+                  "end": 79
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "27db0afa1a0b7baf",
+          "rule": "key-only-word-overlap",
+          "severity": "advisory",
+          "message": "A substantive word appears in the context and key only; clinical relevance may justify it.",
+          "evidence": [
+            {
+              "field": "exhibit.items[1].label",
+              "text": "femoral",
+              "start": 23,
+              "end": 30
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Femoral",
+              "start": 0,
+              "end": 7,
+              "choiceId": "choice.flags3.20261107.f3-03-type.key"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.inguinal-hernia.caregiving-strain",
+              "profileIds": [
+                "canonical",
+                "profile.flags3.inguinal-hernia.caregiving-strain.20261107"
+              ],
+              "ranges": [
+                {
+                  "start": 23,
+                  "end": 30
+                },
+                {
+                  "start": 0,
+                  "end": 7
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "wordingFingerprint": "256e7f9c6aa607ee857945390068d5a091c26afe06a162ca2c3420bd1f8db02d",
+      "priorityStage": 1,
+      "caseReferenceCount": 1
+    },
+    {
+      "questionVariantId": "question.achalasia.high-resolution-manometry.v2.r6",
+      "conceptId": "concept.achalasia.high-resolution-manometry.v2",
+      "conceptName": "Resolve technical and symptom-protocol limitations in motility testing",
+      "conceptType": "workup",
+      "educationalTier": 1,
+      "facilityStages": [
+        1
+      ],
+      "optionCounts": [
+        3
+      ],
+      "authoredVersions": [
+        "question-authoring.2026-11-02.v8"
+      ],
+      "reviewStatuses": [
+        "needs_clinician_review"
+      ],
+      "caseIds": [
+        "case.achalasia.night-regurgitation"
+      ],
+      "nodeOccurrences": 1,
+      "profileContexts": 2,
+      "metadataOrigins": [
+        "authored_question"
+      ],
+      "tutorialSequence": false,
+      "tutorialEligible": false,
+      "educationalIntent": "unclassified_pending_review",
+      "rationaleComparisonAvailable": true,
+      "definitionFingerprints": [
+        "92af69719254102ce4754f5ff9495e4b39139bf182569bc9c6381959e55cc0d6"
+      ],
+      "supportingEvidenceClaimIds": [
+        "claim.achalasia.high-resolution-manometry",
+        "claim.qq20261102a.esophageal-physiology-sequence",
+        "claim.qq20261102c.hrm-protocol-and-provocation",
+        "claim.qq20261102d.hrm-rapid-drink-purpose",
+        "claim.qq20261102d.hrm-rapid-swallow-interpretation"
+      ],
+      "findings": [
+        {
+          "id": "4b46b8596113d34d",
+          "rule": "key-only-word-overlap",
+          "severity": "advisory",
+          "message": "A substantive word appears in the context and key only; clinical relevance may justify it.",
+          "evidence": [
+            {
+              "field": "currentUpdate",
+              "text": "after",
+              "start": 226,
+              "end": 231
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "after",
+              "start": 20,
+              "end": 25,
+              "choiceId": "manometry_2"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.achalasia.night-regurgitation",
+              "profileIds": [
+                "canonical",
+                "profile.flags3.achalasia.night-regurgitation.20261107"
+              ],
+              "ranges": [
+                {
+                  "start": 226,
+                  "end": 231
+                },
+                {
+                  "start": 20,
+                  "end": 25
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "wordingFingerprint": "d9741106e3047c7d712b3643c9df13888393d77cc766239732606333b5484b77",
+      "priorityStage": 1,
+      "caseReferenceCount": 1
+    },
+    {
+      "questionVariantId": "question.achalasia.manometric-recognition.v2.r7",
+      "conceptId": "concept.achalasia.secondary-junction-lesion-assessment.v1",
+      "conceptName": "Investigate a secondary junction lesion despite achalasia-pattern physiology",
+      "conceptType": "workup",
+      "educationalTier": 1,
+      "facilityStages": [
+        1
+      ],
+      "optionCounts": [
+        3
+      ],
+      "authoredVersions": [
+        "question-authoring.2026-11-07.flags3-r1"
+      ],
+      "reviewStatuses": [
+        "needs_clinician_review"
+      ],
+      "caseIds": [
+        "case.achalasia.night-regurgitation"
+      ],
+      "nodeOccurrences": 1,
+      "profileContexts": 2,
+      "metadataOrigins": [
+        "authored_question"
+      ],
+      "tutorialSequence": false,
+      "tutorialEligible": false,
+      "educationalIntent": "unclassified_pending_review",
+      "rationaleComparisonAvailable": true,
+      "definitionFingerprints": [
+        "de8b5fbe1369d6b538769e1fa29dbbe9789c9f8e19e89e283233009cffe1a955"
+      ],
+      "supportingEvidenceClaimIds": [
+        "claim.flags3.20261107.junction-wall-target",
+        "claim.flags3.20261107.motor-pattern-scope"
+      ],
+      "findings": [
+        {
+          "id": "53ad6641a1112717",
+          "rule": "unique-key-test-name",
+          "severity": "advisory",
+          "message": "Only the key matches the small named-test lexicon; check semantic and naming parity.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "ultrasound",
+              "start": 11,
+              "end": 21,
+              "choiceId": "choice.flags3.20261107.f3-02.key"
+            }
+          ],
+          "metrics": {
+            "aliasGroup": "Ultrasound"
+          },
+          "occurrences": [
+            {
+              "caseId": "case.achalasia.night-regurgitation",
+              "profileIds": [
+                "canonical",
+                "profile.flags3.achalasia.night-regurgitation.20261107"
+              ],
+              "ranges": [
+                {
+                  "start": 11,
+                  "end": 21
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "wordingFingerprint": "0ddff41f09912591c3334e6e266d5c79b911e12059f609db3265e781966765da",
+      "priorityStage": 1,
+      "caseReferenceCount": 1
+    },
+    {
+      "questionVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v3.r11",
+      "conceptId": "concept.groin-hernia.femoral-defect-repair-priority.v1",
+      "conceptName": "Recognize the femoral exception to inguinal watchful waiting",
+      "conceptType": "management",
+      "educationalTier": 1,
+      "facilityStages": [
+        1
+      ],
+      "optionCounts": [
+        3
+      ],
+      "authoredVersions": [
+        "question-authoring.2026-11-07.flags3-r1"
+      ],
+      "reviewStatuses": [
+        "needs_clinician_review"
+      ],
+      "caseIds": [
+        "case.inguinal-hernia.caregiving-strain"
+      ],
+      "nodeOccurrences": 1,
+      "profileContexts": 2,
+      "metadataOrigins": [
+        "authored_question"
+      ],
+      "tutorialSequence": false,
+      "tutorialEligible": false,
+      "educationalIntent": "unclassified_pending_review",
+      "rationaleComparisonAvailable": true,
+      "definitionFingerprints": [
+        "05caa1b169316fe41092038b83193bedcdb99218ac930fef5ccd5c5a7ffe2889"
+      ],
+      "supportingEvidenceClaimIds": [
+        "claim.flags3.20261107.acute-boundary",
+        "claim.flags3.20261107.reducible-femoral-plan"
+      ],
+      "findings": [],
+      "wordingFingerprint": "3ae33e6a504afe0ba56ee8493f8078c99632d885a826923fc3a4bb2b4e925669",
+      "priorityStage": 1,
+      "caseReferenceCount": 1
+    }
+  ],
+  "preservedContext": [
+    {
+      "variantId": "question.achalasia.high-resolution-manometry.v2.r6",
+      "findings": [
+        {
+          "id": "4b46b8596113d34d",
+          "rule": "key-only-word-overlap",
+          "severity": "advisory",
+          "message": "A substantive word appears in the context and key only; clinical relevance may justify it.",
+          "evidence": [
+            {
+              "field": "currentUpdate",
+              "text": "after",
+              "start": 226,
+              "end": 231
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "after",
+              "start": 20,
+              "end": 25,
+              "choiceId": "manometry_2"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.achalasia.night-regurgitation",
+              "profileIds": [
+                "canonical",
+                "profile.flags3.achalasia.night-regurgitation.20261107"
+              ],
+              "ranges": [
+                {
+                  "start": 226,
+                  "end": 231
+                },
+                {
+                  "start": 20,
+                  "end": 25
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "disposition": "Unchanged current first acquisition question; the after/after lexical match is recorded, not rewritten in this owner-flag lane."
+    }
+  ],
+  "warningDisposition": "All warnings remain in raw output. Author explanations do not waive independent/clinical review or establish PASS."
+}

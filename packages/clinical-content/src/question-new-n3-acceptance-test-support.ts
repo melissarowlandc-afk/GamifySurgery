@@ -1,3 +1,4 @@
+import {beforeFlags3AcceptanceRelease,beforeFlags3AcceptanceManifest,beforeFlags3AcceptanceSource} from "./question-flags3-acceptance-test-support";
 import {createHash} from "node:crypto";
 import {readFileSync} from "node:fs";
 import {expect} from "vitest";
@@ -28,6 +29,7 @@ const rows=packet.frozenPreservation.map(pin=>{
 /** Historical test epoch only. First pin all five accepted objects and prove
  * the complete live delta; no runtime/save path calls these adapters. */
 export function beforeN3AcceptanceRelease(release:SyntheticClinicalRelease):SyntheticClinicalRelease {
+ release=beforeFlags3AcceptanceRelease(release);
  expect(rows).toHaveLength(5);
  for(const row of rows)expect(release.cases.find(c=>c.id===row.caseId)).toEqual(source.cases.find(c=>c.id===row.caseId));
  expect(release.cases.filter(c=>c.id.startsWith("case.n3.")).map(c=>c.id).sort()).toEqual(rows.map(r=>r.caseId).sort());
@@ -39,6 +41,7 @@ export function beforeN3AcceptanceRelease(release:SyntheticClinicalRelease):Synt
  return restored;
 }
 export function beforeN3AcceptanceManifest(manifest:QuestionShipManifest):QuestionShipManifest {
+ manifest=beforeFlags3AcceptanceManifest(manifest);
  expect(manifest.accepted.filter(a=>a.sourceView==="n3-round3")).toEqual(rows);
  const headerSources={...manifest.headerSources};
  for(const row of rows){expect(headerSources[row.caseId]).toBe("n3-round3");delete headerSources[row.caseId];}
@@ -47,6 +50,7 @@ export function beforeN3AcceptanceManifest(manifest:QuestionShipManifest):Questi
  return restored;
 }
 export function beforeN3AcceptanceSource(path:string,current:string):string {
+ current=beforeFlags3AcceptanceSource(path,current);
  const receipt=read("tools/question-quality/fixtures/question-new-n3-acceptance-source-migration-20261105.json") as {
   files:Array<{path:string;beforeSha256:string;afterSha256:string;beforeText:string}>;
  };

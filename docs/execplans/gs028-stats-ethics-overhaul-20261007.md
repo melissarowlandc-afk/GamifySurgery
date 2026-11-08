@@ -9300,3 +9300,611 @@ remain. The work stays local and uncommitted; no push or deploy occurred.
 The manager owns acceptance and the GitHub-backup checkpoint decision. Final
 per-file SHA-256s and unrelated-path preservation are recorded in
 `.local-dev/release-port19-20261105/final-file-inventory.json` after this append.
+
+
+## Release port 20 and Level 5 evidence rebind 20 (release worktree, flags3 acceptance) — 2026-11-07
+
+Completed only the manager-accepted flags3 lane in
+`C:/Users/rowla/Projects/GS-release`, entry HEAD identified by the manager as
+`46e19b2f`. The live tree was read-only. No clinical content was authored or
+silently approved. No cloud/iPhone memory, selector, progression, balance,
+character, save/journal schema, codec limit or unrelated runtime edit was ported.
+Local work remains uncommitted; no push, install, network, agent or deploy.
+
+### Accepted projection and provenance
+
+The four exact directed rows are:
+
+- `F3-01`: `question.statistics-ethics.predictive-value-prevalence.v4.r1` → `concept.statistics-ethics.predictive-value-prevalence`.
+- `F3-02`: `question.achalasia.manometric-recognition.v2.r7` → `concept.achalasia.secondary-junction-lesion-assessment.v1`.
+- `F3-03-type`: `question.groin-hernia.ultrasound-type.v1` → `concept.groin-hernia.ultrasound-compartment-classification.v1`.
+- `F3-03`: `question.inguinal-hernia.symptomatic-elective-repair.v3.r12` → `concept.groin-hernia.femoral-defect-repair-priority.v1`.
+
+F3-02 supersedes B2A02 and F3-03 supersedes B2A08: **69 - 2 + 4 = 71** accepted
+rows. All other **67** prior rows and all **1,423** legacy tuples remain exact;
+whole-case relations increase **2 → 3**. Default counts and object hashes:
+
+- Manifest `question-ship.2026-11-07.v5`: **71 accepted rows**, SHA-256 of
+  `JSON.stringify(manifest)`
+  `c32128d1bebad68306fdfb28b893278548998fecb988a0c50dfb2377ebe413d6`.
+- Default: **1,141 cases / 1,452 nodes / 606 meanings**; SHA-256
+  `0fbd0efc0502cb47e463a07ea2c8a74e6ce992876f27442ec5597b17cc5273cf`.
+- Exactly **three** current case bodies change; the other **1,138** cases and
+  all **605** prior meanings remain exact. The single new meaning is
+  `concept.groin-hernia.ultrasound-compartment-classification.v1`.
+- Main draft catalog unchanged. Four accepted question versions remain
+  `needs_clinician_review`, with null clinician review. Existing **11** approval
+  records and **38** protected approved-source paths are byte-exact.
+- Accepted source hash `12418fd9c79c7f7e85d46879ff6077a83349b833e5f317aeeefb1128129ff404`;
+  original reviewed source hash
+  `3be43217d9e9077b2ce47945e28e0d55b88c20e97a494e8bae4d1d91c53f2033`.
+  The required immutable r11 source remains available for historical provenance;
+  only r12 is admitted in fresh management encounters. Other parked drafts and
+  unrelated lanes were not imported.
+- Every previous timing row remains exact: **2,215 → 2,219**. Three new exact
+  procedure-preview order bindings remain `future_planned`; no new procedure
+  execution or timing-policy change. Ledger/review records were copied, with
+  their original access/reuse metadata; no external material was fetched.
+
+Independent verification: `accepted-71-verification.json` in the private task
+directory. These are object hashes; raw source-file hashes are listed separately.
+
+### Scoped port and necessary release adaptations
+
+The requested content-diff helper found **114** differing source/test/asset
+paths. Its output was redirected to this task's scratch directory without
+overwriting historical receipts. Final dispositions are **41 copied /
+5 hunk-ported / 88 live versions excluded**. Additional documentation, quality
+tools and required immutable fixtures are explicitly included in the disposition
+receipt, `.local-dev/release-verify/port20-20261107.json`. Exactly **53 public
+source/evidence/documentation paths** change; generated build output and private
+receipts are outside this count.
+
+The new original flags3 test protected main-tree files that are intentionally
+absent or different in this release. Its original 840-path capture remains
+unchanged. A separate, SHA-pinned release receipt names exactly **35** excluded
+paths: **22** must retain exact pre-port release bytes, **13** must remain absent.
+The question guard checks every original protected path, using those explicit
+release-entry hashes only for these unrelated lanes. No broad allow-list or
+source-read substitution was added. Source helper, original migration/capture
+fixtures and historical main-tree scope/validation records remain intact.
+
+The complete admitted-concept test gains exactly the one new meaning, retaining
+every earlier ID and the strict full-array equality. Two launch-pin files are
+updated only to the native first report (51 patients; 62.51688977024545 and UI
+scoreLabel 62.51). The existing `entryLarge` **4,900,000-byte** threshold is
+unchanged: the new staged native fixture measures **5,035,511 bytes** after its
+same 1,200 real operational commands/stored-block gzip. No cloud test or runtime
+file was changed for this port. The iPhone memory fix is preserved byte-for-byte.
+
+One derived performance fixture required a local update after the first full
+player run: its historical service rows came only from the final checkpoint.
+That checkpoint now retains 14 eligible resolved rows rather than 18, reducing
+the fixture from 27 operations to 23 and failing its existing `>25` stress floor.
+The fixture now retains the original **18 unique authentic historical rows**
+from the same native run's checkpoints (87 eligible unique rows available),
+giving the original **27 total operations** with **nine active chains**, 96 rooms,
+41 doors, 25 staff and two outstanding diagnostic orders. It deduplicates real
+records and uses their common journey clock; no work or bytes were invented.
+The performance test and every budget/assertion remain unchanged. The departed
+pediatric-family preservation hunk remains intact. Provenance is recorded in
+`workload-provenance.json`; corrected launch/workload tests pass **17/17**.
+Fresh complete domain and player runs were then started against this final
+fixture. The final scope is **41 copied / 5 hunk-ported / 88 live versions excluded**.
+
+| Copied/hunk-ported path | Disposition | Release SHA-256 |
+|---|---|---|
+| `apps/player/src/questionShipSaveCompatibility.test.ts` | copied | `4ed5006b23979cd2f0af78161d2afb007e7c825f4d1ccf389710ce3ede9d1d39` |
+| `apps/player/src/session/levelFiveLaunch.test.tsx` | hunk-ported | `5cf9a200dea7f76bfae30edfaa561df9fc6bdcdeacfc40cd07194980dde0c36d` |
+| `docs/execplans/question-flags3-acceptance-20261107.md` | copied | `da2b4757c9bb1f510de4a00dcc0b3298216e8e3178ebe28bef2873bfbbc27695` |
+| `docs/research/question-flags3-20261107.json` | copied | `9dc7689a265937018a492b59df7567f5ef11d95180fed49c0659274a01e6d247` |
+| `docs/research/question-flags3-acceptance-files-20261107.json` | copied | `09764e487ea88367d0c511bdbe05bc40f5f97a5898098aa39345cf9dbce01e37` |
+| `docs/research/question-flags3-acceptance-handoff-20261107.md` | copied | `109cb3c3f3f4590169f81d55919a53b03fc030c667b6dbca0dbc387b94f33863` |
+| `docs/research/question-flags3-acceptance-scope-20261107.json` | copied | `b9f902f54417cc1a7b2affaa8a392065e14404a071d4ce0dbdb0402fedd720e4` |
+| `docs/research/question-flags3-acceptance-validation-20261107.json` | copied | `6f3069cc02183b8b95a13a71ffcdd511f9d6272d5a1c165b7f63afb6b261bd89` |
+| `docs/research/question-flags3-accepted-20261107.json` | copied | `0f1ff920c8a926a10c2add1afbe255e7d4dded01dccb177684c09517bb5a7be2` |
+| `docs/research/question-flags3-manager-decision-20261107.md` | copied | `3ccc11c4cca92457ee675e402ab9f4f51a4db688c987485753511734b7990d87` |
+| `docs/research/question-flags3-review-20261107.json` | copied | `a59a748d8d616ca0e7a2c575c72e3a54b988917f98939232677936e71ea23feb` |
+| `docs/research/sources-question-flags3-20261107.json` | copied | `d749c243880930c53972d0fbfb0e4d13a70dc2764f66e8e9d5f3b0b3a3bf9659` |
+| `packages/clinical-content/src/answer-choice-timing.test.ts` | copied | `d90694e852366f715b58f4986dfcdd016aeda4cecea1126537e97214ac4e5c54` |
+| `packages/clinical-content/src/answer-choice-timing.ts` | copied | `37b65085cf5d41a543fea68ba3bed0f82ebd8277f345c53e2957d54a1647d63d` |
+| `packages/clinical-content/src/index.ts` | copied | `f22453a850aa22d4ffba37f05710e8abfb43784547f46cbb28397a76e2181e6b` |
+| `packages/clinical-content/src/question-bank-batch2b-acceptance-20261105.test.ts` | copied | `6f67cf40c95aeed9da4af0a8dca516b10047a8dec6fbb8154d213973d1d9e2d1` |
+| `packages/clinical-content/src/question-flags2-round3-20261105.test.ts` | copied | `06106c775b8b845999ffe325fb1f081b9c561591d04f9de054a5b23ee68396d3` |
+| `packages/clinical-content/src/question-flags3-20261107-data.ts` | copied | `2df687fec9495647dff2a235f48d7983ed1de89d060b14c1a731142f5ae82d8d` |
+| `packages/clinical-content/src/question-flags3-20261107.test.ts` | hunk-ported | `4e86634d37150709bd616d54f7b2375b3018406f4c76342f17f668f7a7e33cef` |
+| `packages/clinical-content/src/question-flags3-20261107.ts` | copied | `be252da89b3ceb215f8ab7de45f535272ab9ddd95caabf30bff6be4a1a2a3b35` |
+| `packages/clinical-content/src/question-flags3-acceptance-20261107.test.ts` | copied | `ce8ca1e938e74d76e75a6aef45b00757b15691ef7e05f9c016f82c03d6d9d06c` |
+| `packages/clinical-content/src/question-flags3-acceptance-test-support.ts` | copied | `af6bf04b16f7c3b4d1dab9284761283b460e88afa9d47c0efad7ba77eacad737` |
+| `packages/clinical-content/src/question-flags3-accepted-20261107.ts` | copied | `4c4c2e1b2ccbd32dba5e6cfb056fe480d11091a48bdc75ec788fd2e57398d344` |
+| `packages/clinical-content/src/question-flags3-evidence-20261107.ts` | copied | `8e7cd9e640718d150ba30387d0efddda6117fa46fd6522c09c0b36752e0897a6` |
+| `packages/clinical-content/src/question-flags3-retained-input-20261107.ts` | copied | `c177ea2dba248474cae76e817614c052aa52fdecade6f50815d33e4d7a7afb35` |
+| `packages/clinical-content/src/question-new-n3-acceptance-20261105.test.ts` | copied | `804087e7c4dc4249981e152bd61c0b541c83b8f3a778d09a902b94daa39b1ad4` |
+| `packages/clinical-content/src/question-new-n3-acceptance-test-support.ts` | copied | `ed94177ebb121d1ecbae9b4574651355f0e1eeeee948e2729a415397b747644a` |
+| `packages/clinical-content/src/question-new-n3-round3-20261105.test.ts` | copied | `f8b47fd1c2bd5f1eb972f9fb71fb365f5b2e39ecdec9420ff2e274e39b5a91fc` |
+| `packages/clinical-content/src/question-ship-case-replacements.test.ts` | copied | `e1032f47478bbdf840af1fbbd93b0693df7284ca2478a0f177cffa809bccf00d` |
+| `packages/clinical-content/src/question-ship-manifest.test.ts` | copied | `45b33c956c8ef2f4df61a035d8d34cb70f63d0ff0348c9ff84ea9e8300107676` |
+| `packages/clinical-content/src/question-ship-manifest.ts` | copied | `50dadc0a2daf64704b8aa599e23051692ad81bc9e3462772870cd18bb935a6c0` |
+| `packages/clinical-content/src/synthetic-content.ts` | copied | `819c38fce01be9684a8ef35e09c5bb64978dc710993862dbcf066b2c5f9392ed` |
+| `packages/game-domain/src/test-choice-orders.ts` | copied | `cfb0739a97e9eeaa9c671fd4e1da458ec45b0aa2b731863534b42551d80f79e6` |
+| `packages/game-domain/tests/approved-clinical-admission.test.ts` | hunk-ported | `470aa7707b65db595298787369bb85b5bd7f63cbf97594931d9b51a34044e6f5` |
+| `packages/game-domain/tests/level-five-launch.test.ts` | hunk-ported | `5d03fe7c285265dbcd3bdf702d47b4726a6ce148e6242285822fe3bbc683625a` |
+| `tests/fixtures/diagnostic-workload.ts` | hunk-ported | `a21f273bc9770967388e9d6d718adece4581765f40c36dbbc7d11650245a6318` |
+| `tools/question-quality/capture-question-flags3-acceptance-20261107.mjs` | copied | `79193cc940219c49148be61670381f19d10b90ff1b34911708bbc5b8cb48a06e` |
+| `tools/question-quality/check-question-flags3-acceptance-20261107.mjs` | copied | `fe8967c8827bf1e5342b236c2f68bd8090e9b92298e336c1b4054158e6736cbc` |
+| `tools/question-quality/fixtures/question-flags3-acceptance-before-20261107.json` | copied | `d94aedc367f17ee764e97cc39ae8e46e0e67af72aefe26740fea7e8c6079437a` |
+| `tools/question-quality/fixtures/question-flags3-acceptance-source-migration-20261107.json` | copied | `41f5abfc99ac2a29f37feeaf0470bb90524482dbe3d642607664173fe1e89852` |
+| `tools/question-quality/fixtures/question-flags3-before-20261107.json` | copied | `a08f2af30a7ae0722a3e6b67a115a29a6cceadb9122689199dc48606782e4204` |
+| `tools/question-quality/question-flags3-accepted-lint-20261107.json` | copied | `3e2fe48f6dd9974551e94865ed81b219b85213346d952b494081f78656a0d057` |
+| `tools/question-quality/question-flags3-lint-20261107.json` | copied | `638f40f7e10603e6a295f75e51634b78fcd846b9ba14cda42892d7c5ce50840d` |
+| `tools/question-quality/record-question-flags3-source-migration-20261107.mjs` | copied | `c32c330c8b9b96e861bcbf5fb37d96cac965e8e9296deb2b39806a25bd55bba1` |
+| `tools/question-quality/record-question-flags3-validation-20261107.mjs` | copied | `7687f70280c6433af4932f8a03c0ccdd2249f29807e19a1be51a3d0b6b5d8747` |
+| `tools/question-quality/review-question-flags3-accepted-20261107.mjs` | copied | `1aacae216f0708fce9804f25d00f1f0eaf3ecab899952a98eea9085b9f646d48` |
+
+Additional generated strict release-epoch fixture:
+`tools/question-quality/fixtures/question-flags3-release-source-pins-20261107.json`,
+SHA-256 `d51706b40781e3b06f06251e464fd70a15f683491ed1a7234191cac374af13c2`.
+
+Exact 53-path changed-file list (before/after hashes for every path are in
+`final-file-inventory.json`):
+
+- `apps/player/src/questionShipSaveCompatibility.test.ts`
+- `apps/player/src/session/levelFiveLaunch.test.tsx`
+- `docs/execplans/gs028-stats-ethics-overhaul-20261007.md`
+- `docs/execplans/question-flags3-acceptance-20261107.md`
+- `docs/execplans/release-port20-20261107.md`
+- `docs/handoffs/CURRENT_THREAD_HANDOFF.md`
+- `docs/research/question-flags3-20261107.json`
+- `docs/research/question-flags3-acceptance-files-20261107.json`
+- `docs/research/question-flags3-acceptance-handoff-20261107.md`
+- `docs/research/question-flags3-acceptance-scope-20261107.json`
+- `docs/research/question-flags3-acceptance-validation-20261107.json`
+- `docs/research/question-flags3-accepted-20261107.json`
+- `docs/research/question-flags3-manager-decision-20261107.md`
+- `docs/research/question-flags3-review-20261107.json`
+- `docs/research/sources-question-flags3-20261107.json`
+- `packages/clinical-content/src/answer-choice-timing.test.ts`
+- `packages/clinical-content/src/answer-choice-timing.ts`
+- `packages/clinical-content/src/index.ts`
+- `packages/clinical-content/src/question-bank-batch2b-acceptance-20261105.test.ts`
+- `packages/clinical-content/src/question-flags2-round3-20261105.test.ts`
+- `packages/clinical-content/src/question-flags3-20261107-data.ts`
+- `packages/clinical-content/src/question-flags3-20261107.test.ts`
+- `packages/clinical-content/src/question-flags3-20261107.ts`
+- `packages/clinical-content/src/question-flags3-acceptance-20261107.test.ts`
+- `packages/clinical-content/src/question-flags3-acceptance-test-support.ts`
+- `packages/clinical-content/src/question-flags3-accepted-20261107.ts`
+- `packages/clinical-content/src/question-flags3-evidence-20261107.ts`
+- `packages/clinical-content/src/question-flags3-retained-input-20261107.ts`
+- `packages/clinical-content/src/question-new-n3-acceptance-20261105.test.ts`
+- `packages/clinical-content/src/question-new-n3-acceptance-test-support.ts`
+- `packages/clinical-content/src/question-new-n3-round3-20261105.test.ts`
+- `packages/clinical-content/src/question-ship-case-replacements.test.ts`
+- `packages/clinical-content/src/question-ship-manifest.test.ts`
+- `packages/clinical-content/src/question-ship-manifest.ts`
+- `packages/clinical-content/src/synthetic-content.ts`
+- `packages/game-domain/src/test-choice-orders.ts`
+- `packages/game-domain/tests/approved-clinical-admission.test.ts`
+- `packages/game-domain/tests/level-five-launch.test.ts`
+- `tests/fixtures/diagnostic-workload.ts`
+- `tests/fixtures/level-five-integration-checkpoints-20261012.json`
+- `tests/fixtures/level-five-legacy-behavior-20261012.json`
+- `tools/qa/level-five-integration-results-20261012.json`
+- `tools/question-quality/capture-question-flags3-acceptance-20261107.mjs`
+- `tools/question-quality/check-question-flags3-acceptance-20261107.mjs`
+- `tools/question-quality/fixtures/question-flags3-acceptance-before-20261107.json`
+- `tools/question-quality/fixtures/question-flags3-acceptance-source-migration-20261107.json`
+- `tools/question-quality/fixtures/question-flags3-before-20261107.json`
+- `tools/question-quality/fixtures/question-flags3-release-source-pins-20261107.json`
+- `tools/question-quality/question-flags3-accepted-lint-20261107.json`
+- `tools/question-quality/question-flags3-lint-20261107.json`
+- `tools/question-quality/record-question-flags3-source-migration-20261107.mjs`
+- `tools/question-quality/record-question-flags3-validation-20261107.mjs`
+- `tools/question-quality/review-question-flags3-accepted-20261107.mjs`
+
+### Frozen save and encounter safety
+
+All **31** ship-save compatibility tests pass, including **12** flags3 tests:
+three fresh admissions/format-3 completions, three old waiting snapshots, three
+old in-progress snapshots and three committed old-admission journals. Their
+retained source cases match this actual GS-release entry snapshot exactly:
+
+- `case.inguinal-hernia.caregiving-strain`: `question.inguinal-hernia.equivocal-exam-ultrasound.v3.r7`, `question.inguinal-hernia.symptomatic-elective-repair.v3.r10`; complete case SHA-256 `2a16b84ac1e7e51b9a89a643d20482427f379a3773bf40353f998e8cbfb93d98`.
+- `case.achalasia.night-regurgitation`: `question.achalasia.high-resolution-manometry.v2.r6`, `question.achalasia.manometric-recognition.v2.r6`; complete case SHA-256 `bad005826ac5fc93fb23fb677f60c154217492f6b78836715840ff5e6a92c848`.
+- `case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-characteristics-fixed`: `question.statistics-ethics.predictive-value-prevalence.v4`; complete case SHA-256 `9347cfc945d124f1ae7093f718a5b1eb9fb5647f4040047dc645cf70335108de`.
+
+Tests retain complete frozen case/node/variant/concept IDs, randomized choices,
+existing reviews, old timing/order bindings, durable completion and idempotent
+scoring. New anatomical history is not copied from the retired workup card.
+The no-result-gate type/plan pair remains in its examination room; existing
+result-gated cases still assert return to the founder desk. The original
+240-tick bound and all codec limits remain unchanged. All nine previous Level 5
+checkpoints also load with identical frozen encounters and prior FSRS histories.
+No real tester storage or remote backend was used. Evidence:
+`save-safety-verification.json`, focused/full player JSON reports and
+`accepted-run-verification.json`.
+
+### Native Level 5 rebind 20 and numerical explanation
+
+The actual unchanged native journey and lower helper ran inside GS-release
+with original seed `level-five-m9.integration.01` and funded Level 4 opening.
+The staging wrapper redirected only generated artifact paths. Native commands
+exited 0; **29 journey writes + 2 lower-helper writes**, zero canonical writes
+before the strict verifier. Guard and native driver/assertion hashes remain
+unchanged. Every report has 3,000 observed active minutes, ten categories and
+at least twenty qualifying patients; best/latest/immutable-first invariants,
+supplier savings, rounds/comfort, retirement and >20,000-command assertions pass.
+
+| Main total | Before (rebind 19) | After (rebind 20) | Delta |
+|---|---:|---:|---:|
+| Commands | 30,501 | 26,531 | -3,970 |
+| Closing cents | 6,790,515 | 6,019,042 | -771,473 |
+| Completed encounters | 471 | 412 | -59 |
+| Walkouts | 0 | 0 | 0 |
+| Final facility tick | 28,416 | 24,681 | -3,735 |
+| Inspection unlock tick | 18,644 | 14,906 | -3,738 |
+
+The accepted new meaning changes the sorted unseen-concept pool used by the
+unchanged `clinical-selection.ts`. The deterministic choice depends on that
+pool's length, so the same seed can select a different existing case before a
+flags3 case appears. A read-only, 2,000-minute matched prefix first differs at
+**tick 60**: `encounter.auto.4.0` chooses the prior peristomal-skin case versus
+the existing paired postoperative HIV case. First answer/command differs at
+**102**, cash at **103**, XP at **105**. Neither first case's content was edited.
+This changes subsequent chart/service/review scheduling and when the ordinary
+goals simultaneously hold. At tick 600, XP is 104 before / 84 after; at 1,200,
+208 / 210. The complete trace is `prefix-comparison.json`.
+
+Level 4 advancement is **78 ticks earlier**; the XP goal is **296 ticks earlier**.
+The new satisfaction trajectory reaches 91 at tick 14,906 instead of 18,644;
+both unlocks retain staff morale 100 and nine employees, with all thresholds
+unchanged. Thus the three-inspection journey finishes **3,735 minutes sooner**.
+The lower completion total follows shorter exposure: completions per 1,000
+facility minutes increase **16.575169 → 16.693003**;
+all three report samples increase (table below). There is no introduced walkout
+or collapse in patient throughput.
+
+For causal confirmation, a separate complete run uses the **same current engine,
+driver and seed**, changing only `context.clinicalRelease` back to the exact
+pre-port object. That counterfactual restores **all** prior metrics, all three
+reports and **all nine checkpoint bytes**, including 30,501 / 6,790,515 / 471 / 0.
+It never writes canonical evidence. `content-only-control.json` is the proof.
+No balance, selector, service engine or driver was altered to obtain either run.
+
+Cash reconciles exactly:
+`1,785,500 + 15,101,400 - 265,652 - 9,554,206 - 1,048,000 = 6,019,042` cents.
+Relative delta: **-2,355,000 gross +70,247 avoided stock +1,513,280 avoided paid
+operating = -771,473** cents. Opening and capital cents are unchanged.
+
+| Recorded metric | Before | After | Delta |
+|---|---:|---:|---:|
+| commandsReconciled | 30501 | 26531 | -3970 |
+| openingCashCents | 1785500 | 1785500 | 0 |
+| grossCents | 17456400 | 15101400 | -2355000 |
+| stockCents | 335899 | 265652 | -70247 |
+| paidOperatingCents | 11067486 | 9554206 | -1513280 |
+| capitalCents | 1048000 | 1048000 | 0 |
+| closingCashCents | 6790515 | 6019042 | -771473 |
+| levelFourAdvanceTick | 4156 | 4078 | -78 |
+| xpGoalTick | 14795 | 14499 | -296 |
+| firstAnswers | 614 | 544 | -70 |
+| levelFiveFirstAnswers | 525 | 455 | -70 |
+| completedDailyRounds | 41 | 36 | -5 |
+| positiveComfortUses | 1128 | 958 | -170 |
+| retiredEncounters | 459 | 401 | -58 |
+| retiredReceipts | 6353 | 5257 | -1096 |
+| finishNotices | 0 | 0 | 0 |
+
+| Report | Previous score | New score | Previous patients | New patients |
+|---|---:|---:|---:|---:|
+| 1 | 62.002750872553335 | 62.51688977024545 | 49 | 51 |
+| 2 | 66.79094619665999 | 66.84337234413047 | 49 | 50 |
+| 3 | 45.363372018052374 | 45.45219805372466 | 47 | 49 |
+
+All nine saves change and are regenerated honestly; e2e consumers of
+`tests/fixtures/level-five-integration-checkpoints-20261012.json` receive the
+new saves. `tests/e2e/level-five.spec.ts` was inspected, not edited; it consumes
+the scenarios and relative report invariants rather than old exact score pins.
+Browser execution remains manager-owned.
+
+| Checkpoint | Prior tick | New tick | Delta | Prior serialized-state SHA-256 | New serialized-state SHA-256 |
+|---|---:|---:|---:|---|---|
+| integration-l4 | 4156 | 4078 | -78 | `faeff459356fed800633fb68d4f975fb02ad84ac168614c73fc207c32976016e` | `893b32d65b88b20433576a5de64d5d7ad860618ca6f8e10e06012d65ed40adc3` |
+| integration-build | 4156 | 4078 | -78 | `8bbe238b6b667c74fa6fa116761c536783431d7b3dd65c1d1df8b7f930e23488` | `781e54e756059a92a2b03539a2db3961705c97fdce6cdc03c822662277066530` |
+| integration-preparing | 18645 | 14907 | -3738 | `8714d0e09ed49ab5832a782c722318b9040d4accf72c741db8640445b7631a07` | `135dcc8e3cc8032c89cde7e8d825dc6d72f30a969e6787f90c9c80636fb9ef1b` |
+| integration-running | 18782 | 15044 | -3738 | `b98ae455750c3e71aace1473cb1185ed789db08ccdcc04bd0343a9c49c1684db` | `e2317349aef7421e476326d14c6d995639f515a41b774e7ae11fcaddbb94d9f7` |
+| integration-final | 21701 | 17963 | -3738 | `265c6de1cc59c5dd706533f761102636df910842e71a6393d4b01d635ef07821` | `dd91465be95ba8eb93360625a341f0bad211a825d7524d1dfd26cda49b2e7615` |
+| integration-finish | 21702 | 17964 | -3738 | `0238b9837bb97bafa18ac4b24647521f29f76236d51d557a0b5ef95f92025a57` | `c692a1416b68642c67bb38c3f5b86d4f81ba0820cfc4a557fa2b9a693e186752` |
+| integration-repeat-final | 25358 | 21620 | -3738 | `8f5582e75489aeaacf2435f03c72b0a63d91d46052b0aed4c68ed75b7dce4d90` | `d5d79f5d4e28c800bd768a9a5b98fadde10a0170e14e1b1b08e02ac5660d626a` |
+| integration-repeat | 25359 | 21621 | -3738 | `79e822acaed2eb39f338bea9daed70b2a056d5f598d594c22c38bdff3ff218a3` | `234ccca056b36e5e1a13c45483c55e0286d2ed24d232dedbc83b17f181e43d1d` |
+| integration-lower-repeat | 28416 | 24681 | -3735 | `d44465818e6e2ee5deb135cc671322fdf9976b0b0b29e6733876e786fd415551` | `e3d4bed1d6ac6109fb7dbd7d9befdede5e510f6449954d8716f488487d5ebd2d` |
+
+Strict `verify-staged.mjs` passed before `publish-verified.mjs` wrote the three
+canonical artifacts. Results preserve every earlier history entry and append
+the full previous input/artifact maps plus previous results hash: **19 → 20**
+entries. Only the established raw `liveCap: 4` to current `liveCap: 5`
+metadata correction was applied. No replay-compatible input exception was added.
+
+| Generated evidence artifact | Prior file SHA-256 | Current file SHA-256 |
+|---|---|---|
+| `tools/qa/level-five-integration-results-20261012.json` | `ba6e602765cdebe131541051b4a3a90df2d92e13475e25fd6068a658b50883ca` | `d35fda40e345ec9ff70a8797854acf66161cc7743f0a052cdbc5ba66ccffa505` |
+| `tests/fixtures/level-five-integration-checkpoints-20261012.json` | `2d7df9fa212e10ea8b812c8ae3acc19c9525a760bf779b700ba118e188e83f85` | `560a4a38c5d8d2cdadf3033666a88a2f5e7e75f64533def7b55d2dfa61469d32` |
+| `tests/fixtures/level-five-legacy-behavior-20261012.json` | `ac9c3467b64f954562ed622c527248ae2f95cc1f47f0f95449be95128c58fd14` | `3addb62de20361e02821cc25d6f42de101988af9069439949121e48a532c3683` |
+
+Raw complete native progress SHA-256: `e2e464afb02f6ea7f40ec2b21d4948206ebf1a5af913969a292df90ba57a86a1`.
+Level 5 guard remains `812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909`.
+
+The handoff's four moved bound inputs described its older main-tree map.
+This release collects all source .ts/.json files, so the exact change is **six
+prior bound files plus six added files**, **533 → 539 inputs**, clinical
+**391 → 397**. Manifest and historical test-support files are also bound here.
+Every other previously bound input is exact. Actual old/new map differences:
+
+| Bound path | Entry SHA-256 | Current SHA-256 |
+|---|---|---|
+| `packages/clinical-content/src/answer-choice-timing.ts` | `7f2d9129e930cd1654dc71415a5b7c514341e13c8d994edc41214d94c65f4e54` | `37b65085cf5d41a543fea68ba3bed0f82ebd8277f345c53e2957d54a1647d63d` |
+| `packages/clinical-content/src/index.ts` | `ee124fd210f55353e3568e3a701248b742fa09ed2f1af9c3dc06fc302f329905` | `f22453a850aa22d4ffba37f05710e8abfb43784547f46cbb28397a76e2181e6b` |
+| `packages/clinical-content/src/question-flags3-20261107-data.ts` | `new` | `2df687fec9495647dff2a235f48d7983ed1de89d060b14c1a731142f5ae82d8d` |
+| `packages/clinical-content/src/question-flags3-20261107.ts` | `new` | `be252da89b3ceb215f8ab7de45f535272ab9ddd95caabf30bff6be4a1a2a3b35` |
+| `packages/clinical-content/src/question-flags3-acceptance-test-support.ts` | `new` | `af6bf04b16f7c3b4d1dab9284761283b460e88afa9d47c0efad7ba77eacad737` |
+| `packages/clinical-content/src/question-flags3-accepted-20261107.ts` | `new` | `4c4c2e1b2ccbd32dba5e6cfb056fe480d11091a48bdc75ec788fd2e57398d344` |
+| `packages/clinical-content/src/question-flags3-evidence-20261107.ts` | `new` | `8e7cd9e640718d150ba30387d0efddda6117fa46fd6522c09c0b36752e0897a6` |
+| `packages/clinical-content/src/question-flags3-retained-input-20261107.ts` | `new` | `c177ea2dba248474cae76e817614c052aa52fdecade6f50815d33e4d7a7afb35` |
+| `packages/clinical-content/src/question-new-n3-acceptance-test-support.ts` | `0e3594c8ff7a1d7a5fd259211ab3083bf364e29e989da0f56d5c71023cb62016` | `ed94177ebb121d1ecbae9b4574651355f0e1eeeee948e2729a415397b747644a` |
+| `packages/clinical-content/src/question-ship-manifest.ts` | `243aed1d81250f7a7e5710c05849553fc3b998a7acb9bf1c39aeff100d37d3cf` | `50dadc0a2daf64704b8aa599e23051692ad81bc9e3462772870cd18bb935a6c0` |
+| `packages/clinical-content/src/synthetic-content.ts` | `e93b4deae7bda1134869b80324d77c5698e075e65b97815eb4f991c8aba5ef81` | `819c38fce01be9684a8ef35e09c5bb64978dc710993862dbcf066b2c5f9392ed` |
+| `packages/game-domain/src/test-choice-orders.ts` | `0e692d44de8c72f1d2dd89a18debc05e78fd4da679b2e5b8b15964ef5e9198c1` | `cfb0739a97e9eeaa9c671fd4e1da458ec45b0aa2b731863534b42551d80f79e6` |
+
+### Legacy behavioral evidence
+
+Initial focused domain output: **27 failed / 16 passed (43), 82.34s**, comprising
+one binding, twenty-five legacy load hashes and the new-concept inventory.
+The existing assertion code and native drivers remain exact. The strict static
+concept inventory gains only the one accepted meaning, with complete equality.
+
+The established `legacy-capture.mjs` 25-schema / 120-minute reducer loop was
+adapted into private staging. Each original serialized input is retained. All
+**25 before-image loads and 25 before-image continuations** first reproduce
+the existing artifact under the exact pre-port clinical context. With the new
+release, loads differ only by the single empty anatomical concept history;
+continuation differences after removing that empty history are confined to
+newly admitted encounters. Every encounter present in the original input is
+exact. All prior artifact metadata/history and schema 5–9 equality are retained.
+No comparison hash was hand-edited. `legacy-diagnosis.json` records every path
+and SHA-256, and the staged generator bytes become the canonical fixture.
+
+### Validation commands and exact output
+
+Commands use `CI=true`, installed dependencies, PowerShell `npm.cmd` and
+`--pool=threads --maxWorkers=2`. Process-local preload handles only the sandbox
+optional `net use` probe and the command policy. All original logs, native exits,
+timestamps/commands and per-workspace Vitest JSON are retained under
+`.local-dev/release-port20-20261107/`.
+
+- `npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=../../.local-dev/release-port20-20261107/domain-full-final.json` (native exit 0).
+- `npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=../../.local-dev/release-port20-20261107/player-full-verified.json` (native exit 0).
+- `npm.cmd run test --workspace @gamify-surgery/clinical-context-workbench --workspace @gamify-surgery/balance-config --workspace @gamify-surgery/clinical-authoring --workspace @gamify-surgery/clinical-content --workspace @gamify-surgery/clinical-research -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port20-20261107/workspace-json-reporter.mjs` (native exit 0).
+- `npm.cmd run typecheck` (native exit 0).
+- `npm.cmd run build --workspace @gamify-surgery/player` (native exit 0).
+- `npm.cmd run clinical:lint:test` (native exit 0).
+- `node scripts/verify-launcher-contract.mjs` (native exit 0).
+- `npm.cmd run test:boundaries` (native exit 0).
+
+The original root/boundary invocation was stopped by the inherited prior-task
+blanket no-Git preload. This brief forbids commits, so an exact read-only retry
+permits only the verifier's `git ls-files -z`, with optional Git locks disabled;
+the Node child-process call fails with **spawnSync git EPERM**. The native
+shell can perform the exact read-only call with optional locks disabled. Its
+**7,219 paths / 517,063 bytes** are retained verbatim. A process-local bridge
+serves only that exact command to the unchanged boundary verifier, refusing a
+different worktree, changed Git index or changed inventory SHA-256. With that
+strict bridge the real verifier passes: **Verified runtime dependency boundaries
+and 7219 tracked path(s)**, followed by **gamify-surgery-player protocol 1**;
+native exit **0**. Inventory SHA-256 is
+`64705f82c1445da55db6f69f16f318cd50ce34f28640ffa663149b2e249147b5`;
+Git index SHA-256 remains
+`b04331b1b0ee14afd8d7b83bb012994c4a4f0588c980065d35bafb9441655d45`.
+No Git mutation or network occurred; no verifier assertion changed. The initial
+root invocation remains recorded as blocked; all seven workspace suites were
+run directly with threads and final native suite exits **0**:
+
+| Workspace | Test files | Passed | Failed | Skipped |
+|---|---:|---:|---:|---:|
+| clinical-context-workbench | 8 | 43 | 0 | 0 |
+| player | 383 | 3622 | 0 | 0 |
+| balance-config | 24 | 164 | 0 | 0 |
+| clinical-authoring | 7 | 81 | 0 | 0 |
+| clinical-content | 123 | 1362 | 0 | 0 |
+| clinical-research | 8 | 83 | 0 | 0 |
+| game-domain | 198 | 5173 | 0 | 1 |
+| **Total** | **751** | **10528** | **0** | **1** |
+
+Focused clinical:
+```text
+ Test Files  3 passed (3)
+      Tests  37 passed (37)
+   Duration  6.61s (transform 3.87s, setup 0ms, import 9.61s, tests 3.06s, environment 0ms)
+Native exit: 0
+```
+
+Focused player (ship-save, separateCampaign, flagFreeze):
+```text
+ Test Files  3 passed (3)
+      Tests  79 passed (79)
+   Duration  32.64s (transform 8.82s, setup 0ms, import 16.60s, tests 47.47s, environment 0ms)
+Native exit: 0
+```
+
+Full player:
+```text
+ Test Files  383 passed (383)
+      Tests  3622 passed (3622)
+   Duration  766.13s (transform 17.33s, setup 0ms, import 615.61s, tests 877.10s, environment 27ms)
+Native exit: 0
+```
+
+The initial complete player run had **three** failures: two presentation
+expectations from this worker's temporary 62.52 pin (the unchanged formatter
+floors to 62.51), plus the rebind-dependent workload fixture's 23-versus->25
+stress failure described above. Initial output was **381 files passed / 2 failed;
+3,619 tests passed / 3 failed (3,622), 790.32s**, native exit 1. The label pin and
+fixture were corrected without changing runtime/formatter/performance
+assertions. Isolated launch tests pass 16/16 and corrected launch/workload tests
+17/17. An interim player rerun was interrupted through its owned tool session
+after the fixture correction to require a coherent fresh final-source run;
+no complete-suite result is claimed for that interim run. Final complete
+receipts above use `player-full-verified.json` / `player-full-verified.log`.
+All initial/interim logs are retained. These were integration pin/derived-fixture
+failures, not prior release failures or timeouts.
+
+Full domain:
+```text
+ Test Files  198 passed (198)
+      Tests  5173 passed | 1 skipped (5174)
+   Duration  536.60s (transform 11.80s, setup 0ms, import 401.82s, tests 648.60s, environment 15ms)
+Native exit: 0
+```
+
+Other five workspaces, command order:
+```text
+ Test Files  8 passed (8)
+      Tests  43 passed (43)
+   Duration  976ms (transform 295ms, setup 0ms, import 814ms, tests 424ms, environment 0ms)
+ Test Files  24 passed (24)
+      Tests  164 passed (164)
+   Duration  2.14s (transform 707ms, setup 0ms, import 2.22s, tests 151ms, environment 1ms)
+ Test Files  7 passed (7)
+      Tests  81 passed (81)
+   Duration  594ms (transform 123ms, setup 0ms, import 356ms, tests 276ms, environment 0ms)
+ Test Files  123 passed (123)
+      Tests  1362 passed (1362)
+   Duration  96.70s (transform 5.29s, setup 0ms, import 165.34s, tests 16.05s, environment 8ms)
+ Test Files  8 passed (8)
+      Tests  83 passed (83)
+   Duration  1.91s (transform 161ms, setup 0ms, import 441ms, tests 922ms, environment 0ms)
+Native exit: 0
+```
+
+Seven workspace typechecks pass, native **0** (workbench client/server, player,
+balance, authoring, content, research, domain). Player build passes, native **0**:
+**Vite 8.1.5, 1,034 modules, 7.35s**; main bundle **22,433.72 kB / gzip 3,748.86 kB**.
+Existing chunk/dynamic-import warnings remain. Lint unit tests: **33 passed /
+0 failed**, native 0. Launcher: **gamify-surgery-player protocol 1**, native 0.
+An initial private projection verifier compared runtime optional-undefined
+properties with JSON captures using object deep equality; it was corrected to
+the exact serialized-object SHA comparison used by the acceptance packets and
+rerun successfully. Its original log remains; no repository assertion was
+weakened for this private-script error.
+
+### Other live-tree differences observed and not shipped
+
+The following **88 live versions** were excluded. Three evidence paths were
+regenerated locally from GS-release instead of copied; their release actions
+are explicit below. All other excluded release paths remain at entry bytes or
+required absence. The raw comparison is `content-diff.txt` in private receipts.
+
+- `apps/player/character-phlebotomy.html` — Unreviewed character/art presentation lane, excluded.
+- `apps/player/character-proportions.html` — Unreviewed character/art presentation lane, excluded.
+- `apps/player/character-rooms.html` — Unreviewed character/art presentation lane, excluded.
+- `apps/player/src/art/characterBitmapArt.test.ts` — Unreviewed character/art presentation lane, excluded.
+- `apps/player/src/art/characterBitmapArt.ts` — Unreviewed character/art presentation lane, excluded.
+- `apps/player/src/art/characterPhlebotomyQa.before.json` — Unreviewed character/art presentation lane, excluded.
+- `apps/player/src/art/characterPhlebotomyQa.frames.json` — Unreviewed character/art presentation lane, excluded.
+- `apps/player/src/art/characterPhlebotomyQa.test.ts` — Unreviewed character/art presentation lane, excluded.
+- `apps/player/src/art/characterPhlebotomyQa.ts` — Unreviewed character/art presentation lane, excluded.
+- `apps/player/src/art/characterPhlebotomyQaModel.ts` — Unreviewed character/art presentation lane, excluded.
+- `apps/player/src/art/characterProportions.generated.json` — Unreviewed character/art presentation lane, excluded.
+- `apps/player/src/art/characterProportions.test.ts` — Unreviewed character/art presentation lane, excluded.
+- `apps/player/src/art/characterProportions.ts` — Unreviewed character/art presentation lane, excluded.
+- `apps/player/src/art/characterProportionsQa.ts` — Unreviewed character/art presentation lane, excluded.
+- `apps/player/src/art/characterRoomProportions.generated.json` — Unreviewed character/art presentation lane, excluded.
+- `apps/player/src/art/characterRoomProportions.test.ts` — Unreviewed character/art presentation lane, excluded.
+- `apps/player/src/art/characterRoomProportions.ts` — Unreviewed character/art presentation lane, excluded.
+- `apps/player/src/art/characterRoomQaModel.ts` — Unreviewed character/art presentation lane, excluded.
+- `apps/player/src/art/characterRoomsQa.ts` — Unreviewed character/art presentation lane, excluded.
+- `apps/player/src/diagnostics/problemDiagnostics.test.ts` — Separate cloud/storage/diagnostics work; preserve release iPhone memory fix and existing compatibility.
+- `apps/player/src/diagnostics/problemDiagnostics.ts` — Separate cloud/storage/diagnostics work; preserve release iPhone memory fix and existing compatibility.
+- `apps/player/src/facility/approvedRoomPresentation.test.ts` — Unreviewed character/art presentation lane, excluded.
+- `apps/player/src/facility/backlessRollingStools.test.ts` — Unreviewed character/art presentation lane, excluded.
+- `apps/player/src/facility/characterPresentation.test.ts` — Unreviewed character/art presentation lane, excluded.
+- `apps/player/src/facility/characterPresentation.ts` — Unreviewed character/art presentation lane, excluded.
+- `apps/player/src/facility/characterRoomScaleIntegration.test.ts` — Unreviewed character/art presentation lane, excluded.
+- `apps/player/src/facility/FacilityCanvas.tsx` — Outside manager-accepted flags3 acceptance; preserve release version.
+- `apps/player/src/facility/FacilityScene.ts` — Outside manager-accepted flags3 acceptance; preserve release version.
+- `apps/player/src/facility/furnitureSeatLayering.test.ts` — Unreviewed character/art presentation lane, excluded.
+- `apps/player/src/facility/phlebotomyPresentation.test.ts` — Unreviewed character/art presentation lane, excluded.
+- `apps/player/src/facility/staffIdleSupports.test.ts` — Unreviewed character/art presentation lane, excluded.
+- `apps/player/src/feedback/TesterFeedback.tsx` — Separate cloud/storage/diagnostics work; preserve release iPhone memory fix and existing compatibility.
+- `apps/player/src/mobile/MobileShell.tsx` — Outside manager-accepted flags3 acceptance; preserve release version.
+- `apps/player/src/session/breadButterPresentation.test.ts` — Retain release-only fixture/pin compatibility; regenerate locally if the flags3 delta requires it, never copy live evidence.
+- `apps/player/src/session/buildViewModels.test.ts` — Outside manager-accepted flags3 acceptance; preserve release version.
+- `apps/player/src/session/cloud/cache.ts` — Separate cloud/storage/diagnostics work; preserve release iPhone memory fix and existing compatibility.
+- `apps/player/src/session/cloud/codecTasks.ts` — Separate cloud/storage/diagnostics work; preserve release iPhone memory fix and existing compatibility.
+- `apps/player/src/session/cloud/codecWorker.test.ts` — Separate cloud/storage/diagnostics work; preserve release iPhone memory fix and existing compatibility.
+- `apps/player/src/session/cloud/codecWorker.ts` — Separate cloud/storage/diagnostics work; preserve release iPhone memory fix and existing compatibility.
+- `apps/player/src/session/cloud/codecWorkerNative.test.ts` — Separate cloud/storage/diagnostics work; preserve release iPhone memory fix and existing compatibility.
+- `apps/player/src/session/cloud/coordinator.ts` — Separate cloud/storage/diagnostics work; preserve release iPhone memory fix and existing compatibility.
+- `apps/player/src/session/cloud/entryStorage.ts` — Separate cloud/storage/diagnostics work; preserve release iPhone memory fix and existing compatibility.
+- `apps/player/src/session/cloud/gameSession.test.tsx` — Separate cloud/storage/diagnostics work; preserve release iPhone memory fix and existing compatibility.
+- `apps/player/src/session/cloud/gameSession.ts` — Separate cloud/storage/diagnostics work; preserve release iPhone memory fix and existing compatibility.
+- `apps/player/src/session/cloud/journalCodec.ts` — Separate cloud/storage/diagnostics work; preserve release iPhone memory fix and existing compatibility.
+- `apps/player/src/session/cloud/releaseCodecHeadroom.test.ts` — Separate cloud/storage/diagnostics work; preserve release iPhone memory fix and existing compatibility.
+- `apps/player/src/session/cloud/separateCampaign.test.ts` — Separate cloud/storage/diagnostics work; preserve release iPhone memory fix and existing compatibility.
+- `apps/player/src/session/cloud/snapshotCodec.ts` — Separate cloud/storage/diagnostics work; preserve release iPhone memory fix and existing compatibility.
+- `apps/player/src/session/cloud/tickPerformanceTestSupport.ts` — Separate cloud/storage/diagnostics work; preserve release iPhone memory fix and existing compatibility.
+- `apps/player/src/session/cloud/watchdogs.test.ts` — Separate cloud/storage/diagnostics work; preserve release iPhone memory fix and existing compatibility.
+- `apps/player/src/session/diagnosticProjectionDifferential.test.ts` — Separate unaccepted incremental/performance/waiting lane, excluded.
+- `apps/player/src/session/flagFreeze.test.tsx` — Retain release-only fixture/pin compatibility; regenerate locally if the flags3 delta requires it, never copy live evidence.
+- `apps/player/src/session/levelFiveRoomsViewModels.test.tsx` — Retain release-only fixture/pin compatibility; regenerate locally if the flags3 delta requires it, never copy live evidence.
+- `apps/player/src/session/localJournal.test.ts` — Separate cloud/storage/diagnostics work; preserve release iPhone memory fix and existing compatibility.
+- `apps/player/src/session/localJournal.ts` — Separate cloud/storage/diagnostics work; preserve release iPhone memory fix and existing compatibility.
+- `apps/player/src/ui/ChartPanel.tsx` — Outside manager-accepted flags3 acceptance; preserve release version.
+- `apps/player/src/ui/roomAccessFeedback.test.ts` — Outside manager-accepted flags3 acceptance; preserve release version.
+- `apps/player/src/ui/roomAccessTestSupport.ts` — Outside manager-accepted flags3 acceptance; preserve release version.
+- `packages/balance-config/src/guidance-tips.ts` — Outside manager-accepted flags3 acceptance; preserve release version.
+- `packages/game-domain/src/facilityNavigation.ts` — Separate unaccepted incremental/performance/waiting lane, excluded.
+- `packages/game-domain/src/facilityNavigationReference.testSupport.ts` — Separate unaccepted incremental/performance/waiting lane, excluded.
+- `packages/game-domain/src/incrementalEvidenceOwnership.test.ts` — Separate unaccepted incremental/performance/waiting lane, excluded.
+- `packages/game-domain/src/incrementalEvidenceOwnership.ts` — Separate unaccepted incremental/performance/waiting lane, excluded.
+- `packages/game-domain/src/incrementalEvidenceProjection.test.ts` — Separate unaccepted incremental/performance/waiting lane, excluded.
+- `packages/game-domain/src/incrementalEvidenceProjection.ts` — Separate unaccepted incremental/performance/waiting lane, excluded.
+- `packages/game-domain/src/incrementalEvidenceReferences.test.ts` — Separate unaccepted incremental/performance/waiting lane, excluded.
+- `packages/game-domain/src/incrementalEvidenceReferences.ts` — Separate unaccepted incremental/performance/waiting lane, excluded.
+- `packages/game-domain/src/incrementalEvidenceRetirement.test.ts` — Separate unaccepted incremental/performance/waiting lane, excluded.
+- `packages/game-domain/src/incrementalEvidenceRetirement.ts` — Separate unaccepted incremental/performance/waiting lane, excluded.
+- `packages/game-domain/src/incrementalEvidenceValues.test.ts` — Separate unaccepted incremental/performance/waiting lane, excluded.
+- `packages/game-domain/src/incrementalEvidenceValues.ts` — Separate unaccepted incremental/performance/waiting lane, excluded.
+- `packages/game-domain/src/incrementalTickClone.test.ts` — Separate unaccepted incremental/performance/waiting lane, excluded.
+- `packages/game-domain/src/incrementalTickClone.ts` — Separate unaccepted incremental/performance/waiting lane, excluded.
+- `packages/game-domain/src/readonlyProjectionMemo.ts` — Separate unaccepted incremental/performance/waiting lane, excluded.
+- `packages/game-domain/src/reducer.ts` — Separate unaccepted incremental/performance/waiting lane, excluded.
+- `packages/game-domain/src/routineAvailabilityReference.testSupport.ts` — Separate unaccepted incremental/performance/waiting lane, excluded.
+- `packages/game-domain/src/settledStateQueries.test.ts` — Separate unaccepted incremental/performance/waiting lane, excluded.
+- `packages/game-domain/src/settledStateQueries.ts` — Separate unaccepted incremental/performance/waiting lane, excluded.
+- `packages/game-domain/src/waiting-destinations.ts` — Separate unaccepted incremental/performance/waiting lane, excluded.
+- `packages/game-domain/tests/readonlyProjectionMemo.test.ts` — Separate unaccepted incremental/performance/waiting lane, excluded.
+- `packages/game-domain/tests/routine-endoscopy-ready.fixture.ts` — Outside manager-accepted flags3 acceptance; preserve release version.
+- `packages/game-domain/tests/routine-endoscopy-ready.test.ts` — Outside manager-accepted flags3 acceptance; preserve release version.
+- `packages/game-domain/tests/waiting-chart-attendance.fixture.ts` — Separate unaccepted incremental/performance/waiting lane, excluded.
+- `packages/game-domain/tests/waiting-chart-attendance.test.ts` — Separate unaccepted incremental/performance/waiting lane, excluded.
+- `tests/fixtures/level-five-integration-checkpoints-20261012.json` — Retain release-only fixture/pin compatibility; regenerate locally if the flags3 delta requires it, never copy live evidence. Regenerated locally by guarded rebind20; historical live-tree evidence remains excluded.
+- `tests/fixtures/level-five-legacy-behavior-20261012.json` — Retain release-only fixture/pin compatibility; regenerate locally if the flags3 delta requires it, never copy live evidence. Regenerated locally by guarded rebind20; historical live-tree evidence remains excluded.
+- `tools/qa/level-five-integration-results-20261012.json` — Retain release-only fixture/pin compatibility; regenerate locally if the flags3 delta requires it, never copy live evidence. Regenerated locally by guarded rebind20; historical live-tree evidence remains excluded.
+- `tools/qa/tick-state-differential.mjs` — Separate unaccepted incremental/performance/waiting lane, excluded.
+
+### Open risks and handoff
+
+The boundary verifier passes through the strict native-inventory bridge; Node's
+Git spawning remains sandbox-restricted.
+No browser/device playtest or real tester-save access occurred; synthetic old
+snapshots/journals and native continuations pass. The accepted easy-difficulty
+and advisory findings remain as documented by the manager; all new versions
+still need clinician review. Historical main-tree packets and audit tools retain
+their original capture scope; use this release's strict provenance/validation
+receipts for release acceptance. Existing build size/dynamic-import warnings
+remain. These local changes are not a commit, backup push or deployment; the
+manager owns acceptance and any separately authorized checkpoint.
+
+Exact final source/evidence/doc hashes and the 53-path scope audit are in
+`.local-dev/release-port20-20261107/final-file-inventory.json` after this append.
+No unreviewed main-tree lane is claimed as shipped.

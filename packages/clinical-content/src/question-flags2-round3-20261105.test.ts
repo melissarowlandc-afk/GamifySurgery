@@ -1,3 +1,4 @@
+import {QUESTION_FLAGS3_ACCEPTED_TIMING_ENTRIES} from "./question-flags3-accepted-20261107";
 import {createHash} from "node:crypto";
 import {readFileSync} from "node:fs";
 import {describe,expect,it} from "vitest";
@@ -20,7 +21,7 @@ import {QUESTION_NEW_N3_ROUND2_TIMING_ENTRIES as concurrentN3Round2Timings} from
 import {QUESTION_NEW_N3_ROUND3_TIMING_ENTRIES as concurrentN3Round3Timings} from "./question-new-n3-round3-20261105";
 import {QUESTION_FLAGS2_WHOLE_CASE_TIMING_ENTRIES} from "./question-flags2-whole-case-accepted-20261105";
 import {beforeWholeCaseReplacementRelease,beforeWholeCaseReplacementManifest,beforeWholeCaseReplacementSource} from "./question-ship-case-replacements-test-support";
-const concurrentN3Timings=[...concurrentN3Round2Timings,...concurrentN3Round3Timings,...QUESTION_FLAGS2_WHOLE_CASE_TIMING_ENTRIES];
+const concurrentN3Timings=[...concurrentN3Round2Timings,...concurrentN3Round3Timings,...QUESTION_FLAGS2_WHOLE_CASE_TIMING_ENTRIES,...QUESTION_FLAGS3_ACCEPTED_TIMING_ENTRIES];
 import {syntheticClinicalReleaseSchema,type SyntheticClinicalRelease} from "./schema";
 
 const read=(p:string)=>JSON.parse(readFileSync(new URL("../../../"+p,import.meta.url),"utf8"));

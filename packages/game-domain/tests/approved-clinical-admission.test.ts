@@ -278,6 +278,8 @@ describe("approved clinical admission boundaries", () => {
       "concept.predictive-value.collection-population-denominator.v1",
       "concept.palpable-breast.completed-imaging-clinical-target.v1",
       "concept.phpt.inherited-calcium-before-localization.v2",
+        // Flags3: the separately scored, manager-accepted anatomical objective.
+        "concept.groin-hernia.ultrasound-compartment-classification.v1",
     ]);
   });
 

@@ -1,0 +1,1384 @@
+[
+  {
+    "id": "F3-01",
+    "title": "Positive screen: use the positive-result denominator",
+    "round": "manager-acceptance-fix",
+    "status": "manager_accepted_unapproved_draft",
+    "reviewStatus": "needs_clinician_review",
+    "pipelinePassed": false,
+    "releaseReady": true,
+    "acceptanceAllowed": true,
+    "ownerFlagId": "F3-01",
+    "originalFlaggedVariantId": "question.statistics-ethics.predictive-value-prevalence.v4",
+    "ownerNote": "This question also is confusing",
+    "ownerNoteResolution": "One concrete screening context replaces the conflicting aldosteronism/breast-test story. One quantitative task uses a complete two-by-two audit; each observed number appears once before answering, with four parallel percentage choices and no negative wording.",
+    "holdStatus": "none",
+    "sourceVerificationHold": null,
+    "sourceHoldScope": null,
+    "sourceView": "flags3-accepted",
+    "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-characteristics-fixed",
+    "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-characteristics-fixed.1",
+    "conceptId": "concept.statistics-ethics.predictive-value-prevalence",
+    "previousConceptId": "concept.statistics-ethics.predictive-value-prevalence",
+    "keyOrderNotice": "key shown first for review only; runtime answer choices are randomized",
+    "reviewDisplayNote": "Before is the exact captured current variant, with Jamie Taylor only rendering its name token and canonical age/sex retained. After uses the named draft patient. Neither is a claim that the owner screenshot exactly matches the current first decision.",
+    "beforeRole": "Exact independently reviewed round-one draft; original live fallback remains in the original packet and retained source",
+    "before": {
+      "variantId": "question.statistics-ethics.predictive-value-prevalence.v4.r1",
+      "Presentation": "Nathan Brooks, a 54-year-old man, attends the preoperative clinic to discuss a positive nasal MRSA screening result.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "table",
+        "caption": "Constructed preoperative screening audit. All consecutive patients received both tests.",
+        "columnHeaders": [
+          "Reference culture: MRSA detected",
+          "Reference culture: MRSA not detected"
+        ],
+        "rowHeaders": [
+          "Screen positive",
+          "Screen negative"
+        ],
+        "cells": [
+          [
+            "40",
+            "95"
+          ],
+          [
+            "10",
+            "855"
+          ]
+        ]
+      },
+      "Task": "For a positive screen such as Nathan Brooks's, what percentage in this audit had MRSA detected by reference culture?",
+      "Options": [
+        "**KEY:** About 30%",
+        "About 70%",
+        "About 80%",
+        "About 90%"
+      ]
+    },
+    "after": {
+      "variantId": "question.statistics-ethics.predictive-value-prevalence.v4.r1",
+      "Presentation": "Nathan Brooks, a 54-year-old man, attends the preoperative clinic to discuss a positive nasal MRSA screening result.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "table",
+        "caption": "Constructed preoperative screening audit. All consecutive patients received both tests.",
+        "columnHeaders": [
+          "Reference culture: MRSA detected",
+          "Reference culture: MRSA not detected"
+        ],
+        "rowHeaders": [
+          "Screen positive",
+          "Screen negative"
+        ],
+        "cells": [
+          [
+            "40",
+            "95"
+          ],
+          [
+            "10",
+            "855"
+          ]
+        ]
+      },
+      "Task": "For a positive screen such as Nathan Brooks's, what percentage in this audit had MRSA detected by reference culture?",
+      "Options": [
+        "**KEY:** About 30%",
+        "About 70%",
+        "About 80%",
+        "About 90%"
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** About 30%",
+          "The relevant group is all positive screens: 40 with MRSA detected and 95 without it. Thus 40/135 is about 30%."
+        ],
+        [
+          "About 70%",
+          "This is 95/135, the reference-negative share of positive screens. It reverses which reference outcome the question asks about."
+        ],
+        [
+          "About 80%",
+          "This is 40/50, the sensitivity within reference-positive patients. The patient starts with a positive screen, so that is the wrong denominator."
+        ],
+        [
+          "About 90%",
+          "This is 855/950, the specificity within reference-negative patients. It does not estimate reference positivity after a positive screen."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** About 30%",
+          "The relevant group is all positive screens: 40 with MRSA detected and 95 without it. Thus 40/135 is about 30%."
+        ],
+        [
+          "About 70%",
+          "This is 95/135, the reference-negative share of positive screens. It reverses which reference outcome the question asks about."
+        ],
+        [
+          "About 80%",
+          "This is 40/50, the sensitivity within reference-positive patients. The patient starts with a positive screen, so that is the wrong denominator."
+        ],
+        [
+          "About 90%",
+          "This is 855/950, the specificity within reference-negative patients. It does not estimate reference positivity after a positive screen."
+        ]
+      ]
+    },
+    "inference": "Identify the positive-screen row rather than a reference-status column. Then: Divide its reference-positive count by all results in that row, then select the rounded percentage.",
+    "focus": "The question conditions on the positive screen. The two cells in that row are 40 and 95; the reference-positive column total is not the needed denominator.",
+    "whatChanged": "No change: exact independently reviewed draft accepted by manager.",
+    "reviewResponse": {
+      "independentReview": "docs/research/question-flags3-review-20261107.json",
+      "managerDecision": "docs/research/question-flags3-manager-decision-20261107.md",
+      "response": "No change: exact independently reviewed draft accepted by manager.",
+      "residual": "Reviewer predicts easy; manager explicitly accepts owner-note resolution. Future difficulty work, not a new author PASS."
+    },
+    "selfCheck": {
+      "reviewer": "author; not independent review or clinical sign-off",
+      "manualReviewCompleted": true,
+      "coverTheKey": {
+        "attack": "With the key marker removed, all options have the same approximate-percentage grammar and comparable length. No clinical label or word match distinguishes a number. A solver must decide which row defines the conditional population; recognizing a single familiar number can select a distractor.",
+        "lintWarnings": []
+      },
+      "sameDecisionStageAndCategory": {
+        "category": "Approximate percentages derived from the same audit",
+        "assessment": "All labels answer the stated task; exact clinical ranking remains for independent/clinician review."
+      },
+      "reasoningSteps": [
+        "Identify the positive-screen row rather than a reference-status column.",
+        "Divide its reference-positive count by all results in that row, then select the rounded percentage."
+      ],
+      "closestCredibleError": "A resident who recalls sensitivity but fails to condition on the reported positive screen would choose 80%; one who reverses the reference outcome would choose 70%.",
+      "decidingFinding": "The question conditions on the positive screen. The two cells in that row are 40 and 95; the reference-positive column total is not the needed denominator.",
+      "counterfactual": "Keeping the 40 reference-positive positive screens but changing the reference-negative positive screens to 10 would make 80% the PPV. The key therefore depends on the actual false-positive count, not the name of a statistical measure in an option.",
+      "residentDifficulty": "Easy per independent review; accepted for owner-note resolution, with future difficulty work recorded.",
+      "singleDefensibleBestAnswer": "The relevant group is all positive screens: 40 with MRSA detected and 95 without it. Thus 40/135 is about 30%.",
+      "deletionTest": "Removed the subscription joke, conflicting specialty/test names, repeated fixed-characteristic assumptions and summary conclusion. The patient establishes the positive-result frame; the four audit counts identify denominator errors without multiple cohorts or duplicated percentages.",
+      "options": [
+        {
+          "label": "About 30%",
+          "isKey": true,
+          "rationale": "The relevant group is all positive screens: 40 with MRSA detected and 95 without it. Thus 40/135 is about 30%.",
+          "temptation": "Correct interpretation of the supplied record."
+        },
+        {
+          "label": "About 70%",
+          "isKey": false,
+          "rationale": "This is 95/135, the reference-negative share of positive screens. It reverses which reference outcome the question asks about.",
+          "temptation": "This is 95/135, the reference-negative share of positive screens. It reverses which reference outcome the question asks about."
+        },
+        {
+          "label": "About 80%",
+          "isKey": false,
+          "rationale": "This is 40/50, the sensitivity within reference-positive patients. The patient starts with a positive screen, so that is the wrong denominator.",
+          "temptation": "This is 40/50, the sensitivity within reference-positive patients. The patient starts with a positive screen, so that is the wrong denominator."
+        },
+        {
+          "label": "About 90%",
+          "isKey": false,
+          "rationale": "This is 855/950, the specificity within reference-negative patients. It does not estimate reference positivity after a positive screen.",
+          "temptation": "This is 855/950, the specificity within reference-negative patients. It does not estimate reference positivity after a positive screen."
+        }
+      ],
+      "clinicalAndSourceLimit": "No claim that these synthetic data measure clinical MRSA performance, diagnose infection or select prophylaxis. Original statistical-source access dates remain unchanged.",
+      "sourceUncertaintyIsNotDifficulty": true,
+      "displayContext": "Exact reviewed after fields retained."
+    },
+    "supportingEvidenceClaimIds": [
+      "claim.flags3.20261107.positive-result-denominator",
+      "claim.flags3.20261107.audit-calculation",
+      "claim.flags3.20261107.audit-alternative-denominators"
+    ],
+    "conceptVersion": {
+      "meaning": "same",
+      "reason": "The existing concept already includes calculating PPV and distinguishing it from test characteristics. Only the clinical frame, data representation and wording change.",
+      "previousConceptId": "concept.statistics-ethics.predictive-value-prevalence",
+      "newConceptId": "concept.statistics-ethics.predictive-value-prevalence",
+      "historyMigration": "None"
+    },
+    "lint": {
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [],
+      "after": [],
+      "beforeCount": 0,
+      "afterCount": 0,
+      "profileContexts": 2,
+      "dispositions": [],
+      "suppressedFindings": 0
+    },
+    "visibleHistory": {
+      "before": {
+        "chiefComplaint": "Positive screening result",
+        "presentation": "Nathan Brooks, a 54-year-old man, attends the preoperative clinic to discuss a positive nasal MRSA screening result.",
+        "stem": "For a positive screen such as Nathan Brooks's, what percentage in this audit had MRSA detected by reference culture?",
+        "exhibit.caption": "Constructed preoperative screening audit. All consecutive patients received both tests.",
+        "exhibit.columnHeaders[0]": "Reference culture: MRSA detected",
+        "exhibit.columnHeaders[1]": "Reference culture: MRSA not detected",
+        "exhibit.rowHeaders[0]": "Screen positive",
+        "exhibit.rowHeaders[1]": "Screen negative",
+        "exhibit.cells[0][0]": "40",
+        "exhibit.cells[0][1]": "95",
+        "exhibit.cells[1][0]": "10",
+        "exhibit.cells[1][1]": "855"
+      },
+      "after": {
+        "chiefComplaint": "Positive screening result",
+        "presentation": "Nathan Brooks, a 54-year-old man, attends the preoperative clinic to discuss a positive nasal MRSA screening result.",
+        "stem": "For a positive screen such as Nathan Brooks's, what percentage in this audit had MRSA detected by reference culture?",
+        "exhibit.caption": "Constructed preoperative screening audit. All consecutive patients received both tests.",
+        "exhibit.columnHeaders[0]": "Reference culture: MRSA detected",
+        "exhibit.columnHeaders[1]": "Reference culture: MRSA not detected",
+        "exhibit.rowHeaders[0]": "Screen positive",
+        "exhibit.rowHeaders[1]": "Screen negative",
+        "exhibit.cells[0][0]": "40",
+        "exhibit.cells[0][1]": "95",
+        "exhibit.cells[1][0]": "10",
+        "exhibit.cells[1][1]": "855"
+      }
+    },
+    "encounterContinuity": {
+      "previousNodeIds": [
+        "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-characteristics-fixed.1"
+      ],
+      "candidateNodeIds": [
+        "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-characteristics-fixed.1"
+      ],
+      "requiresManagerCompositionReview": false,
+      "change": "Same single-node structure and concept; new exact question/header/profile need explicit acceptance.",
+      "selectionLimit": null,
+      "managerCompositionAccepted": true
+    },
+    "fallback": {
+      "variantId": "question.statistics-ethics.predictive-value-prevalence.v4",
+      "conceptId": "concept.statistics-ethics.predictive-value-prevalence",
+      "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-characteristics-fixed",
+      "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-characteristics-fixed.1",
+      "policy": "Frozen encounters retain this exact older live version and FSRS identity; fresh supply uses the manager-accepted source."
+    },
+    "questionVariantId": "question.statistics-ethics.predictive-value-prevalence.v4.r1",
+    "frozenPreservation": {
+      "reviewedQuestionVariantId": "question.statistics-ethics.predictive-value-prevalence.v4.r1",
+      "reviewedNodeSha256": "b0eda5cd3092495a7f1808c2a3e4d82506b390cddc1cf846520f775fec062b50",
+      "acceptedNodeSha256": "b0eda5cd3092495a7f1808c2a3e4d82506b390cddc1cf846520f775fec062b50",
+      "acceptedQuestionSha256": "d5daa9c355b8747f6c1487d7b84baa06b729a94d5115040c023248d0cf0bf5d5",
+      "acceptedCaseSha256": "590cbe13f4c8690f70b20ad159ba118cb1362716ce6b4cfa6aabc743be3f97a1",
+      "exactReviewedNode": true,
+      "exactReviewedCase": true
+    },
+    "evidenceUpdate": "No added medical rule, source, threshold or new claim. Established classification uses claim.flags3.20261107.groin-compartment and the existing repair/acuity claims. All remain needs_clinician_review."
+  },
+  {
+    "id": "F3-02",
+    "title": "Dysphagia: read the reports, then choose the next target",
+    "round": "manager-acceptance-fix",
+    "status": "manager_accepted_unapproved_draft",
+    "reviewStatus": "needs_clinician_review",
+    "pipelinePassed": true,
+    "releaseReady": true,
+    "acceptanceAllowed": true,
+    "ownerFlagId": "F3-02",
+    "originalFlaggedVariantId": "question.achalasia.manometric-recognition.v2.r6",
+    "ownerNote": "The imaging findings written out is confusing",
+    "ownerNoteResolution": "Endoscopy, biopsy, CT and pressure findings each appear once as short labelled result statements. Presentation contains symptoms only; the update supplies the new weight trajectory. The preceding currently live acquisition question and its feedback/gate stay exact, so each decision has a distinct task.",
+    "holdStatus": "none",
+    "sourceVerificationHold": null,
+    "sourceHoldScope": null,
+    "sourceView": "flags3-accepted",
+    "caseId": "case.achalasia.night-regurgitation",
+    "nodeId": "node.achalasia.night-regurgitation.2",
+    "conceptId": "concept.achalasia.secondary-junction-lesion-assessment.v1",
+    "previousConceptId": "concept.achalasia.secondary-junction-lesion-assessment.v1",
+    "keyOrderNotice": "key shown first for review only; runtime answer choices are randomized",
+    "reviewDisplayNote": "Before is the exact captured current variant, with Jamie Taylor only rendering its name token and canonical age/sex retained. After uses the named draft patient. Neither is a claim that the owner screenshot exactly matches the current first decision.",
+    "beforeRole": "Exact independently reviewed round-one draft; original live fallback remains in the original packet and retained source",
+    "before": {
+      "variantId": "question.achalasia.manometric-recognition.v2.r7",
+      "Presentation": "Gavin Keller, a 66-year-old man, visits the surgery clinic because food and drinks pause behind the sternum and return at night.",
+      "Current update": "At the return visit, Gavin Keller reports continued unintentional weight loss.",
+      "Exhibit": {
+        "kind": "keyValue",
+        "caption": "Investigation record",
+        "items": [
+          {
+            "label": "Upper endoscopy",
+            "value": "No mucosal mass or fixed luminal narrowing. Resistance when the scope crossed the gastroesophageal junction."
+          },
+          {
+            "label": "Junction mucosal biopsy",
+            "value": "Mucosa present; malignant cells not identified."
+          },
+          {
+            "label": "CT: gastric cardia and junction",
+            "value": "Wall thickening is greater on one side and extends across the gastroesophageal junction."
+          },
+          {
+            "label": "Pressure study: primary supine series",
+            "value": "Catheter spans the junction. Median relaxation pressure above this laboratory's upper reference limit during separated water swallows."
+          },
+          {
+            "label": "Pressure study: upright series",
+            "value": "Median relaxation pressure within this laboratory's reference interval."
+          },
+          {
+            "label": "Pressure study: body channels",
+            "value": "No propagated distal contractions in either position."
+          }
+        ]
+      },
+      "Task": "Which procedure should be requested next for Gavin Keller's swallowing problem?",
+      "Options": [
+        "**KEY:** Endoscopic ultrasound with guided sampling",
+        "Functional lumen imaging with distensibility measurement",
+        "Timed barium swallow with tablet passage"
+      ]
+    },
+    "after": {
+      "variantId": "question.achalasia.manometric-recognition.v2.r7",
+      "Presentation": "Gavin Keller, a 66-year-old man, visits the surgery clinic because food and drinks pause behind the sternum and return at night.",
+      "Current update": "At the return visit, Gavin Keller reports continued unintentional weight loss.",
+      "Exhibit": {
+        "kind": "keyValue",
+        "caption": "Investigation record",
+        "items": [
+          {
+            "label": "Upper endoscopy",
+            "value": "No mucosal mass or fixed luminal narrowing. Resistance when the scope crossed the gastroesophageal junction."
+          },
+          {
+            "label": "Junction mucosal biopsy",
+            "value": "Mucosa present; malignant cells not identified."
+          },
+          {
+            "label": "CT: gastric cardia and junction",
+            "value": "Wall thickening is greater on one side and extends across the gastroesophageal junction."
+          },
+          {
+            "label": "Pressure study: primary supine series",
+            "value": "Catheter spans the junction. Median relaxation pressure above this laboratory's upper reference limit during separated water swallows."
+          },
+          {
+            "label": "Pressure study: upright series",
+            "value": "Median relaxation pressure within this laboratory's reference interval."
+          },
+          {
+            "label": "Pressure study: body channels",
+            "value": "No propagated distal contractions in either position."
+          }
+        ]
+      },
+      "Task": "Which procedure should be requested next for Gavin Keller's swallowing problem?",
+      "Options": [
+        "**KEY:** Endoscopic ultrasound with guided sampling",
+        "Functional lumen imaging with distensibility measurement",
+        "Timed barium swallow with tablet passage"
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Endoscopic ultrasound with guided sampling",
+          "The motor pattern can coexist with a secondary junction process. Weight loss, one-sided wall thickening and resistance despite unrevealing mucosal samples make wall assessment and directed tissue acquisition the next target."
+        ],
+        [
+          "Functional lumen imaging with distensibility measurement",
+          "The positional pressure difference could tempt further functional testing. A distensibility measurement would not determine what accounts for the focal CT wall abnormality beyond the sampled mucosa."
+        ],
+        [
+          "Timed barium swallow with tablet passage",
+          "Quantifying emptying is credible for a motility question. It would not establish the cause of the focal junction-wall finding that remains unresolved after the mucosal samples."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Endoscopic ultrasound with guided sampling",
+          "The motor pattern can coexist with a secondary junction process. Weight loss, one-sided wall thickening and resistance despite unrevealing mucosal samples make wall assessment and directed tissue acquisition the next target."
+        ],
+        [
+          "Functional lumen imaging with distensibility measurement",
+          "The positional pressure difference could tempt further functional testing. A distensibility measurement would not determine what accounts for the focal CT wall abnormality beyond the sampled mucosa."
+        ],
+        [
+          "Timed barium swallow with tablet passage",
+          "Quantifying emptying is credible for a motility question. It would not establish the cause of the focal junction-wall finding that remains unresolved after the mucosal samples."
+        ]
+      ]
+    },
+    "inference": "Reconcile the primary-position motor findings without treating the upright value as a veto. Then: Recognize the focal wall/mucosal-sampling discrepancy and select the investigation that can assess that target.",
+    "focus": "The asymmetric cardia/junction wall finding remains unexplained by mucosal samples. The primary motor pattern does not settle its cause; no scan is labelled malignant or pseudoachalasia before answering.",
+    "whatChanged": "No change: exact independently reviewed draft accepted by manager.",
+    "reviewResponse": {
+      "independentReview": "docs/research/question-flags3-review-20261107.json",
+      "managerDecision": "docs/research/question-flags3-manager-decision-20261107.md",
+      "response": "No change: exact independently reviewed draft accepted by manager.",
+      "residual": "Exact moderate PASS retained."
+    },
+    "selfCheck": {
+      "reviewer": "author; not independent review or clinical sign-off",
+      "manualReviewCompleted": true,
+      "coverTheKey": {
+        "attack": "Procedure names have parallel grammatical scope and each is a plausible investigation of dysphagia. The task contains no wall, tissue, malignancy or safety cue. Necessary negatives describe the sampled compartment rather than literally excluding an offered procedure.",
+        "lintWarnings": [
+          {
+            "id": "53ad6641a1112717",
+            "rule": "unique-key-test-name",
+            "status": "retained_warning_manager_accepted",
+            "reason": "The small named-test lexicon recognizes ultrasound but not the other offered named investigations (functional lumen imaging and timed barium swallow). All choices are specific tests at the same stage. No keyed test is named in the preceding data. This is a vocabulary limitation, not permission to assume clinical validity."
+          }
+        ]
+      },
+      "sameDecisionStageAndCategory": {
+        "category": "Named diagnostic procedures at the next-investigation stage",
+        "assessment": "All labels answer the stated task; exact clinical ranking remains for independent/clinician review."
+      },
+      "reasoningSteps": [
+        "Reconcile the primary-position motor findings without treating the upright value as a veto.",
+        "Recognize the focal wall/mucosal-sampling discrepancy and select the investigation that can assess that target."
+      ],
+      "closestCredibleError": "FLIP is a credible near-miss for someone who treats a normal upright relaxation value as unresolved motor classification; a timed contrast study is credible if impaired transit is mistaken for the remaining diagnostic question.",
+      "decidingFinding": "The asymmetric cardia/junction wall finding remains unexplained by mucosal samples. The primary motor pattern does not settle its cause; no scan is labelled malignant or pseudoachalasia before answering.",
+      "counterfactual": "Without a focal wall finding or weight-loss trajectory, and with an incomplete pressure acquisition instead, complementary functional assessment could become the relevant next task. No general EUS-over-FLIP hierarchy is inferred.",
+      "residentDifficulty": "Moderate per independent review; exact PASS version retained.",
+      "singleDefensibleBestAnswer": "The motor pattern can coexist with a secondary junction process. Weight loss, one-sided wall thickening and resistance despite unrevealing mucosal samples make wall assessment and directed tissue acquisition the next target.",
+      "deletionTest": "Removed the presentation's endoscopy summary and the update's repeated endoscopy/CT narrative. Kept every finding in one result row. A contrast swallow from the older screenshot is not silently invented in the current source view.",
+      "options": [
+        {
+          "label": "Endoscopic ultrasound with guided sampling",
+          "isKey": true,
+          "rationale": "The motor pattern can coexist with a secondary junction process. Weight loss, one-sided wall thickening and resistance despite unrevealing mucosal samples make wall assessment and directed tissue acquisition the next target.",
+          "temptation": "Correct interpretation of the supplied record."
+        },
+        {
+          "label": "Functional lumen imaging with distensibility measurement",
+          "isKey": false,
+          "rationale": "The positional pressure difference could tempt further functional testing. A distensibility measurement would not determine what accounts for the focal CT wall abnormality beyond the sampled mucosa.",
+          "temptation": "The positional pressure difference could tempt further functional testing. A distensibility measurement would not determine what accounts for the focal CT wall abnormality beyond the sampled mucosa."
+        },
+        {
+          "label": "Timed barium swallow with tablet passage",
+          "isKey": false,
+          "rationale": "Quantifying emptying is credible for a motility question. It would not establish the cause of the focal junction-wall finding that remains unresolved after the mucosal samples.",
+          "temptation": "Quantifying emptying is credible for a motility question. It would not establish the cause of the focal junction-wall finding that remains unresolved after the mucosal samples."
+        }
+      ],
+      "clinicalAndSourceLimit": "Recorded ACG/Chicago claims support the motor-pattern/secondary-target boundary. Sampling technique and exact target require clinician review; no exact IRP, weight-loss, timing or malignancy-probability value is added.",
+      "sourceUncertaintyIsNotDifficulty": true,
+      "displayContext": "Exact reviewed after fields retained."
+    },
+    "supportingEvidenceClaimIds": [
+      "claim.flags3.20261107.motor-pattern-scope",
+      "claim.flags3.20261107.junction-wall-target"
+    ],
+    "conceptVersion": {
+      "meaning": "same",
+      "reason": "The scored objective remains secondary junction-lesion assessment despite achalasia-pattern physiology. Reports and task are clarified; no new pressure threshold or tissue protocol is introduced.",
+      "previousConceptId": "concept.achalasia.secondary-junction-lesion-assessment.v1",
+      "newConceptId": "concept.achalasia.secondary-junction-lesion-assessment.v1",
+      "historyMigration": "None"
+    },
+    "lint": {
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [
+        {
+          "id": "53ad6641a1112717",
+          "rule": "unique-key-test-name",
+          "severity": "advisory",
+          "message": "Only the key matches the small named-test lexicon; check semantic and naming parity.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "ultrasound",
+              "start": 11,
+              "end": 21,
+              "choiceId": "choice.flags3.20261107.f3-02.key"
+            }
+          ],
+          "metrics": {
+            "aliasGroup": "Ultrasound"
+          },
+          "occurrences": [
+            {
+              "caseId": "case.achalasia.night-regurgitation",
+              "profileIds": [
+                "canonical",
+                "profile.flags3.achalasia.night-regurgitation.20261107"
+              ],
+              "ranges": [
+                {
+                  "start": 11,
+                  "end": 21
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "after": [
+        {
+          "id": "53ad6641a1112717",
+          "rule": "unique-key-test-name",
+          "severity": "advisory",
+          "message": "Only the key matches the small named-test lexicon; check semantic and naming parity.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "ultrasound",
+              "start": 11,
+              "end": 21,
+              "choiceId": "choice.flags3.20261107.f3-02.key"
+            }
+          ],
+          "metrics": {
+            "aliasGroup": "Ultrasound"
+          },
+          "occurrences": [
+            {
+              "caseId": "case.achalasia.night-regurgitation",
+              "profileIds": [
+                "canonical",
+                "profile.flags3.achalasia.night-regurgitation.20261107"
+              ],
+              "ranges": [
+                {
+                  "start": 11,
+                  "end": 21
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "beforeCount": 1,
+      "afterCount": 1,
+      "profileContexts": 2,
+      "dispositions": [
+        {
+          "id": "53ad6641a1112717",
+          "rule": "unique-key-test-name",
+          "status": "retained_warning_manager_accepted",
+          "reason": "The small named-test lexicon recognizes ultrasound but not the other offered named investigations (functional lumen imaging and timed barium swallow). All choices are specific tests at the same stage. No keyed test is named in the preceding data. This is a vocabulary limitation, not permission to assume clinical validity."
+        }
+      ],
+      "suppressedFindings": 0
+    },
+    "visibleHistory": {
+      "before": {
+        "chiefComplaint": "Difficulty swallowing",
+        "presentation": "Gavin Keller, a 66-year-old man, visits the surgery clinic because food and drinks pause behind the sternum and return at night.",
+        "stem": "Which procedure should be requested next for Gavin Keller's swallowing problem?",
+        "currentUpdate": "At the return visit, Gavin Keller reports continued unintentional weight loss.",
+        "priorResults[0]": "The esophageal pressure-study report is available for review.",
+        "priorFeedback[0]": "The acquisition sequence changes how absence of contraction is interpreted. A swallow delivered during the preceding response can inhibit that response; a rapid-swallow maneuver is not an ordinary separated-swallow series. Use baseline wet swallows separated by recovery before assigning the body classification. Provocative sequences have additional roles.",
+        "priorTeachingPoint[0]": "The acquisition sequence changes how absence of contraction is interpreted. A swallow delivered during the preceding response can inhibit that response; a rapid-swallow maneuver is not an ordinary separated-swallow series. Use baseline wet swallows separated by recovery before assigning the body classification. Provocative sequences have additional roles.",
+        "exhibit.caption": "Investigation record",
+        "exhibit.items[0].label": "Upper endoscopy",
+        "exhibit.items[0].value": "No mucosal mass or fixed luminal narrowing. Resistance when the scope crossed the gastroesophageal junction.",
+        "exhibit.items[1].label": "Junction mucosal biopsy",
+        "exhibit.items[1].value": "Mucosa present; malignant cells not identified.",
+        "exhibit.items[2].label": "CT: gastric cardia and junction",
+        "exhibit.items[2].value": "Wall thickening is greater on one side and extends across the gastroesophageal junction.",
+        "exhibit.items[3].label": "Pressure study: primary supine series",
+        "exhibit.items[3].value": "Catheter spans the junction. Median relaxation pressure above this laboratory's upper reference limit during separated water swallows.",
+        "exhibit.items[4].label": "Pressure study: upright series",
+        "exhibit.items[4].value": "Median relaxation pressure within this laboratory's reference interval.",
+        "exhibit.items[5].label": "Pressure study: body channels",
+        "exhibit.items[5].value": "No propagated distal contractions in either position."
+      },
+      "after": {
+        "chiefComplaint": "Difficulty swallowing",
+        "presentation": "Gavin Keller, a 66-year-old man, visits the surgery clinic because food and drinks pause behind the sternum and return at night.",
+        "stem": "Which procedure should be requested next for Gavin Keller's swallowing problem?",
+        "currentUpdate": "At the return visit, Gavin Keller reports continued unintentional weight loss.",
+        "priorResults[0]": "The esophageal pressure-study report is available for review.",
+        "priorFeedback[0]": "The acquisition sequence changes how absence of contraction is interpreted. A swallow delivered during the preceding response can inhibit that response; a rapid-swallow maneuver is not an ordinary separated-swallow series. Use baseline wet swallows separated by recovery before assigning the body classification. Provocative sequences have additional roles.",
+        "priorTeachingPoint[0]": "The acquisition sequence changes how absence of contraction is interpreted. A swallow delivered during the preceding response can inhibit that response; a rapid-swallow maneuver is not an ordinary separated-swallow series. Use baseline wet swallows separated by recovery before assigning the body classification. Provocative sequences have additional roles.",
+        "exhibit.caption": "Investigation record",
+        "exhibit.items[0].label": "Upper endoscopy",
+        "exhibit.items[0].value": "No mucosal mass or fixed luminal narrowing. Resistance when the scope crossed the gastroesophageal junction.",
+        "exhibit.items[1].label": "Junction mucosal biopsy",
+        "exhibit.items[1].value": "Mucosa present; malignant cells not identified.",
+        "exhibit.items[2].label": "CT: gastric cardia and junction",
+        "exhibit.items[2].value": "Wall thickening is greater on one side and extends across the gastroesophageal junction.",
+        "exhibit.items[3].label": "Pressure study: primary supine series",
+        "exhibit.items[3].value": "Catheter spans the junction. Median relaxation pressure above this laboratory's upper reference limit during separated water swallows.",
+        "exhibit.items[4].label": "Pressure study: upright series",
+        "exhibit.items[4].value": "Median relaxation pressure within this laboratory's reference interval.",
+        "exhibit.items[5].label": "Pressure study: body channels",
+        "exhibit.items[5].value": "No propagated distal contractions in either position."
+      }
+    },
+    "encounterContinuity": {
+      "previousNodeIds": [
+        "node.achalasia.night-regurgitation.1",
+        "node.achalasia.night-regurgitation.2"
+      ],
+      "candidateNodeIds": [
+        "node.achalasia.night-regurgitation.1",
+        "node.achalasia.night-regurgitation.2"
+      ],
+      "requiresManagerCompositionReview": false,
+      "change": "Same two-node structure. Preserve the currently live first acquisition node and gate exactly; replace the second wording and pin the new symptom-only header/profile.",
+      "selectionLimit": null,
+      "managerCompositionAccepted": true
+    },
+    "fallback": {
+      "variantId": "question.achalasia.manometric-recognition.v2.r6",
+      "conceptId": "concept.achalasia.secondary-junction-lesion-assessment.v1",
+      "caseId": "case.achalasia.night-regurgitation",
+      "nodeId": "node.achalasia.night-regurgitation.2",
+      "policy": "Frozen encounters retain this exact older live version and FSRS identity; fresh supply uses the manager-accepted source."
+    },
+    "questionVariantId": "question.achalasia.manometric-recognition.v2.r7",
+    "frozenPreservation": {
+      "reviewedQuestionVariantId": "question.achalasia.manometric-recognition.v2.r7",
+      "reviewedNodeSha256": "aa53ceb04f7e202fa157a20a3264c5916106029ccbf00a2e208ef5b7cd1150d5",
+      "acceptedNodeSha256": "aa53ceb04f7e202fa157a20a3264c5916106029ccbf00a2e208ef5b7cd1150d5",
+      "acceptedQuestionSha256": "2ef0a09304a955da4e19653e1c8365939e6248fad0ddb0517baab2334a0686a1",
+      "acceptedCaseSha256": "c0228a2330760bf87ec3888ed9551b4a2a304ed4f44e72414694db634efeb303",
+      "exactReviewedNode": true,
+      "exactReviewedCase": true
+    },
+    "evidenceUpdate": "No added medical rule, source, threshold or new claim. Established classification uses claim.flags3.20261107.groin-compartment and the existing repair/acuity claims. All remain needs_clinician_review."
+  },
+  {
+    "id": "F3-03-type",
+    "title": "Groin ultrasound: identify the hernia type",
+    "round": "manager-acceptance-fix",
+    "status": "manager_accepted_unapproved_draft",
+    "reviewStatus": "needs_clinician_review",
+    "pipelinePassed": false,
+    "releaseReady": true,
+    "acceptanceAllowed": true,
+    "ownerFlagId": "F3-03",
+    "originalFlaggedVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v3.r10",
+    "ownerNote": "The target US findings should prompt the player to choose which kind of hernia the patient has too",
+    "ownerNoteResolution": "Adds an explicit three-choice type-identification decision before repair planning. The prior interpreted inguinal report/gate is absent from this proposed result-review encounter; only raw current landmarks precede classification.",
+    "holdStatus": "none",
+    "sourceVerificationHold": null,
+    "sourceHoldScope": null,
+    "sourceView": "flags3-accepted",
+    "caseId": "case.inguinal-hernia.caregiving-strain",
+    "nodeId": "node.flags3.groin-ultrasound-classification.20261107",
+    "conceptId": "concept.groin-hernia.ultrasound-compartment-classification.v1",
+    "previousConceptId": "concept.groin-hernia.femoral-defect-repair-priority.v1",
+    "keyOrderNotice": "key shown first for review only; runtime answer choices are randomized",
+    "reviewDisplayNote": "Before is the exact captured current variant, with Jamie Taylor only rendering its name token and canonical age/sex retained. After uses the named draft patient. Neither is a claim that the owner screenshot exactly matches the current first decision.",
+    "beforeRole": "Exact independently reviewed round-one draft; original live fallback remains in the original packet and retained source",
+    "before": {
+      "variantId": "question.groin-hernia.ultrasound-type.v1",
+      "Presentation": "Elliot Reed, a 59-year-old man, returns to the surgery clinic with an intermittent right groin bulge. He now completes his usual caregiving lifts.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "keyValue",
+        "caption": "Targeted dynamic groin ultrasound",
+        "items": [
+          {
+            "label": "Sac neck",
+            "value": "Below the inguinal ligament."
+          },
+          {
+            "label": "Relation to the common femoral vein",
+            "value": "Immediately medial to the vein."
+          }
+        ]
+      },
+      "Task": "Which type of hernia do the ultrasound findings identify in Elliot Reed?",
+      "Options": [
+        "**KEY:** Femoral hernia",
+        "Direct inguinal hernia",
+        "Indirect inguinal hernia"
+      ]
+    },
+    "after": {
+      "variantId": "question.groin-hernia.ultrasound-type.v1",
+      "Presentation": "Elliot Reed, a 59-year-old man, returns to the surgery clinic with an intermittent right groin bulge.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "keyValue",
+        "caption": "Targeted dynamic groin ultrasound",
+        "items": [
+          {
+            "label": "Sac neck",
+            "value": "Below the inguinal ligament."
+          },
+          {
+            "label": "Relation to the common femoral vein",
+            "value": "Immediately medial to the vein."
+          }
+        ]
+      },
+      "Task": "Which type of hernia do the ultrasound findings identify in Elliot Reed?",
+      "Options": [
+        "**KEY:** Femoral hernia",
+        "Direct inguinal hernia",
+        "Indirect inguinal hernia"
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Femoral hernia",
+          "The neck lies below the inguinal ligament and medial to the common femoral vein, identifying the femoral-canal route."
+        ],
+        [
+          "Direct inguinal hernia",
+          "Direct inguinal anatomy is defined at Hesselbach's triangle medial to the inferior epigastric vessels. The recorded neck instead follows the below-ligament compartment beside the common femoral vein."
+        ],
+        [
+          "Indirect inguinal hernia",
+          "An indirect inguinal sac enters the deep ring lateral to the inferior epigastric vessels. The reported below-ligament neck and venous relationship identify a different route."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Femoral hernia",
+          "The neck lies below the inguinal ligament and medial to the common femoral vein, identifying the femoral-canal route."
+        ],
+        [
+          "Direct inguinal hernia",
+          "Direct inguinal anatomy is defined at Hesselbach's triangle medial to the inferior epigastric vessels. The recorded neck instead follows the below-ligament compartment beside the common femoral vein."
+        ],
+        [
+          "Indirect inguinal hernia",
+          "An indirect inguinal sac enters the deep ring lateral to the inferior epigastric vessels. The reported below-ligament neck and venous relationship identify a different route."
+        ]
+      ]
+    },
+    "inference": "Locate the sac neck relative to the ligament. Then: Use the venous relationship to identify the anatomical compartment and choose the corresponding hernia type.",
+    "focus": "The neck is below the ligament and medial to the common femoral vein. The labels on the offered diagnoses are not given as interpretations in the presentation, update or report.",
+    "whatChanged": "Remove the unrelated caregiving-lifts sentence from the shared presentation; type question, ultrasound exhibit, options and feedback stay exact.",
+    "reviewResponse": {
+      "independentReview": "docs/research/question-flags3-review-20261107.json",
+      "managerDecision": "docs/research/question-flags3-manager-decision-20261107.md",
+      "response": "Remove the unrelated caregiving-lifts sentence from the shared presentation; type question, ultrasound exhibit, options and feedback stay exact.",
+      "residual": "Reviewer predicts easy; manager explicitly accepts owner-note resolution. Future difficulty work, not a new author PASS."
+    },
+    "selfCheck": {
+      "reviewer": "author; not independent review or clinical sign-off",
+      "manualReviewCompleted": true,
+      "coverTheKey": {
+        "attack": "All options are nearby hernia types with parallel noun grammar. The report names the common femoral vein because that is the necessary anatomical reference, not a diagnosis label; any resulting lexical warning must be disclosed rather than hidden with an unclear synonym.",
+        "lintWarnings": [
+          {
+            "id": "69424ed2a767eed0",
+            "rule": "case-detail-key-rationale-overlap",
+            "status": "retained_warning_manager_accepted",
+            "reason": "Necessary raw anatomical references: both inguinal ligament and common femoral vein are named, with spatial relationships requiring classification. No diagnosis is supplied. Matching those observations in feedback explains the inference; it is not an eligibility conclusion in the case. Keep this transparent residual word-overlap risk for independent/clinician review."
+          },
+          {
+            "id": "ac4b207b3c09c64a",
+            "rule": "case-detail-key-rationale-overlap",
+            "status": "retained_warning_manager_accepted",
+            "reason": "Necessary raw anatomical references: both inguinal ligament and common femoral vein are named, with spatial relationships requiring classification. No diagnosis is supplied. Matching those observations in feedback explains the inference; it is not an eligibility conclusion in the case. Keep this transparent residual word-overlap risk for independent/clinician review."
+          },
+          {
+            "id": "27db0afa1a0b7baf",
+            "rule": "key-only-word-overlap",
+            "status": "retained_warning_manager_accepted",
+            "reason": "Necessary raw anatomical references: both inguinal ligament and common femoral vein are named, with spatial relationships requiring classification. No diagnosis is supplied. Matching those observations in feedback explains the inference; it is not an eligibility conclusion in the case. Keep this transparent residual word-overlap risk for independent/clinician review."
+          }
+        ]
+      },
+      "sameDecisionStageAndCategory": {
+        "category": "Specific groin-hernia diagnoses",
+        "assessment": "All labels answer the stated task; exact clinical ranking remains for independent/clinician review."
+      },
+      "reasoningSteps": [
+        "Locate the sac neck relative to the ligament.",
+        "Use the venous relationship to identify the anatomical compartment and choose the corresponding hernia type."
+      ],
+      "closestCredibleError": "Direct inguinal hernia tempts a reader who treats every medial groin finding as the same medial defect; indirect inguinal hernia tempts the common assumption that any intermittent reducing groin sac uses the deep ring.",
+      "decidingFinding": "The neck is below the ligament and medial to the common femoral vein. The labels on the offered diagnoses are not given as interpretations in the presentation, update or report.",
+      "counterfactual": "A neck at the deep ring lateral to the inferior epigastric vessels would change the answer to indirect inguinal hernia. A medial posterior-wall defect at Hesselbach's triangle would support direct inguinal hernia.",
+      "residentDifficulty": "Easy per independent review; accepted for owner-note resolution, with future difficulty work recorded.",
+      "singleDefensibleBestAnswer": "The neck lies below the inguinal ligament and medial to the common femoral vein, identifying the femoral-canal route.",
+      "deletionTest": "Deleted the caregiving sentence. Retain the raw compartment and vessel relationship needed for an unambiguous type decision.",
+      "options": [
+        {
+          "label": "Femoral hernia",
+          "isKey": true,
+          "rationale": "The neck lies below the inguinal ligament and medial to the common femoral vein, identifying the femoral-canal route.",
+          "temptation": "Correct interpretation of the supplied record."
+        },
+        {
+          "label": "Direct inguinal hernia",
+          "isKey": false,
+          "rationale": "Direct inguinal anatomy is defined at Hesselbach's triangle medial to the inferior epigastric vessels. The recorded neck instead follows the below-ligament compartment beside the common femoral vein.",
+          "temptation": "Direct inguinal anatomy is defined at Hesselbach's triangle medial to the inferior epigastric vessels. The recorded neck instead follows the below-ligament compartment beside the common femoral vein."
+        },
+        {
+          "label": "Indirect inguinal hernia",
+          "isKey": false,
+          "rationale": "An indirect inguinal sac enters the deep ring lateral to the inferior epigastric vessels. The reported below-ligament neck and venous relationship identify a different route.",
+          "temptation": "An indirect inguinal sac enters the deep ring lateral to the inferior epigastric vessels. The reported below-ligament neck and venous relationship identify a different route."
+        }
+      ],
+      "clinicalAndSourceLimit": "Uses recorded femoral/direct/indirect anatomy claims. No source figure, diagnostic-performance estimate, operative technique or risk percentage is introduced.",
+      "sourceUncertaintyIsNotDifficulty": true,
+      "displayContext": "Own presentation contains no diagnosis, caregiving detail or repair instruction; necessary raw anatomical landmarks remain."
+    },
+    "supportingEvidenceClaimIds": [
+      "claim.flags3.20261107.groin-compartment",
+      "claim.flags3.20261107.direct-comparator",
+      "claim.flags3.20261107.indirect-comparator"
+    ],
+    "conceptVersion": {
+      "meaning": "new_version",
+      "reason": "New separately scored diagnostic sub-objective: classify a groin sac from ultrasound landmarks. The original repair-priority concept is retained for the following management node; no history is transferred between the two constructs.",
+      "previousConceptId": "concept.groin-hernia.femoral-defect-repair-priority.v1",
+      "newConceptId": "concept.groin-hernia.ultrasound-compartment-classification.v1",
+      "historyMigration": "None"
+    },
+    "lint": {
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [
+        {
+          "id": "69424ed2a767eed0",
+          "rule": "case-detail-key-rationale-overlap",
+          "severity": "advisory",
+          "message": "A case-detail phrase repeats only the explicit keyed reason. Review for pre-answer teaching; raw decision-critical evidence may justify the overlap. Synonymous paraphrases still require human review.",
+          "evidence": [
+            {
+              "field": "exhibit.items[0].value",
+              "text": "Below the inguinal ligament",
+              "start": 0,
+              "end": 27
+            },
+            {
+              "field": "authoring.answerChoices.rationale",
+              "text": "below the inguinal ligament",
+              "start": 14,
+              "end": 41,
+              "choiceId": "choice.flags3.20261107.f3-03-type.key",
+              "postAnswerMetadata": true
+            }
+          ],
+          "metrics": {
+            "explicitRationalesCompared": 3
+          },
+          "occurrences": [
+            {
+              "caseId": "case.inguinal-hernia.caregiving-strain",
+              "profileIds": [
+                "canonical",
+                "profile.flags3.inguinal-hernia.caregiving-strain.20261107"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 27
+                },
+                {
+                  "start": 14,
+                  "end": 41
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ac4b207b3c09c64a",
+          "rule": "case-detail-key-rationale-overlap",
+          "severity": "advisory",
+          "message": "A case-detail phrase repeats only the explicit keyed reason. Review for pre-answer teaching; raw decision-critical evidence may justify the overlap. Synonymous paraphrases still require human review.",
+          "evidence": [
+            {
+              "field": "exhibit.items[1].label",
+              "text": "to the common femoral vein",
+              "start": 9,
+              "end": 35
+            },
+            {
+              "field": "authoring.answerChoices.rationale",
+              "text": "to the common femoral vein",
+              "start": 53,
+              "end": 79,
+              "choiceId": "choice.flags3.20261107.f3-03-type.key",
+              "postAnswerMetadata": true
+            }
+          ],
+          "metrics": {
+            "explicitRationalesCompared": 3
+          },
+          "occurrences": [
+            {
+              "caseId": "case.inguinal-hernia.caregiving-strain",
+              "profileIds": [
+                "canonical",
+                "profile.flags3.inguinal-hernia.caregiving-strain.20261107"
+              ],
+              "ranges": [
+                {
+                  "start": 9,
+                  "end": 35
+                },
+                {
+                  "start": 53,
+                  "end": 79
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "27db0afa1a0b7baf",
+          "rule": "key-only-word-overlap",
+          "severity": "advisory",
+          "message": "A substantive word appears in the context and key only; clinical relevance may justify it.",
+          "evidence": [
+            {
+              "field": "exhibit.items[1].label",
+              "text": "femoral",
+              "start": 23,
+              "end": 30
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Femoral",
+              "start": 0,
+              "end": 7,
+              "choiceId": "choice.flags3.20261107.f3-03-type.key"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.inguinal-hernia.caregiving-strain",
+              "profileIds": [
+                "canonical",
+                "profile.flags3.inguinal-hernia.caregiving-strain.20261107"
+              ],
+              "ranges": [
+                {
+                  "start": 23,
+                  "end": 30
+                },
+                {
+                  "start": 0,
+                  "end": 7
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "after": [
+        {
+          "id": "69424ed2a767eed0",
+          "rule": "case-detail-key-rationale-overlap",
+          "severity": "advisory",
+          "message": "A case-detail phrase repeats only the explicit keyed reason. Review for pre-answer teaching; raw decision-critical evidence may justify the overlap. Synonymous paraphrases still require human review.",
+          "evidence": [
+            {
+              "field": "exhibit.items[0].value",
+              "text": "Below the inguinal ligament",
+              "start": 0,
+              "end": 27
+            },
+            {
+              "field": "authoring.answerChoices.rationale",
+              "text": "below the inguinal ligament",
+              "start": 14,
+              "end": 41,
+              "choiceId": "choice.flags3.20261107.f3-03-type.key",
+              "postAnswerMetadata": true
+            }
+          ],
+          "metrics": {
+            "explicitRationalesCompared": 3
+          },
+          "occurrences": [
+            {
+              "caseId": "case.inguinal-hernia.caregiving-strain",
+              "profileIds": [
+                "canonical",
+                "profile.flags3.inguinal-hernia.caregiving-strain.20261107.v2"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 27
+                },
+                {
+                  "start": 14,
+                  "end": 41
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ac4b207b3c09c64a",
+          "rule": "case-detail-key-rationale-overlap",
+          "severity": "advisory",
+          "message": "A case-detail phrase repeats only the explicit keyed reason. Review for pre-answer teaching; raw decision-critical evidence may justify the overlap. Synonymous paraphrases still require human review.",
+          "evidence": [
+            {
+              "field": "exhibit.items[1].label",
+              "text": "to the common femoral vein",
+              "start": 9,
+              "end": 35
+            },
+            {
+              "field": "authoring.answerChoices.rationale",
+              "text": "to the common femoral vein",
+              "start": 53,
+              "end": 79,
+              "choiceId": "choice.flags3.20261107.f3-03-type.key",
+              "postAnswerMetadata": true
+            }
+          ],
+          "metrics": {
+            "explicitRationalesCompared": 3
+          },
+          "occurrences": [
+            {
+              "caseId": "case.inguinal-hernia.caregiving-strain",
+              "profileIds": [
+                "canonical",
+                "profile.flags3.inguinal-hernia.caregiving-strain.20261107.v2"
+              ],
+              "ranges": [
+                {
+                  "start": 9,
+                  "end": 35
+                },
+                {
+                  "start": 53,
+                  "end": 79
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "27db0afa1a0b7baf",
+          "rule": "key-only-word-overlap",
+          "severity": "advisory",
+          "message": "A substantive word appears in the context and key only; clinical relevance may justify it.",
+          "evidence": [
+            {
+              "field": "exhibit.items[1].label",
+              "text": "femoral",
+              "start": 23,
+              "end": 30
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Femoral",
+              "start": 0,
+              "end": 7,
+              "choiceId": "choice.flags3.20261107.f3-03-type.key"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.inguinal-hernia.caregiving-strain",
+              "profileIds": [
+                "canonical",
+                "profile.flags3.inguinal-hernia.caregiving-strain.20261107.v2"
+              ],
+              "ranges": [
+                {
+                  "start": 23,
+                  "end": 30
+                },
+                {
+                  "start": 0,
+                  "end": 7
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "beforeCount": 3,
+      "afterCount": 3,
+      "profileContexts": 2,
+      "dispositions": [
+        {
+          "id": "69424ed2a767eed0",
+          "rule": "case-detail-key-rationale-overlap",
+          "status": "retained_warning_manager_accepted",
+          "reason": "Necessary raw anatomical references: both inguinal ligament and common femoral vein are named, with spatial relationships requiring classification. No diagnosis is supplied. Matching those observations in feedback explains the inference; it is not an eligibility conclusion in the case. Keep this transparent residual word-overlap risk for independent/clinician review."
+        },
+        {
+          "id": "ac4b207b3c09c64a",
+          "rule": "case-detail-key-rationale-overlap",
+          "status": "retained_warning_manager_accepted",
+          "reason": "Necessary raw anatomical references: both inguinal ligament and common femoral vein are named, with spatial relationships requiring classification. No diagnosis is supplied. Matching those observations in feedback explains the inference; it is not an eligibility conclusion in the case. Keep this transparent residual word-overlap risk for independent/clinician review."
+        },
+        {
+          "id": "27db0afa1a0b7baf",
+          "rule": "key-only-word-overlap",
+          "status": "retained_warning_manager_accepted",
+          "reason": "Necessary raw anatomical references: both inguinal ligament and common femoral vein are named, with spatial relationships requiring classification. No diagnosis is supplied. Matching those observations in feedback explains the inference; it is not an eligibility conclusion in the case. Keep this transparent residual word-overlap risk for independent/clinician review."
+        }
+      ],
+      "suppressedFindings": 0
+    },
+    "visibleHistory": {
+      "before": {
+        "chiefComplaint": "Intermittent groin bulge",
+        "presentation": "Elliot Reed, a 59-year-old man, returns to the surgery clinic with an intermittent right groin bulge. He now completes his usual caregiving lifts.",
+        "stem": "Which type of hernia do the ultrasound findings identify in Elliot Reed?",
+        "exhibit.caption": "Targeted dynamic groin ultrasound",
+        "exhibit.items[0].label": "Sac neck",
+        "exhibit.items[0].value": "Below the inguinal ligament.",
+        "exhibit.items[1].label": "Relation to the common femoral vein",
+        "exhibit.items[1].value": "Immediately medial to the vein."
+      },
+      "after": {
+        "chiefComplaint": "Intermittent groin bulge",
+        "presentation": "Elliot Reed, a 59-year-old man, returns to the surgery clinic with an intermittent right groin bulge.",
+        "stem": "Which type of hernia do the ultrasound findings identify in Elliot Reed?",
+        "exhibit.caption": "Targeted dynamic groin ultrasound",
+        "exhibit.items[0].label": "Sac neck",
+        "exhibit.items[0].value": "Below the inguinal ligament.",
+        "exhibit.items[1].label": "Relation to the common femoral vein",
+        "exhibit.items[1].value": "Immediately medial to the vein."
+      }
+    },
+    "encounterContinuity": {
+      "previousNodeIds": [
+        "node.inguinal-hernia.caregiving-strain.1",
+        "node.inguinal-hernia.caregiving-strain.2"
+      ],
+      "candidateNodeIds": [
+        "node.flags3.groin-ultrasound-classification.20261107",
+        "node.inguinal-hernia.caregiving-strain.2"
+      ],
+      "requiresManagerCompositionReview": false,
+      "change": "Proposed two-node result-review encounter replaces the old investigation/plan pair. Add classification and retain the original management concept; exclude the old interpreted inguinal gate from fresh composition. Full source-case acceptance/replacement is required, not isolated node insertion.",
+      "selectionLimit": "Paired-only new classification coverage. Existing FSRS policy can defer the case while the management companion is future-due; no selector, routing or history migration change.",
+      "managerCompositionAccepted": true
+    },
+    "fallback": {
+      "variantId": "question.inguinal-hernia.symptomatic-elective-repair.v3.r10",
+      "conceptId": "concept.groin-hernia.femoral-defect-repair-priority.v1",
+      "caseId": "case.inguinal-hernia.caregiving-strain",
+      "nodeId": "node.inguinal-hernia.caregiving-strain.2",
+      "policy": "Frozen encounters retain this exact older live version and FSRS identity; fresh supply uses the manager-accepted source."
+    },
+    "questionVariantId": "question.groin-hernia.ultrasound-type.v1",
+    "frozenPreservation": {
+      "reviewedQuestionVariantId": "question.groin-hernia.ultrasound-type.v1",
+      "reviewedNodeSha256": "84feab9bf398d45d0843bf24cda669d0e993817369e66595206eb9965e272d72",
+      "acceptedNodeSha256": "84feab9bf398d45d0843bf24cda669d0e993817369e66595206eb9965e272d72",
+      "acceptedQuestionSha256": "885d1759ceffd40b6cca0d26eda7fa88a1f2ec7a33f030b020c2ceb0f08d0ee7",
+      "acceptedCaseSha256": "08faf9f23cdf48f53b5d22df1abf57730ac2e05da6d68d2ad15c87a3992779bf",
+      "exactReviewedNode": true,
+      "exactReviewedCase": false
+    },
+    "evidenceUpdate": "No added medical rule, source, threshold or new claim. Established classification uses claim.flags3.20261107.groin-compartment and the existing repair/acuity claims. All remain needs_clinician_review."
+  },
+  {
+    "id": "F3-03",
+    "title": "Classified groin sac: choose the repair plan",
+    "round": "manager-acceptance-fix",
+    "status": "manager_accepted_unapproved_draft",
+    "reviewStatus": "needs_clinician_review",
+    "pipelinePassed": false,
+    "releaseReady": true,
+    "acceptanceAllowed": true,
+    "ownerFlagId": "F3-03",
+    "originalFlaggedVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v3.r10",
+    "ownerNote": "The target US findings should prompt the player to choose which kind of hernia the patient has too",
+    "ownerNoteResolution": "Keeps repair priority after the new type question, with the same management concept. Classification feedback deliberately gives no observation-versus-repair rule; the learner still applies that rule to the improving, nonacute patient.",
+    "holdStatus": "none",
+    "sourceVerificationHold": null,
+    "sourceHoldScope": null,
+    "sourceView": "flags3-accepted",
+    "caseId": "case.inguinal-hernia.caregiving-strain",
+    "nodeId": "node.inguinal-hernia.caregiving-strain.2",
+    "conceptId": "concept.groin-hernia.femoral-defect-repair-priority.v1",
+    "previousConceptId": "concept.groin-hernia.femoral-defect-repair-priority.v1",
+    "keyOrderNotice": "key shown first for review only; runtime answer choices are randomized",
+    "reviewDisplayNote": "Before is the exact captured current variant, with Jamie Taylor only rendering its name token and canonical age/sex retained. After uses the named draft patient. Neither is a claim that the owner screenshot exactly matches the current first decision.",
+    "beforeRole": "Exact independently reviewed round-one draft; original live fallback remains in the original packet and retained source",
+    "before": {
+      "variantId": "question.inguinal-hernia.symptomatic-elective-repair.v3.r11",
+      "Presentation": "Elliot Reed, a 59-year-old man, returns to the surgery clinic with an intermittent right groin bulge. He now completes his usual caregiving lifts.",
+      "Current update": "The groin bulge disappears when Elliot Reed lies down. The groin is nontender, the abdomen is soft and not distended, and he reports no vomiting.",
+      "Exhibit": null,
+      "Task": "Which plan should be offered for Elliot Reed's groin hernia at this visit?",
+      "Options": [
+        "**KEY:** Plan elective hernia repair",
+        "Plan scheduled hernia surveillance",
+        "Plan emergency hernia exploration"
+      ]
+    },
+    "after": {
+      "variantId": "question.inguinal-hernia.symptomatic-elective-repair.v3.r12",
+      "Presentation": "Elliot Reed, a 59-year-old man, returns to the surgery clinic with an intermittent right groin bulge.",
+      "Current update": "Ultrasound classification: femoral hernia. Elliot Reed now completes his usual caregiving lifts. The groin bulge disappears when he lies down. The groin is nontender, the abdomen is soft and not distended, and he reports no vomiting.",
+      "Exhibit": null,
+      "Task": "Which plan should be offered for Elliot Reed's groin hernia at this visit?",
+      "Options": [
+        "**KEY:** Plan elective hernia repair",
+        "Plan scheduled hernia surveillance",
+        "Plan emergency hernia exploration"
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Plan elective hernia repair",
+          "The established femoral anatomy supports timely elective repair despite improved function. The reducing, nontender presentation without obstructive features does not establish an emergency."
+        ],
+        [
+          "Plan scheduled hernia surveillance",
+          "Observation can be appropriate for selected minimally symptomatic inguinal hernias in men. Improvement in lifting does not extend that observation rule to the identified femoral route."
+        ],
+        [
+          "Plan emergency hernia exploration",
+          "The femoral type warrants repair planning, but the current record does not show the persistent painful irreducible or obstructed presentation needed to favor emergency exploration here."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Plan elective hernia repair",
+          "The established femoral anatomy supports timely elective repair despite improved function. The reducing, nontender presentation without obstructive features does not establish an emergency."
+        ],
+        [
+          "Plan scheduled hernia surveillance",
+          "Observation can be appropriate for selected minimally symptomatic inguinal hernias in men. Improvement in lifting does not extend that observation rule to the identified femoral route."
+        ],
+        [
+          "Plan emergency hernia exploration",
+          "The femoral type warrants repair planning, but the current record does not show the persistent painful irreducible or obstructed presentation needed to favor emergency exploration here."
+        ]
+      ]
+    },
+    "inference": "Combine the previously classified hernia with current reduction and nonacute findings. Then: Choose elective repair rather than importing inguinal watchful waiting or treating the type itself as proof of an emergency.",
+    "focus": "Femoral anatomy changes the observation boundary, while withdrawal at rest and the current nontender, nonobstructive presentation distinguish elective planning from emergency exploration.",
+    "whatChanged": "Established ultrasound classification and functional status now appear in this management node's own Current update. Version r12 retains its objective, task, three options, feedback and evidence mappings.",
+    "reviewResponse": {
+      "independentReview": "docs/research/question-flags3-review-20261107.json",
+      "managerDecision": "docs/research/question-flags3-manager-decision-20261107.md",
+      "response": "Established ultrasound classification and functional status now appear in this management node's own Current update. Version r12 retains its objective, task, three options, feedback and evidence mappings.",
+      "residual": "Reviewer predicts easy; manager explicitly accepts owner-note resolution. Future difficulty work, not a new author PASS."
+    },
+    "selfCheck": {
+      "reviewer": "author; not independent review or clinical sign-off",
+      "manualReviewCompleted": true,
+      "coverTheKey": {
+        "attack": "The task does not name safety, risk or a preferred urgency. All options name an actual plan at comparable scope. Necessary acute findings remain visible; they are not removed to make an emergency distractor falsely defensible.",
+        "lintWarnings": []
+      },
+      "sameDecisionStageAndCategory": {
+        "category": "Timing/observation plans for the established groin hernia",
+        "assessment": "All labels answer the stated task; exact clinical ranking remains for independent/clinician review."
+      },
+      "reasoningSteps": [
+        "Combine the previously classified hernia with current reduction and nonacute findings.",
+        "Choose elective repair rather than importing inguinal watchful waiting or treating the type itself as proof of an emergency."
+      ],
+      "closestCredibleError": "Scheduled surveillance is the closest near-miss because this man's function has improved; emergency exploration tempts overreaction to the femoral type without interpreting current acuity.",
+      "decidingFinding": "Femoral anatomy changes the observation boundary, while withdrawal at rest and the current nontender, nonobstructive presentation distinguish elective planning from emergency exploration.",
+      "counterfactual": "If the sac remained irreducible with persistent pain and vomiting, urgent assessment would replace elective planning. If the type were a minimally symptomatic reducible inguinal hernia in an informed man, observation could be appropriate.",
+      "residentDifficulty": "Easy per independent review; accepted for owner-note resolution, with future difficulty work recorded.",
+      "singleDefensibleBestAnswer": "The established femoral anatomy supports timely elective repair despite improved function. The reducing, nontender presentation without obstructive features does not establish an emergency.",
+      "deletionTest": "The earlier report label and mechanism commentary are gone. Current acute observations each delimit urgency; the prior ultrasound is not repeated as a teaching sentence in the task.",
+      "options": [
+        {
+          "label": "Plan elective hernia repair",
+          "isKey": true,
+          "rationale": "The established femoral anatomy supports timely elective repair despite improved function. The reducing, nontender presentation without obstructive features does not establish an emergency.",
+          "temptation": "Correct interpretation of the supplied record."
+        },
+        {
+          "label": "Plan scheduled hernia surveillance",
+          "isKey": false,
+          "rationale": "Observation can be appropriate for selected minimally symptomatic inguinal hernias in men. Improvement in lifting does not extend that observation rule to the identified femoral route.",
+          "temptation": "Observation can be appropriate for selected minimally symptomatic inguinal hernias in men. Improvement in lifting does not extend that observation rule to the identified femoral route."
+        },
+        {
+          "label": "Plan emergency hernia exploration",
+          "isKey": false,
+          "rationale": "The femoral type warrants repair planning, but the current record does not show the persistent painful irreducible or obstructed presentation needed to favor emergency exploration here.",
+          "temptation": "The femoral type warrants repair planning, but the current record does not show the persistent painful irreducible or obstructed presentation needed to favor emergency exploration here."
+        }
+      ],
+      "clinicalAndSourceLimit": "The femoral repair direction has one adequate recorded management guideline. Exact urgency and procedure require clinician review; no new deadline, probability or technique is taught.",
+      "sourceUncertaintyIsNotDifficulty": true,
+      "displayContext": "Self-contained: the known femoral classification, reduction and nonacute examination are visible in this node. The class label is introduced only after the separate type question."
+    },
+    "supportingEvidenceClaimIds": [
+      "claim.flags3.20261107.reducible-femoral-plan",
+      "claim.flags3.20261107.acute-boundary"
+    ],
+    "conceptVersion": {
+      "meaning": "same",
+      "reason": "The original management objective and concept ID remain: apply femoral anatomy and acuity to repair priority. Classification is now independently scored in a new preceding node.",
+      "previousConceptId": "concept.groin-hernia.femoral-defect-repair-priority.v1",
+      "newConceptId": "concept.groin-hernia.femoral-defect-repair-priority.v1",
+      "historyMigration": "None"
+    },
+    "lint": {
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [],
+      "after": [],
+      "beforeCount": 0,
+      "afterCount": 0,
+      "profileContexts": 2,
+      "dispositions": [],
+      "suppressedFindings": 0
+    },
+    "visibleHistory": {
+      "before": {
+        "chiefComplaint": "Intermittent groin bulge",
+        "presentation": "Elliot Reed, a 59-year-old man, returns to the surgery clinic with an intermittent right groin bulge. He now completes his usual caregiving lifts.",
+        "stem": "Which plan should be offered for Elliot Reed's groin hernia at this visit?",
+        "currentUpdate": "The groin bulge disappears when Elliot Reed lies down. The groin is nontender, the abdomen is soft and not distended, and he reports no vomiting.",
+        "priorFeedback[0]": "The sac neck's relationship to the ligament and vein identifies a femoral hernia. Direct and indirect inguinal labels refer to different anatomical routes.",
+        "priorTeachingPoint[0]": "The sac neck's relationship to the ligament and vein identifies a femoral hernia. Direct and indirect inguinal labels refer to different anatomical routes."
+      },
+      "after": {
+        "chiefComplaint": "Intermittent groin bulge",
+        "presentation": "Elliot Reed, a 59-year-old man, returns to the surgery clinic with an intermittent right groin bulge.",
+        "stem": "Which plan should be offered for Elliot Reed's groin hernia at this visit?",
+        "currentUpdate": "Ultrasound classification: femoral hernia. Elliot Reed now completes his usual caregiving lifts. The groin bulge disappears when he lies down. The groin is nontender, the abdomen is soft and not distended, and he reports no vomiting.",
+        "priorFeedback[0]": "The sac neck's relationship to the ligament and vein identifies a femoral hernia. Direct and indirect inguinal labels refer to different anatomical routes.",
+        "priorTeachingPoint[0]": "The sac neck's relationship to the ligament and vein identifies a femoral hernia. Direct and indirect inguinal labels refer to different anatomical routes."
+      }
+    },
+    "encounterContinuity": {
+      "previousNodeIds": [
+        "node.inguinal-hernia.caregiving-strain.1",
+        "node.inguinal-hernia.caregiving-strain.2"
+      ],
+      "candidateNodeIds": [
+        "node.flags3.groin-ultrasound-classification.20261107",
+        "node.inguinal-hernia.caregiving-strain.2"
+      ],
+      "requiresManagerCompositionReview": false,
+      "change": "Proposed two-node result-review encounter replaces the old investigation/plan pair. Add classification and retain the original management concept; exclude the old interpreted inguinal gate from fresh composition. Full source-case acceptance/replacement is required, not isolated node insertion.",
+      "selectionLimit": "Paired-only new classification coverage. Existing FSRS policy can defer the case while the management companion is future-due; no selector, routing or history migration change.",
+      "managerCompositionAccepted": true
+    },
+    "fallback": {
+      "variantId": "question.inguinal-hernia.symptomatic-elective-repair.v3.r10",
+      "conceptId": "concept.groin-hernia.femoral-defect-repair-priority.v1",
+      "caseId": "case.inguinal-hernia.caregiving-strain",
+      "nodeId": "node.inguinal-hernia.caregiving-strain.2",
+      "policy": "Frozen encounters retain this exact older live version and FSRS identity; fresh supply uses the manager-accepted source."
+    },
+    "questionVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v3.r12",
+    "frozenPreservation": {
+      "reviewedQuestionVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v3.r11",
+      "reviewedNodeSha256": "649fbd1bfd825722e59aa9ee15b0cca95dabc980765e07207af6a69df066692f",
+      "acceptedNodeSha256": "5664948a4b367a7140d8aa636497689f9836ecd5cc18dd329ec37ad1723ae563",
+      "acceptedQuestionSha256": "08deb5847e18beade0664cb0132fef5b0925cdf9955e46cb859d56e2adb2a2fa",
+      "acceptedCaseSha256": "08faf9f23cdf48f53b5d22df1abf57730ac2e05da6d68d2ad15c87a3992779bf",
+      "exactReviewedNode": false,
+      "exactReviewedCase": false
+    },
+    "evidenceUpdate": "No added medical rule, source, threshold or new claim. Established classification uses claim.flags3.20261107.groin-compartment and the existing repair/acuity claims. All remain needs_clinician_review."
+  }
+]
