@@ -139,3 +139,34 @@ it("defers an initially covered phone map until first reveal, then retains the s
   await render(true); await render(false); expect(captured.games).toHaveLength(1); expect(game.destroy).not.toHaveBeenCalled();
   await cleanupPhoneTests(); expect(game.destroy).toHaveBeenCalledWith(true);
 });
+
+it.each([false, true])("publishes a pending gesture before lifecycle/Save & Close flush and removes listeners (phone=%s)", async mobile => {
+  observer(); vi.useFakeTimers(); const env = phoneTestDom(), fixture = phoneFixture();
+  Object.assign(env.browser, { setInterval, clearInterval }); Object.assign(env.doc, { visibilityState: "visible" });
+  const values = new Map<string, string>(), storage = { getItem: (key: string) => values.get(key) ?? null,
+    setItem: (key: string, value: string) => { values.set(key, value); } };
+  const preferences = createFacilityCameraPreferenceSession(storage);
+  const changed = vi.fn((camera: FacilityCameraView) => { preferences.change("gesture", camera); });
+  await env.render(<FacilityCanvas mobileInput={mobile} viewModel={{ ...fixture.facility, camera: { zoom: 1.2, panX: 0, panY: 0 } }}
+    onCameraChange={changed} onPlaceRoom={() => true} />);
+  const game = captured.games[0], scene = game.config.scene;
+  scene.scale = game.scale; scene.time = { now: 0 };
+  const host = env.find(node => node.attributes["data-testid"] === "facility-canvas");
+  const geometryRead = vi.fn(() => 900);
+  Object.defineProperties(host, { clientWidth: { configurable: true, get: geometryRead }, clientHeight: { configurable: true, get: geometryRead } });
+  scene.drawWorld = vi.fn(); scene.positionText = vi.fn(); scene.drawPlacementGhost = vi.fn(); scene.refreshLayout();
+  const unbind = bindFacilityCameraPreferenceLifecycle(preferences, env.browser, env.doc as unknown as Document);
+  for (let i = 0; i < 40; i++) { scene.handleWheel(-30); scene.time.now += 10; game.events.emit("poststep"); }
+  expect(changed).not.toHaveBeenCalled();
+  expect(geometryRead).not.toHaveBeenCalled();
+  const latest = scene.getCameraPreference();
+  await act(async () => { env.browser.dispatchEvent(new Event("pagehide")); });
+  expect(changed).toHaveBeenCalledExactlyOnceWith(latest);
+  expect(readFacilityCameraPreference("gesture", storage)).toEqual(latest);
+  changed.mockClear(); scene.handleWheel(30); const beforeSave = scene.getCameraPreference();
+  await act(async () => { env.browser.dispatchEvent(new Event("pointerdown")); }); // Outside canvas, before the React action.
+  preferences.flush(); expect(changed).toHaveBeenCalledExactlyOnceWith(beforeSave);
+  expect(readFacilityCameraPreference("gesture", storage)).toEqual(beforeSave);
+  unbind(); await cleanupPhoneTests(); changed.mockClear();
+  env.browser.dispatchEvent(new Event("pagehide")); expect(changed).not.toHaveBeenCalled();
+});

@@ -9281,3 +9281,46 @@ order remains unverified; no account/tester-save access. No origin/path change.
 Full paths/hashes/exact validation/open risks: GS028 port23 appendix. Receipts:
 .local-dev/release-port23-20261108/. Local/uncommitted; no push/install/network/
 agents/deploy/clinical approval. Manager owns release and backup.
+
+
+## 2026-11-08 — Release port24: map pan/zoom performance
+
+Only accepted renderer rounds1–3 ported into GS-release9439b199:27 port paths
+(25 copied /2 hunk-ported),97 observed differences excluded. Retained camera,
+crisp settle, gesture-end publication, transform-only pins, paused reuse,
+culling and picking/Build/labels/popups/sizing tests. Unaccepted character/art,
+cloud/session/domain/clinical and .github untouched; released filtering and
+manager splitter measurement retained. Dispositions:`.local-dev/release-verify/port24-20261108.json`.
+
+Level5:all553 inputs (411 clinical),nine checkpoints,three reports,metadata,
+history22 and launch/workload pins unchanged.44 focused tests pass; no rebind.
+26,531 commands /6,019,042 cents /412 completions /0 walkouts.
+
+Seven suites:768 files /11172 passed /0 failed /1 existing skip.
+Seven typechecks,boundary/launcher and player build (1052 modules,10.22s) pass.
+Focused renderer46 pass. Scoped e2e has four unchanged biopsy TS2322 errors,
+exactly reproduced from entry; other eight specs/config typecheck cleanly.
+No browser run claimed; manager supplied4/4 production and functional acceptance.
+Owner origin/path/profile unchanged; new QA5186 is disposable separate storage.
+
+Full paths/hashes/exact output/exclusions/risks:GS028 port24 section. Receipts:
+`.local-dev/release-port24-20261108/`. Local/uncommitted; no push,install,network,
+agents,deploy or clinical approval. Manager owns browser smoke,backup,release.
+
+
+### 2026-11-08 — Port24 follow-up: CI test-stability guard pins
+
+Manager-copied seven CI test/support sources verified and preserved. Authorized
+exactly operationalEnginePerformance, operationalSessionPerformance and
+tickPerformance test hashes through existing history-bearing source-pin fixtures.
+Only fixture digest/count constants and necessary cross-guard digests propagate;
+170 unrelated old pin rows, 74 absences and immutable captures remain exact.
+Eight guard/fixture paths plus three coordination docs changed by this worker.
+
+CI=true, threads: full clinical-content 127 files /1,584 tests passed,128.82s;
+five edited player files /71 tests passed,59.46s. Both exits0, no failures/skips.
+All553 inputs (411 clinical), Level5 evidence and .github unchanged. Restored
+diagnosticWorkloadPerformance remains exact. Fifteen pre-existing screenshots
+preserved. Updated dispositions:31 copied /10 hunk-ported /93 excluded.
+Exact hashes/commands/output: GS028 port24 follow-up; receipts under
+`.local-dev/release-port24-ci-stability-20261108/`. Local/uncommitted; no deploy.

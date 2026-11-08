@@ -11251,3 +11251,350 @@ future work. No owner origin/profile/opening-path change or save reset.
 Work remains local/uncommitted for manager acceptance. Manager owns release,
 browser/device acceptance and any separately authorized GitHub backup.
 
+
+
+## Release port 24 (release worktree, map pan/zoom performance) — 2026-11-08
+
+Manager-directed port from read-only GamifySurgery into GS-release, user-stated HEAD 9439b199. Only accepted map pan/zoom rounds 1–3 were ported. No rebind, source pin migration, clinical/domain/balance/cloud/asset edit, .github edit, commit, push, install, network, browser, agent or deployment action.
+
+Scope receipt: `.local-dev/release-verify/port24-20261108.json`; 25 copied / 2 hunk-ported / 97 excluded paths. The original three worker final manifests match the captured source hashes. The original research report and ExecPlan retain historical worker validation and older fixture hashes; the release verification below is authoritative for this port.
+
+FacilityScene used the accepted baseline-to-final delta, preserving unaccepted character art, pose scales, supports, registration, texture filtering and occupied-room QA changes. Of 157 context groups,154 applied directly; the absent character QA hook was excluded and two overlapping camera-scale/paused-size changes were applied to the released registration code. The accepted character-resolution proof needed read-only `groundX`, which was added to its existing debug hook. Its original released linear-filter assertion remains, because the live nearest-filter art lane is outside this port. The splitter spec is already text-identical to live; the manager's border-excluded host measurement stays unchanged.
+
+### Changed files
+
+Exactly 30 public paths: the 27 port paths below, `docs/execplans/release-port24-20261108.md`, this additive GS028 section, and the additive `docs/handoffs/CURRENT_THREAD_HANDOFF.md` section. Private captures, reports, native logs and scripts stay under `.local-dev/release-port24-20261108/`. The final complete path/hash audit is `scope-audit-final.json` there.
+
+| Ported path | Disposition | Before SHA-256 | After SHA-256 |
+| --- | --- | --- | --- |
+| `apps/player/src/facility/ClinicMapPins.tsx` | copied | 773d7ac41acf3b65c91ff291917a30e1939884f1bdc9fa673196147aad26d3bb | bbe1f6fd6bccafd6d39cc994fe4fbb227d8212a8a4ee6bd77ef557db6552bd87 |
+| `apps/player/src/facility/FacilityCanvas.lifecycle.test.tsx` | copied | 07298611dfa388f210ffb1e622b9751d73310086df6cae8997b5c068d11895b2 | 78da70ffbf7259915951d3137cac9eb13f62262e2605e01bda1a508d0bc224db |
+| `apps/player/src/facility/FacilityCanvas.tsx` | copied | 4e3b8727f01f2c704230ffeededf28f8c9024666f2abd535e0db7bdfdd99fdd6 | 6eeb650551dccfea7beca5e7f7d90e25f3b2b340e6d54e96dc800281ec04e871 |
+| `apps/player/src/facility/FacilityScene.ts` | hunk-ported | 00dbf78f85eb2fbe2f98a3013162e1b53b5a5e74373337d369fc1dac80f5ecf3 | aad58f5498280bea2d5bb7237c2bdb211c5a7fb5154ec0393dd400dcc4bf73fb |
+| `apps/player/src/facility/cameraGesturePublication.test.ts` | copied | new | adfcf0b489ebbf91e46cc67b72e1200809221f72c35ce173cfc4085e38122296 |
+| `apps/player/src/facility/facilityProofPolicy.ts` | copied | new | 18dfaa71adba88c0e2445f8e97a5da3ea9119c29a63a55c1b9159a142400ebe4 |
+| `apps/player/src/facility/facilityWorldSignature.ts` | copied | ece56e7d86e0d2343a98da89db479211a5dcbdc8917693420e31a17c9b03bd13 | 332aec6bb4bd72258c7cddd7052b25225d6b7590167b272729e0d5e8318be944 |
+| `apps/player/src/facility/graphicsViewportCulling.test.ts` | copied | new | 2be204a90d6c04d2a91289dcb2ba611064495315eb0b38fdaad0a1e4f333e3bb |
+| `apps/player/src/facility/graphicsViewportCulling.ts` | copied | new | 572589867d2496a7510ef3193593e5ef6849a79f2a3275223235c1f57e5d8c40 |
+| `apps/player/src/facility/mapPinPositions.test.ts` | copied | new | 72c4a14a05c68de64a37f51b4e00312fa33390fe314bfffbb277860cbb3d2920 |
+| `apps/player/src/facility/mapPinPositions.ts` | copied | new | b1228d5952548c8f1f6ec2b799e26f7613d1e920280e4183ba941d074d1d7b1c |
+| `apps/player/src/facility/retainedCamera.test.ts` | copied | new | 45eb3c636fbd5c6a092d0aa0804faee67d1e0b1efc448f340f4a9cfd53d895fe |
+| `apps/player/src/facility/retainedCamera.ts` | copied | new | 4c1290dd1d51c0f2230a08747c62f3e88092c46b6d10a452630e66031a7adabf |
+| `apps/player/src/facility/retainedCameraRoundTwo.test.ts` | copied | new | a3ad99a6154e5c7d7ebaca26c7621fc5e7acadb55890ced0d2c8e69dcfa5ed4b |
+| `apps/player/src/facility/retainedCameraTestSupport.ts` | copied | new | 177f9d85ecaa9ed1c3132fbb730459c051bd610c892c707fa050371205c1e1a0 |
+| `docs/execplans/map-pan-zoom-performance-20261108.md` | copied | new | e7ab78a041e842d049597a4abb0de3bdaa8ed164463655b062cc01bac440f54e |
+| `docs/research/map-pan-zoom-performance-20261108.md` | copied | new | b1f26367697352f8114526c54b68bcff73253ea3c4b6396a1a840512539ef6a5 |
+| `playwright.map-performance.config.ts` | copied | new | 8d398e39b753d95a11687ebe14134a4935d3bb4a6dd5905e4eb067c0a2de5782 |
+| `scripts/qa/map-performance-preview.mjs` | copied | new | f3e0771c5729ca9c9beecbad2b4eea851d85f1e3e46d94894fbf3ce08fdce027 |
+| `tests/e2e/character-resolution-zoom.spec.ts` | hunk-ported | bcf41d496d97d419cd16b644b7727fe9b22353a49fd31d500c07b2172dd08228 | 8a595411dc29dc47ffb2d3d294e995adfbfe2753711fb9fba23589f74d749d4a |
+| `tests/e2e/clinic-biopsy-visitors-correction.spec.ts` | copied | 05405f32bd1881db6d873460acfbd735e9dc09a9d3bc03852d0d9f5f233405e7 | 2a3f6a8d40fdc092affddb9958c7694ef5fac97b63266487b58d1995b1ee6ed8 |
+| `tests/e2e/fixtures/freshLocalCampaign.ts` | copied | new | 721949fcb595247554b3338280564c2f0445e6f82042fd04126f166453bd4d7a |
+| `tests/e2e/floor-pattern-pan-stability.spec.ts` | copied | ee3b95d273ffaede8ad5a4423a07c706788b579ddcfbb9800fa42ca66041ed75 | 41b196d0b514eeb4c9a5bbf83049e930e60d035748d37cedd570e81ef5fb7a11 |
+| `tests/e2e/helpers.ts` | copied | 27f9c6c51e2866306739d181360f67c3f3116272aa6a3644bc445b2a7e497c14 | 4d79c535af1263e6887634a1b3befd7794ac6e7afec84340f9e1299c6c76f946 |
+| `tests/e2e/level-five.spec.ts` | copied | 8697e951007e63caa70325c8ef18f19334c1ed8e31543acd4295cb941bb4e459 | 68397c4cd96e68ace93a6990c5a9293620e66e64a9572163d39aabe58cb941d5 |
+| `tests/e2e/map-click-info.spec.ts` | copied | 823f688c6051ffda454cd6b35c172e71f78e7b12447019ac7776a8e6199df87c | 35219e2e8b543b53d3027c0ea3ae02cf4505422e672539919ff346db27958ac3 |
+| `tests/e2e/map-pan-zoom-performance.spec.ts` | copied | new | a7cc8c70f689e026d3135a098d3c3af4426fcc1c5040c4aa4f3342d10cafff68 |
+
+### Level 5 remains unchanged
+
+All553 bound input hashes, including411 clinical inputs, match entry. All nine checkpoints, three complete reports, result metadata,22 inputHistory entries, launch/workload pins and the strict integration guard are byte-identical. Focused integration/launch checks:2 files /44 tests pass. No generator or rebind was needed for a presentation-only port.
+
+| Value | Before | After |
+| --- | ---: | ---: |
+| Commands | 26,531 | 26,531 |
+| Closing cash cents | 6,019,042 | 6,019,042 |
+| Completions | 412 | 412 |
+| Walkouts | 0 | 0 |
+| Unlock tick | 14,906 | 14,906 |
+| Final tick | 24,681 | 24,681 |
+
+- Unchanged `tools/qa/level-five-integration-results-20261012.json`: `2af0e6a514834a4ab1daa81bdc973123c8e3f8a1cf787b8ef8d2726bca648a97`.
+- Unchanged `tests/fixtures/level-five-integration-checkpoints-20261012.json`: `560a4a38c5d8d2cdadf3033666a88a2f5e7e75f64533def7b55d2dfa61469d32`.
+- Unchanged `tests/fixtures/level-five-legacy-behavior-20261012.json`: `3addb62de20361e02821cc25d6f42de101988af9069439949121e48a532c3683`.
+- Unchanged `packages/game-domain/tests/level-five-integration.test.ts`: `812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909`.
+
+Cash:1,785,500 +15,101,400 -265,652 -9,554,206 -1,048,000 =6,019,042 cents. Existing guarded run evidence remains bound; no new simulation run is claimed. Raw audit:`level-five-input-audit.json`.
+
+### Validation
+
+CI=true; installed tools only; seven workspace suites directly, each `--pool=threads --maxWorkers=2`, preserving test timeouts/assertions. Process-local preload handles only the optional Windows `net use` probe. All native commands and exit codes are in `*-process.json`, raw output in matching `.log`, and exact per-file/test records in `workspace-*.json`.
+
+| Workspace | Files passed | Tests passed | Failed | Existing skipped |
+| --- | ---: | ---: | ---: | ---: |
+| clinical-context-workbench | 8 | 43 | 0 | 0 |
+| player | 395 | 3977 | 0 | 0 |
+| balance-config | 24 | 164 | 0 | 0 |
+| clinical-authoring | 7 | 81 | 0 | 0 |
+| clinical-content | 127 | 1584 | 0 | 0 |
+| clinical-research | 8 | 83 | 0 | 0 |
+| game-domain | 199 | 5240 | 0 | 1 |
+| Total | 768 | 11172 | 0 | 1 |
+
+Prior release-tree baseline:763 files /11,130 passed /0 failed /1 skipped. This port adds five files and42 passing tests. Main-tree worker failures in bread-butter choices, SSR escaping, gym copy and legacy evidence limits were already corrected in GS-release and those release fixes were preserved.
+
+`other-workspaces.log`, exit0:
+
+```text
+ Test Files  8 passed (8)
+      Tests  43 passed (43)
+   Start at  17:21:43
+   Duration  1.80s (transform 549ms, setup 0ms, import 1.46s, tests 746ms, environment 1ms)
+ Test Files  24 passed (24)
+      Tests  164 passed (164)
+   Start at  17:21:45
+   Duration  3.80s (transform 909ms, setup 0ms, import 4.02s, tests 271ms, environment 2ms)
+ Test Files  7 passed (7)
+      Tests  81 passed (81)
+   Start at  17:21:50
+   Duration  1.09s (transform 234ms, setup 0ms, import 653ms, tests 520ms, environment 1ms)
+ Test Files  127 passed (127)
+      Tests  1584 passed (1584)
+   Start at  17:21:51
+   Duration  173.84s (transform 11.53s, setup 0ms, import 296.30s, tests 28.56s, environment 15ms)
+ Test Files  8 passed (8)
+      Tests  83 passed (83)
+   Start at  17:24:46
+   Duration  3.99s (transform 382ms, setup 0ms, import 1.06s, tests 1.77s, environment 1ms)
+```
+
+`domain.log`, exit0:
+
+```text
+ Test Files  199 passed (199)
+      Tests  5240 passed | 1 skipped (5241)
+   Start at  17:22:30
+   Duration  745.33s (transform 20.71s, setup 0ms, import 540.62s, tests 918.63s, environment 22ms)
+```
+
+`player.log`, exit0:
+
+```text
+ Test Files  395 passed (395)
+      Tests  3977 passed (3977)
+   Start at  17:21:43
+   Duration  1072.39s (transform 26.25s, setup 0ms, import 788.16s, tests 1304.48s, environment 36ms)
+```
+
+`level-five.log`, exit0:
+
+```text
+ Test Files  2 passed (2)
+      Tests  44 passed (44)
+   Start at  17:20:13
+   Duration  105.14s (transform 9.76s, setup 0ms, import 17.83s, tests 96.91s, environment 0ms)
+```
+
+`focused-renderer.log`, exit0:
+
+```text
+ Test Files  6 passed (6)
+      Tests  46 passed (46)
+   Start at  17:20:28
+   Duration  16.70s (transform 13.30s, setup 0ms, import 26.53s, tests 4.72s, environment 0ms)
+```
+
+Root `npm.cmd run typecheck`, exit0: all seven workspaces, no diagnostics (workbench client+server, player, balance-config, clinical-authoring, clinical-content, clinical-research, game-domain).
+
+`npm.cmd run test:boundaries`: direct Node invocation exit1 solely `spawnSync git EPERM`. Native read-only `git ls-files -z` with GIT_OPTIONAL_LOCKS=0 succeeded. A strict process-local bridge supplies those exact bytes only for that exact Git inventory command, verifying tree/index/inventory SHA-256; all boundary/launcher assertions execute unchanged. Bridged rerun exit0:
+
+```text
+Verified runtime dependency boundaries and 7351 tracked path(s).
+Verified launcher health contract gamify-surgery-player protocol 1.
+```
+
+`npm.cmd run build --workspace @gamify-surgery/player`, exit0, normal QA proof flag0:
+
+```text
+transforming...✓ 1052 modules transformed.
+✓ built in 10.22s
+```
+
+Existing bundle-size/dynamic-import/plugin timing warnings only. No production preview/server launched.
+
+Touched-spec e2e typecheck, exit1: four pre-existing TS2322 RoomUpgradeLevel fixture errors in `clinic-biopsy-visitors-correction.spec.ts` at57:5,58:110,59:115,273:5. Captured pre-port control exit1 reproduces the exact entire diagnostic output after filename normalization. All other eight relevant specs (map performance/clicks/character resolution/floor pan/Level5/splitter/Build/phone) plus the new Playwright config typecheck with exit0 and no diagnostics. No assertion/type suppression or unrelated fixture repair. `e2e-baseline-verification.json` records all four exact headers and control equality.
+
+Exact commands executed:
+
+```text
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port24-20261108/workspace-json-reporter.mjs
+npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port24-20261108/workspace-json-reporter.mjs
+npm.cmd run test --workspace @gamify-surgery/clinical-context-workbench --workspace @gamify-surgery/balance-config --workspace @gamify-surgery/clinical-authoring --workspace @gamify-surgery/clinical-content --workspace @gamify-surgery/clinical-research -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port24-20261108/workspace-json-reporter.mjs
+npm.cmd run typecheck
+npm.cmd run build --workspace @gamify-surgery/player
+npm.cmd run test:boundaries
+npm.cmd run test --workspace @gamify-surgery/game-domain -- tests/level-five-integration.test.ts tests/level-five-launch.test.ts --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=../../.local-dev/release-port24-20261108/level-five.json
+npm.cmd run test --workspace @gamify-surgery/player -- src/facility/retainedCamera.test.ts src/facility/retainedCameraRoundTwo.test.ts src/facility/cameraGesturePublication.test.ts src/facility/graphicsViewportCulling.test.ts src/facility/mapPinPositions.test.ts src/facility/FacilityCanvas.lifecycle.test.tsx --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=../../.local-dev/release-port24-20261108/focused-renderer.json
+node node_modules/typescript/bin/tsc --noEmit -p .local-dev/release-port24-20261108/e2e-clean-tsconfig.json
+node node_modules/typescript/bin/tsc --noEmit -p .local-dev/release-port24-20261108/e2e-tsconfig.json
+node node_modules/typescript/bin/tsc --noEmit -p .local-dev/release-port24-20261108/e2e-entry-tsconfig.json
+```
+
+### Observed differences excluded from the port
+
+- `apps/player/character-phlebotomy.html` — Unaccepted character/art/proportions lane; retain released art and presentation.
+- `apps/player/character-proportions.html` — Unaccepted character/art/proportions lane; retain released art and presentation.
+- `apps/player/character-rooms.html` — Unaccepted character/art/proportions lane; retain released art and presentation.
+- `apps/player/src/art/characterBitmapArt.test.ts` — Unaccepted character/art/proportions lane; retain released art and presentation.
+- `apps/player/src/art/characterBitmapArt.ts` — Unaccepted character/art/proportions lane; retain released art and presentation.
+- `apps/player/src/art/characterPhlebotomyQa.before.json` — Unaccepted character/art/proportions lane; retain released art and presentation.
+- `apps/player/src/art/characterPhlebotomyQa.frames.json` — Unaccepted character/art/proportions lane; retain released art and presentation.
+- `apps/player/src/art/characterPhlebotomyQa.test.ts` — Unaccepted character/art/proportions lane; retain released art and presentation.
+- `apps/player/src/art/characterPhlebotomyQa.ts` — Unaccepted character/art/proportions lane; retain released art and presentation.
+- `apps/player/src/art/characterPhlebotomyQaModel.ts` — Unaccepted character/art/proportions lane; retain released art and presentation.
+- `apps/player/src/art/characterProportions.generated.json` — Unaccepted character/art/proportions lane; retain released art and presentation.
+- `apps/player/src/art/characterProportions.test.ts` — Unaccepted character/art/proportions lane; retain released art and presentation.
+- `apps/player/src/art/characterProportions.ts` — Unaccepted character/art/proportions lane; retain released art and presentation.
+- `apps/player/src/art/characterProportionsQa.ts` — Unaccepted character/art/proportions lane; retain released art and presentation.
+- `apps/player/src/art/characterRoomProportions.generated.json` — Unaccepted character/art/proportions lane; retain released art and presentation.
+- `apps/player/src/art/characterRoomProportions.test.ts` — Unaccepted character/art/proportions lane; retain released art and presentation.
+- `apps/player/src/art/characterRoomProportions.ts` — Unaccepted character/art/proportions lane; retain released art and presentation.
+- `apps/player/src/art/characterRoomQaModel.ts` — Unaccepted character/art/proportions lane; retain released art and presentation.
+- `apps/player/src/art/characterRoomsQa.ts` — Unaccepted character/art/proportions lane; retain released art and presentation.
+- `apps/player/src/diagnostics/problemDiagnostics.test.ts` — Cloud/session/diagnostics or release-only regression fixes outside accepted renderer lane.
+- `apps/player/src/diagnostics/problemDiagnostics.ts` — Cloud/session/diagnostics or release-only regression fixes outside accepted renderer lane.
+- `apps/player/src/facility/approvedRoomPresentation.test.ts` — Unaccepted character/art/proportions lane; retain released art and presentation.
+- `apps/player/src/facility/backlessRollingStools.test.ts` — Outside accepted map-performance lane; retain release content.
+- `apps/player/src/facility/characterPresentation.test.ts` — Unaccepted character/art/proportions lane; retain released art and presentation.
+- `apps/player/src/facility/characterPresentation.ts` — Unaccepted character/art/proportions lane; retain released art and presentation.
+- `apps/player/src/facility/characterRoomScaleIntegration.test.ts` — Unaccepted character/art/proportions lane; retain released art and presentation.
+- `apps/player/src/facility/furnitureSeatLayering.test.ts` — Unaccepted character/art/proportions lane; retain released art and presentation.
+- `apps/player/src/facility/phlebotomyPresentation.test.ts` — Unaccepted character/art/proportions lane; retain released art and presentation.
+- `apps/player/src/facility/staffIdleSupports.test.ts` — Unaccepted character/art/proportions lane; retain released art and presentation.
+- `apps/player/src/feedback/TesterFeedback.tsx` — Cloud/session/diagnostics or release-only regression fixes outside accepted renderer lane.
+- `apps/player/src/mobile/MobileShell.tsx` — Outside accepted map-performance lane; retain release content.
+- `apps/player/src/session/breadButterPresentation.test.ts` — Cloud/session/diagnostics or release-only regression fixes outside accepted renderer lane.
+- `apps/player/src/session/buildViewModels.test.ts` — Cloud/session/diagnostics or release-only regression fixes outside accepted renderer lane.
+- `apps/player/src/session/chartStructuredFields.test.tsx` — Cloud/session/diagnostics or release-only regression fixes outside accepted renderer lane.
+- `apps/player/src/session/cloud/cache.ts` — Cloud/session/diagnostics or release-only regression fixes outside accepted renderer lane.
+- `apps/player/src/session/cloud/codecTasks.ts` — Cloud/session/diagnostics or release-only regression fixes outside accepted renderer lane.
+- `apps/player/src/session/cloud/codecWorker.test.ts` — Cloud/session/diagnostics or release-only regression fixes outside accepted renderer lane.
+- `apps/player/src/session/cloud/codecWorker.ts` — Cloud/session/diagnostics or release-only regression fixes outside accepted renderer lane.
+- `apps/player/src/session/cloud/codecWorkerNative.test.ts` — Cloud/session/diagnostics or release-only regression fixes outside accepted renderer lane.
+- `apps/player/src/session/cloud/coordinator.ts` — Cloud/session/diagnostics or release-only regression fixes outside accepted renderer lane.
+- `apps/player/src/session/cloud/entryStorage.ts` — Cloud/session/diagnostics or release-only regression fixes outside accepted renderer lane.
+- `apps/player/src/session/cloud/gameSession.test.tsx` — Cloud/session/diagnostics or release-only regression fixes outside accepted renderer lane.
+- `apps/player/src/session/cloud/gameSession.ts` — Cloud/session/diagnostics or release-only regression fixes outside accepted renderer lane.
+- `apps/player/src/session/cloud/journalCodec.ts` — Cloud/session/diagnostics or release-only regression fixes outside accepted renderer lane.
+- `apps/player/src/session/cloud/releaseCodecHeadroom.test.ts` — Cloud/session/diagnostics or release-only regression fixes outside accepted renderer lane.
+- `apps/player/src/session/cloud/separateCampaign.test.ts` — Cloud/session/diagnostics or release-only regression fixes outside accepted renderer lane.
+- `apps/player/src/session/cloud/snapshotCodec.ts` — Cloud/session/diagnostics or release-only regression fixes outside accepted renderer lane.
+- `apps/player/src/session/cloud/tickPerformanceTestSupport.ts` — Cloud/session/diagnostics or release-only regression fixes outside accepted renderer lane.
+- `apps/player/src/session/cloud/watchdogs.test.ts` — Cloud/session/diagnostics or release-only regression fixes outside accepted renderer lane.
+- `apps/player/src/session/diagnosticProjectionDifferential.test.ts` — Cloud/session/diagnostics or release-only regression fixes outside accepted renderer lane.
+- `apps/player/src/session/flagFreeze.test.tsx` — Cloud/session/diagnostics or release-only regression fixes outside accepted renderer lane.
+- `apps/player/src/session/levelFiveLaunch.test.tsx` — Cloud/session/diagnostics or release-only regression fixes outside accepted renderer lane.
+- `apps/player/src/session/levelFiveRoomsViewModels.test.tsx` — Cloud/session/diagnostics or release-only regression fixes outside accepted renderer lane.
+- `apps/player/src/session/localJournal.test.ts` — Cloud/session/diagnostics or release-only regression fixes outside accepted renderer lane.
+- `apps/player/src/session/localJournal.ts` — Cloud/session/diagnostics or release-only regression fixes outside accepted renderer lane.
+- `apps/player/src/ui/ChartPanel.tsx` — Outside accepted map-performance lane; retain release content.
+- `apps/player/src/ui/roomAccessFeedback.test.ts` — Outside accepted map-performance lane; retain release content.
+- `apps/player/src/ui/roomAccessTestSupport.ts` — Outside accepted map-performance lane; retain release content.
+- `packages/balance-config/src/guidance-tips.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `packages/clinical-content/src/question-flags3-20261107.test.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `packages/clinical-content/src/question-stats1-20261108.test.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `packages/game-domain/src/facilityNavigation.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `packages/game-domain/src/facilityNavigationReference.testSupport.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `packages/game-domain/src/incrementalEvidenceOwnership.test.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `packages/game-domain/src/incrementalEvidenceOwnership.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `packages/game-domain/src/incrementalEvidenceProjection.test.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `packages/game-domain/src/incrementalEvidenceProjection.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `packages/game-domain/src/incrementalEvidenceReferences.test.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `packages/game-domain/src/incrementalEvidenceReferences.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `packages/game-domain/src/incrementalEvidenceRetirement.test.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `packages/game-domain/src/incrementalEvidenceRetirement.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `packages/game-domain/src/incrementalEvidenceValues.test.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `packages/game-domain/src/incrementalEvidenceValues.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `packages/game-domain/src/incrementalTickClone.test.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `packages/game-domain/src/incrementalTickClone.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `packages/game-domain/src/readonlyProjectionMemo.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `packages/game-domain/src/reducer.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `packages/game-domain/src/routineAvailabilityReference.testSupport.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `packages/game-domain/src/settledStateQueries.test.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `packages/game-domain/src/settledStateQueries.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `packages/game-domain/src/waiting-destinations.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `packages/game-domain/tests/approved-clinical-admission.test.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `packages/game-domain/tests/level-five-launch.test.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `packages/game-domain/tests/readonlyProjectionMemo.test.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `packages/game-domain/tests/routine-endoscopy-ready.fixture.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `packages/game-domain/tests/routine-endoscopy-ready.test.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `packages/game-domain/tests/waiting-chart-attendance.fixture.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `packages/game-domain/tests/waiting-chart-attendance.test.ts` — Unreleased domain/incremental work or release-only clinical guard/test differences; presentation port must not change any package.
+- `tests/e2e/splitter-map-shade.spec.ts` — Already text-identical to live (line endings only); preserve released manager border-excluded host measurement.
+- `tests/e2e/ui-density.spec.ts` — Outside accepted map-performance lane; retain release content.
+- `tests/fixtures/diagnostic-workload.ts` — Stale live-tree Level 5 fixtures/evidence/workload or unrelated QA; preserve released binding, totals and pins.
+- `tests/fixtures/level-five-integration-checkpoints-20261012.json` — Stale live-tree Level 5 fixtures/evidence/workload or unrelated QA; preserve released binding, totals and pins.
+- `tests/fixtures/level-five-legacy-behavior-20261012.json` — Stale live-tree Level 5 fixtures/evidence/workload or unrelated QA; preserve released binding, totals and pins.
+- `tools/qa/level-five-integration-results-20261012.json` — Stale live-tree Level 5 fixtures/evidence/workload or unrelated QA; preserve released binding, totals and pins.
+- `tools/qa/tick-state-differential.mjs` — Stale live-tree Level 5 fixtures/evidence/workload or unrelated QA; preserve released binding, totals and pins.
+
+### Open risks and manager handoff
+
+No new native-test failure, timeout or typecheck regression. Four unchanged biopsy fixture typing errors remain in the touched e2e scope. Browser/GPU/device behavior was not rerun in this sandbox. Manager acceptance supplied for this lane: production4/4 desktop+phone Level4/5 with25ms desktop p95; dev splitter/map-click/Build/character-resolution/phone-space pass. Manager reports clinic-income-popups lines142/178 and character-stills-glide59/169 fail identically pre-port. Those browser baseline failures are not newly measured here. A release-tree browser smoke remains with the manager, including preserved released character filtering.
+
+No owner opening pathway changed: START_GAME.cmd, exact http://127.0.0.1:4173, intended persistent profile. New QA runner uses disposable http://127.0.0.1:5186 with separate storage, only when explicitly started; ordinary production builds cannot expose the proof from the URL alone. No QA origin was opened. Validated work is local/uncommitted; the manager owns review, GitHub backup and release.
+
+
+### Port 24 follow-up: CI test-stability guard authorization — 2026-11-08
+
+Manager authorization: live-tree `docs/research/ci-perf-test-stability-20261108.md` and the explicit port-24 follow-up brief. The manager already copied seven accepted test/support files (listed in dispositions) with LF. This worker verified all seven byte-for-byte against live LF sources and left them unchanged. diagnosticWorkloadPerformance.test.ts remains at the original release-entry hash. No product or clinical-content change, no Level 5 rebind, no new approval, no Git mutation/push/deploy/install/network/agent/browser action.
+
+Authorized source deltas are exactly these three test files; all were previously protected by the same captured digest in each of the three historical guards:
+
+| Source | Previous SHA-256 | Accepted CI-test SHA-256 |
+| --- | --- | --- |
+| `apps/player/src/session/cloud/operationalEnginePerformance.test.ts` | 3adaa316c60b406df43733587f453a14297c38cfd3c5884e9525c0e98b567c4e | 72c35c73e2d64a3e33f3eb8d5d8ed21fa71778e78040706e7adc0f51fdb36180 |
+| `apps/player/src/session/cloud/operationalSessionPerformance.test.tsx` | c943d7fc6ea4af13f7e984a643ec21dcfbb91e520e9429aba5e82ace7d83d8a7 | 600957dde32dc9238892cf3e6b49a2933380f44f4144938265d0298c3c916392 |
+| `apps/player/src/session/cloud/tickPerformance.test.ts` | 63182a8577ffbf208dc00105cc6ce906b9125346378934e36cbb1106ebeef03d | 61f0d17025a795417b224ef1c18a3fcf833c9fb0e90e63e233e908ee2e7a2778 |
+
+The existing release-source-pin mechanism is retained. Each of the three fixtures adds three exact rows with an authorization reason and old/new hashes; complete prior fixture hashes/rows and all earlier authorizationHistory entries are retained. Fixed pin counts: flags3 44→47, stats1 46→49, stats1 acceptance 83→86. Guard bodies are byte-identical except fixture digest/count constants. The 840/844/1396 original protected-source loops remain intact. All 170 unrelated old pin rows and all 74 required absences are exact.
+
+Necessary metadata dependencies: the stats1 fixture pins the flags3 guard; the stats1 acceptance fixture pins both earlier guards; the later flags4 fixture pins the stats1 acceptance guard. Those four linked guard-file requirements were propagated to their new exact digests with history; flags4 still has one pinned row and all nine original migration checks. No other source requirement changed. This is digest propagation, not an additional product authorization.
+
+Worker changed exactly these eight guard/fixture paths, plus this additive handoff, the additive current-thread handoff and the port-24 plan (11 public paths this follow-up):
+
+| Path | Before SHA-256 | After SHA-256 |
+| --- | --- | --- |
+| `tools/question-quality/fixtures/question-flags3-release-source-pins-20261107.json` | 56abdc80dd8625e6185c994b6f230955a001ef25f08e20aa64e501b7b794f21a | 9e0a495af8550a0282d22ffbef5ad218990ec90ea1f5f5454293dbcb3e698754 |
+| `packages/clinical-content/src/question-flags3-20261107.test.ts` | a5b911b99150462b1b8ce392681fc2d118b09121d3ccc23b8b23f8df5b0350ca | b9e8a35f85b120f55bc07ad281d72a7a4ff2718e3dfe8e315e04ec2e69e4917e |
+| `tools/question-quality/fixtures/question-stats1-release-source-pins-20261108.json` | 9b1393678f4c8a80e92902af3a8e55b31dee338febf874bcdd88f8dd00b1bf04 | 0a774abd218de52c0a59daf24396d8fed8189fecf05bb9bb43dd417783461ec8 |
+| `packages/clinical-content/src/question-stats1-20261108.test.ts` | 5f1e5aa326d8f20a9703550359ed9357c1df940b09e908c4d7cae87922463eb0 | ed39ddbbffaa825009860a5809908b325f9e244bb96e3d4ef2c9f9e1fa646b1d |
+| `tools/question-quality/fixtures/question-stats1-acceptance-release-source-pins-20261108.json` | f7169cdad9d175d81f818e46e6dba606b6abe82bd3b18de174de3388a61ffaa3 | 4148aa0b7b90e1d365dadd8486724c81f9087ffce9c9cb391d2582dc62d86e11 |
+| `packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts` | eec467ca190404e7f8d7bb53f17ad92cba14eeb4f8178d04b7b9f4928af843e4 | ee6fae366d629647bf4ae7a332f26257d51e6721469fb1fb8d98f43cedcf8a1f |
+| `tools/question-quality/fixtures/question-flags4-acceptance-release-source-pins-20261108.json` | b9b99624ad361782f74e06dc57f7ebf93499c9b1f4601608cac118cc257be5dd | 29cbb47430e955ca543067ee0f6511f80bfac0e43f848541700edd8a504adb6c |
+| `packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts` | 97cc942004be35ce3f3ab2a4f37dcaa9a873fdbd8d5bdd4e077b74dcc948e761 | 083344d2fff939db67f9e5d855b402c770ec2171cd668e5b3784309754079e94 |
+
+The existing port-24 disposition history is preserved. Updated totals including manager copies and metadata integration: 31 copied / 10 hunk-ported / 93 excluded; 44 scoped public changes from the original renderer-port entry. Fifteen pre-existing manager browser screenshots differ from that older entry and were preserved, separately listed in the final audit rather than attributed to this worker.
+
+Validation in GS-release, CI=true, sandbox threads, maxWorkers=2, optional `net use` preload only. Native exit codes and full unmodified stdout/stderr are in `.local-dev/release-port24-ci-stability-20261108/{clinical,player-ci-five}-process.json` and matching `.log`; JSON test records use matching `.json`.
+
+```text
+npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=../../.local-dev/release-port24-ci-stability-20261108/clinical.json
+
+ Test Files  127 passed (127)
+      Tests  1584 passed (1584)
+   Start at  18:33:25
+   Duration  128.82s (transform 8.23s, setup 0ms, import 217.43s, tests 23.54s, environment 11ms)
+NATIVE_EXIT_CODE=0
+```
+
+```text
+npm.cmd run test --workspace @gamify-surgery/player -- src/session/cloud/operationalEnginePerformance.test.ts src/session/cloud/operationalSessionPerformance.test.tsx src/session/cloud/tickPerformance.test.ts src/facility/retainedCamera.test.ts src/ui/CloudCampaignEntry.test.tsx --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=../../.local-dev/release-port24-ci-stability-20261108/player-ci-five.json
+
+ ✓ src/session/cloud/operationalEnginePerformance.test.ts (1 test) 32403ms
+ ✓ src/session/cloud/operationalSessionPerformance.test.tsx (1 test) 38348ms
+ ✓ src/ui/CloudCampaignEntry.test.tsx (52 tests) 8877ms
+ ✓ src/session/cloud/tickPerformance.test.ts (2 tests) 3742ms
+ ✓ src/facility/retainedCamera.test.ts (15 tests) 2318ms
+
+ Test Files  5 passed (5)
+      Tests  71 passed (71)
+   Start at  18:33:38
+   Duration  59.46s (transform 12.01s, setup 0ms, import 25.84s, tests 85.69s, environment 0ms)
+NATIVE_EXIT_CODE=0
+```
+
+Both requested runs pass: full clinical-content 127 files / 1,584 tests, 128.82s; five edited player files / 71 tests, 59.46s. Zero failures, skips or timeout classifications. React act warnings remain in player stderr; there is no test failure. This is the requested follow-up validation, not a new all-workspace/build/browser run. The earlier full seven-suite result remains recorded for the pre-CI-edit renderer milestone.
+
+Final audit: all 553 bound inputs (411 clinical), Level 5 evidence/checkpoints/pins, all runtime sources and .github remain exact to follow-up entry. No other source pins were refreshed. CI runner repeatability still belongs to the manager; the tests-only lane preserves thresholds and retries only explicit performance-budget errors. Existing unrelated e2e typing/browser limitations from the original port remain. All changes remain local/uncommitted. No owner origin/profile/opening pathway changed.
