@@ -9281,3 +9281,25 @@ order remains unverified; no account/tester-save access. No origin/path change.
 Full paths/hashes/exact validation/open risks: GS028 port23 appendix. Receipts:
 .local-dev/release-port23-20261108/. Local/uncommitted; no push/install/network/
 agents/deploy/clinical approval. Manager owns release and backup.
+
+
+## 2026-11-09 — Release port25: cloud revision-conflict loop
+
+Only accepted coordinator/transport/repaired-save fix +11-test regression and
+report/plan ported. Exact preimages matched; no mixed runtime hunks. Eight exact
+guard/fixture updates retain captures/history,164 unrelated pins and74 absences.
+17 public paths total. Dispositions:6 copied /8 hunk-ported /146 excluded; all
+retained-camera/phone-memory/catalogue/CI-test/unrelated work excluded.
+
+Seven CI suites:764 files /11141 passing tests /0 failures /1 existing skip.
+Seven typechecks,boundary/launcher,player build pass. Focused cloud92 andLevel5
+44 pass. All553 inputs (411 clinical),nine checkpoints,three reports,evidence/
+launch pins unchanged:26,531 commands /6,019,042 cents /412 completed /0 walkouts.
+No rebind. Exact output,files/hashes and exclusions:GS028 port25 handoff and
+`.local-dev/release-verify/port25-20261109.json`; private receipts under
+`.local-dev/release-port25-20261109/`.
+
+No browser/live accounts/DB/network/SQL/agents/install/deploy/Git mutation.
+Manager must roll out,refresh old clients and run browser cloud acceptance;
+live flood attribution/reduction unconfirmed. HTTP abort is best effort.
+Owner origin/path/profile unchanged. Local/uncommitted for manager review.

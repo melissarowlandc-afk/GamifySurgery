@@ -11251,3 +11251,125 @@ future work. No owner origin/profile/opening-path change or save reset.
 Work remains local/uncommitted for manager acceptance. Manager owns release,
 browser/device acceptance and any separately authorized GitHub backup.
 
+
+
+## Release port 25 — cloud revision-conflict loop (2026-11-09)
+
+GS-release only, user-stated HEAD a9559c24. Ported exactly the manager-accepted client fix. Three runtime preimages match the worker baseline after line-ending normalization; all seven final worker source hashes were verified before copying. No mixed runtime hunk merge was required. No live traffic/accounts/database/network or browser was accessed; no Git mutation, installs, agents, SQL, .github or deployment action.
+
+Runtime behavior: a refused renewal consumes an attempt and cannot leave a due ready loop; automatic retries honor backoff; rejected cached heads are invalidated; per-mutation/base budgets survive metadata reads; real RPC deadlines abort HTTP; repaired saves require a fresh matching head before freezing the first upload. Durable local continuation preserves rejected operation bytes and writer fencing. The 1 Hz defect is reproduced offline; attribution of the entire live error volume remains unconfirmed.
+
+Changed files (17 public paths; full old/new SHA-256 and every excluded path are listed in `.local-dev/release-verify/port25-20261109.json`):
+
+- Copied `apps/player/src/session/cloud/coordinator.ts`.
+- Copied `apps/player/src/session/cloud/supabaseTransport.ts`.
+- Copied `apps/player/src/session/cloud/gameSession.ts`.
+- Copied `apps/player/src/session/cloud/revisionConflictLoop.test.ts`.
+- Copied `docs/execplans/cloud-revision-conflict-loop-20261109.md`.
+- Copied `docs/research/cloud-revision-conflict-loop-20261109.md`.
+- Exact guard metadata/digest integration: `tools/question-quality/fixtures/question-flags3-release-source-pins-20261107.json`.
+- Exact guard metadata/digest integration: `packages/clinical-content/src/question-flags3-20261107.test.ts`.
+- Exact guard metadata/digest integration: `tools/question-quality/fixtures/question-stats1-release-source-pins-20261108.json`.
+- Exact guard metadata/digest integration: `packages/clinical-content/src/question-stats1-20261108.test.ts`.
+- Exact guard metadata/digest integration: `tools/question-quality/fixtures/question-stats1-acceptance-release-source-pins-20261108.json`.
+- Exact guard metadata/digest integration: `packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts`.
+- Exact guard metadata/digest integration: `tools/question-quality/fixtures/question-flags4-acceptance-release-source-pins-20261108.json`.
+- Exact guard metadata/digest integration: `packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts`.
+- Release coordination: `docs/execplans/release-port25-20261109.md`.
+- Release coordination: `docs/execplans/gs028-stats-ethics-overhaul-20261007.md`.
+- Release coordination: `docs/handoffs/CURRENT_THREAD_HANDOFF.md`.
+
+Dispositions: 6 copied / 8 hunk-ported / 146 excluded. Exclusions include all retained-camera/facility/art/phone-memory paths, the catalogue plugin/Vite config/durable restart sources, CI test-stability changes, unrelated domain/question changes, and live-tree evidence/launch/workload versions. Every observed differing path is enumerated with reason and hashes in the disposition JSON; none was shipped outside the accepted lane.
+
+Source guards authorize only coordinator.ts, supabaseTransport.ts and gameSession.ts. Four fixture/guard pairs retain every original assertion, immutable capture and previous authorization history. Pin counts 44→45 /46→47 /83→84 and flags4 remains1. All 164 unrelated old pin rows and 74 required absences remain exact; linked guard-file digests propagate mechanically. Full three-file delta chain: `guard-deltas.json` under the private receipt directory.
+
+Level 5: all 553 inputs (411 clinical), nine checkpoints, three full reports, results/history22, strict guard and launch/workload pins remain byte-identical. Focused integration/launch44 tests pass; no rebind. Totals remain **26,531 commands /6,019,042 closing cents /412 completions /0 walkouts**. Results SHA `2af0e6a514834a4ab1daa81bdc973123c8e3f8a1cf787b8ef8d2726bca648a97`; checkpoints SHA `560a4a38c5d8d2cdadf3033666a88a2f5e7e75f64533def7b55d2dfa61469d32`.
+
+Validation: CI=true, sandbox threads; existing four-worker player cap, two workers for other suites. No threshold, retry policy, timeout or correctness assertion changed. Both the new conflict/recovery suite and the released unsafe-number recovery are included.
+
+| Workspace | Files | Passed tests | Failed | Existing skip |
+| --- | ---: | ---: | ---: | ---: |
+| clinical-context-workbench | 8 | 43 | 0 | 0 |
+| player | 391 | 3946 | 0 | 0 |
+| balance-config | 24 | 164 | 0 | 0 |
+| clinical-authoring | 7 | 81 | 0 | 0 |
+| clinical-content | 127 | 1584 | 0 | 0 |
+| clinical-research | 8 | 83 | 0 | 0 |
+| game-domain | 199 | 5240 | 0 | 1 |
+| Total | 764 | 11141 | 0 | 1 |
+
+Baseline release:763 files /11,130 passing tests /1 skip. This port adds one regression file and11 tests. Live worker's four known baseline failures were already fixed in this release; those release-only tests/fixes were preserved. Exact native summaries (all exit0):
+
+`other-workspaces.log`:
+
+```text
+ Test Files  8 passed (8)
+      Tests  43 passed (43)
+   Start at  15:35:43
+   Duration  1.00s (transform 268ms, setup 0ms, import 789ms, tests 442ms, environment 0ms)
+ Test Files  24 passed (24)
+      Tests  164 passed (164)
+   Start at  15:35:44
+   Duration  2.14s (transform 532ms, setup 0ms, import 2.25s, tests 152ms, environment 1ms)
+ Test Files  7 passed (7)
+      Tests  81 passed (81)
+   Start at  15:35:47
+   Duration  607ms (transform 129ms, setup 0ms, import 366ms, tests 285ms, environment 0ms)
+ Test Files  127 passed (127)
+      Tests  1584 passed (1584)
+   Start at  15:35:48
+   Duration  130.09s (transform 6.73s, setup 0ms, import 221.97s, tests 21.80s, environment 10ms)
+ Test Files  8 passed (8)
+      Tests  83 passed (83)
+   Start at  15:37:58
+   Duration  2.62s (transform 221ms, setup 0ms, import 590ms, tests 1.33s, environment 0ms)
+```
+
+`domain.log`:
+
+```text
+ Test Files  199 passed (199)
+      Tests  5240 passed | 1 skipped (5241)
+   Start at  15:36:05
+   Duration  560.89s (transform 17.18s, setup 0ms, import 401.94s, tests 698.71s, environment 13ms)
+```
+
+`player.log`:
+
+```text
+ Test Files  391 passed (391)
+      Tests  3946 passed (3946)
+   Start at  15:36:05
+   Duration  467.85s (transform 33.76s, setup 0ms, import 739.42s, tests 1082.61s, environment 33ms)
+```
+
+`focused-cloud.log`:
+
+```text
+ Test Files  5 passed (5)
+      Tests  92 passed (92)
+   Start at  15:35:04
+   Duration  13.45s (transform 5.89s, setup 0ms, import 13.09s, tests 13.33s, environment 0ms)
+```
+
+`level-five.log`:
+
+```text
+ Test Files  2 passed (2)
+      Tests  44 passed (44)
+   Start at  15:35:29
+   Duration  96.13s (transform 7.36s, setup 0ms, import 12.72s, tests 90.43s, environment 0ms)
+```
+
+Root `npm.cmd run typecheck`: all seven workspace commands pass, exit0. `npm.cmd run test:boundaries`: direct Node run blocked solely by `spawnSync git EPERM`; native read-only `git ls-files -z` succeeded. Strict tree/index/inventory-hash bridge supplies only those exact bytes for that exact inventory call. Unmodified boundary/launcher assertions pass:7351 tracked paths, launcher protocol1.
+
+`npm.cmd run build --workspace @gamify-surgery/player`, exit0:
+
+```text
+transforming...✓ 1048 modules transformed.
+✓ built in 6.67s
+```
+
+Existing chunk-size/dynamic-import/plugin warnings remain. Raw commands, stdout/stderr, test JSON and native exit receipts are under `.local-dev/release-port25-20261109/`; `validation-summary.json` lists every exact command. Final source/file/absence audit: `scope-audit-final.json`.
+
+Risks / manager next step: already-open old clients retain the loop until refreshed after rollout. HTTP abort is best effort and does not prove database-query cancellation. The manager still owns browser cloud-saves/cloud-recovery acceptance and request-ID correlation; no claim that live errors have stopped. No server-side rate-limit/migration change was made. Owner opening pathway/origin/profile unchanged. Validated changes remain local/uncommitted for manager review and rollout.

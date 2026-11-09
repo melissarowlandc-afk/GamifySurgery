@@ -172,6 +172,7 @@ export class CloudGameSession {
       session.changeVersion++; session.dirty = true; session.queueLocal(); coordinator.noteLocalChange();
       if (playable !== loaded.state) problemDiagnostics.event("gameSession", "learning-catalog-adapted");
       for (const code of loaded.numberRepairs ?? []) problemDiagnostics.event("codec-repair", code);
+      if (loaded.numberRepairs?.length) coordinator.requireFreshUploadHead();
     }
     if (useEngine) {
       // In recovery mode do not overlap the just-used codec realm and engine

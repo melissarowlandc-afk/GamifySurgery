@@ -15,7 +15,8 @@ import {
 
 /** Structural interface accepts SupabaseClient without generating/storing credentials. */
 export interface CloudRpcClient {
-  rpc(name: string, args: Record<string, unknown>): PromiseLike<{ data: unknown; error: unknown }>;
+  rpc(name: string, args: Record<string, unknown>): PromiseLike<{ data: unknown; error: unknown }> &
+    { abortSignal?(signal: AbortSignal): PromiseLike<{ data: unknown; error: unknown }> };
 }
 type ObjectValue = Record<string, unknown>;
 function object(value: unknown): ObjectValue {
@@ -66,33 +67,47 @@ export class SupabaseCloudTransport implements CloudTransport {
   private readonly heads = new Map<string, CloudCampaignHead>();
   private readonly tokens = new Map<string, string>();
   private readonly readBackoffs = new Map<string, RequestBackoff>();
+  private readonly mutationBackoffs = new Map<string, RequestBackoff>();
   constructor(private readonly client: CloudRpcClient, private readonly accountId: string,
     private readonly currentAccountId: () => Promise<string | null>, private readonly now: () => number = () => Date.now()) {}
-  private async call(name: string, args: Record<string, unknown>): Promise<unknown> {
+  private async call(name: string, args: Record<string, unknown>, mutationKey?: string): Promise<unknown> {
     let timer: ReturnType<typeof setTimeout> | undefined;
-    let sent = false;
+    let sent = false, expired = false;
+    const controller = new AbortController();
     const reading = ["beta2_cloud_access", "beta2_cloud_list", "beta2_cloud_load", "beta2_snapshot_load"].includes(name);
-    let budget = this.readBackoffs.get(name);
+    let budget = mutationKey ? this.mutationBackoffs.get(mutationKey) : this.readBackoffs.get(name);
+    if (mutationKey && !budget) {
+      // Same failed mutation/base across foreground pulses: metadata reads must
+      // not reset its schedule. A freshly reconciled revision has its own key.
+      budget = new RequestBackoff(15_000, 5 * 60_000, this.now);
+      if (this.mutationBackoffs.size >= 64) this.mutationBackoffs.delete(this.mutationBackoffs.keys().next().value!);
+      this.mutationBackoffs.set(mutationKey, budget);
+    }
     if (reading && !budget) { budget = new RequestBackoff(1_000, 5 * 60_000, this.now); this.readBackoffs.set(name, budget); }
     try {
       return await Promise.race([(async () => {
         if (await this.currentAccountId() !== this.accountId) throw new CloudSyncError("auth");
+        if (expired) throw new CloudSyncError("network");
         if (budget && !budget.ready()) throw new CloudSyncError("throttled", budget.remaining());
         sent = true;
-        const { data, error } = await this.client.rpc(name, args);
+        const request = this.client.rpc(name, args);
+        const { data, error } = await (request.abortSignal ? request.abortSignal(controller.signal) : request);
+        if (expired) throw new CloudSyncError("network");
         if (await this.currentAccountId() !== this.accountId) throw new CloudSyncError("auth");
         if ((error as { code?: string } | null)?.code === "PGRST202" && name === "beta2_cloud_lease_v2") {
           // Rollback/stale schema discovery only. Never downgrade an auth,
           // generation, revision, quota or token rejection to another endpoint.
-          this.efficientLeases = false; return this.call("beta2_cloud_lease", args);
+          this.efficientLeases = false; return this.call("beta2_cloud_lease", args, mutationKey);
         }
         if (error) throw error;
         budget?.success();
         return data;
-      })(), new Promise<never>((_, reject) => { timer = setTimeout(() => reject(new CloudSyncError("network")), 30_000); })]);
+      })(), new Promise<never>((_, reject) => { timer = setTimeout(() => {
+        expired = true; controller.abort(); reject(new CloudSyncError("network"));
+      }, 30_000); })]);
     } catch (error) {
       const failure = mappedError(error);
-      if (sent && budget && ["network", "throttled"].includes(failure.code)) budget.fail(failure.retryAfterMs);
+      if (sent && budget) budget.fail(failure.retryAfterMs);
       throw failure;
     }
     finally { clearTimeout(timer); }
@@ -170,8 +185,14 @@ export class SupabaseCloudTransport implements CloudTransport {
     return this.leaseCall(input.campaignId, input.takeover ? "takeover" : "acquire", input.expectedRevision, head.writerGeneration!, token);
   }
   private async leaseCall(campaignId: string, action: string, expectedRevision: string, writerGeneration: string, writerToken: string): Promise<CloudLease> {
-    const data = object(await this.call(this.efficientLeases ? "beta2_cloud_lease_v2" : "beta2_cloud_lease", { p_protocol: CLOUD_SYNC_PROTOCOL, p_campaign_id: campaignId, p_action: action,
-      p_expected_revision: expectedRevision, p_writer_generation: writerGeneration, p_writer_token: writerToken }));
+    let reply: unknown;
+    try { reply = await this.call(this.efficientLeases ? "beta2_cloud_lease_v2" : "beta2_cloud_lease", { p_protocol: CLOUD_SYNC_PROTOCOL, p_campaign_id: campaignId, p_action: action,
+      p_expected_revision: expectedRevision, p_writer_generation: writerGeneration, p_writer_token: writerToken }, JSON.stringify(["lease", campaignId, action, expectedRevision, writerGeneration])); }
+    catch (error) {
+      if (error instanceof CloudSyncError && error.code === "revision" && this.heads.get(campaignId)?.revision === expectedRevision) this.heads.delete(campaignId);
+      throw error;
+    }
+    const data = object(reply);
     const result: CloudLease = { campaignId, revision: revision(data.revision), writerGeneration: revision(data.writerGeneration),
       writerToken, expiresAtMs: action === "release" ? timestamp(data.serverTime) : timestamp(data.expiresAt),
       serverNowMs: timestamp(data.serverTime), writerActive: action !== "release" };
@@ -179,7 +200,7 @@ export class SupabaseCloudTransport implements CloudTransport {
   }
   async renew(input: Parameters<CloudTransport["renew"]>[0]): Promise<CloudLease> {
     const head = this.heads.get(input.campaignId);
-    if (!head) throw new CloudSyncError("writer");
+    if (!head) throw new CloudSyncError("revision"); // Rejected cached CAS base requires a fresh head.
     return this.leaseCall(input.campaignId, "renew", head.revision, input.writerGeneration, input.writerToken);
   }
   async release(input: Parameters<CloudTransport["release"]>[0]): Promise<void> {
@@ -220,7 +241,7 @@ export class SupabaseCloudTransport implements CloudTransport {
     const wire = operation.wireRequest;
     if (!wire || await cloudCodec.run({ kind: "hash", input: wire.text }) !== wire.sha256) throw new CloudSyncError("corrupt");
     const request = JSON.parse(operation.requestText) as CloudCommitRequest;
-    return this.receipt(await this.call(request.saveFormat === 3 ? "beta2_snapshot_write" : "beta2_cloud_write", { p_request_text: wire.text, p_request_sha256: wire.sha256 }), request.campaignId, operation);
+    return this.receipt(await this.call(request.saveFormat === 3 ? "beta2_snapshot_write" : "beta2_cloud_write", { p_request_text: wire.text, p_request_sha256: wire.sha256 }, JSON.stringify(["write", request.campaignId, request.expectedRevision ?? "import"])), request.campaignId, operation);
   }
   async importCampaign(operation: CloudFrozenOperation): Promise<CloudCommitReceipt> {
     const receipt = await this.commit(operation), request = JSON.parse(operation.requestText) as CloudImportRequest;

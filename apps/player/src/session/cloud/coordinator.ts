@@ -119,6 +119,7 @@ export class CloudSyncCoordinator {
   private backupRetryAfter: TimePair | null = null;
   private journalOwner: string | null = null;
   private snapshotSaves = false;
+  private checkUploadHead = false;
   get supportsSnapshots(): boolean { return this.snapshotSaves; }
 
   constructor(private readonly options: {
@@ -153,6 +154,8 @@ export class CloudSyncCoordinator {
     return ((await this.journal?.head(cloudCampaignStorageKey(this.scope)))?.highWater ?? null) !== this.openedJournalHighWater;
   }
   noteLocalChange(dirty = true): void { this.journalDirty = dirty; if (dirty) this.dirtySince ??= this.now(); else if (!this.recovery()) this.dirtySince = null; }
+  /** Hydration repairs may have been prepared against a head that changed during opening. */
+  requireFreshUploadHead(): void { this.checkUploadHead = true; }
   confirmJournalDurability(): void {
     if (this.storageRetrying && !this.attempted && this.failure === "processing" && this.allowed()) { this.storageRetrying = false; this.failure = null; this.backupRetryAfter = null; this.emit(); }
     if (!this.localDurable && !this.attempted && !this.localCacheConflict) {
@@ -269,8 +272,9 @@ export class CloudSyncCoordinator {
     if (isTransientStorageError(error) && this.allowed() && this.localDurable) {
       this.storageRetrying = true; this.failure = "processing"; this.backupRetryAfter = this.now(); this.emit(); return;
     }
-    this.retryAfterMs = ["network", "throttled"].includes(code)
-      ? this.networkBackoff.fail(error instanceof CloudSyncError ? error.retryAfterMs : 0) : 0;
+    // Logical conflicts and storage/processing failures must not bypass the
+    // automatic request budget simply because they are not network errors.
+    this.retryAfterMs = this.networkBackoff.fail(error instanceof CloudSyncError ? error.retryAfterMs : 0);
     this.failure = code;
     if (code === "network" || code === "throttled") {
       const remaining = this.window ? Math.max(0, this.remaining(this.window.until)) : 0;
@@ -439,9 +443,35 @@ export class CloudSyncCoordinator {
           canSaveSeparate: campaigns.length < 2 || campaigns.some(row => row.campaignId === separateId) } : {}) };
     } catch { /* A failed preview must never replace a retained save or grant play. */ }
   }
-  private async failChecked(error: unknown, epoch: number): Promise<void> {
+  private async failChecked(error: unknown, epoch: number, previouslyPlayable = this.allowed()): Promise<void> {
     if (!this.live(epoch)) return;
     this.fail(error); // Fence immediately; preview work must never extend authority.
+    if (error instanceof CloudSyncError && error.code === "revision" && previouslyPlayable && this.localDurable &&
+      this.journalOwner && this.automaticSelection && this.options.entryStore && !this.hasPriorRecovery && !this.closingRequested) {
+      // Preserve the live durable projection while all server writes are
+      // disabled. Full automatic selection, not replay/rebase of the rejected
+      // operation, owns recovery. A proven different writer still pauses here.
+      try {
+        if (this.prepareLocalRecovery && !await cloudCheckDeadline(this.prepareLocalRecovery())) return;
+        let head;
+        try { head = await cloudCheckDeadline(this.options.transport.head(this.scope.campaignId), Math.min(3_000, CLOUD_READ_TIMEOUT_MS)); }
+        catch (failure) { if (!(failure instanceof CloudSyncError) || !["network", "throttled"].includes(failure.code)) throw failure; }
+        if (!this.live(epoch)) return;
+        const writer = this.window?.lease ?? this.retainedWriter;
+        if (!writer || head && head.writerGeneration !== writer.writerGeneration) { this.fail(new CloudSyncError("writer")); return; }
+        await this.options.entryStore.write(`offline-base:${this.scope.campaignId}`, { snapshotSha256: this.record!.entry.confirmed.snapshot.uncompressedSha256 });
+        if (!this.live(epoch) || this.closingRequested) return;
+        this.foregroundVersion++; // Cancel already-sent checks/renewals without cancelling accepted journal writes.
+        this.window = null; this.suspendedLease = null; this.offlineLocal = true; this.offlineBase = true;
+        this.grace = null; this.phase = "waiting"; this.failure = "network"; this.resumeAuthorized = true;
+        this.emit(); return;
+      } catch (failure) {
+        problemDiagnostics.error("conflict-local-recovery", failure);
+        // No fresh ownership/durability proof: keep the fence and the original
+        // conflict bytes. The bounded automatic resolver retries later.
+        if (this.live(epoch) && failure instanceof CloudSyncError && ["auth", "revoked", "deleted", "writer"].includes(failure.code)) this.fail(failure);
+      }
+    }
     if (error instanceof CloudSyncError && ["deleted", "corrupt"].includes(error.code)) {
       try {
         const access = await cloudCheckDeadline(this.options.transport.capabilities(), 3_000);
@@ -753,6 +783,7 @@ export class CloudSyncCoordinator {
       await this.persist({ ...this.record.entry, confirmed, recovery: following ? { baseRevision: receipt.revision,
         writerGeneration: recovery.writerGeneration, inFlight: null, following } : null });
       this.coveredUsage = new Set(receipt.usageReceiptIds);
+      this.checkUploadHead = false;
       for (const listener of this.receiptListeners) listener(receipt);
       // New commands can arrive throughout encoding/upload. Give that following
       // state its own quiet interval instead of uploading it on every pulse.
@@ -762,6 +793,7 @@ export class CloudSyncCoordinator {
   checkpoint(reason: CloudCheckpointReason = "ordinary"): Promise<boolean> {
     if (this.preparingCheckpoint) return this.preparingCheckpoint;
     const automatic = ["ordinary", "hidden", "pagehide", "day-end"].includes(reason);
+    if (automatic && (!this.networkBackoff.ready() || !["ready", "saving"].includes(this.phase))) return Promise.resolve(false);
     if (automatic && this.backupRetryAfter && this.elapsed(this.backupRetryAfter) < 60_000) return Promise.resolve(false);
     if (automatic && this.lastAutomaticCheckpoint && this.elapsed(this.lastAutomaticCheckpoint) < 60_000 &&
       this.localDurable && ["ready", "saving"].includes(this.phase) && !this.failure) return Promise.resolve(true);
@@ -776,13 +808,19 @@ export class CloudSyncCoordinator {
   private uploadCheckpoint(automatic: boolean): Promise<boolean> {
     if (this.uploading) return this.uploading;
     this.checkTime();
-    if (!this.enabled || this.stopped || !this.localDurable || !this.window || this.remaining(this.window.until) <= 0 ||
+    if (!this.enabled || this.stopped || this.offlineBase || !this.localDurable || !this.window || this.remaining(this.window.until) <= 0 ||
       !["ready", "saving"].includes(this.phase)) return Promise.resolve(false);
     if (!this.recovery()) return Promise.resolve(true);
     const epoch = this.epoch;
     this.phase = "saving"; this.emit();
     const work = (async () => {
       try {
+        if (this.checkUploadHead && !this.recovery()?.inFlight) {
+          const head = await cloudCheckDeadline(this.options.transport.head(this.scope.campaignId));
+          if (!this.live(epoch)) return false;
+          if (head.revision !== this.confirmedRevision) throw new CloudSyncError("revision");
+          if (head.writerGeneration !== this.window?.lease.writerGeneration) throw new CloudSyncError("writer");
+        }
         const operation = await timeCloudEntry("upload-freeze", () => this.freeze());
         if (!operation || !this.live(epoch)) return false;
         const receipt = await timeCloudEntry("upload-commit", () => cloudCheckDeadline(this.options.transport.commit(operation)));
@@ -1041,7 +1079,7 @@ export class CloudSyncCoordinator {
   async pulse(): Promise<void> {
     if (!this.enabled || this.stopped || this.closingRequested || this.phase === "closed" || !requestDocumentVisible()) return;
     if (this.offlineLocal) {
-      if (!this.automaticSelection || this.checking || this.elapsed(this.lastReconnect) < Math.max(CLOUD_RENEW_MS, this.retryAfterMs)) return;
+      if (!this.automaticSelection || this.checking || !this.networkBackoff.ready() || this.elapsed(this.lastReconnect) < Math.max(CLOUD_RENEW_MS, this.retryAfterMs)) return;
       this.lastReconnect = this.now(); this.checking = true;
       const epoch = this.epoch;
       try {
@@ -1062,7 +1100,16 @@ export class CloudSyncCoordinator {
     }
     this.checkTime();
     if (this.lastPublishedStatus !== this.statusSignature()) this.emit();
-    if (this.autoReconnect && !this.closingRequested && !this.allowed() &&
+    if (this.failure === "revision" && this.automaticSelection && !this.checking && !this.reconnecting && !this.renewing && !this.uploading &&
+      this.networkBackoff.ready() && this.elapsed(this.lastReconnect) >= Math.max(CLOUD_RENEW_MS, this.retryAfterMs)) {
+      this.lastReconnect = this.now(); this.checking = true;
+      this.retryAfterMs = this.networkBackoff.fail(); // Reserve across a coordinator replacement, including a failed selection.
+      try { await this.automaticSelection(); }
+      catch (error) { if (!this.stopped) this.fail(error); }
+      finally { this.checking = false; }
+      return;
+    }
+    if (this.autoReconnect && !this.closingRequested && !this.allowed() && this.networkBackoff.ready() &&
       ["clock", "lease-expired", "lease-check", "network", "throttled", "storage", "processing"].includes(this.failure ?? "") &&
       this.elapsed(this.lastReconnect) >= Math.max(CLOUD_RENEW_MS, this.retryAfterMs)) {
       if (["clock", "lease-expired"].includes(this.failure ?? "")) {
@@ -1071,14 +1118,15 @@ export class CloudSyncCoordinator {
       }
       await this.focus(); return;
     }
-    if (this.checking || this.reconnecting || this.renewing || this.grace || !this.localDurable) return;
+    if (this.checking || this.reconnecting || this.renewing || this.grace || !this.localDurable || !this.networkBackoff.ready()) return;
     const epoch = this.epoch, version = this.foregroundVersion;
     // A fresh authority check or close supersedes an already-sent renewal. Its
     // late response must neither fence the checked owner nor reopen a closed one.
     const current = () => this.live(epoch) && version === this.foregroundVersion && !this.closingRequested && this.phase !== "closed";
     if (this.window && ["ready", "saving"].includes(this.phase) && this.elapsed(this.lastRenew) >= this.renewalCadence()) {
       this.renewing = true;
-      const previous = this.window, sent = this.now();
+      const previous = this.window, sent = this.now(), previouslyPlayable = this.allowed();
+      this.lastRenew = sent; // A refused/short-circuited check is still an attempt, never a 1 Hz renewal schedule.
       try {
         const lease = await cloudCheckDeadline(this.options.transport.renew(previous.lease));
         if (!current()) return;
@@ -1097,7 +1145,7 @@ export class CloudSyncCoordinator {
             if (!this.uploading) {
               // focus owns its gate. Do not set a new checking phase before
               // joining a check that may already have successfully resumed.
-              if (this.live(epoch)) await this.focus();
+              if (this.live(epoch) && !await this.focus() && this.phase === "ready") await this.failChecked(error, epoch, previouslyPlayable);
             } else {
               const head = await cloudCheckDeadline(this.options.transport.head(this.scope.campaignId));
               if (!current()) return;
