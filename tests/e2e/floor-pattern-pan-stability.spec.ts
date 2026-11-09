@@ -103,16 +103,12 @@ async function snapshotSurfaces(page: Page): Promise<SurfaceSnapshot> {
     const sprites = expected.map((key) => {
       const sprite = scene.environmentSprites.get(key);
       if (!sprite) throw new Error(`Missing environment TileSprite ${key}`);
-      // Raw display coordinates stay in the retained draw frame while the
-      // camera pans. Compare the actual screen projection and local material.
-      const screen = scene.worldToScreen(sprite);
-      const zoom = scene.cameras.main.zoom;
       return {
         key,
-        x: screen.x,
-        y: screen.y,
-        width: sprite.width * zoom,
-        height: sprite.height * zoom,
+        x: sprite.x,
+        y: sprite.y,
+        width: sprite.width,
+        height: sprite.height,
         tilePositionX: sprite.tilePositionX,
         tilePositionY: sprite.tilePositionY,
         tileScaleX: sprite.tileScaleX,

@@ -8,43 +8,8 @@
       "capturedMainSha256": "034f6f69da950feca9e3c4fd928eeffb3b1a7d2069a6e2611b87da6d3df95635",
       "mainAcceptedSha256": "100dababa898bd80133914633832da65537e0cfc38464d6e5b95d7318d42ad3b",
       "releaseEntrySha256": "4080f4b98a7888897bd6b9609878294bbc35c7544e770e5e787e7e7447340c86",
-      "requiredReleaseSha256": "ee6fae366d629647bf4ae7a332f26257d51e6721469fb1fb8d98f43cedcf8a1f",
-      "reason": "Mechanical exact digest propagation for the three authorized port24 CI test changes; guard assertions, protected sources and immutable captures remain intact.",
-      "authorizedDeltas": [
-        {
-          "on": "2026-11-08",
-          "milestone": "release-port24-ci-test-stability",
-          "releaseBeforeSha256": "eec467ca190404e7f8d7bb53f17ad92cba14eeb4f8178d04b7b9f4928af843e4",
-          "previousRequirement": "eec467ca190404e7f8d7bb53f17ad92cba14eeb4f8178d04b7b9f4928af843e4",
-          "releaseAfterSha256": "ee6fae366d629647bf4ae7a332f26257d51e6721469fb1fb8d98f43cedcf8a1f",
-          "reason": "Mechanical exact digest propagation for the three authorized port24 CI test changes; guard assertions, protected sources and immutable captures remain intact."
-        }
-      ]
-    }
-  ],
-  "authorizationHistory": [
-    {
-      "on": "2026-11-08",
-      "milestone": "release-port24-ci-test-stability",
-      "priorFixtureSha256": "b9b99624ad361782f74e06dc57f7ebf93499c9b1f4601608cac118cc257be5dd",
-      "priorPaths": [
-        {
-          "path": "packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts",
-          "capturedMainSha256": "034f6f69da950feca9e3c4fd928eeffb3b1a7d2069a6e2611b87da6d3df95635",
-          "mainAcceptedSha256": "100dababa898bd80133914633832da65537e0cfc38464d6e5b95d7318d42ad3b",
-          "releaseEntrySha256": "4080f4b98a7888897bd6b9609878294bbc35c7544e770e5e787e7e7447340c86",
-          "requiredReleaseSha256": "eec467ca190404e7f8d7bb53f17ad92cba14eeb4f8178d04b7b9f4928af843e4",
-          "reason": "Retain the release strict source-guard loop with accepted F4 clinical epoch adapter; current exact bytes pinned, immutable main source preimage preserved."
-        }
-      ],
-      "deltas": [
-        {
-          "path": "packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts",
-          "beforeSha256": "eec467ca190404e7f8d7bb53f17ad92cba14eeb4f8178d04b7b9f4928af843e4",
-          "afterSha256": "ee6fae366d629647bf4ae7a332f26257d51e6721469fb1fb8d98f43cedcf8a1f",
-          "kind": "linked-guard-digest"
-        }
-      ]
+      "requiredReleaseSha256": "eec467ca190404e7f8d7bb53f17ad92cba14eeb4f8178d04b7b9f4928af843e4",
+      "reason": "Retain the release strict source-guard loop with accepted F4 clinical epoch adapter; current exact bytes pinned, immutable main source preimage preserved."
     }
   ]
 }

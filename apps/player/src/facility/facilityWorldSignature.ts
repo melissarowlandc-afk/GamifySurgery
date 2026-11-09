@@ -13,7 +13,6 @@ function positiveGridSize(value: number, fallback: number): number {
  */
 export function getFacilityWorldSignature(
   model: FacilityViewModel,
-  includeCamera = true,
 ): string {
   const placement = model.placement;
   const rooms = model.rooms
@@ -73,7 +72,7 @@ export function getFacilityWorldSignature(
     `endoscopy:${occupiedEndoscopyRooms}`,
     `imaging:${activeImagingRooms}`,
     model.selectedRoomInstanceId ?? "-",
-    includeCamera && model.camera
+    model.camera
       ? `${model.camera.zoom},${model.camera.panX},${model.camera.panY}`
       : "camera.default",
   ].join(":");

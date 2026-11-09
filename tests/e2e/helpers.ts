@@ -170,8 +170,21 @@ export async function getActiveState(
  * renders the ordinary persisted campaign through its production migration,
  * selectors, Phaser scene, and React UI.
  */
-/** Also supports first-open proofs, before any campaign journal exists. */
-export function createLevelOneVisualFixture(state: MutableVisualGameState): MutableVisualGameState {
+export async function installLevelOneVisualState(
+  page: Page,
+): Promise<void> {
+  const profile = await getProfile(page);
+  const activeIndex = profile.campaigns.findIndex(
+    (campaign) => campaign.campaignId === profile.activeCampaignId,
+  );
+  if (activeIndex < 0) {
+    throw new Error("Active campaign record is missing.");
+  }
+  const active = profile.campaigns[activeIndex]!;
+  const state = JSON.parse(
+    active.serializedState,
+  ) as MutableVisualGameState;
+
   state.facilityLevel = 1;
   state.clinicalXp = 64;
   state.cash = 2_460;
@@ -450,20 +463,6 @@ export function createLevelOneVisualFixture(state: MutableVisualGameState): Muta
       };
     }
   }
-
-  return state;
-}
-
-export async function installLevelOneVisualState(page: Page): Promise<void> {
-  const profile = await getProfile(page);
-  const activeIndex = profile.campaigns.findIndex(
-    (campaign) => campaign.campaignId === profile.activeCampaignId,
-  );
-  if (activeIndex < 0) {
-    throw new Error("Active campaign record is missing.");
-  }
-  const active = profile.campaigns[activeIndex]!;
-  const state = createLevelOneVisualFixture(JSON.parse(active.serializedState) as MutableVisualGameState);
 
   profile.campaigns[activeIndex] = {
     ...active,

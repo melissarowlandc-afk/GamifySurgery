@@ -1,7 +1,7 @@
 import { mkdirSync } from "node:fs";
 import { expect, test, type Page } from "@playwright/test";
-import { createInitialGameState } from "@gamify-surgery/game-domain";
-import { openFreshLocalCampaign } from "./fixtures/freshLocalCampaign";
+import { deserializeGameState, serializeGameState } from "@gamify-surgery/game-domain";
+import { getProfile, PROFILE_KEY, startClinic } from "./helpers";
 import { buildMapClickScenario } from "./fixtures/mapClickInfoScenario";
 
 // Owner request (2026-10-07): click a character → info box above the head;
@@ -18,12 +18,8 @@ const scene = (page: Page) => page.evaluate(() =>
 
 /** Canvas-relative point → page point. */
 async function pagePoint(page: Page, point: { x: number; y: number }) {
-  return page.evaluate((point) => {
-    const canvas = document.querySelector("[data-testid='facility-canvas'] canvas")!;
-    const host = canvas.parentElement as any, rect = canvas.getBoundingClientRect();
-    const scale = host.__facilityGame.scale;
-    return { x: rect.x + point.x * rect.width / scale.width, y: rect.y + point.y * rect.height / scale.height };
-  }, point);
+  const box = (await page.getByTestId("facility-canvas").locator("canvas").boundingBox())!;
+  return { x: box.x + point.x, y: box.y + point.y };
 }
 
 async function characterPoint(page: Page, key: string) {
@@ -42,7 +38,7 @@ async function characterPoint(page: Page, key: string) {
     const actor = facility.characterBitmapContainers.get(characterKey)?.getByName("actor");
     if (!actor?.visible) return null;
     const bounds = actor.getBounds();
-    return facility.worldToScreen({ x: bounds.centerX, y: bounds.top + bounds.height * 0.55 });
+    return { x: bounds.centerX, y: bounds.top + bounds.height * 0.55 };
   }, key);
   expect(point, `character ${key} is rendered`).not.toBeNull();
   return pagePoint(page, point!);
@@ -68,10 +64,7 @@ async function centerOn(page: Page, tileX: number, tileY: number, zoom: number) 
     });
     facility.refreshLayout(true);
   }, { tileX, tileY, zoom });
-  await expect.poll(() => page.evaluate(() => {
-    const facility = (document.querySelector("[data-testid='facility-canvas']") as any).__facilityGame.scene.getScene("facility-scene");
-    return !facility.crispZoomPending && facility.cameras.main.zoom === 1;
-  })).toBe(true);
+  await page.waitForTimeout(300);
 }
 
 async function snap(page: Page, name: string) {
@@ -86,19 +79,21 @@ test("map click info boxes, founder seats and re-seating", async ({ page }, test
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
 
-  const base = createInitialGameState();
-  base.campaignId = "campaign.map-click-round2";
-  const scenario = buildMapClickScenario(base);
+  await startClinic(page, "QA Founder", "Map Click QA");
+  const profile = await getProfile(page);
+  const index = profile.campaigns.findIndex((candidate) => candidate.campaignId === profile.activeCampaignId);
+  const scenario = buildMapClickScenario(deserializeGameState(profile.campaigns[index]!.serializedState));
   expect(scenario.breakRoomId).not.toBeNull();
-  await openFreshLocalCampaign(page, scenario.state, "Map Click QA");
-  await page.addStyleTag({ content: ".facility-pause-indicator { visibility:hidden !important; }" });
+  profile.campaigns[index] = { ...profile.campaigns[index]!, serializedState: serializeGameState(scenario.state) };
+  profile.tutorialsEnabled = false;
+  await page.addInitScript(({ key, value }) => localStorage.setItem(key, JSON.stringify(value)), { key: PROFILE_KEY, value: profile });
+  await page.goto("/?prototype-tools=0&facility-gait-proof=1");
+  await page.getByRole("button", { name: "Resume Map Click QA" }).click();
+  await page.addStyleTag({ content: ".facility-pause-indicator,.tutorial-overlay { visibility:hidden !important; }" });
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   await expect.poll(() => scene(page), { timeout: 20_000 }).toBe(true);
-  await expect.poll(() => page.evaluate((ids) => {
-    const facility = (document.querySelector("[data-testid='facility-canvas']") as any).__facilityGame.scene.getScene("facility-scene");
-    return ids.every(id => facility.bridge.viewModel.patients.some((patient: any) => patient.instanceId === id));
-  }, [scenario.standingId, scenario.hallwayId]), { timeout: 20_000 }).toBe(true);
   await centerOn(page, 37, 26, 1.6);
+  await page.waitForTimeout(800);
 
   // 1. Re-seating: run time; the standing and hallway patients both reach chairs
   //    (new staff also walk in from the street meanwhile).
@@ -159,14 +154,14 @@ test("map click info boxes, founder seats and re-seating", async ({ page }, test
   const deskChair = await page.evaluate(() => {
     const facility = (document.querySelector("[data-testid='facility-canvas']") as any).__facilityGame.scene.getScene("facility-scene");
     const chair = facility.bridge.viewModel.founderChairs.find((candidate: any) => candidate.kind === "front_desk_public");
-    const point = facility.worldToScreen(facility.founderSeatScreenPoint(chair));
+    const point = facility.founderSeatScreenPoint(chair);
     return { x: point.x, y: point.y - facility.layout.tileSize * 0.25 };
   });
   await centerOn(page, 37, 30, 1.6);
   const deskChairNow = await page.evaluate(() => {
     const facility = (document.querySelector("[data-testid='facility-canvas']") as any).__facilityGame.scene.getScene("facility-scene");
     const chair = facility.bridge.viewModel.founderChairs.find((candidate: any) => candidate.kind === "front_desk_public");
-    const point = facility.worldToScreen(facility.founderSeatScreenPoint(chair));
+    const point = facility.founderSeatScreenPoint(chair);
     return { x: point.x, y: point.y - facility.layout.tileSize * 0.25 };
   });
   expect(deskChair).toBeTruthy();
@@ -191,7 +186,7 @@ test("map click info boxes, founder seats and re-seating", async ({ page }, test
   await centerOn(page, breakSeat.location.x, breakSeat.location.y, 1.6);
   const breakPoint = await page.evaluate((seat) => {
     const facility = (document.querySelector("[data-testid='facility-canvas']") as any).__facilityGame.scene.getScene("facility-scene");
-    const point = facility.worldToScreen(facility.founderSeatScreenPoint(seat));
+    const point = facility.founderSeatScreenPoint(seat);
     return { x: point.x, y: point.y - facility.layout.tileSize * 0.2 };
   }, breakSeat);
   const breakTarget = await pagePoint(page, breakPoint);
@@ -216,7 +211,7 @@ test("map click info boxes, founder seats and re-seating", async ({ page }, test
   const zoomedPoint = await page.evaluate((characterKey) => {
     const facility = (document.querySelector("[data-testid='facility-canvas']") as any).__facilityGame.scene.getScene("facility-scene");
     const bounds = facility.characterBitmapContainers.get(characterKey).getByName("actor").getBounds();
-    return facility.worldToScreen({ x: bounds.centerX, y: bounds.top + bounds.height * 0.55 });
+    return { x: bounds.centerX, y: bounds.top + bounds.height * 0.55 };
   }, zoomedKey);
   const zoomedTarget = await pagePoint(page, zoomedPoint);
   await page.mouse.click(zoomedTarget.x, zoomedTarget.y);

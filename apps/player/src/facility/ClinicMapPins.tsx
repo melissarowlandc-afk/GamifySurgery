@@ -1,16 +1,13 @@
 import type { FacilityAlertPinPosition, FacilityAlertPinView } from "./types";
-import type { MapPinElementBinder } from "./mapPinPositions";
 
-export function ClinicMapPins({ pins, positions, onAction, onPinElement }: {
+export function ClinicMapPins({ pins, positions, onAction }: {
   pins: readonly FacilityAlertPinView[];
   positions: readonly FacilityAlertPinPosition[];
   onAction?: (id: string) => void;
-  onPinElement?: MapPinElementBinder;
 }) {
   return <div className="clinic-map-pins" aria-label="Live clinic problems">{positions.flatMap((position) => {
     const pin = pins.find((candidate) => candidate.id === position.id);
     return pin ? [<button key={pin.id} className="clinic-map-pin" type="button"
-      ref={onPinElement ? element => onPinElement(pin.id, element, position) : undefined}
       style={{ left: position.x, top: position.y }} title={`${pin.title} · ${pin.actionLabel}`}
       aria-label={`${pin.title}: ${pin.actionLabel}`} disabled={!onAction}
       onPointerDown={(event) => event.stopPropagation()}

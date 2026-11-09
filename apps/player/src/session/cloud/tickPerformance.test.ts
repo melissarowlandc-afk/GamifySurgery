@@ -18,12 +18,12 @@ import { runCloudCodecTask } from "./codecTasks";
 import { completeSnapshotLearning } from "./snapshotLearning";
 import { loadCloudEvidenceCheckpoint } from "./codecEvidence";
 import { tickCommand, tickSession } from "./tickPerformanceTestSupport";
-import { assertPerformanceBudgets, ciTime as hostedTime, runPerformanceTest } from "../../../../../tests/support/performanceBudget";
 
+const hostedTime = (ms: number) => process.env.CI ? ms * 10 : ms;
 const output = new URL("../../../../../.local-dev/tick-stutter-20261104/", import.meta.url);
 afterEach(() => vi.restoreAllMocks());
 
-it("attributes the retained large snapshot tick path and 170-command tail", () => runPerformanceTest(async () => {
+it("attributes the retained large snapshot tick path and 170-command tail", async () => {
   const codec = cloudCodec.run.bind(cloudCodec);
   // The production codec runs off-thread. Isolate its CPU from the synchronous
   // command measurements under Vitest's inline codec, then measure it below.
@@ -117,15 +117,13 @@ it("attributes the retained large snapshot tick path and 170-command tail", () =
       writeFileSync(new URL(`${process.env.TICK_MEASUREMENT}-measurement.json`, output), JSON.stringify(measurement, null, 2));
     }
     expect(measurement.tail).toBe(182);
+    expect(ticks[0]!.executeMs + ticks[0]!.viewMs, "first real tick plus complete view frame budget").toBeLessThan(hostedTime(16));
     const steady = ticks.filter(tick => tick.tail >= 170).map(tick => tick.executeMs + tick.viewMs);
-    assertPerformanceBudgets([
-      { label: "first real tick plus complete view frame budget", actualMs: ticks[0]!.executeMs + ticks[0]!.viewMs, limitMs: hostedTime(16) },
-      { label: "every steady tick plus complete view frame budget", actualMs: Math.max(...steady), limitMs: hostedTime(16) },
-    ]);
-  } finally { unsubscribe(); inspector?.disconnect(); f.session.dispose(); vi.restoreAllMocks(); }
-}), hostedTime(120_000));
+    expect(Math.max(...steady), "every steady tick plus complete view frame budget").toBeLessThan(hostedTime(16));
+  } finally { unsubscribe(); inspector?.disconnect(); f.session.dispose(); }
+}, hostedTime(120_000));
 
-it("compares uninstrumented reducer and evidence ticks at 1x/2x/4x with an exact 170-command tail", () => runPerformanceTest(async () => {
+it("compares uninstrumented reducer and evidence ticks at 1x/2x/4x with an exact 170-command tail", async () => {
   // This controls for profiler/mock overhead and distinguishes session work
   // from a domain reducer that already clones the full current GameState.
   const codec = cloudCodec.run.bind(cloudCodec);
@@ -172,9 +170,9 @@ it("compares uninstrumented reducer and evidence ticks at 1x/2x/4x with an exact
       mkdirSync(output, { recursive: true });
       writeFileSync(new URL(`${process.env.TICK_MEASUREMENT}-uninstrumented.json`, output), JSON.stringify({ snapshotBytes: f.copy.snapshot.uncompressedBytes, records }, null, 2));
     }
-    assertPerformanceBudgets([1, 2, 4].map(speed => {
+    for (const speed of [1, 2, 4]) {
       const frames = records.filter(record => record.speed === speed).map(record => record.executeMs + record.viewMs);
-      return { label: `every ${speed}x tick plus view frame budget`, actualMs: Math.max(...frames), limitMs: hostedTime(16) };
-    }));
-  } finally { f.session.dispose(); vi.restoreAllMocks(); }
-}), hostedTime(120_000));
+      expect(Math.max(...frames), `every ${speed}x tick plus view frame budget`).toBeLessThan(hostedTime(16));
+    }
+  } finally { f.session.dispose(); }
+}, hostedTime(120_000));

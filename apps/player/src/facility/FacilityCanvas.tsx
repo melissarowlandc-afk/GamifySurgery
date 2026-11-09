@@ -7,8 +7,6 @@ import {
   type ReactElement,
 } from "react";
 import { ClinicMapPins } from "./ClinicMapPins";
-import { createMapPinPositionWriter } from "./mapPinPositions";
-import { facilityProofEnabled } from "./facilityProofPolicy";
 import type { FacilityAlertPinPosition } from "./types";
 import Phaser from "phaser";
 import { clampFacilityCamera, isValidFacilityCamera } from "./facilityCameraBounds";
@@ -118,15 +116,7 @@ export function FacilityCanvas({
   ariaLabel,
 }: FacilityCanvasProps): ReactElement {
   const hostRef = useRef<HTMLDivElement>(null);
-  const proofCounts = useRef({ canvasRenders: 0, viewModelChanges: 0, model: viewModel });
-  if (import.meta.env.DEV || import.meta.env.VITE_FACILITY_PERF_PROOF === "1") {
-    proofCounts.current.canvasRenders++;
-    if (proofCounts.current.model !== viewModel) proofCounts.current.viewModelChanges++;
-  }
-  proofCounts.current.model = viewModel;
   const [alertPinPositions, setAlertPinPositions] = useState<FacilityAlertPinPosition[]>([]);
-  const pinPositions = useRef<ReturnType<typeof createMapPinPositionWriter> | null>(null);
-  if (!pinPositions.current) pinPositions.current = createMapPinPositionWriter(setAlertPinPositions);
   const [mobilePageHidden, setMobilePageHidden] = useState(false);
   const mobilePolicy = useRef<MobileMapPresentationPolicy | null>(null);
   if (mobileInput === true && !mobilePolicy.current) mobilePolicy.current = new MobileMapPresentationPolicy();
@@ -163,7 +153,7 @@ export function FacilityCanvas({
   bridgeRef.current.onMoveFounder = onMoveFounder;
   bridgeRef.current.onCameraChange = onCameraChange;
   bridgeRef.current.onSelectedRoomRectChange = onSelectedRoomRectChange;
-  bridgeRef.current.onAlertPinPositionsChange = pinPositions.current.publish;
+  bridgeRef.current.onAlertPinPositionsChange = setAlertPinPositions;
 
   useEffect(() => { phoneFrames.current?.update(); });
   useEffect(() => { if (mobileInput === true) markPhonePlaying(); }, [mobileInput]);
@@ -254,7 +244,6 @@ export function FacilityCanvas({
     let cameraSettleTimer: number | null = null;
     const reconcileCamera = () => {
       if (bridgeRef.current.mobileInput === true && bridgeRef.current.mobilePresentation?.hidden) return;
-      if (scene.hasPendingCameraChange()) return;
       // Phaser may still be loading assets. Reconcile only after create/update
       // has run, using the current canvas size rather than a saved viewport.
       if (gameRef.current !== game || !scene.sys.isActive() ||
@@ -280,7 +269,7 @@ export function FacilityCanvas({
       lastCameraLayoutSignature = signature;
       if (facilityCameraSignature(camera) !== facilityCameraSignature(model.camera)) {
         bridgeRef.current.viewModel = { ...model, camera };
-        scene.publishCameraChange(camera);
+        bridgeRef.current.onCameraChange?.(camera);
       }
     };
     const settleResizeCamera = () => {
@@ -293,21 +282,18 @@ export function FacilityCanvas({
       }, DESKTOP_CAMERA_RESIZE_SETTLE_MS);
     };
     game.events.on(Phaser.Core.Events.POST_STEP, reconcileCamera);
-    // Opt-in in development or a separately built QA production artifact.
+    // The map-mounted gait proof is deliberately opt-in and development-only.
     // It lets Playwright observe the *rendered Phaser actor* metadata without
     // adding a visible debug panel or making gameplay state inspectable.
-    const gaitProofEnabled = facilityProofEnabled(import.meta.env.DEV,
-      import.meta.env.VITE_FACILITY_PERF_PROOF === "1", window.location.search);
+    const gaitProofEnabled = import.meta.env.DEV &&
+      new URLSearchParams(window.location.search).has("facility-gait-proof");
     const proofHost = host as HTMLDivElement & {
       __facilityGaitSnapshot?: () => unknown;
       __facilityGame?: Phaser.Game;
-      __facilityProof?: { mode: "development" | "production"; readCounts: () => { canvasRenders: number; viewModelChanges: number } };
     };
     if (gaitProofEnabled) {
       proofHost.__facilityGame = game;
       proofHost.__facilityGaitSnapshot = () => scene.debugCharacterGaitSnapshot();
-      proofHost.__facilityProof = { mode: import.meta.env.DEV ? "development" : "production",
-        readCounts: () => ({ canvasRenders: proofCounts.current.canvasRenders, viewModelChanges: proofCounts.current.viewModelChanges }) };
     }
 
     let resizeFrame: number | null = null;
@@ -362,13 +348,7 @@ export function FacilityCanvas({
       cameraSettleTimer = null; desktopResizing = false; desktopSplitterHeld = false;
       reconcileCamera();
     };
-    const flushCamera = () => { scene.cancelCameraGesture(); flushResizeCamera(); };
-    const flushHiddenCamera = () => { if (document.visibilityState === "hidden") flushCamera(); };
-    const flushBeforeAction = (event: Event) => {
-      // A Save & Close/zoom/menu action must see the latest wheel preference,
-      // even when clicked before the quiet-wheel timeout. Runs before React.
-      if (event.target !== ownedCanvas) scene.cancelCameraGesture();
-    };
+    const flushHiddenCamera = () => { if (document.visibilityState === "hidden") flushResizeCamera(); };
     const beginSplitterResize = (event: PointerEvent) => {
       if (event.target instanceof HTMLElement && event.target.closest(".workspace-splitter")) desktopSplitterHeld = true;
     };
@@ -378,17 +358,12 @@ export function FacilityCanvas({
       if (desktopResizing) settleResizeCamera();
     };
     const desktopLifecycle = bridgeRef.current.mobileInput !== true;
-    // Publish before the session's bubble-phase storage flush on both layouts.
-    window.addEventListener("pagehide", flushCamera, true);
-    window.addEventListener("beforeunload", flushCamera, true);
-    document.addEventListener("visibilitychange", flushHiddenCamera, true);
-    window.addEventListener("pointerdown", flushBeforeAction, true);
-    window.addEventListener("keydown", flushBeforeAction, true);
-    window.addEventListener("pointercancel", flushCamera, true);
-    window.addEventListener("blur", flushCamera);
     if (desktopLifecycle) {
       // Capture runs before the session's existing bubble-phase preference
       // flush, including an immediate reload before the 250ms settle timer.
+      window.addEventListener("pagehide", flushResizeCamera, true);
+      window.addEventListener("beforeunload", flushResizeCamera, true);
+      document.addEventListener("visibilitychange", flushHiddenCamera, true);
       window.addEventListener("pointerdown", beginSplitterResize, true);
       window.addEventListener("pointerup", finishSplitterResize, true);
       window.addEventListener("pointercancel", finishSplitterResize, true);
@@ -396,7 +371,6 @@ export function FacilityCanvas({
     }
 
     return () => {
-      flushCamera();
       frameBudget?.dispose();
       if (phoneFrames.current === frameBudget) phoneFrames.current = null;
       if (frameBudget) {
@@ -410,14 +384,10 @@ export function FacilityCanvas({
       game.events.off(Phaser.Core.Events.POST_STEP, reconcileCamera);
       resizeObserver.disconnect();
       if (cameraSettleTimer !== null) window.clearTimeout(cameraSettleTimer);
-      window.removeEventListener("pagehide", flushCamera, true);
-      window.removeEventListener("beforeunload", flushCamera, true);
-      document.removeEventListener("visibilitychange", flushHiddenCamera, true);
-      window.removeEventListener("pointerdown", flushBeforeAction, true);
-      window.removeEventListener("keydown", flushBeforeAction, true);
-      window.removeEventListener("pointercancel", flushCamera, true);
-      window.removeEventListener("blur", flushCamera);
       if (desktopLifecycle) {
+        window.removeEventListener("pagehide", flushResizeCamera, true);
+        window.removeEventListener("beforeunload", flushResizeCamera, true);
+        document.removeEventListener("visibilitychange", flushHiddenCamera, true);
         window.removeEventListener("pointerdown", beginSplitterResize, true);
         window.removeEventListener("pointerup", finishSplitterResize, true);
         window.removeEventListener("pointercancel", finishSplitterResize, true);
@@ -432,7 +402,6 @@ export function FacilityCanvas({
       if (proofHost.__facilityGame === game) {
         delete proofHost.__facilityGame;
         delete proofHost.__facilityGaitSnapshot;
-        delete proofHost.__facilityProof;
       }
       game.destroy(true);
       // Phaser defers final destruction until its next step. A deliberately
@@ -455,6 +424,6 @@ export function FacilityCanvas({
       }
       data-testid="facility-canvas"
       data-phone-memory-mode={mobileInput === true ? phoneMemoryProfile().mode : undefined}
-    >{mobileInput === true && (mobileMapCovered || mobilePageHidden) ? null : <ClinicMapPins pins={viewModel.alertPins ?? []} positions={alertPinPositions} onAction={onAlertPinAction} onPinElement={pinPositions.current.bind} />}</div>
+    >{mobileInput === true && (mobileMapCovered || mobilePageHidden) ? null : <ClinicMapPins pins={viewModel.alertPins ?? []} positions={alertPinPositions} onAction={onAlertPinAction} />}</div>
   );
 }
