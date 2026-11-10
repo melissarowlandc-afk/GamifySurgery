@@ -2215,6 +2215,7 @@ export const EXACT_TEST_CHOICE_ORDER_RECORDS: readonly ExactTestChoiceOrderRecor
   // END N3 ROUND2 exact-order append.
   // BEGIN N3 ROUND3 explicit candidate exact-order append.
   ...QUESTION_NEW_N3_ROUND3_TEST_ORDER_RECORDS,
+  ...QUESTION_HARDEN1_N3R4_TEST_ORDER_RECORDS,
   // END N3 ROUND3 explicit candidate exact-order append.
   // BEGIN FLAGS2 accepted whole-case preview bindings 20261105
   ...QUESTION_FLAGS2_WHOLE_CASE_TEST_ORDER_RECORDS,
@@ -2275,3 +2276,6 @@ export function getExactTestChoiceOrderRecord(
 // BEGIN FLAGS3 exact accepted preview bindings 20261107
 import { QUESTION_FLAGS3_ACCEPTED_TEST_ORDER_RECORDS } from "@gamify-surgery/clinical-content";
 // END FLAGS3 exact accepted preview bindings 20261107
+
+// Exact accepted N3R4 external-only identities; no service execution or acceptance check.
+import {QUESTION_HARDEN1_N3R4_TEST_ORDER_RECORDS} from "./question-harden1-n3r4-test-orders";

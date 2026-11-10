@@ -8,8 +8,8 @@
       "capturedMainSha256": "034f6f69da950feca9e3c4fd928eeffb3b1a7d2069a6e2611b87da6d3df95635",
       "mainAcceptedSha256": "100dababa898bd80133914633832da65537e0cfc38464d6e5b95d7318d42ad3b",
       "releaseEntrySha256": "4080f4b98a7888897bd6b9609878294bbc35c7544e770e5e787e7e7447340c86",
-      "requiredReleaseSha256": "d818488991a992accefe6551098eeeedeff3e98bed2ba0399760c3482326bf31",
-      "reason": "Mechanical exact guard digest propagation after authorized port27 transport source/test deltas; captures, assertions, unrelated pins and all earlier authorization history remain unchanged.",
+      "requiredReleaseSha256": "e70bf90f3f61412db5f65c3a5956bf5bfd8c70b35433cb3d906d708009ea653d",
+      "reason": "Manager-authorized port28 exact three-case acceptance or honestly regenerated native evidence; original captures,unrelated pins and prior authorizations retained.",
       "authorizedDeltas": [
         {
           "on": "2026-11-09",
@@ -34,6 +34,22 @@
           "previousRequirement": "d8beb6febd7736be919f87bf45e15b8da90c11ac917a85a90604fcf1acdc1833",
           "releaseAfterSha256": "d818488991a992accefe6551098eeeedeff3e98bed2ba0399760c3482326bf31",
           "reason": "Mechanical exact guard digest propagation after authorized port27 transport source/test deltas; captures, assertions, unrelated pins and all earlier authorization history remain unchanged."
+        },
+        {
+          "on": "2026-11-10",
+          "milestone": "release-port28-port",
+          "releaseBeforeSha256": "d818488991a992accefe6551098eeeedeff3e98bed2ba0399760c3482326bf31",
+          "previousRequirement": "d818488991a992accefe6551098eeeedeff3e98bed2ba0399760c3482326bf31",
+          "releaseAfterSha256": "c49b1dc2de4c4cbe1909f77f569a306d6605a16e676c48d9bb15180147bb3477",
+          "reason": "Manager-authorized port28 exact three-case acceptance or honestly regenerated native evidence; original captures,unrelated pins and prior authorizations retained."
+        },
+        {
+          "on": "2026-11-10",
+          "milestone": "release-port28-evidence",
+          "releaseBeforeSha256": "d818488991a992accefe6551098eeeedeff3e98bed2ba0399760c3482326bf31",
+          "previousRequirement": "c49b1dc2de4c4cbe1909f77f569a306d6605a16e676c48d9bb15180147bb3477",
+          "releaseAfterSha256": "e70bf90f3f61412db5f65c3a5956bf5bfd8c70b35433cb3d906d708009ea653d",
+          "reason": "Manager-authorized port28 exact three-case acceptance or honestly regenerated native evidence; original captures,unrelated pins and prior authorizations retained."
         }
       ]
     }
@@ -133,6 +149,112 @@
           "beforeSha256": "d8beb6febd7736be919f87bf45e15b8da90c11ac917a85a90604fcf1acdc1833",
           "afterSha256": "d818488991a992accefe6551098eeeedeff3e98bed2ba0399760c3482326bf31",
           "kind": "linked-guard-digest"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-10",
+      "milestone": "release-port28-port",
+      "priorFixtureSha256": "2e8a89879fcf7da8e1bda455863f0a3e3fa91714aff9cd95ee14ba08242a6fa2",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts",
+          "capturedMainSha256": "034f6f69da950feca9e3c4fd928eeffb3b1a7d2069a6e2611b87da6d3df95635",
+          "mainAcceptedSha256": "100dababa898bd80133914633832da65537e0cfc38464d6e5b95d7318d42ad3b",
+          "releaseEntrySha256": "4080f4b98a7888897bd6b9609878294bbc35c7544e770e5e787e7e7447340c86",
+          "requiredReleaseSha256": "d818488991a992accefe6551098eeeedeff3e98bed2ba0399760c3482326bf31",
+          "reason": "Mechanical exact guard digest propagation after authorized port27 transport source/test deltas; captures, assertions, unrelated pins and all earlier authorization history remain unchanged.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-09",
+              "milestone": "release-port25-cloud-conflict",
+              "releaseBeforeSha256": "eec467ca190404e7f8d7bb53f17ad92cba14eeb4f8178d04b7b9f4928af843e4",
+              "previousRequirement": "eec467ca190404e7f8d7bb53f17ad92cba14eeb4f8178d04b7b9f4928af843e4",
+              "releaseAfterSha256": "1916fd67f7e42197c23b12b5e82a9ff4aae0fe026ed0492d690f5e5882a0cbbc",
+              "reason": "Mechanical exact digest propagation for three authorized port25 cloud-source changes; guard assertions, unrelated protected sources and immutable captures remain intact."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port26-memory-rerelease",
+              "releaseBeforeSha256": "1916fd67f7e42197c23b12b5e82a9ff4aae0fe026ed0492d690f5e5882a0cbbc",
+              "previousRequirement": "1916fd67f7e42197c23b12b5e82a9ff4aae0fe026ed0492d690f5e5882a0cbbc",
+              "releaseAfterSha256": "d8beb6febd7736be919f87bf45e15b8da90c11ac917a85a90604fcf1acdc1833",
+              "reason": "Mechanical exact guard digest propagation after merging89a52452 CI authorizations with preserved port25 cloud authorizations; unrelated pins, captures and guard logic remain exact."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port27-nonretryable-client",
+              "releaseBeforeSha256": "d8beb6febd7736be919f87bf45e15b8da90c11ac917a85a90604fcf1acdc1833",
+              "previousRequirement": "d8beb6febd7736be919f87bf45e15b8da90c11ac917a85a90604fcf1acdc1833",
+              "releaseAfterSha256": "d818488991a992accefe6551098eeeedeff3e98bed2ba0399760c3482326bf31",
+              "reason": "Mechanical exact guard digest propagation after authorized port27 transport source/test deltas; captures, assertions, unrelated pins and all earlier authorization history remain unchanged."
+            }
+          ]
+        }
+      ],
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts",
+          "beforeSha256": "d818488991a992accefe6551098eeeedeff3e98bed2ba0399760c3482326bf31",
+          "previousRequirement": "d818488991a992accefe6551098eeeedeff3e98bed2ba0399760c3482326bf31",
+          "afterSha256": "c49b1dc2de4c4cbe1909f77f569a306d6605a16e676c48d9bb15180147bb3477"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-10",
+      "milestone": "release-port28-evidence",
+      "priorFixtureSha256": "218f9fc6c7377465443feb2104fb9e09cdf6a25903f028bf29f0677040a4123b",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts",
+          "capturedMainSha256": "034f6f69da950feca9e3c4fd928eeffb3b1a7d2069a6e2611b87da6d3df95635",
+          "mainAcceptedSha256": "100dababa898bd80133914633832da65537e0cfc38464d6e5b95d7318d42ad3b",
+          "releaseEntrySha256": "4080f4b98a7888897bd6b9609878294bbc35c7544e770e5e787e7e7447340c86",
+          "requiredReleaseSha256": "c49b1dc2de4c4cbe1909f77f569a306d6605a16e676c48d9bb15180147bb3477",
+          "reason": "Manager-authorized port28 exact three-case acceptance or honestly regenerated native evidence; original captures,unrelated pins and prior authorizations retained.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-09",
+              "milestone": "release-port25-cloud-conflict",
+              "releaseBeforeSha256": "eec467ca190404e7f8d7bb53f17ad92cba14eeb4f8178d04b7b9f4928af843e4",
+              "previousRequirement": "eec467ca190404e7f8d7bb53f17ad92cba14eeb4f8178d04b7b9f4928af843e4",
+              "releaseAfterSha256": "1916fd67f7e42197c23b12b5e82a9ff4aae0fe026ed0492d690f5e5882a0cbbc",
+              "reason": "Mechanical exact digest propagation for three authorized port25 cloud-source changes; guard assertions, unrelated protected sources and immutable captures remain intact."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port26-memory-rerelease",
+              "releaseBeforeSha256": "1916fd67f7e42197c23b12b5e82a9ff4aae0fe026ed0492d690f5e5882a0cbbc",
+              "previousRequirement": "1916fd67f7e42197c23b12b5e82a9ff4aae0fe026ed0492d690f5e5882a0cbbc",
+              "releaseAfterSha256": "d8beb6febd7736be919f87bf45e15b8da90c11ac917a85a90604fcf1acdc1833",
+              "reason": "Mechanical exact guard digest propagation after merging89a52452 CI authorizations with preserved port25 cloud authorizations; unrelated pins, captures and guard logic remain exact."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port27-nonretryable-client",
+              "releaseBeforeSha256": "d8beb6febd7736be919f87bf45e15b8da90c11ac917a85a90604fcf1acdc1833",
+              "previousRequirement": "d8beb6febd7736be919f87bf45e15b8da90c11ac917a85a90604fcf1acdc1833",
+              "releaseAfterSha256": "d818488991a992accefe6551098eeeedeff3e98bed2ba0399760c3482326bf31",
+              "reason": "Mechanical exact guard digest propagation after authorized port27 transport source/test deltas; captures, assertions, unrelated pins and all earlier authorization history remain unchanged."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port28-port",
+              "releaseBeforeSha256": "d818488991a992accefe6551098eeeedeff3e98bed2ba0399760c3482326bf31",
+              "previousRequirement": "d818488991a992accefe6551098eeeedeff3e98bed2ba0399760c3482326bf31",
+              "releaseAfterSha256": "c49b1dc2de4c4cbe1909f77f569a306d6605a16e676c48d9bb15180147bb3477",
+              "reason": "Manager-authorized port28 exact three-case acceptance or honestly regenerated native evidence; original captures,unrelated pins and prior authorizations retained."
+            }
+          ]
+        }
+      ],
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts",
+          "beforeSha256": "d818488991a992accefe6551098eeeedeff3e98bed2ba0399760c3482326bf31",
+          "previousRequirement": "c49b1dc2de4c4cbe1909f77f569a306d6605a16e676c48d9bb15180147bb3477",
+          "afterSha256": "e70bf90f3f61412db5f65c3a5956bf5bfd8c70b35433cb3d906d708009ea653d"
         }
       ]
     }

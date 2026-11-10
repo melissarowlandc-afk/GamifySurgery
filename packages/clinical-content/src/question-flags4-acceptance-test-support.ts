@@ -22,6 +22,7 @@ const rows:QuestionShipAcceptance[]=revisions.map(r=>({acceptanceId:r.auditId,ca
 /** Historical test epoch only. Pin the exact one-case acceptance before
  * restoring the prior state. Never called by gameplay, admission or saves. */
 export function beforeFlags4AcceptanceRelease(release:SyntheticClinicalRelease):SyntheticClinicalRelease {
+ release=beforeHarden1N3r4AcceptanceRelease(release);
  if(digest(release)===before.default.sha256)return release;
  // Older guards may already hold a pre-stats1/pre-flags3 epoch. Their own
  // immutable hash assertions remain responsible for those historical inputs.
@@ -36,6 +37,7 @@ export function beforeFlags4AcceptanceRelease(release:SyntheticClinicalRelease):
  return restored;
 }
 export function beforeFlags4AcceptanceManifest(manifest:QuestionShipManifest):typeof before.manifest {
+ manifest=beforeHarden1N3r4AcceptanceManifest(manifest);
  if(digest(manifest)===digest(before.manifest))return manifest as typeof before.manifest;
  if(!manifest.accepted.some(r=>r.sourceView==="flags4-accepted"))return manifest as typeof before.manifest;
  const expected={...before.manifest,id:"question-ship.2026-11-08.v7",accepted:[...before.manifest.accepted,...rows],
@@ -44,12 +46,14 @@ export function beforeFlags4AcceptanceManifest(manifest:QuestionShipManifest):ty
  return structuredClone(before.manifest);
 }
 export function beforeFlags4AcceptanceTimings(actual:readonly AnswerChoiceTimingRegistryEntry[]):AnswerChoiceTimingRegistryEntry[] {
+ actual=beforeHarden1N3r4AcceptanceTimings(actual);
  if(digest(actual)===digest(before.timing))return [...actual];
  if(!actual.some(t=>t.questionVariantId===revisions[0]!.questionVariantId))return [...actual];
  expect(actual,"all2283 previous rows remain in order; append only one accepted no-test identity").toEqual([...before.timing,...timings]);
  return structuredClone(before.timing);
 }
 export function beforeFlags4AcceptanceSource(path:string,current:string):string {
+ current=beforeHarden1N3r4AcceptanceSource(path,current);
  const row=migration.files.find(r=>r.path===path);if(!row)return current;
  const sha=(s:string)=>createHash("sha256").update(s).digest("hex");
  expect(sha(current),path+" exact authorized flags4 acceptance bytes").toBe(row.afterSha256);
@@ -57,3 +61,5 @@ export function beforeFlags4AcceptanceSource(path:string,current:string):string 
  expect(row.beforeSha256,path+" immutable intake digest").toBe(before.files[path]);
  return row.beforeText;
 }
+
+import {beforeHarden1N3r4AcceptanceRelease,beforeHarden1N3r4AcceptanceManifest,beforeHarden1N3r4AcceptanceTimings,beforeHarden1N3r4AcceptanceSource} from "./question-harden1-n3r4-acceptance-test-support";

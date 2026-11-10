@@ -1578,8 +1578,13 @@ import { QUESTION_STATS1_ACCEPTED_SOURCE_RELEASE, withAcceptedQuestionStats1Conc
 // BEGIN FLAGS4 accepted-source integration 20261108
 import { QUESTION_FLAGS4_ACCEPTED_SOURCE_RELEASE } from "./question-flags4-accepted-20261108";
 // END FLAGS4 accepted-source integration 20261108
+// BEGIN HARDEN1 / N3R4 accepted exact source integration 20261110
+import {QUESTION_HARDEN1_ACCEPTANCE_SOURCE,QUESTION_N3R4_RETAINED_ACCEPTANCE_SOURCE,withAcceptedHarden1N3r4Concepts} from "./question-harden1-n3r4-accepted-20261110";
+// END HARDEN1 / N3R4 accepted exact source integration 20261110
 /** Default runtime content: exact accepted rewrites/new items plus legacy fallback. */
-export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease(projectManagerAcceptedQuestions(withAcceptedQuestionFlags3Concepts(withAcceptedQuestionFlags2WholeCaseConcepts(withAcceptedQuestionStats1Concepts(withAcceptedQuestionFlags2Concepts(withAcceptedQuestionBankBatch2bRound2Concepts(withAcceptedQuestionNewN3Round2Concepts(QUESTION_CATALOG_RELEASE, QUESTION_NEW_N3_PRE_RELEASE.concepts)))))), QUESTION_FLAGS_PRE_REVISION_RELEASE, {
+export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease(projectManagerAcceptedQuestions(withAcceptedHarden1N3r4Concepts(withAcceptedQuestionFlags3Concepts(withAcceptedQuestionFlags2WholeCaseConcepts(withAcceptedQuestionStats1Concepts(withAcceptedQuestionFlags2Concepts(withAcceptedQuestionBankBatch2bRound2Concepts(withAcceptedQuestionNewN3Round2Concepts(QUESTION_CATALOG_RELEASE, QUESTION_NEW_N3_PRE_RELEASE.concepts))))))), QUESTION_FLAGS_PRE_REVISION_RELEASE, {
+  "harden1-round1": QUESTION_HARDEN1_ACCEPTANCE_SOURCE,
+  "n3-round4": QUESTION_N3R4_RETAINED_ACCEPTANCE_SOURCE,
   "flags4-accepted": QUESTION_FLAGS4_ACCEPTED_SOURCE_RELEASE,
   "stats1-accepted": QUESTION_STATS1_ACCEPTED_SOURCE_RELEASE,
   "flags3-accepted": QUESTION_FLAGS3_ACCEPTED_SOURCE_RELEASE,

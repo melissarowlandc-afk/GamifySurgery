@@ -89,9 +89,20 @@ describe("five-diagnosis pilot registry", () => {
     );
 
     expect(
-      violations.filter(v => v.questionVariantId !== "question.n3.gastric-lymphoma-new-large-cell-process.v2"&&!STATS1_EXACT_LENGTH_EXCEPTIONS.has(v.questionVariantId))
+      violations.filter(v => v.questionVariantId !== "question.n3.venous-ulcer-with-competing-arterial-findings.v4" && v.questionVariantId !== "question.n3.gastric-lymphoma-new-large-cell-process.v2"&&!STATS1_EXACT_LENGTH_EXCEPTIONS.has(v.questionVariantId))
         .map((violation) => violation.questionVariantId).sort(),
     ).toEqual([...IMMUTABLE_APPROVED_LENGTH_EXCEPTIONS].sort());
+    // Exact round-four PASS wording is manager-frozen. Character count alone
+    // flags 51 versus43 characters; bind the entire case and actual disparity.
+    const venousId="question.n3.venous-ulcer-with-competing-arterial-findings.v4";
+    expect(QUESTION_SHIP_MANIFEST.accepted.find(row=>row.questionVariantId===venousId))
+      .toMatchObject({acceptanceId:"review.n3.venous-ulcer-with-competing-arterial-findings.v4",sourceView:"n3-round4",
+        decision:"docs/research/question-harden1-n3r4-manager-decision-20261110.md"});
+    expect(violations.filter(v=>v.questionVariantId===venousId))
+      .toEqual([{questionVariantId:venousId,correctLength:51,longestDistractor:43}]);
+    const venousCase=PILOT_CLINICAL_RELEASE.cases.find(cs=>cs.decisionNodes.some(n=>n.questionVariantId===venousId))!;
+    expect(createHash("sha256").update(JSON.stringify(venousCase)).digest("hex"))
+      .toBe("188d81df478242036469efd23d0de6b7cf77726b0203a22f0ad82bb9c29b758e");
     // Manager explicitly freezes this review-two PASS version. Pin the whole
     // accepted case rather than editing its wording or expanding a broad budget.
     const frozenId = "question.n3.gastric-lymphoma-new-large-cell-process.v2";

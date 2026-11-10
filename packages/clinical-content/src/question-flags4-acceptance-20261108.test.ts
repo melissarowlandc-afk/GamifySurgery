@@ -1,9 +1,9 @@
 import {createHash} from "node:crypto";
 import {readFileSync} from "node:fs";
 import {describe,expect,it} from "vitest";
-import {SYNTHETIC_CLINICAL_RELEASE as live,QUESTION_CATALOG_RELEASE as catalog} from "./synthetic-content";
-import {QUESTION_SHIP_MANIFEST as manifest} from "./question-ship-manifest";
-import {ANSWER_CHOICE_TIMING_REGISTRY as timing} from "./answer-choice-timing";
+import {SYNTHETIC_CLINICAL_RELEASE as actualLive,QUESTION_CATALOG_RELEASE as catalog} from "./synthetic-content";
+import {QUESTION_SHIP_MANIFEST as actualManifest} from "./question-ship-manifest";
+import {ANSWER_CHOICE_TIMING_REGISTRY as actualTiming} from "./answer-choice-timing";
 import {QUESTION_FLAGS4_SOURCE_RELEASE as reviewed,QUESTION_FLAGS4_QUESTIONS as reviewedQuestions,
  QUESTION_FLAGS4_RETAINED_INPUT as retained,QUESTION_FLAGS4_CLAIMS as claims} from "./question-flags4-20261108";
 import {QUESTION_FLAGS4_ACCEPTED_SOURCE_RELEASE as source,QUESTION_FLAGS4_ACCEPTED_REVISIONS as revisions,
@@ -11,6 +11,8 @@ import {QUESTION_FLAGS4_ACCEPTED_SOURCE_RELEASE as source,QUESTION_FLAGS4_ACCEPT
  QUESTION_FLAGS4_ACCEPTED_STATEMENT_MAPPINGS as mappings} from "./question-flags4-accepted-20261108";
 import {beforeFlags4AcceptanceRelease,beforeFlags4AcceptanceManifest,beforeFlags4AcceptanceTimings,beforeFlags4AcceptanceSource} from "./question-flags4-acceptance-test-support";
 
+import {beforeHarden1N3r4AcceptanceRelease,beforeHarden1N3r4AcceptanceManifest,beforeHarden1N3r4AcceptanceTimings} from "./question-harden1-n3r4-acceptance-test-support";
+const live=beforeHarden1N3r4AcceptanceRelease(actualLive),manifest=beforeHarden1N3r4AcceptanceManifest(actualManifest),timing=beforeHarden1N3r4AcceptanceTimings(actualTiming);
 const read=(p:string)=>JSON.parse(readFileSync(new URL("../../../"+p,import.meta.url),"utf8"));
 const before=read("tools/question-quality/fixtures/question-flags4-acceptance-before-20261108.json");
 const packet=read("docs/research/question-flags4-accepted-20261108.json")[0];
@@ -75,7 +77,7 @@ describe("flags4 exact manager acceptance and preserved legacy identity",()=>{
   const migration=read("tools/question-quality/fixtures/question-flags4-acceptance-source-migration-20261108.json");
   expect(migration.files).toHaveLength(9);
   const pinBytes=readFileSync(new URL("../../../tools/question-quality/fixtures/question-flags4-acceptance-release-source-pins-20261108.json",import.meta.url));
-  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("2e8a89879fcf7da8e1bda455863f0a3e3fa91714aff9cd95ee14ba08242a6fa2");
+  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("c017a502e84507d3993e41d8555ce49e76bcf6febc805a475e499410ff662bf1");
   const pins=JSON.parse(pinBytes.toString("utf8")) as {capturedFixtureSha256:string;paths:Array<{path:string;capturedMainSha256:string;requiredReleaseSha256:string}>};
   expect(createHash("sha256").update(readFileSync(new URL("../../../tools/question-quality/fixtures/question-flags4-acceptance-before-20261108.json",import.meta.url))).digest("hex")).toBe(pins.capturedFixtureSha256);
   expect(pins.paths).toHaveLength(1);

@@ -71,10 +71,14 @@ describe("default release projection and explicit catalog runtime behavior",()=>
  });
  it.each(QUESTION_SHIP_MANIFEST.accepted.filter(r=>!r.acceptanceId.startsWith("review.n")).map(r=>[r.acceptanceId,r]as const))
  ("selects manager-accepted rewrite %s with its full accepted/fallback case",(_id,row)=>{
-  const cs=SYNTHETIC_CLINICAL_RELEASE.cases.find(c=>c.id===row.caseId)!;
+  const relation=QUESTION_SHIP_MANIFEST.replacements.find(r=>r.replaces===row.caseId);
+  const replacementRow=relation?QUESTION_SHIP_MANIFEST.accepted.find(r=>r.questionVariantId===relation.with)!:null;
+  const effectiveRow=replacementRow&&replacementRow.caseId!==row.caseId?replacementRow:row;
+  if(replacementRow&&replacementRow.caseId!==row.caseId)expect(SYNTHETIC_CLINICAL_RELEASE.cases.some(c=>c.id===row.caseId)).toBe(false);
+  const cs=SYNTHETIC_CLINICAL_RELEASE.cases.find(c=>c.id===effectiveRow.caseId)!;
   const selected=selectRoutineClinicalCase(vacant(),[cs],NOW)!;
   expect(selected.clinicalCase.id).toBe(cs.id);
-  expect(selected.clinicalCase.decisionNodes.find(n=>n.id===row.nodeId)).toMatchObject({questionVariantId:row.questionVariantId,primaryConceptId:row.conceptId});
+  expect(selected.clinicalCase.decisionNodes.find(n=>n.id===effectiveRow.nodeId)).toMatchObject({questionVariantId:effectiveRow.questionVariantId,primaryConceptId:effectiveRow.conceptId});
  });
  it("selects only supplied default versions across seeds and honors future-due histories",()=>{
   const state=vacant();const pool=acceptedNew;

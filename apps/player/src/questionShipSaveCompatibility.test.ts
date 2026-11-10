@@ -1,3 +1,4 @@
+import {QUESTION_SHIP_MANIFEST} from "@gamify-surgery/clinical-content";
 import { describe, expect, it } from "vitest";
 import { QUESTION_BANK_PRE_BATCH2A_ROUND2_RELEASE, SYNTHETIC_CLINICAL_RELEASE, QUESTION_FLAGS3_RETAINED_INPUT, QUESTION_FLAGS3_ACCEPTED_SOURCE_RELEASE,QUESTION_STATS1_ACCEPTED_SOURCE_RELEASE } from "@gamify-surgery/clinical-content";
 import { applyFsrsReview, applyGameEvidenceCommand, createNewFsrsCard, gameEvidenceDelta,
@@ -140,7 +141,7 @@ describe("pre-gate questions survive projection-only shipping", () => {
     expect(state.operationReceipts[example.admission.operationId]).toMatchObject({status:"applied"});
     const frozen=structuredClone(state.encounters[encounterId]!.frozenCase);
     expect(frozen.decisionNodes).toHaveLength(1);
-    expect(frozen.decisionNodes[0]!.questionVariantId.endsWith(".v2")).toBe(true);
+    expect(frozen.decisionNodes[0]!.questionVariantId).toBe(QUESTION_SHIP_MANIFEST.accepted.find(row=>row.caseId===caseId&&row.nodeId===frozen.decisionNodes[0]!.id)!.questionVariantId);
     const authored=current.clinicalRelease.cases.find(cs=>cs.id===caseId)!.decisionNodes[0]!;
     expect(frozen.decisionNodes[0]).toMatchObject({id:authored.id,questionVariantId:authored.questionVariantId,primaryConceptId:authored.primaryConceptId});
     const orderedChoices=(choices:typeof authored.answerChoices)=>[...choices].sort((a,b)=>a.id.localeCompare(b.id));

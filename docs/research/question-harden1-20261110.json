@@ -1,0 +1,1282 @@
+[
+  {
+    "id": "H1-01",
+    "title": "Interpret a groin neck and a partial-wall bowel threat",
+    "round": 1,
+    "status": "draft_awaiting_independent_review",
+    "reviewStatus": "needs_clinician_review",
+    "pipelinePassed": false,
+    "releaseReady": false,
+    "acceptanceAllowed": false,
+    "originalTargetId": "H1-01",
+    "originalFlaggedVariantId": "question.groin-hernia.ultrasound-type.v1",
+    "originalReviewItemId": "F3-03-type",
+    "ownerNote": "The ultrasound findings should prompt the player to identify the hernia type.",
+    "ownerNoteResolution": "The player explicitly chooses a hernia type from raw ultrasound landmarks, together with exploration versus attempted reduction according to the partial-wall findings. All four choices have the same two components.",
+    "sourceView": "harden1-round1",
+    "holdStatus": "none",
+    "sourceVerificationHold": null,
+    "sourceHoldScope": null,
+    "candidateId": "H1-HERNIA",
+    "sharedCandidateId": "H1-HERNIA",
+    "uniqueScoredCandidateCount": 1,
+    "afterDuplicateForProvenance": false,
+    "compositionProposal": "Two live scored nodes -> ONE joint scored node, subject to manager acceptance. H1-01 and H1-02 show the same after version for traceability; do not accept or count it twice.",
+    "caseId": "case.harden1.groin-wall-threat.20261110",
+    "nodeId": "node.harden1.groin-wall-threat.20261110",
+    "conceptId": "concept.groin-hernia.femoral-defect-repair-priority.v2",
+    "previousConceptId": "concept.groin-hernia.ultrasound-compartment-classification.v1",
+    "keyOrderNotice": "key shown first for review only; runtime answer choices are randomized",
+    "beforeRole": "Exact captured accepted live node at intake; never modified",
+    "before": {
+      "variantId": "question.groin-hernia.ultrasound-type.v1",
+      "Presentation": "Elliot Reed, a 59-year-old man, returns to the surgery clinic with an intermittent right groin bulge.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "keyValue",
+        "caption": "Targeted dynamic groin ultrasound",
+        "items": [
+          {
+            "label": "Sac neck",
+            "value": "Below the inguinal ligament."
+          },
+          {
+            "label": "Relation to the common femoral vein",
+            "value": "Immediately medial to the vein."
+          }
+        ]
+      },
+      "Task": "Which type of hernia do the ultrasound findings identify in Elliot Reed?",
+      "Options": [
+        "**KEY:** Femoral hernia",
+        "Direct inguinal hernia",
+        "Indirect inguinal hernia"
+      ]
+    },
+    "after": {
+      "variantId": "question.groin-hernia.ultrasound-type-and-intervention.v2",
+      "Presentation": "Elliot Reed, a 59-year-old man, presents to the surgery clinic with a newly tender right groin lump. He still passes stool and has not vomited.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "keyValue",
+        "caption": "Targeted groin ultrasound",
+        "items": [
+          {
+            "label": "Sac neck",
+            "value": "Inferior to the inguinal ligament; medial to the common femoral vein."
+          },
+          {
+            "label": "Bowel at the neck",
+            "value": "Part of one bowel wall protrudes through the opening. The remaining lumen stays within the abdomen."
+          },
+          {
+            "label": "Compression",
+            "value": "The protruding wall remains at the opening."
+          },
+          {
+            "label": "Doppler",
+            "value": "No mural signal in the protruding wall. Adjacent bowel has mural signal at the same settings."
+          }
+        ]
+      },
+      "Task": "Which hernia type and hernia-directed intervention fit these findings in Elliot Reed?",
+      "Options": [
+        "**KEY:** Femoral hernia; operative exploration",
+        "Femoral hernia; manual reduction",
+        "Indirect inguinal hernia; operative exploration",
+        "Indirect inguinal hernia; manual reduction"
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Femoral hernia",
+          "The neck lies below the inguinal ligament and medial to the common femoral vein, identifying the femoral-canal route."
+        ],
+        [
+          "Direct inguinal hernia",
+          "Direct inguinal anatomy is defined at Hesselbach's triangle medial to the inferior epigastric vessels. The recorded neck instead follows the below-ligament compartment beside the common femoral vein."
+        ],
+        [
+          "Indirect inguinal hernia",
+          "An indirect inguinal sac enters the deep ring lateral to the inferior epigastric vessels. The reported below-ligament neck and venous relationship identify a different route."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Femoral hernia; operative exploration",
+          "The below-ligament neck medial to the vein identifies the femoral route. The trapped partial wall with absent mural signal raises concern for strangulation despite the patent remaining lumen; emergency operative exploration is appropriate rather than a manual reduction attempt."
+        ],
+        [
+          "Femoral hernia; manual reduction",
+          "This identifies the route correctly and applies an intervention appropriate for selected acute nonreducing hernias without suspected strangulation. It overweights stool passage: the reported mural perfusion raises a different concern even while the remaining lumen permits passage."
+        ],
+        [
+          "Indirect inguinal hernia; operative exploration",
+          "This recognizes threatened bowel but misclassifies the neck. An indirect inguinal sac enters above the ligament, lateral to the inferior epigastric vessels, rather than through the reported compartment."
+        ],
+        [
+          "Indirect inguinal hernia; manual reduction",
+          "This combines two plausible misreadings: assigning an inguinal route from a groin lump and treating continued intestinal passage as evidence that a reduction attempt is appropriate. Both the neck compartment and mural findings oppose that combination."
+        ]
+      ]
+    },
+    "explanation": {
+      "before": "The sac neck's relationship to the ligament and vein identifies a femoral hernia. Direct and indirect inguinal labels refer to different anatomical routes.",
+      "after": "The neck below the inguinal ligament and medial to the vein identifies a femoral hernia.\nA trapped portion of bowel wall can lose perfusion while the remaining lumen still permits passage: a Richter-type configuration. Suspected strangulation warrants emergency operative exploration, rather than manual reduction.\nThe closest error is femoral hernia with manual reduction: stool passage does not establish wall viability. Reduction can be appropriate in selected acute nonreducing hernias without suspected strangulation. This asks the hernia-directed intervention, not the first resuscitation order or repair technique."
+    },
+    "inference": "Locate the sac neck, rather than infer the type from the surface groin bulge. Then: Interpret perfusion in the trapped partial wall, then choose exploration versus a reduction attempt despite continued passage.",
+    "focus": "The below-ligament neck medial to the vein selects the anatomical axis. Absent mural signal in the trapped wall, with adjacent bowel detectable at the same settings, raises strangulation concern and selects exploration rather than treating an acute nonreducing hernia as suitable for manual reduction.",
+    "whatChanged": "Require type plus intervention; balance each type/action component twice. Ultrasound reports observations and never names the type. Replace the two-node scaffold with one joint scored decision and an actual partial-wall threat. No preceding answer or feedback is exposed. Manual reduction is the credible acute alternative when strangulation is not suspected, so the perfusion interpretation matters. All neck, wall, compression and flow information is present in the same node; remove the caregiving sentence. The paired-to-one redesign follows the reviewer suggestion and is a manager proposal.",
+    "reviewResponse": [
+      {
+        "note": "Type was a single landmark lookup with a shortest/odd-category key.",
+        "response": "Require type plus intervention; balance each type/action component twice. Ultrasound reports observations and never names the type."
+      },
+      {
+        "note": "Previous classification feedback supplied the management answer; the emergency foil was implausible in a painless reducing case.",
+        "response": "Replace the two-node scaffold with one joint scored decision and an actual partial-wall threat. No preceding answer or feedback is exposed. Manual reduction is the credible acute alternative when strangulation is not suspected, so the perfusion interpretation matters."
+      },
+      {
+        "note": "Do not make the isolated management context incomplete or add nondeciding sentences.",
+        "response": "All neck, wall, compression and flow information is present in the same node; remove the caregiving sentence. The paired-to-one redesign follows the reviewer suggestion and is a manager proposal."
+      }
+    ],
+    "selfCheck": {
+      "reviewer": "author; not independent review or Melissa Rowland clinical sign-off",
+      "manualReviewCompleted": true,
+      "coverTheKey": {
+        "attack": "The vein name cannot select one answer: both femoral options remain. Recognizing a need for exploration cannot select one answer either: both types have that option. No diagnosis, ischemia label, safety adjective or reduction rationale appears before answering. Each of the four component combinations is distinct.",
+        "rawLintWarnings": [
+          {
+            "id": "9b51254e203295eb",
+            "rule": "convergence",
+            "severity": "advisory",
+            "message": "The key combines components reused across options; inspect whether the combinations cue a shortlist.",
+            "evidence": [
+              {
+                "field": "answerChoices.label",
+                "text": "Femoral",
+                "start": 0,
+                "end": 7,
+                "choiceId": "choice.harden1.20261110.groin.key"
+              },
+              {
+                "field": "answerChoices.label",
+                "text": "operative",
+                "start": 16,
+                "end": 25,
+                "choiceId": "choice.harden1.20261110.groin.key"
+              },
+              {
+                "field": "answerChoices.label",
+                "text": "exploration",
+                "start": 26,
+                "end": 37,
+                "choiceId": "choice.harden1.20261110.groin.key"
+              }
+            ],
+            "metrics": {
+              "components": [
+                "femoral",
+                "operative",
+                "exploration"
+              ],
+              "optionCoverage": [
+                {
+                  "choiceId": "choice.harden1.20261110.groin.key",
+                  "sharedComponentDensity": 0.75,
+                  "components": [
+                    "femoral",
+                    "operative",
+                    "exploration"
+                  ]
+                },
+                {
+                  "choiceId": "choice.harden1.20261110.groin.d1",
+                  "sharedComponentDensity": 0.75,
+                  "components": [
+                    "femoral"
+                  ]
+                },
+                {
+                  "choiceId": "choice.harden1.20261110.groin.d2",
+                  "sharedComponentDensity": 0.8,
+                  "components": [
+                    "operative",
+                    "exploration"
+                  ]
+                },
+                {
+                  "choiceId": "choice.harden1.20261110.groin.d3",
+                  "sharedComponentDensity": 0.8,
+                  "components": []
+                }
+              ]
+            },
+            "occurrences": [
+              {
+                "caseId": "case.harden1.groin-wall-threat.20261110",
+                "profileIds": [
+                  "canonical",
+                  "profile.harden1.20261110.groin"
+                ],
+                "ranges": [
+                  {
+                    "start": 0,
+                    "end": 7
+                  },
+                  {
+                    "start": 16,
+                    "end": 25
+                  },
+                  {
+                    "start": 26,
+                    "end": 37
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "advisoryDisposition": "One raw convergence advisory on the joint hernia set. This is an explicit complete 2x2: exploration/reduction and femoral/indirect each occur twice, every combination exists once, and any choice is the intersection of two components. Thus the key has no unique component-frequency or intersection advantage. Retained unsuppressed for independent review; no lint rule or threshold changed."
+      },
+      "sameDecisionStageAndCategory": "Each option states the hernia type and initial hernia-directed intervention, in the same grammatical order. Two types and two interventions each occur twice.",
+      "reasoningSteps": [
+        "Locate the sac neck, rather than infer the type from the surface groin bulge.",
+        "Interpret perfusion in the trapped partial wall, then choose exploration versus a reduction attempt despite continued passage."
+      ],
+      "closestCredibleError": "Femoral hernia; manual reduction: correct classification, but the resident mistakes a patent residual lumen and stool passage for preserved wall viability. This is closer than elective repair for a currently trapped hernia.",
+      "decidingFinding": "The below-ligament neck medial to the vein selects the anatomical axis. Absent mural signal in the trapped wall, with adjacent bowel detectable at the same settings, raises strangulation concern and selects exploration rather than treating an acute nonreducing hernia as suitable for manual reduction.",
+      "counterfactuals": [
+        {
+          "change": "Keep the wall-threat findings, but move the neck above the ligament and lateral to the inferior epigastric vessels.",
+          "answer": "Indirect inguinal hernia; operative exploration",
+          "why": "The anatomical component changes while the intervention does not."
+        },
+        {
+          "change": "Keep the femoral neck and acute nonreducing presentation, but show preserved mural perfusion with no other clinical or imaging concern for strangulation after acute surgical assessment.",
+          "answer": "Femoral hernia; manual reduction",
+          "why": "A reduction attempt is a supported option for selected acute nonreducing hernias when strangulation is not suspected. Detectable Doppler alone would not suffice for this counterfactual; the whole clinical assessment must change."
+        }
+      ],
+      "residentDifficulty": "Moderate, author prediction for PGY-2/3; not independently calibrated. Two component decisions are necessary, but an experienced resident may recognize this pattern quickly.",
+      "singleDefensibleBestAnswer": "The below-ligament neck medial to the vein identifies the femoral route. The trapped partial wall with absent mural signal raises concern for strangulation despite the patent remaining lumen; emergency operative exploration is appropriate rather than a manual reduction attempt.",
+      "deletionTest": "Keep the neck to determine type; keep partial-wall configuration and stool passage to expose the obstruction-versus-viability error; keep compression plus the adjacent-bowel Doppler comparison to support real perfusion concern rather than a technical blank. No caregiving, permission or facility-availability sentence remains.",
+      "clinicalAndSourceLimit": "Ultrasound signs support concern, not histological proof of necrosis. A normal Doppler signal does not exclude early strangulation. No risk percentage, anatomical size threshold, operation deadline or surgical technique is taught. This is a proposed merge, not retirement or live acceptance.",
+      "options": [
+        {
+          "label": "Femoral hernia; operative exploration",
+          "isKey": true,
+          "words": 4,
+          "rationale": "The below-ligament neck medial to the vein identifies the femoral route. The trapped partial wall with absent mural signal raises concern for strangulation despite the patent remaining lumen; emergency operative exploration is appropriate rather than a manual reduction attempt."
+        },
+        {
+          "label": "Femoral hernia; manual reduction",
+          "isKey": false,
+          "words": 4,
+          "rationale": "This identifies the route correctly and applies an intervention appropriate for selected acute nonreducing hernias without suspected strangulation. It overweights stool passage: the reported mural perfusion raises a different concern even while the remaining lumen permits passage."
+        },
+        {
+          "label": "Indirect inguinal hernia; operative exploration",
+          "isKey": false,
+          "words": 5,
+          "rationale": "This recognizes threatened bowel but misclassifies the neck. An indirect inguinal sac enters above the ligament, lateral to the inferior epigastric vessels, rather than through the reported compartment."
+        },
+        {
+          "label": "Indirect inguinal hernia; manual reduction",
+          "isKey": false,
+          "words": 5,
+          "rationale": "This combines two plausible misreadings: assigning an inguinal route from a groin lump and treating continued intestinal passage as evidence that a reduction attempt is appropriate. Both the neck compartment and mural findings oppose that combination."
+        }
+      ],
+      "sourceUncertaintyIsNotDifficulty": true,
+      "basicAccepted": false,
+      "requiresIndependentReview": true
+    },
+    "supportingEvidenceClaimIds": [
+      "claim.harden1.20261110.femoral-compartment",
+      "claim.harden1.20261110.indirect-compartment",
+      "claim.harden1.20261110.partial-wall-passage",
+      "claim.harden1.20261110.mural-perfusion",
+      "claim.harden1.20261110.suspected-strangulation-repair",
+      "claim.harden1.20261110.reduction-boundary"
+    ],
+    "conceptVersion": {
+      "meaning": "new_version",
+      "reason": "Material expansion from elective femoral-repair priority and a separate landmark classification to one integrated type/intervention construct with suspected partial-wall ischemia. New v2; neither original card is reassigned or retired. The pair-to-one proposal requires manager composition review.",
+      "previousConceptIds": [
+        "concept.groin-hernia.femoral-defect-repair-priority.v1",
+        "concept.groin-hernia.ultrasound-compartment-classification.v1"
+      ],
+      "newConceptId": "concept.groin-hernia.femoral-defect-repair-priority.v2",
+      "historyMigration": "None. No old concept or FSRS record is remapped, mutated, merged or deleted."
+    },
+    "lint": {
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [
+        {
+          "id": "69424ed2a767eed0",
+          "rule": "case-detail-key-rationale-overlap",
+          "severity": "advisory",
+          "message": "A case-detail phrase repeats only the explicit keyed reason. Review for pre-answer teaching; raw decision-critical evidence may justify the overlap. Synonymous paraphrases still require human review.",
+          "evidence": [
+            {
+              "field": "exhibit.items[0].value",
+              "text": "Below the inguinal ligament",
+              "start": 0,
+              "end": 27
+            },
+            {
+              "field": "authoring.answerChoices.rationale",
+              "text": "below the inguinal ligament",
+              "start": 14,
+              "end": 41,
+              "choiceId": "choice.flags3.20261107.f3-03-type.key",
+              "postAnswerMetadata": true
+            }
+          ],
+          "metrics": {
+            "explicitRationalesCompared": 3
+          },
+          "occurrences": [
+            {
+              "caseId": "case.inguinal-hernia.caregiving-strain",
+              "profileIds": [
+                "canonical",
+                "profile.flags3.inguinal-hernia.caregiving-strain.20261107.v2"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 27
+                },
+                {
+                  "start": 14,
+                  "end": 41
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ac4b207b3c09c64a",
+          "rule": "case-detail-key-rationale-overlap",
+          "severity": "advisory",
+          "message": "A case-detail phrase repeats only the explicit keyed reason. Review for pre-answer teaching; raw decision-critical evidence may justify the overlap. Synonymous paraphrases still require human review.",
+          "evidence": [
+            {
+              "field": "exhibit.items[1].label",
+              "text": "to the common femoral vein",
+              "start": 9,
+              "end": 35
+            },
+            {
+              "field": "authoring.answerChoices.rationale",
+              "text": "to the common femoral vein",
+              "start": 53,
+              "end": 79,
+              "choiceId": "choice.flags3.20261107.f3-03-type.key",
+              "postAnswerMetadata": true
+            }
+          ],
+          "metrics": {
+            "explicitRationalesCompared": 3
+          },
+          "occurrences": [
+            {
+              "caseId": "case.inguinal-hernia.caregiving-strain",
+              "profileIds": [
+                "canonical",
+                "profile.flags3.inguinal-hernia.caregiving-strain.20261107.v2"
+              ],
+              "ranges": [
+                {
+                  "start": 9,
+                  "end": 35
+                },
+                {
+                  "start": 53,
+                  "end": 79
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "27db0afa1a0b7baf",
+          "rule": "key-only-word-overlap",
+          "severity": "advisory",
+          "message": "A substantive word appears in the context and key only; clinical relevance may justify it.",
+          "evidence": [
+            {
+              "field": "exhibit.items[1].label",
+              "text": "femoral",
+              "start": 23,
+              "end": 30
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Femoral",
+              "start": 0,
+              "end": 7,
+              "choiceId": "choice.flags3.20261107.f3-03-type.key"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.inguinal-hernia.caregiving-strain",
+              "profileIds": [
+                "canonical",
+                "profile.flags3.inguinal-hernia.caregiving-strain.20261107.v2"
+              ],
+              "ranges": [
+                {
+                  "start": 23,
+                  "end": 30
+                },
+                {
+                  "start": 0,
+                  "end": 7
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "after": [
+        {
+          "id": "9b51254e203295eb",
+          "rule": "convergence",
+          "severity": "advisory",
+          "message": "The key combines components reused across options; inspect whether the combinations cue a shortlist.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "Femoral",
+              "start": 0,
+              "end": 7,
+              "choiceId": "choice.harden1.20261110.groin.key"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "operative",
+              "start": 16,
+              "end": 25,
+              "choiceId": "choice.harden1.20261110.groin.key"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "exploration",
+              "start": 26,
+              "end": 37,
+              "choiceId": "choice.harden1.20261110.groin.key"
+            }
+          ],
+          "metrics": {
+            "components": [
+              "femoral",
+              "operative",
+              "exploration"
+            ],
+            "optionCoverage": [
+              {
+                "choiceId": "choice.harden1.20261110.groin.key",
+                "sharedComponentDensity": 0.75,
+                "components": [
+                  "femoral",
+                  "operative",
+                  "exploration"
+                ]
+              },
+              {
+                "choiceId": "choice.harden1.20261110.groin.d1",
+                "sharedComponentDensity": 0.75,
+                "components": [
+                  "femoral"
+                ]
+              },
+              {
+                "choiceId": "choice.harden1.20261110.groin.d2",
+                "sharedComponentDensity": 0.8,
+                "components": [
+                  "operative",
+                  "exploration"
+                ]
+              },
+              {
+                "choiceId": "choice.harden1.20261110.groin.d3",
+                "sharedComponentDensity": 0.8,
+                "components": []
+              }
+            ]
+          },
+          "occurrences": [
+            {
+              "caseId": "case.harden1.groin-wall-threat.20261110",
+              "profileIds": [
+                "canonical",
+                "profile.harden1.20261110.groin"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 7
+                },
+                {
+                  "start": 16,
+                  "end": 25
+                },
+                {
+                  "start": 26,
+                  "end": 37
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "beforeCount": 3,
+      "afterCount": 1,
+      "afterProfileContexts": 2,
+      "suppressedFindings": 0,
+      "advisoryDisposition": "One raw convergence advisory on the joint hernia set. This is an explicit complete 2x2: exploration/reduction and femoral/indirect each occur twice, every combination exists once, and any choice is the intersection of two components. Thus the key has no unique component-frequency or intersection advantage. Retained unsuppressed for independent review; no lint rule or threshold changed."
+    },
+    "visibleHistory": {
+      "before": {
+        "chiefComplaint": "Intermittent groin bulge",
+        "presentation": "Elliot Reed, a 59-year-old man, returns to the surgery clinic with an intermittent right groin bulge.",
+        "stem": "Which type of hernia do the ultrasound findings identify in Elliot Reed?",
+        "exhibit.caption": "Targeted dynamic groin ultrasound",
+        "exhibit.items[0].label": "Sac neck",
+        "exhibit.items[0].value": "Below the inguinal ligament.",
+        "exhibit.items[1].label": "Relation to the common femoral vein",
+        "exhibit.items[1].value": "Immediately medial to the vein."
+      },
+      "after": {
+        "chiefComplaint": "Painful groin lump",
+        "presentation": "Elliot Reed, a 59-year-old man, presents to the surgery clinic with a newly tender right groin lump. He still passes stool and has not vomited.",
+        "stem": "Which hernia type and hernia-directed intervention fit these findings in Elliot Reed?",
+        "exhibit.caption": "Targeted groin ultrasound",
+        "exhibit.items[0].label": "Sac neck",
+        "exhibit.items[0].value": "Inferior to the inguinal ligament; medial to the common femoral vein.",
+        "exhibit.items[1].label": "Bowel at the neck",
+        "exhibit.items[1].value": "Part of one bowel wall protrudes through the opening. The remaining lumen stays within the abdomen.",
+        "exhibit.items[2].label": "Compression",
+        "exhibit.items[2].value": "The protruding wall remains at the opening.",
+        "exhibit.items[3].label": "Doppler",
+        "exhibit.items[3].value": "No mural signal in the protruding wall. Adjacent bowel has mural signal at the same settings."
+      }
+    },
+    "fallback": {
+      "variantId": "question.groin-hernia.ultrasound-type.v1",
+      "conceptId": "concept.groin-hernia.ultrasound-compartment-classification.v1",
+      "caseId": "case.inguinal-hernia.caregiving-strain",
+      "nodeId": "node.flags3.groin-ultrasound-classification.20261107",
+      "retainedCaseSha256": "08faf9f23cdf48f53b5d22df1abf57730ac2e05da6d68d2ad15c87a3992779bf",
+      "policy": "Keep exact live version unless the manager accepts a reviewed candidate/composition."
+    },
+    "frozenPreservation": {
+      "sourceReleaseSha256": "d7b5a4751ac104d5ed6fa26307295bd86faf0a0a37d6cf2de2758d28a3a6c36b",
+      "retainedInputSha256": "62d3f9ef86f037c932245df3c4ffaa69429cfe5db9eaeda6c03bc2af17e8477c",
+      "candidateTimingSha256": "14d6643eb7d545dbec416ab2e9e3138b13a27a495ca96ee8a510ce99787f789d",
+      "candidateQuestionsSha256": "2252154e74931032c54ed210047c9e4291ed05dbabaedf1db11d29b817d17ee8",
+      "candidateConceptsSha256": "e0d6fee33bc4a95cb074592797fe41c71351f7dad652dc72c4712bebb663f251",
+      "retainedCaseSha256": "08faf9f23cdf48f53b5d22df1abf57730ac2e05da6d68d2ad15c87a3992779bf",
+      "retainedNodeSha256": "84feab9bf398d45d0843bf24cda669d0e993817369e66595206eb9965e272d72",
+      "candidateCaseSha256": "1dea504b8f9cef77f38e333177a0cd4db76893187956fddf21ba4ec04740a413",
+      "candidateNodeSha256": "88b8d5a53e12ecc2e7a775c4b639ba38533ef98ba97f1f4c0c9d1db7270baa7b",
+      "candidateQuestionSha256": "c305be7ab9cb29d46490df364157b85e0874124918e313afc4d6ee2a93dc456a"
+    }
+  },
+  {
+    "id": "H1-02",
+    "title": "Interpret a groin neck and a partial-wall bowel threat",
+    "round": 1,
+    "status": "draft_awaiting_independent_review",
+    "reviewStatus": "needs_clinician_review",
+    "pipelinePassed": false,
+    "releaseReady": false,
+    "acceptanceAllowed": false,
+    "originalTargetId": "H1-02",
+    "originalFlaggedVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v3.r12",
+    "originalReviewItemId": "F3-03",
+    "ownerNote": "The ultrasound findings should prompt the player to identify the hernia type.",
+    "ownerNoteResolution": "The player explicitly chooses a hernia type from raw ultrasound landmarks, together with exploration versus attempted reduction according to the partial-wall findings. All four choices have the same two components.",
+    "sourceView": "harden1-round1",
+    "holdStatus": "none",
+    "sourceVerificationHold": null,
+    "sourceHoldScope": null,
+    "candidateId": "H1-HERNIA",
+    "sharedCandidateId": "H1-HERNIA",
+    "uniqueScoredCandidateCount": 1,
+    "afterDuplicateForProvenance": true,
+    "compositionProposal": "Two live scored nodes -> ONE joint scored node, subject to manager acceptance. H1-01 and H1-02 show the same after version for traceability; do not accept or count it twice.",
+    "caseId": "case.harden1.groin-wall-threat.20261110",
+    "nodeId": "node.harden1.groin-wall-threat.20261110",
+    "conceptId": "concept.groin-hernia.femoral-defect-repair-priority.v2",
+    "previousConceptId": "concept.groin-hernia.femoral-defect-repair-priority.v1",
+    "keyOrderNotice": "key shown first for review only; runtime answer choices are randomized",
+    "beforeRole": "Exact captured accepted live node at intake; never modified",
+    "before": {
+      "variantId": "question.inguinal-hernia.symptomatic-elective-repair.v3.r12",
+      "Presentation": "Elliot Reed, a 59-year-old man, returns to the surgery clinic with an intermittent right groin bulge.",
+      "Current update": "Ultrasound classification: femoral hernia. Elliot Reed now completes his usual caregiving lifts. The groin bulge disappears when he lies down. The groin is nontender, the abdomen is soft and not distended, and he reports no vomiting.",
+      "Exhibit": null,
+      "Task": "Which plan should be offered for Elliot Reed's groin hernia at this visit?",
+      "Options": [
+        "**KEY:** Plan elective hernia repair",
+        "Plan scheduled hernia surveillance",
+        "Plan emergency hernia exploration"
+      ]
+    },
+    "after": {
+      "variantId": "question.groin-hernia.ultrasound-type-and-intervention.v2",
+      "Presentation": "Elliot Reed, a 59-year-old man, presents to the surgery clinic with a newly tender right groin lump. He still passes stool and has not vomited.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "keyValue",
+        "caption": "Targeted groin ultrasound",
+        "items": [
+          {
+            "label": "Sac neck",
+            "value": "Inferior to the inguinal ligament; medial to the common femoral vein."
+          },
+          {
+            "label": "Bowel at the neck",
+            "value": "Part of one bowel wall protrudes through the opening. The remaining lumen stays within the abdomen."
+          },
+          {
+            "label": "Compression",
+            "value": "The protruding wall remains at the opening."
+          },
+          {
+            "label": "Doppler",
+            "value": "No mural signal in the protruding wall. Adjacent bowel has mural signal at the same settings."
+          }
+        ]
+      },
+      "Task": "Which hernia type and hernia-directed intervention fit these findings in Elliot Reed?",
+      "Options": [
+        "**KEY:** Femoral hernia; operative exploration",
+        "Femoral hernia; manual reduction",
+        "Indirect inguinal hernia; operative exploration",
+        "Indirect inguinal hernia; manual reduction"
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Plan elective hernia repair",
+          "The established femoral anatomy supports timely elective repair despite improved function. The reducing, nontender presentation without obstructive features does not establish an emergency."
+        ],
+        [
+          "Plan scheduled hernia surveillance",
+          "Observation can be appropriate for selected minimally symptomatic inguinal hernias in men. Improvement in lifting does not extend that observation rule to the identified femoral route."
+        ],
+        [
+          "Plan emergency hernia exploration",
+          "The femoral type warrants repair planning, but the current record does not show the persistent painful irreducible or obstructed presentation needed to favor emergency exploration here."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Femoral hernia; operative exploration",
+          "The below-ligament neck medial to the vein identifies the femoral route. The trapped partial wall with absent mural signal raises concern for strangulation despite the patent remaining lumen; emergency operative exploration is appropriate rather than a manual reduction attempt."
+        ],
+        [
+          "Femoral hernia; manual reduction",
+          "This identifies the route correctly and applies an intervention appropriate for selected acute nonreducing hernias without suspected strangulation. It overweights stool passage: the reported mural perfusion raises a different concern even while the remaining lumen permits passage."
+        ],
+        [
+          "Indirect inguinal hernia; operative exploration",
+          "This recognizes threatened bowel but misclassifies the neck. An indirect inguinal sac enters above the ligament, lateral to the inferior epigastric vessels, rather than through the reported compartment."
+        ],
+        [
+          "Indirect inguinal hernia; manual reduction",
+          "This combines two plausible misreadings: assigning an inguinal route from a groin lump and treating continued intestinal passage as evidence that a reduction attempt is appropriate. Both the neck compartment and mural findings oppose that combination."
+        ]
+      ]
+    },
+    "explanation": {
+      "before": "Combine the established type with the current acuity. A stable reducing femoral hernia warrants timely elective repair planning even when symptoms have improved. The inguinal watchful-waiting rule for selected men does not apply to this anatomy. New pain, irreducibility or obstructive/ischemic concern would change the urgency; no fixed deadline or repair technique is specified.",
+      "after": "The neck below the inguinal ligament and medial to the vein identifies a femoral hernia.\nA trapped portion of bowel wall can lose perfusion while the remaining lumen still permits passage: a Richter-type configuration. Suspected strangulation warrants emergency operative exploration, rather than manual reduction.\nThe closest error is femoral hernia with manual reduction: stool passage does not establish wall viability. Reduction can be appropriate in selected acute nonreducing hernias without suspected strangulation. This asks the hernia-directed intervention, not the first resuscitation order or repair technique."
+    },
+    "inference": "Locate the sac neck, rather than infer the type from the surface groin bulge. Then: Interpret perfusion in the trapped partial wall, then choose exploration versus a reduction attempt despite continued passage.",
+    "focus": "The below-ligament neck medial to the vein selects the anatomical axis. Absent mural signal in the trapped wall, with adjacent bowel detectable at the same settings, raises strangulation concern and selects exploration rather than treating an acute nonreducing hernia as suitable for manual reduction.",
+    "whatChanged": "Require type plus intervention; balance each type/action component twice. Ultrasound reports observations and never names the type. Replace the two-node scaffold with one joint scored decision and an actual partial-wall threat. No preceding answer or feedback is exposed. Manual reduction is the credible acute alternative when strangulation is not suspected, so the perfusion interpretation matters. All neck, wall, compression and flow information is present in the same node; remove the caregiving sentence. The paired-to-one redesign follows the reviewer suggestion and is a manager proposal.",
+    "reviewResponse": [
+      {
+        "note": "Type was a single landmark lookup with a shortest/odd-category key.",
+        "response": "Require type plus intervention; balance each type/action component twice. Ultrasound reports observations and never names the type."
+      },
+      {
+        "note": "Previous classification feedback supplied the management answer; the emergency foil was implausible in a painless reducing case.",
+        "response": "Replace the two-node scaffold with one joint scored decision and an actual partial-wall threat. No preceding answer or feedback is exposed. Manual reduction is the credible acute alternative when strangulation is not suspected, so the perfusion interpretation matters."
+      },
+      {
+        "note": "Do not make the isolated management context incomplete or add nondeciding sentences.",
+        "response": "All neck, wall, compression and flow information is present in the same node; remove the caregiving sentence. The paired-to-one redesign follows the reviewer suggestion and is a manager proposal."
+      }
+    ],
+    "selfCheck": {
+      "reviewer": "author; not independent review or Melissa Rowland clinical sign-off",
+      "manualReviewCompleted": true,
+      "coverTheKey": {
+        "attack": "The vein name cannot select one answer: both femoral options remain. Recognizing a need for exploration cannot select one answer either: both types have that option. No diagnosis, ischemia label, safety adjective or reduction rationale appears before answering. Each of the four component combinations is distinct.",
+        "rawLintWarnings": [
+          {
+            "id": "9b51254e203295eb",
+            "rule": "convergence",
+            "severity": "advisory",
+            "message": "The key combines components reused across options; inspect whether the combinations cue a shortlist.",
+            "evidence": [
+              {
+                "field": "answerChoices.label",
+                "text": "Femoral",
+                "start": 0,
+                "end": 7,
+                "choiceId": "choice.harden1.20261110.groin.key"
+              },
+              {
+                "field": "answerChoices.label",
+                "text": "operative",
+                "start": 16,
+                "end": 25,
+                "choiceId": "choice.harden1.20261110.groin.key"
+              },
+              {
+                "field": "answerChoices.label",
+                "text": "exploration",
+                "start": 26,
+                "end": 37,
+                "choiceId": "choice.harden1.20261110.groin.key"
+              }
+            ],
+            "metrics": {
+              "components": [
+                "femoral",
+                "operative",
+                "exploration"
+              ],
+              "optionCoverage": [
+                {
+                  "choiceId": "choice.harden1.20261110.groin.key",
+                  "sharedComponentDensity": 0.75,
+                  "components": [
+                    "femoral",
+                    "operative",
+                    "exploration"
+                  ]
+                },
+                {
+                  "choiceId": "choice.harden1.20261110.groin.d1",
+                  "sharedComponentDensity": 0.75,
+                  "components": [
+                    "femoral"
+                  ]
+                },
+                {
+                  "choiceId": "choice.harden1.20261110.groin.d2",
+                  "sharedComponentDensity": 0.8,
+                  "components": [
+                    "operative",
+                    "exploration"
+                  ]
+                },
+                {
+                  "choiceId": "choice.harden1.20261110.groin.d3",
+                  "sharedComponentDensity": 0.8,
+                  "components": []
+                }
+              ]
+            },
+            "occurrences": [
+              {
+                "caseId": "case.harden1.groin-wall-threat.20261110",
+                "profileIds": [
+                  "canonical",
+                  "profile.harden1.20261110.groin"
+                ],
+                "ranges": [
+                  {
+                    "start": 0,
+                    "end": 7
+                  },
+                  {
+                    "start": 16,
+                    "end": 25
+                  },
+                  {
+                    "start": 26,
+                    "end": 37
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "advisoryDisposition": "One raw convergence advisory on the joint hernia set. This is an explicit complete 2x2: exploration/reduction and femoral/indirect each occur twice, every combination exists once, and any choice is the intersection of two components. Thus the key has no unique component-frequency or intersection advantage. Retained unsuppressed for independent review; no lint rule or threshold changed."
+      },
+      "sameDecisionStageAndCategory": "Each option states the hernia type and initial hernia-directed intervention, in the same grammatical order. Two types and two interventions each occur twice.",
+      "reasoningSteps": [
+        "Locate the sac neck, rather than infer the type from the surface groin bulge.",
+        "Interpret perfusion in the trapped partial wall, then choose exploration versus a reduction attempt despite continued passage."
+      ],
+      "closestCredibleError": "Femoral hernia; manual reduction: correct classification, but the resident mistakes a patent residual lumen and stool passage for preserved wall viability. This is closer than elective repair for a currently trapped hernia.",
+      "decidingFinding": "The below-ligament neck medial to the vein selects the anatomical axis. Absent mural signal in the trapped wall, with adjacent bowel detectable at the same settings, raises strangulation concern and selects exploration rather than treating an acute nonreducing hernia as suitable for manual reduction.",
+      "counterfactuals": [
+        {
+          "change": "Keep the wall-threat findings, but move the neck above the ligament and lateral to the inferior epigastric vessels.",
+          "answer": "Indirect inguinal hernia; operative exploration",
+          "why": "The anatomical component changes while the intervention does not."
+        },
+        {
+          "change": "Keep the femoral neck and acute nonreducing presentation, but show preserved mural perfusion with no other clinical or imaging concern for strangulation after acute surgical assessment.",
+          "answer": "Femoral hernia; manual reduction",
+          "why": "A reduction attempt is a supported option for selected acute nonreducing hernias when strangulation is not suspected. Detectable Doppler alone would not suffice for this counterfactual; the whole clinical assessment must change."
+        }
+      ],
+      "residentDifficulty": "Moderate, author prediction for PGY-2/3; not independently calibrated. Two component decisions are necessary, but an experienced resident may recognize this pattern quickly.",
+      "singleDefensibleBestAnswer": "The below-ligament neck medial to the vein identifies the femoral route. The trapped partial wall with absent mural signal raises concern for strangulation despite the patent remaining lumen; emergency operative exploration is appropriate rather than a manual reduction attempt.",
+      "deletionTest": "Keep the neck to determine type; keep partial-wall configuration and stool passage to expose the obstruction-versus-viability error; keep compression plus the adjacent-bowel Doppler comparison to support real perfusion concern rather than a technical blank. No caregiving, permission or facility-availability sentence remains.",
+      "clinicalAndSourceLimit": "Ultrasound signs support concern, not histological proof of necrosis. A normal Doppler signal does not exclude early strangulation. No risk percentage, anatomical size threshold, operation deadline or surgical technique is taught. This is a proposed merge, not retirement or live acceptance.",
+      "options": [
+        {
+          "label": "Femoral hernia; operative exploration",
+          "isKey": true,
+          "words": 4,
+          "rationale": "The below-ligament neck medial to the vein identifies the femoral route. The trapped partial wall with absent mural signal raises concern for strangulation despite the patent remaining lumen; emergency operative exploration is appropriate rather than a manual reduction attempt."
+        },
+        {
+          "label": "Femoral hernia; manual reduction",
+          "isKey": false,
+          "words": 4,
+          "rationale": "This identifies the route correctly and applies an intervention appropriate for selected acute nonreducing hernias without suspected strangulation. It overweights stool passage: the reported mural perfusion raises a different concern even while the remaining lumen permits passage."
+        },
+        {
+          "label": "Indirect inguinal hernia; operative exploration",
+          "isKey": false,
+          "words": 5,
+          "rationale": "This recognizes threatened bowel but misclassifies the neck. An indirect inguinal sac enters above the ligament, lateral to the inferior epigastric vessels, rather than through the reported compartment."
+        },
+        {
+          "label": "Indirect inguinal hernia; manual reduction",
+          "isKey": false,
+          "words": 5,
+          "rationale": "This combines two plausible misreadings: assigning an inguinal route from a groin lump and treating continued intestinal passage as evidence that a reduction attempt is appropriate. Both the neck compartment and mural findings oppose that combination."
+        }
+      ],
+      "sourceUncertaintyIsNotDifficulty": true,
+      "basicAccepted": false,
+      "requiresIndependentReview": true
+    },
+    "supportingEvidenceClaimIds": [
+      "claim.harden1.20261110.femoral-compartment",
+      "claim.harden1.20261110.indirect-compartment",
+      "claim.harden1.20261110.partial-wall-passage",
+      "claim.harden1.20261110.mural-perfusion",
+      "claim.harden1.20261110.suspected-strangulation-repair",
+      "claim.harden1.20261110.reduction-boundary"
+    ],
+    "conceptVersion": {
+      "meaning": "new_version",
+      "reason": "Material expansion from elective femoral-repair priority and a separate landmark classification to one integrated type/intervention construct with suspected partial-wall ischemia. New v2; neither original card is reassigned or retired. The pair-to-one proposal requires manager composition review.",
+      "previousConceptIds": [
+        "concept.groin-hernia.femoral-defect-repair-priority.v1",
+        "concept.groin-hernia.ultrasound-compartment-classification.v1"
+      ],
+      "newConceptId": "concept.groin-hernia.femoral-defect-repair-priority.v2",
+      "historyMigration": "None. No old concept or FSRS record is remapped, mutated, merged or deleted."
+    },
+    "lint": {
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [],
+      "after": [
+        {
+          "id": "9b51254e203295eb",
+          "rule": "convergence",
+          "severity": "advisory",
+          "message": "The key combines components reused across options; inspect whether the combinations cue a shortlist.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "Femoral",
+              "start": 0,
+              "end": 7,
+              "choiceId": "choice.harden1.20261110.groin.key"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "operative",
+              "start": 16,
+              "end": 25,
+              "choiceId": "choice.harden1.20261110.groin.key"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "exploration",
+              "start": 26,
+              "end": 37,
+              "choiceId": "choice.harden1.20261110.groin.key"
+            }
+          ],
+          "metrics": {
+            "components": [
+              "femoral",
+              "operative",
+              "exploration"
+            ],
+            "optionCoverage": [
+              {
+                "choiceId": "choice.harden1.20261110.groin.key",
+                "sharedComponentDensity": 0.75,
+                "components": [
+                  "femoral",
+                  "operative",
+                  "exploration"
+                ]
+              },
+              {
+                "choiceId": "choice.harden1.20261110.groin.d1",
+                "sharedComponentDensity": 0.75,
+                "components": [
+                  "femoral"
+                ]
+              },
+              {
+                "choiceId": "choice.harden1.20261110.groin.d2",
+                "sharedComponentDensity": 0.8,
+                "components": [
+                  "operative",
+                  "exploration"
+                ]
+              },
+              {
+                "choiceId": "choice.harden1.20261110.groin.d3",
+                "sharedComponentDensity": 0.8,
+                "components": []
+              }
+            ]
+          },
+          "occurrences": [
+            {
+              "caseId": "case.harden1.groin-wall-threat.20261110",
+              "profileIds": [
+                "canonical",
+                "profile.harden1.20261110.groin"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 7
+                },
+                {
+                  "start": 16,
+                  "end": 25
+                },
+                {
+                  "start": 26,
+                  "end": 37
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "beforeCount": 0,
+      "afterCount": 1,
+      "afterProfileContexts": 2,
+      "suppressedFindings": 0,
+      "advisoryDisposition": "One raw convergence advisory on the joint hernia set. This is an explicit complete 2x2: exploration/reduction and femoral/indirect each occur twice, every combination exists once, and any choice is the intersection of two components. Thus the key has no unique component-frequency or intersection advantage. Retained unsuppressed for independent review; no lint rule or threshold changed."
+    },
+    "visibleHistory": {
+      "before": {
+        "chiefComplaint": "Intermittent groin bulge",
+        "presentation": "Elliot Reed, a 59-year-old man, returns to the surgery clinic with an intermittent right groin bulge.",
+        "stem": "Which plan should be offered for Elliot Reed's groin hernia at this visit?",
+        "currentUpdate": "Ultrasound classification: femoral hernia. Elliot Reed now completes his usual caregiving lifts. The groin bulge disappears when he lies down. The groin is nontender, the abdomen is soft and not distended, and he reports no vomiting.",
+        "priorFeedback[0]": "The sac neck's relationship to the ligament and vein identifies a femoral hernia. Direct and indirect inguinal labels refer to different anatomical routes.",
+        "priorTeachingPoint[0]": "The sac neck's relationship to the ligament and vein identifies a femoral hernia. Direct and indirect inguinal labels refer to different anatomical routes."
+      },
+      "after": {
+        "chiefComplaint": "Painful groin lump",
+        "presentation": "Elliot Reed, a 59-year-old man, presents to the surgery clinic with a newly tender right groin lump. He still passes stool and has not vomited.",
+        "stem": "Which hernia type and hernia-directed intervention fit these findings in Elliot Reed?",
+        "exhibit.caption": "Targeted groin ultrasound",
+        "exhibit.items[0].label": "Sac neck",
+        "exhibit.items[0].value": "Inferior to the inguinal ligament; medial to the common femoral vein.",
+        "exhibit.items[1].label": "Bowel at the neck",
+        "exhibit.items[1].value": "Part of one bowel wall protrudes through the opening. The remaining lumen stays within the abdomen.",
+        "exhibit.items[2].label": "Compression",
+        "exhibit.items[2].value": "The protruding wall remains at the opening.",
+        "exhibit.items[3].label": "Doppler",
+        "exhibit.items[3].value": "No mural signal in the protruding wall. Adjacent bowel has mural signal at the same settings."
+      }
+    },
+    "fallback": {
+      "variantId": "question.inguinal-hernia.symptomatic-elective-repair.v3.r12",
+      "conceptId": "concept.groin-hernia.femoral-defect-repair-priority.v1",
+      "caseId": "case.inguinal-hernia.caregiving-strain",
+      "nodeId": "node.inguinal-hernia.caregiving-strain.2",
+      "retainedCaseSha256": "08faf9f23cdf48f53b5d22df1abf57730ac2e05da6d68d2ad15c87a3992779bf",
+      "policy": "Keep exact live version unless the manager accepts a reviewed candidate/composition."
+    },
+    "frozenPreservation": {
+      "sourceReleaseSha256": "d7b5a4751ac104d5ed6fa26307295bd86faf0a0a37d6cf2de2758d28a3a6c36b",
+      "retainedInputSha256": "62d3f9ef86f037c932245df3c4ffaa69429cfe5db9eaeda6c03bc2af17e8477c",
+      "candidateTimingSha256": "14d6643eb7d545dbec416ab2e9e3138b13a27a495ca96ee8a510ce99787f789d",
+      "candidateQuestionsSha256": "2252154e74931032c54ed210047c9e4291ed05dbabaedf1db11d29b817d17ee8",
+      "candidateConceptsSha256": "e0d6fee33bc4a95cb074592797fe41c71351f7dad652dc72c4712bebb663f251",
+      "retainedCaseSha256": "08faf9f23cdf48f53b5d22df1abf57730ac2e05da6d68d2ad15c87a3992779bf",
+      "retainedNodeSha256": "5664948a4b367a7140d8aa636497689f9836ecd5cc18dd329ec37ad1723ae563",
+      "candidateCaseSha256": "1dea504b8f9cef77f38e333177a0cd4db76893187956fddf21ba4ec04740a413",
+      "candidateNodeSha256": "88b8d5a53e12ecc2e7a775c4b639ba38533ef98ba97f1f4c0c9d1db7270baa7b",
+      "candidateQuestionSha256": "c305be7ab9cb29d46490df364157b85e0874124918e313afc4d6ee2a93dc456a"
+    }
+  },
+  {
+    "id": "H1-03",
+    "title": "Interpret renal phosphate handling after nutrition restart",
+    "round": 1,
+    "status": "draft_awaiting_independent_review",
+    "reviewStatus": "needs_clinician_review",
+    "pipelinePassed": false,
+    "releaseReady": false,
+    "acceptanceAllowed": false,
+    "originalTargetId": "H1-03",
+    "originalFlaggedVariantId": "question.gs028f.nutrition.refeeding-insulin-phosphate-shift.v3.r2",
+    "originalReviewItemId": "F4-01",
+    "ownerNote": "Answer choices do not make sense.",
+    "ownerNoteResolution": "All three options interpret the same renal response with parallel grammar and specificity. No mechanism/test/treatment category mixing.",
+    "sourceView": "harden1-round1",
+    "holdStatus": "none",
+    "sourceVerificationHold": null,
+    "sourceHoldScope": null,
+    "candidateId": "H1-PHOSPHATE",
+    "sharedCandidateId": null,
+    "uniqueScoredCandidateCount": 1,
+    "afterDuplicateForProvenance": false,
+    "compositionProposal": "One live mechanism node -> one new application node under a materially expanded concept version.",
+    "caseId": "case.harden1.phosphate-handling.20261110",
+    "nodeId": "node.harden1.phosphate-handling.20261110",
+    "conceptId": "concept.gs028f.nutrition.refeeding-insulin-phosphate-shift.v2",
+    "previousConceptId": "concept.gs028f.nutrition.refeeding-insulin-phosphate-shift",
+    "keyOrderNotice": "key shown first for review only; runtime answer choices are randomized",
+    "beforeRole": "Exact captured accepted live node at intake; never modified",
+    "before": {
+      "variantId": "question.gs028f.nutrition.refeeding-insulin-phosphate-shift.v3.r2",
+      "Presentation": "Maya Chen, a 31-year-old woman, is reviewed after a monitored nutrition restart following prolonged poor intake.",
+      "Current update": null,
+      "Exhibit": null,
+      "Task": "Which physiological process links carbohydrate reintroduction to Maya Chen's phosphate decline?",
+      "Options": [
+        "**KEY:** Increased cellular uptake of phosphate",
+        "Increased urinary excretion of phosphate",
+        "Decreased intestinal absorption of phosphate"
+      ]
+    },
+    "after": {
+      "variantId": "question.gs028f.nutrition.refeeding-insulin-phosphate-shift.v3.r3",
+      "Presentation": "Maya Chen, a 31-year-old woman, returns to the surgery clinic to review results from her nutrition restart after prolonged poor intake. Serum creatinine was stable at sampling.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "table",
+        "caption": "Simultaneous blood and urine samples, before phosphate replacement (constructed data)",
+        "columnHeaders": [
+          "Serum (mg/dL)",
+          "Urine (mg/dL)"
+        ],
+        "rowHeaders": [
+          "Phosphate",
+          "Creatinine"
+        ],
+        "cells": [
+          [
+            "1.0",
+            "10"
+          ],
+          [
+            "1.0",
+            "20"
+          ]
+        ]
+      },
+      "Task": "Which interpretation of Maya Chen's renal phosphate handling is supported by these results?",
+      "Options": [
+        "**KEY:** Renal phosphate loss is inappropriately high.",
+        "Renal phosphate conservation is appropriately increased.",
+        "Renal phosphate handling remains unclassifiable here."
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Increased cellular uptake of phosphate",
+          "Carbohydrate reintroduction can increase insulin-associated cellular uptake, moving phosphate from the circulation into cells. This is the feeding-related mechanism being asked about."
+        ],
+        [
+          "Increased urinary excretion of phosphate",
+          "This selects removal from the body rather than redistribution into cells. It confuses a different route of phosphate handling with the metabolic response to carbohydrate reintroduction."
+        ],
+        [
+          "Decreased intestinal absorption of phosphate",
+          "This treats the lower serum concentration as reduced transfer from the intestine. It does not identify the insulin-linked redistribution associated with carbohydrate reintroduction."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Renal phosphate loss is inappropriately high.",
+          "Fractional phosphate excretion is (10 x 1.0)/(1.0 x 20) x 100 = 50%. With concurrent serum phosphate of 1.0 mg/dL, that is inappropriate loss rather than the expected conservation. It does not identify the cause of the renal loss or exclude concurrent redistribution."
+        ],
+        [
+          "Renal phosphate conservation is appropriately increased.",
+          "This anchors on nutrition restart and its familiar cellular-shift explanation without testing the renal response. Creatinine-normalized phosphate excretion is 50%, not the low excretion expected during this degree of hypophosphatemia."
+        ],
+        [
+          "Renal phosphate handling remains unclassifiable here.",
+          "This assumes a timed urine collection is required before any interpretation. Simultaneous phosphate and creatinine concentrations permit fractional-excretion assessment; the supplied pretreatment samples show inappropriate loss. They do not quantify daily phosphate balance."
+        ]
+      ]
+    },
+    "explanation": {
+      "before": "Carbohydrate reintroduction increases insulin-associated phosphate uptake into cells as metabolism shifts toward synthesis.\nThe renal and intestinal options describe removal or reduced entry, rather than this redistribution.\nA phosphate fall by itself does not establish refeeding syndrome.",
+      "after": "Fractional phosphate excretion = (urine phosphate x serum creatinine)/(serum phosphate x urine creatinine) x 100 = (10 x 1)/(1 x 20) x 100 = 50%.\nAt a low simultaneous serum phosphate, the kidney should conserve phosphate; this result supports a renal-loss component.\nFeeding-associated cellular uptake can coexist, but does not account for this renal response. The samples assess current handling, not daily phosphate balance or the specific cause of loss."
+    },
+    "inference": "Normalize the urine phosphate concentration using the simultaneous serum/urine creatinine and phosphate values; obtain 50% fractional excretion. Then: Interpret that result against the simultaneous low serum phosphate: conservation is expected, so the measured excretion supports a renal-loss component.",
+    "focus": "The ratio uses ALL FOUR paired concentrations; serum phosphate is simultaneously low and samples precede replacement. Feeding history does not select the correct renal-response interpretation.",
+    "whatChanged": "Paired raw phosphate/creatinine observations now determine renal handling. The feeding chronology tempts conservation/redistribution but cannot answer the question. Samples are simultaneous and pretreatment, with stable creatinine. Direct permitted methods support the fraction; independent adult hypophosphatemia methods support interpretation. The explanation allows concurrent redistribution and does not diagnose a cause or refeeding syndrome. All three choices are renal-response interpretations. Changing urine phosphate alone reverses the loss/conservation choice; preserve the original coherent-category owner resolution.",
+    "reviewResponse": [
+      {
+        "note": "Original was carbohydrate-trigger-to-mechanism recall; added narrative would not create a second consequential inference.",
+        "response": "Paired raw phosphate/creatinine observations now determine renal handling. The feeding chronology tempts conservation/redistribution but cannot answer the question."
+      },
+      {
+        "note": "Verify urinary acquisition and numerical interpretation; avoid stating that renal loss is excluded or overdiagnosing refeeding.",
+        "response": "Samples are simultaneous and pretreatment, with stable creatinine. Direct permitted methods support the fraction; independent adult hypophosphatemia methods support interpretation. The explanation allows concurrent redistribution and does not diagnose a cause or refeeding syndrome."
+      },
+      {
+        "note": "Keep coherent parallel options and show a meaningful counterfactual.",
+        "response": "All three choices are renal-response interpretations. Changing urine phosphate alone reverses the loss/conservation choice; preserve the original coherent-category owner resolution."
+      }
+    ],
+    "selfCheck": {
+      "reviewer": "author; not independent review or Melissa Rowland clinical sign-off",
+      "manualReviewCompleted": true,
+      "coverTheKey": {
+        "attack": "Every choice shares renal/phosphate vocabulary. Neither nutrition restart nor low serum phosphate alone distinguishes loss from conservation. No option contains an exclusive abbreviation, named test, longer explanation, X-alone qualifier, or uniquely comprehensive treatment. The unclassifiable option tests the plausible but incorrect timed-collection requirement, not a missing-data trick.",
+        "rawLintWarnings": [],
+        "advisoryDisposition": "No raw cue-linter finding."
+      },
+      "sameDecisionStageAndCategory": "Three interpretations of the same renal response, each a six-word declarative sentence. None is a treatment, diagnosis name, or explanatory option.",
+      "reasoningSteps": [
+        "Normalize the urine phosphate concentration using the simultaneous serum/urine creatinine and phosphate values; obtain 50% fractional excretion.",
+        "Interpret that result against the simultaneous low serum phosphate: conservation is expected, so the measured excretion supports a renal-loss component."
+      ],
+      "closestCredibleError": "Renal phosphate conservation is appropriately increased: anchoring on refeeding-associated uptake, or reading a spot urine concentration without creatinine normalization.",
+      "decidingFinding": "The ratio uses ALL FOUR paired concentrations; serum phosphate is simultaneously low and samples precede replacement. Feeding history does not select the correct renal-response interpretation.",
+      "counterfactuals": [
+        {
+          "change": "Change urine phosphate to 0.2 mg/dL, leaving the other three concentrations unchanged.",
+          "answer": "Renal phosphate conservation is appropriately increased.",
+          "why": "Fractional excretion becomes 1%, consistent with conservation during the same low serum phosphate. This would not distinguish poor intestinal delivery from cellular redistribution by itself."
+        }
+      ],
+      "residentDifficulty": "Moderate, author prediction for PGY-2/3; not independently calibrated. A resident familiar with fractional excretion may answer quickly. This is renal physiology, not a change to any statistics question.",
+      "singleDefensibleBestAnswer": "Fractional phosphate excretion is (10 x 1.0)/(1.0 x 20) x 100 = 50%. With concurrent serum phosphate of 1.0 mg/dL, that is inappropriate loss rather than the expected conservation. It does not identify the cause of the renal loss or exclude concurrent redistribution.",
+      "deletionTest": "Retain the brief feeding context to create the anchoring competitor; stable creatinine and simultaneous pretreatment samples constrain interpretation. Each of the four concentrations is necessary for the calculation; no exclusion list of renal/GI disorders supplies a mechanism by elimination.",
+      "clinicalAndSourceLimit": "The constructed values are fictional observations and arithmetic, not copied clinical study values, incidence or treatment thresholds. No exclusive cause, diagnostic refeeding criterion or treatment is asserted. The result is far above both the context-specific 5% criterion in hypophosphatemia and the more general 20% reference discussed by the 2025 source; no disputed boundary decides the key.",
+      "options": [
+        {
+          "label": "Renal phosphate loss is inappropriately high.",
+          "isKey": true,
+          "words": 6,
+          "rationale": "Fractional phosphate excretion is (10 x 1.0)/(1.0 x 20) x 100 = 50%. With concurrent serum phosphate of 1.0 mg/dL, that is inappropriate loss rather than the expected conservation. It does not identify the cause of the renal loss or exclude concurrent redistribution."
+        },
+        {
+          "label": "Renal phosphate conservation is appropriately increased.",
+          "isKey": false,
+          "words": 6,
+          "rationale": "This anchors on nutrition restart and its familiar cellular-shift explanation without testing the renal response. Creatinine-normalized phosphate excretion is 50%, not the low excretion expected during this degree of hypophosphatemia."
+        },
+        {
+          "label": "Renal phosphate handling remains unclassifiable here.",
+          "isKey": false,
+          "words": 6,
+          "rationale": "This assumes a timed urine collection is required before any interpretation. Simultaneous phosphate and creatinine concentrations permit fractional-excretion assessment; the supplied pretreatment samples show inappropriate loss. They do not quantify daily phosphate balance."
+        }
+      ],
+      "sourceUncertaintyIsNotDifficulty": true,
+      "basicAccepted": false,
+      "requiresIndependentReview": true
+    },
+    "supportingEvidenceClaimIds": [
+      "claim.harden1.20261110.phosphate-fraction",
+      "claim.harden1.20261110.phosphate-conservation",
+      "claim.harden1.20261110.phosphate-redistribution",
+      "claim.harden1.20261110.phosphate-diagnostic-boundary",
+      "claim.harden1.20261110.phosphate-multifactorial"
+    ],
+    "conceptVersion": {
+      "meaning": "new_version",
+      "reason": "The old objective recalls insulin-linked cellular uptake. This v2 instead tests interpretation of paired renal-handling data and avoids assigning every postfeeding fall to redistribution. That is a material change, so the old concept/card and live question remain exact.",
+      "previousConceptIds": [
+        "concept.gs028f.nutrition.refeeding-insulin-phosphate-shift"
+      ],
+      "newConceptId": "concept.gs028f.nutrition.refeeding-insulin-phosphate-shift.v2",
+      "historyMigration": "None. No old concept or FSRS record is remapped, mutated, merged or deleted."
+    },
+    "lint": {
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [],
+      "after": [],
+      "beforeCount": 0,
+      "afterCount": 0,
+      "afterProfileContexts": 2,
+      "suppressedFindings": 0,
+      "advisoryDisposition": "No raw cue-linter finding."
+    },
+    "visibleHistory": {
+      "before": {
+        "chiefComplaint": "Nutrition follow-up",
+        "presentation": "Maya Chen, a 31-year-old woman, is reviewed after a monitored nutrition restart following prolonged poor intake.",
+        "stem": "Which physiological process links carbohydrate reintroduction to Maya Chen's phosphate decline?"
+      },
+      "after": {
+        "chiefComplaint": "Nutrition follow-up",
+        "presentation": "Maya Chen, a 31-year-old woman, returns to the surgery clinic to review results from her nutrition restart after prolonged poor intake. Serum creatinine was stable at sampling.",
+        "stem": "Which interpretation of Maya Chen's renal phosphate handling is supported by these results?",
+        "exhibit.caption": "Simultaneous blood and urine samples, before phosphate replacement (constructed data)",
+        "exhibit.columnHeaders[0]": "Serum (mg/dL)",
+        "exhibit.columnHeaders[1]": "Urine (mg/dL)",
+        "exhibit.rowHeaders[0]": "Phosphate",
+        "exhibit.rowHeaders[1]": "Creatinine",
+        "exhibit.cells[0][0]": "1.0",
+        "exhibit.cells[0][1]": "10",
+        "exhibit.cells[1][0]": "1.0",
+        "exhibit.cells[1][1]": "20"
+      }
+    },
+    "fallback": {
+      "variantId": "question.gs028f.nutrition.refeeding-insulin-phosphate-shift.v3.r2",
+      "conceptId": "concept.gs028f.nutrition.refeeding-insulin-phosphate-shift",
+      "caseId": "case.gs028f.nutrition.c1-metabolic-transition",
+      "nodeId": "node.gs028f.nutrition.c1-metabolic-transition.1",
+      "retainedCaseSha256": "bf78cea4beb101646c67a97133b81cb87d6482be4fbc268b846d38c6a2853ffe",
+      "policy": "Keep exact live version unless the manager accepts a reviewed candidate/composition."
+    },
+    "frozenPreservation": {
+      "sourceReleaseSha256": "d7b5a4751ac104d5ed6fa26307295bd86faf0a0a37d6cf2de2758d28a3a6c36b",
+      "retainedInputSha256": "62d3f9ef86f037c932245df3c4ffaa69429cfe5db9eaeda6c03bc2af17e8477c",
+      "candidateTimingSha256": "14d6643eb7d545dbec416ab2e9e3138b13a27a495ca96ee8a510ce99787f789d",
+      "candidateQuestionsSha256": "2252154e74931032c54ed210047c9e4291ed05dbabaedf1db11d29b817d17ee8",
+      "candidateConceptsSha256": "e0d6fee33bc4a95cb074592797fe41c71351f7dad652dc72c4712bebb663f251",
+      "retainedCaseSha256": "bf78cea4beb101646c67a97133b81cb87d6482be4fbc268b846d38c6a2853ffe",
+      "retainedNodeSha256": "1838e5f43de94e7477e408afe5a55d79824e6246bbc66220c86df5b1adcc693c",
+      "candidateCaseSha256": "2cc0c55f2b5ce3425b110cb9d92416e3192c59b6cee62c7a106770132242a2c3",
+      "candidateNodeSha256": "1a49901db35ae85b1340d1689fb72973cf32e447e4608b1ba5b277860729a80e",
+      "candidateQuestionSha256": "dcfebe4b73e9ca2b4fce03929e37d17d9e3f7969578208fa4d7abef1d7866dfe"
+    }
+  }
+]

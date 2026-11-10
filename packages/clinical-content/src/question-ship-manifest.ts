@@ -21,7 +21,7 @@ export interface QuestionShipManifest {
   replacements?: readonly QuestionShipCaseReplacement[];
 }
 export const QUESTION_SHIP_MANIFEST = {
-  id: "question-ship.2026-11-08.v7",
+  id: "question-ship.2026-11-10.v8",
   clinicalApproval: false,
   legacyDecision: "Carry forward the existing live bank before the owner-flag rewrite program; user-directed fallback on 2026-11-05. This does not independently accept prior drafts or grant clinical approval.",
   legacyBindings: [
@@ -9729,9 +9729,15 @@ export const QUESTION_SHIP_MANIFEST = {
     "decision": "docs/research/question-flags4-manager-decision-20261108.md"
   },
   // END FLAGS4 ACCEPTANCE 20261108
+  // BEGIN HARDEN1 / N3R4 exact PASS acceptances 20261110
+  {"acceptanceId":"H1-03","caseId":"case.harden1.phosphate-handling.20261110","nodeId":"node.harden1.phosphate-handling.20261110","questionVariantId":"question.gs028f.nutrition.refeeding-insulin-phosphate-shift.v3.r3","conceptId":"concept.gs028f.nutrition.refeeding-insulin-phosphate-shift.v2","sourceView":"harden1-round1","decision":"docs/research/question-harden1-n3r4-manager-decision-20261110.md"},
+  {"acceptanceId":"review.n3.delayed-regurgitation-proximal-anatomic-study.v4","caseId":"case.n3.delayed-regurgitation-proximal-anatomic-study.v1","nodeId":"node.n3.delayed-regurgitation-proximal-anatomic-study.v1","questionVariantId":"question.n3.delayed-regurgitation-proximal-anatomic-study.v4","conceptId":"concept.n3.delayed-regurgitation-proximal-anatomic-study","sourceView":"n3-round4","decision":"docs/research/question-harden1-n3r4-manager-decision-20261110.md"},
+  {"acceptanceId":"review.n3.venous-ulcer-with-competing-arterial-findings.v4","caseId":"case.n3.venous-ulcer-with-competing-arterial-findings.v1","nodeId":"node.n3.venous-ulcer-with-competing-arterial-findings.v1","questionVariantId":"question.n3.venous-ulcer-with-competing-arterial-findings.v4","conceptId":"concept.venous-leg-ulcer.arterial-assessment-before-compression","sourceView":"n3-round4","decision":"docs/research/question-harden1-n3r4-manager-decision-20261110.md"},
+  // END HARDEN1 / N3R4 exact PASS acceptances 20261110
 ] satisfies QuestionShipAcceptance[],
   // BEGIN FLAGS2 WHOLE-CASE ACCEPTANCES 20261105
   replacements: [
+    { replaces: "case.gs028f.nutrition.c1-metabolic-transition", with: "question.gs028f.nutrition.refeeding-insulin-phosphate-shift.v3.r3" },
     { replaces: "case.gs028c.palpable-breast.paired-dense-focal", with: "question.palpable-breast.negative-mammogram-targeted-us.v1.r4" },
     { replaces: "case.asymptomatic-phpt.incidental-calcium", with: "question.asymptomatic-phpt.age-based-surgery.v1.r3" },
     // Flags3 replaces the old workup/plan node list with classification/plan.
@@ -9739,6 +9745,9 @@ export const QUESTION_SHIP_MANIFEST = {
   ] satisfies QuestionShipCaseReplacement[],
   // END FLAGS2 WHOLE-CASE ACCEPTANCES 20261105
   headerSources: {
+    "case.harden1.phosphate-handling.20261110": "harden1-round1",
+    "case.n3.delayed-regurgitation-proximal-anatomic-study.v1": "n3-round4",
+    "case.n3.venous-ulcer-with-competing-arterial-findings.v1": "n3-round4",
   // BEGIN FLAGS4 ACCEPTED HEADER 20261108
   "case.gs028f.nutrition.c1-metabolic-transition": "flags4-accepted",
   // END FLAGS4 ACCEPTED HEADER 20261108

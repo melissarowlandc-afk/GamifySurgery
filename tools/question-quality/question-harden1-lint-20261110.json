@@ -1,0 +1,526 @@
+{
+  "checkedOn": "2026-11-10",
+  "linterVersion": "question-cue-lint.2026-11-04.v8",
+  "scope": "All unique source/candidate nodes, canonical and finite profiles, exhibits and visible prior feedback. Three packet provenance rows contain only two scored candidates; totals deduplicate the shared after node.",
+  "totals": {
+    "originalTargets": 3,
+    "uniqueCandidates": 2,
+    "reviewRows": 3,
+    "beforeProfileContexts": 6,
+    "afterProfileContexts": 4,
+    "beforeFindings": 3,
+    "afterFindings": 1,
+    "suppressedFindings": 0
+  },
+  "before": {
+    "schemaVersion": 1,
+    "linterVersion": "question-cue-lint.2026-11-04.v8",
+    "releaseId": "clinical.harden1-retained-input.20261110.v1",
+    "scope": "Every case/node and canonical/finite profile in the assembled default release, including unapproved prototype content. Prior feedback is a visible-history cue candidate; future results/current feedback are excluded.",
+    "exposureBasis": "Structural priority proxy only: earlier entry stage, tutorial sequence, case-reference count, then cue findings. No player exposure data collected.",
+    "totals": {
+      "cases": 2,
+      "nodeOccurrences": 3,
+      "uniqueVariants": 3,
+      "concepts": 3,
+      "profileContexts": 6,
+      "variantsWithFindings": 1,
+      "findings": 3,
+      "tutorialSequenceVariants": 0,
+      "missingAuthoredVersion": 0,
+      "missingEducationalTier": 0,
+      "approvalRecordOnlyMetadata": 0,
+      "variantsWithCompleteRationales": 3,
+      "variantsWithMultipleDefinitions": 0,
+      "byPriorityStage": {
+        "0": 1,
+        "1": 2
+      },
+      "byOptionCount": {
+        "3": 3
+      },
+      "variantsByRule": {
+        "case-detail-key-rationale-overlap": 1,
+        "key-only-word-overlap": 1
+      }
+    },
+    "variants": [
+      {
+        "questionVariantId": "question.gs028f.nutrition.refeeding-insulin-phosphate-shift.v3.r2",
+        "conceptId": "concept.gs028f.nutrition.refeeding-insulin-phosphate-shift",
+        "conceptName": "Explain refeeding-related phosphate shifts",
+        "conceptType": "applied_science",
+        "educationalTier": 0,
+        "facilityStages": [
+          0
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "question-authoring.2026-11-08.flags4-r2"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.gs028f.nutrition.c1-metabolic-transition"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "269019bd2894f6d01481b9a66e4f9a4463723906ab2b28f3a457c34df5568b24"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.flags4.20261108.anabolic-transition",
+          "claim.flags4.20261108.carbohydrate-phosphate-uptake",
+          "claim.flags4.20261108.diagnostic-boundary"
+        ],
+        "findings": [],
+        "wordingFingerprint": "fa4d3422c7652c879698a186e8b0f4e220bb94a9247d98f637b6c3c7362086d6",
+        "priorityStage": 0,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.groin-hernia.ultrasound-type.v1",
+        "conceptId": "concept.groin-hernia.ultrasound-compartment-classification.v1",
+        "conceptName": "Classify a groin sac by ultrasound compartment",
+        "conceptType": "diagnosis",
+        "educationalTier": 1,
+        "facilityStages": [
+          1
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "question-authoring.2026-11-07.flags3-r1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.inguinal-hernia.caregiving-strain"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "b91ee88f8da3596a387cef085a55ab85bcdfaeead69de0e06d713c532cc15026"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.flags3.20261107.direct-comparator",
+          "claim.flags3.20261107.groin-compartment",
+          "claim.flags3.20261107.indirect-comparator"
+        ],
+        "findings": [
+          {
+            "id": "69424ed2a767eed0",
+            "rule": "case-detail-key-rationale-overlap",
+            "severity": "advisory",
+            "message": "A case-detail phrase repeats only the explicit keyed reason. Review for pre-answer teaching; raw decision-critical evidence may justify the overlap. Synonymous paraphrases still require human review.",
+            "evidence": [
+              {
+                "field": "exhibit.items[0].value",
+                "text": "Below the inguinal ligament",
+                "start": 0,
+                "end": 27
+              },
+              {
+                "field": "authoring.answerChoices.rationale",
+                "text": "below the inguinal ligament",
+                "start": 14,
+                "end": 41,
+                "choiceId": "choice.flags3.20261107.f3-03-type.key",
+                "postAnswerMetadata": true
+              }
+            ],
+            "metrics": {
+              "explicitRationalesCompared": 3
+            },
+            "occurrences": [
+              {
+                "caseId": "case.inguinal-hernia.caregiving-strain",
+                "profileIds": [
+                  "canonical",
+                  "profile.flags3.inguinal-hernia.caregiving-strain.20261107.v2"
+                ],
+                "ranges": [
+                  {
+                    "start": 0,
+                    "end": 27
+                  },
+                  {
+                    "start": 14,
+                    "end": 41
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "ac4b207b3c09c64a",
+            "rule": "case-detail-key-rationale-overlap",
+            "severity": "advisory",
+            "message": "A case-detail phrase repeats only the explicit keyed reason. Review for pre-answer teaching; raw decision-critical evidence may justify the overlap. Synonymous paraphrases still require human review.",
+            "evidence": [
+              {
+                "field": "exhibit.items[1].label",
+                "text": "to the common femoral vein",
+                "start": 9,
+                "end": 35
+              },
+              {
+                "field": "authoring.answerChoices.rationale",
+                "text": "to the common femoral vein",
+                "start": 53,
+                "end": 79,
+                "choiceId": "choice.flags3.20261107.f3-03-type.key",
+                "postAnswerMetadata": true
+              }
+            ],
+            "metrics": {
+              "explicitRationalesCompared": 3
+            },
+            "occurrences": [
+              {
+                "caseId": "case.inguinal-hernia.caregiving-strain",
+                "profileIds": [
+                  "canonical",
+                  "profile.flags3.inguinal-hernia.caregiving-strain.20261107.v2"
+                ],
+                "ranges": [
+                  {
+                    "start": 9,
+                    "end": 35
+                  },
+                  {
+                    "start": 53,
+                    "end": 79
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "27db0afa1a0b7baf",
+            "rule": "key-only-word-overlap",
+            "severity": "advisory",
+            "message": "A substantive word appears in the context and key only; clinical relevance may justify it.",
+            "evidence": [
+              {
+                "field": "exhibit.items[1].label",
+                "text": "femoral",
+                "start": 23,
+                "end": 30
+              },
+              {
+                "field": "answerChoices.label",
+                "text": "Femoral",
+                "start": 0,
+                "end": 7,
+                "choiceId": "choice.flags3.20261107.f3-03-type.key"
+              }
+            ],
+            "metrics": {},
+            "occurrences": [
+              {
+                "caseId": "case.inguinal-hernia.caregiving-strain",
+                "profileIds": [
+                  "canonical",
+                  "profile.flags3.inguinal-hernia.caregiving-strain.20261107.v2"
+                ],
+                "ranges": [
+                  {
+                    "start": 23,
+                    "end": 30
+                  },
+                  {
+                    "start": 0,
+                    "end": 7
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "wordingFingerprint": "256e7f9c6aa607ee857945390068d5a091c26afe06a162ca2c3420bd1f8db02d",
+        "priorityStage": 1,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v3.r12",
+        "conceptId": "concept.groin-hernia.femoral-defect-repair-priority.v1",
+        "conceptName": "Recognize the femoral exception to inguinal watchful waiting",
+        "conceptType": "management",
+        "educationalTier": 1,
+        "facilityStages": [
+          1
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "question-authoring.2026-11-07.flags3-r2"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.inguinal-hernia.caregiving-strain"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "05caa1b169316fe41092038b83193bedcdb99218ac930fef5ccd5c5a7ffe2889"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.flags3.20261107.acute-boundary",
+          "claim.flags3.20261107.reducible-femoral-plan"
+        ],
+        "findings": [],
+        "wordingFingerprint": "3ae33e6a504afe0ba56ee8493f8078c99632d885a826923fc3a4bb2b4e925669",
+        "priorityStage": 1,
+        "caseReferenceCount": 1
+      }
+    ]
+  },
+  "after": {
+    "schemaVersion": 1,
+    "linterVersion": "question-cue-lint.2026-11-04.v8",
+    "releaseId": "clinical.harden1-retained-source.20261110.v1",
+    "scope": "Every case/node and canonical/finite profile in the assembled default release, including unapproved prototype content. Prior feedback is a visible-history cue candidate; future results/current feedback are excluded.",
+    "exposureBasis": "Structural priority proxy only: earlier entry stage, tutorial sequence, case-reference count, then cue findings. No player exposure data collected.",
+    "totals": {
+      "cases": 2,
+      "nodeOccurrences": 2,
+      "uniqueVariants": 2,
+      "concepts": 2,
+      "profileContexts": 4,
+      "variantsWithFindings": 1,
+      "findings": 1,
+      "tutorialSequenceVariants": 0,
+      "missingAuthoredVersion": 0,
+      "missingEducationalTier": 0,
+      "approvalRecordOnlyMetadata": 0,
+      "variantsWithCompleteRationales": 2,
+      "variantsWithMultipleDefinitions": 0,
+      "byPriorityStage": {
+        "0": 1,
+        "1": 1
+      },
+      "byOptionCount": {
+        "3": 1,
+        "4": 1
+      },
+      "variantsByRule": {
+        "convergence": 1
+      }
+    },
+    "variants": [
+      {
+        "questionVariantId": "question.gs028f.nutrition.refeeding-insulin-phosphate-shift.v3.r3",
+        "conceptId": "concept.gs028f.nutrition.refeeding-insulin-phosphate-shift.v2",
+        "conceptName": "Renal phosphate handling after nutrition restart",
+        "conceptType": "applied_science",
+        "educationalTier": 1,
+        "facilityStages": [
+          0
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "question-authoring.2026-11-10.harden1-r1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.harden1.phosphate-handling.20261110"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "977f86c76e73e314e8e19ca9a92754b220057575eff0edeb69be404f2f166c5a"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.harden1.20261110.phosphate-conservation",
+          "claim.harden1.20261110.phosphate-diagnostic-boundary",
+          "claim.harden1.20261110.phosphate-fraction",
+          "claim.harden1.20261110.phosphate-multifactorial",
+          "claim.harden1.20261110.phosphate-redistribution"
+        ],
+        "findings": [],
+        "wordingFingerprint": "a236915dda13fe14d96b3c2a813da361ff1945d5f926d10d60291d8582638d8b",
+        "priorityStage": 0,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.groin-hernia.ultrasound-type-and-intervention.v2",
+        "conceptId": "concept.groin-hernia.femoral-defect-repair-priority.v2",
+        "conceptName": "Groin ultrasound and intervention",
+        "conceptType": "management",
+        "educationalTier": 1,
+        "facilityStages": [
+          1
+        ],
+        "optionCounts": [
+          4
+        ],
+        "authoredVersions": [
+          "question-authoring.2026-11-10.harden1-r1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.harden1.groin-wall-threat.20261110"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "b02ad41c4aa3d718b84748cd590626c598c097b2632b60ec3a6d6aa3d0cf82c4"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.harden1.20261110.femoral-compartment",
+          "claim.harden1.20261110.indirect-compartment",
+          "claim.harden1.20261110.mural-perfusion",
+          "claim.harden1.20261110.partial-wall-passage",
+          "claim.harden1.20261110.reduction-boundary",
+          "claim.harden1.20261110.suspected-strangulation-repair"
+        ],
+        "findings": [
+          {
+            "id": "9b51254e203295eb",
+            "rule": "convergence",
+            "severity": "advisory",
+            "message": "The key combines components reused across options; inspect whether the combinations cue a shortlist.",
+            "evidence": [
+              {
+                "field": "answerChoices.label",
+                "text": "Femoral",
+                "start": 0,
+                "end": 7,
+                "choiceId": "choice.harden1.20261110.groin.key"
+              },
+              {
+                "field": "answerChoices.label",
+                "text": "operative",
+                "start": 16,
+                "end": 25,
+                "choiceId": "choice.harden1.20261110.groin.key"
+              },
+              {
+                "field": "answerChoices.label",
+                "text": "exploration",
+                "start": 26,
+                "end": 37,
+                "choiceId": "choice.harden1.20261110.groin.key"
+              }
+            ],
+            "metrics": {
+              "components": [
+                "femoral",
+                "operative",
+                "exploration"
+              ],
+              "optionCoverage": [
+                {
+                  "choiceId": "choice.harden1.20261110.groin.key",
+                  "sharedComponentDensity": 0.75,
+                  "components": [
+                    "femoral",
+                    "operative",
+                    "exploration"
+                  ]
+                },
+                {
+                  "choiceId": "choice.harden1.20261110.groin.d1",
+                  "sharedComponentDensity": 0.75,
+                  "components": [
+                    "femoral"
+                  ]
+                },
+                {
+                  "choiceId": "choice.harden1.20261110.groin.d2",
+                  "sharedComponentDensity": 0.8,
+                  "components": [
+                    "operative",
+                    "exploration"
+                  ]
+                },
+                {
+                  "choiceId": "choice.harden1.20261110.groin.d3",
+                  "sharedComponentDensity": 0.8,
+                  "components": []
+                }
+              ]
+            },
+            "occurrences": [
+              {
+                "caseId": "case.harden1.groin-wall-threat.20261110",
+                "profileIds": [
+                  "canonical",
+                  "profile.harden1.20261110.groin"
+                ],
+                "ranges": [
+                  {
+                    "start": 0,
+                    "end": 7
+                  },
+                  {
+                    "start": 16,
+                    "end": 25
+                  },
+                  {
+                    "start": 26,
+                    "end": 37
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "wordingFingerprint": "624834e8563d07e6a570f4b74292bb7801254b8fa17141086c63332fbde07bf4",
+        "priorityStage": 1,
+        "caseReferenceCount": 1
+      }
+    ]
+  },
+  "advisoryDisposition": "One raw convergence advisory on the joint hernia set. This is an explicit complete 2x2: exploration/reduction and femoral/indirect each occur twice, every combination exists once, and any choice is the intersection of two components. Thus the key has no unique component-frequency or intersection advantage. Retained unsuppressed for independent review; no lint rule or threshold changed."
+}

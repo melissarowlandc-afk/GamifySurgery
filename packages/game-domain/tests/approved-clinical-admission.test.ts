@@ -280,6 +280,8 @@ describe("approved clinical admission boundaries", () => {
       "concept.phpt.inherited-calcium-before-localization.v2",
         // Flags3: the separately scored, manager-accepted anatomical objective.
         "concept.groin-hernia.ultrasound-compartment-classification.v1",
+      "concept.gs028f.nutrition.refeeding-insulin-phosphate-shift.v2",
+      "concept.n3.delayed-regurgitation-proximal-anatomic-study",
     ]);
   });
 

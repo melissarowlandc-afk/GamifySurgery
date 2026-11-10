@@ -17,14 +17,15 @@ import {bindJournal,prepareJournal} from "./session/cloud/journalCodec";
 import {snapshotCopy} from "./session/cloud/snapshotCodec";
 import {TestCloudClock} from "./session/cloud/syncTestSupport";
 
-const current=PROTOTYPE_DOMAIN_CONTEXT,NOW=1_800_000_000_000,encounterId="encounter.flags4-ship";
+import {beforeHarden1N3r4AcceptanceRelease} from "../../../packages/clinical-content/src/question-harden1-n3r4-acceptance-test-support";
+const current={...PROTOTYPE_DOMAIN_CONTEXT,clinicalRelease:beforeHarden1N3r4AcceptanceRelease(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease)},NOW=1_800_000_000_000,encounterId="encounter.flags4-ship";
 type Frozen=GameState["encounters"][string]["frozenCase"];
 function setup(historical:boolean){
  const cs=(historical?retained:accepted).cases[0]!;
  // Isolate the exact old/current case only for deterministic admission. All
  // eligibility, navigation, source nodes and frozen-data paths remain real.
  const context:DomainContext={...current,clinicalRelease:{...current.clinicalRelease,cases:[cs]}};
- const state=createInitialGameState(current,{campaignId:"campaign.flags4-ship",campaignSeed:"flags4-ship",createdAtRealMs:NOW});
+ const state=createInitialGameState(PROTOTYPE_DOMAIN_CONTEXT,{campaignId:"campaign.flags4-ship",campaignSeed:"flags4-ship",createdAtRealMs:NOW});
  state.facilityLevel=2;state.paused=false;state.encounters={};state.openChartEncounterId=null;state.attendedEncounterId=null;
  state.nextRoutineArrivalTick=Number.MAX_SAFE_INTEGER;state.nextEmployeeDiscussionTick=Number.MAX_SAFE_INTEGER;state.nextFinancialPostingTick=Number.MAX_SAFE_INTEGER;
  state.rooms.push({id:"room.flags4.exam",roomDefinitionId:"room.examination",x:34,y:26,orientation:0,doorSide:"south",upgradeLevel:1,cleanliness:100});

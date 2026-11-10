@@ -1,0 +1,199 @@
+[
+  {
+    "acceptanceId": "H1-03",
+    "caseId": "case.harden1.phosphate-handling.20261110",
+    "nodeId": "node.harden1.phosphate-handling.20261110",
+    "questionVariantId": "question.gs028f.nutrition.refeeding-insulin-phosphate-shift.v3.r3",
+    "conceptId": "concept.gs028f.nutrition.refeeding-insulin-phosphate-shift.v2",
+    "sourceView": "harden1-round1",
+    "decision": "docs/research/question-harden1-n3r4-manager-decision-20261110.md",
+    "reviewStatus": "needs_clinician_review",
+    "clinicalApproval": false,
+    "authority": "Manager exact editorial acceptance, 2026-11-10; no clinician approval conferred.",
+    "keyOrderNotice": "key shown first for review only; runtime answer choices are randomized",
+    "relation": {
+      "replaces": "case.gs028f.nutrition.c1-metabolic-transition",
+      "with": "question.gs028f.nutrition.refeeding-insulin-phosphate-shift.v3.r3"
+    },
+    "before": {
+      "variantId": "question.gs028f.nutrition.refeeding-insulin-phosphate-shift.v3.r2",
+      "Presentation": "Maya Chen, a 31-year-old woman, is reviewed after a monitored nutrition restart following prolonged poor intake.",
+      "Current update": null,
+      "Exhibit": null,
+      "Task": "Which physiological process links carbohydrate reintroduction to Maya Chen's phosphate decline?",
+      "Options": [
+        "**KEY:** Increased cellular uptake of phosphate",
+        "Increased urinary excretion of phosphate",
+        "Decreased intestinal absorption of phosphate"
+      ]
+    },
+    "after": {
+      "variantId": "question.gs028f.nutrition.refeeding-insulin-phosphate-shift.v3.r3",
+      "Presentation": "Maya Chen, a 31-year-old woman, returns to the surgery clinic to review results from her nutrition restart after prolonged poor intake. Serum creatinine was stable at sampling.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "table",
+        "caption": "Simultaneous blood and urine samples, before phosphate replacement (constructed data)",
+        "columnHeaders": [
+          "Serum (mg/dL)",
+          "Urine (mg/dL)"
+        ],
+        "rowHeaders": [
+          "Phosphate",
+          "Creatinine"
+        ],
+        "cells": [
+          [
+            "1.0",
+            "10"
+          ],
+          [
+            "1.0",
+            "20"
+          ]
+        ]
+      },
+      "Task": "Which interpretation of Maya Chen's renal phosphate handling is supported by these results?",
+      "Options": [
+        "**KEY:** Renal phosphate loss is inappropriately high.",
+        "Renal phosphate conservation is appropriately increased.",
+        "Renal phosphate handling remains unclassifiable here."
+      ]
+    },
+    "explanation": "Fractional phosphate excretion = (urine phosphate x serum creatinine)/(serum phosphate x urine creatinine) x 100 = (10 x 1)/(1 x 20) x 100 = 50%.\nAt a low simultaneous serum phosphate, the kidney should conserve phosphate; this result supports a renal-loss component.\nFeeding-associated cellular uptake can coexist, but does not account for this renal response. The samples assess current handling, not daily phosphate balance or the specific cause of loss.",
+    "supportingEvidenceClaimIds": [
+      "claim.harden1.20261110.phosphate-fraction",
+      "claim.harden1.20261110.phosphate-conservation",
+      "claim.harden1.20261110.phosphate-redistribution",
+      "claim.harden1.20261110.phosphate-diagnostic-boundary",
+      "claim.harden1.20261110.phosphate-multifactorial"
+    ],
+    "sourceReview": "docs/research/question-harden1-review-20261110.json",
+    "lint": [],
+    "frozenPreservation": {
+      "sourceView": "harden1-round1",
+      "sourceReleaseSha256": "d7b5a4751ac104d5ed6fa26307295bd86faf0a0a37d6cf2de2758d28a3a6c36b",
+      "acceptedCaseSha256": "2cc0c55f2b5ce3425b110cb9d92416e3192c59b6cee62c7a106770132242a2c3",
+      "acceptedQuestionSha256": "dcfebe4b73e9ca2b4fce03929e37d17d9e3f7969578208fa4d7abef1d7866dfe",
+      "previousDefaultSha256": "db795ec578f8b5bfa77d1260b2e53c5a59f779f51edcba538fd8753bdb3de139",
+      "previousManifestSha256": "0e70c49460b6f93ec6766f6f59ad10eb9e4b0e38d8745283d9fa35818d68c06c"
+    },
+    "preservation": "Only fresh projection changes. Existing frozen questions and FSRS identities are not rewritten; format3 snapshot/journal witnesses exercise the actual new default."
+  },
+  {
+    "acceptanceId": "review.n3.delayed-regurgitation-proximal-anatomic-study.v4",
+    "caseId": "case.n3.delayed-regurgitation-proximal-anatomic-study.v1",
+    "nodeId": "node.n3.delayed-regurgitation-proximal-anatomic-study.v1",
+    "questionVariantId": "question.n3.delayed-regurgitation-proximal-anatomic-study.v4",
+    "conceptId": "concept.n3.delayed-regurgitation-proximal-anatomic-study",
+    "sourceView": "n3-round4",
+    "decision": "docs/research/question-harden1-n3r4-manager-decision-20261110.md",
+    "reviewStatus": "needs_clinician_review",
+    "clinicalApproval": false,
+    "authority": "Manager exact editorial acceptance, 2026-11-10; no clinician approval conferred.",
+    "keyOrderNotice": "key shown first for review only; runtime answer choices are randomized",
+    "relation": null,
+    "before": null,
+    "after": {
+      "variantId": "question.n3.delayed-regurgitation-proximal-anatomic-study.v4",
+      "Presentation": "Clara Benson, a 73-year-old woman, attends the swallowing clinic for coughing during and after meals. A speech-language pathologist has completed a transnasal flexible endoscopic evaluation of swallowing (FEES).",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "keyValue",
+        "caption": "Original constructed teaching record; fictional patient observations",
+        "items": [
+          {
+            "label": "FEES report: first dyed-puree bolus",
+            "value": "The image is obscured as she swallows. On the next clear view, the pyriform recesses are empty and no dyed material is visible in the laryngeal vestibule."
+          },
+          {
+            "label": "FEES report: later observation",
+            "value": "Forty seconds later, with no additional bolus given, dyed material rises from below the postcricoid edge and pools in the left pyriform recess. She then coughs."
+          }
+        ]
+      },
+      "Task": "Which investigation should be selected next for Clara Benson's swallowing symptoms?",
+      "Options": [
+        "**KEY:** Fluoroscopic barium esophagram",
+        "Esophagogastroduodenoscopy (EGD)",
+        "High-resolution esophageal manometry"
+      ]
+    },
+    "explanation": "The report records visible clearance followed by return of the same material from below, rather than continuous observation throughout the swallow. Investigate a possible proximal retention process with a fluoroscopic barium swallow. The sequence does not prove a diverticulum or exclude events during the obscured view. FEES is not the EGD offered as an alternative; a pressure study answers a different question after structural assessment.",
+    "supportingEvidenceClaimIds": [
+      "claim.n3r4.a3fc0f259108",
+      "claim.n3r4.6a3138a1e303"
+    ],
+    "sourceReview": "docs/research/question-new-n3-round4-review-20261110.json",
+    "lint": [],
+    "frozenPreservation": {
+      "sourceView": "n3-round4",
+      "sourceReleaseSha256": "2ded730f8d582d472301b479018a6bd7711e102f690fdb2e6d05dbddb1f9d994",
+      "acceptedCaseSha256": "ce4b697f86b2be0d8cf8723041951f4aec8f823c25dec0ebb782af8cf204b186",
+      "acceptedQuestionSha256": "a1fa3fa1ac464c17189a5fb7ff119067cef39c97f7adb4b7a92b61e91401d426",
+      "previousDefaultSha256": "db795ec578f8b5bfa77d1260b2e53c5a59f779f51edcba538fd8753bdb3de139",
+      "previousManifestSha256": "0e70c49460b6f93ec6766f6f59ad10eb9e4b0e38d8745283d9fa35818d68c06c"
+    },
+    "preservation": "Only fresh projection changes. Existing frozen questions and FSRS identities are not rewritten; format3 snapshot/journal witnesses exercise the actual new default."
+  },
+  {
+    "acceptanceId": "review.n3.venous-ulcer-with-competing-arterial-findings.v4",
+    "caseId": "case.n3.venous-ulcer-with-competing-arterial-findings.v1",
+    "nodeId": "node.n3.venous-ulcer-with-competing-arterial-findings.v1",
+    "questionVariantId": "question.n3.venous-ulcer-with-competing-arterial-findings.v4",
+    "conceptId": "concept.venous-leg-ulcer.arterial-assessment-before-compression",
+    "sourceView": "n3-round4",
+    "decision": "docs/research/question-harden1-n3r4-manager-decision-20261110.md",
+    "reviewStatus": "needs_clinician_review",
+    "clinicalApproval": false,
+    "authority": "Manager exact editorial acceptance, 2026-11-10; no clinician approval conferred.",
+    "keyOrderNotice": "key shown first for review only; runtime answer choices are randomized",
+    "relation": null,
+    "before": null,
+    "after": {
+      "variantId": "question.n3.venous-ulcer-with-competing-arterial-findings.v4",
+      "Presentation": "Diane Foster, a 72-year-old woman, attends the wound clinic for a persistent medial-ankle ulcer with leg swelling.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "keyValue",
+        "caption": "Original constructed teaching record; fictional patient observations",
+        "items": [
+          {
+            "label": "Wound examination",
+            "value": "Shallow medial-ankle ulcer, edema and brown lower-leg skin; foot warm at rest. No rest pain."
+          },
+          {
+            "label": "Venous duplex",
+            "value": "Axial superficial reflux; deep veins compress throughout the examined segments."
+          },
+          {
+            "label": "Ankle-pressure acquisition",
+            "value": "Brachial systolic pressure 146 mm Hg. At both left pedal arteries, the Doppler signal persists with the ankle cuff at its maximum inflation of 260 mm Hg; the worksheet records ankle pressure greater than 260 mm Hg."
+          }
+        ]
+      },
+      "Task": "Which investigation should guide Diane Foster's ulcer treatment next?",
+      "Options": [
+        "**KEY:** Toe pressure test with digital photoplethysmography",
+        "Exercise ankle-brachial pressure index test",
+        "Lower-limb computed tomography angiography"
+      ]
+    },
+    "explanation": "A pressure above the cuff's occlusion range is not a measurement proving adequate perfusion. The venous findings do not remove the need to assess coexisting arterial disease before compression. Selected toe pressure and digital waveform assessment addresses the noncompressible-ankle limitation. This case does not specify a compression pressure, perfusion cutoff or revascularization plan.",
+    "supportingEvidenceClaimIds": [
+      "claim.n3r4.0b5c4ef72e1b",
+      "claim.n3r4.bf7d58a0e363"
+    ],
+    "sourceReview": "docs/research/question-new-n3-round4-review-20261110.json",
+    "lint": [],
+    "frozenPreservation": {
+      "sourceView": "n3-round4",
+      "sourceReleaseSha256": "2ded730f8d582d472301b479018a6bd7711e102f690fdb2e6d05dbddb1f9d994",
+      "acceptedCaseSha256": "188d81df478242036469efd23d0de6b7cf77726b0203a22f0ad82bb9c29b758e",
+      "acceptedQuestionSha256": "b0a5304dcf8d9cf2e7efe3246293b5cc2b1dcd78ef84df588c261b17dd64e9d6",
+      "previousDefaultSha256": "db795ec578f8b5bfa77d1260b2e53c5a59f779f51edcba538fd8753bdb3de139",
+      "previousManifestSha256": "0e70c49460b6f93ec6766f6f59ad10eb9e4b0e38d8745283d9fa35818d68c06c"
+    },
+    "preservation": "Only fresh projection changes. Existing frozen questions and FSRS identities are not rewritten; format3 snapshot/journal witnesses exercise the actual new default."
+  }
+]

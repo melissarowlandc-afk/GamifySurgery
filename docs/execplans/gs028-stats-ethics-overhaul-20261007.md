@@ -11764,3 +11764,217 @@ Verified launcher health contract gamify-surgery-player protocol 1.
 Existing dynamic-import, large-chunk and plugin-time warnings remain.
 
 Manager gates: deploy/reload the dual-code client before applying SQL. Review definitions/ACLs and run the guarded disposable SQL suite with the release skip flag; the optional-v2 variant needs its separately approved prerequisite files. Manager/owner alone apply/rollback SQL and observe actual SQLSTATE/request behavior, usage delivery and browser cloud recovery. This port does not prove the deployed transaction-runner retry implementation or recover already-expired usage estimates. Original owner origin/profile/path and saves are unchanged; no preview was opened. Manager owns backup and rollout.
+
+## Release port 28 / rebind 28 (2026-11-10, release worktree, harden1 + N3 round 4)
+
+Completed on GS-release entry HEAD 7fb66cf144fbe447359786dba425ce6cc22ef079. Only H1-03 refeeding v3.r3 and the two exact N3 round-4 PASS cases are newly admitted. Manifest **137 rows**; default **1,143 cases / 1,454 nodes / 608 concepts**. All new versions remain `needs_clinician_review`. The 134 earlier authority rows, 1,140 other old cases, all 606 old concepts, prior clinical approvals and the live hernia type-v1/management-r12 pair remain exact.
+
+Manifest hash: `164db3d76d2f380d8ef3035e981dc703f05e2e6cf820a483cdd4dc7660946eaa`; default hash: `01d239ea464a3cbdffd345b107a4035576922a4b143ea57f5c49f0752123ebf4`. Frozen v3.r2 and prior N3 encounters/journals load and complete. Seven new save witnesses pass; the existing ship-save suite expands from31 to33 cases. No wording or clinical approval was authored here.
+
+Dispositions: **46 copied /14 hunk-ported /3 regenerated /113 excluded** observed paths; **66 public file changes** including three coordination paths. Every path/reason/hash is in `.local-dev/release-verify/port28-20261110.json`; exact final before/after hashes are also in `.local-dev/release-port28-20261110/scope-audit-final.json`. The accepted author receipt and original reviewed full harden1/N3R4 views are provenance dependencies; withheld original candidates remain inert. Isolated hardened-hernia round2 files/tools/packets, parked N3 round5 and unrelated cloud/SQL/renderer/domain work were excluded. Source-author receipts describe their original broader lane; they are not this release file list.
+
+Files changed:
+
+- `apps/player/src/questionFlags4SaveCompatibility.test.ts`
+- `apps/player/src/questionHarden1N3r4SaveCompatibility.test.ts`
+- `apps/player/src/questionShipSaveCompatibility.test.ts`
+- `apps/player/src/session/levelFiveLaunch.test.tsx`
+- `docs/execplans/gs028-stats-ethics-overhaul-20261007.md`
+- `docs/execplans/question-harden1-n3r4-acceptance-20261110.md`
+- `docs/execplans/release-port28-20261110.md`
+- `docs/handoffs/CURRENT_THREAD_HANDOFF.md`
+- `docs/research/question-harden1-20261110.json`
+- `docs/research/question-harden1-n3r4-acceptance-handoff-20261110.md`
+- `docs/research/question-harden1-n3r4-accepted-20261110.json`
+- `docs/research/question-harden1-n3r4-files-20261110.json`
+- `docs/research/question-harden1-n3r4-manager-decision-20261110.md`
+- `docs/research/question-harden1-n3r4-validation-20261110.json`
+- `docs/research/question-harden1-review-20261110.json`
+- `docs/research/question-new-n3-round4-20261110.json`
+- `docs/research/question-new-n3-round4-review-20261110.json`
+- `docs/research/sources-question-harden1-20261110.json`
+- `packages/clinical-content/src/answer-choice-timing.test.ts`
+- `packages/clinical-content/src/answer-choice-timing.ts`
+- `packages/clinical-content/src/index.ts`
+- `packages/clinical-content/src/pilot-content.test.ts`
+- `packages/clinical-content/src/question-flags3-20261107.test.ts`
+- `packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts`
+- `packages/clinical-content/src/question-flags4-acceptance-test-support.ts`
+- `packages/clinical-content/src/question-harden1-20261110-data.ts`
+- `packages/clinical-content/src/question-harden1-20261110.test.ts`
+- `packages/clinical-content/src/question-harden1-20261110.ts`
+- `packages/clinical-content/src/question-harden1-evidence-20261110.ts`
+- `packages/clinical-content/src/question-harden1-n3r4-acceptance-20261110.test.ts`
+- `packages/clinical-content/src/question-harden1-n3r4-acceptance-test-support.ts`
+- `packages/clinical-content/src/question-harden1-n3r4-accepted-20261110.ts`
+- `packages/clinical-content/src/question-harden1-n3r4-accepted-data-20261110.ts`
+- `packages/clinical-content/src/question-harden1-retained-input-20261110.ts`
+- `packages/clinical-content/src/question-new-n3-round4-20261110.ts`
+- `packages/clinical-content/src/question-new-n3-round4-candidates.ts`
+- `packages/clinical-content/src/question-new-n3-round4-evidence-20261110.ts`
+- `packages/clinical-content/src/question-new-n3-round4-types.ts`
+- `packages/clinical-content/src/question-ship-manifest.test.ts`
+- `packages/clinical-content/src/question-ship-manifest.ts`
+- `packages/clinical-content/src/question-stats1-20261108.test.ts`
+- `packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts`
+- `packages/clinical-content/src/synthetic-content.ts`
+- `packages/game-domain/src/question-harden1-n3r4-test-orders.ts`
+- `packages/game-domain/src/test-choice-orders.ts`
+- `packages/game-domain/tests/approved-clinical-admission.test.ts`
+- `packages/game-domain/tests/level-five-launch.test.ts`
+- `packages/game-domain/tests/question-new-n3-round2-supply.test.ts`
+- `packages/game-domain/tests/question-new-n3-round3-supply.test.ts`
+- `packages/game-domain/tests/question-new-n3-supply.test.ts`
+- `packages/game-domain/tests/question-ship-gate.test.ts`
+- `tests/fixtures/level-five-integration-checkpoints-20261012.json`
+- `tests/fixtures/level-five-legacy-behavior-20261012.json`
+- `tools/qa/level-five-integration-results-20261012.json`
+- `tools/question-quality/fixtures/question-flags3-release-source-pins-20261107.json`
+- `tools/question-quality/fixtures/question-flags4-acceptance-release-source-pins-20261108.json`
+- `tools/question-quality/fixtures/question-harden1-before-20261110.json`
+- `tools/question-quality/fixtures/question-harden1-n3r4-acceptance-before-20261110.json`
+- `tools/question-quality/fixtures/question-harden1-n3r4-acceptance-source-migration-20261110.json`
+- `tools/question-quality/fixtures/question-harden1-n3r4-release-source-pins-20261110.json`
+- `tools/question-quality/fixtures/question-harden1-n3r4-source-expansion-20261110.json`
+- `tools/question-quality/fixtures/question-stats1-acceptance-release-source-pins-20261108.json`
+- `tools/question-quality/fixtures/question-stats1-release-source-pins-20261108.json`
+- `tools/question-quality/question-harden1-lint-20261110.json`
+- `tools/question-quality/question-harden1-n3r4-acceptance-lint-20261110.json`
+- `tools/question-quality/question-harden1-n3r4-acceptance-scope-20261110.json`
+
+The shared admission test retains the release's21 earlier meaning fixes and adds only the two accepted IDs. The flags4 test retains every release guard and adds only the accepted historical-epoch bindings. Existing source fixtures retain all prior authorizations, 165 unrelated original pin rows, 74 required absences and unchanged assertion bodies except exact fixture digest/count constants. The new author's18-file migration stays immutable; a separate hash-pinned two-row release fixture records the two exact shared-file postimages. Original and new captures are byte-exact.
+
+### Native rebind and old-content control
+
+| Metric | Before | Rebind28 | Delta |
+| --- | ---: | ---: | ---: |
+| Commands | 26,531 | 29,663 | +3,132 |
+| Closing cash, cents | 6,019,042 | 6,601,005 | +581,963 |
+| Completed patients | 412 | 459 | +47 |
+| Walkouts | 0 | 0 | 0 |
+| Gross, cents | 15,101,400 | 16,919,200 | +1,817,800 |
+| Stock, cents | 265,652 | 311,470 | +45,818 |
+| Paid operating costs, cents | 9,554,206 | 10,744,225 | +1,190,019 |
+| Capital, cents | 1,048,000 | 1,048,000 | 0 |
+| XP goal tick | 14,499 | 15,550 | +1,051 |
+| Unlock tick | 14,906 | 17,881 | +2,975 |
+| Final tick | 24,681 | 27,653 | +2,972 |
+| Completed operating-day rounds | 36 | 40 | +4 |
+
+Cash reconciles exactly from the same 1,785,500-cent funded opening. The accepted pool/answer cadence delays XP and unlock; four extra operating days change income, stock and payroll. This causal attribution has an actual control: the same current engine/driver with only the exact pre-port clinical object restored reproduces **every prior metric, all three reports and all nine checkpoint bytes**. No engine/balance drift or fixture substitution is needed.
+
+| Report | Before score / qualifying patients | Rebind28 score / qualifying patients |
+| --- | --- | --- |
+| 1 | 62.51688977024545 / 51 | 62.5988833962967 / 52 |
+| 2 | 66.84337234413047 / 50 | 67.01774207593124 / 48 |
+| 3 | 45.45219805372466 / 49 | 45.510740160222426 / 48 |
+
+The unchanged journey and lower helper ran fresh into staging, using the original seed/funded opening. All assertions remain: >20,000 commands, three real 3,000-minute reports with >=20 patients, low first finish, higher best, lower latest, immutable first, cash reconciliation, real comfort/round/supplier/retirement evidence and zero walkouts. Guarded verify-staged/publish-verified ran before canonical writes. All nine named saves changed; `checkpoint-deltas.json` records every changed field. Consumers include Level5 e2e/QA fixtures; e2e specs were left unchanged. Launch pins alone now use 52 patients, raw 62.5988833962967 and display 62.59.
+
+Bindings:553->565 total, 411->422 clinical. Six existing inputs changed (the author's four named entry points plus manifest and the test-epoch support module); twelve new required source/dependency modules were added. All 18 old/new path hashes are in accepted-run-verification.json and canonical inputHistory. Input history 22->23 retains every previous entry and complete prior input/artifact hashes. Only the established liveCap4->5 metadata correction is applied to the raw run. The integration guard itself remains unchanged.
+
+| Evidence file | Before SHA-256 | After SHA-256 |
+| --- | --- | --- |
+| `tools/qa/level-five-integration-results-20261012.json` | `2af0e6a514834a4ab1daa81bdc973123c8e3f8a1cf787b8ef8d2726bca648a97` | `be932b27dd5ec9bfa46a00a905052bcf1b0755bf280a33d8edfd23bfc2079089` |
+| `tests/fixtures/level-five-integration-checkpoints-20261012.json` | `560a4a38c5d8d2cdadf3033666a88a2f5e7e75f64533def7b55d2dfa61469d32` | `e5bebd15df15305bb2a0ee5dfd732ebd84b68169786821970947be01c707ba3d` |
+| `tests/fixtures/level-five-legacy-behavior-20261012.json` | `3addb62de20361e02821cc25d6f42de101988af9069439949121e48a532c3683` | `ef3ff630f8cac42f5240f5a651090d21287e3399d5f2b0247e0f8e851f146e31` |
+
+Legacy evidence was regenerated by the established reducer loop, preserving all five serialized inputs across schemas 5-9 and all frozen records. Each of 25 loads adds only two blank histories. Level4 continuations change one newly admitted encounter and two new ambient-actor identity/still fields. The unchanged appearance allocator uses occupied/recent stills: swapping only the new encounter's appearance back reproduces the exact old ambient still in all five schema controls; path, clock and other fields remain exact. The initial strict diagnostic stopped on those ambient fields; its failed receipt and successful exact cause proof are retained. This is a bounded derived-state diagnosis, not a broad environment allowance.
+
+### Exact validation
+
+CI=true; all seven suites run directly with --pool=threads (player maxWorkers=4, others 2), because root npm test first hits the sandbox Git-inventory failure. The process-local preload handles only the optional net-use EPERM probe. Commands, native stdout/stderr, exits, timestamps and test JSON are retained under the task directory; validation-summary.json lists exact command lines.
+
+```text
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=4 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port28-20261110/workspace-json-reporter.mjs
+exit 0
+
+npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port28-20261110/workspace-json-reporter.mjs
+exit 0
+
+npm.cmd run test --workspace @gamify-surgery/clinical-context-workbench --workspace @gamify-surgery/balance-config --workspace @gamify-surgery/clinical-authoring --workspace @gamify-surgery/clinical-content --workspace @gamify-surgery/clinical-research -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port28-20261110/workspace-json-reporter.mjs
+exit 0
+```
+
+| Workspace | Files passed | Tests passed | Failed | Skipped |
+| --- | ---: | ---: | ---: | ---: |
+| clinical-context-workbench | 8 | 43 | 0 | 0 |
+| player | 406 | 4049 | 0 | 0 |
+| balance-config | 24 | 164 | 0 | 0 |
+| clinical-authoring | 7 | 81 | 0 | 0 |
+| clinical-content | 129 | 1604 | 0 | 0 |
+| clinical-research | 8 | 83 | 0 | 0 |
+| game-domain | 199 | 5241 | 0 | 1 |
+| Total | 781 | 11,265 | 0 | 1 |
+
+Compared with port 27: +3 files/+30 tests (20 clinical, 7 new player witnesses, 2 additional existing N3 save rows, 1 ship-gate row). The single historical opt-in full differential skip is unchanged. No full-suite test needed an isolated retry and no test timeout/budget was changed.
+
+`other-workspaces.log`:
+
+```text
+ Test Files  8 passed (8)
+      Tests  43 passed (43)
+   Start at  09:30:28
+   Duration  1.45s (transform 418ms, setup 0ms, import 1.24s, tests 665ms, environment 1ms)
+ Test Files  24 passed (24)
+      Tests  164 passed (164)
+   Start at  09:30:30
+   Duration  3.09s (transform 859ms, setup 0ms, import 3.37s, tests 240ms, environment 3ms)
+ Test Files  7 passed (7)
+      Tests  81 passed (81)
+   Start at  09:30:33
+   Duration  998ms (transform 196ms, setup 0ms, import 536ms, tests 502ms, environment 1ms)
+ Test Files  129 passed (129)
+      Tests  1604 passed (1604)
+   Start at  09:30:35
+   Duration  131.40s (transform 9.66s, setup 0ms, import 223.05s, tests 23.73s, environment 11ms)
+ Test Files  8 passed (8)
+      Tests  83 passed (83)
+   Start at  09:32:47
+   Duration  2.34s (transform 201ms, setup 0ms, import 550ms, tests 1.11s, environment 0ms)
+```
+
+`player.log`:
+
+```text
+ Test Files  406 passed (406)
+      Tests  4049 passed (4049)
+   Start at  09:30:28
+   Duration  481.35s (transform 33.48s, setup 0ms, import 753.69s, tests 1125.62s, environment 33ms)
+```
+
+`domain.log`:
+
+```text
+ Test Files  199 passed (199)
+      Tests  5241 passed | 1 skipped (5242)
+   Start at  09:30:28
+   Duration  582.19s (transform 16.75s, setup 0ms, import 419.87s, tests 723.56s, environment 14ms)
+```
+
+`focused-player.log`:
+
+```text
+ Test Files  3 passed (3)
+      Tests  44 passed (44)
+   Start at  09:20:22
+   Duration  25.67s (transform 9.75s, setup 0ms, import 17.07s, tests 21.44s, environment 0ms)
+```
+
+`focused-acceptance.log`:
+
+```text
+ Test Files  2 passed (2)
+      Tests  20 passed (20)
+   Start at  09:20:22
+   Duration  6.14s (transform 6.40s, setup 0ms, import 11.12s, tests 567ms, environment 0ms)
+```
+
+Root `npm.cmd run typecheck`: all seven workspace commands pass, exit0. `npm.cmd run clinical:lint:test`:33 passed, 0 failed, exit0. Player build:665 modules, 11.22s, exit0; existing chunk/dynamic-import/plugin warnings remain. Direct `npm.cmd run test:boundaries` exits1 solely on spawnSync git EPERM. Fresh native read-only git ls-files bytes plus the strict tree/index/inventory-hash bridge let both unchanged verifiers pass, exit0:
+
+```text
+Verified runtime dependency boundaries and 7403 tracked path(s).
+Verified launcher health contract gamify-surgery-player protocol 1.
+```
+
+Manager next step: review the scoped source/evidence delta, then browser-check the changed Level5/e2e saves and owner review-page cases. These are editorial draft acceptances, not clinical sign-off. Existing port 26 memory and port 27 cloud/SQL files, .github and unrelated work are exact. No browser, account, network, SQL, agents, installation, Git mutation or deployment was used. Owner origin/profile/path is unchanged; no preview opened. Work remains local/uncommitted for manager review, backup and rollout.

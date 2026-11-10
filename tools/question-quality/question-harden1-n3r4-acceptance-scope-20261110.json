@@ -1,0 +1,254 @@
+{
+  "checkedOn": "2026-11-10",
+  "before": {
+    "cases": 1141,
+    "nodes": 1452,
+    "registeredMeanings": 606,
+    "scoredMeanings": 450,
+    "questionVersions": 1447,
+    "defaultSha256": "db795ec578f8b5bfa77d1260b2e53c5a59f779f51edcba538fd8753bdb3de139",
+    "manifestSha256": "0e70c49460b6f93ec6766f6f59ad10eb9e4b0e38d8745283d9fa35818d68c06c",
+    "acceptedRows": 134,
+    "timingRows": 2284
+  },
+  "after": {
+    "cases": 1143,
+    "nodes": 1454,
+    "registeredMeanings": 608,
+    "scoredMeanings": 452,
+    "questionVersions": 1449,
+    "defaultSha256": "01d239ea464a3cbdffd345b107a4035576922a4b143ea57f5c49f0752123ebf4",
+    "manifestId": "question-ship.2026-11-10.v8",
+    "manifestSha256": "164db3d76d2f380d8ef3035e981dc703f05e2e6cf820a483cdd4dc7660946eaa",
+    "acceptedRows": 137,
+    "legacyBindings": 1423,
+    "wholeCaseRelations": 4,
+    "timingRows": 2287
+  },
+  "acceptedRows": [
+    {
+      "acceptanceId": "H1-03",
+      "caseId": "case.harden1.phosphate-handling.20261110",
+      "nodeId": "node.harden1.phosphate-handling.20261110",
+      "questionVariantId": "question.gs028f.nutrition.refeeding-insulin-phosphate-shift.v3.r3",
+      "conceptId": "concept.gs028f.nutrition.refeeding-insulin-phosphate-shift.v2",
+      "sourceView": "harden1-round1",
+      "decision": "docs/research/question-harden1-n3r4-manager-decision-20261110.md"
+    },
+    {
+      "acceptanceId": "review.n3.delayed-regurgitation-proximal-anatomic-study.v4",
+      "caseId": "case.n3.delayed-regurgitation-proximal-anatomic-study.v1",
+      "nodeId": "node.n3.delayed-regurgitation-proximal-anatomic-study.v1",
+      "questionVariantId": "question.n3.delayed-regurgitation-proximal-anatomic-study.v4",
+      "conceptId": "concept.n3.delayed-regurgitation-proximal-anatomic-study",
+      "sourceView": "n3-round4",
+      "decision": "docs/research/question-harden1-n3r4-manager-decision-20261110.md"
+    },
+    {
+      "acceptanceId": "review.n3.venous-ulcer-with-competing-arterial-findings.v4",
+      "caseId": "case.n3.venous-ulcer-with-competing-arterial-findings.v1",
+      "nodeId": "node.n3.venous-ulcer-with-competing-arterial-findings.v1",
+      "questionVariantId": "question.n3.venous-ulcer-with-competing-arterial-findings.v4",
+      "conceptId": "concept.venous-leg-ulcer.arterial-assessment-before-compression",
+      "sourceView": "n3-round4",
+      "decision": "docs/research/question-harden1-n3r4-manager-decision-20261110.md"
+    }
+  ],
+  "oldCaseWithheldFromFresh": true,
+  "catalogUnchanged": true,
+  "oldCasesExact": 1140,
+  "oldRegisteredMeaningsExact": 606,
+  "liveHerniaPairUnchanged": true,
+  "newHerniaAccepted": false,
+  "statisticsCasesChecked": 62,
+  "statisticsCasesUnchanged": true,
+  "reviewHashes": {
+    "harden1": "52f2786f9d43373f8a4bbee5b7b87f767cb002795b34aab094fa7355c41078e7",
+    "n3round4": "7162f4529e9bbc7ef4ad8e314e03c2f90d072bf9e177a8d7ff712f3bd138ed80"
+  },
+  "sourceHashes": {
+    "harden1": "d7b5a4751ac104d5ed6fa26307295bd86faf0a0a37d6cf2de2758d28a3a6c36b",
+    "n3round4": "2ded730f8d582d472301b479018a6bd7711e102f690fdb2e6d05dbddb1f9d994"
+  },
+  "migrationDeltas": [
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.ts",
+      "beforeSha256": "de5c8b1f5f808361fe240ac67dda478ac1a2ade09857dd80e4347f1ef4d8c3d8",
+      "afterSha256": "e4bfc30484cc1dcc168c68dc798e838ce2111c5f492fcf0a0354305158fcae61"
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "beforeSha256": "96d50250444a0f41fa6b9b77f686b5c6b2fed7fa16821ab0500a3a4443b77762",
+      "afterSha256": "d1db6c1d311f08b0030cd2e9694860f70663add57317b73b82a369f87f1a85ff"
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "beforeSha256": "0abfabbf84d18c022bcbb58b3454585afac1a28403cb9adec3e5994b7278d68b",
+      "afterSha256": "000dfad4b8f836b66c7e81cdcf409d5fb7f46e2bc1751f44e67313dce3281043"
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "beforeSha256": "bb55f3dbc7ae50ec77bcd18ab50b8dc213f57acf218657cdc693db434b43c8a9",
+      "afterSha256": "d8d58233291b8b31ad52f950ed31e924f914284b6d89565cdb23f394054ad565"
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+      "beforeSha256": "fca3abd6ac40e7cb34eb82419aa76f33fbb35c9e61dadb6c60de3f12a5572dc6",
+      "afterSha256": "aec3c2acf53900743bd060833d9a3fdb51e82d6a52783d72a3dcd2145cec18a3"
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "beforeSha256": "cfb0739a97e9eeaa9c671fd4e1da458ec45b0aa2b731863534b42551d80f79e6",
+      "afterSha256": "573f4c6156d7c1819db74ad87e9a6413482a8a4e4f64d0563f3510f50e12a983"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags4-acceptance-test-support.ts",
+      "beforeSha256": "0238627f0923101a0c8740c82a820c5aaaba45089a3f48f36d64feae0ff7008f",
+      "afterSha256": "b77460f06568b9dd8e17ad7e0938644ef62e2419fee1ffc0d3d3093f39de0112"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
+      "beforeSha256": "b0db2a2b63bdc09836810899f993227c3149f2465478f6a68ae2cc51d232e4ab",
+      "afterSha256": "93501006d93385d1bfc78ed8be0dd56ca28ab8aec07c38d204902ef0e510de9f"
+    },
+    {
+      "path": "packages/clinical-content/src/question-harden1-20261110.test.ts",
+      "beforeSha256": "20a66212d78e910794be1dd5c35e934a03530c33234e2343875ac08d3385773a",
+      "afterSha256": "3da20cf4041d4dfd9846df13bd4736d24fc4907d3fef852d7d9ceb2fe94aef20"
+    },
+    {
+      "path": "apps/player/src/questionFlags4SaveCompatibility.test.ts",
+      "beforeSha256": "ea621194751a32f91d126d4000171104126a59ca244437fc13db084a7d9dd012",
+      "afterSha256": "b2767dfa66931d6ef26c84bd3ce4172457969088e1d46b398059a831ff0e9778"
+    },
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+      "beforeSha256": "5dfcaeabd30722082a60673316b3313914d0c16dc4c6c816f84159b5a57c4167",
+      "afterSha256": "f25208a36cfde86cd861c23933fc0ef9fe8fd23b07574f0890c7316ac9127cea"
+    },
+    {
+      "path": "packages/clinical-content/src/pilot-content.test.ts",
+      "beforeSha256": "c0409d92b0690259da1f7bebfc9fbd209a6d8e76c3cb90f9687db3ccfe84e362",
+      "afterSha256": "b985253b1805228fe8a956e4e543136fca61e361c105e034aeb920b114003ae2"
+    },
+    {
+      "path": "apps/player/src/questionShipSaveCompatibility.test.ts",
+      "beforeSha256": "3c77eaddd147e021e21086521a8861107aeaa138352d8a17d3c4c4167bc26827",
+      "afterSha256": "98c1b26c59000f80d95dc455e127b241876804c6dfc4e6501bfb4d4644136951"
+    },
+    {
+      "path": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+      "beforeSha256": "c06b05b6fd567362484b6a588be6047d2633684bc0386a9c0a7d2b6760d61863",
+      "afterSha256": "192d7f712c3fd848ab2fdc43a087c522963e1d9ea60ce6f33a34e5523384ce52"
+    },
+    {
+      "path": "packages/game-domain/tests/question-new-n3-supply.test.ts",
+      "beforeSha256": "e0fd0259679aecd39af39d7a1b6b47a141a548c7e32a6ec69e2616485a0262cb",
+      "afterSha256": "b31c9b22b55fe371bfb07e400a15b316911291097db251d421738d8f49f85d7c"
+    },
+    {
+      "path": "packages/game-domain/tests/question-new-n3-round2-supply.test.ts",
+      "beforeSha256": "caac6948b635b8306815396d3a5cc3dc10e061f139c97336374f1f98b0935b8e",
+      "afterSha256": "cc3238777608ba4816df5fbd5b377da0574b16d77c65e36bb79742a687f65005"
+    },
+    {
+      "path": "packages/game-domain/tests/question-new-n3-round3-supply.test.ts",
+      "beforeSha256": "f9b7580ac9f869d7830a1afa8cdf882a13b358acf60cb11c5f55c93946372f21",
+      "afterSha256": "590188418987bdc28e82b0e78a00b15c41d9aca2a23a82aced1b119961710b16"
+    },
+    {
+      "path": "packages/game-domain/tests/question-ship-gate.test.ts",
+      "beforeSha256": "4d3ce7d12017dbe623e7f20ce088e7e15eb695891eb4db43cf4a021c5a6323f7",
+      "afterSha256": "37ab0183798acc2077183350761aed58cb486dd1e70df01f24577c486199cdfb"
+    }
+  ],
+  "changedElsewhere": [],
+  "sharedHandoffPrefixUnchanged": true,
+  "levelFiveBoundInputsChanged": [
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "recordedEvidenceSha256": "6d9870d53383af7da6ee7547ba702410a2545882876faa1696c0e1217fae311c",
+      "beforeMilestoneSha256": "96d50250444a0f41fa6b9b77f686b5c6b2fed7fa16821ab0500a3a4443b77762",
+      "afterSha256": "d1db6c1d311f08b0030cd2e9694860f70663add57317b73b82a369f87f1a85ff",
+      "alreadyDifferentBefore": true
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "recordedEvidenceSha256": "a57ffcec34d75e2e337790f1ac0d71e4bfdc8f79d53cdb28596e00ead60413e4",
+      "beforeMilestoneSha256": "0abfabbf84d18c022bcbb58b3454585afac1a28403cb9adec3e5994b7278d68b",
+      "afterSha256": "000dfad4b8f836b66c7e81cdcf409d5fb7f46e2bc1751f44e67313dce3281043",
+      "alreadyDifferentBefore": true
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "recordedEvidenceSha256": "7db1b1253c7d3064adb0602360925c0739bb65c719603507c3fa09a6732ba245",
+      "beforeMilestoneSha256": "bb55f3dbc7ae50ec77bcd18ab50b8dc213f57acf218657cdc693db434b43c8a9",
+      "afterSha256": "d8d58233291b8b31ad52f950ed31e924f914284b6d89565cdb23f394054ad565",
+      "alreadyDifferentBefore": true
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "recordedEvidenceSha256": "522c3fbd3b3503f4b6d74f38e7dbd994b98727a3037b0374f86e58dbf5a41639",
+      "beforeMilestoneSha256": "cfb0739a97e9eeaa9c671fd4e1da458ec45b0aa2b731863534b42551d80f79e6",
+      "afterSha256": "573f4c6156d7c1819db74ad87e9a6413482a8a4e4f64d0563f3510f50e12a983",
+      "alreadyDifferentBefore": true
+    }
+  ],
+  "newRuntimeInputs": [
+    "packages/clinical-content/src/question-harden1-n3r4-accepted-20261110.ts",
+    "packages/clinical-content/src/question-harden1-n3r4-accepted-data-20261110.ts",
+    "packages/game-domain/src/question-harden1-n3r4-test-orders.ts"
+  ],
+  "newlyReferencedExistingSources": [
+    {
+      "path": "packages/clinical-content/src/question-harden1-20261110.ts",
+      "sha256": "9d25bc3a8fc87f4a83586216273f8a6558b488ffbcf70adf0787cf9686766614",
+      "unchanged": true,
+      "listedInPriorEvidenceInputs": false
+    },
+    {
+      "path": "packages/clinical-content/src/question-harden1-20261110-data.ts",
+      "sha256": "10dd3f110d66855aee788fc764b2541d1e9033ead2723ca731f80cc8d022e803",
+      "unchanged": true,
+      "listedInPriorEvidenceInputs": false
+    },
+    {
+      "path": "packages/clinical-content/src/question-harden1-evidence-20261110.ts",
+      "sha256": "bf9765ebcad4ad3ec2bcfb92f14932afcb902b7a42d3bde6d5d76611b9ccd9de",
+      "unchanged": true,
+      "listedInPriorEvidenceInputs": false
+    },
+    {
+      "path": "packages/clinical-content/src/question-harden1-retained-input-20261110.ts",
+      "sha256": "11367558c651a9e1697a42ca9bb78f869f51be2c46a7143407b94ecfbaba6917",
+      "unchanged": true,
+      "listedInPriorEvidenceInputs": false
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n3-round4-20261110.ts",
+      "sha256": "07b50b711edb737ec4f5cd0b914e8bfd283b6e45e1ab878a65e4efa8335a19a9",
+      "unchanged": true,
+      "listedInPriorEvidenceInputs": false
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n3-round4-candidates.ts",
+      "sha256": "07ebdf083b2c7d573ae798309c6f90fd131ed036613bef97d4fe568b37314619",
+      "unchanged": true,
+      "listedInPriorEvidenceInputs": false
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n3-round4-evidence-20261110.ts",
+      "sha256": "7c21cc4238c06296013c74128212331e8a3e523caefeb9baf70d18d5466493e5",
+      "unchanged": true,
+      "listedInPriorEvidenceInputs": false
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n3-round4-types.ts",
+      "sha256": "0890799bfbb88e5f665b68810ef372d8838c75175b795a07d238534bcaab80fb",
+      "unchanged": true,
+      "listedInPriorEvidenceInputs": false
+    }
+  ],
+  "rebindPerformed": false,
+  "rawAcceptanceLintFindings": 0
+}

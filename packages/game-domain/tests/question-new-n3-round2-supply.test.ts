@@ -19,7 +19,7 @@ function reviewed(state:GameState,cs:SyntheticClinicalCase,dueAtMs:number){
 describe("N3 round-two explicit draft supply and frozen completion",()=>{
  it.each(cases.map(cs=>[cs.id,cs]as const))("admits %s in the explicit catalog and defaults only to its exact accepted version",(_id,cs)=>{
   const ctx=context([cs]),state=vacant(cs.earliestFacilityStage as 3|4,ctx);
-  const accepted=manifest.accepted.find(row=>row.sourceView==="n3-round3"&&row.caseId===cs.id);
+  const accepted=manifest.accepted.find(row=>["n3-round3","n3-round4"].includes(row.sourceView)&&row.caseId===cs.id);
   expect(SYNTHETIC_CLINICAL_RELEASE.cases.find(c=>c.id===cs.id)?.decisionNodes[0]!.questionVariantId).toBe(accepted?.questionVariantId);
   expect(getClinicalCaseEligibilityIssue({...state,facilityLevel:(cs.earliestFacilityStage-1) as GameState["facilityLevel"]},cs,ctx)).toContain(`Level ${cs.earliestFacilityStage}`);
   expect(getClinicalCaseEligibilityIssue(state,cs,ctx)).toBeNull();

@@ -1,0 +1,452 @@
+{
+  "checkedOn": "2026-11-10",
+  "clinicalApproval": false,
+  "network": false,
+  "git": false,
+  "installs": false,
+  "deploy": false,
+  "rebind": false,
+  "runs": [
+    {
+      "name": "clinical-final",
+      "cwd": "packages/clinical-content",
+      "command": "npm.cmd test -- --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=<local report>",
+      "report": ".local-dev/question-harden1-n3r4-acceptance-20261110/clinical-final.json",
+      "log": ".local-dev/question-harden1-n3r4-acceptance-20261110/clinical-final.log",
+      "exitCode": 1,
+      "totalTests": 1621,
+      "passed": 1618,
+      "failed": 3,
+      "skipped": 0,
+      "files": 131,
+      "passedFiles": 128,
+      "failedFiles": 3,
+      "exactSummary": [
+        "Test Files  3 failed | 128 passed (131)",
+        "Tests  3 failed | 1618 passed (1621)",
+        "Start at  08:46:19",
+        "Duration  242.40s (transform 26.05s, setup 0ms, import 421.28s, tests 37.60s, environment 16ms)"
+      ],
+      "note": "Full clinical suite; three unchanged foreign source-guard failures.",
+      "failures": [
+        {
+          "file": "packages/clinical-content/src/question-flags3-20261107.test.ts",
+          "title": "flags3 exact owner-flag candidates and retained live source leaves every existing protected source and decision file byte-exact",
+          "durationMs": 2836.215399999999,
+          "message": "AssertionError: packages/game-domain/src/diagnostic-timing.ts: expected '499e069e78d1755c1f23e6ab6b29052ee0728…' to be '2a8e915812e9c5bc2e5b40fcea74bdff129aa…' // Object.is equality"
+        },
+        {
+          "file": "packages/clinical-content/src/question-stats1-20261108.test.ts",
+          "title": "stats1 short single-skill candidates without live acceptance preserves every protected source/capture through the exact authorized standard/test-hook migration",
+          "durationMs": 799.3650999999991,
+          "message": "AssertionError: packages/game-domain/src/diagnostic-timing.ts: expected '499e069e78d1755c1f23e6ab6b29052ee0728…' to be '2a8e915812e9c5bc2e5b40fcea74bdff129aa…' // Object.is equality"
+        },
+        {
+          "file": "packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts",
+          "title": "stats1 exact manager acceptance and frozen identities pins each authorized existing-source delta before preserving old capture assertions",
+          "durationMs": 24.816999999999098,
+          "message": "AssertionError: apps/player/src/session/cloud/codecJson.ts: expected '0994becd5f0022d2489de303987a6bb6a4c59…' to be 'd490196e1988db2f39fc66df0589b768fd109…' // Object.is equality"
+        }
+      ]
+    },
+    {
+      "name": "clinical-focused-final",
+      "cwd": "packages/clinical-content",
+      "command": "npm.cmd test -- --pool=threads --maxWorkers=2 src/question-harden1-round2-20261110.test.ts src/question-harden1-n3r4-acceptance-20261110.test.ts --reporter=default --reporter=json --outputFile=<local report>",
+      "report": ".local-dev/question-harden1-n3r4-acceptance-20261110/clinical-focused-final.json",
+      "log": ".local-dev/question-harden1-n3r4-acceptance-20261110/clinical-focused-final.log",
+      "exitCode": 0,
+      "totalTests": 13,
+      "passed": 13,
+      "failed": 0,
+      "skipped": 0,
+      "files": 2,
+      "passedFiles": 2,
+      "failedFiles": 0,
+      "exactSummary": [
+        "Test Files  2 passed (2)",
+        "Tests  13 passed (13)",
+        "Start at  08:55:42",
+        "Duration  9.42s (transform 10.25s, setup 0ms, import 17.15s, tests 701ms, environment 0ms)"
+      ],
+      "note": "Final13 acceptance/draft tests after the pure deletion-test wording trim.",
+      "failures": []
+    },
+    {
+      "name": "domain-final",
+      "cwd": "packages/game-domain",
+      "command": "npm.cmd test -- --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=<local report>",
+      "report": ".local-dev/question-harden1-n3r4-acceptance-20261110/domain-final.json",
+      "log": ".local-dev/question-harden1-n3r4-acceptance-20261110/domain-final.log",
+      "exitCode": 1,
+      "totalTests": 5255,
+      "passed": 5226,
+      "failed": 28,
+      "skipped": 1,
+      "files": 206,
+      "passedFiles": 203,
+      "failedFiles": 3,
+      "exactSummary": [
+        "Test Files  3 failed | 203 passed (206)",
+        "Tests  28 failed | 5226 passed | 1 skipped (5255)",
+        "Start at  08:46:08",
+        "Duration  831.87s (transform 26.01s, setup 0ms, import 604.08s, tests 1026.46s, environment 20ms)"
+      ],
+      "note": "Full domain suite; retained binding/legacy hash checks, existing registry-expectation omissions, unchanged historical author-stage timeout.",
+      "failures": [
+        {
+          "file": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+          "title": "approved clinical admission boundaries keeps the unapproved prototype runtime release limited to explicitly admitted concepts",
+          "durationMs": 11.809900000000198,
+          "message": "AssertionError: expected [ …(608) ] to deeply equal [ …(587) ]"
+        },
+        {
+          "file": "packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 connected Level 5 reducer journey binds the actual run to its current game, balance, clinical and driver inputs and reconciles cash",
+          "durationMs": 25.90389999999752,
+          "message": "AssertionError: packages/balance-config/src/guidance-tips.ts: expected '5148bcde642c4092883e847731628d9278a5e…' to be '044e6242578d5282081998aa3b42d87923eca…' // Object.is equality"
+        },
+        {
+          "file": "packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level +0/schema 5",
+          "durationMs": 10.164300000004005,
+          "message": "AssertionError: expected 'bb7172d86b523b06a068a4f763b85e576e005…' to be '92728e650dc9a0f02b005470db49ab566769a…' // Object.is equality"
+        },
+        {
+          "file": "packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level +0/schema 6",
+          "durationMs": 6.641700000007404,
+          "message": "AssertionError: expected 'bb7172d86b523b06a068a4f763b85e576e005…' to be '92728e650dc9a0f02b005470db49ab566769a…' // Object.is equality"
+        },
+        {
+          "file": "packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level +0/schema 7",
+          "durationMs": 6.121199999994133,
+          "message": "AssertionError: expected 'bb7172d86b523b06a068a4f763b85e576e005…' to be '92728e650dc9a0f02b005470db49ab566769a…' // Object.is equality"
+        },
+        {
+          "file": "packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level +0/schema 8",
+          "durationMs": 4.359599999996135,
+          "message": "AssertionError: expected 'bb7172d86b523b06a068a4f763b85e576e005…' to be '92728e650dc9a0f02b005470db49ab566769a…' // Object.is equality"
+        },
+        {
+          "file": "packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level +0/schema 9",
+          "durationMs": 4.288399999990361,
+          "message": "AssertionError: expected 'bb7172d86b523b06a068a4f763b85e576e005…' to be '92728e650dc9a0f02b005470db49ab566769a…' // Object.is equality"
+        },
+        {
+          "file": "packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 1/schema 5",
+          "durationMs": 6.458299999998417,
+          "message": "AssertionError: expected '7e7e960cadb51ee4853bffa6b0f9d22767902…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' // Object.is equality"
+        },
+        {
+          "file": "packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 1/schema 6",
+          "durationMs": 5.78959999998915,
+          "message": "AssertionError: expected '7e7e960cadb51ee4853bffa6b0f9d22767902…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' // Object.is equality"
+        },
+        {
+          "file": "packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 1/schema 7",
+          "durationMs": 5.516600000002654,
+          "message": "AssertionError: expected '7e7e960cadb51ee4853bffa6b0f9d22767902…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' // Object.is equality"
+        },
+        {
+          "file": "packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 1/schema 8",
+          "durationMs": 4.120200000004843,
+          "message": "AssertionError: expected '7e7e960cadb51ee4853bffa6b0f9d22767902…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' // Object.is equality"
+        },
+        {
+          "file": "packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 1/schema 9",
+          "durationMs": 3.846899999974994,
+          "message": "AssertionError: expected '7e7e960cadb51ee4853bffa6b0f9d22767902…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' // Object.is equality"
+        },
+        {
+          "file": "packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 2/schema 5",
+          "durationMs": 5.42970000000787,
+          "message": "AssertionError: expected '4db597349ecb50399574aa5ed55cfa8f14159…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' // Object.is equality"
+        },
+        {
+          "file": "packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 2/schema 6",
+          "durationMs": 8.06239999999525,
+          "message": "AssertionError: expected '4db597349ecb50399574aa5ed55cfa8f14159…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' // Object.is equality"
+        },
+        {
+          "file": "packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 2/schema 7",
+          "durationMs": 6.084000000002561,
+          "message": "AssertionError: expected '4db597349ecb50399574aa5ed55cfa8f14159…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' // Object.is equality"
+        },
+        {
+          "file": "packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 2/schema 8",
+          "durationMs": 5.649300000019139,
+          "message": "AssertionError: expected '4db597349ecb50399574aa5ed55cfa8f14159…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' // Object.is equality"
+        },
+        {
+          "file": "packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 2/schema 9",
+          "durationMs": 6.307900000014342,
+          "message": "AssertionError: expected '4db597349ecb50399574aa5ed55cfa8f14159…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' // Object.is equality"
+        },
+        {
+          "file": "packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 3/schema 5",
+          "durationMs": 8.666599999996834,
+          "message": "AssertionError: expected 'ab6430d6e68feb6c0be5ab0a84e90be55670d…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' // Object.is equality"
+        },
+        {
+          "file": "packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 3/schema 6",
+          "durationMs": 7.44539999999688,
+          "message": "AssertionError: expected 'ab6430d6e68feb6c0be5ab0a84e90be55670d…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' // Object.is equality"
+        },
+        {
+          "file": "packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 3/schema 7",
+          "durationMs": 6.3417000000190455,
+          "message": "AssertionError: expected 'ab6430d6e68feb6c0be5ab0a84e90be55670d…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' // Object.is equality"
+        },
+        {
+          "file": "packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 3/schema 8",
+          "durationMs": 5.600099999981467,
+          "message": "AssertionError: expected 'ab6430d6e68feb6c0be5ab0a84e90be55670d…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' // Object.is equality"
+        },
+        {
+          "file": "packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 3/schema 9",
+          "durationMs": 4.4311000000161584,
+          "message": "AssertionError: expected 'ab6430d6e68feb6c0be5ab0a84e90be55670d…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' // Object.is equality"
+        },
+        {
+          "file": "packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 4/schema 5",
+          "durationMs": 6.278300000005402,
+          "message": "AssertionError: expected '6ad157f5f4ad1ea59353e4278c2ed0ee64bf9…' to be '3d3603171902d39a439090f0026ae33ac7654…' // Object.is equality"
+        },
+        {
+          "file": "packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 4/schema 6",
+          "durationMs": 10.257199999992736,
+          "message": "AssertionError: expected '6ad157f5f4ad1ea59353e4278c2ed0ee64bf9…' to be '3d3603171902d39a439090f0026ae33ac7654…' // Object.is equality"
+        },
+        {
+          "file": "packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 4/schema 7",
+          "durationMs": 5.984499999991385,
+          "message": "AssertionError: expected '6ad157f5f4ad1ea59353e4278c2ed0ee64bf9…' to be '3d3603171902d39a439090f0026ae33ac7654…' // Object.is equality"
+        },
+        {
+          "file": "packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 4/schema 8",
+          "durationMs": 4.083099999988917,
+          "message": "AssertionError: expected '6ad157f5f4ad1ea59353e4278c2ed0ee64bf9…' to be '3d3603171902d39a439090f0026ae33ac7654…' // Object.is equality"
+        },
+        {
+          "file": "packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 4/schema 9",
+          "durationMs": 4.0248999999894295,
+          "message": "AssertionError: expected '6ad157f5f4ad1ea59353e4278c2ed0ee64bf9…' to be '3d3603171902d39a439090f0026ae33ac7654…' // Object.is equality"
+        },
+        {
+          "file": "packages/game-domain/tests/patient-supply.test.ts",
+          "title": "routine patient supply records the current clinical inventory and exact unseen-patient boundary by stage",
+          "durationMs": 11844.991500000004,
+          "message": "Error: STACK_TRACE_ERROR"
+        }
+      ]
+    },
+    {
+      "name": "domain-admission-final",
+      "cwd": "packages/game-domain",
+      "command": "npm.cmd test -- --pool=threads --maxWorkers=2 tests/question-new-n3-supply.test.ts tests/question-new-n3-round2-supply.test.ts tests/question-new-n3-round3-supply.test.ts tests/question-ship-gate.test.ts --reporter=default --reporter=json --outputFile=<local report>",
+      "report": ".local-dev/question-harden1-n3r4-acceptance-20261110/domain-admission-final.json",
+      "log": ".local-dev/question-harden1-n3r4-acceptance-20261110/domain-admission-final.log",
+      "exitCode": 0,
+      "totalTests": 319,
+      "passed": 319,
+      "failed": 0,
+      "skipped": 0,
+      "files": 4,
+      "passedFiles": 4,
+      "failedFiles": 0,
+      "exactSummary": [
+        "Test Files  4 passed (4)",
+        "Tests  319 passed (319)",
+        "Start at  09:01:35",
+        "Duration  20.23s (transform 11.13s, setup 0ms, import 22.28s, tests 16.03s, environment 0ms)"
+      ],
+      "note": "Final exact historical/current acceptance fixture checks.",
+      "failures": []
+    },
+    {
+      "name": "domain-patient-supply-repeat",
+      "cwd": "packages/game-domain",
+      "command": "npm.cmd test -- --pool=threads --maxWorkers=2 tests/patient-supply.test.ts --reporter=default --reporter=json --outputFile=<local report>",
+      "report": ".local-dev/question-harden1-n3r4-acceptance-20261110/domain-patient-supply-repeat.json",
+      "log": ".local-dev/question-harden1-n3r4-acceptance-20261110/domain-patient-supply-repeat.log",
+      "exitCode": 1,
+      "totalTests": 4,
+      "passed": 3,
+      "failed": 1,
+      "skipped": 0,
+      "files": 1,
+      "passedFiles": 0,
+      "failedFiles": 1,
+      "exactSummary": [
+        "Test Files  1 failed (1)",
+        "Tests  1 failed | 3 passed (4)",
+        "Start at  09:01:24",
+        "Duration  20.54s (transform 4.41s, setup 0ms, import 6.89s, tests 13.52s, environment 0ms)"
+      ],
+      "note": "Historical pinned N2 author-stage timeout reproduced; no assertion or timeout edit.",
+      "failures": [
+        {
+          "file": "packages/game-domain/tests/patient-supply.test.ts",
+          "title": "routine patient supply records the current clinical inventory and exact unseen-patient boundary by stage",
+          "durationMs": 13069.915800000002,
+          "message": "Error: STACK_TRACE_ERROR"
+        }
+      ]
+    },
+    {
+      "name": "player-final",
+      "cwd": "apps/player",
+      "command": "npm.cmd test -- --pool=threads --maxWorkers=2 src/questionHarden1N3r4SaveCompatibility.test.ts src/questionFlags4SaveCompatibility.test.ts src/questionShipSaveCompatibility.test.ts src/session/cloud/separateCampaign.test.ts src/session/flagFreeze.test.tsx --reporter=default --reporter=json --outputFile=<local report>",
+      "report": ".local-dev/question-harden1-n3r4-acceptance-20261110/player-final.json",
+      "log": ".local-dev/question-harden1-n3r4-acceptance-20261110/player-final.log",
+      "exitCode": 1,
+      "totalTests": 92,
+      "passed": 91,
+      "failed": 1,
+      "skipped": 0,
+      "files": 5,
+      "passedFiles": 4,
+      "failedFiles": 1,
+      "exactSummary": [
+        "Test Files  1 failed | 4 passed (5)",
+        "Tests  1 failed | 91 passed (92)",
+        "Start at  08:54:53",
+        "Duration  64.85s (transform 17.46s, setup 0ms, import 35.77s, tests 92.06s, environment 0ms)"
+      ],
+      "note": "Final five-file run with existing preload; one unchanged cloud codec limit failure.",
+      "failures": [
+        {
+          "file": "apps/player/src/session/cloud/separateCampaign.test.ts",
+          "title": "explicit separate account campaign for a divergent local branch retains real retired encounters which no longer exist in the playable state",
+          "durationMs": 504.1784000000007,
+          "message": "CloudCodecError: JSON string exceeds the codec limit."
+        }
+      ]
+    },
+    {
+      "name": "player-ship-repeat",
+      "cwd": "apps/player",
+      "command": "npm.cmd test -- --pool=threads --maxWorkers=2 src/questionShipSaveCompatibility.test.ts --reporter=default --reporter=json --outputFile=<local report>",
+      "report": ".local-dev/question-harden1-n3r4-acceptance-20261110/player-ship-repeat.json",
+      "log": ".local-dev/question-harden1-n3r4-acceptance-20261110/player-ship-repeat.log",
+      "exitCode": 0,
+      "totalTests": 33,
+      "passed": 33,
+      "failed": 0,
+      "skipped": 0,
+      "files": 1,
+      "passedFiles": 1,
+      "failedFiles": 0,
+      "exactSummary": [
+        "Test Files  1 passed (1)",
+        "Tests  33 passed (33)",
+        "Start at  08:51:15",
+        "Duration  38.34s (transform 6.64s, setup 0ms, import 9.81s, tests 28.35s, environment 0ms)"
+      ],
+      "note": "33/33 file repeat after earlier five-file contention hit the existing5-second journal budget; final combined run also passes all33.",
+      "failures": []
+    }
+  ],
+  "typecheck": {
+    "command": "npm.cmd run typecheck",
+    "cwd": ".",
+    "exitCode": 0,
+    "workspaces": [
+      "@gamify-surgery/clinical-context-workbench",
+      "@gamify-surgery/player",
+      "@gamify-surgery/balance-config",
+      "@gamify-surgery/clinical-authoring",
+      "@gamify-surgery/clinical-content",
+      "@gamify-surgery/clinical-research",
+      "@gamify-surgery/game-domain"
+    ],
+    "passed": 7,
+    "failed": 0,
+    "log": ".local-dev/question-harden1-n3r4-acceptance-20261110/typecheck-final.log"
+  },
+  "linter": {
+    "command": "npm.cmd run clinical:lint:test",
+    "environment": {
+      "NODE_NO_WARNINGS": "1"
+    },
+    "exitCode": 0,
+    "passed": 33,
+    "failed": 0,
+    "log": ".local-dev/question-harden1-n3r4-acceptance-20261110/linter-tests.log",
+    "rawAcceptedFindings": 0,
+    "rawHerniaDraftFindings": 1,
+    "suppressedFindings": 0,
+    "advisory": "Complete balanced2x2 convergence; preserved for independent review."
+  },
+  "playerEnvironment": {
+    "NODE_OPTIONS": "--require=C:/Users/rowla/Projects/GamifySurgery/tools/question-quality/adversarial-r5-player-preload-20261102.cjs",
+    "scope": "Existing optional Vite Windows drive-mapping probe workaround only; no gameplay, test assertions, timeout or codec-budget substitutions."
+  },
+  "preExistingRegistryExpectationOmissions": [
+    "concept.n3.bilateral-carotid-symptom-attribution",
+    "concept.n3.postsplenectomy-nodule-function-before-targeting",
+    "concept.n3.dysphagia-biopsy-territory-after-negative-endoscopy",
+    "concept.n3.tumor-screen-versus-family-test-sequence.v2",
+    "concept.n3.gastric-lymphoma-new-large-cell-process.v2",
+    "concept.transplant.class-ii-crossmatch-target-and-window.v1",
+    "concept.breast.inflammatory-phenotype-after-neoadjuvant-response.v1",
+    "concept.mesenteric-ischaemia.post-revascularization-bowel-staging.v1",
+    "concept.dialysis-access.symptomatic-central-outflow-assessment.v1",
+    "concept.postoperative-delirium.benzodiazepine-withdrawal-exception.v1",
+    "concept.biliary-pancreatitis.local-complication-before-cholecystectomy.v1",
+    "concept.cholecystectomy.subtotal-type-from-remnant-tissue.v1",
+    "concept.diabetic-ketoacidosis.ongoing-insulin-substrate.v1",
+    "concept.acid-base.euglycaemic-risk-with-mixed-gas.v1",
+    "concept.anorectal-fistula.tract-and-transplant-host-plan.v1",
+    "concept.anorectal-fistula.function-before-low-tract-division.v1",
+    "concept.nutrition.gastric-versus-postpyloric-delivery.v1",
+    "concept.predictive-value.collection-population-denominator.v1",
+    "concept.palpable-breast.completed-imaging-clinical-target.v1",
+    "concept.phpt.inherited-calcium-before-localization.v2",
+    "concept.groin-hernia.ultrasound-compartment-classification.v1"
+  ],
+  "timeoutEvidence": {
+    "file": "packages/game-domain/tests/patient-supply.test.ts",
+    "test": "records the current clinical inventory and exact unseen-patient boundary by stage",
+    "firstFullRun": {
+      "status": "passed",
+      "durationMs": 9970.661800000002,
+      "report": ".local-dev/question-harden1-n3r4-acceptance-20261110/domain.json"
+    },
+    "finalFullRun": {
+      "status": "failed",
+      "durationMs": 11844.991500000004
+    },
+    "isolatedRepeat": {
+      "status": "failed",
+      "durationMs": 13069.915800000002
+    },
+    "unchangedBudgetMs": 10000,
+    "fixture": "Explicit QUESTION_NEW_N2_ROUND3_PRE_RELEASE through unchanged tests/fixtures/clinical-author-stage.ts, not the new default cases. No selector/routing/timeout edit. The failure remains open; timing origin is not proven by the pass alone."
+  },
+  "finalStatus": "All newly added acceptance/frozen-save/draft tests and seven typechecks pass. Full suites remain red with exact residuals above; no claim of an all-green suite."
+}
