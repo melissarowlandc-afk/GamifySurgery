@@ -19,6 +19,15 @@ const id = (value: unknown): string | undefined => {
 export function operationalStatePatch(before: unknown, after: unknown): OperationalStatePatch | undefined {
   if (Object.is(before, after)) return undefined;
   if (Array.isArray(before) && Array.isArray(after)) {
+    if (before.length === after.length) {
+      let aligned = true, edits: [number, OperationalStatePatch][] | undefined;
+      for (let i = 0; i < after.length; i++) {
+        if (!Object.is(before[i], after[i]) && id(before[i]) !== id(after[i])) { aligned = false; break; }
+        const patch = operationalStatePatch(before[i], after[i]);
+        if (patch) (edits ??= []).push([i, patch]);
+      }
+      if (aligned) return edits ? { kind: "array", length: after.length, segments: [{ from: 0, count: before.length }], changes: edits } : undefined;
+    }
     const changes: [number, OperationalStatePatch][] = [];
     const segments: ({ from: number; count: number } | { values: unknown[] })[] = [];
     let byId: Map<string, number> | undefined;
@@ -46,14 +55,15 @@ export function operationalStatePatch(before: unknown, after: unknown): Operatio
     return changedOrder || changes.length ? { kind: "array", length: after.length, segments, changes } : undefined;
   }
   if (record(before) && record(after)) {
-    const oldKeys = Object.keys(before), keys = Object.keys(after), changes: [string, OperationalStatePatch][] = [];
+    const oldKeys = Object.keys(before), keys = Object.keys(after);
+    let changes: [string, OperationalStatePatch][] | undefined;
     const sameKeys = oldKeys.length === keys.length && keys.every((key, i) => key === oldKeys[i]);
     for (const key of keys) {
       const patch = Object.hasOwn(before, key) ? operationalStatePatch(before[key], after[key]) : { kind: "replace" as const, value: after[key] };
-      if (patch) changes.push([key, patch]);
+      if (patch) (changes ??= []).push([key, patch]);
     }
-    if (sameKeys && !changes.length) return undefined;
-    return { kind: "object", ...(sameKeys ? {} : { keys }), changes };
+    if (sameKeys && !changes) return undefined;
+    return { kind: "object", ...(sameKeys ? {} : { keys }), changes: changes ?? [] };
   }
   return { kind: "replace", value: after };
 }

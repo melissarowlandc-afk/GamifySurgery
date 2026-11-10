@@ -26,7 +26,7 @@ async function snapshot(page: Page) {
   return page.evaluate(() => {
     const host = document.querySelector("[data-testid='facility-canvas']") as any;
     const g = host.__facilityGame, s = g.scene.getScene("facility-scene"), sources = new Set(), seen = new Set();
-    let rgba = 0, ownedReadback = 0, objects = 0, numbers = 0, renderTextures = 0;
+    let rgba = 0, ownedReadback = 0, objects = 0, numbers = 0, renderTextures = 0, maxTextureSide = 0;
     const walk = (o: any) => { if (seen.has(o)) return; seen.add(o); objects++;
       if (Array.isArray(o.commandBuffer)) numbers += o.commandBuffer.length;
       if (o.type === "RenderTexture") renderTextures++;
@@ -35,20 +35,21 @@ async function snapshot(page: Page) {
     for (const t of Object.values(g.textures.list) as any[]) {
       for (const source of t.source ?? []) if (source.image && !sources.has(source.image)) {
         sources.add(source.image); rgba += source.width * source.height * 4;
+        maxTextureSide = Math.max(maxTextureSide, source.width, source.height);
       }
       if (/tree-gaps-cleaned|^approved-chair:|^approved-stool:|^room-touchup-tint:|^character-contact-shadow$/.test(t.key))
         ownedReadback += t.data?.byteLength ?? 0;
     }
     return { mode: host.dataset.phoneMemoryMode, proofMode: host.__facilityProof.mode,
       observedHeapPeak: (window as any).__phoneMapMemoryProof?.peak ?? 0,
-      objects, numbers, renderTextures, rgba, ownedReadback, textures: Object.keys(g.textures.list).length,
+      objects, numbers, renderTextures, rgba, ownedReadback, maxTextureSide, textures: Object.keys(g.textures.list).length,
       canvases: host.querySelectorAll("canvas").length,
       canvasWidth: g.canvas.width, canvasHeight: g.canvas.height, rendererType: g.renderer.type,
       rooms: s.bridge.viewModel.rooms.length, viewModels: s.retainedViewModelCount() };
   });
 }
 
-for (const level of [4, 5]) for (const reduced of [false, true]) test(`phone L${level} ${reduced ? "reduced" : "normal"} retains bounded pan/zoom memory`, async ({ page, browserName }, info) => {
+for (const level of [4, 5]) for (const reduced of [false, true]) test(`phone L${level} ${reduced ? "restart-reduced" : "automatic-reduced"} retains bounded pan/zoom memory`, async ({ page, browserName }, info) => {
   test.skip(browserName !== "chromium" || !info.project.name.includes("phone"), "Chrome CDP heap proof; physical WebKit acceptance is separate");
   test.setTimeout(120_000);
   await page.setViewportSize({ width: 375, height: 812 });
@@ -76,16 +77,17 @@ for (const level of [4, 5]) for (const reduced of [false, true]) test(`phone L${
   const after = await collect();
   await info.attach("phone-map-memory.json", { body: JSON.stringify({ origin: new URL(page.url()).origin,
     level, reduced, before, after, heapGrowthBytes: after.heap - before.heap }, null, 2), contentType: "application/json" });
-  expect(after.proofMode).toBe("production"); expect(after.mode).toBe(reduced ? "reduced" : "normal");
-  expect(after.heap).toBeLessThan(520 * 1024 * 1024); // Pre-change phone range, rounded up; production only.
+  expect(after.proofMode).toBe("production"); expect(after.mode).toBe("reduced"); // Large clinics need no prior crash.
+  expect(after.heap).toBeLessThan(384 * 1024 * 1024); // Production page only; workers have separate budgets.
   expect(after.rooms).toBe(level === 4 ? 42 : 87); expect(after.rendererType).toBe(1); // Phaser.CANVAS
   expect(after.renderTextures).toBe(0); expect(after.ownedReadback).toBe(0);
   expect(after.canvases).toBe(1);
   expect(after.objects).toBe(before.objects); expect(after.numbers).toBe(before.numbers);
   expect(after.textures).toBeLessThanOrEqual(before.textures + 2); expect(after.viewModels).toBeLessThanOrEqual(2);
   expect(after.heap - before.heap).toBeLessThan((process.env.CI ? 16 : 8) * 1024 * 1024);
-  expect(after.rgba).toBeLessThan(level === 4 ? (reduced ? 185 : 200) * 1_000_000 : (reduced ? 340 : 370) * 1_000_000);
-  expect(after.canvasWidth * after.canvasHeight * 4).toBeLessThanOrEqual(375 * 812 * (reduced ? 1 : 4) * 4);
-  expect(after.canvasWidth).toBeLessThanOrEqual(375 * (reduced ? 1 : 2));
-  expect(after.canvasHeight).toBeLessThanOrEqual(812 * (reduced ? 1 : 2));
+  expect(after.rgba).toBeLessThan((level === 4 ? 100 : 155) * 1_000_000);
+  expect(after.maxTextureSide).toBeLessThanOrEqual(2048);
+  expect(after.canvasWidth * after.canvasHeight * 4).toBeLessThanOrEqual(375 * 812 * 4);
+  expect(after.canvasWidth).toBeLessThanOrEqual(375);
+  expect(after.canvasHeight).toBeLessThanOrEqual(812);
 });

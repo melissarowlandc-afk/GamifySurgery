@@ -6,9 +6,9 @@ import { phoneMemoryProfile } from "./phoneMemoryPolicy";
 export class CharacterTextureBudget {
   private readonly rows = new Map<string, { bytes: number; family?: string }>();
   private bytes = 0;
-  constructor(private readonly maxBytes: number = phoneMemoryProfile().textureBytes,
-    private readonly maxTextures: number = phoneMemoryProfile().textureCount,
-    private readonly keepLiveFamilies = phoneMemoryProfile().keepLiveFamilies) {}
+  constructor(private readonly maxBytes?: number,
+    private readonly maxTextures?: number,
+    private readonly keepLiveFamilies?: boolean) {}
   get retainedBytes(): number { return this.bytes; }
   get size(): number { return this.rows.size; }
   register(key: string, width: number, height: number): void {
@@ -25,11 +25,13 @@ export class CharacterTextureBudget {
     this.rows.delete(key); this.rows.set(key, row);
   }
   trim(pinned: ReadonlySet<string>, remove: (key: string) => void, liveFamilies: ReadonlySet<string> = new Set()): void {
-    if (this.bytes <= this.maxBytes && this.rows.size <= this.maxTextures) return;
+    const profile = phoneMemoryProfile(), maxBytes = this.maxBytes ?? profile.textureBytes,
+      maxTextures = this.maxTextures ?? profile.textureCount, keepLiveFamilies = this.keepLiveFamilies ?? profile.keepLiveFamilies;
+    if (this.bytes <= maxBytes && this.rows.size <= maxTextures) return;
     for (const [key, row] of this.rows) {
-      if (pinned.has(key) || this.keepLiveFamilies && row.family && liveFamilies.has(row.family)) continue;
+      if (pinned.has(key) || keepLiveFamilies && row.family && liveFamilies.has(row.family)) continue;
       remove(key); this.rows.delete(key); this.bytes -= row.bytes;
-      if (this.bytes <= this.maxBytes && this.rows.size <= this.maxTextures) break;
+      if (this.bytes <= maxBytes && this.rows.size <= maxTextures) break;
     }
   }
 }

@@ -7,7 +7,6 @@ import { mapSessionAction } from "../session/sessionActions";
 import { roomThumbnailStage } from "./roomThumbnailCapture";
 import { initializeCanvasRoomLighting } from "./canvasRoomLighting";
 import { serviceVisitorWaitingSupport } from "./serviceVisitorWaitingPresentation";
-import { isInspectorBitmapAsset, loadMobileInspectorBitmap } from "../mobile/performance/inspectorAssets";
 import { CharacterTextureBudget } from "../mobile/performance/characterTextureBudget";
 import { getRoomUpgradeDefinition } from "@gamify-surgery/balance-config";
 import type {
@@ -323,10 +322,13 @@ import type { MobileBuildMapState } from "../mobile/build/types";
 import { PhoneBuildMapInput } from "../mobile/build/mapInput";
 import { framePhoneGhost, phoneGhostEdgePan } from "../mobile/build/ghostCamera";
 import type { MobileMapPresentationPolicy } from "../mobile/performance/presentationPolicy";
-import { mobileBitmapCache, mobileRoomArtReady, selectFacilityAssets } from "../mobile/performance/roomAssets";
+import { mobileBitmapCache, mobileRoomArtReady, selectFacilityAssets, trimPhoneFacilityTextures } from "../mobile/performance/roomAssets";
+import { PHONE_ART_BACKGROUND, PHONE_ART_CHARACTER, PHONE_ART_VISIBLE } from "../mobile/performance/bitmapDecodeQueue";
+import { visiblePhoneAssetIds, visiblePhoneRoomIds } from "../mobile/performance/phoneArtPriority";
 import { resolvePublicArtAssetUrl } from "../art/bitmapAssetManifest";
 import { installMobileCanvasResolution } from "../mobile/performance/canvasResolution";
 import { facilityCanvasSurface } from "../mobile/performance/staticCanvasTexture";
+import { drawFacilityAtlasCrop, facilityAtlasClip, installPhoneArtSource, phoneArtSource } from "../mobile/performance/phoneArt";
 
 export interface FacilitySceneBridge {
   /** Explicit opt-in; desktop never supplies it. */
@@ -669,7 +671,6 @@ export class FacilityScene extends Phaser.Scene {
   private frameDeltaMilliseconds = 0;
   private characterPresentationWasFrozen = false;
   private readonly routeMotionTracks = new Map<string, RouteMotionTrack>();
-  private readonly mobileInspectorStills = new Set<string>();
   private readonly failedInspectorLocations = new Map<string, GridPoint>();
   /** Last horizontal render orientation survives a stationary frame without
    * affecting the domain route or persisted character state. */
@@ -726,6 +727,18 @@ export class FacilityScene extends Phaser.Scene {
   private landscapingTreeCleanupReady = false;
   private roomFixtureAtlasesReady = false;
   private mobileAtlasSignature = "";
+  private mobileRequiredAtlases = new Set<string>();
+  private mobileAtlasPrunePending = false;
+  private readonly mobilePendingAtlases = new Set<string>();
+  private mobileArtRefreshTimer?: ReturnType<typeof setTimeout>;
+  private mobileArtWorldPending = false;
+  private mobileArtCharactersPending = false;
+  private mobileReadyArtSignature = "";
+  private mobileArtStartedAt?: number;
+  private mobileArtFirstTextureAt?: number;
+  private mobileArtFirstRoomAt?: number;
+  private mobileArtSettledAt?: number;
+  private phoneResolutionResize?: () => void;
   private levelFiveAtlasLoadRequested = false;
   private mobileAtlasModel?: FacilityViewModel;
   private mobileAtlasLevel?: number;
@@ -857,9 +870,12 @@ export class FacilityScene extends Phaser.Scene {
     if (this.bridge.mobileInput === true && "gameContext" in this.game.renderer) {
       const resolution = installMobileCanvasResolution(this.game.canvas, this.game.renderer.gameContext, this.scale);
       const resize = () => resolution.resize(this.scale.width, this.scale.height, window.devicePixelRatio);
+      this.phoneResolutionResize = resize;
       resize();
       this.scale.on(Phaser.Scale.Events.RESIZE, resize);
       this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+        this.phoneResolutionResize = undefined;
+        clearTimeout(this.mobileArtRefreshTimer); this.mobileArtRefreshTimer = undefined;
         this.scale.off(Phaser.Scale.Events.RESIZE, resize); resolution.destroy();
       });
     }
@@ -1002,6 +1018,9 @@ export class FacilityScene extends Phaser.Scene {
     this.refreshLayout(true);
   }
 
+  /** A phone can cross the large-clinic threshold without remounting its map. */
+  public refreshPhoneMemoryProfile(): void { this.phoneResolutionResize?.(); }
+
   /**
    * Dynamic scene construction means the first authored pack starts loading
    * after `create`. Until the image is decoded, the original procedural world
@@ -1055,7 +1074,8 @@ export class FacilityScene extends Phaser.Scene {
     this.load.start();
   }
 
-  /** Phone sources are shared with visible catalog previews; desktop uses its original eager loader. */
+  /** Install each source immediately. Visible rooms must not wait for the last
+   * offscreen atlas, and resolved batches must not retain all decoded images. */
   private ensureMobileAtlases(): void {
     if (typeof Image === "undefined") return;
     const model = this.bridge.viewModel;
@@ -1064,19 +1084,60 @@ export class FacilityScene extends Phaser.Scene {
     if (model === this.mobileAtlasModel && level === this.mobileAtlasLevel && previews === this.mobileAtlasPreviews) return;
     this.mobileAtlasModel = model; this.mobileAtlasLevel = level; this.mobileAtlasPreviews = previews;
     const builtRoomIds = [...new Set(model.rooms.map(room => room.definitionId))].sort();
-    const previewRoomIds = [...(previews ?? []), ...(model.placement ? [model.placement.definitionId] : [])];
+    // Catalog previews are offline thumbnail PNGs. Scrolling that catalog must
+    // not decode/retain the full atlas of every room ever seen in the session.
+    const previewRoomIds = model.placement ? [model.placement.definitionId] : [];
     const signature = JSON.stringify([model.campaignId, level, builtRoomIds, previewRoomIds]);
     if (signature === this.mobileAtlasSignature) return;
     this.mobileAtlasSignature = signature;
-    const assets = selectFacilityAssets({ mobile: true, facilityLevel: level, builtRoomIds, previewRoomIds })
-      .filter(asset => !this.textures.exists(getPhaserTextureKey(asset)));
-    Promise.all(assets.map(async asset => ({ asset, image: await mobileBitmapCache.load(asset,
-      resolvePublicArtAssetUrl(asset.relativePath!)) }))).then(loaded => {
-      if (!this.sys.isActive() || this.bridge.mobileInput !== true) return;
-      for (const { asset, image } of loaded) {
+    this.mobileArtStartedAt ??= performance.now(); this.mobileArtSettledAt = undefined;
+    const required = selectFacilityAssets({ mobile: true, facilityLevel: level, builtRoomIds, previewRoomIds });
+    this.mobileRequiredAtlases = new Set(required.map(getPhaserTextureKey)); this.mobileAtlasPrunePending = true;
+    const visible = visiblePhoneAssetIds(visiblePhoneRoomIds(model.rooms,
+      this.calculateLayout(this.scale.width, this.scale.height), this.scale));
+    const priority = (id: string) => visible.has(id) || id === ENVIRONMENT_ATLAS_V1.id || id === LANDSCAPING_ATLAS_V1.id
+      ? PHONE_ART_VISIBLE : PHONE_ART_BACKGROUND;
+    const assets = required.filter(asset => !this.textures.exists(getPhaserTextureKey(asset)))
+      .sort((a, b) => priority(a.id) - priority(b.id));
+    for (const asset of assets) {
+      if (this.mobilePendingAtlases.has(asset.id)) continue;
+      this.mobilePendingAtlases.add(asset.id);
+      const source = phoneArtSource(asset);
+      void mobileBitmapCache.load(asset, resolvePublicArtAssetUrl(source?.path ?? asset.relativePath!), priority(asset.id)).then(image => {
+        this.mobilePendingAtlases.delete(asset.id);
         const key = getPhaserTextureKey(asset);
-        if (image && !this.textures.exists(key)) this.textures.addImage(key, image);
-      }
+        if (!this.sys.isActive() || this.bridge.mobileInput !== true || !this.mobileRequiredAtlases.has(key)) return;
+        if (image && !this.textures.exists(key)) {
+          const texture = this.textures.addImage(key, image);
+          if (texture && source) installPhoneArtSource(texture, source);
+          this.mobileArtFirstTextureAt ??= performance.now();
+        }
+        this.queueMobileArtRefresh(true);
+      });
+    }
+    mobileBitmapCache.prioritize(visible, PHONE_ART_VISIBLE);
+    if (assets.length === 0) this.queueMobileArtRefresh(true);
+  }
+
+  private queueMobileArtRefresh(world = false): void {
+    this.mobileArtWorldPending ||= world; this.mobileArtCharactersPending ||= !world;
+    if (this.mobileArtRefreshTimer !== undefined) return;
+    // Coalesce image completions. Partial/offscreen room packs do not cause a
+    // full-world redraw per texture; the final background completion draws once.
+    this.mobileArtRefreshTimer = setTimeout(() => {
+      this.mobileArtRefreshTimer = undefined;
+      if (this.sys.isActive() && !this.bridge.mobilePresentation?.hidden) this.flushMobileArtRefresh();
+    }, 80);
+  }
+
+  private flushMobileArtRefresh(): void {
+    const visible = visiblePhoneRoomIds(this.bridge.viewModel.rooms, this.layout, this.scale);
+    const ready = visible.filter(id => mobileRoomArtReady(id, asset => this.textures.exists(getPhaserTextureKey(asset))));
+    const signature = JSON.stringify([this.textures.exists(getPhaserTextureKey(ENVIRONMENT_ATLAS_V1)),
+      this.textures.exists(getPhaserTextureKey(LANDSCAPING_ATLAS_V1)),
+      ...Object.values(FRONTAGE_V2_ASSETS).map(asset => this.textures.exists(getPhaserTextureKey(asset))), ready]);
+    if (this.mobileArtWorldPending && (signature !== this.mobileReadyArtSignature || this.mobilePendingAtlases.size === 0)) {
+      this.mobileReadyArtSignature = signature;
       if (this.textures.exists(getPhaserTextureKey(ENVIRONMENT_ATLAS_V1))) {
         this.registerEnvironmentAtlasFrames(); this.environmentAtlasReady = true;
       }
@@ -1084,7 +1145,38 @@ export class FacilityScene extends Phaser.Scene {
       this.landscapingAtlasReady = this.textures.exists(getPhaserTextureKey(LANDSCAPING_ATLAS_V1));
       this.registerRoomFixtureAtlasFrames();
       this.refreshLayout(true);
-    });
+      this.trimMobileAtlases();
+    }
+    this.mobileArtWorldPending = false;
+    if (this.mobileArtCharactersPending) { this.mobileArtCharactersPending = false; this.drawCharacters(); }
+    this.recordMobileArtSettled();
+  }
+
+  private recordMobileArtSettled(): void {
+    if (this.mobileArtStartedAt !== undefined && !this.mobilePendingAtlases.size && !this.pendingCharacterStills.size &&
+      !this.mobileArtWorldPending && !this.mobileArtCharactersPending && this.mobileArtRefreshTimer === undefined && !this.crispZoomPending)
+      this.mobileArtSettledAt ??= performance.now();
+  }
+
+  /** Small presentation-only proof/diagnostic; no patient, save or image data. */
+  public phoneArtLoadingStatus() {
+    const elapsed = (at: number | undefined) => at === undefined || this.mobileArtStartedAt === undefined ? null : at - this.mobileArtStartedAt;
+    return { firstTextureMs: elapsed(this.mobileArtFirstTextureAt), firstRoomMs: elapsed(this.mobileArtFirstRoomAt),
+      settledMs: elapsed(this.mobileArtSettledAt), pendingRooms: this.mobilePendingAtlases.size,
+      missingRoomSources: [...this.mobileRequiredAtlases].filter(key => !this.textures.exists(key)).length,
+      pendingCharacters: this.pendingCharacterStills.size, failedCharacters: this.failedCharacterStills.size,
+      painting: this.mobileArtRefreshTimer !== undefined || this.mobileArtWorldPending || this.mobileArtCharactersPending,
+      cache: mobileBitmapCache.health };
+  }
+
+  private trimMobileAtlases(): void {
+    if (!this.mobileAtlasPrunePending || this.bridge.mobileInput !== true || !this.textures.getTextureKeys) return;
+    if (this.bridge.mobilePresentation?.hidden) return;
+    this.mobileAtlasPrunePending = false;
+    const used = new Set<string>();
+    for (const images of [this.fixtureBitmapImages, this.landscapingBitmapImages, this.environmentSprites])
+      for (const image of images.values()) used.add(image.texture.key);
+    trimPhoneFacilityTextures(this.textures, this.mobileRequiredAtlases, used);
   }
 
   /** Additional approved pack only in Level 5; old eager requests stay exact. */
@@ -1157,18 +1249,20 @@ export class FacilityScene extends Phaser.Scene {
     assets: readonly import("../art/bitmapAssetManifest").BitmapAssetDescriptor[],
   ): void {
     if (this.bridge.mobileInput === true && typeof Image !== "undefined") {
-      for (const asset of assets.filter(isInspectorBitmapAsset)) {
+      for (const asset of assets) {
         const textureKey = getPhaserTextureKey(asset);
-        if (this.textures.exists(textureKey) || this.mobileInspectorStills.has(asset.id)) continue;
-        this.mobileInspectorStills.add(asset.id);
-        loadMobileInspectorBitmap(asset).then(image => {
+        if (this.textures.exists(textureKey) || this.failedCharacterStills.has(asset.id) || this.pendingCharacterStills.has(asset.id)) continue;
+        this.pendingCharacterStills.set(asset.id, asset);
+        void mobileBitmapCache.load(asset, resolvePublicArtAssetUrl(asset.relativePath!), PHONE_ART_CHARACTER).then(image => {
+          this.pendingCharacterStills.delete(asset.id);
           if (!this.sys.isActive()) return;
           if (image && !this.textures.exists(textureKey)) this.textures.addImage(textureKey, image);
+          if (image) this.mobileArtFirstTextureAt ??= performance.now();
           if (!image) this.failedCharacterStills.add(asset.id);
-          this.drawCharacters();
+          this.queueMobileArtRefresh();
         });
       }
-      assets = assets.filter(asset => !isInspectorBitmapAsset(asset));
+      return;
     }
     for (const asset of assets) {
       const textureKey = getPhaserTextureKey(asset);
@@ -1299,12 +1393,13 @@ export class FacilityScene extends Phaser.Scene {
     if (this.textures.exists(key)) return key;
     const atlas = APPROVED_GS015_ROOM_ATLASES.find((candidate) => candidate.id === stool.assetId);
     if (!atlas || !this.textures.exists(getPhaserTextureKey(atlas))) return undefined;
-    const source = this.textures.get(getPhaserTextureKey(atlas)).getSourceImage();
+    const atlasTexture = this.textures.get(getPhaserTextureKey(atlas));
+    const source = atlasTexture.getSourceImage();
     if (!source) return undefined;
     const [x, y, width, height] = stool.sourceRect;
     const texture = facilityCanvasSurface(this.textures, key, width, height, this.bridge.mobileInput === true);
     if (!texture) return undefined;
-    texture.context.drawImage(source as CanvasImageSource, x, y, width, height, 0, 0, width, height);
+    drawFacilityAtlasCrop(texture.context, atlasTexture, x, y, width, height);
     const pixels = texture.getData(0, 0, width, height);
     pixels.data.set(deriveBacklessRollingStoolPixels(pixels.data, width, height, stool.derivation));
     texture.putData(pixels, 0, 0);
@@ -1321,7 +1416,8 @@ export class FacilityScene extends Phaser.Scene {
     const atlas = APPROVED_GS015_ROOM_ATLASES.find((candidate) => candidate.id === mask.assetId);
     if (!atlas) return undefined;
     if (this.bridge.mobileInput === true && !this.textures.exists(getPhaserTextureKey(atlas))) return undefined;
-    const source = this.textures.get(getPhaserTextureKey(atlas)).getSourceImage();
+    const atlasTexture = this.textures.get(getPhaserTextureKey(atlas));
+    const source = atlasTexture.getSourceImage();
     if (!source) return undefined;
     const [sourceX, sourceY, width, height] = mask.sourceRect;
     const rearTexture = facilityCanvasSurface(this.textures, rear, width, height, this.bridge.mobileInput === true);
@@ -1329,17 +1425,7 @@ export class FacilityScene extends Phaser.Scene {
     if (!rearTexture || !foregroundTexture) return undefined;
     for (const texture of [rearTexture, foregroundTexture]) {
       texture.context.clearRect(0, 0, width, height);
-      texture.context.drawImage(
-        source as CanvasImageSource,
-        sourceX,
-        sourceY,
-        width,
-        height,
-        0,
-        0,
-        width,
-        height,
-      );
+      drawFacilityAtlasCrop(texture.context, atlasTexture, sourceX, sourceY, width, height);
     }
     const rearPixels = rearTexture.getData(0, 0, width, height);
     const foregroundPixels = foregroundTexture.getData(0, 0, width, height);
@@ -1483,6 +1569,7 @@ export class FacilityScene extends Phaser.Scene {
         this.resyncMobilePresentation();
         mobileResynced = true;
       }
+      if (this.mobileArtRefreshTimer === undefined && (this.mobileArtWorldPending || this.mobileArtCharactersPending)) this.flushMobileArtRefresh();
     }
     if (this.bridge.mobileInput === true) {
       this.syncMobileInputMode();
@@ -1522,6 +1609,7 @@ export class FacilityScene extends Phaser.Scene {
     }
     this.reportAlertPinPositions();
     this.drawEarningsPopups(time);
+    if (this.bridge.mobileInput === true) this.recordMobileArtSettled();
     // Atlas completion callbacks can redraw outside update(). Delta belongs to
     // this update only, never to a later event-driven redraw.
     this.frameDeltaMilliseconds = 0;
@@ -1582,6 +1670,9 @@ export class FacilityScene extends Phaser.Scene {
     }
 
     this.drawWorld();
+    if (this.bridge.mobileInput === true && this.mobileArtFirstRoomAt === undefined &&
+      visiblePhoneRoomIds(this.bridge.viewModel.rooms, this.layout, this.scale).some(id => id !== "room.hallway" &&
+        mobileRoomArtReady(id, asset => this.textures.exists(getPhaserTextureKey(asset))))) this.mobileArtFirstRoomAt = performance.now();
     this.positionText();
     this.drawPlacementGhost();
   }
@@ -1900,6 +1991,7 @@ export class FacilityScene extends Phaser.Scene {
         this.approvedSideChairRuntimes.delete(key);
       }
     }
+    this.trimMobileAtlases();
   }
 
   private removeInactiveLandscapingBitmapImages(): void {
@@ -5698,7 +5790,12 @@ export class FacilityScene extends Phaser.Scene {
         .setData("approved-front-room-id", room.instanceId)
         .setData("approved-front-base-depth", recordDepth);
       const clipWidth = getApprovedDrawClipWidth(record);
-      if (clipWidth !== undefined) image.setCrop(0, 0, clipWidth, record.sourceRect[3]);
+      if (clipWidth !== undefined) {
+        const [cropWidth, cropHeight] = this.bridge.mobileInput === true
+          ? facilityAtlasClip(this.textures.get(textureKey), record.sourceRect, clipWidth)
+          : [clipWidth, record.sourceRect[3]];
+        image.setCrop(0, 0, cropWidth, cropHeight);
+      }
       else if (image.isCropped) image.setCrop();
       this.activeFixtureBitmapImages.add(key);
       if (lighting) {
@@ -6681,7 +6778,10 @@ export class FacilityScene extends Phaser.Scene {
         `character:inspector:${actor.instanceId}`, actor.appearance, true,
       )),
     ];
-    this.ensureCharacterStills(prefetchAppearances.flatMap(characterStandingBitmapDescriptors));
+    // Reduced phones evict unused cardinals. Prefetching every cardinal again
+    // on each redraw creates an endless decode/eviction loop even while paused.
+    // The selected render plan below requests its exact live pose on demand.
+    if (this.bridge.mobileInput !== true) this.ensureCharacterStills(prefetchAppearances.flatMap(characterStandingBitmapDescriptors));
     representedKeys.add(founderKey);
     const founderPresentation = this.getCharacterRoutePresentation(
       founderKey,
@@ -8923,6 +9023,8 @@ export class FacilityScene extends Phaser.Scene {
     this.cameraPreferencePending = false;
     const camera = this.getCameraPreference();
     if (camera) this.publishCameraChange(camera);
+    if (this.bridge.mobileInput === true) mobileBitmapCache.prioritize(
+      visiblePhoneAssetIds(visiblePhoneRoomIds(this.bridge.viewModel.rooms, this.layout, this.scale)), PHONE_ART_VISIBLE);
   }
 
   public publishCameraChange(camera: FacilityCameraView): void {

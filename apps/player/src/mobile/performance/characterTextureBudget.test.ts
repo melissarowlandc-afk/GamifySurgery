@@ -1,5 +1,16 @@
-import { expect, it } from "vitest";
+import { expect, it, vi } from "vitest";
 import { CharacterTextureBudget } from "./characterTextureBudget";
+import * as memory from "./phoneMemoryPolicy";
+
+it("adopts the smaller profile when a long-running clinic crosses the phone threshold", () => {
+  const current = memory.phoneMemoryProfile(), profile = vi.spyOn(memory, "phoneMemoryProfile");
+  const budget = new CharacterTextureBudget();
+  for (let n = 0; n < 96; n++) budget.register(`pose.${n}`, 160, 320);
+  expect(budget.size).toBe(96);
+  profile.mockReturnValue({ ...current, mode: "reduced", maxDpr: 1, textureBytes: 8 * 1024 * 1024, textureCount: 32, keepLiveFamilies: false });
+  try { budget.trim(new Set(["pose.0"]), () => {}); expect(budget.size).toBe(32); }
+  finally { profile.mockRestore(); }
+});
 
 it("bounds decoded memory across the 1,054-still catalogue while keeping every live pose", () => {
   const budget = new CharacterTextureBudget(), textures = new Set<string>(), pinned = new Set(["founder", "nurse"]);

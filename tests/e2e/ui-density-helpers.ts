@@ -14,6 +14,9 @@ export async function openDensityFixture(page: Page, phone: boolean, keepChart =
   await expect.poll(async () => await shell.isVisible() || await resume.isVisible(), { timeout: 30_000 }).toBe(true);
   if (await resume.isVisible()) await resume.click();
   await expect(page.locator(phone ? ".mobile-shell" : ".game-shell")).toBeVisible({ timeout: 30_000 });
+  // Shell/canvas mount before asynchronous campaign recovery finishes. Match
+  // the fresh-campaign helper's entry barrier before observing or clicking UI.
+  await expect(page.getByRole("region", { name: "Loading clinic", exact: true })).toBeHidden({ timeout: 30_000 });
   await expect.poll(() => page.evaluate(() => document.fonts.status), { timeout: 20_000 }).toBe("loaded");
   if (!keepChart) {
     const chart = page.locator(phone ? '.mobile-sheet[aria-label="Patient chart"]' : ".chart-sheet");

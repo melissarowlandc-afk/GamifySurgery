@@ -17,7 +17,7 @@ import type { MobileMapSelection } from "../mobile/map/selection";
 import type { MobileBuildMapState } from "../mobile/build/types";
 import { MobileMapPresentationPolicy, mobileCanvasSize } from "../mobile/performance/presentationPolicy";
 import { PhoneFrameBudget, PHONE_ACTIVE_FPS } from "../mobile/performance/frameBudget";
-import { phoneMemoryProfile, markPhonePlaying } from "../mobile/performance/phoneMemoryPolicy";
+import { phoneMemoryProfile, markPhonePlaying, observePhoneClinic } from "../mobile/performance/phoneMemoryPolicy";
 import { mobileBitmapCache } from "../mobile/performance/roomAssets";
 import { bindCanvasContextRecovery } from "../mobile/performance/canvasContextRecovery";
 import { facilityMemorySnapshot } from "../mobile/performance/facilityMemory";
@@ -170,6 +170,15 @@ export function FacilityCanvas({
   bridgeRef.current.onAlertPinPositionsChange = pinPositions.current.publish;
 
   useEffect(() => { phoneFrames.current?.update(); });
+  useEffect(() => {
+    if (mobileInput !== true) return;
+    const previous = phoneMemoryProfile(true).maxDpr;
+    observePhoneClinic(mobileFacilityLevel ?? 0, viewModel.rooms.length, true);
+    if (phoneMemoryProfile().maxDpr !== previous) {
+      (gameRef.current?.scene?.getScene?.("facility-scene") as FacilityScene | undefined)?.refreshPhoneMemoryProfile();
+      if (hostRef.current) hostRef.current.dataset.phoneMemoryMode = phoneMemoryProfile().mode;
+    }
+  }, [mobileInput, mobileFacilityLevel, viewModel.rooms.length]);
   useEffect(() => { if (mobileInput === true) markPhonePlaying(); }, [mobileInput]);
   useEffect(() => { if (mobileInput !== true || mobileMapCovered !== true) setCanvasNeeded(true); }, [mobileInput, mobileMapCovered]);
 
@@ -202,7 +211,10 @@ export function FacilityCanvas({
       canvas.remove();
     });
 
-    if (bridgeRef.current.mobileInput === true) phoneMemoryProfile(true);
+    if (bridgeRef.current.mobileInput === true) {
+      observePhoneClinic(bridgeRef.current.mobileFacilityLevel ?? 0, bridgeRef.current.viewModel.rooms.length, true);
+      phoneMemoryProfile(true);
+    }
     const scene = new FacilityScene(bridgeRef.current);
     const width = bridgeRef.current.mobileInput === true ? mobileCanvasSize(host.clientWidth, host.clientHeight).width : Math.max(1, Math.floor(host.clientWidth));
     const height = bridgeRef.current.mobileInput === true ? mobileCanvasSize(host.clientWidth, host.clientHeight).height : Math.max(1, Math.floor(host.clientHeight));

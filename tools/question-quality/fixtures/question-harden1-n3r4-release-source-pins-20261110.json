@@ -6,7 +6,7 @@
       "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
       "mainBeforeSha256": "b0db2a2b63bdc09836810899f993227c3149f2465478f6a68ae2cc51d232e4ab",
       "mainAfterSha256": "93501006d93385d1bfc78ed8be0dd56ca28ab8aec07c38d204902ef0e510de9f",
-      "requiredReleaseSha256": "b1820673e9f27b311ae3663c667777b6819ccfc78fc7841466e860b095446839",
+      "requiredReleaseSha256": "1ed937ce81569910eb1a7e66412466b74d7da28c3ddd4caf95ed8d528fa01fe2",
       "reason": "Exact authorized release hunk port preserves pre-existing strict guard/registry fixes; original migration unchanged."
     },
     {
@@ -59,6 +59,18 @@
           "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
           "beforeSha256": "0d148f08e83c4fae412caa3c79c2a54e94080bbdc86a70f7c3d753b1d255755e",
           "afterSha256": "b1820673e9f27b311ae3663c667777b6819ccfc78fc7841466e860b095446839"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-10",
+      "milestone": "release-port29-port",
+      "priorFixtureSha256": "946b6533d43fd87bea1d122f999993e4567e5cd97ff8c9f726ff67900463dfb6",
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
+          "beforeSha256": "b1820673e9f27b311ae3663c667777b6819ccfc78fc7841466e860b095446839",
+          "afterSha256": "1ed937ce81569910eb1a7e66412466b74d7da28c3ddd4caf95ed8d528fa01fe2"
         }
       ]
     }

@@ -11978,3 +11978,286 @@ Verified launcher health contract gamify-surgery-player protocol 1.
 ```
 
 Manager next step: review the scoped source/evidence delta, then browser-check the changed Level5/e2e saves and owner review-page cases. These are editorial draft acceptances, not clinical sign-off. Existing port 26 memory and port 27 cloud/SQL files, .github and unrelated work are exact. No browser, account, network, SQL, agents, installation, Git mutation or deployment was used. Owner origin/profile/path is unchanged; no preview opened. Work remains local/uncommitted for manager review, backup and rollout.
+
+## Release port 29 (2026-11-10, release worktree, phone performance)
+
+Completed only in GS-release, entry HEAD 58c49c18fd815a061195d87505f09ba423dace15. Shipped the accepted phone performance pass: 142 offline room/decor derivatives, phone atlas/crop loader support, four-slot decode lifetime and stale-load/atlas reclamation, automatic reduced profile at Level 4+ or 40 rooms, native codec idle release after five quiet seconds, and representation-exact array/object transport fast paths. Existing release character rendering is preserved: FacilityScene received exactly 11 performance hunk groups against the author's frozen entry. The main tree remained read-only.
+
+### Paths and provenance
+
+**182 public paths**: 142 PNGs + 27 other author-owned files + 10 exact source-guard metadata files + three release coordination records. Dispositions: **168 copied / 11 hunk-ported / 203 excluded** observed source differences; three additional release-only coordination records. Every path, reason and entry/final hash is in `.local-dev/release-verify/port29-20261110.json`; the complete final changed-path hashes are in `.local-dev/release-port29-20261110/scope-audit-final.json`. All 203 other observed differences are also listed individually in `.local-dev/release-port29-20261110/excluded-paths.txt`.
+
+All 142 new PNGs under `apps/player/public/art/phone/` are deterministic premultiplied-alpha Lanczos reductions of existing, approved release registry assets. Each original's pre-port and current SHA-256 matches the generated manifest; no original artwork was changed or new artwork authored. The release's own exported asset registry was used, and the offline generator's `--verify` reproduced every pixel and manifest row: **142 variants, 18,127,265 encoded bytes, largest side 1,903 pixels (limit 2,048)**. Total RGBA for all derivatives is 77,731,524 bytes versus 327,819,024 for those originals; this is a dimensions calculation, not a phone RAM measurement. Full source/output/pixel hashes: `art-provenance.json` and checked-in `phoneArt.generated.json`.
+
+Other ported paths:
+
+- `apps/player/src/facility/FacilityCanvas.tsx` (copied)
+- `apps/player/src/facility/FacilityScene.ts` (hunk-ported)
+- `apps/player/src/mobile/performance/characterTextureBudget.test.ts` (copied)
+- `apps/player/src/mobile/performance/characterTextureBudget.ts` (copied)
+- `apps/player/src/mobile/performance/lazyArt.test.tsx` (copied)
+- `apps/player/src/mobile/performance/phoneArt.generated.json` (copied)
+- `apps/player/src/mobile/performance/phoneArt.test.ts` (copied)
+- `apps/player/src/mobile/performance/phoneArt.ts` (copied)
+- `apps/player/src/mobile/performance/phoneArtFrame.test.ts` (copied)
+- `apps/player/src/mobile/performance/phoneMemoryPolicy.test.ts` (copied)
+- `apps/player/src/mobile/performance/phoneMemoryPolicy.ts` (copied)
+- `apps/player/src/mobile/performance/roomAssets.test.ts` (copied)
+- `apps/player/src/mobile/performance/roomAssets.ts` (copied)
+- `apps/player/src/mobile/performance/staticCanvasTexture.test.ts` (copied)
+- `apps/player/src/mobile/performance/staticCanvasTexture.ts` (copied)
+- `apps/player/src/session/cloud/codecPhoneIdle.test.ts` (copied)
+- `apps/player/src/session/cloud/codecWorker.ts` (copied)
+- `apps/player/src/session/cloud/gameSession.ts` (copied)
+- `apps/player/src/session/cloud/operationalArrayAllocation.test.ts` (copied)
+- `apps/player/src/session/cloud/operationalStatePatch.ts` (copied)
+- `docs/execplans/phone-performance-pass-20261110.md` (copied)
+- `docs/research/phone-performance-pass-20261110.md` (copied)
+- `scripts/art/generate-phone-art.py` (copied)
+- `scripts/art/phone-art-input.ts` (copied)
+- `scripts/generate-phone-art-input.mjs` (copied)
+- `scripts/qa/phone-runtime-budget.mjs` (copied)
+- `tests/e2e/map-pan-zoom-phone-memory.spec.ts` (copied)
+
+The ten guard metadata paths are:
+
+- `packages/clinical-content/src/question-flags3-20261107.test.ts`
+- `tools/question-quality/fixtures/question-flags3-release-source-pins-20261107.json`
+- `packages/clinical-content/src/question-stats1-20261108.test.ts`
+- `tools/question-quality/fixtures/question-stats1-release-source-pins-20261108.json`
+- `packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts`
+- `tools/question-quality/fixtures/question-stats1-acceptance-release-source-pins-20261108.json`
+- `packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts`
+- `tools/question-quality/fixtures/question-flags4-acceptance-release-source-pins-20261108.json`
+- `packages/clinical-content/src/question-harden1-n3r4-acceptance-20261110.test.ts`
+- `tools/question-quality/fixtures/question-harden1-n3r4-release-source-pins-20261110.json`
+
+Only three source postimages are newly authorized: codecWorker.ts, gameSession.ts and operationalStatePatch.ts. Linked guard digests propagate through the existing chain. All old history/captures remain; 186 untouched original pin rows and all 74 required absences are preserved. Assertions are byte-exact apart from the exact fixture hash/count constants. The harden1 two-row release fixture remains two rows; its immutable source migration and bound test-support module are unchanged.
+
+Release-only records: `docs/execplans/release-port29-20261110.md`, this GS028 appendix and the appended current handoff. Exclusions include all founder/consult domain/balance files and tests, session/viewModels.ts, unrelated character/still/proportion/room capture work, clinical/question drafts, stale live Level 5 evidence, unrelated cloud/SQL files and mixed live coordination docs. No .github changes.
+
+### Level 5: unchanged; no rebind
+
+**29,663 commands / 6,601,005 closing cents / 459 completions / 0 walkouts**, unchanged. All **565 bound inputs (422 clinical)**, all nine checkpoint saves, all three reports, legacy evidence, integration guard, launch pins and workload fixture remain byte-identical. No canonical evidence, inputHistory or liveCap metadata was written. The strict integration/launch checks passed 44/44; the full domain suite also passes.
+
+Unchanged artifact SHA-256:
+
+- Results: `be932b27dd5ec9bfa46a00a905052bcf1b0755bf280a33d8edfd23bfc2079089`.
+- Checkpoints: `e5bebd15df15305bb2a0ee5dfd732ebd84b68169786821970947be01c707ba3d`.
+- Legacy evidence: `ef3ff630f8cac42f5240f5a651090d21287e3399d5f2b0247e0f8e851f146e31`.
+- Integration guard: `812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909`.
+
+### Exact validation
+
+CI=true, threads; player maxWorkers=4, others 2. All native commands, stdout/stderr, timestamps, exits and test JSON are retained in `.local-dev/release-port29-20261110/`; `validation-summary.json` records exact command lines. Seven suites ran directly because root npm test invokes the sandbox-blocked Git inventory first. The process-local optional net-use preload makes no assertion or production changes.
+
+| Workspace | Files passed | Tests passed | Failed | Skipped |
+| --- | ---: | ---: | ---: | ---: |
+| clinical-context-workbench | 8 | 43 | 0 | 0 |
+| player | 410 | 4062 | 0 | 0 |
+| balance-config | 24 | 164 | 0 | 0 |
+| clinical-authoring | 7 | 81 | 0 | 0 |
+| clinical-content | 129 | 1604 | 0 | 0 |
+| clinical-research | 8 | 83 | 0 | 0 |
+| game-domain | 199 | 5241 | 0 | 1 |
+| Total | 785 | 11278 | 0 | 1 |
+
+The one existing opt-in full incremental differential skip is unchanged. No isolated retry or test timeout/budget edit was needed. The author report's concurrent reducer failures and four main-tree player baseline failures did not carry into this release.
+
+`other-workspaces.log`:
+
+```text
+ Test Files  8 passed (8)
+      Tests  43 passed (43)
+   Start at  14:10:57
+   Duration  1.32s (transform 359ms, setup 0ms, import 1.07s, tests 610ms, environment 1ms)
+ Test Files  24 passed (24)
+      Tests  164 passed (164)
+   Start at  14:10:59
+   Duration  2.87s (transform 945ms, setup 0ms, import 2.91s, tests 209ms, environment 2ms)
+ Test Files  7 passed (7)
+      Tests  81 passed (81)
+   Start at  14:11:02
+   Duration  907ms (transform 214ms, setup 0ms, import 541ms, tests 435ms, environment 1ms)
+ Test Files  129 passed (129)
+      Tests  1604 passed (1604)
+   Start at  14:11:03
+   Duration  143.32s (transform 8.09s, setup 0ms, import 245.78s, tests 22.78s, environment 13ms)
+ Test Files  8 passed (8)
+      Tests  83 passed (83)
+   Start at  14:13:27
+   Duration  3.36s (transform 290ms, setup 0ms, import 802ms, tests 1.55s, environment 2ms)
+```
+
+`player.log`:
+
+```text
+ Test Files  410 passed (410)
+      Tests  4062 passed (4062)
+   Start at  14:11:36
+   Duration  547.81s (transform 30.37s, setup 0ms, import 892.46s, tests 1237.03s, environment 40ms)
+```
+
+`domain.log`:
+
+```text
+ Test Files  199 passed (199)
+      Tests  5241 passed | 1 skipped (5242)
+   Start at  14:11:36
+   Duration  658.47s (transform 16.37s, setup 0ms, import 473.80s, tests 817.65s, environment 17ms)
+```
+
+`level-five.log`:
+
+```text
+ Test Files  2 passed (2)
+      Tests  44 passed (44)
+   Start at  14:09:25
+   Duration  77.85s (transform 7.67s, setup 0ms, import 14.01s, tests 71.34s, environment 0ms)
+```
+
+`focused-phone.log`:
+
+```text
+ Test Files  17 passed (17)
+      Tests  124 passed (124)
+   Start at  14:10:07
+   Duration  23.31s (transform 11.48s, setup 0ms, import 36.40s, tests 6.82s, environment 2ms)
+```
+
+Root `npm.cmd run typecheck`: all seven workspace commands pass, exit 0. Scoped e2e TypeScript check for map-pan-zoom-phone-memory and its Playwright config: exit 0. Player build: **667 modules, 12.32s**, exit 0; existing chunk-size/dynamic-import/plugin-timing warnings remain.
+
+Direct boundaries exit 1 solely on `spawnSync git EPERM`. Fresh native read-only inventory plus the existing exact tree/index/inventory-hash bridge passes both unmodified verifiers, exit 0:
+
+`Verified runtime dependency boundaries and 7438 tracked path(s).`
+
+`Verified launcher health contract gamify-surgery-player protocol 1.`
+
+The new production-bundle native worker budget runner passed 600 advancing ticks each for L4 and L5 (CI allowance 1.5 for sampled heap/allocation only), including retained-tail and 512-command compaction budgets. It used this release's sources and fixtures; it did not swap clinical data or use private captures.
+
+| Level | Commands | Advanced ticks | Maximum reply bytes | Main allocated bytes/command | Engine allocated bytes/command |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 4 | 600 | 600 | 626396 | 887175 | 17534822 |
+| 5 | 600 | 600 | 589175 | 909397 | 21016866 |
+
+The two resulting state hashes and complete heap/allocation samples are in `.local-dev/phone-runtime-budget-release29/results.json`. Native Node worker results do not establish iPhone/WebKit/GPU/thermal or real-browser performance. Idle codec release trades retained heap for cold worker restarts; lower cold-start peaks are not established. Manager still owns physical phone and production browser acceptance for pan/zoom, picking, labels, build, reload and cloud save lifecycle with a cold codec. No known implementation/test failures remain. All source text is UTF-8 without BOM/LF; PNG bytes match the accepted manifest. No Git mutation, push, install, network, agents, SQL execution, browser or deployment. Owner origin/profile/opening pathway is unchanged. Local/uncommitted for manager review and rollout.
+
+## Release port 29 round 2 (2026-11-10, release worktree, phone art readiness)
+
+Updated the existing uncommitted port 29 in GS-release at HEAD 58c49c18. Only the accepted round 2 performance lane shipped: exact phone pose requests instead of all-cardinal reloads, independent visible-first room installs instead of an all-atlas barrier, one shared four-slot room/character/inspector queue with deadlines and starvation protection, coalesced painting, diagnostics, tests and deterministic loading replay. Desktop prefetch, character geometry/filtering, all domain/balance/clinical/session behavior and the 142 original round 1 phone variants remain unchanged. No Level 5 rebind.
+
+### Scope and files
+
+**20 paths changed in this follow-up**: the 17 below plus append-only updates to the release plan, this GS028 appendix and current handoff. **194 cumulative port 29 public paths**: 179 copied / 12 hunk-ported + three coordination records. All **228 excluded live-tree differences** are dispositioned individually in `.local-dev/release-verify/port29-20261110.json`; the fresh comparison contains 226 excluded differences, 21 paths already/now copied, 12 already/now hunk-ported, and three release-only coordination records. The round 1 receipt is retained unchanged in roundHistory and `.local-dev/release-port29-round2-20261110/prior-dispositions.json`. Final exact before/after SHA-256: `scope-audit-final.json` in that round 2 directory.
+
+- `apps/player/src/facility/FacilityScene.ts` (hunk-ported)
+- `apps/player/src/mobile/performance/roomAssets.ts` (copied)
+- `apps/player/src/mobile/performance/lazyArt.test.tsx` (copied)
+- `apps/player/src/facility/inspectionActors.test.ts` (copied)
+- `tests/e2e/map-pan-zoom-performance.spec.ts` (copied)
+- `tests/e2e/ui-density.spec.ts` (copied)
+- `tests/e2e/ui-density-helpers.ts` (copied)
+- `apps/player/src/mobile/performance/bitmapDecodeQueue.ts` (copied)
+- `apps/player/src/mobile/performance/bitmapDecodeQueue.test.ts` (copied)
+- `apps/player/src/mobile/performance/phoneArtPriority.ts` (copied)
+- `apps/player/src/mobile/performance/phoneArtPriority.test.ts` (copied)
+- `apps/player/src/mobile/performance/phoneCharacterRequests.test.ts` (copied)
+- `scripts/qa/phone-art-loading.mjs` (copied)
+- `scripts/qa/phone-art-loading.entry.ts` (hunk-ported)
+- `scripts/qa/phone-art-test-textures.ts` (copied)
+- `docs/execplans/phone-performance-pass-20261110.md` (copied)
+- `docs/research/phone-performance-pass-20261110.md` (copied)
+
+FacilityScene has exactly **14 round 2 performance hunk groups**, added over the 11 accepted round 1 groups; all unreleased character/proportion/capture/filter changes stay excluded. The replay tool alone needed a release compatibility hunk: its live import of isCharacterTextureKey depends on excluded character work, so the identical two-prefix classifier already used by the release Scene is local to the QA tool. No character module was changed. Initial scoped QA typing reported TS2305; the local compatibility hunk resolves it and the final scoped check exits 0. Original failed and final successful receipts are retained.
+
+No new clinical source-pin deltas were needed. All **ten round 1 guard/fixture files**, their history/captures and assertions remain byte-identical. Domain, balance, clinical content, cloud/session and view-model sources/tests, .github and SQL remain exact. The author's concurrent build/tutorial/founder changes are excluded. Twelve pre-existing manager/browser screenshot changes under artifacts/screenshots were captured at entry and preserved byte-exact; they are separate from the 194 worker-owned cumulative paths.
+
+### Release replay and Level 5
+
+Ran the minified production scene/cache replay both before and after using GS-release sources and its public checkpoint fixtures. Both model state hashes and all **five settled display maps per level** are byte-identical. Before, neither level settled during the 31-second replay; after, no requests occur after 15 seconds. Four decodes maximum, no pending/failed/missing/timed-out images, and zero world rebuilds during the 48-step pan.
+
+| Fixture | First room, seconds | All art settled, seconds | Requests before -> after | New requests after 15s |
+| --- | ---: | ---: | ---: | ---: |
+| L4 | 1.129 | 2.667 | 1576 -> 117 | 0 |
+| L5 | 1.130 | 5.033 | 1692 -> 228 | 0 |
+
+The release L5 result is **5.033s**, slightly above the request's shorthand <=5s and the author's live-tree 4.933s; it passes the **unchanged checked-in 8s** replay budget. The release replay uses its own accepted-content fixtures and preserved character presentation, with 117/228 requests versus the author's 115/226; no live checkpoint was substituted. First room paint is ~1.129s at both levels. These are deterministic I/O replay times, not physical-phone/network/browser measurements. Exact hashes and metrics: `replay-comparison.json` and `.local-dev/phone-art-loading/{before,after}/`.
+
+Level 5 remains **29,663 commands / 6,601,005 closing cents / 459 completions / 0 walkouts**. All **565 bound inputs (422 clinical)**, nine saves, three reports, canonical results/checkpoints/legacy evidence, inputHistory and launch pins remain byte-identical. The full domain integration and launch tests pass without guard/assertion changes. Results SHA `be932b27dd5ec9bfa46a00a905052bcf1b0755bf280a33d8edfd23bfc2079089`; checkpoint SHA `e5bebd15df15305bb2a0ee5dfd732ebd84b68169786821970947be01c707ba3d`.
+
+### Exact validation
+
+CI=true; all seven suites directly, --pool=threads (player maxWorkers=4, others 2). No test retry or assertion/budget relaxation. All native commands, logs, timestamps, exits and test JSON are retained under `.local-dev/release-port29-round2-20261110/`; validation-summary.json records the exact command lines.
+
+| Workspace | Files passed | Tests passed | Failed | Skipped |
+| --- | ---: | ---: | ---: | ---: |
+| clinical-context-workbench | 8 | 43 | 0 | 0 |
+| player | 413 | 4071 | 0 | 0 |
+| balance-config | 24 | 164 | 0 | 0 |
+| clinical-authoring | 7 | 81 | 0 | 0 |
+| clinical-content | 129 | 1604 | 0 | 0 |
+| clinical-research | 8 | 83 | 0 | 0 |
+| game-domain | 199 | 5241 | 0 | 1 |
+| Total | 788 | 11,287 | 0 | 1 |
+
+Compared with round 1: three new test files / nine added passing tests. The existing opt-in full incremental differential skip is unchanged. The live author's concurrent reducer/UI test failures did not carry into this release.
+
+`other-workspaces.log`:
+
+```text
+ Test Files  8 passed (8)
+      Tests  43 passed (43)
+   Start at  15:57:07
+   Duration  1.50s (transform 418ms, setup 0ms, import 1.22s, tests 749ms, environment 1ms)
+ Test Files  24 passed (24)
+      Tests  164 passed (164)
+   Start at  15:57:09
+   Duration  3.39s (transform 887ms, setup 0ms, import 3.64s, tests 255ms, environment 2ms)
+ Test Files  7 passed (7)
+      Tests  81 passed (81)
+   Start at  15:57:13
+   Duration  1.09s (transform 179ms, setup 0ms, import 566ms, tests 620ms, environment 1ms)
+ Test Files  129 passed (129)
+      Tests  1604 passed (1604)
+   Start at  15:57:14
+   Duration  148.51s (transform 9.53s, setup 0ms, import 254.43s, tests 25.04s, environment 14ms)
+ Test Files  8 passed (8)
+      Tests  83 passed (83)
+   Start at  15:59:43
+   Duration  3.35s (transform 288ms, setup 0ms, import 780ms, tests 1.62s, environment 1ms)
+```
+
+`player.log`:
+
+```text
+ Test Files  413 passed (413)
+      Tests  4071 passed (4071)
+   Start at  15:57:55
+   Duration  542.04s (transform 34.24s, setup 0ms, import 845.68s, tests 1267.31s, environment 40ms)
+```
+
+`domain.log`:
+
+```text
+ Test Files  199 passed (199)
+      Tests  5241 passed | 1 skipped (5242)
+   Start at  15:57:07
+   Duration  648.74s (transform 17.93s, setup 0ms, import 456.88s, tests 817.46s, environment 16ms)
+```
+
+`focused-phone.log`:
+
+```text
+ Test Files  19 passed (19)
+      Tests  125 passed (125)
+   Start at  15:56:33
+   Duration  33.02s (transform 11.57s, setup 0ms, import 52.95s, tests 10.19s, environment 1ms)
+```
+
+All seven workspace typechecks pass, exit 0. Scoped touched e2e and QA replay typechecks pass, exit 0 (after the recorded QA-only compatibility fix). Player build: **668 modules, 15.29s**, exit 0; existing chunk/dynamic-import/plugin warnings remain. Direct boundaries fail only on sandbox spawnSync git EPERM. A fresh native read-only Git inventory and the established exact tree/index/inventory bridge pass both unchanged verifiers, exit 0:
+
+`Verified runtime dependency boundaries and 7438 tracked path(s).`
+
+`Verified launcher health contract gamify-surgery-player protocol 1.`
+
+Manager reports live-tree production map perf **4/4 pass** (desktop+phone, L4+L5). That is supplied manager evidence, not a new release browser run. Manager still owns release browser/density checks and physical iPhone latency, failed-image fallback, decoded/GPU memory and thermal acceptance. No clinical content edits, PNG regeneration, Git mutation, push, install, network, agents, SQL execution, browser or deploy. Owner origins/profiles/opening paths are unchanged. Work remains local/uncommitted for manager review and rollout.

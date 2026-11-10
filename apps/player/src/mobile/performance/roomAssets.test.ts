@@ -3,7 +3,7 @@ import { createInitialGameState, PROTOTYPE_DOMAIN_CONTEXT } from "@gamify-surger
 import { APPROVED_GS015_ROOM_ATLASES, ENVIRONMENT_ATLAS_V1, FRONTAGE_V2_ASSETS, LANDSCAPING_ATLAS_V1, ROOM_FIXTURE_ATLASES } from "../../art/bitmapAssetManifest";
 import { getApprovedRoomPresentation, resolveApprovedRoomDrawRecords } from "../../facility/approvedRoomPresentation";
 import { getTouchupCorridorDecor, isTouchupFileSprite, ROOM_TOUCHUP_DECOR_ASSETS, TOUCHUP_SPRITES } from "../../facility/roomTouchups";
-import { DESKTOP_FACILITY_ASSETS, MobileBitmapCache, mobileRoomAssets, selectFacilityAssets } from "./roomAssets";
+import { DESKTOP_FACILITY_ASSETS, MobileBitmapCache, mobileRoomAssets, selectFacilityAssets, trimPhoneFacilityTextures } from "./roomAssets";
 import { createPrototypePlayerView } from "../../session/viewModels";
 import { FacilityScene } from "../../facility/FacilityScene";
 
@@ -12,6 +12,43 @@ afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 const ids = (assets: ReturnType<typeof mobileRoomAssets>) => assets.map(asset => asset.id);
 
 describe("mobile facility art gating", () => {
+  it("holds a decode slot until asynchronous rasterization completes and drains rejected decodes", async () => {
+    const images: any[] = [], finish: (() => void)[] = [];
+    const cache = new MobileBitmapCache(() => {
+      const n = images.length, image = { decode: () => n === 1 ? Promise.reject(Error("Decoder unavailable")) : new Promise<void>(resolve => finish.push(resolve)) };
+      images.push(image); return image as unknown as HTMLImageElement;
+    });
+    const requests = Array.from({ length: 5 }, (_, n) => cache.load({ ...ENVIRONMENT_ATLAS_V1, id: `decode.${n}` }, "/fixture.png"));
+    images[0].onload(); expect(images).toHaveLength(4); expect(cache.health.activeDecodes).toBe(4);
+    finish.shift()!(); await requests[0]; expect(images).toHaveLength(5);
+    images[1].onload(); expect(await requests[1]).toBeNull();
+    for (const n of [2, 3, 4]) { images[n].onload(); finish.shift()!(); }
+    await Promise.all(requests); expect(cache.health).toMatchObject({ activeDecodes: 0, queuedDecodes: 0, pending: 0 });
+  });
+  it("bounds simultaneous phone decodes at four, drains failures, and clears all completed queue entries", async () => {
+    const images: any[] = [];
+    const cache = new MobileBitmapCache(() => { const image = {}; images.push(image); return image as HTMLImageElement; });
+    const requests = Array.from({ length: 40 }, (_, n) => cache.load({ ...ENVIRONMENT_ATLAS_V1, id: `bounded.${n}` }, "/fixture.png"));
+    expect(images).toHaveLength(4); expect(cache.health).toMatchObject({ activeDecodes: 4, queuedDecodes: 36 });
+    for (let n = 0; n < 40; n++) {
+      expect(cache.health.activeDecodes).toBeLessThanOrEqual(4);
+      images[n]![n % 2 ? "onload" : "onerror"]();
+    }
+    await Promise.all(requests);
+    expect(cache.health).toMatchObject({ activeDecodes: 0, queuedDecodes: 0, pending: 0 });
+  });
+  it("reclaims obsolete room atlases while preserving current rooms, live image references, characters and derivatives", () => {
+    const assets = [...mobileRoomAssets("room.front_desk"), ...mobileRoomAssets("room.mri")];
+    const keys = new Set(assets.map(asset => `stitchin-time-art:${asset.id}`));
+    keys.add("character:live"); keys.add("approved-chair:live");
+    const required = new Set(mobileRoomAssets("room.front_desk").map(asset => `stitchin-time-art:${asset.id}`));
+    const used = new Set([`stitchin-time-art:${mobileRoomAssets("room.mri").find(a => a.id.startsWith("level4:"))!.id}`]);
+    trimPhoneFacilityTextures({ getTextureKeys: () => [...keys], remove: key => keys.delete(key) }, required, used);
+    expect([...required].every(key => keys.has(key))).toBe(true);
+    expect([...used].every(key => keys.has(key))).toBe(true);
+    expect(keys.has("character:live")).toBe(true); expect(keys.has("approved-chair:live")).toBe(true);
+    expect([...keys].filter(key => !required.has(key) && !used.has(key))).toEqual(["character:live", "approved-chair:live"]);
+  });
   it("preserves the exact eager desktop set and order at every facility level", () => {
     const original = [ENVIRONMENT_ATLAS_V1, LANDSCAPING_ATLAS_V1, ...Object.values(FRONTAGE_V2_ASSETS),
       ...ROOM_FIXTURE_ATLASES, ...APPROVED_GS015_ROOM_ATLASES, ...ROOM_TOUCHUP_DECOR_ASSETS];

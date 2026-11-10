@@ -27,8 +27,14 @@ async function openFixture(page: Page, level: number) {
   await expect.poll(() => page.evaluate(() => {
     const game = (document.querySelector("[data-testid='facility-canvas']") as any).__facilityGame;
     const scene = game.scene.getScene("facility-scene");
-    return !scene.load.isLoading() && scene.pendingCharacterStills.size === 0 && !scene.crispZoomPending;
+    const art = scene.bridge.mobileInput ? scene.phoneArtLoadingStatus() : null;
+    return !scene.load.isLoading() && scene.pendingCharacterStills.size === 0 && !scene.crispZoomPending &&
+      (!art || art.pendingRooms === 0 && !art.painting);
   }), { timeout: 30_000 }).toBe(true);
+  return page.evaluate(() => {
+    const scene = (document.querySelector("[data-testid='facility-canvas']") as any).__facilityGame.scene.getScene("facility-scene");
+    return scene.bridge.mobileInput ? scene.phoneArtLoadingStatus() : null;
+  });
 }
 
 async function unobscuredPoint(page: Page) {
@@ -163,10 +169,18 @@ for (const level of [4, 5]) test(`Level ${level} map drag and wheel retain the w
   const phone = info.project.name === "phone-chrome";
   await page.setViewportSize(phone ? { width: 390, height: 844 } : { width: 1600, height: 1000 });
   const errors: string[] = []; page.on("pageerror", error => errors.push(error.message));
-  await openFixture(page, level);
+  const art = await openFixture(page, level);
   const mode = await page.evaluate(() => (document.querySelector("[data-testid='facility-canvas']") as any).__facilityProof?.mode as string);
   expect(["development", "production"]).toContain(mode);
   if (process.env.GAMIFY_MAP_PERFORMANCE_BUILD === "production") expect(mode).toBe("production");
+  if (phone) {
+    await info.attach("phone-opening-art.json", { body: JSON.stringify({ level, mode, art }), contentType: "application/json" });
+    expect(art.firstRoomMs).not.toBeNull();
+    expect(art.firstRoomMs).toBeLessThan(hostedTime(2_500, mode, true));
+    expect(art.settledMs).not.toBeNull();
+    expect(art.settledMs).toBeLessThan(hostedTime(8_000, mode, true));
+    expect(art.missingRoomSources).toBe(0); expect(art.failedCharacters).toBe(0); expect(art.cache.decodeTimeouts).toBe(0);
+  }
   const point = await unobscuredPoint(page);
   await page.mouse.move(point.x, point.y); // Wake the phone's paused-map input burst.
   await renderedFrame(page); await renderedFrame(page);

@@ -11,7 +11,7 @@ export interface StaticCanvasSurface {
   update(): unknown;
   refresh(): unknown;
 }
-export const PHONE_DERIVATIVE_MAX_SIDE = 4096;
+export const PHONE_DERIVATIVE_MAX_SIDE = 2048;
 export const PHONE_DERIVATIVE_MAX_PIXELS = 4 * 1024 * 1024;
 
 export function facilityCanvasSurface(manager: Phaser.Textures.TextureManager,

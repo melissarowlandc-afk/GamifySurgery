@@ -25,6 +25,7 @@ export class PhoneMemoryGuard {
   private loaded = false;
   private countedRestart = false;
   private disposed = false;
+  private largeClinic = false;
   private mirrorState: "none" | "pending" | "ready" | "unavailable" = "none";
   private mirrorRead: Promise<void> = Promise.resolve();
   private writing: Promise<void> | undefined;
@@ -65,9 +66,15 @@ export class PhoneMemoryGuard {
     }
   }
   get profile(): PhoneMemoryProfile {
-    return this.unavailable || !this.loaded && this.mirrorState === "pending" || this.row.safeUntil > this.now() ? reduced : normal;
+    return this.largeClinic || this.unavailable || !this.loaded && this.mirrorState === "pending" || this.row.safeUntil > this.now() ? reduced : normal;
   }
-  get health() { return { mode: this.profile.mode, phase: this.active ? this.phase : "clean", uncleanRestarts: this.row.restarts.length, storageAvailable: !this.unavailable, durableStorage: this.mirrorState }; }
+  get health() { return { mode: this.profile.mode, largeClinic: this.largeClinic, phase: this.active ? this.phase : "clean", uncleanRestarts: this.row.restarts.length, storageAvailable: !this.unavailable, durableStorage: this.mirrorState }; }
+  /** Presentation default only; no campaign fields or backup timing change. */
+  observeClinic(level: number, rooms: number): void {
+    if (this.largeClinic || !(level >= 4 || rooms >= 40)) return;
+    this.largeClinic = true;
+    this.diagnose("phone-memory-large-clinic");
+  }
   beginOpening(): PhoneMemoryProfile {
     if (this.opened || this.suspended) return this.profile;
     this.opened = true;
@@ -177,6 +184,7 @@ function browserGuard(forcePhone = false): PhoneMemoryGuard | null {
   return guard;
 }
 export function phoneMemoryProfile(forcePhone = false): PhoneMemoryProfile { return browserGuard(forcePhone)?.profile ?? normal; }
+export function observePhoneClinic(level: number, rooms: number, forcePhone = false): void { browserGuard(forcePhone)?.observeClinic(level, rooms); }
 export function beginPhoneCloudOpening(): void {
   if (typeof document !== "undefined" && document.visibilityState !== "hidden") browserGuard()?.beginOpening();
 }

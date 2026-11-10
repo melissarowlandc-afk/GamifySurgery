@@ -291,7 +291,7 @@ test("phone normal, Build Mode, and chart preserve readable controls without ove
 }, testInfo) => {
   test.skip(testInfo.project.name !== "phone-chrome", "Phone density proof.");
   await page.setViewportSize({ width: 390, height: 844 });
-  await openDensityFixture(page, true, true);
+  await openDensityFixture(page, true);
 
   const assertNoOverflow = () =>
     page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth);
@@ -308,6 +308,11 @@ test("phone normal, Build Mode, and chart preserve readable controls without ove
     }),
   ).toBe(true);
   await expectPhoneTargets(page);
+  // Select a chart explicitly: this density proof needs an open sheet and
+  // should exercise its real phone action during background art loading.
+  await page.locator(".mobile-tab-bar").getByRole("button", { name: /^Patients(,|$)/ }).click();
+  const patient = page.locator(".mobile-patient-folder.is-waiting .mobile-patient-card[data-patient-id], .mobile-patient-folder.is-active .mobile-patient-card[data-patient-id]").first();
+  await expect(patient).toBeVisible(); await patient.click();
   const chart = page.getByRole("dialog", { name: "Patient chart", exact: true });
   await expect(chart).toBeVisible();
   expect(await assertNoOverflow()).toBe(true);

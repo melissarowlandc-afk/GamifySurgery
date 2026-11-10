@@ -1,5 +1,5 @@
 import { afterEach, expect, it, vi } from "vitest";
-import { beginPhoneCloudOpening, bindPhoneMemoryLifecycle, phoneMemoryProfile, PhoneMemoryGuard, PHONE_LOW_MEMORY_MS, PHONE_MEMORY_KEY, PHONE_RESTART_WINDOW_MS } from "./phoneMemoryPolicy";
+import { beginPhoneCloudOpening, bindPhoneMemoryLifecycle, observePhoneClinic, phoneMemoryProfile, PhoneMemoryGuard, PHONE_LOW_MEMORY_MS, PHONE_MEMORY_KEY, PHONE_RESTART_WINDOW_MS } from "./phoneMemoryPolicy";
 import { mobileCanvasSize } from "./presentationPolicy";
 import { CharacterTextureBudget } from "./characterTextureBudget";
 
@@ -11,6 +11,18 @@ function fixture() {
   const store = { getItem: (key: string) => values.get(key) ?? null, setItem(key: string, value: string) { writes.push(key); values.set(key, value); } };
   return { values, writes, codes, next(ms = 1000) { now += ms; }, guard: () => new PhoneMemoryGuard(store, () => now, code => codes.push(code)) };
 }
+
+it("uses the lower-memory default for Level4+ or forty-room phones without persisting gameplay or changing small/desktop clinics", () => {
+  const f = fixture(), page = f.guard();
+  page.observeClinic(3, 39); expect(page.profile.mode).toBe("normal");
+  page.observeClinic(4, 12); expect(page.profile).toMatchObject({ mode: "reduced", maxDpr: 1, textureCount: 32 });
+  page.observeClinic(5, 87); expect(f.codes).toEqual(["phone-memory-large-clinic"]); expect(f.writes).toEqual([]);
+  const large = f.guard(); large.observeClinic(3, 40); expect(large.profile.mode).toBe("reduced");
+  vi.stubGlobal("window", Object.assign(new EventTarget(), { localStorage: { getItem: () => null }, innerWidth: 1440,
+    location: { search: "?layout=desktop" }, matchMedia: () => ({ matches: false }) }));
+  vi.stubGlobal("document", Object.assign(new EventTarget(), { visibilityState: "visible" }));
+  observePhoneClinic(5, 87); expect(phoneMemoryProfile().mode).toBe("normal");
+});
 
 it("automatically lowers memory before the third opening after two unclean restarts and never writes save keys", () => {
   const f = fixture(); let page = f.guard();

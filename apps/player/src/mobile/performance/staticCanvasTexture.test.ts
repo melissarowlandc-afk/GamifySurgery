@@ -56,7 +56,7 @@ it("rejects unsafe derivative sizes before allocation and uses a procedural fall
   const createElement = vi.fn(() => ({ width: 0, height: 0, getContext: () => null }));
   vi.stubGlobal("document", { createElement });
   const value = { exists: () => false } as any;
-  for (const [w, h] of [[7611, 749], [4096, 4096], [0, 1], [NaN, 8]])
+  for (const [w, h] of [[7611, 749], [2049, 1], [4096, 4096], [0, 1], [NaN, 8]])
     expect(facilityCanvasSurface(value, "no", w!, h!, true)).toBeNull();
   expect(createElement).not.toHaveBeenCalled();
   expect(facilityCanvasSurface(value, "refused", 16, 8, true)).toBeNull();

@@ -68,7 +68,10 @@ it.each([false, true])("draws the separate inspector layer with standard scale/d
   vi.spyOn(scene, "renderInspectBox").mockImplementation(() => {});
   scene.drawCharacters();
   expect(drawn).toHaveBeenCalledTimes(10); expect(depths.every(Number.isFinite)).toBe(true);
-  expect(prefetched.mock.calls[0]![0]).toHaveLength(40);
+  // Phone rendering requests the selected pose inside the render plan (mocked
+  // here); unused-cardinal prefetch would fight reduced-mode texture eviction.
+  if (mobileInput) expect(prefetched).not.toHaveBeenCalled();
+  else expect(prefetched.mock.calls[0]![0]).toHaveLength(40);
   for (const [, key, input] of drawn.mock.calls as any[]) {
     expect(key).toMatch(/^character:inspector:/); expect(input.displayScale).toBe(1); expect(input.pose).not.toBe("seated");
   }

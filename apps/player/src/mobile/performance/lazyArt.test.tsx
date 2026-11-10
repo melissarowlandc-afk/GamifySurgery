@@ -10,9 +10,10 @@ import { roomThumbnailAsset } from "../../art/roomThumbnailManifest";
 import { RoomThumbnail } from "../build/RoomThumbnail";
 import { mobileBitmapCache, mobileRoomAssets, selectFacilityAssets } from "./roomAssets";
 import { MobileMapPresentationPolicy } from "./presentationPolicy";
+import { phoneArtSource } from "./phoneArt";
 
 vi.mock("phaser", () => ({ default: { Scene: class {} } }));
-afterEach(async () => { await cleanupPhoneTests(); vi.restoreAllMocks(); });
+afterEach(async () => { await cleanupPhoneTests(); vi.restoreAllMocks(); vi.useRealTimers(); });
 
 describe("mobile lazy art integration", () => {
   it("loads built and preview art once without preloading unlocked rooms; covered completions do no drawing", async () => {
@@ -22,7 +23,7 @@ describe("mobile lazy art integration", () => {
     const bridge: FacilitySceneBridge = { mobileInput: true, mobilePresentation: policy, mobileFacilityLevel: 0,
       viewModel: createPrototypePlayerView(createInitialGameState(), null, false, null).facility, onPlaceRoom: vi.fn() };
     const scene = new FacilityScene(bridge) as any;
-    const keys = new Set<string>(); const addImage = vi.fn((key: string) => keys.add(key));
+    const keys = new Set<string>(); const addImage = vi.fn((key: string) => { keys.add(key); return { add: vi.fn() }; });
     scene.textures = { exists: (key: string) => keys.has(key), addImage };
     scene.sys = { isActive: () => true }; scene.scale = { width: 390, height: 600 };
     for (const method of ["registerEnvironmentAtlasFrames", "registerLandscapingAtlasFrames", "registerRoomFixtureAtlasFrames",
@@ -30,10 +31,15 @@ describe("mobile lazy art integration", () => {
     scene.ensureMobileAtlases();
     const initial = selectFacilityAssets({ mobile: true, facilityLevel: 0, builtRoomIds: ["room.front_desk"] });
     await vi.waitFor(() => expect(keys.size).toBe(initial.length));
-    expect(load.mock.calls.map(([asset]) => asset.id)).toEqual(initial.map(asset => asset.id));
+    expect(new Set(load.mock.calls.map(([asset]) => asset.id))).toEqual(new Set(initial.map(asset => asset.id)));
+    for (const [asset, url] of load.mock.calls) if (phoneArtSource(asset)) expect(url).toContain("/art/phone/");
     expect(scene.drawWorld).not.toHaveBeenCalled();
     scene.ensureMobileAtlases(); expect(load).toHaveBeenCalledTimes(initial.length);
     bridge.mobilePreviewRoomIds = ["room.mri"]; scene.ensureMobileAtlases();
+    await Promise.resolve(); expect(load).toHaveBeenCalledTimes(initial.length);
+    // An actual placement may warm its art; an offline thumbnail never does.
+    bridge.viewModel = { ...bridge.viewModel, placement: { definitionId: "room.mri", displayName: "MRI", width: 6, height: 6 } };
+    scene.ensureMobileAtlases();
     const preview = selectFacilityAssets({ mobile: true, facilityLevel: 0, builtRoomIds: ["room.front_desk"], previewRoomIds: ["room.mri"] });
     await vi.waitFor(() => expect(keys.size).toBe(preview.length));
     expect(load).toHaveBeenCalledTimes(preview.length);
@@ -52,13 +58,36 @@ describe("mobile lazy art integration", () => {
     const bridge: FacilitySceneBridge = { mobileInput: true, mobileFacilityLevel: 0,
       viewModel: createPrototypePlayerView(createInitialGameState(), null, false, null).facility, onPlaceRoom: vi.fn() };
     const scene = new FacilityScene(bridge) as any; const keys = new Set<string>();
-    scene.textures = { exists: (key: string) => keys.has(key), addImage: (key: string) => keys.add(key), get: vi.fn() };
-    scene.sys = { isActive: () => true };
+    scene.textures = { exists: (key: string) => keys.has(key), addImage: (key: string) => { keys.add(key); return { add: vi.fn() }; }, get: vi.fn() };
+    scene.sys = { isActive: () => true }; scene.scale = { width: 390, height: 600 };
     for (const method of ["registerEnvironmentAtlasFrames", "registerLandscapingAtlasFrames", "registerRoomFixtureAtlasFrames", "refreshLayout"]) scene[method] = vi.fn();
     scene.ensureMobileAtlases(); await vi.waitFor(() => expect(scene.refreshLayout).toHaveBeenCalled());
     expect(keys.has(getPhaserTextureKey(missing))).toBe(false);
     expect(scene.drawApprovedRoomFixtures(bridge.viewModel.rooms[0], { x: 0, y: 0, width: 100, height: 80 })).toBe(false);
     expect(scene.textures.get).not.toHaveBeenCalled();
+  });
+  it("installs visible room sources and coalesces paint before an unrelated background source settles", async () => {
+    vi.useFakeTimers(); vi.stubGlobal("Image", class {});
+    const resolve = new Map<string, (image: HTMLImageElement | null) => void>();
+    vi.spyOn(mobileBitmapCache, "load").mockImplementation(asset => new Promise(done => resolve.set(asset.id, done)));
+    const bridge: FacilitySceneBridge = { mobileInput: true, mobileFacilityLevel: 4,
+      viewModel: createPrototypePlayerView(createInitialGameState(), null, false, null).facility, onPlaceRoom: vi.fn() };
+    const scene = new FacilityScene(bridge) as any, keys = new Set<string>();
+    scene.scale = { width: 390, height: 600 }; scene.sys = { isActive: () => true };
+    scene.textures = { exists: (key: string) => keys.has(key), addImage: (key: string) => { keys.add(key); return { add: vi.fn() }; } };
+    for (const method of ["registerEnvironmentAtlasFrames", "registerLandscapingAtlasFrames", "registerRoomFixtureAtlasFrames", "refreshLayout"]) scene[method] = vi.fn();
+    scene.ensureMobileAtlases();
+    const room = mobileRoomAssets("room.front_desk");
+    for (const asset of room) resolve.get(asset.id)!({} as HTMLImageElement);
+    await Promise.resolve();
+    expect(room.every(asset => keys.has(getPhaserTextureKey(asset)))).toBe(true);
+    expect(scene.mobilePendingAtlases.size).toBeGreaterThan(0);
+    expect(scene.refreshLayout).not.toHaveBeenCalled();
+    await vi.advanceTimersByTimeAsync(80);
+    expect(scene.refreshLayout).toHaveBeenCalledTimes(1);
+    for (const done of resolve.values()) done(null);
+    await vi.runAllTimersAsync();
+    expect(scene.mobilePendingAtlases.size).toBe(0);
   });
   it.each([false, true])("defers catalog PNG requests until visible; never loads room packs (failure=%s)", async fail => {
     const env = phoneTestDom();

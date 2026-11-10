@@ -1,5 +1,5 @@
 import { problemDiagnostics, showCommandProblem } from "../../diagnostics/problemDiagnostics";
-import { phoneMemoryProfile } from "../../mobile/performance/phoneMemoryPolicy";
+import { observePhoneClinic, phoneMemoryProfile } from "../../mobile/performance/phoneMemoryPolicy";
 import { PROTOTYPE_DOMAIN_CONTEXT, createGameEvidenceCheckpoint, prepareGameEvidenceCheckpoint, prepareFacilityPathfinding, getRoomDefinition, applyGameEvidenceCommand, applyGameEvidenceBuildUndo, gameEvidenceDelta, type DomainContext, type GameCommand, type GameEvidenceCheckpoint, type GameEvidenceDelta, type GameState } from "@gamify-surgery/game-domain";
 import { isFirstScoredAnswer } from "../../playtime/scoredQuestionUsage";
 import type { QuestionUsageReceipt } from "../../playtime/usageTypes";
@@ -144,6 +144,7 @@ export class CloudGameSession {
     const playable = loaded.snapshotLineage && coordinator.view.canExecute && !coordinator.hasPriorRecovery
       ? completeSnapshotLearning(loaded.state) : loaded.state;
     const adapted = playable !== loaded.state || Boolean(loaded.numberRepairs?.length);
+    observePhoneClinic(playable.facilityLevel, playable.rooms.length);
     const useEngine = options.operational !== false && (typeof Worker !== "undefined" || Boolean(options.operational?.createPort));
     const session = new CloudGameSession(coordinator, adapted ? { ...loaded, state: playable,
       checkpoint: playable !== loaded.state ? createGameEvidenceCheckpoint(playable) : loaded.checkpoint } : loaded,

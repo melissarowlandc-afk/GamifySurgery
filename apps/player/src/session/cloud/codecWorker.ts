@@ -1,5 +1,5 @@
 import { problemDiagnostics, technicalError } from "../../diagnostics/problemDiagnostics";
-import { beginPhoneCloudOpening } from "../../mobile/performance/phoneMemoryPolicy";
+import { beginPhoneCloudOpening, phoneMemoryProfile } from "../../mobile/performance/phoneMemoryPolicy";
 import { CloudCodecError } from "./codecJson";
 import { handleCloudCodecMessage, unpackCodecFailure, type CloudCodecExecutor, type CloudCodecMessage, type CloudCodecReply, type CloudCodecResults, type CloudCodecTask } from "./codecTasks";
 
@@ -9,6 +9,7 @@ export const CLOUD_WORKER_STARTUP_TIMEOUT_MS = import.meta.env?.MODE === "develo
 // Active processing only, measured from the worker's dequeue/start message.
 // Keep the released generous cap; queued work never spends another task's budget.
 export const CLOUD_WORKER_TASK_TIMEOUT_MS = 60_000;
+export const PHONE_CODEC_IDLE_RELEASE_MS = 5_000;
 
 export interface CloudCodecWorkerPort {
   onmessage: ((event: MessageEvent<CloudCodecReply>) => void) | null;
@@ -24,6 +25,7 @@ export class CloudCodecWorker implements CloudCodecExecutor {
   private ready = false;
   private startupTimer: ReturnType<typeof setTimeout> | null = null;
   private dequeueTimer: ReturnType<typeof setTimeout> | null = null;
+  private idleTimer: ReturnType<typeof setTimeout> | null = null;
   private sequence = 0;
   private lastResponse: number | null = null;
   private lastError: string | null = null;
@@ -43,6 +45,7 @@ export class CloudCodecWorker implements CloudCodecExecutor {
     inFlight: [...this.pending.values()].slice(0, 12).map(p => [p.started === null ? `queued:${p.task.kind}` : p.task.kind,
       Date.now() - (p.started ?? p.posted), p.retries]) }; }
   run<T extends CloudCodecTask>(task: T): Promise<CloudCodecResults[T["kind"]]> {
+    this.clearIdleTimer();
     if (["verify", "hydrate", "inspectCopy", "journalBind", "snapshotImport", "snapshotConvert"].includes(task.kind)) beginPhoneCloudOpening();
     const createWorker = this.createWorker;
     if (import.meta.env?.DEV || import.meta.env?.MODE === "test" || !createWorker) {
@@ -102,6 +105,9 @@ export class CloudCodecWorker implements CloudCodecExecutor {
         for (const code of reply.diagnosticCodes ?? []) problemDiagnostics.event("codec-repair", code);
         waiting.resolve(reply.result);
       }
+      if (!this.pending.size && phoneMemoryProfile().mode === "reduced") {
+        this.idleTimer = setTimeout(() => { this.idleTimer = null; this.releaseIdle(); }, PHONE_CODEC_IDLE_RELEASE_MS);
+      }
     };
     worker.onerror = event => { event.preventDefault?.(); if (this.worker === worker) this.fail(); };
     worker.onmessageerror = () => { if (this.worker === worker) this.fail(); };
@@ -129,6 +135,7 @@ export class CloudCodecWorker implements CloudCodecExecutor {
       "Save processing could not read the checkpoint. Retry the account save.");
   }
   private fail(error: unknown = new CloudCodecError("worker_unavailable", "Save processing is unavailable. Retry the account save."), retry = true): void {
+    this.clearIdleTimer();
     this.lastError = technicalError(error); problemDiagnostics.error("codec-worker", error);
     const failure = error instanceof CloudCodecError ? error : new CloudCodecError("worker_unavailable", "Save processing is unavailable. Retry the account save.");
     if (this.worker) {
@@ -157,6 +164,7 @@ export class CloudCodecWorker implements CloudCodecExecutor {
    * and returned snapshots belong to the caller; no accepted work is cancelled. */
   releaseIdle(): boolean {
     if (this.pending.size) return false;
+    this.clearIdleTimer();
     if (!this.worker) return true;
     const worker = this.worker; this.worker = null; this.ready = false;
     worker.onmessage = null; worker.onerror = null; worker.onmessageerror = null; worker.terminate();
@@ -165,6 +173,10 @@ export class CloudCodecWorker implements CloudCodecExecutor {
     this.startupTimer = null; this.dequeueTimer = null; this.idleReleases++;
     problemDiagnostics.event("phone-memory", "codec-idle-release");
     return true;
+  }
+  private clearIdleTimer(): void {
+    if (this.idleTimer !== null) clearTimeout(this.idleTimer);
+    this.idleTimer = null;
   }
   dispose(): void { this.fail(undefined, false); this.unregister?.(); this.unregister = null; }
 }

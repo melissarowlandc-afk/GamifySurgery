@@ -6,6 +6,7 @@ import { getApprovedRoomPresentation, resolveApprovedRoomDrawRecords } from "../
 import { getRoomTouchup, isTouchupFileSprite, ROOM_TOUCHUP_DECOR_ASSETS, TOUCHUP_SPRITES,
   type TouchupSpriteName } from "../../facility/roomTouchups";
 import { phoneMemoryProfile } from "./phoneMemoryPolicy";
+import { BitmapDecodeQueue, PHONE_ART_BACKGROUND } from "./bitmapDecodeQueue";
 
 /** Exact original eager set/order. Only the phone selector uses a subset. */
 export const DESKTOP_FACILITY_ASSETS: readonly BitmapAssetDescriptor[] = [
@@ -74,6 +75,8 @@ export function mobileRoomArtReady(definitionId: string, hasTexture: (asset: Bit
 
 /** Shared phone image/decoded-source cache for the map and catalog thumbnails. */
 export class MobileBitmapCache {
+  private decodes = new BitmapDecodeQueue();
+  private promotions = new Map<string, (priority: number) => void>();
   private requests = new Map<string, Promise<HTMLImageElement | null>>();
   private owners = new Set<(id: string) => HTMLImageElement | null>();
   private completed = new Map<string, { weak?: { deref(): HTMLImageElement | undefined }; image?: HTMLImageElement; failed?: boolean; bytes: number }>();
@@ -87,13 +90,18 @@ export class MobileBitmapCache {
   get health() {
     this.trim();
     return { pending: this.requests.size, completed: this.completed.size, strongBytes: this.strongBytes,
-      maxStrongBytes: this.limits().bytes, weak: this.weakImage !== null, owners: this.owners.size };
+      maxStrongBytes: this.limits().bytes, weak: this.weakImage !== null, owners: this.owners.size,
+      ...this.decodes.health };
   }
 
   /** A mounted map already owns its images. Consult it before a new decode,
    * including when old Safari's small fallback LRU evicts a large live atlas. */
   connectSource(read: (id: string) => HTMLImageElement | null): () => void {
     this.owners.add(read); return () => { this.owners.delete(read); };
+  }
+
+  prioritize(ids: ReadonlySet<string>, priority: number): void {
+    for (const id of ids) this.promotions.get(id)?.(priority);
   }
 
   private trim() {
@@ -104,9 +112,9 @@ export class MobileBitmapCache {
     }
   }
 
-  load(asset: BitmapAssetDescriptor, url: string): Promise<HTMLImageElement | null> {
+  load(asset: BitmapAssetDescriptor, url: string, priority = PHONE_ART_BACKGROUND): Promise<HTMLImageElement | null> {
     const existing = this.requests.get(asset.id);
-    if (existing) return existing;
+    if (existing) { this.promotions.get(asset.id)?.(priority); return existing; }
     for (const read of this.owners) {
       try { const image = read(asset.id); if (image) return Promise.resolve(image); }
       catch { /* A disposing owner must not prevent another source/fallback. */ }
@@ -120,18 +128,11 @@ export class MobileBitmapCache {
       }
       this.completed.delete(asset.id);
     }
-    const promise = new Promise<HTMLImageElement | null>(resolve => {
-      try {
-        const image = this.createImage();
-        const finish = (value: HTMLImageElement | null) => { image.onload = null; image.onerror = null; resolve(value); };
-        image.decoding = "async";
-        image.onload = () => finish(image);
-        image.onerror = () => finish(null);
-        image.src = url;
-      } catch { resolve(null); }
-    });
+    const { promise, promote } = this.decodes.load(this.createImage, url, priority);
+    this.promotions.set(asset.id, promote);
     this.requests.set(asset.id, promise);
     void promise.then(image => {
+      this.promotions.delete(asset.id);
       this.requests.delete(asset.id);
       const row = !image ? { failed: true, bytes: 0 } : this.weakImage ? { weak: this.weakImage(image), bytes: 0 }
         : { image, bytes: (image.naturalWidth || image.width || asset.nativeWidth) * (image.naturalHeight || image.height || asset.nativeHeight) * 4 };
@@ -139,6 +140,14 @@ export class MobileBitmapCache {
     });
     return promise;
   }
+}
+
+const facilityTextureKeys = new Set(allFacilityAssets.map(asset => `stitchin-time-art:${asset.id}`));
+/** Run at a settled layout change after obsolete display objects are removed,
+ * never during a camera gesture. Live sources/character textures stay owned. */
+export function trimPhoneFacilityTextures(manager: { getTextureKeys(): string[]; remove(key: string): unknown },
+  required: ReadonlySet<string>, used: ReadonlySet<string>): void {
+  for (const key of manager.getTextureKeys()) if (facilityTextureKeys.has(key) && !required.has(key) && !used.has(key)) manager.remove(key);
 }
 
 export const mobileBitmapCache = new MobileBitmapCache();
