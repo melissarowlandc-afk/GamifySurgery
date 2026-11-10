@@ -84,4 +84,58 @@ describe("mobile facility art gating", () => {
     expect(scene.registerApprovedRoomFrame({ assetId: assets[0]!.id, sourceRect: [0, 0, 1, 1] })).toBeUndefined();
     expect(get).not.toHaveBeenCalled();
   });
+
+  it("bounds completed metadata and releases image handlers/resolved promises while sharing pending loads", async () => {
+    let image: any;
+    const cache = new MobileBitmapCache(() => image = {} as HTMLImageElement);
+    for (let i = 0; i < 1000; i++) {
+      const asset = { ...ENVIRONMENT_ATLAS_V1, id: `test:${i}`, nativeWidth: 16, nativeHeight: 16 };
+      const pending = cache.load(asset, "/fixture.png"); expect(cache.load(asset, "/fixture.png")).toBe(pending);
+      image.onload(); expect(await pending).toBe(image);
+      expect(image.onload).toBeNull(); expect(image.onerror).toBeNull();
+    }
+    expect(cache.health).toMatchObject({ pending: 0, completed: 256, strongBytes: 0, weak: true });
+  });
+
+  it("uses bounded normal/reduced fallback LRUs on Safari without WeakRef, preserving live image owners", async () => {
+    vi.stubGlobal("WeakRef", undefined);
+    let image: any, reduced = false;
+    const cache = new MobileBitmapCache(() => image = {} as HTMLImageElement,
+      () => ({ bytes: reduced ? 2048 : 8192, count: 256 }));
+    let liveActorImage: any;
+    for (let i = 0; i < 100; i++) {
+      const pending = cache.load({ ...ENVIRONMENT_ATLAS_V1, id: `test:${i}`, nativeWidth: 16, nativeHeight: 16 }, "/fixture.png");
+      image.onload(); await pending; if (i === 0) liveActorImage = image;
+      expect(cache.health.strongBytes).toBeLessThanOrEqual(8192);
+    }
+    expect(cache.health).toMatchObject({ completed: 8, strongBytes: 8192, weak: false });
+    reduced = true; expect(cache.health).toMatchObject({ completed: 2, strongBytes: 2048 });
+    expect(liveActorImage.onload).toBeNull(); // Eviction never mutates a live source or texture.
+  });
+
+  it("retries a reclaimed weak source and handles image-construction failure without a rejected boot promise", async () => {
+    let image: any, alive = true, created = 0;
+    const cache = new MobileBitmapCache(() => { created++; return image = {} as HTMLImageElement; },
+      () => ({ bytes: 0, count: 256 }), value => ({ deref: () => alive ? value : undefined }));
+    const first = cache.load(ENVIRONMENT_ATLAS_V1, "/fixture.png"); image.onload(); await first;
+    expect(await cache.load(ENVIRONMENT_ATLAS_V1, "/fixture.png")).toBe(image); expect(created).toBe(1);
+    alive = false; const second = cache.load(ENVIRONMENT_ATLAS_V1, "/fixture.png"); image.onload(); await second;
+    expect(created).toBe(2);
+    const unavailable = new MobileBitmapCache(() => { throw Error("Unavailable"); });
+    expect(await unavailable.load(ENVIRONMENT_ATLAS_V1, "/fixture.png")).toBeNull();
+    expect(unavailable.health.pending).toBe(0);
+  });
+
+  it("reuses an oversized atlas owned by the map without WeakRef or a strong cache copy, and disconnects cleanly", async () => {
+    const create = vi.fn(() => { throw Error("No duplicate decode"); });
+    const cache = new MobileBitmapCache(create, () => ({ bytes: 0, count: 1 }), null);
+    const asset = APPROVED_GS015_ROOM_ATLASES.find(candidate => candidate.id === "gs015:recovery:furniture")!;
+    const image = { naturalWidth: 7611, naturalHeight: 749 } as HTMLImageElement;
+    const stale = cache.connectSource(() => { throw Error("Disposed owner"); });
+    const disconnect = cache.connectSource(id => id === asset.id ? image : null);
+    for (let i = 0; i < 100; i++) expect(await cache.load(asset, "/fixture.png")).toBe(image);
+    expect(create).not.toHaveBeenCalled(); expect(cache.health).toMatchObject({ owners: 2, strongBytes: 0, completed: 0 });
+    stale(); disconnect(); expect(cache.health.owners).toBe(0);
+    expect(await cache.load(asset, "/fixture.png")).toBeNull(); expect(create).toHaveBeenCalledOnce();
+  });
 });

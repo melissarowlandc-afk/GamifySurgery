@@ -178,17 +178,17 @@ for (const phone of [false, true]) {
       for (const key of keys) {
         scene.applyCamera({ ...scene.cameraView, zoom: 1.5, panX: 0, panY: 0 });
         await frame(); scene.drawCharacters();
-        const actor = scene.characterBitmapContainers.get(key).getByName("actor"), bounds = actor.getBounds();
+        const actor = scene.characterBitmapContainers.get(key).getByName("actor"), bounds = scene.toScreenRect(actor.getBounds());
         scene.applyCamera({ ...scene.cameraView,
-          panX: scene.cameraView.panX + scene.scale.width / 2 - bounds.centerX,
-          panY: scene.cameraView.panY + scene.scale.height / 2 - bounds.centerY });
-        // refreshLayout redraws the room world, not character containers. Use
-        // current rendered bounds after the React camera update / Phaser redraw.
+          panX: scene.cameraView.panX + scene.scale.width / 2 - (bounds.x + bounds.width / 2),
+          panY: scene.cameraView.panY + scene.scale.height / 2 - (bounds.y + bounds.height / 2) });
+        // Character bounds live in the retained draw frame. Project them into
+        // screen pixels after the React camera echo and Phaser frame.
         await frame(); scene.drawCharacters();
-        const current = actor.getBounds(), canvas = host.querySelector("canvas"), rect = canvas.getBoundingClientRect();
+        const current = scene.toScreenRect(actor.getBounds()), canvas = host.querySelector("canvas"), rect = canvas.getBoundingClientRect();
         const id = key.slice("character:inspector:".length);
         for (const fy of [.5, .3, .7, .15, .85]) for (const fx of [.5, .35, .65]) {
-          const local = { x: current.left + current.width * fx, y: current.top + current.height * fy };
+          const local = { x: current.x + current.width * fx, y: current.y + current.height * fy };
           // Only probe inside a rendered character's hit envelope. These picks
           // describe characters without executing a floor movement or opening UI.
           const selected = phone ? scene.mobileSelectionAtPoint(local) : null;

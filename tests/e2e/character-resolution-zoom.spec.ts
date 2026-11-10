@@ -1,10 +1,9 @@
 import { mkdirSync } from "node:fs";
 import { expect, test, type Page } from "@playwright/test";
 
-import {
-  installLevelOneVisualState,
-  startClinic,
-} from "./helpers";
+import { createInitialGameState } from "@gamify-surgery/game-domain";
+import { createLevelOneVisualFixture } from "./helpers";
+import { openFreshLocalCampaign } from "./fixtures/freshLocalCampaign";
 
 const SCREENSHOT_DIRECTORY = process.env.GAMIFY_CHARACTER_ZOOM_SCREENSHOT_ROOT ??
   "artifacts/screenshots/gs026-runtime/compatibility";
@@ -15,6 +14,10 @@ interface LiveActorSnapshot {
   displayWidth?: number;
   displayHeight?: number;
   originY?: number;
+  expectedOriginY: number;
+  actorLocalY?: number;
+  groundX: number;
+  groundY: number;
   textureScaleMode?: number;
   textureUsesLinearFiltering: boolean;
 }
@@ -24,62 +27,25 @@ test.beforeAll(() => {
 });
 
 async function openCharacterZoomFixture(page: Page): Promise<void> {
-  await startClinic(page, "Character Zoom Founder", "Character Zoom Clinic");
-  await installLevelOneVisualState(page);
-  await page.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resume = page.getByRole("button", { name: /Resume Character Zoom Clinic/ });
-  if (await resume.isVisible()) await resume.click();
-  await expect(page.getByTestId("facility-canvas")).toBeVisible();
+  // Prepare entirely in Node, then seed before the first page opens. No old
+  // controller/journal or pagehide flush can race the fixture import.
+  const state = createLevelOneVisualFixture(JSON.parse(JSON.stringify(createInitialGameState())));
+  state.campaignId = "campaign.character-zoom-round2";
+  state.founder.displayName = "Character Zoom Founder";
+  state.environment.founderLocation = { x: 32, y: 30 };
+  state.environment.founderActivity = null;
+  const patient = state.encounters["encounter.visual.patient.2"]!;
+  patient.patientLocation = { x: 33, y: 30 };
+  patient.patientMovement = null;
+  patient.waitingDestination = null;
+  const staff = (state.employees as Array<Record<string, unknown>>).find(member => member.id === "employee.visual.receptionist")!;
+  Object.assign(staff, { location: { x: 34, y: 30 }, path: [], pathIndex: 0 });
+  await openFreshLocalCampaign(page, state, "Character Zoom Clinic");
   await page.waitForFunction(() => {
     const host = document.querySelector("[data-testid='facility-canvas']") as
       | (HTMLDivElement & { __facilityGaitSnapshot?: () => unknown })
       | null;
     return typeof host?.__facilityGaitSnapshot === "function";
-  });
-}
-
-async function configureStableCharacterCluster(page: Page): Promise<void> {
-  await page.evaluate(() => {
-    const host = document.querySelector("[data-testid='facility-canvas']") as HTMLDivElement & {
-      __facilityGame?: { scene: { getScene: (key: string) => unknown } };
-    };
-    const scene = host.__facilityGame!.scene.getScene("facility-scene") as {
-      bridge: { viewModel: Record<string, unknown> };
-      routeMotionTracks: Map<string, unknown>;
-      characterPhase: number;
-      update: (time: number, delta: number) => void;
-    };
-    const model = scene.bridge.viewModel as {
-      paused: boolean;
-      founder: Record<string, unknown>;
-      patients: Array<Record<string, unknown>>;
-      staff: Array<Record<string, unknown>>;
-    };
-    // This is an opt-in renderer-only composition. It pins existing people in
-    // one nearby live-map cluster without dispatching, saving, or changing a
-    // game route.
-    model.paused = true;
-    Object.assign(model.founder, {
-      location: { x: 32, y: 30 }, path: [], pathIndex: 0,
-      moving: false, direction: "front", activityLabel: undefined,
-    });
-    const patient = model.patients.find(
-      (candidate) => candidate.instanceId === "encounter.visual.patient.2",
-    )!;
-    Object.assign(patient, {
-      location: { x: 33, y: 30 }, path: [], pathIndex: 0,
-      moving: false, direction: "front",
-    });
-    const staff = model.staff.find(
-      (candidate) => candidate.instanceId === "employee.visual.receptionist",
-    )!;
-    Object.assign(staff, {
-      location: { x: 34, y: 30 }, path: [], pathIndex: 0,
-      moving: false, direction: "front",
-    });
-    scene.routeMotionTracks.clear();
-    scene.characterPhase = 0;
-    scene.update(0, 0);
   });
 }
 
@@ -96,16 +62,27 @@ async function setZoomPercent(page: Page, targetPercent: number): Promise<void> 
 }
 
 async function liveActorSnapshots(page: Page): Promise<Record<string, LiveActorSnapshot>> {
-  return page.evaluate(() => {
+  return page.evaluate(async () => {
     const host = document.querySelector("[data-testid='facility-canvas']") as HTMLDivElement & {
       __facilityGame?: { scene: { getScene: (key: string) => unknown } };
       __facilityGaitSnapshot?: () => unknown;
     };
-    const scene = host.__facilityGame!.scene.getScene("facility-scene") as {
-      update: (time: number, delta: number) => void;
-    };
+    const scene = host.__facilityGame!.scene.getScene("facility-scene") as any;
     scene.update(0, 0);
-    return host.__facilityGaitSnapshot!() as Record<string, LiveActorSnapshot>;
+    const snapshots = host.__facilityGaitSnapshot!() as Record<string, LiveActorSnapshot>;
+    const modulePath = "/src/art/characterBitmapArt.ts";
+    const { characterBitmapLayers, characterBitmapRegistration } = await import(/* @vite-ignore */ modulePath);
+    for (const [key, snapshot] of Object.entries(snapshots)) {
+      const actor = scene.characterBitmapContainers.get(key).getByName("actor");
+      const [, kind, id] = /^character:([^:]+):?(.*)$/.exec(key)!;
+      const person = kind === "founder" ? scene.bridge.viewModel.founder : kind === "staff"
+        ? scene.bridge.viewModel.staff.find((member: any) => member.instanceId === id)
+        : scene.bridge.viewModel.patients.find((patient: any) => patient.instanceId === id);
+      if (person) snapshot.expectedOriginY = characterBitmapRegistration(characterBitmapLayers(
+        person.appearance, actor.getData("gait-direction"), actor.getData("gait-pose"), false,
+      )).floorAnchorY;
+    }
+    return snapshots;
   });
 }
 
@@ -113,7 +90,6 @@ test("live GS-026 stills stay smooth, identity-scaled, and floor-anchored across
   test.skip(testInfo.project.name !== "desktop-chrome", "The three comparable character captures use one controlled desktop viewport.");
   await page.setViewportSize({ width: 1374, height: 1000 });
   await openCharacterZoomFixture(page);
-  await configureStableCharacterCluster(page);
   // Keep the capture focused on the rendered actor cluster; paused-state
   // behavior is covered elsewhere and its banner would obscure the founder
   // only at the enlarged proof zoom.
@@ -139,7 +115,10 @@ test("live GS-026 stills stay smooth, identity-scaled, and floor-anchored across
 
   for (const [percent, filename] of screenshots) {
     await setZoomPercent(page, percent);
-    await page.waitForTimeout(150);
+    await expect.poll(() => page.evaluate(() => {
+      const scene = (document.querySelector("[data-testid='facility-canvas']") as any).__facilityGame.scene.getScene("facility-scene");
+      return !scene.crispZoomPending && scene.cameras.main.zoom === 1 && !scene.load.isLoading() && scene.pendingCharacterStills.size === 0;
+    }), { timeout: 30_000 }).toBe(true);
     const snapshots = await liveActorSnapshots(page);
     const referenceWidth = snapshots[expectedActors[0]]!.displayWidth!;
     for (const key of expectedActors) {
@@ -152,8 +131,11 @@ test("live GS-026 stills stay smooth, identity-scaled, and floor-anchored across
       expect(Number.isInteger(actor!.displayWidth)).toBe(true);
       expect(Number.isInteger(actor!.displayHeight)).toBe(true);
       expect(actor!.displayWidth! * 2).toBe(actor!.displayHeight);
-      expect(actor!.originY).toBeCloseTo(287 / 320, 8);
-      expect(actor!.textureUsesLinearFiltering).toBe(true);
+      expect(actor!.originY).toBeCloseTo(actor!.expectedOriginY, 8);
+      expect(Math.abs(actor!.actorLocalY!)).toBe(0);
+      expect(Number.isInteger(actor!.groundX)).toBe(true);
+      expect(Number.isInteger(actor!.groundY)).toBe(true);
+      expect(actor!.textureUsesLinearFiltering).toBe(true); // Preserve the released character filtering policy; nearest-filter art changes are outside port 24.
       expect(typeof actor!.textureScaleMode).toBe("number");
       scaleModes.add(actor!.textureScaleMode!);
       const initialAnchor = anchorsByActor.get(key);

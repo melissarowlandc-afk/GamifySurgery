@@ -163,7 +163,7 @@ async function centerOnGridPoint(page: Page, point: { x: number; y: number }): P
     scene.applyCamera({ ...scene.cameraView, panX: 0, panY: 0 });
     const layout = scene.layout;
     const centerX = layout.originX + (location.x + 0.5) * layout.tileSize;
-    const baseY = scene.actorBaseY(location.y);
+    const baseY = scene.worldToScreen({ x: 0, y: scene.actorBaseY(location.y) }).y;
     scene.applyCamera({
       ...scene.cameraView,
       panX: scene.scale.width / 2 - centerX,
@@ -179,14 +179,14 @@ function actorViewportSnapshot(page: Page, key: string) {
     const scene = (document.querySelector("[data-testid='facility-canvas']") as any).__facilityGame.scene.getScene("facility-scene");
     const actor = scene.characterBitmapContainers.get(actorKey);
     if (!actor) return null;
-    const bounds = actor.getBounds();
+    const bounds = scene.toScreenRect(actor.getBounds());
     return {
       visible: actor.visible,
-      x: actor.x,
-      y: actor.y,
-      bounds: { left: bounds.left, right: bounds.right, top: bounds.top, bottom: bounds.bottom },
+      x: scene.worldToScreen(actor).x,
+      y: scene.worldToScreen(actor).y,
+      bounds: { left: bounds.x, right: bounds.x + bounds.width, top: bounds.y, bottom: bounds.y + bounds.height },
       viewport: { width: scene.scale.width, height: scene.scale.height },
-      intersectsViewport: bounds.right > 0 && bounds.left < scene.scale.width && bounds.bottom > 0 && bounds.top < scene.scale.height,
+      intersectsViewport: bounds.x + bounds.width > 0 && bounds.x < scene.scale.width && bounds.y + bounds.height > 0 && bounds.y < scene.scale.height,
     };
   }, key);
 }

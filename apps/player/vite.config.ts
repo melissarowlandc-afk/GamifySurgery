@@ -1,10 +1,12 @@
 import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import { forbidPrivateModules } from "../../scripts/vite/forbid-private-modules";
+import { runtimeClinicalData } from "../../scripts/vite/runtime-clinical-data";
 
 export default defineConfig({
   define: { __PLAYER_BUILD_DATE__: JSON.stringify(new Date().toISOString().slice(0, 10)) },
-  plugins: [react(), forbidPrivateModules()],
+  plugins: [react(), forbidPrivateModules(), runtimeClinicalData()],
+  worker: { plugins: () => [forbidPrivateModules(), runtimeClinicalData()] },
   test: {
     // Minute-by-minute clinic simulations compete for CPU in the full suite.
     // Bound concurrent files without weakening their assertions or timeouts.

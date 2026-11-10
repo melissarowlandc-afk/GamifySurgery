@@ -8,10 +8,10 @@ import { cleanupPhoneTests } from "../../mobile/screenTestUtils";
 import { operationalSessionFixture } from "./operationalSessionTestSupport";
 import { nativeOperationalEngineTestPort } from "./operationalEngineNativeTestSupport";
 import { mountOperationalController } from "./operationalControllerTestSupport";
+import { assertPerformanceBudgets, ciTime as hostedTime, runPerformanceTest } from "../../../../../tests/support/performanceBudget";
 
-const hostedTime=(ms:number)=>process.env.CI?ms*10:ms;
 afterEach(cleanupPhoneTests);
-it("keeps the actual account session/controller/view below 16ms at 1x/2x/4x on the large public clinic",async()=>{
+it("keeps the actual account session/controller/view below 16ms at 1x/2x/4x on the large public clinic",()=>runPerformanceTest(async()=>{
   const fixture=createDiagnosticWorkload(), f=await operationalSessionFixture({createPort:nativeOperationalEngineTestPort},fixture.state);
   const metrics:{speed:number;mainMs:number;viewMs:number;wallMs:number}[]=[];
   try {
@@ -39,8 +39,8 @@ it("keeps the actual account session/controller/view below 16ms at 1x/2x/4x on t
       const folder=new URL("../../../../../.local-dev/evidence-tick-20261104/",import.meta.url);mkdirSync(folder,{recursive:true});
       writeFileSync(new URL("public-session.json",folder),JSON.stringify({tailCommands:170,metrics},null,2));
     }
-    for(const speed of [1,2,4])expect(Math.max(...metrics.filter(r=>r.speed===speed).map(r=>r.mainMs)),`${speed}x complete main active time`).toBeLessThan(hostedTime(16));
-    expect(Math.max(...metrics.map(r=>r.viewMs)),"chart/overview projection main CPU").toBeLessThan(hostedTime(50));
+    assertPerformanceBudgets([...[1,2,4].map(speed=>({label:`${speed}x complete main active time`,actualMs:Math.max(...metrics.filter(r=>r.speed===speed).map(r=>r.mainMs)),limitMs:hostedTime(16)})),
+      {label:"chart/overview projection main CPU",actualMs:Math.max(...metrics.map(r=>r.viewMs)),limitMs:hostedTime(50)}]);
     console.info("Integrated account tick main maxima",JSON.stringify([1,2,4].map(speed=>({speed,maxMs:Math.max(...metrics.filter(r=>r.speed===speed).map(r=>r.mainMs))}))));
   }finally{await cleanupPhoneTests();f.session.dispose();}
-},hostedTime(120000));
+}),hostedTime(120000));

@@ -42,7 +42,8 @@ it("clears on hidden/pagehide, rearms on visible/pageshow and removes its lifecy
 });
 
 it("expires separated incidents and stale markers, tolerates malformed or unavailable auxiliary storage", () => {
-  const f = fixture(); f.guard().beginOpening(); f.next(); f.guard().beginOpening(); f.next(PHONE_RESTART_WINDOW_MS + 1);
+  const f = fixture(); let page = f.guard(); page.beginOpening(); page.markPlaying(); f.next();
+  page = f.guard(); page.beginOpening(); page.markPlaying(); f.next(PHONE_RESTART_WINDOW_MS + 1);
   expect(f.guard().beginOpening().mode).toBe("normal");
   f.next(PHONE_LOW_MEMORY_MS + 1); expect(f.guard().beginOpening().mode).toBe("normal");
   for (const raw of ["null", "bad JSON", '{"version":2}', "x".repeat(2000)]) {
@@ -80,5 +81,17 @@ it("wires the automatic opening decision into the actual canvas and character de
   const textures = new CharacterTextureBudget();
   for (let i = 0; i < 300; i++) { textures.register(`old.${i}`, 160, 320); textures.trim(new Set(), () => {}); }
   expect(textures.size).toBe(32);
+  expect(f.values.get("untouched.save")).toBe("exact-original-bytes");
+});
+
+it("starts a fresh standalone phone conservatively even when Safari denies the IndexedDB getter", () => {
+  const f = fixture(), browser = Object.assign(new EventTarget(), {
+    localStorage: { getItem: (key: string) => f.values.get(key) ?? null, setItem: (key: string, text: string) => { f.values.set(key, text); } },
+    innerWidth: 390, location: { search: "" }, navigator: { standalone: true }, matchMedia: () => ({ matches: true }),
+  });
+  Object.defineProperty(browser, "indexedDB", { get() { throw Error("SecurityError"); } });
+  vi.stubGlobal("window", browser); vi.stubGlobal("document", Object.assign(new EventTarget(), { visibilityState: "visible" }));
+  expect(() => beginPhoneCloudOpening()).not.toThrow();
+  expect(phoneMemoryProfile().mode).toBe("reduced");
   expect(f.values.get("untouched.save")).toBe("exact-original-bytes");
 });

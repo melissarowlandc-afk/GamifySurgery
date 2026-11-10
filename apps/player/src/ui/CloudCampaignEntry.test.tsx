@@ -54,7 +54,10 @@ async function localClinics(env: ReturnType<typeof phoneTestDom>, names: string[
   return { raw, key, fixtures };
 }
 async function settle(assertion: () => void) {
-  await vi.waitFor(async () => { await act(async () => { await new Promise(resolve => setTimeout(resolve, 0)); }); assertion(); });
+  // Enrollment includes asynchronous codec/hash work and a final account refresh.
+  // A single act flush and waitFor's default 1 s do not cover a busy CI runner.
+  // Poll the actual UI condition; finish immediately when it is true.
+  await vi.waitFor(async () => { await act(async () => { await new Promise(resolve => setTimeout(resolve, 0)); }); assertion(); }, { timeout: 5_000 });
 }
 function refreshAccount(f: ReturnType<typeof account>) {
   f.cloud.refresh = vi.fn(async () => { f.cloud.summaries = await f.cloud.runtime.transport.list(); });
@@ -194,7 +197,7 @@ describe("automatic account campaign entry shared by both layouts", () => {
     const env = phoneTestDom(), f = account(), open = vi.fn(async () => {}); await accountCampaigns(f, 1);
     await env.render(wrap(entry({ onOpen: open, preparing: true }), f));
     await settle(() => expect(env.element.textContent).toContain("Level 0"));
-    await vi.waitFor(() => expect(env.doc.body.textContent).toContain("Getting your campaigns ready…"));
+    await settle(() => expect(env.doc.body.textContent).toContain("Getting your campaigns ready…"));
     expect(env.button("Resume Account 1").attributes.disabled).toBeDefined();
     expect(env.button("Start a new campaign").attributes.disabled).toBeDefined();
     expect(open).not.toHaveBeenCalled();
@@ -207,7 +210,10 @@ describe("automatic account campaign entry shared by both layouts", () => {
   it("automatically enrolls own local campaigns up to the free slots and leaves their exact bytes", async () => {
     const env = phoneTestDom(), f = account(), { raw, key } = await localClinics(env, ["First", "Second"]); refreshAccount(f);
     await env.render(wrap(entry(), f));
-    await settle(() => expect(env.button("Resume Second").attributes.disabled).toBeUndefined());
+    await settle(() => {
+      expect(env.button("Resume First").attributes.disabled).toBeUndefined();
+      expect(env.button("Resume Second").attributes.disabled).toBeUndefined();
+    });
     expect(allElements(env.element, node => node.tagName === "BUTTON" && node.attributes["aria-label"]?.startsWith("Resume ") === true)).toHaveLength(2); expect(f.server.operationCount("account-a")).toBe(2);
     expect((env.browser.localStorage as unknown as Storage).getItem(key)).toBe(raw); expect(f.server.usageCount("account-a")).toBe(0);
     expect(allElements(env.element, node => node.attributes["aria-label"] === "Choose account campaigns")).toHaveLength(0);

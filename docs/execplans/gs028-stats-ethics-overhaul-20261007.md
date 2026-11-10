@@ -11373,3 +11373,244 @@ transforming...✓ 1048 modules transformed.
 Existing chunk-size/dynamic-import/plugin warnings remain. Raw commands, stdout/stderr, test JSON and native exit receipts are under `.local-dev/release-port25-20261109/`; `validation-summary.json` lists every exact command. Final source/file/absence audit: `scope-audit-final.json`.
 
 Risks / manager next step: already-open old clients retain the loop until refreshed after rollout. HTTP abort is best effort and does not prove database-query cancellation. The manager still owns browser cloud-saves/cloud-recovery acceptance and request-ID correlation; no claim that live errors have stopped. No server-side rate-limit/migration change was made. Owner opening pathway/origin/profile unchanged. Validated changes remain local/uncommitted for manager review and rollout.
+
+## Release port26 (2026-11-10, release worktree, retained camera + phone memory + catalogue/restart)
+
+Completed in GS-release at manager-stated HEAD 4ca33203. Restored accepted 89a52452 renderer and CI-test content, then applied the accepted phone-memory and catalogue/durable-restart follow-ups. Live GamifySurgery was read-only. All changes remain local and uncommitted for manager review. No commits, push, install, network, agents, browser run, SQL or deploy.
+
+The Scene keeps the released character filtering/registration. Its delta from 89a52452 is byte-exact to the accepted phone-memory delta after ignoring line offsets: eight edit operations in seven context groups, with zero conflicts. The other 56 accepted source/test/config/report paths match their immutable selected source after LF normalization. Production catalogue evaluation uses this release's clinical data; the runtime test proves strict and JSON-byte equality for every consumed export, including retained-version timing bindings.
+
+Disposition receipt: `.local-dev/release-verify/port26-20261110.json`: **56 copied / 9 hunk-ported / 95 excluded** observed paths. Public change list: **68 paths** = 57 accepted source/test/config/report paths, 8 strict guard/fixture paths and 3 additive/new release coordination paths. Exact before/after SHA-256 for every public path: `.local-dev/release-port26-20261110/scope-audit-final.json`. Immutable selected sources, scene-delta verification, native logs/exit receipts and full test JSON are in that private directory.
+
+### Files changed
+
+89a52452 renderer + CI stability (30):
+
+- `apps/player/src/facility/ClinicMapPins.tsx`
+- `apps/player/src/facility/cameraGesturePublication.test.ts`
+- `apps/player/src/facility/facilityProofPolicy.ts`
+- `apps/player/src/facility/facilityWorldSignature.ts`
+- `apps/player/src/facility/graphicsViewportCulling.test.ts`
+- `apps/player/src/facility/graphicsViewportCulling.ts`
+- `apps/player/src/facility/mapPinPositions.test.ts`
+- `apps/player/src/facility/mapPinPositions.ts`
+- `apps/player/src/facility/retainedCamera.test.ts`
+- `apps/player/src/facility/retainedCamera.ts`
+- `apps/player/src/facility/retainedCameraRoundTwo.test.ts`
+- `apps/player/src/session/cloud/operationalEnginePerformance.test.ts`
+- `apps/player/src/session/cloud/operationalSessionPerformance.test.tsx`
+- `apps/player/src/session/cloud/performanceBudget.test.ts`
+- `apps/player/src/session/cloud/tickPerformance.test.ts`
+- `apps/player/src/ui/CloudCampaignEntry.test.tsx`
+- `docs/execplans/map-pan-zoom-performance-20261108.md`
+- `docs/execplans/release-port24-20261108.md`
+- `docs/research/map-pan-zoom-performance-20261108.md`
+- `playwright.map-performance.config.ts`
+- `scripts/qa/map-performance-preview.mjs`
+- `tests/e2e/character-resolution-zoom.spec.ts`
+- `tests/e2e/clinic-biopsy-visitors-correction.spec.ts`
+- `tests/e2e/fixtures/freshLocalCampaign.ts`
+- `tests/e2e/floor-pattern-pan-stability.spec.ts`
+- `tests/e2e/helpers.ts`
+- `tests/e2e/level-five.spec.ts`
+- `tests/e2e/map-click-info.spec.ts`
+- `tests/e2e/map-pan-zoom-performance.spec.ts`
+- `tests/support/performanceBudget.ts`
+
+map-pan-zoom-phone-memory-20261109 (17):
+
+- `apps/player/src/facility/FacilityCanvas.lifecycle.test.tsx`
+- `apps/player/src/facility/FacilityCanvas.tsx`
+- `apps/player/src/facility/FacilityScene.ts`
+- `apps/player/src/facility/nativePhaserMemoryTestSupport.ts`
+- `apps/player/src/facility/phonePanZoomMemory.test.ts`
+- `apps/player/src/facility/retainedCameraTestSupport.ts`
+- `apps/player/src/mobile/performance/canvasContextRecovery.test.ts`
+- `apps/player/src/mobile/performance/canvasContextRecovery.ts`
+- `apps/player/src/mobile/performance/facilityMemory.ts`
+- `apps/player/src/mobile/performance/roomAssets.test.ts`
+- `apps/player/src/mobile/performance/roomAssets.ts`
+- `apps/player/src/mobile/performance/staticCanvasTexture.test.ts`
+- `apps/player/src/mobile/performance/staticCanvasTexture.ts`
+- `docs/execplans/map-pan-zoom-phone-memory-20261109.md`
+- `docs/research/map-pan-zoom-phone-memory-20261109.md`
+- `playwright.map-phone-memory.config.ts`
+- `tests/e2e/map-pan-zoom-phone-memory.spec.ts`
+
+phone-heap-growth-bisect-20261109 (10):
+
+- `apps/player/src/mobile/performance/phoneHealthStorage.test.ts`
+- `apps/player/src/mobile/performance/phoneHealthStorage.ts`
+- `apps/player/src/mobile/performance/phoneMemoryPolicy.test.ts`
+- `apps/player/src/mobile/performance/phoneMemoryPolicy.ts`
+- `apps/player/src/mobile/performance/runtimeClinicalData.test.ts`
+- `apps/player/vite.config.ts`
+- `docs/execplans/phone-heap-growth-bisect-20261109.md`
+- `docs/research/phone-heap-growth-bisect-20261109.md`
+- `scripts/vite/runtime-clinical-data.ts`
+- `scripts/vite/runtime-clinical-graph.ts`
+
+Strict clinical guard integration (8):
+
+- `packages/clinical-content/src/question-flags3-20261107.test.ts`
+- `packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts`
+- `packages/clinical-content/src/question-stats1-20261108.test.ts`
+- `packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts`
+- `tools/question-quality/fixtures/question-flags3-release-source-pins-20261107.json`
+- `tools/question-quality/fixtures/question-flags4-acceptance-release-source-pins-20261108.json`
+- `tools/question-quality/fixtures/question-stats1-acceptance-release-source-pins-20261108.json`
+- `tools/question-quality/fixtures/question-stats1-release-source-pins-20261108.json`
+
+Release coordination (3):
+
+- `docs/execplans/gs028-stats-ethics-overhaul-20261007.md`
+- `docs/execplans/release-port26-20261110.md`
+- `docs/handoffs/CURRENT_THREAD_HANDOFF.md`
+
+### Excluded observed differences
+
+All95 paths and individual reasons/hashes are in the disposition receipt. They include active non-retryable cloud/play-time changes (`cache`, coordinator, gameSession, codec/worker/journal/entry/watchdog files and their unrelated tests), `supabase/migrations/20261104000100_account_request_budget.sql`, character/art/proportion and seat-support work, unrelated diagnostics/session/UI fixes, domain incremental-projection/clone/navigation changes, stale main-tree launch/workload/checkpoint/evidence artifacts, splitter/ui-density specs and unrelated QA tools. None was copied. Release-only content/save/codec regression fixes remain intact.
+
+The published port 25 cloud runtime remains exact, including coordinator.ts SHA256 `890f6e5f66b5c90eabf6ea0cf1e506d7d56c6f95d76d4e53ec76f014eff548ae`, gameSession.ts `2e408bf19b70fbfb15dde2aa01b947ac71a5c8805f4f4bccb2fdb829f02cfb1a`, and supabaseTransport.ts `9c881904fb6ddbdb9ad76fadd9a00df3d7e70eaeefa9ad60b50b31a3f4cec334`. All 15 release migrations and .github remain exact. Only the four accepted CI test files change under session/cloud.
+
+### Strict source-guard authorizations
+
+Restored the exact 89a52452 source rows for only operationalEnginePerformance.test.ts, operationalSessionPerformance.test.tsx and tickPerformance.test.ts. Each of the three older pin fixtures retains its current port 25 history and adds the old CI authorization verbatim, previous fixture hash/paths and the new authorized delta. Guard bodies are byte-exact except fixture digest/count constants: 45->48,47->50,84->87; flags4 remains1->1 with a linked guard digest only. All immutable captures,173 unrelated pin rows,74 required absences and every prior authorization history entry remain exact. Four full-suite clinical guard files passed.
+
+| CI test | Release entry SHA-256 | Restored 89a52452 SHA-256 |
+| --- | --- | --- |
+| `apps/player/src/session/cloud/operationalEnginePerformance.test.ts` | `3adaa316c60b406df43733587f453a14297c38cfd3c5884e9525c0e98b567c4e` | `72c35c73e2d64a3e33f3eb8d5d8ed21fa71778e78040706e7adc0f51fdb36180` |
+| `apps/player/src/session/cloud/operationalSessionPerformance.test.tsx` | `c943d7fc6ea4af13f7e984a643ec21dcfbb91e520e9429aba5e82ace7d83d8a7` | `600957dde32dc9238892cf3e6b49a2933380f44f4144938265d0298c3c916392` |
+| `apps/player/src/session/cloud/tickPerformance.test.ts` | `63182a8577ffbf208dc00105cc6ce906b9125346378934e36cbb1106ebeef03d` | `61f0d17025a795417b224ef1c18a3fcf833c9fb0e90e63e233e908ee2e7a2778` |
+
+### Level 5 unchanged; no rebind
+
+All 553 bound inputs (411 clinical) remain byte-exact. Nine checkpoints, three reports, legacy behavior, launch/workload pins, inputHistory and all assertions are unchanged. Existing recorded totals remain **26,531 commands / 6,019,042 closing cents / 412 completions / 0 walkouts**; unlock tick14,906 and final tick24,681. Integration/launch tests pass44/44, including binding and cash reconciliation. No generator or canonical evidence write was needed.
+
+- `tools/qa/level-five-integration-results-20261012.json`: `2af0e6a514834a4ab1daa81bdc973123c8e3f8a1cf787b8ef8d2726bca648a97` (unchanged).
+- `tests/fixtures/level-five-integration-checkpoints-20261012.json`: `560a4a38c5d8d2cdadf3033666a88a2f5e7e75f64533def7b55d2dfa61469d32` (unchanged).
+- `packages/game-domain/tests/level-five-integration.test.ts`: `812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909` (unchanged).
+
+### Exact validation
+
+All commands used CI=true, installed dependencies and sandbox threads. The seven suites ran directly because root npm test invokes the Git-inventory-blocked boundary script first. The player uses maxWorkers=4; domain and the other workspaces use maxWorkers=2. Process-local preload handles only the optional `net use` EPERM probe; no application assertion is changed. Exact commands, timestamps, exit codes and log SHA-256 are in `validation-summary.json`.
+
+```text
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=4 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port26-20261110/workspace-json-reporter.mjs
+exit 0
+
+npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port26-20261110/workspace-json-reporter.mjs
+exit 0
+
+npm.cmd run test --workspace @gamify-surgery/clinical-context-workbench --workspace @gamify-surgery/balance-config --workspace @gamify-surgery/clinical-authoring --workspace @gamify-surgery/clinical-content --workspace @gamify-surgery/clinical-research -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port26-20261110/workspace-json-reporter.mjs
+exit 0
+```
+
+| Workspace | Files passed | Tests passed | Failed | Skipped |
+| --- | ---: | ---: | ---: | ---: |
+| clinical-context-workbench | 8 | 43 | 0 | 0 |
+| player | 402 | 4026 | 0 | 0 |
+| balance-config | 24 | 164 | 0 | 0 |
+| clinical-authoring | 7 | 81 | 0 | 0 |
+| clinical-content | 127 | 1584 | 0 | 0 |
+| clinical-research | 8 | 83 | 0 | 0 |
+| game-domain | 199 | 5240 | 0 | 1 |
+| Total | 775 | 11,221 | 0 | 1 |
+
+Compared with released port 25 baseline764 files/11,141 passing tests/1 skip: +11 player files/+80 tests, zero new failures. Existing opt-in historical 26,710-command full differential remains the one skipped test (`game-evidence-incremental.test.ts`); it was not edited. No suite needed an isolated retry.
+
+`other-workspaces.log`:
+
+```text
+ Test Files  8 passed (8)
+      Tests  43 passed (43)
+   Start at  07:23:58
+   Duration  1.13s (transform 336ms, setup 0ms, import 965ms, tests 513ms, environment 0ms)
+ Test Files  24 passed (24)
+      Tests  164 passed (164)
+   Start at  07:23:59
+   Duration  2.56s (transform 617ms, setup 0ms, import 2.72s, tests 190ms, environment 1ms)
+ Test Files  7 passed (7)
+      Tests  81 passed (81)
+   Start at  07:24:02
+   Duration  792ms (transform 171ms, setup 0ms, import 474ms, tests 376ms, environment 0ms)
+ Test Files  127 passed (127)
+      Tests  1584 passed (1584)
+   Start at  07:24:03
+   Duration  129.40s (transform 7.91s, setup 0ms, import 218.40s, tests 24.65s, environment 10ms)
+ Test Files  8 passed (8)
+      Tests  83 passed (83)
+   Start at  07:26:13
+   Duration  2.34s (transform 205ms, setup 0ms, import 541ms, tests 1.11s, environment 0ms)
+```
+
+`player.log`:
+
+```text
+ Test Files  402 passed (402)
+      Tests  4026 passed (4026)
+   Start at  07:23:58
+   Duration  483.38s (transform 26.16s, setup 0ms, import 764.99s, tests 1118.61s, environment 33ms)
+```
+
+`domain.log`:
+
+```text
+ Test Files  199 passed (199)
+      Tests  5240 passed | 1 skipped (5241)
+   Start at  07:23:58
+   Duration  593.62s (transform 14.54s, setup 0ms, import 439.08s, tests 724.84s, environment 15ms)
+```
+
+`focused-memory.log`:
+
+```text
+ Test Files  12 passed (12)
+      Tests  88 passed (88)
+   Start at  07:21:05
+   Duration  17.45s (transform 9.15s, setup 0ms, import 26.37s, tests 6.81s, environment 1ms)
+```
+
+`level-five.log`:
+
+```text
+ Test Files  2 passed (2)
+      Tests  44 passed (44)
+   Start at  07:21:40
+   Duration  78.65s (transform 11.28s, setup 0ms, import 18.50s, tests 69.95s, environment 0ms)
+```
+
+`npm.cmd run typecheck`: all seven workspace commands passed, exit0. `npm.cmd run test:boundaries`: direct invocation exited1 solely with `Could not inspect tracked paths: spawnSync git EPERM`. A fresh successful native-shell read-only `git ls-files -z` produced 7,355 paths; the strict bridge validates tree/index/inventory SHA and serves only those exact bytes for that identical subprocess call. Boundary and launcher assertions then pass unchanged, exit0:
+
+```text
+Verified runtime dependency boundaries and 7355 tracked path(s).
+Verified launcher health contract gamify-surgery-player protocol 1.
+```
+
+`npm.cmd run build --workspace @gamify-surgery/player`, ordinary production flag VITE_FACILITY_PERF_PROOF=0, exit0:
+
+```text
+✓ 664 modules transformed.
+✓ built in 12.67s
+```
+
+Existing large-chunk/dynamic-import/plugin-time warnings remain. The precompute plugin evaluated and bundled the actual released catalogue, not main-tree content.
+
+Touched-spec/config e2e typecheck exited1 with exactly four TS2322 number->RoomUpgradeLevel errors in clinic-biopsy-visitors-correction.spec.ts, lines57,58,59,273. Re-running against the captured entry file gives byte-identical full diagnostics after path normalization, also exit1. Every other touched/functional scoped spec and both map configs typecheck with exit0. No e2e diagnostic was introduced; baseline comparison is `e2e-baseline-verification.json`. Exact current output:
+
+```text
+tests/e2e/clinic-biopsy-visitors-correction.spec.ts(57,5): error TS2322: Type '{ id: string; roomDefinitionId: string; x: number; y: number; orientation: 0; doorSide: null; upgradeLevel: number; cleanliness: number; }' is not assignable to type 'PlacedRoom'.
+  Types of property 'upgradeLevel' are incompatible.
+    Type 'number' is not assignable to type 'RoomUpgradeLevel'.
+tests/e2e/clinic-biopsy-visitors-correction.spec.ts(58,110): error TS2322: Type 'number' is not assignable to type 'RoomUpgradeLevel'.
+tests/e2e/clinic-biopsy-visitors-correction.spec.ts(59,115): error TS2322: Type 'number' is not assignable to type 'RoomUpgradeLevel'.
+tests/e2e/clinic-biopsy-visitors-correction.spec.ts(273,5): error TS2322: Type '{ id: string; roomDefinitionId: string; x: number; y: number; orientation: 0; doorSide: null; upgradeLevel: number; cleanliness: number; }' is not assignable to type 'PlacedRoom'.
+  Types of property 'upgradeLevel' are incompatible.
+    Type 'number' is not assignable to type 'RoomUpgradeLevel'.
+```
+
+### Risks and manager next action
+
+The source reports' Day 20 heap and native-renderer memory measurements remain worker acceptance evidence, not new GS-release physical-phone measurements. No new browser/WebKit/GPU/whole-process claim is made, and the owner's loading/sign-in loop cause remains unconfirmed. Manager should run the accepted production pan/zoom and phone-memory browser configurations, cloud recovery and actual iPhone standalone opening/context-loss checks before rollout. Fresh standalone installs intentionally begin conservatively for 24 hours; origin-wide eviction can still remove both auxiliary markers. The restart database contains only an auxiliary presentation marker; auth, save formats and released cloud logic are unchanged.
+
+Owner pathways remain START_GAME.cmd with exact http://127.0.0.1: 4173 in the intended persistent profile, or the canonical Pages site with its separate storage. No origin/profile/path was changed or opened. QA preview 127.0.0.1: 5186 is separate disposable storage and was not opened. Manager owns backup/release/deploy; this milestone is local and uncommitted.

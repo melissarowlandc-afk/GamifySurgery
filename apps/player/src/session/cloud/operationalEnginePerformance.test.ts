@@ -9,10 +9,9 @@ import { OperationalEngineClient } from "./operationalEngineClient";
 import { nativeOperationalEngineTestPort } from "./operationalEngineNativeTestSupport";
 import { codecTestCampaign } from "./codecTestSupport";
 import { sha256Utf8 } from "./codecJson";
+import { assertPerformanceBudgets, ciTime as hostedTime, runPerformanceTest } from "../../../../../tests/support/performanceBudget";
 
-const hostedTime = (ms: number) => process.env.CI ? ms * 10 : ms;
-
-it("keeps native-worker account tick publication, journaling and supplied overview/chart below one frame on the public L3 workload", async () => {
+it("keeps native-worker account tick publication, journaling and supplied overview/chart below one frame on the public L3 workload", () => runPerformanceTest(async () => {
   const fixture = createDiagnosticWorkload(), atRealMs = 1_800_000_000_000;
   expect(fixture.state.rooms).toHaveLength(96); expect(fixture.state.doors).toHaveLength(41); expect(fixture.state.employees).toHaveLength(25);
   const initial = createGameEvidenceCheckpoint(fixture.state), campaign = codecTestCampaign(JSON.stringify(fixture.state));
@@ -60,12 +59,13 @@ it("keeps native-worker account tick publication, journaling and supplied overvi
       const folder = new URL("../../../../../.local-dev/evidence-tick-20261104/", import.meta.url); mkdirSync(folder, { recursive: true });
       writeFileSync(new URL("public-engine.json", folder), JSON.stringify({ stateBytes: JSON.stringify(fixture.state).length, tailCommands: 170, metrics }, null, 2));
     }
-    for (const speed of [1, 2, 4]) {
+    assertPerformanceBudgets([...[1, 2, 4].flatMap(speed => {
       const rows = metrics.filter(row => row.speed === speed);
-      expect(Math.max(...rows.map(row => row.mainMs)), `${speed}x published state + view + journal`).toBeLessThan(hostedTime(16));
-      expect(Math.max(...rows.map(row => row.activeMs)), `${speed}x main active CPU including native message delivery`).toBeLessThan(hostedTime(16));
-    }
-    expect(Math.max(...metrics.filter(row => row.chart).map(row => row.mainMs)), "chart publication").toBeLessThan(hostedTime(50));
+      return [
+        { label: `${speed}x published state + view + journal`, actualMs: Math.max(...rows.map(row => row.mainMs)), limitMs: hostedTime(16) },
+        { label: `${speed}x main active CPU including native message delivery`, actualMs: Math.max(...rows.map(row => row.activeMs)), limitMs: hostedTime(16) },
+      ];
+    }), { label: "chart publication", actualMs: Math.max(...metrics.filter(row => row.chart).map(row => row.mainMs)), limitMs: hostedTime(50) }]);
     // Report timings separately: worker wall latency is not main-thread CPU.
     console.info("Operational worker public fixture", JSON.stringify({
       rawStateBytes: JSON.stringify(fixture.state).length, retainedCommands: data!.rows.length,
@@ -74,4 +74,4 @@ it("keeps native-worker account tick publication, journaling and supplied overvi
         workerMaxMs: Math.max(...rows.map(row => row.workerMs)), wallMaxMs: Math.max(...rows.map(row => row.elapsedMs)) }; }),
     }));
   } finally { drain.stop(); client.dispose(); }
-}, hostedTime(120_000));
+}), hostedTime(120_000));

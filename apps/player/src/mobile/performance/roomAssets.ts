@@ -5,6 +5,7 @@ import {
 import { getApprovedRoomPresentation, resolveApprovedRoomDrawRecords } from "../../facility/approvedRoomPresentation";
 import { getRoomTouchup, isTouchupFileSprite, ROOM_TOUCHUP_DECOR_ASSETS, TOUCHUP_SPRITES,
   type TouchupSpriteName } from "../../facility/roomTouchups";
+import { phoneMemoryProfile } from "./phoneMemoryPolicy";
 
 /** Exact original eager set/order. Only the phone selector uses a subset. */
 export const DESKTOP_FACILITY_ASSETS: readonly BitmapAssetDescriptor[] = [
@@ -74,19 +75,68 @@ export function mobileRoomArtReady(definitionId: string, hasTexture: (asset: Bit
 /** Shared phone image/decoded-source cache for the map and catalog thumbnails. */
 export class MobileBitmapCache {
   private requests = new Map<string, Promise<HTMLImageElement | null>>();
-  constructor(private createImage: () => HTMLImageElement = () => new Image()) {}
+  private owners = new Set<(id: string) => HTMLImageElement | null>();
+  private completed = new Map<string, { weak?: { deref(): HTMLImageElement | undefined }; image?: HTMLImageElement; failed?: boolean; bytes: number }>();
+  private strongBytes = 0;
+  constructor(private createImage: () => HTMLImageElement = () => new Image(),
+    private limits = () => ({ bytes: (phoneMemoryProfile().mode === "reduced" ? 2 : 8) * 1024 * 1024, count: 256 }),
+    // Old Safari has no WeakRef: keep only a small strong LRU in that case.
+    private weakImage: ((image: HTMLImageElement) => { deref(): HTMLImageElement | undefined }) | null =
+      typeof WeakRef === "function" ? image => new WeakRef(image) : null) {}
+
+  get health() {
+    this.trim();
+    return { pending: this.requests.size, completed: this.completed.size, strongBytes: this.strongBytes,
+      maxStrongBytes: this.limits().bytes, weak: this.weakImage !== null, owners: this.owners.size };
+  }
+
+  /** A mounted map already owns its images. Consult it before a new decode,
+   * including when old Safari's small fallback LRU evicts a large live atlas. */
+  connectSource(read: (id: string) => HTMLImageElement | null): () => void {
+    this.owners.add(read); return () => { this.owners.delete(read); };
+  }
+
+  private trim() {
+    const limit = this.limits();
+    while (this.completed.size > limit.count || this.strongBytes > limit.bytes) {
+      const key = this.completed.keys().next().value; if (key === undefined) break;
+      this.strongBytes -= this.completed.get(key)!.bytes; this.completed.delete(key);
+    }
+  }
 
   load(asset: BitmapAssetDescriptor, url: string): Promise<HTMLImageElement | null> {
     const existing = this.requests.get(asset.id);
     if (existing) return existing;
+    for (const read of this.owners) {
+      try { const image = read(asset.id); if (image) return Promise.resolve(image); }
+      catch { /* A disposing owner must not prevent another source/fallback. */ }
+    }
+    const cached = this.completed.get(asset.id);
+    if (cached) {
+      const image = cached.image ?? cached.weak?.deref();
+      if (image || cached.failed) {
+        this.completed.delete(asset.id); this.completed.set(asset.id, cached); this.trim();
+        return Promise.resolve(image ?? null);
+      }
+      this.completed.delete(asset.id);
+    }
     const promise = new Promise<HTMLImageElement | null>(resolve => {
-      const image = this.createImage();
-      image.decoding = "async";
-      image.onload = () => resolve(image);
-      image.onerror = () => resolve(null);
-      image.src = url;
+      try {
+        const image = this.createImage();
+        const finish = (value: HTMLImageElement | null) => { image.onload = null; image.onerror = null; resolve(value); };
+        image.decoding = "async";
+        image.onload = () => finish(image);
+        image.onerror = () => finish(null);
+        image.src = url;
+      } catch { resolve(null); }
     });
     this.requests.set(asset.id, promise);
+    void promise.then(image => {
+      this.requests.delete(asset.id);
+      const row = !image ? { failed: true, bytes: 0 } : this.weakImage ? { weak: this.weakImage(image), bytes: 0 }
+        : { image, bytes: (image.naturalWidth || image.width || asset.nativeWidth) * (image.naturalHeight || image.height || asset.nativeHeight) * 4 };
+      this.completed.set(asset.id, row); this.strongBytes += row.bytes; this.trim();
+    });
     return promise;
   }
 }

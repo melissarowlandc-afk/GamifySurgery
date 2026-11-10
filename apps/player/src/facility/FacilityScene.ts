@@ -1,5 +1,8 @@
 import Phaser from "phaser";
+import { retainGraphicsViewportBounds } from "./graphicsViewportCulling";
 import { desktopMapShade, facilityCameraSignature } from "./desktopMapShade";
+import { CAMERA_ZOOM_SETTLE_MS, retainedCameraTransform, projectCameraPoint, projectCameraRect, unprojectCameraPoint,
+  type CameraPoint, type CameraRect } from "./retainedCamera";
 import { mapSessionAction } from "../session/sessionActions";
 import { roomThumbnailStage } from "./roomThumbnailCapture";
 import { initializeCanvasRoomLighting } from "./canvasRoomLighting";
@@ -323,6 +326,7 @@ import type { MobileMapPresentationPolicy } from "../mobile/performance/presenta
 import { mobileBitmapCache, mobileRoomArtReady, selectFacilityAssets } from "../mobile/performance/roomAssets";
 import { resolvePublicArtAssetUrl } from "../art/bitmapAssetManifest";
 import { installMobileCanvasResolution } from "../mobile/performance/canvasResolution";
+import { facilityCanvasSurface } from "../mobile/performance/staticCanvasTexture";
 
 export interface FacilitySceneBridge {
   /** Explicit opt-in; desktop never supplies it. */
@@ -597,6 +601,7 @@ export class FacilityScene extends Phaser.Scene {
     Phaser.GameObjects.Text
   >();
 
+  /** Desired screen projection (also used by picking and the shade contract). */
   private layout: GridLayout = {
     originX: 0,
     originY: 0,
@@ -609,6 +614,53 @@ export class FacilityScene extends Phaser.Scene {
     setbackHeight: 24,
     worldBottom: 10 * 24 + 24,
   };
+
+  /** Geometry is retained in this last crisp draw frame while the camera moves. */
+  private renderedLayout?: GridLayout;
+  private renderedCampaignId?: string;
+  private get worldLayout(): GridLayout { return this.renderedLayout ?? this.layout; }
+  private cameraGestureUntil = 0;
+  private crispZoomPending = false;
+  private staticWorldPending = false;
+  private lastProjectionRequest = "";
+  private cameraPreferencePending = false;
+  private lastPublishedCameraRequest = "";
+  private signatureModel?: FacilityViewModel;
+  private staticSignature = "";
+  private frozenCharacterModel?: FacilityViewModel;
+  private frozenCharacterLayout?: GridLayout;
+  private founderActivityAnchor?: [string, string | undefined, number, number];
+
+  private cameraNow(): number { return this.time?.now ?? performance.now(); }
+  public isCameraGestureActive(): boolean {
+    return Boolean(this.dragStart?.dragged || this.mobileGestures?.activeCount || this.cameraNow() < this.cameraGestureUntil);
+  }
+  private screenToWorld(point: CameraPoint): CameraPoint { return unprojectCameraPoint(point, this.worldLayout, this.layout); }
+  private worldToScreen(point: CameraPoint): CameraPoint { return projectCameraPoint(point, this.worldLayout, this.layout); }
+  private toScreenRect(rect: CameraRect): CameraRect { return projectCameraRect(rect, this.worldLayout, this.layout); }
+  private syncRetainedCamera(): void {
+    const transform = retainedCameraTransform(this.worldLayout, this.layout), camera = this.cameras?.main;
+    camera?.setOrigin?.(0, 0);
+    camera?.setZoom(transform.zoom);
+    camera?.setScroll(transform.scrollX, transform.scrollY);
+    // Keep the gesture's sprite placement fractional. The existing Canvas
+    // pixel rounding resumes when the settled world is drawn at native scale.
+    camera?.setRoundPixels?.(transform.zoom === 1);
+  }
+
+  /** Re-express pixel-only seat glides when the crisp draw basis changes. Tile
+   * route/hop/anchor state is already independent of the camera. */
+  private rebaseWorld(): void {
+    const previous = this.renderedLayout;
+    if (previous) this.characterSeatSettles?.forEach((state, key) => {
+      this.characterSeatSettles.set(key, { ...state, drawn: projectCameraPoint(state.drawn, previous, this.layout),
+        ...(state.glide ? { glide: { ...state.glide, from: projectCameraPoint(state.glide.from, previous, this.layout) } } : {}) });
+    });
+    this.renderedLayout = this.layout;
+    this.renderedCampaignId = this.bridge.viewModel.campaignId;
+    this.crispZoomPending = false; this.staticWorldPending = false;
+    this.syncRetainedCamera();
+  }
 
   private placementGhost: PlacementGhost | null = null;
   private characterPhase = 0;
@@ -707,8 +759,10 @@ export class FacilityScene extends Phaser.Scene {
     const stage = roomThumbnailStage(room.width, room.height);
     if (!this.sys.isPaused()) this.sys.pause();
     this.scale.resize(stage.width, stage.height);
+    this.renderedLayout = undefined;
     this.cameras.main.setViewport(0, 0, stage.width, stage.height)
       .setScroll(0, 0).setZoom(1).setBackgroundColor("rgba(0,0,0,0)");
+    this.cameras.main.setRoundPixels?.(true);
     this.children.each(child => {
       (child as Phaser.GameObjects.GameObject & Partial<Phaser.GameObjects.Components.Visible>).setVisible?.(false);
     });
@@ -756,6 +810,7 @@ export class FacilityScene extends Phaser.Scene {
     displayWidth: number | undefined;
     displayHeight: number | undefined;
     originY: number | undefined;
+    groundX: number;
     groundY: number;
     actorLocalY: number | undefined;
     visualLift: number;
@@ -779,6 +834,7 @@ export class FacilityScene extends Phaser.Scene {
         displayWidth: actor?.displayWidth,
         displayHeight: actor?.displayHeight,
         originY: actor?.originY,
+        groundX: container.x,
         groundY: container.y,
         actorLocalY: actor?.y,
         visualLift: actor ? -actor.y : 0,
@@ -994,7 +1050,7 @@ export class FacilityScene extends Phaser.Scene {
         (asset) => this.textures.exists(getPhaserTextureKey(asset)),
       );
       // Do not modify model state: this only replaces the render payload.
-      this.drawWorld();
+      this.refreshLayout(true);
     });
     this.load.start();
   }
@@ -1039,7 +1095,7 @@ export class FacilityScene extends Phaser.Scene {
     // One request per scene. Decode failure keeps the whole room procedural.
     this.levelFiveAtlasLoadRequested = true;
     preloadBitmapAssets(this.load, missing);
-    this.load.once(Phaser.Loader.Events.COMPLETE, () => { this.drawWorld(); });
+    this.load.once(Phaser.Loader.Events.COMPLETE, () => { this.refreshLayout(true); });
     this.load.start();
   }
 
@@ -1153,10 +1209,11 @@ export class FacilityScene extends Phaser.Scene {
     if (!this.textures.exists(cleanedKey)) {
       const source = this.textures.get(textureKey).getSourceImage();
       if (source) {
-        const cleaned = this.textures.createCanvas(
+        const cleaned = facilityCanvasSurface(this.textures,
           cleanedKey,
           LANDSCAPING_ATLAS_V1.nativeWidth,
           LANDSCAPING_ATLAS_V1.nativeHeight,
+          this.bridge.mobileInput === true,
         );
         if (cleaned) {
           // Phaser may decode this source as an Image, canvas, or ImageBitmap
@@ -1245,7 +1302,7 @@ export class FacilityScene extends Phaser.Scene {
     const source = this.textures.get(getPhaserTextureKey(atlas)).getSourceImage();
     if (!source) return undefined;
     const [x, y, width, height] = stool.sourceRect;
-    const texture = this.textures.createCanvas(key, width, height);
+    const texture = facilityCanvasSurface(this.textures, key, width, height, this.bridge.mobileInput === true);
     if (!texture) return undefined;
     texture.context.drawImage(source as CanvasImageSource, x, y, width, height, 0, 0, width, height);
     const pixels = texture.getData(0, 0, width, height);
@@ -1267,12 +1324,8 @@ export class FacilityScene extends Phaser.Scene {
     const source = this.textures.get(getPhaserTextureKey(atlas)).getSourceImage();
     if (!source) return undefined;
     const [sourceX, sourceY, width, height] = mask.sourceRect;
-    const rearTexture = this.textures.exists(rear)
-      ? this.textures.get(rear) as Phaser.Textures.CanvasTexture
-      : this.textures.createCanvas(rear, width, height);
-    const foregroundTexture = this.textures.exists(foreground)
-      ? this.textures.get(foreground) as Phaser.Textures.CanvasTexture
-      : this.textures.createCanvas(foreground, width, height);
+    const rearTexture = facilityCanvasSurface(this.textures, rear, width, height, this.bridge.mobileInput === true);
+    const foregroundTexture = facilityCanvasSurface(this.textures, foreground, width, height, this.bridge.mobileInput === true);
     if (!rearTexture || !foregroundTexture) return undefined;
     for (const texture of [rearTexture, foregroundTexture]) {
       texture.context.clearRect(0, 0, width, height);
@@ -1401,6 +1454,16 @@ export class FacilityScene extends Phaser.Scene {
     this.lastReportedSelectedRoomRect = "";
   }
 
+  public retainedViewModelCount(): number {
+    return new Set([this.bridge.viewModel, this.signatureModel, this.frozenCharacterModel,
+      this.mobileAtlasModel, this.inspectLabelCache?.viewModel].filter(Boolean)).size;
+  }
+
+  public restoreCanvasPresentation(): void {
+    if (this.bridge.mobileInput === true) this.resyncMobilePresentation();
+    this.refreshLayout(true);
+  }
+
   public update(time: number, delta: number): void {
     if (this.bridge.mobileInput !== true && this.bridge.viewModel.levelFiveRoomArt) this.ensureLevelFiveAtlases();
     let mobileResynced = false;
@@ -1444,9 +1507,19 @@ export class FacilityScene extends Phaser.Scene {
 
     if (mobileResynced) this.refreshLayout(true);
     this.refreshLayout();
+    if (this.cameraPreferencePending && !this.isCameraGestureActive()) this.flushCameraChange();
     if (this.bridge.mobileInput === true) this.drawMobileBuildPreview();
     this.reportSelectedRoomRect();
-    this.drawCharacters();
+    if (!motionFrozen || this.frozenCharacterModel !== this.bridge.viewModel || this.frozenCharacterLayout !== this.worldLayout) {
+      this.drawCharacters();
+      this.frozenCharacterModel = motionFrozen ? this.bridge.viewModel : undefined;
+      this.frozenCharacterLayout = motionFrozen ? this.worldLayout : undefined;
+    } else {
+      // Camera transforms move frozen actors already. Keep popup fade/selection
+      // live without resolving every still, route, support and shadow again.
+      this.renderInspectBox();
+      if (this.founderActivityAnchor) this.renderFounderActivityBox(...this.founderActivityAnchor);
+    }
     this.reportAlertPinPositions();
     this.drawEarningsPopups(time);
     // Atlas completion callbacks can redraw outside update(). Delta belongs to
@@ -1456,24 +1529,44 @@ export class FacilityScene extends Phaser.Scene {
 
   private refreshLayout(force = false): void {
     if (this.bridge.mobileInput === true && this.bridge.mobilePresentation?.hidden) return;
+    const campaignChanged = this.renderedLayout && this.renderedCampaignId !== this.bridge.viewModel.campaignId;
+    if (campaignChanged) {
+      this.dragStart = null;
+      this.mobileGestures?.cancel();
+      this.cameraGestureUntil = 0;
+      this.cameraPreferencePending = false;
+    }
     const width = Math.max(1, Math.floor(this.scale.width));
     const height = Math.max(1, Math.floor(this.scale.height));
-    const signature = getFacilityWorldSignature(this.bridge.viewModel) + (this.bridge.mobileInput === true ? ""
-      : `:${this.bridge.viewModel.campaignId ?? ""}:${facilityCameraSignature(this.bridge.viewModel.camera)}`);
+    // Projections are immutable between state changes; gestures need no repeat
+    // room/door scan. Forced asset/edit redraws still refresh the signature.
+    if (force || this.signatureModel !== this.bridge.viewModel) {
+      this.signatureModel = this.bridge.viewModel;
+      this.staticSignature = getFacilityWorldSignature(this.bridge.viewModel, false);
+    }
+    const signature = `${this.bridge.viewModel.campaignId ?? ""}:${this.staticSignature}`;
+    const request = `${this.bridge.viewModel.campaignId ?? ""}:${facilityCameraSignature(this.bridge.viewModel.camera)}`;
+    const changed = force || width !== this.lastWidth || height !== this.lastHeight || signature !== this.lastModelSignature;
+    const projected = request !== this.lastProjectionRequest;
+    if (!changed && !projected && !this.staticWorldPending && !this.crispZoomPending) return;
 
-    if (
-      !force &&
-      width === this.lastWidth &&
-      height === this.lastHeight &&
-      signature === this.lastModelSignature
-    ) {
+    this.layout = this.calculateLayout(width, height);
+    this.lastProjectionRequest = request;
+    if (!campaignChanged && this.renderedLayout && this.layout.tileSize !== this.renderedLayout.tileSize && projected) {
+      this.cameraGestureUntil = this.cameraNow() + CAMERA_ZOOM_SETTLE_MS;
+      this.crispZoomPending = true;
+    }
+    this.syncRetainedCamera();
+    if (this.renderedLayout && this.isCameraGestureActive()) {
+      this.staticWorldPending ||= changed;
       return;
     }
+    if (!changed && !this.staticWorldPending && !this.crispZoomPending) return;
 
     this.lastWidth = width;
     this.lastHeight = height;
     this.lastModelSignature = signature;
-    this.layout = this.calculateLayout(width, height);
+    this.rebaseWorld();
 
     if (!this.bridge.viewModel.placement) {
       this.placementGhost = null;
@@ -1531,15 +1624,19 @@ export class FacilityScene extends Phaser.Scene {
       requestedCamera &&
       requestedCameraSignature !== this.lastRequestedCameraSignature
     ) {
-      this.cameraView = {
-        ...(this.bridge.mobileInput !== true && requestedCamera.desktopViewport ? { desktopViewport: requestedCamera.desktopViewport } : {}),
-        zoom: Math.max(
-          MINIMUM_CAMERA_ZOOM,
-          Math.min(MAXIMUM_CAMERA_ZOOM, requestedCamera.zoom),
-        ),
-        panX: requestedCamera.panX,
-        panY: requestedCamera.panY,
-      };
+      const delayedEcho = this.cameraPreferencePending && requestedCameraSignature === this.lastPublishedCameraRequest;
+      if (!delayedEcho) {
+        this.cameraPreferencePending = false;
+        this.cameraView = {
+          ...(this.bridge.mobileInput !== true && requestedCamera.desktopViewport ? { desktopViewport: requestedCamera.desktopViewport } : {}),
+          zoom: Math.max(
+            MINIMUM_CAMERA_ZOOM,
+            Math.min(MAXIMUM_CAMERA_ZOOM, requestedCamera.zoom),
+          ),
+          panX: requestedCamera.panX,
+          panY: requestedCamera.panY,
+        };
+      }
       this.lastRequestedCameraSignature = requestedCameraSignature;
       this.cameraCampaignId = this.bridge.viewModel.campaignId;
     }
@@ -1638,7 +1735,7 @@ export class FacilityScene extends Phaser.Scene {
     this.architectureGraphics?.clear();
     this.landscapeGraphics?.clear();
 
-    const { originX, originY, tileSize, width, height } = this.layout;
+    const { originX, originY, tileSize, width, height } = this.worldLayout;
     const model = this.bridge.viewModel;
     const columns = positiveGridSize(model.gridColumns, 16);
     const rows = positiveGridSize(model.gridRows, 10);
@@ -1699,14 +1796,20 @@ export class FacilityScene extends Phaser.Scene {
     this.removeInactiveEnvironmentSprites();
     this.removeInactiveFixtureBitmapImages();
     this.removeInactiveLandscapingBitmapImages();
+    // Canvas otherwise replays offscreen Graphics paths on every camera frame.
+    // Retain conservative bounds after edits, without baking phone textures.
+    for (const graphics of [this.terrainGraphics, this.worldGraphics, this.architectureGraphics, this.landscapeGraphics,
+      ...this.fixtureGraphics.values(), ...this.roomFixtureGraphics.values(), ...this.wallDecorGraphics.values()]) {
+      if (graphics) retainGraphicsViewportBounds(graphics);
+    }
   }
 
   /** World-anchored turf; build cells never influence these stipples. */
   private drawContinuousTurf(graphics: Phaser.GameObjects.Graphics): void {
     const exterior = getWorldExteriorLayout({
-      originX: this.layout.originX,
-      originY: this.layout.originY,
-      tileSize: this.layout.tileSize,
+      originX: this.worldLayout.originX,
+      originY: this.worldLayout.originY,
+      tileSize: this.worldLayout.tileSize,
       gridColumns: positiveGridSize(this.bridge.viewModel.gridColumns, 16),
       gridRows: positiveGridSize(this.bridge.viewModel.gridRows, 10),
     });
@@ -1721,8 +1824,8 @@ export class FacilityScene extends Phaser.Scene {
       positiveGridSize(this.bridge.viewModel.gridRows, 10),
     )) {
       this.drawFrontageImage(patch.key, patch.assetId,
-        left + patch.x * this.layout.tileSize, top + patch.y * this.layout.tileSize,
-        patch.width * this.layout.tileSize, FACILITY_DEPTH_WORLD - 9.5, patch.alpha);
+        left + patch.x * this.worldLayout.tileSize, top + patch.y * this.worldLayout.tileSize,
+        patch.width * this.worldLayout.tileSize, FACILITY_DEPTH_WORLD - 9.5, patch.alpha);
       this.landscapingBitmapImages.get(patch.key)
         ?.setRotation(patch.rotation).setFlip(patch.flipX, patch.flipY);
     }
@@ -1730,7 +1833,7 @@ export class FacilityScene extends Phaser.Scene {
 
   /** A restrained contact shadow grounds rooms without adding any collision. */
   private drawBuildingGroundShadows(graphics: Phaser.GameObjects.Graphics): void {
-    const offset = Math.max(2, Math.floor(this.layout.tileSize * 0.09));
+    const offset = Math.max(2, Math.floor(this.worldLayout.tileSize * 0.09));
     for (const room of this.bridge.viewModel.rooms) {
       const rectangle = this.toPixels({
         tileX: room.tileX,
@@ -2099,7 +2202,7 @@ export class FacilityScene extends Phaser.Scene {
     rectangle: { x: number; y: number; width: number; height: number },
     shell: ApprovedRoomShellPresentation,
   ): void {
-    const scale = this.layout.tileSize / shell.tilePixels;
+    const scale = this.worldLayout.tileSize / shell.tilePixels;
     const px = (value: number) => value * scale;
     const cap = px(shell.sideCapWidthPixels);
     const rear = px(shell.rearWallHeightPixels);
@@ -2121,7 +2224,7 @@ export class FacilityScene extends Phaser.Scene {
     const openingAt = (side: "north" | "south" | "west" | "east", offset: number) =>
       openings.some((opening) => opening.side === side && opening.offset === offset);
     const paintNorth = (offset: number) => {
-      const left = rectangle.x + offset * this.layout.tileSize;
+      const left = rectangle.x + offset * this.worldLayout.tileSize;
       const isLow = backed.has(offset);
       const height = isLow ? low : rear;
       const top = rectangle.y - height;
@@ -2141,29 +2244,29 @@ export class FacilityScene extends Phaser.Scene {
         graphics.fillStyle(dark, 1); graphics.fillRect(x - px(1), isLow ? top : top - px(9), width + px(2), px(9));
         graphics.fillStyle(light, 1); graphics.fillRect(x - px(1), isLow ? top : top - px(9), width + px(2), px(3));
       };
-      if (!openingAt("north", offset)) { paint(left, this.layout.tileSize); return; }
-      paint(left, inset); paint(left + this.layout.tileSize - inset, inset);
+      if (!openingAt("north", offset)) { paint(left, this.worldLayout.tileSize); return; }
+      paint(left, inset); paint(left + this.worldLayout.tileSize - inset, inset);
       graphics.fillStyle(wood, 1);
       graphics.fillRect(left + inset - px(5), top, px(5), height);
-      graphics.fillRect(left + this.layout.tileSize - inset, top, px(5), height);
-      if (!isLow) graphics.fillRect(left + inset - px(5), top - px(5), this.layout.tileSize - inset * 2 + px(10), px(6));
+      graphics.fillRect(left + this.worldLayout.tileSize - inset, top, px(5), height);
+      if (!isLow) graphics.fillRect(left + inset - px(5), top - px(5), this.worldLayout.tileSize - inset * 2 + px(10), px(6));
     };
     north.forEach(paintNorth);
     for (const side of ["west", "east"] as const) {
       const offsets = side === "west" ? west : east;
       for (const offset of offsets) {
         const left = side === "west" ? rectangle.x - cap : rectangle.x + rectangle.width;
-        const top = rectangle.y + offset * this.layout.tileSize;
+        const top = rectangle.y + offset * this.worldLayout.tileSize;
         const opening = openingAt(side, offset);
         const paint = (y: number, height: number) => {
           graphics.fillStyle(dark, 1); graphics.fillRect(left, y, cap, height);
           graphics.fillStyle(light, 1); graphics.fillRect(left + (side === "east" ? 0 : cap - px(3)), y, px(3), height);
         };
-        if (!opening) { paint(top, this.layout.tileSize); continue; }
-        paint(top, inset); paint(top + this.layout.tileSize - inset, inset);
+        if (!opening) { paint(top, this.worldLayout.tileSize); continue; }
+        paint(top, inset); paint(top + this.worldLayout.tileSize - inset, inset);
         graphics.fillStyle(wood, 1);
         graphics.fillRect(left - px(2), top + inset - px(3), cap + px(4), px(5));
-        graphics.fillRect(left - px(2), top + this.layout.tileSize - inset - px(2), cap + px(4), px(5));
+        graphics.fillRect(left - px(2), top + this.worldLayout.tileSize - inset - px(2), cap + px(4), px(5));
       }
     }
   }
@@ -2181,7 +2284,7 @@ export class FacilityScene extends Phaser.Scene {
     const south = this.exposedBoundaryRuns(room, "south");
     if (south.length === 0) return;
     const graphics = this.getSortableGraphics(this.roomFixtureGraphics, this.activeRoomFixtureGraphics, `hallway-south:${room.instanceId}`);
-    const scale = this.layout.tileSize / shell.tilePixels;
+    const scale = this.worldLayout.tileSize / shell.tilePixels;
     const px = (value: number) => value * scale;
     const low = px(shell.southHeightPixels);
     const cap = px(shell.sideCapWidthPixels);
@@ -2201,13 +2304,13 @@ export class FacilityScene extends Phaser.Scene {
     };
     for (const run of south) {
       for (let offset = run.offset; offset < run.offset + run.length; offset += 1) {
-        const left = rectangle.x + offset * this.layout.tileSize;
+        const left = rectangle.x + offset * this.worldLayout.tileSize;
         const opening = openings.some((door) => door.side === "south" && door.offset === offset);
-        if (!opening) { paint(left, this.layout.tileSize); continue; }
-        paint(left, inset); paint(left + this.layout.tileSize - inset, inset);
+        if (!opening) { paint(left, this.worldLayout.tileSize); continue; }
+        paint(left, inset); paint(left + this.worldLayout.tileSize - inset, inset);
         graphics.fillStyle(wood, 1);
         graphics.fillRect(left + inset - px(5), southY - px(8), px(5), low + px(8));
-        graphics.fillRect(left + this.layout.tileSize - inset, southY - px(8), px(5), low + px(8));
+        graphics.fillRect(left + this.worldLayout.tileSize - inset, southY - px(8), px(5), low + px(8));
       }
     }
     // Exposed side walls run down over the short wall's face, as on rooms.
@@ -2228,7 +2331,7 @@ export class FacilityScene extends Phaser.Scene {
     room: FacilityRoomView,
     side: "north" | "south",
   ): readonly CanonicalRoomWallRun[] {
-    const tile = this.layout.tileSize;
+    const tile = this.worldLayout.tileSize;
     const hallwayAt = (x: number, y: number) => this.bridge.viewModel.rooms.find((candidate) => {
       const size = orientedSize(candidate);
       return (candidate.kind === "hallway" || candidate.definitionId === "room.hallway")
@@ -2256,7 +2359,7 @@ export class FacilityScene extends Phaser.Scene {
     room: FacilityRoomView,
     side: "east" | "west",
   ): readonly CanonicalRoomWallRun[] {
-    const tile = this.layout.tileSize;
+    const tile = this.worldLayout.tileSize;
     const hallwayAt = (x: number, y: number) => this.bridge.viewModel.rooms.find((candidate) => {
       const size = orientedSize(candidate);
       return (candidate.kind === "hallway" || candidate.definitionId === "room.hallway")
@@ -2378,7 +2481,7 @@ export class FacilityScene extends Phaser.Scene {
     room: FacilityRoomView,
     rectangle: { x: number; y: number; width: number; height: number },
   ): void {
-    const geometry = getSurgeryCenterArchitectureAtScale(this.layout.tileSize);
+    const geometry = getSurgeryCenterArchitectureAtScale(this.worldLayout.tileSize);
     const northRuns = this.exposedBoundaryRuns(room, "north");
     const southRuns = this.exposedBoundaryRuns(room, "south");
     const isExamination = room.definitionId === "room.examination";
@@ -2402,7 +2505,7 @@ export class FacilityScene extends Phaser.Scene {
       this.drawSurgeryCenterComponentTile(
         `surgery-center:floor:${room.instanceId}`,
         "floor", rectangle.x, rectangle.y, rectangle.width, rectangle.height,
-        FACILITY_DEPTH_WORLD + 5, this.layout.tileSize / (832 / 5), this.layout.tileSize / (622 / 4),
+        FACILITY_DEPTH_WORLD + 5, this.worldLayout.tileSize / (832 / 5), this.worldLayout.tileSize / (622 / 4),
       );
     }
     // Side thickness and trim live outside the logical floor, so an adjacent
@@ -2412,8 +2515,8 @@ export class FacilityScene extends Phaser.Scene {
         const x = side === "west"
           ? rectangle.x - geometry.sideThickness
           : rectangle.x + rectangle.width;
-        const y = rectangle.y + run.offset * this.layout.tileSize;
-        const height = run.length * this.layout.tileSize;
+        const y = rectangle.y + run.offset * this.worldLayout.tileSize;
+        const height = run.length * this.worldLayout.tileSize;
         graphics.fillStyle(PIXEL_PALETTE_NUMBER.ink, 1);
         graphics.fillRect(x, y, geometry.sideThickness, height);
         graphics.fillStyle(PIXEL_PALETTE_NUMBER.charcoal, 1);
@@ -2435,14 +2538,14 @@ export class FacilityScene extends Phaser.Scene {
           this.drawSurgeryCenterComponentTile(
             `surgery-center:side:${room.instanceId}:${side}:${run.offset}`,
             "side", x, y, geometry.sideThickness, height,
-            FACILITY_DEPTH_WORLD + 10, this.layout.tileSize / (832 / 5), this.layout.tileSize / (622 / 4),
+            FACILITY_DEPTH_WORLD + 10, this.worldLayout.tileSize / (832 / 5), this.worldLayout.tileSize / (622 / 4),
           );
         }
       }
     }
     for (const run of northRuns) {
-      const x = rectangle.x + run.offset * this.layout.tileSize;
-      const width = run.length * this.layout.tileSize;
+      const x = rectangle.x + run.offset * this.worldLayout.tileSize;
+      const width = run.length * this.worldLayout.tileSize;
       const top = rectangle.y - geometry.northEnvelope;
       graphics.fillStyle(PIXEL_PALETTE_NUMBER.ink, 1);
       graphics.fillRect(x, top, width, geometry.northEnvelope);
@@ -2475,15 +2578,15 @@ export class FacilityScene extends Phaser.Scene {
         this.drawSurgeryCenterComponentTile(
           `surgery-center:north:${room.instanceId}:${run.offset}`,
           "north", x, top, width, geometry.northEnvelope,
-          FACILITY_DEPTH_WORLD + 11, this.layout.tileSize / (832 / 5), this.layout.tileSize / (622 / 4),
+          FACILITY_DEPTH_WORLD + 11, this.worldLayout.tileSize / (832 / 5), this.worldLayout.tileSize / (622 / 4),
         );
       }
     }
     // The foreground crop is present only on exposed south runs: its measured
     // 20px inset is inside this floor, while its 133px extent projects below.
     for (const run of southRuns) {
-      const x = rectangle.x + run.offset * this.layout.tileSize;
-      const width = run.length * this.layout.tileSize;
+      const x = rectangle.x + run.offset * this.worldLayout.tileSize;
+      const width = run.length * this.worldLayout.tileSize;
       const y = rectangle.y + rectangle.height - geometry.foregroundInset;
       graphics.fillStyle(PIXEL_PALETTE_NUMBER.ink, 1);
       graphics.fillRect(x, y, width, geometry.foregroundInset + geometry.foregroundOutset);
@@ -2504,7 +2607,7 @@ export class FacilityScene extends Phaser.Scene {
         this.drawSurgeryCenterComponentTile(
           `surgery-center:front:${room.instanceId}:${run.offset}`,
           "front", x, y, width, geometry.foregroundInset + geometry.foregroundOutset,
-          FACILITY_DEPTH_WORLD + 29, this.layout.tileSize / (832 / 5), this.layout.tileSize / (622 / 4),
+          FACILITY_DEPTH_WORLD + 29, this.worldLayout.tileSize / (832 / 5), this.worldLayout.tileSize / (622 / 4),
         );
       }
     }
@@ -2655,8 +2758,8 @@ export class FacilityScene extends Phaser.Scene {
     const phase = getEnvironmentTileLogicalPhase(
       x,
       y,
-      this.layout.originX,
-      this.layout.originY,
+      this.worldLayout.originX,
+      this.worldLayout.originY,
       tileScale,
     );
     sprite.tilePositionX = phase.x;
@@ -2702,12 +2805,12 @@ export class FacilityScene extends Phaser.Scene {
     this.drawFrontageTile(
       "environment:sidewalk",
       "frontage:paving-v2",
-      this.layout.originX,
-      this.layout.sidewalkTop,
-      this.layout.width,
-      this.layout.sidewalkHeight,
+      this.worldLayout.originX,
+      this.worldLayout.sidewalkTop,
+      this.worldLayout.width,
+      this.worldLayout.sidewalkHeight,
       FACILITY_DEPTH_WORLD + 5,
-      this.layout.tileSize / 128,
+      this.worldLayout.tileSize / 128,
     );
   }
 
@@ -2749,9 +2852,9 @@ export class FacilityScene extends Phaser.Scene {
       .setDisplaySize(width,height).setTileScale(buffer.tileScaleX,buffer.tileScaleY)
       .setDepth(depth).setVisible(true);
     // The curb's cap starts at its own world band, not a wrapped turf Y phase.
-    const materialOriginY = id.startsWith("frontage:curb-") ? y : this.layout.originY;
+    const materialOriginY = id.startsWith("frontage:curb-") ? y : this.worldLayout.originY;
     const phase = getEnvironmentTileLogicalPhase(x, y,
-      this.layout.originX, materialOriginY, tileScale, 0.000001);
+      this.worldLayout.originX, materialOriginY, tileScale, 0.000001);
     sprite.tilePositionX = phase.x;
     sprite.tilePositionY = phase.y;
     this.activeEnvironmentSprites.add(key);
@@ -2788,7 +2891,7 @@ export class FacilityScene extends Phaser.Scene {
       rectangle.width,
       rectangle.height,
       FACILITY_DEPTH_WORLD + 5,
-      Math.max(0.04, this.layout.tileSize / 142),
+      Math.max(0.04, this.worldLayout.tileSize / 142),
     );
   }
 
@@ -2823,12 +2926,12 @@ export class FacilityScene extends Phaser.Scene {
       getExteriorLandscapeCandidates(columns, rows),
       exclusions,
       0.12,
-      this.layout.tileSize,
+      this.worldLayout.tileSize,
     );
     for (const candidate of visible) {
       const isTree = candidate.frameId.startsWith("landscape:tree");
-      const display = getExteriorLandscapeDisplay(candidate, this.layout.tileSize,
-        this.layout.originX, this.layout.originY);
+      const display = getExteriorLandscapeDisplay(candidate, this.worldLayout.tileSize,
+        this.worldLayout.originX, this.worldLayout.originY);
       const { x, y, width, height } = display;
       const depth = getExteriorLandscapeDepth(candidate.y);
       const painted = candidate.frameId.startsWith("frontage:")
@@ -2861,15 +2964,15 @@ export class FacilityScene extends Phaser.Scene {
   }
 
   private drawEnvironment(): void {
-    const pixel = Math.max(1, Math.floor(this.layout.tileSize / 14));
+    const pixel = Math.max(1, Math.floor(this.worldLayout.tileSize / 14));
     this.litterHighlightText?.setVisible(false);
     for (const litter of this.bridge.viewModel.litterItems ?? []) {
       const x =
-        this.layout.originX +
-        (litter.location.x + 0.5) * this.layout.tileSize;
+        this.worldLayout.originX +
+        (litter.location.x + 0.5) * this.worldLayout.tileSize;
       const y =
-        this.layout.originY +
-        (litter.location.y + 0.65) * this.layout.tileSize;
+        this.worldLayout.originY +
+        (litter.location.y + 0.65) * this.worldLayout.tileSize;
       const litterGraphics = this.getSortableGraphics(
         this.fixtureGraphics,
         this.activeFixtureGraphics,
@@ -2888,13 +2991,13 @@ export class FacilityScene extends Phaser.Scene {
         "litter",
         x,
         y,
-        this.layout.tileSize * 0.36,
-        this.layout.tileSize * 0.24,
+        this.worldLayout.tileSize * 0.36,
+        this.worldLayout.tileSize * 0.24,
       );
       if (litter.highlighted) {
         const outlineWidth = Math.max(2, pixel);
-        const highlightWidth = this.layout.tileSize * 0.54;
-        const highlightHeight = this.layout.tileSize * 0.42;
+        const highlightWidth = this.worldLayout.tileSize * 0.54;
+        const highlightHeight = this.worldLayout.tileSize * 0.42;
         litterGraphics.lineStyle(
           outlineWidth,
           PIXEL_PALETTE_NUMBER.highlight,
@@ -2931,11 +3034,11 @@ export class FacilityScene extends Phaser.Scene {
       return;
     }
     let x =
-      this.layout.originX +
-      (cooler.location.x + 0.5) * this.layout.tileSize;
+      this.worldLayout.originX +
+      (cooler.location.x + 0.5) * this.worldLayout.tileSize;
     const fallbackY =
-      this.layout.originY +
-      (cooler.location.y + 0.72) * this.layout.tileSize;
+      this.worldLayout.originY +
+      (cooler.location.y + 0.72) * this.worldLayout.tileSize;
     const founderRoom = this.bridge.viewModel.rooms.find(
       (room) => room.definitionId === "room.front_desk",
     ) ?? this.getFounderRoom();
@@ -2959,10 +3062,10 @@ export class FacilityScene extends Phaser.Scene {
         tileY: founderRoom.tileY,
         ...orientedSize(founderRoom),
       });
-      const left = rectangle.x + approvedCooler.destinationTopLeftTiles[0] * this.layout.tileSize;
-      const top = rectangle.y + approvedCooler.destinationTopLeftTiles[1] * this.layout.tileSize;
-      const width = approvedCooler.renderSizeTiles[0] * this.layout.tileSize;
-      const height = approvedCooler.renderSizeTiles[1] * this.layout.tileSize;
+      const left = rectangle.x + approvedCooler.destinationTopLeftTiles[0] * this.worldLayout.tileSize;
+      const top = rectangle.y + approvedCooler.destinationTopLeftTiles[1] * this.worldLayout.tileSize;
+      const width = approvedCooler.renderSizeTiles[0] * this.worldLayout.tileSize;
+      const height = approvedCooler.renderSizeTiles[1] * this.worldLayout.tileSize;
       x = left + width / 2;
       const coolerGraphics = this.getSortableGraphics(
         this.fixtureGraphics,
@@ -3004,7 +3107,7 @@ export class FacilityScene extends Phaser.Scene {
     // rear-right fixture in the reference composition rather than a tiny icon.
     const maximumWidth = Math.max(
       16,
-      this.layout.tileSize * (
+      this.worldLayout.tileSize * (
         coolerIsAtFrontDesk
           ? FRONT_DESK_PRESENTATION.waterCooler.widthInTiles
           : 0.42
@@ -3012,7 +3115,7 @@ export class FacilityScene extends Phaser.Scene {
     );
     const maximumHeight = Math.max(
       24,
-      this.layout.tileSize * (
+      this.worldLayout.tileSize * (
         coolerIsAtFrontDesk
           ? FRONT_DESK_PRESENTATION.waterCooler.heightInTiles
           : 0.68
@@ -3184,7 +3287,7 @@ export class FacilityScene extends Phaser.Scene {
       );
       const plankHeight = Math.max(
         7,
-        Math.floor(this.layout.tileSize * 0.42),
+        Math.floor(this.worldLayout.tileSize * 0.42),
       );
       graphics.lineStyle(1, PIXEL_PALETTE_NUMBER.sage, 0.34);
       for (
@@ -3230,10 +3333,10 @@ export class FacilityScene extends Phaser.Scene {
         `room-fixtures:${room.instanceId}`,
       );
       roomFixtures.setDepth(FACILITY_DEPTH_WORLD + 20);
-      this.drawRoomFixtures(roomFixtures, room, rectangle, Math.max(5, Math.floor(this.layout.tileSize * 0.14)));
+      this.drawRoomFixtures(roomFixtures, room, rectangle, Math.max(5, Math.floor(this.worldLayout.tileSize * 0.14)));
       this.drawApprovedSouthForeground(roomFixtures, room, rectangle, approved.shell);
       if (room.instanceId === this.bridge.viewModel.selectedRoomInstanceId) {
-        const inset = Math.max(3, Math.floor(this.layout.tileSize * 0.12));
+        const inset = Math.max(3, Math.floor(this.worldLayout.tileSize * 0.12));
         graphics.lineStyle(2, 0xffffff, 1);
         graphics.strokeRect(rectangle.x + inset, rectangle.y + inset, rectangle.width - inset * 2, rectangle.height - inset * 2);
       }
@@ -3242,7 +3345,7 @@ export class FacilityScene extends Phaser.Scene {
     const shade = this.roomFloorColor(room, index);
     const furnitureInset = Math.max(
       5,
-      Math.floor(this.layout.tileSize * 0.14),
+      Math.floor(this.worldLayout.tileSize * 0.14),
     );
     const usesFrontDeskV5Architecture = shouldRenderFrontDeskV5Architecture(
       room.definitionId,
@@ -3287,7 +3390,7 @@ export class FacilityScene extends Phaser.Scene {
       } else {
         const wallWidth = Math.max(
           4,
-          Math.floor(this.layout.tileSize * 0.16),
+          Math.floor(this.worldLayout.tileSize * 0.16),
         );
         this.drawRoomShell(graphics, room, rectangle, wallWidth);
       }
@@ -3303,7 +3406,7 @@ export class FacilityScene extends Phaser.Scene {
     this.drawExaminationV3Foreground(room, rectangle);
 
     if (room.instanceId === this.bridge.viewModel.selectedRoomInstanceId) {
-      const inset = Math.max(3, Math.floor(this.layout.tileSize * 0.12));
+      const inset = Math.max(3, Math.floor(this.worldLayout.tileSize * 0.12));
       graphics.lineStyle(2, 0xffffff, 1);
       graphics.strokeRect(
         rectangle.x + inset,
@@ -3336,7 +3439,7 @@ export class FacilityScene extends Phaser.Scene {
       getApprovedFloorPrimitives(shell, dimensions.width, dimensions.height, capture?.coordinateSpace.floorOriginPixels),
       rectangle.x,
       rectangle.y,
-      this.layout.tileSize / shell.tilePixels,
+      this.worldLayout.tileSize / shell.tilePixels,
     );
     this.drawCleanlinessWear(graphics, room, rectangle);
     if (getRoomTouchup(room.definitionId)) {
@@ -3350,7 +3453,7 @@ export class FacilityScene extends Phaser.Scene {
         getTouchupFloorPrimitives(room.definitionId, orientation, [dimensions.width, dimensions.height], this.getApprovedBaseWidth(room), openDoorSegments, visible),
         rectangle.x,
         rectangle.y,
-        this.layout.tileSize / TOUCHUP_TILE_PIXELS,
+        this.worldLayout.tileSize / TOUCHUP_TILE_PIXELS,
       );
     }
     this.drawApprovedRoomCaps(graphics, room, rectangle, shell);
@@ -3492,7 +3595,7 @@ export class FacilityScene extends Phaser.Scene {
 
   /** Exact proof wall bands and doorway seams, scaled from authored pixels. */
   private drawApprovedRoomCaps(graphics: Phaser.GameObjects.Graphics, room: FacilityRoomView, rectangle: { x: number; y: number; width: number; height: number }, shell: ApprovedRoomShellPresentation): void {
-    const scale = this.layout.tileSize / shell.tilePixels;
+    const scale = this.worldLayout.tileSize / shell.tilePixels;
     const px = (value: number) => value * scale;
     const cap = px(shell.sideCapWidthPixels);
     const low = px(shell.southHeightPixels);
@@ -3511,7 +3614,7 @@ export class FacilityScene extends Phaser.Scene {
     const northBaseHeight = px(room.definitionId === "room.front_desk" ? 23 : 23);
     const touchupAccent = getRoomTouchup(room.definitionId)?.accent;
     for (let offset = 0; offset < dimensions.width; offset += 1) {
-      const left = rectangle.x + offset * this.layout.tileSize;
+      const left = rectangle.x + offset * this.worldLayout.tileSize;
       const isBacked = backed.has(offset);
       const height = isBacked ? low : rear;
       const top = rectangle.y - height;
@@ -3550,15 +3653,15 @@ export class FacilityScene extends Phaser.Scene {
       };
       if (opening) {
         paintRun(left, inset);
-        paintRun(left + this.layout.tileSize - inset, inset);
+        paintRun(left + this.worldLayout.tileSize - inset, inset);
         graphics.fillStyle(wood, 1);
         graphics.fillRect(left + inset - px(5), top, px(5), height);
-        graphics.fillRect(left + this.layout.tileSize - inset, top, px(5), height);
-        if (!isBacked) graphics.fillRect(left + inset - px(5), top - px(5), this.layout.tileSize - inset * 2 + px(10), px(6));
-      } else paintRun(left, this.layout.tileSize);
+        graphics.fillRect(left + this.worldLayout.tileSize - inset, top, px(5), height);
+        if (!isBacked) graphics.fillRect(left + inset - px(5), top - px(5), this.worldLayout.tileSize - inset * 2 + px(10), px(6));
+      } else paintRun(left, this.worldLayout.tileSize);
       if (!isBacked) {
-        graphics.fillStyle(dark, 1); graphics.fillRect(left - px(1), rectangle.y - rear - px(9), this.layout.tileSize + px(2), px(9));
-        graphics.fillStyle(light, 1); graphics.fillRect(left - px(1), rectangle.y - rear - px(9), this.layout.tileSize + px(2), px(3));
+        graphics.fillStyle(dark, 1); graphics.fillRect(left - px(1), rectangle.y - rear - px(9), this.worldLayout.tileSize + px(2), px(9));
+        graphics.fillStyle(light, 1); graphics.fillRect(left - px(1), rectangle.y - rear - px(9), this.worldLayout.tileSize + px(2), px(3));
       }
     }
     for (const side of ["west", "east"] as const) {
@@ -3572,8 +3675,8 @@ export class FacilityScene extends Phaser.Scene {
       };
       let cursor = top;
       for (const opening of sideOpenings) {
-        const doorTop = rectangle.y + opening.offset * this.layout.tileSize + inset;
-        const doorHeight = this.layout.tileSize - inset * 2;
+        const doorTop = rectangle.y + opening.offset * this.worldLayout.tileSize + inset;
+        const doorHeight = this.worldLayout.tileSize - inset * 2;
         paintCap(cursor, doorTop - cursor);
         graphics.fillStyle(wood, 1);
         graphics.fillRect(x - px(2), doorTop - px(3), cap + px(4), px(5));
@@ -3589,7 +3692,7 @@ export class FacilityScene extends Phaser.Scene {
       if (backedSouth.has(offset)) continue;
       if (room.definitionId === "room.front_desk" && offset === 2 &&
         openings.some(door => door.side === "south" && door.offset === offset)) continue;
-      const left = rectangle.x + offset * this.layout.tileSize;
+      const left = rectangle.x + offset * this.worldLayout.tileSize;
       const opening = openings.some((door) => door.side === "south" && door.offset === offset);
       const paintSouth = (x: number, width: number) => {
         graphics.fillStyle(cream, 1); graphics.fillRect(x, southY, width, low);
@@ -3599,16 +3702,16 @@ export class FacilityScene extends Phaser.Scene {
       };
       if (opening) {
         paintSouth(left, inset);
-        paintSouth(left + this.layout.tileSize - inset, inset);
+        paintSouth(left + this.worldLayout.tileSize - inset, inset);
         graphics.fillStyle(wood, 1);
         graphics.fillRect(left + inset - px(5), southY - px(8), px(5), low + px(8));
-        graphics.fillRect(left + this.layout.tileSize - inset, southY - px(8), px(5), low + px(8));
-      } else paintSouth(left, this.layout.tileSize);
+        graphics.fillRect(left + this.worldLayout.tileSize - inset, southY - px(8), px(5), low + px(8));
+      } else paintSouth(left, this.worldLayout.tileSize);
     }
     if (room.definitionId === "room.front_desk") {
-      const entryLeft = rectangle.x + this.layout.tileSize * 2;
-      graphics.fillStyle(0xccb783, 1); graphics.fillRect(entryLeft + px(5), southY - px(2), this.layout.tileSize - px(10), px(5));
-      for (const jambX of [entryLeft - px(12), entryLeft + this.layout.tileSize]) {
+      const entryLeft = rectangle.x + this.worldLayout.tileSize * 2;
+      graphics.fillStyle(0xccb783, 1); graphics.fillRect(entryLeft + px(5), southY - px(2), this.worldLayout.tileSize - px(10), px(5));
+      for (const jambX of [entryLeft - px(12), entryLeft + this.worldLayout.tileSize]) {
         graphics.fillStyle(cream, 1); graphics.fillRect(jambX, southY - px(13), px(12), px(42));
         graphics.fillStyle(trim, 1); graphics.fillRect(jambX, southY + px(20), px(12), px(9));
         graphics.fillStyle(dark, 1); graphics.fillRect(jambX - px(2), southY - px(16), px(16), px(7));
@@ -3626,13 +3729,13 @@ export class FacilityScene extends Phaser.Scene {
       graphics,
       getApprovedFloorPrimitives(
         shell,
-        rectangle.width / this.layout.tileSize,
-        rectangle.height / this.layout.tileSize,
+        rectangle.width / this.worldLayout.tileSize,
+        rectangle.height / this.worldLayout.tileSize,
         [room.tileX * shell.tilePixels, room.tileY * shell.tilePixels],
       ),
       rectangle.x,
       rectangle.y,
-      this.layout.tileSize / shell.tilePixels,
+      this.worldLayout.tileSize / shell.tilePixels,
     );
   }
 
@@ -3643,7 +3746,7 @@ export class FacilityScene extends Phaser.Scene {
     rectangle: { x: number; y: number; width: number; height: number },
     shell: ApprovedRoomShellPresentation,
   ): void {
-    const scale = this.layout.tileSize / shell.tilePixels;
+    const scale = this.worldLayout.tileSize / shell.tilePixels;
     const px = (value: number) => value * scale;
     const low = px(shell.southHeightPixels);
     const inset = px(shell.doorInsetPixels);
@@ -3668,23 +3771,23 @@ export class FacilityScene extends Phaser.Scene {
       if (backedSouth.has(offset)) continue;
       if (room.definitionId === "room.front_desk" && offset === 2 &&
         openings.some(door => door.side === "south" && door.offset === offset)) continue;
-      const left = rectangle.x + offset * this.layout.tileSize;
+      const left = rectangle.x + offset * this.worldLayout.tileSize;
       const opening = openings.some((door) => door.side === "south" && door.offset === offset);
-      if (!opening) { paint(left, this.layout.tileSize); continue; }
-      paint(left, inset); paint(left + this.layout.tileSize - inset, inset);
+      if (!opening) { paint(left, this.worldLayout.tileSize); continue; }
+      paint(left, inset); paint(left + this.worldLayout.tileSize - inset, inset);
       graphics.fillStyle(wood, 1);
       graphics.fillRect(left + inset - px(5), southY - px(8), px(5), low + px(8));
-      graphics.fillRect(left + this.layout.tileSize - inset, southY - px(8), px(5), low + px(8));
+      graphics.fillRect(left + this.worldLayout.tileSize - inset, southY - px(8), px(5), low + px(8));
     }
     if (room.definitionId === "room.front_desk" &&
       openings.some(door => door.side === "south" && door.offset === 2)) {
-      const entryLeft = rectangle.x + this.layout.tileSize * 2;
+      const entryLeft = rectangle.x + this.worldLayout.tileSize * 2;
       // The entrance threshold is floor, not wall: keep it under everyone
       // walking through the front door (above only the sidewalk edge line).
       const threshold = this.getSortableGraphics(this.roomFixtureGraphics, this.activeRoomFixtureGraphics, `front-desk-threshold:${room.instanceId}`);
-      threshold.fillStyle(0xccb783, 1); threshold.fillRect(entryLeft + px(5), southY - px(2), this.layout.tileSize - px(10), px(5));
+      threshold.fillStyle(0xccb783, 1); threshold.fillRect(entryLeft + px(5), southY - px(2), this.worldLayout.tileSize - px(10), px(5));
       threshold.setDepth(FACILITY_DEPTH_WORLD + 31);
-      for (const jambX of [entryLeft - px(12), entryLeft + this.layout.tileSize]) {
+      for (const jambX of [entryLeft - px(12), entryLeft + this.worldLayout.tileSize]) {
         graphics.fillStyle(cream, 1); graphics.fillRect(jambX, southY - px(13), px(12), px(42));
         graphics.fillStyle(trim, 1); graphics.fillRect(jambX, southY + px(20), px(12), px(9));
         graphics.fillStyle(dark, 1); graphics.fillRect(jambX - px(2), southY - px(16), px(16), px(7));
@@ -3745,7 +3848,7 @@ export class FacilityScene extends Phaser.Scene {
     // new resource overlay. Sparse scuffs become more visible as cleanliness
     // falls while keeping furniture, paths, and click targets unobscured.
     const markCount = Math.max(2, Math.round(2 + severity * 7));
-    const inset = Math.max(6, Math.floor(this.layout.tileSize * 0.18));
+    const inset = Math.max(6, Math.floor(this.worldLayout.tileSize * 0.18));
     const usableWidth = Math.max(1, rectangle.width - inset * 2);
     const usableHeight = Math.max(1, rectangle.height - inset * 2);
     graphics.fillStyle(
@@ -3763,7 +3866,7 @@ export class FacilityScene extends Phaser.Scene {
         rectangle.y + inset + ((ySeed % 89) / 89) * usableHeight;
       const width = Math.max(
         2,
-        Math.floor(this.layout.tileSize * (0.06 + (index % 3) * 0.025)),
+        Math.floor(this.worldLayout.tileSize * (0.06 + (index % 3) * 0.025)),
       );
       graphics.fillRect(Math.round(x), Math.round(y), width, 1);
       if (index % 3 === 0) {
@@ -3781,7 +3884,7 @@ export class FacilityScene extends Phaser.Scene {
     if (tier < 2 || !getRoomUpgradeDefinition(room.definitionId)?.appearanceChanges) {
       return;
     }
-    const inset = Math.max(5, Math.floor(this.layout.tileSize * 0.14));
+    const inset = Math.max(5, Math.floor(this.worldLayout.tileSize * 0.14));
     const secondInset = inset + Math.max(3, Math.floor(inset * 0.55));
 
     // Upgraded rooms receive a cleaner perimeter inlay and brighter finished
@@ -3802,7 +3905,7 @@ export class FacilityScene extends Phaser.Scene {
     );
 
     if (tier >= 3) {
-      const corner = Math.max(5, Math.floor(this.layout.tileSize * 0.18));
+      const corner = Math.max(5, Math.floor(this.worldLayout.tileSize * 0.18));
       graphics.fillStyle(PIXEL_PALETTE_NUMBER.deepOlive, 0.28);
       const corners: Array<readonly [number, number]> = [
         [rectangle.x + secondInset, rectangle.y + secondInset],
@@ -3831,7 +3934,7 @@ export class FacilityScene extends Phaser.Scene {
   }): number {
     return getRearWallFaceHeight(
       rectangle.height,
-      this.layout.tileSize,
+      this.worldLayout.tileSize,
     );
   }
 
@@ -3903,7 +4006,7 @@ export class FacilityScene extends Phaser.Scene {
       room: rectangle,
       side,
       offset: safeOffset,
-      tileSize: this.layout.tileSize,
+      tileSize: this.worldLayout.tileSize,
       exposedNorthWall:
         side === "north" &&
         this.hasExposedNorthWallAt(room, safeOffset),
@@ -4001,10 +4104,10 @@ export class FacilityScene extends Phaser.Scene {
       const offset = Math.max(0, Math.min(length - 1, Number.isFinite(door.offset) ? Math.floor(door.offset) : 0));
       const { center } = this.getDoorGeometry(room, door.side, offset);
       const graphics = this.getSortableGraphics(this.roomFixtureGraphics, this.activeRoomFixtureGraphics, `invalid-door:${door.instanceId}`);
-      const size = Math.max(7, this.layout.tileSize * 0.24);
+      const size = Math.max(7, this.worldLayout.tileSize * 0.24);
       graphics.fillStyle(0xfaf1de, 1);
       graphics.fillRect(center.x - size, center.y - size, size * 2, size * 2);
-      graphics.lineStyle(Math.max(2, this.layout.tileSize * 0.06), 0xb3382c, 1);
+      graphics.lineStyle(Math.max(2, this.worldLayout.tileSize * 0.06), 0xb3382c, 1);
       graphics.strokeRect(center.x - size, center.y - size, size * 2, size * 2);
       graphics.lineBetween(center.x - size * 0.55, center.y - size * 0.55, center.x + size * 0.55, center.y + size * 0.55);
       graphics.lineBetween(center.x + size * 0.55, center.y - size * 0.55, center.x - size * 0.55, center.y + size * 0.55);
@@ -4050,7 +4153,7 @@ export class FacilityScene extends Phaser.Scene {
 
       // A short crossbar makes the emphasized segment legible as a wall
       // opening at low zoom without adding any textual wall-position picker.
-      const crossbar = Math.max(3, Math.min(9, this.layout.tileSize * 0.22));
+      const crossbar = Math.max(3, Math.min(9, this.worldLayout.tileSize * 0.22));
       graphics.lineStyle(2, innerColor, 1);
       if (horizontal) {
         graphics.lineBetween(
@@ -4073,7 +4176,7 @@ export class FacilityScene extends Phaser.Scene {
   private doorInteractionAtPointer(
     pointer: Phaser.Input.Pointer,
   ): FacilityDoorInteractionTarget | null {
-    const point = { x: pointer.x, y: pointer.y };
+    const point = this.screenToWorld(pointer);
     return (
       this.getBuildDoorInteractionTargets()
         .filter((target) =>
@@ -4140,7 +4243,7 @@ export class FacilityScene extends Phaser.Scene {
 
     if (room.definitionId === "room.waiting") {
       // Broad terrazzo chips deliberately avoid construction-grid rhythm.
-      const step = Math.max(8, Math.floor(this.layout.tileSize * 0.44));
+      const step = Math.max(8, Math.floor(this.worldLayout.tileSize * 0.44));
       for (let y = top + 5; y < bottom - 2; y += step) {
         for (let x = left + 5; x < right - 2; x += step) {
           const offset = (Math.floor((y - top) / step) % 2) * 3;
@@ -4155,7 +4258,7 @@ export class FacilityScene extends Phaser.Scene {
 
     if (room.definitionId === "room.bathroom") {
       // Small waterproof tile with staggered vertical joints.
-      const tile = Math.max(6, Math.floor(this.layout.tileSize * 0.34));
+      const tile = Math.max(6, Math.floor(this.worldLayout.tileSize * 0.34));
       graphics.lineStyle(1, PIXEL_PALETTE_NUMBER.sage, 0.42);
       for (let y = top + tile; y < bottom; y += tile) {
         graphics.lineBetween(left, y, right, y);
@@ -4172,52 +4275,52 @@ export class FacilityScene extends Phaser.Scene {
     }
 
     if (room.definitionId === "room.ultrasound") {
-      const band = Math.max(10, Math.floor(this.layout.tileSize * 0.62));
+      const band = Math.max(10, Math.floor(this.worldLayout.tileSize * 0.62));
       graphics.fillStyle(PIXEL_PALETTE_NUMBER.sage, 0.26);
       for (let x = left + band; x < right; x += band) graphics.fillRect(x, top, 1, height);
       return;
     }
     if (room.definitionId === "room.ct") {
-      const tile = Math.max(11, Math.floor(this.layout.tileSize * 0.64));
+      const tile = Math.max(11, Math.floor(this.worldLayout.tileSize * 0.64));
       graphics.lineStyle(1, PIXEL_PALETTE_NUMBER.deepOlive, 0.22);
       for (let y = top + tile; y < bottom; y += tile) graphics.lineBetween(left, y, right, y);
       for (let x = left + tile; x < right; x += tile) graphics.lineBetween(x, top, x, bottom);
       return;
     }
     if (room.definitionId === "room.phlebotomy") {
-      const strip = Math.max(7, Math.floor(this.layout.tileSize * 0.4));
+      const strip = Math.max(7, Math.floor(this.worldLayout.tileSize * 0.4));
       graphics.fillStyle(PIXEL_PALETTE_NUMBER.sage, 0.22);
       for (let y = top + strip; y < bottom; y += strip) graphics.fillRect(left, y, width, 1);
       return;
     }
     if (room.definitionId === "room.evs_closet" || room.definitionId === "room.coffee_kiosk") {
-      const tile = Math.max(6, Math.floor(this.layout.tileSize * (room.definitionId === "room.evs_closet" ? 0.3 : 0.42)));
+      const tile = Math.max(6, Math.floor(this.worldLayout.tileSize * (room.definitionId === "room.evs_closet" ? 0.3 : 0.42)));
       graphics.lineStyle(1, room.definitionId === "room.evs_closet" ? PIXEL_PALETTE_NUMBER.deepOlive : PIXEL_PALETTE_NUMBER.paper, 0.3);
       for (let y = top + tile; y < bottom; y += tile) graphics.lineBetween(left, y, right, y);
       for (let x = left + tile; x < right; x += tile) graphics.lineBetween(x, top, x, bottom);
       return;
     }
     if (room.definitionId === "room.endoscopy") {
-      const band = Math.max(12, Math.floor(this.layout.tileSize * 0.74));
+      const band = Math.max(12, Math.floor(this.worldLayout.tileSize * 0.74));
       graphics.fillStyle(PIXEL_PALETTE_NUMBER.deepOlive, 0.16);
       for (let y = top + band; y < bottom; y += band) graphics.fillRect(left, y, width, 2);
       return;
     }
     if (room.definitionId === "room.periop_recovery") {
-      const plank = Math.max(10, Math.floor(this.layout.tileSize * 0.58));
+      const plank = Math.max(10, Math.floor(this.worldLayout.tileSize * 0.58));
       graphics.lineStyle(1, PIXEL_PALETTE_NUMBER.sage, 0.25);
       for (let y = top + plank; y < bottom; y += plank) graphics.lineBetween(left, y, right, y);
       return;
     }
     if (room.definitionId === "room.training") {
-      const tile = Math.max(9, Math.floor(this.layout.tileSize * 0.5));
+      const tile = Math.max(9, Math.floor(this.worldLayout.tileSize * 0.5));
       for (let y = top; y < bottom; y += tile) for (let x = left; x < right; x += tile) {
         if ((Math.floor((x - left) / tile) + Math.floor((y - top) / tile)) % 2 === 0) { graphics.fillStyle(PIXEL_PALETTE_NUMBER.sage, 0.12); graphics.fillRect(x, y, tile, tile); }
       }
       return;
     }
     if (room.definitionId === "room.glp1_telehealth_suite") {
-      const tile = Math.max(13, Math.floor(this.layout.tileSize * 0.72));
+      const tile = Math.max(13, Math.floor(this.worldLayout.tileSize * 0.72));
       graphics.fillStyle(PIXEL_PALETTE_NUMBER.warmGray, 0.24);
       for (let y = top + tile; y < bottom; y += tile) for (let x = left + tile; x < right; x += tile) graphics.fillRect(x, y, 1, 1);
       return;
@@ -4229,7 +4332,7 @@ export class FacilityScene extends Phaser.Scene {
     ) {
       // Darker anti-static sheet flooring with sparse welded seams.
       graphics.fillStyle(PIXEL_PALETTE_NUMBER.deepOlive, 0.09);
-      const band = Math.max(12, Math.floor(this.layout.tileSize * 0.78));
+      const band = Math.max(12, Math.floor(this.worldLayout.tileSize * 0.78));
       for (let y = top + band; y < bottom; y += band) {
         graphics.fillRect(left, y, width, 2);
       }
@@ -4241,7 +4344,7 @@ export class FacilityScene extends Phaser.Scene {
     }
 
     // Examination and procedure rooms use seamless speckled clinical vinyl.
-    const speckle = Math.max(7, Math.floor(this.layout.tileSize * 0.38));
+    const speckle = Math.max(7, Math.floor(this.worldLayout.tileSize * 0.38));
     for (let y = top + 5; y < bottom - 2; y += speckle) {
       for (let x = left + 6; x < right - 2; x += speckle + 2) {
         graphics.fillStyle(PIXEL_PALETTE_NUMBER.sage, 0.24);
@@ -4274,7 +4377,7 @@ export class FacilityScene extends Phaser.Scene {
   private northCornerShoulderWidth(wallWidth: number): number {
     return Math.max(
       wallWidth + 3,
-      Math.floor(this.layout.tileSize * 0.22),
+      Math.floor(this.worldLayout.tileSize * 0.22),
     );
   }
 
@@ -4298,13 +4401,13 @@ export class FacilityScene extends Phaser.Scene {
       for (const run of runs) {
         const y =
           rectangle.y +
-          run.offset * this.layout.tileSize +
+          run.offset * this.worldLayout.tileSize +
           (run.offset === 0 ? 1 : 0);
         const height = Math.max(
           1,
           Math.min(
             rectangle.y + rectangle.height - y,
-            run.length * this.layout.tileSize -
+            run.length * this.worldLayout.tileSize -
               (run.offset === 0 ? 1 : 0),
           ),
         );
@@ -4344,11 +4447,11 @@ export class FacilityScene extends Phaser.Scene {
   ): void {
     const rearWallHeight = this.roomWallFaceHeight(rectangle);
     const wallCapHeight = getSurgeryCenterArchitectureAtScale(
-      this.layout.tileSize,
+      this.worldLayout.tileSize,
     ).outerBorderY;
     const groundY = rectangle.y;
     const northRuns = this.exposedBoundaryRuns(room, "north");
-    const panelGap = Math.max(24, Math.floor(this.layout.tileSize * 1.45));
+    const panelGap = Math.max(24, Math.floor(this.worldLayout.tileSize * 1.45));
     const cornerReturns = getExposedNorthCornerReturns(
       room,
       this.bridge.viewModel.rooms,
@@ -4366,7 +4469,7 @@ export class FacilityScene extends Phaser.Scene {
       const projection = projectRearWallRun(
         rectangle,
         run,
-        this.layout.tileSize,
+        this.worldLayout.tileSize,
         rearWallHeight,
         wallCapHeight,
       );
@@ -4498,7 +4601,7 @@ export class FacilityScene extends Phaser.Scene {
     // cutaway corner without smoothing or consuming additional floor tiles.
     const shoulderDepth = Math.min(
       rectangle.height,
-      Math.max(8, Math.floor(this.layout.tileSize * 0.42)),
+      Math.max(8, Math.floor(this.worldLayout.tileSize * 0.42)),
     );
     const faceTop = groundY - rearWallHeight;
     const stepBottoms = [
@@ -4608,11 +4711,11 @@ export class FacilityScene extends Phaser.Scene {
     graphics.fillStyle(PIXEL_PALETTE_NUMBER.deepOlive, 0.46);
     for (const run of coveredNorthRuns) {
       graphics.fillRect(
-        rectangle.x + run.offset * this.layout.tileSize,
+        rectangle.x + run.offset * this.worldLayout.tileSize,
         rectangle.y,
         Math.min(
-          rectangle.width - run.offset * this.layout.tileSize,
-          run.length * this.layout.tileSize,
+          rectangle.width - run.offset * this.worldLayout.tileSize,
+          run.length * this.worldLayout.tileSize,
         ),
         1,
       );
@@ -4653,10 +4756,10 @@ export class FacilityScene extends Phaser.Scene {
     // begins immediately south, omitting it prevents a duplicate wall from
     // breaking the shared floor plane.
     for (const run of southRuns) {
-      const runX = rectangle.x + run.offset * this.layout.tileSize;
+      const runX = rectangle.x + run.offset * this.worldLayout.tileSize;
       const runWidth = Math.min(
         rectangle.x + rectangle.width - runX,
-        run.length * this.layout.tileSize,
+        run.length * this.worldLayout.tileSize,
       );
       graphics.fillStyle(PIXEL_PALETTE_NUMBER.ink, 1);
       graphics.fillRect(
@@ -4689,7 +4792,7 @@ export class FacilityScene extends Phaser.Scene {
     columns: number,
     rows: number,
   ): void {
-    const { originX, originY, tileSize, width, height } = this.layout;
+    const { originX, originY, tileSize, width, height } = this.worldLayout;
     graphics.fillStyle(PIXEL_PALETTE_NUMBER.highlight, 0.055);
     for (let row = 0; row < rows; row += 1) {
       for (let column = row % 2; column < columns; column += 2) {
@@ -4751,7 +4854,7 @@ export class FacilityScene extends Phaser.Scene {
   }
 
   private drawExterior(graphics: Phaser.GameObjects.Graphics): void {
-    const { tileSize, originX, width, sidewalkTop, sidewalkHeight } = this.layout;
+    const { tileSize, originX, width, sidewalkTop, sidewalkHeight } = this.worldLayout;
     const sidewalkBottom = sidewalkTop + sidewalkHeight;
     if (!this.textures.exists(getPhaserTextureKey(FRONTAGE_V2_ASSETS["frontage:paving-v2"]))) {
       graphics.fillStyle(0xc9c6bb, 1);
@@ -4847,12 +4950,12 @@ export class FacilityScene extends Phaser.Scene {
       : graphics;
     const wallHeight = canonicalShell?.geometry.northHeight ?? this.roomWallFaceHeight(rectangle);
     const wallCapHeight = getSurgeryCenterArchitectureAtScale(
-      this.layout.tileSize,
+      this.worldLayout.tileSize,
     ).outerBorderY;
     const rearWallRuns = this.exposedBoundaryRuns(room, "north");
     const wallWidth = Math.max(
       4,
-      Math.floor(this.layout.tileSize * 0.16),
+      Math.floor(this.worldLayout.tileSize * 0.16),
     );
     const exteriorCorners = getExposedNorthCornerReturns(
       room,
@@ -4870,7 +4973,7 @@ export class FacilityScene extends Phaser.Scene {
       const face = projectRearWallRun(
         rectangle,
         run,
-        this.layout.tileSize,
+        this.worldLayout.tileSize,
         wallHeight,
         wallCapHeight,
       ).face;
@@ -5069,7 +5172,7 @@ export class FacilityScene extends Phaser.Scene {
       alpha = 1,
     ) => {
       if (canonicalShell) {
-        const largestRun = Math.max(0, ...canonicalShell.northWallFaceRuns.map((run) => run.length / this.layout.tileSize));
+        const largestRun = Math.max(0, ...canonicalShell.northWallFaceRuns.map((run) => run.length / this.worldLayout.tileSize));
         if (!shouldRenderWorldNorthWallDecor({ binding: "world-north" }, largestRun)) return;
         const wallInset = Math.max(2, Math.floor(inset * 0.35));
         const usableWidth = Math.max(8, rectangle.width - wallInset * 2);
@@ -5121,7 +5224,7 @@ export class FacilityScene extends Phaser.Scene {
       const projection = projectRearWallArtwork(
         rectangle,
         rearWallRuns,
-        this.layout.tileSize,
+        this.worldLayout.tileSize,
         wallHeight,
         (wallInset + fullWallUsableWidth * centerXRatio) /
           rectangle.width,
@@ -5158,7 +5261,7 @@ export class FacilityScene extends Phaser.Scene {
         },
         rectangle,
         rearWallRuns,
-        this.layout.tileSize,
+        this.worldLayout.tileSize,
         wallHeight,
       );
       const visibleFragments = exposedFragments.flatMap((fragment) =>
@@ -5550,7 +5653,7 @@ export class FacilityScene extends Phaser.Scene {
     const { openDoorSegments, backedNorthSegments } = this.getApprovedSegmentState(room);
     const lighting = this.getTouchupRoomLighting(room, presentation.shell, openDoorSegments, backedNorthSegments);
     const tintTopY = (centerXTiles: number) => lighting
-      ? rectangle.y + getTouchupTintTopAt(lighting, centerXTiles) * this.layout.tileSize / TOUCHUP_TILE_PIXELS
+      ? rectangle.y + getTouchupTintTopAt(lighting, centerXTiles) * this.worldLayout.tileSize / TOUCHUP_TILE_PIXELS
       : undefined;
     let order = 0;
     for (const record of records) {
@@ -5565,11 +5668,11 @@ export class FacilityScene extends Phaser.Scene {
       const renderFrame = backlessTexture ? undefined : frame;
       const [leftTiles, topTiles] = record.destinationTopLeftTiles;
       const [widthTiles, heightTiles] = record.renderSizeTiles;
-      const left = rectangle.x + leftTiles * this.layout.tileSize;
-      const top = rectangle.y + topTiles * this.layout.tileSize;
-      const width = Math.max(1, widthTiles * this.layout.tileSize);
-      const height = Math.max(1, heightTiles * this.layout.tileSize);
-      const contactY = rectangle.y + getApprovedDrawPainterGround(record) * this.layout.tileSize;
+      const left = rectangle.x + leftTiles * this.worldLayout.tileSize;
+      const top = rectangle.y + topTiles * this.worldLayout.tileSize;
+      const width = Math.max(1, widthTiles * this.worldLayout.tileSize);
+      const height = Math.max(1, heightTiles * this.worldLayout.tileSize);
+      const contactY = rectangle.y + getApprovedDrawPainterGround(record) * this.worldLayout.tileSize;
       const key = `approved:${room.instanceId}:${orientation}:${record.id}:${order}`;
       let image = this.fixtureBitmapImages.get(key);
       if (!image) {
@@ -5579,7 +5682,7 @@ export class FacilityScene extends Phaser.Scene {
       // North-wall floor furniture kept on a low wall sorts by its own floor
       // line, so corridor walkers and anything else north of it draw behind.
       const recordDepth = isTouchupRecordFloorSortedOnLowWall(record, backedNorthSegments)
-        ? getFacilitySceneDepth(rectangle.y + getTouchupRecordFloorLine(record) * this.layout.tileSize, "fixture", order % 64)
+        ? getFacilitySceneDepth(rectangle.y + getTouchupRecordFloorLine(record) * this.worldLayout.tileSize, "fixture", order % 64)
         : record.depthPolicy === "wall"
           ? FACILITY_DEPTH_WORLD + 19
           : getFacilitySceneDepth(contactY, "fixture", order % 64);
@@ -5656,7 +5759,7 @@ export class FacilityScene extends Phaser.Scene {
         `approved-procedural:${room.instanceId}:${procedural.id}`,
       );
       const proofRect = getApprovedProceduralScreenRect(procedural, presentation.shell.tilePixels);
-      const scale = this.layout.tileSize / presentation.shell.tilePixels;
+      const scale = this.worldLayout.tileSize / presentation.shell.tilePixels;
       const left = rectangle.x + proofRect.left * scale;
       const top = rectangle.y + proofRect.top * scale;
       const width = proofRect.width * scale;
@@ -5670,7 +5773,7 @@ export class FacilityScene extends Phaser.Scene {
           getTouchupGlassPartitionPrimitives({ left: proofRect.left * k, top: proofRect.top * k, width: proofRect.width * k, height: proofRect.height * k }),
           rectangle.x,
           rectangle.y,
-          this.layout.tileSize / TOUCHUP_TILE_PIXELS,
+          this.worldLayout.tileSize / TOUCHUP_TILE_PIXELS,
         );
       } else if (procedural.style.kind === "ct-observation-partition") {
         graphics.fillStyle(parseApprovedCssColor(procedural.style.body).color, 1);
@@ -5701,8 +5804,8 @@ export class FacilityScene extends Phaser.Scene {
       const depth = procedural.drawPhase === "before-bitmaps"
         ? FACILITY_DEPTH_WORLD + 18
         : procedural.drawPhase === "after-scanner-before-console"
-          ? getFacilitySceneDepth(rectangle.y + procedural.depthKey * this.layout.tileSize, "fixture", 41)
-          : getFacilitySceneDepth(rectangle.y + procedural.depthKey * this.layout.tileSize, "fixture", 32);
+          ? getFacilitySceneDepth(rectangle.y + procedural.depthKey * this.worldLayout.tileSize, "fixture", 41)
+          : getFacilitySceneDepth(rectangle.y + procedural.depthKey * this.worldLayout.tileSize, "fixture", 32);
       graphics.setDepth(depth);
     }
     for (const item of getVisibleTouchupDecor(room.definitionId, orientation, this.getApprovedBaseWidth(room), openDoorSegments, backedNorthSegments)) {
@@ -5710,8 +5813,8 @@ export class FacilityScene extends Phaser.Scene {
       const placed = this.drawTouchupSprite(
         key,
         TOUCHUP_SPRITES[item.sprite],
-        rectangle.x + item.x * this.layout.tileSize,
-        item.kind === "wall" ? rectangle.y + (item.top ?? 0) * this.layout.tileSize : rectangle.y + (item.y ?? 0) * this.layout.tileSize,
+        rectangle.x + item.x * this.worldLayout.tileSize,
+        item.kind === "wall" ? rectangle.y + (item.top ?? 0) * this.worldLayout.tileSize : rectangle.y + (item.y ?? 0) * this.worldLayout.tileSize,
         item.widthTiles,
         item.kind,
       );
@@ -5787,7 +5890,7 @@ export class FacilityScene extends Phaser.Scene {
     const texture = this.textures.get(textureKey);
     const sourceFrame = texture.get(frame);
     const image = texture.getSourceImage() as CanvasImageSource;
-    const canvas = this.textures.createCanvas(key, sourceFrame.cutWidth, sourceFrame.cutHeight);
+    const canvas = facilityCanvasSurface(this.textures, key, sourceFrame.cutWidth, sourceFrame.cutHeight, this.bridge.mobileInput === true);
     if (!canvas) return undefined;
     const context = canvas.getContext();
     const draw = () => context.drawImage(image, sourceFrame.cutX, sourceFrame.cutY, sourceFrame.cutWidth, sourceFrame.cutHeight, 0, 0, sourceFrame.cutWidth, sourceFrame.cutHeight);
@@ -5837,7 +5940,7 @@ export class FacilityScene extends Phaser.Scene {
         frame = undefined;
       }
     }
-    const width = widthTiles * this.layout.tileSize;
+    const width = widthTiles * this.worldLayout.tileSize;
     const height = width * sourceHeight / sourceWidth;
     const top = kind === "wall" ? y : y - height;
     let image = this.fixtureBitmapImages.get(key);
@@ -5870,8 +5973,8 @@ export class FacilityScene extends Phaser.Scene {
     shell: ApprovedRoomShellPresentation,
     lighting: TouchupLighting,
   ): void {
-    const scale = this.layout.tileSize / TOUCHUP_TILE_PIXELS;
-    const southEdge = rectangle.y + rectangle.height + shell.southHeightPixels * this.layout.tileSize / shell.tilePixels;
+    const scale = this.worldLayout.tileSize / TOUCHUP_TILE_PIXELS;
+    const southEdge = rectangle.y + rectangle.height + shell.southHeightPixels * this.worldLayout.tileSize / shell.tilePixels;
     const tint = this.getSortableGraphics(this.fixtureGraphics, this.activeFixtureGraphics, `touchup-light:${room.instanceId}`);
     tint.setBlendMode(Phaser.BlendModes.MULTIPLY);
     this.drawTouchupPrimitives(tint, lighting.regions, rectangle.x, rectangle.y, scale);
@@ -5900,7 +6003,7 @@ export class FacilityScene extends Phaser.Scene {
     const hasNorthWall = exposedNorth && !lowNorth;
     const tile = { x: room.tileX, y: room.tileY };
     if (phase === "floor") {
-      const scale = this.layout.tileSize / TOUCHUP_TILE_PIXELS;
+      const scale = this.worldLayout.tileSize / TOUCHUP_TILE_PIXELS;
       this.drawTouchupPrimitives(graphics, getTouchupCorridorFloorPrimitives(hasNorthWall), rectangle.x, rectangle.y, scale);
       this.drawTouchupPrimitives(graphics, getTouchupCorridorRunnerPrimitives(tile, isCorridor), rectangle.x, rectangle.y, scale);
       return;
@@ -5924,8 +6027,8 @@ export class FacilityScene extends Phaser.Scene {
     items.forEach((item, index) => this.drawTouchupSprite(
       `touchup-corridor:${room.instanceId}:${index}`,
       TOUCHUP_SPRITES[item.sprite],
-      rectangle.x + (item.x - room.tileX) * this.layout.tileSize,
-      item.kind === "wall" ? rectangle.y + ((item.top ?? 0) - room.tileY) * this.layout.tileSize : rectangle.y + ((item.y ?? 0) - room.tileY) * this.layout.tileSize,
+      rectangle.x + (item.x - room.tileX) * this.worldLayout.tileSize,
+      item.kind === "wall" ? rectangle.y + ((item.top ?? 0) - room.tileY) * this.worldLayout.tileSize : rectangle.y + ((item.y ?? 0) - room.tileY) * this.worldLayout.tileSize,
       item.widthTiles,
       item.kind,
     ));
@@ -5965,7 +6068,7 @@ export class FacilityScene extends Phaser.Scene {
     side: "north" | "east" | "south" | "west",
     roomShade: number,
   ): void {
-    const doorWidth = Math.max(8, this.layout.tileSize);
+    const doorWidth = Math.max(8, this.worldLayout.tileSize);
     const horizontalX =
       rectangle.x + Math.floor(rectangle.width / 2 - doorWidth / 2);
     const verticalY =
@@ -6067,7 +6170,7 @@ export class FacilityScene extends Phaser.Scene {
   }
 
   private characterStepBounceDisplayLift(key: string): number {
-    return (this.characterStepBounceStates.get(key)?.lift ?? 0) * this.cameraView.zoom;
+    return (this.characterStepBounceStates.get(key)?.lift ?? 0) * this.cameraView.zoom * this.worldLayout.tileSize / this.layout.tileSize;
   }
 
   private drawCharacterPresentation(
@@ -6083,9 +6186,11 @@ export class FacilityScene extends Phaser.Scene {
     const resolved = resolveCharacterMotionPresentation(
       frozen,
       { ...candidate, displayScale: candidate.displayScale * identityScale },
-      this.layout,
+      this.worldLayout,
     );
-    const motion = this.characterStepMotion(key, resolved.pose, Boolean(frozen));
+    // A first paused frame has no captured presentation yet. It must not
+    // capture an arbitrary breathing/squash phase as its resting size.
+    const motion = this.characterStepMotion(key, resolved.pose, this.characterPresentationFrozen());
     const drawn = this.drawPixelPerson(
       graphics,
       resolved.centerX,
@@ -6100,7 +6205,7 @@ export class FacilityScene extends Phaser.Scene {
       resolved.representation,
       Boolean(frozen),
       resolved.alignSeatContact ?? false,
-      { ...motion, lift: motion.lift * this.cameraView.zoom },
+      { ...motion, lift: motion.lift * this.cameraView.zoom * this.worldLayout.tileSize / this.layout.tileSize },
     );
     if (!frozen) {
       // Glide onto and off seats and furniture posts instead of snapping.
@@ -6111,7 +6216,7 @@ export class FacilityScene extends Phaser.Scene {
         target,
         resolved.pose,
         this.frameDeltaMilliseconds,
-        this.layout.tileSize,
+        this.worldLayout.tileSize,
       );
       this.characterSeatSettles.set(key, settle.state);
       const dx = Math.round(settle.point.x) - target.x;
@@ -6123,7 +6228,7 @@ export class FacilityScene extends Phaser.Scene {
       }
       this.characterMotionSnapshots.set(key, captureCharacterMotionPresentation(
         { ...resolved, baseY: drawn.baseY },
-        this.layout,
+        this.worldLayout,
         drawn.representation,
       ));
     }
@@ -6157,6 +6262,7 @@ export class FacilityScene extends Phaser.Scene {
     fallbackCenterX: number,
     fallbackBaseY: number,
   ): void {
+    this.founderActivityAnchor = [founderKey, label, fallbackCenterX, fallbackBaseY];
     const text = this.founderActivityText;
     const box = this.founderActivityBox;
     const inspected = this.inspectTarget?.kind === "character" && this.inspectTarget.key === founderKey;
@@ -6177,7 +6283,7 @@ export class FacilityScene extends Phaser.Scene {
     // presentation metrics below are the safe fallback when a bitmap is
     // loading, absent, or intentionally hidden.
     const centerX = bounds ? bounds.centerX : fallbackCenterX;
-    const topY = bounds ? bounds.top : fallbackBaseY - Math.max(22, this.layout.tileSize * 0.88);
+    const topY = bounds ? bounds.top : fallbackBaseY - Math.max(22, this.worldLayout.tileSize * 0.88);
     text.setText(label).setPosition(centerX, topY - 4).setVisible(true);
     const textBounds = text.getBounds();
     const insetX = 3;
@@ -6361,10 +6467,10 @@ export class FacilityScene extends Phaser.Scene {
    */
   private actorBaseY(logicalY: number, baseOffset = 0.72): number {
     return getActorPresentationBaseY(logicalY, baseOffset, {
-      originY: this.layout.originY,
-      tileSize: this.layout.tileSize,
-      sidewalkTop: this.layout.sidewalkTop,
-      sidewalkHeight: this.layout.sidewalkHeight,
+      originY: this.worldLayout.originY,
+      tileSize: this.worldLayout.tileSize,
+      sidewalkTop: this.worldLayout.sidewalkTop,
+      sidewalkHeight: this.worldLayout.sidewalkHeight,
       gridRows: positiveGridSize(this.bridge.viewModel.gridRows, 10),
     });
   }
@@ -6389,9 +6495,9 @@ export class FacilityScene extends Phaser.Scene {
         const facing = getApprovedSupportFacing(support.facing);
         const painterGround = getApprovedSupportPainterGround(support);
         return {
-          centerX: bounds.x + support.seat.x * this.layout.tileSize,
-          baseY: bounds.y + support.seat.y * this.layout.tileSize,
-          depthBaseY: bounds.y + painterGround.y * this.layout.tileSize,
+          centerX: bounds.x + support.seat.x * this.worldLayout.tileSize,
+          baseY: bounds.y + support.seat.y * this.worldLayout.tileSize,
+          depthBaseY: bounds.y + painterGround.y * this.worldLayout.tileSize,
           scale: 1,
           seatTarget: true,
           supportRole: support.role,
@@ -6462,9 +6568,9 @@ export class FacilityScene extends Phaser.Scene {
     const facing = getApprovedSupportFacing(support.facing);
     const painterGround = getApprovedSupportPainterGround(support);
     return {
-      centerX: bounds.x + support.seat.x * this.layout.tileSize,
-      baseY: bounds.y + support.seat.y * this.layout.tileSize,
-      depthBaseY: bounds.y + painterGround.y * this.layout.tileSize,
+      centerX: bounds.x + support.seat.x * this.worldLayout.tileSize,
+      baseY: bounds.y + support.seat.y * this.worldLayout.tileSize,
+      depthBaseY: bounds.y + painterGround.y * this.worldLayout.tileSize,
       scale: 1,
       seatTarget: support.pose !== "standing",
       hidden,
@@ -6614,7 +6720,7 @@ export class FacilityScene extends Phaser.Scene {
       resolvedFounderPose = founderDisplay?.pose ?? resolvedFounderPose;
       const founderAtFrontDesk = founderDisplay?.supportRole === "front-desk-staff";
       const founderCenterX = founderDisplay?.centerX ??
-        this.layout.originX + (candidateFounderLocation.x + 0.5) * this.layout.tileSize;
+        this.worldLayout.originX + (candidateFounderLocation.x + 0.5) * this.worldLayout.tileSize;
       const founderBaseY = this.drawCharacterPresentation(graphics, founderKey, {
         centerX: founderCenterX,
         baseY: founderDisplay?.baseY ?? this.actorBaseY(
@@ -6706,10 +6812,10 @@ export class FacilityScene extends Phaser.Scene {
           this.bridge.viewModel.rooms,
         );
       const employeeCenterX = employeeDisplay?.centerX ??
-        this.layout.originX +
-          (employeeLocation.x + 0.5) * this.layout.tileSize +
+        this.worldLayout.originX +
+          (employeeLocation.x + 0.5) * this.worldLayout.tileSize +
           (founderSeatedAdjacentReceptionist?.centerOffsetTiles ?? 0) *
-            this.layout.tileSize;
+            this.worldLayout.tileSize;
       const employeeDisplayBaseY = employeeDisplay?.baseY ?? this.actorBaseY(
         employeeLocation.y,
         0.72 +
@@ -6741,7 +6847,7 @@ export class FacilityScene extends Phaser.Scene {
       );
       this.setCharacterSupportPresentation(key, graphics, employeeDisplay, index + 1);
       if (employee.discussionActionRequired) {
-        const unit = this.layout.tileSize / 32;
+        const unit = this.worldLayout.tileSize / 32;
         const markerY = employeeBaseY - 36 * unit;
         graphics.fillStyle(0xf7cf52, 1);
         graphics.fillCircle(employeeCenterX, markerY, 6 * unit);
@@ -6768,8 +6874,8 @@ export class FacilityScene extends Phaser.Scene {
         const pedestrianLocation = presentation.location ?? { x: 0, y: 0 };
         const graphics = this.getCharacterGraphics(key);
         const baseY = this.drawCharacterPresentation(graphics, key, {
-          centerX: this.layout.originX +
-            (pedestrianLocation.x + 0.5) * this.layout.tileSize,
+          centerX: this.worldLayout.originX +
+            (pedestrianLocation.x + 0.5) * this.worldLayout.tileSize,
           baseY: this.actorBaseY(pedestrianLocation.y),
           appearance: pedestrian.appearance,
           direction: stationaryFloorDirection(presentation.moving, presentation.direction, false),
@@ -6848,9 +6954,9 @@ export class FacilityScene extends Phaser.Scene {
       const location = presentation.location ?? actor.location;
       const graphics = this.getCharacterGraphics(actorKey);
       const baseY = this.drawCharacterPresentation(graphics, actorKey, {
-        centerX: this.layout.originX + (location.x + .5) * this.layout.tileSize,
+        centerX: this.worldLayout.originX + (location.x + .5) * this.worldLayout.tileSize,
         // The cosmetic routes use the exact approved floor coordinate system.
-        baseY: this.layout.originY + (location.y + .5) * this.layout.tileSize,
+        baseY: this.worldLayout.originY + (location.y + .5) * this.worldLayout.tileSize,
         appearance: actor.appearance, direction: presentation.direction,
         pose: this.characterPose(presentation.moving, presentation.direction, this.characterGaitOffset(actorKey, 300 + index)),
         rightFacing: presentation.rightFacing, displayScale: 1,
@@ -6915,6 +7021,7 @@ export class FacilityScene extends Phaser.Scene {
 
   /** Bitmap actor under the pointer; the front-most (highest depth) wins. */
   private characterAtPointer(pointer: Phaser.Input.Pointer): string | null {
+    const hitPoint = this.screenToWorld(pointer);
     let best: { key: string; depth: number } | null = null;
     for (const [key, container] of this.characterBitmapContainers) {
       if (!container.visible || !characterRefFromKey(key)) continue;
@@ -6924,8 +7031,8 @@ export class FacilityScene extends Phaser.Scene {
       if (bounds.width <= 0 || bounds.height <= 0) continue;
       // Sprite cells carry side margins; a narrower box avoids picking a neighbour.
       const insetX = bounds.width * 0.2;
-      if (pointer.x < bounds.left + insetX || pointer.x > bounds.right - insetX ||
-        pointer.y < bounds.top || pointer.y > bounds.bottom) continue;
+      if (hitPoint.x < bounds.left + insetX || hitPoint.x > bounds.right - insetX ||
+        hitPoint.y < bounds.top || hitPoint.y > bounds.bottom) continue;
       if (!best || container.depth > best.depth) best = { key, depth: container.depth };
     }
     return best?.key ?? null;
@@ -6981,14 +7088,14 @@ export class FacilityScene extends Phaser.Scene {
     );
     if (!support) {
       return {
-        x: this.layout.originX + (seat.location.x + 0.5) * this.layout.tileSize,
-        y: this.layout.originY + (seat.location.y + 0.5) * this.layout.tileSize,
+        x: this.worldLayout.originX + (seat.location.x + 0.5) * this.worldLayout.tileSize,
+        y: this.worldLayout.originY + (seat.location.y + 0.5) * this.worldLayout.tileSize,
       };
     }
     const bounds = this.toPixels({ tileX: room.tileX, tileY: room.tileY, ...orientedSize(room) });
     return {
-      x: bounds.x + support.seat.x * this.layout.tileSize,
-      y: bounds.y + support.seat.y * this.layout.tileSize,
+      x: bounds.x + support.seat.x * this.worldLayout.tileSize,
+      y: bounds.y + support.seat.y * this.worldLayout.tileSize,
     };
   }
 
@@ -7032,7 +7139,7 @@ export class FacilityScene extends Phaser.Scene {
         return;
       }
       anchorX = point.x;
-      anchorY = point.y - this.layout.tileSize * 0.55;
+      anchorY = point.y - this.worldLayout.tileSize * 0.55;
       label = target.label;
     }
     const pointerSize = 3;
@@ -7137,7 +7244,7 @@ export class FacilityScene extends Phaser.Scene {
           position.x,
           getEarningsPopupLabelY(
             position.y,
-            this.layout.tileSize,
+            this.worldLayout.tileSize,
             this.earningsPopupState.activePopups
               .slice(0, popupIndex)
               .filter(
@@ -7178,8 +7285,8 @@ export class FacilityScene extends Phaser.Scene {
       const location = this.bridge.viewModel.remoteReceiptAnchors?.[actorId];
       return location
         ? {
-            x: this.layout.originX + (location.x + 0.5) * this.layout.tileSize,
-            y: this.actorBaseY(location.y) - Math.max(18, this.layout.tileSize * 0.8),
+            x: this.worldLayout.originX + (location.x + 0.5) * this.worldLayout.tileSize,
+            y: this.actorBaseY(location.y) - Math.max(18, this.worldLayout.tileSize * 0.8),
           }
         : undefined;
     }
@@ -7192,7 +7299,7 @@ export class FacilityScene extends Phaser.Scene {
         : `character:${actorKind === "employee" ? "staff" : "patient"}:${actorId}`;
     const snapshot = this.characterMotionSnapshots.get(key);
     if (!snapshot) return undefined;
-    const position = replayCharacterMotionPresentation(snapshot, this.layout);
+    const position = replayCharacterMotionPresentation(snapshot, this.worldLayout);
     return {
       x: position.centerX,
       y: this.getEarningsPopupHeadY(snapshot, position.baseY, key),
@@ -7213,13 +7320,13 @@ export class FacilityScene extends Phaser.Scene {
     );
     if (layers) {
       const registration = characterBitmapRegistration(layers);
-      const metrics = getCharacterStillPresentationMetrics(this.layout.tileSize, snapshot.displayScale);
+      const metrics = getCharacterStillPresentationMetrics(this.worldLayout.tileSize, snapshot.displayScale);
       const pixelScale = metrics.height / registration.cell.height;
       return baseY - this.characterStepBounceDisplayLift(key) -
         (registration.floorY - registration.visibleBounds.y) * pixelScale;
     }
     return baseY - this.characterStepBounceDisplayLift(key) -
-      getCharacterStillPresentationMetrics(this.layout.tileSize, snapshot.displayScale).height * 0.72;
+      getCharacterStillPresentationMetrics(this.worldLayout.tileSize, snapshot.displayScale).height * 0.72;
   }
 
   private getCharacterBitmapContainer(
@@ -7246,7 +7353,7 @@ export class FacilityScene extends Phaser.Scene {
     const key = "character-contact-shadow";
     if (this.textures.exists(key)) return key;
     const size = 64;
-    const texture = this.textures.createCanvas(key, size, size);
+    const texture = facilityCanvasSurface(this.textures, key, size, size, this.bridge.mobileInput === true);
     const context = texture?.getContext();
     if (texture && context) {
       const gradient = context.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
@@ -7336,7 +7443,7 @@ export class FacilityScene extends Phaser.Scene {
       stationaryFloorDirection(moving, direction, destinationPose !== undefined);
     const renderedRightFacing = approvedSupportDisplay?.rightFacing ?? patient.rightFacing ?? false;
     const centerX = approvedSupportDisplay?.centerX ??
-      this.layout.originX + (location.x + 0.5) * this.layout.tileSize;
+      this.worldLayout.originX + (location.x + 0.5) * this.worldLayout.tileSize;
     const baseY = this.drawCharacterPresentation(
       graphics,
       `character:patient:${patient.instanceId}`,
@@ -7355,7 +7462,7 @@ export class FacilityScene extends Phaser.Scene {
     finishCharacter(
       baseY,
       frozenPatient
-        ? replayCharacterMotionPresentation(frozenPatient, this.layout).centerX
+        ? replayCharacterMotionPresentation(frozenPatient, this.worldLayout).centerX
         : centerX,
       pose,
       renderedDirection,
@@ -7384,7 +7491,7 @@ export class FacilityScene extends Phaser.Scene {
     const waitingSupport = serviceVisitorWaitingSupport(this.bridge.viewModel, visitor);
     const supportDisplay = this.getApprovedActorSupportDisplayPosition(location, moving, visitor.supportRole ?? waitingSupport?.supportRole,
       visitor.supportId, visitor.supportRoomInstanceId ?? waitingSupport?.supportRoomInstanceId);
-    const centerX = supportDisplay?.centerX ?? this.layout.originX + (location.x + 0.5) * this.layout.tileSize;
+    const centerX = supportDisplay?.centerX ?? this.worldLayout.originX + (location.x + 0.5) * this.worldLayout.tileSize;
     const pose = supportDisplay?.pose ?? this.characterPose(moving, direction, this.characterGaitOffset(key, 300 + index));
     const renderedDirection = supportDisplay?.direction ?? stationaryFloorDirection(moving, direction, false);
     const baseY = this.drawCharacterPresentation(graphics, key, {
@@ -7435,7 +7542,7 @@ export class FacilityScene extends Phaser.Scene {
       this.characterSeatSettles.delete(key);
     }
     const baseY = this.drawCharacterPresentation(graphics, key, {
-      centerX: supportDisplay?.centerX ?? this.layout.originX + (location.x + 0.5 + (actor.pediatricFamilyId && moving ? .18 : 0)) * this.layout.tileSize,
+      centerX: supportDisplay?.centerX ?? this.worldLayout.originX + (location.x + 0.5 + (actor.pediatricFamilyId && moving ? .18 : 0)) * this.worldLayout.tileSize,
       baseY: supportDisplay?.baseY ?? this.actorBaseY(location.y), appearance: actor.appearance,
       direction: supportDisplay?.direction ?? stationaryFloorDirection(moving, direction, false),
       pose: supportDisplay?.pose ?? this.characterPose(moving, direction, this.characterGaitOffset(key, 400 + index)),
@@ -7465,7 +7572,7 @@ export class FacilityScene extends Phaser.Scene {
     ) {
       return;
     }
-    const pixel = Math.max(2, Math.floor(this.layout.tileSize / 9));
+    const pixel = Math.max(2, Math.floor(this.worldLayout.tileSize / 9));
     const pulse =
       this.bridge.viewModel.paused
         ? 0
@@ -7477,7 +7584,7 @@ export class FacilityScene extends Phaser.Scene {
       rightFacing,
     );
     const registration = characterBitmapRegistration(layers);
-    const metrics = getCharacterStillPresentationMetrics(this.layout.tileSize, displayScale);
+    const metrics = getCharacterStillPresentationMetrics(this.worldLayout.tileSize, displayScale);
     const visualLift = this.characterStepBounceDisplayLift(
       `character:patient:${patient.instanceId}`,
     );
@@ -7532,7 +7639,13 @@ export class FacilityScene extends Phaser.Scene {
       movingRight,
     );
     const registration = characterBitmapRegistration(authoredLayers);
-    const metrics = getCharacterStillPresentationMetrics(this.layout.tileSize, displayScale);
+    const metrics = getCharacterStillPresentationMetrics(this.worldLayout.tileSize, displayScale);
+    // Keep a paused floor/seat still crisp after a zoom settles. Preserve the
+    // exact frozen mid-hop shape/lift and the live breathing/walking motion.
+    const restingStill = this.characterPresentationFrozen() && motion.lift === 0 &&
+      pose !== "walk-a" && pose !== "walk-neutral" && pose !== "walk-b";
+    const width = metrics.width * (restingStill ? 1 : motion.scaleX);
+    const height = metrics.height * (restingStill ? 1 : motion.scaleY);
     const adjustedBaseY = authoredLayers && alignSeatContact && !baseIsAdjusted && registration.seatContactY !== undefined
       ? alignCharacterStillSeatToWorld(baseY, registration.floorY, registration.seatContactY, metrics.height, registration.cell.height)
       : baseY;
@@ -7554,7 +7667,7 @@ export class FacilityScene extends Phaser.Scene {
           existing.setVisible(true)
             .setPosition(Math.round(centerX), Math.round(adjustedBaseY))
             .setDepth(getFacilitySceneDepth(adjustedBaseY, "character", offsetIndex % 64));
-          actor.setDisplaySize(metrics.width * motion.scaleX, metrics.height * motion.scaleY);
+          actor.setDisplaySize(width, height);
           actor.y = -visualLift;
           this.updateCharacterContactShadow(existing, metrics.width, motion);
           graphics.clear();
@@ -7567,7 +7680,7 @@ export class FacilityScene extends Phaser.Scene {
         const actor = container.getByName("actor") as Phaser.GameObjects.Image;
         // Origin at the feet, so squash, stretch and breathing keep them planted.
         actor.setTexture(textureKey)
-          .setDisplaySize(metrics.width * motion.scaleX, metrics.height * motion.scaleY)
+          .setDisplaySize(width, height)
           .setPosition(0, -visualLift)
           .setOrigin(0.5, registration.floorAnchorY)
           .setFlipX(false);
@@ -7589,8 +7702,6 @@ export class FacilityScene extends Phaser.Scene {
     }
     this.characterBitmapContainers.get(key ?? "")?.setVisible(false);
     graphics.clear();
-    const width = metrics.width * motion.scaleX;
-    const height = metrics.height * motion.scaleY;
     graphics.fillStyle(0x8b9088, 0.9);
     graphics.fillCircle(0, -height * 0.64, Math.max(2, width * 0.16));
     graphics.fillRoundedRect(-width * 0.18, -height * 0.48, width * 0.36, height * 0.42, Math.max(2, width * 0.08));
@@ -7844,18 +7955,18 @@ export class FacilityScene extends Phaser.Scene {
   private reportSelectedRoomRect(): void {
     const model = this.bridge.viewModel;
     const room =
-      model.buildMode && model.selectedRoomInstanceId && this.layout
+      model.buildMode && model.selectedRoomInstanceId && this.worldLayout
         ? model.rooms.find(
             (candidate) =>
               candidate.instanceId === model.selectedRoomInstanceId,
           )
         : undefined;
     const rect = room
-      ? this.toPixels({
+      ? this.toScreenRect(this.toPixels({
           tileX: room.tileX,
           tileY: room.tileY,
           ...orientedSize(room),
-        })
+        }))
       : null;
     const key = rect
       ? `${Math.round(rect.x)},${Math.round(rect.y)},${Math.round(rect.width)},${Math.round(rect.height)},${this.scale.width},${this.scale.height}`
@@ -7882,14 +7993,15 @@ export class FacilityScene extends Phaser.Scene {
         const room = this.bridge.viewModel.rooms.find((candidate) => candidate.instanceId === pin.target.id);
         if (!room) return [];
         const rect = this.toPixels({ tileX: room.tileX, tileY: room.tileY, ...orientedSize(room) });
-        return [{ id: pin.id, x: Math.round(rect.x + rect.width / 2), y: Math.round(rect.y + Math.min(rect.height / 2, this.layout.tileSize)) }];
+        return [{ id: pin.id, x: rect.x + rect.width / 2, y: rect.y + Math.min(rect.height / 2, this.worldLayout.tileSize) }];
       }
       const key = `character:${pin.target.kind === "patient" ? "patient" : "service-visitor"}:${pin.target.id}`;
       const actor = this.characterMotionSnapshots.get(key);
       if (!actor || !this.activeCharacterGraphics.has(key)) return [];
-      return [{ id: pin.id, x: Math.round(this.layout.originX + actor.anchorXInTiles * this.layout.tileSize),
-        y: Math.round(this.layout.originY + (actor.anchorYInTiles - 1.25 * actor.displayScale) * this.layout.tileSize) }];
-    }).filter((point) => point.x >= 14 && point.x <= this.scale.width - 14 && point.y >= 14 && point.y <= this.scale.height - 14);
+      return [{ id: pin.id, x: this.worldLayout.originX + actor.anchorXInTiles * this.worldLayout.tileSize,
+        y: this.worldLayout.originY + (actor.anchorYInTiles - 1.25 * actor.displayScale) * this.worldLayout.tileSize }];
+    }).map(point => { const screen = this.worldToScreen(point); return { id: point.id, x: Math.round(screen.x), y: Math.round(screen.y) }; })
+      .filter((point) => point.x >= 14 && point.x <= this.scale.width - 14 && point.y >= 14 && point.y <= this.scale.height - 14);
     const signature = JSON.stringify(positions);
     if (signature === this.lastReportedAlertPins) return;
     this.lastReportedAlertPins = signature;
@@ -7897,7 +8009,7 @@ export class FacilityScene extends Phaser.Scene {
   }
 
   private positionText(): void {
-    const { originX, originY, width, tileSize } = this.layout;
+    const { originX, originY, width, tileSize } = this.worldLayout;
     const model = this.bridge.viewModel;
     const compact = this.scale.width < 520;
 
@@ -7994,7 +8106,7 @@ export class FacilityScene extends Phaser.Scene {
       )
       .setPosition(
         originX + width / 2,
-        originY + this.layout.height + Math.max(7, Math.floor(tileSize * 0.18)),
+        originY + this.worldLayout.height + Math.max(7, Math.floor(tileSize * 0.18)),
       );
     if (this.bridge.mobileInput === true) this.footerText?.setVisible(false);
   }
@@ -8010,17 +8122,13 @@ export class FacilityScene extends Phaser.Scene {
       }
       return;
     }
-    const halfWidth = Math.max(70, label.length * 3.5);
-    this.interactionHintText
-      ?.setText(label)
-      .setPosition(
-        Math.max(
-          halfWidth,
-          Math.min(this.scale.width - halfWidth, pointer.x),
-        ),
-        Math.max(24, pointer.y - 10),
-      )
-      .setVisible(true);
+    if (this.interactionHintText) {
+      const halfWidth = Math.max(70, label.length * 3.5);
+      const position = this.screenToWorld({ x: Math.max(halfWidth, Math.min(this.scale.width - halfWidth, pointer.x)),
+        y: Math.max(24, pointer.y - 10) });
+      this.interactionHintText.setText(label).setPosition(position.x, position.y).setVisible(true);
+      this.interactionHintText.setScale?.(this.worldLayout.tileSize / this.layout.tileSize);
+    }
     if (this.game?.canvas) {
       this.game.canvas.style.cursor = "pointer";
     }
@@ -8140,6 +8248,7 @@ export class FacilityScene extends Phaser.Scene {
   private bindMobileInput(): void {
     this.mobileGestures = new MapTouchGestures();
     this.phoneBuildInput = new PhoneBuildMapInput(() => this.bridge.mobileBuild ?? null,
+      // This adapter consumes screen touches, including the ghost's grab offset.
       () => ({ ...this.layout, columns: positiveGridSize(this.bridge.viewModel.gridColumns, 16),
         rows: positiveGridSize(this.bridge.viewModel.gridRows, 10) }), () => this.bridge.viewModel.placement, () => this.scale);
     this.input.addPointer(1);
@@ -8177,13 +8286,15 @@ export class FacilityScene extends Phaser.Scene {
         }
         if (wasMultiple) this.applyMobileGestures(gestures);
         else this.mobileGestures!.cancel();
+        if (this.mobileGestures!.activeCount === 0) this.flushCameraChange();
         return;
       }
       this.applyMobileGestures(gestures);
+      if (this.mobileGestures!.activeCount === 0) this.flushCameraChange();
     });
     this.input.on("wheel", (pointer: Phaser.Input.Pointer, _objects: unknown[], _x: number, deltaY: number) => {
       const zoom = Math.round((this.cameraView.zoom + (deltaY > 0 ? -0.1 : 0.1)) * 10) / 10;
-      this.applyCamera(transformPhoneCamera(this.cameraView, this.bridge.viewModel, this.scale, pointer, pointer, zoom));
+      this.applyCamera(transformPhoneCamera(this.cameraView, this.bridge.viewModel, this.scale, pointer, pointer, zoom), true);
     });
     const cancel = () => {
       this.mobileGestures!.cancel();
@@ -8193,6 +8304,7 @@ export class FacilityScene extends Phaser.Scene {
       this.endHallwayPaint();
       this.setInteractionHint(null);
       this.drawPlacementGhost();
+      this.flushCameraChange();
     };
     this.input.on("gameout", cancel);
     this.input.on("pointerupoutside", cancel);
@@ -8229,12 +8341,12 @@ export class FacilityScene extends Phaser.Scene {
         const room = model.rooms.find(candidate => candidate.instanceId === section.roomId);
         return room ? [{ value: section.id, bounds: this.getDoorGeometry(room, section.side, section.offset).hitRegion }] : [];
       });
-      state.onIntent({ kind: "door", id: nearestTouchTarget(point, targets) });
+      state.onIntent({ kind: "door", id: nearestTouchTarget(point, targets.map(target => ({ ...target, bounds: this.toScreenRect(target.bounds) }))) });
       return;
     }
     const room = nearestTouchTarget(point, model.rooms
       .filter(candidate => candidate.kind !== "hallway" && candidate.definitionId !== "room.hallway")
-      .map(candidate => ({ value: candidate, bounds: this.toPixels({ tileX: candidate.tileX, tileY: candidate.tileY, ...orientedSize(candidate) }) })));
+      .map(candidate => ({ value: candidate, bounds: this.toScreenRect(this.toPixels({ tileX: candidate.tileX, tileY: candidate.tileY, ...orientedSize(candidate) })) })));
     if (room) this.bridge.onSelectRoom?.(room.instanceId);
   }
 
@@ -8262,12 +8374,12 @@ export class FacilityScene extends Phaser.Scene {
     if (placement && state.ghost && !this.isHallwayPlacementActive()) {
       const frameKey = JSON.stringify([ghostKey, placement.width, placement.height, this.scale.width, this.scale.height]);
       if (frameKey !== this.mobileGhostFrameKey) {
-        this.mobileGhostFrameKey = frameKey; // applyCamera redraws synchronously.
+        this.mobileGhostFrameKey = frameKey; // applyCamera projects synchronously.
         this.applyCamera(framePhoneGhost(this.cameraView, model, this.scale, state.ghost, placement));
       }
     }
     const signature = JSON.stringify([state.ghost, state.hallway?.cells, state.doors, state.selectedDoorId,
-      placement, this.layout.originX, this.layout.originY, this.layout.tileSize]);
+      placement, this.worldLayout.originX, this.worldLayout.originY, this.worldLayout.tileSize]);
     if (signature === this.mobileBuildDrawSignature) return;
     this.mobileBuildDrawSignature = signature;
     graphics.clear(); this.ghostStatusText?.setVisible(false); this.ghostDoorText?.setVisible(false);
@@ -8295,7 +8407,7 @@ export class FacilityScene extends Phaser.Scene {
     const shift = phoneGhostEdgePan(drag.point, this.scale, delta);
     if (!shift.x && !shift.y) return;
     this.applyCamera(transformPhoneCamera(this.cameraView, this.bridge.viewModel, this.scale,
-      { x: 0, y: 0 }, shift));
+      { x: 0, y: 0 }, shift), true);
     this.phoneBuildInput?.move(drag.id, drag.point);
   }
 
@@ -8303,7 +8415,7 @@ export class FacilityScene extends Phaser.Scene {
     for (const gesture of gestures) {
       if (gesture.kind === "pan" || gesture.kind === "pinch") {
         this.applyCamera(transformPhoneCamera(this.cameraView, this.bridge.viewModel, this.scale,
-          gesture.from, gesture.to, gesture.kind === "pinch" ? this.cameraView.zoom * gesture.scale : this.cameraView.zoom));
+          gesture.from, gesture.to, gesture.kind === "pinch" ? this.cameraView.zoom * gesture.scale : this.cameraView.zoom), true);
       } else if (!this.bridge.viewModel.buildMode && !this.bridge.viewModel.placement) {
         this.bridge.onMobileSelection?.(this.mobileSelectionAtPoint(gesture.point));
       }
@@ -8331,10 +8443,10 @@ export class FacilityScene extends Phaser.Scene {
       if (!graphics.visible || this.characterBitmapContainers.get(key)?.visible || !characterRefFromKey(key)) continue;
       const motion = this.characterMotionSnapshots.get(key);
       if (!motion) continue;
-      const size = this.layout.tileSize * motion.displayScale;
+      const size = this.worldLayout.tileSize * motion.displayScale;
       details.push({ value: { kind: "character", key }, depth: graphics.depth,
-        bounds: { x: this.layout.originX + motion.anchorXInTiles * this.layout.tileSize - size * 0.35,
-          y: this.layout.originY + motion.anchorYInTiles * this.layout.tileSize - size * 1.3, width: size * 0.7, height: size * 1.3 } });
+        bounds: { x: this.worldLayout.originX + motion.anchorXInTiles * this.worldLayout.tileSize - size * 0.35,
+          y: this.worldLayout.originY + motion.anchorYInTiles * this.worldLayout.tileSize - size * 1.3, width: size * 0.7, height: size * 1.3 } });
     }
     for (const chair of model.founderChairs ?? []) {
       const seat = this.founderSeatScreenPoint(chair);
@@ -8350,7 +8462,7 @@ export class FacilityScene extends Phaser.Scene {
     if (model.waterCooler) details.push({ value: { kind: "environment", selection: { kind: "environment", action: "refill-water",
       name: "Water cooler", status: model.waterCooler.needsRefill ? "Needs refill" : "Water cooler is full" } },
       bounds: this.toPixels({ tileX: model.waterCooler.location.x, tileY: model.waterCooler.location.y, width: 1, height: 1 }) });
-    const detail = nearestTouchTarget(point, details);
+    const detail = nearestTouchTarget(point, details.map(target => ({ ...target, bounds: this.toScreenRect(target.bounds) })));
     if (detail?.kind === "character") {
       const ref = characterRefFromKey(detail.key);
       return ref ? describeMobileCharacter(ref, model, this.bridge.onDescribeCharacter, Boolean(this.bridge.onPraiseEmployee)) : null;
@@ -8363,7 +8475,7 @@ export class FacilityScene extends Phaser.Scene {
       if (desk) return { kind: "front-desk", roomId: desk.instanceId };
     }
     const room = nearestTouchTarget(point, model.rooms.filter((candidate) => candidate.kind !== "hallway" && candidate.definitionId !== "room.hallway")
-      .map((candidate) => ({ value: candidate, bounds: this.toPixels({ tileX: candidate.tileX, tileY: candidate.tileY, ...orientedSize(candidate) }) })));
+      .map((candidate) => ({ value: candidate, bounds: this.toScreenRect(this.toPixels({ tileX: candidate.tileX, tileY: candidate.tileY, ...orientedSize(candidate) })) })));
     const destination = this.walkDestinationAtPointer(pointer);
     if (room) return { ...describeMobileRoom(room, destination),
       ...(destination ? { moveAccepted: this.bridge.onMoveFounder?.(destination) ?? false } : {}) };
@@ -8402,7 +8514,7 @@ export class FacilityScene extends Phaser.Scene {
           this.dragStart.panX + deltaX,
         panY:
           this.dragStart.panY + deltaY,
-      });
+      }, true);
       return;
     }
 
@@ -8490,6 +8602,7 @@ export class FacilityScene extends Phaser.Scene {
     const gesture = this.dragStart;
     this.dragStart = null;
     this.endHallwayPaint();
+    if (gesture?.dragged) this.flushCameraChange();
     if (
       !gesture ||
       gesture.dragged ||
@@ -8778,14 +8891,52 @@ export class FacilityScene extends Phaser.Scene {
           Math.round((this.cameraView.zoom + direction * 0.1) * 10) / 10,
         ),
       ),
-    });
+    }, true);
   }
 
-  private applyCamera(camera: FacilityCameraView): void {
+  private applyCamera(camera: FacilityCameraView, deferPublication = false): void {
+    // A React echo of the previous input may arrive before Phaser's next
+    // update. Consume that request before assigning this newer gesture so
+    // calculateLayout cannot overwrite it with the previous input's camera.
+    this.lastRequestedCameraSignature = `${this.bridge.viewModel.campaignId ?? ""}:${facilityCameraSignature(this.bridge.viewModel.camera)}`;
+    this.cameraCampaignId = this.bridge.viewModel.campaignId;
     this.cameraView = camera;
+    this.layout = this.calculateLayout(Math.max(1, Math.floor(this.scale.width)), Math.max(1, Math.floor(this.scale.height)));
+    this.cameraGestureUntil = this.cameraNow() + CAMERA_ZOOM_SETTLE_MS;
+    this.crispZoomPending = this.layout.tileSize !== this.worldLayout.tileSize;
+    this.syncRetainedCamera();
+    this.interactionHintText?.setVisible(false);
+    if (this.bridge.viewModel.placement) this.drawPlacementGhost();
+    if (deferPublication) this.cameraPreferencePending = true;
+    else {
+      this.cameraPreferencePending = false;
+      this.publishCameraChange(this.cameraView);
+    }
+  }
+
+  public hasPendingCameraChange(): boolean { return this.cameraPreferencePending; }
+
+  /** Gesture end/quiet wheel and lifecycle capture publish one small preference.
+   * A new campaign or explicit external camera request fences out the old one. */
+  public flushCameraChange(): void {
+    if (!this.cameraPreferencePending) return;
+    this.cameraPreferencePending = false;
+    const camera = this.getCameraPreference();
+    if (camera) this.publishCameraChange(camera);
+  }
+
+  public publishCameraChange(camera: FacilityCameraView): void {
+    this.lastPublishedCameraRequest = `${this.bridge.viewModel.campaignId ?? ""}:${facilityCameraSignature(camera)}`;
     this.bridge.onCameraChange?.(camera);
-    this.lastModelSignature = "";
-    this.refreshLayout(true);
+  }
+
+  public cancelCameraGesture(): void {
+    this.dragStart = null;
+    this.pointerDownCharacterKey = null;
+    this.mobileGestures?.cancel();
+    this.phoneBuildInput?.cancel();
+    this.endHallwayPaint();
+    this.flushCameraChange();
   }
 
   /** Small presentation preference, normalized by the most recently drawn layout. */
@@ -8918,7 +9069,7 @@ export class FacilityScene extends Phaser.Scene {
       tileY: ghost.tileY,
       ...size,
     });
-    const border = Math.max(2, Math.floor(this.layout.tileSize * 0.1));
+    const border = Math.max(2, Math.floor(this.worldLayout.tileSize * 0.1));
     const roomShade = ghost.valid ? 0xffffff : 0xc5c5c0;
 
     // Always draw the entire proposed footprint. A translucent fill keeps the
@@ -8952,7 +9103,7 @@ export class FacilityScene extends Phaser.Scene {
 
       const centerX = rectangle.x + rectangle.width / 2;
       const centerY = rectangle.y + rectangle.height / 2;
-      const inset = Math.max(8, Math.floor(this.layout.tileSize * 0.62));
+      const inset = Math.max(8, Math.floor(this.worldLayout.tileSize * 0.62));
       const doorPoint =
         doorSide === "north"
           ? { x: centerX, y: rectangle.y + inset }
@@ -8970,7 +9121,7 @@ export class FacilityScene extends Phaser.Scene {
       graphics.lineStyle(Math.max(2, border), 0x111111, 1);
       graphics.lineBetween(centerX, centerY, doorPoint.x, doorPoint.y);
       graphics.fillStyle(0x111111, 1);
-      const arrow = Math.max(5, Math.floor(this.layout.tileSize * 0.22));
+      const arrow = Math.max(5, Math.floor(this.worldLayout.tileSize * 0.22));
       if (doorSide === "north") {
         graphics.fillTriangle(
           doorPoint.x,
@@ -9044,7 +9195,7 @@ export class FacilityScene extends Phaser.Scene {
         doorSide === "north"
           ? {
               x: centerX,
-              y: rectangle.y + Math.max(11, this.layout.tileSize * 0.32),
+              y: rectangle.y + Math.max(11, this.worldLayout.tileSize * 0.32),
             }
           : doorSide === "south"
             ? {
@@ -9052,18 +9203,18 @@ export class FacilityScene extends Phaser.Scene {
                 y:
                   rectangle.y +
                   rectangle.height -
-                  Math.max(11, this.layout.tileSize * 0.32),
+                  Math.max(11, this.worldLayout.tileSize * 0.32),
               }
             : doorSide === "west"
               ? {
-                  x: rectangle.x + Math.max(24, this.layout.tileSize * 0.6),
+                  x: rectangle.x + Math.max(24, this.worldLayout.tileSize * 0.6),
                   y: centerY,
                 }
               : {
                   x:
                     rectangle.x +
                     rectangle.width -
-                    Math.max(24, this.layout.tileSize * 0.6),
+                    Math.max(24, this.worldLayout.tileSize * 0.6),
                   y: centerY,
                 };
       this.ghostDoorText
@@ -9113,22 +9264,19 @@ export class FacilityScene extends Phaser.Scene {
     const statusMessage = ghost.valid
       ? "✓ SPACE CLEAR — CLICK TO BUILD"
       : `✕ ${invalidMessage}`;
-    const statusAbove = rectangle.y > 54;
+    const screenRectangle = this.toScreenRect(rectangle);
+    const statusAbove = screenRectangle.y > 54;
     const statusX = Math.max(
       110,
-      Math.min(this.scale.width - 110, rectangle.x + rectangle.width / 2),
+      Math.min(this.scale.width - 110, screenRectangle.x + screenRectangle.width / 2),
     );
+    const statusPoint = this.screenToWorld({ x: statusX, y: statusAbove ? screenRectangle.y - 5 : screenRectangle.y + screenRectangle.height + 5 });
     this.ghostStatusText
       ?.setText(
         `${placement.displayName.toUpperCase()} • ${size.width}×${size.height} • ${placement.orientation ?? 0}°\n${statusMessage}`,
       )
       .setOrigin(0.5, statusAbove ? 1 : 0)
-      .setPosition(
-        statusX,
-        statusAbove
-          ? rectangle.y - 5
-          : rectangle.y + rectangle.height + 5,
-      )
+      .setPosition(statusPoint.x, statusPoint.y)
       .setVisible(true);
 
     this.footerText?.setText(
@@ -9144,6 +9292,7 @@ export class FacilityScene extends Phaser.Scene {
   private frontDeskSeatInteractionAtPointer(
     pointer: Phaser.Input.Pointer,
   ): boolean {
+    const hitPoint = this.screenToWorld(pointer);
     const room = this.bridge.viewModel.rooms.find(
       (candidate) => candidate.definitionId === "room.front_desk",
     );
@@ -9158,8 +9307,8 @@ export class FacilityScene extends Phaser.Scene {
         })
         .map(([, image]) => image.getBounds());
       if (renderedTargets.some((bounds) =>
-        pointer.x >= bounds.left && pointer.x <= bounds.right &&
-        pointer.y >= bounds.top && pointer.y <= bounds.bottom
+        hitPoint.x >= bounds.left && hitPoint.x <= bounds.right &&
+        hitPoint.y >= bounds.top && hitPoint.y <= bounds.bottom
       )) return true;
     }
     const rectangle = this.toPixels({
@@ -9181,10 +9330,10 @@ export class FacilityScene extends Phaser.Scene {
         const width = bounds.width * fixture.width;
         const height = bounds.height * fixture.height;
         return (
-          pointer.x >= centerX - width / 2 &&
-          pointer.x <= centerX + width / 2 &&
-          pointer.y >= contactY - height &&
-          pointer.y <= contactY
+          hitPoint.x >= centerX - width / 2 &&
+          hitPoint.x <= centerX + width / 2 &&
+          hitPoint.y >= contactY - height &&
+          hitPoint.y <= contactY
         );
       });
   }
@@ -9192,6 +9341,7 @@ export class FacilityScene extends Phaser.Scene {
   private ordinaryChairAtPointer(
     pointer: Phaser.Input.Pointer,
   ): FacilityFounderChairView | null {
+    const hitPoint = this.screenToWorld(pointer);
     for (const room of this.bridge.viewModel.rooms) {
       if (room.definitionId !== "room.waiting") continue;
       const orientation: RoomOrientation = room.orientation === 270 ? 270 : 0;
@@ -9226,28 +9376,28 @@ export class FacilityScene extends Phaser.Scene {
         );
         if (candidates.length === 0) continue;
         const imageBounds = image.getBounds();
-        if (pointer.x < imageBounds.left || pointer.x > imageBounds.right ||
-          pointer.y < imageBounds.top || pointer.y > imageBounds.bottom) continue;
+        if (hitPoint.x < imageBounds.left || hitPoint.x > imageBounds.right ||
+          hitPoint.y < imageBounds.top || hitPoint.y > imageBounds.bottom) continue;
         return candidates
           .map(({ chair, support }) => ({
             chair,
             distance:
-              (pointer.x - (bounds.x + support.seat.x * this.layout.tileSize)) ** 2 +
-              (pointer.y - (bounds.y + support.seat.y * this.layout.tileSize)) ** 2,
+              (hitPoint.x - (bounds.x + support.seat.x * this.worldLayout.tileSize)) ** 2 +
+              (hitPoint.y - (bounds.y + support.seat.y * this.worldLayout.tileSize)) ** 2,
           }))
           .sort((left, right) => left.distance - right.distance)[0]!.chair;
       }
     }
     // Front Desk public chair and Break Room seats: nearest seat contact
     // within half a tile (break seats can share one logical tile).
-    const reach = this.layout.tileSize * 0.5;
+    const reach = this.worldLayout.tileSize * 0.5;
     const nearby = (this.bridge.viewModel.founderChairs ?? [])
       .filter((chair) => chair.kind === "front_desk_public" || chair.kind === "break")
       .flatMap((chair) => {
         const seat = this.founderSeatScreenPoint(chair);
         if (!seat) return [];
         // The seat contact is at hip height; accept clicks on the seat back above it too.
-        const distance = Math.hypot(pointer.x - seat.x, Math.max(0, Math.abs(pointer.y - (seat.y - reach * 0.4)) - reach * 0.4));
+        const distance = Math.hypot(hitPoint.x - seat.x, Math.max(0, Math.abs(hitPoint.y - (seat.y - reach * 0.4)) - reach * 0.4));
         return distance <= reach ? [{ chair, distance }] : [];
       })
       .sort((left, right) => left.distance - right.distance)[0];
@@ -9266,10 +9416,10 @@ export class FacilityScene extends Phaser.Scene {
     height: number;
   } {
     return {
-      x: this.layout.originX + rectangle.tileX * this.layout.tileSize,
-      y: this.layout.originY + rectangle.tileY * this.layout.tileSize,
-      width: rectangle.width * this.layout.tileSize,
-      height: rectangle.height * this.layout.tileSize,
+      x: this.worldLayout.originX + rectangle.tileX * this.worldLayout.tileSize,
+      y: this.worldLayout.originY + rectangle.tileY * this.worldLayout.tileSize,
+      width: rectangle.width * this.worldLayout.tileSize,
+      height: rectangle.height * this.worldLayout.tileSize,
     };
   }
 }

@@ -8,8 +8,8 @@
       "capturedMainSha256": "034f6f69da950feca9e3c4fd928eeffb3b1a7d2069a6e2611b87da6d3df95635",
       "mainAcceptedSha256": "100dababa898bd80133914633832da65537e0cfc38464d6e5b95d7318d42ad3b",
       "releaseEntrySha256": "4080f4b98a7888897bd6b9609878294bbc35c7544e770e5e787e7e7447340c86",
-      "requiredReleaseSha256": "1916fd67f7e42197c23b12b5e82a9ff4aae0fe026ed0492d690f5e5882a0cbbc",
-      "reason": "Mechanical exact digest propagation for three authorized port25 cloud-source changes; guard assertions, unrelated protected sources and immutable captures remain intact.",
+      "requiredReleaseSha256": "d8beb6febd7736be919f87bf45e15b8da90c11ac917a85a90604fcf1acdc1833",
+      "reason": "Mechanical exact guard digest propagation after merging89a52452 CI authorizations with preserved port25 cloud authorizations; unrelated pins, captures and guard logic remain exact.",
       "authorizedDeltas": [
         {
           "on": "2026-11-09",
@@ -18,6 +18,14 @@
           "previousRequirement": "eec467ca190404e7f8d7bb53f17ad92cba14eeb4f8178d04b7b9f4928af843e4",
           "releaseAfterSha256": "1916fd67f7e42197c23b12b5e82a9ff4aae0fe026ed0492d690f5e5882a0cbbc",
           "reason": "Mechanical exact digest propagation for three authorized port25 cloud-source changes; guard assertions, unrelated protected sources and immutable captures remain intact."
+        },
+        {
+          "on": "2026-11-10",
+          "milestone": "release-port26-memory-rerelease",
+          "releaseBeforeSha256": "1916fd67f7e42197c23b12b5e82a9ff4aae0fe026ed0492d690f5e5882a0cbbc",
+          "previousRequirement": "1916fd67f7e42197c23b12b5e82a9ff4aae0fe026ed0492d690f5e5882a0cbbc",
+          "releaseAfterSha256": "d8beb6febd7736be919f87bf45e15b8da90c11ac917a85a90604fcf1acdc1833",
+          "reason": "Mechanical exact guard digest propagation after merging89a52452 CI authorizations with preserved port25 cloud authorizations; unrelated pins, captures and guard logic remain exact."
         }
       ]
     }
@@ -42,6 +50,39 @@
           "path": "packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts",
           "beforeSha256": "eec467ca190404e7f8d7bb53f17ad92cba14eeb4f8178d04b7b9f4928af843e4",
           "afterSha256": "1916fd67f7e42197c23b12b5e82a9ff4aae0fe026ed0492d690f5e5882a0cbbc",
+          "kind": "linked-guard-digest"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-10",
+      "milestone": "release-port26-memory-rerelease",
+      "priorFixtureSha256": "e41322052a52d840203079ca02ba77b67a0e60f4dcb2753d65fcfc08408e1f7a",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts",
+          "capturedMainSha256": "034f6f69da950feca9e3c4fd928eeffb3b1a7d2069a6e2611b87da6d3df95635",
+          "mainAcceptedSha256": "100dababa898bd80133914633832da65537e0cfc38464d6e5b95d7318d42ad3b",
+          "releaseEntrySha256": "4080f4b98a7888897bd6b9609878294bbc35c7544e770e5e787e7e7447340c86",
+          "requiredReleaseSha256": "1916fd67f7e42197c23b12b5e82a9ff4aae0fe026ed0492d690f5e5882a0cbbc",
+          "reason": "Mechanical exact digest propagation for three authorized port25 cloud-source changes; guard assertions, unrelated protected sources and immutable captures remain intact.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-09",
+              "milestone": "release-port25-cloud-conflict",
+              "releaseBeforeSha256": "eec467ca190404e7f8d7bb53f17ad92cba14eeb4f8178d04b7b9f4928af843e4",
+              "previousRequirement": "eec467ca190404e7f8d7bb53f17ad92cba14eeb4f8178d04b7b9f4928af843e4",
+              "releaseAfterSha256": "1916fd67f7e42197c23b12b5e82a9ff4aae0fe026ed0492d690f5e5882a0cbbc",
+              "reason": "Mechanical exact digest propagation for three authorized port25 cloud-source changes; guard assertions, unrelated protected sources and immutable captures remain intact."
+            }
+          ]
+        }
+      ],
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts",
+          "beforeSha256": "1916fd67f7e42197c23b12b5e82a9ff4aae0fe026ed0492d690f5e5882a0cbbc",
+          "afterSha256": "d8beb6febd7736be919f87bf45e15b8da90c11ac917a85a90604fcf1acdc1833",
           "kind": "linked-guard-digest"
         }
       ]

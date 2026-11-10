@@ -9303,3 +9303,11 @@ No browser/live accounts/DB/network/SQL/agents/install/deploy/Git mutation.
 Manager must roll out,refresh old clients and run browser cloud acceptance;
 live flood attribution/reduction unconfirmed. HTTP abort is best effort.
 Owner origin/path/profile unchanged. Local/uncommitted for manager review.
+
+## 2026-11-10 - Release port26: retained camera, phone memory, catalogue/restart
+
+Restored 89a52452 renderer/CI sources; applied only accepted phone-memory and catalogue/durable-restart follow-ups. Scene memory delta is byte-exact; excluded live character/art and active cloud/play-time/migration lanes. 57 accepted paths + 8 strict guard/fixture paths + 3 coordination paths = 68 public paths. Dispositions: 56 copied / 9 hunk-ported / 95 excluded; full paths/reasons/hashes in `.local-dev/release-verify/port26-20261110.json` and GS028 port26 appendix. 173 unrelated pin rows,74 absences and all port 25 authorization history retained; three CI source rows restored exactly from 89a52452.
+
+Seven CI suites: 775 files / 11,221 passing tests / 0 failures / 1 existing opt-in skip. Seven typechecks, player build (664 modules/12.67s), boundary/launcher assertions pass (fresh exact native inventory bridge after Node Git EPERM). Focused renderer/memory/restart/catalogue 88 and Level 5 integration/launch 44 pass. E2e scope: four pre-existing biopsy-fixture type errors reproduced byte-exact to entry; remaining specs/configs clean. Raw logs/native exits/full JSON and final scope audit: `.local-dev/release-port26-20261110/`.
+
+All 553 inputs (411 clinical), nine checkpoints, three reports, evidence/history/launch pins unchanged: 26,531 commands / 6,019,042 cents / 412 completions / 0 walkouts. No rebind. Released port 25 cloud runtime,15 migrations and .github exact. No browser/network/account/SQL access, agents, install, Git mutation or deploy. New physical iPhone/WebKit/GPU acceptance remains manager work; original loop cause unconfirmed. Owner origin/profile/path unchanged; no preview opened. Local/uncommitted for manager review and backup/rollout.

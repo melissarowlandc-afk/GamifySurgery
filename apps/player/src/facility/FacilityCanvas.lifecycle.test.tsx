@@ -4,6 +4,7 @@ import { phoneFixture, phoneTestDom, cleanupPhoneTests } from "../mobile/screenT
 import { DESKTOP_CAMERA_RESIZE_SETTLE_MS, FacilityCanvas } from "./FacilityCanvas";
 import { bindFacilityCameraPreferenceLifecycle, createFacilityCameraPreferenceSession, readFacilityCameraPreference } from "../session/facilityCameraPreference";
 import type { FacilityCameraView } from "./types";
+import { mobileBitmapCache } from "../mobile/performance/roomAssets";
 
 const captured = vi.hoisted(() => ({ games: [] as any[] }));
 vi.mock("phaser", () => {
@@ -138,4 +139,56 @@ it("defers an initially covered phone map until first reveal, then retains the s
   await render(false); expect(captured.games).toHaveLength(1); const game = captured.games[0];
   await render(true); await render(false); expect(captured.games).toHaveLength(1); expect(game.destroy).not.toHaveBeenCalled();
   await cleanupPhoneTests(); expect(game.destroy).toHaveBeenCalledWith(true);
+});
+
+it("recovers the mounted phone Canvas context without constructing a second game or reloading a campaign", async () => {
+  observer(); vi.useFakeTimers(); const env = phoneTestDom(), fixture = phoneFixture();
+  Object.assign(env.browser, { setInterval, clearInterval });
+  Object.assign(env.doc, { visibilityState: "visible" });
+  const owners = mobileBitmapCache.health.owners;
+  await env.render(<FacilityCanvas mobileInput viewModel={fixture.facility} onPlaceRoom={() => true} />);
+  expect(mobileBitmapCache.health.owners).toBe(owners + 1);
+  const game = captured.games[0], scene = game.config.scene;
+  scene.sys.isActive = () => true; scene.restoreCanvasPresentation = vi.fn();
+  const before = game.loop.wake.mock.calls.length;
+  game.canvas.dispatchEvent(new Event("contextlost")); expect(game.loop.running).toBe(false);
+  await act(async () => { vi.advanceTimersByTime(6000); });
+  expect(game.loop.wake).toHaveBeenCalledTimes(before); // Watchdog respects a lost context.
+  game.canvas.dispatchEvent(new Event("contextrestored"));
+  expect(scene.restoreCanvasPresentation).toHaveBeenCalledOnce(); expect(game.loop.running).toBe(true);
+  expect(captured.games).toHaveLength(1); await cleanupPhoneTests();
+  expect(mobileBitmapCache.health.owners).toBe(owners);
+  game.canvas.dispatchEvent(new Event("contextlost")); game.canvas.dispatchEvent(new Event("contextrestored"));
+  expect(scene.restoreCanvasPresentation).toHaveBeenCalledOnce();
+});
+
+it.each([false, true])("publishes a pending gesture before lifecycle/Save & Close flush and removes listeners (phone=%s)", async mobile => {
+  observer(); vi.useFakeTimers(); const env = phoneTestDom(), fixture = phoneFixture();
+  Object.assign(env.browser, { setInterval, clearInterval }); Object.assign(env.doc, { visibilityState: "visible" });
+  const values = new Map<string, string>(), storage = { getItem: (key: string) => values.get(key) ?? null,
+    setItem: (key: string, value: string) => { values.set(key, value); } };
+  const preferences = createFacilityCameraPreferenceSession(storage);
+  const changed = vi.fn((camera: FacilityCameraView) => { preferences.change("gesture", camera); });
+  await env.render(<FacilityCanvas mobileInput={mobile} viewModel={{ ...fixture.facility, camera: { zoom: 1.2, panX: 0, panY: 0 } }}
+    onCameraChange={changed} onPlaceRoom={() => true} />);
+  const game = captured.games[0], scene = game.config.scene;
+  scene.scale = game.scale; scene.time = { now: 0 };
+  const host = env.find(node => node.attributes["data-testid"] === "facility-canvas");
+  const geometryRead = vi.fn(() => 900);
+  Object.defineProperties(host, { clientWidth: { configurable: true, get: geometryRead }, clientHeight: { configurable: true, get: geometryRead } });
+  scene.drawWorld = vi.fn(); scene.positionText = vi.fn(); scene.drawPlacementGhost = vi.fn(); scene.refreshLayout();
+  const unbind = bindFacilityCameraPreferenceLifecycle(preferences, env.browser, env.doc as unknown as Document);
+  for (let i = 0; i < 40; i++) { scene.handleWheel(-30); scene.time.now += 10; game.events.emit("poststep"); }
+  expect(changed).not.toHaveBeenCalled();
+  expect(geometryRead).not.toHaveBeenCalled();
+  const latest = scene.getCameraPreference();
+  await act(async () => { env.browser.dispatchEvent(new Event("pagehide")); });
+  expect(changed).toHaveBeenCalledExactlyOnceWith(latest);
+  expect(readFacilityCameraPreference("gesture", storage)).toEqual(latest);
+  changed.mockClear(); scene.handleWheel(30); const beforeSave = scene.getCameraPreference();
+  await act(async () => { env.browser.dispatchEvent(new Event("pointerdown")); }); // Outside canvas, before the React action.
+  preferences.flush(); expect(changed).toHaveBeenCalledExactlyOnceWith(beforeSave);
+  expect(readFacilityCameraPreference("gesture", storage)).toEqual(beforeSave);
+  unbind(); await cleanupPhoneTests(); changed.mockClear();
+  env.browser.dispatchEvent(new Event("pagehide")); expect(changed).not.toHaveBeenCalled();
 });
