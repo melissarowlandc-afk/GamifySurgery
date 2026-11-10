@@ -11614,3 +11614,153 @@ tests/e2e/clinic-biopsy-visitors-correction.spec.ts(273,5): error TS2322: Type '
 The source reports' Day 20 heap and native-renderer memory measurements remain worker acceptance evidence, not new GS-release physical-phone measurements. No new browser/WebKit/GPU/whole-process claim is made, and the owner's loading/sign-in loop cause remains unconfirmed. Manager should run the accepted production pan/zoom and phone-memory browser configurations, cloud recovery and actual iPhone standalone opening/context-loss checks before rollout. Fresh standalone installs intentionally begin conservatively for 24 hours; origin-wide eviction can still remove both auxiliary markers. The restart database contains only an auxiliary presentation marker; auth, save formats and released cloud logic are unchanged.
 
 Owner pathways remain START_GAME.cmd with exact http://127.0.0.1: 4173 in the intended persistent profile, or the canonical Pages site with its separate storage. No origin/profile/path was changed or opened. QA preview 127.0.0.1: 5186 is separate disposable storage and was not opened. Manager owns backup/release/deploy; this milestone is local and uncommitted.
+
+## Release port 27 (2026-11-10, release worktree, nonretryable conflicts + usage delivery)
+
+Completed on GS-release entry HEAD ae0405e85fc87defde913ecb7896e3d2551a9e4e. Only the accepted client conflict mapping/usage-delivery lane and four inert SQL repository additions were ported. Live GamifySurgery remained read-only. Changes remain local and uncommitted; no push, install, network, agents, SQL execution, database connection, deploy or .github edit.
+
+Runtime: supabaseTransport maps both 40001 and PT409 (HTTP409) to revision; existing recovery, fencing, backoff and abort behavior remains exact. supabaseUsage adds one 30-second deadline across Auth/RPC/fetch/JSON, aborts actual requests, blocks late Auth from sending, and retains unacknowledged immutable receipt IDs for the existing retry policy. Both runtime preimages and four related collector/transport preimages exactly matched the accepted worker capture.
+
+Dispositions: **11 copied /9 hunk-ported /113 excluded** observed paths. 23 public files changed:12 accepted files, 8 strict guard/fixture integrations and 3 coordination paths. Exact path reasons and before/after SHA-256: `.local-dev/release-verify/port27-20261110.json`; final source audit and native logs/exit/full JSON: `.local-dev/release-port27-20261110/`. The two pre-existing untracked artifact directories were retained.
+
+Files changed:
+
+- `apps/player/src/playtime/supabaseUsage.ts`
+- `apps/player/src/playtime/usageDeliveryRecovery.test.ts`
+- `apps/player/src/session/cloud/nonretryableConflictSql.test.ts`
+- `apps/player/src/session/cloud/nonretryableConflicts.test.ts`
+- `apps/player/src/session/cloud/supabaseTransport.test.ts`
+- `apps/player/src/session/cloud/supabaseTransport.ts`
+- `docs/execplans/gs028-stats-ethics-overhaul-20261007.md`
+- `docs/execplans/nonretryable-cloud-conflicts-20261110.md`
+- `docs/execplans/release-port27-20261110.md`
+- `docs/handoffs/CURRENT_THREAD_HANDOFF.md`
+- `docs/research/nonretryable-cloud-conflicts-20261110.md`
+- `packages/clinical-content/src/question-flags3-20261107.test.ts`
+- `packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts`
+- `packages/clinical-content/src/question-stats1-20261108.test.ts`
+- `packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts`
+- `supabase/migrations/20261110000100_nonretryable_cloud_conflicts.sql`
+- `supabase/tests/nonretryable_cloud_conflicts.sql`
+- `supabase/tests/nonretryable_cloud_conflicts_offline.sql`
+- `supabase/tests/nonretryable_cloud_conflicts_rollback.sql`
+- `tools/question-quality/fixtures/question-flags3-release-source-pins-20261107.json`
+- `tools/question-quality/fixtures/question-flags4-acceptance-release-source-pins-20261108.json`
+- `tools/question-quality/fixtures/question-stats1-acceptance-release-source-pins-20261108.json`
+- `tools/question-quality/fixtures/question-stats1-release-source-pins-20261108.json`
+
+The only adaptation to a copied test is nonretryableConflictSql.test.ts: this release lacks the optional efficient-lease migration, so its exact current raise inventory expects the five required functions; if v2 is present it is still mandatory. Both migration and rollback must cover all six signatures, and every actual retryable raise remains checked. Imports are only node:fs and vitest; no database/SQL execution or default script changes. SQL files otherwise match accepted source after LF normalization. For the disposable SQL driver in this tree use **NONRETRYABLE_SKIP_EFFICIENT=1**; optional request-budget migration/tests were excluded. No executable SQL acceptance was run.
+
+Source guards: authorize only supabaseTransport.ts and supabaseTransport.test.ts through the existing delta history. Counts 48->49, 50->51, 87->88; flags4 linked digest only 1->1. All captures, prior authorization history, 179 unrelated pin rows, 74 absences and assertion bodies are exact apart from fixture digest/count constants. Current port 25/26 authorizations remain intact.
+
+- `apps/player/src/session/cloud/supabaseTransport.ts`: `9c881904fb6ddbdb9ad76fadd9a00df3d7e70eaeefa9ad60b50b31a3f4cec334` -> `b02a3087bdd2a7b33ae3318cdac4e73db68a279f561d050b2bafe4be1900d4c1`.
+- `apps/player/src/session/cloud/supabaseTransport.test.ts`: `ca226d8eb9da684cf1fd8635d340a3196ff649f70a8a37269a7dc46906b22dd7` -> `127df7c8a2617ba5a928152d7b7ccc04549612db64665e0553c216551f9b93ae`.
+
+All 113 excluded paths/reasons are listed in the disposition JSON. Groups:30 character/art/renderer paths;25 unrelated cloud/session/save/codec paths;28 domain/balance/performance paths;10 harden1/N3 question paths;3 optional request-budget SQL paths;5 stale evidence/QA/fixture paths;12 other unrelated UI/config paths. Port26 renderer/memory, other cloud runtime, all existing SQL files and .github remain byte-exact. No clinical/content/manifest version was ported.
+
+Level 5: all 553 bound inputs (411 clinical), nine checkpoints, three reports, evidence/history, legacy behavior and launch/workload pins unchanged. Recorded totals remain **26,531 commands /6,019,042 closing cents /412 completions /0 walkouts**. Native integration/launch 44/44 passes, including input binding/cash reconciliation. No rebind or evidence write. Results SHA256 `2af0e6a514834a4ab1daa81bdc973123c8e3f8a1cf787b8ef8d2726bca648a97`; checkpoints `560a4a38c5d8d2cdadf3033666a88a2f5e7e75f64533def7b55d2dfa61469d32` (unchanged).
+
+Exact validation: CI=true; all seven suites directly with --pool=threads, player maxWorkers=4 and others 2. Root test is blocked by the same Node Git-inventory EPERM boundary precondition. Optional net-use probe preload only; no application/test assertions bypassed. Exact command lines and log hashes are in validation-summary.json.
+
+```text
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=4 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port27-20261110/workspace-json-reporter.mjs
+exit 0
+
+npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port27-20261110/workspace-json-reporter.mjs
+exit 0
+
+npm.cmd run test --workspace @gamify-surgery/clinical-context-workbench --workspace @gamify-surgery/balance-config --workspace @gamify-surgery/clinical-authoring --workspace @gamify-surgery/clinical-content --workspace @gamify-surgery/clinical-research -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port27-20261110/workspace-json-reporter.mjs
+exit 0
+```
+
+| Workspace | Files passed | Tests passed | Failures | Skips |
+| --- | ---: | ---: | ---: | ---: |
+| clinical-context-workbench | 8 | 43 | 0 | 0 |
+| player | 405 | 4040 | 0 | 0 |
+| balance-config | 24 | 164 | 0 | 0 |
+| clinical-authoring | 7 | 81 | 0 | 0 |
+| clinical-content | 127 | 1584 | 0 | 0 |
+| clinical-research | 8 | 83 | 0 | 0 |
+| game-domain | 199 | 5240 | 0 | 1 |
+| Total | 778 | 11,235 | 0 | 1 |
+
+Compared with port 26 baseline: +3 player files/+14 tests; zero new failure or skip. No isolated reruns needed. Existing skipped opt-in historical full differential remains unchanged. Native summary output:
+
+`other-workspaces.log`:
+
+```text
+ Test Files  8 passed (8)
+      Tests  43 passed (43)
+   Start at  08:18:49
+   Duration  2.03s (transform 568ms, setup 0ms, import 1.53s, tests 962ms, environment 1ms)
+ Test Files  24 passed (24)
+      Tests  164 passed (164)
+   Start at  08:18:51
+   Duration  4.23s (transform 971ms, setup 0ms, import 4.50s, tests 308ms, environment 2ms)
+ Test Files  7 passed (7)
+      Tests  81 passed (81)
+   Start at  08:18:56
+   Duration  1.16s (transform 249ms, setup 0ms, import 673ms, tests 567ms, environment 1ms)
+ Test Files  127 passed (127)
+      Tests  1584 passed (1584)
+   Start at  08:18:57
+   Duration  137.61s (transform 11.90s, setup 0ms, import 234.44s, tests 24.80s, environment 11ms)
+ Test Files  8 passed (8)
+      Tests  83 passed (83)
+   Start at  08:21:15
+   Duration  2.38s (transform 211ms, setup 0ms, import 570ms, tests 1.12s, environment 0ms)
+```
+
+`player.log`:
+
+```text
+ Test Files  405 passed (405)
+      Tests  4040 passed (4040)
+   Start at  08:18:49
+   Duration  497.40s (transform 39.31s, setup 0ms, import 789.96s, tests 1149.18s, environment 37ms)
+```
+
+`domain.log`:
+
+```text
+ Test Files  199 passed (199)
+      Tests  5240 passed | 1 skipped (5241)
+   Start at  08:18:48
+   Duration  590.02s (transform 18.98s, setup 0ms, import 419.97s, tests 737.00s, environment 15ms)
+```
+
+`focused-cloud.log`:
+
+```text
+ Test Files  9 passed (9)
+      Tests  141 passed (141)
+   Start at  08:17:35
+   Duration  15.49s (transform 7.34s, setup 0ms, import 15.83s, tests 12.60s, environment 1ms)
+```
+
+`level-five.log`:
+
+```text
+ Test Files  2 passed (2)
+      Tests  44 passed (44)
+   Start at  08:18:49
+   Duration  120.30s (transform 15.24s, setup 0ms, import 26.09s, tests 107.98s, environment 0ms)
+```
+
+`npm.cmd run typecheck`: all seven workspace commands pass, exit0. `npm.cmd run test:boundaries`: native attempt exits1 solely on spawnSync git EPERM; fresh successful read-only native git ls-files inventory plus strict tree/index/byte-hash adapter lets both unchanged verifiers pass, exit0:
+
+```text
+Verified runtime dependency boundaries and 7393 tracked path(s).
+Verified launcher health contract gamify-surgery-player protocol 1.
+```
+
+`npm.cmd run build --workspace @gamify-surgery/player`, VITE_FACILITY_PERF_PROOF=0, exit0:
+
+```text
+✓ 664 modules transformed.
+✓ built in 12.62s
+```
+
+Existing dynamic-import, large-chunk and plugin-time warnings remain.
+
+Manager gates: deploy/reload the dual-code client before applying SQL. Review definitions/ACLs and run the guarded disposable SQL suite with the release skip flag; the optional-v2 variant needs its separately approved prerequisite files. Manager/owner alone apply/rollback SQL and observe actual SQLSTATE/request behavior, usage delivery and browser cloud recovery. This port does not prove the deployed transaction-runner retry implementation or recover already-expired usage estimates. Original owner origin/profile/path and saves are unchanged; no preview was opened. Manager owns backup and rollout.

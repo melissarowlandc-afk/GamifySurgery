@@ -42,7 +42,9 @@ function mappedError(error: unknown): CloudSyncError {
   const detail = (error ?? {}) as { code?: string; message?: string; status?: number; details?: string };
   const message = detail.message?.toLowerCase() ?? "";
   if (detail.status === 401 || ["PGRST301", "PGRST302", "bad_jwt"].includes(detail.code ?? "")) return new CloudSyncError("auth");
-  if (detail.code === "40001") return new CloudSyncError("revision");
+  // During rollout old RPCs use serialization_failure; patched RPCs use a
+  // deterministic HTTP 409 so the server must not retry the transaction.
+  if (detail.code === "40001" || detail.code === "PT409") return new CloudSyncError("revision");
   if (detail.code === "54000") return new CloudSyncError("capacity");
   if (detail.code === "P0001" && message.includes("rate")) {
     let seconds = 60;

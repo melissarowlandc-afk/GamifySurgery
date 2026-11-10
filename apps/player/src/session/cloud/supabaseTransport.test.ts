@@ -18,7 +18,7 @@ it.each([false, true])("opts into efficient leases only when the server advertis
   expect(rpc.mock.calls.map(([name]) => name)).toEqual(["beta2_cloud_access", efficient ? "beta2_cloud_lease_v2" : "beta2_cloud_lease"]);
   expect(lease.expiresAtMs - lease.serverNowMs).toBe(600_000);
 });
-it.each(["PGRST202", "55000", "40001", "42501"])("only a missing optional endpoint permits legacy fallback (%s)", async code => {
+it.each(["PGRST202", "55000", "40001", "PT409", "42501"])("only a missing optional endpoint permits legacy fallback (%s)", async code => {
   const rpc = vi.fn(async (name: string) => name === "beta2_cloud_access"
     ? { data: { protocolVersion: 3, enabled: true, writesEnabled: true, noticeAccepted: true, efficientLeases: true }, error: null }
     : name === "beta2_cloud_lease_v2" ? { data: null, error: { code } }
@@ -199,7 +199,8 @@ describe("Supabase protocol-3 sealed-page adapter (offline RPC contract tests)",
     await expect(late.capabilities()).rejects.toMatchObject({ code: "auth" });
   });
   it.each([
-    ["40001", "Cloud revision conflict", "revision"], ["55000", "Cloud lease expired or fenced", "writer"],
+    ["40001", "Cloud revision conflict", "revision"], ["PT409", "Cloud revision conflict", "revision"],
+    ["55000", "Cloud lease expired or fenced", "writer"],
     ["55000", "Cloud writing unavailable", "disabled"], ["42501", "Player access denied", "revoked"],
     ["42501", "Cloud notice acceptance required", "notice"], ["22023", "Cloud client update required", "protocol"],
     ["22023", "Expired or future cloud operation", "operation-expired"], ["54000", "Cloud account capacity reached", "capacity"],

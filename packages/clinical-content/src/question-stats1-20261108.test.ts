@@ -179,10 +179,10 @@ describe("stats1 short single-skill candidates without live acceptance",()=>{
  it("preserves every protected source/capture through the exact authorized standard/test-hook migration",()=>{
   // Release integration retains every original protected path check.
   const pinsPath="tools/question-quality/fixtures/question-stats1-release-source-pins-20261108.json",pinBytes=readFileSync(new URL("../../../"+pinsPath,import.meta.url));
-  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("0a1b4c5601c745fb308ed2581cb8201ef0fea52d4da4de37ab2b55aafacf01fe");
+  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("0d7c3dcde38b7717051dcb9af1bb7ce23a2c913117337bef041aca696760728a");
   const pins=JSON.parse(pinBytes.toString("utf8")) as {capturedFixtureSha256:string;paths:Array<{path:string;capturedMainSha256:string;requiredReleaseSha256:string|null}>};
   expect(createHash("sha256").update(readFileSync(new URL("../../../tools/question-quality/fixtures/question-stats1-before-20261108.json",import.meta.url))).digest("hex")).toBe(pins.capturedFixtureSha256);
-  expect(pins.paths).toHaveLength(50);
+  expect(pins.paths).toHaveLength(51);
   const releasePins=new Map(pins.paths.map(row=>[row.path,row]));
   for(const row of pins.paths)expect(capture.files[row.path],row.path+" immutable main capture").toBe(row.capturedMainSha256);
   for(const[p,h]of Object.entries(capture.files)){

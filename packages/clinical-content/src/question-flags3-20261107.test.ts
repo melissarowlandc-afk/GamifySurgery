@@ -125,10 +125,10 @@ describe("flags3 exact owner-flag candidates and retained live source",()=>{
   // preserving the immutable main-tree capture and every protected path check.
   const pinsPath="tools/question-quality/fixtures/question-flags3-release-source-pins-20261107.json";
   const pinBytes=readFileSync(new URL("../../../"+pinsPath,import.meta.url));
-  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("d583201b2efbbe1f59008189d6a7181d6cf313ae2b862d5e7e541f3d62e61067");
+  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("7a34f3f48cc087b978ca44b5e84c72bae778342e1952b5c0d237c165dd4ac1ab");
   const pins=JSON.parse(pinBytes.toString("utf8")) as {capturedFixtureSha256:string;paths:Array<{path:string;capturedMainSha256:string;releaseEntrySha256:string|null}>};
   expect(createHash("sha256").update(readFileSync(new URL("../../../tools/question-quality/fixtures/question-flags3-before-20261107.json",import.meta.url))).digest("hex")).toBe(pins.capturedFixtureSha256);
-  expect(pins.paths).toHaveLength(48);
+  expect(pins.paths).toHaveLength(49);
   const excluded=new Map(pins.paths.map(row=>[row.path,row]));
   for(const row of pins.paths)expect(capture.files[row.path],row.path+" historical main pin").toBe(row.capturedMainSha256);
   for(const [path,sha]of Object.entries(capture.files)){
