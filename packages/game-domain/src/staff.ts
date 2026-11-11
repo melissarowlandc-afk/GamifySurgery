@@ -2,6 +2,7 @@ import {
   RANDOM_STREAMS,
   deterministicInteger,
 } from "./randomness";
+import { clinicEmployeeWaitsForSeat } from "./clinic-consults";
 import { getDoorCells } from "./doors";
 import {
   findCareAwareFacilityPath,
@@ -358,6 +359,7 @@ export function advanceEmployeeMovement(
   for (const employee of state.employees) {
     // Training owns its protected travel, seated work and return lifecycle.
     if (isEmployeeAwayForTraining(employee)) continue;
+    if (clinicEmployeeWaitsForSeat(state, employee)) continue;
     if (reconcileEmployeeCareRoomRoute(state, employee, context)) {
       continue;
     }

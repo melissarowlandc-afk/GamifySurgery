@@ -61,11 +61,9 @@ function fixture(caseId: string, clinicalContext: DomainContext = historicalCont
 
 function ready(state: GameState): boolean {
   const encounter = state.encounters[encounterId];
-  // A no-gate classification/plan pair stays in its examination room. Existing
-  // result-gated encounters still return to the founder desk after that gate.
-  const returnedFromResult = encounter?.frozenCase.decisionNodes.slice(0,encounter.currentNodeIndex).some(n=>n.resultGateAfter);
+  // Opening any ready decision, including a returned result, escorts both actors to the exam.
   return !!encounter && state.openChartEncounterId === encounterId &&
-    encounter.assignedRoomInstanceId === (returnedFromResult?"room.instance.founder_desk":"room.ship-save.exam") && !encounter.patientMovement &&
+    encounter.assignedRoomInstanceId === "room.ship-save.exam" && !encounter.patientMovement &&
     getCurrentQuestion(state, encounterId, current) !== null;
 }
 async function advanceToQuestion(read: () => GameState, execute: (command: GameCommand) => GameState, prefix: string, durable?:()=>Promise<boolean>) {

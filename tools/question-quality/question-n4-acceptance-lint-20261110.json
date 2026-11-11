@@ -1,0 +1,379 @@
+{
+  "schemaVersion": 1,
+  "linterVersion": "question-cue-lint.2026-11-04.v8",
+  "releaseId": "clinical.synthetic.prototype.v1",
+  "scope": "Every case/node and canonical/finite profile in the assembled default release, including unapproved prototype content. Prior feedback is a visible-history cue candidate; future results/current feedback are excluded.",
+  "exposureBasis": "Structural priority proxy only: earlier entry stage, tutorial sequence, case-reference count, then cue findings. No player exposure data collected.",
+  "totals": {
+    "cases": 8,
+    "nodeOccurrences": 8,
+    "uniqueVariants": 8,
+    "concepts": 8,
+    "profileContexts": 16,
+    "variantsWithFindings": 0,
+    "findings": 0,
+    "tutorialSequenceVariants": 0,
+    "missingAuthoredVersion": 0,
+    "missingEducationalTier": 0,
+    "approvalRecordOnlyMetadata": 0,
+    "variantsWithCompleteRationales": 8,
+    "variantsWithMultipleDefinitions": 0,
+    "byPriorityStage": {
+      "3": 6,
+      "4": 2
+    },
+    "byOptionCount": {
+      "3": 8
+    },
+    "variantsByRule": {}
+  },
+  "variants": [
+    {
+      "questionVariantId": "question.n4.cholangiogram-lucencies-and-proximal-coverage.v1",
+      "conceptId": "concept.n4r2.cholangiogram-quality-before-duct-treatment",
+      "conceptName": "Gallbladder surgery",
+      "conceptType": "management",
+      "educationalTier": 2,
+      "facilityStages": [
+        3
+      ],
+      "optionCounts": [
+        3
+      ],
+      "authoredVersions": [
+        "clinical.question-new-n4.2026-11-10.round2.v1"
+      ],
+      "reviewStatuses": [
+        "needs_clinician_review"
+      ],
+      "caseIds": [
+        "case.n4.cholangiogram-lucencies-and-proximal-coverage.v1"
+      ],
+      "nodeOccurrences": 1,
+      "profileContexts": 2,
+      "metadataOrigins": [
+        "authored_question"
+      ],
+      "tutorialSequence": false,
+      "tutorialEligible": false,
+      "educationalIntent": "unclassified_pending_review",
+      "rationaleComparisonAvailable": true,
+      "definitionFingerprints": [
+        "d9a29275990d788b3bcb77c2213d357e675084adbeccfd93ffad1b09cd83d480"
+      ],
+      "supportingEvidenceClaimIds": [
+        "claim.n4r2.ioc-air-false-positive",
+        "claim.n4r2.ioc-complete-study",
+        "claim.n4r2.ioc-confirmed-stone-treatment"
+      ],
+      "findings": [],
+      "wordingFingerprint": "8cb631a79005f39701fb83e7c1161c3152bf4ccabc3184f2e8672fb9f644758c",
+      "priorityStage": 3,
+      "caseReferenceCount": 1
+    },
+    {
+      "questionVariantId": "question.n4.cholecystectomy-neck-plane-bailout.v1",
+      "conceptId": "concept.gs028g.subtotal-cholecystectomy.safe-bailout",
+      "conceptName": "Subtotal bailout in unsafe anatomy",
+      "conceptType": "management",
+      "educationalTier": 1,
+      "facilityStages": [
+        3
+      ],
+      "optionCounts": [
+        3
+      ],
+      "authoredVersions": [
+        "clinical.question-new-n4.2026-11-10.v1"
+      ],
+      "reviewStatuses": [
+        "needs_clinician_review"
+      ],
+      "caseIds": [
+        "case.n4.cholecystectomy-neck-plane-bailout.v1"
+      ],
+      "nodeOccurrences": 1,
+      "profileContexts": 2,
+      "metadataOrigins": [
+        "authored_question"
+      ],
+      "tutorialSequence": false,
+      "tutorialEligible": false,
+      "educationalIntent": "unclassified_pending_review",
+      "rationaleComparisonAvailable": true,
+      "definitionFingerprints": [
+        "519d4da5fd66d3307771231921c829fd9ff86b8a69ca215ce80f0227548f49b0"
+      ],
+      "supportingEvidenceClaimIds": [
+        "claim.n4.77d7aef55c11",
+        "claim.n4.86849d22206f",
+        "claim.n4.da2f704793ec"
+      ],
+      "findings": [],
+      "wordingFingerprint": "de294668cbb2cb7660c35f8723a2cf0e503446368853e3324d9a6f7fa484ebda",
+      "priorityStage": 3,
+      "caseReferenceCount": 1
+    },
+    {
+      "questionVariantId": "question.n4.colonic-wall-pattern-after-mucosal-biopsy.v1",
+      "conceptId": "concept.colonic-lipoma.endoscopic-recognition.v3",
+      "conceptName": "Distinguish clinical characterization from histologic confirmation",
+      "conceptType": "diagnosis",
+      "educationalTier": 1,
+      "facilityStages": [
+        3
+      ],
+      "optionCounts": [
+        3
+      ],
+      "authoredVersions": [
+        "clinical.question-new-n4.2026-11-10.v1"
+      ],
+      "reviewStatuses": [
+        "needs_clinician_review"
+      ],
+      "caseIds": [
+        "case.n4.colonic-wall-pattern-after-mucosal-biopsy.v1"
+      ],
+      "nodeOccurrences": 1,
+      "profileContexts": 2,
+      "metadataOrigins": [
+        "authored_question"
+      ],
+      "tutorialSequence": false,
+      "tutorialEligible": false,
+      "educationalIntent": "unclassified_pending_review",
+      "rationaleComparisonAvailable": true,
+      "definitionFingerprints": [
+        "f0642cfd4d8aad7559cbad0ae1451916b2b771a1e1a159544b64c33b35a8a37c"
+      ],
+      "supportingEvidenceClaimIds": [
+        "claim.n4.3c893f8ee4f0",
+        "claim.n4.6ebd44d818b0",
+        "claim.n4.d8826fad12fe",
+        "claim.n4.ea03ad0a7d73"
+      ],
+      "findings": [],
+      "wordingFingerprint": "e391447175d0df72e1cb01d0bbde77fdadcdaf656de805fb611407871f9635ea",
+      "priorityStage": 3,
+      "caseReferenceCount": 1
+    },
+    {
+      "questionVariantId": "question.n4.ulcer-recurrent-bleeding-after-clips.v2",
+      "conceptId": "concept.peptic-ulcer-bleeding.endoscopic-hemostasis-modality.v2",
+      "conceptName": "Recognize failed repeat ulcer hemostasis and select rescue",
+      "conceptType": "management",
+      "educationalTier": 1,
+      "facilityStages": [
+        3
+      ],
+      "optionCounts": [
+        3
+      ],
+      "authoredVersions": [
+        "clinical.question-new-n4.2026-11-10.round2.v1"
+      ],
+      "reviewStatuses": [
+        "needs_clinician_review"
+      ],
+      "caseIds": [
+        "case.n4.ulcer-recurrent-bleeding-after-clips.v2"
+      ],
+      "nodeOccurrences": 1,
+      "profileContexts": 2,
+      "metadataOrigins": [
+        "authored_question"
+      ],
+      "tutorialSequence": false,
+      "tutorialEligible": false,
+      "educationalIntent": "unclassified_pending_review",
+      "rationaleComparisonAvailable": true,
+      "definitionFingerprints": [
+        "5c5247669191f2c4ce75df1541ce5050549554079169db11f302f7335f544b47"
+      ],
+      "supportingEvidenceClaimIds": [
+        "claim.n4.49a69d44d485",
+        "claim.n4.be062b16f447",
+        "claim.n4.f1fa567648e6"
+      ],
+      "findings": [],
+      "wordingFingerprint": "2489400e6e18cc4cdb9922e70a7cbb159513a260b8b8d341e15f0b30bcc71d65",
+      "priorityStage": 3,
+      "caseReferenceCount": 1
+    },
+    {
+      "questionVariantId": "question.n4.unexpected-deep-mass-during-lipoma-excision.v2",
+      "conceptId": "concept.soft-tissue-mass.extremity-mri.v2",
+      "conceptName": "Assess local MRI adequacy before soft-tissue biopsy",
+      "conceptType": "workup",
+      "educationalTier": 1,
+      "facilityStages": [
+        3
+      ],
+      "optionCounts": [
+        3
+      ],
+      "authoredVersions": [
+        "clinical.question-new-n4.2026-11-10.round2.v1"
+      ],
+      "reviewStatuses": [
+        "needs_clinician_review"
+      ],
+      "caseIds": [
+        "case.n4.unexpected-deep-mass-during-lipoma-excision.v2"
+      ],
+      "nodeOccurrences": 1,
+      "profileContexts": 2,
+      "metadataOrigins": [
+        "authored_question"
+      ],
+      "tutorialSequence": false,
+      "tutorialEligible": false,
+      "educationalIntent": "unclassified_pending_review",
+      "rationaleComparisonAvailable": true,
+      "definitionFingerprints": [
+        "355471c388e02e0320e34716ce941329c5878ea0b05cf01bfe344ab7b1aae6d0"
+      ],
+      "supportingEvidenceClaimIds": [
+        "claim.n4.34c93980671c",
+        "claim.n4.55bfe6e710a5",
+        "claim.n4.d9ff60dfac0d",
+        "claim.n4.db73b0b71f66"
+      ],
+      "findings": [],
+      "wordingFingerprint": "14fc4f4fa7bb870abe7c2a4063a9a9f4f2ac0744b9ffa7f668354c648a3293db",
+      "priorityStage": 3,
+      "caseReferenceCount": 1
+    },
+    {
+      "questionVariantId": "question.n4.ventral-controlled-enterotomy-mesh-material.v2",
+      "conceptId": "concept.n4r2.mesh-material-and-contact-compartment",
+      "conceptName": "Incisional hernia repair",
+      "conceptType": "management",
+      "educationalTier": 1,
+      "facilityStages": [
+        3
+      ],
+      "optionCounts": [
+        3
+      ],
+      "authoredVersions": [
+        "clinical.question-new-n4.2026-11-10.round2.v1"
+      ],
+      "reviewStatuses": [
+        "needs_clinician_review"
+      ],
+      "caseIds": [
+        "case.n4.ventral-controlled-enterotomy-mesh-material.v2"
+      ],
+      "nodeOccurrences": 1,
+      "profileContexts": 2,
+      "metadataOrigins": [
+        "authored_question"
+      ],
+      "tutorialSequence": false,
+      "tutorialEligible": false,
+      "educationalIntent": "unclassified_pending_review",
+      "rationaleComparisonAvailable": true,
+      "definitionFingerprints": [
+        "945a63b74eef37c8fc0b4dd01238a0697082a4cd4eac6c7a9705f8163be3fc3a"
+      ],
+      "supportingEvidenceClaimIds": [
+        "claim.n4.4b2bd6d4bf88",
+        "claim.n4.8e30265aebbd",
+        "claim.n4.e22669366268",
+        "claim.n4r2.mesh-compartment-contact",
+        "claim.n4r2.permanent-macroporous-material"
+      ],
+      "findings": [],
+      "wordingFingerprint": "9afad8d17c01a86b14629072120cd0191022469f6cdc5aa3c59c27cebea736ea",
+      "priorityStage": 3,
+      "caseReferenceCount": 1
+    },
+    {
+      "questionVariantId": "question.n4.incisional-pocket-above-retained-mesh.v1",
+      "conceptId": "concept.superficial-incisional-ssi.open-drain",
+      "conceptName": "Source control for superficial incisional infection",
+      "conceptType": "management",
+      "educationalTier": 1,
+      "facilityStages": [
+        4
+      ],
+      "optionCounts": [
+        3
+      ],
+      "authoredVersions": [
+        "clinical.question-new-n4.2026-11-10.v1"
+      ],
+      "reviewStatuses": [
+        "needs_clinician_review"
+      ],
+      "caseIds": [
+        "case.n4.incisional-pocket-above-retained-mesh.v1"
+      ],
+      "nodeOccurrences": 1,
+      "profileContexts": 2,
+      "metadataOrigins": [
+        "authored_question"
+      ],
+      "tutorialSequence": false,
+      "tutorialEligible": false,
+      "educationalIntent": "unclassified_pending_review",
+      "rationaleComparisonAvailable": true,
+      "definitionFingerprints": [
+        "9796987626b4a485b299c713ef90fa33a0674bbf98c1a8bac8e94cb816539bc3"
+      ],
+      "supportingEvidenceClaimIds": [
+        "claim.n4.10b8e172c6d1",
+        "claim.n4.3ef0d7efc452",
+        "claim.n4.40b34fe591d8"
+      ],
+      "findings": [],
+      "wordingFingerprint": "0fb5a72d21b623207ff9472c0a0d64672d48639ac0719f30a762da9c5cf564f9",
+      "priorityStage": 4,
+      "caseReferenceCount": 1
+    },
+    {
+      "questionVariantId": "question.n4.venous-ulcer-contralateral-pressure-trap.v1",
+      "conceptId": "concept.venous-leg-ulcer.arterial-assessment-before-compression",
+      "conceptName": "Arterial assessment before venous-ulcer compression",
+      "conceptType": "workup",
+      "educationalTier": 1,
+      "facilityStages": [
+        4
+      ],
+      "optionCounts": [
+        3
+      ],
+      "authoredVersions": [
+        "clinical.question-new-n4.2026-11-10.v1"
+      ],
+      "reviewStatuses": [
+        "needs_clinician_review"
+      ],
+      "caseIds": [
+        "case.n4.venous-ulcer-contralateral-pressure-trap.v1"
+      ],
+      "nodeOccurrences": 1,
+      "profileContexts": 2,
+      "metadataOrigins": [
+        "authored_question"
+      ],
+      "tutorialSequence": false,
+      "tutorialEligible": false,
+      "educationalIntent": "unclassified_pending_review",
+      "rationaleComparisonAvailable": true,
+      "definitionFingerprints": [
+        "13a08b2496559117a0c9bb12ab4a42b10a28a3a1128993db7f34f1c3112d20a0"
+      ],
+      "supportingEvidenceClaimIds": [
+        "claim.n4.0b5c4ef72e1b",
+        "claim.n4.bf7d58a0e363"
+      ],
+      "findings": [],
+      "wordingFingerprint": "5c3211f60ffc137315354dce679a2a797f7d0b836645b2a960932305f0ba0a30",
+      "priorityStage": 4,
+      "caseReferenceCount": 1
+    }
+  ]
+}

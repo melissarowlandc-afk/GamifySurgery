@@ -1,3 +1,5 @@
+import { normalizeFounderConsult } from "./founder-consults";
+import { normalizeRoutineClinicWork } from "./clinic-work";
 import { PROTOTYPE_DOMAIN_CONTEXT } from "./context";
 import { syntheticClinicalCaseSchema } from "@gamify-surgery/clinical-content";
 import { normalizeGuidanceTipsState } from "./guidance-tip-persistence";
@@ -142,7 +144,9 @@ function readClinicVisit(value: unknown, operation: Record<string, unknown>): Cl
   } as const;
   if (!hasContractKeys(value, ["version", "kind", "demographics", "pediatricFamilyId", "requestedRoomInstanceId"]) ||
       value.version !== "clinic-visit.v1" || typeof value.kind !== "string" || !(value.kind in incomeByKind) ||
-      operation.incomeLineId !== incomeByKind[value.kind as keyof typeof incomeByKind] || operation.actorKind !== "visitor" ||
+      operation.incomeLineId !== incomeByKind[value.kind as keyof typeof incomeByKind] ||
+      !(operation.actorKind === "visitor" || value.kind !== "mri" && operation.actorKind === "encounter" &&
+        typeof operation.consultEncounterId === "string" && operation.consultEncounterId === operation.actorId) ||
       !isPixelAppearance(operation.appearance) ||
       !hasContractKeys(value.demographics, ["ageYears", "sexLabel"]) ||
       typeof value.demographics.ageYears !== "number" || !Number.isSafeInteger(value.demographics.ageYears) ||
@@ -275,7 +279,9 @@ function validatePediatricFamilyLinks(state: GameState, context: DomainContext):
   }
   for (const operation of state.serviceOperations) {
     const familyId = operation.clinicVisit?.pediatricFamilyId;
-    if (familyId !== undefined && (families[familyId]?.child.kind !== "service_visitor" || families[familyId]?.child.id !== operation.id)) {
+    if (familyId !== undefined && !(families[familyId]?.child.kind === "service_visitor" && families[familyId]?.child.id === operation.id ||
+        operation.actorKind === "encounter" && operation.consultEncounterId === operation.actorId &&
+        families[familyId]?.child.kind === "encounter" && families[familyId]?.child.id === operation.actorId)) {
       throw new Error("The saved pediatric visit has an orphan family link.");
     }
   }
@@ -991,6 +997,10 @@ function normalizeServiceOperations(
   if (!Array.isArray(candidate)) return [];
   const activePeriopBeds = new Set<string>();
   return candidate.flatMap((raw) => {
+    if (isRecord(raw) && raw.consultEncounterId !== undefined &&
+        (typeof raw.consultEncounterId !== "string" || !raw.consultEncounterId || raw.actorKind !== "encounter" || raw.actorId !== raw.consultEncounterId)) {
+      throw new Error("The saved service consult link is invalid.");
+    }
     const gardenVisitBenefit = isRecord(raw) ? normalizeGardenVisitBenefit(raw.gardenVisitBenefit, facilityTick) : undefined;
     const executiveComfort = isRecord(raw) ? normalizeExecutiveComfort(raw.executiveComfort, facilityTick) : undefined;
     const clinicVisit = isRecord(raw) ? readClinicVisit(raw.clinicVisit, raw) : undefined;
@@ -1188,6 +1198,7 @@ function normalizeServiceOperations(
       throw new Error("The saved diagnostic physical phase witness is invalid.");
     }
     const trainingTiming = normalizeServiceOperationTraining(raw.trainingTiming, frozenOperationPhases);
+    const clinicWork = normalizeRoutineClinicWork(raw.clinicWork, raw, frozenOperationPhases);
     const periopNurseAttention = normalizePeriopNurseAttention(raw.periopNurseAttention, frozenOperationPhases);
     const roomUpgradeRevenue = normalizeRoomUpgradeRevenueQuote(raw.roomUpgradeRevenue, appAppointmentRevenue?.baseFee ?? raw.quoteFee,
       frozenOperationPhases.map((phase) => phase.roomDefinitionId));
@@ -1284,6 +1295,7 @@ function normalizeServiceOperations(
       displayName: raw.displayName,
       appearance: isPixelAppearance(raw.appearance) ? raw.appearance : null,
       ...(clinicVisit ? { clinicVisit } : {}),
+      ...(typeof raw.consultEncounterId === "string" ? { consultEncounterId: raw.consultEncounterId } : {}),
       ...(gardenVisitBenefit ? { gardenVisitBenefit } : {}),
       ...(executiveComfort ? { executiveComfort } : {}),
       ...(appAppointmentRevenue ? { appAppointmentRevenue } : {}),
@@ -1314,6 +1326,7 @@ function normalizeServiceOperations(
       resourceQueueVersion: raw.resourceQueueVersion === 1 ? 1 : undefined,
       phaseFlowVersion,
       ...(trainingTiming ? { trainingTiming } : {}),
+      ...(clinicWork ? { clinicWork } : {}),
       periopBedFlowVersion,
       ...(periopNurseAttention ? { periopNurseAttention } : {}),
       ...(isRecord(raw.saleTransfer) &&
@@ -2865,6 +2878,7 @@ function normalizeEncounter(
 
   return {
     ...(candidate as unknown as EncounterState),
+    ...(candidate.consult !== undefined ? { consult: normalizeFounderConsult(candidate.consult, facilityTick) } : {}),
     frozenCase:
       frozenCase as unknown as EncounterState["frozenCase"],
     lifecycle: normalizedLifecycle,

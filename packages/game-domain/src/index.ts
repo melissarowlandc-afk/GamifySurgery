@@ -69,3 +69,4 @@ export * from "./app-appointments";
 export * from "./game-evidence";
 
 export { withSettledStateQueries } from "./settledStateQueries";
+export * from "./founder-consults";

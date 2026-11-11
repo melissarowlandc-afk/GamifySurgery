@@ -1,3 +1,5 @@
+import { FOUNDER_CONSULT_POLICY } from "./founder-consults";
+
 export const EMPLOYEE_TRAINING_SESSION_MINUTES = 60;
 export const EMPLOYEE_TRAINING_CAPACITY = 2;
 
@@ -91,14 +93,18 @@ export function getEmployeeTrainingLevelBenefit(staffRoleDefinitionId: string, l
   const incrementalPercent = level === 1 ? 0 : definition.percentPerLevel;
   const verb = definition.direction === "reduces" ? "Reduces" : "Increases";
   const consultFeeIncrease = definition.metric === "consult_payment" ? percent / 2 : null;
+  const clinicWork = definition.metric === "app_appointment_revenue" && level > 1
+    ? `; routine APP work takes ${(level - 1) * FOUNDER_CONSULT_POLICY.clinicTrainingReductionPercentPerLevel}% less time` : "";
+  const incrementalClinicWork = definition.metric === "app_appointment_revenue" && level > 1
+    ? `; routine APP work takes another ${FOUNDER_CONSULT_POLICY.clinicTrainingReductionPercentPerLevel}% less time` : "";
   return {
     metric: definition.metric, percent, incrementalPercent,
     totalDescription: level === 1 ? "Baseline" : consultFeeIncrease !== null
       ? `Adds $${consultFeeIncrease} per consult`
-      : `${verb} ${definition.shortMetric} ${percent}%`,
+      : `${verb} ${definition.shortMetric} ${percent}%${clinicWork}`,
     incrementalDescription: level === 1 ? "Baseline" : consultFeeIncrease !== null
       ? "Adds $5 per consult"
-      : `${verb} ${definition.shortMetric} another ${incrementalPercent}%`,
+      : `${verb} ${definition.shortMetric} another ${incrementalPercent}%${incrementalClinicWork}`,
     consultFee: consultFeeIncrease !== null ? 50 + consultFeeIncrease : null,
     consultFeeIncrease,
   };

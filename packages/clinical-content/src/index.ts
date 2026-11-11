@@ -177,3 +177,6 @@ export * from "./question-flags4-accepted-20261108";
 export * from "./question-harden1-n3r4-accepted-20261110";
 export * from "./question-new-n3-round4-20261110";
 // END HARDEN1 / N3R4 exact manager acceptance 20261110
+
+// Manager-directed N4 exact PASS sources, provenance and accepted-only metadata.
+export * from "./question-n4-accepted-20261110";

@@ -16,7 +16,7 @@ import { QUESTION_NEW_N2_ROUND2_TEST_ORDER_RECORDS } from "./question-new-n2-rou
 // BEGIN BATCH2B exact orders
 import { QUESTION_BANK_BATCH2B_TEST_ORDER_RECORDS } from "./question-bank-batch2b-test-orders";
 // END BATCH2B exact orders
-import { ANSWER_CHOICE_TIMING_REGISTRY, GS028_20261007_LEVEL3_TIMING_ENTRIES, VARIETY3_TIMING_ENTRIES, type DecisionNode } from "@gamify-surgery/clinical-content";
+import { ANSWER_CHOICE_TIMING_REGISTRY, GS028_20261007_LEVEL3_TIMING_ENTRIES, QUESTION_N4_ACCEPTED_TEST_ORDER_RECORDS, VARIETY3_TIMING_ENTRIES, type DecisionNode } from "@gamify-surgery/clinical-content";
 import type { EncounterState } from "./types";
 import { QUESTION_NEW_N1_TEST_ORDER_RECORDS } from "./question-new-n1-test-orders";
 // BEGIN N2 append — standalone helper owns new exact external-only records.
@@ -2223,6 +2223,7 @@ export const EXACT_TEST_CHOICE_ORDER_RECORDS: readonly ExactTestChoiceOrderRecor
   ...QUESTION_FLAGS3_ACCEPTED_TEST_ORDER_RECORDS,
   // END FLAGS3 exact accepted preview bindings 20261107
   // END FLAGS2 accepted whole-case preview bindings 20261105
+  ...QUESTION_N4_ACCEPTED_TEST_ORDER_RECORDS,
 ];
 
 // BEGIN N3 exact-order append - external-only records, old identities retained.

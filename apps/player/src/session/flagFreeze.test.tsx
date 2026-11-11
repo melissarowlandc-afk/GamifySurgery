@@ -231,7 +231,11 @@ describe("reported hosted flag recovery boundaries", () => {
     // Also exercise an already-full legacy/older-tab cache appearing before
     // the next campaign write. The campaign writer must reclaim and retry.
     const currentCacheBytes = new TextEncoder().encode(JSON.stringify((await f.cache.read(f.cloud().coordinator.scope))!.entry)).length;
-    f.storage.setItem(optionalKey, "x".repeat(Math.floor((limit - f.localBytes() - currentCacheBytes - 512) / 2) - optionalKey.length));
+    // setItem replaces this key; the earlier cache may still occupy the budget.
+    const priorOptionalBytes = f.stored.has(optionalKey) ? 2 * (optionalKey.length + f.stored.get(optionalKey)!.length) : 0;
+    f.storage.setItem(optionalKey, "x".repeat(Math.floor((limit - (f.localBytes() - priorOptionalBytes) - currentCacheBytes - 512) / 2) - optionalKey.length));
+    expect(f.localBytes() + currentCacheBytes).toBeGreaterThanOrEqual(limit - 513);
+    expect(f.localBytes() + currentCacheBytes).toBeLessThanOrEqual(limit - 512);
     await f.env.click("Resume facility time");
     await act(async () => { expect(await f.cloud().durable()).toBe(true); });
     expect(f.budget.failedCloudWrites).toBeGreaterThan(0);

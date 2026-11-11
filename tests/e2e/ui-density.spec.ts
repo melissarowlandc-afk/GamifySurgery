@@ -311,7 +311,14 @@ test("phone normal, Build Mode, and chart preserve readable controls without ove
   // Select a chart explicitly: this density proof needs an open sheet and
   // should exercise its real phone action during background art loading.
   await page.locator(".mobile-tab-bar").getByRole("button", { name: /^Patients(,|$)/ }).click();
-  const patient = page.locator(".mobile-patient-folder.is-waiting .mobile-patient-card[data-patient-id], .mobile-patient-folder.is-active .mobile-patient-card[data-patient-id]").first();
+  let patient = page.locator(".mobile-patient-folder.is-waiting .mobile-patient-card[data-patient-id], .mobile-patient-folder.is-active .mobile-patient-card[data-patient-id]").first();
+  if (await patient.count() === 0) {
+    // A rebound journey can reach its Level 4 goal just after the last encounter
+    // completes. The helper files that summary; its real chart remains available
+    // in Resolved, including while the discharged patient is still walking out.
+    await page.getByRole("button", { name: /^Resolved, \d+ charts$/ }).click();
+    patient = page.locator(".mobile-patient-folder.is-resolved .mobile-patient-card[data-patient-id]").first();
+  }
   await expect(patient).toBeVisible(); await patient.click();
   const chart = page.getByRole("dialog", { name: "Patient chart", exact: true });
   await expect(chart).toBeVisible();

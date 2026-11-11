@@ -759,6 +759,8 @@ export interface PeriopNurseAttentionState {
 }
 
 export interface ServiceOperationState {
+  /** A routine visitor may become this scored consult without a second actor. */
+  consultEncounterId?: string;
   executiveComfort?: import("./level-five-types").ExecutiveComfortQuote;
   /** Once-only actual garden-rest witness; omitted on older visits. */
   gardenVisitBenefit?: GardenVisitBenefit;
@@ -775,6 +777,20 @@ export interface ServiceOperationState {
   appearance: PixelAppearanceDescriptor | null;
   /** Frozen unscored clinic visit; omission retains legacy operation semantics. */
   clinicVisit?: ClinicVisitState;
+  /** Optional editorial work quote for new autonomous clinic visits. */
+  clinicWork?: {
+    version: "clinic-work.v1";
+    baselineMinutes: number;
+    binding: null | {
+      providerEmployeeId: string;
+      trainingLevel: RoomUpgradeLevel;
+      trainingReductionPercent: number;
+      roomInstanceId: string;
+      roomUpgradeLevel: RoomUpgradeLevel;
+      roomReductionPercent: number;
+      durationMinutes: number;
+    };
+  };
   /** Optional, provider-specific payment contract for new adult APP visits. */
   appAppointmentRevenue?: {
     version: "app-appointment-revenue.v1";
@@ -1095,7 +1111,19 @@ export interface RetailActorLedgerState {
   lastTripAtFacilityTick: number | null;
 }
 
+export interface FounderConsultState {
+  version: "founder-consult.v1";
+  kind: "endoscopy" | "operation" | "app" | "pediatric" | "wound_ostomy";
+  serviceOperationId: string;
+  roomInstanceId: string;
+  phaseIndex: number;
+  providerEmployeeId: string | null;
+  /** Null holds the source work. Closing an unanswered procedure never sets it. */
+  closedAtFacilityTick: number | null;
+}
+
 export interface EncounterState {
+  consult?: FounderConsultState;
   executiveComfort?: import("./level-five-types").ExecutiveComfortQuote;
   /** Once-only actual garden-rest witness; omitted on older visits. */
   gardenVisitBenefit?: GardenVisitBenefit;

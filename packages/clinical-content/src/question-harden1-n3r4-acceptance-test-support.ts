@@ -1,3 +1,4 @@
+import {beforeN4AcceptanceRelease,beforeN4AcceptanceManifest,beforeN4AcceptanceTimings,beforeN4AcceptanceSource} from "./question-n4-acceptance-test-support";
 import {createHash} from "node:crypto";
 import {readFileSync} from "node:fs";
 import {expect} from "vitest";
@@ -12,6 +13,7 @@ const migration=read("tools/question-quality/fixtures/question-harden1-n3r4-acce
 const digest=(v:unknown)=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 /** Test epoch only. Every accepted delta is pinned before restoring history. */
 export function beforeHarden1N3r4AcceptanceRelease(release:SyntheticClinicalRelease):SyntheticClinicalRelease {
+ release=beforeN4AcceptanceRelease(release);
  if(digest(release)===before.default.sha256)return release;
  if(!release.cases.some(cs=>cs.decisionNodes.some(n=>rows.some(r=>r.questionVariantId===n.questionVariantId))))return release;
  for(const cs of cases)expect(release.cases.find(c=>c.id===cs.id),"exact accepted harden1/N3R4 case").toEqual(cs);
@@ -26,6 +28,7 @@ export function beforeHarden1N3r4AcceptanceRelease(release:SyntheticClinicalRele
  return restored;
 }
 export function beforeHarden1N3r4AcceptanceManifest(manifest:QuestionShipManifest):QuestionShipManifest&{id:string;clinicalApproval:false} {
+ manifest=beforeN4AcceptanceManifest(manifest);
  if(digest(manifest)===before.manifestSha256)return manifest as ReturnType<typeof beforeHarden1N3r4AcceptanceManifest>;
  if(!manifest.accepted.some(a=>a.acceptanceId==="H1-03"))return manifest as ReturnType<typeof beforeHarden1N3r4AcceptanceManifest>;
  const expected={...before.manifest,id:"question-ship.2026-11-10.v8",accepted:[...before.manifest.accepted,...rows],
@@ -35,12 +38,14 @@ export function beforeHarden1N3r4AcceptanceManifest(manifest:QuestionShipManifes
  return structuredClone(before.manifest);
 }
 export function beforeHarden1N3r4AcceptanceTimings(actual:readonly AnswerChoiceTimingRegistryEntry[]):AnswerChoiceTimingRegistryEntry[] {
+ actual=beforeN4AcceptanceTimings(actual);
  if(digest(actual)===digest(before.timing))return [...actual];
  if(!actual.some(t=>rows.some(r=>r.questionVariantId===t.questionVariantId)))return [...actual];
  expect(actual,"all2284 old timing tuples plus three exact accepted rows").toEqual([...before.timing,...timings]);
  return structuredClone(before.timing);
 }
 export function beforeHarden1N3r4AcceptanceSource(path:string,current:string):string {
+ current=beforeN4AcceptanceSource(path,current);
  const row=migration.files.find(f=>f.path===path);if(!row)return current;
  const sha=(s:string)=>createHash("sha256").update(s).digest("hex");
  const releasePins=read("tools/question-quality/fixtures/question-harden1-n3r4-release-source-pins-20261110.json") as {paths:Array<{path:string;mainBeforeSha256:string;mainAfterSha256:string;requiredReleaseSha256:string}>};

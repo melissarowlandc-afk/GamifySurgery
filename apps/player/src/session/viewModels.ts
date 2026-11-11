@@ -18,6 +18,7 @@ import { getEmployeeEffectiveMorale } from "@gamify-surgery/game-domain";
 import { getRoomAccessWarning, missingHireRoomMessage } from "../ui/roomAccessFeedback";
 import {
   getProcedureStaffSupportId,
+  pediatricSupportLocation,
   getEndoscopySetupAccess,
   PROTOTYPE_DOMAIN_CONTEXT,
   TUTORIAL_ENCOUNTER_ID,
@@ -694,7 +695,12 @@ function getFounderSupportRole(state: GameState): FacilityActorSupportRole | und
     const room = encounter?.assignedRoomInstanceId
       ? state.rooms.find((candidate) => candidate.id === encounter.assignedRoomInstanceId)
       : undefined;
-    return room ? clinicianSupportRoleForRoom(room.roomDefinitionId) : undefined;
+    const definition = room && getRoomDefinition(room.roomDefinitionId);
+    return room && definition && ["room.examination", "room.pediatric_examination", "room.wound_ostomy", "room.endoscopy", "room.ambulatory_or"].includes(room.roomDefinitionId) &&
+      (samePoint(state.environment.founderLocation, room.roomDefinitionId === "room.pediatric_examination"
+        ? pediatricSupportLocation(room, "stool:clinician") : getRoomCareAnchor(room, definition, "clinician")) ||
+        getProcedureStaffSupportId(room, definition, state.environment.founderLocation, "provider"))
+      ? clinicianSupportRoleForRoom(room.roomDefinitionId) : undefined;
   }
   if (activity?.kind === "sit_in_chair") {
     if (getFounderBreakSeatClaim(state)) return "staff-break-seat";
@@ -2106,7 +2112,15 @@ function derivePrototypePlayerView(
         }),
         seated:
           founderIsIdleAtUnstaffedFrontDesk(state) ||
-          ((state.environment.founderActivity?.kind === "attend_encounter" || state.environment.founderActivity?.kind === "sit_in_chair") &&
+          ((state.environment.founderActivity?.kind === "sit_in_chair" ||
+            state.environment.founderActivity?.kind === "attend_encounter" && (() => {
+              const encounter = state.encounters[state.environment.founderActivity.targetId];
+              const room = state.rooms.find(room => room.id === encounter?.assignedRoomInstanceId);
+              const definition = room && getRoomDefinition(room.roomDefinitionId);
+              return Boolean(room && definition && ["room.examination", "room.pediatric_examination", "room.wound_ostomy"].includes(room.roomDefinitionId) &&
+                samePoint(state.environment.founderLocation, room.roomDefinitionId === "room.pediatric_examination"
+                  ? pediatricSupportLocation(room, "stool:clinician") : getRoomCareAnchor(room, definition, "clinician")));
+            })()) &&
             state.environment.founderActivity.pathIndex >=
               state.environment.founderActivity.path.length - 1),
         ...(() => {

@@ -338,11 +338,11 @@ describe("employee quality-improvement discussions", () => {
     expect(state.employeeDiscussions![discussion.id]!.lifecycle).toBe(
       "feedback_pending",
     );
-    expect(state.environment.founderActivity).toMatchObject({ kind: "sit_in_chair", explicitSeat: true });
-    expect(state.environment.suspendedFounderActivity).toBeNull();
+    expect(state.environment.founderActivity).toMatchObject({ kind: "attend_employee_discussion", targetId: discussion.id });
+    expect(state.environment.suspendedFounderActivity).toMatchObject({ kind: "sit_in_chair", explicitSeat: true });
     state = tick(state, context, "employee-discussion.after-answer");
-    expect(state.environment.founderActivity?.kind).not.toBe("attend_employee_discussion");
-    expect(state.employees.find((employee) => employee.id === discussion.employeeId)?.facilityTask).toBeNull();
+    expect(state.environment.founderActivity?.kind).toBe("attend_employee_discussion");
+    expect(state.employees.find((employee) => employee.id === discussion.employeeId)?.facilityTask?.kind).toBe("participate_qi_discussion");
     expect(
       state.learningHistories[node.primaryConceptId]?.reviews,
     ).toHaveLength(1);
@@ -371,6 +371,9 @@ describe("employee quality-improvement discussions", () => {
       },
       context,
     );
+    expect(state.environment.founderActivity).toMatchObject({ kind: "sit_in_chair", explicitSeat: true });
+    expect(state.environment.suspendedFounderActivity).toBeNull();
+    expect(state.employees.find(employee => employee.id === discussion.employeeId)?.facilityTask).toBeNull();
     state = gameReducer(
       state,
       {

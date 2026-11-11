@@ -21,7 +21,7 @@ export interface QuestionShipManifest {
   replacements?: readonly QuestionShipCaseReplacement[];
 }
 export const QUESTION_SHIP_MANIFEST = {
-  id: "question-ship.2026-11-10.v8",
+  id: "question-ship.2026-11-10.v9",
   clinicalApproval: false,
   legacyDecision: "Carry forward the existing live bank before the owner-flag rewrite program; user-directed fallback on 2026-11-05. This does not independently accept prior drafts or grant clinical approval.",
   legacyBindings: [
@@ -9734,6 +9734,80 @@ export const QUESTION_SHIP_MANIFEST = {
   {"acceptanceId":"review.n3.delayed-regurgitation-proximal-anatomic-study.v4","caseId":"case.n3.delayed-regurgitation-proximal-anatomic-study.v1","nodeId":"node.n3.delayed-regurgitation-proximal-anatomic-study.v1","questionVariantId":"question.n3.delayed-regurgitation-proximal-anatomic-study.v4","conceptId":"concept.n3.delayed-regurgitation-proximal-anatomic-study","sourceView":"n3-round4","decision":"docs/research/question-harden1-n3r4-manager-decision-20261110.md"},
   {"acceptanceId":"review.n3.venous-ulcer-with-competing-arterial-findings.v4","caseId":"case.n3.venous-ulcer-with-competing-arterial-findings.v1","nodeId":"node.n3.venous-ulcer-with-competing-arterial-findings.v1","questionVariantId":"question.n3.venous-ulcer-with-competing-arterial-findings.v4","conceptId":"concept.venous-leg-ulcer.arterial-assessment-before-compression","sourceView":"n3-round4","decision":"docs/research/question-harden1-n3r4-manager-decision-20261110.md"},
   // END HARDEN1 / N3R4 exact PASS acceptances 20261110
+  // N4 exact four round1 + four round2 PASS additions; no clinical approval.
+{
+    "acceptanceId": "review.n4.cholecystectomy-neck-plane-bailout.v1",
+    "caseId": "case.n4.cholecystectomy-neck-plane-bailout.v1",
+    "nodeId": "node.n4.cholecystectomy-neck-plane-bailout.v1",
+    "questionVariantId": "question.n4.cholecystectomy-neck-plane-bailout.v1",
+    "conceptId": "concept.gs028g.subtotal-cholecystectomy.safe-bailout",
+    "sourceView": "n4-round1",
+    "decision": "docs/research/question-n4-manager-decision-20261110.md"
+  },
+  {
+    "acceptanceId": "review.n4.colonic-wall-pattern-after-mucosal-biopsy.v1",
+    "caseId": "case.n4.colonic-wall-pattern-after-mucosal-biopsy.v1",
+    "nodeId": "node.n4.colonic-wall-pattern-after-mucosal-biopsy.v1",
+    "questionVariantId": "question.n4.colonic-wall-pattern-after-mucosal-biopsy.v1",
+    "conceptId": "concept.colonic-lipoma.endoscopic-recognition.v3",
+    "sourceView": "n4-round1",
+    "decision": "docs/research/question-n4-manager-decision-20261110.md"
+  },
+  {
+    "acceptanceId": "review.n4.venous-ulcer-contralateral-pressure-trap.v1",
+    "caseId": "case.n4.venous-ulcer-contralateral-pressure-trap.v1",
+    "nodeId": "node.n4.venous-ulcer-contralateral-pressure-trap.v1",
+    "questionVariantId": "question.n4.venous-ulcer-contralateral-pressure-trap.v1",
+    "conceptId": "concept.venous-leg-ulcer.arterial-assessment-before-compression",
+    "sourceView": "n4-round1",
+    "decision": "docs/research/question-n4-manager-decision-20261110.md"
+  },
+  {
+    "acceptanceId": "review.n4.incisional-pocket-above-retained-mesh.v1",
+    "caseId": "case.n4.incisional-pocket-above-retained-mesh.v1",
+    "nodeId": "node.n4.incisional-pocket-above-retained-mesh.v1",
+    "questionVariantId": "question.n4.incisional-pocket-above-retained-mesh.v1",
+    "conceptId": "concept.superficial-incisional-ssi.open-drain",
+    "sourceView": "n4-round1",
+    "decision": "docs/research/question-n4-manager-decision-20261110.md"
+  },
+  {
+    "acceptanceId": "review.n4.ventral-controlled-enterotomy-mesh-material.v2",
+    "caseId": "case.n4.ventral-controlled-enterotomy-mesh-material.v2",
+    "nodeId": "node.n4.ventral-controlled-enterotomy-mesh-material.v2",
+    "questionVariantId": "question.n4.ventral-controlled-enterotomy-mesh-material.v2",
+    "conceptId": "concept.n4r2.mesh-material-and-contact-compartment",
+    "sourceView": "n4-round2",
+    "decision": "docs/research/question-n4-manager-decision-20261110.md"
+  },
+  {
+    "acceptanceId": "review.n4.unexpected-deep-mass-during-lipoma-excision.v2",
+    "caseId": "case.n4.unexpected-deep-mass-during-lipoma-excision.v2",
+    "nodeId": "node.n4.unexpected-deep-mass-during-lipoma-excision.v2",
+    "questionVariantId": "question.n4.unexpected-deep-mass-during-lipoma-excision.v2",
+    "conceptId": "concept.soft-tissue-mass.extremity-mri.v2",
+    "sourceView": "n4-round2",
+    "decision": "docs/research/question-n4-manager-decision-20261110.md"
+  },
+  {
+    "acceptanceId": "review.n4.ulcer-recurrent-bleeding-after-clips.v2",
+    "caseId": "case.n4.ulcer-recurrent-bleeding-after-clips.v2",
+    "nodeId": "node.n4.ulcer-recurrent-bleeding-after-clips.v2",
+    "questionVariantId": "question.n4.ulcer-recurrent-bleeding-after-clips.v2",
+    "conceptId": "concept.peptic-ulcer-bleeding.endoscopic-hemostasis-modality.v2",
+    "sourceView": "n4-round2",
+    "decision": "docs/research/question-n4-manager-decision-20261110.md"
+  },
+  {
+    "acceptanceId": "review.n4.cholangiogram-lucencies-and-proximal-coverage.v1",
+    "caseId": "case.n4.cholangiogram-lucencies-and-proximal-coverage.v1",
+    "nodeId": "node.n4.cholangiogram-lucencies-and-proximal-coverage.v1",
+    "questionVariantId": "question.n4.cholangiogram-lucencies-and-proximal-coverage.v1",
+    "conceptId": "concept.n4r2.cholangiogram-quality-before-duct-treatment",
+    "sourceView": "n4-round2",
+    "decision": "docs/research/question-n4-manager-decision-20261110.md"
+  }
+,
 ] satisfies QuestionShipAcceptance[],
   // BEGIN FLAGS2 WHOLE-CASE ACCEPTANCES 20261105
   replacements: [
@@ -9745,6 +9819,14 @@ export const QUESTION_SHIP_MANIFEST = {
   ] satisfies QuestionShipCaseReplacement[],
   // END FLAGS2 WHOLE-CASE ACCEPTANCES 20261105
   headerSources: {
+    "case.n4.cholecystectomy-neck-plane-bailout.v1": "n4-round1",
+    "case.n4.colonic-wall-pattern-after-mucosal-biopsy.v1": "n4-round1",
+    "case.n4.venous-ulcer-contralateral-pressure-trap.v1": "n4-round1",
+    "case.n4.incisional-pocket-above-retained-mesh.v1": "n4-round1",
+    "case.n4.ventral-controlled-enterotomy-mesh-material.v2": "n4-round2",
+    "case.n4.unexpected-deep-mass-during-lipoma-excision.v2": "n4-round2",
+    "case.n4.ulcer-recurrent-bleeding-after-clips.v2": "n4-round2",
+    "case.n4.cholangiogram-lucencies-and-proximal-coverage.v1": "n4-round2",
     "case.harden1.phosphate-handling.20261110": "harden1-round1",
     "case.n3.delayed-regurgitation-proximal-anatomic-study.v1": "n3-round4",
     "case.n3.venous-ulcer-with-competing-arterial-findings.v1": "n3-round4",

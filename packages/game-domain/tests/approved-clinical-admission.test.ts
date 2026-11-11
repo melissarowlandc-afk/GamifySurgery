@@ -282,6 +282,8 @@ describe("approved clinical admission boundaries", () => {
         "concept.groin-hernia.ultrasound-compartment-classification.v1",
       "concept.gs028f.nutrition.refeeding-insulin-phosphate-shift.v2",
       "concept.n3.delayed-regurgitation-proximal-anatomic-study",
+      "concept.n4r2.mesh-material-and-contact-compartment",
+      "concept.n4r2.cholangiogram-quality-before-duct-treatment",
     ]);
   });
 

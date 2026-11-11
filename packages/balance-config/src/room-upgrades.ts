@@ -1,4 +1,5 @@
 import { STAFF_BREAK_POLICY } from "./staff-breaks";
+import { FOUNDER_CONSULT_POLICY } from "./founder-consults";
 
 export const ROOM_UPGRADE_BASE_LEVEL = 1;
 export const ROOM_UPGRADE_MAXIMUM_LEVEL = 5;
@@ -163,9 +164,11 @@ export function getRoomUpgradePoints(
 
 function benefitDescription(definition: RoomUpgradeDefinition, amount: number): string {
   const points = amount === 1 ? "point" : "points";
+  const clinicWork = ["room.examination", "room.pediatric_examination", "room.wound_ostomy"].includes(definition.roomDefinitionId)
+    ? `; routine APP work takes ${amount / definition.amountPerUpgrade * FOUNDER_CONSULT_POLICY.clinicRoomReductionPercentPerLevel}% less time` : "";
   switch (definition.effectKind) {
     case "none": return "No upgrades";
-    case "revenue_percent": return `+${amount}% ${definition.benefitSubject}`;
+    case "revenue_percent": return `+${amount}% ${definition.benefitSubject}${clinicWork}`;
     case "cleanliness_decay_reduction_percent": return `${amount}% slower cleanliness loss`;
     case "cleaning_duration_reduction_percent": return `Cleaning takes ${amount}% less time`;
     case "training_duration_reduction_percent": return `Training sessions take ${amount}% less time`;
@@ -174,7 +177,7 @@ function benefitDescription(definition: RoomUpgradeDefinition, amount: number): 
     case "reading_duration_reduction_percent": return `Scan reading takes ${amount}% less time`;
     case "administration_duration_reduction_percent": return `Administrative work takes ${amount}% less time`;
     case "waiting_satisfaction_points": return `+${amount} satisfaction ${points} for ${definition.benefitSubject}`;
-    case "examination_satisfaction_points": return `+${amount} satisfaction ${points} after ${definition.benefitSubject}`;
+    case "examination_satisfaction_points": return `+${amount} satisfaction ${points} after ${definition.benefitSubject}${clinicWork}`;
     case "recovery_satisfaction_points": return `+${amount} satisfaction ${points} after recovery`;
     case "daily_coffee_morale_points": return `+${amount} staff morale ${points} from daily coffee`;
     case "break_morale_points": return `+${amount} staff morale ${points} per break; +${amount / definition.amountPerUpgrade * STAFF_BREAK_POLICY.dailyMoraleGainPerUpgrade} daily morale from the best operational staff room`;

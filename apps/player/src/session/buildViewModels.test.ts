@@ -257,7 +257,7 @@ describe("Build Mode view models", () => {
       upgradeCostLabel: "$90",
     });
     expect(view.selectedRoomBuild?.upgradeImprovements).toEqual([
-      "+2 satisfaction points after examination",
+      "+2 satisfaction points after examination; routine APP work takes 5% less time",
     ]);
     expect(view.selectedRoomBuild?.upgradeImprovements.join(" ")).not.toMatch(/finish|capacity|clinic|capped/);
     expect(view.selectedRoomBuild?.upgradeImprovements).not.toContain(
@@ -289,7 +289,7 @@ describe("Build Mode view models", () => {
 describe("approved room upgrade ladders in player views", () => {
   // Owner-approved table, checked through the actual player projection.
   const rows: ReadonlyArray<readonly [string, string, string[], number[]]> = [
-    ["room.examination", "+2 satisfaction points after examination", ["+2 points", "+4 points", "+6 points", "+8 points"], [90, 140, 210, 300]],
+    ["room.examination", "+2 satisfaction points after examination; routine APP work takes 5% less time", ["+2 points", "+4 points", "+6 points", "+8 points"], [90, 140, 210, 300]],
     ["room.waiting", "+2 satisfaction points for waiting patients", ["+2 points", "+4 points", "+6 points", "+8 points"], [110, 170, 250, 360]],
     ["room.bathroom", "10% slower cleanliness loss", ["10% slower loss", "20% slower loss", "30% slower loss", "40% slower loss"], [70, 110, 170, 250]],
     ["room.minor_procedure", "+6% procedure revenue", ["+6%", "+12%", "+18%", "+24%"], [220, 330, 480, 680]],

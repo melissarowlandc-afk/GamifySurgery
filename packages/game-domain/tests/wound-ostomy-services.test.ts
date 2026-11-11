@@ -38,7 +38,7 @@ describe("M6 APP wound/ostomy visits", () => {
     expect(operation.reservedRoomInstanceIds).toEqual(["room.wound.qa.0"]);
     const room = state.rooms.find(row => row.id === "room.wound.qa.0")!;
     expect(operation.location).toEqual(getRoomCareAnchor(room, getRoomDefinition(room.roomDefinitionId, context)!, "patient"));
-    expect(operation.phaseEndsAtFacilityTick! - operation.phaseStartedAtFacilityTick!).toBe(30);
+    expect(operation.phaseEndsAtFacilityTick! - operation.phaseStartedAtFacilityTick!).toBe(95);
     expect(operation.appAppointmentRevenue).toMatchObject({ baseFee: 60, trainingPercent: 0, fee: 60 });
     expect(state.levelFourCompletion?.woundOstomyCareVisit).toBeFalsy();
     state = deserializeGameState(serializeGameState(state), context);
@@ -70,7 +70,7 @@ describe("M6 APP wound/ostomy visits", () => {
     expect(deserializeGameState(serializeGameState(state), context).levelFourCompletion).toEqual(witness);
   });
 
-  it("scales both demand streams by staffed home and meets option B without a global visitor cap", () => {
+  it("scales both demand streams by staffed home and covers base costs with the slower basic clinic work", () => {
     const state = fixture(2);
     for (let i = 0; i < 540; i++) {
       state.facilityTick++; advanceEmployeeMovement(state, context); advanceServiceOperations(state, context);
@@ -78,10 +78,10 @@ describe("M6 APP wound/ostomy visits", () => {
       expect(new Set(active.map(row => row.providerReservation?.kind === "employee" ? row.providerReservation.employeeId : null)).size).toBe(active.length);
     }
     const receipts = state.serviceIncomeReceipts.filter(row => ["income.wound_care", "income.ostomy_support"].includes(row.incomeLineId));
-    expect(receipts.filter(row => row.incomeLineId === "income.wound_care")).toHaveLength(6);
-    expect(receipts.filter(row => row.incomeLineId === "income.ostomy_support")).toHaveLength(6);
-    expect(receipts.reduce((sum, row) => sum + row.grossAmount, 0)).toBe(810);
-    expect(810 - 2 * (30 + 2) * 9).toBe(234);
+    expect(receipts.filter(row => row.incomeLineId === "income.wound_care")).toHaveLength(5);
+    expect(receipts.filter(row => row.incomeLineId === "income.ostomy_support")).toHaveLength(4);
+    expect(receipts.reduce((sum, row) => sum + row.grossAmount, 0)).toBe(600);
+    expect(600 - 2 * (30 + 2) * 9).toBe(24);
     expect(new Set(visits(state).map(row => row.clinicVisit?.requestedRoomInstanceId)).size).toBe(2);
   });
 

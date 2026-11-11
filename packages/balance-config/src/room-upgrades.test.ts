@@ -173,12 +173,12 @@ describe("room-upgrade numeric and label helpers", () => {
   });
 
   it("describes the total tier benefit separately from a single additional purchase", () => {
-    expect(getRoomUpgradePerPurchaseLabel("room.examination")).toBe("+2 satisfaction points after examination");
+    expect(getRoomUpgradePerPurchaseLabel("room.examination")).toBe("+2 satisfaction points after examination; routine APP work takes 5% less time");
     expect(getRoomUpgradeLevelBenefit("room.examination", 1)).toMatchObject({ totalAmount: 0, incrementalAmount: 0, totalDescription: "Baseline" });
     expect(getRoomUpgradeLevelBenefit("room.examination", 5)).toMatchObject({
       totalAmount: 8, incrementalAmount: 2,
-      totalDescription: "+8 satisfaction points after examination",
-      incrementalDescription: "+2 satisfaction points after examination",
+      totalDescription: "+8 satisfaction points after examination; routine APP work takes 20% less time",
+      incrementalDescription: "+2 satisfaction points after examination; routine APP work takes 5% less time",
     });
     expect(getRoomUpgradeLevelBenefit("room.reading", 5)).toMatchObject({
       totalAmount: 40, incrementalAmount: 10,

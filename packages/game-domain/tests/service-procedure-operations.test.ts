@@ -707,11 +707,13 @@ describe("mapped in-clinic procedure operations", () => {
       providerReservation: null,
       timingPhases: [{ durationTicks: 60, resourceBound: true }, { durationTicks: 120, resourceBound: false }],
     });
-    expect(state.environment.founderActivity).toBeNull();
+    expect(state.environment.founderActivity).toMatchObject({ kind: "attend_encounter", targetId: encounter.id });
     expect(state.employees[0]!.facilityTask).toMatchObject({ kind: "perform_imaging" });
     state = deserializeGameState(serializeGameState(state));
     expect(state.encounters[encounter.id]!.pendingResult?.approvedProcedureTimingVersion).toBe(1);
     state = acknowledgeDecisionFeedback(state);
+    expect(state.environment.founderActivity?.kind).not.toBe("attend_encounter");
+    expect(state.openChartEncounterId).not.toBe(encounter.id);
     const pending = state.encounters[encounter.id]!.pendingResult!;
     const work = pending.timingPhases!.find((phase) => phase.resourceBound)!;
     expect(pending.onsiteReturn).toMatchObject({

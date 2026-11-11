@@ -241,11 +241,8 @@ describe("current prototype contracts", () => {
     expect(state.encounters[TUTORIAL_ENCOUNTER_ID]).toMatchObject({
       lifecycle: "active_action_required",
     });
-    expect(
-      state.encounters[TUTORIAL_ENCOUNTER_ID]?.patientMovement
-        ?.destinationRoomInstanceId,
-    ).toBe("room.instance.founder_desk");
-    expect(state.environment.founderActivity).toBeNull();
+    expect(state.encounters[TUTORIAL_ENCOUNTER_ID]?.patientMovement).toBeNull();
+    expect(state.environment.founderActivity).toMatchObject({ kind: "attend_encounter", targetId: TUTORIAL_ENCOUNTER_ID });
 
     state = completeTutorialCorrectly(state, "front-desk-bridge");
     expect(state.cash).toBeGreaterThanOrEqual(160);
@@ -295,7 +292,9 @@ describe("current prototype contracts", () => {
     expect({
       facilityTick: state.facilityTick,
       cash: state.cash,
-    }).toEqual({ facilityTick: 198, cash: 176.75 });
+    // The bedside stand freezes the check-in waiting leg; the two tutorial
+    // encounters now finish four minutes sooner, with four minutes less upkeep.
+    }).toEqual({ facilityTick: 194, cash: 177 });
     expect(state.cash).toBeGreaterThanOrEqual(160);
 
     let delayed = deserializeGameState(serializeGameState(state));
@@ -639,7 +638,7 @@ describe("current prototype contracts", () => {
     expect(opened.operationReceipts["ordinary.no-exam"]?.status).toBe("applied");
     expect(opened.openChartEncounterId).toBe("encounter.ordinary");
     expect(opened.encounters["encounter.ordinary"]?.lifecycle).toBe("active_action_required");
-    expect(opened.environment.founderActivity?.kind).not.toBe("attend_encounter");
+    expect(opened.environment.founderActivity).toMatchObject({ kind: "attend_encounter", targetId: "encounter.ordinary" });
 
     opened.rooms.push({
       id: "room.unreachable.examination",

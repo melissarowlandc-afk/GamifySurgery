@@ -20,3 +20,4 @@ export { default as APPROVED_LEVEL5_SUPPORT_ROUTES } from "./level-five-support-
 export * from "./guidance-tips";
 export { default as APPROVED_PEDIATRIC_SUPPORT_ROUTES } from "./pediatric-support-routes.json";
 export { FACILITY_INSPECTION_RULES } from "./facility-inspection";
+export * from "./founder-consults";

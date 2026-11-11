@@ -6100,3 +6100,7 @@ import { QUESTION_FLAGS4_ACCEPTED_TIMING_ENTRIES } from "./question-flags4-accep
 // BEGIN HARDEN1 / N3R4 exact accepted timing 20261110
 import {QUESTION_HARDEN1_N3R4_ACCEPTED_TIMING_ENTRIES} from "./question-harden1-n3r4-accepted-20261110";
 // END HARDEN1 / N3R4 exact accepted timing 20261110
+
+// Exact N4 PASS estimates; domain order installation is a separate owned lane.
+import {QUESTION_N4_ACCEPTED_TIMING_ENTRIES} from "./question-n4-accepted-20261110";
+ANSWER_CHOICE_TIMING_REGISTRY.push(...QUESTION_N4_ACCEPTED_TIMING_ENTRIES);

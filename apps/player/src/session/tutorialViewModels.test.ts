@@ -194,7 +194,7 @@ describe("first shift derived from native state", () => {
       state = tick(state);
     }
     expect(getCurrentQuestion(state, SECOND_TUTORIAL_ENCOUNTER_ID)).not.toBeNull();
-    expect(realWaitMs).toBe(37_750); // Actual 151-minute physical wait at guided 4x, including return/check-in.
+    expect(realWaitMs).toBe(37_500); // Actual 150-minute wait at guided 4x; adjacent attendance removes one walking minute.
     expect(ordinaryWaitMs).toBe(realWaitMs * 4);
     expect(state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.steps[0]!.result?.durationTicks).toBe(plan.durationTicks);
     expect(state.encounters[SECOND_TUTORIAL_ENCOUNTER_ID]!.frozenCase).toEqual(frozen);

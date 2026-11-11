@@ -1,15 +1,17 @@
+import {beforeN4AcceptanceRelease,beforeN4AcceptanceManifest,beforeN4AcceptanceTimings} from "./question-n4-acceptance-test-support";
 import {createHash} from "node:crypto";
 import {readFileSync} from "node:fs";
 import {describe,expect,it} from "vitest";
-import {SYNTHETIC_CLINICAL_RELEASE as live,QUESTION_CATALOG_RELEASE as catalog} from "./synthetic-content";
-import {QUESTION_SHIP_MANIFEST as manifest} from "./question-ship-manifest";
-import {ANSWER_CHOICE_TIMING_REGISTRY as timing} from "./answer-choice-timing";
+import {SYNTHETIC_CLINICAL_RELEASE as actualLive,QUESTION_CATALOG_RELEASE as catalog} from "./synthetic-content";
+import {QUESTION_SHIP_MANIFEST as actualManifest} from "./question-ship-manifest";
+import {ANSWER_CHOICE_TIMING_REGISTRY as actualTiming} from "./answer-choice-timing";
 import {QUESTION_HARDEN1_N3R4_ACCEPTED_CASES as cases,QUESTION_HARDEN1_N3R4_ACCEPTED_ROWS as rows,
  QUESTION_HARDEN1_N3R4_ACCEPTED_QUESTIONS as questions,QUESTION_HARDEN1_N3R4_ACCEPTED_TIMING_ENTRIES as estimates,
  QUESTION_HARDEN1_ACCEPTANCE_SOURCE as harden,QUESTION_N3R4_RETAINED_ACCEPTANCE_SOURCE as n3} from "./question-harden1-n3r4-accepted-20261110";
 import {QUESTION_NEW_N3_ROUND4_SOURCE_RELEASE as authoredN3,QUESTION_NEW_N3_ROUND4_CASES as rawN3} from "./question-new-n3-round4-20261110";
 import {beforeHarden1N3r4AcceptanceRelease as previous,beforeHarden1N3r4AcceptanceManifest as previousManifest,
  beforeHarden1N3r4AcceptanceTimings as previousTiming,beforeHarden1N3r4AcceptanceSource as previousSource} from "./question-harden1-n3r4-acceptance-test-support";
+const live=beforeN4AcceptanceRelease(actualLive),manifest=beforeN4AcceptanceManifest(actualManifest),timing=beforeN4AcceptanceTimings(actualTiming);
 const read=(p:string)=>JSON.parse(readFileSync(new URL("../../../"+p,import.meta.url),"utf8"));
 const before=read("tools/question-quality/fixtures/question-harden1-n3r4-acceptance-before-20261110.json");
 const hash=(v:unknown)=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
@@ -59,10 +61,10 @@ describe("exact harden1 H1-03 and two N3R4 PASS acceptances",()=>{
   const migration=read("tools/question-quality/fixtures/question-harden1-n3r4-acceptance-source-migration-20261110.json");
   expect(migration.files).toHaveLength(18);
   const pinBytes=readFileSync(new URL("../../../tools/question-quality/fixtures/question-harden1-n3r4-release-source-pins-20261110.json",import.meta.url));
-  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("05c074f12aef6d974f67529f37636a0c3eccc95d89e685db3057f7b2fc5e7315");
+  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("22c443ffa75c80d88af01cb21de45c7a5a910f712b4ec419ed64d6c1f7bc6a6d");
   const releasePins=JSON.parse(pinBytes.toString("utf8")) as {originalMigrationSha256:string;paths:Array<{path:string;requiredReleaseSha256:string}>};
   expect(createHash("sha256").update(readFileSync(new URL("../../../tools/question-quality/fixtures/question-harden1-n3r4-acceptance-source-migration-20261110.json",import.meta.url))).digest("hex")).toBe(releasePins.originalMigrationSha256);
-  expect(releasePins.paths).toHaveLength(2);
+  expect(releasePins.paths).toHaveLength(3);
   for(const pin of releasePins.paths)expect(createHash("sha256").update(readFileSync(new URL("../../../"+pin.path,import.meta.url))).digest("hex")).toBe(pin.requiredReleaseSha256);
   for(const row of migration.files){const text=readFileSync(new URL("../../../"+row.path,import.meta.url),"utf8");
    expect(createHash("sha256").update(previousSource(row.path,text)).digest("hex")).toBe(row.beforeSha256);}

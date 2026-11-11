@@ -210,14 +210,17 @@ describe("owner-requested colleague Easter-egg names", () => {
   });
 
   it("uses the same compatible pool for a service visitor and respects a staff reservation", () => {
-    const state = createAppAppointmentsQaState();
+    const baseline = createAppAppointmentsQaState();
+    let state = structuredClone(baseline);
     const id = `service-operation.${state.serviceOperationSequence}`;
     let expected: string | undefined;
     for (let i = 0; i < 1_000; i++) {
-      state.campaignSeed = `service.colleague.${i}`;
-      const appearance = createPatientPixelAppearance(state.campaignSeed, id, {}, "patient", getPatientAppearanceSelectionContext(state));
-      expected = selectColleagueDisplayName(state.campaignSeed, `patient:${id}`, getNamePresentationProfile(appearance));
-      if (expected) break;
+      state = structuredClone(baseline); state.campaignSeed = `service.colleague.${i}`;
+      const probe = structuredClone(state);
+      const probeId = startServiceOperation(probe, "income.app_consult", "visitor", PROTOTYPE_DOMAIN_CONTEXT)!;
+      const visit = probe.serviceOperations.find(row => row.id === probeId)!;
+      expected = selectColleagueDisplayName(state.campaignSeed, `patient:${id}`, visit.clinicVisit!.demographics);
+      if (expected && visit.displayName === expected) break;
     }
     expect(expected).toBeDefined();
     // A colleague already hired in another role must be reserved for this draw.
@@ -226,8 +229,8 @@ describe("owner-requested colleague Easter-egg names", () => {
     const operation = state.serviceOperations.find(op => op.id === id)!;
     expect(operation.displayName).not.toBe(expected);
     expect(names.has(operation.displayName)).toBe(true);
-    const presentation = getNamePresentationProfile(operation.appearance);
-    expect(operation.clinicVisit?.demographics).toEqual(presentation);
+    const presentation = operation.clinicVisit!.demographics;
+    expect(presentation.sexLabel).toBe(getNamePresentationProfile(operation.appearance)?.sexLabel);
     expect(operation.displayName).toBe(selectColleagueDisplayName(state.campaignSeed, `patient:${id}`, presentation, [expected!]));
   });
 

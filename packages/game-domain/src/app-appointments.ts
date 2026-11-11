@@ -54,10 +54,11 @@ export function getAppStandbyLabel(state: GameState, employee: EmployeeState): s
 }
 
 /** Includes physical occupants after a care reservation is released. */
-export function getScoredExaminationRoomIds(state: GameState, context: DomainContext): Set<string> {
+export function getScoredExaminationRoomIds(state: GameState, context: DomainContext, exceptEncounterId?: string): Set<string> {
   const rooms = state.rooms.filter(room => ["room.examination", "room.pediatric_examination"].includes(room.roomDefinitionId));
   const ids = new Set<string>();
   for (const encounter of Object.values(state.encounters)) {
+    if (encounter.id === exceptEncounterId) continue;
     if (encounter.lifecycle !== "resolved") for (const id of [encounter.assignedRoomInstanceId,
       encounter.queuedCareRoomInstanceId, encounter.patientMovement?.destinationRoomInstanceId]) if (id) ids.add(id);
     if (!encounter.patientLocation) continue;
@@ -69,10 +70,10 @@ export function getScoredExaminationRoomIds(state: GameState, context: DomainCon
   return ids;
 }
 
-export function scoredPatientNeedsExamRoom(state: GameState, lineId = APP_APPOINTMENT_INCOME_LINE_ID): boolean {
+export function scoredPatientNeedsExamRoom(state: GameState, lineId = APP_APPOINTMENT_INCOME_LINE_ID, exceptEncounterId?: string): boolean {
   if (WOUND_OSTOMY_APPOINTMENT_INCOME_LINE_IDS.includes(lineId)) return false;
   const encounter = state.openChartEncounterId ? state.encounters[state.openChartEncounterId] : undefined;
-  return Boolean(encounter && Boolean(encounter.frozenCase.pediatricProfile) === (lineId === PEDIATRIC_APPOINTMENT_INCOME_LINE_ID) &&
+  return Boolean(encounter && encounter.id !== exceptEncounterId && Boolean(encounter.frozenCase.pediatricProfile) === (lineId === PEDIATRIC_APPOINTMENT_INCOME_LINE_ID) &&
     ["waiting_unopened", "active_action_required", "resolved_summary_available"].includes(encounter.lifecycle) &&
     !encounter.assignedRoomInstanceId && !encounter.queuedCareRoomInstanceId &&
     encounter.patientMovement?.kind !== "walking_to_care");
@@ -118,7 +119,7 @@ export function recordWoundOstomyVisitCompletion(state: GameState, operation: Se
       state.rooms.some(room => room.id === id && room.roomDefinitionId === "room.wound_ostomy"))) return;
   state.levelFourCompletion ??= { version: "level-four-completion.v1", pediatricVisitWithParent: null,
     woundOstomyCareVisit: null, acknowledgedAtFacilityTick: null };
-  state.levelFourCompletion.woundOstomyCareVisit ??= { serviceOperationId: operation.id, encounterId: null,
+  state.levelFourCompletion.woundOstomyCareVisit ??= { serviceOperationId: operation.id, encounterId: operation.consultEncounterId ?? null,
     incomeLineId: operation.incomeLineId, completedAtFacilityTick: state.facilityTick };
 }
 

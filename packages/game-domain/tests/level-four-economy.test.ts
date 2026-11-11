@@ -22,7 +22,7 @@ describe("Level 4 real simulation economy and arrivals", () => {
     );
   }, hostedTime(120_000));
 
-  it("adds all APP streams beside the same normal scored arrivals without rewarding learning", () => {
+  it("adds APP demand beside the same scored arrivals; unanswered consults hold their source without rewarding learning", () => {
     let withAppointments = createEarlyLevelFourEconomyState("level-four-arrival-fairness-m8");
     withAppointments.nextRoutineArrivalTick = 1;
     let withoutAppointments = structuredClone(withAppointments);
@@ -40,9 +40,12 @@ describe("Level 4 real simulation economy and arrivals", () => {
     expect([...arrivalsWith]).toEqual([...arrivalsWithout]);
     expect(withAppointments.learningHistories).toEqual(withoutAppointments.learningHistories);
     expect(withAppointments.clinicalXp).toBe(withoutAppointments.clinicalXp);
-    expect(withAppointments.serviceIncomeReceipts.some((receipt) => receipt.incomeLineId === "income.pediatric_consult")).toBe(true);
-    expect(withAppointments.serviceIncomeReceipts.some((receipt) => receipt.incomeLineId === "income.app_consult")).toBe(true);
-    expect(withAppointments.serviceIncomeReceipts.some((receipt) => receipt.incomeLineId === "income.wound_care")).toBe(true);
+    for (const line of ["income.pediatric_consult", "income.app_consult", "income.wound_care"]) {
+      const held = withAppointments.serviceOperations.find(op => op.incomeLineId === line && op.consultEncounterId &&
+        withAppointments.encounters[op.consultEncounterId]?.consult?.closedAtFacilityTick === null);
+      expect(withAppointments.serviceIncomeReceipts.some(receipt => receipt.incomeLineId === line) || Boolean(held), line).toBe(true);
+      if (held) { expect(held.status).toBe("in_service"); expect(held.completedAtFacilityTick).toBeNull(); }
+    }
     expect(getEmergencyGlp1Status(withAppointments).payment).toBe(50);
   }, hostedTime(120_000));
 });

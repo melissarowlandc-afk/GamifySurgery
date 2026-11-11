@@ -1,3 +1,6 @@
+import { founderConsultClockKey, founderProcedureConsultPath, procedureConsultKind, reconcileFounderConsultSources, selectProcedureConsult, sourceConsultOperation } from "./founder-consults";
+import { clinicFounderPath, clinicFounderWaitsForSeat, isClinicFounderConsult, reconcileClinicConsultClosures,
+  releaseClinicConsult, returnClinicProvider, selectClinicConsult, vacateClinicProvider } from "./clinic-consults";
 import { withFacilityNavigationScope } from "./facilityNavigation";
 import { chooseWaitingAreaDestination, serviceWaitingPointKind, waitingOccupiedPointKeys } from "./waiting-destinations";
 import { captureBeforeGameRetirement, captureGameEvent, captureGameReceipt } from "./game-evidence-capture";
@@ -543,7 +546,9 @@ function planFounderAfterEncounter(
   state: GameState,
   context: DomainContext,
 ): void {
-  if (state.environment.founderActivity?.explicitSeat) return;
+  if (state.environment.founderActivity?.explicitSeat ||
+      state.environment.founderActivity?.kind === "attend_encounter" ||
+      state.environment.founderActivity?.kind === "attend_employee_discussion") return;
   const entrance = getPublicEntrance(state, context);
   if (!entrance) {
     state.environment.founderActivity = null;
@@ -617,6 +622,7 @@ function suspendFounderActivityForConsult(state: GameState): void {
       (activity.kind === "sit_in_chair" && activity.explicitSeat === true))
       ? clonePlain(activity)
       : null;
+  cancelRetailTripsForActor(state, "founder", "founder", "Chart attendance superseded optional shopping.");
 }
 
 function resumeFounderActivityAfterConsult(
@@ -1334,6 +1340,8 @@ function createEncounter(
     encounterId: string;
     clinicalCase: SyntheticClinicalCase;
     patientDisplayName?: string;
+    patientAppearance?: EncounterState["patientAppearance"];
+    approvedProfileId?: string | null;
     arrivalClass: EncounterState["arrivalClass"];
     protectedGuaranteeId: string | null;
     patienceExempt?: boolean;
@@ -1344,7 +1352,7 @@ function createEncounter(
   let frozenCase = clonePlain(input.clinicalCase);
   const approvedProfiles = frozenCase.approvedInstantiationProfiles;
   if (approvedProfiles && approvedProfiles.length > 0) {
-    const selectedProfile =
+    const selectedProfile = approvedProfiles.find(profile => profile.id === input.approvedProfileId) ??
       approvedProfiles[
         deterministicInteger(
           state.campaignSeed,
@@ -1520,6 +1528,7 @@ function createEncounter(
   };
   if (pediatricIdentity) encounter.patientAppearance.stillId = pediatricIdentity.childStillId;
   if (variety3Identity) encounter.patientAppearance.stillId = variety3Identity.patientStillId;
+  if (input.patientAppearance) encounter.patientAppearance = clonePlain(input.patientAppearance);
   if (frozenCase.pediatricProfile) createPediatricFamily(state, encounter, "encounter", pediatricIdentity ? {
     displayName: pediatricIdentity.parentName,
     sexLabel: pediatricIdentity.parentRelationship === "mother" ? "Female" : "Male",
@@ -2806,15 +2815,25 @@ function getEmployeeDiscussionApproachPath(
   context: DomainContext,
   employee: EmployeeState,
 ): GridPoint[] {
-  const employeeCareRoom = protectedCareRoomAtPoint(state, context, employee.location);
+  return getFounderAdjacentApproachPath(state, context, employee.location);
+}
+
+/** An encounter/discussion stand is distinct from every actor's reserved seat. */
+function getFounderAdjacentApproachPath(state: GameState, context: DomainContext, location: GridPoint): GridPoint[] {
+  const employeeCareRoom = protectedCareRoomAtPoint(state, context, location);
   const allowedCareRooms = employeeCareRoom ? new Set([employeeCareRoom.id]) : new Set<string>();
+  const occupied = waitingOccupiedPointKeys(state, null);
+  occupied.delete(`${state.environment.founderLocation.x},${state.environment.founderLocation.y}`);
   const candidates = [
-    { x: employee.location.x, y: employee.location.y - 1 },
-    { x: employee.location.x + 1, y: employee.location.y },
-    { x: employee.location.x, y: employee.location.y + 1 },
-    { x: employee.location.x - 1, y: employee.location.y },
+    { x: location.x, y: location.y - 1 },
+    { x: location.x + 1, y: location.y },
+    { x: location.x, y: location.y + 1 },
+    { x: location.x - 1, y: location.y },
   ];
   return candidates
+    .filter(point => !occupied.has(`${point.x},${point.y}`))
+    .filter(point => !state.rooms.some(room => room.roomDefinitionId === "room.front_desk" &&
+      samePoint(point, getRoomNavigationAnchor(room, getRoomDefinition(room.roomDefinitionId, context)!, "staff"))))
     .map((destination) =>
       pathFromLocationToFacilityPoint(
         state,
@@ -3067,10 +3086,8 @@ function tryStartEmployeeDiscussionAttendance(
   discussion: EmployeeDiscussionState,
   context: DomainContext,
 ): boolean {
-  if (discussion.lifecycle !== "active_action_required" ||
-      state.openEmployeeDiscussionId !== discussion.id ||
-      state.environment.pendingFounderConsult?.kind !== "employee_discussion" ||
-      state.environment.pendingFounderConsult.targetId !== discussion.id) return false;
+  if (!["active_action_required", "feedback_pending", "resolved_summary_available"].includes(discussion.lifecycle) ||
+      state.openEmployeeDiscussionId !== discussion.id) return false;
   if (state.environment.founderActivity?.kind === "attend_employee_discussion" &&
       state.environment.founderActivity.targetId === discussion.id) return true;
   const employee = state.employees.find((candidate) => candidate.id === discussion.employeeId);
@@ -3282,7 +3299,8 @@ function reduceSubmitEmployeeDiscussionAnswer(
   step.status = "feedback_pending";
   nextDiscussion.lifecycle = "feedback_pending";
   next.environment.pendingFounderConsult = null;
-  releaseEmployeeDiscussionReservation(next, nextDiscussion, context);
+  // Answering is not closing: keep both actors at the discussion until close
+  // or file, including while the player reads the explanation.
   next.reviewIntents.push({
     id: `review-intent.${nextDiscussion.id}.${node.id}`,
     encounterId: nextDiscussion.id,
@@ -3433,8 +3451,9 @@ function reduceOpenChart(
   }
   if (
     encounter.patientMovement?.kind === "arriving_for_check_in" ||
-    encounter.patientMovement?.kind === "leaving_after_walkout" ||
-    encounter.patientMovement?.kind === "leaving_after_resolution"
+    (encounter.lifecycle !== "resolved" &&
+      (encounter.patientMovement?.kind === "leaving_after_walkout" ||
+        encounter.patientMovement?.kind === "leaving_after_resolution"))
   ) {
     return rejectCommand(
       state,
@@ -3444,8 +3463,46 @@ function reduceOpenChart(
         : "The patient is already leaving the clinic.",
     );
   }
+  // Filed charts are historical reviews even while the discharged actor exits.
+  // The ordinary resolved path below keeps that movement and does not reserve
+  // an exam, the founder, or the patient's former clinic provider.
   const next = cloneState(state);
   const nextEncounter = next.encounters[command.encounterId]!;
+  const consultSource = sourceConsultOperation(next, nextEncounter);
+  if (consultSource && nextEncounter.consult?.closedAtFacilityTick === null &&
+      !["completed", "cancelled"].includes(consultSource.status)) {
+    next.openChartEncounterId = nextEncounter.id;
+    clearPatientFeedAttention(nextEncounter);
+    if (nextEncounter.lifecycle === "waiting_unopened") {
+      nextEncounter.lifecycle = "active_action_required";
+      nextEncounter.firstOpenedAtTick ??= next.facilityTick;
+    }
+    const node = nextEncounter.frozenCase.decisionNodes[nextEncounter.currentNodeIndex];
+    next.attendedEncounterId = nextEncounter.lifecycle === "active_action_required" ? nextEncounter.id : null;
+    next.environment.pendingFounderConsult = node && nextEncounter.lifecycle === "active_action_required"
+      ? { kind: "encounter", targetId: nextEncounter.id, nodeId: node.id } : null;
+    if (isClinicFounderConsult(nextEncounter) && consultSource.status !== "in_service") {
+      const current = next.environment.founderActivity;
+      if (current?.kind === "attend_encounter" && current.targetId === nextEncounter.id) releaseFounderAttendanceForEncounter(next, context, nextEncounter);
+      return recordReceipt(next, command, "applied", "Consult chart opened; waiting for its clinic room and APP to resume care.");
+    }
+    const activity = next.environment.founderActivity;
+    const alreadyHere = activity?.kind === "attend_encounter" && activity.targetId === nextEncounter.id;
+    const alreadyOperating = activity?.kind === "perform_service" && activity.targetId === consultSource.id;
+    if (!alreadyHere && !alreadyOperating && !isFounderReservedForService(next) &&
+        (!activity || activity.kind === "walk_to_point" || isAutomaticFounderActivity(activity))) {
+      const clinicConsult = isClinicFounderConsult(nextEncounter);
+      const path = clinicConsult ? clinicFounderPath(next, nextEncounter, context) : founderProcedureConsultPath(next, nextEncounter, context);
+      if (path.length && (!clinicConsult || vacateClinicProvider(next, nextEncounter, context))) {
+        suspendFounderActivityForConsult(next);
+        next.environment.founderActivity = { kind: "attend_encounter", targetId: nextEncounter.id, path, pathIndex: 0,
+          lastMovedAtFacilityTick: next.facilityTick, workMinutesRemaining: Number.MAX_SAFE_INTEGER };
+      }
+    }
+    return recordReceipt(next, command, "applied", isClinicFounderConsult(nextEncounter)
+      ? "APP consult opened; the founder will take the clinician stool."
+      : "Procedure consult opened; the patient and procedure remain in their suite.");
+  }
   const retailTrip = activeRetailOperationForActor(
     next,
     "encounter",
@@ -3459,8 +3516,7 @@ function reduceOpenChart(
   const careEligibleLifecycle =
     nextEncounter.lifecycle === "waiting_unopened" ||
     nextEncounter.lifecycle === "active_action_required" ||
-    (nextEncounter.lifecycle === "resolved_summary_available" &&
-      nextEncounter.terminalFeedback?.acknowledged !== true);
+    nextEncounter.lifecycle === "resolved_summary_available";
   if (retailTrip && careEligibleLifecycle) {
     // Retail movement owns the live actor position while its trip is active.
     // Freeze that exact tile before cancelling so the chart redirect starts
@@ -3484,9 +3540,8 @@ function reduceOpenChart(
   const isFirstOpening = nextEncounter.lifecycle === "waiting_unopened";
   const isReopenableActive =
     nextEncounter.lifecycle === "active_action_required";
-  const isUnacknowledgedTerminal =
-    nextEncounter.lifecycle === "resolved_summary_available" &&
-    nextEncounter.terminalFeedback?.acknowledged !== true;
+  const isTerminalReview =
+    nextEncounter.lifecycle === "resolved_summary_available";
   if (isFirstOpening) {
     nextEncounter.lifecycle = "active_action_required";
     nextEncounter.firstOpenedAtTick ??= next.facilityTick;
@@ -3497,65 +3552,28 @@ function reduceOpenChart(
   next.environment.pendingFounderConsult = actionableNode
     ? { kind: "encounter", targetId: nextEncounter.id, nodeId: actionableNode.id }
     : null;
-  const procedureConsultCandidate = (() => {
-    const pending = nextEncounter.pendingResult;
-    if (!pending || pending.deliveredAtTick === null ||
-        nextEncounter.currentNodeIndex <= pending.originatingNodeIndex) return null;
-    const roomId = pending.completedCareProvenance?.roomInstanceId ??
-      pending.patientTravel?.destinationRoomInstanceId;
-    const room = roomId ? next.rooms.find((candidate) => candidate.id === roomId) : null;
-    return room && (room.roomDefinitionId === "room.endoscopy" ||
-      room.roomDefinitionId === "room.ambulatory_or") ? room : null;
-  })();
-  const procedureConsultRoom = (() => {
-    const room = procedureConsultCandidate;
-    if (!room) return null;
-    const occupiedByAnotherPatient = Object.values(next.encounters).some(
-      (encounter) => encounter.id !== nextEncounter.id && (
-        encounter.assignedRoomInstanceId === room.id ||
-        encounter.queuedCareRoomInstanceId === room.id ||
-        encounter.patientMovement?.destinationRoomInstanceId === room.id ||
-        (() => {
-          const visibleLocation = getEncounterPatientLocation(next, encounter.id);
-          return visibleLocation !== null && pointInsideRoom(visibleLocation, room, context);
-        })()
-      ),
-    ) || next.serviceOperations.some((operation) =>
-      operation.actorId !== nextEncounter.id &&
-      // A finished operation keeps the last in-room location of a patient who
-      // has since walked back to wait for results; only live work occupies
-      // the room. Patients are covered by their own locations above.
-      operation.status !== "completed" && operation.status !== "cancelled" && (
-        operation.reservedRoomInstanceIds.includes(room.id) ||
-        operation.transitionHeldRoomInstanceIds?.includes(room.id) ||
-        operation.periopBedReservation?.roomInstanceId === room.id ||
-        (operation.location !== null && pointInsideRoom(operation.location, room, context))
-      ),
-    );
-    return occupiedByAnotherPatient ? null : room;
-  })();
+  // Completed test/procedure results are ordinary exam reviews. Only the live
+  // source-consult branch above owns intra-procedure attendance in a suite.
   const hasExamReservation = encounterHasExaminationRoomReservation(
     next,
     nextEncounter,
   );
-  // A new clinic starts with $120 while the required first Examination Room
-  // costs $160. The two protected tutorial encounters may therefore complete
-  // at the Front Desk only while no Examination Room exists, so even their
-  // lowest combined payouts still fund normal construction after the required
-  // timed-service wait and posted Front Desk upkeep. Every ordinary visit, and
-  // every clinic with an Examination Room, retains the care-room rule.
-  const usesProtectedFrontDeskTutorialBridge =
-    (nextEncounter.id === TUTORIAL_ENCOUNTER_ID ||
-      nextEncounter.id === SECOND_TUTORIAL_ENCOUNTER_ID) &&
-    next.facilityLevel === 0 &&
-    !next.rooms.some(
-      (room) => room.roomDefinitionId === "room.examination",
-    );
-  const needsCareRoom = procedureConsultRoom === null &&
-    procedureConsultCandidate === null &&
-    (isFirstOpening || isReopenableActive || isUnacknowledgedTerminal) &&
+  const hasExamRoom = next.rooms.some(room => room.roomDefinitionId ===
+    (nextEncounter.frozenCase.pediatricProfile ? "room.pediatric_examination" : "room.examination"));
+  const needsPatientApproach = !hasExamRoom &&
+    (isFirstOpening || isReopenableActive || isTerminalReview);
+  if (needsPatientApproach) {
+    if (amenityTrip) requestPatientAmenityReturn(next, "encounter", nextEncounter.id, context);
+    else {
+      // Attend the actor visible at opening, not a stale waiting-path endpoint.
+      nextEncounter.patientMovement = null;
+      if (nextEncounter.waitingDestination && (!nextEncounter.patientLocation || !samePoint(nextEncounter.patientLocation, nextEncounter.waitingDestination.location))) nextEncounter.waitingDestination = null;
+      nextEncounter.idleWaitingSinceTick = null;
+    }
+  }
+  const needsCareRoom = (isFirstOpening || isReopenableActive || isTerminalReview) &&
     !hasExamReservation &&
-    !usesProtectedFrontDeskTutorialBridge;
+    hasExamRoom;
   const existingExamRoomId = getEncounterExaminationRoomId(
     next,
     nextEncounter,
@@ -3572,32 +3590,21 @@ function reduceOpenChart(
     careEligibleLifecycle &&
     existingExamRoomId !== null &&
     (amenityTrip !== null || retailTrip !== null);
-  const needsProcedureConsult = procedureConsultRoom !== null && !founderAlreadyAttending;
   const founderHasBlockingActivity = next.environment.founderActivity !== null &&
     next.environment.founderActivity.kind !== "walk_to_point" &&
     !isAutomaticFounderActivity(next.environment.founderActivity);
   const founderCanAttend = founderAlreadyAttending ||
-    (!isFounderReservedForService(next) && !founderHasBlockingActivity);
-  if ((needsCareRoom || needsFounderEscort || needsDetourRedirect || needsProcedureConsult) && founderCanAttend) {
-    const destination = needsProcedureConsult
+    (!isFounderReservedForService(next) && !founderHasBlockingActivity && !(needsPatientApproach && amenityTrip));
+  if ((needsCareRoom || needsPatientApproach || needsFounderEscort || needsDetourRedirect) && founderCanAttend) {
+    const destination = needsPatientApproach
       ? (() => {
-          const definition = getRoomDefinition(procedureConsultRoom.roomDefinitionId, context);
-          if (!definition) return null;
-          const founderPath = pathFromLocationToFacilityPoint(
-            next, context, next.environment.founderLocation,
-            getRoomNavigationAnchor(procedureConsultRoom, definition, "staff"),
-            new Set([procedureConsultRoom.id]),
-          );
-          return founderPath.length > 0
-            ? { roomId: procedureConsultRoom.id, patientPath: [], founderPath }
-            : null;
+          const location = getEncounterPatientLocation(next, nextEncounter.id);
+          const founderPath = location ? getFounderAdjacentApproachPath(next, context, location) : [];
+          return founderPath.length ? { roomId: null, patientPath: [], founderPath } : null;
         })()
       : needsCareRoom
       ? (() => {
-          const start =
-            nextEncounter.patientLocation ??
-            getPublicEntrance(next, context)?.outside ??
-            null;
+          const start = nextEncounter.patientLocation;
           return start === null
             ? null
             : chooseCareRoom(
@@ -3656,7 +3663,7 @@ function reduceOpenChart(
       // milestone explicitly assigns the founder's next activity.
       workMinutesRemaining: Number.MAX_SAFE_INTEGER,
       };
-    if (!needsProcedureConsult && (needsCareRoom || amenityTrip || retailTrip)) {
+    if (!needsPatientApproach && (needsCareRoom || needsFounderEscort || amenityTrip || retailTrip)) {
       nextEncounter.waitingDestination = null;
       // Chart availability is immediate and so is the care redirect: a patient
       // already walking or idling toward a waiting endpoint leaves that leg at
@@ -3759,6 +3766,24 @@ function reduceCloseChart(
   }
   const releaseFounderAttendance = () =>
     releaseFounderAttendanceForEncounter(next, context, nextEncounter);
+  const consultSource = sourceConsultOperation(next, nextEncounter);
+  if (consultSource && isClinicFounderConsult(nextEncounter) && nextEncounter.consult?.closedAtFacilityTick === null && nextEncounter.answers.length > 0) {
+    releaseClinicConsult(next, nextEncounter, context);
+  }
+  if (consultSource && nextEncounter.consult?.closedAtFacilityTick === null &&
+      !["completed", "cancelled"].includes(consultSource.status)) {
+    if (next.openChartEncounterId === nextEncounter.id) next.openChartEncounterId = null;
+    if (next.attendedEncounterId === nextEncounter.id) next.attendedEncounterId = null;
+    if (isClinicFounderConsult(nextEncounter)) returnClinicProvider(next, nextEncounter, context);
+    if (nextEncounter.lifecycle === "resolved_summary_available" && nextEncounter.terminalFeedback?.acknowledged) {
+      nextEncounter.lifecycle = "resolved";
+      nextEncounter.consult = { ...nextEncounter.consult, closedAtFacilityTick: next.facilityTick };
+    } else beginPatientFeedAttention(nextEncounter, "clinical_decision", next.facilityTick);
+    releaseFounderAttendance();
+    return recordReceipt(next, command, "applied", nextEncounter.consult.closedAtFacilityTick === null
+      ? "Chart closed; the procedure still needs its consult answered and filed."
+      : "Consult filed; the procedure can finish.");
+  }
   const returnPatientToWaiting = () => {
     releaseEncounterCareReservation(nextEncounter);
     nextEncounter.waitingDestination = null;
@@ -4222,8 +4247,7 @@ function reduceSubmitAnswer(
       nextEncounter.patientSatisfaction;
     nextEncounter.resolvedAtFacilityTick = next.facilityTick;
     nextEncounter.idleWaitingSinceTick = null;
-    // The panel remains open for terminal feedback and the optional summary,
-    // but completed charts no longer receive Active-patient attendance rules.
+    // Terminal feedback and the summary retain physical attendance until close.
     next.openChartEncounterId = nextEncounter.id;
     if (next.attendedEncounterId === nextEncounter.id) {
       next.attendedEncounterId = null;
@@ -4425,7 +4449,8 @@ function reduceSubmitAnswer(
   }
 
   next.environment.pendingFounderConsult = null;
-  releaseFounderAttendanceForEncounter(next, context, nextEncounter);
+  // Answer submission does not close the chart. Feedback/summary still owns
+  // attendance; close or the next-step action that closes it releases everyone.
 
   if (diagnosticPlan && isFinalNode) advanceNewDiagnosticOrders(next, context);
 
@@ -6075,6 +6100,10 @@ function maybeAdmitAutomaticPatient(
       (clinicalCase) =>
         !isEmployeeDiscussionCase(clinicalCase) &&
         clinicalCase.routineEligible &&
+        // Intra-procedure questions describe an actual ongoing procedure.
+        // Only selectProcedureConsult can supply that patient and source; an
+        // installed room alone must not offer them as a new clinic arrival.
+        procedureConsultKind(clinicalCase) === null &&
         getClinicalCaseEligibilityIssue(state, clinicalCase, context, capabilities) === null &&
         clinicalCase.decisionNodes.every(
           (node) =>
@@ -6082,10 +6111,13 @@ function maybeAdmitAutomaticPatient(
         ),
     )
     .sort((left, right) => left.id.localeCompare(right.id));
-  if (eligibleCases.length === 0) {
+  const procedureConsult = selectClinicConsult(state, context, selectedAtRealMs, activeEmployeeDiscussionConceptIds, true)
+    ?? selectProcedureConsult(state, context, selectedAtRealMs, activeEmployeeDiscussionConceptIds)
+    ?? selectClinicConsult(state, context, selectedAtRealMs, activeEmployeeDiscussionConceptIds);
+  if (eligibleCases.length === 0 && !procedureConsult) {
     return;
   }
-  const selection = selectRoutineClinicalCase(
+  const selection = procedureConsult?.selection ?? selectRoutineClinicalCase(
     state,
     eligibleCases,
     selectedAtRealMs,
@@ -6099,7 +6131,7 @@ function maybeAdmitAutomaticPatient(
   const sequence = state.routineArrivalSequence;
   const clinicalCase = selection.clinicalCase;
   const encounterId = `encounter.auto.${state.facilityLevel}.${sequence}`;
-  state.encounters[encounterId] = createEncounter(state, context, {
+  const admitted = createEncounter(state, context, {
     encounterId,
     clinicalCase,
     arrivalClass: "routine",
@@ -6108,7 +6140,44 @@ function maybeAdmitAutomaticPatient(
     // tutorial from blocking progression. They may wait indefinitely until
     // the player is ready; ordinary Level 1 patients retain normal patience.
     patienceExempt: state.facilityLevel === 0,
+    ...(procedureConsult ? { patientDisplayName: procedureConsult.operation.displayName,
+      patientAppearance: procedureConsult.operation.appearance ?? undefined, approvedProfileId: procedureConsult.profileId } : {}),
   });
+  state.encounters[encounterId] = admitted;
+  if (procedureConsult) {
+    const { operation, roomId, kind } = procedureConsult;
+    state.lastServiceAppointmentTicks[founderConsultClockKey(kind)] = state.facilityTick;
+    const existingFamily = pediatricFamilyForActor(state, "service_visitor", operation.id);
+    if (existingFamily) {
+      const duplicateFamilyId = admitted.pediatricFamilyId;
+      const duplicate = duplicateFamilyId ? state.pediatricFamilies?.[duplicateFamilyId] : undefined;
+      if (duplicate) {
+        state.retailExternalActors = state.retailExternalActors.filter(actor => actor.id !== duplicate.parentActorId);
+        delete state.pediatricFamilies![duplicate.id];
+      }
+      existingFamily.child = { kind: "encounter", id: admitted.id };
+      admitted.pediatricFamilyId = existingFamily.id;
+      const parent = state.retailExternalActors.find(actor => actor.id === existingFamily.parentActorId);
+      if (parent) { parent.linkedEncounterId = admitted.id; parent.linkedServiceOperationId = null; }
+    }
+    admitted.consult = { version: "founder-consult.v1", kind, serviceOperationId: operation.id, roomInstanceId: roomId,
+      phaseIndex: operation.phaseIndex, providerEmployeeId: operation.providerReservation?.kind === "employee" ? operation.providerReservation.employeeId : null,
+      closedAtFacilityTick: null };
+    admitted.patientLocation = operation.location ? { ...operation.location } : null;
+    admitted.patientMovement = null;
+    admitted.assignedRoomInstanceId = roomId;
+    admitted.checkInStatus = "checked_in";
+    applyFacilityExperienceAtCheckIn(state, admitted, context);
+    beginPatientFeedAttention(admitted, "checked_in", state.facilityTick);
+    admitted.waitingDestination = null;
+    admitted.idleWaitingSinceTick = null;
+    admitted.waiting = { ...admitted.waiting, patienceExempt: true, departureDueTick: null };
+    operation.actorKind = "encounter";
+    operation.actorId = admitted.id;
+    operation.consultEncounterId = admitted.id;
+    operation.displayName = admitted.patientDisplayName;
+    operation.appearance = clonePlain(admitted.patientAppearance);
+  }
   state.routineArrivalSequence += 1;
   state.nextRoutineArrivalTick = getNextRoutineArrivalTick(state, context);
 }
@@ -7089,6 +7158,7 @@ function advanceFounderActivity(
     }
   }
   if (activity.pathIndex < activity.path.length - 1) {
+    if (clinicFounderWaitsForSeat(state)) return;
     const elapsedTicks = Math.max(
       1,
       state.facilityTick - activity.lastMovedAtFacilityTick,
@@ -8341,6 +8411,8 @@ function reduceAdvanceTick(
   const hourlyExpenseAtMinuteStart = -getOperatingExpensePerFacilityHour(next, context);
   const supplierSavingsAtMinuteStart = getSupplierUpkeepSavingsPerFacilityHour(next, context);
   next.facilityTick += 1;
+  reconcileFounderConsultSources(next);
+  reconcileClinicConsultClosures(next, context);
   reconcileFrozenPatientTravel(state, next, context);
   const founderActivity = next.environment.founderActivity;
   if (founderActivity) {
@@ -8349,6 +8421,7 @@ function reduceAdvanceTick(
       const encounter = next.encounters[founderActivity.targetId];
       for (const roomId of [
         encounter?.assignedRoomInstanceId,
+        ...(encounter?.consult ? [sourceConsultOperation(next, encounter)?.periopBedReservation?.roomInstanceId] : []),
         encounter?.queuedCareRoomInstanceId,
         encounter?.patientMovement?.destinationRoomInstanceId,
         encounter?.pendingResult?.patientTravel?.destinationRoomInstanceId,
@@ -8843,8 +8916,13 @@ function reduceAdvanceTick(
   for (const encounter of Object.values(next.encounters)) {
     if (encounter.pendingResult) bindPendingResultRoomRevenue(next, context, encounter, encounter.pendingResult);
   }
-  if (next.environment.pendingFounderConsult?.kind === "encounter" &&
-      next.openChartEncounterId === next.environment.pendingFounderConsult.targetId &&
+  const openConsult = next.openChartEncounterId ? next.encounters[next.openChartEncounterId] : undefined;
+  const openConsultSource = openConsult?.consult?.closedAtFacilityTick === null ? sourceConsultOperation(next, openConsult) : undefined;
+  // The open chart itself is durable attendance intent, including an old save
+  // opened while the patient was offsite or returning from diagnostic care.
+  if ((openConsultSource || openConsult && ["waiting_unopened", "active_action_required", "resolved_summary_available"].includes(openConsult.lifecycle)) &&
+      next.openChartEncounterId &&
+      !(next.environment.founderActivity?.kind === "perform_service" && next.environment.founderActivity.targetId === openConsultSource?.id) &&
       !(next.environment.founderActivity?.kind === "attend_encounter" &&
         next.environment.founderActivity.targetId === next.openChartEncounterId)) {
     const retryOperationId = "system.open-chart-attendance-retry";

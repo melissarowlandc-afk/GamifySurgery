@@ -76,9 +76,9 @@ describe("M5c pediatric APP appointments", () => {
     for (let i = 0; i < 600; i++) {
       state.facilityTick++; advanceEmployeeMovement(state, context); advanceServiceOperations(state, context); sameRoom(state);
     }
-    // Six completed visits per home in ten hours; the seventh is still in
-    // transit/care at the cutoff. Installed demand remains every 90 minutes.
-    expect(state.serviceIncomeReceipts.filter(row => row.incomeLineId === line.id)).toHaveLength(12);
+    // Basic 95-minute work plus paired travel is slower than 90-minute demand.
+    // Five complete per home; queued demand stays bounded by the home cap.
+    expect(state.serviceIncomeReceipts.filter(row => row.incomeLineId === line.id)).toHaveLength(10);
     expect(new Set(visits(state).map(row => row.clinicVisit?.requestedRoomInstanceId)).size).toBe(2);
     expect(state.nextServiceAppointmentTicks[line.id]).toBeUndefined();
   });
@@ -181,7 +181,7 @@ describe("M5c pediatric APP appointments", () => {
     state = gameReducer(state, { type: "SELL_ROOM", operationId: "peds.sale", roomId, saleConfirmationToken: sale.confirmationToken }, context);
     expect(state.operationReceipts["peds.sale"]?.status).toBe("applied");
     sameRoom(state);
-    expect(visits(state).find(row => row.id === id)?.saleTransfer?.remainingPhaseMinutes).toBe(30);
+    expect(visits(state).find(row => row.id === id)?.saleTransfer?.remainingPhaseMinutes).toBe(95);
     state = deserializeGameState(serializeGameState(state), context);
     state = until(state, value => visits(value).find(row => row.id === id)?.status === "completed");
     expect(visits(state).find(row => row.id === id)?.appAppointmentRevenue).toEqual(frozenFee);

@@ -208,6 +208,8 @@ describe("autonomous appointments in clinic", () => {
 
   it("reroutes after firing and selling, then sends visitors home if the final APP is fired", () => {
     let state = until(fixture(), value => visits(value).filter(operation => operation.status === "in_service").length === 2);
+    // Isolate reroute/final dismissal from the denser autonomous queue.
+    state.serviceAppointmentsEnabled = false;
     const preview = getRoomSalePreview(state, "room.app.0", context)!;
     expect(preview.dismissedEmployees.map(employee => employee.id)).toEqual(["app.0"]);
     expect(getRoomStaffCapacity({ ...state, rooms: state.rooms.filter(room => room.id !== "room.app.0") }, "staff.app").capacity).toBe(1);

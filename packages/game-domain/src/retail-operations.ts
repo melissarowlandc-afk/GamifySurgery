@@ -217,7 +217,7 @@ function actorCanStart(state: GameState, kind: RetailActorKind, id: string, line
     !state.retailOperations.some((operation) => ["walking_to_outlet", "queued", "purchasing"].includes(operation.status) && operation.servingEmployeeId === id) &&
     !state.environment.glp1AutomationSlots.some((slot) => slot.employeeId === id)));
   // A seat the player chose holds until they move the founder or open a chart (owner rule, 2026-10-07).
-  if (kind === "founder") return (state.environment.founderActivity === null || ["attend_encounter", "return_to_front_desk", "wander_facility", "sit_in_chair", "visit_bathroom"].includes(state.environment.founderActivity.kind)) &&
+  if (kind === "founder") return (state.environment.founderActivity === null || ["return_to_front_desk", "wander_facility", "sit_in_chair", "visit_bathroom"].includes(state.environment.founderActivity.kind)) &&
     state.environment.founderActivity?.explicitSeat !== true && !clinical.founderReserved && !founderHasActiveServiceOperation(state);
   if (kind === "encounter") return isWaitingEncounterEligible(state, id, line.retail?.category === "food_drink");
   if (kind === "service_visitor") {

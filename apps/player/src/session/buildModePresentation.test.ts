@@ -101,7 +101,7 @@ describe("Build Mode upgrade benefit text", () => {
   });
 
   it.each([
-    ["room.examination", "+2 satisfaction points after examination", "+6 points", "+8 points"],
+    ["room.examination", "+2 satisfaction points after examination; routine APP work takes 5% less time", "+6 points", "+8 points"],
     ["room.laboratory", "+6% paid laboratory-processing revenue", "+18%", "+24%"],
     ["room.reading", "Scan reading takes 10% less time", "30% less time", "40% less time"],
     ["room.bathroom", "10% slower cleanliness loss", "30% slower loss", "40% slower loss"],

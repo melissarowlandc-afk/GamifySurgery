@@ -12261,3 +12261,593 @@ All seven workspace typechecks pass, exit 0. Scoped touched e2e and QA replay ty
 `Verified launcher health contract gamify-surgery-player protocol 1.`
 
 Manager reports live-tree production map perf **4/4 pass** (desktop+phone, L4+L5). That is supplied manager evidence, not a new release browser run. Manager still owns release browser/density checks and physical iPhone latency, failed-image fallback, decoded/GPU memory and thermal acceptance. No clinical content edits, PNG regeneration, Git mutation, push, install, network, agents, SQL execution, browser or deploy. Owner origins/profiles/opening paths are unchanged. Work remains local/uncommitted for manager review and rollout.
+
+## Release port30 / rebind30 (2026-11-10, release worktree, founder/consult pathing)
+
+Completed only in GS-release at entry HEAD 23b6008d5ce38096d8fab6ea2c968ac36d85c79e. Main remained read-only. Ported the manager-accepted M1 founder attendance, M2 same-patient endoscopy/intra-op consult gates, M3 APP handoff/bounded clinic queues/training and room speedups, M4 pediatric/wound-ostomy handoffs/frequency, and round-2 route/attendance/preemption/pose fixes. Intra-op mechanics still have no admitted routine-OR clinical content. The approved ready predicate and its exact postimage hash are included; the shared buildViewModels test retains the stronger release Break Room assertions and changes only its two consult descriptions.
+
+### Files and exclusions
+
+**77 changed public paths**: 57 copied, 15 hunk-ported and 2 regenerated paths plus 3 release-only coordination records. The 60-path port set includes the 54 accepted code/test paths, approved readiness/postimage pair, two author documents and two necessary test-fixture dependencies described below. Every observed path has a reason and before/live/after hashes in `.local-dev/release-verify/port30-20261110.json`. The exact **203 excluded paths** are listed in `.local-dev/release-port30-20261110/excluded-paths.txt` and the disposition JSON. This includes all active N4 clinical drafts, unreleased art/character, phone/perf, cloud/SQL/CI and unrelated tools/docs; none was copied. The entry's two unrelated untracked artifact directories remain untouched.
+
+- `apps/player/src/questionShipSaveCompatibility.test.ts` (copied)
+- `apps/player/src/session/buildModePresentation.test.ts` (copied)
+- `apps/player/src/session/buildViewModels.test.ts` (hunk-ported)
+- `apps/player/src/session/flagFreeze.test.tsx` (hunk-ported)
+- `apps/player/src/session/founderAppConsults.test.ts` (copied)
+- `apps/player/src/session/founderConsultAttendance.test.ts` (copied)
+- `apps/player/src/session/founderProcedureConsults.test.ts` (copied)
+- `apps/player/src/session/founderQaAttendance.test.ts` (copied)
+- `apps/player/src/session/founderSpecialtyConsults.test.ts` (copied)
+- `apps/player/src/session/founderStaffAttendance.test.ts` (copied)
+- `apps/player/src/session/levelFiveLaunch.test.tsx` (hunk-ported)
+- `apps/player/src/session/tutorialViewModels.test.ts` (copied)
+- `apps/player/src/session/viewModels.ts` (copied)
+- `docs/execplans/founder-consult-pathing-20261110.md` (copied)
+- `docs/research/founder-consult-pathing-20261110.md` (copied)
+- `packages/balance-config/src/app-role.test.ts` (copied)
+- `packages/balance-config/src/employee-training.ts` (copied)
+- `packages/balance-config/src/founder-consults.test.ts` (copied)
+- `packages/balance-config/src/founder-consults.ts` (copied)
+- `packages/balance-config/src/guidance-tips.ts` (copied)
+- `packages/balance-config/src/index.ts` (copied)
+- `packages/balance-config/src/room-upgrades.test.ts` (copied)
+- `packages/balance-config/src/room-upgrades.ts` (copied)
+- `packages/balance-config/src/service-income-catalog.ts` (copied)
+- `packages/clinical-content/src/question-flags3-20261107.test.ts` (hunk-ported)
+- `packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts` (hunk-ported)
+- `packages/clinical-content/src/question-harden1-n3r4-acceptance-20261110.test.ts` (hunk-ported)
+- `packages/clinical-content/src/question-stats1-20261108.test.ts` (hunk-ported)
+- `packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts` (hunk-ported)
+- `packages/game-domain/src/app-appointments.ts` (copied)
+- `packages/game-domain/src/clinic-consult-topics.ts` (copied)
+- `packages/game-domain/src/clinic-consults.ts` (copied)
+- `packages/game-domain/src/clinic-work.ts` (copied)
+- `packages/game-domain/src/founder-consults.ts` (copied)
+- `packages/game-domain/src/index.ts` (copied)
+- `packages/game-domain/src/pediatric-family.ts` (copied)
+- `packages/game-domain/src/persistence.ts` (copied)
+- `packages/game-domain/src/reducer.ts` (copied)
+- `packages/game-domain/src/retail-operations.ts` (copied)
+- `packages/game-domain/src/selectors.ts` (copied)
+- `packages/game-domain/src/service-operations.ts` (copied)
+- `packages/game-domain/src/staff.ts` (copied)
+- `packages/game-domain/src/types.ts` (copied)
+- `packages/game-domain/tests/app-appointments.test.ts` (copied)
+- `packages/game-domain/tests/colleague-names.test.ts` (copied)
+- `packages/game-domain/tests/employee-discussions.test.ts` (copied)
+- `packages/game-domain/tests/founder-app-consults.test.ts` (copied)
+- `packages/game-domain/tests/founder-consult-attendance.test.ts` (copied)
+- `packages/game-domain/tests/founder-consults.fixture.ts` (copied)
+- `packages/game-domain/tests/founder-procedure-consults.test.ts` (copied)
+- `packages/game-domain/tests/founder-qa-attendance.fixture.ts` (hunk-ported)
+- `packages/game-domain/tests/founder-qa-attendance.test.ts` (copied)
+- `packages/game-domain/tests/founder-specialty-consults.test.ts` (copied)
+- `packages/game-domain/tests/game-domain.test.ts` (copied)
+- `packages/game-domain/tests/level-five-launch.test.ts` (hunk-ported)
+- `packages/game-domain/tests/level-four-economy.test.ts` (copied)
+- `packages/game-domain/tests/level-four-integration-defects.test.ts` (copied)
+- `packages/game-domain/tests/level-four-integration.test.ts` (copied)
+- `packages/game-domain/tests/level-two-endoscopy.test.ts` (copied)
+- `packages/game-domain/tests/pediatric-appointments.test.ts` (copied)
+- `packages/game-domain/tests/retail-operations.test.ts` (copied)
+- `packages/game-domain/tests/routine-clinic-queue.test.ts` (copied)
+- `packages/game-domain/tests/service-procedure-operations.test.ts` (copied)
+- `packages/game-domain/tests/timing-encounters.test.ts` (copied)
+- `packages/game-domain/tests/wound-ostomy-services.test.ts` (copied)
+- `tests/fixtures/founder-qa-attendance-20261110.json` (copied)
+- `tests/fixtures/level-five-integration-checkpoints-20261012.json` (regenerated)
+- `tools/qa/level-five-integration-results-20261012.json` (regenerated)
+- `tools/question-quality/fixtures/question-flags3-release-source-pins-20261107.json` (hunk-ported)
+- `tools/question-quality/fixtures/question-flags4-acceptance-release-source-pins-20261108.json` (hunk-ported)
+- `tools/question-quality/fixtures/question-harden1-n3r4-acceptance-source-migration-20261110.json` (copied)
+- `tools/question-quality/fixtures/question-harden1-n3r4-release-source-pins-20261110.json` (hunk-ported)
+- `tools/question-quality/fixtures/question-stats1-acceptance-release-source-pins-20261108.json` (hunk-ported)
+- `tools/question-quality/fixtures/question-stats1-release-source-pins-20261108.json` (hunk-ported)
+- `docs/execplans/release-port30-20261110.md` (release-only coordination)
+- `docs/execplans/gs028-stats-ethics-overhaul-20261007.md` (release-only coordination)
+- `docs/handoffs/CURRENT_THREAD_HANDOFF.md` (release-only coordination)
+
+Fixture dependencies found by actual validation: the new QA witness originally selected Sophia Young from the author's moving Level5 fixture. Retained that exact original public integration-l4 checkpoint in founder-qa-attendance-20261110.json (SHA 793c500e5220b9af48e011e27d08f48065be038aa8e6f886cabb63b4515eecbb), then changed only the owned QA factory to deserialize it with the normal context and original QA campaign/XP metadata. The patient remains encounter.auto.4.57; every original name, frozen case, pose and attendance assertion remains. Source fixture SHA/provenance and the exact bounded hunk are in retained-sophia-fixture.json. No owner/private save or alternate patient was substituted.
+
+The regenerated real Level5 save exposed a pre-existing cache-replacement error in flagFreeze.test.tsx: the second filler subtracted the still-existing optional key twice, causing String.repeat(-5446). The release-only hunk subtracts the existing key's size before calculating its replacement; the quota remains **5 MiB**, the real campaign is unpadded, all recovery/reload assertions remain, and two assertions prove the intended 512-513 byte headroom. The live file's unrelated comment change stays excluded. quota-setup-correction.json records the exact old/new hunk. No product cloud source changed.
+
+### Strict protected-source provenance
+
+The initial focused clinical run recorded four expected failures: actual app-appointments source drift, approved readiness postimage, and its migration-digest chain. Exact authorized founder/consult/readiness/launch-test deltas were added through the existing mechanisms. All capture files and history entries remain, **74 required absences** and **186 unrelated original pin rows** remain exact, and the new source pins are strict. The 18-row acceptance migration fixture changes only the already authorized ready-test afterSha256 to 0895aadc381839d9e10324aa00bcdf2de9ca96ac3994bbbd1a0f2ec6ff9cb980; every original beforeText/preimage is retained. Its SHA changes da61238d2d24dd92e29b6e61cd74e6ffba99afbadfd889d634aada163df59865 -> d345f5dcc9825101f43699c5914b76b3b2cce5f58d5099aefeb279bdae5ea0b9. The linked two-row release fixture preserves the previous migration SHA in authorizedMigrationUpdates. The reported perf codec mismatch did **not** reproduce in GS-release: codecJson.ts and its existing pins are unchanged. Final focused guards: 5 files / 234 passing tests. No guard body or assertion was deleted or weakened.
+
+### Actual guarded Level5 journey and controls
+
+Fresh native journey and lower helper ran inside GS-release with the original seed and funded Level4 opening, staging only. verify-staged.mjs checked all assertions and both independent actual-run controls before publish-verified.mjs locally wrote the two canonical artifacts. The first invocation failed preflight before the journey or any write; the successful invocation started from scratch. Only the established liveCap metadata correction (4 -> 5) and the inputHistory append were applied beyond generated bytes. All prior **23 history entries** remain; the prior 565-input binding is the new 24th entry. Inputs are now **570**, with **20 changed/new runtime/balance paths**. The integration guard remains byte-identical (SHA 812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909).
+
+| Metric | Before | After | Delta |
+| --- | ---: | ---: | ---: |
+| Commands | 29,663 | 34,420 | +4,757 |
+| Closing cash, cents | 6,601,005 | 7,310,006 | +709,001 |
+| Completed patients | 459 | 533 | +74 |
+| Walkouts | 0 | 0 | 0 |
+| XP goal tick | 15,550 | 14,938 | -612 |
+| Unlock tick | 17,881 | 22,301 | +4,420 |
+| Final tick | 27,653 | 32,073 | +4,420 |
+| Gross receipts, cents | 16,919,200 | 19,626,500 | +2,707,300 |
+| Stock, cents | 311,470 | 456,014 | +144,544 |
+| Paid operating, cents | 10,744,225 | 12,597,980 | +1,853,755 |
+
+These exactly reproduce the domain worker's expected CHECK. Opening 1,785,500 and capital 1,048,000 cents are unchanged. Cash reconciles: 1,785,500 + 19,626,500 - 456,014 - 12,597,980 - 1,048,000 = **7,310,006**. The delta reconciles independently: +2,707,300 gross -144,544 stock -1,853,755 operating = +709,001.
+
+This is a changed behavioral run. Accepted clinic work/attendance gates and bounded queues extend the run by 4,420 minutes; the adult offered interval changes 120 -> 90, basic clinical work uses 95 minutes rather than legacy30/20, and trained/room work quotes46 at5/5. More total completions reflect both that longer horizon and the accepted cadence/queue changes; they are not a claim of a 16% fixed-day productivity gain. Fees were not raised. The author's separate equal-horizon economic attribution is retained under author/release-followup/economic-attribution.json.
+
+Independent **old-runtime control** used process-local reads of all 565 exact pre-port bound sources through the unchanged TS loader: it reproduced every old metric, all three old reports and all nine old checkpoint bytes. Independent **old-content control** ran the current runtime with the exact pre-port clinical object and reproduced every new metric/report/save byte. All **422 clinical hashes**, the admitted release fingerprint 01d239ea464a3cbdffd345b107a4035576922a4b143ea57f5c49f0752123ebf4 and manifest137/1,143cases/1,454nodes/608concepts stay unchanged. No N4 admission, clinical version, approval or source edit.
+
+All **nine checkpoint saves** and **three reports** changed; tests/e2e consumers were left untouched. Exact changed paths and per-save SHA pairs are in checkpoint-deltas.json and accepted-run-verification.json. The verified launch pins alone change first-report qualifying patients52 ->48, raw score62.5988833962967 ->62.771688127099196 and displayed score62.59 ->62.77.
+
+| Checkpoint | Tick before -> after | Cash cents before -> after | Changed JSON paths |
+| --- | ---: | ---: | ---: |
+| integration-l4 | 4247 -> 3850 | 2795650 -> 2709500 | 10874 |
+| integration-build | 4247 -> 3850 | 1747650 -> 1661500 | 10558 |
+| integration-preparing | 17882 -> 22302 | 4670438 -> 5579379 | 18666 |
+| integration-running | 18019 -> 22439 | 4769797 -> 5610358 | 19902 |
+| integration-final | 20938 -> 25358 | 5369883 -> 6191128 | 22403 |
+| integration-finish | 20939 -> 25359 | 5369883 -> 6191128 | 20282 |
+| integration-repeat-final | 24595 -> 29015 | 6226483 -> 7031472 | 24292 |
+| integration-repeat | 24596 -> 29016 | 6226983 -> 7031472 | 21851 |
+| integration-lower-repeat | 27653 -> 32073 | 6601005 -> 7310006 | 24286 |
+
+| Report | Raw total before -> after | Qualifying patients before -> after |
+| --- | --- | --- |
+| 1 | 62.5988833962967 -> 62.771688127099196 | 52 -> 48 |
+| 2 | 67.01774207593124 -> 66.72582929932634 | 48 -> 49 |
+| 3 | 45.510740160222426 -> 45.38546238244465 | 48 -> 48 |
+
+Three 3,000-minute reports, qualifying-patient/category floors, low first score, best/latest and immutable-first checks, positive comfort/rounds/supplier/retirement assertions, >20,000 commands and cash reconciliation remain strict. Old campaign safety: actual regeneration of all **25 schema5-9 loads plus 25 120-minute continuations** is byte-identical to the old release, including all old learning histories and 50 frozen-record checks. The legacy canonical file was therefore **not rewritten**. Accepted founder fixtures separately exercise persisted held consults, original legacy work durations and new clinicWork round trips, while malformed records remain rejected. Focused player saves/attendance:59 pass; full stats/ship/flags save suites also pass.
+
+| Artifact | Old SHA-256 | New SHA-256 | Disposition |
+| --- | --- | --- | --- |
+| tools/qa/level-five-integration-results-20261012.json | `be932b27dd5ec9bfa46a00a905052bcf1b0755bf280a33d8edfd23bfc2079089` | `0c5355646677e42caa691d4fddccb2f4890b571e458d38c682ccd8997d20e7ec` | changed |
+| tests/fixtures/level-five-integration-checkpoints-20261012.json | `e5bebd15df15305bb2a0ee5dfd732ebd84b68169786821970947be01c707ba3d` | `ea2c934b79ddab4fa5cd0481293d834962d967faf46fd4d28947036e09e96a60` | changed |
+| tests/fixtures/level-five-legacy-behavior-20261012.json | `ef3ff630f8cac42f5240f5a651090d21287e3399d5f2b0247e0f8e851f146e31` | `ef3ff630f8cac42f5240f5a651090d21287e3399d5f2b0247e0f8e851f146e31` | unchanged |
+
+Changed bound inputs (the complete old/new provenance is also in canonical inputHistory and the disposition receipt):
+
+| Path | Old SHA-256 | New SHA-256 |
+| --- | --- | --- |
+| packages/balance-config/src/employee-training.ts | `9daacd4783b15e7fa5ee85c1348a313e6454bae4710e003d5494f3b890d899d5` | `35659ec6a6bce04e50643d54a23798b9df4081f6cd9877848b92d857c4d34e4b` |
+| packages/balance-config/src/guidance-tips.ts | `2563d44cc6921094320efcbaab996c9673f190dad60470706305f7944efeb9c3` | `67c20f0bb806ee5e7822c30df798e424958742a5500ad980ca38e93a58e6a669` |
+| packages/balance-config/src/index.ts | `40333ab81d3d9e8df49348db629337369560bddb04020b26c63599cd33609470` | `8078a8d81bb84453842ca0abcb1aafdf65b3f6a2bac389343ea5a90e8fadfe84` |
+| packages/balance-config/src/room-upgrades.ts | `c3212d71a3972f53ce400b9f6f9cee7e9c6a7e3280399aff03912fd8c87b040c` | `d796c252d3a6216384bcddde32da6b66431960ddd933b4a104232d172c0331a0` |
+| packages/balance-config/src/service-income-catalog.ts | `6096a39f88f9243917b41ec6d084500f7265baa57bc9a59ffd9f18a2603d42e8` | `203ca6e8d08cc06d13c881136cf6d06978fb3deca5b088bb0c4581f344bfe22f` |
+| packages/game-domain/src/app-appointments.ts | `9053ef12e1024cdb87865de85d190bb9dc649976d927b345039f278e67dc0f1e` | `72e1168893dfdcb4f2dc0c0a9a598340f1f59f3a76c8f2098d78218912713dac` |
+| packages/game-domain/src/index.ts | `adb0aeb1d71a3216cc4b963e4e9bc5ccdee84af505844e79f10ddb64da9a563c` | `5345cf8dd064a3f073f5e5c9fc436261c0ac31d159f3a9e1aa207489acf7c258` |
+| packages/game-domain/src/pediatric-family.ts | `73701aa504372382272c0dc8dd6f265a43fb294ac37d4ec4d204346cac3880de` | `369acb35e7bae1fd612f793cd877dc456036a381cfb58bca25f51eed231be0c0` |
+| packages/game-domain/src/persistence.ts | `38fff7eef07ff0be979bd52fc4fe5e3d89ddb4e8f093bb3d6da64d8dbc6e759e` | `5856c780b56aa82e771e741a0f97567822cd5924db359280d1bbe80315b19904` |
+| packages/game-domain/src/reducer.ts | `d1ce8e5a99fcca2de26b7d0e485e2f7f8cd9885d909a2ff22a993b9954abb1da` | `38d620eaa73f2638c890ead472d4594e17f6ae993dccb5f4618282553bb2a532` |
+| packages/game-domain/src/retail-operations.ts | `6afb0724762579737a96f2ca110a0735e4fe5c04b457a05b7be4140b307a99fe` | `df28ac34a4ecc4b032ec9c79aef3f521cec0b3f6e0e07f2925ee39ced78e4f92` |
+| packages/game-domain/src/selectors.ts | `7a2a03ef8f581705e90bb7588a47bb56a419cc41d62757b692f340746150f87c` | `8ce9d46e024a6f37ea50e83e3e064c57483a91338276324de51cdba5f58475a7` |
+| packages/game-domain/src/service-operations.ts | `92fc79feeb93a45f2af617f98c645576514a4183d8ace84096ce77ad176aa2af` | `fa467ce6cfe910fb9b82b165f1dabd7ab8c0fb70f413e6a6cddbc7d66864b10d` |
+| packages/game-domain/src/staff.ts | `01a84bae18dc72b353840a526944e98a72e5ab9a1fe8dc18dcebc6637a1c0260` | `b950beb1673b38ab456cf6ddfb55f931aac1ff4b15a8bf1951af9572d87cc931` |
+| packages/game-domain/src/types.ts | `452324bbc85ef83005a817f0f2ca748f5c3889b47c14dff598f3b76bb4e5c86e` | `7d8dc527b95a3ca00a48afde790dbc4440c7ea2a9d1c08d55c1d3865cd71f047` |
+| packages/balance-config/src/founder-consults.ts | new | `870601deb612e8fa043932b8020127345a1ef3c2443c1ef54560d39ccc4579e3` |
+| packages/game-domain/src/clinic-consult-topics.ts | new | `7480671744d0fb1f129716fd4fc83eb7b3a63b832b153a702c9e621c262cf976` |
+| packages/game-domain/src/clinic-consults.ts | new | `fbf0b9ee9f3f4410527abef6db6f672ede0bf4766faf0942f79f64f54b44e657` |
+| packages/game-domain/src/clinic-work.ts | new | `b2b0f88aca29ccb8c1a78e55b67c4db599e674daba6ff0f427c9f7b11a5c1a0b` |
+| packages/game-domain/src/founder-consults.ts | new | `647575a8a4ab556b441feba019607f0c573defa86f0896dee2611b1197ccfa2c` |
+
+### Exact validation
+
+CI=true, all seven suites directly using --pool=threads (player maxWorkers4, others2). Root npm test's prerequisite boundary inventory subprocess is sandbox-blocked; the unchanged verifiers pass with the exact fresh native read-only Git inventory adapter. No test budget/assertion relaxation. All original failing/successful logs, JSON and native exit receipts are retained under .local-dev/release-port30-20261110; validation-summary.json contains the exact command lines, source controls and hashes.
+
+| Workspace | Files | Passed | Failed | Skipped |
+| --- | ---: | ---: | ---: | ---: |
+| clinical-context-workbench | 8 | 43 | 0 | 0 |
+| player | 419 | 4086 | 0 | 0 |
+| balance-config | 25 | 165 | 0 | 0 |
+| clinical-authoring | 7 | 81 | 0 | 0 |
+| clinical-content | 129 | 1604 | 0 | 0 |
+| clinical-research | 8 | 83 | 0 | 0 |
+| game-domain | 205 | 5264 | 0 | 1 |
+| Total | 801 | 11326 | 0 | 1 |
+
+Compared with release23b6008d baseline788files/11,287passed/0failed/1skip: +13files and +39passing tests; the existing opt-in incremental differential skip is unchanged. The initial full player run had 418 passing files/4,084 passing tests and the two quota-setup errors described above. The corrected full player suite is recorded separately as player-verified, not substituted over the failure receipt.
+
+`other-nonclinical.log`:
+
+```text
+Test Files  8 passed (8)
+      Tests  43 passed (43)
+   Start at  18:15:01
+   Duration  848ms (transform 250ms, setup 0ms, import 712ms, tests 366ms, environment 0ms)
+ Test Files  25 passed (25)
+      Tests  165 passed (165)
+   Start at  18:15:02
+   Duration  2.07s (transform 522ms, setup 0ms, import 2.14s, tests 148ms, environment 2ms)
+ Test Files  7 passed (7)
+      Tests  81 passed (81)
+   Start at  18:15:04
+   Duration  577ms (transform 117ms, setup 0ms, import 339ms, tests 262ms, environment 0ms)
+ Test Files  8 passed (8)
+      Tests  83 passed (83)
+   Start at  18:15:05
+   Duration  1.93s (transform 161ms, setup 0ms, import 442ms, tests 935ms, environment 0ms)
+```
+
+`clinical.log`:
+
+```text
+Test Files  129 passed (129)
+      Tests  1604 passed (1604)
+   Start at  18:17:50
+   Duration  132.72s (transform 7.63s, setup 0ms, import 224.88s, tests 25.20s, environment 11ms)
+```
+
+`domain.log`:
+
+```text
+Test Files  205 passed (205)
+      Tests  5264 passed | 1 skipped (5265)
+   Start at  18:17:50
+   Duration  601.32s (transform 15.38s, setup 0ms, import 433.02s, tests 745.91s, environment 15ms)
+```
+
+`player.log`:
+
+```text
+Test Files  1 failed | 418 passed (419)
+      Tests  2 failed | 4084 passed (4086)
+   Start at  18:17:50
+   Duration  498.11s (transform 29.21s, setup 0ms, import 778.13s, tests 1163.07s, environment 34ms)
+```
+
+`player-verified.log`:
+
+```text
+Test Files  419 passed (419)
+      Tests  4086 passed (4086)
+   Start at  18:28:37
+   Duration  446.82s (transform 28.21s, setup 0ms, import 711.24s, tests 1028.90s, environment 30ms)
+```
+
+`focused-save-verified.log`:
+
+```text
+Test Files  9 passed (9)
+      Tests  59 passed (59)
+   Start at  18:07:26
+   Duration  32.50s (transform 6.73s, setup 0ms, import 24.32s, tests 39.62s, environment 1ms)
+```
+
+`quota-verified.log`:
+
+```text
+Test Files  1 passed (1)
+      Tests  36 passed (36)
+   Start at  18:27:20
+   Duration  34.07s (transform 5.60s, setup 0ms, import 8.78s, tests 25.21s, environment 0ms)
+```
+
+Both original and final seven-workspace typechecks exit0. Player production build exits0: **673 modules,10.97s**, with existing chunk/dynamic-import/plugin warnings. Direct boundaries exit1 only for spawnSync git EPERM; exact-inventory fallback exits0:
+
+`Verified runtime dependency boundaries and 7601 tracked path(s).`
+
+`Verified launcher health contract gamify-surgery-player protocol 1.`
+
+Initial focused save run recorded seven missing-Sophia fixture failures; archival fixture correction produces9files/59passed. Quota correction produces1file/36passed. Initial focused guards record4expectedfail/230pass, then5files/234pass. All originals are retained honestly. Scope audit checks all source/artifact hashes, input history, all18 migration preimages, all untouched guard rows/absences, LF/UTF8 without BOM, unchanged clinical content and excluded perf/cloud/art/SQL/CI paths.
+
+### Risks and handoff
+
+Manager owns release browser/e2e route/pose and changed-checkpoint acceptance, backup and rollout. Intra-op mechanics still lack admitted live OR content; no question/clinical approval was added here. Native/headless proof does not replace physical-phone or live-cloud acceptance. Main remained read-only; no .github, network, browser, SQL execution, install, agents, Git mutation, commit/push or deploy. Owner origins/profiles/opening paths remain unchanged. This milestone is local/uncommitted for manager review; no remote backup or release is claimed.
+
+## Release port31 / rebind31 (2026-11-10, release worktree, round3 pathing + accepted N4)
+
+Supersedes the uncommitted port30 path dispositions, preserving its complete native-run/provenance history. Work only in GS-release at HEAD23b6008d5ce38096d8fab6ea2c968ac36d85c79e; main read-only. The combined release has **138 worker-owned public paths**, **81 changed this step** and57retained unchanged from port30. Cumulative dispositions:111copied/24hunk-ported/3regenerated; **573 observed differences excluded**, including12pre-existing browser screenshot changes preserved byte-exact outside worker ownership. Every path/reason/original/release/live/final hash is in .local-dev/release-verify/port31-20261110.json; exact excluded and changed lists are in .local-dev/release-port31-20261110/{excluded-paths,changed-paths}.txt. Port30's receipt remains immutable and linked by SHA.
+
+### Accepted scope and strict provenance
+
+Round3 changes only the resolved-during-departure OPEN_CHART guard, its19raw-save/domain/player regressions and real Resolved-card phone density fallback. Filed charts stay read-only without recalling the patient or reserving founder/room/provider; unfiled summaries still hold attendance. The Sophia helper/retained original snapshot and port30 quota correction are byte-identical. The additional rebound-L4 fixture is the exact original public state with encoding normalization only. No renderer/performance/cloud production source was changed.
+
+N4 adds exactly the eight manager-directed PASS tuples, all **needs_clinician_review**, no clinician approval. Manifest145rows; default **1151cases/1462nodes/610concepts**. Manifest SHA **08614aeff7c4b733c96b9aff7ac3b9774343e6bd2bfd46c520ae96c221056b42**; default SHA **b0e2675e53fb9132f8f8c5b630c34d324d2d97645f40de40f3191a06806fdf48**. All1143old cases,608old concepts,137old authority rows,1423legacy tuples and4whole-case relations remain exact. The18necessary frozen N4 source dependencies match the author's raw hashes; LF/BOM normalization changes no compiled clinical field. Both exact complete source-view hashes pass. The27withheld source versions remain catalog-only and unadmitted, including all seven REVISE items. No unaccepted N3, hardened hernia, pediatric/family/topic acceptance or other lane was shipped. The parked hernia test/dependency remains absent under an explicit strict guard.
+
+Runtime integration is limited to clinic-consult-topics.ts (one wound affinity), test-choice-orders.ts (eight exact not_executed/future_planned tuples) and reducer.ts (source-only fresh procedural offers), plus19regressions. All four accepted OR and two accepted endoscopy cases are tested through real sources, frozen reload, deadline holds, answering/close and one completion; both wound routes and no-extra-order behavior pass. Frozen unsourced historical OR charts still load/open. No cadence, fee, duration, save field/schema or balance input changed.
+
+The first full domain run found only a strict admission vector listing608rather than610concepts. Appended exactly the two accepted IDs, preserving every old ID and full equality; this is test-only and changes zero Level5bound inputs. The7-test file passes, and a complete domain rerun is retained separately. Authorized H1/N4 source postimages were recorded through exact release pin fixtures; no original capture was refreshed or guard removed. Original74required absences,211unrelated entry pin rows and all history remain exact; N4 adds the explicit hernia absence. H1's18-row migration is byte-exact. N4's10-row capture/migration is byte-exact; two strict release postimages preserve the older release guard extensions, and the one absent hernia row is still checked for original beforeText/hash/identity. Final six guarded files:242pass. Codec/performance/cloud source hashes were not changed or excused.
+
+### Actual guarded journey, controls and attribution
+
+Fresh native journey and lower helper used the unchanged seed level-five-m9.integration.01, funded Level4opening and original driver/assertions. All writes stayed staged until verify-staged/publish-verified passed. Canonical results/checkpoints/legacy were then written locally; integration guard remains SHA812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909. Only established liveCap4->5 metadata correction and history append beyond generated bytes. All24prior histories retained, now25; inputs570->590, clinical422->442,28changed/new bound paths.
+
+| Actual arm | Commands | Closing cents | Completed | Walkouts | Final tick |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Port30, old content/earlier runtime | 34420 | 7310006 | 533 | 0 | 32073 |
+| N4 content before three-file integration | 27080 | 6098464 | 420 | 0 | 25171 |
+| Old content with final runtime | 29023 | 6378107 | 451 | 0 | 27061 |
+| Port31, N4 content/final runtime | 28601 | 6227467 | 445 | 0 | 26649 |
+
+Port31 exactly reproduces the domain worker CHECK. Versus port30: **-5819commands/-1082539cents/-88completions**, zero walkouts; journey length **-5424minutes**. Gross19626500->16225500(-3401000), stock456014->366516(-89498), operating12597980->10369017(-2228963), capital1048000unchanged. Cash:1785500+16225500-366516-10369017-1048000=**6227467**; delta -3401000+89498+2228963=-1082539cents. XP gate14938->14959(+21), simultaneous-goal unlock22301->16877(-5424).
+
+The fresh new-content/pre-integration control retains the round3 review guard and changes only the three integration source files back. It reproduces27080/6098464/420/0. Integration on those identical N4 definitions adds **1521commands/129003cents/25completions**,1478minutes; gross+729400-stock16275-operating584122=+129003. First50arrivals agree; at tick3125 the first divergence is APP thyroglossal-duct case -> wound diabetic-foot case. Wound affinity includes the four retained incision cases plus accepted N4incision, changing real source profiles/selection and later goal timing. The eight diagnostic tuples execute no extra tests. No demand or price knob was tuned.
+
+The fresh old-content/current-runtime control gives29023/6378107/451/0; under final runtime N4content contributes **-422commands/-150640cents/-6completions**, -412minutes. Under earlier integration the content contrast is -7340/-1211542/-113; the different conditional effects show selection/goal interactions, not additive fixed productivity effects. Port30baseline is the actual preceding verified native run, not a newly rerun old-world arm.
+
+**No OR/endoscopy hold delay explains this CHECK delta.** The read-only observer wraps the unchanged journey.apply and covers every ever-admitted patient: final446(434retired+12retained), old-content452, pre-integration421. All three observed arms have **zero OR/endoscopy consult admissions and zero OR/endoscopy phase-hold minutes**, and no endoscopy/OR receipt line. Actual measured overdue holds in the final arm are only wound5/pediatric11/APP2operation-minutes. All19separate procedural regressions prove OR/endoscopy holds; this full-pool CHECK does not exercise them. Attribution-verification.json contains exact coverage, arrivals, financial ledgers, control source hashes and first divergence. Totals span different horizons and are not a same-duration productivity claim.
+
+All nine checkpoints and all three reports changed. Existing e2e consumers were not edited apart from the accepted ui-density fallback. The two launch tests update only qualifying patients48->51, raw first score62.771688127099196->62.441674349990286 and scoreLabel62.77->62.44; no size threshold or budget was changed.
+
+| Checkpoint | Tick before -> after | Cash cents before -> after |
+| --- | ---: | ---: |
+| integration-l4 | 3850 -> 3969 | 2709500 -> 2746500 |
+| integration-build | 3850 -> 3969 | 1661500 -> 1698500 |
+| integration-preparing | 22302 -> 16878 | 5579379 -> 4457330 |
+| integration-running | 22439 -> 17015 | 5610358 -> 4477406 |
+| integration-final | 25358 -> 19934 | 6191128 -> 5088398 |
+| integration-finish | 25359 -> 19935 | 6191128 -> 5082782 |
+| integration-repeat-final | 29015 -> 23591 | 7031472 -> 5909128 |
+| integration-repeat | 29016 -> 23592 | 7031472 -> 5909128 |
+| integration-lower-repeat | 32073 -> 26649 | 7310006 -> 6227467 |
+
+| Report | Raw score before -> after | Patients before -> after |
+| --- | --- | --- |
+| 1 | 62.771688127099196 -> 62.441674349990286 | 48 -> 51 |
+| 2 | 66.72582929932634 -> 66.6965763107746 | 49 -> 51 |
+| 3 | 45.38546238244465 -> 45.38120376175499 | 48 -> 50 |
+
+Every original three-report/3000-minute/category/patient-floor, best/latest/immutable-first, positive rounds/comfort/savings/retirement, >20000commands and cash assertion remains. Native regeneration of25schema5-9loads and25next120-minute continuations changes **only two new blank histories**, with every prior history/frozen case and serialized input exact; no continuation actor/receipt/cash delta. Legacy JSON is generated, not hand-edited. Old checkpoint reload also preserves every frozen definition and608old histories. Focused save/chart/source checks306pass (including256stats saves,33ship saves,9N4snapshot/journal cases and8new visibility cases); full player saves pass as well.
+
+| Artifact | Old SHA-256 | New SHA-256 |
+| --- | --- | --- |
+| tools/qa/level-five-integration-results-20261012.json | `0c5355646677e42caa691d4fddccb2f4890b571e458d38c682ccd8997d20e7ec` | `d83dbeb8f80237a094e00c182a23c27f3491584d6b0e03130e47475f45ac102c` |
+| tests/fixtures/level-five-integration-checkpoints-20261012.json | `ea2c934b79ddab4fa5cd0481293d834962d967faf46fd4d28947036e09e96a60` | `8590d582b9d462b55cf2eb1a4f208c6809f116331f7bf20dccdee1c1d26f0ab6` |
+| tests/fixtures/level-five-legacy-behavior-20261012.json | `ef3ff630f8cac42f5240f5a651090d21287e3399d5f2b0247e0f8e851f146e31` | `ef5724338ef49a1ca78c55a02bac30ff8ffc977ed820250a346e4431671a5045` |
+
+All28old/new input hashes and exact per-checkpoint JSON deltas: accepted-run-verification.json, checkpoint-deltas.json and canonical inputHistory. Native staging receipts record33journeywrites/2lowerwrites, zero canonical writes before guarded publication. No partial journey was resumed.
+
+### Exact validation
+
+CI=true; seven workspace suites directly with --pool=threads (player4workers, others2). Every original failed/final log and native exit is retained under .local-dev/release-port31-20261110; validation-summary.json gives exact commands/output/hashes. Initial focused guards5fail/237pass are the expected source/epoch integration failures, then242pass. Initial full domain5293pass/1fail/1existing skip is the exact admission-list issue above, not a timeout. No new skip, test-budget or assertion relaxation.
+
+| Workspace | Files | Passed | Failed | Skipped |
+| --- | ---: | ---: | ---: | ---: |
+| clinical-context-workbench | 8 | 43 | 0 | 0 |
+| player | 421 | 4103 | 0 | 0 |
+| balance-config | 25 | 165 | 0 | 0 |
+| clinical-authoring | 7 | 81 | 0 | 0 |
+| clinical-content | 130 | 1612 | 0 | 0 |
+| clinical-research | 8 | 83 | 0 | 0 |
+| game-domain | 207 | 5294 | 0 | 1 |
+| Total | 806 | 11381 | 0 | 1 |
+
+Versus validated port30: +5files/+55tests; existing opt-in incremental differential skip unchanged. All seven typechecks pass. Production player build **673modules/11.29s**, exit0; existing plugin/chunk/dynamic-import warnings. The touched phone-spec typecheck passes, exit0. Direct boundaries fail only at sandbox spawnSync git EPERM; exact fresh native read-only7601-path inventory passes both unchanged boundary and launcher verifiers, exit0. No browser test run is claimed.
+
+`other-nonclinical.log`:
+
+```text
+Test Files  8 passed (8)
+      Tests  43 passed (43)
+   Start at  20:54:10
+   Duration  972ms (transform 283ms, setup 0ms, import 778ms, tests 403ms, environment 0ms)
+ Test Files  25 passed (25)
+      Tests  165 passed (165)
+   Start at  20:54:11
+   Duration  2.18s (transform 569ms, setup 0ms, import 2.31s, tests 155ms, environment 1ms)
+ Test Files  7 passed (7)
+      Tests  81 passed (81)
+   Start at  20:54:14
+   Duration  616ms (transform 138ms, setup 0ms, import 374ms, tests 285ms, environment 0ms)
+ Test Files  8 passed (8)
+      Tests  83 passed (83)
+   Start at  20:54:15
+   Duration  2.05s (transform 176ms, setup 0ms, import 477ms, tests 988ms, environment 1ms)
+```
+
+`clinical.log`:
+
+```text
+Test Files  130 passed (130)
+      Tests  1612 passed (1612)
+   Start at  21:00:52
+   Duration  135.08s (transform 7.22s, setup 0ms, import 227.94s, tests 26.12s, environment 11ms)
+```
+
+`player.log`:
+
+```text
+Test Files  421 passed (421)
+      Tests  4103 passed (4103)
+   Start at  21:00:52
+   Duration  496.38s (transform 30.63s, setup 0ms, import 791.52s, tests 1138.53s, environment 41ms)
+```
+
+`domain.log`:
+
+```text
+Test Files  1 failed | 206 passed (207)
+      Tests  1 failed | 5293 passed | 1 skipped (5295)
+   Start at  21:00:52
+   Duration  615.14s (transform 15.17s, setup 0ms, import 442.74s, tests 765.05s, environment 15ms)
+```
+
+`domain-verified.log`:
+
+```text
+Test Files  207 passed (207)
+      Tests  5294 passed | 1 skipped (5295)
+   Start at  21:12:45
+   Duration  564.60s (transform 11.66s, setup 0ms, import 415.32s, tests 692.04s, environment 15ms)
+```
+
+`admission-verified.log`:
+
+```text
+Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  21:12:45
+   Duration  5.72s (transform 3.48s, setup 0ms, import 5.56s, tests 62ms, environment 0ms)
+```
+
+`guards-final.log`:
+
+```text
+Test Files  6 passed (6)
+      Tests  242 passed (242)
+   Start at  21:12:45
+   Duration  11.94s (transform 4.11s, setup 0ms, import 17.50s, tests 5.36s, environment 0ms)
+```
+
+`focused-new.log`:
+
+```text
+Test Files  3 passed (3)
+      Tests  38 passed (38)
+   Start at  20:43:20
+   Duration  16.89s (transform 7.16s, setup 0ms, import 14.07s, tests 12.55s, environment 0ms)
+```
+
+`focused-player.log`:
+
+```text
+Test Files  4 passed (4)
+      Tests  306 passed (306)
+   Start at  20:43:20
+   Duration  66.96s (transform 8.56s, setup 0ms, import 17.44s, tests 93.97s, environment 0ms)
+```
+
+### Combined files and handoff
+
+- `apps/player/src/questionN4SaveCompatibility.test.ts` (copied)
+- `apps/player/src/questionShipSaveCompatibility.test.ts` (copied; inherited port30)
+- `apps/player/src/session/buildModePresentation.test.ts` (copied; inherited port30)
+- `apps/player/src/session/buildViewModels.test.ts` (hunk-ported; inherited port30)
+- `apps/player/src/session/flagFreeze.test.tsx` (hunk-ported; inherited port30)
+- `apps/player/src/session/founderAppConsults.test.ts` (copied; inherited port30)
+- `apps/player/src/session/founderCheckpointVisibility.test.ts` (copied)
+- `apps/player/src/session/founderConsultAttendance.test.ts` (copied; inherited port30)
+- `apps/player/src/session/founderProcedureConsults.test.ts` (copied; inherited port30)
+- `apps/player/src/session/founderQaAttendance.test.ts` (copied; inherited port30)
+- `apps/player/src/session/founderSpecialtyConsults.test.ts` (copied; inherited port30)
+- `apps/player/src/session/founderStaffAttendance.test.ts` (copied; inherited port30)
+- `apps/player/src/session/levelFiveLaunch.test.tsx` (hunk-ported)
+- `apps/player/src/session/tutorialViewModels.test.ts` (copied; inherited port30)
+- `apps/player/src/session/viewModels.ts` (copied; inherited port30)
+- `docs/execplans/founder-consult-pathing-20261110.md` (copied)
+- `docs/execplans/gs028-stats-ethics-overhaul-20261007.md` (hunk-ported)
+- `docs/execplans/question-n4-acceptance-20261110.md` (copied)
+- `docs/execplans/release-port30-20261110.md` (hunk-ported; inherited port30)
+- `docs/execplans/release-port31-20261110.md` (hunk-ported)
+- `docs/handoffs/CURRENT_THREAD_HANDOFF.md` (hunk-ported)
+- `docs/research/founder-consult-pathing-20261110.md` (copied)
+- `docs/research/question-n4-acceptance-handoff-20261110.md` (copied)
+- `docs/research/question-n4-accepted-20261110.json` (copied)
+- `docs/research/question-n4-domain-runtime-integration-20261110.md` (copied)
+- `docs/research/question-n4-files-20261110.json` (copied)
+- `docs/research/question-n4-manager-decision-20261110.md` (copied)
+- `docs/research/question-n4-runtime-integration-20261110.json` (copied)
+- `docs/research/question-n4-validation-20261110.json` (copied)
+- `docs/research/question-new-n4-review-20261110.json` (copied)
+- `docs/research/question-new-n4-review2-20261110.json` (copied)
+- `packages/balance-config/src/app-role.test.ts` (copied; inherited port30)
+- `packages/balance-config/src/employee-training.ts` (copied; inherited port30)
+- `packages/balance-config/src/founder-consults.test.ts` (copied; inherited port30)
+- `packages/balance-config/src/founder-consults.ts` (copied; inherited port30)
+- `packages/balance-config/src/guidance-tips.ts` (copied; inherited port30)
+- `packages/balance-config/src/index.ts` (copied; inherited port30)
+- `packages/balance-config/src/room-upgrades.test.ts` (copied; inherited port30)
+- `packages/balance-config/src/room-upgrades.ts` (copied; inherited port30)
+- `packages/balance-config/src/service-income-catalog.ts` (copied; inherited port30)
+- `packages/clinical-content/src/answer-choice-timing.test.ts` (copied)
+- `packages/clinical-content/src/answer-choice-timing.ts` (copied)
+- `packages/clinical-content/src/index.ts` (copied)
+- `packages/clinical-content/src/pilot-content.test.ts` (copied)
+- `packages/clinical-content/src/question-flags3-20261107.test.ts` (hunk-ported)
+- `packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts` (hunk-ported)
+- `packages/clinical-content/src/question-harden1-n3r4-acceptance-20261110.test.ts` (hunk-ported)
+- `packages/clinical-content/src/question-harden1-n3r4-acceptance-test-support.ts` (hunk-ported)
+- `packages/clinical-content/src/question-n4-acceptance-20261110.test.ts` (hunk-ported)
+- `packages/clinical-content/src/question-n4-acceptance-test-support.ts` (hunk-ported)
+- `packages/clinical-content/src/question-n4-accepted-20261110.ts` (copied)
+- `packages/clinical-content/src/question-new-n4-20261110.ts` (copied)
+- `packages/clinical-content/src/question-new-n4-endoscopy.ts` (copied)
+- `packages/clinical-content/src/question-new-n4-evidence-20261110.ts` (copied)
+- `packages/clinical-content/src/question-new-n4-intra-op.ts` (copied)
+- `packages/clinical-content/src/question-new-n4-materialize.ts` (copied)
+- `packages/clinical-content/src/question-new-n4-pediatric.ts` (copied)
+- `packages/clinical-content/src/question-new-n4-reference-bindings.ts` (copied)
+- `packages/clinical-content/src/question-new-n4-round2-20261110.ts` (copied)
+- `packages/clinical-content/src/question-new-n4-round2-additional.ts` (copied)
+- `packages/clinical-content/src/question-new-n4-round2-dispositions.ts` (copied)
+- `packages/clinical-content/src/question-new-n4-round2-evidence.ts` (copied)
+- `packages/clinical-content/src/question-new-n4-round2-materialize.ts` (copied)
+- `packages/clinical-content/src/question-new-n4-round2-reference-bindings.ts` (copied)
+- `packages/clinical-content/src/question-new-n4-round2-revisions.ts` (copied)
+- `packages/clinical-content/src/question-new-n4-round2-types.ts` (copied)
+- `packages/clinical-content/src/question-new-n4-self-check-parks.ts` (copied)
+- `packages/clinical-content/src/question-new-n4-types.ts` (copied)
+- `packages/clinical-content/src/question-new-n4-wound-ostomy.ts` (copied)
+- `packages/clinical-content/src/question-ship-manifest.test.ts` (copied)
+- `packages/clinical-content/src/question-ship-manifest.ts` (copied)
+- `packages/clinical-content/src/question-stats1-20261108.test.ts` (hunk-ported)
+- `packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts` (hunk-ported)
+- `packages/clinical-content/src/synthetic-content.ts` (copied)
+- `packages/game-domain/src/app-appointments.ts` (copied; inherited port30)
+- `packages/game-domain/src/clinic-consult-topics.ts` (copied)
+- `packages/game-domain/src/clinic-consults.ts` (copied; inherited port30)
+- `packages/game-domain/src/clinic-work.ts` (copied; inherited port30)
+- `packages/game-domain/src/founder-consults.ts` (copied; inherited port30)
+- `packages/game-domain/src/index.ts` (copied; inherited port30)
+- `packages/game-domain/src/pediatric-family.ts` (copied; inherited port30)
+- `packages/game-domain/src/persistence.ts` (copied; inherited port30)
+- `packages/game-domain/src/reducer.ts` (copied)
+- `packages/game-domain/src/retail-operations.ts` (copied; inherited port30)
+- `packages/game-domain/src/selectors.ts` (copied; inherited port30)
+- `packages/game-domain/src/service-operations.ts` (copied; inherited port30)
+- `packages/game-domain/src/staff.ts` (copied; inherited port30)
+- `packages/game-domain/src/test-choice-orders.ts` (copied)
+- `packages/game-domain/src/types.ts` (copied; inherited port30)
+- `packages/game-domain/tests/app-appointments.test.ts` (copied; inherited port30)
+- `packages/game-domain/tests/approved-clinical-admission.test.ts` (hunk-ported)
+- `packages/game-domain/tests/colleague-names.test.ts` (copied; inherited port30)
+- `packages/game-domain/tests/employee-discussions.test.ts` (copied; inherited port30)
+- `packages/game-domain/tests/founder-app-consults.test.ts` (copied; inherited port30)
+- `packages/game-domain/tests/founder-checkpoint-visibility.fixture.ts` (copied)
+- `packages/game-domain/tests/founder-checkpoint-visibility.test.ts` (copied)
+- `packages/game-domain/tests/founder-consult-attendance.test.ts` (copied; inherited port30)
+- `packages/game-domain/tests/founder-consults.fixture.ts` (copied; inherited port30)
+- `packages/game-domain/tests/founder-procedure-consults.test.ts` (copied; inherited port30)
+- `packages/game-domain/tests/founder-qa-attendance.fixture.ts` (hunk-ported; inherited port30)
+- `packages/game-domain/tests/founder-qa-attendance.test.ts` (copied; inherited port30)
+- `packages/game-domain/tests/founder-specialty-consults.test.ts` (copied; inherited port30)
+- `packages/game-domain/tests/game-domain.test.ts` (copied; inherited port30)
+- `packages/game-domain/tests/level-five-launch.test.ts` (hunk-ported)
+- `packages/game-domain/tests/level-four-economy.test.ts` (copied; inherited port30)
+- `packages/game-domain/tests/level-four-integration-defects.test.ts` (copied; inherited port30)
+- `packages/game-domain/tests/level-four-integration.test.ts` (copied; inherited port30)
+- `packages/game-domain/tests/level-two-endoscopy.test.ts` (copied; inherited port30)
+- `packages/game-domain/tests/n4-consult-integration.test.ts` (copied)
+- `packages/game-domain/tests/pediatric-appointments.test.ts` (copied; inherited port30)
+- `packages/game-domain/tests/retail-operations.test.ts` (copied; inherited port30)
+- `packages/game-domain/tests/routine-clinic-queue.test.ts` (copied; inherited port30)
+- `packages/game-domain/tests/service-procedure-operations.test.ts` (copied; inherited port30)
+- `packages/game-domain/tests/timing-encounters.test.ts` (copied; inherited port30)
+- `packages/game-domain/tests/wound-ostomy-services.test.ts` (copied; inherited port30)
+- `tests/e2e/ui-density.spec.ts` (copied)
+- `tests/fixtures/founder-consult-rebound-l4-20261110.json` (copied)
+- `tests/fixtures/founder-qa-attendance-20261110.json` (copied; inherited port30)
+- `tests/fixtures/level-five-integration-checkpoints-20261012.json` (regenerated)
+- `tests/fixtures/level-five-legacy-behavior-20261012.json` (regenerated)
+- `tools/qa/level-five-integration-results-20261012.json` (regenerated)
+- `tools/question-quality/capture-question-n4-acceptance-20261110.mjs` (copied)
+- `tools/question-quality/fixtures/question-flags3-release-source-pins-20261107.json` (hunk-ported)
+- `tools/question-quality/fixtures/question-flags4-acceptance-release-source-pins-20261108.json` (hunk-ported)
+- `tools/question-quality/fixtures/question-harden1-n3r4-acceptance-source-migration-20261110.json` (copied; inherited port30)
+- `tools/question-quality/fixtures/question-harden1-n3r4-release-source-pins-20261110.json` (hunk-ported)
+- `tools/question-quality/fixtures/question-n4-acceptance-before-20261110.json` (copied)
+- `tools/question-quality/fixtures/question-n4-acceptance-source-migration-20261110.json` (copied)
+- `tools/question-quality/fixtures/question-n4-release-source-pins-20261110.json` (hunk-ported)
+- `tools/question-quality/fixtures/question-stats1-acceptance-release-source-pins-20261108.json` (hunk-ported)
+- `tools/question-quality/fixtures/question-stats1-release-source-pins-20261108.json` (hunk-ported)
+- `tools/question-quality/integrate-question-n4-acceptance-20261110.mjs` (copied)
+- `tools/question-quality/question-n4-acceptance-lint-20261110.json` (copied)
+- `tools/question-quality/question-n4-acceptance-scope-20261110.json` (copied)
+- `tools/question-quality/record-question-n4-files-20261110.mjs` (copied)
+- `tools/question-quality/record-question-n4-source-migration-20261110.mjs` (copied)
+- `tools/question-quality/record-question-n4-validation-20261110.mjs` (copied)
+- `tools/question-quality/review-question-n4-acceptance-20261110.mjs` (copied)
+
+Manager owns browser/phone density, real staffed OR/endoscopy/full-pool frequency and changed-save acceptance, clinical sign-off, backup and rollout. The four OR definitions are now admitted drafts, while CHECK itself has no procedural consults. Twelve pre-existing screenshot changes are preserved/excluded; no unrelated performance, renderer, cloud, art, SQL or .github source edits. Main read-only; no Git mutation/commit/push, installs, network, agents, browser, database/SQL execution or deploy. Owner origins/profiles/opening paths unchanged. Combined port31 remains local/uncommitted for manager review.

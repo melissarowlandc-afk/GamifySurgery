@@ -1753,6 +1753,13 @@ function toPatientListItem(state: GameState, encounter: EncounterState): Patient
         : "Resolved";
   }
 
+  if (encounter.consult?.closedAtFacilityTick === null) {
+    const label = { endoscopy: "Intra-endoscopy consult", operation: "Intra-op consult", app: "APP consult",
+      pediatric: "Pediatric consult", wound_ostomy: "Wound/ostomy consult" }[encounter.consult.kind];
+    statusLabel = encounter.terminalFeedback?.acknowledged ? `${label}: close chart to resume care` : label;
+    if (["app", "pediatric", "wound_ostomy"].includes(encounter.consult.kind) &&
+        state.serviceOperations.find(op => op.id === encounter.consult!.serviceOperationId)?.status !== "in_service") statusLabel = `${label}: waiting for clinic capacity`;
+  }
   return {
     encounterId: encounter.id,
     patientDisplayName: encounter.patientDisplayName,
@@ -1760,7 +1767,7 @@ function toPatientListItem(state: GameState, encounter: EncounterState): Patient
     arrivalClass: encounter.arrivalClass,
     statusLabel,
     actionRequired:
-      encounter.lifecycle === "active_action_required" &&
+      (encounter.lifecycle === "active_action_required" || encounter.consult?.closedAtFacilityTick === null && encounter.lifecycle !== "resolved") &&
       (encounter.patientMovement === null ||
         encounter.patientMovement.kind === "walking_to_care" ||
         encounter.patientMovement.kind === "walking_to_waiting" ||
@@ -1906,6 +1913,8 @@ export function getCurrentQuestion(
   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
 ): CurrentQuestion | null {
   const encounter = state.encounters[encounterId];
+  if (encounter?.consult?.closedAtFacilityTick === null && ["app", "pediatric", "wound_ostomy"].includes(encounter.consult.kind) &&
+      state.serviceOperations.find(op => op.id === encounter.consult!.serviceOperationId)?.status !== "in_service") return null;
   if (
     !encounter ||
     encounter.lifecycle !== "active_action_required" ||

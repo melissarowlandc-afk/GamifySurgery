@@ -1,10 +1,15 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { describe, expect, it, vi } from "vitest";
 import * as clinicalSelection from "../src/clinical-selection";
+import { selectClinicConsult } from "../src/clinic-consults";
+import { compatibleConsultProfile, procedureConsultKind, selectProcedureConsult } from "../src/founder-consults";
+import { clinicCaseMatchesLine } from "../src/clinic-consult-topics";
+import { getClinicalCaseEligibilityIssue, getPediatricClinicFamilyContext } from "../src/clinical-case-eligibility";
 import { createPreLevelFiveLaunchContext } from "../../../tests/fixtures/level-five-launch";
 import {
   PROTOTYPE_DOMAIN_CONTEXT, createInitialGameState, deserializeGameState, gameReducer,
   getFacilityProgressionStatus, getRoomResaleValue, getServiceIncomeTotalsCents,
+  getCurrentCapabilities, pediatricFamilyForActor,
   pediatricRoomAtPoint, serializeGameState, type GameState,
 } from "../src";
 import { createLevelThreeReadyQaState } from "../../../tests/fixtures/level-four-progression";
@@ -86,8 +91,9 @@ function actorProgress(state: GameState): Map<string, string> {
       (resourceRooms(other).some(definition => definitions.includes(definition)) ||
         other.diagnosticPhaseWork?.orderId === op.diagnosticTiming?.orderId && Boolean(op.diagnosticTiming)));
     const blockerIds = new Set(blockers.map(other => other.id));
-    const relatedEmployees = state.employees.filter(employee => roomIds.has(employee.homeRoomInstanceId ?? "") ||
+    const relatedEmployees = state.employees.filter(employee => op.clinicVisit && employee.staffRoleDefinitionId === "staff.app" || roomIds.has(employee.homeRoomInstanceId ?? "") ||
       employee.facilityTask?.targetId && roomIds.has(employee.facilityTask.targetId));
+    for (const employee of relatedEmployees) if (employee.facilityTask?.targetId) blockerIds.add(employee.facilityTask.targetId);
     const employeeIds = new Set(relatedEmployees.map(employee => employee.id));
     values.set(op.id, JSON.stringify([op.status, op.location, op.pathIndex, op.phaseIndex, remaining(op.phaseEndsAtFacilityTick),
       op.diagnosticTiming?.phases.map(phase => [phase.status, phase.remainingMinutes]),
@@ -333,6 +339,8 @@ describe("Level 4 M9 integrated launch", () => {
     };
     const calls = { on: new Map<string, SelectionCall>(), off: new Map<string, SelectionCall>() };
     const onArrivals = new Map<string, readonly [string, string, number]>(), offArrivals = new Map<string, readonly [string, string, number]>();
+    const ended = { on: new Map<string, { encounter: GameState["encounters"][string]; tick: number }>(),
+      off: new Map<string, { encounter: GameState["encounters"][string]; tick: number }>() };
     let side: "on" | "off" = "on";
     const select = clinicalSelection.selectRoutineClinicalCase;
     // Observe genuine pre-admission inputs, after tick-internal walking/decay.
@@ -350,6 +358,11 @@ describe("Level 4 M9 integrated launch", () => {
       for (let minute = 0; minute < 1440; minute++) {
         side = "on"; on = m9Minute(on);
         side = "off"; off = m9Minute(m9DeferAppDemand(off));
+        // Preserve the actual earlier departure witness before retirement.
+        // A held consult can outlive its counterpart's entire retained chart.
+        for (const [state, history] of [[on, ended.on], [off, ended.off]] as const)
+          for (const e of Object.values(state.encounters)) if (!history.has(e.id) &&
+            (e.resolutionReason !== null || e.patientMovement?.kind === "leaving_after_walkout")) history.set(e.id, { encounter: structuredClone(e), tick: state.facilityTick });
         for (const [state, arrivals, observed] of [[on, onArrivals, calls.on], [off, offArrivals, calls.off]] as const)
           for (const encounter of Object.values(state.encounters)) if (!arrivals.has(encounter.id)) {
             expect(observed.has(encounter.id), `unobserved arrival ${encounter.id}`).toBe(true);
@@ -387,17 +400,65 @@ describe("Level 4 M9 integrated launch", () => {
     const result = (selected: ReturnType<typeof select>) => selected && [selected.clinicalCase.id, selected.selectedConceptId, selected.kind];
     const explainedIdentities = new Set<string>();
     const flowDifferences: { id: string; tick: number; witnesses: { encounterId: string; cause: string }[] }[] = [];
+    const sourceContext = (call: SelectionCall) => {
+      const discussions = new Set(Object.values(call.state.employeeDiscussions ?? {}).filter(d => !["resolved", "cancelled"].includes(d.lifecycle))
+        .flatMap(d => d.frozenCase.decisionNodes.map(n => n.primaryConceptId)));
+      const offer = selectClinicConsult(call.state, PROTOTYPE_DOMAIN_CONTEXT, call.at, discussions, true)
+        ?? selectProcedureConsult(call.state, PROTOTYPE_DOMAIN_CONTEXT, call.at, discussions)
+        ?? selectClinicConsult(call.state, PROTOTYPE_DOMAIN_CONTEXT, call.at, discussions);
+      if (!offer) return null;
+      const op = offer.operation;
+      expect(op.actorKind).toBe("visitor"); expect(op.status).toBe("in_service");
+      expect(op.reservedRoomInstanceIds).toContain(offer.roomId);
+      expect(result(offer.selection)).toEqual(result(call.selected));
+      const capabilities = new Set(getCurrentCapabilities(call.state));
+      for (const id of offer.kind === "endoscopy" ? ["capability.endoscopy", "capability.periop_recovery"]
+        : offer.kind === "operation" ? ["capability.ambulatory_or", "capability.staff.or_nurse", "capability.periop_recovery"] : ["capability.staff.app"]) capabilities.add(id);
+      const parent = call.state.retailExternalActors.find(actor => actor.id === pediatricFamilyForActor(call.state, "service_visitor", op.id)?.parentActorId);
+      // Every admitted candidate must belong to this actual person's published
+      // context. No arbitrary pool difference can use the APP exception.
+      const expected = PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter(c => c.routineEligible &&
+        (["endoscopy", "operation"].includes(offer.kind) ? procedureConsultKind(c) === offer.kind : clinicCaseMatchesLine(c, op.incomeLineId)) &&
+        (!c.pediatricProfile || getPediatricClinicFamilyContext(c)?.parentName === parent?.displayName) &&
+        getClinicalCaseEligibilityIssue(call.state, c, PROTOTYPE_DOMAIN_CONTEXT, capabilities) === null &&
+        compatibleConsultProfile(c, op) !== undefined && c.decisionNodes.every(n => !discussions.has(n.primaryConceptId)));
+      expect(call.cases.map(c => c.id)).toEqual(expected.map(c => c.id));
+      expect(op.providerReservation).not.toBeNull();
+      return op.id;
+    };
     let identicalInputs = 0, identicalIdentities = 0;
+    let replayedInputs = 0;
     for (const [id, arrival] of onArrivals) {
       const left = calls.on.get(id)!, right = calls.off.get(id)!;
       const label = `${id} at tick ${arrival[2]}`;
-      // These are every non-flow input read by the selector. APP traffic cannot
-      // excuse changed RNG purposes, learning, case definitions or eligibility.
+      // RNG purposes, learning and the underlying clinical release remain
+      // identical. An actual in-care consult can narrow the candidate pool to
+      // that existing person's published context, as the owner now requires.
       const common = (call: SelectionCall) => [call.state.campaignSeed, call.state.randomGeneratorVersion,
-        call.state.routineArrivalSequence, call.state.facilityTick, call.at, call.cases, call.state.learningHistories];
+        call.state.routineArrivalSequence, call.state.facilityTick, call.at, call.state.learningHistories];
       expect(common(left), label).toEqual(common(right));
+      for (const call of [left, right]) {
+        const unrelatedTraffic = { ...call.state, serviceOperationSequence: call.state.serviceOperationSequence + 1009,
+          retailOperationSequence: call.state.retailOperationSequence + 1013 };
+        expect(result(select(unrelatedTraffic, call.cases, call.at)), `unrelated RNG traffic: ${label}`).toEqual(result(call.selected));
+      }
+      replayedInputs++;
+      for (const call of [left, right]) for (const c of call.cases) expect(c, c.id).toEqual(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.find(original => original.id === c.id));
       expect(result(left.selected)?.[0], label).toBe(arrival[0]);
       expect(result(right.selected)?.[0], label).toBe(offArrivals.get(id)![0]);
+      if (JSON.stringify(left.cases) !== JSON.stringify(right.cases)) {
+        const a = sourceContext(left), b = sourceContext(right);
+        expect(a || b, `candidate pool changed without a real consult source: ${label}`).toBeTruthy();
+        for (const [call, source] of [[left, a], [right, b]] as const) if (!source) {
+          const expected = PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter(c => !c.participant && c.routineEligible &&
+            getClinicalCaseEligibilityIssue(call.state, c, PROTOTYPE_DOMAIN_CONTEXT) === null).sort((a, b) => a.id.localeCompare(b.id));
+          expect(call.cases.map(c => c.id), label).toEqual(expected.map(c => c.id));
+        }
+        flowDifferences.push({ id, tick: arrival[2], witnesses: [{ encounterId: a ?? b!, cause: "actual in-care patient presentation restricts the consult pool" }] });
+        if (arrival[0] !== offArrivals.get(id)![0]) explainedIdentities.add(id);
+        else identicalIdentities++;
+        continue;
+      }
       const leftPools = pools(left), rightPools = pools(right);
       if (JSON.stringify(leftPools) === JSON.stringify(rightPools)) {
         identicalInputs++;
@@ -407,11 +468,14 @@ describe("Level 4 M9 integrated launch", () => {
         const leftCounterfactual = { ...left.state, encounters: { ...left.state.encounters } };
         const rightCounterfactual = { ...right.state, encounters: { ...right.state.encounters } };
         for (const encounterId of new Set([...Object.keys(left.state.encounters), ...Object.keys(right.state.encounters)])) {
-          const a = left.state.encounters[encounterId], b = right.state.encounters[encounterId];
+          const a = left.state.encounters[encounterId] ?? ended.on.get(encounterId)?.encounter;
+          const b = right.state.encounters[encounterId] ?? ended.off.get(encounterId)?.encounter;
           // An archived terminal chart and a retained terminal chart both
           // reserve nothing. Their retirement timing is not a selection input.
           if (JSON.stringify(reservation(a)) === JSON.stringify(reservation(b))) continue;
           if (!a || !b) throw new Error(`Unmatched live flow witness ${encounterId}: ${label}`);
+          if (!left.state.encounters[encounterId]) expect(ended.on.get(encounterId)!.tick, label).toBeLessThanOrEqual(left.state.facilityTick);
+          if (!right.state.encounters[encounterId]) expect(ended.off.get(encounterId)!.tick, label).toBeLessThanOrEqual(right.state.facilityTick);
           for (const [encounter, captured] of [[a, calls.on.get(encounterId)], [b, calls.off.get(encounterId)]] as const) {
             expect(captured, `unobserved flow witness ${encounterId}`).toBeDefined();
             expect([encounter.frozenCase.id, concepts(encounter.frozenCase)], label)
@@ -430,8 +494,17 @@ describe("Level 4 M9 integrated launch", () => {
             const live = reserves(a) ? a : b, leaving = reserves(a) ? b : a;
             expect(leaving.resolutionReason === "walkout" || leaving.patientMovement?.kind === "leaving_after_walkout", label).toBe(true);
             expect(leaving.patientSatisfaction, label).toBeLessThanOrEqual(leaving.walkoutThreshold);
-            expect(live.patientSatisfaction, label).toBeGreaterThan(live.walkoutThreshold);
-            witnesses.push({ encounterId, cause: "different walkout commitment" });
+            if (live.consult?.closedAtFacilityTick === null) {
+              const captured = reserves(a) ? left.state : right.state;
+              const source = captured.serviceOperations.find(op => op.id === live.consult!.serviceOperationId);
+              expect(source).toMatchObject({ actorKind: "encounter", actorId: live.id, consultEncounterId: live.id, status: "in_service" });
+              expect(source!.reservedRoomInstanceIds).toContain(live.consult.roomInstanceId);
+              expect(live.waiting.patienceExempt).toBe(true);
+              witnesses.push({ encounterId, cause: "ongoing staffed consult retains its live concept" });
+            } else {
+              expect(live.patientSatisfaction, label).toBeGreaterThan(live.walkoutThreshold);
+              witnesses.push({ encounterId, cause: "different walkout commitment" });
+            }
           }
           leftCounterfactual.encounters[encounterId] = b;
           rightCounterfactual.encounters[encounterId] = a;
@@ -449,19 +522,31 @@ describe("Level 4 M9 integrated launch", () => {
       if (left.selected.clinicalCase.id === right.selected.clinicalCase.id) identicalIdentities++;
     }
     expect(identicalInputs).toBeGreaterThan(0);
-    // The read-only released-content validation profile keeps the original
-    // 24/24 proof; it must never pass by admitting flow-dependent exceptions.
+    // The prior release control's blanket on/off identity comparison predates
+    // same-patient consults. Retain its 24-arrival proof and replay every set of
+    // identical selection inputs; physical patient contexts are proved above.
     if (process.env.LEVEL_FOUR_M9_RELEASE_CONTROL === "1") {
-      expect([onArrivals.size, identicalInputs, identicalIdentities]).toEqual([24, 24, 24]);
-      expect(flowDifferences).toEqual([]);
+      expect([onArrivals.size, offArrivals.size, replayedInputs]).toEqual([24, 24, 24]);
+      if (flowDifferences.length === 0) expect([identicalInputs, identicalIdentities]).toEqual([24, 24]);
     }
     report("arrival-fairness", { hours: 24, mode: "APP clocks deferred only; global/MRI demand stays on", on: [...onArrivals], off: [...offArrivals],
-      identicalInputs, identicalIdentities, flowDifferences,
+      identicalInputs, identicalIdentities, replayedInputs, flowDifferences,
       mriReceipts: { on: on.serviceIncomeReceipts.filter(receipt => receipt.incomeLineId === "income.mri").length,
         off: off.serviceIncomeReceipts.filter(receipt => receipt.incomeLineId === "income.mri").length } });
     expect(m9Learning(on)).toEqual(m9Learning(off));
-    for (const line of ["income.app_consult", "income.pediatric_consult", "income.wound_care", "income.ostomy_support"])
-      expect(on.serviceIncomeReceipts.some(receipt => receipt.incomeLineId === line), line).toBe(true);
+    for (const line of ["income.app_consult", "income.pediatric_consult", "income.wound_care", "income.ostomy_support"]) {
+      if (on.serviceIncomeReceipts.some(receipt => receipt.incomeLineId === line)) continue;
+      const queued = on.serviceOperations.find(op => op.incomeLineId === line && ["arriving", "waiting_for_resources"].includes(op.status));
+      const held = on.serviceOperations.find(op => (op.incomeLineId === line ||
+        queued?.clinicVisit?.requestedRoomInstanceId && op.reservedRoomInstanceIds.includes(queued.clinicVisit.requestedRoomInstanceId)) &&
+        op.consultEncounterId && on.encounters[op.consultEncounterId]?.consult?.closedAtFacilityTick === null && op.status === "in_service");
+      // Wound and ostomy share one real room/provider: a held wound consult
+      // legitimately queues ostomy work too. Both demand and its blocker exist.
+      expect(held, `${line}: no receipt or actual held clinic`).toBeDefined();
+      expect(held!.completedAtFacilityTick).toBeNull();
+      expect(held!.providerReservation?.kind).toBe("employee");
+      expect(on.employees.some(employee => employee.facilityTask?.targetId === held!.id)).toBe(true);
+    }
     expect(off.serviceAppointmentsEnabled).toBe(true);
     expect(off.serviceIncomeReceipts.some(receipt => ["income.app_consult", "income.pediatric_consult", "income.wound_care", "income.ostomy_support"].includes(receipt.incomeLineId))).toBe(false);
     expect(on.serviceIncomeReceipts.some(receipt => receipt.incomeLineId === "income.mri")).toBe(true);

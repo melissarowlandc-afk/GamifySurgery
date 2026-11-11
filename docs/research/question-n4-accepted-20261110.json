@@ -1,0 +1,949 @@
+[
+  {
+    "acceptanceId": "review.n4.cholecystectomy-neck-plane-bailout.v1",
+    "caseId": "case.n4.cholecystectomy-neck-plane-bailout.v1",
+    "nodeId": "node.n4.cholecystectomy-neck-plane-bailout.v1",
+    "questionVariantId": "question.n4.cholecystectomy-neck-plane-bailout.v1",
+    "conceptId": "concept.gs028g.subtotal-cholecystectomy.safe-bailout",
+    "sourceView": "n4-round1",
+    "decision": "docs/research/question-n4-manager-decision-20261110.md",
+    "title": "Gallbladder surgery",
+    "reviewStatus": "needs_clinician_review",
+    "clinicalApproval": false,
+    "independentReview": "docs/research/question-new-n4-review-20261110.json",
+    "verdict": "PASS",
+    "sourceHoldStatus": "none",
+    "heldKeyClaims": [],
+    "keyOrderNotice": "key shown first for review only; runtime answer choices are randomized",
+    "beforeRole": "Exact independently reviewed source fields; no authoring edits in this acceptance.",
+    "before": {
+      "Presentation": "Martha Quinn, a 57-year-old woman, is undergoing laparoscopic cholecystectomy for recurrent gallstone symptoms. Dissection has reached the gallbladder neck.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "keyValue",
+        "caption": "Original constructed teaching record; fictional patient observations",
+        "items": [
+          {
+            "label": "View after altered retraction",
+            "value": "The gallbladder body separates from the liver, but a dense band joins the neck to tissue at the porta. Its layers cannot be separated under the current views."
+          },
+          {
+            "label": "Traction response",
+            "value": "Pulling the neck laterally tents the broad duct below it. The apparent funnel into the neck and that duct move together; their junction is not delineated."
+          }
+        ]
+      },
+      "Task": "Which operative plan should be selected for Martha Quinn at this point?",
+      "Options": [
+        "**KEY:** Subtotal cholecystectomy",
+        "Fundus-first total cholecystectomy",
+        "Neck-first total cholecystectomy"
+      ]
+    },
+    "after": {
+      "Presentation": "Martha Quinn, a 57-year-old woman, is undergoing laparoscopic cholecystectomy for recurrent gallstone symptoms. Dissection has reached the gallbladder neck.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "keyValue",
+        "caption": "Original constructed teaching record; fictional patient observations",
+        "items": [
+          {
+            "label": "View after altered retraction",
+            "value": "The gallbladder body separates from the liver, but a dense band joins the neck to tissue at the porta. Its layers cannot be separated under the current views."
+          },
+          {
+            "label": "Traction response",
+            "value": "Pulling the neck laterally tents the broad duct below it. The apparent funnel into the neck and that duct move together; their junction is not delineated."
+          }
+        ]
+      },
+      "Task": "Which operative plan should be selected for Martha Quinn at this point?",
+      "Options": [
+        "**KEY:** Subtotal cholecystectomy",
+        "Fundus-first total cholecystectomy",
+        "Neck-first total cholecystectomy"
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Subtotal cholecystectomy",
+          "The body is separable while neck/duct anatomy remains unresolved; subtotal surgery is an accepted offered bailout that avoids hazardous division there."
+        ],
+        [
+          "Fundus-first total cholecystectomy",
+          "A change in dissection direction does not by itself solve the unresolved final neck/duct junction that a total operation must address."
+        ],
+        [
+          "Neck-first total cholecystectomy",
+          "The apparent funnel is not reliable identification when the broad duct is being tented into it and its junction remains unresolved."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Subtotal cholecystectomy",
+          "The body is separable while neck/duct anatomy remains unresolved; subtotal surgery is an accepted offered bailout that avoids hazardous division there."
+        ],
+        [
+          "Fundus-first total cholecystectomy",
+          "A change in dissection direction does not by itself solve the unresolved final neck/duct junction that a total operation must address."
+        ],
+        [
+          "Neck-first total cholecystectomy",
+          "The apparent funnel is not reliable identification when the broad duct is being tented into it and its junction remains unresolved."
+        ]
+      ]
+    },
+    "explanation": "A funnel-shaped appearance does not resolve the junction when traction tents a broad duct and the neck plane remains fused. Avoid division of unidentified structures. Subtotal cholecystectomy is an accepted bailout among the offered choices. Conversion or stopping can also be legitimate safe strategies; they are not declared wrong or used as distractors.",
+    "supportingEvidenceClaimIds": [
+      "claim.n4.da2f704793ec",
+      "claim.n4.86849d22206f",
+      "claim.n4.77d7aef55c11"
+    ],
+    "whatChanged": "Default-release admission only. Clinical wording/options/claims/status and existing concept meanings are unchanged.",
+    "conceptMeaning": "existing_meaning_retained",
+    "frozenPreservation": {
+      "acceptanceId": "review.n4.cholecystectomy-neck-plane-bailout.v1",
+      "sourceView": "n4-round1",
+      "sourceReleaseSha256": "6e52115019ab011b59722b68c6cb2ddca7c8f43943a56652327cc87bb2f69782",
+      "caseId": "case.n4.cholecystectomy-neck-plane-bailout.v1",
+      "questionVariantId": "question.n4.cholecystectomy-neck-plane-bailout.v1",
+      "conceptId": "concept.gs028g.subtotal-cholecystectomy.safe-bailout",
+      "rawAuthoringCaseSha256": "9c8ae1ab0710baf8d33e106ee127340c38f1fceaa17efc13ffcf6b245ae3fc29",
+      "acceptedCaseSha256": "71596ae9074acd2aea1540811e27041b43e1b5c844d638b7a5496d0eb247b47a",
+      "acceptedQuestionSha256": "47ac63fc3a5216dbe62ea5421ecada5e05e9fe8625db4be0a708077bd8d8af87"
+    },
+    "lint": []
+  },
+  {
+    "acceptanceId": "review.n4.colonic-wall-pattern-after-mucosal-biopsy.v1",
+    "caseId": "case.n4.colonic-wall-pattern-after-mucosal-biopsy.v1",
+    "nodeId": "node.n4.colonic-wall-pattern-after-mucosal-biopsy.v1",
+    "questionVariantId": "question.n4.colonic-wall-pattern-after-mucosal-biopsy.v1",
+    "conceptId": "concept.colonic-lipoma.endoscopic-recognition.v3",
+    "sourceView": "n4-round1",
+    "decision": "docs/research/question-n4-manager-decision-20261110.md",
+    "title": "Colon lesion review",
+    "reviewStatus": "needs_clinician_review",
+    "clinicalApproval": false,
+    "independentReview": "docs/research/question-new-n4-review-20261110.json",
+    "verdict": "PASS",
+    "sourceHoldStatus": "none",
+    "heldKeyClaims": [],
+    "keyOrderNotice": "key shown first for review only; runtime answer choices are randomized",
+    "beforeRole": "Exact independently reviewed source fields; no authoring edits in this acceptance.",
+    "before": {
+      "Presentation": "Leonard Hayes, a 68-year-old man, is undergoing colonoscopy to reassess an incidental colonic mound sampled during an earlier examination. He has no symptoms attributable to the lesion.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "keyValue",
+        "caption": "Original constructed teaching record; fictional patient observations",
+        "items": [
+          {
+            "label": "Earlier specimen",
+            "value": "Colonic surface mucosa; no submucosal tissue is present in the fragment."
+          },
+          {
+            "label": "Recorded miniprobe study",
+            "value": "The mound is homogeneous and bright, confined to the submucosal layer; the muscle layer beneath it is continuous."
+          },
+          {
+            "label": "Current colonoscopic view",
+            "value": "A smooth yellow mound indents under gentle closed-forceps pressure and returns to shape; the overlying surface is intact."
+          }
+        ]
+      },
+      "Task": "What should the endoscopist do with Leonard Hayes's mound during this examination?",
+      "Options": [
+        "**KEY:** Leave the mound without further sampling",
+        "Obtain deeper bite-on-bite mucosal samples",
+        "Remove the mound by endoscopic resection"
+      ]
+    },
+    "after": {
+      "Presentation": "Leonard Hayes, a 68-year-old man, is undergoing colonoscopy to reassess an incidental colonic mound sampled during an earlier examination. He has no symptoms attributable to the lesion.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "keyValue",
+        "caption": "Original constructed teaching record; fictional patient observations",
+        "items": [
+          {
+            "label": "Earlier specimen",
+            "value": "Colonic surface mucosa; no submucosal tissue is present in the fragment."
+          },
+          {
+            "label": "Recorded miniprobe study",
+            "value": "The mound is homogeneous and bright, confined to the submucosal layer; the muscle layer beneath it is continuous."
+          },
+          {
+            "label": "Current colonoscopic view",
+            "value": "A smooth yellow mound indents under gentle closed-forceps pressure and returns to shape; the overlying surface is intact."
+          }
+        ]
+      },
+      "Task": "What should the endoscopist do with Leonard Hayes's mound during this examination?",
+      "Options": [
+        "**KEY:** Leave the mound without further sampling",
+        "Obtain deeper bite-on-bite mucosal samples",
+        "Remove the mound by endoscopic resection"
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Leave the mound without further sampling",
+          "The integrated phenotype supports a clear asymptomatic lipoma; the overlying mucosal fragment does not make it necessary to obtain another sample."
+        ],
+        [
+          "Obtain deeper bite-on-bite mucosal samples",
+          "A prior specimen lacking submucosa does not automatically justify another sample when the integrated phenotype is already characteristic."
+        ],
+        [
+          "Remove the mound by endoscopic resection",
+          "An incidental clearly characterized lipoma does not require resection merely to obtain histology."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Leave the mound without further sampling",
+          "The integrated phenotype supports a clear asymptomatic lipoma; the overlying mucosal fragment does not make it necessary to obtain another sample."
+        ],
+        [
+          "Obtain deeper bite-on-bite mucosal samples",
+          "A prior specimen lacking submucosa does not automatically justify another sample when the integrated phenotype is already characteristic."
+        ],
+        [
+          "Remove the mound by endoscopic resection",
+          "An incidental clearly characterized lipoma does not require resection merely to obtain histology."
+        ]
+      ]
+    },
+    "explanation": "The earlier fragment describes mucosa, not the submucosal mound. That sampling limitation does not overturn a characteristic soft yellow, homogeneous bright submucosal phenotype. A clearly characterized asymptomatic lipoma does not need another biopsy or lipoma-directed resection. Symptoms, ulceration or uncertainty would change the assessment.",
+    "supportingEvidenceClaimIds": [
+      "claim.n4.3c893f8ee4f0",
+      "claim.n4.ea03ad0a7d73",
+      "claim.n4.6ebd44d818b0",
+      "claim.n4.d8826fad12fe"
+    ],
+    "whatChanged": "Default-release admission only. Clinical wording/options/claims/status and existing concept meanings are unchanged.",
+    "conceptMeaning": "existing_meaning_retained",
+    "frozenPreservation": {
+      "acceptanceId": "review.n4.colonic-wall-pattern-after-mucosal-biopsy.v1",
+      "sourceView": "n4-round1",
+      "sourceReleaseSha256": "6e52115019ab011b59722b68c6cb2ddca7c8f43943a56652327cc87bb2f69782",
+      "caseId": "case.n4.colonic-wall-pattern-after-mucosal-biopsy.v1",
+      "questionVariantId": "question.n4.colonic-wall-pattern-after-mucosal-biopsy.v1",
+      "conceptId": "concept.colonic-lipoma.endoscopic-recognition.v3",
+      "rawAuthoringCaseSha256": "209929b44a2ffb520d848cab46760473bb6ac7cb4bd0f9d042cf02adf16ced72",
+      "acceptedCaseSha256": "62125405ca2999a938c9d1e7d9bab4d8f34471d60017b8e4db8585ed755f483b",
+      "acceptedQuestionSha256": "ed54c806ca92aa3d79c4a99d6680e71c201751a81e5178bdb03e93332084ac2b"
+    },
+    "lint": []
+  },
+  {
+    "acceptanceId": "review.n4.venous-ulcer-contralateral-pressure-trap.v1",
+    "caseId": "case.n4.venous-ulcer-contralateral-pressure-trap.v1",
+    "nodeId": "node.n4.venous-ulcer-contralateral-pressure-trap.v1",
+    "questionVariantId": "question.n4.venous-ulcer-contralateral-pressure-trap.v1",
+    "conceptId": "concept.venous-leg-ulcer.arterial-assessment-before-compression",
+    "sourceView": "n4-round1",
+    "decision": "docs/research/question-n4-manager-decision-20261110.md",
+    "title": "Ankle ulcer",
+    "reviewStatus": "needs_clinician_review",
+    "clinicalApproval": false,
+    "independentReview": "docs/research/question-new-n4-review-20261110.json",
+    "verdict": "PASS",
+    "sourceHoldStatus": "none",
+    "heldKeyClaims": [],
+    "keyOrderNotice": "key shown first for review only; runtime answer choices are randomized",
+    "beforeRole": "Exact independently reviewed source fields; no authoring edits in this acceptance.",
+    "before": {
+      "Presentation": "Arthur Lane, a 74-year-old man, attends the wound/ostomy clinic for a left medial-ankle ulcer. The team is choosing treatment after venous and arterial laboratory reports arrive.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "keyValue",
+        "caption": "Original constructed teaching record; fictional patient observations",
+        "items": [
+          {
+            "label": "Wound and venous study",
+            "value": "The left ankle has a shallow ulcer, edema and brown skin. Duplex shows left superficial venous reflux."
+          },
+          {
+            "label": "Right ankle acquisition",
+            "value": "Pedal Doppler signals disappear with cuff inflation and return as pressure is released; the recorded ratio is within the laboratory reference range."
+          },
+          {
+            "label": "Left ankle acquisition",
+            "value": "At the cuff's maximum inflation the pedal Doppler signals remain audible; the worksheet records pressure above the instrument's occlusion range. The foot is warm at rest."
+          }
+        ]
+      },
+      "Task": "Which investigation should guide Arthur Lane's left-leg treatment next?",
+      "Options": [
+        "**KEY:** Left toe pressure test with digital waveforms",
+        "Left exercise ankle-brachial pressure test",
+        "Left-leg computed tomography angiography"
+      ]
+    },
+    "after": {
+      "Presentation": "Arthur Lane, a 74-year-old man, attends the wound/ostomy clinic for a left medial-ankle ulcer. The team is choosing treatment after venous and arterial laboratory reports arrive.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "keyValue",
+        "caption": "Original constructed teaching record; fictional patient observations",
+        "items": [
+          {
+            "label": "Wound and venous study",
+            "value": "The left ankle has a shallow ulcer, edema and brown skin. Duplex shows left superficial venous reflux."
+          },
+          {
+            "label": "Right ankle acquisition",
+            "value": "Pedal Doppler signals disappear with cuff inflation and return as pressure is released; the recorded ratio is within the laboratory reference range."
+          },
+          {
+            "label": "Left ankle acquisition",
+            "value": "At the cuff's maximum inflation the pedal Doppler signals remain audible; the worksheet records pressure above the instrument's occlusion range. The foot is warm at rest."
+          }
+        ]
+      },
+      "Task": "Which investigation should guide Arthur Lane's left-leg treatment next?",
+      "Options": [
+        "**KEY:** Left toe pressure test with digital waveforms",
+        "Left exercise ankle-brachial pressure test",
+        "Left-leg computed tomography angiography"
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Left toe pressure test with digital waveforms",
+          "The affected ankle could not be occluded by the cuff; selected distal physiology addresses that limitation rather than borrowing reassurance from the right side."
+        ],
+        [
+          "Left exercise ankle-brachial pressure test",
+          "Exercise ankle measurements do not repair a resting acquisition in which the artery could not be occluded."
+        ],
+        [
+          "Left-leg computed tomography angiography",
+          "Anatomic arterial imaging is not the selected next physiologic assessment of this non-occluding cuff result before ulcer treatment."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Left toe pressure test with digital waveforms",
+          "The affected ankle could not be occluded by the cuff; selected distal physiology addresses that limitation rather than borrowing reassurance from the right side."
+        ],
+        [
+          "Left exercise ankle-brachial pressure test",
+          "Exercise ankle measurements do not repair a resting acquisition in which the artery could not be occluded."
+        ],
+        [
+          "Left-leg computed tomography angiography",
+          "Anatomic arterial imaging is not the selected next physiologic assessment of this non-occluding cuff result before ulcer treatment."
+        ]
+      ]
+    },
+    "explanation": "The normal right-side result does not validate the left acquisition. Persistent left pedal signals at maximal cuff inflation prevent that ankle measurement from establishing adequate perfusion. Assess selected toe/digital physiology before choosing compression. Venous reflux and warmth at rest do not settle that arterial question. No compression pressure or perfusion threshold is prescribed.",
+    "supportingEvidenceClaimIds": [
+      "claim.n4.0b5c4ef72e1b",
+      "claim.n4.bf7d58a0e363"
+    ],
+    "whatChanged": "Default-release admission only. Clinical wording/options/claims/status and existing concept meanings are unchanged.",
+    "conceptMeaning": "existing_meaning_retained",
+    "frozenPreservation": {
+      "acceptanceId": "review.n4.venous-ulcer-contralateral-pressure-trap.v1",
+      "sourceView": "n4-round1",
+      "sourceReleaseSha256": "6e52115019ab011b59722b68c6cb2ddca7c8f43943a56652327cc87bb2f69782",
+      "caseId": "case.n4.venous-ulcer-contralateral-pressure-trap.v1",
+      "questionVariantId": "question.n4.venous-ulcer-contralateral-pressure-trap.v1",
+      "conceptId": "concept.venous-leg-ulcer.arterial-assessment-before-compression",
+      "rawAuthoringCaseSha256": "580212c160bda5ff4caed600b32df96e785dad4b378249865466c26c92c76c6e",
+      "acceptedCaseSha256": "f6b8431cc3b4c406c058cd87d59e03bb3a73c61eff88dd870f7c29f4ed2ec1c3",
+      "acceptedQuestionSha256": "3ffb49049945a8bff438631845c84f34cf0c42c99b65264600b0638a783af088"
+    },
+    "lint": []
+  },
+  {
+    "acceptanceId": "review.n4.incisional-pocket-above-retained-mesh.v1",
+    "caseId": "case.n4.incisional-pocket-above-retained-mesh.v1",
+    "nodeId": "node.n4.incisional-pocket-above-retained-mesh.v1",
+    "questionVariantId": "question.n4.incisional-pocket-above-retained-mesh.v1",
+    "conceptId": "concept.superficial-incisional-ssi.open-drain",
+    "sourceView": "n4-round1",
+    "decision": "docs/research/question-n4-manager-decision-20261110.md",
+    "title": "Incision drainage",
+    "reviewStatus": "needs_clinician_review",
+    "clinicalApproval": false,
+    "independentReview": "docs/research/question-new-n4-review-20261110.json",
+    "verdict": "PASS",
+    "sourceHoldStatus": "none",
+    "heldKeyClaims": [],
+    "keyOrderNotice": "key shown first for review only; runtime answer choices are randomized",
+    "beforeRole": "Exact independently reviewed source fields; no authoring edits in this acceptance.",
+    "before": {
+      "Presentation": "Sandra Reed, a 63-year-old woman, attends the wound/ostomy clinic for new opaque drainage from a small opening in a postoperative abdominal incision. She has a prior retromuscular mesh repair.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "keyValue",
+        "caption": "Original constructed teaching record; fictional patient observations",
+        "items": [
+          {
+            "label": "Wound examination",
+            "value": "Pressing adjacent subcutaneous tissue expresses pus through one small opening. Several skin sutures still span the involved segment."
+          },
+          {
+            "label": "Ultrasound and examination record",
+            "value": "The fluid pocket is in subcutaneous tissue above a continuous fascial layer. The retromuscular mesh plane is separate; no communicating tract is demonstrated. The surrounding skin has no spreading change and she is conversing comfortably."
+          }
+        ]
+      },
+      "Task": "Which source-control plan should be selected for Sandra Reed's current wound?",
+      "Options": [
+        "**KEY:** Open drainage of the incisional pocket",
+        "Needle drainage of the incisional pocket",
+        "Mesh explantation and incisional pocket drainage"
+      ]
+    },
+    "after": {
+      "Presentation": "Sandra Reed, a 63-year-old woman, attends the wound/ostomy clinic for new opaque drainage from a small opening in a postoperative abdominal incision. She has a prior retromuscular mesh repair.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "keyValue",
+        "caption": "Original constructed teaching record; fictional patient observations",
+        "items": [
+          {
+            "label": "Wound examination",
+            "value": "Pressing adjacent subcutaneous tissue expresses pus through one small opening. Several skin sutures still span the involved segment."
+          },
+          {
+            "label": "Ultrasound and examination record",
+            "value": "The fluid pocket is in subcutaneous tissue above a continuous fascial layer. The retromuscular mesh plane is separate; no communicating tract is demonstrated. The surrounding skin has no spreading change and she is conversing comfortably."
+          }
+        ]
+      },
+      "Task": "Which source-control plan should be selected for Sandra Reed's current wound?",
+      "Options": [
+        "**KEY:** Open drainage of the incisional pocket",
+        "Needle drainage of the incisional pocket",
+        "Mesh explantation and incisional pocket drainage"
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Open drainage of the incisional pocket",
+          "The displayed purulent pocket requires opening and drainage, removing obstructing sutures as needed, rather than leaving a pinhole over retained pus."
+        ],
+        [
+          "Needle drainage of the incisional pocket",
+          "Aspiration through a closed segment does not provide the supported opening/drainage approach for this purulent incisional pocket."
+        ],
+        [
+          "Mesh explantation and incisional pocket drainage",
+          "The current localized compartment map does not establish a mesh-source indication requiring explantation."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Open drainage of the incisional pocket",
+          "The displayed purulent pocket requires opening and drainage, removing obstructing sutures as needed, rather than leaving a pinhole over retained pus."
+        ],
+        [
+          "Needle drainage of the incisional pocket",
+          "Aspiration through a closed segment does not provide the supported opening/drainage approach for this purulent incisional pocket."
+        ],
+        [
+          "Mesh explantation and incisional pocket drainage",
+          "The current localized compartment map does not establish a mesh-source indication requiring explantation."
+        ]
+      ]
+    },
+    "explanation": "First locate the source: the displayed pocket lies above intact fascia rather than in the separate mesh plane. Then provide adequate local opening and drainage, releasing skin sutures when needed. A pinhole or needle aspiration does not replace opening the involved purulent incisional segment. This record does not prove that mesh infection can never coexist or determine whether systemic antibiotics are needed in every patient.",
+    "supportingEvidenceClaimIds": [
+      "claim.n4.10b8e172c6d1",
+      "claim.n4.3ef0d7efc452",
+      "claim.n4.40b34fe591d8"
+    ],
+    "whatChanged": "Default-release admission only. Clinical wording/options/claims/status and existing concept meanings are unchanged.",
+    "conceptMeaning": "existing_meaning_retained",
+    "frozenPreservation": {
+      "acceptanceId": "review.n4.incisional-pocket-above-retained-mesh.v1",
+      "sourceView": "n4-round1",
+      "sourceReleaseSha256": "6e52115019ab011b59722b68c6cb2ddca7c8f43943a56652327cc87bb2f69782",
+      "caseId": "case.n4.incisional-pocket-above-retained-mesh.v1",
+      "questionVariantId": "question.n4.incisional-pocket-above-retained-mesh.v1",
+      "conceptId": "concept.superficial-incisional-ssi.open-drain",
+      "rawAuthoringCaseSha256": "4ed850f7bc0b74cc67db52f9e21d8dce79eb0faa540fae0b7442acd38e832616",
+      "acceptedCaseSha256": "184bf66e9648c13714aee1e9047229b09de949295bd1b8080e4f67d1c69e3dcb",
+      "acceptedQuestionSha256": "c642e19e54114b49d050c9f0dab1c8d93117695425eea8f0b0048477477343a2"
+    },
+    "lint": []
+  },
+  {
+    "acceptanceId": "review.n4.ventral-controlled-enterotomy-mesh-material.v2",
+    "caseId": "case.n4.ventral-controlled-enterotomy-mesh-material.v2",
+    "nodeId": "node.n4.ventral-controlled-enterotomy-mesh-material.v2",
+    "questionVariantId": "question.n4.ventral-controlled-enterotomy-mesh-material.v2",
+    "conceptId": "concept.n4r2.mesh-material-and-contact-compartment",
+    "sourceView": "n4-round2",
+    "decision": "docs/research/question-n4-manager-decision-20261110.md",
+    "title": "Incisional hernia repair",
+    "reviewStatus": "needs_clinician_review",
+    "clinicalApproval": false,
+    "independentReview": "docs/research/question-new-n4-review2-20261110.json",
+    "verdict": "PASS",
+    "sourceHoldStatus": "none",
+    "heldKeyClaims": [],
+    "keyOrderNotice": "key shown first for review only; runtime answer choices are randomized",
+    "beforeRole": "Exact independently reviewed source fields; no authoring edits in this acceptance.",
+    "before": {
+      "Presentation": "Ruth Dawson, a 69-year-old woman, is undergoing elective incisional-hernia repair. A bowel opening occurred during adhesiolysis. Reconstruction is now at mesh selection.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "keyValue",
+        "caption": "Original constructed clinical record; fictional observations",
+        "items": [
+          {
+            "label": "Bowel and field",
+            "value": "The opening was recognized immediately and sutured. Inspection under a leak assessment shows no escape; the adjacent bowel remains pink. A localized spill has been removed. Hemodynamics and support requirements are unchanged."
+          },
+          {
+            "label": "Reconstruction",
+            "value": "The anterior fascial edges can be closed. The posterior rectus sheaths have been reapproximated over the viscera; the planned mesh pocket lies between these sheaths and the rectus muscles."
+          }
+        ]
+      },
+      "Task": "Which mesh should be used for Ruth Dawson’s selected single-stage repair?",
+      "Options": [
+        "**KEY:** Macroporous monofilament polypropylene mesh",
+        "Microporous expanded polytetrafluoroethylene mesh",
+        "Non-cross-linked porcine dermal mesh"
+      ]
+    },
+    "after": {
+      "Presentation": "Ruth Dawson, a 69-year-old woman, is undergoing elective incisional-hernia repair. A bowel opening occurred during adhesiolysis. Reconstruction is now at mesh selection.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "keyValue",
+        "caption": "Original constructed clinical record; fictional observations",
+        "items": [
+          {
+            "label": "Bowel and field",
+            "value": "The opening was recognized immediately and sutured. Inspection under a leak assessment shows no escape; the adjacent bowel remains pink. A localized spill has been removed. Hemodynamics and support requirements are unchanged."
+          },
+          {
+            "label": "Reconstruction",
+            "value": "The anterior fascial edges can be closed. The posterior rectus sheaths have been reapproximated over the viscera; the planned mesh pocket lies between these sheaths and the rectus muscles."
+          }
+        ]
+      },
+      "Task": "Which mesh should be used for Ruth Dawson’s selected single-stage repair?",
+      "Options": [
+        "**KEY:** Macroporous monofilament polypropylene mesh",
+        "Microporous expanded polytetrafluoroethylene mesh",
+        "Non-cross-linked porcine dermal mesh"
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Macroporous monofilament polypropylene mesh",
+          "The controlled event falls within the selected single-stage scope, and the reconstructed posterior layer separates this extraperitoneal prosthesis from bowel. Permanent macroporous synthetic reinforcement is supported in that selected context."
+        ],
+        [
+          "Microporous expanded polytetrafluoroethylene mesh",
+          "Selecting a visceral-contact material misreads the extraperitoneal pocket and does not address the contamination-related material comparison."
+        ],
+        [
+          "Non-cross-linked porcine dermal mesh",
+          "The recognized and controlled bowel event does not establish a benefit from substituting biologic mesh for the supported permanent macroporous synthetic option."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Macroporous monofilament polypropylene mesh",
+          "The controlled event falls within the selected single-stage scope, and the reconstructed posterior layer separates this extraperitoneal prosthesis from bowel. Permanent macroporous synthetic reinforcement is supported in that selected context."
+        ],
+        [
+          "Microporous expanded polytetrafluoroethylene mesh",
+          "Selecting a visceral-contact material misreads the extraperitoneal pocket and does not address the contamination-related material comparison."
+        ],
+        [
+          "Non-cross-linked porcine dermal mesh",
+          "The recognized and controlled bowel event does not establish a benefit from substituting biologic mesh for the supported permanent macroporous synthetic option."
+        ]
+      ]
+    },
+    "explanation": "The repaired opening, controlled spill and unchanged physiology define the selected single-stage scope. The closed posterior layer also places the implant outside the peritoneal cavity. Choose macroporous monofilament polypropylene rather than defaulting to biologic material or selecting a visceral-contact material for a compartment separated from bowel. This does not select repair timing after an uncontrolled enterotomy.",
+    "supportingEvidenceClaimIds": [
+      "claim.n4.8e30265aebbd",
+      "claim.n4.e22669366268",
+      "claim.n4.4b2bd6d4bf88",
+      "claim.n4r2.mesh-compartment-contact",
+      "claim.n4r2.permanent-macroporous-material"
+    ],
+    "whatChanged": "Default-release admission only. Clinical wording/options/claims/status and existing concept meanings are unchanged.",
+    "conceptMeaning": "new_meaning_already_versioned_in_reviewed_candidate",
+    "frozenPreservation": {
+      "acceptanceId": "review.n4.ventral-controlled-enterotomy-mesh-material.v2",
+      "sourceView": "n4-round2",
+      "sourceReleaseSha256": "5ee26ba76c9deaa161e423f1419a9030e2886dd4a7c678626b9156a22b5f0c51",
+      "caseId": "case.n4.ventral-controlled-enterotomy-mesh-material.v2",
+      "questionVariantId": "question.n4.ventral-controlled-enterotomy-mesh-material.v2",
+      "conceptId": "concept.n4r2.mesh-material-and-contact-compartment",
+      "rawAuthoringCaseSha256": "1c451ae253df4390756153060b54b707c965984869a91a1a8dcb28ea83e3b9fb",
+      "acceptedCaseSha256": "d40eb51fc66b0c74a63bfa92d787f88389f4bac39ccbf606c62fb9244135ed35",
+      "acceptedQuestionSha256": "44d1ccb4229916f293427caa03aac68b5e6049b957075db6ea2e0715e8481100"
+    },
+    "lint": []
+  },
+  {
+    "acceptanceId": "review.n4.unexpected-deep-mass-during-lipoma-excision.v2",
+    "caseId": "case.n4.unexpected-deep-mass-during-lipoma-excision.v2",
+    "nodeId": "node.n4.unexpected-deep-mass-during-lipoma-excision.v2",
+    "questionVariantId": "question.n4.unexpected-deep-mass-during-lipoma-excision.v2",
+    "conceptId": "concept.soft-tissue-mass.extremity-mri.v2",
+    "sourceView": "n4-round2",
+    "decision": "docs/research/question-n4-manager-decision-20261110.md",
+    "title": "Thigh lump excision",
+    "reviewStatus": "needs_clinician_review",
+    "clinicalApproval": false,
+    "independentReview": "docs/research/question-new-n4-review2-20261110.json",
+    "verdict": "PASS",
+    "sourceHoldStatus": "none",
+    "heldKeyClaims": [],
+    "keyOrderNotice": "key shown first for review only; runtime answer choices are randomized",
+    "beforeRole": "Exact independently reviewed source fields; no authoring edits in this acceptance.",
+    "before": {
+      "Presentation": "Helen Marlow, a 64-year-old woman, is undergoing excision of a slowly enlarging upper-arm lump. The incision has exposed the tissue described below; the lesion has not been cut.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "keyValue",
+        "caption": "Original constructed clinical record; fictional observations",
+        "items": [
+          {
+            "label": "Outside ultrasound",
+            "value": "An ovoid fatty-appearing focus was measured entirely above the deep fascia."
+          },
+          {
+            "label": "Operative view",
+            "value": "The palpable lump is beneath the fascia and moves with the adjacent muscle. An exposed portion is firm and lobulated; a separate small fatty nodule lies in the superficial tissue."
+          }
+        ]
+      },
+      "Task": "Which plan should be selected at this point in Helen Marlow’s operation?",
+      "Options": [
+        "**KEY:** Close the wound, then obtain regional MRI and a planned core biopsy",
+        "Take an incisional biopsy, then obtain regional MRI and staging",
+        "Complete a marginal excision, then use the specimen for diagnosis"
+      ]
+    },
+    "after": {
+      "Presentation": "Helen Marlow, a 64-year-old woman, is undergoing excision of a slowly enlarging upper-arm lump. The incision has exposed the tissue described below; the lesion has not been cut.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "keyValue",
+        "caption": "Original constructed clinical record; fictional observations",
+        "items": [
+          {
+            "label": "Outside ultrasound",
+            "value": "An ovoid fatty-appearing focus was measured entirely above the deep fascia."
+          },
+          {
+            "label": "Operative view",
+            "value": "The palpable lump is beneath the fascia and moves with the adjacent muscle. An exposed portion is firm and lobulated; a separate small fatty nodule lies in the superficial tissue."
+          }
+        ]
+      },
+      "Task": "Which plan should be selected at this point in Helen Marlow’s operation?",
+      "Options": [
+        "**KEY:** Close the wound, then obtain regional MRI and a planned core biopsy",
+        "Take an incisional biopsy, then obtain regional MRI and staging",
+        "Complete a marginal excision, then use the specimen for diagnosis"
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Close the wound, then obtain regional MRI and a planned core biopsy",
+          "The operative target and imaged superficial nodule are different structures. Define the deep lesion and plan the biopsy path before further disruption."
+        ],
+        [
+          "Take an incisional biopsy, then obtain regional MRI and staging",
+          "This cuts the deep lesion and creates a tract before regional extent and a definitive resection path have been planned."
+        ],
+        [
+          "Complete a marginal excision, then use the specimen for diagnosis",
+          "The superficial fatty focus does not establish the nature or boundary of the muscle-associated lesion."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Close the wound, then obtain regional MRI and a planned core biopsy",
+          "The operative target and imaged superficial nodule are different structures. Define the deep lesion and plan the biopsy path before further disruption."
+        ],
+        [
+          "Take an incisional biopsy, then obtain regional MRI and staging",
+          "This cuts the deep lesion and creates a tract before regional extent and a definitive resection path have been planned."
+        ],
+        [
+          "Complete a marginal excision, then use the specimen for diagnosis",
+          "The superficial fatty focus does not establish the nature or boundary of the muscle-associated lesion."
+        ]
+      ]
+    },
+    "explanation": "The ultrasound describes tissue above fascia; the palpable operative target is below it and moves with muscle. Reconcile that mismatch before accepting the prior benign interpretation. Closing without cutting the deep mass permits regional MRI and a planned core-biopsy route. Immediate marginal excision or an unplanned incisional tract can compromise subsequent treatment planning.",
+    "supportingEvidenceClaimIds": [
+      "claim.n4.55bfe6e710a5",
+      "claim.n4.d9ff60dfac0d",
+      "claim.n4.db73b0b71f66",
+      "claim.n4.34c93980671c"
+    ],
+    "whatChanged": "Default-release admission only. Clinical wording/options/claims/status and existing concept meanings are unchanged.",
+    "conceptMeaning": "existing_meaning_retained",
+    "frozenPreservation": {
+      "acceptanceId": "review.n4.unexpected-deep-mass-during-lipoma-excision.v2",
+      "sourceView": "n4-round2",
+      "sourceReleaseSha256": "5ee26ba76c9deaa161e423f1419a9030e2886dd4a7c678626b9156a22b5f0c51",
+      "caseId": "case.n4.unexpected-deep-mass-during-lipoma-excision.v2",
+      "questionVariantId": "question.n4.unexpected-deep-mass-during-lipoma-excision.v2",
+      "conceptId": "concept.soft-tissue-mass.extremity-mri.v2",
+      "rawAuthoringCaseSha256": "27e4055cb6544d7ca9142fe09ebafd7b7d5504dce08b0d3ee94c1fe8b5924771",
+      "acceptedCaseSha256": "067aab80675869b4edeb1dac4c86c271e6737ca135564525d53ea42e15d8f68f",
+      "acceptedQuestionSha256": "449c68a08d762efbb651672688054bf7b2d9dd78cad953f35b4259afd15f5de7"
+    },
+    "lint": []
+  },
+  {
+    "acceptanceId": "review.n4.ulcer-recurrent-bleeding-after-clips.v2",
+    "caseId": "case.n4.ulcer-recurrent-bleeding-after-clips.v2",
+    "nodeId": "node.n4.ulcer-recurrent-bleeding-after-clips.v2",
+    "questionVariantId": "question.n4.ulcer-recurrent-bleeding-after-clips.v2",
+    "conceptId": "concept.peptic-ulcer-bleeding.endoscopic-hemostasis-modality.v2",
+    "sourceView": "n4-round2",
+    "decision": "docs/research/question-n4-manager-decision-20261110.md",
+    "title": "Recurrent melena",
+    "reviewStatus": "needs_clinician_review",
+    "clinicalApproval": false,
+    "independentReview": "docs/research/question-new-n4-review2-20261110.json",
+    "verdict": "PASS",
+    "sourceHoldStatus": "none",
+    "heldKeyClaims": [],
+    "keyOrderNotice": "key shown first for review only; runtime answer choices are randomized",
+    "beforeRole": "Exact independently reviewed source fields; no authoring edits in this acceptance.",
+    "before": {
+      "Presentation": "Elena Brooks, a 72-year-old woman, is undergoing repeat upper endoscopy after renewed melena and a fall in hemoglobin. Her circulation has stabilized with resuscitation. Initial endoscopy had stopped bleeding with through-the-scope clips.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "keyValue",
+        "caption": "Original constructed clinical record; fictional observations",
+        "items": [
+          {
+            "label": "Current endoscopic field",
+            "value": "A discrete point between the prior clips is spurting. The ulcer lies on a broad fibrotic base facing the endoscope; the lumen permits a stable frontal view."
+          },
+          {
+            "label": "Tissue response",
+            "value": "The previous clip arms have caught thin superficial edges that are separating from the base. Gentle contact around the bleeding point indents the surrounding tissue without uncovering a deep cavity."
+          }
+        ]
+      },
+      "Task": "Which hemostatic strategy should be selected next for Elena Brooks?",
+      "Options": [
+        "**KEY:** Place a cap-mounted clip across the focal vessel",
+        "Place a through-the-scope hemostatic clip at the vessel",
+        "End this attempt and proceed to arterial embolization"
+      ]
+    },
+    "after": {
+      "Presentation": "Elena Brooks, a 72-year-old woman, is undergoing repeat upper endoscopy after renewed melena and a fall in hemoglobin. Her circulation has stabilized with resuscitation. Initial endoscopy had stopped bleeding with through-the-scope clips.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "keyValue",
+        "caption": "Original constructed clinical record; fictional observations",
+        "items": [
+          {
+            "label": "Current endoscopic field",
+            "value": "A discrete point between the prior clips is spurting. The ulcer lies on a broad fibrotic base facing the endoscope; the lumen permits a stable frontal view."
+          },
+          {
+            "label": "Tissue response",
+            "value": "The previous clip arms have caught thin superficial edges that are separating from the base. Gentle contact around the bleeding point indents the surrounding tissue without uncovering a deep cavity."
+          }
+        ]
+      },
+      "Task": "Which hemostatic strategy should be selected next for Elena Brooks?",
+      "Options": [
+        "**KEY:** Place a cap-mounted clip across the focal vessel",
+        "Place a through-the-scope hemostatic clip at the vessel",
+        "End this attempt and proceed to arterial embolization"
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Place a cap-mounted clip across the focal vessel",
+          "This is recurrent focal bleeding after initial conventional hemostasis, with poor superficial purchase. Cap-mounted clipping offers a repeat endoscopic approach before declaring repeat therapy unsuccessful."
+        ],
+        [
+          "Place a through-the-scope hemostatic clip at the vessel",
+          "The separating superficial edges make repeating the same type of purchase less persuasive in this recurrent setting."
+        ],
+        [
+          "End this attempt and proceed to arterial embolization",
+          "Repeat endoscopic treatment has not yet failed in the stabilized patient with a visible target. Embolization is the escalation when repeat therapy fails or is infeasible."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Place a cap-mounted clip across the focal vessel",
+          "This is recurrent focal bleeding after initial conventional hemostasis, with poor superficial purchase. Cap-mounted clipping offers a repeat endoscopic approach before declaring repeat therapy unsuccessful."
+        ],
+        [
+          "Place a through-the-scope hemostatic clip at the vessel",
+          "The separating superficial edges make repeating the same type of purchase less persuasive in this recurrent setting."
+        ],
+        [
+          "End this attempt and proceed to arterial embolization",
+          "Repeat endoscopic treatment has not yet failed in the stabilized patient with a visible target. Embolization is the escalation when repeat therapy fails or is infeasible."
+        ]
+      ]
+    },
+    "explanation": "Distinguish recurrence after initial success from failure of repeat endoscopic treatment. Use the focal target and superficial clip-edge separation to reconsider tissue capture. Cap-mounted clipping is the best offered repeat approach. Another superficial clip repeats the observed purchase problem; embolization remains the escalation if repeat endoscopic treatment fails.",
+    "supportingEvidenceClaimIds": [
+      "claim.n4.49a69d44d485",
+      "claim.n4.f1fa567648e6",
+      "claim.n4.be062b16f447"
+    ],
+    "whatChanged": "Default-release admission only. Clinical wording/options/claims/status and existing concept meanings are unchanged.",
+    "conceptMeaning": "existing_meaning_retained",
+    "frozenPreservation": {
+      "acceptanceId": "review.n4.ulcer-recurrent-bleeding-after-clips.v2",
+      "sourceView": "n4-round2",
+      "sourceReleaseSha256": "5ee26ba76c9deaa161e423f1419a9030e2886dd4a7c678626b9156a22b5f0c51",
+      "caseId": "case.n4.ulcer-recurrent-bleeding-after-clips.v2",
+      "questionVariantId": "question.n4.ulcer-recurrent-bleeding-after-clips.v2",
+      "conceptId": "concept.peptic-ulcer-bleeding.endoscopic-hemostasis-modality.v2",
+      "rawAuthoringCaseSha256": "26f17c2966c50a6c7e9566d219f37b4dcd1255f38678a1b7c2e47aa41309a297",
+      "acceptedCaseSha256": "1535a568d89cd5f306aeb3d9cd74ffb59dd4d07b5e3f31dfb95c3f5c4962d23b",
+      "acceptedQuestionSha256": "ff415f4eef08123bfcb2cc9292566bbcb41fbe6918220d9ded18cabc32329aee"
+    },
+    "lint": []
+  },
+  {
+    "acceptanceId": "review.n4.cholangiogram-lucencies-and-proximal-coverage.v1",
+    "caseId": "case.n4.cholangiogram-lucencies-and-proximal-coverage.v1",
+    "nodeId": "node.n4.cholangiogram-lucencies-and-proximal-coverage.v1",
+    "questionVariantId": "question.n4.cholangiogram-lucencies-and-proximal-coverage.v1",
+    "conceptId": "concept.n4r2.cholangiogram-quality-before-duct-treatment",
+    "sourceView": "n4-round2",
+    "decision": "docs/research/question-n4-manager-decision-20261110.md",
+    "title": "Gallbladder surgery",
+    "reviewStatus": "needs_clinician_review",
+    "clinicalApproval": false,
+    "independentReview": "docs/research/question-new-n4-review2-20261110.json",
+    "verdict": "PASS",
+    "sourceHoldStatus": "none",
+    "heldKeyClaims": [],
+    "keyOrderNotice": "key shown first for review only; runtime answer choices are randomized",
+    "beforeRole": "Exact independently reviewed source fields; no authoring edits in this acceptance.",
+    "before": {
+      "Presentation": "Evelyn Shaw, a 61-year-old woman, is undergoing laparoscopic cholecystectomy. The surgeon has cannulated a duct for fluoroscopic cholangiography.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "keyValue",
+        "caption": "Original constructed procedure record; fictional observations",
+        "items": [
+          {
+            "label": "Early frames",
+            "value": "Three round lucencies enter near the catheter tip and change position and shape between frames."
+          },
+          {
+            "label": "Later frames",
+            "value": "Contrast reaches the duodenum. Proximal contrast outlines a rightward branching tree; the corresponding branching pattern on the other side is outside the opacified field. No lucency stays fixed at one site."
+          }
+        ]
+      },
+      "Task": "Which operative plan should be selected from Evelyn Shaw’s current cholangiogram?",
+      "Options": [
+        "**KEY:** De-air the injection system and repeat ductal imaging",
+        "Proceed to common-bile-duct exploration for the filling defects",
+        "Complete the cholecystectomy after documenting free duodenal flow"
+      ]
+    },
+    "after": {
+      "Presentation": "Evelyn Shaw, a 61-year-old woman, is undergoing laparoscopic cholecystectomy. The surgeon has cannulated a duct for fluoroscopic cholangiography.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "keyValue",
+        "caption": "Original constructed procedure record; fictional observations",
+        "items": [
+          {
+            "label": "Early frames",
+            "value": "Three round lucencies enter near the catheter tip and change position and shape between frames."
+          },
+          {
+            "label": "Later frames",
+            "value": "Contrast reaches the duodenum. Proximal contrast outlines a rightward branching tree; the corresponding branching pattern on the other side is outside the opacified field. No lucency stays fixed at one site."
+          }
+        ]
+      },
+      "Task": "Which operative plan should be selected from Evelyn Shaw’s current cholangiogram?",
+      "Options": [
+        "**KEY:** De-air the injection system and repeat ductal imaging",
+        "Proceed to common-bile-duct exploration for the filling defects",
+        "Complete the cholecystectomy after documenting free duodenal flow"
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** De-air the injection system and repeat ductal imaging",
+          "Changing lucencies near injection suggest an artifact, and duodenal flow does not establish complete proximal coverage. Improve the study before deciding on duct treatment."
+        ],
+        [
+          "Proceed to common-bile-duct exploration for the filling defects",
+          "This acts on transient injection-associated lucencies before confirming a genuine ductal lesion on an adequate study."
+        ],
+        [
+          "Complete the cholecystectomy after documenting free duodenal flow",
+          "Duodenal passage does not answer the incomplete proximal anatomy or settle the apparent defects."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** De-air the injection system and repeat ductal imaging",
+          "Changing lucencies near injection suggest an artifact, and duodenal flow does not establish complete proximal coverage. Improve the study before deciding on duct treatment."
+        ],
+        [
+          "Proceed to common-bile-duct exploration for the filling defects",
+          "This acts on transient injection-associated lucencies before confirming a genuine ductal lesion on an adequate study."
+        ],
+        [
+          "Complete the cholecystectomy after documenting free duodenal flow",
+          "Duodenal passage does not answer the incomplete proximal anatomy or settle the apparent defects."
+        ]
+      ]
+    },
+    "explanation": "The transient moving lucencies near the injection tip can be air, while flow into the duodenum does not establish that both proximal ductal trees were shown. De-air and obtain a complete repeat study before committing to duct exploration or accepting the image as reassuring. The guideline supplies quality requirements and artifact concerns; the repeat-injection sequence is an original clinical application of those requirements.",
+    "supportingEvidenceClaimIds": [
+      "claim.n4r2.ioc-air-false-positive",
+      "claim.n4r2.ioc-complete-study",
+      "claim.n4r2.ioc-confirmed-stone-treatment"
+    ],
+    "whatChanged": "Default-release admission only. Clinical wording/options/claims/status and existing concept meanings are unchanged.",
+    "conceptMeaning": "new_meaning_already_versioned_in_reviewed_candidate",
+    "frozenPreservation": {
+      "acceptanceId": "review.n4.cholangiogram-lucencies-and-proximal-coverage.v1",
+      "sourceView": "n4-round2",
+      "sourceReleaseSha256": "5ee26ba76c9deaa161e423f1419a9030e2886dd4a7c678626b9156a22b5f0c51",
+      "caseId": "case.n4.cholangiogram-lucencies-and-proximal-coverage.v1",
+      "questionVariantId": "question.n4.cholangiogram-lucencies-and-proximal-coverage.v1",
+      "conceptId": "concept.n4r2.cholangiogram-quality-before-duct-treatment",
+      "rawAuthoringCaseSha256": "e737f6ad5ae6cf053c43c546df28bdf4d38c9bb64d6300507095132b2b4ade3f",
+      "acceptedCaseSha256": "2fcd76f1c88d262848b9b258716c0aa0dfb0d0cfa0098c275ce4f275cdb3874b",
+      "acceptedQuestionSha256": "f2c9dee7b9e9c2a409e813727ca64bf5ddd3f08b4fd957865392c1267232ce51"
+    },
+    "lint": []
+  }
+]

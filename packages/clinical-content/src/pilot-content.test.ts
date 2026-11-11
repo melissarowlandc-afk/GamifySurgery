@@ -1,3 +1,4 @@
+import {QUESTION_N4_FROZEN_PRESERVATION} from "./question-n4-accepted-20261110";
 import { describe, expect, it } from "vitest";
 import { createHash } from "node:crypto";
 import {readFileSync} from "node:fs";
@@ -50,6 +51,10 @@ const STATS1_EXACT_LENGTH_EXCEPTIONS=new Set([
  "question.statistics-ethics.p-value.v2.r8",
  "question.statistics-ethics.study-design.v4.r1",
 ]);
+const N4_EXACT_LENGTH_EXCEPTIONS=new Map([
+ ["question.n4.venous-ulcer-contralateral-pressure-trap.v1",{correctLength:45,longestDistractor:42}],
+ ["question.n4.unexpected-deep-mass-during-lipoma-excision.v2",{correctLength:67,longestDistractor:65}],
+]);
 const stats1Packet=JSON.parse(readFileSync(new URL("../../../docs/research/question-stats1-accepted-20261108.json",import.meta.url),"utf8")) as Array<{
  questionVariantId:string;frozenPreservation:{acceptedCaseSha256:string};
 }>;
@@ -89,9 +94,19 @@ describe("five-diagnosis pilot registry", () => {
     );
 
     expect(
-      violations.filter(v => v.questionVariantId !== "question.n3.venous-ulcer-with-competing-arterial-findings.v4" && v.questionVariantId !== "question.n3.gastric-lymphoma-new-large-cell-process.v2"&&!STATS1_EXACT_LENGTH_EXCEPTIONS.has(v.questionVariantId))
+      violations.filter(v => !N4_EXACT_LENGTH_EXCEPTIONS.has(v.questionVariantId) && v.questionVariantId !== "question.n3.venous-ulcer-with-competing-arterial-findings.v4" && v.questionVariantId !== "question.n3.gastric-lymphoma-new-large-cell-process.v2"&&!STATS1_EXACT_LENGTH_EXCEPTIONS.has(v.questionVariantId))
         .map((violation) => violation.questionVariantId).sort(),
     ).toEqual([...IMMUTABLE_APPROVED_LENGTH_EXCEPTIONS].sort());
+    // Two exact N4 PASS versions have tiny raw-character residuals. Preserve
+    // reviewed prose; pin actual disparity, authority and complete case hashes.
+    for(const [id,lengths]of N4_EXACT_LENGTH_EXCEPTIONS){
+      expect(violations.filter(v=>v.questionVariantId===id)).toEqual([{questionVariantId:id,...lengths}]);
+      expect(QUESTION_SHIP_MANIFEST.accepted.find(row=>row.questionVariantId===id))
+        .toMatchObject({decision:"docs/research/question-n4-manager-decision-20261110.md"});
+      const cs=PILOT_CLINICAL_RELEASE.cases.find(cs=>cs.decisionNodes.some(n=>n.questionVariantId===id))!;
+      expect(createHash("sha256").update(JSON.stringify(cs)).digest("hex"))
+        .toBe(QUESTION_N4_FROZEN_PRESERVATION.find(row=>row.questionVariantId===id)!.acceptedCaseSha256);
+    }
     // Exact round-four PASS wording is manager-frozen. Character count alone
     // flags 51 versus43 characters; bind the entire case and actual disparity.
     const venousId="question.n3.venous-ulcer-with-competing-arterial-findings.v4";
