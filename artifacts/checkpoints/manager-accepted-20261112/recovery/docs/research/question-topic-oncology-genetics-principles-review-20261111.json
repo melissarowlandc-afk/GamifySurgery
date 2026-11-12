@@ -1,0 +1,701 @@
+[
+  {
+    "id": "question.topic.oncology-genetics-principles.polyposis-panel.v1",
+    "nodeId": "node.topic.oncology-genetics-principles.polyposis-panel.v1",
+    "title": "Germline testing after diffuse adenomas",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The task is complete, but 'His procedure and pathology records are shown' adds no information. The explanation's discussion of a 'newly asserted testing threshold' is author-facing."
+    ],
+    "cues": [
+      {
+        "phrase": "More than 80 separate polyps across the colon.",
+        "why": "The repeated polyps/polyposis root favors the only broadly labelled 'Polyposis panel'; the competing hamartoma panel is also a polyposis evaluation but is not named symmetrically."
+      }
+    ],
+    "fairness": [
+      "APC/MUTYH-inclusive evaluation is the best offered answer. No confident clinical error identified in this offline review; this is not source verification or clinical approval.",
+      "The negative pedigree does not distinguish the options: removing it leaves the same histology-to-panel match. There is no genuine dominant-versus-recessive testing competitor.",
+      "First node is coherent and does not disclose the sister's eventual genotype."
+    ],
+    "suggestions": [
+      "Use equally specific gene-panel labels and a credible competing adenomatous-polyposis testing strategy, so interpreting pedigree or assay coverage changes the choice.",
+      "Remove display-announcement prose and move the constructed-count caveat out of learner feedback."
+    ]
+  },
+  {
+    "id": "question.topic.oncology-genetics-principles.mutyh-sibling.v1",
+    "nodeId": "node.topic.oncology-genetics-principles.mutyh-sibling.v1",
+    "title": "Cascade testing after biallelic MUTYH findings",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The familial variants and task are clear; 'MAP' in the explanation should be expanded on first use."
+    ],
+    "cues": [
+      {
+        "phrase": "MUTYH variant A and MUTYH variant B, confirmed in trans.",
+        "why": "The key repeats both named targets; the other options omit a stated target or switch to an unrelated named gene. Ordinary completeness matching succeeds without understanding recessive inheritance."
+      }
+    ],
+    "fairness": [
+      "Testing both familial variants is best among these choices. No confident clinical inaccuracy identified.",
+      "The follow-up is coherent and self-contained, but reading two explicitly listed targets and choosing both is not two consequential inferences. Prior feedback does not itself supply the answer."
+    ],
+    "suggestions": [
+      "Require interpretation of a relative's actual partial result and remaining assay coverage, then a concrete next testing decision with comparably complete options.",
+      "Expand MUTYH-associated polyposis in feedback."
+    ]
+  },
+  {
+    "id": "question.topic.oncology-genetics-principles.apc-child-testing.v1",
+    "nodeId": "node.topic.oncology-genetics-principles.apc-child-testing.v1",
+    "title": "Predictive APC testing in a minor",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The child's age, asymptomatic status, familial variant and requested decision are clear. Presentation and exhibit substantially duplicate each other."
+    ],
+    "cues": [
+      {
+        "phrase": "Offer familial APC testing during childhood",
+        "why": "This key combines both majority components: 'familial APC testing' appears in two options and 'during childhood' appears in two. Convergence yields the key without knowing childhood actionability."
+      }
+    ],
+    "fairness": [
+      "Targeted testing is the best offered plan for the represented child; broad testing is generally less focused, not inherently incapable of finding the familial variant.",
+      "This standalone item chiefly recalls the APC childhood-actionability rule. Knowing the rule settles the item without a second consequential interpretation."
+    ],
+    "suggestions": [
+      "Remove the component-convergence shortcut and compare equally specific, credible plans.",
+      "If retaining this foundational concept as an easy item, seek explicit acceptance of that role; otherwise add a supported patient-specific testing/coverage issue that genuinely changes the plan."
+    ]
+  },
+  {
+    "id": "question.topic.oncology-genetics-principles.failed-ihc-controls.v1",
+    "nodeId": "node.topic.oncology-genetics-principles.failed-ihc-controls.v1",
+    "title": "Invalid mismatch-repair immunohistochemistry",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The stain observations and task are understandable. No material ambiguity in the visible text."
+    ],
+    "cues": [
+      {
+        "phrase": "Expected nuclear staining absent.",
+        "why": "This explicitly announces failed quality control; 'Repeat tumor MMR IHC with valid controls' is the only option addressing the announced defect."
+      }
+    ],
+    "fairness": [
+      "Repeating an uninterpretable run is the best offered answer; absent control staining cannot establish tumor-specific loss.",
+      "The two alternatives move directly to biological interpretation of an invalid assay, leaving no close competing pathology-workup decision.",
+      "The first part sets up a coherent repeat-panel sequence. It tests a single quality-control rule rather than a difficult clinical chain."
+    ],
+    "suggestions": [
+      "Keep necessary control findings, but compare credible specimen/assay-recovery strategies with enough acquisition detail to distinguish them.",
+      "Alternatively obtain explicit acceptance as foundational quality-control practice rather than claiming resident-level two-step difficulty."
+    ]
+  },
+  {
+    "id": "question.topic.oncology-genetics-principles.mlh1-methylation.v1",
+    "nodeId": "node.topic.oncology-genetics-principles.mlh1-methylation.v1",
+    "title": "Reflex testing after MLH1/PMS2 loss",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The repeat result is understandable on its own. The explanation's disclaimer about 'the only permitted reflex algorithm' is awkward learner-facing editorial language."
+    ],
+    "cues": [
+      {
+        "phrase": "MLH1 absent; PMS2 absent; MSH2 present; MSH6 present.",
+        "why": "The key repeats the absent MLH1 target, whereas the gene-specific distractor repeats retained MSH2. The option set exposes a simple label match rather than a close algorithmic decision."
+      }
+    ],
+    "fairness": [
+      "MLH1 methylation analysis is a defensible best answer among these options. MSI can be useful in other settings, but it does not resolve the represented cause of valid MLH1/PMS2 loss.",
+      "The preceding explanation teaches assay validity but does not directly teach methylation. The later node remains mostly one familiar reflex-test rule."
+    ],
+    "suggestions": [
+      "Use a credible competing next molecular pathway and make a patient-specific result or assay limitation distinguish it.",
+      "Replace the algorithm disclaimer with a short explanation of what this assay establishes and what it does not."
+    ]
+  },
+  {
+    "id": "question.topic.oncology-genetics-principles.unmethylated-germline.v1",
+    "nodeId": "node.topic.oncology-genetics-principles.unmethylated-germline.v1",
+    "title": "Constitutional evaluation after unmethylated MLH1 loss",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The task asks what the patient should receive, but one option is a test for her daughter; that option does not answer the same task."
+    ],
+    "cues": [
+      {
+        "phrase": "Evelyn has completed pretest genetic counseling.",
+        "why": "This readiness statement steers toward the constitutional testing option without adding a discriminatory clinical finding."
+      },
+      {
+        "phrase": "Familial MLH1-variant assay for her daughter",
+        "why": "The recipient mismatch with the task eliminates this option before interpreting the laboratory data."
+      }
+    ],
+    "fairness": [
+      "Constitutional evaluation is the best offered pathway; the tumor result does not itself diagnose Lynch syndrome.",
+      "The follow-up repeats the relevant IHC/methylation data and can stand alone. Earlier feedback frames methylation as the acquired-versus-inherited distinction, so the sequence further lowers difficulty.",
+      "The remaining MSI option repeats phenotype assessment rather than presenting a close inherited-risk decision."
+    ],
+    "suggestions": [
+      "Make all options concrete testing plans for the same patient at the same stage.",
+      "Use a credible remaining hereditary-versus-somatic workup choice with the findings needed to rank it; do not simply add an unsupported alternative algorithm.",
+      "Remove the pretest-readiness cue while retaining informed-consent context where needed."
+    ]
+  },
+  {
+    "id": "question.topic.oncology-genetics-principles.mlh1-cascade.v1",
+    "nodeId": "node.topic.oncology-genetics-principles.mlh1-cascade.v1",
+    "title": "Familial MLH1 deletion testing",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Blood sequencing of MLH1 coding exons' does not explicitly specify whether copy-number analysis is included. The explanation assumes a sequence-only assay."
+    ],
+    "cues": [
+      {
+        "phrase": "Pathogenic MLH1 exon deletion confirmed.",
+        "why": "'Blood assay for the familial MLH1 deletion' repeats the target and variant class exactly; the stool-screening option is outside the task's familial-testing category."
+      }
+    ],
+    "fairness": [
+      "A deletion-capable familial assay is best. An exon deletion is not safely excluded by an assay lacking deletion detection, but the offered sequencing assay's limitations should be explicit.",
+      "The update is coherent and self-contained. Earlier feedback already distinguishes constitutional investigation from tumor screening; the new node mainly matches the stated target to its assay."
+    ],
+    "suggestions": [
+      "Describe actual assay coverage consistently for every option, including whether sequencing includes copy-number detection.",
+      "Replace the stool-screening foil with a credible familial-testing competitor and require interpretation of an assay limitation rather than exact phrase matching."
+    ]
+  },
+  {
+    "id": "question.topic.oncology-genetics-principles.epcam-coverage.v1",
+    "nodeId": "node.topic.oncology-genetics-principles.epcam-coverage.v1",
+    "title": "EPCAM testing after negative MSH2/MSH6 evaluation",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The reports and task are clear. No material ambiguity identified."
+    ],
+    "cues": [
+      {
+        "phrase": "Repeat constitutional MSH2 sequencing",
+        "why": "This repeats a completed assay without any new adequacy concern; a reader can discard it using chronology rather than medical knowledge."
+      }
+    ],
+    "fairness": [
+      "EPCAM deletion analysis is the best offered next test; the molecular relationship between EPCAM and MSH2 must still be known.",
+      "There is a genuine interpretation-plus-coverage decision, but the closest competitors are weak: one repeats completed testing and one addresses a different staining pair.",
+      "Standalone presentation supplies the necessary current reports. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": [
+      "Replace the unjustified exact repeat with a clinically credible competing extension of the workup.",
+      "Retain the precise prior assay coverage and control adequacy; do not remove necessary negative findings just to raise difficulty."
+    ]
+  },
+  {
+    "id": "question.topic.oncology-genetics-principles.pms2-negative-mlh1.v1",
+    "nodeId": "node.topic.oncology-genetics-principles.pms2-negative-mlh1.v1",
+    "title": "MLH1 evaluation after isolated PMS2 loss",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": false,
+    "highYield": false,
+    "clarityIssues": [
+      "'Validated PMS2 sequencing' describes the method but does not clearly state that this particular specimen/result was technically adequate; the explanation assumes an adequate negative."
+    ],
+    "cues": [
+      {
+        "phrase": "Repeat PMS2 sequencing with deletion/duplication analysis",
+        "why": "Repeats the completed test verbatim without a documented adequacy problem, allowing elimination before interpreting the unusual staining relationship."
+      }
+    ],
+    "fairness": [
+      "The proposed MLH1 follow-up is plausible, but its exact sequencing priority after isolated PMS2 loss is a specialist algorithm detail requiring clinician verification; no confident clinical error is asserted offline.",
+      "As written, difficulty rests mostly on recalling a less-common exception to stain/gene correspondence. The exact secondary single-gene branch is less broadly testable than initial MMR screening or familial-risk decisions.",
+      "The standalone record contains the key prior results, but does not create a second consequential decision."
+    ],
+    "suggestions": [
+      "Confirm the exact isolated-PMS2-loss pathway with the clinical reviewer before accepting this teaching point.",
+      "Prioritize a more broadly tested assay-interpretation objective, or supply a supported case-specific coverage problem and credible alternatives.",
+      "State specimen adequacy if rejecting repeat testing on that basis."
+    ]
+  },
+  {
+    "id": "question.topic.oncology-genetics-principles.affected-father-first.v1",
+    "nodeId": "node.topic.oncology-genetics-principles.affected-father-first.v1",
+    "title": "Choosing the informative relative for hereditary testing",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The familial evaluation task is clear. 'Their records are shown' is unnecessary framing."
+    ],
+    "cues": [
+      {
+        "phrase": "Her father has completed counseling and wishes to be tested.",
+        "why": "Explicit availability/readiness foregrounds the only new comprehensive evaluation."
+      },
+      {
+        "phrase": "Repeat BRCA1 coding sequencing for Elena",
+        "why": "An unchanged repeat of the displayed assay is dismissible from chronology alone."
+      }
+    ],
+    "fairness": [
+      "Testing the affected father with an appropriate panel is the best offered plan. A VUS is not an established familial causal target.",
+      "The closest distractors are an uncertain-variant assay and an unexplained repeat; neither competes closely with starting the affected relative's evaluation.",
+      "This first node's explanation explicitly previews using the father's result as a family target, scaffolding the next node."
+    ],
+    "suggestions": [
+      "Retain the father's willingness briefly as a genuine feasibility fact, but compare plausible testing strategies at the same stage.",
+      "Make the limited coverage of Elena's test or an actual informative-relative constraint consequential instead of using a repeated assay as filler.",
+      "Keep feedback focused enough that the next node must still interpret new evidence."
+    ]
+  },
+  {
+    "id": "question.topic.oncology-genetics-principles.familial-brca2-deletion.v1",
+    "nodeId": "node.topic.oncology-genetics-principles.familial-brca2-deletion.v1",
+    "title": "Testing for a newly established familial BRCA2 deletion",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Blood sequencing of BRCA2 coding exons' is not explicitly sequence-only, although the explanation treats it as incapable of addressing the deletion."
+    ],
+    "cues": [
+      {
+        "phrase": "Pathogenic BRCA2 exon deletion.",
+        "why": "The key reproduces 'BRCA2 deletion'; the two distractors either drop the variant class or return to the previously discounted BRCA1 VUS."
+      }
+    ],
+    "fairness": [
+      "A familial deletion assay is the best answer if the competing sequencing assay lacks deletion detection; make that limitation explicit.",
+      "The update is coherent and includes enough information to stand alone.",
+      "In the full sequence, the previous explanation states that the father's result establishes a family target and that Elena's VUS is not causal. This node then rehearses those rules, reducing independent reasoning."
+    ],
+    "suggestions": [
+      "Define each assay's coverage and replace the already-discredited VUS foil with a credible alternative.",
+      "Test a distinct interpretation or next decision rather than repeating the prior feedback's family-target rule."
+    ]
+  },
+  {
+    "id": "question.topic.oncology-genetics-principles.true-negative-plus-vus.v1",
+    "nodeId": "node.topic.oncology-genetics-principles.true-negative-plus-vus.v1",
+    "title": "Breast risk management after a true negative and separate VUS",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The management task is clear. Current update and exhibit duplicate most findings; compress the presentation without deleting the family-risk context."
+    ],
+    "cues": [],
+    "fairness": [
+      "Routine age-based screening is the best offered plan under the represented history: the validated familial negative and nonactionable VUS must both be interpreted before choosing management.",
+      "Carrier surveillance and risk-reducing surgery are meaningful overinterpretation errors; no independent high-risk indication is supplied.",
+      "The sequence follows coherently and the current node restates the familial result, separate VUS and relevant other risk history. Earlier feedback scaffolds the VUS principle but does not supply the final risk-management decision.",
+      "PASS is an editorial judgment on the supplied text, not clinical approval or verification of a specific screening schedule."
+    ],
+    "suggestions": [
+      "Remove redundant prose/exhibit repetition while retaining the evidence supporting a true negative and the absence of another represented high-risk indication.",
+      "Retain needs_clinician_review until Melissa approves the exact version."
+    ]
+  },
+  {
+    "id": "question.topic.oncology-genetics-principles.other-family-branch.v1",
+    "nodeId": "node.topic.oncology-genetics-principles.other-family-branch.v1",
+    "title": "Unexplained cancer history on the other family branch",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The task and two family branches are clear."
+    ],
+    "cues": [
+      {
+        "phrase": "Alive, has completed counseling, and wishes to be tested.",
+        "why": "The key is the only option introducing evaluation of the newly highlighted willing relative."
+      },
+      {
+        "phrase": "Repeat Clara's paternal BRCA2 target assay",
+        "why": "The target was already adequately tested. Along with another paternal option, this leaves the only maternal option as a novelty/branch-matching shortcut."
+      }
+    ],
+    "fairness": [
+      "The affected maternal aunt is the most informative offered person to test. The paternal true negative does not explain the independent maternal cancer history.",
+      "The underlying two-lineage interpretation is useful, but both distractors return to the resolved paternal branch. The option set lets a learner bypass that interpretation.",
+      "The standalone node contains sufficient family and testing context; no confident clinical error identified."
+    ],
+    "suggestions": [
+      "Compare credible approaches to the unresolved maternal history, such as which available relative or assay should start that evaluation, with supported facts that rank them.",
+      "Keep the paternal true negative, but do not make every distractor an explicitly completed paternal investigation."
+    ]
+  },
+  {
+    "id": "question.topic.oncology-genetics-principles.sequence-only-apc.v1",
+    "nodeId": "node.topic.oncology-genetics-principles.sequence-only-apc.v1",
+    "title": "Residual germline testing after negative APC sequencing",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The current report and task are clear; the two report rows repeat the same scope information."
+    ],
+    "cues": [
+      {
+        "phrase": "Polyposis panel with APC deletion/duplication analysis",
+        "why": "The only broad polyposis-labelled plan contrasts with an exact completed repeat and a different gene-family panel. The most comprehensive relevant-sounding option can win without interpreting Sanger coverage."
+      },
+      {
+        "phrase": "Repeat APC coding sequence analysis",
+        "why": "Matches the already completed assay without any new specimen or quality concern."
+      }
+    ],
+    "fairness": [
+      "A panel addressing copy-number changes and additional polyposis genes is the best offered plan.",
+      "Interpreting sequence-only coverage could create a useful two-step item, but the alternatives do not force it: the marked polyposis phenotype and an unexplained repeat already largely settle the choice.",
+      "The standalone case is coherent. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": [
+      "Specify the relevant genes and coverage neutrally in all options rather than contrasting one comprehensive panel with an unexplained repeat.",
+      "Use competing credible extensions of the existing workup and make the actual assay limitation decide between them."
+    ]
+  },
+  {
+    "id": "question.topic.oncology-genetics-principles.tumor-brca-constitutional.v1",
+    "nodeId": "node.topic.oncology-genetics-principles.tumor-brca-constitutional.v1",
+    "title": "Constitutional assessment after a tumor BRCA2 result",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The task asks which pathway Miriam should receive, but one answer is testing her son. The options differ in recipient as well as specimen."
+    ],
+    "cues": [
+      {
+        "phrase": "Which genetic testing pathway should {patientName} receive next?",
+        "why": "The patient-specific lead-in excludes the son-testing option by grammar before any tumor-versus-germline reasoning."
+      },
+      {
+        "phrase": "Repeat BRCA2 sequencing on another tumor block",
+        "why": "The only other same-patient option repeats the tumor finding without a supplied adequacy concern."
+      }
+    ],
+    "fairness": [
+      "Constitutional evaluation of Miriam is the best offered action; tumor pathogenicity does not by itself establish inheritance.",
+      "The core distinction is high yield. As written, one option fails the task and another repeats completed work, so the intended interpretation is avoidable.",
+      "The standalone context is sufficient. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": [
+      "Ask for the next family evaluation step if different recipients are intentional, or make all options testing pathways for Miriam.",
+      "Compare clinically credible specimen/assay choices with enough context to distinguish them, retaining the tumor-only nature of the initial result."
+    ]
+  },
+  {
+    "id": "question.topic.oncology-genetics-principles.rb1-constitutional-assessment.v1",
+    "nodeId": "node.topic.oncology-genetics-principles.rb1-constitutional-assessment.v1",
+    "title": "Hereditary assessment after retinoblastoma and sarcoma",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The task is understandable, but 'longitudinal cancer history' is unnecessarily abstract; ask directly about hereditary-risk evaluation or the next genetic assessment."
+    ],
+    "cues": [
+      {
+        "phrase": "Cancer-genetics assessment with constitutional RB1 testing",
+        "why": "The only constitutional and specialist-assessment option is more comprehensive than the two somatic tests. Its scope aligns uniquely with the broad history-focused task."
+      }
+    ],
+    "fairness": [
+      "Constitutional RB1 assessment is reasonable for the represented history despite unilateral disease and no affected relatives; the item appropriately avoids declaring a germline diagnosis.",
+      "There is an actual inference from two malignancies to inherited-risk assessment, but both distractors answer tumor characterization questions rather than offer competing hereditary evaluations.",
+      "A standalone presentation supplies both cancers and pedigree. RB1-associated inherited predisposition is testable; the exact clinical workup remains for clinician confirmation."
+    ],
+    "suggestions": [
+      "Compare similarly scoped constitutional evaluations or coherent genetic workup strategies, with supported findings that distinguish the closest inherited predisposition.",
+      "Keep the absence of family history as a meaningful interpretive challenge, not as proof against inherited risk."
+    ]
+  },
+  {
+    "id": "question.topic.oncology-genetics-principles.brca-child-deferral.v1",
+    "nodeId": "node.topic.oncology-genetics-principles.brca-child-deferral.v1",
+    "title": "Predictive BRCA2 testing in an asymptomatic minor",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The age, asymptomatic status and predictive-testing task are clear. Presentation and exhibit repeat the same information."
+    ],
+    "cues": [
+      {
+        "phrase": "Offer broad cancer-panel testing during childhood",
+        "why": "This expands beyond the known familial target without any additional indication and duplicates the immediate-testing distractor, leaving a simple defer-versus-test split."
+      }
+    ],
+    "fairness": [
+      "Deferral of routine predictive BRCA testing is the best offered plan for this asymptomatic 12-year-old with no separate pediatric diagnostic indication.",
+      "This is a single childhood-actionability rule, not two consequential steps. Broad testing is a weak third option.",
+      "Standalone chronology is coherent. No confident clinical error identified; the explanation appropriately says 'generally' and preserves diagnostic exceptions."
+    ],
+    "suggestions": [
+      "Either obtain explicit acceptance as easy foundational practice or introduce a supported, genuinely competing clinical indication requiring interpretation before choosing a plan.",
+      "Do not fabricate an unrelated pediatric diagnosis just to manufacture difficulty; retire or merge redundant variants if needed.",
+      "Remove duplicate framing."
+    ]
+  },
+  {
+    "id": "question.topic.oncology-genetics-principles.bevacizumab-open-wound.v1",
+    "nodeId": "node.topic.oncology-genetics-principles.bevacizumab-open-wound.v1",
+    "title": "Bevacizumab restart with persistent postoperative wound opening",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The current postoperative decision is clear. No material ambiguity identified."
+    ],
+    "cues": [],
+    "fairness": [
+      "Withholding is the best offered plan: the elapsed interval and actual wound status are separate conditions, and the unhealed wound remains consequential despite passage of time.",
+      "The restart and dose-reduction alternatives represent recognizable attempts to treat elapsed time or dose as sufficient. The feedback appropriately avoids clearing other chemotherapy.",
+      "The exact label interval quoted in feedback was not independently verified because network access is prohibited; clinician/source confirmation remains required before clinical approval.",
+      "This first node does not teach the later perforation-specific discontinuation decision."
+    ],
+    "suggestions": [
+      "Keep the distinction between interval and adequate healing, and retain the limitation on restarting after a wound complication.",
+      "Preserve the draft clinical-review status; PASS does not validate the quoted label against a current source."
+    ]
+  },
+  {
+    "id": "question.topic.oncology-genetics-principles.bevacizumab-perforation.v1",
+    "nodeId": "node.topic.oncology-genetics-principles.bevacizumab-perforation.v1",
+    "title": "Future bevacizumab use after gastrointestinal perforation",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The follow-up is understandable, but 'At a later clinic visit, the founder reviews an intervening outside hospital admission' adds layered time framing. State the sequence once."
+    ],
+    "cues": [],
+    "fairness": [
+      "Discontinuation is the best offered answer for the described perforation during exposure. No confident clinical inaccuracy identified; the drug-label claim remains unverified offline.",
+      "The raw operative description requires recognition of a perforation, but both remaining options simply rechallenge the same drug. Recognition followed by its standard prohibition is a short recall chain, not two consequential competing decisions.",
+      "The sequence can follow the wound-healing node, but explicitly naming bevacizumab resumption would be clearer than 'resumed treatment.' Its later current record supplies the necessary exposure and operative findings."
+    ],
+    "suggestions": [
+      "Keep this as an explicitly accepted safety-recognition item if desired, rather than claiming difficult two-step reasoning.",
+      "For a resident-level revision, use a clinically supported distinction that changes temporary holding versus permanent discontinuation and give genuinely competing plans.",
+      "Simplify the retrospective chronology and state the specific resumed drug."
+    ]
+  },
+  {
+    "id": "question.topic.oncology-genetics-principles.checkpoint-colitis.v1",
+    "nodeId": "node.topic.oncology-genetics-principles.checkpoint-colitis.v1",
+    "title": "Initial treatment of pembrolizumab-associated inflammatory colitis",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Attends the clinic after discharge' and 'initial ... treatment' create a small retrospective tense mismatch; the task is otherwise complete."
+    ],
+    "cues": [],
+    "fairness": [
+      "Withholding pembrolizumab and starting systemic corticosteroids is the best offered treatment for the represented persistent inflammatory illness after the negative initial infectious evaluation.",
+      "The learner must interpret exposure, symptoms and workup, then choose initial therapy rather than symptomatic continuation or immediate biologic escalation. Absence of deep ulcers and no steroid course help distinguish the closest treatment alternative.",
+      "No exact toxicity grade, steroid dose or universal biologic preference is asserted. Initial treatment still requires clinical review of the exact case; no current guideline verification was performed offline.",
+      "The first node establishes a coherent starting treatment stage and does not disclose the later infection-reassessment answer."
+    ],
+    "suggestions": [
+      "Make the task explicitly retrospective: ask what initial treatment should have been recommended at that documented assessment.",
+      "Retain decision-critical findings and avoid adding unsupported grading cutoffs or dose rules."
+    ]
+  },
+  {
+    "id": "question.topic.oncology-genetics-principles.refractory-colitis-infection.v1",
+    "nodeId": "node.topic.oncology-genetics-principles.refractory-colitis-infection.v1",
+    "title": "Reassessing infection during corticosteroid-treated colitis",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The patient is described as discharged and in clinic, but the task asks what to recommend to his outside-hospital team. It is unclear whether the worsening disease is current or an already resolved admission event.",
+      "No hemodynamic or systemic-severity observations accompany the new fever, making an isolated next-plan comparison less secure if intended as current care."
+    ],
+    "cues": [
+      {
+        "phrase": "Increase corticosteroids before changing the evaluation plan",
+        "why": "The qualifier advertises refusal to reassess despite newly changed findings; it explains why the distractor is wrong inside the option."
+      },
+      {
+        "phrase": "Collected before corticosteroid treatment during the original outside-hospital evaluation.",
+        "why": "This timing is necessary clinical information, but paired with two immediate immunosuppression escalations it makes the only reassessment option unusually easy to identify."
+      }
+    ],
+    "fairness": [
+      "New fever and worsening diarrhea during immunosuppression reasonably justify renewed infection evaluation, including CMV consideration; the prior negative stool tests do not exclude a later infection.",
+      "The concept has two consequential steps: reassess the changed host/course, then reconsider escalation. However, testing and necessary treatment may occur concurrently, so the task should clearly ask what evaluation is needed before deciding escalation rather than imply all care waits for tests.",
+      "The update carries enough prior treatment to stand alone, and the earlier explanation does not reveal the new infection decision. The chronology nevertheless needs repair."
+    ],
+    "suggestions": [
+      "Choose a clear retrospective timestamp and ask which evaluation was needed at that point, or make the current presentation explicitly active with enough severity information.",
+      "Use parallel, credible evaluation plans, or complete same-stage treatment/evaluation plans; remove the explanatory 'before changing the evaluation plan' qualifier.",
+      "Keep CMV as a differential requiring assessment, not a diagnosis established by fever."
+    ]
+  },
+  {
+    "id": "question.topic.oncology-genetics-principles.rasburicase-urate-sample.v1",
+    "nodeId": "node.topic.oncology-genetics-principles.rasburicase-urate-sample.v1",
+    "title": "Interpreting urate measurements after rasburicase",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The retrospective task is clear. The detailed protocol implied by 'chilled heparin collection' is abbreviated; feedback should not imply that collection alone guarantees valid handling."
+    ],
+    "cues": [
+      {
+        "phrase": "Blood stood at room temperature before processing.",
+        "why": "One option repeats room-temperature collection, while the key offers its direct temperature opposite. The highlighted handling defect and temperature contrast can identify the intended correction without knowing rasburicase."
+      },
+      {
+        "phrase": "Measure urinary urate with a paired creatinine assay",
+        "why": "This changes the specimen/question rather than providing a close competing way to verify the circulating urate result."
+      }
+    ],
+    "fairness": [
+      "Properly handled repeat plasma urate is the best offered request. Rasburicase can continue degrading urate ex vivo; no confident clinical error identified.",
+      "Persistent potassium, phosphate and creatinine abnormalities do not themselves prove that the plasma urate is falsely low. The handling record provides the reason for concern.",
+      "The chemistry trend is largely decorative for the offered decision: the handling record alone selects the same answer. This is a single specimen-handling rule rather than two consequential inferences.",
+      "The first node is coherent as an outside-record review and does not teach the later drug-reaction answer."
+    ],
+    "suggestions": [
+      "Either accept this explicitly as foundational safety/laboratory practice or redesign around a consequential interpretation that actually depends on both the clinical and specimen records.",
+      "Use comparable plasma-testing strategies and explain the validated handling pathway in feedback without inventing timing requirements.",
+      "Avoid implying that other tumor-lysis abnormalities establish failure of urate control."
+    ]
+  },
+  {
+    "id": "question.topic.oncology-genetics-principles.rasburicase-reexposure.v1",
+    "nodeId": "node.topic.oncology-genetics-principles.rasburicase-reexposure.v1",
+    "title": "Future rasburicase use after oxidative toxicity",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The task clearly concerns future documentation after recovery; the acute-versus-follow-up boundary is explicit."
+    ],
+    "cues": [
+      {
+        "phrase": "methemoglobin markedly above the laboratory range; hemoglobin falls with laboratory evidence of hemolysis.",
+        "why": "Both named toxicities are supplied, leaving the management rule to recall rather than requiring interpretation of an undiagnosed reaction."
+      },
+      {
+        "phrase": "Continue rasburicase with corrected cold-sample urate monitoring",
+        "why": "Imports the preceding laboratory-handling answer as a conspicuously unrelated fix for cyanosis and hemolysis. It is a nonfunctioning cross-node foil."
+      }
+    ],
+    "fairness": [
+      "Permanent discontinuation is the best offered plan for the represented reaction. A later normal G6PD result would not negate the observed toxicity; no confident clinical inaccuracy identified.",
+      "The follow-up stands alone and follows coherently. Earlier feedback is not an answer leak, but the imported cold-sample distractor weakens discrimination.",
+      "The permanent wording is appropriate to the intended safety rule, not an unfair rhetorical absolute. The precise current label was not verified offline."
+    ],
+    "suggestions": [
+      "Replace the sample-handling distractor with a credible decision about the documented drug reaction.",
+      "Seek explicit acceptance as a safety-recognition exception if retaining named methemoglobinemia/hemolysis; otherwise make interpretation consequential using supported observations and close alternatives."
+    ]
+  },
+  {
+    "id": "question.topic.oncology-genetics-principles.cord-whole-spine-mri.v1",
+    "nodeId": "node.topic.oncology-genetics-principles.cord-whole-spine-mri.v1",
+    "title": "Imaging for suspected malignant spinal cord compression",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The retrospective imaging task is complete and the urgent symptom cluster is clear."
+    ],
+    "cues": [
+      {
+        "phrase": "New thoracic back pain",
+        "why": "Neither limited option targets the stated thoracic neurologic syndrome: 'Urgent MRI of the lumbar spine' mismatches the location, while bone scintigraphy differs in purpose. 'Whole spine' is the only MRI covering the named region."
+      }
+    ],
+    "fairness": [
+      "Urgent whole-spine MRI is the best offered answer in this represented malignant cord-compression scenario. No confident clinical error identified.",
+      "The syndrome is high yield, but the options allow selection by anatomic coverage without deciding why whole-spine rather than region-directed MRI is required.",
+      "The first node stands alone and does not state the later mobility plan. Feedback should explain the clinical reason for whole-spine coverage, rather than chiefly appeal to a regional guideline."
+    ],
+    "suggestions": [
+      "Use a credible urgent region-directed MRI alternative so the resident must distinguish it from whole-spine imaging.",
+      "Explain the supported rationale for the required imaging extent after the answer.",
+      "If retaining the obvious emergency-recognition form, request explicit acceptance of that educational role rather than rating it hard."
+    ]
+  },
+  {
+    "id": "question.topic.oncology-genetics-principles.cord-stability-before-mobility.v1",
+    "nodeId": "node.topic.oncology-genetics-principles.cord-stability-before-mobility.v1",
+    "title": "Mobilization after malignant vertebral collapse",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The patient is already at post-hospital clinic, while the task asks which mobility plan to recommend 'from' an outside-hospital record. It is unclear whether the choice applies to the earlier acute episode or current mobility.",
+      "'Maintain spinal precautions' does not specify what positioning or permitted movement the plan entails; the explanation does not define it."
+    ],
+    "cues": [
+      {
+        "phrase": "Maintain spinal precautions pending stability assessment",
+        "why": "This is the only cautious assessment-first option, contrasted with two ways to mobilize despite explicitly severe movement-related pain and persistent weakness. It can be selected as the safe-sounding answer."
+      }
+    ],
+    "fairness": [
+      "The structural collapse, mechanical pain and persistent neurologic findings support specialist stability assessment before mobilization; improvement in resting pain alone is not clearance.",
+      "There is a meaningful interpretation-plus-action distinction, but the two mobilization distractors do not offer much independent clinical competition.",
+      "The current node supplies the MRI and clinical trajectory, so it can stand alone. The prior explanation establishes urgent malignant compression and specialist assessment, adding legitimate scaffolding.",
+      "Precaution details and the patient's stability assessment at the relevant time should be confirmed by the clinician; no unsupported universal bed-rest or brace rule is inferred."
+    ],
+    "suggestions": [
+      "Anchor the task to the time of the acute MRI and state what stability assessment had actually occurred.",
+      "Describe the intended precaution/mobility action concretely without inventing a universal positioning or brace policy.",
+      "Compare credible mobility plans at the same clinical stage, and preserve the meaningful contrast between resting analgesic response and movement-related symptoms."
+    ]
+  }
+]

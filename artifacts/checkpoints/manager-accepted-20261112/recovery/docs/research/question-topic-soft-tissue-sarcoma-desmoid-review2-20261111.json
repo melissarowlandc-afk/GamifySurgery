@@ -1,0 +1,266 @@
+[
+  {
+    "id": "thoracic-staging",
+    "nodeId": "node.topic-soft-tissue-sarcoma-desmoid.thoracic-staging.20261111.v2",
+    "title": "Pulmonary staging after nondiagnostic PET/CT",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "does not define their margins clearly",
+        "why": "The update announces an inadequate examination. Of the offered plans, only the key obtains a different diagnostic anatomical examination; the others repeat or accept the just-described inadequate study."
+      },
+      {
+        "phrase": "Obtain diagnostic chest CT to assess the nodules",
+        "why": "This is the only new investigation. Both alternatives reuse PET/CT, so novelty plus the explicitly deficient CT description points toward the key without interpreting sarcoma biology or small-nodule FDG sensitivity."
+      }
+    ],
+    "fairness": [
+      "The diagnostic chest CT is the best offered answer. A normal radiograph and absent measurable uptake in these tiny nodules do not establish benignity. The explanation appropriately leaves the nodules indeterminate rather than declaring metastases.",
+      "The CT acquisition purpose is relevant and should not simply be deleted. The weakness is discrimination: even without the nodule sizes, FDG result, or radiograph, the explicit inadequate CT characterization largely selects the same option. This remains one test-selection rule rather than two consequential inferences.",
+      "Chest staging is a high-yield sarcoma concept; difficulty here is a qualitative editorial estimate, not a measured board frequency or success rate.",
+      "The standalone presentation supplies the named patient's age, sex, biopsy diagnosis, and treatment stage. No earlier node or explanation is required.",
+      "Review-wide limitation: judgments use only current candidate/after visible fields, with key position ignored. No network or source verification was performed. Clinical uncertainty is not a finding of factual error, and editorial PASS never constitutes Melissa Rowland's clinical approval."
+    ],
+    "suggestions": [
+      "Retain a concrete acquisition record, but make its interpretation change a clinically meaningful next step rather than merely identify the sole new test.",
+      "Use equally credible plans at the same staging decision point; do not make both distractors repetitions or acceptance of the same explicitly inadequate examination.",
+      "If no supported second decision can be built without obscuring necessary findings, seek explicit acceptance as a focused foundational staging item rather than presenting this version as a difficult resident item."
+    ]
+  },
+  {
+    "id": "rps-biopsy",
+    "nodeId": "node.topic-soft-tissue-sarcoma-desmoid.rps-biopsy.20261111.v2",
+    "title": "Retroperitoneal tumor sampling after fatty-component biopsy",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The best offered plan is image-guided coaxial cores of region B. The existing fatty-component pathology establishes useful information, but its documented footprint does not establish the histology of the distinct enhancing solid nodule.",
+      "Two decisions remain: recognize possible heterogeneous tumor biology despite the well-differentiated biopsy label, then select representative sampling by a percutaneous rather than open route. Repeating A and using open biopsy are recognizable clinical errors.",
+      "The four labels form a balanced target-by-method matrix; neither B nor the percutaneous method appears only in the key. The access record is decision-critical feasibility information, not a key-only permission, because it applies to both targets. No material grammar, length, absolute, or diagnostic-label giveaway was found.",
+      "Representative biopsy and avoiding an unnecessary operative biopsy field in suspected retroperitoneal sarcoma are high-yield surgical principles. No definite clinical inaccuracy was identified in the supplied explanation.",
+      "The standalone case contains the prior result, target map, and access findings. It does not require an earlier scored biopsy decision."
+    ],
+    "suggestions": [
+      "Preserve the distinction between a supported fatty-component diagnosis and the unsampled nodule; do not turn possible higher-grade tissue into a declared diagnosis before sampling.",
+      "If recomposed with another sampling node, review prior feedback again: the MDM2 sampling item tests a closely overlapping limitation and could become rehearsed recall."
+    ]
+  },
+  {
+    "id": "rps-histotype-resection",
+    "nodeId": "node.topic-soft-tissue-sarcoma-desmoid.rps-histotype-resection.20261111.v2",
+    "title": "Histotype and organ preservation in retroperitoneal resection",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Tumor/cava resection with preservation of kidney and colon is the best offered plan. The morphology, myoid panel, and caval involvement support leiomyosarcoma, while the organ interfaces do not supply an indication to remove either adjacent organ.",
+      "The two consequential steps are inferring the tumor family from the biopsy/venous context and applying its operative implications to the actual organ interfaces. The broad kidney-and-colon operation is the closest credible error through overgeneralization of retroperitoneal liposarcoma surgery.",
+      "The uninvolved interfaces understandably favor organ preservation, but they are necessary findings rather than disposable answer hints: histotype can affect how apparent interfaces are used in retroperitoneal operative planning. The diagnosis itself is not supplied in the visible pre-answer fields.",
+      "All options include tumor/cava removal and balance kidney and colon inclusion. There is no component-frequency convergence. The isolated kidney-only and colon-only additions are weaker distractors than the multivisceral plan, so this is moderate rather than hard.",
+      "No definite clinical inaccuracy is identified. Preservation is judged for the stated records, not as a promise that imaging always excludes operative adherence or microscopic invasion.",
+      "The named patient, pathology, vascular plan, and staging are present in this standalone node; no prior histologic answer is needed. Histotype-informed complete resection and avoiding unnecessary organ loss are testable surgical concepts."
+    ],
+    "suggestions": [
+      "Preserve the histotype and organ-interface reasoning if editing the set. Any stronger distractor should represent a real operative error without adding an unsupported organ-sacrifice rule.",
+      "Keep the explanation conditional on the supplied anatomy and findings; do not generalize radiographic fat planes into a universal guarantee of a negative operative margin."
+    ]
+  },
+  {
+    "id": "rps-radiotherapy-boundary",
+    "nodeId": "node.topic-soft-tissue-sarcoma-desmoid.rps-radiotherapy-boundary.20261111.v2",
+    "title": "Adjuvant treatment after grossly complete retroperitoneal resection",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'No discrete residual mass or isolated residual-risk focus is identified' combines a radiographic observation with an undefined planning conclusion. A resident cannot tell whether the latter means a mapped surgical margin, an unresectable focal attachment, or an imaging target; microscopic positive margins are themselves residual-risk information."
+    ],
+    "cues": [
+      {
+        "phrase": "No discrete residual mass or isolated residual-risk focus is identified",
+        "why": "The 'residual-risk focus' clause supplies an expert interpretation favoring surveillance instead of showing the margin/operative facts from which that interpretation should follow. Absence of a visible mass is legitimate data; the undefined second clause is the cue."
+      }
+    ],
+    "fairness": [
+      "Surveillance is a defensible best offered standard plan after grossly complete resection in this scenario. Microscopic margin involvement does not automatically establish benefit from postoperative radiotherapy or adjuvant chemotherapy. No confident contrary clinical rule is asserted in this offline review.",
+      "The explanation should not imply that absence of a gross target itself argues against all adjuvant radiotherapy: adjuvant treatment, when indicated, commonly addresses microscopic risk. The relevant distinction here is the retroperitoneal setting, evidence for benefit, and treatment toxicity.",
+      "The margin positivity/high grade create credible treatment temptations. Interpreting microscopic rather than gross residual disease and then applying site-specific postoperative management is a reasonable two-step, high-yield objective.",
+      "The bowel observation is decision-critical toxicity context and should remain. It need not be converted into an invented dose or universal radiation prohibition.",
+      "The standalone postoperative record is coherent with tumor/cava resection and supplies its own histotype and margin findings; no earlier resection question is necessary."
+    ],
+    "suggestions": [
+      "Replace 'isolated residual-risk focus' with concrete findings from the operative report and oriented margin map, explicitly attributed to those records. Keep the CT observation of no discrete mass separate.",
+      "Explain surveillance primarily through the limits of routine adjuvant benefit in this setting and the postoperative bowel exposure, while acknowledging individualized specialist review for exceptional situations.",
+      "Recheck the exact postoperative recommendation with the clinician after the wording repair; this report does not establish a new radiotherapy selection criterion."
+    ]
+  },
+  {
+    "id": "desmoid-function-course",
+    "nodeId": "node.topic-soft-tissue-sarcoma-desmoid.desmoid-function-course.20261111.v2",
+    "title": "Desmoid surveillance after growth followed by functional recovery",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Continued specialist active surveillance is the best offered plan for the supplied plateau, decreased pain, recovered usual workload, and nonthreatening anatomical relationship. Prior enlargement alone does not require escalation at the current visit.",
+      "The functional comparison is meaningful: working modified duties at the interim visit is not the same as tolerating the original workload. The learner must integrate the interval size trajectory with actual function, then decide whether treatment is currently justified.",
+      "The improving findings favor the answer clinically rather than through label matching. The three specific plans are at the same decision stage, with no unique rationale-bearing key, absolute, or convergence cue.",
+      "Initial growth and earlier symptomatic limitation make resection or systemic treatment credible temptations; they are not selected merely because the mass remains larger than baseline. The table's measurements are fictional observations, not invented treatment thresholds.",
+      "The exact duration of the plateau is not given. That limits any claim of durable stability, but the key is continued monitored surveillance, not discharge or a fixed long follow-up interval; no such durability claim is required.",
+      "Desmoid surveillance versus intervention is a high-yield contemporary management principle. This standalone node supplies the full longitudinal course and does not borrow an earlier treatment decision."
+    ],
+    "suggestions": [
+      "Retain the actual usual-work comparison and the monitored nature of surveillance.",
+      "Do not turn the single plateau into a universal growth threshold or claim lasting remission. Any future interval-specific teaching point would need its own support."
+    ]
+  },
+  {
+    "id": "desmoid-hereditary-evaluation",
+    "nodeId": "node.topic-soft-tissue-sarcoma-desmoid.desmoid-hereditary-evaluation.20261111.v2",
+    "title": "Hereditary polyposis evaluation after a normal distal examination",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Complete colonoscopy with APC-focused germline evaluation is the best offered plan. The mesenteric desmoid and father's early colectomy for numerous adenomas favor an APC-associated polyposis evaluation over the offered mismatch-repair pathway.",
+      "The second consequential inference is that a normal examination ending in the sigmoid does not clear the proximal colon. A hereditary direction and the extent of colorectal examination both matter to the proposed evaluation.",
+      "The balanced four-option matrix prevents 'Complete' or 'APC-focused' alone from identifying the key. The pedigree is clinical evidence, not a pre-answer named syndrome. No material nonmedical cue was found.",
+      "A negative tumor CTNNB1 result does not diagnose germline APC disease; the explanation appropriately describes raised concern rather than established FAP. APC-focused evaluation need not exclude broader genetics assessment when clinically indicated.",
+      "Desmoid/polyposis association and the limitations of incomplete colorectal examination are high-yield. The pattern is recognizable, so this is moderate rather than hard.",
+      "The standalone record includes the actual examination extent, family history, and absence of a known familial result. It does not depend on a preceding diagnosis question."
+    ],
+    "suggestions": [
+      "Preserve the original procedure extent rather than replacing it with the interpretive label 'inadequate screening.'",
+      "Keep the explanation at the level of evaluation for suspected hereditary disease; do not equate CTNNB1-negative tumor testing with a proven germline diagnosis."
+    ]
+  },
+  {
+    "id": "desmoid-mesenteric-escalation",
+    "nodeId": "node.topic-soft-tissue-sarcoma-desmoid.desmoid-mesenteric-escalation.20261111.v2",
+    "title": "Escalation of progressive symptomatic mesenteric desmoid",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The best offered direction is systemic treatment through sarcoma oncology. Repeated enlargement and worsening meal-limiting pain distinguish this from a stable surveillance course, while the bowel/mesenteric-root setting makes local therapy a consequential competing choice.",
+      "The two steps are recognizing clinically meaningful progression after surveillance/supportive care and selecting a systemic rather than upfront radiation approach for this anatomy. The absence of obstruction/ischemia is necessary urgency information; it does not disclose the drug.",
+      "Nirogacestat is presented as one adult systemic option, not as superior to every other desmoid drug. No definite clinical inaccuracy is identified, but current drug selection and eligibility were not externally verified in this offline review and still require clinician sign-off.",
+      "The three options are concrete treatment strategies. The oncology-referral wording is somewhat more specific than the other labels, but there is no meaningful length, convergence, absolute, or wording-match shortcut that selects the drug without clinical knowledge.",
+      "The high-yield objective is progression-driven escalation and treatment by anatomical site. Exact drug-name recall is more specialized; do not infer that it is itself a frequently tested board fact.",
+      "The standalone case supplies prior monitoring/analgesia, current trajectory, anatomy, and emergency negatives. It remains answerable without the hereditary-evaluation node."
+    ],
+    "suggestions": [
+      "In feedback, replace the author-facing sentence 'The question compares systemic versus initial local treatment, not superiority among drugs' with concise clinical teaching about why this patient's progression and anatomy favor systemic care.",
+      "Retain the absence of obstruction/ischemia and the distinction between supportive care and prior tumor-directed systemic treatment."
+    ]
+  },
+  {
+    "id": "mdm2-sampling-limit",
+    "nodeId": "node.topic-soft-tissue-sarcoma-desmoid.mdm2-sampling-limit.20261111.v2",
+    "title": "Limits of an MDM2-positive fatty-component sample",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "rather than assuming that the molecular result grades the entire lesion",
+        "why": "This is a pre-answer teaching sentence. It explicitly states the sampling/molecular limitation the resident should infer and directly undermines the repeat-MDM2 distractor."
+      },
+      {
+        "phrase": "Image-guided core sampling of the nonfatty nodule",
+        "why": "Only the key obtains new information from a new target. The other options repeat testing or sampling of the already described fatty cores/bulk, so the layout rewards 'sample the only remaining thing' even without understanding MDM2."
+      },
+      {
+        "phrase": "The intramass nodule can be reached percutaneously through the involved compartment.",
+        "why": "This explicitly previews feasibility of the key's procedure. Because no competing route or compartment is offered, the detail does not create a second decision; it reinforces the sole new-target option."
+      }
+    ],
+    "fairness": [
+      "The proposed nodule biopsy is clinically defensible and best among the offered options. MDM2 amplification in sampled fatty tissue does not establish the histology of a separate unsampled nonfatty nodule.",
+      "The update supplies the first inference, and the option set makes the remaining step easy. Molecular interpretation plus another biopsy is not two consequential steps when the limitation is already stated and both competitors simply revisit the same component.",
+      "The explanation appropriately limits what the existing specimen establishes and does not claim that the nodule is proven dedifferentiation. No definite clinical inaccuracy is identified.",
+      "Sampling representativeness and the limits of molecular classification are useful, high-yield concepts. This exact node substantially overlaps the retroperitoneal repeat-biopsy item, however; changing site alone does not establish a distinct reasoning objective.",
+      "The standalone record includes the imaging, sampled footprint, and pathology and needs no earlier answer."
+    ],
+    "suggestions": [
+      "Delete the interpretive 'rather than assuming' clause; show only the actual specimen and imaging records before the task.",
+      "Build credible same-stage alternatives whose ranking depends on interpreting both morphology/molecular findings and the sample footprint. Do not retain two repetitions of completed work as disposable foils.",
+      "Keep anatomical feasibility only where it resolves a real competing procedure; do not remove safety information merely to hide the key.",
+      "Differentiate the consequential objective from rps-biopsy or propose consolidation for manager review. Do not label the repaired version hard solely because it includes a molecular marker."
+    ]
+  },
+  {
+    "id": "alt-function-preserving-resection",
+    "nodeId": "node.topic-soft-tissue-sarcoma-desmoid.alt-function-preserving-resection.20261111.v2",
+    "title": "Function-preserving excision after representative lipomatous-tumor sampling",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Marginal en bloc excision with neurovascular preservation is the best offered plan. The documented sampling includes the only nonfatty nodule and does not identify a dedifferentiated component; the symptomatic extremity lipomatous-tumor pattern supports a function-preserving local operation.",
+      "The learner must first interpret the representative fatty and nodule findings, then apply subtype-specific margin policy where a normal-tissue cuff would sacrifice the femoral nerve. The pathology detail changes the decision instead of merely naming ALT before a margin-recall task.",
+      "The nerve relationship is essential morbidity information, not an answer leak. Two options preserve the bundle, so avoiding nerve injury alone does not distinguish marginal surgery from preoperative radiation plus excision.",
+      "Targeted cores cannot guarantee absence of every unsampled malignant focus, but the wording says 'without an identified dedifferentiated component' rather than claiming absolute exclusion. No confident clinical inaccuracy is found in that limitation.",
+      "Wide excision/nerve sacrifice and adding radiotherapy are recognizable overtreatment errors for this presented pattern. The explanation's reference to a high-grade margin policy should not be read as a universal rule that a high-grade tumor requires nerve sacrifice.",
+      "This is high-yield subtype-specific surgical planning. Although the update refers to additional cores, the standalone exhibit provides both initial and targeted findings, so no prior sampling node is required."
+    ],
+    "suggestions": [
+      "Clarify in feedback that high grade does not by itself mandate femoral-nerve sacrifice; resection of critical structures depends on actual involvement and the overall oncologic plan.",
+      "Preserve the targeted nodule result in any future multipart version, and re-review the preceding explanation so it does not announce this margin decision."
+    ]
+  },
+  {
+    "id": "advanced-systemic-intensity",
+    "nodeId": "node.topic-soft-tissue-sarcoma-desmoid.advanced-systemic-intensity.20261111.v2",
+    "title": "Response-oriented first-line therapy for symptomatic metastatic sarcoma",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The task asks which regimen 'best fits' the whole patient, but the visible pretreatment assessment documents laboratory/organ-function findings rather than the broader functional fitness needed to rank combination treatment against doxorubicin monotherapy."
+    ],
+    "cues": [],
+    "fairness": [
+      "The mechanical progression creates a credible need for tumor shrinkage, and doxorubicin/ifosfamide is a defensible response-oriented choice for a suitable patient. The explanation correctly distinguishes greater response opportunity from an automatic survival advantage.",
+      "The supplied normal systolic function, blood counts, and renal/liver tests do not by themselves establish fitness for more intensive chemotherapy. Current mobility, self-care, usual activity, or comparable performance-status observations are absent. The explanation's 'supplied fit UPS patient' goes beyond the visible evidence.",
+      "Doxorubicin monotherapy remains an arguably defensible first-line option if functional reserve or toxicity tolerance is limited. Wanting to resume solid meals supplies a treatment goal, but does not by itself resolve the response-versus-toxicity tradeoff.",
+      "The two intended inferences are recognizing the response priority from progressive compression and balancing it against suitability for combination therapy. The first is supported; the second needs additional decision-critical context. No invented age cutoff or performance threshold is asserted here.",
+      "The task explicitly restricts the comparison to systemic regimens, so the absence of a decompressive procedure among the options is not itself a defect. The explanation should not imply that chemotherapy obviates supportive or local assessment of progressive oral-intake limitation.",
+      "The options are parallel regimen names with plausible near-misses; no material wording, diagnosis-label, or length cue is present. Response-versus-toxicity reasoning is testable, although the exact advanced-sarcoma regimen comparison is more specialized than basic surgical workup.",
+      "The standalone presentation and update supply histology, metastatic sites, prior-treatment status, and symptom chronology; the issue is treatment-selection sufficiency rather than dependence on an earlier node."
+    ],
+    "suggestions": [
+      "Add concise observed functional-reserve information, not an unsupported author label such as 'fit' or 'eligible.' Keep the existing organ-function assessment.",
+      "Make the clinical priority and acceptable toxicity tradeoff sufficiently clear to rank combination therapy over monotherapy, without simply instructing the learner to choose the more intensive regimen.",
+      "Alternatively narrow the task to the supported response-versus-toxicity comparison instead of claiming the globally best regimen for an incompletely characterized patient.",
+      "Have the clinician confirm the repaired exact ranking and current regimen context before approval."
+    ]
+  }
+]

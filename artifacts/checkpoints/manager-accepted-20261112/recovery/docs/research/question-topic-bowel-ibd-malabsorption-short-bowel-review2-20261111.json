@@ -1,0 +1,296 @@
+[
+  {
+    "id": "question.topic.bowel-ibd-malabsorption-short-bowel.celiac-panel.v1",
+    "nodeId": "node.topic.bowel-ibd-malabsorption-short-bowel.celiac-panel.v1",
+    "title": "Selecting serology after an inadequate celiac panel",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "tTG-IgA is the conventional best next blood test in this gluten-exposed, IgA-sufficient adult. EMA remains a clinically useful assay; its presence is a credible sequencing distractor, not proof that EMA is diagnostically invalid.",
+      "The learner must interpret the significance of an isolated IgG result and HLA susceptibility in the stated IgA context, then choose the appropriate initial IgA-based assessment instead of another IgG assay or a confirmatory-stage assay. This is a common diagnostic-workup concept, with moderate rather than hard predicted difficulty.",
+      "The task explicitly requests a blood test, so the absence of an endoscopic biopsy option does not create a competing next-test key. The named adult, sex, gluten exposure and task are supplied without another node.",
+      "Cue attack: tTG and IgA occur in the record, but the key spells out tissue transglutaminase, and both IgA choices remain viable on a purely lexical reading. The assay names and normal total IgA are necessary data, not sufficient nonmedical answer cues.",
+      "This is an offline editorial review of the supplied visible fields, not fresh source verification or clinical approval. The same limitation applies to every entry in this report; PASS does not change needs_clinician_review. Runtime rendering and wait estimates are outside the supplied visible-field review."
+    ],
+    "suggestions": [
+      "No blocking revision. Preserve the distinction between a preferred initial assay and an invalid test; do not strengthen the explanation into a claim that EMA cannot evaluate celiac disease.",
+      "Optional brevity edit: remove the announcement that the outside panel and laboratory report are available; the update already supplies them."
+    ]
+  },
+  {
+    "id": "question.topic.bowel-ibd-malabsorption-short-bowel.crohn-abscess.v1",
+    "nodeId": "node.topic.bowel-ibd-malabsorption-short-bowel.crohn-abscess.v1",
+    "title": "Initial source control of a Crohn-associated collection",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The collection, accessible route, maintained circulation and localized examination support antibiotics with percutaneous drainage over immediate resection or infliximab induction into an undrained infection. No competing best answer or confident clinical inaccuracy is apparent in this record.",
+      "Interpret the focal collection as a penetrating infectious complication, then use the physiology and anatomy to select the initial source-control strategy. Immediate resection is a credible stage-of-care error. This is high-yield and moderate, although the infliximab alternative is easier to reject.",
+      "The phrase 'with an image-guided access path' favors drainage, but supplies decision-critical anatomy rather than merely announcing service availability. Removing it would weaken the ranking against surgery; retain it.",
+      "The retrospective clinic frame and task agree about the admission time point. As the first node, it needs no later findings. Its explanation teaches initial source control without naming the later node's limited-resection answer; the later fistula/stenosis decision remains distinct.",
+      "All options share antibiotics and compare specific additional treatments. No unique length, qualifier, convergence or diagnosis-label shortcut selects the key without interpreting the clinical findings."
+    ],
+    "suggestions": [
+      "No blocking revision. Preserve the localized examination, physiology and access anatomy; do not remove these necessary discriminators in an attempt to increase difficulty.",
+      "Keep the later persistent-fistula and obstruction results out of this node's pre-answer display."
+    ]
+  },
+  {
+    "id": "question.topic.bowel-ibd-malabsorption-short-bowel.crohn-fistula-stricture.v1",
+    "nodeId": "node.topic.bowel-ibd-malabsorption-short-bowel.crohn-fistula-stricture.v1",
+    "title": "Persistent fistula and obstructing ileal disease after source control",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Persistent communication from the skin tract to ileum together with symptomatic fixed narrowing and upstream dilation supports limited resection after infection control and nutritional recovery. Strictureplasty across this fistulizing segment and balloon dilation are inferior choices for the stated combination.",
+      "The learner must distinguish resolution of the collection from persistence of penetrating and obstructive bowel disease, then choose the bowel operation appropriate to that combination. This is a high-yield surgical selection problem with plausible bowel-preservation errors.",
+      "The sequence is coherent. The update states that the collection and fever resolved and supplies persistent drainage, symptoms, imaging and optimization; the learner can answer with this presentation and update even without recalling the prior selected answer. Earlier feedback does not disclose how to treat the new fistulizing stenosis.",
+      "The first two options both use 'fistulizing', and all three address the ileal narrowing. That shared terminology does not uniquely identify the key. The alternatives have comparable scope and contain no explanatory ridicule."
+    ],
+    "suggestions": [
+      "No blocking revision. Preserve the simultaneous fistula and obstruction findings and the explicit infection-control chronology.",
+      "Optional precision edit in a future version: describe the medical-treatment course more concretely than 'optimized IBD therapy' if its adequacy is to become a scored discriminator; the current operative ranking does not require an invented regimen or duration."
+    ]
+  },
+  {
+    "id": "question.topic.bowel-ibd-malabsorption-short-bowel.crohn-strictureplasty.v1",
+    "nodeId": "node.topic.bowel-ibd-malabsorption-short-bowel.crohn-strictureplasty.v1",
+    "title": "Bowel preservation for separated uncomplicated Crohn strictures",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The short, separated jejunal strictures, prior bowel loss, inaccessible endoscopic sites and absence of penetrating or suspicious findings support strictureplasty. Separate resections remain a credible operative alternative, but would remove additional bowel; en bloc resection would also sacrifice the intervening supple segments.",
+      "The two consequential judgments are whether these sites are suitable for strictureplasty and how distribution plus remaining bowel changes the choice versus resection. This is a core operative principle and moderate predicted difficulty, not a complex strictureplasty-technique question.",
+      "The 140 cm finding is patient anatomy, not a stated universal intestinal-failure threshold. The explanation appropriately avoids promising parenteral-nutrition independence or asserting a cutoff.",
+      "The negative findings are a conspicuous eligibility checklist, but they supply genuine contraindication information rather than quote the answer. 'Three narrowed segments' occurs in two options, and the options remain parallel operations. No decisive nonmedical cue was identified.",
+      "The retrospective operative task is complete and standalone. The patient, age and sex are explicit."
+    ],
+    "suggestions": [
+      "No blocking revision. Do not make the item harder by withholding fistula, collection or mass findings that determine eligibility.",
+      "If a later, harder variant is desired, use a clinician-supported site-specific finding that changes the treatment of one stricture; preserve this exact reviewed version separately."
+    ]
+  },
+  {
+    "id": "question.topic.bowel-ibd-malabsorption-short-bowel.uc-visible-dysplasia.v1",
+    "nodeId": "node.topic.bowel-ibd-malabsorption-short-bowel.uc-visible-dysplasia.v1",
+    "title": "Management after complete excision of visible low-grade dysplasia",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "En bloc excision, negative margins and absence of dysplasia in surrounding and other sampled mucosa support endoscopic surveillance. Total proctocolectomy is a meaningful over-treatment trap in a patient with extensive UC; segmental resection lacks a remaining target in the supplied record.",
+      "The learner must integrate lesion visibility, excision adequacy and the other mucosal samples, then distinguish surveillance from the obsolete simplification that any colitis-associated dysplasia mandates colectomy. This is a high-yield, lower-moderate application item, not a hard item.",
+      "The explanation appropriately says the lesion 'can be followed endoscopically' and does not claim that colectomy is never an option or that follow-up can stop. No exact unsupported surveillance interval is introduced.",
+      "'Surveillance' appears in the complaint/presentation and in the key, but the visit is a review of a surveillance examination; that word does not establish what should happen after dysplasia is found. Margins and mucosal findings are necessary clinical evidence, not gratuitous exclusions.",
+      "This is a standalone case in the supplied active packet. It does not expose the later invisible-high-grade candidate or its answer."
+    ],
+    "suggestions": [
+      "No blocking revision. Preserve complete excision and assessment of other mucosa; those facts distinguish this case from a biopsy-only or incompletely resected lesion.",
+      "Keep the teaching point conditional on the supplied findings rather than teaching surveillance for all UC-associated low-grade dysplasia."
+    ]
+  },
+  {
+    "id": "question.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.v2",
+    "nodeId": "node.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.v2",
+    "title": "Discordant postoperative markers and an incomplete endoscopic examination",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Continue treatment with biomarker-only monitoring",
+        "why": "The '-only' qualifier makes this option sound less comprehensive than the key. This is a minor stylistic cue, not a decisive shortcut: surveillance without endoscopy is an actual competing strategy, and the reader must still interpret the raised markers and examination coverage."
+      }
+    ],
+    "fairness": [
+      "A distal examination ending at the splenic flexure has not assessed the ileocolic postoperative site. Repeatedly elevated stool markers despite symptomatic remission and normal CRP support completing endoscopic assessment before empiric infliximab escalation. The displayed record resolves why repeating an apparently normal examination is appropriate.",
+      "Two consequential steps remain: reject whole-disease reassurance from limited specimen/visual coverage, then choose confirmation rather than symptom-based monitoring or treatment escalation based on a nonspecific marker. Both competing plans represent plausible clinical errors. This is high-yield and moderate.",
+      "The incomplete examination is actual acquisition information, not merely a statement that a desired test has not been done. The key is allowed to be an investigation against management alternatives because the record supplies a real unresolved discrepancy.",
+      "The explanation explicitly limits its postoperative monitoring claim. I cannot independently verify the exact scope of the conditional low-calprotectin guidance offline; I identify no confident contradiction in this high-marker, incompletely assessed case and do not endorse a universal rule.",
+      "The standalone update supplies the resection, timing, treatment and current condition without requiring the earlier Crohn case. The exhibit is labeled constructed and the task is complete."
+    ],
+    "suggestions": [
+      "Optional wording cleanup: name the monitoring plan concretely, such as continuing infliximab with repeat fecal calprotectin assessment, rather than advertising '-only'. Do not introduce an unsupported interval.",
+      "Remove the editorial phrase 'a universal endoscopy-for-every-normal-marker rule is withheld' from learner feedback in a future revision; state the clinical limitation directly. Retain clinician verification of the conditional guideline boundary."
+    ]
+  },
+  {
+    "id": "question.topic.bowel-ibd-malabsorption-short-bowel.sbs-continuity.v2",
+    "nodeId": "node.topic.bowel-ibd-malabsorption-short-bowel.sbs-continuity.v2",
+    "title": "Reconstruction of excluded distal bowel in short bowel syndrome",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Which operation ... prioritize' asks for an operation to perform, whereas the explanation concludes that restoration is the first opportunity 'to assess'. Assessment for reconstruction and a definitive commitment to that operation are different levels of decision."
+    ],
+    "cues": [
+      {
+        "phrase": "Lengthen the proximal jejunum and retain the jejunostomy",
+        "why": "The added requirement to retain the stoma conspicuously refuses to use the patent distal limb described at length in the exhibit. It makes the competitor intentionally incomplete and leaves the key as the only operation that uses the available distal intestine."
+      },
+      {
+        "phrase": "Replace the remnant intestine with an intestinal graft",
+        "why": "This is a conspicuous maximal replacement option beside two reconstructive options in a recovered patient with usable bowel and no stated parenteral-support complication. A test-wise reader can reject it as disproportionate without reasoning through transplant candidacy."
+      }
+    ],
+    "fairness": [
+      "Restoring continuity is a clinically reasonable intended priority. No confident clinical inaccuracy or second equally strong offered answer is identified; the problem is inadequate discrimination and a mismatch between the task's commitment and the explanation's assessment language.",
+      "The map requires basic anatomical reading, but the choices do not require a second consequential comparison: connect the unused patent bowel defeats both a plan explicitly leaving it unused and unsupported transplantation. Jejunal dilation hints at lengthening without making it a genuinely competing complete plan.",
+      "Recruiting distal ileum and colon is high-yield. The current version tests that elementary principle rather than a difficult reconstructive choice. The explanation itself acknowledges that techniques may be combined, undermining the forced choice against lengthening with a retained stoma.",
+      "The standalone record supplies both limbs and recovery status. It does not require the earlier transplant or D-lactate cases; no sequence defect is apparent. Exact remnant lengths or adaptation timelines are not supplied, and should not be invented to force a difficult operative ranking."
+    ],
+    "suggestions": [
+      "Align the task and key at one decision level: evaluation/planning for reconstruction, or selection of a defined operation based on adequate operative evidence.",
+      "Replace the deliberately incomplete lengthening-with-retained-stoma option with a credible complete reconstructive strategy. Supply a clinician-verified anatomical or functional finding that actually changes the ranking between the strategies; do not simply remove the necessary distal-patency findings.",
+      "Remove the graft distractor unless the case supplies a real, supported candidacy or sequencing conflict. Do not add invented length thresholds or parenteral-nutrition failure rules.",
+      "If no supported competing decision exists, seek explicit acceptance as a basic anatomy/reconstruction item rather than labeling it a difficult two-step resident question."
+    ]
+  },
+  {
+    "id": "question.topic.bowel-ibd-malabsorption-short-bowel.sbs-d-lactate.v2",
+    "nodeId": "node.topic.bowel-ibd-malabsorption-short-bowel.sbs-d-lactate.v2",
+    "title": "Dietary prevention after suspected D-lactic episodes",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Withhold all enteral nutrition",
+        "why": "'All' creates an extreme, categorically broader intervention than either selective nutrient restriction. The task requests prevention after recovery, making this a visibly excessive outlier rather than a close dietary competitor."
+      },
+      {
+        "phrase": "He is now back to baseline and tolerating oral meals.",
+        "why": "Together with 'after the acute abnormality has resolved' in the task, this repeats the stage distinction that dismisses complete bowel rest. One clear recovery statement is necessary; repeating it gives disproportionate assistance against the weakest option."
+      }
+    ],
+    "fairness": [
+      "The stated combination of short bowel with colon continuity, postprandial neurologic episodes, high-gap acidosis and a normal routine lactate is compatible with D-lactic acidosis. Restricting concentrated simple sugars is a reasonable preventive intervention. The explanation appropriately says 'suggest' rather than claiming biochemical confirmation.",
+      "No confident clinical inaccuracy or equally best offered answer is identified. The issue is that the classic syndrome-to-carbohydrate association and the extreme bowel-rest foil make this easy. Naming a syndrome and recalling its familiar substrate restriction does not establish two consequential decisions under the owner's standard.",
+      "Long-chain fat restriction is a recognizable short-bowel intervention, but the supplied record gives it no episode-specific rationale; the third option is explicitly an acute-stage strategy in a repeatedly declared recovered patient. Thus the second step is weakly contested.",
+      "D-lactic acidosis is a high-yield short-bowel complication. The standalone update supplies colon continuity and the symptom/laboratory pattern, so it does not require a preceding reconstruction answer. The diagnosis is not leaked in the visible complaint or task."
+    ],
+    "suggestions": [
+      "Replace complete bowel rest with a specific, credible preventive dietary plan of comparable scope; do not disguise the same extreme option by deleting 'all'.",
+      "To claim two-step difficulty, provide a supported competing clinical consideration that makes the preventive intervention differ from another reasonable short-bowel intervention. Require interpretation of observations that change that choice, rather than adding more hallmark D-lactate findings.",
+      "State the recovered phase once. Preserve the distinction between a normal routine lactate result and exclusion of D-lactate production.",
+      "If the objective remains classic complication recognition followed by substrate recall, request explicit acceptance as a basic item rather than claiming moderate/hard difficulty."
+    ]
+  },
+  {
+    "id": "question.topic.bowel-ibd-malabsorption-short-bowel.jejunal-gist-resection.v2",
+    "nodeId": "node.topic.bowel-ibd-malabsorption-short-bowel.jejunal-gist-resection.v2",
+    "title": "Initial therapy for localized GIST threatening major bowel loss",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Localized disease does not by itself make immediate surgery the best initial plan when inseparable arterial arcades supply a long length of uninvolved bowel. Controlled bleeding and maintained intake permit a neoadjuvant strategy; the KIT exon 11 result supports the conventional imatinib choice over sunitinib.",
+      "The learner must infer the functional consequence of en bloc vascular resection, then combine that consequence with molecular sensitivity and the absence of an urgent symptom driver to choose initial therapy. Immediate surgery is a credible error, and sunitinib tests treatment-line confusion. This is high-yield and moderate, not merely diagnosis recognition.",
+      "The known GIST diagnosis is appropriate for a management question. Two choices share 'Begin neoadjuvant ... therapy', so that phrasing does not uniquely identify imatinib. The vascular description supplies operative consequences without directly stating 'unresectable' or naming a desired drug.",
+      "The word 'variant' is less precise than an activating pathogenic KIT mutation. I have not verified the particular molecular result offline and am not treating every possible exon 11 variant as sensitive. This is a precision limitation, not a confident claim that the conventional keyed answer is clinically wrong.",
+      "The named patient, staging, bleeding status and vascular anatomy make the task standalone. No later surgical result is needed."
+    ],
+    "suggestions": [
+      "No blocking change to the intended clinical decision. A future precision edit should identify the molecular finding as a pathogenic activating mutation if that is what the constructed pathology record intends; have the clinician verify the sensitivity statement without inventing a specific sequence variant.",
+      "Keep the vascular supply consequence and controlled symptoms; removing either would weaken the sequencing decision against immediate surgery."
+    ]
+  },
+  {
+    "id": "question.topic.bowel-ibd-malabsorption-short-bowel.uc-staged-colectomy.v2",
+    "nodeId": "node.topic.bowel-ibd-malabsorption-short-bowel.uc-staged-colectomy.v2",
+    "title": "Extent of the initial operation after failed acute UC therapy",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The operation-selection task explicitly begins after colectomy has been chosen. It therefore does not require the reader to invent the duration or criteria for failure of methylprednisolone and infliximab rescue.",
+      "Total abdominal colectomy with end ileostomy is the defensible initial operation for the supplied acute, steroid-exposed, nutritionally compromised record. Immediate pouch construction is a credible but premature definitive-treatment error; proctocolectomy with end ileostomy avoids a pouch anastomosis but still adds pelvic dissection.",
+      "Two consequential judgments are needed: recognize why the current risk state changes reconstructive timing, then distinguish deferral of pelvic dissection from simply avoiding an undiverted anastomosis. The alternatives are specific operations, including a diverted pouch, so this is a high-yield moderate staging question.",
+      "Absence of neoplasm or rectal perforation supports the rectum-preserving initial strategy. These are necessary boundary observations rather than a lexical match to the key. All choices have comparable procedural specificity; the key is not the uniquely qualified cautious option.",
+      "The retrospective clinic frame and hospital-operation task agree. The update provides the decision stage and relevant patient condition without another node. No confident clinical inaccuracy was identified."
+    ],
+    "suggestions": [
+      "No blocking revision. Preserve the distinction between diversion and deferral of pouch construction, and between avoiding an anastomosis and avoiding pelvic surgery.",
+      "Optional clarity addition to feedback: explicitly state that the rectum is retained at this initial stage. Do not add an unsupported fixed interval for completion surgery."
+    ]
+  },
+  {
+    "id": "question.topic.bowel-ibd-malabsorption-short-bowel.uc-invisible-highgrade.v2",
+    "nodeId": "node.topic.bowel-ibd-malabsorption-short-bowel.uc-invisible-highgrade.v2",
+    "title": "Confirmed invisible high-grade dysplasia in extensive UC",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'His extensive ulcerative colitis is clinically controlled' repeats the presentation without adding a decision-critical observation. The duplicated status and the already-cleared descending lesion lengthen an otherwise direct indication question."
+    ],
+    "cues": [],
+    "fairness": [
+      "Total proctocolectomy is the defensible intended answer for repeated, independently confirmed invisible high-grade dysplasia in this extensive-UC record after expert reassessment. Continued surveillance and right hemicolectomy are weaker offered plans. No confident clinical inaccuracy or second best key was identified.",
+      "The mapped specimen sites are coherent, but the descending-colon low-grade lesion and its cleared scar fail the deletion test: deleting those rows leaves repeated invisible high-grade dysplasia and the same colectomy decision. The table therefore does not create the claimed additional consequential inference.",
+      "The decisive diagnosis is already supplied by 'High-grade dysplasia' and 'High-grade dysplasia again', with agreement and repeat expert inspection explicitly completed. This is legitimate pathology information, not an unfair nonmedical cue; nevertheless, applying the familiar confirmed-invisible-HGD operative rule is easy rather than two-step reasoning.",
+      "The options are short, parallel plans with no unique qualifier, convergence or phrase overlap that identifies the key without clinical knowledge. The difficulty defect should not be mislabeled a lexical defect or repaired by hiding necessary pathology confirmation.",
+      "This is a very high-yield surgical indication. The standalone version repeats the needed index and repeat examinations and does not rely on the separate visible-low-grade case. No continuity defect was identified."
+    ],
+    "suggestions": [
+      "Remove the repeated controlled-colitis sentence and the resolved descending-lesion history unless those observations actually change the scored decision.",
+      "For a two-step revision, use a clinician-supported unresolved specimen, site or confirmation issue whose interpretation changes the immediate next action. Compare plans at that same stage rather than merely adding another independently dispositive HGD result.",
+      "Alternatively, retain this as a concise, explicitly accepted basic surgical-indication item. Do not present a larger result table as evidence of difficult reasoning.",
+      "Preserve the exact pathology grades and adequacy information needed for a single best answer; do not manufacture uncertainty or invent a new threshold to raise difficulty."
+    ]
+  },
+  {
+    "id": "question.topic.bowel-ibd-malabsorption-short-bowel.pouch-localize.v2",
+    "nodeId": "node.topic.bowel-ibd-malabsorption-short-bowel.pouch-localize.v2",
+    "title": "Persistent pouch symptoms after incomplete distal mucosal assessment",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Normal pouch-body and afferent-limb findings do not establish normality of the obscured distal channel. Persistent bleeding and urgency justify completing site-specific mucosal evaluation before assigning the new evacuation symptoms to a primary functional disorder.",
+      "The learner must localize the limitation of the available observations and biopsy, then rank mucosal reassessment against physiology testing prompted by genuine straining and incomplete evacuation. Manometry is a credible near-miss, making this a high-yield moderate investigation-sequencing item.",
+      "MRI for a fistula is the weakest competitor: no draining tract, focal sepsis or other specific penetrating finding is supplied. Nevertheless, it is a real alternative investigation for structural pouch complications, not a nonsensical test. It does not outrank completing the clearly limited mucosal examination in this record.",
+      "The exhibit reports actual obscuration and sampled sites rather than merely announcing that a test was omitted. Repeating pouchoscopy therefore is not a disposable already-completed-test foil. 'Pouchoscopy' appears in both the prior report and the key, but that repetition alone does not establish whether repetition is justified.",
+      "The explanation does not claim that normal pouch histology excludes all pouch disease or that evacuation dysfunction can never coexist. The standalone presentation supplies the pouch history, current symptoms and investigation limits without a prior case. No confident clinical inaccuracy was identified."
+    ],
+    "suggestions": [
+      "No blocking revision. Keep persistent bleeding, the genuine evacuation symptoms and the exact sites of adequate versus obscured examination; they establish the ordering of the competing investigations.",
+      "For a future harder variant, strengthen the third investigation's patient-specific rationale only if supported observations still leave one best next test. Do not add decorative fistula symptoms or remove the necessary examination limitation."
+    ]
+  }
+]

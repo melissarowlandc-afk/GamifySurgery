@@ -1,0 +1,883 @@
+[
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.cmi-after-duplex.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.cmi-after-duplex.v1",
+    "title": "Anatomical imaging after a limited mesenteric duplex",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "CTA is a defensible best next investigation after the documented fasting study failed to visualize the origins, with preserved renal function and no contrast reaction.",
+      "The task already directs the learner to define mesenteric arterial anatomy. The reduced-intake trajectory need not be interpreted to choose CTA over repeating the same limited study or invasive diagnostic angiography; it does not create a second consequential decision.",
+      "First node is self-contained. Its explanation introduces revascularization planning before the next referral item, modestly scaffolding that later decision."
+    ],
+    "suggestions": [
+      "Retain the actual acquisition limitation. Rebuild the comparison around a credible remaining imaging decision rather than counting symptom attribution that the task has already resolved.",
+      "If the objective is simply CTA after inadequate duplex, seek explicit acceptance as foundational practice rather than describe it as difficult two-step reasoning."
+    ]
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.cmi-referral.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.cmi-referral.v1",
+    "title": "Referral after symptomatic multivessel mesenteric disease",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Vascular referral is the best primary pathway for the persistent meal-related symptoms, weight loss and multivessel disease. Nutritional support can be concurrent, but does not resolve the vascular problem.",
+      "The competing referrals are weak at this completed diagnostic stage: nutrition does not address the obstructed arterial supply, and functional ischemia testing adds little to the supplied symptomatic multivessel picture.",
+      "The update follows the first node coherently and supplies the relevant imaging and ongoing symptoms. Prior feedback already mentions treatment planning; this is chiefly recognition of the expected next referral."
+    ],
+    "suggestions": [
+      "Keep nutrition care in shared background if intended to continue, and ask about a real unresolved vascular-care decision with credible competing actions.",
+      "Avoid treating fewer episodes on smaller meals as a second scored inference when the update expressly states continued pain and weight loss."
+    ]
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.cmi-mra.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.cmi-mra.v1",
+    "title": "Mesenteric imaging after severe iodinated-contrast reaction",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Iodinated mesenteric CT angiography",
+        "why": "Both distractors explicitly repeat 'Iodinated' after a presentation describing anaphylaxis to iodinated contrast; the key is the sole option without that repeated hazard."
+      },
+      {
+        "phrase": "Iodinated catheter mesenteric angiography",
+        "why": "Creates the same nonmedical exclusion shortcut as the other distractor; the pair collapses to one error."
+      },
+      {
+        "phrase": "she has no MRI-incompatible device",
+        "why": "Explicit permission for the only MRI option, layered onto preserved renal function and the contrast-reaction cue."
+      }
+    ],
+    "fairness": [
+      "Contrast-enhanced MRA is clinically reasonable in this stable chronic setting. No confident key inaccuracy identified.",
+      "The severe prior reaction is necessary safety information and should not be hidden, but the options do not require an independent diagnostic inference or two consequential decisions.",
+      "Standalone chronology is clear."
+    ],
+    "suggestions": [
+      "Use conventional parallel test labels rather than selectively annotating both wrong answers with their contraindicated agent.",
+      "Retain the severe reaction and relevant renal/device information, but compare genuinely plausible alternative investigations or accept this as a single-constraint safety item."
+    ]
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.cmi-recurrence-duplex.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.cmi-recurrence-duplex.v1",
+    "title": "Investigation of recurrent symptoms after SMA stenting",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Kidney function has chronically declined' does not describe the current degree of impairment or establish a patient-specific reason to prefer duplex over CTA."
+    ],
+    "cues": [],
+    "fairness": [
+      "Recurrent meal pain and weight loss require current evaluation; the previous patent CTA does not establish current stent patency.",
+      "The explanation calls duplex 'a first examination option,' which supports its acceptability but does not establish a unique best answer over CTA in this exact case.",
+      "CTA may also be defensible for symptomatic post-stent evaluation. I cannot establish its inferiority from an unspecified chronic renal decline in this offline review; this is a ranking uncertainty, not a claim that duplex is wrong.",
+      "The item stands alone and contains the relevant initial response and recurrence chronology."
+    ],
+    "suggestions": [
+      "Supply a supported, concrete renal/contrast context and the actual clinical question the initial examination must resolve, or narrow the task to a supported surveillance decision.",
+      "Have Melissa adjudicate duplex versus CTA for the exact revised record; do not turn any chronic renal impairment into an absolute CTA contraindication."
+    ]
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.incidental-medical.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.incidental-medical.v1",
+    "title": "Management of an asymptomatic isolated SMA stenosis",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "prophylactic SMA angioplasty and stenting",
+        "why": "Both invasive alternatives are explicitly labeled 'prophylactic,' while the presentation repeatedly establishes absence of symptoms; the options form a reassurance-versus-two-procedures pattern."
+      },
+      {
+        "phrase": "No operation that would interrupt mesenteric collaterals is planned.",
+        "why": "States the absence of a special prophylactic-treatment consideration in teaching language, without such an operation being a live competing decision."
+      }
+    ],
+    "fairness": [
+      "Cardiovascular prevention and symptom counselling are appropriate for the stated asymptomatic isolated lesion; no confident clinical inaccuracy identified.",
+      "Severe imaging versus absence of symptoms is worthwhile teaching, but here the repeated asymptomatic findings and paired prophylactic procedures leave a one-rule decision.",
+      "The nonprocedural option is a broad review/counselling plan while the others name exact operations. The standalone timeline is clear."
+    ],
+    "suggestions": [
+      "Remove redundant exception-negation prose unless it changes an actual offered decision.",
+      "Compare specific care plans at the same stage and introduce a genuinely unresolved, supported indication distinction if resident-level two-step difficulty is required."
+    ]
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.nomi-circulatory.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.nomi-circulatory.v1",
+    "title": "Initial management of low-flow bowel ischemia",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "low-output state",
+        "why": "The key 'Correct low output and optimize circulating perfusion' directly repeats the supplied mechanism."
+      },
+      {
+        "phrase": "patent major mesenteric arteries and veins and no focal occluding clot",
+        "why": "Explicitly removes the target of both clot-removal distractors; no medical differential is needed to reject two clot-directed procedures."
+      }
+    ],
+    "fairness": [
+      "Correction of the circulatory cause is appropriate for the supplied nonocclusive pattern without peritonitis.",
+      "The key is a broad resuscitation priority; the alternatives are specific procedures for an explicitly absent clot. This is not a strong same-stage comparison.",
+      "The retrospective clinic framing is understandable, although 'founder' adds no clinical information. The next deterioration node is chronologically coherent."
+    ],
+    "suggestions": [
+      "Retain vessel patency and the examination, but compare plausible actions within nonocclusive ischemia care, with sufficient supported findings to distinguish them.",
+      "Replace the generic perfusion instruction with a concrete care priority supported by the actual hemodynamic record; do not invent drug or pressure targets."
+    ]
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.nomi-operative-change.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.nomi-operative-change.v1",
+    "title": "Operation despite improved circulatory markers in nonocclusive ischemia",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Urgent operative assessment is the single best offered pathway for persistent rigidity, generalized involuntary guarding and clinical deterioration despite improved output and lactate.",
+      "The learner must reconcile improved systemic markers with worsening local findings, then switch from circulatory treatment or vasodilator care to operative bowel assessment.",
+      "The preceding explanation asks for reassessment but does not state this later operative trigger. The update supplies both the earlier treatment and the new examination, so the task remains coherent without recalling a prior selected answer.",
+      "High-yield distinction; difficulty is a qualitative editorial prediction, not measured performance or clinical approval."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.embolic-source-workup.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.embolic-source-workup.v1",
+    "title": "Investigation of a cardiac source after limb embolism",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "cardiac embolic source",
+        "why": "Only the key investigates the heart after the presentation supplies atrial fibrillation and emboli in two systemic territories; the competitors remain confined to the leg."
+      },
+      {
+        "phrase": "postoperative arterial duplex shows the reconstruction and runoff are patent",
+        "why": "This also makes the offered repeat runoff CTA a completed-territory foil rather than a close competing source investigation."
+      }
+    ],
+    "fairness": [
+      "Echocardiographic source assessment is appropriate. The question does not require withholding anticoagulation while awaiting it, and should not be interpreted that way.",
+      "Venous duplex is a weak source alternative without a supplied paradoxical-embolism question. Repeating leg runoff imaging does not address the main unresolved source.",
+      "The case stands alone, but the diagnostic inference is essentially supplied by the AF and systemic-embolism history."
+    ],
+    "suggestions": [
+      "Compare credible source investigations or a concrete unresolved cardiac-source question, using the findings needed to distinguish them.",
+      "Keep adequate local patency information without using an already completed local assessment as the main wrong answer."
+    ]
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.viability-urgency.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.viability-urgency.v1",
+    "title": "Urgency for a salvageable threatened limb",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Anatomical imaging followed by scheduled revascularization' leaves the actual delay unspecified; 'scheduled' can mean a planned urgent procedure rather than an elective postponement."
+    ],
+    "cues": [
+      {
+        "phrase": "scheduled revascularization",
+        "why": "The timing word contrasts with 'Immediate' without defining a clinically meaningful delay; a test taker can choose the urgent-sounding option from the alarming examination."
+      }
+    ],
+    "fairness": [
+      "Weak but retained movement, sensory loss beyond the toes, absent arterial signal and retained venous flow support immediate limb-salvage care.",
+      "The pattern is classic and all findings point in the same direction; classification followed by its associated urgency is primarily a recall chain against a delay and amputation.",
+      "Rapid anatomical imaging can be part of urgent treatment planning. The item should not imply that any imaging before intervention is wrong.",
+      "The initial retrospective node stands alone and the subsequent reperfusion course is coherent."
+    ],
+    "suggestions": [
+      "Clarify that the competing imaging pathway creates a real delay, or compare equally urgent concrete pathways with the required supported resource/anatomical facts.",
+      "Seek explicit foundational/safety acceptance if retaining straightforward viability-to-urgency recognition."
+    ]
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.postreperfusion-fasciotomy.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.postreperfusion-fasciotomy.v1",
+    "title": "Compartment syndrome after limb reperfusion",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "the recorded foot became warm with pedal arterial signals",
+        "why": "Together with the subsequent patent duplex, this repeatedly excludes the recurrent-occlusion distractor."
+      },
+      {
+        "phrase": "The arterial reconstruction remained patent on duplex.",
+        "why": "After a textbook tense-calf/passive-stretch-pain pattern, the repeat patency statement leaves fasciotomy as the only plausible procedure against embolectomy and major amputation."
+      }
+    ],
+    "fairness": [
+      "Emergency calf fasciotomy is appropriate for these clinical findings; patent arteries do not exclude compartment syndrome.",
+      "The intact reconstruction is relevant and should not simply be hidden. The weakness is the absence of a close credible management alternative, not a wrong clinical key.",
+      "The update clearly follows successful revascularization and contains enough current findings to stand alone. The earlier explanation does not reveal fasciotomy."
+    ],
+    "suggestions": [
+      "Keep necessary perfusion findings but remove redundant reassurance.",
+      "Either explicitly accept this as urgent complication recognition or build a supported assessment-versus-decompression decision with realistic competing findings; do not manufacture a pressure threshold or delay treatment in a clearly diagnostic presentation."
+    ]
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.embolic-longterm.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.embolic-longterm.v1",
+    "title": "Long-term antithrombotic therapy after cardiac-source embolism",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "atrial fibrillation and a left-atrial appendage thrombus as the source of the removed embolus",
+        "why": "Supplies the complete etiologic interpretation; the resident only recalls the associated antithrombotic class."
+      },
+      {
+        "phrase": "no ongoing anticoagulation contraindication is identified",
+        "why": "Removes the only suggested treatment constraint without requiring the learner to interpret bleeding evidence."
+      }
+    ],
+    "fairness": [
+      "Therapeutic oral anticoagulation is the best offered strategy for the stated cardiac embolic source. Single or dual antiplatelet therapy is not an equivalent substitute.",
+      "The update is chronologically coherent after surgery and contains the source and hemostasis information needed independently.",
+      "The broad class labels do not create a genuinely difficult secondary-prevention choice once AF and intracardiac thrombus are explicitly established."
+    ],
+    "suggestions": [
+      "Use a supported competing indication or actual treatment constraint if the goal is consequential two-step antithrombotic reasoning.",
+      "Otherwise label and seek acceptance as foundational source-directed secondary prevention; do not claim the preceding surgical course makes this node hard."
+    ]
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.irreversible-boundary.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.irreversible-boundary.v1",
+    "title": "Procedural boundary for a clinically irreversible limb",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The present-day clinic attendance is followed by 'initial procedural pathway'; specifying the recorded emergency assessment in the task would make its retrospective time reference clearer."
+    ],
+    "cues": [],
+    "fairness": [
+      "Complete anesthesia, paralysis, rigidity and loss of both Doppler signals support the amputation pathway rather than attempted reperfusion. No confident clinical error identified.",
+      "Every supplied finding aligns with the classic irreversible category. Two reperfusion techniques share the same contraindicated premise, so the decision is mainly recognition of that category and its associated treatment.",
+      "The examination is complete and must not be weakened merely to make the question harder."
+    ],
+    "suggestions": [
+      "Retain the necessary viability observations. Either obtain explicit safety-recognition acceptance or introduce a supported discordance/serial assessment that creates a real decision rather than two labels for irreversible ischemia.",
+      "Make the task explicitly refer to the initial outside emergency assessment."
+    ]
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.heparin-bridge.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.heparin-bridge.v1",
+    "title": "Initial systemic anticoagulation in acute limb ischemia",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "found no contraindication to systemic anticoagulation",
+        "why": "Announces eligibility for the drug-class decision instead of presenting an actual competing safety consideration."
+      }
+    ],
+    "fairness": [
+      "IV unfractionated heparin is the best offered initial treatment while urgent vascular care proceeds.",
+      "Oral aspirin and warfarin are not close substitutes for immediate parenteral anticoagulation in this setting; the item is routine drug recall after obvious acute ischemia.",
+      "The standalone retrospective presentation is clear; retained toe movement should not be interpreted as a reason to delay urgent vascular assessment."
+    ],
+    "suggestions": [
+      "Use a real, supported drug-selection or sequencing constraint with credible immediate-treatment alternatives if two-step reasoning is required.",
+      "Otherwise seek acceptance as a basic immediate-care item; do not count diagnosis plus memorized first drug as two consequential steps."
+    ]
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.hit-anticoagulant.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.hit-anticoagulant.v1",
+    "title": "Anticoagulant choice with a history of immune HIT",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "heparin-induced thrombocytopenia",
+        "why": "The contraindication name contains 'heparin,' repeated in both wrong options, while argatroban is the only differently named agent."
+      },
+      {
+        "phrase": "recorded safety constraint",
+        "why": "The task explicitly tells the learner to choose by the already named contraindication."
+      }
+    ],
+    "fairness": [
+      "Argatroban is a reasonable nonheparin anticoagulant among the offered choices; no confident inaccuracy is identified.",
+      "The documented previous immune HIT is legitimate safety information. However, it makes both heparin preparations the same readily excluded error and leaves a single-rule drug selection.",
+      "The standalone timeline is understandable; the question does not establish a new current HIT diagnosis."
+    ],
+    "suggestions": [
+      "Retain the genuine HIT history but compare plausible nonheparin options only when supported patient-specific information can distinguish them.",
+      "If retaining this option set, classify it as a basic contraindication item rather than hard resident reasoning."
+    ]
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.bleeding-anticoagulation.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.bleeding-anticoagulation.v1",
+    "title": "Anticoagulation during active intracranial hemorrhage and limb ischemia",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Withhold systemic heparin pending urgent joint assessment",
+        "why": "This is the only option that incorporates the prominently supplied active hemorrhage and a joint assessment; both alternatives initiate therapeutic heparin preparations."
+      },
+      {
+        "phrase": "these were hospital treatments and are not delivered in this clinic",
+        "why": "Implementation/setting disclaimer adds no decision information to an already explicit retrospective hospital review."
+      }
+    ],
+    "fairness": [
+      "Withholding systemic anticoagulation during active major intracranial bleeding while urgently coordinating vascular and hemorrhage care is reasonable.",
+      "The active-bleeding boundary is essential, but both distractors cross the same obvious boundary; there is no second consequential inference.",
+      "The record must mean active hemorrhage, not merely residual blood on a follow-up scan. The presentation supplies ongoing hemorrhage management, so I do not flag the key as inaccurate.",
+      "The later procedural candidate is held and is not scored in this review."
+    ],
+    "suggestions": [
+      "Retain a clear active-hemorrhage description, but remove the clinic-delivery disclaimer.",
+      "Seek explicit safety-recognition acceptance or create a separately supported decision within the competing bleeding/salvage constraints; do not imply a universal exact restart interval."
+    ]
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.ami-cta-normal-lactate.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.ami-cta-normal-lactate.v1",
+    "title": "Vascular-phase imaging despite normal lactate and noncontrast CT",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Arterial-and-venous-phase CTA is the best offered investigation for persistent severe pain, embolic risk and an initially modest abdominal examination.",
+      "The learner must reject false reassurance from a normal lactate and a noncontrast study, then choose an acquisition that evaluates mesenteric vessels and bowel rather than portal-venous CT or duplex.",
+      "The phase labels are necessary technical distinctions, not unfair key-only elaboration. No diagnosis label or teaching sentence supplies the interpretation before choice.",
+      "The first hospital-review node stands alone. Later CTA findings are not needed to solve it."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.peritonitis-exploration.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.peritonitis-exploration.v1",
+    "title": "Changing a catheter plan after evolving peritoneal findings",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Operative bowel assessment with vascular planning is the best offered pathway for new overt peritoneal findings despite falling lactate.",
+      "The resident must prioritize the changing examination over biochemical improvement, then revise an already selected catheter-first strategy; both steps affect management.",
+      "Catheter revascularization is a credible prior plan made insufficient by the new examination, rather than an unrelated distractor.",
+      "The update supplies SMA occlusion, prior plan, resuscitation and the new findings. It is coherent after CTA and can be understood without recalling the prior chosen answer; previous feedback does not disclose this operative decision."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.bowel-staging.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.bowel-staging.v1",
+    "title": "Bowel reconstruction after reperfusion with unresolved viability and physiologic instability",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Discontinuity with planned re-exploration best fits uncertain residual bowel recovery, swollen edges and persistent hypothermia/acidemia/vasopressor dependence.",
+      "Two consequential decisions remain: avoid immediate anastomosis in the current physiologic state, and preserve the opportunity to reassess uncertain bowel after resuscitation.",
+      "The four options balance anastomosis versus stapled ends and re-exploration versus definitive closure. Neither component frequency nor unique wording assembles the key.",
+      "The update explicitly supplies completed restoration of flow and resection of a perforated nonviable segment, so it follows the operative node and stands alone. Earlier explanations do not teach this reconstruction choice.",
+      "No invented exact timing or viability cutoff is required. Exact clinical approval remains with Melissa."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.ami-cta-aki.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.ami-cta-aki.v1",
+    "title": "CTA for acute-on-chronic mesenteric symptoms despite acute kidney injury",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "no vascular-phase study had been performed",
+        "why": "Names the missing acquisition and points directly to the only vascular-phase CT option; the actual noncontrast study is already described."
+      },
+      {
+        "phrase": "Urgent arterial-and-venous-phase CT angiography",
+        "why": "Only the key says 'Urgent,' whereas the alternatives say 'during resuscitation' or 'after initial resuscitation'; urgency wording helps choose it independently of protocol knowledge."
+      },
+      {
+        "phrase": "Repeat noncontrast abdominal CT during resuscitation",
+        "why": "Repeats an already performed modality without a new acquisition question or clinical change that would make repetition competitive."
+      }
+    ],
+    "fairness": [
+      "Urgent CTA despite AKI is a defensible best answer in the stated suspected acute ischemic course.",
+      "The acute-on-chronic pain pattern and renal concern support meaningful inference plus a risk-sensitive imaging decision. The current choice set nevertheless weakens that reasoning through an explicit missing-action cue and a disposable repeat-test foil.",
+      "The hospital-review chronology is clear and standalone."
+    ],
+    "suggestions": [
+      "Delete the redundant 'no vascular-phase study' sentence while retaining what the outside CT actually acquired.",
+      "Use parallel timing language and credible alternative imaging plans that test the renal-risk tradeoff; keep necessary urgency and do not invent a creatinine cutoff."
+    ]
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.mvt-heparin.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.mvt-heparin.v1",
+    "title": "Initial management of mesenteric venous thrombosis without peritonitis",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Therapeutic heparin is the best initial option for the supplied mesenteric venous filling defect, enhancing bowel, absence of peritonitis and absence of active bleeding.",
+      "The learner interprets the vessel/phase findings as venous disease rather than an arterial occlusion, then uses bowel enhancement and the examination to choose anticoagulation rather than immediate lysis or laparotomy.",
+      "All offered choices are actual initial treatments. The visible findings support a single best answer without an invented numerical threshold.",
+      "The node is self-contained. Its explanation explicitly names the peritonitis boundary, which is a cueing limitation for the following deterioration node, not for this first choice."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.mvt-deterioration.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.mvt-deterioration.v1",
+    "title": "Operative escalation during anticoagulation for mesenteric venous thrombosis",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Acute MVT without peritonitis can begin therapeutic heparin with close reassessment.",
+        "why": "The preceding node's visible explanation explicitly teaches the boundary that this update then reverses."
+      },
+      {
+        "phrase": "During therapeutic heparin treatment",
+        "why": "Without a supplied dosing/activity problem, 'Escalation of intravenous heparin therapy' is a weak alternative to the newly obvious operative indication."
+      }
+    ],
+    "fairness": [
+      "Urgent bowel assessment is appropriate for generalized involuntary guarding, persistent rigidity and circulatory deterioration.",
+      "The case progression is coherent and the update supplies prior therapy and new findings. The problem is independent difficulty: prior feedback plus a textbook peritoneal examination makes this recognition of a rehearsed trigger.",
+      "No confident key inaccuracy is identified; do not remove necessary peritoneal findings to manufacture uncertainty."
+    ],
+    "suggestions": [
+      "Keep this as explicitly scaffolded escalation practice only if that role is accepted.",
+      "For an independent resident-level node, test a distinct subsequent decision or a supported competing explanation with credible alternatives, and prevent prior feedback from rehearsing the exact scored discriminator."
+    ]
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.initial-abi.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.initial-abi.v1",
+    "title": "First investigation for vascular versus spinal exertional leg symptoms",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Resting ABI is the best offered initial investigation for exertional calf symptoms relieved by standing, diminished pulses and no acute limb-threat findings.",
+      "The resident must weigh the symptom behavior and pulses against an old lumbar MRI abnormality, then choose initial physiology rather than repeat spinal imaging or premature anatomical CTA.",
+      "The old imaging is a plausible attribution trap rather than definitive proof of the current cause. The pulse and symptom details are necessary discrimination, not unfair wording overlap.",
+      "The first node is standalone; its explanation does not disclose the exercise-ABI answer to the later normal-resting-ABI update."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.normal-exercise.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.normal-exercise.v1",
+    "title": "Testing persistent claudication-like symptoms with a normal resting ABI",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Exercise ABI is the best offered next test for persistent exertional symptoms with a normal compressible resting ABI.",
+      "The case is coherent after the resting study and the update supplies the actual value, compressibility and reproducible symptoms. It stands alone without knowing the prior selected answer.",
+      "The item is a high-yield single algorithm branch. TBI and duplex are adjacent tests, but the normal-compressible result essentially supplies the entire decision; there is no additional consequential tradeoff.",
+      "No convincing nonmedical wording cue or confident clinical error was identified."
+    ],
+    "suggestions": [
+      "Seek explicit acceptance as focused foundational diagnostic practice, or add a supported testing constraint that changes the choice among plausible alternatives.",
+      "Do not artificially lengthen the stem or add an unrelated objective simply to claim two steps."
+    ]
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.noncompressible-toe.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.noncompressible-toe.v1",
+    "title": "Physiologic assessment after a noncompressible ankle measurement",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Toe pressure/TBI with waveforms is appropriate when the supplied high ankle measurement is noncompressible and a wound needs perfusion assessment.",
+      "The ABI and persistent flow under high cuff pressure provide adequate raw information; no confident medical inaccuracy identified.",
+      "The task directly asks for another physiological investigation, and the alternatives are two further ankle-based measurements. This is mainly the familiar noncompressible-ABI-to-toe-testing rule.",
+      "The first node stands alone and does not preannounce the specific referral answer in the subsequent wound node. No strong unfair lexical cue was identified."
+    ],
+    "suggestions": [
+      "Retain the noncompressibility evidence. Obtain foundational-practice acceptance or build a genuinely unresolved perfusion-interpretation decision using supported concordant/discordant measurements.",
+      "Do not describe the single test-selection rule as difficult merely because diabetes, an ulcer and neuropathy are also present."
+    ]
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.clti-salvage.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.clti-salvage.v1",
+    "title": "Revascularization referral for an ischemic nonhealing toe ulcer",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Revascularization assessment with wound care is the best offered pathway for persistent tissue loss, very poor digital perfusion and dependency-relieved nocturnal pain.",
+      "Elective toe amputation lacks a supplied nonviable or unsalvageable toe, and treadmill rehabilitation does not address the wound-threatening perfusion problem. These are not close remaining decisions.",
+      "The toe pressure is interpreted together with waveforms, symptoms and tissue loss; it should not be taught as a standalone universal cutoff.",
+      "The update supplies the relevant result and current wound status, follows the first test coherently and stands alone. Earlier feedback does not explicitly give the referral answer."
+    ],
+    "suggestions": [
+      "Compare credible limb-salvage or treatment-sequencing pathways with the actual findings that distinguish them.",
+      "Retain the wound and perfusion observations; replace unsupported elective amputation as a generic foil rather than inventing tissue nonviability."
+    ]
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.exercise-exposure.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.exercise-exposure.v1",
+    "title": "Determining whether structured exercise has actually failed",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Proceed to iliac angioplasty and stenting",
+        "why": "No iliac lesion or procedural anatomy is supplied; this anatomically specific intervention is unsupported independently of interpreting the exercise record."
+      },
+      {
+        "phrase": "Proceed to aortoiliac bypass reconstruction",
+        "why": "A second unsupported aortoiliac procedure shares the same premature-stage error, leaving the key as the only substantiated plan."
+      }
+    ],
+    "fairness": [
+      "The activity sheet does not establish failure of structured exercise, so supervised interval walking is appropriate.",
+      "Interpreting actual exercise exposure rather than trusting the referral is a worthwhile inference. However, the proposed procedural competitors are not established options from the available anatomy, weakening the second consequential decision.",
+      "The later case ultimately describes common-femoral bifurcation disease with patent iliac inflow. That future result is not used to score this first node, but it means a repair must not simply add contradictory known iliac disease to this presentation."
+    ],
+    "suggestions": [
+      "Preserve the actual activity observations and compare credible treatments available at this stage.",
+      "If procedural treatment is meant to be a real alternative, supply supported concordant anatomy and maintain consistency with the later femoral-bifurcation node; otherwise compare specific nonprocedural escalation plans."
+    ]
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.adequate-failure.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.adequate-failure.v1",
+    "title": "Anatomical planning after persistent limitation despite structured therapy",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Which investigation should guide {patientName}'s next treatment planning?",
+        "why": "With established abnormal physiology and a stated preference for a procedure, the task points toward the only anatomical arterial mapping option."
+      },
+      {
+        "phrase": "Repeat exercise treadmill ankle-brachial index",
+        "why": "Established abnormal resting physiology and documented persistent walking limitation leave little reason for this repeat physiological step as worded."
+      }
+    ],
+    "fairness": [
+      "Arterial duplex mapping is a reasonable next study after persistent function-limiting symptoms despite structured therapy.",
+      "The MRI alternative has no neurological or positional trigger in this case. Together with repeat ABI, it leaves the key as the only investigation addressing the new planning stage.",
+      "The earlier explanation already establishes exercise before intervention. The update supplies completed therapy and remaining limitation, so the sequence is coherent but strongly scaffolded.",
+      "The current node can be read with its case presentation, although it chiefly tests the now-obvious shift to anatomical planning."
+    ],
+    "suggestions": [
+      "Compare plausible anatomical planning investigations under concrete supported patient constraints, or test an actual unresolved candidacy decision rather than contrast mapping with unrelated/redundant studies.",
+      "Retain the later treatment-response chronology and avoid counting the previously taught exercise-before-intervention rule as a fresh inference."
+    ]
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.cfa-procedure.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.cfa-procedure.v1",
+    "title": "Procedure selection for common-femoral bifurcation and profunda-origin disease",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Common-femoral endarterectomy with patch angioplasty is the best offered procedure for bulky bifurcation plaque extending into the profunda origin in the stated acceptable-risk, previously unoperated groin.",
+      "The learner must interpret the importance of the profunda origin and preserved inflow/runoff, then choose local open reconstruction over a bifurcation stent or bypass of an inappropriate segment.",
+      "Operative-risk and groin-history information are legitimate procedure-selection constraints, not a nonmedical instruction to choose the key.",
+      "The sequence from failed therapy through mapping to an outside angiogram is coherent. The update supplies anatomy and risk locally; the case presentation/current context retains the symptomatic indication, so no earlier answer choice must be remembered.",
+      "The broad 'acceptable operative risk' is a supplied premise, not an independently derived risk estimate."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.response-defer.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.response-defer.v1",
+    "title": "Continuing therapy after meaningful functional improvement despite a low ABI",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Antiplatelet/statin care and the prescribed walking program continue.",
+        "why": "This update states the exact treatment that the keyed option asks the learner to continue."
+      },
+      {
+        "phrase": "Continue antiplatelet/statin care and structured exercise",
+        "why": "Repeats the already announced current plan, against two invasive escalations despite explicitly tolerable symptoms and achieved activities."
+      }
+    ],
+    "fairness": [
+      "Ongoing medical/exercise care is appropriate after the stated functional improvement; a persistently abnormal ABI alone is not an indication to intervene.",
+      "Function-versus-imaging is high-yield, but the update gives away the management conclusion and the alternatives are two unnecessary escalation procedures.",
+      "The later knee/heart-failure update is chronologically possible. This first node itself stands alone."
+    ],
+    "suggestions": [
+      "Delete the sentence announcing that the program continues; retain neutral medication/exercise history and the actual functional response.",
+      "Make a consequential response interpretation necessary, or seek acceptance as a straightforward function-over-number teaching item."
+    ]
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.hf-exercise.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.hf-exercise.v1",
+    "title": "PAD exercise modification with knee limitation and heart failure",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Which symptom-directed treatment' does not identify whether the target is knee pain, recurrent ischemic calf symptoms or maintenance of PAD benefit. The new limiting symptom is knee pain, and the preceding node established adequate PAD function."
+    ],
+    "cues": [],
+    "fairness": [
+      "Heart failure makes cilostazol an inappropriate PAD symptom treatment; knee-limited treadmill participation does not establish failure from refractory ischemic calf symptoms.",
+      "Structured arm exercise is a plausible PAD training alternative. It is not a treatment for the knee pathology itself, which makes the broad symptom-directed wording misleading.",
+      "The two meaningful judgments are interpreting why activity stops and applying the heart-failure medication constraint. They are stronger than the wording of the current task.",
+      "The update is coherent after prior improvement, but should explicitly preserve the current PAD functional status so it does not rely on the player recalling an earlier answer or infer a new claudication relapse."
+    ],
+    "suggestions": [
+      "Ask for the next PAD care plan or modification of PAD treatment, without naming 'exercise' in a way that uniquely matches the key.",
+      "State the relevant current walking goal/function briefly and distinguish the orthopedic limitation from renewed ischemic limitation; keep the heart-failure constraint."
+    ]
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.pad-antiplatelet.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.pad-antiplatelet.v1",
+    "title": "Antithrombotic prevention in PAD without another anticoagulation indication",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "clopidogrel has been tolerated",
+        "why": "The key continues the expressly tolerated agent, while one distractor adds the drug linked to a prior bleed and the other uses a class whose indications are explicitly negated."
+      },
+      {
+        "phrase": "no revascularization, atrial fibrillation or venous thromboembolism",
+        "why": "An option-by-option exclusion list removes reasons for both escalation alternatives rather than leaving a real competing indication."
+      }
+    ],
+    "fairness": [
+      "Continuing single-agent clopidogrel is the best offered plan. An abnormal ABI does not itself justify full-intensity apixaban.",
+      "A healed aspirin-associated ulcer bleed is not by itself an absolute lifetime prohibition on aspirin; the lack of a supplied indication for dual therapy is also important. The explanation should not imply an absolute aspirin ban.",
+      "The case stands alone, but the incorrect referral rationale and exclusions make this a single-rule correction rather than difficult antithrombotic reasoning."
+    ],
+    "suggestions": [
+      "Retain necessary bleeding and indication information but replace checklist exclusions with a concise clinical record.",
+      "If aiming for two-step difficulty, create a supported competing prevention indication or regimen tradeoff with credible alternatives; do not conflate full-intensity anticoagulation with other PAD antithrombotic strategies."
+    ]
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.foot-drainage.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.foot-drainage.v1",
+    "title": "Source-control sequencing in an infected ischemic foot",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Complete elective reconstruction, then drain the collection",
+        "why": "'Elective' signals inappropriate delay in a case with pus, fluctuance, spreading redness and rigors; the option advertises its error."
+      },
+      {
+        "phrase": "Perform primary major amputation, then reassess reconstruction",
+        "why": "No unsalvageable limb is described, and the post-amputation reconstruction target is not specified; this is an extreme and poorly defined foil."
+      }
+    ],
+    "fairness": [
+      "Prompt drainage/debridement with antibiotics and coordinated vascular care is appropriate for the drainable infection.",
+      "The need to sequence source control against perfusion is high-yield, but both competitors are implausible as written and allow recognition of the sole reasonable sequence.",
+      "'Then reassess reconstruction' should not be read as permission for an undefined delay in restoring perfusion; the explanation appropriately says vascular care is coordinated.",
+      "The first retrospective node is self-contained. The later source-controlled bypass planning follows coherently."
+    ],
+    "suggestions": [
+      "Remove the pejorative 'elective' timing qualifier and compare credible coordinated sequences using the actual urgency and infection findings.",
+      "Replace primary major amputation unless supported unsalvageability makes it a real alternative; preserve explicit ongoing vascular coordination."
+    ]
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.vein-conduit.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.vein-conduit.v1",
+    "title": "Conduit choice after ipsilateral saphenous vein occlusion",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "the contralateral vein is continuous, compressible and adequate for the planned conduit",
+        "why": "'Adequate for the planned conduit' supplies the suitability conclusion; the key simply repeats the contralateral vein."
+      },
+      {
+        "phrase": "the ipsilateral great saphenous vein is occluded through the needed length",
+        "why": "Explicitly eliminates the otherwise closest named vein option, leaving only recall of vein preference over prosthetic material."
+      }
+    ],
+    "fairness": [
+      "Contralateral great saphenous vein is the best offered conduit for the selected femoral-to-tibial bypass with suitable autogenous vein available.",
+      "The anatomical mapping facts are legitimate and should remain, but their interpretation is largely given. There are not two independently consequential steps.",
+      "The update supplies selected bypass, available vein and controlled infection, so it follows source control coherently and stands alone. Earlier feedback does not teach the conduit answer."
+    ],
+    "suggestions": [
+      "Remove the authored suitability conclusion and use supported mapping observations if interpretation is intended.",
+      "Compare clinically plausible conduit alternatives with the details needed to rank them, or explicitly accept this as foundational autogenous-conduit selection."
+    ]
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.inflow-first.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.inflow-first.v1",
+    "title": "Initial treatment of multilevel disease causing rest pain without tissue loss",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Correcting common-iliac inflow is the best offered initial target for rest pain without tissue loss, severe proximal disease and a patent profunda collateral pathway.",
+      "The resident must integrate the clinical goal and collateral anatomy, then choose proximal correction before distal recanalization or bypass. The longest occlusion is not automatically the first target.",
+      "The explanation appropriately describes the strategy as reasonable rather than a universal rule that every multilevel lesion must be treated identically.",
+      "The initial case is self-contained. Its later wound update changes the problem from rest pain to persistent tissue loss after restored inflow, which is a coherent progression."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.vascular-limb-mesenteric-arterial.wound-outflow.v1",
+    "nodeId": "node.vascular-limb-mesenteric-arterial.wound-outflow.v1",
+    "title": "Persistent tissue loss after restoration of arterial inflow",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Reconstruct the distal arterial route to the foot' is broad; neither a specific target artery nor a definite procedure is named. It is clearer as a target-selection objective than as a concrete treatment plan."
+    ],
+    "cues": [
+      {
+        "phrase": "iliac repair is patent with restored femoral inflow",
+        "why": "Directly eliminates 'Revise the patent common-iliac reconstruction'; repeating 'patent' inside that option announces its defect."
+      },
+      {
+        "phrase": "reconstructible artery reaching the foot",
+        "why": "The key 'Reconstruct the distal arterial route to the foot' closely paraphrases this supplied eligibility conclusion."
+      },
+      {
+        "phrase": "Resume treadmill rehabilitation before reconstruction",
+        "why": "Offers an obvious stage mismatch for a nonhealing ischemic ulcer rather than a credible competing perfusion plan."
+      }
+    ],
+    "fairness": [
+      "Further distal perfusion restoration is appropriate for persistent tissue loss and nearly flat digital waveforms after inflow correction.",
+      "The current node therefore has a defensible general direction, but the option set lets the learner match the sole unresolved arterial territory without making two consequential decisions.",
+      "The update gives the completed inflow repair, new wound and residual disease, so it stands alone and follows the earlier rest-pain node coherently.",
+      "An exact open-versus-endovascular choice cannot be inferred from the current broad anatomy and should not be invented."
+    ],
+    "suggestions": [
+      "Decide whether the task tests a target or an exact procedure. For target selection, use comparable specific arterial targets and realistic residual uncertainty; for procedure selection, provide the necessary supported anatomy and patient constraints.",
+      "Replace revision of an explicitly patent repair and treadmill treatment as disposable foils, and remove the preinterpreted 'reconstructible' conclusion if raw anatomy can fairly support the intended inference."
+    ]
+  }
+]

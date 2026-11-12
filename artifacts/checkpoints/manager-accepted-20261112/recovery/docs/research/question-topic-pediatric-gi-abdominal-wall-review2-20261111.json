@@ -1,0 +1,333 @@
+[
+  {
+    "id": "question.pediatric-gi-abdominal-wall.bilious-incomplete-study.v2",
+    "nodeId": "node.pediatric-gi-abdominal-wall.bilious-incomplete-study.v2",
+    "title": "Bilious drainage: transferred images versus original acquisition",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": false,
+    "clarityIssues": [
+      "The distinction between acquired and transferred images is clear, but the record does not say whether the original sequences are accessible for timely interpretation. Their existence in an archive does not establish access during an urgent evaluation.",
+      "The task is complete and the age, sex and named-patient record-review frame are coherent. 'Seek pediatric review' is less specific about the interpreting specialist than the two pediatric-radiology alternatives."
+    ],
+    "cues": [
+      {
+        "phrase": "Those sequences were not included in the transferred image set.",
+        "why": "Together with the documented stored sequences, this advertises a missing-document retrieval problem. A reader needs little medical knowledge to choose review of the original series over obtaining another test."
+      },
+      {
+        "phrase": "Original acquisition log / review of the original upper-GI series",
+        "why": "The only option that repairs the conspicuously described record-transfer omission repeats 'original'; the duodenal anatomy need not be interpreted to select it."
+      }
+    ],
+    "fairness": [
+      "Reviewing promptly accessible original images is reasonable. If they cannot be obtained promptly, repeat imaging can also be appropriate; the explanation assumes prompt review without establishing that practical boundary. This is an underspecified ranking, not a claim that the intended action is clinically wrong.",
+      "The general neonatal bilious-vomiting topic is high yield, but this scored objective primarily tests archive retrieval rather than recognition, interpretation or management of malrotation. The normal plain-film appearance does not earn a separate consequential inference in these options.",
+      "Standalone case: no preceding answer is needed and no later node is present. Review is limited to candidate text; no fresh source verification or clinical approval is claimed."
+    ],
+    "suggestions": [
+      "Reframe around a clinically consequential interpretation or adequacy problem with credible competing imaging plans, rather than simply the existence of untransferred images.",
+      "If retaining the retrieval objective, establish actual access to the original study neutrally and seek explicit acceptance as an easy diagnostic-records skill. Do not label it a difficult two-step pediatric-surgery question.",
+      "Specify pediatric radiology consistently across options; preserve bilious drainage and the current examination rather than removing necessary urgency information."
+    ]
+  },
+  {
+    "id": "question.pediatric-gi-abdominal-wall.pyloric-residual-alkalosis.v2",
+    "nodeId": "node.pediatric-gi-abdominal-wall.pyloric-residual-alkalosis.v2",
+    "title": "Pyloric stenosis: unresolved alkalosis after circulatory recovery",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'IV correction' and 'IV maintenance' do not specify what fluids or replacement of ongoing losses each plan includes. Maintenance is a fluid-delivery purpose, not an intrinsically noncorrective fluid composition.",
+      "Both 'before pyloromyotomy' options postpone surgery without stating a different reassessment or readiness endpoint, leaving their actual clinical distinction vague."
+    ],
+    "cues": [
+      {
+        "phrase": "Continue IV correction before pyloromyotomy / Begin pyloromyotomy during IV correction / Continue IV maintenance before pyloromyotomy",
+        "why": "The key uniquely combines the repeated components 'IV correction' and 'before pyloromyotomy'. Component convergence can identify it without interpreting the laboratory values."
+      }
+    ],
+    "fairness": [
+      "The substantial hypochloremic alkalosis supports further directed correction before anesthesia despite recovered perfusion and normal potassium. No confident clinical error is identified in that central teaching point.",
+      "The maintenance alternative is insufficiently specified to be unequivocally distinct from continued correction. A resident should not have to infer an unstated fluid prescription to reject it.",
+      "The diagnosis is appropriately supplied for a perioperative task. However, the marked biochemical abnormality followed by the familiar correct-before-surgery rule is currently straightforward; the option ambiguity does not make it hard or establish two consequential steps.",
+      "Standalone case with adequate patient identity and chronology. The explanation correctly separates circulatory improvement from biochemical readiness."
+    ],
+    "suggestions": [
+      "Name concrete, clinically distinct fluid and reassessment plans, using only verified regimen components; do not invent a dose, rate or anesthetic threshold.",
+      "Remove the component-convergence structure and ensure every option clearly differs in an action that matters for this patient.",
+      "To meet the routine-resident difficulty target, make the response trajectory alter a credible remaining perioperative choice. Otherwise request an explicitly accepted basic safety role."
+    ]
+  },
+  {
+    "id": "question.pediatric-gi-abdominal-wall.intussusception-partial-progress.v1",
+    "nodeId": "node.pediatric-gi-abdominal-wall.intussusception-partial-progress.v1",
+    "title": "Intussusception: partial reduction with continued stability",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must distinguish incomplete but progressive reduction from failed nonoperative treatment, then integrate the reassuring reassessment to choose another supervised attempt rather than operation. Residual intussusception prevents observation from being equivalent to successful reduction.",
+      "A delayed repeat enema is the best supported offered plan. Trapped fluid makes failure a credible concern but does not itself establish perforation or mandate surgery. No confident clinical inaccuracy is identified.",
+      "The child's older age raises concern for a lead point but does not by itself invalidate another reduction attempt. The exhibit does not establish that a lead point has been excluded; feedback should not imply that it has.",
+      "The choices are parallel care plans; there is no convincing nonmedical wording shortcut. Naming the established diagnosis is legitimate because the task concerns response and next management.",
+      "Standalone case: the initial diagnosis, procedure outcome and current assessment are all supplied. No earlier explanation is necessary."
+    ],
+    "suggestions": [
+      "Retain partial anatomical progress, residual disease and the reassessment together; removing any of these would weaken the actual decision.",
+      "A minor copyedit would change 'a 8-year-old girl' to 'an 8-year-old girl'. Preserve the exact independently reviewed version unless a new version is authorized.",
+      "Clinical sign-off should retain the distinction between selecting another supervised attempt here and declaring that repeat enemas are appropriate indefinitely or that a lead point is absent."
+    ]
+  },
+  {
+    "id": "question.pediatric-gi-abdominal-wall.hscr-superficial-biopsy.v2",
+    "nodeId": "node.pediatric-gi-abdominal-wall.hscr-superficial-biopsy.v2",
+    "title": "Suspected Hirschsprung disease: completing existing histology",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The visible task and specimen description are understandable; the historical 'superficial-biopsy' identifier is not a visible clinical finding and was not used to infer inadequacy."
+    ],
+    "cues": [
+      {
+        "phrase": "Ancillary stains have not been performed.",
+        "why": "The stem names an unfinished task and the key supplies it. This is the explicit missing-step cue prohibited by the owner lessons."
+      },
+      {
+        "phrase": "the paraffin block remains available",
+        "why": "This feasibility permission reinforces reuse of the existing specimen; combined with 'broad submucosa' and the named missing stains, it pre-solves most of the choice between histology completion and resampling."
+      },
+      {
+        "phrase": "Obtain expert histology with calretinin studies",
+        "why": "Only this option is labelled 'expert', adding an unnecessary quality advantage over the other diagnostic paths."
+      }
+    ],
+    "fairness": [
+      "Further expert evaluation of representative tissue is a defensible best answer; the text does not justify treating the initial absence of identified ganglion cells as a completed diagnosis. No confident clinical error is identified in the explanation.",
+      "Specimen location and submucosal representation matter, but the current set lets the learner match an announced incomplete workup to its completion. Neither a new biopsy nor manometry remains a comparably close competitor after all the scaffold is supplied.",
+      "Histologic confirmation and biopsy adequacy are high-yield Hirschsprung concepts. This version tests a narrow unfinished-laboratory-step decision more than difficult clinical application.",
+      "Standalone case: symptoms and the diagnostic stage are supplied independently of the separate postoperative Ava case. These should not be interpreted as a single continuous encounter."
+    ],
+    "suggestions": [
+      "Replace the announced omission with a neutral specimen and processing record whose interpretation actually distinguishes completion of existing tissue from resampling; retain necessary adequacy findings.",
+      "Use equally neutral wording for specialist involvement across all options.",
+      "Build a supported, credible competing diagnostic error. If the only remaining decision is to finish an explicitly unfinished test, retain it only under an accepted basic-skill role."
+    ]
+  },
+  {
+    "id": "question.pediatric-gi-abdominal-wall.hscr-postpullthrough-obstruction.v2",
+    "nodeId": "node.pediatric-gi-abdominal-wall.hscr-postpullthrough-obstruction.v2",
+    "title": "Post-pull-through obstruction: anatomy before functional testing",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "No contrast assessment of the reconstructed bowel has been performed during this symptomatic period.",
+        "why": "The stem explicitly names the missing investigation, and 'contrast enema' appears only in the key. A reader can select the announced missing test without interpreting ganglionated samples or the postoperative course."
+      }
+    ],
+    "fairness": [
+      "Rectal examination and contrast assessment of postoperative anatomy are defensible before assigning these symptoms to a functional mechanism. Ganglion cells at sampled sites do not demonstrate an anatomically patent reconstruction. No confident clinical error is identified in that explanation.",
+      "The chronology is coherent: initial spontaneous stools precede acquired evacuation difficulty. The options share rectal examination and compare additional investigations at the same stage.",
+      "The intended anatomy-versus-physiology distinction is high yield, but the explicit absent-contrast sentence bypasses it. Deleting the histology record still leaves an obvious wording path to the answer; the extra report currently does not establish two consequential inferences.",
+      "Standalone case: it supplies the operation, elapsed interval, prior function and current symptoms without requiring another Ava question. No later part is present."
+    ],
+    "suggestions": [
+      "Remove the named-test omission cue while retaining a neutral account of what the current assessment actually established.",
+      "Make a clinically supported observation discriminate postoperative mechanical disease from a plausible functional evaluation, rather than asking the learner to complete a list of investigations.",
+      "Keep the initial improvement and subsequent deterioration; do not replace the chronology with an authored diagnosis of mechanical obstruction."
+    ]
+  },
+  {
+    "id": "question.pediatric-gi-abdominal-wall.nec-fixed-loop-context.v1",
+    "nodeId": "node.pediatric-gi-abdominal-wall.nec-fixed-loop-context.v1",
+    "title": "NEC: persistent loop during improving clinical course",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The persistent loop creates a credible temptation to operate. The learner must assess its significance alongside improving abdominal findings and decreasing organ support, then choose continued monitored medical treatment rather than an invasive intervention.",
+      "The absence of free gas alone would not settle the decision. The concurrent clinical trajectory makes continued nonoperative treatment the best offered plan. No confident clinical inaccuracy is identified.",
+      "The key is somewhat longer than the two procedure labels, but not an explanatory or comprehensiveness outlier. Improvement is decision-critical evidence, not merely an authored statement that surgery is unnecessary.",
+      "Standalone case: the known NEC diagnosis, current treatment and relevant serial findings are supplied. The explanation appropriately calls for close reassessment rather than treating the fixed loop as harmless."
+    ],
+    "suggestions": [
+      "Preserve both the concerning radiographic observation and the improving clinical trajectory. Do not turn this into the false rule that absence of pneumoperitoneum excludes a surgical indication.",
+      "Keep difficulty qualitative and retain clinician review of the exact clinical course; this editorial PASS is not clinical sign-off."
+    ]
+  },
+  {
+    "id": "question.pediatric-gi-abdominal-wall.gastroschisis-domain-intolerance.v1",
+    "nodeId": "node.pediatric-gi-abdominal-wall.gastroschisis-domain-intolerance.v1",
+    "title": "Gastroschisis: reduction-related physiological compromise",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The reversible changes during reduction establish that returning all the bowel, rather than simply the choice of fascial suture, produces compromise. The resident then distinguishes gradual reduction from two methods of primary closure.",
+      "The sutureless option is a credible competing error: changing the covering technique does not necessarily resolve the intolerance to full reduction already demonstrated. Staged reduction with a silo is the best supported offered plan.",
+      "No confident clinical inaccuracy is identified. The explanation does not invent a pressure threshold or require one to infer the relevant physiology.",
+      "Repeated 'Primary' in two alternatives does not independently select the key without understanding the reduction response. All choices are comparably concise operative plans, and the raw anatomical description is appropriate.",
+      "Standalone case: baseline physiology, trial response and reversal are supplied. No previous diagnosis task or feedback is needed."
+    ],
+    "suggestions": [
+      "Preserve the improvement when the reduction is released; it makes the causal inference consequential.",
+      "Keep the explanation focused on intolerance of reduction rather than implying that every gastroschisis requires a silo or that sutureless closure is generally inappropriate."
+    ]
+  },
+  {
+    "id": "question.pediatric-gi-abdominal-wall.omphalocele-pulmonary-boundary.v2",
+    "nodeId": "node.pediatric-gi-abdominal-wall.omphalocele-pulmonary-boundary.v2",
+    "title": "Large omphalocele: pulmonary compromise and timing of reduction",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Protect the sac' does not name a specific nonoperative sac-care approach, whereas the competing options name reduction and closure strategies. The immediate defer-reduction decision is clear, but treatment specificity is uneven."
+    ],
+    "cues": [
+      {
+        "phrase": "Protect the sac and defer reduction during stabilization",
+        "why": "Only the key explicitly offers protection and stabilization. Against a worsening respiratory course, it gains a generic safety advantage before the resident evaluates whether even staged reduction is inappropriate."
+      },
+      {
+        "phrase": "Begin staged reduction now / Begin complete reduction now",
+        "why": "Both distractors emphasize immediate intervention while the key receives the reassuring stabilization qualifier. This asymmetry weakens the otherwise meaningful delayed-versus-staged comparison."
+      }
+    ],
+    "fairness": [
+      "The intact sac, limited domain and worsening respiratory/pulmonary vascular findings support initial nonoperative management. No confident clinical inaccuracy is identified in the intended choice.",
+      "There is a legitimate two-step objective: interpret the respiratory and echocardiographic course, then distinguish deferring reduction from the tempting compromise of gradual reduction. That is a moderate, high-yield decision once the options are neutralized.",
+      "The explanation attributes a subgroup preference to ERNICA. Its exact strength and applicability were not independently source-verified in this offline, candidate-text review; clinical sign-off should confirm that wording rather than treating this review as guideline verification.",
+      "Standalone case: the defect, sac condition, respiratory trajectory and current decision stage are supplied. There is no preceding item that reveals the answer."
+    ],
+    "suggestions": [
+      "Place shared neonatal stabilization and sac protection in common context, then compare equally neutral and concrete reduction/closure strategies.",
+      "Do not delete the pulmonary findings to remove the cue; they establish the clinical reason to prefer delay over a silo or other staged reduction.",
+      "Remove repeated liver-location information between the update and exhibit. Preserve a clear statement of sac integrity and abdominal domain.",
+      "Have the named clinician confirm the exact delayed-versus-immediate-staged preference and qualify guideline wording to match its supported strength."
+    ]
+  },
+  {
+    "id": "question.pediatric-gi-abdominal-wall.meconium-resuscitated-boundary.v2",
+    "nodeId": "node.pediatric-gi-abdominal-wall.meconium-resuscitated-boundary.v2",
+    "title": "Meconium obstruction: incomplete but progressive contrast decompression",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The microcolon/ileal pellet pattern and contrast passage establish the relevant obstruction pattern. The learner must then distinguish useful partial response from completed decompression or treatment failure and apply the current complication assessment.",
+      "Another supervised therapeutic contrast attempt is the best supported offered plan. Persistent pellets and bilious drainage make passive observation a less adequate plan; anatomical progress and maintained physiology make immediate operative decompression less compelling.",
+      "No confident clinical inaccuracy is identified. The explanation appropriately avoids a universal number of attempts or mandatory interval. It should not be read as permission to repeat a hyperosmolar intervention without continued fluid management and monitoring.",
+      "The complication negatives are clinically necessary eligibility information. Although they weaken surgery, residual obstruction still makes escalation a credible error after an incompletely successful first attempt. There is no decisive nonmedical phrase match or option-length outlier.",
+      "Standalone case: initial treatment, procedure findings and postprocedure condition are supplied without relying on a preceding diagnosis or treatment answer."
+    ],
+    "suggestions": [
+      "Retain residual obstruction as well as procedural progress; either observation alone would flatten the decision.",
+      "Keep the explanation explicit that the repeat procedure is supervised and accompanied by continued resuscitation/monitoring. Do not add unverified dosing, attempt counts or intervals.",
+      "Do not infer cystic-fibrosis confirmation from this vignette or add it as an established diagnosis without separate evidence."
+    ]
+  },
+  {
+    "id": "question.pediatric-gi-abdominal-wall.wilms-cog-initial-plan.v2",
+    "nodeId": "node.pediatric-gi-abdominal-wall.wilms-cog-initial-plan.v2",
+    "title": "Wilms tumor: high caval extension under a COG pathway",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The imaging defines continuous venous extension and its upper extent. The resident must apply that extent as an exception to the usual upfront nephrectomy approach, then preserve the histology-before-chemotherapy sequence under the explicitly stated COG framework.",
+      "Biopsy followed by preoperative chemotherapy and reassessment for resection is the defensible best offered sequence. Immediate nephrectomy with thrombectomy is a credible default-pathway error; chemotherapy before tissue diagnosis imports a different pathway. No confident clinical inaccuracy is identified from the supplied text.",
+      "The exact hepatic-vein-level boundary and biopsy requirement are protocol-specific clinical claims. They were not freshly source-verified under the no-network restriction; this editorial assessment does not independently certify current COG criteria.",
+      "Naming Wilms tumor and the protocol is legitimate for a management-exception task. The key is not uniquely qualified or longer in a way that selects it; all choices are concrete tumor-directed sequences.",
+      "Standalone case: anatomy and protocol are present without another Noah item. Do not compose this directly with the separate upfront-nephrectomy node without supplying a coherent treatment interval and operative context."
+    ],
+    "suggestions": [
+      "Preserve the exact thrombus extent and the named pathway; making either vague would create a real fairness problem.",
+      "Obtain named clinical confirmation of the exact protocol boundary and histologic sequence before promotion from needs_clinician_review.",
+      "Do not add unrelated metastatic findings or a diagnosis-recognition task merely to increase difficulty; the exception and treatment sequence already create the consequential reasoning."
+    ]
+  },
+  {
+    "id": "question.pediatric-gi-abdominal-wall.wilms-normal-node-sampling.v2",
+    "nodeId": "node.pediatric-gi-abdominal-wall.wilms-normal-node-sampling.v2",
+    "title": "Wilms staging: fat-only submission versus actual nodal sampling",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The surgeon is still operating, but the pathologist has characterized the entire submitted fragment. Clarify whether this is an intraoperative pathology consultation; an ordinary final histology report would not be available before closure.",
+      "The task is otherwise complete and the specimen wording distinguishes the labelled site from the tissue actually present."
+    ],
+    "cues": [
+      {
+        "phrase": "the entire submitted fragment as mature adipose tissue and small vessels",
+        "why": "The only submitted material is explicitly not described as lymph-node tissue, while the task specifically requests a regional-node plan. Matching the missing tissue category to 'node samples' largely supplies the answer without a Wilms-specific inference."
+      },
+      {
+        "phrase": "Submit hilar and periaortic node samples / Close without further regional-node sampling / Perform formal retroperitoneal node clearance",
+        "why": "The options contrast targeted completion with doing nothing and a much more extensive procedure. In combination with the announced specimen omission, the middle-intensity choice is conspicuously sensible. This is a structural cue, not a claim that moderate treatment is generally correct."
+      }
+    ],
+    "fairness": [
+      "Additional actual regional-node samples are the best offered action. A fat-only negative specimen cannot establish nodal status, and normal appearance does not replace sampling. No confident clinical error is identified in that central explanation.",
+      "The intraoperative availability of the reported tissue characterization is underexplained, not proven impossible. It needs an explicit realistic workflow rather than an assumption that definitive postoperative pathology is immediately available.",
+      "Wilms nodal staging is high yield, but this construction reduces it to completing an obviously missing sample. Knowing that regional staging requires lymph-node tissue settles the item; there is no close second consequential decision.",
+      "Standalone case: it provides its own operative context. The shared Noah name does not establish continuation from the high-caval-extension case, and no such treatment continuity should be inferred."
+    ],
+    "suggestions": [
+      "Specify the nature and timing of the intraoperative pathology communication if that is the intended workflow; have a clinician confirm its realism.",
+      "Use a supported, clinically consequential staging or sampling distinction with credible same-stage alternatives rather than a plainly absent sample versus no action or formal clearance.",
+      "Retain the difference between sampled tissue and labelled specimen location. Do not solve the cue problem by calling a fat-only specimen adequate or by withholding necessary tissue findings.",
+      "If retained as basic specimen-adequacy teaching, seek explicit acceptance of that purpose instead of describing it as difficult two-step resident reasoning."
+    ]
+  },
+  {
+    "id": "question.pediatric-gi-abdominal-wall.preterm-hernia-timing.v1",
+    "nodeId": "node.pediatric-gi-abdominal-wall.preterm-hernia-timing.v1",
+    "title": "Preterm infant hernia: respiratory risk and repair timing",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The learner must establish that this is a currently reducible hernia without an acute incarceration episode, then weigh ongoing respiratory disease against the risk of waiting. Planned repair after neonatal hospitalization is the best supported offered plan in this specific context.",
+      "Repair before discharge is a credible competing plan. Surveillance for spontaneous resolution is a weaker alternative, but represents confusing an inguinal hernia with a self-resolving pediatric groin condition; it does not create a second defensible key.",
+      "Reliable follow-up and warning-sign education favor the delayed strategy, but are legitimate safety conditions for that choice rather than unnecessary permission. Removing them would weaken the stated basis for waiting.",
+      "No confident clinical inaccuracy is identified. The explanation appropriately avoids an exact age threshold, indefinite observation or a universal delay rule. The precise contemporary timing evidence was not freshly verified in this offline review.",
+      "Standalone case: gestational age, current chronological age, reducibility, respiratory support and follow-up context are supplied. The arithmetic is coherent, and no preceding hernia-diagnosis item is needed."
+    ],
+    "suggestions": [
+      "Retain the distinction between a planned deferred operation and surveillance for spontaneous resolution.",
+      "Keep respiratory status, reducibility and follow-up reliability together when using this exact timing key; do not generalize it to an incarcerated hernia or unreliable access to reassessment.",
+      "Editorial PASS does not resolve any separate clinical timing hold or grant clinical approval. Preserve the exact version pending the named clinician's decision."
+    ]
+  }
+]

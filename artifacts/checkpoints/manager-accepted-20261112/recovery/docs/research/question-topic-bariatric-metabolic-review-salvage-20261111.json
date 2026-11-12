@@ -1,0 +1,88 @@
+[
+  {
+    "id": "question.topic.bariatric-metabolic.diet-response-drug-stage.v2",
+    "nodeId": "node.topic.bariatric-metabolic.diet-response-drug-stage.v2",
+    "title": "Choose medication after reproducible acarbose intolerance",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Change to short-acting subcutaneous octreotide",
+        "why": "Minor specificity asymmetry: this option specifies formulation and route, whereas the others use 'acarbose-based medication plan' and 'oral diazoxide-based plan'. It is not the longest choice, and the qualifiers distinguish an actual treatment formulation rather than explain why it wins. This does not provide a reliable knowledge-free key; parallel wording could nevertheless be cleaner."
+      }
+    ],
+    "fairness": [
+      "The standalone presentation identifies Maya Benton, age 45, female, and her Roux-en-Y history. The current update supplies established post-bariatric hypoglycemia, ongoing measured symptomatic lows and dietary treatment; the exhibit supplies the entire medication course. 'At a later follow-up' has sufficient local context and requires no missing prior answer or feedback. There is only one scored node in this salvage case.",
+      "Short-acting subcutaneous octreotide is the best offered next medication: the record supports clinically consequential acarbose intolerance despite efficacy. Continued acarbose mistakes fewer lows for an acceptable overall response; diazoxide is the credible competing replacement but occupies a later treatment position in the guideline sequence reflected here. No stated patient constraint makes it preferable to the somatostatin-analogue option.",
+      "Two consequential steps survive: interpret improvement in hypoglycemia alongside withdrawal/reintroduction evidence of adverse effects, then select the next medication stage. The diagnosis supplied in the update is legitimate background for this management task. The visible record does not label the patient acarbose-intolerant before the choice.",
+      "A nonmedical reader can reasonably reject continuation after 'prevent usual activities' and 'The same activity-limiting gastrointestinal symptoms return', but cannot thereby choose between octreotide and diazoxide. Those findings are necessary treatment-tolerability evidence, not gratuitous distractor exclusions. No component-convergence, rhetorical absolute or key-only task-word cue selects the replacement drug.",
+      "This is high-yield postoperative metabolic management, with moderate rather than hard difficulty: the dechallenge/rechallenge relationship is explicit and the remaining discrimination is drug sequencing. Changing the adverse-effect course to tolerable symptoms would make continuation more credible; intolerance or unsuitability of the intervening treatment stage would strengthen diazoxide.",
+      "No confident clinical inaccuracy identified. This offline review did not independently verify current guideline wording, comparative evidence or drug sequencing. PASS is an editorial judgment, not clinical approval; the exact version remains needs_clinician_review. The explanation appropriately avoids inventing a dose or universal adverse-effect cutoff."
+    ],
+    "suggestions": [
+      "No blocking standalone-context repair. Retain both the efficacy and tolerability observations; deleting either would weaken the intended competing interpretation.",
+      "Optional wording polish: use direct drug-plan labels for all choices, such as 'Continue acarbose with meals', 'Change to oral diazoxide', and the existing octreotide formulation. Do not add unsupported dosing detail merely to equalize length.",
+      "Remove the author-facing final explanation sentence beginning 'No dose, maximum trial count' if revising feedback; it discusses construction of the item rather than teaching the clinical decision. Confirm exact drug sequencing during Melissa Rowland's clinical sign-off."
+    ]
+  },
+  {
+    "id": "question.topic.bariatric-metabolic.refractory-reflux-revision.v2",
+    "nodeId": "node.topic.bariatric-metabolic.refractory-reflux-revision.v2",
+    "title": "Select reflux-monitoring modality and medication state",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Nora Ellis, age 43, female, is presented in clinic after sleeve gastrectomy. The update supplies the prior grade C esophagitis, actual current PPI use, continuing symptoms and current endoscopic anatomy. These establish the local chronology without requiring the former medication-timing companion. This salvage case has one scored node, with no later-part dependency.",
+      "Ambulatory impedance-pH monitoring during PPI treatment is the defensible best offered protocol. Historical grade C esophagitis establishes GERD, while the cause of current symptoms during acid suppression remains unresolved. The resident must infer established disease rather than an unproven diagnosis, then select a protocol capable of relating ongoing symptoms to reflux during treatment.",
+      "Off-treatment pH or impedance-pH testing addresses a different diagnostic state. On-treatment pH-only monitoring is a plausible near-miss but lacks impedance's ability to assess reflux events beyond acid exposure. The alternatives are distinct, clinically recognizable monitoring protocols rather than unrelated or deliberately absurd investigations.",
+      "The four labels form a balanced matrix: each modality and each medication state occurs twice. 'Ambulatory impedance-pH monitoring during PPI treatment' cannot be uniquely assembled by majority-component convergence. 'pH-only' is a technical modality distinction appearing in two choices, not a rhetorical absolute. The task does not supply 'nonacid', 'impedance' or the required medication state.",
+      "The statement 'The team is evaluating whether the present symptoms remain reflux-related' defines the investigation's purpose but does not resolve either protocol component. Grade C esophagitis is decision-critical evidence, not a diagnosis-label giveaway in this test-selection task. Prior PPI use is likewise necessary context rather than an unfair wording match.",
+      "High-yield foregut workup with two consequential protocol decisions and moderate difficulty. A patient with unproven GERD would change the on/off-treatment decision; simply remembering that reflux warrants pH testing is insufficient to choose the complete key here.",
+      "The duration of optimized PPI use and current mucosal healing are not fully specified. This limits conclusions about definitive medical failure or readiness for an operation, but does not create an equally good offered monitoring protocol for the represented persistent on-treatment symptom question. Do not infer an operative indication from this node.",
+      "No confident clinical inaccuracy identified. The exact ACG attribution and current recommendations were not freshly verified because this review is offline. Editorial PASS does not confer clinical approval; the exact version remains needs_clinician_review."
+    ],
+    "suggestions": [
+      "No blocking repair. Preserve the objective prior esophagitis finding, actual dosing/adherence observations and balanced four-protocol option set.",
+      "Optional brevity improvement: omit 'Her BMI is 38 kg/m²' from a future authorized revision of this isolated monitoring question; it does not determine the monitoring protocol. Retain it only if it serves another visible decision.",
+      "Replace the author-facing explanation ending 'this item does not force an operation from an adequacy label' with a brief clinical statement that monitoring informs subsequent treatment. If a later question asks whether to escalate or operate, supply its own supported treatment-course and operative criteria."
+    ]
+  },
+  {
+    "id": "question.topic.bariatric-metabolic.spontaneous-sample-before-label.v2",
+    "nodeId": "node.topic.bariatric-metabolic.spontaneous-sample-before-label.v2",
+    "title": "Choose sampling that characterizes the actual symptomatic spells",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "the separately timed glucose records",
+        "why": "Mild pre-answer scaffolding: it directs attention to the timing mismatch that the resident should notice in the table. It does not itself establish whether the overnight readings are valid or distinguish spontaneous-event sampling from glucose provocation. The item retains a medical decision, but deleting 'separately timed' would leave the observations to do more of the work."
+      }
+    ],
+    "fairness": [
+      "Maya Benton, age 45, female, has a complete standalone presentation, bypass history and symptom chronology. The update excludes insulin and secretagogue use, and the exhibit contains all measurements needed for this investigation choice. No previous diagnostic confirmation, answer or treatment response is required. This is a single-node salvage case.",
+      "Venous biochemical sampling during a typical spontaneous spell is the best offered investigation. The postmeal symptoms have not been sampled; the low overnight sensor readings occurred without symptoms and conflict with simultaneous finger-stick values. A normal asymptomatic clinic glucose does not characterize the daytime episodes.",
+      "The first inference is that these records do not establish a fasting hypoglycemic syndrome or document the symptomatic postmeal event. The consequential next choice is how to obtain relevant biochemical evidence: spontaneous-event sampling rather than a fasting workup driven by sensor lows or a glucose-load challenge. The latter remains a plausible resident error even after recognizing the timing mismatch.",
+      "The repeated asymptomatic nighttime readings and normal simultaneous finger-stick values weaken the fasting distractor through medically relevant evidence. Their presence is fair: removing the corroborating measurements would leave a different unresolved concern. The additional normal clinic measurement is less essential but reinforces the distinction between sampling while well and sampling during the actual spell.",
+      "All three options are investigations with venous biochemical sampling and comparable length. 'during a typical spontaneous spell' has an intuitive advantage, but the labels alone do not establish why a standardized oral challenge is inferior. There is no uniquely long explanatory key, rhetorical absolute, diagnosis disclosure, component convergence or key-only technical term copied from the task.",
+      "This is high-yield evaluation of suspected post-bariatric hypoglycemia and interpretation of discordant glucose evidence. Difficulty is at the lower end of moderate, not hard: the timestamps and paired measurements make the first inference relatively accessible, while avoiding inappropriate provocative testing still requires knowledge. Difficulty is a qualitative prediction, not measured performance.",
+      "The explanation correctly avoids claiming that one low glucose proves the cause of the spells. 'Venous biochemical sampling' leaves the panel unspecified, but this is equally true across the options and does not make the sampling-strategy decision ambiguous. This node does not test the composition of a critical sample or immediate treatment of an active emergency.",
+      "No confident clinical inaccuracy identified. Current PBH diagnostic guidance was not freshly verified offline, and this review does not establish a specific glucose threshold or a universal sampling protocol. Editorial PASS leaves the exact draft needs_clinician_review."
+    ],
+    "suggestions": [
+      "No blocking context repair. Optional cue reduction: change the update's second sentence to 'Her meal/symptom diary and glucose records are shown below', or remove that table-announcement sentence entirely. Keep the actual timestamps and simultaneous measurement comparisons.",
+      "Preserve the explanation's separation of documenting hypoglycemia from establishing its etiology. If feedback is expanded, describe the missing symptom-glucose relationship and confirmation through symptom resolution without inventing a diagnostic threshold or implying that treatment should wait for sampling.",
+      "Confirm the exact diagnostic-test recommendation during clinical sign-off. The requested scope contains three salvage nodes; kept, retired, parked, held and other non-salvage records were excluded from verdicts. Runtime wait displays and implementation were not assessed from these six permitted content fields."
+    ]
+  }
+]

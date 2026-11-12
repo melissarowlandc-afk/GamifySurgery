@@ -1,0 +1,118 @@
+[
+  {
+    "id": "question.critical-shock-resuscitation.peripheral-norepinephrine.v2",
+    "nodeId": "node.critical-shock-resuscitation.peripheral-norepinephrine.v2",
+    "title": "Initial norepinephrine delivery through available vascular access",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The named patient, age/sex, short complaint and immediate delivery task are clear. There is no material chronology ambiguity in this first node.",
+      "The passive-leg-raise and ventricular-contraction observations do not distinguish the offered plans: every option already chooses norepinephrine. They add reading without making this route decision more demanding."
+    ],
+    "cues": [
+      {
+        "phrase": "A saline flush produces new swelling around the insertion site.",
+        "why": "Against a left line that flushes easily without swelling, this makes the right-line option visibly malfunctioning even to a reader with little clinical knowledge. It is a necessary safety observation if this line is described, but an obviously unusable line is a weak resident-level competitor."
+      },
+      {
+        "phrase": "A new internal jugular line is being prepared.",
+        "why": "Together with the option 'Infuse norepinephrine after internal jugular cannulation', this explicitly contrasts a future route with the one usable route already available. The severe-current-illness versus waiting pattern helps identify the key without interpreting the flow assessment. This is needed timing context, not a recommendation to hide access availability."
+      }
+    ],
+    "fairness": [
+      "Infusing norepinephrine through the left forearm cannula is the single defensible best offered immediate plan: severe ongoing hypoperfusion makes delay undesirable, while the right cannula has new swelling with flushing. The explanation appropriately adds site monitoring and continuing central preparation.",
+      "No confident clinical inaccuracy was identified in the supplied text. This is an offline editorial assessment, not verification of current guidelines or clinical approval; the exact version remains needs_clinician_review.",
+      "The practical rule is high yield, but the item does not deliver two substantial consequential inferences. Recognizing an obviously problematic cannula supplies a trivial elimination; the remaining discrimination is the familiar peripheral-start-versus-wait rule.",
+      "The subsequent source-control completion and increasing norepinephrine requirement follow coherently. This node's Explanation does not disclose the later vasopressin answer."
+    ],
+    "suggestions": [
+      "Replace the obviously infiltrated-route distractor with a clinically credible competing delivery or resuscitation plan at the same stage. Preserve necessary access and urgency observations; do not manufacture difficulty by concealing patency or adding unsupported catheter specifications.",
+      "Make the actual response findings consequential to the options, so the learner must interpret a competing physiologic or delivery problem before selecting the route or plan. Otherwise remove the unused flow-assessment detail.",
+      "If a fair moderate comparison cannot be supported, park this item or seek explicit acceptance as a basic safety item. Its present educational value does not establish the requested resident-level two-step difficulty."
+    ]
+  },
+  {
+    "id": "question.critical-shock-resuscitation.vasopressin-escalation.v2",
+    "nodeId": "node.critical-shock-resuscitation.vasopressin-escalation.v2",
+    "title": "Persistent low pressure with substantial flow during norepinephrine escalation",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Adding vasopressin is the single defensible best offered adjustment. The near-unchanged stroke volumes during passive leg raising do not support another preload-directed bolus, and current cardiac output of 7.6 L/min does not support choosing dobutamine for a demonstrated low-flow problem. Persistent low pressure despite increasing norepinephrine favors additional vasopressor support among these choices.",
+      "Two consequential steps remain: integrate pressure, output and reversible preload response to identify the dominant treatment problem, then choose the matching escalation. The observations are not replaced with a diagnosis label. Changing the flow or preload-response pattern would change the ranking.",
+      "No unique wording match, length outlier, convergence pattern, rhetorical absolute or pre-answer teaching sentence identifies the key. The three choices are concrete resuscitation adjustments. Mentioning increasing norepinephrine is legitimate decision information; it does not itself eliminate the fluid and inotrope competitors without clinical knowledge.",
+      "The isolated task is complete with the shared presentation, update and exhibit. Source control progressing from under way to complete is coherent, and antibiotic treatment clearly continues. The earlier route explanation supplies neither this key nor its pressure-versus-flow reasoning. Earlier unchanged preload response makes the fluid distractor less tempting in sequence, but the fresh measured output and pressure course still support a distinct decision.",
+      "For sequence review only, the preserved following inotrope node explicitly introduces later deterioration, new low cardiac index and diffuse weak contraction after pressure is maintained. This is a coherent changed state, not a contradiction of the current output. The current Explanation does not name the next keyed treatment. No new verdict is assigned to that preserved node.",
+      "The concept is high-yield surgical critical-care physiology and vasoactive management. Moderate is a qualitative prediction, not a measured result; this is not a hard question for a resident who can interpret the supplied hemodynamics.",
+      "No confident clinical inaccuracy was identified. The unspecified norepinephrine dose does not create a competing correct answer within this option set; this review does not establish a universal dose threshold or rule for choosing vasopressin over further norepinephrine titration. Offline editorial PASS is not source verification or clinical approval; retain needs_clinician_review."
+    ],
+    "suggestions": [
+      "Preserve the measured flow, reversible response and support trajectory together. Do not replace them with an authored vasodilatory-shock conclusion or add an unsupported dose cutoff.",
+      "Retain the explicit later-state transition before the preserved inotrope question. Keep any expanded feedback from naming its next answer."
+    ]
+  },
+  {
+    "id": "question.critical-shock-resuscitation.validate-pressure-measurement.v2",
+    "nodeId": "node.critical-shock-resuscitation.validate-pressure-measurement.v2",
+    "title": "Arterial pressure discrepancy and transducer reference height",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The clinical discrepancy, MAP goal and chronology are explicit. The pressure-system description is understandable but cumbersome: the separate-reference-tube negative introduces a specialized configuration distinction without helping distinguish the three offered actions beyond specifying conventional leveling.",
+      "'Lower the pressure transducer to the reference mark' is internally incompatible with the stated heights. A transducer at 90 cm cannot be lowered to a mark at 120 cm. This is an option-construction defect rather than a clinically plausible directional error."
+    ],
+    "cues": [
+      {
+        "phrase": "Right-atrial reference mark 120 cm. Transducer stopcock 90 cm.",
+        "why": "Simple spatial arithmetic makes 'Raise the pressure transducer to the reference mark' the only possible move to that mark and eliminates the lowering option without medical knowledge. The resident need not interpret the blood-pressure discrepancy to narrow the question to raising versus zeroing."
+      },
+      {
+        "phrase": "Which pressure-system action should precede",
+        "why": "The task already selects equipment correction before drug adjustment. Together with the explicit geometry, it supplies the management-sequencing inference the clinical observations should have made consequential."
+      }
+    ],
+    "fairness": [
+      "Raising the transducer to the right-atrial reference is the single best offered action. The observed lower stopcock position is consistent with a falsely high displayed pressure; zeroing at that same position does not remove the hydrostatic offset. No new numerical correction rule or threshold is needed to resolve the item.",
+      "No confident clinical inaccuracy was identified in the key or Explanation. The problem is difficulty and distractor plausibility, not a competing correct answer. Offline assessment does not verify sources or confer clinical approval; retain needs_clinician_review.",
+      "Delete the arterial/cuff values, MAP goal and current examination and the same action still follows from the reference heights and equipment-directed task. The question mainly tests a single leveling-versus-zeroing rule, not interpretation followed by a consequential resuscitation choice.",
+      "The preceding improving-perfusion encounter and the explicitly later discrepant measurement are coherent. This node supplies its own current examination, goal, readings and arrangement, so it stands alone. The prior explanation does not disclose transducer leveling."
+    ],
+    "suggestions": [
+      "Replace the geometrically impossible lowering-to-a-higher-mark option with a credible competing troubleshooting or treatment plan. Keep choices comparable in scope and avoid wording that exposes the mistake before the physiology is considered.",
+      "Use a neutral next-action task and make the discrepancy determine whether to change vasoactive support or correct/reassess the measurement. Require the pressure/perfusion observations to change the decision rather than decorating a leveling question.",
+      "Retain enough information to specify the actual transducer arrangement, but express it more economically if possible. Do not remove decision-critical configuration information merely to hide the answer, invent calibration findings or add unsupported cutoffs.",
+      "If this remains a single-rule equipment exercise, seek explicit acceptance of a basic monitoring purpose or park it instead of labeling it moderate or two-step."
+    ]
+  },
+  {
+    "id": "question.critical-shock-resuscitation.echo-for-persistent-shock.v2",
+    "nodeId": "node.critical-shock-resuscitation.echo-for-persistent-shock.v2",
+    "title": "Next structural assessment after limited transthoracic acquisition",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "TEE is the single defensible best offered next investigation for this persistently unstable patient with important cardiac structures unexamined. Contrast-enhanced TTE addresses a different limitation from failure to obtain the needed acoustic views; pulmonary artery catheterization could supply useful physiology but does not resolve the missing structural assessment as directly.",
+      "Two consequential steps are present: recognize that the useful local left-ventricular observation does not complete assessment of the high-filling-pressure, nonresponsive circulation; then distinguish failed acoustic access from a border-definition problem and select a suitable structural approach. Confusing those acquisition limitations makes contrast TTE a credible near miss.",
+      "The explicitly unacquired views and unexamined structures are necessary adequacy information, not an unsupported author diagnosis. They give a medically knowledgeable reader the discriminator but do not provide a nonmedical unique phrase match: both echo choices overlap with the prior examination, and none of the labels explains its own superiority. There is no portability/availability permission unique to the key or option-length cue favoring it.",
+      "The presentation identifies a named 54-year-old woman, the short complaint matches the current state, and the complete task specifies the decision after the reported examination. This is a standalone node with no preceding-answer contamination. The Explanation appropriately preserves the useful local observation rather than declaring the entire prior examination worthless.",
+      "The high-yield construct is adequate assessment of an unresolved shock mechanism and selection of the next investigation, not acquisition of specialized TEE views. Moderate is a qualitative prediction; the explicitly failed views make this more straightforward than a hard mixed-shock case.",
+      "No confident clinical inaccuracy was identified in the supplied text. The limited view cannot establish global left-ventricular function, exclude tamponade or diagnose a specific right-sided mechanism, and the Explanation does not make those claims. The exact described acquisition pattern and clinical ranking still require named clinician review. No current source verification was performed; editorial PASS does not change needs_clinician_review."
+    ],
+    "suggestions": [
+      "Preserve the distinction between valid local information and structures not assessed; do not replace the acquisition observations with a diagnostic conclusion.",
+      "Keep the contrast-TTE and invasive-hemodynamic alternatives, since their differing capabilities provide the meaningful discrimination. Do not imply that TEE is universally superior after every limited TTE or that the supplied pressures establish a specific diagnosis."
+    ]
+  }
+]

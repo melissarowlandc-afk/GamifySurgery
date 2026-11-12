@@ -1,0 +1,100 @@
+[
+  {
+    "id": "H1-01",
+    "title": "Interpret a groin neck and a partial-wall bowel threat",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "medial to the common femoral vein",
+        "why": "A reader without anatomical knowledge can match 'femoral' to both 'Femoral hernia' options and discard both 'Indirect inguinal hernia' options. This does not uniquely identify the key, but it bypasses the intended anatomical inference. The landmark is clinically necessary; this is not a recommendation to conceal it."
+      },
+      {
+        "phrase": "Compression / The protruding wall remains at the opening.",
+        "why": "The plain-language report suggests pushing has already failed, making 'manual reduction' look like repeating an unsuccessful action. Diagnostic compression is not necessarily a formal therapeutic reduction attempt, but the wording permits that nonmedical elimination strategy. Combined with the femoral word match, it points toward the complete key without the intended interpretation of bowel perfusion."
+      },
+      {
+        "phrase": "Femoral hernia; operative exploration / Femoral hernia; manual reduction / Indirect inguinal hernia; operative exploration / Indirect inguinal hernia; manual reduction",
+        "why": "Convergence attack does NOT select a key: each component occurs twice and every combination occurs once. Length, grammar and specificity are comparable. No uniquely comprehensive option, rhetorical absolute, pre-answer diagnostic label or teaching sentence identifies the answer. The balanced matrix does not cure the separate stem shortcuts."
+      }
+    ],
+    "fairness": [
+      "Reviewed the after fields of question.groin-hernia.ultrasound-type-and-intervention.v2, node.harden1.groin-wall-threat.20261110. Current update is null. H1-02 contains the identical displayed candidate and is not a second executable question. There are no held, parked or dropped records in this packet. Key markers and author explanations were not used to solve the item.",
+      "One defensible best answer among the supplied choices: femoral hernia with operative exploration. The sac-neck relationship supports the anatomical classification. Tenderness, persistent protrusion and absent mural Doppler signal with a positive adjacent-bowel comparison support concern for threatened bowel and make manual reduction an inferior choice here. The task asks for a hernia-directed intervention, so omission of a full resuscitation plan does not create a competing answer.",
+      "The indirect-inguinal alternatives conflict with the stated neck location. Femoral hernia with manual reduction is the nearest clinical competitor, but the supplied perfusion findings strongly disfavor it. Continued stool passage and absence of vomiting do not establish bowel viability. Absent Doppler signal supports concern; it should not be treated as standalone proof of irreversible necrosis. No confident clinical inaccuracy identified in the displayed fields.",
+      "The owner's ultrasound-to-hernia-type request remains resolved: the task explicitly requires a hernia type derived from the targeted ultrasound findings. The exhibit does not literally name the diagnosis.",
+      "PGY-2/3 prediction: easy. The intended components are anatomical classification and selection of an intervention for potentially compromised bowel. As displayed, the first can be bypassed by word matching, while the second is a familiar danger-to-exploration rule with a weak remaining competitor. The partial-wall configuration explains why passage can continue, but exploration remains the obvious choice without that row. Two answer components therefore do not establish two consequential reasoning steps actually required by this version.",
+      "This is an offline editorial assessment of the supplied visible text, not a new source verification or clinician approval. No runtime rendering, option-order or sequence behavior was tested; those cannot be established from these fields."
+    ],
+    "suggestions": [
+      "Retain the named anatomical landmarks and perfusion observations needed for a fair key; do not make the case harder by hiding suspected bowel compromise or adding unsupported diagnostic thresholds.",
+      "For a genuine hardening pass, make the anatomical interpretation change the intervention decision instead of appending classification to an independently obvious emergency choice. Develop a clinician-supported case with a credible competing plan, then identify the exact raw observation that changes the plan. Retain an explicit hernia-type task so the owner's request stays resolved.",
+      "Clarify the ultrasound compression observation as an acquisition finding rather than an implied completed treatment attempt. Re-attack the revised case with the Doppler and bowel-configuration rows hidden: the intended management answer should not follow merely from a suggestion that reduction already failed.",
+      "If the intended objective is instead recognition of a threatened partial-wall hernia despite preserved passage, seek explicit acceptance as an easy safety-recognition item. Do not describe this exact version as independently hardened to moderate difficulty. Any repair must be reviewed as a new exact version."
+    ]
+  },
+  {
+    "id": "H1-02",
+    "title": "Interpret a groin neck and a partial-wall bowel threat",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "medial to the common femoral vein",
+        "why": "The 'femoral' word match narrows the four options to two without requiring the learner to interpret the spatial relationship. This is the same displayed candidate as H1-01, not a separate finding against a second node."
+      },
+      {
+        "phrase": "Compression / The protruding wall remains at the opening.",
+        "why": "A nonmedical reader can interpret this as an unsuccessful attempt to push the protrusion back, making both 'manual reduction' choices look redundant. That reading plus the anatomical word match can reach the key without assessing the perfusion comparison. Diagnostic compression and a therapeutic reduction attempt are not necessarily equivalent."
+      },
+      {
+        "phrase": "Femoral hernia; operative exploration / Femoral hernia; manual reduction / Indirect inguinal hernia; operative exploration / Indirect inguinal hernia; manual reduction",
+        "why": "The complete balanced 2x2 has no component-frequency or unique-intersection advantage. No option-length, grammar, absolute, teaching-sentence or explicitly named-diagnosis shortcut independently selects the key."
+      }
+    ],
+    "fairness": [
+      "H1-02 duplicates H1-01's after fields byte-for-byte at the parsed field level: question.groin-hernia.ultrasound-type-and-intervention.v2, node.harden1.groin-wall-threat.20261110. It receives the same verdict for traceability and must be counted once with H1-01 when counting unique candidates. No second after decision node or intervening feedback is supplied.",
+      "The best answer remains femoral hernia with operative exploration. The neck location distinguishes the type; the tender, persistently protruding bowel wall and absent mural signal relative to adjacent bowel support concern that makes manual reduction inferior. Both indirect-inguinal combinations are anatomically inconsistent with the exhibit. The missing obstructive symptoms do not create an equally defensible reduction option.",
+      "Decision-critical information for the choice between these options is present. The Doppler finding supports concern rather than proving irreversible ischemic injury. No confident clinical inaccuracy identified. The ultrasound still prompts selection of a hernia type, preserving the owner's request.",
+      "PGY-2/3 prediction: easy. The two requested answer components can be solved as a cued anatomical match plus a familiar emergency-action rule. The bowel-wall configuration is educationally relevant but unnecessary to select exploration once the other danger findings are supplied. The version does not require the intended two consequential reasoning steps, despite scoring two components together.",
+      "Editorial review only, based on the displayed after fields without author rationales as evidence. No fresh source verification, clinical approval or runtime validation is implied."
+    ],
+    "suggestions": [
+      "Revise the shared candidate once, applying the H1-01 recommendations, and preserve both intake IDs as provenance. Do not manufacture another question by repeating this same decision or add preceding feedback that supplies its answer.",
+      "Keep a clinically necessary safety finding even if it makes management easy. Either build a supported case in which the ultrasound classification affects a genuinely competing management decision, or request explicit acceptance of the existing safety-recognition objective at easy difficulty. The latter is an exception decision, not evidence that hardening succeeded."
+    ]
+  },
+  {
+    "id": "H1-03",
+    "title": "Interpret renal phosphate handling after nutrition restart",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "Renal phosphate handling remains unclassifiable here.",
+        "why": "This is an epistemic alternative beside two physiological interpretations and is the weakest distractor. A test-wise reader may prefer a substantive interpretation because paired measurements were provided. Eliminating it still does not select loss over conservation, so this is a limited cue, not a key-revealing flaw."
+      },
+      {
+        "phrase": "Renal phosphate loss is inappropriately high. / Renal phosphate conservation is appropriately increased.",
+        "why": "These central competitors have parallel grammar, length and specificity. The 'inappropriately'/'appropriately' distinction does not reveal which matches the measurements. All choices share renal/phosphate vocabulary; no task overlap, majority-component convergence, uniquely long qualification, absolute, teaching sentence or diagnosis label selects the key without interpreting the data."
+      }
+    ],
+    "fairness": [
+      "Reviewed the after fields of question.gs028f.nutrition.refeeding-insulin-phosphate-shift.v3.r3, node.harden1.phosphate-handling.20261110. Current update is null. The key marker, explanations and author claims were not used to derive the answer.",
+      "Independent calculation: fractional phosphate excretion = (urine phosphate x serum creatinine) / (serum phosphate x urine creatinine) x 100 = (10 x 1.0) / (1.0 x 20) x 100 = 50%. The units are consistent within each ratio. This is arithmetic on the supplied constructed values, not an invented clinical cutoff.",
+      "Two consequential steps are required: normalize phosphate excretion using the paired phosphate and creatinine concentrations, then judge that excretion against the concurrently low serum phosphate. Substantial fractional excretion during hypophosphatemia supports inappropriate renal loss rather than appropriate conservation. A feeding history by itself cannot choose between those interpretations.",
+      "Exactly one defensible best answer among the supplied options: renal phosphate loss is inappropriately high. Stable serum creatinine, simultaneous samples, stated units and collection before replacement provide the decision-critical context. A timed urine collection is not necessary for this fractional-excretion calculation, so 'unclassifiable' is inferior. No precise diagnostic threshold is needed to distinguish these alternatives at the supplied value.",
+      "The result supports a renal-loss component; it neither identifies its cause nor excludes concurrent redistribution or depleted stores. The displayed task appropriately restricts the conclusion to renal phosphate handling and does not claim that renal loss is the physiological mechanism of refeeding. No confident clinical inaccuracy identified.",
+      "The owner's incoherent-options concern remains resolved: all three choices interpret the same patient's renal phosphate handling. There is no mixing of a mechanism, a test and a treatment. The material shift from refeeding-mechanism recall to renal-handling interpretation is apparent from the task; acceptance of that changed educational objective is a separate product/content decision.",
+      "PGY-2/3 prediction: moderate, with easier performance expected from residents fluent in fractional-excretion calculations. The difficulty comes from selecting and applying the normalization and then interpreting the renal response, rather than a difficult arithmetic operation or an undisclosed protocol. This is clinical physiology, not a statistics question covered by the standard's single-skill exception.",
+      "PASS is an editorial judgment on these exact displayed fields. No network or source verification was performed, no clinical approval is conferred, and the candidate remains needs_clinician_review pending Melissa Rowland's exact-version sign-off. Runtime behavior was outside this text-only review."
+    ],
+    "suggestions": [
+      "Retain the simultaneous pretreatment sampling, units, stable creatinine and narrow renal-handling task. Do not add the computed fraction or its interpretation before the learner answers.",
+      "No required wording repair for this version. Keep the explanation's distinction between a renal-loss component and an exclusive cause. If the weak 'unclassifiable' distractor is later replaced, use another credible interpretation of the same measurements and independently review that changed option set."
+    ]
+  }
+]

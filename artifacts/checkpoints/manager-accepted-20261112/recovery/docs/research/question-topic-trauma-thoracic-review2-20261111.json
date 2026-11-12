@@ -1,0 +1,331 @@
+[
+  {
+    "id": "question.trauma-thoracic.bci-selective-imaging.20261111.v2",
+    "nodeId": "node.trauma-thoracic.bci-selective-imaging.20261111.v2",
+    "title": "Select cardiac assessment after an abnormal screen",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Monitored reassessment without immediate imaging is the best of these plans: the conduction finding is unchanged from before injury, and the current course does not supply an additional structural or ischemic imaging indication. The elevated troponin is not dismissed.",
+      "The task now compares additional imaging while telemetry and serial biomarkers are shared care; it no longer falsely treats those measures as mutually exclusive with echocardiography. TTE could become appropriate with a changed clinical question, but that does not make routine immediate TTE the best answer here.",
+      "Two consequential judgments remain: distinguish an old ECG abnormality from the new biomarker finding, then apply current physiology to the imaging decision. No confident clinical inaccuracy identified.",
+      "The subsequent arrhythmia and nondiagnostic TTE introduce new information. This explanation does not name TEE or give away the later modality choice.",
+      "Scope: this report reviews all 13 active candidate nodes, including four pass-preserved authored candidates; it does not inherit their previous verdicts. The five parked nodes, 19 historical inventory records, two existing holds and three unkeyed slots are noted but not graded. No external source verification was performed. PASS is an editorial judgment, not Melissa Rowland's clinical approval."
+    ],
+    "suggestions": [
+      "Keep the immediate-imaging scope and shared monitoring explicit. Do not remove the baseline ECG or stability observations to manufacture difficulty.",
+      "Optional tightening: shorten the presentation's record-opening narration; it contributes no clinical discriminator."
+    ]
+  },
+  {
+    "id": "question.trauma-thoracic.bci-persistent-arrhythmia.20261111.v2",
+    "nodeId": "node.trauma-thoracic.bci-persistent-arrhythmia.20261111.v2",
+    "title": "Resolve an inadequate echocardiographic assessment",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "TEE is the defensible best next imaging choice for an unresolved structural/function assessment after repeated nondiagnostic transthoracic views in this course. CT and MRI are less appropriate substitutes for the immediate question as presented.",
+      "The learner must connect the new rhythm/perfusion change to an unresolved cardiac assessment, then account for the actual acoustic-window failure when choosing the next modality. The failed examination is necessary information, not an unfair instruction to select TEE.",
+      "The chronology follows the initially stable cardiac assessment coherently. The update supplies the new indication, completed investigation and inadequacy, so the decision also stands alone with the common presentation.",
+      "No confident clinical inaccuracy identified. The final explanation sentence should be read as a conditional about this imaging question, not as permission to ignore persistent arrhythmia after any normal TTE."
+    ],
+    "suggestions": [
+      "Retain the actual failed visualization findings and the new course. Keep the explanation limited to the imaging decision; ongoing rhythm management is outside this task.",
+      "If tightening feedback, replace the broad final counterfactual with a statement that further imaging depends on whether an adequate study resolves the clinical question."
+    ]
+  },
+  {
+    "id": "question.trauma-thoracic.bci-normalpair-other-admission.20261111.v1",
+    "nodeId": "node.trauma-thoracic.bci-normalpair-other-admission.20261111.v1",
+    "title": "Separate cardiac rule-out from other admission needs",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Trauma-ward admission for respiratory care is best among the offered dispositions. Normal completed cardiac screening does not resolve persistent oxygen need, inadequate inspiration or secretion clearance despite treatment.",
+      "Two consequential judgments are tested: remove a BCI-specific reason for telemetry, then independently assess whether the noncardiac injuries still require admission. Discharge and cardiac-observation admission represent different credible errors.",
+      "The respiratory wording overlaps the respiratory-care option, but the observations are essential to disposition; they are not a diagnosis label or a nonmedical giveaway. The normal cardiac pair remains necessary to rank telemetry.",
+      "This standalone node contains the treatment response needed to decide disposition. No confident clinical inaccuracy identified; the record does not establish an additional indication for a higher level of care."
+    ],
+    "suggestions": [
+      "Preserve the treatment-response observations and the distinction between cardiac clearance and discharge readiness.",
+      "Optional tightening: remove the current-update sentence announcing that the disposition note is being opened; the exhibit already supplies the record."
+    ]
+  },
+  {
+    "id": "question.trauma-thoracic.chest-drain-organ-trajectory.20261111.v1",
+    "nodeId": "node.trauma-thoracic.chest-drain-organ-trajectory.20261111.v1",
+    "title": "Handle a drain with an unintended organ trajectory",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Retaining the tube while obtaining contrast CT mapping is the best next plan for this stable patient with an organ-traversing catheter and incompletely assessed adjacent vessels. Blind removal or retraction before defining the injury can worsen bleeding.",
+      "The task requires interpreting the abnormal trajectory as more than poor pleural drainage, then using hemodynamic stability and incomplete vascular assessment to select controlled investigation before manipulation.",
+      "The ultrasound finding is appropriately supplied for a management question. All three options pair a tube action with an assessment; no option-length, convergence or generic-safe-plan cue uniquely identifies the key.",
+      "The standalone update supplies the essential acquired finding and perfusion state. The explanation appropriately includes surgical-team involvement rather than portraying CT as definitive management. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": [
+      "Retain stability and incomplete vascular assessment. Do not add an unsupported quantitative bleeding threshold or imply that every misplaced tube must always remain indefinitely.",
+      "Optional tightening: remove the sentence announcing the reassessment record."
+    ]
+  },
+  {
+    "id": "question.trauma-thoracic.tension-after-intubation.20261111.v2",
+    "nodeId": "node.trauma-thoracic.tension-after-intubation.20261111.v2",
+    "title": "Treat ventilation-dependent circulatory deterioration",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Lengthen expiration before restarting mandatory ventilation' does not clearly say whether to allow an immediate prolonged passive exhalation, change the ventilator settings for subsequent breaths, or do both. The course has already resumed ventilation and reproduced hypotension."
+    ],
+    "cues": [
+      {
+        "phrase": "The endotracheal tube is patent.",
+        "why": "This directly weakens 'Suction the endotracheal tube before ventilation'; there are no secretion or intraluminal-obstruction observations to keep that action competitive."
+      },
+      {
+        "phrase": "a prolonged passive exhalation and stronger pulses",
+        "why": "The improvement after exhalation points toward the only option that repeats the expiration concept. This is legitimate physiological evidence, but its wording becomes an especially strong shortcut against one explicitly undermined distractor."
+      }
+    ],
+    "fairness": [
+      "The release response and recurrence with the same ventilation pattern favor dynamic gas trapping with impaired venous return. The prior pleural air collection creates a meaningful anchoring competitor; it does not establish that pleural decompression is the best response to these acquired observations.",
+      "The intended key is clinically defensible, and two consequential steps are present: interpret the intervention-response pattern, then prevent recurrence by changing ventilation timing. The revision need is a vague action label and a weak third alternative, not a demonstrated false physiological claim.",
+      "The current option should explicitly distinguish immediate release of pressure from the subsequent ventilator adjustment. Do not teach that this response permanently excludes a concurrent pleural problem.",
+      "The standalone presentation and update are coherent. No confident clinical inaccuracy identified; no invented ventilator threshold is needed."
+    ],
+    "suggestions": [
+      "State the immediate action and subsequent setting change concretely, for example disconnect to permit exhalation, then resume with a lower mandatory rate/longer expiratory time. Use clinician-supported wording and make all alternatives comparable in scope.",
+      "Replace suction with a plausible competing ventilator or pressure-management action that a resident could choose from the actual observations. Retain the tube-patency finding if it is clinically necessary.",
+      "Keep the earlier pleural finding and the reproducible response; do not hide the observations that make the intended answer fair."
+    ]
+  },
+  {
+    "id": "question.trauma-thoracic.airway-tear-repair.20261111.v2",
+    "nodeId": "node.trauma-thoracic.airway-tear-repair.20261111.v2",
+    "title": "Choose treatment for a major traumatic airway tear",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "separation of the right main-bronchial wall with a visible gap between the proximal and distal segments",
+        "why": "This is close to supplying the decisive extent of injury outright. In this option set it funnels directly to repair rather than requiring a further consequential interpretation."
+      },
+      {
+        "phrase": "The pleural tube is patent, all side holes are intrapleural, and the drainage connections are intact.",
+        "why": "Combined with continuing collapse and a large leak, this announces failure of the drainage strategy offered again as a distractor. These are legitimate safety observations, but the repeated failed strategy is a weak competitor."
+      }
+    ],
+    "fairness": [
+      "Operative bronchial repair is the defensible best treatment for the described major disruption with continuing leak despite adequate drainage and restored perfusion. I do not identify a confident clinical inaccuracy or a second equally strong answer.",
+      "The diagnostic step is already completed. Visible discontinuity plus persistent functional failure makes this predominantly recognition of a major injury's treatment. Stenting is less compelling without a patient-specific reason to prefer it, and unchanged ventilation/drainage has already failed.",
+      "The active standalone update supplies the bronchoscopy and drainage findings; it does not depend on the parked investigation node. The clinic presentation remains coherent.",
+      "The subject is high-yield. The requested resident difficulty is not established merely by adding several separate drain-adequacy negatives."
+    ],
+    "suggestions": [
+      "Retain the necessary anatomy and drainage observations, but compare genuinely competing definitive strategies for an evidence-supported morphology and patient condition. Require a second finding to change the treatment ranking.",
+      "If the intended objective is simply recognition that a major bronchial disruption needs repair, seek explicit acceptance as a foundational/safety item rather than calling this a difficult two-step node.",
+      "Do not obscure a complete disruption or remove a necessary negative merely to make nonoperative care appear fair."
+    ]
+  },
+  {
+    "id": "question.trauma-thoracic.thoracic-bleeding-control.20261111.v1",
+    "nodeId": "node.trauma-thoracic.thoracic-bleeding-control.20261111.v1",
+    "title": "Escalate thoracic bleeding care from physiology",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Thoracotomy is the best of the offered hemorrhage-control approaches in the repeated loss-of-perfusion course. Low drain output is not reliable reassurance when a large collection remains and blood pressure depends on continuing transfusion.",
+      "The two consequential steps are to reject a misleading drainage-output interpretation, then use physiological instability to choose the operative approach over thoracoscopy or an embolization pathway.",
+      "The alternatives are parallel procedures addressing hemostasis. Necessary perfusion and alternative-source observations are not wording-only cues; they discriminate clinically meaningful paths.",
+      "The next node explicitly establishes successful hemostasis and a later stable state. This explanation does not disclose the later retained-clot treatment. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": [
+      "Preserve the mismatch between low drainage and ongoing physiological failure. Do not replace it with an unsupported exact output threshold.",
+      "Optional tightening: the current-update sentence can be shortened while retaining that drainage and blood replacement have occurred."
+    ]
+  },
+  {
+    "id": "question.trauma-thoracic.retained-hemothorax.20261111.v2",
+    "nodeId": "node.trauma-thoracic.retained-hemothorax.20261111.v2",
+    "title": "Treat retained blood after hemorrhage control",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Early VATS evacuation is a defensible best answer for substantial loculated traumatic clot with incomplete expansion in a recovered, spontaneously breathing patient. An additional drain addresses free fluid less well than the demonstrated clot; fibrinolysis remains a clinically plausible comparator.",
+      "The learner must distinguish a patent tube draining fluid from adequate evacuation of organized pleural contents, then reassess treatment in the now-stable postoperative state rather than reuse the earlier unstable-bleeding approach.",
+      "The explanation appropriately states a conditional recommendation and preserves fibrinolysis as a selected alternative. The specific comparison after a recent thoracotomy still needs clinician confirmation; this offline review does not independently verify that subgroup or current guideline wording.",
+      "The update independently supplies the prior operation, achieved hemostasis, current physiology and CT findings. It follows the preceding node coherently and is not answered by the earlier explanation. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": [
+      "Retain the conditional recommendation and patient-specific operative-risk framing; do not turn VATS into an absolute rule.",
+      "The renal-function sentence does not distinguish the offered treatments in the visible case; remove it unless a concrete relevant risk is actually being tested.",
+      "Confirm the postoperative application with Melissa during clinical sign-off rather than treating this editorial PASS as source verification."
+    ]
+  },
+  {
+    "id": "question.trauma-thoracic.aortic-acquisition.20261111.v2",
+    "nodeId": "node.trauma-thoracic.aortic-acquisition.20261111.v2",
+    "title": "Match the vascular question to the acquired study",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Its source data and all three reconstructed series are present in the receiving archive.",
+        "why": "This explicitly exhausts the material that the 'Retrieve further series from the existing CT acquisition' option proposes to retrieve. A nonmedical reader can eliminate that option without interpreting aortic imaging."
+      },
+      {
+        "phrase": "cannot resolve the aortic wall",
+        "why": "Together with a fully complete archive, this makes the only new CT acquisition the conspicuous repair. The inventory largely explains why one distractor cannot work rather than creating a second clinical inference."
+      }
+    ],
+    "fairness": [
+      "A dedicated thoracic CTA is the best offered investigation for a stable patient with unresolved suspected aortic injury after an inadequate venous-phase examination. Catheter aortography is a weaker routine next investigation; no confident clinical inaccuracy is identified.",
+      "The venous-versus-arterial acquisition distinction is valuable, but the extra reconstruction labels do not create a second consequential decision once the packet explicitly declares the existing data complete and inadequate.",
+      "The explanation should not be generalized to say every venous-phase trauma CT is incapable of detecting an aortic injury; this particular examination is documented as unresolved.",
+      "The later node supplies the new diagnostic result and urgent associated injury. This explanation does not give away its repair sequence, and the pair is coherent."
+    ],
+    "suggestions": [
+      "Replace the exhausted-retrieval distractor with a genuinely available, clinically credible next investigation, and introduce a supported patient or acquisition constraint whose interpretation changes the ranking.",
+      "Alternatively, retain acquisition-versus-reconstruction interpretation as an explicitly accepted focused foundational objective. Do not label the current inventory a difficult two-step problem.",
+      "Keep the complete acquisition/transfer information if retrieval remains an option; hiding whether adequate images exist would create ambiguity rather than useful difficulty."
+    ]
+  },
+  {
+    "id": "question.trauma-thoracic.aortic-repair-sequence.20261111.v1",
+    "nodeId": "node.trauma-thoracic.aortic-repair-sequence.20261111.v1",
+    "title": "Sequence repair of a stable aortic injury",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Treating the urgent expanding cranial hematoma before TEVAR is the defensible best sequence under the supplied stable, non-extravasating grade 3 aortic course. Medical surveillance alone does not adequately address the stated repair-requiring lesion.",
+      "Two consequential judgments remain: distinguish a repair indication from an immediate aortic emergency, then prioritize the competing urgent intracranial operation. The urgent neurosurgical indication is necessary decision information, not an unfair word cue.",
+      "The task asks for sequence, not anticoagulation or exact blood-pressure targets. It does not require guessing omitted quantitative thresholds or timing intervals.",
+      "The completed aortic diagnosis, suitability for TEVAR, perfusion and competing injury are all restated, so the second node stands alone. Earlier feedback about CT acquisition does not rehearse the sequence.",
+      "No confident clinical inaccuracy identified. The explanation's attribution to current SVS guidance has not been independently verified in this network-free review."
+    ],
+    "suggestions": [
+      "Keep stability and the urgent associated-injury indication explicit. Avoid adding unsourced exact delay intervals or blood-pressure targets.",
+      "Preserve this exact version unless a separately authorized correction is needed; its inclusion here does not grant clinical sign-off."
+    ]
+  },
+  {
+    "id": "question.trauma-thoracic.esophageal-free-leak.20261111.v2",
+    "nodeId": "node.trauma-thoracic.esophageal-free-leak.20261111.v2",
+    "title": "Treat a contaminated traumatic esophageal defect",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "the tissue edges are viable and can be approximated without tension. Extensive tissue loss is absent.",
+        "why": "The paired statements largely supply the primary-repair rationale and remove the obvious reason for diversion. They leave little inference in this three-choice set."
+      },
+      {
+        "phrase": "At exploration",
+        "why": "This is necessary stage information, but its repetition in the update and task makes the endoscopic alternative a conspicuous stage outlier. Combined with already supplied repairability, it collapses the comparison."
+      }
+    ],
+    "fairness": [
+      "Primary repair with external drainage is a defensible best answer for the operative findings as written. Free contamination and sepsis support source control; viable approximable tissue supports repair. I do not identify a confident clinical inaccuracy.",
+      "The potentially consequential first decision, whether this course requires operative source control, has already been made before the scored task. The remaining choice is predominantly a repairability rule with its decisive findings stated explicitly.",
+      "Stenting is not categorically impossible merely because exploration has occurred; the explanation should rest on the lesion, contamination and repairability rather than using 'already-explored' as a universal exclusion.",
+      "The update independently supplies the injury, leak, deterioration and operative findings. It stands alone after the diagnostic node was parked and does not need that node's answer."
+    ],
+    "suggestions": [
+      "Keep the decision stage clear and preserve necessary tissue findings. Build a same-stage comparison in which supported lesion or patient details genuinely distinguish two plausible reconstructive/source-control strategies.",
+      "Do not simply delete tissue viability or approximation information: that would make repair versus diversion less fair.",
+      "If retaining this straightforward repairability objective, request explicit foundational-item acceptance. Qualify the feedback so exploration itself is not taught as a contraindication to every endoscopic approach."
+    ]
+  },
+  {
+    "id": "question.trauma-thoracic.left-diaphragm-evaluation.20261111.v2",
+    "nodeId": "node.trauma-thoracic.left-diaphragm-evaluation.20261111.v2",
+    "title": "Resolve a penetrating diaphragm-risk boundary",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Repeat CT with hospital reassessment",
+        "why": "The offered action repeats the just-described unresolved test without specifying a different acquisition or new diagnostic advantage. It is a weak competitor against the only direct inspection option."
+      },
+      {
+        "phrase": "unresolved left-diaphragm finding",
+        "why": "The task already locates and frames the remaining problem. With serial examination and CT already represented in the update, direct inspection is the only option introducing a new means of resolving it; this permits novelty-based elimination."
+      }
+    ],
+    "fairness": [
+      "Laparoscopic assessment is the defensible best choice for the stable left-sided penetrating-risk situation with an equivocal CT. Absence of herniation or peritoneal signs does not resolve a possible small injury.",
+      "The explanation appropriately discloses a conditional recommendation and very-low-quality evidence. I do not identify a confident clinical inaccuracy or claim that an alternative can never be appropriate.",
+      "As written, the item mainly tests the familiar left thoracoabdominal stab-wound investigation rule. Two alternatives repeat already nonresolving assessments or delay them; they do not sustain a second consequential resident-level decision.",
+      "The standalone patient, chronology and task are complete. The issue is weak competition and insufficient reasoning depth, not missing decision-critical information."
+    ],
+    "suggestions": [
+      "Compare concrete, clinically credible diagnostic approaches at the same stage and use a supported anatomic or patient constraint that changes their ranking. If repeat imaging remains, specify what would differ from the completed examination and why it might help.",
+      "Retain side, stability and the actual CT findings. Do not remove necessary negatives or add an unsupported threshold to make the item harder.",
+      "If retaining this recognition-level diagnostic rule, obtain explicit foundational-item acceptance and preserve the uncertainty stated in the explanation."
+    ]
+  },
+  {
+    "id": "question.trauma-thoracic.rib-fixation-weaning.20261111.v2",
+    "nodeId": "node.trauma-thoracic.rib-fixation-weaning.20261111.v2",
+    "title": "Reassess rib stabilization after failed liberation",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Rib stabilization is a defensible best next addition among the offered plans after recovery from shock, persistent severely displaced segmental fractures, improving pulmonary findings and failed liberation despite analgesic care.",
+      "The learner must distinguish improving parenchymal injury from persistent chest-wall mechanical failure, then choose correction of that barrier rather than simply repeat support or commit to prolonged weaning. Both the interval improvement and actual failed trials matter.",
+      "Paradoxical movement is a legitimate necessary observation, not a diagnosis label. The known fracture pattern does not by itself answer the question; current physiological recovery and failure despite treatment determine why reassessment is appropriate now.",
+      "The active update supplies the preceding recovery, fracture morphology, treatment and failed trials; it stands alone without the parked shock-priority node. No preceding fixation feedback supplies the answer.",
+      "No confident clinical inaccuracy identified. The key should be interpreted as the next treatment strategy, not a guarantee that stabilization produces successful extubation; the explanation appropriately uses 'supports ... assessment'."
+    ],
+    "suggestions": [
+      "Preserve the contrast between improving lung findings and persistent mechanical failure during actual trials.",
+      "Keep clinician confirmation of operative candidacy and avoid unsupported exact timing thresholds. Do not promise ventilator liberation as an inevitable outcome of stabilization."
+    ]
+  }
+]

@@ -1,0 +1,65 @@
+{
+  "checkedOn": "2026-11-08",
+  "clinicalApproval": false,
+  "sourceCheck": "Offline source reuse only; tests do not clinically approve the candidate.",
+  "runs": [
+    {
+      "cwd": "packages/clinical-content",
+      "command": "npm.cmd test -- --pool=threads",
+      "nativeExitCode": 0,
+      "filesPassed": 126,
+      "filesFailed": 0,
+      "testsPassed": 1576,
+      "testsFailed": 0,
+      "durationSeconds": 41.03,
+      "log": ".local-dev/question-flags4-20261108/clinical-full-final.log",
+      "logSha256": "e014ac0dc5c13c6609d48e40ad2c2b47f535e9a24381a89adf3686bdf7a9f6ee",
+      "exactSummary": "Test Files  126 passed (126)\r\n      Tests  1576 passed (1576)\r\n   Start at  14:26:34\r\n   Duration  41.03s (transform 62.53s, setup 0ms, import 532.32s, tests 35.30s, environment 23ms)"
+    },
+    {
+      "cwd": ".",
+      "command": "npm.cmd run typecheck",
+      "nativeExitCode": 0,
+      "workspaceCount": 7,
+      "workspaces": [
+        "@gamify-surgery/clinical-context-workbench",
+        "@gamify-surgery/player",
+        "@gamify-surgery/balance-config",
+        "@gamify-surgery/clinical-authoring",
+        "@gamify-surgery/clinical-content",
+        "@gamify-surgery/clinical-research",
+        "@gamify-surgery/game-domain"
+      ],
+      "log": ".local-dev/question-flags4-20261108/typecheck-seven-final.log",
+      "logSha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "exactOutput": "> gamify-surgery@0.0.1 typecheck\r\n> npm run typecheck --workspaces --if-present\r\n\r\n\r\n> @gamify-surgery/clinical-context-workbench@0.0.1 typecheck\r\n> tsc --noEmit -p tsconfig.client.json && tsc --noEmit -p tsconfig.server.json\r\n\r\n\r\n> @gamify-surgery/player@0.0.1 typecheck\r\n> tsc --noEmit -p tsconfig.json\r\n\r\n\r\n> @gamify-surgery/balance-config@0.0.1 typecheck\r\n> tsc --noEmit -p tsconfig.json\r\n\r\n\r\n> @gamify-surgery/clinical-authoring@0.0.1 typecheck\r\n> tsc --noEmit -p tsconfig.json\r\n\r\n\r\n> @gamify-surgery/clinical-content@0.0.1 typecheck\r\n> tsc --noEmit -p tsconfig.json\r\n\r\n\r\n> @gamify-surgery/clinical-research@0.0.1 typecheck\r\n> tsc --noEmit -p tsconfig.json\r\n\r\n\r\n> @gamify-surgery/game-domain@0.0.1 typecheck\r\n> tsc --noEmit -p tsconfig.json"
+    },
+    {
+      "cwd": ".",
+      "command": "npm.cmd run clinical:lint:test",
+      "nativeExitCode": 0,
+      "testsPassed": 33,
+      "testsFailed": 0,
+      "durationMilliseconds": 3287.6033,
+      "log": ".local-dev/question-flags4-20261108/linter-tests.log",
+      "logSha256": "b0c691c93bc2799cf0d482810fe499291daa86ce2b465a5c315c683b92b47d74",
+      "exactSummary": "ℹ tests 33\r\nℹ suites 0\r\nℹ pass 33\r\nℹ fail 0\r\nℹ cancelled 0\r\nℹ skipped 0\r\nℹ todo 0\r\nℹ duration_ms 3287.6033"
+    }
+  ],
+  "candidateChecks": {
+    "authorRegenerationCommand": "node tools/question-quality/author-question-flags4-20261108.mjs --check",
+    "packetRegenerationCommand": "node tools/question-quality/review-question-flags4-20261108.mjs --check",
+    "nativeExitCode": 0,
+    "beforeCueFindings": 1,
+    "afterCueFindings": 0,
+    "suppressedFindings": 0,
+    "protectedExistingSourcePaths": 1327,
+    "changedExistingSourcePaths": 0
+  },
+  "notes": [
+    "The final clinical run includes all 10 flags4 tests. Earlier diagnostic runs are not substituted for this final-content result.",
+    "The first focused invocation did not start because its relative log destination was wrong. It was corrected; no test failure was hidden or assertion/budget changed.",
+    "Node prints the existing experimental TypeScript-strip warning. The linter command exits 0 with 33 passing tests.",
+    "No game-domain or player suite was required or run for this candidate-only milestone. No result from a previous milestone is reported as current."
+  ]
+}

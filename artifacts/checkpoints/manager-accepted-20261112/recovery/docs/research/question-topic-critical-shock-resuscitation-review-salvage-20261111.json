@@ -1,0 +1,84 @@
+[
+  {
+    "id": "question.critical-shock-resuscitation.inotrope-after-pressure-restored.v1",
+    "nodeId": "node.critical-shock-resuscitation.inotrope-after-pressure-restored.v1",
+    "title": "Circulatory support reassessment",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "Nonblocking chronology imprecision: 'Later' and 'Repeat echocardiography' remain understandable after the initial treatment described in the new presentation, but no earlier echocardiographic result is supplied. The explanation's 'New low output' is not independently established by this standalone record. The current abnormality, rather than proof that it is new, is sufficient for the decision."
+    ],
+    "cues": [
+      {
+        "phrase": "Which next infusion adjustment / Give a balanced-crystalloid bolus",
+        "why": "Minor category-fit cue: a reader may favor the two choices explicitly called infusions over the bolus. This does not distinguish dobutamine from norepinephrine, and a bolus is also an infused treatment, so it does not give away the key. A neutral resuscitation-adjustment lead-in would be cleaner."
+      }
+    ],
+    "fairness": [
+      "Dobutamine is the single best offered adjustment. The resident must integrate MAP 70 on pressure support with impaired peripheral perfusion, cardiac index 1.6 and weak LV contraction, then select a treatment directed at flow rather than additional pressure or volume. Achieved pressure is not presented as proof of adequate perfusion.",
+      "Increasing norepinephrine is a credible pressure-focused error, but the record supplies an achieved pressure and a demonstrated flow problem. Another crystalloid bolus is a credible response to poor perfusion, but the technically adequate passive-leg-raising assessment supplies the patient-specific reason to rank it lower. Neither competing option is equally well supported by the displayed findings.",
+      "The low cardiac index and weak contraction are strong clinical discriminators, not a wording-only answer. With the clinical observations covered, the two infusion labels have comparable grammar, length and specificity; there is no convergence pattern, rhetorical absolute, unique cautious qualifier or diagnosis label naming the drug.",
+      "The case stands alone: Daniel Mercer has an age, sex, short visit reason, postoperative infection context, initial fluid treatment, completed source-control procedure and continuing antibiotics. The update and exhibit state the current drugs, pressure, perfusion, flow and preload response. There is one decision node and no prior answer or feedback required to solve it.",
+      "This is moderate rather than hard: the hemodynamic abnormalities are concordant and explicit, but the consequential distinction between pressure, flow and preload still requires application. Shock physiology and vasoactive selection are high-yield general-surgery critical-care concepts; this is a qualitative judgment, not an exam-frequency or performance measurement.",
+      "The explanation appropriately describes dobutamine as a supported option with reassessment, rather than the only possible inotropic strategy. No confident clinical inaccuracy was identified. Review was confined to the after/candidate visible fields; no network or fresh source verification was performed. Editorial PASS does not confer clinical approval: retain needs_clinician_review pending Melissa Rowland's exact-version sign-off."
+    ],
+    "suggestions": [
+      "Optional wording polish in a separately versioned revision: ask 'Which next resuscitation adjustment best addresses Daniel Mercer's current hypoperfusion?' so the task fits all three treatments equally.",
+      "Optional standalone polish: use 'Current low output' in the explanation instead of 'New low output'; do not add a historical echo solely to justify an unnecessary chronology claim.",
+      "Preserve the actual pressure, flow and preload observations. Replacing them with a conclusion such as cardiac dysfunction requiring inotropic support would remove the first reasoning step. No blocking repair is required."
+    ]
+  },
+  {
+    "id": "question.critical-shock-resuscitation.lactate-perfusion-discordance.v1",
+    "nodeId": "node.critical-shock-resuscitation.lactate-perfusion-discordance.v1",
+    "title": "Perfusion reassessment",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "Nonblocking terminology imprecision: 'MAP 68 mm Hg on an unchanged norepinephrine target of 65 mm Hg' assigns pressure units to a drug target. The adjacent MAP wording and both pressure-target options make the intended MAP goal clear, but the sentence should name the pressure goal directly."
+    ],
+    "cues": [],
+    "fairness": [
+      "Maintaining the MAP target at 65 mm Hg is the single best offered order. The resident must reconcile a still-elevated lactate with its falling trend and improving clinical perfusion, then decide whether further pressure or volume escalation is supported. The negative preload response adds a consequential check against giving fluid simply to pursue the lactate value.",
+      "Raising the MAP goal is a plausible attempt to improve perfusion, but the displayed bedside response does not supply a reason to pursue the offered higher target. A further bolus is a plausible response to residual hyperlactatemia, but unchanged stroke volume during an adequate reversible preload maneuver ranks it below continuing present support. The stem need not establish that no patient ever benefits from a different pressure target.",
+      "Cue attack: '65 mm Hg' appears in the current goal and the maintain-goal option, but maintaining versus changing an existing goal necessarily shares that value. This is not a sufficient nonmedical key: the learner still must decide whether the response warrants escalation. 'Lactate has fallen' and 'urine output improving' are directional clinical data, not an instruction to maintain treatment. The key is not uniquely long or qualified; there are no absolutes, explanatory distractor clauses or component-convergence patterns.",
+      "The task is complete and the case is self-contained. Tomas Reed's name, age, sex, short visit reason and ICU infection-treatment context are supplied. All relevant observations are in the exhibit. There is no current-update field to recover from a prior part and no later scored companion in the candidate case.",
+      "Moderate at the easier end of that category, not hard: most findings point toward improvement, but persistent hyperlactatemia provides a credible competing signal and the proposed fluid and pressure responses test different management errors. Integrating perfusion endpoints rather than chasing one laboratory value is high-yield resident critical care. The difficulty judgment is qualitative.",
+      "The explanation retains reassessment and does not declare residual lactate harmless, prove a particular cause of its elevation or establish a universal MAP target. No confident clinical inaccuracy was identified. This offline editorial assessment is not fresh source verification or clinical approval; retain needs_clinician_review pending Melissa Rowland's exact-version sign-off."
+    ],
+    "suggestions": [
+      "Optional wording polish in a separately versioned revision: 'MAP 68 mm Hg during norepinephrine treatment; the MAP goal remains 65 mm Hg.' This distinguishes a pressure target from a drug dose without adding data or a threshold.",
+      "Keep the residual lactate elevation, its direction of change, bedside observations and preload response together. Do not replace them with 'adequately resuscitated' or 'perfusion normalized,' which would supply the conclusion.",
+      "Do not market this as a hard item or add a second unrelated objective to force difficulty. The present focused management decision is acceptable at moderate difficulty; no blocking repair is required."
+    ]
+  },
+  {
+    "id": "question.critical-shock-resuscitation.vasopressin-escalation.v2",
+    "nodeId": "node.critical-shock-resuscitation.vasopressin-escalation.v2",
+    "title": "Persistent hypotension reassessment",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Adding vasopressin is the single best offered adjustment. The resident must integrate persistent low MAP despite increasing norepinephrine with substantial measured output and the nearly unchanged stroke volume during passive leg raising, then select additional pressure support rather than a fluid or inotrope strategy.",
+      "The 63-to-64-to-63 mL sequence supplies an interpretable reversible assessment without requiring an invented exact cutoff. It makes a bolus less appropriate than the keyed adjustment. The current output of 7.6 L/min does not establish a low-output indication for dobutamine. Output alone is not proof that all tissue perfusion is adequate, and the explanation does not need that stronger claim.",
+      "The norepinephrine dose is unspecified. This limits a claim about exactly when to introduce vasopressin or whether to choose it over further norepinephrine titration; the latter is not an offered option. The escalating support trajectory, persistent hypotension and supplied flow findings adequately distinguish the three actual choices. No universal dose threshold is inferred by this review.",
+      "Cue attack: 'higher norepinephrine support briefly raises the MAP, which then falls again' is necessary treatment-response information, not a textual match to vasopressin. 'Current pressure,' 'Current flow' and 'Reversible preload assessment' identify measurements without naming the inferred mechanism. Both drug additions use the same grammar and length; the bolus is another concrete resuscitation action. No unique key overlap, absolute, explanatory option, diagnosis disclosure or convergence shortcut was identified.",
+      "The new case stands alone. Daniel Mercer's name, age, sex, short visit reason, postoperative infection and initial fluid treatment are supplied; the update explicitly establishes completed source control and continuing IV antibiotics. Current pressure, output, preload response and norepinephrine trajectory are present. There is one scored node, so neither a prior access-management answer nor a later inotrope question is needed for continuity.",
+      "Moderate rather than hard: the raw reversible measurements require interpretation and the resident must distinguish pressure support from flow or volume support, but the resulting phenotype is fairly clear. Fluid responsiveness and vasoactive escalation are high-yield surgical critical-care concepts. The rating is a reviewer prediction, not measured difficulty or a verified frequency of board testing.",
+      "No confident clinical inaccuracy or equally defensible offered alternative was identified. Assessment is limited to the after/candidate visible fields and used no network or fresh source verification. Retain needs_clinician_review pending Melissa Rowland's exact-version sign-off. Kept-unchanged, retired, parked, held and other nonsalvage records are outside this report's verdicts."
+    ],
+    "suggestions": [
+      "Preserve the raw stroke-volume sequence and measured output rather than replace them with a vasodilatory-shock diagnosis or a statement that vasopressin is indicated.",
+      "If a future revision adds further norepinephrine titration as a competing option, establish a sufficiently supported treatment context to make that comparison fair; do not invent a mandatory dose threshold.",
+      "No blocking revision is required. Keep this as a standalone pressure-versus-flow decision and retain the current explicit antibiotic and source-control chronology."
+    ]
+  }
+]

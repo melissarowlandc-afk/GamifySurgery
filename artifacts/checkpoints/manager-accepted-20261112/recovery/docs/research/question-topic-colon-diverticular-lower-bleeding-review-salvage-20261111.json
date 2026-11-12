@@ -1,0 +1,80 @@
+[
+  {
+    "id": "question.topic.colon-diverticular-lower-bleeding.first-episode-with-urinary-symptoms.v1",
+    "nodeId": "node.topic.colon-diverticular-lower-bleeding.salvage-first-episode-with-urinary-symptoms.v1",
+    "title": "Initial investigation of recurrent urinary infection with pneumaturia and abdominal findings",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Best offered answer: contrast-enhanced CT of the abdomen and pelvis. First interpret recurrent treated infections, bubbles during urination without instrumentation, and focal abdominal tenderness as concern for a bowel-bladder process; then choose an investigation that evaluates its cause and surrounding anatomy rather than limiting the initial examination to the urinary lumen or collecting system. Cystoscopy is the closest credible error for a resident anchoring on recurrent urinary infection.",
+      "The findings raise suspicion rather than prove diverticular fistulization. Other causes of urinary gas are possible, but that uncertainty does not create a better offered initial investigation. The explanation appropriately calls for assessment instead of declaring a confirmed fistula or its cause.",
+      "Cystoscopy can be useful in subsequent bladder evaluation and ultrasound can assess urinary obstruction; neither is the best offered initial assessment of this combined abdominal and urinary presentation. Their usefulness in other circumstances does not make them coequal keys here.",
+      "Cue attack: 'bubbles during urination' is a clinical discriminator, not a lexical match to the CT option. 'There had been no urinary catheterization' is necessary interpretation context for urinary gas. 'initial combination of findings' modestly favors a broad evaluation conceptually, but identifying the appropriate modality still requires clinical knowledge. No diagnosis label, rationale embedded in a choice, absolute, convergence pattern or decisive length outlier supplies the answer.",
+      "Standalone check: Daniel Mercer has a consistent age, sex and short complaint; the update contains the relevant prior treatment, symptoms and investigation history. The task clearly asks for the initial investigation in this retrospective clinic review. There is one node, no exhibit and no preceding feedback or later part to supply missing information or rehearse the answer.",
+      "Moderate, toward the easier end: the syndrome is recognizable, but choosing cross-sectional assessment over a plausible bladder-directed investigation is a consequential second decision. This is a high-yield general-surgery diagnostic concept; that rating is an editorial judgment, not a measured exam-frequency claim.",
+      "Offline review of the candidate text only. No confident clinical inaccuracy identified; exact fistula-oriented contrast protocols and current guideline wording were not independently verified. PASS is editorial and does not confer clinical approval; the draft remains needs_clinician_review."
+    ],
+    "suggestions": [
+      "No required repair for this standalone version. Keep the no-instrumentation history and avoid adding a pre-answer fistula label or a sentence telling the learner to evaluate both organs.",
+      "If feedback is expanded in a future authorized version, explain why cystoscopy may contribute later without replacing the initial assessment of adjacent bowel and bladder. Do not imply that the broad CT option specifies every protocol detail needed to demonstrate a tract."
+    ]
+  },
+  {
+    "id": "question.topic.colon-diverticular-lower-bleeding.first-presentation-ct.v1",
+    "nodeId": "node.topic.colon-diverticular-lower-bleeding.salvage-first-presentation-ct.v1",
+    "title": "Initial CT selection for overlapping abdominal and urinary symptoms",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Best offered answer: contrast-enhanced CT of the abdomen and pelvis. First weigh focal left-lower-quadrant tenderness and fever against dysuria and limited urinalysis abnormalities; then select an imaging approach that assesses a possible colonic inflammatory process and its complications rather than committing to a ureteric-stone protocol.",
+      "The urinalysis does not prove or exclude a urinary source. Absence of blood does not rule out a stone, and absence of nitrites does not rule out urinary infection. The broader clinical pattern makes contrast-enhanced abdominopelvic CT the best offered choice without requiring either false exclusion. Normal creatinine supports the stated contrast choice without inventing a renal-function cutoff.",
+      "Noncontrast stone-protocol CT can also show some alternative abdominal findings; it should not be taught as incapable of detecting diverticulitis. It remains less appropriate than the offered contrast-enhanced study for this uncertain first inflammatory presentation. Colonoscopy is a plausible stage-of-care error, but does not replace initial assessment of an acute extraluminal inflammatory process.",
+      "Cue attack: 'discomfort during urination' could attract the stone distractor rather than reveal the key. 'Creatinine was within the laboratory reference interval' is contrast-related context, but two CT options remain and the finding does not itself establish the suspected source. The options have comparable length, name investigations and contain no self-discrediting explanations. Neither the complaint nor the presentation supplies a diverticulitis diagnosis.",
+      "Standalone check: Elena Brooks has a consistent age, sex and short complaint. 'At that visit' resolves to the first episode described in the presentation, and 'initial presentation' distinguishes the historical investigation from a test to order at today's follow-up. The solitary node requires no missing treatment result, companion explanation or exhibit.",
+      "Moderate at the lower boundary, not hard: the conventional CT choice will be familiar, but the urinary findings create a real anchoring error and require choosing between two CT protocols. The competing urinary and colonic interpretations make the second decision meaningful. Initial investigation and complication assessment of suspected diverticulitis are high-yield surgical learning objectives.",
+      "Offline review of the candidate text only. No confident clinical inaccuracy identified, and no new probability, threshold or diagnostic exclusion is asserted. Guideline currency was not independently verified. Editorial PASS leaves needs_clinician_review unchanged."
+    ],
+    "suggestions": [
+      "No required standalone repair. Preserve the urinary findings and uncertainty of the first episode; removing them would reduce this to an easier diagnosis-to-test association.",
+      "For a future authorized feedback revision, explicitly distinguish the preferred broader inflammatory evaluation from a stone-focused protocol while acknowledging that noncontrast CT can detect other pathology. Do not claim that the negative urine findings exclude urinary disease."
+    ]
+  },
+  {
+    "id": "question.topic.colon-diverticular-lower-bleeding.post-recovery-alarm-colonoscopy.v2",
+    "nodeId": "node.topic.colon-diverticular-lower-bleeding.salvage-post-recovery-alarm-colonoscopy.v1",
+    "title": "Persistent alarm findings despite a recent adequate colonoscopy",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "She tolerated that examination without a procedural problem.",
+        "why": "Minor, nonfatal feasibility cue: it reassures the learner about repeating the prior optical examination immediately before that option is offered. It adds little beyond the documented complete, adequately prepared examination. Removing it would preserve the clinical ranking; it does not independently settle why optical colonoscopy is preferred to CT colonography."
+      }
+    ],
+    "fairness": [
+      "Best offered answer: optical colonoscopy. First distinguish persistent caliber change, weight loss and focal thickening from uncomplicated recovery despite the recent reassuring examination; then select direct luminal assessment with the ability to sample a suspicious abnormality rather than another structural imaging study.",
+      "The recent colonoscopy's date, completion and preparation are supplied, so the learner cannot solve the case simply by assuming the prior examination was inadequate. New alarm findings create the diagnostic indication. The known diverticulitis-with-abscess label supplies legitimate background and does not resolve this new investigation decision.",
+      "CT colonography is a credible competitor for structural colonic evaluation, but cannot obtain tissue and is less appropriate as the first offered investigation when optical examination is feasible and new focal pathology requires assessment. Conventional CT has already shown the persistent abnormality and resolved collection; repeating it does not address the principal remaining luminal question as directly. Neither distractor is categorically useless.",
+      "The task says 'post-recovery', and the update supplies resolution of fever, acute tenderness and the collection. Together these support a diagnostic examination after the acute episode rather than urgent endoscopy during active diverticulitis. The text does not establish a fixed safe interval or prove that every inflammatory change has vanished, and the review does not infer either claim. No confident clinical error or second equally defensible best answer identified.",
+      "Other cue attacks: 'colonoscopy report documented cecal intubation, good preparation and no mass' repeats a term in the key but is decision-critical competing evidence, not an unfair answer announcement. 'Optical colonoscopy' and 'CT colonography' are similarly concise procedure names; the longer conventional-CT distractor does not create a key-length cue. No pre-answer teaching sentence says that tissue is required or names the new diagnosis.",
+      "Standalone check: Nora Bennett has a consistent age, sex and short complaint. Her admission, recovery, current symptoms and earlier colonoscopy are all contained in this single case. There is no dependence on an absent companion's stricture findings or management decision, no prior explanation and no missing exhibit. The task is complete when displayed separately with its presentation and update.",
+      "Moderate: the recent high-quality examination creates meaningful competing reassurance, and modality selection then requires a capability distinction. Persistent alarm features and the limits of a prior negative examination are high-yield concepts. This is not hard solely because several observations are supplied.",
+      "Offline review of the candidate text only; guideline currency and exact timing recommendations were not independently verified. The verdict does not endorse a blanket repeat-colonoscopy rule after every abscess despite a recent adequate examination. Editorial PASS is limited to these symptomatic findings and leaves needs_clinician_review unchanged."
+    ],
+    "suggestions": [
+      "No required repair for standalone coherence or answer uniqueness. In a future authorized wording version, remove the prior-tolerance sentence to reduce redundant feasibility cueing while retaining the examination's date, completeness and preparation quality.",
+      "Make the reusable distinction explicit in post-answer feedback: new alarm findings warrant diagnostic reassessment despite a recent adequate examination, and optical colonoscopy permits tissue sampling whereas CT colonography does not. Avoid inventing a waiting interval or treating persistent thickening as proof of malignancy."
+    ]
+  }
+]

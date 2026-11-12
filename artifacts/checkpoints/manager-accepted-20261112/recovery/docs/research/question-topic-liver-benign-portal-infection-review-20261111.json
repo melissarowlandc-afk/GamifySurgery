@@ -1,0 +1,680 @@
+[
+  {
+    "id": "question.topic.liver-benign-portal-infection.adenoma-imaging.v1",
+    "nodeId": "node.topic.liver-benign-portal-infection.adenoma-imaging.v1",
+    "title": "Characterization of an incompletely imaged solid liver lesion",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "MRI is a reasonable next investigation, but contrast-enhanced ultrasound is also a credible characterization study. The visible record gives neither lesion size nor a demonstrated adenoma/FNH differential that uniquely establishes the asserted preference for hepatobiliary MRI. This is an unresolved ranking concern, not a confident claim that MRI is incorrect.",
+      "The explanation calls this a 'suspected benign hepatocellular differential' more specifically than the presentation establishes. The single-phase limitation justifies further characterization but does not by itself exclude contrast-enhanced ultrasound.",
+      "This report is an offline editorial assessment of candidate text, without external source verification or clinical sign-off. PASS elsewhere in this array does not confer clinician approval."
+    ],
+    "suggestions": [
+      "Establish the particular unresolved imaging question that makes hepatobiliary MRI preferable, using supported observations; otherwise replace the equally defensible imaging competitor.",
+      "Keep the acquisition limitation and noninvasive-before-biopsy decision. Do not add a sentence simply declaring MRI preferred.",
+      "Coverage: 27 distinct executable candidates reviewed (11 rewrites and 16 new nodes). Historical records noted but not re-reviewed: 2 Keep and 19 Retire-and-replace; 3 withheld teaching points are excluded. No separate parked executable candidate is listed."
+    ]
+  },
+  {
+    "id": "question.topic.liver-benign-portal-infection.adenoma-man-resection.v1",
+    "nodeId": "node.topic.liver-benign-portal-infection.adenoma-man-resection.v1",
+    "title": "Regressing adenoma in a man",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Resection planning is the defensible best listed answer for an operable man with established adenoma despite regression after steroid withdrawal. Regression makes continued surveillance a credible competing error.",
+      "The hemorrhage and operative-fitness observations appropriately distinguish embolization and establish that elective surgery is feasible; they do not disclose the male-specific rule.",
+      "The follow-up clearly establishes diagnosis and interval course and can be answered with its presentation and exhibit. The preceding imaging explanation does not supply the resection answer."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.liver-benign-portal-infection.adenoma-woman-observe.v1",
+    "nodeId": "node.topic.liver-benign-portal-infection.adenoma-woman-observe.v1",
+    "title": "Initial management of a small adenoma in a woman",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Which initial lesion-directed plan should accompany withdrawal",
+        "why": "The task supplies risk-factor withdrawal, leaving only the familiar size/sex observation rule."
+      },
+      {
+        "phrase": "no hemorrhage; the specialist review has no separate malignant concern",
+        "why": "Together with the repeated absence of pain and blood loss, this removes the main intervention branches before the choices are read. Some safety information is necessary, but the repetition does not add reasoning."
+      }
+    ],
+    "fairness": [
+      "MRI surveillance is the defensible best listed initial plan. No confident clinical error identified.",
+      "This tests a straightforward management rule with an implausible embolization competitor in the supplied nonbleeding case. The subsequent growth item does not make this first node independently two-step."
+    ],
+    "suggestions": [
+      "Retain enough information to establish safe initial observation, but remove duplicated exclusions.",
+      "Introduce a supported competing consideration that actually changes the initial decision, or request explicit acceptance as foundational practice rather than describing it as difficult resident reasoning.",
+      "Use three credible plans at the same stage; do not manufacture difficulty by withholding bleeding or malignant-risk information."
+    ]
+  },
+  {
+    "id": "question.topic.liver-benign-portal-infection.adenoma-woman-growth.v1",
+    "nodeId": "node.topic.liver-benign-portal-infection.adenoma-woman-growth.v1",
+    "title": "Adenoma growth after estrogen withdrawal",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "specialist review considers the lesion technically resectable",
+        "why": "This adds permission for the keyed operation beside surveillance and embolization; it further simplifies an already explicit growth/size trigger."
+      }
+    ],
+    "fairness": [
+      "Elective resection is the defensible best listed answer for the stated persistent growth and size after withdrawal. No confident clinical error identified.",
+      "The chronology is coherent and the follow-up restates the initial size and hormone withdrawal, so it stands alone. Earlier feedback introduces size, sex and bleeding as the observation determinants, further scaffolding this simple rule application.",
+      "Growth, size and elapsed time all point to the same action; the item does not present a consequential competing inference."
+    ],
+    "suggestions": [
+      "Preserve the clinically useful longitudinal case but acknowledge its current foundational difficulty.",
+      "For a resident reasoning item, use a supported trajectory or workup uncertainty that distinguishes plausible management alternatives, rather than adding further indications for the same operation.",
+      "Retain necessary operative eligibility without announcing the selected procedure as the approved route."
+    ]
+  },
+  {
+    "id": "question.topic.liver-benign-portal-infection.adenoma-beta-catenin.v1",
+    "nodeId": "node.topic.liver-benign-portal-infection.adenoma-beta-catenin.v1",
+    "title": "Molecular risk despite adenoma regression",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The established activating beta-catenin result supports resection despite a shrinking small lesion. The reader must weigh response to estrogen withdrawal against separate molecular risk rather than equate regression with removal of risk.",
+      "The biopsy is explicitly completed after multidisciplinary review, so the question does not imply routine biopsy of every adenoma. Surveillance is a credible competing error; embolization is weaker but does not create an alternative best answer.",
+      "The supplied management-level pathology label is appropriate; it is not a diagnosis label giving away a diagnosis task. Detailed mutation-subtype refinements were not independently verified offline."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.liver-benign-portal-infection.hemangioma-conservative.v1",
+    "nodeId": "node.topic.liver-benign-portal-infection.hemangioma-conservative.v1",
+    "title": "Large stable asymptomatic vascular liver lesion",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The learner must identify the characteristic enhancement pattern, then distinguish lesion size from a reason to intervene or surveil. Routine care is the best listed plan for the supplied stable, typical, asymptomatic lesion.",
+      "Annual imaging and enucleation represent plausible overmanagement errors. Absence of symptoms, compression and interval growth is decision-critical rather than gratuitous elimination.",
+      "No diagnosis label appears in the candidate presentation or task. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.liver-benign-portal-infection.different-lesion-imaging.v1",
+    "nodeId": "node.topic.liver-benign-portal-infection.different-lesion-imaging.v1",
+    "title": "A new lesion beside previously characterized FNH",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "A separate solid segment VII lesion is new",
+        "why": "The text explicitly resolves the lesion-identity issue that the exhibit is purportedly testing. Every offered plan already concerns further investigation, so the old FNH diagnosis does not distinguish the choices."
+      },
+      {
+        "phrase": "Targeted noncontrast liver ultrasound",
+        "why": "This is a plainly weaker repetition of the modality that just identified an uncharacterized solid lesion; it supplies little competition to dedicated contrast imaging."
+      }
+    ],
+    "fairness": [
+      "Dedicated MRI is a reasonable best listed next study. The problem is construct weakness, not a confident clinical error.",
+      "Deleting the prior FNH report leaves essentially the same MRI-versus-repeat-ultrasound-versus-biopsy task. There is no offered management error that actually applies the old benign diagnosis to the new lesion."
+    ],
+    "suggestions": [
+      "Make lesion identity or adequacy of the prior characterization consequential to the decision, using a clear comparison that the resident interprets.",
+      "Replace the weak repeat-ultrasound foil with a credible alternative at the same diagnostic stage; provide the observation that resolves the choice.",
+      "Keep the current lesion and site explicit; do not create difficulty through ambiguous anatomy."
+    ]
+  },
+  {
+    "id": "question.topic.liver-benign-portal-infection.cirrhosis-risk-venue.v1",
+    "nodeId": "node.topic.liver-benign-portal-infection.cirrhosis-risk-venue.v1",
+    "title": "Facility planning for elective surgery in cirrhosis",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The stem does not show enough completed risk assessment to equate choosing a suitable hospital with clearance to proceed; the intended scope should be venue planning."
+    ],
+    "cues": [
+      {
+        "phrase": "complex elective abdominal-wall reconstruction",
+        "why": "This alone strongly favors hospital rescue resources over an ambulatory center, even with the liver exhibit hidden."
+      },
+      {
+        "phrase": "hospital with hepatology and postoperative rescue support",
+        "why": "The key is the uniquely comprehensive safety plan, compared with a weak outpatient plan and a prophylactic invasive procedure."
+      },
+      {
+        "phrase": "has not undergone etiologic treatment or a documented recompensation assessment",
+        "why": "The named missing assessment adds an editorial warning but does not distinguish the three operating venues/plans."
+      }
+    ],
+    "fairness": [
+      "A hospital with liver expertise is the best listed venue; reassuring chemistry does not erase portal hypertension. Routine prophylactic TIPS is not established by this vignette.",
+      "The comparison does not force the intended risk interpretation because the proposed operation already rules against the principal competitor."
+    ],
+    "suggestions": [
+      "Compare plausible hospital-level plans and make the portal-hypertension findings change timing, assessment or venue within that comparison.",
+      "Ask explicitly about the planning decision rather than imply that the record establishes operative clearance.",
+      "Remove the named missing-assessment sentence unless a corresponding concrete decision depends on it."
+    ]
+  },
+  {
+    "id": "question.topic.liver-benign-portal-infection.cirrhosis-defer.v1",
+    "nodeId": "node.topic.liver-benign-portal-infection.cirrhosis-defer.v1",
+    "title": "Uncontrolled ascites before elective hernia repair",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "elective hernia repair",
+        "why": "The task labels the care phase, while the exhibit explicitly excludes the emergency branch offered as a distractor."
+      },
+      {
+        "phrase": "Control ascites with hepatology before scheduling repair",
+        "why": "This is the only optimization plan beside immediate repair and urgent assessment, making the cautious option easy to identify."
+      }
+    ],
+    "fairness": [
+      "Deferring nonurgent repair for ascites optimization is the best listed plan. Recurrent tense fluid despite treatment supports specialist reassessment.",
+      "Unchanged bilirubin does not create a credible conflict with the clearly described uncontrolled ascites.",
+      "The explanation introduces a permanent drain that is not an offered plan; this is distracting feedback rather than a demonstrated clinical error."
+    ],
+    "suggestions": [
+      "Compare realistic management strategies for the unresolved ascites/hernia problem with supported patient-specific discriminators.",
+      "Retain incarceration and skin findings needed for urgency, but do not treat their straightforward absence as a second consequential inference.",
+      "Remove the unrelated permanent-drain discussion from this explanation."
+    ]
+  },
+  {
+    "id": "question.topic.liver-benign-portal-infection.new-fluid-elective.v1",
+    "nodeId": "node.topic.liver-benign-portal-infection.new-fluid-elective.v1",
+    "title": "New ascites after an elective hernia booking",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Which plan should replace",
+        "why": "The lead-in announces that the earlier booking must change before the resident interprets the new findings."
+      },
+      {
+        "phrase": "new free intraperitoneal fluid",
+        "why": "This is necessary clinical information, but its near-direct match to 'ascites evaluation and control' plus two weak competitors reduces the decision to matching the newly named problem."
+      }
+    ],
+    "fairness": [
+      "Evaluation and control of new ascites before nonurgent repair is the best listed plan. Similar bilirubin and creatinine do not establish continued readiness.",
+      "New fluid genuinely changes the earlier clinical state, but the task supplies the consequential conclusion. A default TIPS plan lacks a completed evaluation."
+    ],
+    "suggestions": [
+      "Use a neutral task about whether and how to proceed with the planned operation.",
+      "Compare plausible next evaluations or operative-timing plans rather than automatic shunting and proceeding despite unevaluated decompensation.",
+      "Keep the earlier and current chronology explicit."
+    ]
+  },
+  {
+    "id": "question.topic.liver-benign-portal-infection.urgent-hernia-boundary.v1",
+    "nodeId": "node.topic.liver-benign-portal-infection.urgent-hernia-boundary.v1",
+    "title": "Obstructed hernia after prior ascites-related deferral",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Urgent exploration with concurrent resuscitation",
+        "why": "This is the only option combining the obvious definitive action with stabilization; the other options add a prerequisite before the same exploration."
+      },
+      {
+        "phrase": "without observed bleeding or anticoagulant exposure",
+        "why": "This necessary context strongly weakens the plasma prerequisite; together with explicit closed-loop findings the option set becomes an elementary urgent-care sequence."
+      }
+    ],
+    "fairness": [
+      "Urgent exploration with concurrent resuscitation is the defensible best answer. The obstructed nonreducing hernia and CT findings override the earlier elective ascites plan.",
+      "The urgent recognition objective is high yield and should retain its warning signs. Current difficulty is foundational, not a two-step resident challenge.",
+      "The later bleeding node is coherent because it explicitly records a new clinical state; this explanation does not name its cryoprecipitate answer."
+    ],
+    "suggestions": [
+      "Seek explicit acceptance as a safety/recognition exception, or construct a genuinely unresolved perioperative choice after recognition of the emergency.",
+      "Do not remove obstruction findings or delay necessary surgery just to increase difficulty.",
+      "Keep the distinction between initial absence of bleeding and subsequent active oozing explicit."
+    ]
+  },
+  {
+    "id": "question.topic.liver-benign-portal-infection.cirrhotic-inr.v1",
+    "nodeId": "node.topic.liver-benign-portal-infection.cirrhotic-inr.v1",
+    "title": "Targeted product selection for new bleeding with low fibrinogen",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Active diffuse bleeding plus fibrinogen 70 mg/dL supports targeted fibrinogen replacement. Cryoprecipitate is the best listed product; plasma can supply fibrinogen but is less targeted and more volume-intensive, while PCC does not replace the deficit.",
+      "The learner must avoid targeting the INR and interpret the new deficit in the context of active bleeding. The choices are parallel named products.",
+      "The updated bleeding state, medication record and results are supplied in this node. It can stand alone with the case presentation and appropriately changes the prior nonbleeding decision without contradiction."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.liver-benign-portal-infection.cirrhosis-analgesic.v1",
+    "nodeId": "node.topic.liver-benign-portal-infection.cirrhosis-analgesic.v1",
+    "title": "Rescue analgesia during renal and fluid deterioration",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The pain source and expected duration are unspecified. 'Marked nociceptive pain' is an author summary rather than a concrete clinical problem.",
+      "The clinic retrospective frame shifts to 'current hospital pain plan'; the referenced inpatient decision time should be explicit."
+    ],
+    "cues": [
+      {
+        "phrase": "a brief supervised oral rescue analgesic is being considered",
+        "why": "This pre-answer permission rehearses the keyed opioid rationale."
+      },
+      {
+        "phrase": "Which additional systemic analgesic",
+        "why": "Acetaminophen is already listed as scheduled care, so it is disadvantaged as an 'additional' drug even without calculating the daily dose."
+      }
+    ],
+    "fairness": [
+      "Conservatively dosed short-acting hydromorphone can be a reasonable rescue option in the stated context, while more systemic NSAID exposure is problematic.",
+      "The 2-g/day calculation supplies useful reasoning, but the explanation presents the cited ceiling as universal without specifying its scope. Exact dose recommendations were not independently verified offline; this is a wording/verification concern rather than a confident declaration of inaccuracy."
+    ],
+    "suggestions": [
+      "Specify the actual pain problem and care phase, remove the rescue-permission sentence, and compare complete parallel analgesic adjustments.",
+      "Make an acetaminophen escalation option explicit if daily-dose interpretation is the intended discriminator, with any exact regimen supported and clinician-reviewed.",
+      "Describe the relevant conservative cirrhosis dosing recommendation without implying an exceptionless pharmacologic maximum."
+    ]
+  },
+  {
+    "id": "question.topic.liver-benign-portal-infection.cathartic-response.v1",
+    "nodeId": "node.topic.liver-benign-portal-infection.cathartic-response.v1",
+    "title": "Lactulose adjustment after excessive losses",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Frequent watery stools were followed by standing light-headedness and a blood-pressure drop",
+        "why": "This visibly describes excessive laxative effect; reducing the laxative can be selected without understanding ammonia interpretation."
+      },
+      {
+        "phrase": "Reduce or temporarily hold lactulose",
+        "why": "This is the only option that decreases catharsis; both alternatives intensify it despite the conspicuous losses."
+      }
+    ],
+    "fairness": [
+      "Reduction or temporary holding with correction of losses is the best listed action. Elevated ammonia does not by itself require intensified catharsis.",
+      "The clinical reasoning is sound, but the ammonia value is not necessary to choose the answer against these alternatives. The item does not meaningfully test a two-step distinction."
+    ],
+    "suggestions": [
+      "Use credible competing adjustments that require interpretation of mental-status and bowel-response trajectories.",
+      "Retain dehydration and electrolyte findings needed for safety; improve the comparison rather than hiding treatment toxicity.",
+      "Clarify the retrospective decision time and avoid counting recognition of excessive diarrhea plus stopping a laxative as two consequential inferences."
+    ]
+  },
+  {
+    "id": "question.topic.liver-benign-portal-infection.postop-imaging.v1",
+    "nodeId": "node.topic.liver-benign-portal-infection.postop-imaging.v1",
+    "title": "Imaging a worsening postoperative fluid collection",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "initial abdominal CT was performed without IV contrast",
+        "why": "The missing acquisition feature is repeated in the only broadly appropriate offered study, 'CT of the abdomen and pelvis with IV contrast'."
+      },
+      {
+        "phrase": "MRI with cholangiopancreatography",
+        "why": "There is no biliary or pancreatic operation, finding or unresolved question to make this a close alternative after retroperitoneal lymph-node dissection."
+      }
+    ],
+    "fairness": [
+      "Contrast-enhanced CT is a defensible best study for the worsening postoperative course. Confirming what was actually acquired is better than assuming a missing exported series means no acquisition.",
+      "The Doppler and MRCP alternatives do not engage the postoperative collection question, so the learner need not resolve a credible modality competition.",
+      "The later fluid assay is plausible, but the sequence jumps from requesting imaging to collection sampling without an intervening CT result."
+    ],
+    "suggestions": [
+      "Compare plausible imaging or collection-evaluation pathways at this stage with a genuine protocol or extent-of-disease discriminator.",
+      "Keep the acquisition record, but remove the explanatory comparison with an exported series from feedback unless it serves this actual vignette.",
+      "Add a concise relevant result/chronology bridge to the later sample if the case is intended to teach a connected workup, without revealing the fluid composition."
+    ]
+  },
+  {
+    "id": "question.topic.liver-benign-portal-infection.chyle-equivocal.v1",
+    "nodeId": "node.topic.liver-benign-portal-infection.chyle-equivocal.v1",
+    "title": "Confirming composition after equivocal fluid triglycerides",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The laboratory's 'equivocal range' is not defined. It conveys an interpreted conclusion rather than results that the learner can independently assess; any numerical replacement needs a supported assay-specific basis."
+    ],
+    "cues": [
+      {
+        "phrase": "Repeated fluid triglyceride results remain in the laboratory?s equivocal range",
+        "why": "The record explicitly says the repeated test has not resolved the problem, making that same repeat-test option easy to discard."
+      },
+      {
+        "phrase": "the laboratory accepts both assays as technically valid",
+        "why": "This additionally closes the offered repeat-assay branch, leaving recall of the named confirmatory assay rather than interpretation of a competing result."
+      }
+    ],
+    "fairness": [
+      "Lipoprotein electrophoresis identifying chylomicrons is a defensible confirmatory choice. Opacity alone does not establish chyle.",
+      "The difficulty comes from knowing a specialized assay, not two consequential steps. The postoperative presentation and current sample are sufficient to answer without the preceding CT choice.",
+      "The fever/collection workup is not resolved by this composition result; the explanation appropriately avoids claiming that it locates a leak."
+    ],
+    "suggestions": [
+      "Test a consequential conflict in sample identity, adequacy or findings rather than announcing valid-but-equivocal repeats and asking for the next assay by recall.",
+      "Replace a redundant repeat-assay foil with a genuinely credible competing composition assessment, or retain this only with an explicitly accepted focused-recall purpose.",
+      "Repair the visible apostrophe corruption in 'laboratory?s' when the author revises the candidate."
+    ]
+  },
+  {
+    "id": "question.topic.liver-benign-portal-infection.cardiac-ascites.v1",
+    "nodeId": "node.topic.liver-benign-portal-infection.cardiac-ascites.v1",
+    "title": "High-gradient, high-protein ascites with venous congestion",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The simultaneous samples yield a 2.5-g/dL albumin gradient; high ascitic protein and persistent neck-vein distension favor evaluating a cardiac contribution. Echocardiography is the best listed next investigation.",
+      "The nodular-liver report makes anchoring on cirrhosis a credible error. Hepatic/portal Doppler is a plausible alternative, but the combined fluid and examination findings support cardiac evaluation first.",
+      "The explanation appropriately says the findings raise a cardiac mechanism rather than prove it. The examination is legitimate evidence, not a wording-only answer cue."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.liver-benign-portal-infection.culture-negative-ascites.v1",
+    "nodeId": "node.topic.liver-benign-portal-infection.culture-negative-ascites.v1",
+    "title": "Empirical treatment of neutrocytic ascites before culture growth",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The first sample has 'no growth reported so far'; that is a pending culture, not a finalized culture-negative episode. The explanation correctly uses 'initially negative', and the displayed task should preserve that distinction."
+    ],
+    "cues": [
+      {
+        "phrase": "Which antimicrobial plan",
+        "why": "The options comprise one active treatment, explicitly named prophylaxis, and a diagnostic delay. The lead-in and symptomatic illness allow category/stage elimination without interpreting the neutrophil count."
+      },
+      {
+        "phrase": "Begin oral ciprofloxacin prophylaxis",
+        "why": "Naming prophylaxis advertises the wrong care phase beside current persistent illness."
+      }
+    ],
+    "fairness": [
+      "IV ceftriaxone is the defensible best listed empirical plan in the supplied community-onset context. Treatment should not await a positive culture.",
+      "This is a high-yield threshold-and-treatment rule, but the weak stage-mismatched alternatives substantially reduce its intended reasoning demand.",
+      "The later positive polymicrobial culture is coherent with an initially pending negative report; no sequence contradiction is present."
+    ],
+    "suggestions": [
+      "Use parallel full antimicrobial plans or a neutral immediate-management task with credible alternatives at the same care phase.",
+      "Make the culture/neutrophil disagreement consequential to the comparison, rather than offer prophylaxis and repeat testing as visibly wrong stages.",
+      "Do not add unrelated albumin or other management decisions merely to manufacture a second skill."
+    ]
+  },
+  {
+    "id": "question.topic.liver-benign-portal-infection.secondary-peritonitis.v1",
+    "nodeId": "node.topic.liver-benign-portal-infection.secondary-peritonitis.v1",
+    "title": "Persistent ascitic infection with a focal and polymicrobial change",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The current update says 'after the initial treatment period' without naming the treatment. A reader starting at this later node cannot assess whether the preceding therapy was appropriate from its own visible fields."
+    ],
+    "cues": [
+      {
+        "phrase": "antimicrobial coverage is being broadened",
+        "why": "This is appropriate shared care, but combined with an already repeated fluid sample it leaves the CT as the only substantial new investigation among the offered alternatives."
+      },
+      {
+        "phrase": "Transthoracic echocardiography",
+        "why": "Only peritoneal-fluid culture growth is reported; no bloodstream or cardiac findings support this as a close competitor. It is an out-of-scope foil."
+      }
+    ],
+    "fairness": [
+      "CT with early surgical consideration is the best listed next investigation for persistent/focal symptoms and polymicrobial ascitic infection.",
+      "The initial-to-later culture chronology is coherent. The explanation should preserve suspicion for secondary peritonitis rather than claim the culture alone proves a surgically correctable source.",
+      "The clinical construct has two useful steps, but distractor quality and standalone treatment context need repair."
+    ],
+    "suggestions": [
+      "Restate the actual initial empirical treatment in the later record and retain the duration and response observations.",
+      "Replace echocardiography with a credible same-stage diagnostic alternative and establish why it is less appropriate now.",
+      "Keep broadening antimicrobials as shared care; do not pit necessary treatment against investigation as mutually exclusive actions."
+    ]
+  },
+  {
+    "id": "question.topic.liver-benign-portal-infection.diuretic-volume-loss.v1",
+    "nodeId": "node.topic.liver-benign-portal-infection.diuretic-volume-loss.v1",
+    "title": "Hypovolemic hyponatremia despite persistent ascites",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The dose-related weight loss, orthostasis and creatinine rise favor circulating-volume depletion despite retained ascitic fluid. Holding diuretics and giving isotonic saline is the best listed plan.",
+      "The learner must distinguish total-body fluid distribution from effective circulating volume and then choose a fluid strategy; the free-water-restriction alternative is a credible hypervolemic-hyponatremia error.",
+      "The alert, nonseizing state helps distinguish an immediate severe-neurologic-symptom pathway. The answer implies monitored management, not an unrestricted sodium correction rate; no rate is asserted."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.liver-benign-portal-infection.acute-variceal-treatment.v1",
+    "nodeId": "node.topic.liver-benign-portal-infection.acute-variceal-treatment.v1",
+    "title": "Initial medication coverage for suspected variceal bleeding",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Octreotide plus ceftriaxone is the best listed essential pair for suspected variceal hemorrhage before endoscopy. Pantoprazole may also be appropriate while the source is uncertain, as the explanation acknowledges.",
+      "All three components appear twice across the choices; there is no convergence cue selecting the key. Labels are parallel and none is a unique length outlier.",
+      "Known varices plus hematemesis directly cues the familiar treatment bundle clinically. The item tests bundle recall rather than two consequential inferences; this is a difficulty issue, not a nonmedical wording exploit.",
+      "The explanation does not reveal the subsequent early-TIPS decision, and the case proceeds coherently to endoscopy."
+    ],
+    "suggestions": [
+      "Retain the balanced component design but introduce a supported decision-relevant treatment history or care-phase distinction that makes both components require interpretation.",
+      "Alternatively, seek explicit acceptance as foundational early-bleeding management practice.",
+      "Do not imply acid suppression is forbidden or withhold the variceal history merely to obscure the diagnosis."
+    ]
+  },
+  {
+    "id": "question.topic.liver-benign-portal-infection.preemptive-tips.v1",
+    "nodeId": "node.topic.liver-benign-portal-infection.preemptive-tips.v1",
+    "title": "Early TIPS after initial hemostasis in high-risk cirrhosis",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Child-Pugh C11 in the first 24 hours after variceal bleeding supports the early pre-emptive TIPS pathway despite successful banding. Serial ligation plus beta blockade is the credible competing routine prevention pathway.",
+      "The supplied score is appropriate input for a management decision; reconstructing it is not necessary. Timing and cardiopulmonary/vascular observations establish important eligibility context rather than state the treatment rule.",
+      "The later node supplies the source, hemostasis result, risk category and timing, so it stands alone with the presentation. Prior medication feedback does not give this answer.",
+      "No confident clinical inaccuracy identified; a complete procedural candidacy assessment remains necessary, as the explanation indicates."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.liver-benign-portal-infection.rebleeding-tips.v1",
+    "nodeId": "node.topic.liver-benign-portal-infection.rebleeding-tips.v1",
+    "title": "Escalation after failure of combined secondary prophylaxis",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Recurrent documented variceal bleeding despite consistent tolerated nadolol and serial ligation supports TIPS assessment/escalation after acute control.",
+      "The learner must distinguish failure of adequate combined prevention from missed treatment, then choose escalation over optimizing the same components. The carvedilol option is a credible neighboring decision.",
+      "The current specialist assessment is legitimate candidacy context. Its wording could be more concrete, but it does not name the TIPS answer or render another listed plan equally best.",
+      "No specific beta-blocker dose or response target is invented in this review; exact adequacy remains a clinician-review consideration."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.liver-benign-portal-infection.pyogenic-source-control.v1",
+    "nodeId": "node.topic.liver-benign-portal-infection.pyogenic-source-control.v1",
+    "title": "Persistent liver abscess despite susceptible antimicrobial therapy",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Persistent symptoms and an enlarging liquefied collection despite active therapy support image-guided drainage while antibiotics continue. Broadening antibiotics is a credible error when failure is incorrectly attributed to susceptibility.",
+      "The learner must distinguish antimicrobial coverage from source control, then choose a drainage route suited to the stated anatomy and absence of generalized peritonitis.",
+      "The access-route observation legitimately distinguishes percutaneous treatment from operative treatment; it is not merely an unexplained permission to perform the key.",
+      "No arbitrary size or duration threshold is needed for this comparison. The later catheter complication follows coherently, and this explanation does not name the specific device repair."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.liver-benign-portal-infection.pyogenic-drain-failure.v1",
+    "nodeId": "node.topic.liver-benign-portal-infection.pyogenic-drain-failure.v1",
+    "title": "Recurrent fever with a displaced drainage catheter",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Which next source-control plan",
+        "why": "The task supplies the mechanism category that the resident was supposed to distinguish from antimicrobial failure."
+      },
+      {
+        "phrase": "The catheter tip and side holes lie outside the residual liver cavity",
+        "why": "The necessary mechanical finding directly maps to 'Replace or reposition the drainage catheter'; no competing interpretation remains in the current option set."
+      }
+    ],
+    "fairness": [
+      "Restoring drainage is the defensible best listed plan. Catheter removal despite a persistent cavity and fever is a weak alternative, and operation is premature without a barrier to percutaneous correction.",
+      "The follow-up is coherent and includes enough current imaging and microbiology to stand alone.",
+      "The preceding explanation explicitly teaches source control despite susceptible therapy. Combined with the unambiguous catheter location, the follow-up is simpler than an independent two-step task."
+    ],
+    "suggestions": [
+      "Use a neutral next-management task and a genuinely unresolved drain-function or residual-collection comparison with credible alternatives.",
+      "Keep the actual catheter position visible; do not create difficulty by hiding the decisive imaging finding.",
+      "If retained unchanged, classify it as a mechanical-safety recognition item requiring explicit foundational acceptance."
+    ]
+  },
+  {
+    "id": "question.topic.liver-benign-portal-infection.amebic-luminal-completion.v1",
+    "nodeId": "node.topic.liver-benign-portal-infection.amebic-luminal-completion.v1",
+    "title": "Luminal treatment after an amebic liver abscess",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The task calls the plan 'completed' while asking for its missing next treatment. 'After the tissue-active course' would identify the phase more precisely."
+    ],
+    "cues": [
+      {
+        "phrase": "no luminal agent appears in the record",
+        "why": "This names the exact missing treatment class instead of letting the resident infer it from the medication history."
+      },
+      {
+        "phrase": "The full tissue-active metronidazole course was completed",
+        "why": "The interpretation 'tissue-active' teaches the compartment distinction before the answer."
+      },
+      {
+        "phrase": "Another course of oral metronidazole",
+        "why": "The 'Another course' label advertises repetition of a completed successful treatment; IV ceftriaxone is then a weak different-organism foil."
+      }
+    ],
+    "fairness": [
+      "Paromomycin is the defensible best listed completion therapy after metronidazole for the established infection.",
+      "Luminal completion is indicated even without the added positive stool result, so that result does not create a second consequential decision. The assay type and timing are unspecified; this review does not assert that the result proves viable persistence.",
+      "The concept is high yield, but the visible item mostly names an omission and asks for its drug."
+    ],
+    "suggestions": [
+      "Show the actual medication history without labeling its tissue activity or naming the omitted class.",
+      "Use credible antiparasitic-course alternatives at the same stage and keep the question focused on the treatment-completion decision.",
+      "Remove the stool result unless its interpretation changes the clinical choice; otherwise specify the test and timing with appropriate evidence."
+    ]
+  },
+  {
+    "id": "question.topic.liver-benign-portal-infection.hydatid-biliary-complication.v1",
+    "nodeId": "node.topic.liver-benign-portal-infection.hydatid-biliary-complication.v1",
+    "title": "Complicated hepatic echinococcosis with biliary communication",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The internal-cyst pattern supports echinococcosis; the demonstrated duct communication and recovered membranes establish the complication that changes cyst management. Specialist surgery with antiparasitic planning is the best listed definitive route after stabilization and biliary decompression.",
+      "PAIR plus antiparasitic treatment is a meaningful neighboring pathway that the biliary communication makes inappropriate here. Drug treatment with follow-up is also a real alternative in other disease configurations, rather than an absurd distractor.",
+      "The diagnosis is not named in the presentation or task, and all options describe cyst-management plans. The specialist label does not independently disclose the anatomical contraindication.",
+      "The question deliberately stops short of a specific operation, dose or universal stage/size rule. Detailed stage-dependent treatment nuances require clinician verification; no confident clinical inaccuracy identified in this comparison."
+    ],
+    "suggestions": []
+  }
+]

@@ -1,0 +1,795 @@
+[
+  {
+    "id": "B2B01",
+    "title": "Select leak diversion in a patient with a competing bleeding risk",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "The best offered intervention is plastic stenting: the resident must interpret a communicating stump leak with preserved main-duct continuity, then incorporate ongoing anticoagulation when comparing stenting with sphincterotomy. Covered metal stenting is a credible escalation error, although weaker than sphincterotomy here.",
+      "Importance: high, practical postoperative complication management. Realism: the current ward setting and concurrent pulmonary embolus are coherent. The heparin record is duplicated but is decision-critical clinical information, not a nonmedical answer match.",
+      "Owner flag F02: fully resolved at the wording level by replacement; the remote-nerve distractors and supplied referred-pain mechanism are absent. The replacement assesses bile-leak management, not the original anatomy objective.",
+      "Scope for this entire report: all 40 packet items are covered, including 38 revisions and the two frozen PASS items. Clinical judgments use only the after Presentation, Current update, Exhibit, Task and Options; titles are identifiers, not learner cues. The standard, owner-flag handoff and first review provide review context. No author self-check, rationale, earlier/future feedback or hidden eligibility field establishes a verdict. The B2B24 image referenced by Exhibit was inspected.",
+      "All clinical judgments are offline editorial assessments, not fresh source verification or Melissa Rowland's approval. Drafts remain needs_clinician_review. Difficulty is predicted for PGY-2/3, not measured. Necessary raw discriminators are not automatically unfair cues; an empty cues array does not imply that the item is difficult. Runtime waits, randomization, finite profiles and sequence leakage were outside this after-fields-only review."
+    ],
+    "suggestions": [
+      "Preserve the duct-continuity and anticoagulation facts; the repeated heparin administration sentence can be consolidated without changing the decision."
+    ]
+  },
+  {
+    "id": "B2B02",
+    "title": "Choose the cell target and serum window for the unresolved crossmatch",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "The resident must distinguish a negative T-cell assay from the DQ-reactive archived serum finding, then choose both the relevant donor-cell target and the serum collected before the event. The balanced matrix prevents component-frequency convergence.",
+      "Preimplantation serum with donor B cells is the most defensible offered request for investigating a pre-existing compatibility problem. The bead result is evidence prompting investigation, not proof by itself that the antibody caused graft failure.",
+      "Importance: moderate-to-high transplant immunology; the exact assay-selection detail is more specialized than most general-surgery clinic decisions, but it changes a real investigation rather than merely relabeling rejection.",
+      "Realism: a retrospective transplant-event review is coherent, although this belongs in a specialist case-review encounter rather than routine outpatient management.",
+      "Owner flag F06: fully resolved in the displayed replacement. Neither the rejection diagnosis nor an irrelevant IgE foil supplies the answer; the new assay discrepancy also resolves the former one-step recognition problem."
+    ],
+    "suggestions": [
+      "Retain the balanced cell/serum matrix and the preimplantation archive; specialist clinical sign-off should verify the exact assay interpretation without treating a positive bead result as conclusive causation."
+    ]
+  },
+  {
+    "id": "B2B03",
+    "title": "Avoid an INR-driven transfusion delay in an urgent cirrhotic operation",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [],
+    "fairness": [
+      "No clear competing best answer identified: isolated INR prolongation in this cirrhosis context does not establish a need for the offered prophylactic factor products. The other clot measurements and bleeding observations are legitimate safety data.",
+      "Too easy for the routine PGY-2/3 target. The task has already established urgent exploration and asks a familiar isolated-INR prophylaxis rule; choosing between two replacement products does not create a consequential second inference.",
+      "Importance: high perioperative transfusion stewardship. Realism: the inpatient urgent-hernia setting is coherent, but much of the obstruction narrative is unscored once exploration is established.",
+      "Owner flag F07: fully resolved at the wording level by replacement. The alone options and vague multifactor-risk label are gone; this now tests prophylactic factor transfusion, not the original multifactor surgical-risk objective."
+    ],
+    "suggestions": [
+      "Keep urgent surgery as shared context and compare three concrete perioperative haemostasis plans that represent credible errors for the same actual coagulation findings.",
+      "Use a clinician-supported discrepancy in bleeding, factor assessment or treatment history that changes the plan; do not merely add more normal tests. Alternatively seek explicit acceptance as an easy safety item."
+    ]
+  },
+  {
+    "id": "B2B04",
+    "title": "Reconsider drainage after the Doppler finding",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "Focused soft-tissue study",
+        "why": "This closely repeats the focused ultrasound already described in detail. The option gives no changed acquisition or target, so a test-wise reader can reject it as repetition before interpreting the vascular finding."
+      }
+    ],
+    "fairness": [
+      "An arterial duplex is a defensible next investigation for a potentially communicating vascular cavity. The displayed colour findings support suspicion, not a definitive diagnosis or permission to incise it.",
+      "Too easy for PGY-2/3: pulsatile filling through a channel followed by an arterial study is a recognition-to-matching-test chain; the deep-venous and repeated soft-tissue studies are weak competitors.",
+      "Importance: high avoidance of inappropriate drainage of a vascular lesion. Realism: an incomplete focused sweep prompting formal vascular imaging is plausible, but the original wound course adds little to the current diagnostic choice.",
+      "Owner flag F08: the original alone/isolated-node distractors are fully removed by replacement. The original wording flag is resolved; resident-level discrimination remains unresolved."
+    ],
+    "suggestions": [
+      "Supply a usable constructed Doppler exhibit or a more specific acquisition record, with the suspected communication and uncertainty represented rather than a diagnostic caption.",
+      "Compare credible next investigations at the same stage, each with a distinct target or protocol. If retaining the straightforward arterial-recognition task, seek an explicit safety/basic role."
+    ]
+  },
+  {
+    "id": "B2B06",
+    "title": "Choose the target and assay for a cystic neck-node reassessment",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Frozen PASS retained. The learner must distinguish an unrepresentative fluid sample and potentially contaminated washout from an adequate nodal assessment, then select a tissue target and assay. All matrix components occur equally often.",
+      "The key is defensible among the options; detectable washout alone is not presented as proof of metastasis. The needle trajectory is decision-critical, not a gratuitous exclusion.",
+      "Importance: high thyroid surgical workup. Realism: clinician/radiologist attribution and the specific lateral node are clear. A trans-thyroid trajectory to a lateral node is unusual and remains a clinical geometry check, not a newly established error.",
+      "Owner flag F16: fully resolved in the displayed frozen version; attribution, anatomical clarity and implausible competitors have been repaired. This is editorial PASS, not clinical approval."
+    ],
+    "suggestions": [
+      "Preserve this frozen version. Carry the unusual needle-path geometry to clinical sign-off without silently editing the passed item."
+    ]
+  },
+  {
+    "id": "B2B07",
+    "title": "Distinguish reciting risks from appreciating their personal relevance",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "a protective object placed under the skin makes malignant cells impossible",
+        "why": "An overtly fantastical absolute belief supplies the impaired-appreciation interpretation almost directly; ordinary test-taking points to assessment of capacity."
+      },
+      {
+        "phrase": "Assess decision-specific capacity",
+        "why": "This is the sole assessment option against two dispositions that presume the assessment's result. With an explicitly repeated questionable belief, cautious sequencing identifies the key."
+      }
+    ],
+    "fairness": [
+      "Assessing decision-specific capacity is defensible; the belief alone does not establish incapacity or authorize a relative to consent. The item appropriately keys assessment rather than automatic treatment.",
+      "Too easy for PGY-2/3. Repeating the belief and the failed challenge makes the appreciation deficit explicit rather than requiring a difficult distinction from an informed values-based refusal.",
+      "Importance: high practical ethics. Realism: the situation is possible, but the scripted repeated claim and immediate relative-consent alternative feel constructed for answer elimination."
+    ],
+    "suggestions": [
+      "Use a realistic discrepancy between factual understanding and personal appreciation, with enough dialogue to distinguish it from a culturally grounded belief or an informed acceptance of risk.",
+      "Compare concrete next assessment/support steps at the same stage instead of one assessment against two premature dispositions. Preserve the rule that disagreement or unusual belief alone is not incapacity."
+    ]
+  },
+  {
+    "id": "B2B08",
+    "title": "Use the pretreatment skin presentation when planning after response",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "The resident must recognize the pretreatment inflammatory presentation and apply its continuing implications despite apparent breast and nodal response. This is a meaningful boundary against de-escalation after neoadjuvant treatment.",
+      "Mastectomy with axillary dissection is the defensible offered plan for the presented inflammatory, initially node-positive disease. The balanced matrix gives no component-frequency or length cue.",
+      "Importance: high breast oncology and ABSITE-style reasoning. Realism: the before/after record is coherent; the initially extensive rapid skin findings are necessary even though the table repeats some of them. This surgical task does not purport to describe all multimodal treatment."
+    ],
+    "suggestions": [
+      "Retain the pretreatment skin extent and nodal confirmation; do not turn disappearance of the skin changes into permission for a different disease category."
+    ]
+  },
+  {
+    "id": "B2B09",
+    "title": "Plan the bowel after revascularization with uncertain residual viability",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "The key integrates two consequential findings: uncertain remaining bowel viability and ongoing physiologic derangement. A resident must decide both against immediate anastomosis and against definitive closure without a second look.",
+      "The four plans form a balanced matrix; no wording-only route uniquely assembles the answer. The current observations justify staged management without needing an invented pH or temperature cutoff.",
+      "Importance: very high emergency general surgery. Realism: the intraoperative revascularization/resection sequence is coherent. The abbreviated stapled-ends option is a bowel plan, not a complete prescription for temporary abdominal closure or intensive care."
+    ],
+    "suggestions": [
+      "Preserve the uncertainty of residual viability and current support trajectory. Clarify the technical temporary-closure details in subsequent feedback, without teaching the answer before selection."
+    ]
+  },
+  {
+    "id": "B2B10",
+    "title": "Resolve response and localization discordance before breast resection",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Frozen PASS retained. Interpretation establishes that the palpable remnant and enhancing focus are one location, whereas the original marked bed is another; the learner must cover both relevant sites.",
+      "The key is defensible, and the balanced component frequencies prevent convergence. Rejecting a redundant pair requires interpreting the site record rather than reading option style.",
+      "Importance: high practical breast localization. Realism: marker/response discordance is credible. Localization of both sites is not a claim that enhancement alone defines microscopic disease or clear margins."
+    ],
+    "suggestions": [
+      "Preserve the frozen version and the explicit distinction between the original marker and current palpable/enhancing focus."
+    ]
+  },
+  {
+    "id": "B2B11",
+    "title": "Choose biliary source control during a new cardiac event",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "Which gallbladder intervention",
+        "why": "The task names gallbladder treatment while one option is merely 'transpapillary duct stenting'; the category mismatch helps discard that distractor before integrating the competing cardiac event."
+      },
+      {
+        "phrase": "The common duct is not enlarged and bilirubin remains within its reporting interval.",
+        "why": "This row specifically neutralizes the duct-stenting foil, leaving an obvious drainage-versus-operation contrast in a patient with an overt active cardiac event."
+      }
+    ],
+    "fairness": [
+      "Percutaneous cholecystostomy is a defensible bridge for persistent gallbladder infection during an active cardiac event. However, 'ERCP with transpapillary duct stenting' is underspecified: if intended to mean endoscopic gallbladder drainage through the cystic duct, its ranking cannot be dismissed as routine common-duct stenting.",
+      "Two clinical considerations are present, but both are overt. Typical PGY-2/3 residents should find the operative-risk/source-control choice easy against these alternatives.",
+      "Importance: high acute biliary management. Realism: the ward setting is credible; the task should not imply that fever progression during a new cardiac event permits a leisurely outpatient discussion."
+    ],
+    "suggestions": [
+      "Name the exact stented duct and destination in the ERCP option; do not conflate common-bile-duct decompression with transpapillary gallbladder drainage.",
+      "Compare actual gallbladder source-control strategies with supported patient/anatomy/expertise information that ranks them. Retain necessary cardiac and biliary safety information rather than merely removing the negatives."
+    ]
+  },
+  {
+    "id": "B2B12",
+    "title": "Select supportive treatment without repeating a harmful analgesic class",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "The deep veins compress and show respiratory flow variation.",
+        "why": "This is a purposeful exclusion of deeper thrombosis but makes both systemic-anticoagulation options weak; the remaining choice is the elementary analgesic-class contraindication."
+      }
+    ],
+    "fairness": [
+      "The key is defensible for the displayed superficial chest-wall process with a recent NSAID-associated marginal ulcer. Diagnosis and analgesic selection are distinct steps, but both are straightforward for PGY-2/3.",
+      "Importance: moderate for Mondor-type chest-wall disease; avoiding a harmful analgesic class is high-yield. Realism: specialist assessment is plausible, but the entire authorization/coordinator presentation is irrelevant to this treatment decision.",
+      "The Doppler findings and recent ulcer should not be suppressed to manufacture uncertainty; the defect is mainly easy competitors, not an incorrect clinical key."
+    ],
+    "suggestions": [
+      "Remove the record-sharing preamble if this version is editable; if it is frozen shared context, record that limitation outside the displayed task.",
+      "Build a supported management boundary with more credible alternatives than routine systemic anticoagulation for the described localized chest-wall finding, or seek explicit foundational acceptance."
+    ]
+  },
+  {
+    "id": "B2B13",
+    "title": "Choose the target and method after a nonrepresentative discharge workup",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "it has no sonographic correlate",
+        "why": "This explicitly makes ultrasound guidance for P unavailable while P is the only unresolved suspicious target; one matrix component is eliminated by an announced modality exclusion."
+      },
+      {
+        "phrase": "Target R: mammography-guided vacuum biopsy",
+        "why": "R is described only as mobile ultrasound duct contents, with no mammographic target. This cross-product is a formal matrix cell rather than a credible competing request."
+      }
+    ],
+    "fairness": [
+      "Mammography-guided vacuum biopsy of P is defensible because the prior sample came from R and contains none of P's calcifications. Target provenance and sampling method are two real considerations, but the incompatible matrix cells make the answer too easy for residents.",
+      "Importance: high breast imaging/pathology concordance. Realism: a wrong-target benign sample is plausible. R's mobile avascular contents do not automatically prove benignity in all contexts, but they do not resolve P.",
+      "The milk-like discharge after metoclopramide is now decorative: tissue sampling of an unsampled suspicious calcification field would remain necessary without it."
+    ],
+    "suggestions": [
+      "Retain the target/specimen-radiograph mismatch. Replace impossible cross-product requests with three clinically feasible sampling plans that represent realistic adequacy or target-selection errors.",
+      "Remove the unrelated drug-associated discharge unless it changes the next action. Do not invent a sonographic target merely to populate a matrix."
+    ]
+  },
+  {
+    "id": "B2B14",
+    "title": "Choose the CT request when urinary findings compete with an acute abdomen",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [],
+    "fairness": [
+      "Contrast-enhanced abdominopelvic CT is a defensible best offered request for this inflammatory acute-abdominal presentation. Haematuria creates a plausible renal-colic temptation, but delayed CT urography is a weak acute-care competitor.",
+      "Too easy for PGY-2/3: classic migratory pain, focal guarding and rising inflammatory markers make the intended protocol routine. Recognizing appendicitis and recalling its usual CT request is not a substantial second inference.",
+      "Importance: high. Realism: the hospital setting, pregnancy assessment and contrast-related observations are coherent. These safety facts are not independently exploitable wording cues and should not be removed simply to make the item harder."
+    ],
+    "suggestions": [
+      "Keep the concrete CT-protocol task, but use a supported case where the urinary/inflammatory interpretation or a genuine acquisition constraint changes the protocol choice.",
+      "Replace excretory-phase urography with a credible same-stage request. Do not introduce unsupported contrast contraindications or numeric thresholds."
+    ]
+  },
+  {
+    "id": "B2B15",
+    "title": "Recognize the renal consequence of a new analgesic before elective repair",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [],
+    "fairness": [
+      "Acetaminophen is the defensible offered analgesic class; neither naproxen nor celecoxib solves the presented NSAID-associated renal concern. This does not establish an unrestricted dose or a complete AKI treatment plan.",
+      "Too easy for PGY-2/3. The task already tells the learner to replace ibuprofen, so the new renal deterioration need not be interpreted to choose the only non-NSAID option in a patient with cirrhosis and ascites.",
+      "Importance: high medication safety, but the renal and perioperative consequences are left unscored. Realism: the outpatient deterioration is credible and warrants broader assessment than analgesic substitution; the narrowly worded task should not be presented as complete management."
+    ],
+    "suggestions": [
+      "Change the task to a concrete initial renal/perioperative treatment sequence that requires interpreting the deterioration, with equally credible active plans.",
+      "If retaining analgesic selection, supply a supported constraint that makes two analgesic approaches genuinely competitive; avoid a class-recognition key against two members of the same contraindicated class."
+    ]
+  },
+  {
+    "id": "B2B16",
+    "title": "Interpret worsening mentation alongside the current cathartic response",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "fluid restriction",
+        "why": "Two options restrict fluid despite frequent watery stools, orthostatic symptoms, high sodium and falling urine output. They are conspicuously contrary to the displayed fluid-loss story; the matrix reduces to a simple lactulose direction choice."
+      }
+    ],
+    "fairness": [
+      "Reducing excessive lactulose while replacing fluid and potassium is defensible. The ammonia result should not override the actual treatment response. Both recognizing treatment-related losses and changing the plan matter, but the competing plans are too weak for routine PGY-2/3 difficulty.",
+      "Importance: high perioperative cirrhosis/medication management. Realism: the pattern is coherent, but the after presentation never states cirrhosis or why lactulose was prescribed; an elevated ammonia report alone does not establish the whole cause of inattention.",
+      "Temporary withholding versus dose reduction can depend on severity; the broad reduction label is not confidently wrong, but this should not imply that further assessment of altered mentation is unnecessary."
+    ],
+    "suggestions": [
+      "State the established clinical indication for lactulose without asserting that all current confusion has the same cause.",
+      "Keep the stool, orthostatic and electrolyte observations. Compare plausible acute correction/regimen plans rather than fluid restriction in this overt loss state, and have the clinician adjudicate reduction versus temporary withholding for the chosen severity."
+    ]
+  },
+  {
+    "id": "B2B17",
+    "title": "Choose an access study from the pattern of venous hypertension",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "The resident must localize an outflow problem using access dysfunction, chest-wall collaterals and prior ipsilateral central catheterization, then select an investigation that includes the central veins. Peripheral DVT and steal-focused testing are plausible neighboring errors.",
+      "The key is defensible. The warm hand is necessary clinical discrimination against ischemia, not a summary declaration that an alternative has been excluded. 'Including central venous outflow' states the actual coverage required rather than a generic comprehensive-plan cue.",
+      "Importance: high dialysis-access knowledge. Realism: the dialysis-session observations and anatomical catheter history are credible; this is a useful specialist referral/investigation decision."
+    ],
+    "suggestions": [
+      "Retain the central-catheter history and collateral distribution; feedback should distinguish the requested study's coverage from proof of a specific stenosis."
+    ]
+  },
+  {
+    "id": "B2B18",
+    "title": "Separate the ECG response from potassium removal",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "Glucose and arterial pH are within their reporting intervals.",
+        "why": "Normal pH specifically weakens the bicarbonate option while the normalized ECG weakens repeat calcium. The option set is resolved by the explicitly supplied treatment endpoints rather than a difficult sequencing problem."
+      }
+    ],
+    "fairness": [
+      "Insulin-glucose is the defensible offered next IV treatment after ECG stabilization with persistent severe hyperkalaemia. Calcium has not removed potassium; the item should not imply that shifting potassium is definitive removal in a maintenance-dialysis patient.",
+      "Too easy for PGY-2/3: this is the basic distinction between membrane stabilization and potassium shifting. The repeat identical potassium is useful evidence, but it does not make the familiar rule two consequential steps.",
+      "Importance: very high emergency safety. Realism: an inpatient reassessment is appropriate. Exact current UKKA recommendations were not freshly checked under the no-network constraint; this is not a new protocol verification."
+    ],
+    "suggestions": [
+      "Seek explicit acceptance as an easy safety item, or compare supported next-treatment sequences with a genuine treatment-response or contraindication boundary after immediate stabilization.",
+      "Keep the ECG and potassium response; a harder rewrite must not conceal them or suggest that calcium lowers serum potassium. Include definitive removal planning in the later teaching context."
+    ]
+  },
+  {
+    "id": "B2B19",
+    "title": "Retrieve an acquired target before duplicating the examination",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "The skin marker and tissue from the surface to the pectoral fascia are included in orthogonal cine sweeps.",
+        "why": "The table supplies a complete-looking acquisition of the requested site, making review of stored images the obvious cautious option against repeating them or proceeding directly to sampling."
+      }
+    ],
+    "fairness": [
+      "Reviewing the stored target-M series is a defensible next step before treating a mismatched PDF as the actual examination result. The record establishes acquisition, not its diagnostic conclusion.",
+      "Too easy for PGY-2/3. The current choice is chiefly a documentation/retrieval step; no interpretation of the correct-site images is available, so the richer clinical concordance decision remains untested.",
+      "Importance: high general principle, modest incremental learning value for this exact retrieval task. Realism: mismatched attachments are plausible. A mobile thickening is not automatically harmless, and image review must not become indefinite biopsy deferral."
+    ],
+    "suggestions": [
+      "Show an actual correct-site acquisition finding or a supported report-image discrepancy and compare concrete diagnostic plans that depend on interpreting it.",
+      "Keep the distinction from B2B36: this site has been imaged, whereas that acquisition is obscured. Avoid making review-more-information the only sensible stage."
+    ]
+  },
+  {
+    "id": "B2B20",
+    "title": "Use the origin of a pelvic collection to choose its drainage route",
+    "verdict": "REVISE",
+    "difficulty": "hard",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "the ischioanal fat is not the route connecting it to the lower focus",
+        "why": "This explicitly negates the competing origin rather than merely depicting the connecting anatomy. A learner who associates drainage labels with compartments can eliminate both transperineal plans without tracing the positive course; this is an exclusion scaffold, not a completely nonmedical shortcut."
+      }
+    ],
+    "fairness": [
+      "Transanal drainage with systemic antibiotics is defensible for the stated intersphincteric origin extending above the levator with fever and spreading inflammation. Route selection and the adjunctive decision are separate consequential interpretations.",
+      "Importance: high, though the exact supralevator drainage distinction is a more advanced colorectal topic. Predicted hard reflects that anatomical decision, not missing safety information.",
+      "Realism: MRI for a deep occult collection is credible in an appropriately stable assessment. This report provides prose anatomy rather than the spatial exhibit favored by the owner. Route terminology and anatomy require clinician sign-off; no specific operative technique is validated here."
+    ],
+    "suggestions": [
+      "Replace the explicit not-the-route clause with a constructed cross-sectional map showing the positive communication and relevant compartments; retain accessible raw anatomical observations.",
+      "Keep the cellulitis/fever and balanced route/adjunct matrix. Do not remove necessary infection-extent information merely to make the antibiotic half harder."
+    ]
+  },
+  {
+    "id": "B2B21",
+    "title": "Recognize a withdrawal exception in a postoperative medication decision",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "The learner must identify a withdrawal pattern from the medication chronology and autonomic findings, then apply the exception to routine avoidance of benzodiazepines in postoperative delirium. Lorazepam is the most defensible offered etiologic treatment.",
+      "Haloperidol and dexmedetomidine are plausible symptom-management temptations but do not substitute for treating the likely withdrawal cause. The omitted doses are necessary chronology, not an authored instruction to give the keyed drug.",
+      "Importance: high postoperative medication reconciliation and delirium management. Realism: the inpatient syndrome is coherent. This does not establish a dose, route, monitoring level or that every alternative delirium cause has been excluded."
+    ],
+    "suggestions": [
+      "Preserve the medication chronology and autonomic findings; keep subsequent teaching explicit that symptom suppression does not replace withdrawal treatment and reassessment."
+    ]
+  },
+  {
+    "id": "B2B22",
+    "title": "Distinguish mesenteric venous disease from an arterial pathway",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [],
+    "fairness": [
+      "Intravenous unfractionated heparin is the defensible initial offered treatment for mesenteric venous thrombosis without the described examination indicating peritonitis. Immediate thrombolysis is a weaker routine first-treatment alternative; laparotomy depends on bowel compromise and clinical evolution.",
+      "Too easy for PGY-2/3: the report names the affected vein and gives a classic filling defect, then the task asks standard initial treatment. This is a diagnosis-to-treatment recall chain rather than a difficult arterial-versus-venous reasoning problem.",
+      "Importance: very high. Realism: the acute hospital assessment is coherent. Lack of free gas does not establish viable bowel, and absence of guarding is a decision-critical current observation, not a guarantee against later deterioration.",
+      "The two descriptions of absent peritonism are redundant but not independent nonmedical answer cues."
+    ],
+    "suggestions": [
+      "Retain the examination findings and replace repeated reassuring wording with a supported trajectory or treatment constraint that actually changes the next action.",
+      "Compare plausible management sequences after the venous diagnosis is shared, or seek explicit acceptance of the easier initial-treatment rule. Do not imply that no free gas excludes infarction."
+    ]
+  },
+  {
+    "id": "B2B23",
+    "title": "Do not equate clinical recovery with resolution of local pancreatitis",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "The resident must distinguish clinical improvement from resolution of local necrotizing disease, then integrate the lack of an ongoing duct indication. Interval cholecystectomy without ERCP is the defensible offered plan.",
+      "The balanced matrix avoids length and convergence cues. The negative duct findings are necessary to rank the ERCP component; deleting them would create uncertainty rather than fair difficulty.",
+      "Importance: high biliary pancreatitis management. Realism: a clinically recovering patient with persistent debris-containing collections is credible. 'Interval' intentionally avoids an unsupported exact date; it should not be read as a fixed universal waiting period."
+    ],
+    "suggestions": [
+      "Retain the local collection and earlier nonenhancement observations, with subsequent clinical review determining actual operative timing."
+    ]
+  },
+  {
+    "id": "B2B24",
+    "title": "Bracket the malignant residual field rather than the MRI edge",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "The learner must interpret the sampled epithelial/necrotic finding as residual in-situ malignancy and incorporate its mapped extent beyond MRI enhancement. M-to-C is the defensible bracket within the expressly established conservation field.",
+      "Every option shares M and differs only at the other endpoint, so there is no majority-component cue. The pathological description at C supplies meaningful evidence; it is not a diagnosis label or an explanation that directly instructs the endpoint choice.",
+      "Importance: high breast conservation planning after therapy. Realism: the stated one-quadrant scope and established conservation decision repair the earlier missing operative scope.",
+      "The referenced image exists at apps/player/public/clinical-exhibits/batch2b-r2-b24-breast-map.png and was visually inspected. It is legible, explicitly constructed, and consistent with the text: M-E enhancement, M-C calcifications, P old palpable extent. This verifies the asset, not in-game rendering or microscopic margins."
+    ],
+    "suggestions": [
+      "Preserve the explicit operative scope and spatial map. Keep the interpretation of the C specimen for the learner rather than adding a malignant-endpoint caption."
+    ]
+  },
+  {
+    "id": "B2B25",
+    "title": "Choose a completion technique from remnant anatomy and wall quality",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "The key follows two meaningful constraints: unsafe dissection/identification at the hilum and wall that cannot reliably hold closure. Fenestrating subtotal cholecystectomy is the most defensible offered completion plan.",
+      "The wall splitting is legitimate observed operative information, not a preference or teaching sentence restating the procedure. Reconstituting subtotal and fundus-first total procedures are credible errors at this boundary.",
+      "Importance: very high operative safety. Realism: the intraoperative anatomy and tissue quality are coherent. The short option does not specify all drainage, remnant or leak-management details, and should not imply that fenestrating surgery is universally preferable."
+    ],
+    "suggestions": [
+      "Retain both the dissection hazard and the wall-quality finding; removing either would weaken the exact ranking."
+    ]
+  },
+  {
+    "id": "B2B26",
+    "title": "Resolve discordant acute biliary findings without a modality tie",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "The common duct is not enlarged and the liver panel remains within its reporting intervals.",
+        "why": "The entire row weakens the MRCP distractor while the endoscopy option is tied to an explicitly earlier burning symptom. Both alternatives are steered away before a difficult modality comparison is needed."
+      }
+    ],
+    "fairness": [
+      "Hepatobiliary scintigraphy is the most defensible offered test for the current clinical/ultrasound discordance. Removing CT resolves the previous offered-modality tie; this review does not establish that HIDA is uniquely superior to all possible tests outside the choices.",
+      "Too easy for PGY-2/3: a familiar suspected acute gallbladder process with an unrevealing structural ultrasound is followed by its usual functional test, against weak duct/peptic alternatives.",
+      "Importance: high acute biliary investigation. Realism: the acute setting and specific ultrasound observations are improved. The previous naproxen-associated symptom adds a conspicuously stale alternative rather than a strong current differential.",
+      "This is the v3 sibling, not the F12 v4 exact owner-flagged variant; a verdict here does not certify resolution of that separate version."
+    ],
+    "suggestions": [
+      "Keep the actual ultrasound observations and a unique offered key. Compare plausible current investigation strategies whose ranking depends on a supported protocol or present clinical discrepancy.",
+      "Do not reintroduce CT as a distractor without a clinician-supported discriminator, and do not replace raw observations with an inconclusive label or feasibility permission."
+    ]
+  },
+  {
+    "id": "B2B29",
+    "title": "Notice ECG deterioration after a potassium-shifting intervention",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "pH is within the laboratory interval.",
+        "why": "The supplied normal pH specifically removes the main rationale for the bicarbonate foil; the other competing drug has just been given and has already lowered potassium."
+      }
+    ],
+    "fairness": [
+      "Calcium gluconate is the defensible offered next treatment for progressive ECG toxicity despite a lower potassium result. The current ECG response is clinically necessary, not an unfair clue to delete.",
+      "Too easy for PGY-2/3: the classic ECG pattern directly triggers the familiar membrane-stabilization rule. Interpreting an ECG change and naming its standard immediate drug is not a substantial two-step item here.",
+      "Importance: very high safety knowledge. Realism: inpatient reassessment is appropriate, though worsening electrical toxicity despite a falling serum value should prompt broader reassessment as well. The exact current UKKA pathway was not freshly verified."
+    ],
+    "suggestions": [
+      "Seek explicit easy safety acceptance or test a supported response-dependent sequencing decision with credible competing next steps.",
+      "Preserve the ECG danger signs and do not make the answer harder by concealing current potassium or acid-base information."
+    ]
+  },
+  {
+    "id": "B2B30",
+    "title": "Choose the infusion after glucose falls but ketone acidosis persists",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "The resident must recognize persistent ketone acidosis despite near-normal glucose, then choose ongoing insulin with glucose support rather than stopping causal treatment or continuing saline without glucose. Both components matter.",
+      "The balanced matrix has no convergence cue. The constructed gas values are internally consistent to the displayed precision; they are not a physiologically contradictory way to force the key.",
+      "Importance: high perioperative SGLT2-associated ketoacidosis management. Realism: postoperative illness with an improving glucose before ketone resolution is credible.",
+      "The key identifies the glucose/insulin decision, not a complete fluid, potassium, dose or monitoring prescription. Isotonic fluid can remain clinically relevant alongside glucose; the distractor should be understood as the offered alternative support plan."
+    ],
+    "suggestions": [
+      "Retain simultaneous ketone, glucose and acid-base measurements; make clear in later feedback that the selected glucose addition does not forbid other indicated resuscitation or electrolyte replacement."
+    ]
+  },
+  {
+    "id": "B2B31",
+    "title": "Reconcile ABO evidence despite a negative HLA record",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "The preimplantation HLA cell-binding report was negative.",
+        "why": "HLA is presented as an already completed negative comparison, while the exhibit introduces an unresolved erythrocyte discrepancy. This supplies a novelty/elimination advantage to both ABO options, though ABO identification still requires medical knowledge."
+      }
+    ],
+    "fairness": [
+      "The ABO/preimplantation pairing is the intended and most plausible etiologic focus: the resident can derive donor A/recipient O and ask whether relevant recipient antibodies preceded the event.",
+      "The task asks broadly which records 'should be reconciled', not which archive can establish pre-existing ABO incompatibility. Post-event antibody records and reconsideration of a negative HLA workup can also be legitimate parts of that review. I cannot treat them as inherently incorrect record requests; this is task-ranking ambiguity rather than proof that the key is clinically wrong.",
+      "Importance: high compatibility safety, with moderate relevance for this specific retrospective record-selection task. Realism: the bench record is coherent, but whether an ABO-incompatible transplant was planned/desensitized is not given. The displayed forward typing alone does not prove a clerical error or antibody causation."
+    ],
+    "suggestions": [
+      "Define the specific unresolved historical question and make all options equally concrete tests or archive comparisons that could answer it, rather than broad requests that could all belong in an investigation.",
+      "If the intended error is unexpected incompatibility, state the relevant planned compatibility/desensitization context. Do not make a negative HLA result a declaration that HLA review is never appropriate."
+    ]
+  },
+  {
+    "id": "B2B32",
+    "title": "Find the masked gap before choosing the cause tests",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "The raw gap is 12 mmol/L; applying the supplied albumin relation gives 19 mmol/L, above this constructed laboratory's upper reference of 16. The resident must uncover that signal despite loose stools, then select tests for unmeasured anions.",
+      "Lactate and beta-hydroxybutyrate are the most defensible offered initial etiologic request. The urinary and stool panels represent plausible errors if the record is treated solely as a normal-gap loss process.",
+      "Importance: high surgical acid-base interpretation. Realism: cirrhosis, low albumin and lactulose-associated stool losses form a credible competing explanation. The gas and bicarbonate values are internally coherent.",
+      "The calculation aid states a permitted operation rather than the patient's result; it does not itself provide the interpretation. The selected tests are not a complete evaluation of every possible unmeasured anion."
+    ],
+    "suggestions": [
+      "Retain the raw values and the real competing stool-loss explanation. Do not replace the calculation with an already reported corrected-gap label."
+    ]
+  },
+  {
+    "id": "B2B33",
+    "title": "Do not let near-normal pH and glucose erase the metabolic signal",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "The resident must recognize that upper-range pH and normal glucose do not dismiss a high-gap metabolic process, then connect the postoperative drug/exposure history to the appropriate ketone assay. This is more than naming an already supplied diagnosis.",
+      "Blood beta-hydroxybutyrate is the most defensible offered priority. Salicylates can produce a mixed pattern, but no exposure is supplied; the explicit dapagliflozin history makes ketone testing the better-supported first request without proving the final diagnosis.",
+      "Importance: high perioperative metabolic safety. Realism: limited intake with SGLT2 exposure is credible. The qualitative gas descriptions do not permit quantitative compensation analysis, but that is not required to choose this initial assay.",
+      "No nonmedical overlap or option-category cue identified; the drug name is necessary clinical evidence."
+    ],
+    "suggestions": [
+      "Retain the drug history and gap finding. Do not claim a quantified mixed disorder or confirmed ketoacidosis from these qualitative values before the assay returns."
+    ]
+  },
+  {
+    "id": "B2B34",
+    "title": "Choose a current cause request when the raw trend moves the other way",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "Admission lactate and ketone review",
+        "why": "The task asks what to request 'now' from a current panel, so this is an explicitly historical-review foil. It is the same analyte pair as the key with a stale time label; a test-wise reader can remove it without calculating either gap."
+      }
+    ],
+    "fairness": [
+      "The raw gaps are 14 at admission and 12 currently; the supplied albumin adjustment makes the current gap 19 while admission remains 14. The calculation creates a real counterintuitive trend and supports current lactate/ketone testing.",
+      "The key is defensible, and the gas/bicarbonate values are internally coherent. However, the historical-review distractor creates an avoidable temporal/category cue; it is not a competing current specimen request.",
+      "Importance: high acid-base interpretation. Realism: paired inpatient panels are useful, although the substantial albumin fall lacks a time interval. That omission limits interpretation of the clinical trajectory without invalidating the current arithmetic.",
+      "Two real steps remain, so predicted difficulty is moderate despite the defective distractor. A current urine study is a credible error if the uncorrected gap is taken at face value."
+    ],
+    "suggestions": [
+      "Replace admission-record review with a plausible current etiologic laboratory request, keeping all options at the same time and decision stage.",
+      "State the actual interval between the constructed panels if the size of the albumin change is intended to be part of the clinical story; preserve the raw-versus-corrected trend."
+    ]
+  },
+  {
+    "id": "B2B35",
+    "title": "Verify the discordant specimen before treating a bicarbonate result",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "From the infusion lumen while its saline flush was running",
+        "why": "The collection record effectively announces a contaminated specimen. The only option that recollects the implicated electrolyte sample independently becomes the obvious repair, before any acid-base calculation."
+      },
+      {
+        "phrase": "Radial puncture recorded separately",
+        "why": "Together with the fully normal arterial panel, this explicitly privileges the already completed sample and makes another arterial gas a weak repetitive foil."
+      }
+    ],
+    "fairness": [
+      "A peripheral electrolyte panel is a defensible way to verify the discrepancy. The numerical pattern is unusually well constructed: the sodium/chloride shift and fall in total CO2 are compatible with dilution toward saline composition, while the arterial gas is coherent.",
+      "Too easy for PGY-2/3 despite those good numbers: the explicit collection error does the interpretive work, and two distractors fail to address the named problem.",
+      "Importance: high specimen quality and avoidance of inappropriate treatment. Realism: saline contamination is credible, and the simultaneously normal arterial gas can clarify that rapid breathing did not establish an acid-base diagnosis at that instant."
+    ],
+    "suggestions": [
+      "Retain actual collection provenance, but present neutral timestamps, infusion/site records and the conflicting panels rather than an explicit running-flush collection statement.",
+      "Offer credible verification plans with distinct specimen sites or sequences, then require the numerical/provenance interpretation to rank them. Do not merely conceal provenance that is necessary for fairness."
+    ]
+  },
+  {
+    "id": "B2B36",
+    "title": "Distinguish an obscured target from a completed negative examination",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "tissue beneath that stripe is not depicted",
+        "why": "This gives the adequacy conclusion directly, selecting reacquisition over retrieving a report of the same obscured study."
+      },
+      {
+        "phrase": "Retrieve the existing breast ultrasound report",
+        "why": "This is a documentation action beside two new imaging acquisitions. It cannot repair the expressly stated absence of depicted tissue and is a weak category/sequence foil."
+      }
+    ],
+    "fairness": [
+      "Repeating targeted ultrasound with the marker artifact corrected is the defensible next imaging request. Retrieving a report cannot recover tissue never depicted, and MRI is premature for this specific technical failure.",
+      "Too easy for PGY-2/3: the record already states the unvisualized target and leaves one obvious way to complete the test. The wrong-site PDF adds largely redundant information.",
+      "Importance: high concordance/adequacy principle. Realism: an acoustic shadow from a marker is plausible, but a knowingly completed sweep with the entire relevant stripe obscured is a conspicuous acquisition failure.",
+      "The absence of a biopsy option is acceptable for this explicitly imaging-only task; a completed repeat scan would not automatically settle a persistent suspicious examination."
+    ],
+    "suggestions": [
+      "Use a constructed acquisition image with an accessible observation description, then ask for a specific corrective acquisition or diagnostic sequence whose appropriateness requires interpreting coverage.",
+      "Keep the distinction between incomplete acquisition and a true negative result, but avoid a supplied adequacy conclusion and a documentation-only foil."
+    ]
+  },
+  {
+    "id": "B2B37",
+    "title": "Choose both a representative target and a tissue method",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "The H images show a small post-needle cavity beneath the puncture scar, separate from M.",
+        "why": "This explicitly labels the alternative target as a post-procedure site unrelated to the persistent lump, eliminating both sonographic-target options before the sample-method decision."
+      }
+    ],
+    "fairness": [
+      "A core sample of the clinically palpable target is the defensible offered request. The prior H sample cannot resolve M, and a negative correct-site ultrasound does not negate a suspicious palpable finding.",
+      "Two decisions exist, target and method, but both are straightforward: the wrong-site sample is overt and core versus needle cytology is a familiar adequacy distinction. Too easy for routine PGY-2/3 difficulty.",
+      "Importance: high breast-clinic diagnostic safety. Realism: wrong-site sampling is possible, but the repeated site error after repeat scanning is unusually elaborate. 'Sonographic target' is also imprecise now that H is described as a post-needle cavity.",
+      "This is a v1 sibling, not the exact F17 v4 owner-flagged variant; repairing it cannot be recorded as full resolution of that separate flag."
+    ],
+    "suggestions": [
+      "Name concrete M/H targets consistently in every option and describe the existing sample record without author-supplied dismissal of H.",
+      "Use a supported sample-adequacy or concordance problem where more than one target/method combination is clinically feasible. Preserve the concerning examination rather than weakening biopsy necessity to create difficulty."
+    ]
+  },
+  {
+    "id": "B2B38",
+    "title": "Choose the opposite drainage route for an ischioanal origin",
+    "verdict": "REVISE",
+    "difficulty": "hard",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "the plane between the sphincters is not its communicating route",
+        "why": "The text explicitly excludes the competing origin instead of requiring the learner to trace the positive route. This is an anatomical elimination scaffold; it does not give a lay reader the entire drainage rule."
+      }
+    ],
+    "fairness": [
+      "Transperineal drainage is the defensible route for the displayed upward extension from the lateral ischioanal compartment. Route selection plus adjunctive antibiotic assessment are consequential decisions; the anatomical rule is advanced enough to predict hard PGY-2/3 performance.",
+      "The no-systemic-antibiotic component is plausible in a well, immunocompetent patient without spreading infection, but 'skin redness remains at the small opening' leaves the extent and significance of cellulitis imprecise. Normal temperature alone does not establish that antibiotics are unnecessary. Exact ranking warrants clinician review rather than a universal no-antibiotic claim.",
+      "Importance: high colorectal source control. Realism: a small external opening can coexist with a deeper collection; MRI is reasonable for that discordance. The complex anatomy is currently delivered only as prose."
+    ],
+    "suggestions": [
+      "Show the communicating route on an independently constructed anatomical exhibit and remove the explicit exclusion of the other route.",
+      "Describe the observed extent of local erythema and relevant systemic/host findings without an authored no-cellulitis label; have the clinician confirm whether the exact deep-collection scenario supports the antibiotic choice.",
+      "Keep the distinction from B2B20 as a real origin-dependent change in route, not merely a reversed negative sentence."
+    ]
+  },
+  {
+    "id": "B2B39",
+    "title": "Integrate a high tract with immunosuppression despite normal neutrophils",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "The learner must interpret a high sphincter-crossing tract and the transplant immunosuppression despite normal neutrophils, then combine sphincter-preserving drainage with systemic antibiotics. Both plan components are consequential.",
+      "The key is defensible among the offered choices. Source control has already been achieved, so the former unresolved timing of drainage during cytopenia is not being assumed away; this is a different, clearly stated host/tract scenario.",
+      "Importance: high colorectal care and immunosuppressed-host assessment. Realism: recurrent abscess with a documented tract during examination under anaesthesia is coherent. Normal counts do not establish normal immune function.",
+      "The balanced matrix avoids convergence, and the normal laboratory values provide a credible clinical near-miss rather than a key-specific grammar or length cue."
+    ],
+    "suggestions": [
+      "Preserve the distinction between drug-induced immunosuppression and neutrophil count, together with the observed tract height and completed cavity drainage."
+    ]
+  },
+  {
+    "id": "B2B40",
+    "title": "Notice baseline function before dividing an apparently low tract",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "The resident must recognize that an apparently low tract is not the whole decision: pre-existing leakage, low resting tone and prior sphincter division make further division less attractive. A loose draining seton is the defensible offered procedure at this stage.",
+      "Primary fistulotomy is a credible default error for a low tract; cutting seton placement remains a sphincter-dividing strategy. The functional observations are necessary patient-specific evidence, not a stated preference that simply announces the key.",
+      "Importance: high practical continence preservation. Realism: prior sphincterotomy and baseline dysfunction are coherent. The key is an initial drainage strategy, not proof of definitive fistula cure or a universal best operation."
+    ],
+    "suggestions": [
+      "Retain baseline function and prior-operation anatomy. Keep any later definitive repair decision distinct from this current-stage drainage task."
+    ]
+  },
+  {
+    "id": "B2B41",
+    "title": "Audit delivered intake before escalating for an albumin result",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "Consumed oral supplements",
+        "why": "Together with the meal row, the displayed amounts sum exactly to both prescribed targets. Simple arithmetic and continuation of an apparently successful route select the sole oral option without interpreting albumin or inflammation."
+      }
+    ],
+    "fairness": [
+      "Continuing oral nutritional support is the defensible offered route given the supplied dietitian targets and measured consumption. The numbers are explicitly individual constructed targets, not asserted universal requirements.",
+      "Too easy for PGY-2/3. The albumin/CRP relationship is not required to solve it; the exact target-matching sums and absence of a delivery problem do almost all the work.",
+      "Importance: high perioperative nutrition, but the specific task adds little beyond arithmetic. Realism: a measured intake audit is credible; a current day's adequacy does not by itself establish sustained adequacy or prove that every nutritional goal is met.",
+      "'Fortified oral nutrition' is less precise than continuing the actual meal-plus-supplement prescription shown; it could be read as changing rather than preserving the successful regimen."
+    ],
+    "suggestions": [
+      "Name the actual oral prescription consistently in the context and option.",
+      "Use a supported delivered-intake trajectory or route/tolerance discrepancy that makes two active support plans credible and requires a clinical inference beyond summing exactly to the target. Do not invent universal feeding thresholds."
+    ]
+  },
+  {
+    "id": "B2B42",
+    "title": "Distinguish gastric delivery failure from failure of the whole enteral route",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "The resident must localize failure to gastric delivery rather than oral effort or a mechanical distal obstruction, then select access beyond the stomach. Nasojejunal feeding is the defensible next route to discuss among the options.",
+      "Parenteral feeding is a plausible over-escalation error after two failed delivery attempts; gastrostomy retains the compartment with the observed retention. The observed transit findings are necessary anatomical evidence, not an unsupported statement that the entire gut works.",
+      "Importance: high practical perioperative nutrition. Realism: vomiting supplies a reason for the investigations, and the route discussion is clinically coherent. A patent bowel study does not prove absorption or future jejunal tolerance; the next route would still require monitored assessment.",
+      "No independent nonmedical cue identified. This is at the easier end of moderate for PGY-2/3, but localization of the failure changes the otherwise tempting switch to parenteral support."
+    ],
+    "suggestions": [
+      "Preserve the gastric-retention versus distal-passage distinction and describe any subsequent jejunal feeding as a monitored strategy, not guaranteed tolerance."
+    ]
+  },
+  {
+    "id": "F13",
+    "title": "Investigate an awake abnormality before relying on the sleepiness report",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "The resident must recognize that the awake oxygenation/total-CO2 findings raise a current ventilatory or acid-base question not settled by the sleepiness history, then choose a blood gas rather than a sleep-only investigation.",
+      "Arterial blood-gas analysis is the most defensible offered immediate investigation. The supplied findings do not establish obesity hypoventilation syndrome: body habitus and alternative causes are not provided. That limitation does not prevent assessing awake gas exchange.",
+      "Importance: high perioperative respiratory assessment. Realism: screening can uncover daytime abnormalities; a saturation reference is more naturally a clinical range than a 'laboratory reference band', but the intended observation is understandable.",
+      "Owner flag F13: fully resolved in this displayed replacement. The alone options and informal-impression shortcut are absent, and the apparently reassuring sleepiness report now competes with objective awake findings. This changes the task from screening-tool selection to evaluation of an abnormal preoperative assessment; it is not clinical approval of the new objective."
+    ],
+    "suggestions": [
+      "Preserve the distinction between sleep-risk screening and evaluating awake physiology; avoid diagnosing a specific hypoventilation syndrome from this record alone."
+    ]
+  }
+]

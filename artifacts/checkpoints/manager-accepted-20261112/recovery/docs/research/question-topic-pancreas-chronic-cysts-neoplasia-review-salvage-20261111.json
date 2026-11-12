@@ -1,0 +1,191 @@
+[
+  {
+    "id": "case.topic.pancreas-chronic-cysts-neoplasia.salvage.chronic-failed-stenting.v1",
+    "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.chronic-failed-stenting.v1",
+    "title": "Persistent chronic-pancreatitis pain after repeated duct stenting",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Scope for this report: only the seven status-salvage after versions were judged. Kept-unchanged, retired, parked, held and omitted companion records were not adjudicated. IDs identify the standalone cases because the salvage records have caseId rather than a separate id. All verdicts are editorial, not clinical approval. This is an offline text review, not a fresh guideline/source verification or runtime rendering/timing audit; all drafts remain needs_clinician_review.",
+      "Longitudinal pancreaticojejunostomy is the defensible best offered intervention: persistent disabling pain, repeated short-lived endoscopic benefit and a dilated obstructed duct support durable surgical drainage; absence of head enlargement or a focal mass makes this morphology coherent. Another stent cycle and celiac block are real interventions, but neither is the best next strategy for this fit patient with the stated treatment history.",
+      "Two consequential steps remain: interpret the response trajectory as persistent obstructive pancreatic pain despite improved nutritional symptoms, then select drainage appropriate to the duct/head anatomy. The nearest error is repeating an initially helpful endoscopic treatment despite its repeatedly transient benefit. Without failed endotherapy or with different head morphology, the comparison would change.",
+      "No reliable nonmedical wording shortcut was found. The known chronic-pancreatitis diagnosis is appropriate for an intervention task. Surgical fitness is necessary eligibility context, not an instruction to select the operation. Options are specific and parallel in function, with no explanatory distractor wording or convergence.",
+      "The single-node case supplies its own diagnosis, treatment history and imaging. No prior answer or exhibit is needed. Named patient, age/sex and short complaint are coherent. Surgical management of painful obstructive chronic pancreatitis is high-yield general-surgery content; moderate is a qualitative prediction, not measured performance. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": [
+      "Optional precision: replace 'should be discussed' with 'is the best next intervention' so the task asks for ranking rather than whether any reasonable option can be mentioned.",
+      "Optional tightening: shorten the enzyme-response sentence if it is not needed to distinguish the pain target. Do not remove the prior endoscopic response, duct anatomy or operative-fitness information."
+    ]
+  },
+  {
+    "id": "case.topic.pancreas-chronic-cysts-neoplasia.salvage.functional-net-enucleation.v1",
+    "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.functional-net-enucleation.v1",
+    "title": "Operation for a small superficial pancreatic-neck insulinoma",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The explanation says 'this is different from surveillance of the prior nonfunctioning NET case.' There is no prior case in this standalone encounter. This suggests missing information or a preceding lesion in the same patient, and fails the self-contained feedback requirement."
+    ],
+    "cues": [
+      {
+        "phrase": "Enucleation with intraoperative ultrasound",
+        "why": "Minor option-style cue: the key alone advertises an additional localization/safety check. This is not sufficient to solve the item without anatomical knowledge, and central pancreatectomy also has a technical qualifier, but it is worth neutralizing during the required revision."
+      }
+    ],
+    "fairness": [
+      "Enucleation is the defensible best offered operation for the stated solitary, superficial, localized insulinoma with duct separation. Neck location makes central resection a credible anatomical distractor; the depth and duct relationship determine why it is unnecessarily extensive here. Distal resection would sacrifice more gland than the supplied anatomy requires. No confident clinical inaccuracy identified; exact operative suitability still requires named clinical review, and no universal duct-distance threshold is newly asserted by this review.",
+      "The supplied insulinoma diagnosis is appropriate because the task is operative selection, not diagnosis. The resident must interpret local depth/duct relationships as allowing limited excision, then select that operation over a location-driven segmental resection. This supports moderate anatomical application. The endocrine confirmation repeats the established functional diagnosis and does not create an additional scored inference.",
+      "The pre-answer standalone presentation supplies the sporadic functional diagnosis, staging and fitness; no missing earlier workup is needed to choose among the operations. The defect is the explicit cross-case reference in feedback. Named patient, age/sex and complaint are coherent. Insulinoma operation selection and duct injury avoidance are high-yield topics.",
+      "The key marker and post-answer explanation were not treated as pre-answer cues. Current source verification and actual runtime wait presentation were outside this offline text review."
+    ],
+    "suggestions": [
+      "Required: remove the reference to 'the prior nonfunctioning NET case' in a new reviewable version, or replace it with a general self-contained statement about why a symptomatic functional lesion is treated despite small size. Preserve the frozen source version.",
+      "Optional: compare operation names at the same specificity and explain intraoperative ultrasound in feedback, or state shared intraoperative localization once if clinically appropriate.",
+      "Retain the neck location, superficial position and measured duct relationship; deleting those findings would make the central-resection distractor harder to rank fairly. No additional diagnostic puzzle is needed."
+    ]
+  },
+  {
+    "id": "case.topic.pancreas-chronic-cysts-neoplasia.salvage.ipmn-high-risk-plan.v1",
+    "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.ipmn-high-risk-plan.v1",
+    "title": "Pancreatic cyst with duct dilation and an enhancing mural nodule",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Referral for pancreatic resection is the defensible best offered plan given duct communication, pronounced main-duct dilation and an enhancing mural nodule in a fit patient. The explanation correctly distinguishes a surgical indication from proof of invasive cancer. No confident clinical inaccuracy identified in this offline review; current guideline details were not independently retrieved.",
+      "Two steps: interpret the duct/nodule observations as a high-risk mucinous duct lesion, then decide that additional cyst-fluid classification should not gate surgical referral. The closest error is insisting on sampling before referral, not simply failing to recognize the cyst. EUS for further anatomical assessment is different from the specifically offered cyst-fluid sampling and may still form part of specialist planning.",
+      "Each high-risk feature reinforces the decision, so this is moderate rather than hard. The item still tests a meaningful sequencing error: surveillance or diagnostic sampling as the primary plan despite established concerning anatomy. Do not imply that every use of EUS is contraindicated.",
+      "No reliable language-only key was found. The raw measurements require clinical interpretation. Fitness information affects management eligibility and should remain. Options name three distinct plans without explanatory qualifiers, absurd absolutes or a unique wording match.",
+      "The case stands alone: incidental discovery, symptom context, duct/cyst findings, staging and fitness are all present. 'Returned' MRI does not require a previous scored node. Named patient, age/sex and short complaint are coherent. IPMN risk stratification and the limits of cyst-fluid testing are high-yield."
+    ],
+    "suggestions": [
+      "Optional precision: make explicit in feedback that the recommendation is referral for resection planning; specialist EUS/anatomical assessment may still occur without making cyst-fluid confirmation a prerequisite.",
+      "Retain the statement that imaging risk does not establish invasive cancer, and do not infer an exact resection extent beyond the supplied distribution."
+    ]
+  },
+  {
+    "id": "case.topic.pancreas-chronic-cysts-neoplasia.salvage.mcn-large-symptomatic.v1",
+    "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.mcn-large-symptomatic.v2",
+    "title": "Persistent symptomatic body-tail cyst after a separate collection resolves",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Distal pancreatic resection referral is the defensible best offered plan for the large, persistently symptomatic, presumed mucinous body-tail lesion in this operative candidate. The pre-existing cyst and new post-pancreatitis collection are explicitly separated; their chronology prevents treating A as merely the new inflammatory collection.",
+      "The explanation appropriately uses 'presumed MCN' rather than claiming definitive histology. Elevated CEA supports mucinous classification, not invasive malignancy; scant bland cytology does not reliably establish safety. These limits are accurately expressed at the level of this offline review. No confident clinical inaccuracy identified, and exact guideline criteria were not freshly verified.",
+      "Two consequential steps: integrate lesion chronology, persistent gastric compression and mucinous findings to identify the relevant residual problem; then choose resection referral despite nondiagnostic reassurance from scant bland cells. Repeat sampling is the closest credible error because the resident may incorrectly demand cytologic proof before referral. Size and symptoms reinforce the indication, keeping difficulty moderate rather than hard.",
+      "A and B are introduced in the standalone presentation and consistently tracked. Their names are cognitively manageable here; no omitted prior answer is needed. 'Subsequent' testing and B's resolution form a coherent sequence. Named patient, age/sex and short complaint fit the story.",
+      "No reliable nonmedical cue was found: A appears in every choice, all options are concrete plans, and no diagnosis label or teaching sentence supplies the decision before answering. The cyst-fluid interpretation and distinction between neoplasm and a post-pancreatitis collection are high-yield."
+    ],
+    "suggestions": [
+      "Optional wording cleanup: replace 'Refer A for distal pancreatic resection' with 'Refer for distal pancreatectomy' or a similarly natural patient-focused label, while keeping lesion A explicit in the task.",
+      "Preserve the pre-attack chronology, resolved collection, persistent symptoms and cytology limitation. Do not strengthen the diagnosis to histologically confirmed MCN or invasive cancer."
+    ]
+  },
+  {
+    "id": "case.topic.pancreas-chronic-cysts-neoplasia.salvage.net-growth-duct-proximity.v1",
+    "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.net-growth-duct-proximity.v1",
+    "title": "Growing nonfunctioning pancreatic NET close to the main duct",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Distal pancreatectomy with regional node assessment",
+        "why": "Minor completeness cue: this is the longest choice and the only one with an added staging component. It could attract a test-wise reader, but does not uniquely solve the case without understanding progression and duct anatomy; the other options are complete strategies, not deliberately incomplete descriptions."
+      }
+    ],
+    "fairness": [
+      "Formal distal resection with regional assessment is the defensible best offered plan: the tumor is now substantially larger, causes an upstream duct effect and lies very close to the duct. The old limited low-proliferation sample does not settle the present management question. Surveillance and enucleation each embody a distinct credible error.",
+      "Two consequential decisions are supported: first reconsider surveillance because the current lesion differs materially from the original small tumor, then use its deep duct relationship to reject enucleation in favor of formal resection. Removing progression would reopen surveillance; changing the anatomy could alter the limited-versus-formal operation comparison. This is moderate, not hard, because both discriminators are pronounced.",
+      "The absence of a specified surveillance interval limits any claim about growth rate, but does not make the offered ranking ambiguous: current size, duct effect and proximity are supplied. The explanation does not calculate a growth rate. No confident clinical inaccuracy identified in this offline review; no exact threshold is newly proposed.",
+      "The known nonfunctioning NET diagnosis is legitimate background for management. Updated cardiopulmonary fitness matters at this age and is not gratuitous permission. No diagnosis-word match, absolute or convergence shortcut was identified beyond the modest completeness cue noted above.",
+      "Initial size, surveillance context, old biopsy, current anatomy, restaging and fitness are present in the standalone case. No previous scored decision is needed. Named patient, age/sex and complaint are coherent. Nonfunctioning pancreatic NET surveillance versus resection and enucleation limitations are high-yield surgical concepts."
+    ],
+    "suggestions": [
+      "Optional style improvement: balance operative-option specificity or move the nodal component into feedback if doing so preserves the intended oncologic distinction.",
+      "Do not call the growth rapid without a supplied interval. Keep the new duct effect and measured relationship because they make the enucleation comparison consequential."
+    ]
+  },
+  {
+    "id": "case.topic.pancreas-chronic-cysts-neoplasia.salvage.postop-transient-drain-bleed.v1",
+    "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.postop-transient-drain-bleed.v1",
+    "title": "Transient drain bleeding after pancreatic surgery",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Which investigation should be obtained urgently in ... hospital record' awkwardly treats the record as the place where a test is performed. The retrospective setting is understandable, but the task should ask what should have been obtained at that point in the hospital course."
+    ],
+    "cues": [
+      {
+        "phrase": "should be obtained urgently",
+        "why": "The task supplies the consequential conclusion that transient bleeding requires urgent investigation. The resident never has to decide whether cessation is reassuring, even though that is the principal lesson in the explanation."
+      },
+      {
+        "phrase": "There is no hematemesis or melena",
+        "why": "Paired with visible drain blood, this explicitly weakens the endoscopy distractor. It is legitimate clinical information, but this option set does not require the resident to weigh a plausible competing luminal source."
+      },
+      {
+        "phrase": "CT angiography of the abdomen",
+        "why": "This is the only offered test overtly directed at blood vessels in a task already labelled urgent after bleeding; the other choices study the gastrointestinal lumen or pancreatic duct. A reader with basic test-name familiarity can reach it without recognizing enzyme-associated vascular erosion. This is an option-purpose shortcut, not an exact repeated-word match."
+      }
+    ],
+    "fairness": [
+      "CT angiography is the defensible best investigation among the offered choices in the described currently stable patient. The association of postoperative enzyme-rich leakage, transient bleeding and potential vascular erosion is clinically coherent. No confident clinical inaccuracy identified in the supplied explanation.",
+      "The verdict concerns discrimination, not the keyed test's clinical plausibility. The intended two-step sequence would be recognizing a potentially dangerous arterial event despite cessation and choosing the appropriate evaluation from the current clinical state. Instead, urgency is supplied, observation is not an option, and MRCP is a weak immediate bleeding alternative. Stability is stated but scarcely discriminates among the actual three choices.",
+      "Do not infer that CTA is universally mandatory before catheter angiography or intervention; those alternatives are not offered, and their ranking would need a more specific clinical state and clinician-verified rationale. 'Circulation is currently maintained' alone should not be used to settle a newly introduced CTA-versus-immediate-angiography dispute.",
+      "The standalone presentation supplies the operation, postoperative collection, drain and readmission context; 'later in the same admission' has an identifiable antecedent. No omitted collection-management result is required. The named patient, age/sex and short complaint are coherent. Sentinel bleeding after pancreatic surgery is high-yield, but this version is easy recognition rather than a sufficiently discriminating resident reasoning item."
+    ],
+    "suggestions": [
+      "Required for the requested difficulty: use a neutral next-management task and compare complete, plausible plans at the same decision stage. Make the interpretation of brief cessation consequential rather than announcing urgency in the task.",
+      "Retain the transient bleeding, hemoglobin fall, enzyme-rich fluid and contemporaneous circulatory state. Do not hide safety findings to create difficulty.",
+      "One possible repair is to compare observation after cessation with vascular evaluation and another credible immediate plan; have Melissa verify all three rankings. Do not simply replace MRCP with catheter angiography unless supplied observations make exactly one pathway best.",
+      "If retained as an easy safety-recognition item instead, obtain explicit acceptance of that educational exception and label its purpose; do not call it a hard or two-step question.",
+      "Use retrospective wording such as 'Which next step should have been taken at this point in the hospital course?' Preserve the frozen original when creating the revision."
+    ]
+  },
+  {
+    "id": "case.topic.pancreas-chronic-cysts-neoplasia.salvage.postop-vomiting-inflammation.v1",
+    "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.postop-vomiting-inflammation.v1",
+    "title": "Recurrent postoperative vomiting with inflammation and changing drain output",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Contrast-enhanced CT of the abdomen and pelvis",
+        "why": "Minor option-length/breadth cue: the key is the longest and broadest anatomical investigation. The extra words describe a standard test rather than its rationale, and the competing symptom-focused and duct-focused investigations remain understandable choices. This is not a reliable language-only solution."
+      }
+    ],
+    "fairness": [
+      "Contrast-enhanced CT is the defensible best offered next investigation for postoperative vomiting with an inflammatory trajectory and abrupt reduction of previously enzyme-rich drainage. Gastric-emptying testing anchors on the symptom; MRCP anchors on the pancreatic duct/leak. Neither is the best initial assessment of the suspected new abdominal complication in the described stable patient.",
+      "Two steps remain: infer that recurrent vomiting with rising inflammatory markers and altered drainage should not be assigned to isolated delayed gastric emptying, then prioritize anatomical evaluation for a secondary complication over functional testing or detailed duct mapping. This is at the lower end of moderate difficulty for a resident. The clinical red flags make it accessible but serve the decision; no pre-answer sentence names an abscess or tells the reader to obtain cross-sectional imaging.",
+      "The case is self-contained: surgery and readmission are in the presentation; symptom trajectory, inflammatory change, drain behavior and contemporaneous stability are in the update. No CT finding or drainage result from an omitted companion is imported. Named patient, age/sex and complaint are coherent, and the retrospective task is understandable in context.",
+      "No confident clinical inaccuracy identified. Fever/leukocyte trend and drain change justify investigation without proving an infected collection. The explanation correctly describes a suspected secondary complication rather than claiming a confirmed diagnosis. Offline review does not verify current guidance, runtime estimates or actual rendering.",
+      "Secondary causes of postoperative gastric dysfunction and investigation of postoperative pancreatic collections are high-yield. There are no later scored parts to assess for answer leakage."
+    ],
+    "suggestions": [
+      "Optional task precision: ask which investigation should have been obtained next for the recurrent postoperative vomiting, so the question identifies its clinical problem even when displayed separately from the presentation.",
+      "Retain the temporal drain change and inflammatory trend; they distinguish the intended complication assessment from a routine emptying study. Do not add a collection diagnosis or future imaging result before the choice.",
+      "Keep the standard modality names and comparable option presentation; no fixed wait duration belongs in the authored prose. Actual runtime wait previews remain an integration check outside this text-only review."
+    ]
+  }
+]

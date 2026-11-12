@@ -1,0 +1,441 @@
+[
+  {
+    "id": "question.topic.breast-cancer.current-recurrence-receptor-specimen.v1",
+    "nodeId": "node.topic.breast-cancer.current-recurrence-receptor-specimen.v1",
+    "title": "Receptor reassessment in recurrent breast cancer",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {"phrase": "Its receptor studies have not been performed.", "why": "Names the missing task immediately before asking for receptor reassessment; the only option that fills that named omission is testing the liver core."},
+      {"phrase": "The archived primary's receptor results are in the chart", "why": "Makes repeating the historical assay look redundant without requiring knowledge of receptor conversion."},
+      {"phrase": "Hereditary breast-cancer panel testing on blood", "why": "The only option that is not a receptor panel can be rejected by matching the task's 'tumor-receptor' wording."}
+    ],
+    "fairness": [
+      "Testing the adequate metastatic core is the best offered assessment. No confident clinical inaccuracy identified; the weakness is discrimination, not a competing correct key.",
+      "The current-versus-historical specimen decision is high yield, but the supplied adequacy conclusion and named missing assay reduce this to one obvious selection.",
+      "Review scope for this entire report: all 20 after/candidate nodes, including both replacement drafts, were reviewed offline against the supplied authoring standard. No author self-check was treated as evidence of quality, no sources were newly verified, and no clinical approval is granted. Difficulty and high-yield judgments are qualitative. Retained, retired, parked and held records were excluded from node verdicts. Runtime waits, rendering and source provenance were not audited from these visible-content fields."
+    ],
+    "suggestions": [
+      "Build a real specimen-selection problem using supported observations about competing samples' timing, viability or assay adequacy; require the learner to decide which evidence can establish current biology.",
+      "Compare three plausible tumor-assessment plans, rather than a redundant historical assay and an unrelated germline panel. Preserve necessary specimen information without announcing the unperformed keyed assay.",
+      "Remove 'no germline interpretation or metastatic drug regimen is scored here' from learner feedback; it describes authoring scope rather than teaching the clinical distinction."
+    ]
+  },
+  {
+    "id": "question.topic.breast-cancer.mastectomy-rni-omit-alnd.v1",
+    "nodeId": "node.topic.breast-cancer.mastectomy-rni-omit-alnd.v1",
+    "title": "Limited positive sentinel nodes after mastectomy with planned regional irradiation",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The intended reasoning is consequential: identify the upfront, limited-burden population, then incorporate planned regional irradiation when deciding about completion dissection. Radiation planning is necessary clinical context, not a wording giveaway.",
+      "No completion operation is a defensible best offered answer under the stated omission framework. Contemporary mastectomy omission criteria were not independently verified in this no-network review; clinician confirmation of the exact population remains necessary.",
+      "Repeat sentinel mapping and axillary sampling is not a convincing competing plan after four sentinel nodes have already been examined and two are positive. The node effectively presents a binary dissection-versus-omission question with filler."
+    ],
+    "suggestions": [
+      "Replace repeat mapping with a clinically credible regional-treatment alternative and broaden the task if necessary so all options address the same decision.",
+      "Keep the upfront treatment phase, nodal burden and planned radiation fields explicit; do not remove those necessary eligibility facts to make the question harder."
+    ]
+  },
+  {
+    "id": "question.topic.breast-cancer.mastectomy-no-rni-alnd.v1",
+    "nodeId": "node.topic.breast-cancer.mastectomy-no-rni-alnd.v1",
+    "title": "Positive sentinel nodes when regional reirradiation is not planned",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Completion dissection is the best offered operation under the supplied radiation constraint. The radiation oncologist's patient-specific assessment appropriately avoids asserting that any prior irradiation universally prohibits reirradiation.",
+      "Two real steps remain: identify limited positive nodes after upfront mastectomy, then recognize that the radiation-supported omission pathway cannot simply be transferred to this plan.",
+      "Repeat sentinel mapping and axillary sampling again lacks a credible purpose after positive sentinel staging. No confident clinical error was identified in the key, but the third option does not meet the credible-distractor standard.",
+      "The exact contemporary omission boundary was not independently source-verified offline."
+    ],
+    "suggestions": [
+      "Rebuild the third alternative around an actual competing axillary-treatment decision at this stage; do not retain repeat mapping solely to reach three choices.",
+      "Delete the redundant 'No neoadjuvant treatment was given' if 'upfront mastectomy' is retained and is unambiguous for the intended learner."
+    ]
+  },
+  {
+    "id": "question.topic.breast-cancer.initial-cno-response-slnb.v1",
+    "nodeId": "node.topic.breast-cancer.initial-cno-response-slnb.v1",
+    "title": "Axillary staging after response in an initially node-negative patient",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Sentinel staging is the best offered operation in the represented initially clinically node-negative post-neoadjuvant setting. The explanation correctly separates breast imaging response from pathologic nodal status.",
+      "No decisive nonmedical wording shortcut was found, but the breast MRI response is a distractor to an otherwise routine sentinel-staging rule. Normal nodes before and after treatment do not require a second consequential inference here.",
+      "This is high-yield foundational knowledge, but the draft is not identified as an independently accepted basic exception."
+    ],
+    "suggestions": [
+      "Either seek explicit acceptance as a focused foundational item or replace the simple operation choice with a supported staging-adequacy or phase-dependent problem that changes the next action.",
+      "Do not count recognizing a normal axilla and recalling sentinel biopsy as two consequential steps. Remove the breast marker sentence unless a revised task uses it."
+    ]
+  },
+  {
+    "id": "question.topic.breast-cancer.initial-fixed-nodes-alnd.v1",
+    "nodeId": "node.topic.breast-cancer.initial-fixed-nodes-alnd.v1",
+    "title": "Axillary surgery after response of initially fixed nodal disease",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The pretreatment fixed cluster must be interpreted as a different initial nodal setting from mobile cN1 disease, then carried forward despite apparent response. Clipping and response make targeted staging a credible near-miss.",
+      "No lexical cue, convergence pattern or diagnosis label selects dissection without clinical knowledge. Fixed nodes are necessary staging evidence.",
+      "Dissection is the best offered plan under the stated standard higher-burden framework. No confident clinical inaccuracy identified; the explanation's current ASBrS claim was not independently verified offline."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.breast-cancer.skin-versus-parenchymal-tissue.v1",
+    "nodeId": "node.topic.breast-cancer.skin-versus-parenchymal-tissue.v1",
+    "title": "Tissue diagnosis with progressive breast skin changes",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {"phrase": "the parenchymal area has not been sampled", "why": "Explicitly names the unsampled target while another option repeats the already sampled skin."},
+      {"phrase": "There is no drainable collection.", "why": "Directly negates the apparent purpose of the aspiration alternative. Together with the named unsampled target, this allows elimination instead of specimen interpretation."}
+    ],
+    "fairness": [
+      "Image-guided core of the parenchymal abnormality is the best offered next procedure. The negative skin finding does not resolve the breast target; no confident clinical error identified.",
+      "The two distractors are weakened by explicit statements that skin was already sampled and no collection is drainable. The inference-to-action chain is largely supplied.",
+      "The later invasive-cancer update follows coherently. This explanation does not disclose the next node's systemic-therapy-first sequence."
+    ],
+    "suggestions": [
+      "Use a specimen-target adequacy problem with actual acquisition and tissue observations and credible competing tissue procedures. Avoid announcing which target has not been sampled.",
+      "Retain the information needed to distinguish solid tissue from a fluid collection, but replace the aspiration foil if it remains plainly inapplicable."
+    ]
+  },
+  {
+    "id": "question.topic.breast-cancer.inflammatory-initial-sequence.v1",
+    "nodeId": "node.topic.breast-cancer.inflammatory-initial-sequence.v1",
+    "title": "Initial treatment sequence for inflammatory breast cancer",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must integrate the rapid, extensive skin changes with invasive carcinoma and nonmetastatic staging, then select treatment order. The diagnosis is not supplied as a pre-answer label.",
+      "The three options contain the same treatment components in different sequences, avoiding a uniquely comprehensive key. Surgery first is a meaningful error even though radiation first is less tempting.",
+      "Systemic therapy before modified radical mastectomy and radiation is the best offered initial strategy. This is a planned sequence, not evidence that surgery will remain appropriate regardless of response.",
+      "The update follows the preceding tissue-procedure node, supplies the new pathology and staging, and is understandable with the presentation without needing the prior answer. Earlier feedback does not state this sequence."
+    ],
+    "suggestions": [
+      "In feedback, make future surgery conditional on reassessment after systemic therapy; retain the current concrete initial-sequence task."
+    ]
+  },
+  {
+    "id": "question.topic.breast-cancer.marker-target-reconciliation.v1",
+    "nodeId": "node.topic.breast-cancer.marker-target-reconciliation.v1",
+    "title": "Absent biopsy marker despite removal of the calcification target",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The learner must distinguish the documented displaced marker from the malignant target, reconcile specimen and breast imaging, and decide whether further excision is necessary. The absent marker makes unnecessary medial excision a credible error.",
+      "Closure while awaiting histologic margins is the best offered plan because the complete mapped calcification target is represented and no residual target is seen. This does not equate radiographic retrieval with negative microscopic margins.",
+      "Additional specimen views are less compelling than the marker-bed alternative, but the displacement-versus-retained-target distinction supplies a genuine interpretation task. No nonmedical wording rule alone resolves that distinction.",
+      "The record explicitly places the decision before closure, so permanent pathology is not falsely presented as already available. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": [
+      "For more natural presentation, replace 'The founder reviews' with a named-patient outside intraoperative consultation frame. Keep clear that the operation is ongoing elsewhere and the player is advising from clinic."
+    ]
+  },
+  {
+    "id": "question.topic.breast-cancer.nipple-representative-skin.v1",
+    "nodeId": "node.topic.breast-cancer.nipple-representative-skin.v1",
+    "title": "Representative biopsy for a persistent nipple lesion",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {"phrase": "the pathology description includes no epidermis", "why": "Names the missing tissue compartment, followed by a key that uniquely supplies skin."},
+      {"phrase": "Full-thickness biopsy of involved nipple skin", "why": "It is the only option sampling the visibly involved surface named in the task; both alternatives remain beneath it. Little clinical knowledge is needed once the missing epidermis is announced."}
+    ],
+    "fairness": [
+      "Representative nipple skin biopsy is the best offered procedure. Negative parenchymal imaging and a benign subareolar core do not exclude a nipple epidermal process.",
+      "The explanation appropriately allows an adequate punch or wedge rather than falsely ranking the two. No confident clinical inaccuracy identified.",
+      "Persistent nipple disease is highly testable, but this particular tissue-compartment matching exercise is one-step recognition, not a difficult resident application."
+    ],
+    "suggestions": [
+      "Either obtain explicit foundational-item acceptance or test a real specimen-adequacy/extent decision in which several plausible samples have useful but different evidentiary limits.",
+      "Do not merely delete the missing-epidermis statement while leaving an underspecified specimen; rebuild the comparison so necessary raw tissue findings require interpretation."
+    ]
+  },
+  {
+    "id": "question.topic.breast-cancer.verify-mri-focus.v1",
+    "nodeId": "node.topic.breast-cancer.verify-mri-focus.v1",
+    "title": "Verification of a separate MRI breast finding",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {"phrase": "only the 10-o'clock lesion has been sampled", "why": "Identifies the completed task, making the option that samples the other clock position the unique new diagnostic action."},
+      {"phrase": "The additional focus would change the planned breast resection.", "why": "Supplies the management-changing interpretation rather than requiring it; combined with 'before the breast operation is changed,' it rehearses the reason for the key."},
+      {"phrase": "The radiologist can target both findings", "why": "A feasibility permission removes any practical target-selection problem while repeating the procedure's rationale."}
+    ],
+    "fairness": [
+      "Biopsy of the separate suspicious focus before escalating surgery is the best offered procedure. No confident clinical inaccuracy identified.",
+      "Repeating the proven primary's biopsy has no supplied adequacy or discordance problem. Interval MRI and the completed-target repeat do not create two consequential steps.",
+      "The following node coherently supplies a biopsy attempt, but this explanation's instruction to assess whether tissue fits the target scaffolds that later concordance task. It does not supply the actual later needle-position interpretation."
+    ],
+    "suggestions": [
+      "Present the concrete planned resection and spatial imaging observations so the learner infers why the second finding matters.",
+      "Replace the redundant primary biopsy with a credible diagnostic alternative or redesign the node around competing acquisition/target problems. Keep any genuinely necessary feasibility fact neutral.",
+      "Keep this feedback focused on verification before escalation; let the later node earn its separate concordance inference."
+    ]
+  },
+  {
+    "id": "question.topic.breast-cancer.benign-sample-discordance.v1",
+    "nodeId": "node.topic.breast-cancer.benign-sample-discordance.v1",
+    "title": "Benign tissue from a biopsy that missed the MRI target",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The learner must reconcile benign adipose tissue with a needle notch and marker posterior to a persistent focus, then choose repeat representative sampling instead of accepting the benign label or treating unproven multicentric malignancy.",
+      "Repeat image-guided sampling is the best offered plan. A benign report does not establish benignity of a target the needle did not represent. No confident clinical error identified.",
+      "The options reflect two meaningful opposite errors: premature reassurance and premature oncologic escalation. No key-only lexical match or convergence selects the answer without interpreting target representation.",
+      "The update is coherent after the first diagnostic plan and stands with the shared presentation. Previous feedback primes concordance generally, so difficulty is moderate, not hard; it does not disclose this acquisition failure."
+    ],
+    "suggestions": [
+      "For maximal precision, change 'The 4-o'clock focus is sampled' to describe a biopsy attempt targeting that focus, since the subsequent evidence shows that the focus itself was missed."
+    ]
+  },
+  {
+    "id": "question.topic.breast-cancer.map-nonenhancing-field.v1",
+    "nodeId": "node.topic.breast-cancer.map-nonenhancing-field.v1",
+    "title": "Operative mapping of calcifications beyond an MRI remnant",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The original distribution and prior tissue assessment of the calcifications are absent. It is unclear whether this is an uncharacterized field needing diagnostic mapping or already established malignant extent. That distinction matters to the purpose of another biopsy."
+    ],
+    "cues": [
+      {"phrase": "The original mass is no longer palpable.", "why": "Directly disables the palpation-guided alternative rather than leaving a credible competing tissue-assessment plan."},
+      {"phrase": "extending well beyond that remnant into separated breast regions", "why": "Together with the task's 'operative map,' this favors the only option covering the distributed field. The other options both stay at the original mass."}
+    ],
+    "fairness": [
+      "The underlying high-yield lesson is that MRI enhancement response does not establish clearance of residual calcifications.",
+      "Field sampling is plausible, but the stem does not establish how these calcifications relate to the pretreatment cancer map or why further biopsy is needed before surgical planning. I cannot confidently validate the exact diagnostic workflow from these fields alone.",
+      "Do not imply that negative selected cores would automatically permit leaving all suspicious post-treatment calcifications. The current explanation does not explicitly claim this, but its 'determine whether the operation must encompass disease' wording needs clinician scrutiny.",
+      "The next node supplies actual malignant mapping results and follows the proposed procedure; the first explanation does not explicitly name its mastectomy answer."
+    ],
+    "suggestions": [
+      "State the relevant prior calcification map and pathology, and identify the unresolved extent question that a new tissue assessment would answer.",
+      "Have the clinician verify the exact post-neoadjuvant calcification workup and surgical-extent implication; do not invent a sampling threshold or negative-biopsy clearance rule.",
+      "Replace palpation of a nonpalpable target with a credible image-guided alternative, and make the choice depend on interpreting the records rather than matching field size.",
+      "Remove the explanation's software-oriented 'not an executed clinic order' sentence from learner teaching."
+    ]
+  },
+  {
+    "id": "question.topic.breast-cancer.diffuse-malignant-residual.v1",
+    "nodeId": "node.topic.breast-cancer.diffuse-malignant-residual.v1",
+    "title": "Breast surgery for distributed residual malignant calcifications",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Tissue between the original foci' and 'original focal tumor sites' introduce multiple original foci, whereas the shared presentation describes an original mass and its marker without a pretreatment multifocal map.",
+      "The oncoplastic option is limited to original focal sites rather than clearly describing whether it attempts to encompass the newly demonstrated malignant field. That makes the apparent conservation alternative narrower than the real surgical question."
+    ],
+    "cues": [
+      {"phrase": "Localized excision of the marked enhancing bed", "why": "Like the other conservation option, it explicitly ignores the newly mapped central and peripheral disease. Comparing a whole-breast operation with two old-target operations weakens the intended feasibility judgment."}
+    ],
+    "fairness": [
+      "Mastectomy is the best offered operation for the described diffuse malignant field, and the explanation correctly avoids treating no invasion in sampled cores as proof of whole-breast clearance.",
+      "Two meaningful steps are available: interpret the distributed DCIS despite the small MRI remnant, then apply the current extent to the operation. The ambiguous original-foci history and restricted conservation labels blunt that reasoning.",
+      "The new pathology follows the preceding mapping plan and can be interpreted with the presentation. Earlier feedback establishes that calcifications matter but does not explicitly give this operation. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": [
+      "Make the original lesion map consistent across both nodes, or remove references to undocumented original foci.",
+      "Describe actual current field geometry and its relationship to the breast sufficiently to compare mastectomy with a credible attempt to remove the entire malignant distribution. Do not manufacture an exact breast-volume cutoff.",
+      "Do not use two knowingly incomplete old-target excisions as substitutes for a realistic conservation decision."
+    ]
+  },
+  {
+    "id": "question.topic.breast-cancer.dcis-positive-shave.v1",
+    "nodeId": "node.topic.breast-cancer.dcis-positive-shave.v1",
+    "title": "Final cavity margin despite clear main lumpectomy margins",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The learner must reconstruct which oriented specimen defines the final lateral boundary, then treat tumor at that inked boundary despite reassuring main-specimen distances.",
+      "Re-excision before radiation is the best offered plan. Remaining parenchyma, nondiffuse extent and the patient's conservation preference appropriately distinguish it from accepting the positive margin or choosing mastectomy.",
+      "The lateral wording identifies the anatomical site; it does not itself establish why the additional shave supersedes the main specimen. No material key-only cue or convergence shortcut found.",
+      "The later re-excision and definitive combined histology follow coherently. This explanation does not teach the subsequent invasive-with-DCIS margin rule. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.breast-cancer.invasive-with-dcis-margin.v1",
+    "nodeId": "node.topic.breast-cancer.invasive-with-dcis-margin.v1",
+    "title": "Margin framework after invasive carcinoma is found with DCIS",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The combined specimens change the diagnosis from pure DCIS to invasive carcinoma with associated DCIS. The learner must change the applicable margin framework, then decide whether the close but ink-negative lateral edge needs another excision.",
+      "No additional breast excision is the best offered margin-specific answer given clear ink, no residual suspicious calcifications and planned whole-breast radiation. Another excision is a credible error if the learner carries forward the pure-DCIS rule.",
+      "The update supplies the new histology and final margins without requiring the previous answer. It follows the re-excision node and preserves patient, side and treatment chronology.",
+      "The task appropriately limits itself to breast surgery for this margin; it does not imply that newly identified invasion needs no other staging or management. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.breast-cancer.her2-neoadjuvant-sequence.v1",
+    "nodeId": "node.topic.breast-cancer.her2-neoadjuvant-sequence.v1",
+    "title": "Initial treatment of node-positive HER2-positive breast cancer",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {"phrase": "HER2 immunostaining is 3+", "why": "Only the keyed option repeats HER2. The surgery-first option uses generic 'systemic therapy,' so a reader can favor the uniquely biomarker-matched label without deciding treatment order."}
+    ],
+    "fairness": [
+      "The intended two-step reasoning is appropriate: interpret receptor results and regional disease, then select neoadjuvant systemic treatment rather than upfront surgery.",
+      "Preoperative chemotherapy with HER2-directed therapy is the best offered strategy. Endocrine treatment is not a competitive plan with the explicitly ER/PR-negative tumor; the draft leaves only one strong distractor.",
+      "The explanation appropriately defers exact regimen selection to medical eligibility review. No confident clinical inaccuracy identified.",
+      "The later response/staging and residual-disease nodes follow this therapy coherently. This feedback does not give either later operation or adjuvant drug."
+    ],
+    "suggestions": [
+      "Hold the HER2-directed systemic components constant across credible sequencing alternatives so the learner must use stage and treatment timing, rather than unique biomarker word matching.",
+      "Replace the endocrine foil with a clinician-supported plausible strategy for this tumor biology; do not add a known-inapplicable therapy simply to reach three options."
+    ]
+  },
+  {
+    "id": "question.topic.breast-cancer.converted-node-targeted-staging.v1",
+    "nodeId": "node.topic.breast-cancer.converted-node-targeted-staging.v1",
+    "title": "Axillary staging after response of initially mobile node-positive disease",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {"phrase": "Single-tracer sentinel mapping without targeted retrieval", "why": "The 'without' label advertises an omitted component while the key offers both dual mapping and retrieval. It makes the key the visibly more complete version of the same procedure."},
+      {"phrase": "The operative localization record identifies that clip", "why": "In combination with the deliberately incomplete mapping foil, the repeated clip/retrieval wording makes it easy to match the documented object to the comprehensive option. The clip itself is necessary clinical information and should not simply be deleted."}
+    ],
+    "fairness": [
+      "The intended two steps are sound: recognize the initially mobile node-positive to clinically negative transition, then select an appropriate staging approach rather than infer pathologic clearance or automatically dissect.",
+      "Targeted optimized staging is a defensible best offered approach for this selected scenario. No confident clinical inaccuracy identified. Detailed current technical adequacy requirements were not independently source-verified offline.",
+      "The update follows the initial systemic-therapy decision, and the shared presentation supplies initial nodal status. It stands without the prior answer. Its explanation does not reveal the later adjuvant drug."
+    ],
+    "suggestions": [
+      "Remove critique-style 'without targeted retrieval' wording and compare neutrally described, genuinely plausible operative strategies.",
+      "For a stronger application item, use actual mapping/retrieval observations that require assessment of staging adequacy before a next action. Verify any exact technical criterion with the clinician and supporting source; do not invent a node-count rule.",
+      "Retain the initial mobile-node findings, current response and clip history because those determine which evidence applies."
+    ]
+  },
+  {
+    "id": "question.topic.breast-cancer.residual-her2-adjuvant.v1",
+    "nodeId": "node.topic.breast-cancer.residual-her2-adjuvant.v1",
+    "title": "Adjuvant therapy after residual invasive HER2-positive disease",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The learner must distinguish a small residual invasive focus from nodal clearance, clear margins or residual DCIS alone, then apply the post-neoadjuvant treatment implication. Continuing trastuzumab is a credible competing error.",
+      "Ado-trastuzumab emtansine is the best offered option under the established residual-invasive-disease framework after taxane/trastuzumab therapy. No confident clinical inaccuracy identified. The changing contemporary HER2 treatment landscape was not independently verified in this no-network review.",
+      "The drug labels are comparable and no unique word match selects the key: trastuzumab appears in both the key and the continuation option. Neratinib is less competitive at this treatment stage, but it is a recognizable HER2-treatment sequencing error.",
+      "This third node supplies prior treatment, current surgery and residual histology, so it stands with the presentation without relying on earlier answers. Earlier explanations do not disclose this drug."
+    ],
+    "suggestions": [
+      "Keep the clinical teaching focused on residual invasive disease and treatment sequencing; the final sentence about the clinic not administering a regimen is unnecessary authoring-context language."
+    ]
+  },
+  {
+    "id": "question.topic.breast-cancer.upfront-one-positive-no-alnd.v1",
+    "nodeId": "node.topic.breast-cancer.upfront-one-positive-no-alnd.v1",
+    "title": "Limited sentinel metastasis after upfront breast conservation",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Before surgery the axilla was not palpable' is anatomically imprecise. The intended observation is that no axillary lymph nodes were palpable."
+    ],
+    "cues": [],
+    "fairness": [
+      "The resident must interpret the positive sentinel result within the upfront breast-conservation, limited-burden and radiation context, then avoid automatic completion dissection. This is a high-yield treatment boundary.",
+      "No completion operation is the best offered answer in the stated setting. No confident clinical inaccuracy identified.",
+      "Repeat sentinel-node mapping and excision lacks a supplied staging failure or other credible reason after three sentinel nodes have been examined. It functions as filler beside the meaningful omission-versus-dissection comparison."
+    ],
+    "suggestions": [
+      "Replace 'the axilla was not palpable' with 'no axillary lymph nodes were palpable.'",
+      "Replace repeat sentinel mapping with a clinician-supported competing regional-treatment plan, adjusting the task's scope if necessary so all choices remain parallel.",
+      "Keep the upfront-treatment and radiation details; they are decision-critical rather than gratuitous cues."
+    ]
+  },
+  {
+    "id": "question.topic.breast-cancer.post-nst-micrometastasis-alnd.v1",
+    "nodeId": "node.topic.breast-cancer.post-nst-micrometastasis-alnd.v1",
+    "title": "Residual micrometastatic nodal disease after neoadjuvant therapy",
+    "verdict": "REVISE",
+    "difficulty": "hard",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'The axilla is no longer palpable' should refer to the previously palpable axillary node or nodes, not the axilla itself."
+    ],
+    "cues": [],
+    "fairness": [
+      "Two consequential steps are required: interpret the small deposit as residual nodal disease after neoadjuvant treatment despite apparently adequate targeted retrieval, then avoid importing upfront-surgery omission criteria merely because nodal radiation is planned.",
+      "Completion dissection with planned radiation is the best offered answer under the stated conventional post-neoadjuvant residual-disease framework. Radiation without dissection is a strong near-miss. No confident clinical inaccuracy identified.",
+      "The exact current management boundary for post-neoadjuvant micrometastases is evolving and was not independently verified offline. Treat 'current standard guidance' as requiring dated clinician/source confirmation, not as validated by this review.",
+      "Repeat targeted sentinel surgery is poorly motivated after the clipped node and multiple sentinel nodes have already been retrieved. The third option should represent a genuine competing management error rather than repeat completed staging.",
+      "No lexical cue or convergence pattern chooses between the two meaningful treatment plans. Difficulty comes from treatment phase and residual burden, not from the wording repair needed."
+    ],
+    "suggestions": [
+      "Correct the palpable-node wording and replace the repeat-staging foil with a credible treatment-stage alternative, preserving the difficult dissection-versus-radiation comparison.",
+      "Have Melissa confirm the exact dated guideline boundary and any relevant trial-versus-standard distinction before accepting the teaching point; do not infer a universal rule from older upfront-surgery data.",
+      "Explain the positive indication for the recommended operation, rather than relying only on lack of proof for omission."
+    ]
+  }
+]

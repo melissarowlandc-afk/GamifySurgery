@@ -1,0 +1,407 @@
+[
+  {
+    "id": "S33",
+    "title": "Recognize confounding by illness severity",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "One bias-identification concept; no calculation. Severity influences dressing assignment and healing, establishing the common-cause structure needed for confounding. Neither differential recollection nor outcome assessment is described, so the other offered biases are unsupported. Three-line feedback gives the rule, applies both links, and distinguishes recall bias. No missing numerical assumption changes the answer. Context words, whitespace tokens containing letters/digits: prose 5; exhibit 16; combined pre-task 21. Explanation: 3 lines.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S34",
+    "title": "Recognize outcome-dependent recall",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "One bias-identification concept; no calculation. Contemporaneous diaries show equal prior exposure, but later exposure reports differ by infection status. This supports outcome-dependent recall over the offered selection/confounding alternatives. The feedback applies the supplied diary/interview comparison without inventing a measurement or calculation. Necessary temporal wording is evidence, not a verbatim answer label. Context words, whitespace tokens containing letters/digits: prose 5; exhibit 28; combined pre-task 33. Explanation: 3 lines.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S35",
+    "title": "Recognize outcome-related survey response",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "One participation-bias concept. Response rates: excellent recovery 40/50 = 80%; poor recovery 10/50 = 20%. Excellent recovery comprises 40/50 = 80% of respondents versus 50/100 = 50% of all patients. Thus respondents have a different outcome composition despite universal invitation. Selection/nonresponse bias is the single best offered answer; no recall or observer mechanism is supplied. All feedback arithmetic is exact. Context words, whitespace tokens containing letters/digits: prose 5; exhibit 17; combined pre-task 22. Explanation: 3 lines.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S36",
+    "title": "Recognize differential measurement error",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "One measurement-bias concept. Observed intervention-minus-control pressure difference equals the true difference plus (10 - 0) = 10 mmHg. The direction of the calibration offset is correct. Instrument assignment is aligned with group, but the demonstrated mechanism is systematic measurement error; measurement bias is more specific than the offered generic confounding label. No patient severity imbalance or selection process is supplied. Feedback is grounded in the calibration data. Context words, whitespace tokens containing letters/digits: prose 5; exhibit 29; combined pre-task 34. Explanation: 3 lines.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": [
+      "Optional wording refinement: replace the final line with \"The known distortion comes from calibration, not a demonstrated baseline difference between patients.\" Do not imply that confounding must involve a patient characteristic."
+    ]
+  },
+  {
+    "id": "S37",
+    "title": "Calculate sensitivity",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "One sensitivity calculation. TP=30, FN=20, FP=10, TN=40. Sensitivity=30/(30+20)=60%, exactly. Distractors are FNR=40%, PPV=30/40=75%, and specificity=40/50=80%; none also answers the task. Feedback correctly works the required denominator and the PPV trap. No rounding is needed. Context words, whitespace tokens containing letters/digits: prose 9; exhibit 15; combined pre-task 24. Explanation: 3 lines.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S38",
+    "title": "Calculate specificity",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "One specificity calculation. Specificity=80/(80+20)=80%; sensitivity=90/(90+10)=90%; false-positive rate=20/100=20%. The three options therefore represent distinct quantities. The reference-positive column is useful for the sensitivity distractor; no test-selection or sample-size assumption is needed for these descriptive fractions. Feedback is correct and no rounding is needed. Context words, whitespace tokens containing letters/digits: prose 9; exhibit 15; combined pre-task 24. Explanation: 3 lines.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S39",
+    "title": "Calculate sensitivity from the reference-positive subgroup",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "One sensitivity calculation using only the required reference-positive subgroup. Sensitivity=20/(20+80)=20%. The distractors are positive/negative odds=20/80=25% and false-negative fraction=80/100=80%. Key and all explanation calculations are exact. Reference-negative data are unnecessary. Context words, whitespace tokens containing letters/digits: prose 9; exhibit 11; combined pre-task 20. Explanation: 3 lines.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S40",
+    "title": "Calculate the false-negative rate",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "One false-negative-rate calculation. FNR=20/(80+20)=20%; sensitivity=80/100=80%; FN/TP=20/80=25%. The task explicitly identifies the conditioning group, so it cannot be confused with the false-omission proportion. This necessary denominator clarification does not supply the answer. Feedback correctly gives FNR=1-sensitivity. Context words, whitespace tokens containing letters/digits: prose 9; exhibit 11; combined pre-task 20. Explanation: 3 lines.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S41",
+    "title": "Calculate positive predictive value",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "One PPV calculation. PPV=40/(40+10)=80%. Other choices correspond to sensitivity=40/100=40%, specificity=90/100=90%, and the false-discovery proportion=10/50=20%. All numbers are exact, the denominator is identifiable from the table, and the three-line feedback teaches the correct method and closest denominator error. Context words, whitespace tokens containing letters/digits: prose 9; exhibit 15; combined pre-task 24. Explanation: 3 lines.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S42",
+    "title": "Use the collection cohort for PPV",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "One cohort-specific PPV task. Caption explicitly restricts the counts to positive tests. Clinic PPV=40/(40+10)=80%; ICU PPV=90/(90+10)=90%; clinic false-discovery proportion=10/50=20%. Collection occurred in clinic, making 80% the sole answer to the expressly cohort-level question. No individualized post-transfer probability is requested or established. The short transfer fact is necessary to the cohort-selection trap; feedback correctly applies it. Context words, whitespace tokens containing letters/digits: prose 9; exhibit 21; combined pre-task 30. Explanation: 3 lines.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S43",
+    "title": "Relate PPV to tested-population prevalence",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "One direction-of-PPV concept with sensitivity and specificity held fixed. Independently using 100 people per clinic: A has 8 TP and 9 FP, so PPV=8/17 (about 47.06%); B has 16 TP and 8 FP, so PPV=16/24=2/3 (about 66.67%). B is uniquely higher. These fractions verify the key but need not be calculated by the learner. Feedback gives the monotonic rule and applies the supplied 20% versus 10% prevalences; no precision or sample-size inference is requested. Context words, whitespace tokens containing letters/digits: prose 9; exhibit 23; combined pre-task 32. Explanation: 3 lines.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S44",
+    "title": "Calculate PPV without substituting sensitivity",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "One PPV calculation. PPV=20/(20+20)=50%; sensitivity=20/(20+60)=25%; specificity=180/(180+20)=90%. All offered percentages have distinct, credible denominator interpretations. Feedback works PPV and identifies the sensitivity error correctly. No rounding is needed. Context words, whitespace tokens containing letters/digits: prose 9; exhibit 15; combined pre-task 24. Explanation: 3 lines.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S45",
+    "title": "Calculate a risk ratio",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "One descriptive exposed-versus-unexposed risk ratio. Risks are 20/100=0.20 and 10/100=0.10, giving RR=2.0. Reversed RR=0.5. OR=(20/80)/(10/90)=2.25, exactly as the explanation states. Table totals include events and are sufficient for this arithmetic task; no inferential test, pairing assumption, or causal effect is requested. Context words, whitespace tokens containing letters/digits: prose 5; exhibit 12; combined pre-task 17. Explanation: 3 lines.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S46",
+    "title": "Calculate an odds ratio from case-control sampling",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "One case-control exposure odds ratio. Exposure odds among cases=40/10=4 and among controls=20/20=1; OR=4/1=4.0. Reciprocal OR=0.25. The 2.0 distractor can be reproduced by incorrectly using sampled outcome fractions as cohort risks: [40/(40+20)]/[10/(10+20)]=(2/3)/(1/3)=2. It is not the exposure odds ratio. Feedback cross-products are exact and the case-control sampling limitation is valid. Context words, whitespace tokens containing letters/digits: prose 5; exhibit 12; combined pre-task 17. Explanation: 3 lines.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S47",
+    "title": "Convert model odds to event probability",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "One odds-to-probability conversion, with intermediate arithmetic serving that one requested quantity. Reference odds=0.50/(1-0.50)=1; group A odds=1*0.5=0.5; probability=0.5/(1+0.5)=1/3. Nearest whole percent is uniquely 33%. The 25% distractor incorrectly uses the OR as an RR; 50% ignores the OR. Same-covariate-profile wording supplies the model compatibility assumption. Feedback contains the complete correct calculation. Context words, whitespace tokens containing letters/digits: prose 5; exhibit 18; combined pre-task 23. Explanation: 3 lines.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S48",
+    "title": "Interpret relative risk without changing its scale",
+    "verdict": "REVISE",
+    "ownerFit": true,
+    "mathChecked": "One relative-risk interpretation; RR=0.5 gives risk A=0.5*risk B and relative reduction=1-0.5=50%. An odds reduction is not generally 50%: if risk B=0.20, risk A=0.10 and OR=(0.10/0.90)/(0.20/0.80)=4/9. Absolute reduction is 0.5*risk B and is unspecified. A 50-percentage-point reduction is possible only at the special baseline risk of 100%, not implied by the data. The key is mathematically correct and feedback is correct. Context words, whitespace tokens containing letters/digits: prose 5; exhibit 14; combined pre-task 19. Explanation: 3 lines.",
+    "cues": [
+      {
+        "phrase": "Risk is 50% lower / Odds are 50% lower / Risk is 50 percentage points lower",
+        "why": "The key combines the majority components: risk appears in two options and 50% lower appears in two. It can be selected by convergence. The task also names risk, making the odds option a category mismatch before any conversion."
+      }
+    ],
+    "fairness": [
+      "The option set permits a wording strategy despite a single defensible general interpretation."
+    ],
+    "explanationIssues": [],
+    "suggestions": [
+      "Use parallel risk statements that differ in direction or magnitude, for example \"Risk is 50% lower\", \"Risk is 50% higher\", and \"Risk is unchanged\". Keep the one-line RR and the relative-reduction explanation; do not add a clinical decision."
+    ]
+  },
+  {
+    "id": "S49",
+    "title": "Calculate NNT for one outcome and horizon",
+    "verdict": "REVISE",
+    "ownerFit": true,
+    "mathChecked": "One NNT calculation with an explicit infection outcome and 30-day horizon. ARR=0.20-0.10=0.10; NNT=1/0.10=10, exactly. The distractors can arise from 1/control risk=5 and 1/relative reduction=1/0.50=2. Feedback arithmetic and horizon are correct; no rounding is needed. Context words, whitespace tokens containing letters/digits: prose 9; exhibit 17; combined pre-task 26. Explanation: 3 lines.",
+    "cues": [
+      {
+        "phrase": "10 patients / 5 patients / 2 patients",
+        "why": "The key is the only two-digit and largest option. The same largest-key/two-small-distractors pattern recurs in S51 and S52, creating a family-level shortcut even though these two errors are individually credible."
+      }
+    ],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": [
+      "Break the repeated magnitude pattern across the NNT variants. One concrete set here is 5, 10, and 20 patients: reciprocal control risk, correct NNT, and the control percentage incorrectly treated as a patient count. Adjust the last feedback line to address an offered error. Keep the outcome and 30-day horizon."
+    ]
+  },
+  {
+    "id": "S50",
+    "title": "Calculate absolute risk reduction",
+    "verdict": "REVISE",
+    "ownerFit": true,
+    "mathChecked": "One absolute risk reduction. ARR=15%-10%=5 percentage points. Relative reduction=(15-10)/15=1/3, approximately 33.33%, which explains the rounded 33 distractor; 25 is the sum 15+10. The key and explanation are correct, but the option geometry is weak. Context words, whitespace tokens containing letters/digits: prose 9; exhibit 17; combined pre-task 26. Explanation: 3 lines.",
+    "cues": [
+      {
+        "phrase": "5 percentage points / 33 percentage points / 25 percentage points",
+        "why": "Both distractors exceed the entire 15% control risk and are two-digit values; only the single-digit key is within the feasible 0-to-15-point reduction range. This lets an upper-bound check select the key without computing the requested difference."
+      }
+    ],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": [
+      "Use same-scale errors without two impossible large alternatives, for example 5, 10, and 15 percentage points (difference, treatment rate substituted for difference, control rate substituted for difference). Explain one of those actual offered errors instead of retaining feedback about a removed 33% option."
+    ]
+  },
+  {
+    "id": "S51",
+    "title": "Calculate NNT for one outcome and horizon",
+    "verdict": "REVISE",
+    "ownerFit": true,
+    "mathChecked": "One NNT calculation. ARR=0.12-0.08=0.04; NNT=1/0.04=25 patients over 30 days. The 4 distractor is ARR in percentage points without inversion; 3 is inverse relative reduction, 1/[(12-8)/12]=3. All worked numbers in feedback are correct and no rounding is needed. Context words, whitespace tokens containing letters/digits: prose 9; exhibit 17; combined pre-task 26. Explanation: 3 lines.",
+    "cues": [
+      {
+        "phrase": "25 patients / 4 patients / 3 patients",
+        "why": "The wrong options cluster at 3-4 while the key is the sole two-digit value, over six times either distractor. This repeats the largest-key pattern in S49 and S52."
+      }
+    ],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": [
+      "Replace the clustered option set while retaining credible mistakes. For example, 4, 25, and 33 patients represent raw ARR points, correct NNT, and rounded relative reduction incorrectly used as a count. Alternatively vary the constructed rates across siblings so NNT is not always the largest option. Keep feedback tied to the retained distractor."
+    ]
+  },
+  {
+    "id": "S52",
+    "title": "Calculate NNT for one outcome and horizon",
+    "verdict": "REVISE",
+    "ownerFit": true,
+    "mathChecked": "One NNT calculation. ARR=0.30-0.25=0.05; NNT=1/0.05=20 patients over 30 days. The 5 distractor is raw ARR percentage points; 6 is inverse relative reduction, 1/[(30-25)/30]=6. Key and explanation are exact and the follow-up horizon is present. Context words, whitespace tokens containing letters/digits: prose 9; exhibit 17; combined pre-task 26. Explanation: 3 lines.",
+    "cues": [
+      {
+        "phrase": "20 patients / 5 patients / 6 patients",
+        "why": "The wrong options cluster at 5-6 while the correct answer is the sole two-digit and largest value. It reinforces the same answer-by-magnitude shortcut across all three NNT items in this review."
+      }
+    ],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": [
+      "Break the cluster with a plausible option above the key, for example 5, 20, and 25 patients (raw ARR points, correct NNT, and treatment percentage incorrectly used as the count). Retain the mental arithmetic and 30-day horizon. Update the closest-error feedback if its intended distractor changes."
+    ]
+  },
+  {
+    "id": "S53",
+    "title": "Interpret a p-value under its null model",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "One p-value-definition concept. 0.04=4%. The key correctly conditions the probability of an at-least-as-extreme test result on the null model, whereas the distractors reverse conditioning or substitute replication probability. Two-sided is supplied; extremeness is with respect to that test. A numeric equal-means null is not needed to distinguish these generic definitions, and no effect estimate is inferred. The three-line explanation gives the correct rule and 0.04-to-4% application. Context words, whitespace tokens containing letters/digits: prose 5; exhibit 12; combined pre-task 17. Explanation: 3 lines.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S54",
+    "title": "Compare an uncertainty interval with a benefit target",
+    "verdict": "REVISE",
+    "ownerFit": false,
+    "mathChecked": "The numeric boundary is 2 days and 1<2<3, so that boundary is inside the interval. However, the stated target benefit is the range of reductions at least 2 days, which overlaps the interval and extends above it; it is not itself a point wholly inside the interval. The likely intended interpretation is that the CI permits reductions below and at/above the target. No incorrect arithmetic, but the task/option referent should be exact. Context words, whitespace tokens containing letters/digits: prose 5; exhibit 27; combined pre-task 32. Explanation: 3 lines.",
+    "cues": [],
+    "fairness": [
+      "\"Target benefit\" means at least 2 days in the exhibit but is treated as the single value 2 in the task and key. A learner must silently replace the target range with its threshold. This small ambiguity prevents an unqualified owner-fit pass."
+    ],
+    "explanationIssues": [
+      "\"Target benefit remains unresolved\" is a reasonable qualitative conclusion, but the feedback should explicitly identify the 2-day threshold and which sides of it the interval includes."
+    ],
+    "suggestions": [
+      "Minimal repair: ask \"Where is the 2-day target threshold relative to the confidence interval?\" and use \"Threshold lies inside/below/above the interval\". Explain \"1 < 2 < 3; the interval includes reductions below and above the target threshold.\" This keeps one task and requires no added study narrative."
+    ]
+  },
+  {
+    "id": "S55",
+    "title": "Avoid proving no effect from nonsignificance",
+    "verdict": "REVISE",
+    "ownerFit": true,
+    "mathChecked": "One hypothesis-test decision. p=0.20 exceeds alpha=0.05, so the tested null is not rejected. The treatments are not thereby demonstrated equivalent, and the null is not disproved. The key is unique without needing a sample size or distribution because the p-value is already supplied. However, the feedback identifies a more specific null than the stem states. Context words, whitespace tokens containing letters/digits: prose 5; exhibit 15; combined pre-task 20. Explanation: 3 lines.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [
+      "The explanation says \"do not reject the equal-means null\", but the exhibit only says \"Difference in mean recovery time\". Equality (difference=0) is a conventional inference, not an expressly supplied null; a test of a nonzero prespecified difference could also have the given p-value."
+    ],
+    "suggestions": [
+      "Minimal repair: change the second feedback line to \"0.20 > 0.05 -> do not reject the tested null hypothesis.\" Alternatively replace the exhibit Test value with \"Null hypothesis: equal population mean recovery times.\" Do not add irrelevant distribution or sample-size details."
+    ]
+  },
+  {
+    "id": "S56",
+    "title": "Separate statistical evidence from clinical importance",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "One distinction between evidence against a tested null and clinical importance. p=0.001 is 0.1% under the null-model tail calculation, not a benefit size or probability that bias is absent. Under the test model, the key is the only supported offered inference. No direction, effect magnitude, or absence of bias follows. Feedback gives the applicable rule and its limitation; a worked effect-size calculation would require absent data and is appropriately not attempted. Context words, whitespace tokens containing letters/digits: prose 5; exhibit 11; combined pre-task 16. Explanation: 3 lines.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S57",
+    "title": "Interpret a ratio interval containing its null",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "One ratio-CI significance decision. RR null=1 and 0.8<1<1.2. The expressly matching two-sided 5% test therefore does not reject no difference. Both directional-significance alternatives are unsupported. Confidence level, effect scale, matching test convention and ratio orientation are supplied; no sample-size assumption is needed to interpret this already supplied interval. Feedback correctly distinguishes nonrejection from proof of equality. Context words, whitespace tokens containing letters/digits: prose 5; exhibit 14; combined pre-task 19. Explanation: 3 lines.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S58",
+    "title": "Interpret a ratio interval below its null",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "One ratio-CI significance decision. Both endpoints 0.4 and 0.8 are below the RR null of 1, so the matching two-sided 5% test supports lower risk in A relative to B. Neither nonsignificance nor higher risk fits. Feedback correctly names 1 rather than 0 as the null and uses the actual endpoints. The task/exhibit combination supplies the direction and matching confidence level. Context words, whitespace tokens containing letters/digits: prose 5; exhibit 14; combined pre-task 19. Explanation: 3 lines.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S59",
+    "title": "Use zero as the null for a difference",
+    "verdict": "REVISE",
+    "ownerFit": true,
+    "mathChecked": "One difference-CI significance decision. Difference null=0, and -2<0<1, so the matching two-sided 5% test does not reject no difference. Neither significant shortening nor significant lengthening is established. The interval and direction A-B are supplied; the point estimate is not. The key and interval calculation are correct. Context words, whitespace tokens containing letters/digits: prose 5; exhibit 18; combined pre-task 23. Explanation: 3 lines.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [
+      "\"A negative point estimate does not override an interval containing 0\" introduces a point-estimate detail absent from the item. The midpoint is -0.5 days, but a general confidence interval need not be symmetric about its point estimate; the supplied interval alone does not establish a negative estimate."
+    ],
+    "suggestions": [
+      "Replace the last line with \"A negative lower endpoint alone does not establish a significant decrease.\" This directly uses a shown value and avoids adding unnecessary point-estimate data."
+    ]
+  },
+  {
+    "id": "S60",
+    "title": "Compare precision at the same confidence level",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "One precision comparison on the same effect scale at the same confidence level. Width A=1.1-0.9=0.2; width B=1.5-0.5=1.0, so A is narrower and more precise. Both intervals contain the RR null 1, but significance is a different property. Feedback calculations are exact. All estimate labels appear symmetrically in the options; no key-specific wording shortcut is present. Context words, whitespace tokens containing letters/digits: prose 5; exhibit 26; combined pre-task 31. Explanation: 3 lines.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S61",
+    "title": "Recognize a false positive hypothesis test",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "One error-classification concept; no numeric calculation. Simulation truth states no effect, so the no-effect null is true; rejecting it is a Type I error. Type II requires a false null and failure to reject, and no-error is incompatible with the stated truth/decision pair. Feedback gives the definition, applies the pair, and distinguishes the opposite error. Context words, whitespace tokens containing letters/digits: prose 5; exhibit 14; combined pre-task 19. Explanation: 3 lines.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S62",
+    "title": "Recognize a false negative hypothesis test",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "One error-classification concept; no numeric calculation. An effect exists, so the no-effect null is false; failure to reject it is a Type II error. The Type I and no-error alternatives do not fit. No effect magnitude is needed merely to classify a realized error, as opposed to calculating its probability. Feedback is correctly conditional on the false null. Context words, whitespace tokens containing letters/digits: prose 5; exhibit 17; combined pre-task 22. Explanation: 3 lines.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S63",
+    "title": "Calculate power from type II error probability",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "One power calculation under the stated alternative. Power=1-beta=1-0.20=0.80=80%. The 20% option confuses beta with power; 90% and 10% are unsupported alternative probability pairs, not also defensible results. No rounding or extra design assumption is needed because beta is given. Feedback supplies the rule and exact subtraction. Both offered complement pairs prevent complement structure alone from uniquely selecting the key. Context words, whitespace tokens containing letters/digits: prose 5; exhibit 10; combined pre-task 15. Explanation: 3 lines.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S64",
+    "title": "Calculate type II error probability from power",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "One Type II-error-probability calculation under the stated alternative. beta=1-power=1-0.90=0.10=10%. The 90% distractor confuses detection with failure; 5% and 95% have no support from the supplied power and cannot substitute a conventional alpha or confidence level. Feedback is correct and no rounding is needed. Two complementary option pairs do not uniquely identify the key without applying the relevant rule. Context words, whitespace tokens containing letters/digits: prose 5; exhibit 7; combined pre-task 12. Explanation: 3 lines.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  }
+]

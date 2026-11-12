@@ -1,0 +1,1113 @@
+{
+  "schemaVersion": 1,
+  "generatedOn": "2026-11-10",
+  "batch": "N3 round 5",
+  "label": "Key shown first for review only in retained prior-version records; no round-five keyed candidates.",
+  "reviewStatus": "needs_clinician_review",
+  "clinicalSignoff": "Melissa Rowland; source reuse, tests and author checks do not confer clinical approval.",
+  "purpose": "Resolve the three returned round-four items; the manager explicitly permits parking when a genuinely two-step revision is not supportable.",
+  "dispositionCounts": {
+    "inputs": 3,
+    "revisedCandidates": 0,
+    "parked": 3,
+    "newOwnerQuestions": 0
+  },
+  "variants": [],
+  "parkedItems": [
+    {
+      "id": "review.n3.foot-culture-versus-clinical-infection.v4",
+      "disposition": "PARK_NO_SUPPORTED_SECOND_DECISION",
+      "reviewStatus": "needs_clinician_review",
+      "newVariantId": null,
+      "candidateEmitted": false,
+      "managerAcceptanceRequested": false,
+      "foundationalAcceptanceRequested": false,
+      "retainedVersion": {
+        "sourcePacket": "docs/research/question-new-n3-round4-20261110.json",
+        "questionVariantId": "question.n3.foot-culture-versus-clinical-infection.v4",
+        "conceptId": "concept.diabetic-foot-ulcer.no-antibiotics-without-infection",
+        "exactVersionSha256": "ebcd3660737576840a79f4d946f34c8b108369cc9671ab411bd82b0a2b50f811",
+        "keyShownFirstForReviewOnly": true,
+        "after": {
+          "Presentation": "Andre Wells, a 59-year-old man with diabetes and reduced plantar sensation, attends the foot clinic after completing cephalexin for redness around a forefoot ulcer.",
+          "Exhibit": {
+            "kind": "keyValue",
+            "caption": "Original constructed teaching record; fictional patient observations",
+            "items": [
+              {
+                "label": "Earlier examination",
+                "value": "A 9-by-7-mm ulcer with opaque drainage and surrounding warm, swollen skin."
+              },
+              {
+                "label": "Current examination",
+                "value": "A 6-by-4-mm shallow ulcer with red granulation tissue and thin straw-colored fluid. Surrounding skin has the same temperature and color as the opposite foot; no swelling or fluctuance is found. Temperature 36.8 C."
+              },
+              {
+                "label": "Surface swab",
+                "value": "Heavy Pseudomonas aeruginosa growth; the report lists ciprofloxacin and gentamicin as susceptible."
+              }
+            ]
+          },
+          "Task": "Which antimicrobial plan is appropriate for Andre Wells at this visit?",
+          "Options": [
+            "**KEY:** Maintain existing offloading and dressings",
+            "Add oral ciprofloxacin to offloading and dressings",
+            "Add topical gentamicin to offloading and dressings"
+          ],
+          "Explanation": "Clinical infection and a positive surface culture are different findings. The current examination and healing trajectory do not establish persistent soft-tissue infection. Continue offloading and dressings; antibiotics should not be prescribed to sterilize an uninfected ulcer or promote its healing. New inflammation or deeper findings would require reassessment."
+        },
+        "status": "Unchanged historical draft; included to explain parking, not submitted as a round-five candidate."
+      },
+      "independentReview": {
+        "source": "docs/research/question-new-n3-round4-review-20261110.json",
+        "id": "review.n3.foot-culture-versus-clinical-infection.v4",
+        "title": "Foot ulcer follow-up",
+        "verdict": "REVISE",
+        "difficulty": "easy",
+        "twoStep": false,
+        "cues": [
+          {
+            "phrase": "Maintain existing offloading and dressings",
+            "why": "The key is the sole maintain/no-drug plan beside two Add drug plans. This structural outlier is easy to pair with the conspicuously improving examination; it is a cue risk, although option structure alone does not prove the answer."
+          },
+          {
+            "phrase": "Surrounding skin has the same temperature and color as the opposite foot; no swelling or fluctuance is found. Temperature 36.8 C.",
+            "why": "Together with the visibly smaller ulcer, this supplies a dense all-clear pattern. A nonmedical reader can favor maintaining care over adding either drug. These observations are legitimate clinical evidence and must not simply be deleted to make the question harder."
+          },
+          {
+            "phrase": "Which antimicrobial plan is appropriate for Andre Wells at this visit?",
+            "why": "The lead-in frames the answers as antimicrobial plans, but the key names wound care without explicitly stating the antimicrobial decision. This is a category/wording mismatch, not a reliable cue toward the key."
+          }
+        ],
+        "fairness": [
+          "Node node.n3.foot-culture-versus-clinical-infection.v1: maintaining wound care without additional antimicrobial treatment is the single best offered answer on the supplied current examination. Heavy growth from a surface swab does not by itself establish ongoing infection.",
+          "The smaller shallow granulating wound, changed drainage and absence of current surrounding inflammatory findings support clinical improvement despite the surface susceptibility report. Reduced sensation means absence of pain would not be decisive; the item appropriately supplies examination findings instead.",
+          "Oral ciprofloxacin and topical gentamicin both represent treatment of the swab rather than a demonstrated current infection. Neither has an equally defensible indication in the visible record. No confident clinical inaccuracy identified; this conclusion does not exclude every possible deep complication outside the described case.",
+          "The culture-versus-examination conflict is useful, but the current version collapses to the familiar rule not to treat a clinically uninfected ulcer. The two drug alternatives repeat the same basic error. Reading improvement and then choosing no antibiotic does not require two independently consequential decisions at PGY-2/3 level.",
+          "No diagnosis label, explanatory option rationale, convergence pattern or absolute uniquely selects the key. The problem is mainly low discrimination and answer-category asymmetry, not an unsafe key."
+        ],
+        "suggestions": [
+          "Use a neutral complete lead-in about the next wound-treatment plan and give every option an explicit antimicrobial disposition while keeping offloading and dressings common to all choices.",
+          "To meet the requested resident target, introduce a supported specimen-quality or clinical-reassessment decision that actually changes the next action, with a credible competing plan rather than two routes of unnecessary antibiotic use. Supply the observations that resolve that decision and independently review the new objective.",
+          "If the intended objective remains this straightforward stewardship boundary, request explicit acceptance as a foundational item rather than claiming moderate difficulty or two consequential steps. Do not hide the current examination to manufacture uncertainty."
+        ]
+      },
+      "originalObjective": "Reconcile the current wound examination with a positive superficial culture before prescribing another antimicrobial.",
+      "supportedBoundary": "The recorded facts support clinical recognition of infection and withholding antibiotics from a clinically uninfected ulcer. The separate deep-infection claim supports recognition and external escalation, not a ranking of sampling techniques or source-control pathways.",
+      "reviewResponse": [
+        "Agree that the improving examination plus two unnecessary-drug alternatives makes the retained v4 easy. Oral and topical treatment repeat the same culture-driven error.",
+        "A neutral next-wound-treatment task and explicit antimicrobial dispositions in every option would repair the category mismatch. They would not add a second inference.",
+        "Do not delete the current examination, add equivocal redness without resolving its cause, or repackage the old deep-abscess item. Review 2 already found that construction easy with weak competitors."
+      ],
+      "prospectiveConstruction": {
+        "stepA": "Interpret current inflammatory findings and the provenance of the reported organism to decide whether infection is established and whether the result represents the tissue whose treatment is being considered.",
+        "stepB": "If infection is established, choose the appropriate next reassessment/specimen plan rather than automatically prescribing from the surface report.",
+        "closestCompetitor": "Act on a plausible organism and susceptibility report immediately rather than resolve whether the specimen represents the current process.",
+        "decidingObservationNeeded": "A clinically meaningful current infection assessment plus the actual sampling site and method, with findings that resolve a soft-tissue versus deeper sampling question.",
+        "ablation": "In v4, deleting the present examination removes the basis for withholding antibiotics. Adding specimen provenance without changing the treatment question merely reinforces the same no-antibiotic rule.",
+        "counterfactual": "New local inflammatory findings would require reassessment under the existing recognition claim. They do not, by themselves, make the offered ciprofloxacin correct or establish which new specimen to obtain.",
+        "alternativeKeyEstablished": false,
+        "status": "Considered outline only; no invented resolving observations, proposed key or executable variant."
+      },
+      "missingSupport": "A directly recorded diabetic-foot specimen-selection recommendation and its applicability to a concrete examination: when clinical reassessment is enough, when an aseptically obtained tissue specimen is appropriate, and what findings justify a different deeper-specimen pathway. The recorded IWGDF/IDSA citation is not evidence that those unrecorded recommendations were checked.",
+      "reentryTask": "Targeted verification of the relevant specimen-selection facts in permitted IWGDF/IDSA guidance, followed by an independently reviewed case whose current findings actually distinguish the competing plans. No new systemic agent, dose, culture hierarchy or bone-sampling indication is inferred now.",
+      "selfCheck": {
+        "kind": "manual_author_reassessment",
+        "independent": false,
+        "clinicalApproval": false,
+        "rubric": "question-authoring.2026-11-08.v15",
+        "authorVerdict": "PARK_NOT_PASS",
+        "calibratedToReviewer": {
+          "difficulty": "easy",
+          "twoStep": false,
+          "disagreement": false
+        },
+        "coverTheKey": "NOT MET for a resident-level rewrite: maintain/no-drug is the structural outlier; the necessary resolving examination makes the two drug options weak. Keep the examination rather than hiding it.",
+        "sameStage": "The retained antimicrobial lead-in and wound-care key are not perfectly aligned. A neutral wound-treatment lead-in and parallel explicit antimicrobial plans are the appropriate repair if this objective is reopened.",
+        "twoSteps": "NOT MET: interpreting improvement then choosing no further antibiotic is one stewardship boundary. A sampling decision would be a new consequential step, but its key is not recorded.",
+        "difficulty": "Retained v4: easy, agreeing with the reviewer. No moderate/hard claim for a hypothetical revision.",
+        "oneBestAnswer": "The retained v4 no-antibiotic answer is supported in its described examination; no unique best answer is established for the proposed specimen-selection extension.",
+        "decidingObservation": "A clinically meaningful current infection assessment plus the actual sampling site and method, with findings that resolve a soft-tissue versus deeper sampling question.",
+        "counterfactual": "New local inflammatory findings would require reassessment under the existing recognition claim. They do not, by themselves, make the offered ciprofloxacin correct or establish which new specimen to obtain.",
+        "closestCompetitor": "Act on a plausible organism and susceptibility report immediately rather than resolve whether the specimen represents the current process."
+      },
+      "evidenceAudit": [
+        {
+          "claimId": "claim.dfi.clinical-recognition",
+          "statement": "Diabetes-related foot soft-tissue infection is diagnosed clinically from local or systemic inflammatory findings; colonization alone does not establish infection.",
+          "limitation": "Single-current-guideline limitation.",
+          "lastCheckedOn": "2026-09-28",
+          "sourceIds": [
+            "source.dfi.iwgdf-idsa-2023"
+          ],
+          "use": "Recorded boundary only; does not verify the unrecorded extension identified above."
+        },
+        {
+          "claimId": "claim.dfu.no-antibiotics-uninfected",
+          "statement": "Systemic or local antibiotics should not be used for a clinically uninfected diabetic foot ulcer solely to prevent infection or promote healing.",
+          "limitation": "External multidisciplinary foot care remains required; no onsite wound service is implied.",
+          "lastCheckedOn": "2026-09-28",
+          "sourceIds": [
+            "source.dfi.iwgdf-idsa-2023"
+          ],
+          "use": "Recorded boundary only; does not verify the unrecorded extension identified above."
+        },
+        {
+          "claimId": "claim.dfi.initial-escalation",
+          "statement": "Severe infection or moderate infection with important morbidity warrants hospital consideration; gangrene, deep abscess, necrotizing infection, compartment syndrome, or severe ischemia warrants urgent surgical consultation.",
+          "limitation": "The clinic objective stops at recognition and external escalation.",
+          "lastCheckedOn": "2026-09-28",
+          "sourceIds": [
+            "source.dfi.iwgdf-idsa-2023"
+          ],
+          "use": "Recorded boundary only; does not verify the unrecorded extension identified above."
+        }
+      ],
+      "ownerQuestion": null
+    },
+    {
+      "id": "review.n3.lactation-drain-contact-boundary.v4",
+      "disposition": "PARK_NO_SUPPORTED_SECOND_DECISION",
+      "reviewStatus": "needs_clinician_review",
+      "newVariantId": null,
+      "candidateEmitted": false,
+      "managerAcceptanceRequested": false,
+      "foundationalAcceptanceRequested": false,
+      "retainedVersion": {
+        "sourcePacket": "docs/research/question-new-n3-round4-20261110.json",
+        "questionVariantId": "question.n3.lactation-drain-contact-boundary.v4",
+        "conceptId": "concept.n3.lactation-drain-contact-boundary",
+        "exactVersionSha256": "54a1946164548672abae17be99a7f0c0d06b3c9b55d1bd7081618e577da149f3",
+        "keyShownFirstForReviewOnly": true,
+        "after": {
+          "Presentation": "Natalie Stone, a 31-year-old woman, attends the breast clinic after drainage of an MRSA abscess. Her infant is healthy and was born at term. A lactation clinician observes feeding and expression from the affected breast.",
+          "Exhibit": {
+            "kind": "keyValue",
+            "caption": "Original constructed teaching record; fictional patient observations",
+            "items": [
+              {
+                "label": "Wound and latch",
+                "value": "The draining opening lies above the areola beneath a dressing. During the observed latch the infant's mouth remains below the dressing; the dressing stays adherent around the opening."
+              },
+              {
+                "label": "Pump contact",
+                "value": "With the flange in position, its upper rim crosses the opening and lifts the dressing edge. Drainage from the opening reaches the flange's inner breast-contact surface and runs toward the milk tunnel."
+              },
+              {
+                "label": "Collection path",
+                "value": "The tunnel and bottle remain connected to that flange throughout expression."
+              }
+            ]
+          },
+          "Task": "Which affected-side plan should Natalie Stone follow for the next feed using the observed arrangements?",
+          "Options": [
+            "**KEY:** Breastfeed directly and discard expressed milk",
+            "Breastfeed directly and give expressed milk",
+            "Pause breastfeeding and give expressed milk",
+            "Pause breastfeeding and discard expressed milk"
+          ],
+          "Explanation": "Apply the contact precaution to each route. The observed latch avoids the covered opening; the pump setup contacts drainage along a component connected to the milk tunnel. Continue the observed direct feed and discard milk from that expression setup. Reassess or change the expression arrangement before collecting milk for use; the decision does not establish that every future pump setup is unsafe."
+        },
+        "status": "Unchanged historical draft; included to explain parking, not submitted as a round-five candidate."
+      },
+      "independentReview": {
+        "source": "docs/research/question-new-n3-round4-review-20261110.json",
+        "id": "review.n3.lactation-drain-contact-boundary.v4",
+        "title": "Feeding after drainage",
+        "verdict": "REVISE",
+        "difficulty": "easy",
+        "twoStep": false,
+        "cues": [
+          {
+            "phrase": "the infant's mouth remains below the dressing; the dressing stays adherent around the opening",
+            "why": "This explicitly favorable contact description maps directly to continuing direct feeding. A reader can make the clean-versus-dirty distinction without identifying a clinical mechanism."
+          },
+          {
+            "phrase": "Drainage from the opening reaches the flange's inner breast-contact surface and runs toward the milk tunnel.",
+            "why": "The visibly dirty collection path maps directly to discarding expressed milk. Combined with the favorable latch description, ordinary contamination reasoning selects the complete key without a second resident-level inference."
+          },
+          {
+            "phrase": "The tunnel and bottle remain connected to that flange throughout expression.",
+            "why": "This additional linkage reinforces the same contamination answer. It clarifies exposure but adds no independent decision or competing interpretation."
+          }
+        ],
+        "fairness": [
+          "Node node.n3.lactation-drain-contact-boundary.v1: continuing the observed direct feed and discarding milk collected with the described contaminated setup is the single best offered plan. Healthy term infant status, the covered opening, observed latch and pump contact are supplied.",
+          "The complete four-option matrix balances each feed/discard component equally. There is no frequency convergence, uniquely comprehensive option, grammar outlier, diagnosis-to-option lexical match or rhetorical absolute. The shortcut arises from the very explicit clean/contaminated route descriptions, not an unbalanced matrix.",
+          "Giving the expressed milk disregards the described wound-drainage exposure; pausing the observed direct feed treats the protected latch as though it had the same contact. Neither alternative is equally supported by this record. No confident clinical inaccuracy identified in the assessed fields.",
+          "There are two route judgments, but each applies the same immediately visible contact distinction. Counting them as two consequential reasoning steps overstates the cognitive demand. The unusual setting may require knowledge of MRSA feeding precautions, but the options and exhibit make the answer accessible through common-sense contamination avoidance.",
+          "The task is appropriately limited to the observed arrangements and next feed. The verdict does not imply that every future expression setup is unsafe or that every infant shares this patient's circumstances."
+        ],
+        "suggestions": [
+          "Keep the complete balanced matrix and necessary contact observations; do not obscure whether drainage reaches the collection path to manufacture difficulty.",
+          "For a resident-level revision, test a supported concrete next action after a specified change in wound coverage or equipment contact, so reassessment changes the feeding/collection plan rather than asking two restatements of the same contact rule. State the actual arrangement and keep all options at that same decision stage.",
+          "If the exact objective is simply recognizing safe versus contaminated routes, seek explicit foundational/safety-item acceptance and label the difficulty easy. Cosmetic removal of the collection-path sentence will not create a second consequential step."
+        ]
+      },
+      "originalObjective": "Apply contact precautions separately to the observed affected-side latch and expression arrangement.",
+      "supportedBoundary": "The recorded ABM/CDC fact supports continued feeding or expressed milk when mouth and flange avoid infected tissue, drainage and the drain site. The other recorded facts support ultrasound and selected source control; they do not supply a new equipment-decontamination, milk-handling or special-infant protocol.",
+      "reviewResponse": [
+        "Agree that the balanced four-option matrix avoids convergence but still asks two applications of one immediately visible contact rule.",
+        "Retain the necessary contact observations. Removing the milk-path linkage would recreate the fairness gap identified in review 2 rather than create clinical difficulty.",
+        "Considered the suggested change in coverage or equipment contact: a newly observed protected or exposed arrangement changes permission under the same conditional rule, but this alone is still clean/contaminated matching. It does not meet the requested independent second resident-level decision."
+      ],
+      "prospectiveConstruction": {
+        "stepA": "Interpret the changed wound coverage and contact path rather than assume that the earlier feeding assessment still applies.",
+        "stepB": "Choose a concrete feeding/collection action for the new arrangement, including any consequence for milk collected under a different arrangement.",
+        "closestCompetitor": "Carry an earlier feeding permission into a changed arrangement, or treat a correction to future collection as resolving a prior collection exposure.",
+        "decidingObservationNeeded": "The sequence of actual contacts would distinguish the arrangements, but it supplies no independent clinical mechanism beyond the existing contact rule.",
+        "ablation": "Deleting the change in contact leaves the original direct-feed/expressed-milk mapping. Keeping it adds chronology but still repeats the same safety rule; it does not establish PGY-2/3 demand.",
+        "counterfactual": "If the infant mouth newly contacts the infected opening, the earlier direct-feeding permission no longer follows from the recorded precaution. Whether a particular corrected collection setup or special infant circumstance warrants a different concrete protocol needs directly supported guidance.",
+        "alternativeKeyEstablished": false,
+        "status": "Considered outline only; no invented resolving observations, proposed key or executable variant."
+      },
+      "missingSupport": "An independently consequential management objective with a directly verified concrete action. The recorded limitation about an immunocompromised infant does not itself specify that action; no withholding interval, equipment protocol or retrospective milk-disposition rule is supplied by it.",
+      "reentryTask": "Either obtain explicit manager acceptance of this exact objective as a foundational safety item, or identify and verify a separate clinically relevant decision before authoring another resident-level version. Do not add a special-infant scenario or generic referral key to manufacture difficulty.",
+      "selfCheck": {
+        "kind": "manual_author_reassessment",
+        "independent": false,
+        "clinicalApproval": false,
+        "rubric": "question-authoring.2026-11-08.v15",
+        "authorVerdict": "PARK_NOT_PASS",
+        "calibratedToReviewer": {
+          "difficulty": "easy",
+          "twoStep": false,
+          "disagreement": false
+        },
+        "coverTheKey": "The balanced matrix has no component-frequency cue. Nevertheless, explicit protected latch versus drainage in the collection path makes common-sense contact matching sufficient; disguising those findings would reduce fairness.",
+        "sameStage": "The retained four plans are at the same next-feed decision stage. A revision must preserve that parallel scope, not mix wound drainage, a test and feeding permission.",
+        "twoSteps": "NOT MET: two routes, or before/after contact arrangements, are two applications of one precaution. No distinct supported second clinical decision has been established.",
+        "difficulty": "Retained v4: easy, agreeing with the reviewer. An unfamiliar setting does not establish moderate difficulty.",
+        "oneBestAnswer": "The retained exact contact arrangement supports the intended route-specific answer under its stated healthy-term-infant scope. A more complex changed-setup or special-infant protocol has no established unique key here.",
+        "decidingObservation": "The sequence of actual contacts would distinguish the arrangements, but it supplies no independent clinical mechanism beyond the existing contact rule.",
+        "counterfactual": "If the infant mouth newly contacts the infected opening, the earlier direct-feeding permission no longer follows from the recorded precaution. Whether a particular corrected collection setup or special infant circumstance warrants a different concrete protocol needs directly supported guidance.",
+        "closestCompetitor": "Carry an earlier feeding permission into a changed arrangement, or treat a correction to future collection as resolving a prior collection exposure."
+      },
+      "evidenceAudit": [
+        {
+          "claimId": "claim.lactational-breast-abscess.continued-feeding-precautions",
+          "statement": "Breastfeeding or expressed milk generally can continue from an affected breast when the infant's mouth and pump flange avoid purulent drainage, open infected tissue, and the drain site.",
+          "limitation": "Feeding safety remains individualized, including when an infant is immunocompromised or direct contact with infected tissue cannot be avoided.",
+          "lastCheckedOn": "2026-09-11",
+          "sourceIds": [
+            "source.expansion.abm-mastitis-2022",
+            "source.expansion.cdc-mrsa-breastfeeding-2025"
+          ],
+          "use": "Recorded boundary only; does not verify the unrecorded extension identified above."
+        },
+        {
+          "claimId": "claim.lactational-breast-abscess.targeted-ultrasound",
+          "statement": "Targeted breast ultrasound is appropriate for a stable lactating adult with a persistent focal tender or erythematous mass suspicious for an abscess.",
+          "limitation": "This does not make every episode of mastitis an imaging indication or exclude inflammatory cancer and other masses.",
+          "lastCheckedOn": "2026-09-11",
+          "sourceIds": [
+            "source.expansion.acr-lactation-imaging-2026",
+            "source.expansion.abm-mastitis-2022"
+          ],
+          "use": "Recorded boundary only; does not verify the unrecorded extension identified above."
+        },
+        {
+          "claimId": "claim.lactational-breast-abscess.selected-drainage",
+          "statement": "A confirmed uncomplicated drainable lactational abscess requires source control; image-guided aspiration with fluid culture is a reasonable initial option, with antibiotic care individualized.",
+          "limitation": "Aspiration is not universal; repeated aspiration, catheter drainage, or surgery may be needed. This claim excludes sepsis, necrosis, rapidly progressive infection, and malignancy concern.",
+          "lastCheckedOn": "2026-09-11",
+          "sourceIds": [
+            "source.expansion.abm-mastitis-2022",
+            "source.expansion.acr-lactation-imaging-2026"
+          ],
+          "use": "Recorded boundary only; does not verify the unrecorded extension identified above."
+        }
+      ],
+      "ownerQuestion": null
+    },
+    {
+      "id": "review.n3.chyle-leak-diet-composition-versus-calories.v4",
+      "disposition": "PARK_NO_SUPPORTED_SECOND_DECISION",
+      "reviewStatus": "needs_clinician_review",
+      "newVariantId": null,
+      "candidateEmitted": false,
+      "managerAcceptanceRequested": false,
+      "foundationalAcceptanceRequested": false,
+      "retainedVersion": {
+        "sourcePacket": "docs/research/question-new-n3-round4-20261110.json",
+        "questionVariantId": "question.n3.chyle-leak-diet-composition-versus-calories.v4",
+        "conceptId": "concept.n3.chyle-leak-diet-composition-versus-calories",
+        "exactVersionSha256": "4f95a92962f8ad9660d0ba5dfb737d58638c6599f7a62dba6a4e44f00430bbcf",
+        "keyShownFirstForReviewOnly": true,
+        "after": {
+          "Presentation": "Victor Lane, a 65-year-old man, attends the surgical follow-up clinic after retroperitoneal lymph-node dissection. You review the hospital team's initial nutrition decision when new abdominal drainage developed.",
+          "Exhibit": {
+            "kind": "keyValue",
+            "caption": "Original constructed teaching record; fictional patient observations",
+            "items": [
+              {
+                "label": "Drainage",
+                "value": "Clear before meals resumed; subsequently cloudy white."
+              },
+              {
+                "label": "Paired samples",
+                "value": "Fluid triglycerides 780 mg/dL; serum triglycerides 120 mg/dL."
+              },
+              {
+                "label": "Intake and examination",
+                "value": "Meals meet the team's energy and protein prescription. No vomiting; passing stool. Abdomen soft. The hospital is monitoring drain volume, weight and electrolytes."
+              }
+            ]
+          },
+          "Task": "Which initial hospital nutrition prescription best fits Victor Lane's record?",
+          "Options": [
+            "**KEY:** Oral feeding with long-chain-fat restriction and medium-chain enrichment",
+            "Oral feeding with long-chain triglyceride enrichment",
+            "Parenteral feeding with intravenous nutrients and cessation of oral feeds"
+          ],
+          "Explanation": "Interpret the fluid findings with the operative and meal history: they support postoperative chylous loss rather than a calorie-delivery problem. The selected initial nutrition plan uses long-chain-fat restriction with medium-chain enrichment while preserving energy/protein intake and monitoring fluid, electrolytes and nutrition. PN is reserved for a different feasibility or refractory-course decision. The fictional sample values are not diagnostic cutoffs or an escalation rule."
+        },
+        "status": "Unchanged historical draft; included to explain parking, not submitted as a round-five candidate."
+      },
+      "independentReview": {
+        "source": "docs/research/question-new-n3-round4-review-20261110.json",
+        "id": "review.n3.chyle-leak-diet-composition-versus-calories.v4",
+        "title": "Postoperative nutrition review",
+        "verdict": "REVISE",
+        "difficulty": "easy",
+        "twoStep": false,
+        "cues": [
+          {
+            "phrase": "Meals meet the team's energy and protein prescription. No vomiting; passing stool. Abdomen soft.",
+            "why": "This bundles a statement that intake goals are met with reassuring gut-function findings. It steers away from both nutritional enrichment for inadequate intake and parenteral feeding, leaving the composition-changing option. Gut feasibility is legitimate information, but the cluster makes the option set easier without resolving loss severity."
+          },
+          {
+            "phrase": "Oral feeding with long-chain-fat restriction and medium-chain enrichment",
+            "why": "The key is the only oral prescription with two coordinated composition changes and the only mention of medium-chain fat; its oral competitor merely enriches long-chain triglycerides. This is a weak specificity/novelty cue, not a conclusive nonmedical shortcut. The parenteral option is similarly long, so this is not a uniquely-long-key finding."
+          }
+        ],
+        "fairness": [
+          "Node node.n3.chyle-leak-diet-composition-versus-calories.v1: the operation, meal-associated white drainage and markedly triglyceride-rich fluid strongly favor chylous loss. Long-chain-fat restriction with medium-chain enrichment is the likely intended initial oral plan; long-chain enrichment is not a close credible competitor once that process is recognized.",
+          "The cognitive demand is predominantly recognition of a classic postoperative pattern followed by recall of its familiar dietary association. The paired serum value does not create an additional management decision, and the current long-chain-enrichment distractor does little to distinguish PGY-2/3 reasoning. Two sequential recalls are not two consequential steps under the owner standard.",
+          "Single-best-answer confidence is limited against the parenteral option: actual drain output, loss trajectory and resulting volume/nutritional consequences are absent. Saying the hospital is monitoring these variables supplies no results. Adequate oral calories and a functioning gut do not alone establish that continued intestinal fat absorption is appropriate for every severity of chylous loss.",
+          "Clinical uncertainty, not a declared factual error: I cannot certify from this offline record that PN is equally appropriate in this particular patient, nor that the intended oral prescription is wrong. The missing severity information prevents confidently dismissing PN across reasonable interpretations of the case. A clinician should establish the supported initial-treatment boundary; no numeric cutoff is inferred here.",
+          "The historical hospital decision is clearly distinguished from the current clinic visit. The task is complete. No visible label names chyle, no rhetorical absolute dictates treatment, and the options do not form a majority-component convergence that uniquely selects the key. Difficulty is easy for the apparent intended solution; uncertainty about PN is a fairness defect, not desirable hardness."
+        ],
+        "suggestions": [
+          "Supply the actual loss course and relevant physiological/nutritional observations needed to distinguish an initial oral trial from bowel rest/PN, with clinician-supported interpretation. Do not substitute a new unsupported volume threshold or the conclusion mild leak for those observations.",
+          "Replace long-chain enrichment with a genuinely credible competing nutrition prescription at the same stage, supported by the clinical objective. Keep option specificity comparable and avoid making only the key a detailed combined prescription.",
+          "Make a documented response or meaningful constraint change which plausible nutrition plan is best; otherwise treat the diagnosis-to-diet association as foundational. Preserve the distinction between recognizing chyle and deciding the appropriate route/intensity of nutritional support.",
+          "Re-review both single-key fairness and two-step demand after revision. Do not resolve the PN ambiguity solely by asserting in post-answer feedback that it is reserved for another stage."
+        ]
+      },
+      "originalObjective": "Recognize the postoperative fluid pattern and select long-chain-fat restriction with medium-chain enrichment rather than increase long-chain fat or start PN.",
+      "supportedBoundary": "Recorded facts support fluid analysis, monitored initial conservative management and general oral/enteral versus PN boundaries. They explicitly retain heterogeneous evidence and do not define a chyle-loss volume, response duration or physiological threshold that selects PN or invasive escalation.",
+      "reviewResponse": [
+        "Agree that classic fluid recognition followed by the familiar diet association is predominantly recall, and long-chain-fat enrichment is not a credible nearest competitor.",
+        "Agree that adequate oral calories and a functioning gut do not resolve the competing PN option without actual loss course and physiological consequences. The retained v4 is not certified single-best against PN.",
+        "Considered a real intake/output and nutritional-response record. A falling-output/return-to-earlier-formula sequence would repeat the lay trend-matching shortcut criticized in review 2. A detailed loss record would require a supported interpretation before it could fairly choose oral, enteral or PN treatment."
+      ],
+      "prospectiveConstruction": {
+        "stepA": "Interpret actual drain-loss trajectory together with nutritional intake, volume status and laboratory course, rather than infer treatment adequacy from fluid appearance or calorie prescription.",
+        "stepB": "Use that interpretation to choose the next nutrition route/intensity among credible conservative enteral and PN strategies.",
+        "closestCompetitor": "Start PN for ongoing losses despite a functioning gut, or continue a dietary plan because prescribed calories are adequate despite an adverse physiological course.",
+        "decidingObservationNeeded": "A documented response or constraint that a permitted source directly supports as distinguishing the offered nutrition plans. Neither a fictional output number nor the phrase being monitored establishes that boundary.",
+        "ablation": "Without the loss and physiological course, PN cannot be reliably ranked in the proposed closer option set. With a simple A-better/B-worse table, the answer follows from the trend without the intended clinical reasoning.",
+        "counterfactual": "General recorded guidance supports PN when oral and enteral routes are infeasible, contraindicated or insufficient. It does not say which particular course of chylous losses establishes those conditions, or when to abandon a given dietary trial.",
+        "alternativeKeyEstablished": false,
+        "status": "Considered outline only; no invented resolving observations, proposed key or executable variant."
+      },
+      "missingSupport": "A directly supported and clinically reviewed interpretation of a specified postoperative chyle-loss/response course that ranks the closest oral/enteral versus bowel-rest/PN plans. The generic PN boundary and permission to monitor do not establish that exact application. No universal numeric cutoff is inferred.",
+      "reentryTask": "Verify a bounded initial-versus-refractory nutritional-management decision with permitted guidance and clinician review before constructing the resolving observations. The earlier owner-approved large symptomatic inpatient case does not approve a new stable low-output or PN-escalation variant.",
+      "selfCheck": {
+        "kind": "manual_author_reassessment",
+        "independent": false,
+        "clinicalApproval": false,
+        "rubric": "question-authoring.2026-11-08.v15",
+        "authorVerdict": "PARK_NOT_PASS",
+        "calibratedToReviewer": {
+          "difficulty": "easy",
+          "twoStep": false,
+          "disagreement": false
+        },
+        "coverTheKey": "NOT MET: the key is the only detailed oral composition change; the long-chain-enrichment rival is weak. Reassuring intake/gut statements steer away from PN without settling loss severity.",
+        "sameStage": "A future revision should compare similarly specified nutrition prescriptions at the same treatment point. Do not mix a generic diet, lymphatic intervention and a loosely defined admission decision.",
+        "twoSteps": "NOT MET: the retained construction is classic pattern recognition plus diet recall. A loss-response interpretation could change a real second management decision, but that boundary is unverified.",
+        "difficulty": "Retained v4: easy for the intended answer; unresolved PN ranking is a fairness defect, not difficulty.",
+        "oneBestAnswer": "NOT ESTABLISHED against PN in v4 because the severity/response context is absent. No replacement key is emitted until that comparison is supported.",
+        "decidingObservation": "A documented response or constraint that a permitted source directly supports as distinguishing the offered nutrition plans. Neither a fictional output number nor the phrase being monitored establishes that boundary.",
+        "counterfactual": "General recorded guidance supports PN when oral and enteral routes are infeasible, contraindicated or insufficient. It does not say which particular course of chylous losses establishes those conditions, or when to abandon a given dietary trial.",
+        "closestCompetitor": "Start PN for ongoing losses despite a functioning gut, or continue a dietary plan because prescribed calories are adequate despite an adverse physiological course."
+      },
+      "evidenceAudit": [
+        {
+          "claimId": "claim.chylous-ascites.fluid-analysis-confirmation",
+          "statement": "Suspected postoperative chylous ascites requires diagnostic fluid sampling with triglyceride measurement and studies directed at infection and other plausible postoperative leaks rather than diagnosis from imaging appearance alone.",
+          "limitation": "The exact ancillary fluid studies depend on the operation and differential diagnosis. This approved concept does not teach an unsourced universal numeric triglyceride cutoff.",
+          "lastCheckedOn": "2026-08-06",
+          "sourceIds": [
+            "source.al-busafi.chylous-ascites-review.2014",
+            "source.bhardwaj.chylous-ascites-review.2018"
+          ],
+          "use": "Recorded boundary only; does not verify the unrecorded extension identified above."
+        },
+        {
+          "claimId": "claim.postoperative-chylous-ascites.initial-hospital-management",
+          "statement": "Initial hospital management of large, symptomatic, reaccumulating postoperative chylous ascites can include symptom-directed peritoneal drainage, restriction of long-chain triglycerides with medium-chain triglyceride enrichment, and monitoring of nutrition, fluid, and electrolytes.",
+          "limitation": "Evidence is heterogeneous, drainage is symptom- and accumulation-dependent, and persistent or severe refractory leakage may require individualized lymphatic localization, intervention, or surgery. This claim does not impose a rigid escalation timeline.",
+          "lastCheckedOn": "2026-08-06",
+          "sourceIds": [
+            "source.al-busafi.chylous-ascites-review.2014",
+            "source.bhardwaj.chylous-ascites-review.2018",
+            "source.espen.hospital-nutrition.2021"
+          ],
+          "use": "Recorded boundary only; does not verify the unrecorded extension identified above."
+        },
+        {
+          "claimId": "claim.nutrition.oral-enteral",
+          "statement": "When the gastrointestinal tract functions, oral intake and oral supplements are preferred first, with enteral nutrition used when oral intake is inadequate.",
+          "limitation": "Route choice remains individualized.",
+          "lastCheckedOn": "2026-09-29",
+          "sourceIds": [
+            "source.nutrition.espen-practical-2021"
+          ],
+          "use": "Recorded boundary only; does not verify the unrecorded extension identified above."
+        },
+        {
+          "claimId": "claim.nutrition.pn-boundary",
+          "statement": "Parenteral nutrition is reserved for situations in which oral and enteral routes are infeasible, contraindicated, or insufficient.",
+          "limitation": "No fixed timing, formulation, or dose is taught.",
+          "lastCheckedOn": "2026-09-29",
+          "sourceIds": [
+            "source.nutrition.espen-practical-2021"
+          ],
+          "use": "Recorded boundary only; does not verify the unrecorded extension identified above."
+        }
+      ],
+      "ownerQuestion": null
+    }
+  ],
+  "executableCandidates": {
+    "count": 0,
+    "sourceFiles": [],
+    "sourceRelease": null,
+    "previewCommand": null,
+    "reason": "All three fail the requested supported two-step construction. No new source release, timing row, question ID or executable key is emitted."
+  },
+  "frozenPreservation": [
+    {
+      "id": "review.n3.delayed-regurgitation-proximal-anatomic-study.v4",
+      "questionVariantId": "question.n3.delayed-regurgitation-proximal-anatomic-study.v4",
+      "authoredCaseSha256": "ce4b697f86b2be0d8cf8723041951f4aec8f823c25dec0ebb782af8cf204b186",
+      "preservedExact": true,
+      "manifestOwner": "Manager/rewrite lane; this worker makes no acceptance or integration change."
+    },
+    {
+      "id": "review.n3.venous-ulcer-with-competing-arterial-findings.v4",
+      "questionVariantId": "question.n3.venous-ulcer-with-competing-arterial-findings.v4",
+      "authoredCaseSha256": "188d81df478242036469efd23d0de6b7cf77726b0203a22f0ad82bb9c29b758e",
+      "preservedExact": true,
+      "manifestOwner": "Manager/rewrite lane; this worker makes no acceptance or integration change."
+    }
+  ],
+  "existingOwnerHolds": {
+    "count": 13,
+    "sourcePacket": "docs/research/question-new-n3-round4-20261110.json",
+    "exactPriorArraySha256": "ff69b5cdc6ea93140640327fcda8ef07cb190be955ab7337e8ad53ddf19e9d88",
+    "unchanged": true,
+    "newQuestions": [],
+    "status": "Awaiting Melissa; no held item is reopened or rewritten here."
+  },
+  "previouslyProposedDrops": {
+    "count": 17,
+    "sourcePacket": "docs/research/question-new-n3-round4-20261110.json",
+    "exactPriorArraySha256": "baf84d10202354705845b9adf2b08edc7becc044da3c0b65709173792484651b",
+    "managerDecision": "Accepted as drops in the current brief; historical source definitions and FSRS identities are retained, with no retirement migration."
+  },
+  "earlierPassPreservation": [
+    {
+      "id": "review.n3.bilateral-carotid-symptom-attribution.v2",
+      "variantSha256": "cefd185d88d4a1c2e55d928bd172dd1fab020713ea364055413fe45db3d2ba3d",
+      "authoredCaseSha256": "581b65b6ac2e19c44749bbec6fd9bc8e5ed1e914665e90004aab1a84ab4bfa37",
+      "exact": true,
+      "reviewSource": "docs/research/question-new-n3-review2-20261105.json",
+      "liveExact": true,
+      "round4Edited": false
+    },
+    {
+      "id": "review.n3.postsplenectomy-nodule-function-before-targeting.v2",
+      "variantSha256": "f88cf9ff5359299b4dc44dda89752b0c74c56c8e5eea627f0ab141953864c8f6",
+      "authoredCaseSha256": "3d77e53c925f24799f943280b5a579a60a16810720ca81ab62b1d273edb6c7ae",
+      "exact": true,
+      "reviewSource": "docs/research/question-new-n3-review2-20261105.json",
+      "liveExact": true,
+      "round4Edited": false
+    },
+    {
+      "id": "review.n3.dysphagia-biopsy-territory-after-negative-endoscopy.v2",
+      "variantSha256": "f8dcf7df10db721f6ed9cfcffe7457206ffadd75fe8567c374fd7517b0a79ce9",
+      "authoredCaseSha256": "28da5b119f54be7141e385fa2d1d1f51383c22cad31835b82ec748dd5e5d6c15",
+      "exact": true,
+      "reviewSource": "docs/research/question-new-n3-review2-20261105.json",
+      "liveExact": true,
+      "round4Edited": false
+    },
+    {
+      "id": "review.n3.tumor-screen-versus-family-test-sequence.v2",
+      "variantSha256": "ac2f0407f9a1a4af42445495bff871c4e566a66d062661edf5d8eadd1c7c2610",
+      "authoredCaseSha256": "e48cf9407571beece224c5d56fe1fdeffa4f89d3e2078bbcb06edaf6e8de43ea",
+      "exact": true,
+      "reviewSource": "docs/research/question-new-n3-review2-20261105.json",
+      "liveExact": true,
+      "round4Edited": false
+    },
+    {
+      "id": "review.n3.gastric-lymphoma-new-large-cell-process.v2",
+      "variantSha256": "70fb910e8aa9e70f228d04a125be08f880859e132e4687d8b202a3fa7eee09a6",
+      "authoredCaseSha256": "c0a73c140565409277e2dbc382c3eee17ad8e0699c71db73fabe13a1401f09fc",
+      "exact": true,
+      "reviewSource": "docs/research/question-new-n3-review2-20261105.json",
+      "liveExact": true,
+      "round4Edited": false
+    }
+  ],
+  "sourceMode": {
+    "networkCalls": 0,
+    "newAtomicFacts": 0,
+    "newSourceRecords": 0,
+    "refreshedVerificationDates": 0,
+    "description": "Read only locally recorded permitted atomic claims, bibliography and verification/approval ledgers. A citation is not verification of an unrecorded recommendation.",
+    "localCrossChecks": [
+      {
+        "path": "docs/execplans/concept-expansion-source-review-2026-09-11.md",
+        "use": "Lactational-abscess scope and source limitations; no new milk-handling protocol."
+      },
+      {
+        "path": "docs/clinical-workbench/approvals/owner-row-037-postoperative-chylous-ascites.md",
+        "use": "Exact large symptomatic inpatient approval scope; excludes approval of a stable low-output or rigid escalation variant."
+      },
+      {
+        "path": "docs/research/question-new-n3-review2-20261105.json",
+        "use": "Avoid repeating the easy deep-abscess and A-better/B-worse constructions."
+      }
+    ]
+  },
+  "claims": [
+    {
+      "contentVersion": "development-batch.2026-09-28.pre-endoscopy.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.dfi.clinical-recognition",
+      "statement": "Diabetes-related foot soft-tissue infection is diagnosed clinically from local or systemic inflammatory findings; colonization alone does not establish infection.",
+      "sourceIds": [
+        "source.dfi.iwgdf-idsa-2023"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "Single-current-guideline limitation.",
+      "applicablePopulation": "Adults with diabetes and a foot wound.",
+      "lastCheckedOn": "2026-09-28"
+    },
+    {
+      "contentVersion": "development-batch.2026-09-28.pre-endoscopy.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.dfu.no-antibiotics-uninfected",
+      "statement": "Systemic or local antibiotics should not be used for a clinically uninfected diabetic foot ulcer solely to prevent infection or promote healing.",
+      "sourceIds": [
+        "source.dfi.iwgdf-idsa-2023"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "External multidisciplinary foot care remains required; no onsite wound service is implied.",
+      "applicablePopulation": "Adults with a clinically uninfected diabetes-related foot ulcer.",
+      "lastCheckedOn": "2026-09-28"
+    },
+    {
+      "contentVersion": "development-batch.2026-09-28.pre-endoscopy.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.dfi.initial-escalation",
+      "statement": "Severe infection or moderate infection with important morbidity warrants hospital consideration; gangrene, deep abscess, necrotizing infection, compartment syndrome, or severe ischemia warrants urgent surgical consultation.",
+      "sourceIds": [
+        "source.dfi.iwgdf-idsa-2023"
+      ],
+      "evidenceCategory": "disposition",
+      "certainty": "moderate",
+      "limitation": "The clinic objective stops at recognition and external escalation.",
+      "applicablePopulation": "Adults with diabetes-related foot infection and danger features.",
+      "lastCheckedOn": "2026-09-28"
+    },
+    {
+      "contentVersion": "development-batch.2026-09-11.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.lactational-breast-abscess.continued-feeding-precautions",
+      "statement": "Breastfeeding or expressed milk generally can continue from an affected breast when the infant's mouth and pump flange avoid purulent drainage, open infected tissue, and the drain site.",
+      "sourceIds": [
+        "source.expansion.abm-mastitis-2022",
+        "source.expansion.cdc-mrsa-breastfeeding-2025"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "moderate",
+      "limitation": "Feeding safety remains individualized, including when an infant is immunocompromised or direct contact with infected tissue cannot be avoided.",
+      "applicablePopulation": "Lactating adults receiving care for a breast abscess whose infant and pump can avoid contact with purulent drainage, open tissue, and drains.",
+      "lastCheckedOn": "2026-09-11"
+    },
+    {
+      "contentVersion": "development-batch.2026-09-11.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.lactational-breast-abscess.targeted-ultrasound",
+      "statement": "Targeted breast ultrasound is appropriate for a stable lactating adult with a persistent focal tender or erythematous mass suspicious for an abscess.",
+      "sourceIds": [
+        "source.expansion.acr-lactation-imaging-2026",
+        "source.expansion.abm-mastitis-2022"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "This does not make every episode of mastitis an imaging indication or exclude inflammatory cancer and other masses.",
+      "applicablePopulation": "Stable lactating adults with a persistent focal inflammatory breast mass suspicious for a collection.",
+      "lastCheckedOn": "2026-09-11"
+    },
+    {
+      "contentVersion": "development-batch.2026-09-11.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.lactational-breast-abscess.selected-drainage",
+      "statement": "A confirmed uncomplicated drainable lactational abscess requires source control; image-guided aspiration with fluid culture is a reasonable initial option, with antibiotic care individualized.",
+      "sourceIds": [
+        "source.expansion.abm-mastitis-2022",
+        "source.expansion.acr-lactation-imaging-2026"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Aspiration is not universal; repeated aspiration, catheter drainage, or surgery may be needed. This claim excludes sepsis, necrosis, rapidly progressive infection, and malignancy concern.",
+      "applicablePopulation": "Stable lactating adults with a confirmed uncomplicated drainable breast abscess and no urgent complication.",
+      "lastCheckedOn": "2026-09-11"
+    },
+    {
+      "contentVersion": "clinical.owner-row-037.2026-08-06.1",
+      "reviewStatus": "clinically_approved",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": {
+        "reviewer": "Melissa Rowland, MD",
+        "reviewedOn": "2026-08-06",
+        "contentVersion": "clinical.owner-row-037.2026-08-06.1"
+      },
+      "id": "claim.chylous-ascites.fluid-analysis-confirmation",
+      "statement": "Suspected postoperative chylous ascites requires diagnostic fluid sampling with triglyceride measurement and studies directed at infection and other plausible postoperative leaks rather than diagnosis from imaging appearance alone.",
+      "sourceIds": [
+        "source.al-busafi.chylous-ascites-review.2014",
+        "source.bhardwaj.chylous-ascites-review.2018"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "The exact ancillary fluid studies depend on the operation and differential diagnosis. This approved concept does not teach an unsourced universal numeric triglyceride cutoff.",
+      "applicablePopulation": "Stable postoperative adults with newly identified ascites and suspected lymphatic leakage.",
+      "lastCheckedOn": "2026-08-06"
+    },
+    {
+      "contentVersion": "clinical.owner-row-037.2026-08-06.1",
+      "reviewStatus": "clinically_approved",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": {
+        "reviewer": "Melissa Rowland, MD",
+        "reviewedOn": "2026-08-06",
+        "contentVersion": "clinical.owner-row-037.2026-08-06.1"
+      },
+      "id": "claim.postoperative-chylous-ascites.initial-hospital-management",
+      "statement": "Initial hospital management of large, symptomatic, reaccumulating postoperative chylous ascites can include symptom-directed peritoneal drainage, restriction of long-chain triglycerides with medium-chain triglyceride enrichment, and monitoring of nutrition, fluid, and electrolytes.",
+      "sourceIds": [
+        "source.al-busafi.chylous-ascites-review.2014",
+        "source.bhardwaj.chylous-ascites-review.2018",
+        "source.espen.hospital-nutrition.2021"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Evidence is heterogeneous, drainage is symptom- and accumulation-dependent, and persistent or severe refractory leakage may require individualized lymphatic localization, intervention, or surgery. This claim does not impose a rigid escalation timeline.",
+      "applicablePopulation": "Hemodynamically stable postoperative adults with confirmed large, symptomatic, reaccumulating chylous ascites.",
+      "lastCheckedOn": "2026-08-06"
+    },
+    {
+      "contentVersion": "development-batch.2026-09-29.pre-endoscopy.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.nutrition.oral-enteral",
+      "statement": "When the gastrointestinal tract functions, oral intake and oral supplements are preferred first, with enteral nutrition used when oral intake is inadequate.",
+      "sourceIds": [
+        "source.nutrition.espen-practical-2021"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Route choice remains individualized.",
+      "applicablePopulation": "Nutritionally at-risk adult surgical patients with a functional gastrointestinal tract.",
+      "lastCheckedOn": "2026-09-29"
+    },
+    {
+      "contentVersion": "development-batch.2026-09-29.pre-endoscopy.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.nutrition.pn-boundary",
+      "statement": "Parenteral nutrition is reserved for situations in which oral and enteral routes are infeasible, contraindicated, or insufficient.",
+      "sourceIds": [
+        "source.nutrition.espen-practical-2021"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "moderate",
+      "limitation": "No fixed timing, formulation, or dose is taught.",
+      "applicablePopulation": "Adult surgical patients needing nutrition support.",
+      "lastCheckedOn": "2026-09-29"
+    }
+  ],
+  "sources": [
+    {
+      "contentVersion": "clinical.question-new-n3.2026-11-05.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.dfi.iwgdf-idsa-2023",
+      "title": "IWGDF/IDSA diabetes-related foot infection guideline",
+      "completeCitation": "Senneville E, Albalawi Z, van Asten SA, et al. IWGDF/IDSA Guidelines on the Diagnosis and Treatment of Diabetes-related Foot Infections. Clin Infect Dis. 2023;ciad527. doi:10.1093/cid/ciad527.",
+      "organizationOrJournal": "IWGDF and Infectious Diseases Society of America",
+      "authors": [
+        "Senneville E",
+        "Albalawi Z",
+        "van Asten SA",
+        "et al."
+      ],
+      "publicationYear": 2023,
+      "doi": "10.1093/cid/ciad527",
+      "pmid": null,
+      "officialUrl": "https://www.idsociety.org/practice-guideline/diabetic-foot-infections/",
+      "accessedOn": "2026-09-28",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyrighted guidance; targeted factual verification only",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced.",
+      "authorityAssessment": "Current intersociety guideline; single-source limitation retained.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.n3.f40690a1ddfc",
+        "claim.n3.cc8e11d4c5c0"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-new-n3.2026-11-05.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.expansion.abm-mastitis-2022",
+      "title": "Academy of Breastfeeding Medicine Clinical Protocol #36: The Mastitis Spectrum, Revised 2022",
+      "completeCitation": "Mitchell KB, Johnson HM, Rodríguez JM, et al.; Academy of Breastfeeding Medicine. Academy of Breastfeeding Medicine Clinical Protocol #36: The Mastitis Spectrum, Revised 2022. Breastfeeding Medicine. 2022;17(5):360-376. doi:10.1089/bfm.2022.29207.kbm. Accessed 2026-09-11.",
+      "organizationOrJournal": "Academy of Breastfeeding Medicine / Breastfeeding Medicine",
+      "authors": [
+        "K. B. Mitchell",
+        "H. M. Johnson",
+        "J. M. Rodríguez",
+        "Academy of Breastfeeding Medicine"
+      ],
+      "publicationYear": 2022,
+      "doi": "10.1089/bfm.2022.29207.kbm",
+      "pmid": null,
+      "officialUrl": "https://abm.memberclicks.net/assets/DOCUMENTS/PROTOCOLS/36-mitchell-et-al-2022-academy-of-breastfeeding-medicine-clinical-protocol-36-the-mastitis-spectrum-revised-2022.pdf",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyrighted; personal-use terms; targeted factual verification only",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, or marks reproduced.",
+      "authorityAssessment": "Direct society authority for source control, culture, drainage alternatives, continued breastfeeding, and individualized antibiotic care.",
+      "usageRole": "evidence",
+      "accessedOn": "2026-09-11",
+      "evidenceClaimIds": [
+        "claim.n3.2a9236e18292"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-new-n3.2026-11-05.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.expansion.cdc-mrsa-breastfeeding-2025",
+      "title": "Methicillin-Resistant Staphylococcus aureus (MRSA) and Breastfeeding",
+      "completeCitation": "Centers for Disease Control and Prevention. Methicillin-Resistant Staphylococcus aureus (MRSA) and Breastfeeding. Updated September 23, 2025. Accessed 2026-09-11.",
+      "organizationOrJournal": "Centers for Disease Control and Prevention",
+      "authors": [
+        "Centers for Disease Control and Prevention"
+      ],
+      "publicationYear": 2025,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.cdc.gov/breastfeeding-special-circumstances/hcp/illnesses-conditions/mrsa.html",
+      "sourceClass": "government_guidance",
+      "licenseLabel": "US federal factual material; public-domain conditions apply",
+      "reuseStatus": "public_domain_conditions_apply",
+      "reuseNotes": "Exclude third-party content, images, and agency marks; no endorsement implied.",
+      "authorityAssessment": "Independent safety cross-check for continued feeding and avoiding contact with purulent drainage, open tissue, and drains.",
+      "usageRole": "cross_check",
+      "accessedOn": "2026-09-11",
+      "evidenceClaimIds": [
+        "claim.n3.2a9236e18292"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-09-11.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.expansion.acr-lactation-imaging-2026",
+      "title": "ACR Appropriateness Criteria Breast Imaging During Lactation",
+      "completeCitation": "Expert Panel on Breast Imaging; Dogan BE, Salkowski LR, Weinstein SP, et al. ACR Appropriateness Criteria Breast Imaging During Lactation. Journal of the American College of Radiology. 2026;23(8):1768-1785. doi:10.1016/j.jacr.2026.03.002. Accessed 2026-09-11.",
+      "organizationOrJournal": "American College of Radiology / Journal of the American College of Radiology",
+      "authors": [
+        "B. E. Dogan",
+        "L. R. Salkowski",
+        "S. P. Weinstein",
+        "ACR Expert Panel on Breast Imaging"
+      ],
+      "publicationYear": 2026,
+      "doi": "10.1016/j.jacr.2026.03.002",
+      "pmid": null,
+      "officialUrl": "https://acsearch.acr.org/docs/3196809/Narrative",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyright ACR; targeted factual verification only",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Original factual synthesis only; no guideline prose, tables, figures, or marks reproduced.",
+      "authorityAssessment": "Current society imaging guidance directly supports targeted ultrasound and image-guided aspiration in suspected lactational abscess.",
+      "usageRole": "evidence",
+      "accessedOn": "2026-09-11",
+      "evidenceClaimIds": [
+        "claim.lactational-breast-abscess.targeted-ultrasound",
+        "claim.lactational-breast-abscess.selected-drainage"
+      ]
+    },
+    {
+      "contentVersion": "clinical.owner-row-037.2026-08-06.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.al-busafi.chylous-ascites-review.2014",
+      "title": "Chylous Ascites: Evaluation and Management",
+      "completeCitation": "Al-Busafi SA, Ghali P, Deschênes M, Wong P. Chylous Ascites: Evaluation and Management. ISRN Hepatol. 2014;2014:240473. doi:10.1155/2014/240473.",
+      "organizationOrJournal": "ISRN Hepatology",
+      "authors": [
+        "Said A. Al-Busafi",
+        "Peter Ghali",
+        "Marc Deschênes",
+        "Philip Wong"
+      ],
+      "publicationYear": 2014,
+      "doi": "10.1155/2014/240473",
+      "pmid": "27335837",
+      "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4890871/",
+      "accessedOn": "2026-08-06",
+      "sourceClass": "narrative_review",
+      "licenseLabel": "Open-access article; publisher and article-specific reuse terms apply",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Use for targeted factual verification and independently written synthesis only; do not reproduce source prose, figures, or tables.",
+      "authorityAssessment": "Peer-reviewed clinical review supporting diagnostic paracentesis with fluid analysis and conservative nutritional management of chylous ascites.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.chylous-ascites.fluid-analysis-confirmation",
+        "claim.postoperative-chylous-ascites.initial-hospital-management"
+      ]
+    },
+    {
+      "contentVersion": "clinical.owner-row-037.2026-08-06.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.bhardwaj.chylous-ascites-review.2018",
+      "title": "Chylous Ascites: A Review of Pathogenesis, Diagnosis and Treatment",
+      "completeCitation": "Bhardwaj R, Vaziri H, Gautam A, Ballesteros E, Karimeddini D, Wu GY. Chylous Ascites: A Review of Pathogenesis, Diagnosis and Treatment. J Clin Transl Hepatol. 2018;6(1):105-113. doi:10.14218/JCTH.2017.00035.",
+      "organizationOrJournal": "Journal of Clinical and Translational Hepatology",
+      "authors": [
+        "Rohit Bhardwaj",
+        "Haleh Vaziri",
+        "Anuj Gautam",
+        "Enrique Ballesteros",
+        "Darius Karimeddini",
+        "George Y. Wu"
+      ],
+      "publicationYear": 2018,
+      "doi": "10.14218/JCTH.2017.00035",
+      "pmid": "29577037",
+      "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5863006/",
+      "accessedOn": "2026-08-06",
+      "sourceClass": "narrative_review",
+      "licenseLabel": "Creative Commons Attribution-NonCommercial 4.0 International",
+      "reuseStatus": "cc_by_nc_4_0_restricted",
+      "reuseNotes": "Use with attribution for noncommercial development; retain the noncommercial restriction and do not reproduce source prose, figures, or tables.",
+      "authorityAssessment": "Peer-reviewed review independently supporting the imaging-composition boundary, fluid confirmation, dietary therapy, symptom-directed drainage, and escalation only for selected persistent cases.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.chylous-ascites.imaging-does-not-confirm-composition",
+        "claim.chylous-ascites.fluid-analysis-confirmation",
+        "claim.postoperative-chylous-ascites.initial-hospital-management"
+      ]
+    },
+    {
+      "contentVersion": "clinical.owner-row-037.2026-08-06.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.espen.hospital-nutrition.2021",
+      "title": "ESPEN guideline on hospital nutrition",
+      "completeCitation": "Thibault R, Abbasoglu O, Ioannou E, et al. ESPEN guideline on hospital nutrition. Clin Nutr. 2021;40(12):5684-5709. doi:10.1016/j.clnu.2021.09.039.",
+      "organizationOrJournal": "European Society for Clinical Nutrition and Metabolism; Clinical Nutrition",
+      "authors": [
+        "Ronan Thibault",
+        "Osman Abbasoglu",
+        "Evangelia Ioannou",
+        "European Society for Clinical Nutrition and Metabolism"
+      ],
+      "publicationYear": 2021,
+      "doi": "10.1016/j.clnu.2021.09.039",
+      "pmid": "34742138",
+      "officialUrl": "https://clinicalnutrition.espen.org/files/ESPEN-Guidelines/ESPEN_guideline_on_hospital_nutrition.pdf",
+      "accessedOn": "2026-08-06",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyrighted professional-society guidance; targeted factual verification only",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Use for targeted factual verification and citation only; do not reproduce protected recommendations, tables, or algorithms.",
+      "authorityAssessment": "Multidisciplinary nutrition guidance supporting a low-long-chain-triglyceride diet enriched with medium-chain triglycerides for a proven chyle leak while recognizing the limited evidence base.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.postoperative-chylous-ascites.initial-hospital-management"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-new-n3.2026-11-05.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.nutrition.espen-practical-2021",
+      "title": "ESPEN practical guideline on clinical nutrition in surgery",
+      "completeCitation": "Weimann A, Braga M, Carli F, et al. ESPEN practical guideline: Clinical nutrition in surgery. Clin Nutr. 2021;40(7):4745-4761. doi:10.1016/j.clnu.2021.03.031.",
+      "organizationOrJournal": "European Society for Clinical Nutrition and Metabolism",
+      "authors": [
+        "Weimann A",
+        "Braga M",
+        "Carli F",
+        "et al."
+      ],
+      "publicationYear": 2021,
+      "doi": "10.1016/j.clnu.2021.03.031",
+      "pmid": null,
+      "officialUrl": "https://doi.org/10.1016/j.clnu.2021.03.031",
+      "accessedOn": "2026-09-29",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyrighted guidance; targeted factual verification only",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Original factual synthesis only; no source prose, tables, figures, charts, or algorithms reproduced. N1 reuses locally recorded atomic synthesis and bibliographic metadata only; no source text, table, figure or excerpt was retrieved or copied. Access date is inherited; N1 did not refresh it. N2 uses recorded atomic synthesis and bibliographic metadata, with explicitly identified mathematical derivations. No source text, table, figure or excerpt was retrieved or copied. The original access date is retained, not refreshed.",
+      "authorityAssessment": "Copyrighted society practical guideline for screening and oral/enteral/parenteral route boundaries.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.n3.e2f4cca1859a",
+        "claim.n3.e757fd75ecb1"
+      ]
+    }
+  ],
+  "sourceLinks": [
+    {
+      "sourceId": "source.dfi.iwgdf-idsa-2023",
+      "url": "https://www.idsociety.org/practice-guideline/diabetic-foot-infections/",
+      "target": "_blank",
+      "rel": "noopener noreferrer",
+      "referrerPolicy": "no-referrer"
+    },
+    {
+      "sourceId": "source.expansion.abm-mastitis-2022",
+      "url": "https://abm.memberclicks.net/assets/DOCUMENTS/PROTOCOLS/36-mitchell-et-al-2022-academy-of-breastfeeding-medicine-clinical-protocol-36-the-mastitis-spectrum-revised-2022.pdf",
+      "target": "_blank",
+      "rel": "noopener noreferrer",
+      "referrerPolicy": "no-referrer"
+    },
+    {
+      "sourceId": "source.expansion.cdc-mrsa-breastfeeding-2025",
+      "url": "https://www.cdc.gov/breastfeeding-special-circumstances/hcp/illnesses-conditions/mrsa.html",
+      "target": "_blank",
+      "rel": "noopener noreferrer",
+      "referrerPolicy": "no-referrer"
+    },
+    {
+      "sourceId": "source.expansion.acr-lactation-imaging-2026",
+      "url": "https://acsearch.acr.org/docs/3196809/Narrative",
+      "target": "_blank",
+      "rel": "noopener noreferrer",
+      "referrerPolicy": "no-referrer"
+    },
+    {
+      "sourceId": "source.al-busafi.chylous-ascites-review.2014",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4890871/",
+      "target": "_blank",
+      "rel": "noopener noreferrer",
+      "referrerPolicy": "no-referrer"
+    },
+    {
+      "sourceId": "source.bhardwaj.chylous-ascites-review.2018",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5863006/",
+      "target": "_blank",
+      "rel": "noopener noreferrer",
+      "referrerPolicy": "no-referrer"
+    },
+    {
+      "sourceId": "source.espen.hospital-nutrition.2021",
+      "url": "https://clinicalnutrition.espen.org/files/ESPEN-Guidelines/ESPEN_guideline_on_hospital_nutrition.pdf",
+      "target": "_blank",
+      "rel": "noopener noreferrer",
+      "referrerPolicy": "no-referrer"
+    },
+    {
+      "sourceId": "source.nutrition.espen-practical-2021",
+      "url": "https://doi.org/10.1016/j.clnu.2021.03.031",
+      "target": "_blank",
+      "rel": "noopener noreferrer",
+      "referrerPolicy": "no-referrer"
+    }
+  ],
+  "lint": {
+    "scope": "Diagnostic rerun of the three unchanged v4 drafts, including their finite profile contexts; no new candidate is claimed clean or passed.",
+    "newCandidateCount": 0,
+    "retainedVersions": 3,
+    "totals": {
+      "cases": 3,
+      "nodeOccurrences": 3,
+      "uniqueVariants": 3,
+      "concepts": 3,
+      "profileContexts": 6,
+      "variantsWithFindings": 0,
+      "findings": 0,
+      "tutorialSequenceVariants": 0,
+      "missingAuthoredVersion": 0,
+      "missingEducationalTier": 0,
+      "approvalRecordOnlyMetadata": 0,
+      "variantsWithCompleteRationales": 3,
+      "variantsWithMultipleDefinitions": 0,
+      "byPriorityStage": {
+        "3": 2,
+        "4": 1
+      },
+      "byOptionCount": {
+        "3": 2,
+        "4": 1
+      },
+      "variantsByRule": {}
+    },
+    "linterVersion": "question-cue-lint.2026-11-04.v8",
+    "findings": []
+  },
+  "runtime": {
+    "newRuntimeDefinitions": 0,
+    "newConceptVersions": 0,
+    "historyMigrations": 0,
+    "registryEdits": 0,
+    "manifestEdits": 0,
+    "randomization": "Retained definitions still have shuffleAnswers=true. No new choices or test waits were authored.",
+    "saveEffect": "No runtime code or historical definition changes by this lane; no new save-compatibility behavior or test is claimed.",
+    "level5BoundInputEdits": []
+  },
+  "statistics": "No statistics item, constructed statistical dataset or added statistical objective."
+}

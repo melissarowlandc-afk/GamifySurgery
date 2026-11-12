@@ -1,0 +1,75 @@
+[
+  {
+    "id": "question.topic.trauma-initial-abdomen.liver-grade-versus-physiology.v1",
+    "nodeId": "node.topic.trauma-initial-abdomen.liver-grade-versus-physiology.v1",
+    "title": "High-grade liver injury: initial management",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Hepatic angiography with empiric embolization",
+        "why": "The qualifier 'empiric' appears only in this distractor and makes it sound less evidence-directed than the unqualified alternatives. It is clinically intelligible, but gives a test-wise reader an extra reason to reject it. This is a modest option-framing cue, not a unique shortcut to the key."
+      }
+    ],
+    "fairness": [
+      "Monitored nonoperative hepatic care is the single best offered answer: sustained circulation without blood or vasopressor support, unchanged hemoglobin, no peritoneal signs and no arterial extravasation support observation despite grade IV anatomy. Neither immediate operative hemorrhage control nor empiric embolization has a demonstrated indication in the supplied record. No confident clinical inaccuracy was identified in the key or explanation.",
+      "The standalone presentation identifies Maya Grant, age 42, female, and explicitly anchors the task to the historical hospital decision. The complete exhibit supplies the decision evidence; no former companion, prior answer or missing update is necessary. There is no multipart sequence to assess.",
+      "The difficulty problem is substantive: every physiologic finding points toward uncomplicated observation, and the only opposing consideration is the already-labelled anatomic grade. Applying the familiar rule that grade alone does not mandate intervention is one consequential management judgment here; counting assessment of normal vital signs as a separate hard inference would overstate the task. The intervention distractors provide little competition for a PGY-2/3 resident.",
+      "The grade-versus-physiology distinction is a high-yield trauma concept. The named injury is appropriate for a management question, and hepatic/liver wording does not uniquely match the key. There is no convergence, absolute wording or pre-answer teaching sentence that independently selects it. Retain the necessary normal findings; their removal would undermine fairness rather than create useful difficulty.",
+      "This is an offline editorial assessment of the supplied candidate text, not fresh source verification or clinical approval. Difficulty is a qualitative prediction. Only the three salvage nodes were reviewed; all other statuses and held records were excluded. Runtime randomization, rendered waits and release behavior were outside this text-only review."
+    ],
+    "suggestions": [
+      "For a resident-level revision, develop a separately versioned candidate in which a supported serial course or discordant imaging/physiology finding changes the choice between initially plausible management plans. Require the learner to interpret that discrepancy and then select the action. Do not invent thresholds or remove safety findings to manufacture uncertainty.",
+      "Alternatively, request explicit acceptance of this exact construct as foundational high-yield practice and label it easy; the current prior-PASS designation does not establish that exception under the supplied difficulty standard.",
+      "Use neutral, comparable labels for credible alternatives in a revised option set. Merely deleting 'empiric' will not repair the weak competition or establish two-step reasoning.",
+      "The phrase 'As the clinic founder' adds no clinical decision information and can be shortened in a future authorized presentation revision. Preserve the historical hospital-time anchor and named age/sex context. Do not silently alter a previously passed exact version."
+    ]
+  },
+  {
+    "id": "question.topic.trauma-initial-abdomen.liver-delayed-arterial-bleeding.v1",
+    "nodeId": "node.topic.trauma-initial-abdomen.liver-delayed-arterial-bleeding.v1",
+    "title": "Delayed bleeding after liver trauma: source control",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must first connect papillary blood and the arterial-connected contrast sac to a post-traumatic hepatic arterial bleeding source, then choose endovascular source control in the supported circulation described. Confusing the biliary exit route with the bleeding source makes ERCP a credible error; treating any delayed hemorrhage operatively is the second meaningful alternative. These are two consequential steps, although the classic findings make this moderate rather than hard.",
+      "Hepatic angiography with selective embolization is the single best offered procedure. ERCP with transpapillary biliary stenting does not adequately address the demonstrated hepatic arterial lesion; laparotomy is less appropriate as the initial approach in the stated stable, localized setting. No confident clinical inaccuracy was identified in the key or explanation. The question need not teach that ERCP has no role in any hemobilia presentation; its ranking is specific to this arterial source and these options.",
+      "Standalone coherence passes: Maya Grant's age, sex, blunt-trauma history and historical hospital decision point are supplied. 'During admission' establishes the delayed event, while 'within the prior liver injury' establishes the lesion context. The earlier injury grade and initial management answer are unnecessary to solve this decision. No previous feedback or future companion observation is needed, and there is no remaining multipart chain.",
+      "Cue attack: 'hepatic arterial branch' is necessary localization rather than a diagnostic teaching label; 'hepatic' occurs in both the angiographic and operative options. 'major papilla' overlaps 'transpapillary' in a distractor, so matching words alone cannot select the key. The options are comparable specific procedures without an unusually qualified key, convergence or absolutes. 'no mucosal bleeding lesion' clarifies the bleeding localization rather than mechanically excluding one of the offered procedures.",
+      "Delayed traumatic hepatic arterial bleeding and the distinction between source and drainage route are high-yield surgical decisions. This offline editorial PASS is not fresh evidence verification or named-clinician approval; the exact candidate remains needs_clinician_review. Runtime wait rendering and randomization were not assessed from these text fields."
+    ],
+    "suggestions": [
+      "No substantive revision is required for this standalone composition. Preserve the arterial-phase description, blood at the papilla and current blood pressure without circulatory support; these establish the source and procedural ranking without relying on a former companion.",
+      "Keep the explanation after the answer. It appropriately explains why treating the biliary route is different from controlling the arterial source."
+    ]
+  },
+  {
+    "id": "question.topic.trauma-initial-abdomen.renal-isolated-urine-leak.v1",
+    "nodeId": "node.topic.trauma-initial-abdomen.renal-isolated-urine-leak.v1",
+    "title": "Renal collecting-system injury: observation versus intervention",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must interpret delayed opacification through the pelvis, ureter and bladder together with a calyceal leak, then decide whether urinary extravasation warrants immediate drainage or repair. The stable course and absence of a growing or infected collection favor observation. Automatic stenting for any urine leak is a credible close error, making this moderate two-step application rather than merely identifying the known leak.",
+      "Monitored nonoperative renal care is the single best offered initial plan. The described small calyceal leak, downstream opacification, preserved perfusion and stable hemoglobin do not establish a need for immediate ureteral stenting or renal exploration. No confident clinical inaccuracy was identified in the key or explanation. Downstream opacification should not be generalized into proof that every possible partial urinary-tract injury is excluded; in this candidate it is interpreted alongside the explicitly localized calyceal injury.",
+      "Standalone coherence passes: Iris Bennett is identified as a 31-year-old woman after a rollover collision, and the presentation explains that 'now' refers to the hospital record. 'The completed CT' is natural chronology and does not require the learner to have chosen that test in a previous node. The current update supplies the imaging, circulation and interval collection findings needed for this initial management choice. There are no later parts or imported prior explanations.",
+      "Cue attack: 'small nearby urine leak' supplies a finding, not the rule that observation is appropriate. 'Delayed images opacify the pelvis and ureter through to the bladder' requires interpretation; it does not name the management answer. 'without fever or an enlarging collection' is a necessary complication assessment, not an option-label match. Renal/ureteral anatomy appears across alternatives, labels have comparable specificity, and there is no uniquely long key, convergence, absolute or pre-answer management teaching sentence.",
+      "The contrast between collecting-system extravasation and an intervention-requiring complication is high-yield general-surgery trauma knowledge. This offline editorial PASS is not fresh source verification or named-clinician approval; the exact candidate remains needs_clinician_review. Runtime presentation of waits and randomization was outside the supplied text-only scope."
+    ],
+    "suggestions": [
+      "No substantive revision is required for the standalone case. Retain the downstream urinary opacification and interval complication findings; deleting them would weaken the basis for choosing observation over intervention.",
+      "Keep the explanation tied to initial monitored care and the described uncomplicated leak. Avoid expanding it into a universal rule that urine extravasation never requires intervention."
+    ]
+  }
+]

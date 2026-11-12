@@ -1,0 +1,136 @@
+{
+  "checkedOn": "2026-11-10",
+  "scope": "Harden1 candidate authoring only. No acceptance, manifest, default, statistics, domain, save/cloud, evidence or N3 edit.",
+  "clinical": {
+    "command": "npm.cmd test -- --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=../../.local-dev/harden1-clinical-final-20261110.json",
+    "cwd": "packages/clinical-content",
+    "exitCode": 1,
+    "files": {
+      "total": 129,
+      "passed": 126,
+      "failed": 3
+    },
+    "tests": {
+      "total": 1608,
+      "passed": 1605,
+      "failed": 3,
+      "skipped": 0
+    },
+    "durationSeconds": 205.4,
+    "ownCandidateFile": {
+      "path": "packages/clinical-content/src/question-harden1-20261110.test.ts",
+      "passed": 13,
+      "failed": 0
+    },
+    "failures": [
+      {
+        "file": "packages/clinical-content/src/question-flags3-20261107.test.ts",
+        "title": "flags3 exact owner-flag candidates and retained live source leaves every existing protected source and decision file byte-exact",
+        "messages": [
+          "AssertionError: packages/game-domain/src/diagnostic-timing.ts: expected '499e069e78d1755c1f23e6ab6b29052ee0728…' to be '2a8e915812e9c5bc2e5b40fcea74bdff129aa…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-flags3-20261107.test.ts:124:210\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64"
+        ],
+        "classification": "Existing external-lane source-preservation capture mismatch; no assertion or capture changed in harden1."
+      },
+      {
+        "file": "packages/clinical-content/src/question-stats1-20261108.test.ts",
+        "title": "stats1 short single-skill candidates without live acceptance preserves every protected source/capture through the exact authorized standard/test-hook migration",
+        "messages": [
+          "AssertionError: packages/game-domain/src/diagnostic-timing.ts: expected '499e069e78d1755c1f23e6ab6b29052ee0728…' to be '2a8e915812e9c5bc2e5b40fcea74bdff129aa…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-stats1-20261108.test.ts:182:93\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64"
+        ],
+        "classification": "Existing external-lane source-preservation capture mismatch; no assertion or capture changed in harden1."
+      },
+      {
+        "file": "packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts",
+        "title": "stats1 exact manager acceptance and frozen identities pins each authorized existing-source delta before preserving old capture assertions",
+        "messages": [
+          "AssertionError: apps/player/src/session/cloud/codecJson.ts: expected '0994becd5f0022d2489de303987a6bb6a4c59…' to be 'd490196e1988db2f39fc66df0589b768fd109…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts:98:156\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64"
+        ],
+        "classification": "Existing external-lane source-preservation capture mismatch; no assertion or capture changed in harden1."
+      }
+    ],
+    "priorFailureDocumentation": "docs/research/question-flags4-acceptance-handoff-20261108.md",
+    "countChange": {
+      "firstRun": {
+        "files": 128,
+        "passed": 1594,
+        "failed": 3,
+        "total": 1597
+      },
+      "concurrentAddedTestFiles": [
+        {
+          "path": "packages/clinical-content/src/question-new-n3-round4-20261110.test.ts",
+          "tests": 11,
+          "status": "passed"
+        }
+      ],
+      "attribution": "N3 round4 added 11 passing tests during concurrent work; that file was preserved."
+    },
+    "log": ".local-dev/harden1-clinical-final-20261110.log",
+    "jsonReport": ".local-dev/harden1-clinical-final-20261110.json"
+  },
+  "typecheck": {
+    "command": "npm.cmd run typecheck",
+    "exitCode": 0,
+    "workspaceCount": 7,
+    "workspaces": [
+      "@gamify-surgery/clinical-context-workbench",
+      "@gamify-surgery/player",
+      "@gamify-surgery/balance-config",
+      "@gamify-surgery/clinical-authoring",
+      "@gamify-surgery/clinical-content",
+      "@gamify-surgery/clinical-research",
+      "@gamify-surgery/game-domain"
+    ],
+    "log": ".local-dev/harden1-typecheck-final2-20261110.log"
+  },
+  "cueLinterTests": {
+    "command": "npm.cmd run clinical:lint:test",
+    "exitCode": 0,
+    "total": 33,
+    "passed": 33,
+    "failed": 0,
+    "skipped": 0,
+    "log": ".local-dev/harden1-lint-tests-20261110.log"
+  },
+  "regeneration": {
+    "commands": [
+      "node tools/question-quality/author-question-harden1-20261110.mjs --check",
+      "node tools/question-quality/review-question-harden1-20261110.mjs --check"
+    ],
+    "exitCodes": [
+      0,
+      0
+    ]
+  },
+  "authoringCorrections": "A local raw-case versus validated-view case-hash mismatch and type-only errors were fixed before the final results. Assertions and source guards were retained.",
+  "levelFive": {
+    "changedBoundInputs": [],
+    "unchangedBoundClinicalInputs": [
+      {
+        "path": "packages/clinical-content/src/index.ts",
+        "beforeSha256": "0abfabbf84d18c022bcbb58b3454585afac1a28403cb9adec3e5994b7278d68b",
+        "afterSha256": "0abfabbf84d18c022bcbb58b3454585afac1a28403cb9adec3e5994b7278d68b",
+        "evidenceRecordedSha256": "a57ffcec34d75e2e337790f1ac0d71e4bfdc8f79d53cdb28596e00ead60413e4"
+      },
+      {
+        "path": "packages/clinical-content/src/synthetic-content.ts",
+        "beforeSha256": "96d50250444a0f41fa6b9b77f686b5c6b2fed7fa16821ab0500a3a4443b77762",
+        "afterSha256": "96d50250444a0f41fa6b9b77f686b5c6b2fed7fa16821ab0500a3a4443b77762",
+        "evidenceRecordedSha256": "6d9870d53383af7da6ee7547ba702410a2545882876faa1696c0e1217fae311c"
+      },
+      {
+        "path": "packages/clinical-content/src/answer-choice-timing.ts",
+        "beforeSha256": "bb55f3dbc7ae50ec77bcd18ab50b8dc213f57acf218657cdc693db434b43c8a9",
+        "afterSha256": "bb55f3dbc7ae50ec77bcd18ab50b8dc213f57acf218657cdc693db434b43c8a9",
+        "evidenceRecordedSha256": "7db1b1253c7d3064adb0602360925c0739bb65c719603507c3fa09a6732ba245"
+      }
+    ],
+    "newDefaultLoadedModules": [],
+    "candidateFilesPresentInExistingInputMap": [],
+    "evidenceEdited": false,
+    "rebindPerformed": false
+  },
+  "clinicalApproval": false,
+  "independentReviewPerformed": false,
+  "shipAcceptance": false
+}

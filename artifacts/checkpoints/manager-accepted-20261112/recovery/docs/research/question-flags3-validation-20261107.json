@@ -1,0 +1,106 @@
+{
+  "checkedOn": "2026-11-07",
+  "scope": "Flags3 candidate-only authoring. No ship acceptance, clinical approval, network retrieval or existing code edits.",
+  "results": {
+    "clinical": {
+      "command": "npm.cmd test -- --pool=threads",
+      "cwd": "packages/clinical-content",
+      "exitCode": 0,
+      "log": ".local-dev/question-flags3-20261107/clinical-full.log",
+      "logSha256": "19a9d3744eadcd9c8262abaf32e36c61b98ada97f3e4e69c8141e69116ffa7ed",
+      "filesPassed": 122,
+      "testsPassed": 1352,
+      "testsFailed": 0,
+      "durationSeconds": 30.6,
+      "newFlags3TestsPassed": 15
+    },
+    "typecheck": {
+      "command": "npm.cmd run typecheck",
+      "cwd": ".",
+      "exitCode": 0,
+      "log": ".local-dev/question-flags3-20261107/typecheck.log",
+      "logSha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "workspaces": [
+        "@gamify-surgery/clinical-context-workbench",
+        "@gamify-surgery/player",
+        "@gamify-surgery/balance-config",
+        "@gamify-surgery/clinical-authoring",
+        "@gamify-surgery/clinical-content",
+        "@gamify-surgery/clinical-research",
+        "@gamify-surgery/game-domain"
+      ],
+      "passed": 7,
+      "total": 7
+    },
+    "linterTests": {
+      "command": "npm.cmd run clinical:lint:test",
+      "cwd": ".",
+      "exitCode": 0,
+      "log": ".local-dev/question-flags3-20261107/linter-tests.log",
+      "logSha256": "4130d3f3769e3ba1804ea78acf1c78d69415676e37b6073950c305188bb7f46c",
+      "testsPassed": 33,
+      "testsFailed": 0,
+      "durationMs": 2557.9205
+    },
+    "generationChecks": [
+      {
+        "command": "node tools/question-quality/author-question-flags3-20261107.mjs --check",
+        "cwd": ".",
+        "exitCode": 0,
+        "log": ".local-dev/question-flags3-20261107/author-check.log",
+        "logSha256": "f35c1308c79efd34759f5ab7c17403192917ea9ebf133bbaf269596f31779aed"
+      },
+      {
+        "command": "node tools/question-quality/review-question-flags3-20261107.mjs --check",
+        "cwd": ".",
+        "exitCode": 0,
+        "log": ".local-dev/question-flags3-20261107/packet-check.log",
+        "logSha256": "d24a0b759760f27ce5a2020f3dc49a73210914cc631759a54f0d7a66e89ca3eb"
+      }
+    ]
+  },
+  "candidateLint": {
+    "report": "tools/question-quality/question-flags3-lint-20261107.json",
+    "newVariants": 4,
+    "newVariantContexts": 8,
+    "preservedContextCount": 2,
+    "totalContexts": 10,
+    "newFindings": 4,
+    "preservedFindings": 1,
+    "suppressedFindings": 0,
+    "status": "Raw advisory warnings retained with exact fields and author dispositions; no zero-lint, independent PASS or clinical approval claim."
+  },
+  "sourceScope": {
+    "sourceLedger": "docs/research/sources-question-flags3-20261107.json",
+    "sources": 14,
+    "basisClaims": 15,
+    "newAtomicApplications": 10,
+    "keyHolds": [],
+    "sourceAccessDatesUnchanged": true,
+    "newNetworkRetrieval": false
+  },
+  "unchanged": {
+    "protectedExistingFiles": 840,
+    "sourceChanges": [],
+    "liveSha256": "77261db946b72dbf0f001e6ce11aab75928b561a19a8a17a874274f08b185a30",
+    "catalog": true,
+    "manifest": true,
+    "globalTiming": true
+  },
+  "candidateSourceSha256": "3be43217d9e9077b2ce47945e28e0d55b88c20e97a494e8bae4d1d91c53f2033",
+  "existingLevelFiveInputsChanged": [],
+  "newCandidateRuntimeModulesNotInDefault": 4,
+  "independentReviewPending": true,
+  "clinicalSignoff": "Melissa Rowland; exact versions remain needs_clinician_review",
+  "domainOrPlayerSuiteClaimed": false,
+  "constraints": {
+    "noGit": true,
+    "noInstall": true,
+    "noAgents": true,
+    "noNetwork": true,
+    "noExternalMessages": true,
+    "noDeploy": true,
+    "noRebind": true,
+    "noCloudSaveOrManifestEdit": true
+  }
+}

@@ -1,0 +1,370 @@
+[
+  {
+    "id": "question.topic.small-bowel-obstruction-ileus.initial-observation.v1",
+    "nodeId": "node.topic.small-bowel-obstruction-ileus.initial-observation.v1",
+    "title": "Initial nonoperative management of presumed adhesive SBO",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Intravenous fluids and nasogastric decompression reduced her pain, but she had passed no flatus.",
+        "why": "The improvement followed by an unresolved symptom steers a nonmedical reader toward the middle, continue-treatment option between immediate surgery and stopping treatment. This is a soft structural cue, not a reason to remove clinically necessary trajectory."
+      },
+      {
+        "phrase": "Continue decompression with serial inpatient surgical reassessment",
+        "why": "Only this option explicitly includes ongoing monitoring. Against immediate exploration and tube removal/feeding, it is also the conspicuously cautious middle course."
+      }
+    ],
+    "fairness": [
+      "Continued inpatient nonoperative care is the best offered plan for the single-transition pattern, preserved enhancement, nonperitoneal examination and response to decompression. No definite clinical inaccuracy identified.",
+      "Feeding immediately is weak competition in this unresolved initial episode. The interpretation-to-action chain is largely routine recognition rather than two consequential resident-level decisions.",
+      "The initial node stands alone and the later 48-hour and 72-hour updates follow coherently. Its explanation does not disclose the next contrast study or the later transit endpoint.",
+      "Review-wide limitation: this is an offline editorial assessment of candidate visible fields, including preceding candidate explanations where applicable. No sources were newly retrieved or verified; difficulty and high-yield ratings are qualitative, not measured examination frequencies. Editorial PASS anywhere in this report is not Melissa Rowland's clinical approval."
+    ],
+    "suggestions": [
+      "Replace the immediate feeding foil with a credible same-stage obstruction plan and introduce a supported patient-specific consideration that actually changes the choice between the competing plans.",
+      "Keep the perfusion, examination and response observations needed for safe nonoperative eligibility. Do not create difficulty by deleting danger-sign assessment.",
+      "If the objective remains straightforward initial SBO safety recognition, seek an explicit foundational-item exception rather than describing the present version as difficult or two-step."
+    ]
+  },
+  {
+    "id": "question.topic.small-bowel-obstruction-ileus.contrast-assessment.v1",
+    "nodeId": "node.topic.small-bowel-obstruction-ileus.contrast-assessment.v1",
+    "title": "Contrast transit assessment after unresolved SBO",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Presented independently, this node says the admission CT was technically adequate but does not give its findings. The shared presentation gives symptoms and prior hysterectomy, not an established uncomplicated obstruction. Adequacy does not communicate what was found.",
+      "The task asks which study should inform the plan without identifying the unresolved clinical question. In sequence the intended prognostic question can be inferred; standalone it is underspecified."
+    ],
+    "cues": [
+      {
+        "phrase": "The admission CT had been technically adequate and the clinical findings had not deteriorated.",
+        "why": "This is placed directly against repeating the same CT; the option is a completed-test foil with no new question or acquisition need."
+      },
+      {
+        "phrase": "Abdominal MRI with small-bowel anatomic assessment",
+        "why": "Alongside an already adequate anatomic CT, this labels another anatomic study, leaving the contrast/follow-up option as the only clearly different assessment. The novelty pattern helps without interpreting the clinical record."
+      }
+    ],
+    "fairness": [
+      "In the complete adhesive-course sequence, a water-soluble contrast transit assessment is a defensible best offered study for persistent obstruction without deterioration. No definite clinical error identified.",
+      "Repeat CT and MRI do not represent strong competing indications in the supplied stable, already-imaged scenario. Selecting the one new type of investigation does not establish two consequential steps.",
+      "The preceding explanation does not name this test, so direct prior-feedback answer leakage is absent. The principal sequence problem is dependence on earlier CT findings when the node is displayed alone."
+    ],
+    "suggestions": [
+      "Include a concise recap of the actual admission CT findings and current nonperitoneal status in this node's visible context.",
+      "Frame a concrete unresolved management question and compare clinically credible studies or plans that address it; keep the lead-in neutral enough that it does not name transit or uniquely select the contrast option.",
+      "Replace MRI or the unchanged repeat CT with a genuine near-miss supported by the revised scenario. Do not use the mere fact that one option is new as the discriminator."
+    ]
+  },
+  {
+    "id": "question.topic.small-bowel-obstruction-ileus.failed-observation.v1",
+    "nodeId": "node.topic.small-bowel-obstruction-ileus.failed-observation.v1",
+    "title": "Persistent SBO after an adequately administered contrast challenge",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Proceed with operative planning' does not specify whether the decision is to operate now, arrange an operation while continuing resuscitation, or merely discuss possible surgery.",
+      "'Extend nasogastric decompression and the current observation plan' has no endpoint or reassessment condition, making its difference from operative planning less precise than the task requires.",
+      "As a standalone later node, it lacks a brief recap of the initial obstruction anatomy and presumed cause; the timeline and failed transit result themselves are understandable."
+    ],
+    "cues": [],
+    "fairness": [
+      "The resident must interpret a technically adequate failure of colonic transit, then integrate persistent symptoms and drainage with the course of nonoperative care. Those are consequential steps and a high-yield decision.",
+      "Operative planning is well supported, but its exclusivity over a further monitored trial is not fully settled by these words. An unguarded abdomen and unspecified substantial drainage do not create a universal operative deadline at 72 hours. This is a ranking uncertainty, not a confident claim that the intended key is clinically wrong.",
+      "Decompression can continue during operative planning, so the offered actions partially overlap unless the decisions are explicitly framed as ending versus extending the trial.",
+      "The 48-hour preceding update plus the 24-hour film coherently produces 72 total hours. Earlier feedback does not teach the 24-hour endpoint or state this operative answer.",
+      "The explanation appropriately says the time points are not a universal deadline; the option ranking should preserve that same nuance."
+    ],
+    "suggestions": [
+      "Make the options mutually exclusive decisions about ending or extending the nonoperative trial, while treating continued fluids and decompression as shared background care.",
+      "Provide the patient-specific trend and any clinically relevant operative-risk consideration needed to resolve the remaining choice, rather than relying on the clock alone or inventing a threshold.",
+      "Have Melissa confirm the exact ranking of surgery versus a further monitored trial for this constructed course before scoring it as single-best-answer.",
+      "Add only the brief prior CT/cause context needed for independent presentation; retain the documented contrast-administration adequacy."
+    ]
+  },
+  {
+    "id": "question.topic.small-bowel-obstruction-ileus.closed-loop-normal-lactate.v1",
+    "nodeId": "node.topic.small-bowel-obstruction-ileus.closed-loop-normal-lactate.v1",
+    "title": "Threatened closed-loop bowel despite normal lactate",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Urgent exploration is the single defensible best offered plan: the paired transition points and mesenteric geometry require interpretation, and reduced relative enhancement plus fluid make continued observation or a contrast challenge inappropriate.",
+      "Normal lactate, maintained blood pressure and partial pain relief create a credible competing reassurance error without excluding threatened bowel. The explanation appropriately describes concern for perfusion rather than claiming proven irreversible necrosis.",
+      "The task is complete and the standalone patient context supplies age, sex, prior operation and the relevant care stage. No hidden prior result is required.",
+      "The CT observations are clinical evidence, not diagnosis labels or nonmedical lexical shortcuts. No material length, convergence, absolute-language or teaching-sentence cue identified."
+    ],
+    "suggestions": [
+      "Retain the raw CT findings and conflicting clinical reassurance. Do not upgrade the prediction to hard solely because several radiologic signs are supplied.",
+      "Preserve the distinction between threatened perfusion requiring exploration and bowel already proved nonviable."
+    ]
+  },
+  {
+    "id": "question.topic.small-bowel-obstruction-ileus.clinical-deterioration.v1",
+    "nodeId": "node.topic.small-bowel-obstruction-ileus.clinical-deterioration.v1",
+    "title": "New peritoneal findings during SBO observation",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The task announces that the observation plan should be replaced, although recognizing whether the course invalidates observation is part of the intended decision."
+    ],
+    "cues": [
+      {
+        "phrase": "Which plan should replace",
+        "why": "This pre-eliminates the option that continues the current plan and supplies the change-of-management inference."
+      },
+      {
+        "phrase": "before escalation",
+        "why": "The contrast option advertises a delay in escalation. Paired with the instruction to replace observation and the acute worsening, it reads as an acknowledged sequencing error rather than a neutral competing plan."
+      }
+    ],
+    "fairness": [
+      "Exploration is the best offered action for new constant focal pain and involuntary guarding with systemic deterioration. A normal lactate does not resolve the concerning examination. No definite clinical inaccuracy identified.",
+      "Both alternatives delay action after overt peritoneal findings. The resident can choose exploration from this familiar trigger without using the earlier CT, so the present item is safety recognition rather than two consequential steps.",
+      "The single-node chronology is coherent and standalone; the issue is cueing and low discrimination, not missing historical context."
+    ],
+    "suggestions": [
+      "Use a neutral task asking for the best current hospital plan; remove the instruction that the old plan must be replaced.",
+      "Remove 'before escalation' from the option and use specific, same-stage plans whose rationales belong after answering.",
+      "Retain genuine guarding and worsening. Either obtain an explicit safety-recognition exception or redesign around a supported competing decision; do not make an emergency appear uncertain by hiding its warning signs."
+    ]
+  },
+  {
+    "id": "question.topic.small-bowel-obstruction-ileus.postcontrast-deterioration.v1",
+    "nodeId": "node.topic.small-bowel-obstruction-ileus.postcontrast-deterioration.v1",
+    "title": "Clinical deterioration after favorable contrast passage",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Urgent exploration is the best offered plan for new involuntary guarding and rebound. Earlier colonic contrast passage does not establish present bowel viability or override the changed examination.",
+      "The consequential conflict is a favorable prognostic test followed by a new clinical state: the learner must understand what the earlier test establishes and decide whether that information still supports observation. Repeating transit films and completing the original observation period represent anchoring errors.",
+      "Difficulty is at the lower end of moderate because the new peritoneal findings are overt; this should not be presented as a hard operative decision.",
+      "Presentation and update clearly separate initial improvement from later deterioration. This is a standalone node, so no prior scored explanation supplies the rule.",
+      "No material nonmedical wording shortcut identified. The known SBO diagnosis is appropriate background for a new management decision, not disclosure of a requested diagnosis."
+    ],
+    "suggestions": [
+      "Keep the favorable transit result and the subsequent clinical change together when displayed independently.",
+      "Retain the explanation's limited prognostic interpretation of contrast passage; do not turn it into a guarantee of resolution or evidence that contrast itself caused recovery."
+    ]
+  },
+  {
+    "id": "question.topic.small-bowel-obstruction-ileus.postoperative-imaging.v1",
+    "nodeId": "node.topic.small-bowel-obstruction-ileus.postoperative-imaging.v1",
+    "title": "Imaging persistent postoperative vomiting",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "No elapsed postoperative interval or symptom trajectory is supplied beyond 'persistent' and 'continued.' The resident cannot distinguish the early expected recovery phase from failure to recover or a changed course.",
+      "'Continued to vomit despite nasogastric drainage' does not establish whether the tube is functioning adequately; a statement of actual decompression response would make the clinical situation clearer.",
+      "The sentence about the complete acquisition record sounds like an authoring audit rather than a concise clinical history."
+    ],
+    "cues": [
+      {
+        "phrase": "The complete imaging acquisition record listed two plain-film examinations with similar gas distribution.",
+        "why": "This explicitly makes another plain film repetitive without presenting a new reason to repeat it. A nonmedical reader can eliminate that option."
+      },
+      {
+        "phrase": "Complete transabdominal ultrasound of the abdomen",
+        "why": "This generic alternative has no targeted finding or question in the stem, making the broad CT option the obvious conventional escalation once repeated radiographs are excluded."
+      }
+    ],
+    "fairness": [
+      "CT is a defensible best investigation among the offered modalities for unexplained persistent postoperative vomiting and possible mechanical or postoperative complications. Gas in the colon does not settle the cause.",
+      "The incomplete chronology weakens the justification for investigation now, even though it does not make either listed distractor clearly better.",
+      "The options mostly ask for recognition that CT evaluates a postoperative abdomen; they do not make the resident discriminate two credible diagnostic pathways.",
+      "The subsequent CT-result node follows coherently. This explanation does not disclose opioid reduction, so the later item's main cue originates in its own update, not this feedback."
+    ],
+    "suggestions": [
+      "Specify a concise postoperative timeline and relevant progression or failed recovery, using constructed observations rather than an invented universal day cutoff.",
+      "Describe the actual response to decompression in ordinary clinical language and shorten the acquisition-history sentence.",
+      "Rebuild the competitors around a real residual diagnostic question or protocol/adequacy distinction. Repeating an unchanged radiograph and offering untargeted ultrasound do not create resident-level difficulty."
+    ]
+  },
+  {
+    "id": "question.topic.small-bowel-obstruction-ileus.postoperative-support.v1",
+    "nodeId": "node.topic.small-bowel-obstruction-ileus.postoperative-support.v1",
+    "title": "Supportive care for postoperative motility dysfunction",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Completed assessment' can sound more conclusive than the supplied imaging and examination warrant; the explanation should continue to allow reassessment of persistent symptoms.",
+      "The postoperative interval remains unspecified in this later node as well as its preceding investigation node."
+    ],
+    "cues": [
+      {
+        "phrase": "including while reporting little incisional pain",
+        "why": "This explicitly announces unnecessary analgesic exposure immediately before the only option that reduces opioids. The medication-management inference is supplied rather than earned."
+      },
+      {
+        "phrase": "Vomiting still prevented oral intake.",
+        "why": "This directly negates the feeding option. It is important clinical information, but against this option set it functions as an explicit elimination clue."
+      },
+      {
+        "phrase": "without a focal caliber change, closed segment, collection or free air",
+        "why": "Together with the supplied opioid-overuse cue, this removes the exploration foil and leaves the supportive option. The necessary CT assessment should stay; the alternatives need to improve."
+      }
+    ],
+    "fairness": [
+      "Opioid reduction with ongoing decompression, replacement and reassessment is the best offered plan for the described course. Neither immediate feeding despite vomiting nor exploration for an unsupported adhesion is a credible near-miss.",
+      "The resident need not synthesize the entire CT result to choose the only option correcting an explicitly unnecessary medication exposure. The current version does not demonstrate two consequential steps.",
+      "The node contains enough CT and current treatment context to be understood independently, apart from the missing temporal detail. It follows the preceding imaging decision coherently, and that explanation does not reveal the analgesic choice.",
+      "No definite clinical inaccuracy identified. Do not interpret the absence of the listed CT findings as proof that future complications or other contributors cannot emerge."
+    ],
+    "suggestions": [
+      "Keep analgesic use factual without announcing that it is unnecessary; supply a clinically meaningful pain/function tradeoff if analgesic adjustment is the actual objective.",
+      "Keep common supportive treatment in shared context and compare specific, plausible changes at the same stage instead of surgery versus feeding versus the only cautious plan.",
+      "Retain ongoing vomiting and the pertinent CT findings for fairness; improve the decision rather than deleting essential exclusions.",
+      "Add the necessary chronology and keep the explanation explicit that persistent symptoms still require reassessment."
+    ]
+  },
+  {
+    "id": "question.topic.small-bowel-obstruction-ileus.postoperative-focal-entrapment.v1",
+    "nodeId": "node.topic.small-bowel-obstruction-ileus.postoperative-focal-entrapment.v1",
+    "title": "Postoperative fascial entrapment with reduced bowel enhancement",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The explanation ends with internal curriculum language about the 'scored decision' and 'hernia topic' rather than a clinical teaching point."
+    ],
+    "cues": [
+      {
+        "phrase": "The trapped segment",
+        "why": "This interprets the preceding anatomy as entrapment before the learner answers. It also makes waiting or performing a transit study intuitively unattractive without interpreting entry and exit narrowings."
+      },
+      {
+        "phrase": "The scored decision is urgency of bowel assessment, with hernia-repair technique left to the hernia topic.",
+        "why": "This is post-answer curriculum metadata, not a pre-answer giveaway in this standalone item. It belongs outside the learner explanation."
+      }
+    ],
+    "fairness": [
+      "Urgent exploration is the best offered action for bowel through a recent fascial opening with two narrowings, reduced enhancement and surrounding fluid. An intact skin incision does not negate the deep defect.",
+      "The normal blood pressure and intact skin are weak competitors against the explicit entrapment description and threatened-perfusion findings. Both distractors simply delay exploration; the present version is easy safety recognition rather than two consequential resident decisions.",
+      "The recurrent symptoms after initial return of bowel function are coherent and useful. The single-node case stands alone.",
+      "No definite clinical inaccuracy identified. Do not hide reduced enhancement or fluid merely to make this dangerous presentation harder."
+    ],
+    "suggestions": [
+      "Replace the interpretive word 'trapped' with a neutral reference to the described segment.",
+      "Move the curriculum-boundary sentence out of the learner-facing explanation.",
+      "Either secure an explicit safety-recognition exception or test a genuinely remaining, supported operative-management decision with credible same-stage choices. Keep hernia-repair technique out of this item's scope unless the manager expressly changes ownership."
+    ]
+  },
+  {
+    "id": "question.topic.small-bowel-obstruction-ileus.virgin-abdomen-observation.v1",
+    "nodeId": "node.topic.small-bowel-obstruction-ileus.virgin-abdomen-observation.v1",
+    "title": "Initial SBO management in a previously unoperated abdomen",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Continued supervised decompression and surgical reassessment is the best offered initial plan for this improving, nonperitoneal patient without an identified lesion or threatened segment.",
+      "The clinically consequential competing error is treating absence of prior surgery as an automatic indication for exploration. The resident must interpret the current anatomy and danger assessment, then decide how the unoperated abdomen changes management.",
+      "The oral-intake alternative is weaker than immediate exploration, but the central surgery-versus-observation comparison is credible. Difficulty is moderate, not hard.",
+      "The extensive negative findings have a clinical job: they assess a visible cause and urgent complication. They do not by themselves teach that an unoperated abdomen can receive a nonoperative trial; no material nonmedical key cue identified.",
+      "The explanation appropriately leaves cause and follow-up unresolved and does not declare adhesions proved or malignancy excluded. The complete single-node case stands alone."
+    ],
+    "suggestions": [
+      "Retain the distinction between a monitored initial trial and concluding that the cause is benign or established.",
+      "Keep the absence of prior surgery and the current danger assessment visible together. Future variants could strengthen the third option without changing this accepted central decision."
+    ]
+  },
+  {
+    "id": "question.topic.small-bowel-obstruction-ileus.rygb-negative-assessment.v1",
+    "nodeId": "node.topic.small-bowel-obstruction-ileus.rygb-negative-assessment.v1",
+    "title": "Persistent post-RYGB symptoms after unrevealing CT and endoscopy",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'During the acute episode' is less precise than the preceding recurrent/episodic symptom history. State the duration and trajectory of this admission's unresolved symptoms without inventing a mandatory time threshold.",
+      "The final explanation sentence mixes an evidence limitation with an editorial exact-version review instruction."
+    ],
+    "cues": [
+      {
+        "phrase": "Upper endoscopy showed a patent gastrojejunal anastomosis and no marginal ulcer.",
+        "why": "This directly answers the only stated target of the repeat-endoscopy option. No inadequate examination, new bleeding or changed target is supplied to make repetition credible."
+      },
+      {
+        "phrase": "Repeat upper endoscopy with gastrojejunal reassessment",
+        "why": "After the explicitly adequate target assessment, this is a completed-test foil. Removing it leaves a meaningful two-way observation-versus-laparoscopy decision, but the three-option item needs another plausible competitor."
+      }
+    ],
+    "fairness": [
+      "Diagnostic laparoscopy is clinically defensible and favored by persistent substantial symptoms after RYGB despite unrevealing CT and endoscopy. A negative scan does not reliably eliminate intermittent internal herniation.",
+      "The actual two-step reasoning is interpreting the limits of negative testing in altered anatomy, then choosing whether persistent symptoms justify exploration. This is high-yield and moderate.",
+      "The exact urgency/ranking against further inpatient reassessment warrants clinician confirmation for this wording; symptom duration and response are too imprecise to pretend that a universal operative timing rule has been established. This is uncertainty, not a confident finding that laparoscopy is wrong.",
+      "The single-node case stands alone and provides the prior anatomy and test findings. The explanation appropriately avoids claiming that an internal hernia is already proved.",
+      "The stated evidence-quality limitation is not independently verified in this offline review and is not being treated as author proof of the key."
+    ],
+    "suggestions": [
+      "Specify the current admission's symptom course and response to treatment so the residual observation-versus-exploration choice is concrete.",
+      "Replace repeating the same adequate endoscopy with a clinically credible competing plan tied to the actual remaining uncertainty; do not invent an endoscopic deficiency merely to rescue the distractor.",
+      "Keep the evidence limitation in appropriate clinical feedback, but move the exact-version approval instruction to review metadata.",
+      "Obtain Melissa's exact-version judgment on the operation-versus-reassessment boundary; do not add a time cutoff unsupported by evidence."
+    ]
+  },
+  {
+    "id": "question.topic.small-bowel-obstruction-ileus.gallstone-bowel-intervention.v1",
+    "nodeId": "node.topic.small-bowel-obstruction-ileus.gallstone-bowel-intervention.v1",
+    "title": "Bowel intervention for an intraluminal gallstone obstruction",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "a firm object within the lumen",
+        "why": "This repeats the everyday-language target of the key, 'removal of the obstructing object.' A reader can choose removal without recognizing the CT triad."
+      },
+      {
+        "phrase": "There was no constricting band.",
+        "why": "This explicitly deletes the adhesiolysis alternative rather than making it a credible competing interpretation."
+      },
+      {
+        "phrase": "The surgeon judged it viable.",
+        "why": "This supplies the resection-versus-preservation interpretation. Combined with the direct band exclusion, the remaining option is selected by elimination."
+      }
+    ],
+    "fairness": [
+      "Enterolithotomy is the best offered bowel intervention for the supplied obstructing luminal object and viable, intact bowel. The task appropriately does not require choosing a concurrent biliary operation.",
+      "The viability assessment is necessary for fairness, but its presence plus an explicitly absent band means the offered operations do not require two consequential inferences. Recognizing gallstone ileus from the CT does not change the answer once the operative paragraph is supplied.",
+      "Resection is not supported by a nonviable or perforated segment, and adhesiolysis does not address the stated intraluminal cause. The item is clinically coherent but easy.",
+      "The single-node patient and operative chronology stand alone. No definite clinical inaccuracy identified; do not replace adequate operative viability information with hidden assumptions just to raise difficulty."
+    ],
+    "suggestions": [
+      "Rebuild the same-stage options around real remaining obstruction-relief decisions, with supported operative findings that separate them. Avoid a band-release foil that the stem explicitly rules out.",
+      "Preserve a defensible viability assessment, but remove redundant interpretive teaching if the raw operative observations already support the intended boundary.",
+      "Either make the CT information consequential to the requested decision or shorten it; the current operative paragraph independently selects the answer.",
+      "If kept as basic gallstone-obstruction recognition and viable-bowel preservation, obtain an explicit foundational-item exception instead of claiming two-step difficulty. Do not add a disputed simultaneous fistula-repair key to manufacture complexity."
+    ]
+  }
+]

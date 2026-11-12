@@ -1,0 +1,441 @@
+[
+  {
+    "id": "question.topic.perioperative-risk-recovery.beta-new-exposure.v2",
+    "nodeId": "node.topic.perioperative-risk-recovery.beta-new-exposure.v2",
+    "title": "Actual beta-blocker exposure before surgery",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Best answer: omit tomorrow's metoprolol and review its longer-term indication. Actual administration history defeats literal continuation of the copied list; controlled hypertension without another represented indication defeats postponement merely to establish beta blockade.",
+      "Two consequential judgments remain: distinguish current treatment from an old prescription, then decide whether the indication warrants starting treatment or delaying surgery. This is a high-yield perioperative medication-reconciliation error.",
+      "The task, named age/sex presentation and timing are complete. This is a standalone case with no earlier feedback supplying the answer.",
+      "Review-wide limitation: this is an offline editorial review of the 21 executable candidate nodes, not independent source verification or clinical sign-off. Difficulty and high-yield judgments are qualitative. Historical kept/retired records and nine parked/unkeyed attempts were noted but not graded. All candidates remain needs_clinician_review. The reviewed input SHA-256 is de31ee9a99add949870b91b84f5704508ffd334a2f4209633d2afcf6453dca28."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.warfarin-interruption.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.warfarin-interruption.v1",
+    "title": "Warfarin interruption for atrial fibrillation",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Best supported answer: interrupt warfarin without a therapeutic heparin bridge. Neither continuing therapeutic warfarin through the represented bowel resection nor routine therapeutic bridging has a competing indication in this vignette. No confident clinical inaccuracy is identified.",
+      "This tests an important, commonly tested rule, but the indication is supplied and the history removes the competing thromboembolic scenarios. The main discrimination is routine AF bridging recall; recognizing that colectomy requires interruption does not create a demanding second inference here.",
+      "The explanation correctly separates therapeutic bridging from postoperative surgical VTE prophylaxis. The standalone patient context and task are clear."
+    ],
+    "suggestions": [
+      "Obtain explicit acceptance as a focused foundational item if retaining this level of difficulty; do not label the current version a difficult two-step resident item.",
+      "For an application rewrite, introduce an actual administration/INR discrepancy and a supported procedural requirement that changes the immediate interruption plan, then compare concrete perioperative plans. Replace the very weak continue-usual-warfarin foil with a credible scheduling or bridging error. Any added timing or INR criterion needs source support; adding more negative history alone will not improve the reasoning demand."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.vte-active-bleeding.v2",
+    "nodeId": "node.topic.perioperative-risk-recovery.vte-active-bleeding.v2",
+    "title": "VTE prevention during new postoperative bleeding",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Best supported answer: intermittent pneumatic compression during the active bleeding reassessment. Both offered heparin preparations retain the bleeding concern. The narrow prophylaxis task does not substitute for treating the hemorrhage.",
+      "The fresh bloody drain output and falling hemoglobin make this a direct safety-recognition item. Removing the prior DVT and mobility details leaves the same offered answer; those details do not create a second consequential decision in this option set.",
+      "The distinction is high yield and clinically fair, but neither heparin foil is a close competitor under the explicit current course. The retrospective decision point is clear and the case stands alone."
+    ],
+    "suggestions": [
+      "Retain the bleeding observations and seek explicit acceptance as an easy safety-recognition exception, or redesign the tested decision around a supported conflict that changes a concrete prevention plan.",
+      "Do not manufacture difficulty by softening necessary bleeding signs, implying that switching heparin preparations solves active bleeding, or inventing a post-bleeding restart interval. Do not describe the present recognition-and-avoidance rule as two consequential steps."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.extended-cancer-course.v2",
+    "nodeId": "node.topic.perioperative-risk-recovery.extended-cancer-course.v2",
+    "title": "Extended prophylaxis after cancer surgery",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Best supported answer: continue prophylactic LMWH to about four postoperative weeks. The prior DVT, major cancer operation and limited mobility support extended prevention; the nonexpanding bruise and unchanged serial hemoglobin do not establish recurrent major bleeding warranting a new hold.",
+      "The learner must reinterpret current bleeding concern after an earlier serious event, then apply persistent VTE risk to discharge duration. Stopping at discharge and carrying forward the earlier bleeding restriction are distinct, credible errors.",
+      "The explanation appropriately distinguishes total postoperative duration from four additional weeks after discharge. This high-yield standalone discharge record contains the relevant earlier course without requiring another node's answer. No new numerical eligibility threshold is inferred."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.sglt2-drug-switch.v2",
+    "nodeId": "node.topic.perioperative-risk-recovery.sglt2-drug-switch.v2",
+    "title": "SGLT2 drug identity and operation calendar",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Friday at 08:00 is the supported answer under the stated four-day ertugliflozin minimum: it is four days after Monday at 08:00. Thursday is three days later, and the following Monday is later than the first qualifying slot. The task appropriately limits itself to the interruption minimum rather than declaring overall fitness for surgery.",
+      "Medication-specific interruption is high yield, but the current dispensing record and current bottle explicitly agree on ertugliflozin. The scored work is essentially recall of one drug-specific interval followed by simple calendar arithmetic; the old list does not require a consequential reconciliation judgment once current use is stated this directly.",
+      "This is not a statistics item eligible for the owner's minimal single-skill exception. The standalone calendar and named patient are otherwise clear; no confident clinical error is identified."
+    ],
+    "suggestions": [
+      "Keep as an explicitly accepted focused medication-safety item if that is the intended role; rate it easy rather than difficult two-step reasoning.",
+      "For a harder rewrite, use an actual administration history whose clinically relevant exposure must be established, with a supported competing perioperative consideration that changes the plan. Do not add extra date arithmetic, conceal the last dose, or suggest that a hold interval alone establishes safety."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.sglt2-acid-ketone-pattern.v2",
+    "nodeId": "node.topic.perioperative-risk-recovery.sglt2-acid-ketone-pattern.v2",
+    "title": "Postoperative ketotic acidosis with modest glucose",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Best answer: intravenous insulin with dextrose-containing fluid. Diabetes/SGLT2 exposure, substantial ketonemia and acidosis support DKA despite the modest glucose. The supplied potassium and completed initial volume replacement make the proposed next-infusion comparison interpretable.",
+      "Two consequential steps are present: recognize the acid-ketone disorder without relying on marked hyperglycemia, then choose glucose-containing support while insulin treats ketogenesis. Insulin with dextrose-free fluid and withholding insulin for saline are credible glucose-driven errors.",
+      "The options compare the same infusion decision. The explicit dextrose distinction is the clinical variable being tested, not an explanatory giveaway. The constructed exhibit and historical decision point stand alone; the explanation does not invent a dose or rate. This is high-yield perioperative metabolic safety."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.awake-ventilation-assessment.v2",
+    "nodeId": "node.topic.perioperative-risk-recovery.awake-ventilation-assessment.v2",
+    "title": "Daytime ventilation assessment in severe obesity",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Diagnostic sleep testing is booked.",
+        "why": "The task asks for an additional investigation while one distractor is attended diagnostic polysomnography. A reader can reject an already-booked option by novelty rather than interpreting ventilation."
+      },
+      {
+        "phrase": "Serum total CO2 was 32 and 33 mmol/L",
+        "why": "Two repeated results, combined with the task's word persistent, make Repeat serum total CO2 measurement the second recycled alternative. With sleep testing also booked, only arterial blood-gas analysis is a new investigation."
+      }
+    ],
+    "fairness": [
+      "Arterial blood-gas analysis is the best supported offered investigation for suspected awake hypoventilation. The explanation correctly avoids diagnosing OHS from bicarbonate or oxygen saturation alone, and the absence of diuretic use/vomiting helps interpretation.",
+      "The high-yield clinical inference exists in principle, but the current option set can be solved without it by discarding the two repeated or already-arranged tests. This prevents credit for two consequential reasoning steps.",
+      "The standalone task and patient are understandable; the defect is option construction rather than a confident clinical inaccuracy."
+    ],
+    "suggestions": [
+      "Compare equally new, clinically plausible investigations at the same decision stage instead of one new test against a booked study and a third measurement of the same chemistry.",
+      "Keep the serial chemistry and the information needed to distinguish alternative causes. Remove the booking sentence if it has no necessary clinical job after rebuilding the options; do not hide necessary findings merely to make the question harder."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.frailty-domains.v2",
+    "nodeId": "node.topic.perioperative-risk-recovery.frailty-domains.v2",
+    "title": "Recent baseline function for frailty assessment",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "help with shopping and medicine organization, but independent dressing, toileting and transfers",
+        "why": "The recent account explicitly pairs help with independence. Only the keyed option has that mixed dependence/independence structure; the other choices describe dependence throughout or independence throughout. Plain-language matching largely replaces assessment."
+      }
+    ],
+    "fairness": [
+      "The recent pre-illness account supports instrumental-task dependence with personal-care independence. Neither the acute dehydrated ward state nor remote independence should replace the relevant baseline. No confident clinical inaccuracy is identified.",
+      "The actual scored task selects a temporal record and restates its functional categories. It does not require a second consequential care decision, a nuanced CFS interpretation or resolution of competing recent baseline accounts. Baseline-versus-acute function is high yield, but the current item is easy.",
+      "The standalone chronology is clear. The explanation does not claim a numerical CFS score or justify excluding treatment on a frailty label."
+    ],
+    "suggestions": [
+      "Retain this as an explicitly accepted focused baseline-assessment exercise, or change the objective to a concrete planning decision that depends on interpreting recent function rather than choosing its paraphrase.",
+      "If retaining a baseline-selection task, use credible competing interpretations of the same relevant recent period and remove the all-dependent/all-independent structural shortcut. Preserve the recent pre-illness evidence and do not invent a CFS score or cutoff."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.recovery-support.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.recovery-support.v1",
+    "title": "Discharge support after incomplete functional recovery",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Arrange supervised rehabilitation does not specify the setting or availability of transfer assistance. Intermittent therapy is also supervised rehabilitation, so the intended distinction from the third option depends on an unstated residential or continuous-support interpretation.",
+      "The preoperative frailty narrative adds substantial reading before a later postoperative record that independently supplies the support decision. The chronological transition is understandable, but the current functional findings should carry the task."
+    ],
+    "cues": [
+      {
+        "phrase": "Her daughter worked outside the home during the day.",
+        "why": "This directly defeats the evening-assistance option once another person is required for transfers. The home alternatives do not offer credible coverage of the stated need."
+      },
+      {
+        "phrase": "Arrange supervised rehabilitation and reassess home transfers and steps",
+        "why": "Only this option repeats both unmet tasks and includes reassessment. It is the uniquely comprehensive plan against two visibly incomplete home-support schedules."
+      }
+    ],
+    "fairness": [
+      "The record does support arranging help that covers transfers and home access; corridor walking with a therapist does not establish those abilities. However, the precise setting intended by the key is not stated, and the data do not by themselves establish eligibility for a particular inpatient rehabilitation program.",
+      "The actual comparison is largely a commonsense coverage mismatch rather than two consequential clinical judgments. Discharge function and caregiver availability are high-yield considerations.",
+      "Although the current update follows the preoperative presentation coherently, the standalone item needs a more precise care-plan comparison. No later node is required to understand the problem."
+    ],
+    "suggestions": [
+      "Specify the intended support arrangement and when assistance is available, rather than using supervised rehabilitation as a broad label.",
+      "Compare realistic plans that each address transfers and entrance access, with an observed functional limitation or caregiver constraint determining the best arrangement. Keep reassessment common to all plans when appropriate.",
+      "Trim preoperative details that do not change this postoperative decision; do not imply that the vignette establishes insurance or inpatient-rehabilitation admission criteria."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.delirium-anticholinergic-order.v2",
+    "nodeId": "node.topic.perioperative-risk-recovery.delirium-anticholinergic-order.v2",
+    "title": "Medication removal without withdrawal or undertreated pain",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Best answer: discontinue the admission-added bedtime diphenhydramine. Abruptly discontinuing a confirmed longstanding benzodiazepine introduces withdrawal concerns, while the observed pain response provides a reason not to simply remove necessary analgesia.",
+      "The learner must identify medication-related delirium risk and then use actual exposure and indication to distinguish the safest immediate discontinuation among three potentially problematic drug classes. These are consequential competing considerations, not merely three unrelated medicines.",
+      "The admission chronology, exhibit and complete task stand alone. The explanation limits the immediate decision and does not endorse indefinite clonazepam use or supply an unsupported taper. Delirium prevention with avoidance of withdrawal and undertreated pain is high yield."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.delirium-quiet-cause.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.delirium-quiet-cause.v1",
+    "title": "Quiet postoperative confusion with small-volume voiding",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The presentation ends with The founder reviews these medication orders for the night before surgery, but no medication orders are shown. In this standalone version the sentence points to missing content and suggests a medication-review task that the postoperative investigation question does not ask."
+    ],
+    "cues": [],
+    "fairness": [
+      "Best supported investigation: bedside postvoid bladder ultrasound. Fluctuating attention with postvoid lower-abdominal fullness and repeated small voids warrants assessing a reversible retention-related contributor before the offered neurodiagnostic escalation. Passing small amounts of urine does not establish adequate emptying.",
+      "The two meaningful judgments are recognition of a new fluctuating cognitive syndrome rather than baseline memory impairment, followed by prioritization of a local reversible contributor. The explanation appropriately avoids claiming that retention is the only cause.",
+      "The postoperative update otherwise stands alone and follows the earlier surgical history coherently. This is a high-yield delirium/retention decision; the required repair is the orphaned reference, not deletion of necessary urinary findings."
+    ],
+    "suggestions": [
+      "Delete the dangling preoperative medication-orders sentence and explicitly frame the reviewed record as the postoperative episode now being assessed. No replacement medication exhibit is needed for this task.",
+      "Re-read the resulting presentation plus current update as one standalone encounter; preserve the urinary observations and the explanation's multifactorial-delirium limitation."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.art-unavoidable-interruption.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.art-unavoidable-interruption.v1",
+    "title": "ART during an unusable enteral route",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Continue the regimen components that can be obtained separately does not name the components or delivery route. Separately obtaining medicines does not resolve the demonstrated enteral problem, so the proposed competing plan is difficult to interpret as a real treatment option."
+    ],
+    "cues": [
+      {
+        "phrase": "no complete non-enteral substitute in the hospital formulary",
+        "why": "The completed specialist review supplies the feasibility conclusion; paired with tablets returning in drainage, it leaves interruption as the only workable option without requiring ART-specific knowledge."
+      },
+      {
+        "phrase": "Coordinate temporary interruption of the complete oral regimen",
+        "why": "This is the only coordinated complete-regimen plan that does not repeat the already-demonstrated failed route. The other choices advertise either partial treatment or repetition of failed dosing."
+      }
+    ],
+    "fairness": [
+      "Temporary coordinated interruption of the complete regimen is the supported choice under the represented unusable route and completed specialist assessment. No confident clinical inaccuracy is identified; the explanation appropriately discourages routine interruption when delivery remains possible.",
+      "Preserving complete ART and avoiding improvised partial treatment are important perioperative concepts, but the scored item is easy because the route/formulation decision has already been made in the presentation. The current version does not require two consequential inferences.",
+      "The retrospective standalone setting is coherent. Do not remove the specialist feasibility information while leaving an answer that depends on it."
+    ],
+    "suggestions": [
+      "Either obtain explicit acceptance as a focused medication-safety exception or author a concrete formulation/administration record that the resident must interpret before choosing the regimen-level plan.",
+      "Specify actual components and routes if competing delivery plans are to be scored, with pharmacist/HIV-clinician-supported feasibility. Avoid a vague partial-regimen foil and repeated tube dosing after explicit documented failure. Do not invent substitution or interruption rules to manufacture difficulty."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.postoperative-targeted-ultrasound.v2",
+    "nodeId": "node.topic.perioperative-risk-recovery.postoperative-targeted-ultrasound.v2",
+    "title": "Wrong-site negative study after breast surgery",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Best answer: targeted ultrasound at the current 2 o'clock incision. The complete acquisition record and sonographer confirmation establish that the negative examination concerns the old 6 o'clock scar, rather than merely an incomplete export of a correctly performed study.",
+      "The learner must assess whether the negative study answers the current question, then select focused characterization of an early postoperative fullness rather than mammographic escalation or sampling an uncharacterized target. Ultrasound-guided aspiration is not established as the next investigation before a drainable collection is demonstrated.",
+      "Both the key and aspiration option name the current site, and both contain ultrasound; exact site matching alone does not uniquely select the key. The standalone case is coherent. Imaging-target adequacy and postoperative collection evaluation are high-yield practical concepts."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.postoperative-seroma-observe.v2",
+    "nodeId": "node.topic.perioperative-risk-recovery.postoperative-seroma-observe.v2",
+    "title": "Recurrent collection with improved function",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Best supported plan: observation with reassessment. Prior aspiration and increased measured dimensions make repeat intervention tempting, but present function, minimal symptoms, closed noninflamed wound and uncomplicated ultrasound appearance do not establish a need for drainage.",
+      "Two consequential interpretations are needed: classify the current collection in its wound context, then weigh its current effect against its persistence/size trend and the earlier reason for aspiration. Repeat aspiration is a credible error; catheter drainage is a more aggressive escalation without the represented burden to support it.",
+      "The explanation bases observation on current effects rather than an invented size cutoff. All relevant earlier treatment and current reassessment findings are included in this standalone case. Postoperative seroma management is high yield."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.contrast-event-provenance.v2",
+    "nodeId": "node.topic.perioperative-risk-recovery.contrast-event-provenance.v2",
+    "title": "Contrast-event phenotype and actual culprit agent",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Best answer: gadobutrol-associated immediate hypersensitivity-type reaction. Transient warmth without wheals at the iohexol visit does not support the same event classification as generalized itchy raised plaques after gadobutrol.",
+      "The learner must distinguish physiologic symptoms from an allergic-like phenotype and then attribute that event to the administered agent rather than the referral header. Both agent names occur in the exhibit and in plausible choices; word matching to a single named drug cannot solve the item.",
+      "The explanation correctly limits inference: the record does not prove an IgE mechanism or determine another agent's safety or a prophylaxis protocol. The complete standalone exhibit supports one documentation answer. Accurate contrast reaction history is a high-yield diagnostic-safety concept."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.extravasation-progressive-injury.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.extravasation-progressive-injury.v1",
+    "title": "Progressive hand injury after contrast extravasation",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Best answer: urgent hand-surgical assessment. Progressive tense swelling, sensory deterioration and marked pain with passive extension after initial elevation warrant escalation for threatened tissue rather than continuation of the same observation plan.",
+      "The learner must separate the present local injury trajectory from the prior systemic hives event and then recognize that the progression changes the management of extravasation. Continued local observation is a credible plan for a different, nonprogressive course; antihistamine treatment addresses the wrong represented process.",
+      "The explanation requests assessment rather than claiming a pressure-defined diagnosis or mandating an operation. This high-yield escalation principle is clear in the standalone historical record. Necessary warning signs should not be weakened to create difficulty."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.penicillin-delayed-boundary.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.penicillin-delayed-boundary.v1",
+    "title": "Severe delayed drug reaction and allergy evaluation",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Best answer: retain the reaction record and obtain drug-allergy specialist assessment. The retrieved blistering, mucosal disease and organ injury do not fit a routine remote benign-rash delabeling pathway.",
+      "The two consequential judgments are recognition of a severe delayed phenotype from the fuller history and understanding why neither direct challenge nor an immediate-hypersensitivity skin-test-then-challenge pathway resolves that risk. The elapsed years and reassuring abbreviated header are credible distractors.",
+      "The item need not name one exact severe delayed syndrome to establish that routine challenge is inappropriate. It does not claim that a particular alternative perioperative antibiotic is safe. The standalone task is clear and the allergy-evaluation boundary is high yield."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.low-risk-cardiac-testing.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.low-risk-cardiac-testing.v1",
+    "title": "Cardiac testing before a minor local procedure",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Clinical assessment without additional ischemia testing is the supported answer for the represented minor local procedure and absence of an independent cardiovascular indication. Neither offered imaging test is needed merely because arthritis prevents estimating exercise capacity.",
+      "Avoiding unnecessary preoperative testing is high yield. However, recognizing a superficial lipoma excision under local anesthesia as a low-risk procedure largely settles the offered decision. The functional-capacity uncertainty does not create a meaningful second decision or a close test-selection competitor.",
+      "The standalone presentation and task are clear, and no confident clinical error is identified. This is an easy indication-recognition item rather than a difficult resident application problem."
+    ],
+    "suggestions": [
+      "Retain with explicit acceptance as a focused foundational testing-indication item, or revise the clinical situation so a real independent cardiovascular concern or supported procedural-risk distinction must be resolved before choosing whether testing changes management.",
+      "Use credible same-stage strategies under that revised context. Do not make the present low-risk procedure artificially dangerous or order testing simply to create a second step."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.symptomatic-aortic-valve.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.symptomatic-aortic-valve.v1",
+    "title": "Valve assessment before nonurgent major surgery",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Best answer: defer the nonurgent operation for valve-team assessment. The concordant valve measurements and exertional presyncope support a symptomatic severe aortic-stenosis concern despite preserved ejection fraction.",
+      "The learner must interpret valve severity and symptoms, then apply the nonurgent major-operation context to preparation. Proceeding with surveillance treats preserved systolic function as sufficient reassurance; dobutamine stress testing misapplies a strategy for a different diagnostic question to already concordant high-gradient findings.",
+      "The key appropriately calls for specialist assessment rather than declaring a particular valve intervention mandatory. All needed context is present in this standalone case. This is a commonly tested perioperative cardiac decision."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.des-acs-elective-timing.v2",
+    "nodeId": "node.topic.perioperative-risk-recovery.des-acs-elective-timing.v2",
+    "title": "Original PCI indication and elective surgery timing",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Best supported scheduling target: at least twelve months after PCI for the represented ACS-related DES and elective surgery requiring clopidogrel interruption. The acute symptoms, new ECG findings, troponin rise and culprit thrombus support the ACS pathway rather than the generic coronary-disease header.",
+      "Two consequential steps are present: reconstruct the PCI indication from the original record, then combine it with elective urgency and antiplatelet interruption when choosing the timing pathway. Six months and the current interval represent different plausible pathways rather than arbitrary numerical filler.",
+      "The explanation preserves the ideally-delayed elective context and distinguishes a time-sensitive exception without claiming that every post-PCI operation has the same timing. The standalone task is complete. This is high-yield perioperative stent management; current source wording was not independently retrieved in this offline review."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.mins-followup-plan.v2",
+    "nodeId": "node.topic.perioperative-risk-recovery.mins-followup-plan.v2",
+    "title": "Postoperative troponin trajectory and follow-up",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "with routine renal follow-up",
+        "why": "The task asks which referral should be added, making the nephrology alternative appear already covered before the learner interprets the serial troponin/eGFR exhibit."
+      },
+      {
+        "phrase": "He now walks his usual route without chest discomfort or breathlessness and has no new ECG change.",
+        "why": "Together with the explicitly routine follow-up setting, this strongly removes the urgent alternative. Once nephrology is already covered, outpatient cardiology is the sole new nonurgent choice; the exhibit can be deleted and the same answer still follows from the option structure."
+      }
+    ],
+    "fairness": [
+      "Outpatient cardiovascular review is the best supported offered plan. The marked postoperative rise/fall beyond the earlier stable elevation, with little renal-function change, should not simply be attributed to the previous CKD-associated baseline. The present record does not establish a need for urgent cardiac transfer.",
+      "The explanation's phrase resolved perioperative injury overstates what is documented: clinical stability is shown, but return of troponin to baseline is not. This is a precision concern, not a claim that the proposed referral is clinically wrong. Describe the past perioperative injury and current stability without asserting demonstrated biochemical resolution.",
+      "Acute versus chronic troponin elevation and postoperative cardiovascular follow-up are high yield. However, the current referral choices undermine the intended two-step interpretation by making the biomarker data unnecessary for choosing among them.",
+      "The standalone chronology and exhibit are clear. The report does not need to call this plaque rupture or myocardial infarction to justify the offered follow-up, and the explanation appropriately avoids doing so."
+    ],
+    "suggestions": [
+      "Rebuild the choices as equally new, same-stage follow-up plans so the serial troponin and renal course determine the choice; do not contrast an already-established specialty visit with an obviously unnecessary urgent transfer.",
+      "Apply the deletion test: without the serial exhibit, the intended answer should no longer be recoverable from the referral setup alone. Preserve the clinical-stability findings needed to distinguish outpatient from emergency care.",
+      "Replace resolved perioperative injury with wording that states the documented past rise/fall and present clinical stability. Do not invent a normalization result, an assay cutoff, or proof of a specific infarction mechanism."
+    ]
+  }
+]

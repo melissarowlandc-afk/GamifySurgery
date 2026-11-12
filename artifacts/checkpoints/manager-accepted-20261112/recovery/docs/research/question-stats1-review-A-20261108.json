@@ -1,0 +1,495 @@
+[
+  {
+    "id": "S01",
+    "title": "Choose an independent two-mean test",
+    "verdict": "REVISE",
+    "ownerFit": true,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 21, combined 26 words (including visible labels and numbers); explanation 3 lines. Two groups, continuous healing time, approximate normality and similar variances support the independent-samples Student t-test for the requested mean difference. Paired t requires a stated pairing, which is absent. Rank-sum targets relative ranks/distributions rather than directly estimating/testing the unrestricted mean difference. No numerical calculation or rounding is requested.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [
+      "The phrase 'suitable continuous-data assumptions' does not actually teach the applicable normality and variance assumptions, as the statistics standard requires for test-selection feedback.",
+      "'not a shared assessor' refers to an assessor detail absent from this item's stem/exhibit; it appears to be feedback copied from the fourth variant."
+    ],
+    "suggestions": [
+      "Use three short lines: 'Two independent groups with approximately normal outcomes and similar variances: use the independent-samples Student t-test.' / 'It compares the population mean healing times.' / 'A paired t-test needs matched pairs or repeated observations.'.",
+      "For precision, replace 'different/separate patients' or 'one group' wording with 'independent, unpaired patients'; different identities alone do not establish independence. This is a short clarification, not a request for a new design or extra data."
+    ]
+  },
+  {
+    "id": "S02",
+    "title": "Choose an independent two-mean test",
+    "verdict": "REVISE",
+    "ownerFit": true,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 23, combined 28 words (including visible labels and numbers); explanation 3 lines. Two hospital samples, continuous blood loss, approximate normality and similar variances support the independent-samples Student t-test for the requested population mean difference. No patient matching is described. Rank-sum is not the direct mean-parameter procedure. No arithmetic or rounding is requested.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [
+      "The phrase 'suitable continuous-data assumptions' does not actually teach the applicable normality and variance assumptions, as the statistics standard requires for test-selection feedback.",
+      "'not a shared assessor' refers to an assessor detail absent from this item's stem/exhibit; it appears to be feedback copied from the fourth variant."
+    ],
+    "suggestions": [
+      "Use three short lines: 'Two independent groups with approximately normal outcomes and similar variances: use the independent-samples Student t-test.' / 'It compares the population mean blood losses.' / 'A paired t-test needs matched pairs or repeated observations.'.",
+      "Change the outcome label from 'Mean blood loss in mL' to 'Blood loss in mL' so the individual measurement is distinguished from the population mean requested in the task.",
+      "For precision, replace 'different/separate patients' or 'one group' wording with 'independent, unpaired patients'; different identities alone do not establish independence. This is a short clarification, not a request for a new design or extra data."
+    ]
+  },
+  {
+    "id": "S03",
+    "title": "Choose an independent two-mean test",
+    "verdict": "REVISE",
+    "ownerFit": true,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 23, combined 28 words (including visible labels and numbers); explanation 3 lines. Two surgical groups, one group per patient, continuous incision length, approximate normality and similar variances support the independent-samples Student t-test for the mean difference. No matching is described. Rank-sum is not the direct mean-parameter procedure. No arithmetic or rounding is requested.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [
+      "The phrase 'suitable continuous-data assumptions' does not actually teach the applicable normality and variance assumptions, as the statistics standard requires for test-selection feedback.",
+      "'not a shared assessor' refers to an assessor detail absent from this item's stem/exhibit; it appears to be feedback copied from the fourth variant."
+    ],
+    "suggestions": [
+      "Use three short lines: 'Two independent groups with approximately normal outcomes and similar variances: use the independent-samples Student t-test.' / 'It compares the population mean incision lengths.' / 'A paired t-test needs matched pairs or repeated observations.'.",
+      "For precision, replace 'different/separate patients' or 'one group' wording with 'independent, unpaired patients'; different identities alone do not establish independence. This is a short clarification, not a request for a new design or extra data."
+    ]
+  },
+  {
+    "id": "S04",
+    "title": "Choose an independent two-mean test",
+    "verdict": "REVISE",
+    "ownerFit": true,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 23, combined 28 words (including visible labels and numbers); explanation 3 lines. Two separate rehabilitation groups with continuous walking distance, approximate normality and similar variances support an independent-samples Student t-test for the mean difference. A shared therapist does not itself pair observations. Rank-sum does not directly target the unrestricted mean difference. No arithmetic or rounding is requested.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [
+      "The phrase 'suitable continuous-data assumptions' does not actually teach the applicable normality and variance assumptions, as the statistics standard requires for test-selection feedback."
+    ],
+    "suggestions": [
+      "Use three short lines: 'Two independent groups with approximately normal outcomes and similar variances: use the independent-samples Student t-test.' / 'It compares the population mean walking distances.' / 'One therapist measuring everyone does not create matched pairs.'.",
+      "For precision, replace 'different/separate patients' or 'one group' wording with 'independent, unpaired patients'; different identities alone do not establish independence. This is a short clarification, not a request for a new design or extra data."
+    ]
+  },
+  {
+    "id": "S05",
+    "title": "Choose a paired mean-difference test",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 19, combined 24 words (including visible labels and numbers); explanation 3 lines. Before/after walking distances are linked within patients; approximately normal differences support a paired t-test of the population mean change. Independent t ignores the stated linkage. Signed-rank can also test zero symmetric location under a normal model, but the task's 'directly' and population-mean target make the paired t-test the single best option; this is not a claim that signed-rank is universally invalid. No raw values, computed statistic or rounding are requested. The three-line feedback states the difference-based rule, applies normality, and explains the pairing error.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S06",
+    "title": "Choose a paired mean-difference test",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 15, combined 20 words (including visible labels and numbers); explanation 3 lines. Each patient's two scale readings form a pair; approximately normal within-patient weight differences support a paired t-test of the population mean difference. No temporal change is required. Independent t ignores the stated linkage. Signed-rank can also test zero symmetric location under a normal model, but the task's 'directly' and population-mean target make the paired t-test the single best option; this is not a claim that signed-rank is universally invalid. No raw values, computed statistic or rounding are requested. The three-line feedback states the difference-based rule, applies normality, and explains the pairing error.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S07",
+    "title": "Choose a paired mean-difference test",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 24, combined 29 words (including visible labels and numbers); explanation 3 lines. One-to-one matching defines the analysis pairs; approximate normality is stated for the within-pair healing-time differences. A paired t-test directly addresses the requested population mean difference using those matches. Independent t ignores the stated linkage. Signed-rank can also test zero symmetric location under a normal model, but the task's 'directly' and population-mean target make the paired t-test the single best option; this is not a claim that signed-rank is universally invalid. No raw values, computed statistic or rounding are requested. The three-line feedback states the difference-based rule, applies normality, and explains the pairing error.",
+    "cues": [
+      {
+        "phrase": "Within-pair differences / Paired-samples",
+        "why": "Accepted conceptual overlap: the pairing is essential data, not an unnecessary answer phrase. Both paired t and signed-rank use pairs; the mean target and normal differences distinguish the key."
+      }
+    ],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S08",
+    "title": "Choose a paired mean-difference test",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 28, combined 33 words (including visible labels and numbers); explanation 3 lines. Before/after blood pressure is paired and the differences are approximately normal. Skewness of the separate readings does not invalidate the paired t-test; normality of the differences is the relevant assumption. Independent t ignores the stated linkage. Signed-rank can also test zero symmetric location under a normal model, but the task's 'directly' and population-mean target make the paired t-test the single best option; this is not a claim that signed-rank is universally invalid. No raw values, computed statistic or rounding are requested. The three-line feedback states the difference-based rule, applies normality, and explains the pairing error.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S09",
+    "title": "Choose one omnibus mean comparison",
+    "verdict": "REVISE",
+    "ownerFit": true,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 23, combined 28 words (including visible labels and numbers); explanation 3 lines. 3 separate groups with continuous healing time, approximate within-group normality and similar variances support one-way ANOVA for H0: all 3 population means are equal. Neither offered two-sample t procedure supplies the requested single omnibus comparison. No numeric means, sample sizes or test statistic are needed to choose among these options; no arithmetic or rounding is requested.",
+    "cues": [
+      {
+        "phrase": "One-way analysis of variance test / Independent-samples Student t-test / Paired-samples Student t-test",
+        "why": "Low-level option-family outlier: the key is the only non-t label and the longest conventional name. The group count legitimately distinguishes it; this is acceptable focused practice, not a reason to add difficulty. There is no component-convergence cue or explanatory qualifier."
+      }
+    ],
+    "fairness": [],
+    "explanationIssues": [
+      "'Suitable mean-model assumptions' is a placeholder rather than teaching the applicable within-group normality, similar variances and independence. The explanation also uses a generic 'three or more' instead of applying the actual group count."
+    ],
+    "suggestions": [
+      "Use: '3 independent groups with approximately normal healing time and similar variances: use one-way ANOVA.' / 'H0: all 3 population means are equal; rejection does not identify which pair differs.' / 'A two-sample t-test compares only two group means.'",
+      "Use 'independent patients' in the exhibit to make the independence assumption explicit without lengthening the narrative."
+    ]
+  },
+  {
+    "id": "S10",
+    "title": "Choose one omnibus mean comparison",
+    "verdict": "REVISE",
+    "ownerFit": true,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 24, combined 29 words (including visible labels and numbers); explanation 3 lines. 4 separate groups with continuous length of stay, approximate within-group normality and similar variances support one-way ANOVA for H0: all 4 population means are equal. Neither offered two-sample t procedure supplies the requested single omnibus comparison. No numeric means, sample sizes or test statistic are needed to choose among these options; no arithmetic or rounding is requested.",
+    "cues": [
+      {
+        "phrase": "One-way analysis of variance test / Independent-samples Student t-test / Paired-samples Student t-test",
+        "why": "Low-level option-family outlier: the key is the only non-t label and the longest conventional name. The group count legitimately distinguishes it; this is acceptable focused practice, not a reason to add difficulty. There is no component-convergence cue or explanatory qualifier."
+      }
+    ],
+    "fairness": [],
+    "explanationIssues": [
+      "'Suitable mean-model assumptions' is a placeholder rather than teaching the applicable within-group normality, similar variances and independence. The explanation also uses a generic 'three or more' instead of applying the actual group count."
+    ],
+    "suggestions": [
+      "Use: '4 independent groups with approximately normal length of stay and similar variances: use one-way ANOVA.' / 'H0: all 4 population means are equal; rejection does not identify which pair differs.' / 'A two-sample t-test compares only two group means.'",
+      "Use 'independent patients' in the exhibit to make the independence assumption explicit without lengthening the narrative."
+    ]
+  },
+  {
+    "id": "S11",
+    "title": "Choose one omnibus mean comparison",
+    "verdict": "REVISE",
+    "ownerFit": true,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 24, combined 29 words (including visible labels and numbers); explanation 3 lines. 3 separate groups with continuous task-completion time, approximate within-group normality and similar variances support one-way ANOVA for H0: all 3 population means are equal. Neither offered two-sample t procedure supplies the requested single omnibus comparison. No numeric means, sample sizes or test statistic are needed to choose among these options; no arithmetic or rounding is requested.",
+    "cues": [
+      {
+        "phrase": "One-way analysis of variance test / Independent-samples Student t-test / Paired-samples Student t-test",
+        "why": "Low-level option-family outlier: the key is the only non-t label and the longest conventional name. The group count legitimately distinguishes it; this is acceptable focused practice, not a reason to add difficulty. There is no component-convergence cue or explanatory qualifier."
+      }
+    ],
+    "fairness": [],
+    "explanationIssues": [
+      "'Suitable mean-model assumptions' is a placeholder rather than teaching the applicable within-group normality, similar variances and independence. The explanation also uses a generic 'three or more' instead of applying the actual group count."
+    ],
+    "suggestions": [
+      "Use: '3 independent groups with approximately normal task-completion time and similar variances: use one-way ANOVA.' / 'H0: all 3 population means are equal; rejection does not identify which pair differs.' / 'A two-sample t-test compares only two group means.'",
+      "Use 'independent patients' in the exhibit to make the independence assumption explicit without lengthening the narrative."
+    ]
+  },
+  {
+    "id": "S12",
+    "title": "Choose one omnibus mean comparison",
+    "verdict": "REVISE",
+    "ownerFit": true,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 23, combined 28 words (including visible labels and numbers); explanation 3 lines. 4 separate groups with continuous blood loss, approximate within-group normality and similar variances support one-way ANOVA for H0: all 4 population means are equal. Neither offered two-sample t procedure supplies the requested single omnibus comparison. No numeric means, sample sizes or test statistic are needed to choose among these options; no arithmetic or rounding is requested.",
+    "cues": [
+      {
+        "phrase": "One-way analysis of variance test / Independent-samples Student t-test / Paired-samples Student t-test",
+        "why": "Low-level option-family outlier: the key is the only non-t label and the longest conventional name. The group count legitimately distinguishes it; this is acceptable focused practice, not a reason to add difficulty. There is no component-convergence cue or explanatory qualifier."
+      }
+    ],
+    "fairness": [],
+    "explanationIssues": [
+      "'Suitable mean-model assumptions' is a placeholder rather than teaching the applicable within-group normality, similar variances and independence. The explanation also uses a generic 'three or more' instead of applying the actual group count."
+    ],
+    "suggestions": [
+      "Use: '4 independent groups with approximately normal blood loss and similar variances: use one-way ANOVA.' / 'H0: all 4 population means are equal; rejection does not identify which pair differs.' / 'A two-sample t-test compares only two group means.'",
+      "Use 'independent patients' in the exhibit to make the independence assumption explicit without lengthening the narrative."
+    ]
+  },
+  {
+    "id": "S13",
+    "title": "Choose a rank comparison for separate groups",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 20, combined 25 words (including visible labels and numbers); explanation 3 lines. Two separate groups of eight patients each provide strongly skewed continuous healing time. Wilcoxon rank-sum is the appropriate offered rank-based test of the equal-distribution null; signed-rank needs a stated linkage and the small, strongly nonnormal samples do not justify the offered Student t procedure. Equal shapes are not required to test the equal-distribution null, but would matter for a simple median-shift interpretation. Rank-sum is not an omnibus detector of every possible distributional difference. No rank statistic, p-value or rounding is requested. The three-line feedback correctly warns against automatically calling this a mean/median comparison.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S14",
+    "title": "Choose a rank comparison for separate groups",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 21, combined 26 words (including visible labels and numbers); explanation 3 lines. Two separate groups of eight patients each provide strongly skewed continuous walking distance. Wilcoxon rank-sum is the appropriate offered rank-based test of the equal-distribution null; signed-rank needs a stated linkage and the small, strongly nonnormal samples do not justify the offered Student t procedure. Equal shapes are not required to test the equal-distribution null, but would matter for a simple median-shift interpretation. Rank-sum is not an omnibus detector of every possible distributional difference. No rank statistic, p-value or rounding is requested. The three-line feedback correctly warns against automatically calling this a mean/median comparison.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S15",
+    "title": "Choose a rank comparison for separate groups",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 21, combined 26 words (including visible labels and numbers); explanation 3 lines. Two separate groups of eight patients each provide strongly skewed continuous length of stay. Wilcoxon rank-sum is the appropriate offered rank-based test of the equal-distribution null; signed-rank needs a stated linkage and the small, strongly nonnormal samples do not justify the offered Student t procedure. Equal shapes are not required to test the equal-distribution null, but would matter for a simple median-shift interpretation. Rank-sum is not an omnibus detector of every possible distributional difference. No rank statistic, p-value or rounding is requested. The three-line feedback correctly warns against automatically calling this a mean/median comparison.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S16",
+    "title": "Choose a rank comparison for separate groups",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 20, combined 25 words (including visible labels and numbers); explanation 3 lines. Two separate groups of eight patients each provide strongly skewed continuous blood loss. Wilcoxon rank-sum is the appropriate offered rank-based test of the equal-distribution null; signed-rank needs a stated linkage and the small, strongly nonnormal samples do not justify the offered Student t procedure. Equal shapes are not required to test the equal-distribution null, but would matter for a simple median-shift interpretation. Rank-sum is not an omnibus detector of every possible distributional difference. No rank statistic, p-value or rounding is requested. The three-line feedback correctly warns against automatically calling this a mean/median comparison.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S17",
+    "title": "Choose a rank comparison of within-pair change",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 25, combined 30 words (including visible labels and numbers); explanation 3 lines. The before/after walking distances in each patient supply 12 paired continuous differences. Symmetry makes the signed-rank location null interpretable as median difference zero; strong nonnormality at this small sample size makes the paired Student t procedure a poor alternative. Rank-sum discards the linkage. Thus signed-rank is the single best offered test. No actual difference values are supplied or needed for test selection, so no rank sum or p-value can or should be computed. No rounding issue. Three-line feedback correctly explains signed magnitudes, the symmetry assumption and the independent-groups error.",
+    "cues": [
+      {
+        "phrase": "Within-pair differences",
+        "why": "Accepted necessary structure, not an unfair cue: both signed-rank and the paired t distractor apply to paired data. Symmetry, nonnormality and the median target distinguish the best procedure."
+      }
+    ],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S18",
+    "title": "Choose a rank comparison of within-pair change",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 23, combined 28 words (including visible labels and numbers); explanation 3 lines. The two scale weights in each patient supply 12 paired continuous differences. Symmetry makes the signed-rank location null interpretable as median difference zero; strong nonnormality at this small sample size makes the paired Student t procedure a poor alternative. Rank-sum discards the linkage. Thus signed-rank is the single best offered test. No actual difference values are supplied or needed for test selection, so no rank sum or p-value can or should be computed. No rounding issue. Three-line feedback correctly explains signed magnitudes, the symmetry assumption and the independent-groups error.",
+    "cues": [
+      {
+        "phrase": "Within-pair differences",
+        "why": "Accepted necessary structure, not an unfair cue: both signed-rank and the paired t distractor apply to paired data. Symmetry, nonnormality and the median target distinguish the best procedure."
+      }
+    ],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S19",
+    "title": "Choose a rank comparison of within-pair change",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 22, combined 27 words (including visible labels and numbers); explanation 3 lines. The healing times in one-to-one matched dressing pairs supply 12 paired continuous differences. Symmetry makes the signed-rank location null interpretable as median difference zero; strong nonnormality at this small sample size makes the paired Student t procedure a poor alternative. Rank-sum discards the linkage. Thus signed-rank is the single best offered test. No actual difference values are supplied or needed for test selection, so no rank sum or p-value can or should be computed. No rounding issue. Three-line feedback correctly explains signed magnitudes, the symmetry assumption and the independent-groups error.",
+    "cues": [
+      {
+        "phrase": "Within-pair differences",
+        "why": "Accepted necessary structure, not an unfair cue: both signed-rank and the paired t distractor apply to paired data. Symmetry, nonnormality and the median target distinguish the best procedure."
+      }
+    ],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S20",
+    "title": "Choose a rank comparison of within-pair change",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 24, combined 29 words (including visible labels and numbers); explanation 3 lines. The two blood-loss methods on each operation supply 12 paired continuous differences. Symmetry makes the signed-rank location null interpretable as median difference zero; strong nonnormality at this small sample size makes the paired Student t procedure a poor alternative. Rank-sum discards the linkage. Thus signed-rank is the single best offered test. No actual difference values are supplied or needed for test selection, so no rank sum or p-value can or should be computed. No rounding issue. Three-line feedback correctly explains signed magnitudes, the symmetry assumption and the independent-groups error.",
+    "cues": [
+      {
+        "phrase": "Within-pair differences",
+        "why": "Accepted necessary structure, not an unfair cue: both signed-rank and the paired t distractor apply to paired data. Symmetry, nonnormality and the median target distinguish the best procedure."
+      }
+    ],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S21",
+    "title": "Choose an association test for independent categories",
+    "verdict": "REVISE",
+    "ownerFit": false,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 18, combined 23 words (including visible labels and numbers); explanation 3 lines. Row totals = 50, 50; column totals = 50, 30, 20; N = 100. E_ij = row total x column total / N gives [25,15,10] in both rows; minimum E = 50 x 20 / 100 = 10 exactly. If columns are mutually exclusive patient categories, Pearson chi-square with (2-1)(3-1) = 2 degrees of freedom is appropriate. McNemar requires linked binary data; ANOVA requires a quantitative outcome. Arithmetic in the explanation is correct; no rounding.",
+    "cues": [],
+    "fairness": [
+      "'Healed', 'Infected' and 'Bleeding' are not intrinsically mutually exclusive: an infected wound can also bleed, and healed status depends on assessment timing. The caption states independence but does not define one outcome category per patient. Pearson's ordinary contingency-table model needs each patient counted once in one column; overlapping event counts would invalidate that model."
+    ],
+    "explanationIssues": [],
+    "suggestions": [
+      "Define a single mutually exclusive wound-status classification at one assessment, with an explicit rule for infection plus bleeding, or replace these labels with naturally exclusive categories. Keep all six counts and the same single test-choice task. Do not treat the current caption alone as proof that overlapping clinical outcomes were coded correctly."
+    ]
+  },
+  {
+    "id": "S22",
+    "title": "Choose an association test for independent categories",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 21, combined 26 words (including visible labels and numbers); explanation 3 lines. Row totals = 60, 60; column totals = 50, 30, 40; N = 120. E_ij = row total x column total / N gives [25,15,20] in both rows; minimum E = 60 x 30 / 120 = 15 exactly. Independent categorical counts with adequate expected cells support Pearson chi-square, df = (2-1)(3-1) = 2. McNemar requires linked binary observations; ANOVA does not analyze these nominal device counts. Formula, substituted numbers and result in the three-line explanation are correct; no rounding.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S23",
+    "title": "Choose an association test for independent categories",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 20, combined 25 words (including visible labels and numbers); explanation 3 lines. Row totals = 50, 50, 50; column totals = 60, 90; N = 150. E_ij = row total x column total / N gives [20,30] in every row; minimum E = 50 x 60 / 150 = 20 exactly. Independent categorical observations with adequate cells support Pearson chi-square, df = (3-1)(2-1) = 2. McNemar needs paired binary outcomes; a normal-theory ANOVA is not the appropriate analysis of this nominal contingency table. Formula, substituted numbers and result in the three-line explanation are correct; no rounding.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S24",
+    "title": "Choose an association test for independent categories",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 18, combined 23 words (including visible labels and numbers); explanation 3 lines. Row totals = 60, 60; column totals = 50, 40, 30; N = 120. E_ij = row total x column total / N gives [25,20,15] in both rows; minimum E = 60 x 30 / 120 = 15 exactly. Independent observations in the listed operative-approach categories support Pearson chi-square, df = (2-1)(3-1) = 2. McNemar needs linked binary data; ANOVA does not compare nominal operative-approach categories. Formula, substituted numbers and result in the three-line explanation are correct; no rounding.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S25",
+    "title": "Choose an exact test for sparse independent counts",
+    "verdict": "REVISE",
+    "ownerFit": true,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 18, combined 23 words (including visible labels and numbers); explanation 3 lines. Row totals = 8, 8; column totals = 2, 14; N = 16. Expected counts = [1,7] in both rows, because expected events per group = 8 x 2 / 16 = 1 exactly. Fisher exact is the single best listed procedure for these sparse independent 2x2 counts. Pearson's large-sample approximation is unreliable here; McNemar requires pairing, explicitly absent. The stated expected count is numerically correct, including the fractional expected counts; no rounding or p-value computation is requested.",
+    "cues": [
+      {
+        "phrase": "Fisher exact test / Pearson chi-square test / McNemar chi-square test",
+        "why": "Mild family-outlier pattern: only the key lacks 'chi-square'. No task or exhibit wording names 'exact' or supplies the answer, and both distractors represent meaningful errors (sparse approximation versus pairing). Acceptable labels for focused test selection; no convergence or unequal explanatory qualifier."
+      }
+    ],
+    "fairness": [],
+    "explanationIssues": [
+      "The explanation supplies the expected count as a result without the expected-cell formula or substituted numbers. This fails the requested worked-method feedback even though the result and three-line length are correct."
+    ],
+    "suggestions": [
+      "Replace the second line with 'Expected event count = row total x event-column total / N = 8 x 2 / 16 = 1 per group.' Keep the first line's sparse-independent-2x2 rule and the third line's warning about Pearson's approximation."
+    ]
+  },
+  {
+    "id": "S26",
+    "title": "Choose an exact test for sparse independent counts",
+    "verdict": "REVISE",
+    "ownerFit": true,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 18, combined 23 words (including visible labels and numbers); explanation 3 lines. Row totals = 10, 10; column totals = 1, 19; N = 20. Expected counts = [0.5,9.5] in both rows, because expected events per group = 10 x 1 / 20 = 0.5 exactly. Fisher exact is the single best listed procedure for these sparse independent 2x2 counts. Pearson's large-sample approximation is unreliable here; McNemar requires pairing, explicitly absent. The stated expected count is numerically correct, including the fractional expected counts; no rounding or p-value computation is requested.",
+    "cues": [
+      {
+        "phrase": "Fisher exact test / Pearson chi-square test / McNemar chi-square test",
+        "why": "Mild family-outlier pattern: only the key lacks 'chi-square'. No task or exhibit wording names 'exact' or supplies the answer, and both distractors represent meaningful errors (sparse approximation versus pairing). Acceptable labels for focused test selection; no convergence or unequal explanatory qualifier."
+      }
+    ],
+    "fairness": [],
+    "explanationIssues": [
+      "The explanation supplies the expected count as a result without the expected-cell formula or substituted numbers. This fails the requested worked-method feedback even though the result and three-line length are correct."
+    ],
+    "suggestions": [
+      "Replace the second line with 'Expected event count = row total x event-column total / N = 10 x 1 / 20 = 0.5 per group.' Keep the first line's sparse-independent-2x2 rule and the third line's warning about Pearson's approximation."
+    ]
+  },
+  {
+    "id": "S27",
+    "title": "Choose an exact test for sparse independent counts",
+    "verdict": "REVISE",
+    "ownerFit": true,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 18, combined 23 words (including visible labels and numbers); explanation 3 lines. Row totals = 10, 10; column totals = 2, 18; N = 20. Expected counts = [1,9] in both rows, because expected events per group = 10 x 2 / 20 = 1 exactly. Fisher exact is the single best listed procedure for these sparse independent 2x2 counts. Pearson's large-sample approximation is unreliable here; McNemar requires pairing, explicitly absent. The stated expected count is numerically correct, including the fractional expected counts; no rounding or p-value computation is requested.",
+    "cues": [
+      {
+        "phrase": "Fisher exact test / Pearson chi-square test / McNemar chi-square test",
+        "why": "Mild family-outlier pattern: only the key lacks 'chi-square'. No task or exhibit wording names 'exact' or supplies the answer, and both distractors represent meaningful errors (sparse approximation versus pairing). Acceptable labels for focused test selection; no convergence or unequal explanatory qualifier."
+      }
+    ],
+    "fairness": [],
+    "explanationIssues": [
+      "The explanation supplies the expected count as a result without the expected-cell formula or substituted numbers. This fails the requested worked-method feedback even though the result and three-line length are correct."
+    ],
+    "suggestions": [
+      "Replace the second line with 'Expected event count = row total x event-column total / N = 10 x 2 / 20 = 1 per group.' Keep the first line's sparse-independent-2x2 rule and the third line's warning about Pearson's approximation."
+    ]
+  },
+  {
+    "id": "S28",
+    "title": "Choose an exact test for sparse independent counts",
+    "verdict": "REVISE",
+    "ownerFit": true,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 18, combined 23 words (including visible labels and numbers); explanation 3 lines. Row totals = 12, 12; column totals = 1, 23; N = 24. Expected counts = [0.5,11.5] in both rows, because expected events per group = 12 x 1 / 24 = 0.5 exactly. Fisher exact is the single best listed procedure for these sparse independent 2x2 counts. Pearson's large-sample approximation is unreliable here; McNemar requires pairing, explicitly absent. The stated expected count is numerically correct, including the fractional expected counts; no rounding or p-value computation is requested.",
+    "cues": [
+      {
+        "phrase": "Fisher exact test / Pearson chi-square test / McNemar chi-square test",
+        "why": "Mild family-outlier pattern: only the key lacks 'chi-square'. No task or exhibit wording names 'exact' or supplies the answer, and both distractors represent meaningful errors (sparse approximation versus pairing). Acceptable labels for focused test selection; no convergence or unequal explanatory qualifier."
+      }
+    ],
+    "fairness": [],
+    "explanationIssues": [
+      "The explanation supplies the expected count as a result without the expected-cell formula or substituted numbers. This fails the requested worked-method feedback even though the result and three-line length are correct."
+    ],
+    "suggestions": [
+      "Replace the second line with 'Expected event count = row total x event-column total / N = 12 x 1 / 24 = 0.5 per group.' Keep the first line's sparse-independent-2x2 rule and the third line's warning about Pearson's approximation."
+    ]
+  },
+  {
+    "id": "S29",
+    "title": "Identify one study design",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 18, combined 23 words (including visible labels and numbers); explanation 3 lines. Investigator-controlled allocation of patients to two dressings by a random sequence establishes a randomized trial; subsequent infection recording supplies the outcome. Neither observational cohort nor outcome-sampled case-control design describes this allocation. No numerical calculation or rounding is involved. Three-line feedback states chance assignment, applies investigator allocation and contrasts the observational cohort.",
+    "cues": [
+      {
+        "phrase": "random sequence / Randomized trial",
+        "why": "Strong but legitimate defining-term overlap for this focused design-identification exercise. The sequence allocates an intervention, rather than merely randomly sampling patients. Removing chance assignment would remove essential design information; no extra answer hint, length outlier or component convergence is present."
+      }
+    ],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S30",
+    "title": "Identify one study design",
+    "verdict": "REVISE",
+    "ownerFit": false,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 18, combined 23 words (including visible labels and numbers); explanation 3 lines. Grouping historical records by preoperative exposure and comparing later outcomes is consistent with a retrospective cohort, and 'old charts' does not by itself mean case-control. However, this describes analysis grouping without explicitly stating how charts entered the sample. An outcome-selected case-control set can also be regrouped by smoking, so the key is not fully secured by the stated sampling information. No arithmetic or rounding is involved.",
+    "cues": [],
+    "fairness": [
+      "The selection basis of the charts is missing. To exclude case-control sampling, say the charts were selected without regard to postoperative infection (for example, all consecutive operations in a defined set)."
+    ],
+    "explanationIssues": [
+      "'Sampling by exposure before the outcome' asserts a sampling rule not actually stated in the exhibit and can confuse the clinical exposure-outcome chronology with when investigators selected historical records. A retrospective cohort need not be sampled before outcomes occur."
+    ],
+    "suggestions": [
+      "Use an equally short exhibit such as: 'Investigators include all consecutive surgical patients from a past year, group charts by preoperative smoking status, and compare recorded postoperative infections.'",
+      "Use feedback: 'A retrospective cohort identifies a defined population without selecting on outcome.' / 'Here, all consecutive patients enter; smoking precedes the recorded infections.' / 'Case-control studies select people by outcome status.'"
+    ]
+  },
+  {
+    "id": "S31",
+    "title": "Identify one study design",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 19, combined 24 words (including visible labels and numbers); explanation 3 lines. The investigators explicitly select infected and uninfected patients by outcome, then ascertain earlier smoking exposure: case-control. Cohort selection is not based on the outcome, and a cross-sectional survey is not what this outcome-selected historical comparison describes. No calculation or rounding. Three-line feedback accurately identifies the sampling rule and applies it to infection status, without importing missing study details.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  },
+  {
+    "id": "S32",
+    "title": "Identify one study design",
+    "verdict": "PASS",
+    "ownerFit": true,
+    "mathChecked": "Independent review of the six requested after fields only. Pre-task count: prose 5, exhibit 19, combined 24 words (including visible labels and numbers); explanation 3 lines. Smoking status and current wound symptoms are measured in every respondent at one clinic survey: cross-sectional. There is neither outcome-based case/control selection nor an exposure-defined group observed for subsequent outcomes in the stated design. No calculation or rounding. Three-line feedback correctly applies the one-time sampling rule and contrasts a cohort; it does not require prospective data collection for every cohort.",
+    "cues": [],
+    "fairness": [],
+    "explanationIssues": [],
+    "suggestions": []
+  }
+]

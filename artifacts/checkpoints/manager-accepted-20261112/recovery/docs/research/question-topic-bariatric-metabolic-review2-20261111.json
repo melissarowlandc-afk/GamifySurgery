@@ -1,0 +1,305 @@
+[
+  {
+    "id": "question.topic.bariatric-metabolic.healed-surface-fixed-outlet.v2",
+    "nodeId": "node.topic.bariatric-metabolic.healed-surface-fixed-outlet.v2",
+    "title": "Healed ulcer surface with persistent gastrojejunal obstruction",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The clinical task is complete, but the displayed explanation ends with an unexplained editorial reference: 'This does not resolve the separately held recurrent-stricture v3 ranking.' A resident cannot interpret that reference from this encounter."
+    ],
+    "cues": [],
+    "fairness": [
+      "Endoscopic balloon dilation is the defensible best offered treatment: the surface has healed while a fixed, food-retaining outlet remains. Another surveillance cycle does not address the obstruction, and the supplied treatment history does not establish failure of endoscopic therapy warranting immediate revision.",
+      "Moderate application: separate mucosal response from mechanical recovery, then choose initial treatment rather than interpret persistent symptoms as a reason for surgical escalation. This is a familiar, high-yield postoperative complication, not a hard item.",
+      "The standalone update supplies the interval symptoms and treatment history without requiring the parked medication question. No strong nonmedical wording, length, convergence or absolute-language shortcut was identified.",
+      "Review-wide scope: 11 revised executable nodes were assessed from current candidate presentation, update, exhibit, task, option labels and explanation. The 3 pass-preserved nodes, 4 parked candidates, legacy keep/retirement records and held recurrent-stricture record were noted but not regraded. Candidate fields were compared with authoredCases; the anatomy node's empty versus absent update has no visible content difference.",
+      "Review-wide limitation: this is an offline editorial assessment, not source verification, measured difficulty or clinical approval. No network was used; no new clinical cutoff or regimen is asserted. PASS does not change needs_clinician_review. Runtime rendering, wait previews and integration were not tested under this visible-content-only review."
+    ],
+    "suggestions": [
+      "Remove the held-v3 sentence from learner-facing feedback and retain it only in editorial metadata. The clinical question otherwise meets the moderate application standard; do not rebuild it merely to inflate difficulty."
+    ]
+  },
+  {
+    "id": "question.topic.bariatric-metabolic.vomiting-neurological-replacement.v2",
+    "nodeId": "node.topic.bariatric-metabolic.vomiting-neurological-replacement.v2",
+    "title": "Immediate thiamine treatment during a vomiting admission",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The retrospective clinic frame and hospitalization timing are understandable. 'No replacement dose, glucose-delay rule or laboratory-turnaround cutoff is taught' is editorial commentary rather than useful patient-specific feedback."
+    ],
+    "cues": [
+      {
+        "phrase": "Which thiamine plan best fits",
+        "why": "The task supplies the nutrient, so recognizing the neurological syndrome no longer contributes to choosing the treatment substance. Naming a drug for a route/timing task is legitimate, but this cannot also be counted as an independent diagnostic inference."
+      },
+      {
+        "phrase": "she repeatedly vomited after attempted drinks and vitamin tablets",
+        "why": "Together with four route/timing combinations, this permits a nonmedical elimination of both oral options. The observation is clinically necessary and should remain; the resulting option set is easy rather than a difficult two-step decision."
+      }
+    ],
+    "fairness": [
+      "Immediate intravenous thiamine is the defensible best option for this acute neurological presentation with unreliable oral intake. Waiting for the assay is not a credible preferred alternative here; no confident clinical inaccuracy identified.",
+      "The four-option matrix is balanced and has no majority-component convergence. Nevertheless, the full familiar neurological pattern, named thiamine and explicit failed oral delivery collapse it to a safety/recognition item.",
+      "The standalone retrospective chronology avoids any need to remember the outlet-treatment node. Preventing delay in treatment is high yield even though the current item is easy."
+    ],
+    "suggestions": [
+      "Seek explicit independent acceptance as a basic safety item if retaining this scope; do not describe it as two consequential resident-level steps. Otherwise commission a supported clinical decision in which a plausible competing plan survives initial syndrome recognition.",
+      "Preserve the neurological warning signs and oral-intake observations; do not manufacture difficulty by hiding urgency or adding an unsupported dose or delay rule.",
+      "Replace the editorial final sentence with concise clinical feedback explaining why confirmation should not delay treatment and why oral delivery is unsuitable here."
+    ]
+  },
+  {
+    "id": "question.topic.bariatric-metabolic.spontaneous-sample-before-label.v2",
+    "nodeId": "node.topic.bariatric-metabolic.spontaneous-sample-before-label.v2",
+    "title": "Separate symptomatic episodes from discordant overnight glucose readings",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Sampling a typical spontaneous symptomatic episode is the best offered investigation. The nocturnal CGM readings conflict with contemporaneous finger-stick values and are not the symptomatic daytime events; the well-state clinic sample does not resolve the latter.",
+      "Two consequential steps are present: interpret measurement provenance and temporal mismatch, then choose the sampling context rather than a fast or glucose challenge. The normal observations have specific evidentiary roles rather than merely declaring a diagnosis excluded.",
+      "The three choices are comparable sampling strategies with no unique explanation, rhetorical absolute or majority-component key. 'Separately timed' helps orient the table but does not identify which test to order.",
+      "The opening node stands alone. Its explanation does not disclose the later diet or medication answers. The later case supplies an established diagnosis explicitly rather than requiring the learner to assume that this proposed test has already proved it.",
+      "This tests a high-yield diagnostic principle. No confident inaccuracy identified from the candidate; the exact current guideline position on provocative testing has not been independently reverified offline."
+    ],
+    "suggestions": [
+      "Retain the episode/sample distinction and the caution that an isolated low does not establish etiology. Avoid expanding this into a second task about the full hypoglycemia laboratory panel."
+    ]
+  },
+  {
+    "id": "question.topic.bariatric-metabolic.initial-meal-pattern.v2",
+    "nodeId": "node.topic.bariatric-metabolic.initial-meal-pattern.v2",
+    "title": "Protein intake and carbohydrate pattern after established hypoglycemia",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The task and table are understandable. The fixed '60 g/day' prescription is narrower than the explanation's individualized minimum; readers could mistake that floor for a universal complete target."
+    ],
+    "cues": [
+      {
+        "phrase": "Keep current protein intake; retain the liquid carbohydrate pattern",
+        "why": "This no-change option is conspicuous filler when the task presents an ongoing symptomatic pattern for correction. Balancing a matrix does not make this a credible competing prescription."
+      },
+      {
+        "phrase": "Sweetened liquid drink; shaking two hours later with a measured low glucose",
+        "why": "Together with the matching juice episode and the symptom-free solid-food row, the table makes the liquid-versus-solid change apparent without clinical knowledge. Both 'retain the liquid carbohydrate pattern' choices are easily eliminated."
+      },
+      {
+        "phrase": "Increase protein to 60 g/day; use lower-glycemic carbohydrate portions",
+        "why": "This is the only option changing both highlighted intake features. There is no frequency-convergence defect, but a generic 'correct both problems' strategy strongly favors it without knowing the clinical protein target."
+      }
+    ],
+    "fairness": [
+      "The protein entries sum to 30 g/day, and the intended diet is the best of the supplied options. No confident clinical falsehood is identified; the exact minimum is not independently reverified in this offline review.",
+      "Adding the three protein values and recalling dietary advice are parallel elementary operations, not a consequential interpretation followed by a difficult decision. The earlier diagnostic feedback does not leak this answer; the weakness is in this node itself.",
+      "The later-visit frame and explicitly established PBH allow standalone use. The narrative is not contradictory, but symptomatic glucose with relief alone should not be taught as excluding every other etiology; retain the statement that the diagnosis has been established.",
+      "Nutritional management is high yield. The current alternatives do not create moderate or hard resident discrimination."
+    ],
+    "suggestions": [
+      "Replace the no-change filler and obviously symptom-reproducing prescriptions with plausible, specific nutrition plans that differ in a clinically meaningful remaining error. Do not require four choices merely to complete a matrix.",
+      "Make an actual observed dietary response or competing nutritional requirement change the plan; do not add arithmetic merely to count a second step.",
+      "If retaining a protein target, distinguish a supported minimum from an individualized final prescription without making the key uniquely qualified."
+    ]
+  },
+  {
+    "id": "question.topic.bariatric-metabolic.diet-response-drug-stage.v2",
+    "nodeId": "node.topic.bariatric-metabolic.diet-response-drug-stage.v2",
+    "title": "Acarbose efficacy versus reproducible intolerance",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The table distinguishes fewer hypoglycemic episodes from an acceptable overall treatment response. Activity-limiting gastrointestinal symptoms recur on reintroduction and settle off treatment; changing therapy is justified by observations rather than the supplied label 'intolerant'.",
+      "Short-acting subcutaneous octreotide is the defensible best offered next drug under the stated sequence. Continued acarbose rewards attention to efficacy while ignoring reproducible harm; diazoxide tests premature movement to a later alternative. Exact guideline sequencing is not freshly verified offline, so this editorial PASS is not clinical approval.",
+      "Two consequential steps remain: infer drug intolerance despite efficacy, then choose the next treatment stage. A reader can reject continuation from the trajectory without specialized knowledge, but cannot distinguish the two replacement agents by wording alone.",
+      "The node supplies established PBH, implemented dietary care and the full medication course. It stands alone, follows the diet node coherently and is not answered by that node's explanation.",
+      "The concept is useful and testable postoperative metabolic management. The clear dechallenge/rechallenge makes this moderate, not hard; it does not establish a universal adverse-effect threshold or require another rechallenge."
+    ],
+    "suggestions": [
+      "Keep the efficacy-versus-tolerability trajectory and the equally concrete next-drug choices. Retain specialist-directed framing in feedback and verify the exact sequencing during clinical sign-off."
+    ]
+  },
+  {
+    "id": "question.topic.bariatric-metabolic.biliopancreatic-pathway.v2",
+    "nodeId": "node.topic.bariatric-metabolic.biliopancreatic-pathway.v2",
+    "title": "Localize an excluded-limb obstruction after Roux-en-Y bypass",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Which reconstructed intestinal pathway best explains' is less precise than asking which limb is obstructed and at what level. The options contain both a limb and a level.",
+      "The explanation's 'retained as fair moderate application, not a claimed two-step treatment decision' exposes an editorial disposition to the learner."
+    ],
+    "cues": [],
+    "fairness": [
+      "The selectively dilated excluded stomach, duodenum and connected jejunum, with a nondistended alimentary pathway and decompressed distal bowel, support biliopancreatic-limb obstruction near the jejunojejunal junction. The exhibit does not prove the specific obstructing lesion, and the explanation appropriately limits that claim.",
+      "The labels are parallel, with no strong nonmedical key-only lexical match. Mapping the reported distribution to reconstructed anatomy is fair moderate application for a resident still consolidating bypass anatomy.",
+      "It remains one localization decision. There is no consequential second action or competing clinical constraint. An author statement that this is an exception does not establish independent acceptance of an exception to the owner's two-step requirement.",
+      "The retrospective CT review is coherent and standalone without an update. This is a high-yield postoperative anatomy/obstruction concept; its value should not be confused with two-step difficulty."
+    ],
+    "suggestions": [
+      "Make the lead-in explicitly ask for the obstructed limb and level, and remove the editorial final sentence from feedback.",
+      "Obtain explicit acceptance as a focused anatomy exception, or develop a supported management consequence that requires the localization and compares credible same-stage actions. Do not add an automatic intervention rule or unsupported timing threshold to manufacture a second step."
+    ]
+  },
+  {
+    "id": "question.topic.bariatric-metabolic.symptoms-after-negative-swallow.v2",
+    "nodeId": "node.topic.bariatric-metabolic.symptoms-after-negative-swallow.v2",
+    "title": "Persistent postoperative symptoms after a negative sleeve swallow study",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'You review the admission decisions in sequence' implies a multi-node admission sequence, but this current candidate case has a single decision. The retrospective timing itself is clear."
+    ],
+    "cues": [
+      {
+        "phrase": "Renal function was normal and there was no contrast-reaction history.",
+        "why": "This is a permission cue uniquely aligned with 'Computed tomography with oral and intravenous contrast'. In this uncomplicated option set it adds little beyond pointing at the only explicitly contrast-labeled choice."
+      }
+    ],
+    "fairness": [
+      "CT with oral and intravenous contrast is the defensible best offered investigation of continued pain, fever and tachycardia after sleeve surgery despite a negative luminal study. The negative swallow does not exclude a leak or perigastric collection. No confident clinical inaccuracy identified.",
+      "For the intended resident audience, the alternatives are weak: neither upper-abdominal ultrasound nor another luminal examination competes closely with CT for the broad postoperative extraluminal question. The same answer is readily selected even if the prior swallow result is removed.",
+      "The observation-to-test sequence therefore functions as familiar recognition, not two consequential steps. The concept is high yield, but easy safety knowledge is not a hard item.",
+      "The candidate stands alone. The preserved source-control question is in a different case and is not a later part of this executable candidate; its earlier review status does not establish this node's quality."
+    ],
+    "suggestions": [
+      "Remove the sequence promise and review whether the contrast-permission sentence is needed for fairness. Retain any genuinely decision-critical contraindication if a revised comparison depends on it.",
+      "Compare clinically credible investigations or management plans at the same stage, using actual acquisition limitations or course observations that materially change the next step. Do not merely add another conspicuously inferior test.",
+      "Alternatively retain the clear safety lesson only with explicit acceptance of an easy recognition purpose; do not count an uninformative negative study as an extra reasoning step."
+    ]
+  },
+  {
+    "id": "question.topic.bariatric-metabolic.patent-sleeve-medical-stage.v2",
+    "nodeId": "node.topic.bariatric-metabolic.patent-sleeve-medical-stage.v2",
+    "title": "Correct omeprazole administration before escalating post-sleeve reflux care",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The task is complete and the chronology is clear. The explanation's discussion of dilation of a patent sleeve addresses a treatment absent from the current option set."
+    ],
+    "cues": [
+      {
+        "phrase": "Her medication diary places the capsule at bedtime, several hours after her evening meal",
+        "why": "The unusually emphasized administration detail corresponds directly to the only option adjusting administration, 'Move omeprazole dosing before breakfast'. This is a real clinical observation, but the competing options allow it to function as an answer-locating cue."
+      },
+      {
+        "phrase": "Replace omeprazole with bedtime famotidine",
+        "why": "Repeating 'bedtime' makes this foil resemble the conspicuously highlighted existing problem, while the other distractor jumps to bypass conversion. Neither creates a close contest with correcting the medication timing."
+      }
+    ],
+    "fairness": [
+      "Correcting administration of conventional delayed-release omeprazole before declaring medical failure is the defensible best plan. No confident clinical inaccuracy identified.",
+      "The item primarily tests one familiar medication-administration rule. The sleeve findings do not produce a separate consequential inference because no plausible anatomy-directed competitor remains once the timing sentence is noticed.",
+      "This is a high-yield treatment-optimization lesson but an easy item in its current set. It is not made moderate by contrasting a minor correction with a premature operation.",
+      "The next reflux node coherently supplies changed treatment, adherence and repeat evaluation. This explanation does not name the later on-treatment impedance-pH answer, so there is no direct sequence leakage."
+    ],
+    "suggestions": [
+      "Retain the formulation and actual dosing record, but compare plausible medication-optimization or evaluation plans at the same decision stage. Require the record to distinguish a credible competing explanation for apparent treatment failure.",
+      "If the intended lesson remains only premeal administration, seek explicit basic-purpose acceptance instead of counting recognition plus moving the dose as two steps.",
+      "Trim the dilation discussion from feedback unless dilation becomes a credible offered alternative in a substantively revised item."
+    ]
+  },
+  {
+    "id": "question.topic.bariatric-metabolic.refractory-reflux-revision.v2",
+    "nodeId": "node.topic.bariatric-metabolic.refractory-reflux-revision.v2",
+    "title": "Choose reflux-monitoring modality and medication state in established GERD",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "On-treatment impedance-pH monitoring is the defensible best offered investigation: prior grade C esophagitis establishes GERD, while persistent symptoms during documented twice-daily PPI treatment leave their current reflux association unresolved.",
+      "Two consequential protocol decisions are required: distinguish established from unproven GERD to select medication state, then recognize why pH-only monitoring has insufficient scope for ongoing symptoms during acid suppression. The full balanced matrix prevents majority-component convergence.",
+      "Each choice is the same type of investigation with comparable wording. The task does not itself say 'on therapy' or 'nonacid', and the diagnosis-establishing endoscopy is legitimate necessary evidence rather than a diagnosis-task giveaway.",
+      "The later visit follows the initial medication-timing node coherently and supplies all decision-critical prior disease and current treatment observations when read alone. Earlier feedback teaches proper dosing but does not disclose the monitoring protocol.",
+      "The exact time on the revised regimen is not stated. That limits claims that medical treatment has definitively failed or surgery is indicated; it does not overturn the best monitoring modality/state among the offered tests. Preserve that distinction and do not invent a universal treatment-duration cutoff.",
+      "This is high-yield foregut/reflux workup with moderate difficulty. The guideline attribution is not newly verified offline, and this PASS does not approve an operative indication."
+    ],
+    "suggestions": [
+      "Keep the established-GERD evidence and actual dosing/adherence record. If a future node asks whether to escalate treatment or operate, separately supply the supported treatment course and decision criteria rather than inheriting a claim of refractory disease from this test-selection item."
+    ]
+  },
+  {
+    "id": "question.topic.bariatric-metabolic.bowel-reserve-procedure.v2",
+    "nodeId": "node.topic.bariatric-metabolic.bowel-reserve-procedure.v2",
+    "title": "Bariatric procedure discussion with Crohn's disease and prior resections",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The lead-in asks what a named guideline favors rather than what clinical decision the resident should make. This is clear as guideline recall, but not the intended applied two-step task."
+    ],
+    "cues": [
+      {
+        "phrase": "Which operation does conditional SAGES guidance favor",
+        "why": "Naming the recommendation frames the entire answer as a recalled society preference; the detailed patient record is not needed to retrieve that preference. This is a task-construction shortcut rather than a key-only lexical match."
+      }
+    ],
+    "fairness": [
+      "Within the explicitly conditional discussion, sleeve gastrectomy is a defensible preference over adding bypass in a patient with Crohn's disease and prior resections. The explanation appropriately acknowledges very low certainty and competing considerations; no confident clinical falsehood is identified. The exact current SAGES recommendation was not independently verified offline.",
+      "There is no strong nonmedical convergence, length or grammatical cue. Nonetheless, sleeve is the only offered option avoiding intestinal bypass, and the patient details all point in that direction. The duodenal-switch option adds little close competition.",
+      "Most of the current disease and nutrition observations establish background suitability rather than create a second consequential decision. No reflux removes the most obvious competing reason for bypass. The same conditional guideline answer follows from the presentation and lead-in without most of the update.",
+      "The standalone case is coherent. Procedure anatomy, bowel preservation and nutritional consequences are high yield; recalling the wording of a very-low-certainty society recommendation is a less convincing ABSITE learning objective. This is easy, not an independently accepted moderate exception."
+    ],
+    "suggestions": [
+      "Use a neutral clinical lead-in and place guideline attribution and certainty in feedback.",
+      "Design a supported patient-specific decision where a credible competing consideration must actually be weighed. Do not add severe reflux or another conflicting indication unless the record and evidence can still establish one best answer.",
+      "If the supplied evidence supports only a conditional preference rather than a fair discriminating case, retain it only under an explicitly accepted focused guideline/recognition purpose, or withhold it from the difficult resident set."
+    ]
+  },
+  {
+    "id": "question.topic.bariatric-metabolic.cytopenias-neuropathy-zinc.v2",
+    "nodeId": "node.topic.bariatric-metabolic.cytopenias-neuropathy-zinc.v2",
+    "title": "Sensory gait change, cytopenias and supplemental zinc exposure",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Copper per unit",
+        "why": "Copper is the only candidate assay substance named in the supplement exhibit; vitamin E never appears there. With the neurological and blood findings hidden, a reader can still favor the copper branch by word matching. The copper column is unnecessary to calculate the zinc exposure."
+      },
+      {
+        "phrase": "Self-started extra supplement",
+        "why": "Repeated 'extra' wording and a self-started immune-health rationale encourage a generic stop-the-extra-product answer. This history is clinically relevant, so it should not be deleted indiscriminately; the cue becomes more consequential when combined with the copper-only exhibit label."
+      }
+    ],
+    "fairness": [
+      "Copper evaluation with holding the nonindicated extra zinc product is the defensible best plan. The sensory findings plus anemia/neutropenia favor copper over the offered vitamin E alternative, and the recorded zinc exposure warrants attention rather than continuation by default.",
+      "The arithmetic is correct: 15 + 2 x 50 = 115 mg/day of supplemental zinc, including 100 mg from the extra product. These are fictional exposure observations, not an asserted diagnostic or toxicity threshold.",
+      "Two clinically consequential components exist: integrate the neurological and hematological pattern to prioritize an assay, then reconcile exposure and choose an interim supplement action. However, the copper-label shortcut weakens independent measurement of the first component. The exact addition is not necessary to notice that the extra product dominates exposure, so the arithmetic does not justify a hard rating.",
+      "The assay/action matrix has balanced component frequencies and no uniquely comprehensive key. The normal B12-related tests are legitimate differential information rather than a reason to repeat a completed test as a foil.",
+      "The case stands alone and does not claim that the pattern proves deficiency or specify a replacement dose. The underlying post-bypass micronutrient complication and zinc interaction are high yield; no confident clinical inaccuracy identified."
+    ],
+    "suggestions": [
+      "Remove the nonessential copper-content column from the teaching exhibit so the clinical pattern must determine the assay. Keep the actual zinc-per-unit and daily-use observations.",
+      "Name the additional product neutrally while retaining its ingredient, actual use and nonprescribed indication. Do not hide exposure or imply that a medically indicated supplement should automatically be stopped.",
+      "Repeat the cover-the-findings cue attack after that repair: the remaining labels should not select an assay without the neurological and hematological evidence. Retain moderate rather than hard difficulty unless a genuine additional clinical discriminator is introduced."
+    ]
+  }
+]

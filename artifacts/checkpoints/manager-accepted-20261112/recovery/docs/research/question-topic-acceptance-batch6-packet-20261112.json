@@ -1,0 +1,2429 @@
+{
+  "checkedOn": "2026-11-12",
+  "reviewDisplay": "Key shown first for review only. Runtime answer choices shuffle.",
+  "clinicalApproval": false,
+  "accepted": [
+    {
+      "acceptanceId": "question.pediatric-neck-thoracic-gu.20261111.node-sample.v1",
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1",
+      "nodeId": "node.pediatric-neck-thoracic-gu.20261111.node-sample",
+      "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.node-sample.v1",
+      "conceptId": "concept.pediatric-neck-thoracic-gu.inadequate-node-sample-escalation.v1",
+      "sourceView": "topic-batch6-pediatric-neck-thoracic-gu",
+      "decision": "docs/research/question-topic-acceptance-batch6-20261112.md",
+      "title": "Act on nonrepresentative node sampling",
+      "reviewStatus": "needs_clinician_review",
+      "holdStatus": "none",
+      "review": {
+        "path": "docs/research/question-topic-pediatric-neck-thoracic-gu-review-salvage-20261111.json",
+        "record": {
+          "id": "question.pediatric-neck-thoracic-gu.20261111.node-sample.v1",
+          "nodeId": "node.pediatric-neck-thoracic-gu.20261111.node-sample",
+          "title": "Act on nonrepresentative node sampling",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Scope for this report: six current status=salvage nodes only, using candidate Presentation, Current update, Exhibit, Task, option labels and Explanation. Option-author rationales, author gates and prior PASS claims were not treated as evidence. Kept-unchanged, retired, parked, held and other nonsalvage records were excluded. The id field is the questionVariantId. All six cases have one node; no later-part sequencing is applicable.",
+            "The named 14-year-old boy, outside specimen and present examination are sufficient for standalone interpretation. The task identifies the patient, site and diagnostic decision without needing the removed companion.",
+            "Excisional biopsy is the best offered plan for a persistently enlarging fixed pediatric cervical node after nonrepresentative sampling. Repeat FNA is a credible less-invasive competitor, but the concerning clinical course and need for representative tissue favor excision. Surveillance wrongly treats an unsampled target as benign. This does not imply that every inadequate pediatric FNA mandates excision.",
+            "Two consequential steps: recognize blood/fat without lymphoid tissue as failure to assess the target, then integrate continued enlargement and fixation to choose tissue acquisition rather than surveillance or another limited sample. Replacing this with adequate benign tissue and a regressing examination could change the plan.",
+            "Cue attack: 'no lymphoid tissue is represented' is necessary specimen-adequacy information, not an instruction to select excision; both sampling options remain linguistically compatible. Repeated 'cervical node' is shared across all options. No unique length, absolute, convergence or diagnosis-label shortcut identified. The explanation appropriately withholds a cancer diagnosis.",
+            "High-yield judgment: discordance between reassuring sampling and a concerning neck mass is a practical surgical diagnostic problem. Difficulty is a qualitative prediction, not measured performance.",
+            "All report verdicts are offline editorial judgments, not fresh source verification or clinical approval. No network, source-accuracy audit or runtime rendering/timing audit was performed. No confident clinical inaccuracy identified here; all exact drafts remain needs_clinician_review pending Melissa Rowland's sign-off."
+          ],
+          "suggestions": [
+            "Retain the specimen contents and interval behavior together; do not replace them with a label such as inadequate biopsy or suspected lymphoma.",
+            "No required scored-content repair. Preserve the exact version unless a separately authorized revision is made."
+          ]
+        }
+      },
+      "nodeSha256": "d97a9db1bd0cffff9be6c3996b0cf65ac7f8de5db8f67d516c4f00a5c9d7f8d5",
+      "questionSha256": "94ee9b63c563de2afe4a059bab6e6d527b4f924edd21bea3dcf3185d5769df11",
+      "reviewedSourceNodeSha256": "d97a9db1bd0cffff9be6c3996b0cf65ac7f8de5db8f67d516c4f00a5c9d7f8d5",
+      "sourceFileSha256": "cc088d37bf249056798b48ab7c88182c7f71df4e8730f447299844c9ae55ce00",
+      "supportingEvidenceClaimIds": [
+        "claim.pediatric-neck-thoracic-gu.node-inadequate-fna",
+        "claim.pediatric-neck-thoracic-gu.progressive-node-assessment"
+      ],
+      "runtime": {
+        "caseId": "case.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1",
+        "issue": null,
+        "receipt": {
+          "operationId": "topic6.final.admit",
+          "commandType": "ADMIT_PATIENT",
+          "status": "applied",
+          "message": "Patient is approaching the clinic.",
+          "facilityTick": 0
+        },
+        "requiredSetting": "clinic",
+        "requiredCapabilityIds": [
+          "capability.pediatric_examination"
+        ],
+        "earliestFacilityStage": 4,
+        "clinicAdmissible": true,
+        "pediatric": true,
+        "actualPatientName": "Lucas Ellis",
+        "actualDemographics": {
+          "ageYears": 14,
+          "sexLabel": "Male"
+        },
+        "childStillId": "level3-roster-v2.030",
+        "pediatricFamilyId": "pediatric-family.encounter.encounter.topic6.final",
+        "parentName": "Sarah Ellis",
+        "expectedFamily": {
+          "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+          "reviewStatus": "needs_clinician_review",
+          "aiAssistedDrafting": true,
+          "lastClinicianReview": null,
+          "id": "family.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1",
+          "caseId": "case.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1",
+          "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.node-sample.v1",
+          "profileId": "profile.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1",
+          "childName": "Lucas Ellis",
+          "childStillId": "level3-roster-v2.030",
+          "prototypeDemographics": {
+            "ageYears": 14,
+            "sexLabel": "Male"
+          },
+          "parentName": "Sarah Ellis",
+          "parentRelationship": "mother",
+          "parentCount": 1,
+          "parentPlacement": "same_room_throughout",
+          "metadataSource": "tools/character-mapping/level3-roster-complete-v2/roster.json",
+          "profileValuesBasis": "editorial_art_contract_not_disease_probability",
+          "evidenceClaimIds": [
+            "claim.pediatric-neck-thoracic-gu.node-inadequate-fna",
+            "claim.pediatric-neck-thoracic-gu.progressive-node-assessment"
+          ]
+        },
+        "appAffinity": false,
+        "procedureConsultKind": null,
+        "topicAffinityBindingsNeeded": [],
+        "timingInstalled": true,
+        "timing": {
+          "caseId": "case.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1",
+          "nodeId": "node.pediatric-neck-thoracic-gu.20261111.node-sample",
+          "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.node-sample.v1",
+          "classification": {
+            "kind": "no_test"
+          }
+        },
+        "testChoiceOrdersNeeded": []
+      },
+      "after": {
+        "Presentation": "{patientName}, a 14-year-old boy, attends clinic with his mother, Sarah Ellis, who remains in the room. A firm cervical lump continues to enlarge after an outside needle sample was described to the family as reassuring. The founder reviews the outside record at the tissue-sampling decision; all questions concern that recorded care, and no biopsy or test is performed in this clinic.",
+        "Current update": "The original pathology report is reviewed with the current neck examination.",
+        "Exhibit": {
+          "kind": "keyValue",
+          "caption": "Constructed teaching record; fictional observations",
+          "items": [
+            {
+              "label": "Needle specimen",
+              "value": "Blood and adipose fragments; no lymphoid tissue is represented."
+            },
+            {
+              "label": "Interval examination",
+              "value": "The same firm cervical lump has enlarged and remains fixed. There is no current inflammatory skin lesion."
+            }
+          ]
+        },
+        "Task": "Which diagnostic plan fits {patientName}'s cervical lump at this review?",
+        "Options": [
+          "**KEY:** Excisional biopsy of the cervical node",
+          "Repeat fine-needle aspiration of the cervical node",
+          "Clinical surveillance of the cervical node"
+        ]
+      },
+      "explanation": "The report describes what entered the needle, not a benign diagnosis of the enlarging node. Persistent concerning examination findings after an indeterminate sample warrant representative biopsy. This does not establish a cancer diagnosis.",
+      "lint": [
+        {
+          "id": "3e2d21ac30594d6a",
+          "rule": "ambiguous-cervical-term",
+          "severity": "advisory",
+          "message": "Qualify the anatomical site: for example, neck/cervical lymph node. This lexical check cannot determine the intended organ.",
+          "evidence": [
+            {
+              "field": "stem",
+              "text": "cervical",
+              "start": 43,
+              "end": 51
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1",
+              "profileIds": [
+                "canonical",
+                "profile.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1"
+              ],
+              "ranges": [
+                {
+                  "start": 43,
+                  "end": 51
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ac303abe6597df09",
+          "rule": "ambiguous-cervical-term",
+          "severity": "advisory",
+          "message": "Qualify the anatomical site: for example, neck/cervical lymph node. This lexical check cannot determine the intended organ.",
+          "evidence": [
+            {
+              "field": "presentation",
+              "text": "cervical",
+              "start": 111,
+              "end": 119
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1",
+              "profileIds": [
+                "canonical",
+                "profile.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1"
+              ],
+              "ranges": [
+                {
+                  "start": 111,
+                  "end": 119
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "fef018f51e4618b0",
+          "rule": "ambiguous-cervical-term",
+          "severity": "advisory",
+          "message": "Qualify the anatomical site: for example, neck/cervical lymph node. This lexical check cannot determine the intended organ.",
+          "evidence": [
+            {
+              "field": "exhibit.items[1].value",
+              "text": "cervical",
+              "start": 14,
+              "end": 22
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1",
+              "profileIds": [
+                "canonical",
+                "profile.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1"
+              ],
+              "ranges": [
+                {
+                  "start": 14,
+                  "end": 22
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "e3c96cd45501431f",
+          "rule": "key-only-word-overlap",
+          "severity": "advisory",
+          "message": "A substantive word appears in the context and key only; clinical relevance may justify it.",
+          "evidence": [
+            {
+              "field": "presentation",
+              "text": "biopsy",
+              "start": 341,
+              "end": 347
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "biopsy",
+              "start": 11,
+              "end": 17,
+              "choiceId": "choice.pediatric-neck-thoracic-gu.20261111.node-sample.excision"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1",
+              "profileIds": [
+                "canonical",
+                "profile.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1"
+              ],
+              "ranges": [
+                {
+                  "start": 341,
+                  "end": 347
+                },
+                {
+                  "start": 11,
+                  "end": 17
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "acceptanceId": "question.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.v1",
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1",
+      "nodeId": "node.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy",
+      "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.v1",
+      "conceptId": "concept.pediatric-neck-thoracic-gu.mediastinal-peripheral-biopsy-route.v1",
+      "sourceView": "topic-batch6-pediatric-neck-thoracic-gu",
+      "decision": "docs/research/question-topic-acceptance-batch6-20261112.md",
+      "title": "Choose a safer tissue route with mediastinal compression",
+      "reviewStatus": "needs_clinician_review",
+      "holdStatus": "none",
+      "review": {
+        "path": "docs/research/question-topic-pediatric-neck-thoracic-gu-review-salvage-20261111.json",
+        "record": {
+          "id": "question.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.v1",
+          "nodeId": "node.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy",
+          "title": "Choose a safer tissue route with mediastinal compression",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Standalone: the case supplies the subsequent hospital setting, positional symptoms, CT airway compression, available peripheral target and observed cooperation. No prior node or its feedback is needed. The initial clinic attendance and subsequent father/clinician chart review can be read chronologically; the task names the hospital team receiving the recommendation.",
+            "Local-anesthetic cervical-node excision is the best offered plan. The deep-sedation needle option is a meaningful trap: a smaller procedure does not necessarily avoid the physiologic hazard. Thoracoscopy under general anesthesia is less attractive when peripheral tissue is available. The key is a specialist plan, not permission to perform an awake excision in any child or setting.",
+            "Two consequential steps: infer anesthesia/position-related risk from supine breathlessness plus tracheal narrowing, then choose a diagnostic target and anesthetic approach that can supply tissue with less exposure to that risk. Removing the compression findings or the accessible target changes the comparison.",
+            "Cue attack: 'She remained calm during an awake needle procedure' and 'The left supraclavicular node is accessible' favor feasibility of the key, but are necessary constraints; deleting them would weaken its fairness. Neither repeats an option verbatim, and deciding between local anesthesia, deep sedation and general anesthesia still requires clinical knowledge. No rhetorical absolute, length outlier or convergence pattern identified.",
+            "The explanation appropriately connects the route and anesthetic risk after the choice. Prior cooperation with a needle is not proof that excision will be tolerated; the specialist team must still assess feasibility. This limitation does not make the two offered sedated mediastinal approaches equally preferable.",
+            "High-yield judgment: avoiding hazardous anesthesia in a child with a compressive anterior mediastinal mass is a consequential surgical safety concept. No confident clinical inaccuracy identified in the permitted text; independent current-source verification and clinical approval were outside this offline review."
+          ],
+          "suggestions": [
+            "No required scored-content repair. Preserve both the airway observations and practical peripheral-target/cooperation information.",
+            "Keep the local-anesthetic approach conditional on specialist assessment; do not strengthen the explanation into a guarantee that prior needle tolerance establishes excision tolerance."
+          ]
+        }
+      },
+      "nodeSha256": "5ca23439b805b1c0082d8486587c12ae6690482b786dc18bb03efd708b195a67",
+      "questionSha256": "44d2c25a7211bd62c4ad873978614f6a175f9bb56414f864a94223356b2abb71",
+      "reviewedSourceNodeSha256": "5b2466719fd297387f5397fbba6ef37476ecaf47984a818b393fcde1fd4e53d3",
+      "sourceFileSha256": "cc088d37bf249056798b48ab7c88182c7f71df4e8730f447299844c9ae55ce00",
+      "supportingEvidenceClaimIds": [
+        "claim.pediatric-neck-thoracic-gu.mediastinal-anesthesia-risk",
+        "claim.pediatric-neck-thoracic-gu.mediastinal-peripheral-biopsy",
+        "claim.pediatric-neck-thoracic-gu.node-inadequate-fna"
+      ],
+      "runtime": {
+        "caseId": "case.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1",
+        "issue": null,
+        "receipt": {
+          "operationId": "topic6.final.admit",
+          "commandType": "ADMIT_PATIENT",
+          "status": "applied",
+          "message": "Patient is approaching the clinic.",
+          "facilityTick": 0
+        },
+        "requiredSetting": "clinic",
+        "requiredCapabilityIds": [
+          "capability.pediatric_examination"
+        ],
+        "earliestFacilityStage": 4,
+        "clinicAdmissible": true,
+        "pediatric": true,
+        "actualPatientName": "Grace Turner",
+        "actualDemographics": {
+          "ageYears": 11,
+          "sexLabel": "Female"
+        },
+        "childStillId": "level3-roster-v2.027",
+        "pediatricFamilyId": "pediatric-family.encounter.encounter.topic6.final",
+        "parentName": "James Turner",
+        "expectedFamily": {
+          "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+          "reviewStatus": "needs_clinician_review",
+          "aiAssistedDrafting": true,
+          "lastClinicianReview": null,
+          "id": "family.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1",
+          "caseId": "case.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1",
+          "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.v1",
+          "profileId": "profile.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1",
+          "childName": "Grace Turner",
+          "childStillId": "level3-roster-v2.027",
+          "prototypeDemographics": {
+            "ageYears": 11,
+            "sexLabel": "Female"
+          },
+          "parentName": "James Turner",
+          "parentRelationship": "father",
+          "parentCount": 1,
+          "parentPlacement": "same_room_throughout",
+          "metadataSource": "tools/character-mapping/level3-roster-complete-v2/roster.json",
+          "profileValuesBasis": "editorial_art_contract_not_disease_probability",
+          "evidenceClaimIds": [
+            "claim.pediatric-neck-thoracic-gu.mediastinal-anesthesia-risk",
+            "claim.pediatric-neck-thoracic-gu.mediastinal-peripheral-biopsy",
+            "claim.pediatric-neck-thoracic-gu.node-inadequate-fna"
+          ]
+        },
+        "appAffinity": false,
+        "procedureConsultKind": null,
+        "topicAffinityBindingsNeeded": [],
+        "timingInstalled": true,
+        "timing": {
+          "caseId": "case.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1",
+          "nodeId": "node.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy",
+          "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.v1",
+          "classification": {
+            "kind": "no_test"
+          }
+        },
+        "testChoiceOrdersNeeded": []
+      },
+      "after": {
+        "Presentation": "{patientName}, an 11-year-old girl, attends clinic with her father, James Turner, who remains in the room. A lump above her left collarbone has enlarged despite a recent ultrasound report describing a benign-looking neck node. The following decision concerns the subsequent outside hospital episode, reviewed in clinic with her father.",
+        "Current update": "At a subsequent clinic chart-review visit, the founder and {patientName}'s father review the outside children's hospital record. {patientName} is being managed there; no biopsy or anesthesia is performed in this clinic.",
+        "Exhibit": {
+          "kind": "keyValue",
+          "caption": "Constructed teaching record; fictional observations",
+          "items": [
+            {
+              "label": "Outside observations",
+              "value": "{patientName} speaks comfortably seated but becomes breathless when supine. She remained calm during an awake needle procedure."
+            },
+            {
+              "label": "Chest CT and tissue target",
+              "value": "An anterior mediastinal mass narrows the trachea. The left supraclavicular node is accessible and has not yet provided diagnostic tissue."
+            }
+          ]
+        },
+        "Task": "Which biopsy plan should the founder recommend to {patientName}'s hospital team?",
+        "Options": [
+          "**KEY:** Cervical-node excision with local anesthesia",
+          "Mediastinal thoracoscopy with general anesthesia",
+          "Mediastinal core biopsy with deep sedation"
+        ]
+      },
+      "explanation": "Choose the least hazardous route that can provide adequate tissue. Here a peripheral node and documented cooperation allow a local-anesthetic plan for the specialist team. Deep sedation or general anesthesia can worsen airway or cardiovascular compromise from a mediastinal mass.",
+      "lint": [
+        {
+          "id": "91f22a1ba44c5a5e",
+          "rule": "negative-aligned-to-distractor",
+          "severity": "advisory",
+          "message": "A negated/excluded term appears in exactly one distractor; this is not proof that the finding excludes that diagnosis.",
+          "evidence": [
+            {
+              "field": "currentUpdate",
+              "text": "no biopsy or anesthesia is performed in this clinic",
+              "start": 167,
+              "end": 218
+            },
+            {
+              "field": "currentUpdate",
+              "text": "biopsy",
+              "start": 170,
+              "end": 176
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "biopsy",
+              "start": 17,
+              "end": 23,
+              "choiceId": "choice.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.core"
+            }
+          ],
+          "metrics": {
+            "term": "biopsy"
+          },
+          "occurrences": [
+            {
+              "caseId": "case.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1",
+              "profileIds": [
+                "canonical",
+                "profile.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1"
+              ],
+              "ranges": [
+                {
+                  "start": 167,
+                  "end": 218
+                },
+                {
+                  "start": 170,
+                  "end": 176
+                },
+                {
+                  "start": 17,
+                  "end": 23
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "acceptanceId": "question.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+      "nodeId": "node.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+      "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+      "conceptId": "concept.pediatric-neck-thoracic-gu.proximal-hypospadias-gonadal-workup.v2",
+      "sourceView": "topic-batch6-pediatric-neck-thoracic-gu",
+      "decision": "docs/research/question-topic-acceptance-batch6-20261112.md",
+      "title": "Recognize the need for chromosomal assessment",
+      "reviewStatus": "needs_clinician_review",
+      "holdStatus": "none",
+      "review": {
+        "path": "docs/research/question-topic-pediatric-neck-thoracic-gu-review-salvage-20261111.json",
+        "record": {
+          "id": "question.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+          "nodeId": "node.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+          "title": "Recognize the need for chromosomal assessment",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Standalone: the case supplies Noah's age, clinical gender presentation, genital findings, completed 46,XX result, clinical stability and biochemical stage. The question asks for a prioritized biochemical study, not a complete DSD workup or a new chromosome test. Calling Noah a boy is not contradicted by the karyotype and does not settle gonadal anatomy or gender identity.",
+            "Baseline 17-hydroxyprogesterone is the best offered initial study. AMH addresses a competing question about testicular tissue; the completed chromosome result makes adrenal virilization a higher-priority explanation to assess. A stimulated steroid profile is a credible adrenal-investigation competitor, but no baseline biochemical result yet justifies moving directly to the characterization stage in this stable case.",
+            "Two consequential steps: reinterpret the external anatomy and nonpalpable gonads in light of 46,XX, then select an initial adrenal screen rather than a testicular-tissue marker or a later-stage stimulated profile. A different chromosome result or an already borderline baseline result changes that comparison.",
+            "Cue attack: 'No steroid measurements have yet been obtained' gives the necessary stage; it does not uniquely match the key because both baseline and stimulated steroid investigations could answer the wording. Two options use 'Baseline serum', so this is not a key-only grammatical cue. No diagnosis label, convergence or rhetorical absolute identifies the answer without clinical knowledge.",
+            "The explanation supplies early-morning collection and assay details after the answer, and explicitly avoids representing one test as a complete workup. No confident clinical inaccuracy identified. The claimed Endocrine Society recommendation was not freshly verified; exact guideline applicability and assay details remain for clinical sign-off.",
+            "High-yield judgment: genital anomalies with nonpalpable gonads require recognition of possible DSD/adrenal disease before surgery. Baseline-versus-stimulation sequencing adds a useful, moderately demanding distinction, although it is more specialized than recognition alone."
+          ],
+          "suggestions": [
+            "No required scored-content repair. Preserve the completed karyotype, stable clinical state and absence of prior biochemical testing; these make the offered studies rankable.",
+            "Do not expose the authoring title as a clinical task heading: its reference to chromosomal assessment describes an already completed step, whereas the actual task correctly asks for biochemical testing."
+          ]
+        }
+      },
+      "nodeSha256": "a3ce3363c547bd628616269a7bb87ec5c257e344c9cba9fbbf33e762a8d07118",
+      "questionSha256": "3d26940603545eb9223b06fab256286f295fef4b58871930b47d3fcc904de64e",
+      "reviewedSourceNodeSha256": "f814dade0f92390014f1e4a6c832976aa01e3736f3cc603f16a6956eb4383ac7",
+      "sourceFileSha256": "cc088d37bf249056798b48ab7c88182c7f71df4e8730f447299844c9ae55ce00",
+      "supportingEvidenceClaimIds": [
+        "claim.pediatric-neck-thoracic-gu.proximal-meatus-nonpalpable-gonads",
+        "claim.pediatric-neck-thoracic-gu.xx-nonpalpable-adrenal-evaluation",
+        "claim.pediatric-neck-thoracic-gu.cah-past-infancy-initial-screen",
+        "claim.pediatric-neck-thoracic-gu.cah-borderline-confirmation"
+      ],
+      "runtime": {
+        "caseId": "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+        "issue": null,
+        "receipt": {
+          "operationId": "topic6.final.admit",
+          "commandType": "ADMIT_PATIENT",
+          "status": "applied",
+          "message": "Patient is approaching the clinic.",
+          "facilityTick": 0
+        },
+        "requiredSetting": "clinic",
+        "requiredCapabilityIds": [
+          "capability.pediatric_examination"
+        ],
+        "earliestFacilityStage": 4,
+        "clinicAdmissible": true,
+        "pediatric": true,
+        "actualPatientName": "Noah Wells",
+        "actualDemographics": {
+          "ageYears": 5,
+          "sexLabel": "Male"
+        },
+        "childStillId": "level3-roster-v2.022",
+        "pediatricFamilyId": "pediatric-family.encounter.encounter.topic6.final",
+        "parentName": "Daniel Wells",
+        "expectedFamily": {
+          "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+          "reviewStatus": "needs_clinician_review",
+          "aiAssistedDrafting": true,
+          "lastClinicianReview": null,
+          "id": "family.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+          "caseId": "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+          "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+          "profileId": "profile.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+          "childName": "Noah Wells",
+          "childStillId": "level3-roster-v2.022",
+          "prototypeDemographics": {
+            "ageYears": 5,
+            "sexLabel": "Male"
+          },
+          "parentName": "Daniel Wells",
+          "parentRelationship": "father",
+          "parentCount": 1,
+          "parentPlacement": "same_room_throughout",
+          "metadataSource": "tools/character-mapping/level3-roster-complete-v2/roster.json",
+          "profileValuesBasis": "editorial_art_contract_not_disease_probability",
+          "evidenceClaimIds": [
+            "claim.pediatric-neck-thoracic-gu.proximal-meatus-nonpalpable-gonads",
+            "claim.pediatric-neck-thoracic-gu.xx-nonpalpable-adrenal-evaluation",
+            "claim.pediatric-neck-thoracic-gu.cah-past-infancy-initial-screen",
+            "claim.pediatric-neck-thoracic-gu.cah-borderline-confirmation"
+          ]
+        },
+        "appAffinity": false,
+        "procedureConsultKind": null,
+        "topicAffinityBindingsNeeded": [],
+        "timingInstalled": true,
+        "timing": {
+          "caseId": "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+          "nodeId": "node.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+          "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+          "classification": {
+            "kind": "no_test"
+          }
+        },
+        "testChoiceOrdersNeeded": []
+      },
+      "after": {
+        "Presentation": "{patientName}, a 5-year-old boy, attends clinic with his father, Daniel Wells, who remains in the room, before proposed genital surgery. The founder reviews the outside preoperative assessment record; all questions concern that recorded biochemical decision, and no test or procedure is performed in this clinic.",
+        "Current update": "Examination documents a proximal urethral opening and no palpable gonad on either side. {patientName} is comfortable, eating normally and has no vomiting or dehydration. Multidisciplinary endocrine/urologic assessment is underway.",
+        "Exhibit": {
+          "kind": "keyValue",
+          "caption": "Constructed teaching record; fictional observations",
+          "items": [
+            {
+              "label": "Completed laboratory result",
+              "value": "The chromosome report is 46,XX."
+            },
+            {
+              "label": "Available biochemical record",
+              "value": "No steroid measurements have yet been obtained."
+            }
+          ]
+        },
+        "Task": "Which biochemical study should be prioritized next in {patientName}'s preoperative assessment?",
+        "Options": [
+          "**KEY:** Baseline serum 17-hydroxyprogesterone",
+          "Baseline serum anti-Mullerian hormone",
+          "Cosyntropin-stimulated adrenal steroid profile"
+        ]
+      },
+      "explanation": "The chromosome result prevents assuming that bilateral nonpalpable gonads are simply undescended testes. An adrenal cause of virilization needs evaluation. For a stable symptomatic child past infancy, the Endocrine Society supports baseline early-morning 17-hydroxyprogesterone by LC-MS/MS as the initial screen; borderline results need further specialist testing. This is one prioritized step within full multidisciplinary assessment, not a complete DSD workup or a decision about gender identity or genital surgery.",
+      "lint": [
+        {
+          "id": "ef7e99836c352080",
+          "rule": "negative-aligned-to-distractor",
+          "severity": "advisory",
+          "message": "A negated/excluded term appears in exactly one distractor; this is not proof that the finding excludes that diagnosis.",
+          "evidence": [
+            {
+              "field": "exhibit.items[1].value",
+              "text": "No steroid measurements have ",
+              "start": 0,
+              "end": 29
+            },
+            {
+              "field": "exhibit.items[1].value",
+              "text": "steroid",
+              "start": 3,
+              "end": 10
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "steroid",
+              "start": 31,
+              "end": 38,
+              "choiceId": "choice.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2.stimulated"
+            }
+          ],
+          "metrics": {
+            "term": "steroid"
+          },
+          "occurrences": [
+            {
+              "caseId": "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+              "profileIds": [
+                "canonical",
+                "profile.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 29
+                },
+                {
+                  "start": 3,
+                  "end": 10
+                },
+                {
+                  "start": 31,
+                  "end": 38
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "acceptanceId": "question.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2",
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness-salvage.v1",
+      "nodeId": "node.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2",
+      "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2",
+      "conceptId": "concept.pediatric-neck-thoracic-gu.cdh-physiologic-readiness.v1",
+      "sourceView": "topic-batch6-pediatric-neck-thoracic-gu",
+      "decision": "docs/research/question-topic-acceptance-batch6-20261112.md",
+      "title": "Sequence diaphragmatic repair with physiology",
+      "reviewStatus": "needs_clinician_review",
+      "holdStatus": "none",
+      "review": {
+        "path": "docs/research/question-topic-pediatric-neck-thoracic-gu-review-salvage-20261111.json",
+        "record": {
+          "id": "question.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2",
+          "nodeId": "node.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2",
+          "title": "Sequence diaphragmatic repair with physiology",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Standalone: the presentation explicitly separates Isla's current age of six years from the neonatal record at four days. The repair-sequencing task refers to that recorded ICU decision, and all necessary trends are reproduced. No previous neonatal-management node is required.",
+            "Planning repair while continuing ICU support is the best offered plan under the sustained oxygenation/perfusion observations, preserved ventricular function and pulmonary pressure now below simultaneous systemic pressure. Continued stabilization before reconsideration is a credible error if residual pulmonary hypertension or intubation is mistaken for an absolute barrier. ECMO escalation is a weaker competitor because the record does not describe failure of conventional support.",
+            "Two consequential steps: integrate respiratory/perfusion data and interpret pulmonary pressure relative to systemic pressure, then decide whether residual support needs warrant deferring repair. The pulmonary pressure of 45 mmHg cannot be treated as a universal standalone readiness cutoff. Worsening perfusion/support or a different relative pressure pattern could reverse the decision.",
+            "Cue attack: 'fell from 75 to 45 mmHg' is favorable raw trend data, but does not itself teach the relative-pressure interpretation. All three options are concrete sequencing plans of similar length; none uniquely repeats the numerical findings or advertises a rationale. The known congenital diaphragmatic hernia diagnosis is appropriate background for a timing task, not disclosure of its answer.",
+            "The explanation appropriately limits the key to planning/consideration with multidisciplinary confirmation rather than automatic clearance. No confident clinical inaccuracy identified. The exact current CAHS readiness criteria and applicability were not independently verified in this offline review; the supplied numbers are not endorsed as new thresholds.",
+            "High-yield judgment: CDH repair follows physiological stabilization rather than anatomic urgency or mandatory complete normalization. The question is moderately demanding because apparently abnormal residual pulmonary pressure and continued intubation must be weighed against the actual trajectory; it is not hard merely because several measurements appear."
+          ],
+          "suggestions": [
+            "No required scored-content repair. Retain simultaneous systemic pressure and the sustained perfusion/support observations; a falling pulmonary-pressure number by itself would not carry the same inference.",
+            "Preserve the explicit neonatal-record age and the explanation's distinction between planning repair and unconditional operative clearance."
+          ]
+        }
+      },
+      "nodeSha256": "46e5aa89112a265d0cf2017dbf27068926dd994d66ab671f21aabc3a4f94a82e",
+      "questionSha256": "154613bc903f12cc13f5f6c4ae0401731312f36e7731bfc20d4a86b52b2a3246",
+      "reviewedSourceNodeSha256": "46e5aa89112a265d0cf2017dbf27068926dd994d66ab671f21aabc3a4f94a82e",
+      "sourceFileSha256": "cc088d37bf249056798b48ab7c88182c7f71df4e8730f447299844c9ae55ce00",
+      "supportingEvidenceClaimIds": [
+        "claim.pediatric-neck-thoracic-gu.cdh-physiology",
+        "claim.pediatric-neck-thoracic-gu.cdh-stabilization-before-repair",
+        "claim.pediatric-neck-thoracic-gu.cdh-cahs-perfusion-readiness-2026",
+        "claim.pediatric-neck-thoracic-gu.cdh-cahs-oxygen-readiness-2026",
+        "claim.pediatric-neck-thoracic-gu.cdh-cahs-pressure-readiness-2026",
+        "claim.pediatric-neck-thoracic-gu.cdh-cahs-repair-support-2026",
+        "claim.pediatric-neck-thoracic-gu.cdh-cahs-ecmo-consideration-2026"
+      ],
+      "runtime": {
+        "caseId": "case.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness-salvage.v1",
+        "issue": null,
+        "receipt": {
+          "operationId": "topic6.final.admit",
+          "commandType": "ADMIT_PATIENT",
+          "status": "applied",
+          "message": "Patient is approaching the clinic.",
+          "facilityTick": 0
+        },
+        "requiredSetting": "clinic",
+        "requiredCapabilityIds": [
+          "capability.pediatric_examination"
+        ],
+        "earliestFacilityStage": 4,
+        "clinicAdmissible": true,
+        "pediatric": true,
+        "actualPatientName": "Isla Chen",
+        "actualDemographics": {
+          "ageYears": 6,
+          "sexLabel": "Female"
+        },
+        "childStillId": "level3-roster-v2.021",
+        "pediatricFamilyId": "pediatric-family.encounter.encounter.topic6.final",
+        "parentName": "Mei Chen",
+        "expectedFamily": {
+          "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+          "reviewStatus": "needs_clinician_review",
+          "aiAssistedDrafting": true,
+          "lastClinicianReview": null,
+          "id": "family.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness-salvage.v1",
+          "caseId": "case.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness-salvage.v1",
+          "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2",
+          "profileId": "profile.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness-salvage.v1",
+          "childName": "Isla Chen",
+          "childStillId": "level3-roster-v2.021",
+          "prototypeDemographics": {
+            "ageYears": 6,
+            "sexLabel": "Female"
+          },
+          "parentName": "Mei Chen",
+          "parentRelationship": "mother",
+          "parentCount": 1,
+          "parentPlacement": "same_room_throughout",
+          "metadataSource": "tools/character-mapping/level3-roster-complete-v2/roster.json",
+          "profileValuesBasis": "editorial_art_contract_not_disease_probability",
+          "evidenceClaimIds": [
+            "claim.pediatric-neck-thoracic-gu.cdh-physiology",
+            "claim.pediatric-neck-thoracic-gu.cdh-stabilization-before-repair",
+            "claim.pediatric-neck-thoracic-gu.cdh-cahs-perfusion-readiness-2026",
+            "claim.pediatric-neck-thoracic-gu.cdh-cahs-oxygen-readiness-2026",
+            "claim.pediatric-neck-thoracic-gu.cdh-cahs-pressure-readiness-2026",
+            "claim.pediatric-neck-thoracic-gu.cdh-cahs-repair-support-2026",
+            "claim.pediatric-neck-thoracic-gu.cdh-cahs-ecmo-consideration-2026"
+          ]
+        },
+        "appAffinity": false,
+        "procedureConsultKind": null,
+        "topicAffinityBindingsNeeded": [],
+        "timingInstalled": true,
+        "timing": {
+          "caseId": "case.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness-salvage.v1",
+          "nodeId": "node.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2",
+          "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2",
+          "classification": {
+            "kind": "no_test"
+          }
+        },
+        "testChoiceOrdersNeeded": []
+      },
+      "after": {
+        "Presentation": "{patientName}, a 6-year-old girl, attends clinic with her mother, Mei Chen, who remains in the room. The founder reviews outside neonatal ICU records from when {patientName} was a 4-day-old girl treated at the referring tertiary hospital for a left congenital diaphragmatic hernia. All questions concern that recorded ICU care.",
+        "Current update": "The referring team asks about the repair sequence. She remains intubated on conventional ventilation; the chest radiograph still shows bowel in the left hemithorax.",
+        "Exhibit": {
+          "kind": "keyValue",
+          "caption": "Constructed teaching record; fictional observations",
+          "items": [
+            {
+              "label": "Last 24 hours",
+              "value": "FiO2 0.30 with preductal saturation 93-95%; urine output 2 mL/kg/hour; lactate 1.5 mmol/L; blood pressure within the unit's normal range for gestational age without inotropes."
+            },
+            {
+              "label": "Echocardiography trend",
+              "value": "Estimated pulmonary artery systolic pressure fell from 75 to 45 mmHg. Simultaneous systemic systolic pressure is now 70 mmHg; ventricular function is preserved."
+            }
+          ]
+        },
+        "Task": "Which repair-sequencing plan is best supported by {patientName}'s current outside ICU record?",
+        "Options": [
+          "**KEY:** Plan repair while continuing the present ICU support",
+          "Continue stabilization before reconsidering the repair",
+          "Assess ECMO escalation before planning the repair"
+        ]
+      },
+      "explanation": "Persistent hernia and intubation do not themselves determine timing. Interpret the whole trend: perfusion and oxygenation have been sustained and estimated pulmonary pressure is now below systemic. The current CAHS guideline supports considering repair after physiological readiness is sustained, with the neonatal, surgical and anesthesia teams confirming the plan. This is not automatic operative clearance or a guarantee of safety; renewed instability would change the sequence.",
+      "lint": [
+        {
+          "id": "65d435209d192e62",
+          "rule": "unique-key-abbreviation",
+          "severity": "advisory",
+          "message": "An abbreviation occurs only in the key; check naming/style parity.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "ICU",
+              "start": 41,
+              "end": 44,
+              "choiceId": "choice.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2.repair"
+            }
+          ],
+          "metrics": {},
+          "occurrences": [
+            {
+              "caseId": "case.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness-salvage.v1",
+              "profileIds": [
+                "canonical",
+                "profile.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness-salvage.v1"
+              ],
+              "ranges": [
+                {
+                  "start": 41,
+                  "end": 44
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "skipped": [],
+  "probes": [
+    {
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1",
+      "issue": null,
+      "receipt": {
+        "operationId": "topic6.final.admit",
+        "commandType": "ADMIT_PATIENT",
+        "status": "applied",
+        "message": "Patient is approaching the clinic.",
+        "facilityTick": 0
+      },
+      "requiredSetting": "clinic",
+      "requiredCapabilityIds": [
+        "capability.pediatric_examination"
+      ],
+      "earliestFacilityStage": 4,
+      "clinicAdmissible": true,
+      "pediatric": true,
+      "actualPatientName": "Lucas Ellis",
+      "actualDemographics": {
+        "ageYears": 14,
+        "sexLabel": "Male"
+      },
+      "childStillId": "level3-roster-v2.030",
+      "pediatricFamilyId": "pediatric-family.encounter.encounter.topic6.final",
+      "parentName": "Sarah Ellis",
+      "expectedFamily": {
+        "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "family.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1",
+        "caseId": "case.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1",
+        "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.node-sample.v1",
+        "profileId": "profile.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1",
+        "childName": "Lucas Ellis",
+        "childStillId": "level3-roster-v2.030",
+        "prototypeDemographics": {
+          "ageYears": 14,
+          "sexLabel": "Male"
+        },
+        "parentName": "Sarah Ellis",
+        "parentRelationship": "mother",
+        "parentCount": 1,
+        "parentPlacement": "same_room_throughout",
+        "metadataSource": "tools/character-mapping/level3-roster-complete-v2/roster.json",
+        "profileValuesBasis": "editorial_art_contract_not_disease_probability",
+        "evidenceClaimIds": [
+          "claim.pediatric-neck-thoracic-gu.node-inadequate-fna",
+          "claim.pediatric-neck-thoracic-gu.progressive-node-assessment"
+        ]
+      },
+      "appAffinity": false,
+      "procedureConsultKind": null
+    },
+    {
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1",
+      "issue": null,
+      "receipt": {
+        "operationId": "topic6.final.admit",
+        "commandType": "ADMIT_PATIENT",
+        "status": "applied",
+        "message": "Patient is approaching the clinic.",
+        "facilityTick": 0
+      },
+      "requiredSetting": "clinic",
+      "requiredCapabilityIds": [
+        "capability.pediatric_examination"
+      ],
+      "earliestFacilityStage": 4,
+      "clinicAdmissible": true,
+      "pediatric": true,
+      "actualPatientName": "Grace Turner",
+      "actualDemographics": {
+        "ageYears": 11,
+        "sexLabel": "Female"
+      },
+      "childStillId": "level3-roster-v2.027",
+      "pediatricFamilyId": "pediatric-family.encounter.encounter.topic6.final",
+      "parentName": "James Turner",
+      "expectedFamily": {
+        "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "family.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1",
+        "caseId": "case.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1",
+        "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.v1",
+        "profileId": "profile.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1",
+        "childName": "Grace Turner",
+        "childStillId": "level3-roster-v2.027",
+        "prototypeDemographics": {
+          "ageYears": 11,
+          "sexLabel": "Female"
+        },
+        "parentName": "James Turner",
+        "parentRelationship": "father",
+        "parentCount": 1,
+        "parentPlacement": "same_room_throughout",
+        "metadataSource": "tools/character-mapping/level3-roster-complete-v2/roster.json",
+        "profileValuesBasis": "editorial_art_contract_not_disease_probability",
+        "evidenceClaimIds": [
+          "claim.pediatric-neck-thoracic-gu.mediastinal-anesthesia-risk",
+          "claim.pediatric-neck-thoracic-gu.mediastinal-peripheral-biopsy",
+          "claim.pediatric-neck-thoracic-gu.node-inadequate-fna"
+        ]
+      },
+      "appAffinity": false,
+      "procedureConsultKind": null
+    },
+    {
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+      "issue": null,
+      "receipt": {
+        "operationId": "topic6.final.admit",
+        "commandType": "ADMIT_PATIENT",
+        "status": "applied",
+        "message": "Patient is approaching the clinic.",
+        "facilityTick": 0
+      },
+      "requiredSetting": "clinic",
+      "requiredCapabilityIds": [
+        "capability.pediatric_examination"
+      ],
+      "earliestFacilityStage": 4,
+      "clinicAdmissible": true,
+      "pediatric": true,
+      "actualPatientName": "Noah Wells",
+      "actualDemographics": {
+        "ageYears": 5,
+        "sexLabel": "Male"
+      },
+      "childStillId": "level3-roster-v2.022",
+      "pediatricFamilyId": "pediatric-family.encounter.encounter.topic6.final",
+      "parentName": "Daniel Wells",
+      "expectedFamily": {
+        "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "family.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+        "caseId": "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+        "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+        "profileId": "profile.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+        "childName": "Noah Wells",
+        "childStillId": "level3-roster-v2.022",
+        "prototypeDemographics": {
+          "ageYears": 5,
+          "sexLabel": "Male"
+        },
+        "parentName": "Daniel Wells",
+        "parentRelationship": "father",
+        "parentCount": 1,
+        "parentPlacement": "same_room_throughout",
+        "metadataSource": "tools/character-mapping/level3-roster-complete-v2/roster.json",
+        "profileValuesBasis": "editorial_art_contract_not_disease_probability",
+        "evidenceClaimIds": [
+          "claim.pediatric-neck-thoracic-gu.proximal-meatus-nonpalpable-gonads",
+          "claim.pediatric-neck-thoracic-gu.xx-nonpalpable-adrenal-evaluation",
+          "claim.pediatric-neck-thoracic-gu.cah-past-infancy-initial-screen",
+          "claim.pediatric-neck-thoracic-gu.cah-borderline-confirmation"
+        ]
+      },
+      "appAffinity": false,
+      "procedureConsultKind": null
+    },
+    {
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness-salvage.v1",
+      "issue": null,
+      "receipt": {
+        "operationId": "topic6.final.admit",
+        "commandType": "ADMIT_PATIENT",
+        "status": "applied",
+        "message": "Patient is approaching the clinic.",
+        "facilityTick": 0
+      },
+      "requiredSetting": "clinic",
+      "requiredCapabilityIds": [
+        "capability.pediatric_examination"
+      ],
+      "earliestFacilityStage": 4,
+      "clinicAdmissible": true,
+      "pediatric": true,
+      "actualPatientName": "Isla Chen",
+      "actualDemographics": {
+        "ageYears": 6,
+        "sexLabel": "Female"
+      },
+      "childStillId": "level3-roster-v2.021",
+      "pediatricFamilyId": "pediatric-family.encounter.encounter.topic6.final",
+      "parentName": "Mei Chen",
+      "expectedFamily": {
+        "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "id": "family.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness-salvage.v1",
+        "caseId": "case.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness-salvage.v1",
+        "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2",
+        "profileId": "profile.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness-salvage.v1",
+        "childName": "Isla Chen",
+        "childStillId": "level3-roster-v2.021",
+        "prototypeDemographics": {
+          "ageYears": 6,
+          "sexLabel": "Female"
+        },
+        "parentName": "Mei Chen",
+        "parentRelationship": "mother",
+        "parentCount": 1,
+        "parentPlacement": "same_room_throughout",
+        "metadataSource": "tools/character-mapping/level3-roster-complete-v2/roster.json",
+        "profileValuesBasis": "editorial_art_contract_not_disease_probability",
+        "evidenceClaimIds": [
+          "claim.pediatric-neck-thoracic-gu.cdh-physiology",
+          "claim.pediatric-neck-thoracic-gu.cdh-stabilization-before-repair",
+          "claim.pediatric-neck-thoracic-gu.cdh-cahs-perfusion-readiness-2026",
+          "claim.pediatric-neck-thoracic-gu.cdh-cahs-oxygen-readiness-2026",
+          "claim.pediatric-neck-thoracic-gu.cdh-cahs-pressure-readiness-2026",
+          "claim.pediatric-neck-thoracic-gu.cdh-cahs-repair-support-2026",
+          "claim.pediatric-neck-thoracic-gu.cdh-cahs-ecmo-consideration-2026"
+        ]
+      },
+      "appAffinity": false,
+      "procedureConsultKind": null
+    }
+  ],
+  "counts": {
+    "before": {
+      "cases": 1338,
+      "nodes": 1533,
+      "registeredMeanings": 1035,
+      "scoredMeanings": 840,
+      "acceptedRows": 686,
+      "timingRows": 2836
+    },
+    "after": {
+      "cases": 1340,
+      "nodes": 1535,
+      "registeredMeanings": 1039,
+      "scoredMeanings": 844,
+      "acceptedRows": 690,
+      "timingRows": 2840
+    },
+    "requested": 4,
+    "acceptedNodes": 4,
+    "acceptedCases": 4,
+    "skippedNodes": 0,
+    "retiredCases": 2,
+    "retiredNodes": 2,
+    "newMeanings": 4,
+    "pendingOrderRecords": 0
+  },
+  "manifestId": "question-ship.2026-11-12.v15",
+  "hashes": {
+    "defaultBefore": "2c524904fafc7e915dab19256a191397e0a00f5a68bf0ebc9e2e37fe69394921",
+    "defaultAfter": "4eef72623a1de415f302d7d44819b40a4749b523d18c325102ad35b5d0c5d2e7",
+    "manifestBefore": "6e074c70648de65270be5f86610d55f0a3a1ab2212df453ac0e5adee1834c9ce",
+    "manifestAfter": "75c681e29d13d5dbe27fa5f5599244276f9e314b3e9ef1b95f0a91fa41a0ad91",
+    "catalogBefore": "3e0d1bb346abc1579e5c24400565c36c158d90304b60171b24b6a88f64b2ed40",
+    "catalogAfter": "3e0d1bb346abc1579e5c24400565c36c158d90304b60171b24b6a88f64b2ed40"
+  },
+  "replacements": [
+    {
+      "replaces": "case.pediatric-clinic.growing-firm-neck-node",
+      "with": "question.pediatric-neck-thoracic-gu.20261111.node-sample.v1"
+    },
+    {
+      "replaces": "case.pediatric-clinic.retractile-testis-remains-scrotal",
+      "with": "question.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2"
+    }
+  ],
+  "consolidations": [],
+  "stageAdjustments": [],
+  "eligibilityAdjustments": [],
+  "retirementCoverage": [
+    {
+      "legacyCaseId": "case.pediatric-clinic.growing-firm-neck-node",
+      "primaryTargetCaseId": "case.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1",
+      "allTargetCaseIds": [
+        "case.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1"
+      ],
+      "reason": "Declared source-audit replacement."
+    },
+    {
+      "legacyCaseId": "case.pediatric-clinic.retractile-testis-remains-scrotal",
+      "primaryTargetCaseId": "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+      "allTargetCaseIds": [
+        "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1"
+      ],
+      "reason": "Declared source-audit replacement."
+    }
+  ],
+  "duplicateContexts": [],
+  "retained": [
+    {
+      "caseId": "case.pediatric-clinic.growing-firm-neck-node",
+      "sha256": "c92eba9d6bc0c304952970f51c4a9574244d53127c0e35274bddef6a09c37367",
+      "nodes": [
+        {
+          "id": "node.pediatric-clinic.growing-firm-neck-node.1",
+          "questionVariantId": "question.pediatric-clinic.growing-firm-neck-node.v2",
+          "conceptId": "concept.pediatric-clinic.concerning-neck-node-referral"
+        }
+      ]
+    },
+    {
+      "caseId": "case.pediatric-clinic.retractile-testis-remains-scrotal",
+      "sha256": "615f4397f8666bf2248909ffc3c2156bdd532295bc001e6c7742fe97dfa0fd0e",
+      "nodes": [
+        {
+          "id": "node.pediatric-clinic.retractile-testis-remains-scrotal.1",
+          "questionVariantId": "question.pediatric-clinic.retractile-testis-remains-scrotal.v1",
+          "conceptId": "concept.pediatric-clinic.true-retractile-testis-surveillance"
+        }
+      ]
+    }
+  ],
+  "removedFromFreshScoredMeanings": [],
+  "sourceViews": [
+    {
+      "name": "topic-batch6-pediatric-neck-thoracic-gu",
+      "cases": 4,
+      "nodes": 4,
+      "sha256": "51c69bd360532acf227f708a1e3ed75427d80c2e0d12f64b6c7b512a8cb03867"
+    }
+  ],
+  "frozenPreservation": [
+    {
+      "topic": "pediatric-neck-thoracic-gu",
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1",
+      "rawCaseSha256": "85e8f9a7990c75623c8f0404945a4a89b27075cd13cad0e4c41a6a736eedcdf7",
+      "retainedCaseSha256": "85e8f9a7990c75623c8f0404945a4a89b27075cd13cad0e4c41a6a736eedcdf7",
+      "nodes": [
+        {
+          "nodeId": "node.pediatric-neck-thoracic-gu.20261111.node-sample",
+          "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.node-sample.v1",
+          "conceptId": "concept.pediatric-neck-thoracic-gu.inadequate-node-sample-escalation.v1",
+          "nodeSha256": "d97a9db1bd0cffff9be6c3996b0cf65ac7f8de5db8f67d516c4f00a5c9d7f8d5",
+          "questionSha256": "94ee9b63c563de2afe4a059bab6e6d527b4f924edd21bea3dcf3185d5769df11",
+          "reviewPath": "docs/research/question-topic-pediatric-neck-thoracic-gu-review-salvage-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "pediatric-neck-thoracic-gu",
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1",
+      "rawCaseSha256": "b316588fbed2436e00fe16c285d1d75e31df26f166fd828fce228486936ddae5",
+      "retainedCaseSha256": "bd680e03ea042e564c127678b0467d51ee13149f63cbeffd32572eca9467d721",
+      "nodes": [
+        {
+          "nodeId": "node.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy",
+          "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.v1",
+          "conceptId": "concept.pediatric-neck-thoracic-gu.mediastinal-peripheral-biopsy-route.v1",
+          "nodeSha256": "5ca23439b805b1c0082d8486587c12ae6690482b786dc18bb03efd708b195a67",
+          "questionSha256": "44d2c25a7211bd62c4ad873978614f6a175f9bb56414f864a94223356b2abb71",
+          "reviewPath": "docs/research/question-topic-pediatric-neck-thoracic-gu-review-salvage-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "pediatric-neck-thoracic-gu",
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+      "rawCaseSha256": "a49e762de3581c9ecb9fe5b94cf76e27747bfe3e50342d92620fee5746ec19db",
+      "retainedCaseSha256": "163ebf7a0c95d0737f576a0c2f8d96b1479a7c3dd78e4509652cc974eb21b40b",
+      "nodes": [
+        {
+          "nodeId": "node.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+          "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+          "conceptId": "concept.pediatric-neck-thoracic-gu.proximal-hypospadias-gonadal-workup.v2",
+          "nodeSha256": "a3ce3363c547bd628616269a7bb87ec5c257e344c9cba9fbbf33e762a8d07118",
+          "questionSha256": "3d26940603545eb9223b06fab256286f295fef4b58871930b47d3fcc904de64e",
+          "reviewPath": "docs/research/question-topic-pediatric-neck-thoracic-gu-review-salvage-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "pediatric-neck-thoracic-gu",
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness-salvage.v1",
+      "rawCaseSha256": "00390c84bbe70a132bff5facd7e612aec81836f5fbff9f91136db68ad32c18c1",
+      "retainedCaseSha256": "ba65719f1552473b6919896dd6314410f12179008e246f22fc44c07d58b8f2a6",
+      "nodes": [
+        {
+          "nodeId": "node.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2",
+          "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2",
+          "conceptId": "concept.pediatric-neck-thoracic-gu.cdh-physiologic-readiness.v1",
+          "nodeSha256": "46e5aa89112a265d0cf2017dbf27068926dd994d66ab671f21aabc3a4f94a82e",
+          "questionSha256": "154613bc903f12cc13f5f6c4ae0401731312f36e7731bfc20d4a86b52b2a3246",
+          "reviewPath": "docs/research/question-topic-pediatric-neck-thoracic-gu-review-salvage-20261111.json"
+        }
+      ]
+    }
+  ],
+  "presentationCorrections": {
+    "checkedOn": "2026-11-12",
+    "authority": "Manager batch6 acceptance and name-only correction rule",
+    "records": [
+      {
+        "id": "presentation-correction.topic-batch6.20261112.case.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1",
+        "caseId": "case.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1",
+        "literalName": "Grace Turner",
+        "correctionType": "presentation_only",
+        "reviewStatus": "needs_clinician_review",
+        "lastClinicianReview": null,
+        "beforeCaseSha256": "b316588fbed2436e00fe16c285d1d75e31df26f166fd828fce228486936ddae5",
+        "beforeQuestionSha256": {
+          "question.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.v1": "3f10a94b1da21d564168a38c1d6734ada4bed1275fb4d3f7244aa88770cb342b"
+        },
+        "fields": [
+          {
+            "target": "case",
+            "path": [
+              "decisionNodes",
+              0,
+              "currentUpdate"
+            ],
+            "before": "At a subsequent clinic chart-review visit, the founder and Grace's father review the outside children's hospital record. Grace is being managed there; no biopsy or anesthesia is performed in this clinic.",
+            "after": "At a subsequent clinic chart-review visit, the founder and {patientName}'s father review the outside children's hospital record. {patientName} is being managed there; no biopsy or anesthesia is performed in this clinic."
+          },
+          {
+            "target": "case",
+            "path": [
+              "decisionNodes",
+              0,
+              "exhibit",
+              "items",
+              0,
+              "value"
+            ],
+            "before": "Grace speaks comfortably seated but becomes breathless when supine. She remained calm during an awake needle procedure.",
+            "after": "{patientName} speaks comfortably seated but becomes breathless when supine. She remained calm during an awake needle procedure."
+          },
+          {
+            "target": "question.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.v1",
+            "path": [
+              "exhibit",
+              "items",
+              0,
+              "value"
+            ],
+            "before": "Grace speaks comfortably seated but becomes breathless when supine. She remained calm during an awake needle procedure.",
+            "after": "{patientName} speaks comfortably seated but becomes breathless when supine. She remained calm during an awake needle procedure."
+          }
+        ]
+      },
+      {
+        "id": "presentation-correction.topic-batch6.20261112.case.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+        "caseId": "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+        "literalName": "Noah Wells",
+        "correctionType": "presentation_only",
+        "reviewStatus": "needs_clinician_review",
+        "lastClinicianReview": null,
+        "beforeCaseSha256": "a49e762de3581c9ecb9fe5b94cf76e27747bfe3e50342d92620fee5746ec19db",
+        "beforeQuestionSha256": {
+          "question.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2": "3d26940603545eb9223b06fab256286f295fef4b58871930b47d3fcc904de64e"
+        },
+        "fields": [
+          {
+            "target": "case",
+            "path": [
+              "decisionNodes",
+              0,
+              "currentUpdate"
+            ],
+            "before": "Examination documents a proximal urethral opening and no palpable gonad on either side. Noah is comfortable, eating normally and has no vomiting or dehydration. Multidisciplinary endocrine/urologic assessment is underway.",
+            "after": "Examination documents a proximal urethral opening and no palpable gonad on either side. {patientName} is comfortable, eating normally and has no vomiting or dehydration. Multidisciplinary endocrine/urologic assessment is underway."
+          }
+        ]
+      },
+      {
+        "id": "presentation-correction.topic-batch6.20261112.case.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness-salvage.v1",
+        "caseId": "case.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness-salvage.v1",
+        "literalName": "Isla Chen",
+        "correctionType": "presentation_only",
+        "reviewStatus": "needs_clinician_review",
+        "lastClinicianReview": null,
+        "beforeCaseSha256": "00390c84bbe70a132bff5facd7e612aec81836f5fbff9f91136db68ad32c18c1",
+        "beforeQuestionSha256": {
+          "question.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2": "154613bc903f12cc13f5f6c4ae0401731312f36e7731bfc20d4a86b52b2a3246"
+        },
+        "fields": [
+          {
+            "target": "case",
+            "path": [
+              "presentation"
+            ],
+            "before": "{patientName}, a 6-year-old girl, attends clinic with her mother, Mei Chen, who remains in the room. The founder reviews outside neonatal ICU records from when Isla was a 4-day-old girl treated at the referring tertiary hospital for a left congenital diaphragmatic hernia. All questions concern that recorded ICU care.",
+            "after": "{patientName}, a 6-year-old girl, attends clinic with her mother, Mei Chen, who remains in the room. The founder reviews outside neonatal ICU records from when {patientName} was a 4-day-old girl treated at the referring tertiary hospital for a left congenital diaphragmatic hernia. All questions concern that recorded ICU care."
+          },
+          {
+            "target": "case",
+            "path": [
+              "approvedInstantiationProfiles",
+              0,
+              "presentation"
+            ],
+            "before": "{patientName}, a 6-year-old girl, attends clinic with her mother, Mei Chen, who remains in the room. The founder reviews outside neonatal ICU records from when Isla was a 4-day-old girl treated at the referring tertiary hospital for a left congenital diaphragmatic hernia. All questions concern that recorded ICU care.",
+            "after": "{patientName}, a 6-year-old girl, attends clinic with her mother, Mei Chen, who remains in the room. The founder reviews outside neonatal ICU records from when {patientName} was a 4-day-old girl treated at the referring tertiary hospital for a left congenital diaphragmatic hernia. All questions concern that recorded ICU care."
+          }
+        ]
+      }
+    ]
+  },
+  "timingOrderAdjustments": [],
+  "noTestClassificationAdjustments": [],
+  "sourceByteFreeze": {
+    "path": "docs/research/question-topic-acceptance-batch6-source-freeze-20261112.json",
+    "sha256": "6f48f0ecf982b10974a39f777bd082eef6833786e968c8ac97e74748dc952ec1",
+    "exactFields": 4,
+    "total": 4,
+    "objectKeyOrderNormalizations": 0
+  },
+  "claims": [
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-neck-thoracic-gu.node-inadequate-fna",
+      "statement": "An indeterminate needle sample does not settle persistent concerning pediatric lymphadenopathy; representative surgical biopsy may be needed.",
+      "sourceIds": [
+        "source.pediatric-neck-thoracic-gu.ipso-2022",
+        "source.pediatric-neck-thoracic-gu.rch-cervical-nodes-2021"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "Surgical biopsy is supported when the clinical course remains concerning, not for every reactive node.",
+      "applicablePopulation": "Children or adolescents in the explicitly defined clinical scenario",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-neck-thoracic-gu.progressive-node-assessment",
+      "statement": "A growing firm or supraclavicular cervical node merits pediatric specialist assessment even if another node has reassuring findings.",
+      "sourceIds": [
+        "source.pediatric-neck-thoracic-gu.rch-cervical-nodes-2021",
+        "source.pediatric-neck-thoracic-gu.ipso-2022"
+      ],
+      "evidenceCategory": "disposition",
+      "certainty": "moderate",
+      "limitation": "A red flag is not a diagnosis of malignancy.",
+      "applicablePopulation": "Children or adolescents in the explicitly defined clinical scenario",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-neck-thoracic-gu.mediastinal-anesthesia-risk",
+      "statement": "A mediastinal mass can cause airway or cardiovascular compromise during general anesthesia or heavy sedation, requiring risk-aware biopsy planning.",
+      "sourceIds": [
+        "source.pediatric-neck-thoracic-gu.nci-child-nhl-pdq",
+        "source.pediatric-neck-thoracic-gu.ipso-2022"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "moderate",
+      "limitation": null,
+      "applicablePopulation": "Children or adolescents in the explicitly defined clinical scenario",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-neck-thoracic-gu.mediastinal-peripheral-biopsy",
+      "statement": "A peripheral node can provide tissue under local anesthesia in an appropriately cooperative child with a mediastinal mass, avoiding a more hazardous intrathoracic approach.",
+      "sourceIds": [
+        "source.pediatric-neck-thoracic-gu.nci-child-nhl-pdq",
+        "source.pediatric-neck-thoracic-gu.ipso-2022"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Requires specialist planning, adequate tissue and patient cooperation; not a guarantee of safety or a rule against all general anesthesia.",
+      "applicablePopulation": "Children or adolescents in the explicitly defined clinical scenario",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-neck-thoracic-gu.proximal-meatus-nonpalpable-gonads",
+      "statement": "Proximal hypospadias with nonpalpable gonads warrants chromosomal and endocrine assessment for a difference of sex development.",
+      "sourceIds": [
+        "source.pediatric-neck-thoracic-gu.cua-puc-2017"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "One dated society guideline; does not determine chromosomes from appearance or prescribe hormone therapy.",
+      "applicablePopulation": "Children or adolescents in the explicitly defined clinical scenario",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-neck-thoracic-gu.xx-nonpalpable-adrenal-evaluation",
+      "statement": "A 46,XX result with bilateral nonpalpable gonads requires evaluation for an adrenal cause of genital virilization rather than assuming unseen gonads are testes.",
+      "sourceIds": [
+        "source.pediatric-neck-thoracic-gu.cua-puc-2017"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "CUA-PUC directly supports 17-hydroxyprogesterone testing in this setting. The proximal-meatus presentation also requires full multidisciplinary DSD care; chromosomes do not determine gender identity.",
+      "applicablePopulation": "Bilateral nonpalpable gonads with a 46,XX result",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-neck-thoracic-gu.cah-past-infancy-initial-screen",
+      "statement": "For symptomatic patients past infancy, baseline early-morning serum 17-hydroxyprogesterone by liquid chromatography-tandem mass spectrometry is the initial biochemical screen for 21-hydroxylase-deficient CAH.",
+      "sourceIds": [
+        "source.pediatric-neck-thoracic-gu.endocrine-cah-2018"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "Direct recommendation 3.2. CUA-PUC independently supports testing in the gonadal context. No diagnostic cutoff or drug regimen authored.",
+      "applicablePopulation": "Symptomatic individuals past infancy",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-neck-thoracic-gu.cah-borderline-confirmation",
+      "statement": "A borderline 17-hydroxyprogesterone result requires specialist assessment with a stimulated adrenal steroid profile rather than treating the screen as a complete diagnosis.",
+      "sourceIds": [
+        "source.pediatric-neck-thoracic-gu.endocrine-cah-2018"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "Direct recommendation 3.3. No stimulation dose, diagnostic concentration or treatment instruction.",
+      "applicablePopulation": "Individuals with borderline CAH screening results",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-neck-thoracic-gu.cdh-physiology",
+      "statement": "Pulmonary hypoplasia, pulmonary hypertension and cardiac dysfunction can drive the early instability of congenital diaphragmatic hernia.",
+      "sourceIds": [
+        "source.pediatric-neck-thoracic-gu.chandrasekharan-cdh-2017"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "moderate",
+      "limitation": "Older licensed review; supports qualitative physiology, not modern thresholds.",
+      "applicablePopulation": "Children or adolescents in the explicitly defined clinical scenario",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-neck-thoracic-gu.cdh-stabilization-before-repair",
+      "statement": "Initial cardiorespiratory stabilization precedes congenital diaphragmatic hernia repair.",
+      "sourceIds": [
+        "source.pediatric-neck-thoracic-gu.chandrasekharan-cdh-2017"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Only one directly verified source for the broad timing sequence. Current 2023 guideline access failed. Modern readiness criteria, ECLS policy and ventilation/drug targets remain unkeyed.",
+      "applicablePopulation": "Children or adolescents in the explicitly defined clinical scenario",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-neck-thoracic-gu.cdh-cahs-perfusion-readiness-2026",
+      "statement": "May 2026 CAHS CDH guidance considers repair after a day of adequate perfusion, including urine output above 1 mL/kg/hour, lactate below 3 mmol/L and age-appropriate blood pressure with no or minimal inotropic support.",
+      "sourceIds": [
+        "source.pediatric-neck-thoracic-gu.cahs-cdh-2026"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Local protocol, not universal clearance or an automatic timer. Respiratory and echocardiographic criteria also matter.",
+      "applicablePopulation": "Neonates with CDH in tertiary neonatal surgical care",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-neck-thoracic-gu.cdh-cahs-oxygen-readiness-2026",
+      "statement": "May 2026 CAHS readiness guidance uses preductal saturation in its stated 85-95 percent range on reduced inspired oxygen, with FiO2 below its published 0.4-0.5 range.",
+      "sourceIds": [
+        "source.pediatric-neck-thoracic-gu.cahs-cdh-2026"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Published FiO2 wording spans 0.4-0.5. Fictional FiO2 0.30 lies below both bounds; no ambiguous boundary is scored. Older search snippets excluded.",
+      "applicablePopulation": "Neonates with CDH in tertiary neonatal surgical care",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-neck-thoracic-gu.cdh-cahs-pressure-readiness-2026",
+      "statement": "Improvement of estimated pulmonary artery pressure to below systemic pressure is part of the May 2026 CAHS CDH readiness assessment.",
+      "sourceIds": [
+        "source.pediatric-neck-thoracic-gu.cahs-cdh-2026"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Sub-systemic does not require normal pulmonary pressure. Perfusion, respiratory support and multidisciplinary judgment remain necessary.",
+      "applicablePopulation": "Neonates with CDH in tertiary neonatal surgical care",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-neck-thoracic-gu.cdh-cahs-repair-support-2026",
+      "statement": "CDH repair can proceed with continuing ventilatory support after an appropriate physiological assessment; tracheal extubation is not a universal prerequisite.",
+      "sourceIds": [
+        "source.pediatric-neck-thoracic-gu.cahs-cdh-2026",
+        "source.pediatric-neck-thoracic-gu.chandrasekharan-cdh-2017"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Current local guidance plus an older independent review; no preferred approach or fixed day of life inferred.",
+      "applicablePopulation": "Neonates with CDH in tertiary neonatal surgical care",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-neck-thoracic-gu.cdh-cahs-ecmo-consideration-2026",
+      "statement": "Instability despite maximal medical support in CDH can prompt multidisciplinary assessment for ECMO before determining the repair sequence.",
+      "sourceIds": [
+        "source.pediatric-neck-thoracic-gu.cahs-cdh-2026"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Individual suitability assessment required. No ECMO eligibility cutoffs, outcomes or operate-on-ECMO rule authored.",
+      "applicablePopulation": "Selected critically ill neonates with CDH",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    }
+  ],
+  "sources": [
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.pediatric-neck-thoracic-gu.ipso-2022",
+      "title": "International Society of Paediatric Surgical Oncology Surgical Practice Guidelines",
+      "completeCitation": "Abib SCV, Chui CH, Cox S, et al. International Society of Paediatric Surgical Oncology (IPSO) Surgical Practice Guidelines. Ecancermedicalscience. 2022;16:1356. doi:10.3332/ecancer.2022.1356. Relevant chapter: Elgendy A, Abdelhafeez H, Abib S. Management of lymph node enlargement in children.",
+      "organizationOrJournal": "Ecancermedicalscience / IPSO",
+      "authors": [
+        "Simone de Campos Vieira Abib",
+        "Chan Hon Chui",
+        "Sharon Cox",
+        "Abdelhafeez H. Abdelhafeez",
+        "Ahmed Elgendy",
+        "IPSO guideline contributors (et al.)"
+      ],
+      "publicationYear": 2022,
+      "doi": "10.3332/ecancer.2022.1356",
+      "pmid": null,
+      "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9023308/",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Creative Commons Attribution 4.0",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Underlying facts independently synthesized with attribution. No prose, excerpts, tables, figures, algorithms or patient images reproduced. No commercial or unrestricted reuse permission is inferred.",
+      "authorityAssessment": "Specialist society consensus, not a universal mandate to biopsy every palpable childhood node. Relevant lymph-node and mediastinal-biopsy sections checked.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.pediatric-neck-thoracic-gu.improving-nodes-observation",
+        "claim.pediatric-neck-thoracic-gu.progressive-node-assessment",
+        "claim.pediatric-neck-thoracic-gu.node-inadequate-fna",
+        "claim.pediatric-neck-thoracic-gu.mediastinal-anesthesia-risk",
+        "claim.pediatric-neck-thoracic-gu.mediastinal-peripheral-biopsy"
+      ],
+      "accessMethod": "permitted_public_targeted_read",
+      "rightsCheckedOn": "2026-11-11",
+      "termsFinding": "Primary page and available rights statement checked for this targeted factual use; no source corpus or model training. See exclusions for inaccessible or restricted routes.",
+      "termsUrl": null,
+      "medicalAuthority": "Specialist society consensus, not a universal mandate to biopsy every palpable childhood node. Relevant lymph-node and mediastinal-biopsy sections checked.",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.pediatric-neck-thoracic-gu.rch-cervical-nodes-2021",
+      "title": "Cervical lymphadenopathy",
+      "completeCitation": "Royal Children's Hospital Melbourne, Paediatric Improvement Collaborative. Clinical Practice Guideline: Cervical lymphadenopathy. Updated April 2021. Accessed 11 November 2026.",
+      "organizationOrJournal": "Royal Children's Hospital Melbourne / Paediatric Improvement Collaborative",
+      "authors": [
+        "RCH Clinical Practice Guidelines team"
+      ],
+      "publicationYear": 2021,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.rch.org.au/clinicalguide/guideline_index/cervical_lymphadenopathy/",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "government_guidance",
+      "licenseLabel": "Copyright; targeted factual verification only",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Underlying facts independently synthesized with attribution. No prose, excerpts, tables, figures, algorithms or patient images reproduced. No commercial or unrestricted reuse permission is inferred.",
+      "authorityAssessment": "Government pediatric clinical guidance. Supports phenotype-based observation, infection assessment and biopsy/drainage boundaries; antibiotic regimens are local and are not imported.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.pediatric-neck-thoracic-gu.improving-nodes-observation",
+        "claim.pediatric-neck-thoracic-gu.progressive-node-assessment",
+        "claim.pediatric-neck-thoracic-gu.node-inadequate-fna",
+        "claim.pediatric-neck-thoracic-gu.bacterial-node-abscess-drainage",
+        "claim.pediatric-neck-thoracic-gu.ntm-node-pattern",
+        "claim.pediatric-neck-thoracic-gu.ntm-excision-drainage"
+      ],
+      "accessMethod": "permitted_public_targeted_read",
+      "rightsCheckedOn": "2026-11-11",
+      "termsFinding": "Primary page and available rights statement checked for this targeted factual use; no source corpus or model training. See exclusions for inaccessible or restricted routes.",
+      "termsUrl": null,
+      "medicalAuthority": "Government pediatric clinical guidance. Supports phenotype-based observation, infection assessment and biopsy/drainage boundaries; antibiotic regimens are local and are not imported.",
+      "licenseUrl": null
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.pediatric-neck-thoracic-gu.nci-child-nhl-pdq",
+      "title": "Childhood Non-Hodgkin Lymphoma Treatment (PDQ), health professional version",
+      "completeCitation": "PDQ Pediatric Treatment Editorial Board. Childhood Non-Hodgkin Lymphoma Treatment (PDQ), Health Professional Version. Bethesda, MD: National Cancer Institute. Continuously maintained summary; accessed 11 November 2026.",
+      "organizationOrJournal": "National Cancer Institute",
+      "authors": [
+        "PDQ Pediatric Treatment Editorial Board"
+      ],
+      "publicationYear": null,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.cancer.gov/types/lymphoma/hp/child-nhl-treatment-pdq",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "government_guidance",
+      "licenseLabel": "NCI information reuse policy; conditions and third-party exclusions apply",
+      "reuseStatus": "public_domain_conditions_apply",
+      "reuseNotes": "Underlying facts independently synthesized with attribution. No prose, excerpts, tables, figures, algorithms or patient images reproduced. No commercial or unrestricted reuse permission is inferred.",
+      "authorityAssessment": "Federal peer-reviewed evidence summary. Targeted mediastinal-mass diagnostic safety only; no lymphoma chemotherapy or unsupported cancer diagnosis.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.pediatric-neck-thoracic-gu.mediastinal-anesthesia-risk",
+        "claim.pediatric-neck-thoracic-gu.mediastinal-peripheral-biopsy"
+      ],
+      "accessMethod": "permitted_public_targeted_read",
+      "rightsCheckedOn": "2026-11-11",
+      "termsFinding": "Primary page and available rights statement checked for this targeted factual use; no source corpus or model training. See exclusions for inaccessible or restricted routes.",
+      "termsUrl": "https://www.cancer.gov/policies/copyright-reuse",
+      "medicalAuthority": "Federal peer-reviewed evidence summary. Targeted mediastinal-mass diagnostic safety only; no lymphoma chemotherapy or unsupported cancer diagnosis.",
+      "licenseUrl": null
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.pediatric-neck-thoracic-gu.cua-puc-2017",
+      "title": "CUA-PUC guideline for cryptorchidism",
+      "completeCitation": "Braga LH, Lorenzo AJ, Romao RLP. Canadian Urological Association-Pediatric Urologists of Canada (CUA-PUC) guideline for the diagnosis, management, and followup of cryptorchidism. Can Urol Assoc J. 2017;11(7):E251-E260. doi:10.5489/cuaj.4585.",
+      "organizationOrJournal": "Canadian Urological Association Journal",
+      "authors": [
+        "Luis H. Braga",
+        "Armando J. Lorenzo",
+        "Rodrigo L. P. Romao"
+      ],
+      "publicationYear": 2017,
+      "doi": "10.5489/cuaj.4585",
+      "pmid": null,
+      "officialUrl": "https://cuaj.ca/index.php/journal/article/view/4585",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyright; targeted factual verification only",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Underlying facts independently synthesized with attribution. No prose, excerpts, tables, figures, algorithms or patient images reproduced. No commercial or unrestricted reuse permission is inferred.",
+      "authorityAssessment": "Evidence-graded society guideline, dated 2017. Specific examination, imaging, exploration and DSD recommendations verified in publisher PDF. Not described as a 2026 update.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.pediatric-neck-thoracic-gu.maintained-scrotal-position",
+        "claim.pediatric-neck-thoracic-gu.retractile-surveillance",
+        "claim.pediatric-neck-thoracic-gu.acquired-ascent",
+        "claim.pediatric-neck-thoracic-gu.testis-exam-imaging",
+        "claim.pediatric-neck-thoracic-gu.nonpalpable-exploration",
+        "claim.pediatric-neck-thoracic-gu.vas-vessels-enter-ring",
+        "claim.pediatric-neck-thoracic-gu.proximal-meatus-nonpalpable-gonads",
+        "claim.pediatric-neck-thoracic-gu.xx-nonpalpable-adrenal-evaluation"
+      ],
+      "accessMethod": "permitted_public_targeted_read",
+      "rightsCheckedOn": "2026-11-11",
+      "termsFinding": "Primary page and available rights statement checked for this targeted factual use; no source corpus or model training. See exclusions for inaccessible or restricted routes.",
+      "termsUrl": null,
+      "medicalAuthority": "Evidence-graded society guideline, dated 2017. Specific examination, imaging, exploration and DSD recommendations verified in publisher PDF. Not described as a 2026 update.",
+      "licenseUrl": null
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.pediatric-neck-thoracic-gu.endocrine-cah-2018",
+      "title": "Endocrine Society CAH guideline: diagnostic recommendations",
+      "completeCitation": "Speiser PW, Arlt W, Auchus RJ, Baskin LS, Conway GS, Merke DP, Meyer-Bahlburg HFL, Miller WL, Murad MH, Oberfield SE, White PC. Congenital Adrenal Hyperplasia Due to Steroid 21-Hydroxylase Deficiency: An Endocrine Society Clinical Practice Guideline. 2018. doi:10.1210/jc.2018-01865. Official Endocrine Society guideline resource, 19 September 2018, recommendations 3.2-3.4.",
+      "organizationOrJournal": "Endocrine Society; The Journal of Clinical Endocrinology & Metabolism",
+      "authors": [
+        "Phyllis W. Speiser",
+        "Wiebke Arlt",
+        "Richard J. Auchus",
+        "Laurence S. Baskin",
+        "Gerard S. Conway",
+        "Deborah P. Merke",
+        "Heino F. L. Meyer-Bahlburg",
+        "Walter L. Miller",
+        "M. Hassan Murad",
+        "Sharon E. Oberfield",
+        "Perrin C. White"
+      ],
+      "publicationYear": 2018,
+      "doi": "10.1210/jc.2018-01865",
+      "pmid": null,
+      "officialUrl": "https://www.endocrine.org/clinical-practice-guidelines/congenital-adrenal-hyperplasia-guideline-resources",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyright; targeted factual verification only",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Underlying facts independently synthesized with attribution. No source prose, excerpts, tables, algorithms, figures or illustrations stored or adapted. No open license inferred.",
+      "authorityAssessment": "Evidence-graded society recommendations directly visible on the official resource page. Dated 2018, not described as a 2026 update. Initial diagnostic screening past infancy and follow-up of borderline results verified; paired with CUA-PUC for the gonadal context.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.pediatric-neck-thoracic-gu.cah-past-infancy-initial-screen",
+        "claim.pediatric-neck-thoracic-gu.cah-borderline-confirmation"
+      ],
+      "accessMethod": "permitted_public_targeted_read",
+      "rightsCheckedOn": "2026-11-11",
+      "termsUrl": null,
+      "licenseUrl": null,
+      "medicalAuthority": "Evidence-graded society guideline, 2018; targeted verification of recommendations 3.2-3.3.",
+      "termsFinding": "Official society resource and visible recommendations inspected for targeted factual verification. Copyright retained; no text reproduced or open-license inference. The guessed /terms-of-use route was inaccessible and linked OUP full-article route failed. No AI-specific prohibition appeared in the accessed resource; inaccessible content and snippets were not evidence."
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.pediatric-neck-thoracic-gu.chandrasekharan-cdh-2017",
+      "title": "Congenital Diaphragmatic hernia ? a review",
+      "completeCitation": "Chandrasekharan PK, Rawat M, Madappa R, Rothstein DH, Lakshminrusimha S. Congenital Diaphragmatic hernia ? a review. Matern Health Neonatol Perinatol. 2017;3:6. doi:10.1186/s40748-017-0045-1.",
+      "organizationOrJournal": "Maternal Health, Neonatology and Perinatology",
+      "authors": [
+        "Praveen Kumar Chandrasekharan",
+        "Munmun Rawat",
+        "Rajeshwari Madappa",
+        "David H. Rothstein",
+        "Satyan Lakshminrusimha"
+      ],
+      "publicationYear": 2017,
+      "doi": "10.1186/s40748-017-0045-1",
+      "pmid": null,
+      "officialUrl": "https://link.springer.com/article/10.1186/s40748-017-0045-1",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "narrative_review",
+      "licenseLabel": "Creative Commons Attribution 4.0; separately credited images excluded",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Underlying facts independently synthesized with attribution. No prose, excerpts, tables, figures, algorithms or patient images reproduced. No commercial or unrestricted reuse permission is inferred.",
+      "authorityAssessment": "Older review supporting broad stabilization-before-repair sequence. Not used for modern ECLS thresholds, ventilation targets, drug rules or exact readiness cutoffs.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.pediatric-neck-thoracic-gu.cdh-physiology",
+        "claim.pediatric-neck-thoracic-gu.cdh-stabilization-before-repair",
+        "claim.pediatric-neck-thoracic-gu.cdh-cahs-repair-support-2026"
+      ],
+      "accessMethod": "permitted_public_targeted_read",
+      "rightsCheckedOn": "2026-11-11",
+      "termsFinding": "Primary page and available rights statement checked for this targeted factual use; no source corpus or model training. See exclusions for inaccessible or restricted routes.",
+      "termsUrl": null,
+      "medicalAuthority": "Older review supporting broad stabilization-before-repair sequence. Not used for modern ECLS thresholds, ventilation targets, drug rules or exact readiness cutoffs.",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.pediatric-neck-thoracic-gu.cahs-cdh-2026",
+      "title": "CAHS neonatal CDH guideline, May 2026",
+      "completeCitation": "Child and Adolescent Health Service, Neonatology. Congenital Diaphragmatic Hernia (CDH). Government of Western Australia. First issued June 2006; last reviewed May 2026; approved 26 May 2026; next review May 2029. Surgical Considerations, pp. 9-10. Official guideline URL.",
+      "organizationOrJournal": "Child and Adolescent Health Service, Government of Western Australia",
+      "authors": [
+        "Child and Adolescent Health Service Neonatology; Neonatology Coordinating Group"
+      ],
+      "publicationYear": 2026,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.cahs.health.wa.gov.au/-/media/HSPs/CAHS/Documents/Health-Professionals/Neonatology-guidelines/Congenital-Diaphragmatic-Hernia-CDH.pdf",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "government_guidance",
+      "licenseLabel": "Copyright; targeted factual verification only",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Underlying facts independently synthesized with attribution. No source prose, excerpts, tables, algorithms, figures or illustrations stored or adapted. No open license inferred.",
+      "authorityAssessment": "Current local government neonatal guideline, last reviewed May 2026. Its readiness criteria and multidisciplinary judgment were directly verified in the current 15-page PDF. Not a universal operative deadline; older 13-page search snippets differ.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.pediatric-neck-thoracic-gu.cdh-cahs-perfusion-readiness-2026",
+        "claim.pediatric-neck-thoracic-gu.cdh-cahs-oxygen-readiness-2026",
+        "claim.pediatric-neck-thoracic-gu.cdh-cahs-pressure-readiness-2026",
+        "claim.pediatric-neck-thoracic-gu.cdh-cahs-repair-support-2026",
+        "claim.pediatric-neck-thoracic-gu.cdh-cahs-ecmo-consideration-2026"
+      ],
+      "accessMethod": "permitted_public_targeted_read",
+      "rightsCheckedOn": "2026-11-11",
+      "termsUrl": null,
+      "licenseUrl": null,
+      "medicalAuthority": "Current local government neonatal guideline, May 2026. Local protocol applicability requires clinical review.",
+      "termsFinding": "Public government PDF and visible notices inspected; no AI-specific prohibition encountered in the accessed document. No reuse license inferred. Guessed Global copyright/terms/disclaimer routes were inaccessible. Restricted to short original factual synthesis under repository permission for government guidance; no text reproduction or corpus ingestion."
+    }
+  ],
+  "pendingRuntimeOrders": [],
+  "outsideRecordTestingChoices": [
+    {
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1",
+      "nodeId": "node.pediatric-neck-thoracic-gu.20261111.node-sample",
+      "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.node-sample.v1",
+      "choiceId": "choice.pediatric-neck-thoracic-gu.20261111.node-sample.excision",
+      "choiceLabel": "Excisional biopsy of the cervical node",
+      "proposedProfileId": "timing.test.biopsy",
+      "originalProposal": {
+        "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v1",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "caseId": "case.pediatric-neck-thoracic-gu.20261111.node-sample",
+        "nodeId": "node.pediatric-neck-thoracic-gu.20261111.node-sample",
+        "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.node-sample.v1",
+        "answerChoiceId": "choice.pediatric-neck-thoracic-gu.20261111.node-sample.excision",
+        "answerChoiceLabel": "Excisional biopsy of the cervical node",
+        "timingProfileId": "timing.test.biopsy",
+        "execution": "planning_only_no_service_request",
+        "resultGateAfter": null,
+        "registryChangeOwner": "manager",
+        "legacyIdentityPolicy": "append exact new identities; retain all existing timing/order records"
+      },
+      "activeClassification": "no_test",
+      "runtimeWaitBindingRequired": false
+    },
+    {
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1",
+      "nodeId": "node.pediatric-neck-thoracic-gu.20261111.node-sample",
+      "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.node-sample.v1",
+      "choiceId": "choice.pediatric-neck-thoracic-gu.20261111.node-sample.fna",
+      "choiceLabel": "Repeat fine-needle aspiration of the cervical node",
+      "proposedProfileId": "timing.test.biopsy",
+      "originalProposal": {
+        "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v1",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "caseId": "case.pediatric-neck-thoracic-gu.20261111.node-sample",
+        "nodeId": "node.pediatric-neck-thoracic-gu.20261111.node-sample",
+        "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.node-sample.v1",
+        "answerChoiceId": "choice.pediatric-neck-thoracic-gu.20261111.node-sample.fna",
+        "answerChoiceLabel": "Repeat fine-needle aspiration of the cervical node",
+        "timingProfileId": "timing.test.biopsy",
+        "execution": "planning_only_no_service_request",
+        "resultGateAfter": null,
+        "registryChangeOwner": "manager",
+        "legacyIdentityPolicy": "append exact new identities; retain all existing timing/order records"
+      },
+      "activeClassification": "no_test",
+      "runtimeWaitBindingRequired": false
+    },
+    {
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1",
+      "nodeId": "node.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy",
+      "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.v1",
+      "choiceId": "choice.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.peripheral",
+      "choiceLabel": "Cervical-node excision with local anesthesia",
+      "proposedProfileId": "timing.test.biopsy",
+      "originalProposal": {
+        "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v1",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "caseId": "case.pediatric-neck-thoracic-gu.20261111.neck-to-mediastinum",
+        "nodeId": "node.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy",
+        "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.v1",
+        "answerChoiceId": "choice.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.peripheral",
+        "answerChoiceLabel": "Cervical-node excision with local anesthesia",
+        "timingProfileId": "timing.test.biopsy",
+        "execution": "planning_only_no_service_request",
+        "resultGateAfter": null,
+        "registryChangeOwner": "manager",
+        "legacyIdentityPolicy": "append exact new identities; retain all existing timing/order records"
+      },
+      "activeClassification": "no_test",
+      "runtimeWaitBindingRequired": false
+    },
+    {
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1",
+      "nodeId": "node.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy",
+      "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.v1",
+      "choiceId": "choice.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.thoracoscopy",
+      "choiceLabel": "Mediastinal thoracoscopy with general anesthesia",
+      "proposedProfileId": "timing.test.biopsy",
+      "originalProposal": {
+        "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v1",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "caseId": "case.pediatric-neck-thoracic-gu.20261111.neck-to-mediastinum",
+        "nodeId": "node.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy",
+        "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.v1",
+        "answerChoiceId": "choice.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.thoracoscopy",
+        "answerChoiceLabel": "Mediastinal thoracoscopy with general anesthesia",
+        "timingProfileId": "timing.test.biopsy",
+        "execution": "planning_only_no_service_request",
+        "resultGateAfter": null,
+        "registryChangeOwner": "manager",
+        "legacyIdentityPolicy": "append exact new identities; retain all existing timing/order records"
+      },
+      "activeClassification": "no_test",
+      "runtimeWaitBindingRequired": false
+    },
+    {
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1",
+      "nodeId": "node.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy",
+      "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.v1",
+      "choiceId": "choice.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.core",
+      "choiceLabel": "Mediastinal core biopsy with deep sedation",
+      "proposedProfileId": "timing.test.biopsy",
+      "originalProposal": {
+        "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v1",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "caseId": "case.pediatric-neck-thoracic-gu.20261111.neck-to-mediastinum",
+        "nodeId": "node.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy",
+        "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.v1",
+        "answerChoiceId": "choice.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.core",
+        "answerChoiceLabel": "Mediastinal core biopsy with deep sedation",
+        "timingProfileId": "timing.test.biopsy",
+        "execution": "planning_only_no_service_request",
+        "resultGateAfter": null,
+        "registryChangeOwner": "manager",
+        "legacyIdentityPolicy": "append exact new identities; retain all existing timing/order records"
+      },
+      "activeClassification": "no_test",
+      "runtimeWaitBindingRequired": false
+    },
+    {
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+      "nodeId": "node.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+      "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+      "choiceId": "choice.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2.17ohp",
+      "choiceLabel": "Baseline serum 17-hydroxyprogesterone",
+      "proposedProfileId": "timing.test.advanced_diagnostic",
+      "originalProposal": {
+        "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "caseId": "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+        "nodeId": "node.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+        "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+        "answerChoiceId": "choice.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2.17ohp",
+        "answerChoiceLabel": "Baseline serum 17-hydroxyprogesterone",
+        "timingProfileId": "timing.test.advanced_diagnostic",
+        "execution": "planning_only_no_service_request",
+        "resultGateAfter": null,
+        "registryChangeOwner": "manager",
+        "legacyIdentityPolicy": "append exact new identities; retain all existing timing/order records"
+      },
+      "activeClassification": "no_test",
+      "runtimeWaitBindingRequired": false
+    },
+    {
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+      "nodeId": "node.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+      "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+      "choiceId": "choice.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2.amh",
+      "choiceLabel": "Baseline serum anti-Mullerian hormone",
+      "proposedProfileId": "timing.test.advanced_diagnostic",
+      "originalProposal": {
+        "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "caseId": "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+        "nodeId": "node.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+        "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+        "answerChoiceId": "choice.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2.amh",
+        "answerChoiceLabel": "Baseline serum anti-Mullerian hormone",
+        "timingProfileId": "timing.test.advanced_diagnostic",
+        "execution": "planning_only_no_service_request",
+        "resultGateAfter": null,
+        "registryChangeOwner": "manager",
+        "legacyIdentityPolicy": "append exact new identities; retain all existing timing/order records"
+      },
+      "activeClassification": "no_test",
+      "runtimeWaitBindingRequired": false
+    },
+    {
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+      "nodeId": "node.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+      "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+      "choiceId": "choice.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2.stimulated",
+      "choiceLabel": "Cosyntropin-stimulated adrenal steroid profile",
+      "proposedProfileId": "timing.test.combined_diagnostic",
+      "originalProposal": {
+        "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+        "reviewStatus": "needs_clinician_review",
+        "aiAssistedDrafting": true,
+        "lastClinicianReview": null,
+        "caseId": "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+        "nodeId": "node.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+        "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+        "answerChoiceId": "choice.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2.stimulated",
+        "answerChoiceLabel": "Cosyntropin-stimulated adrenal steroid profile",
+        "timingProfileId": "timing.test.combined_diagnostic",
+        "execution": "planning_only_no_service_request",
+        "resultGateAfter": null,
+        "registryChangeOwner": "manager",
+        "legacyIdentityPolicy": "append exact new identities; retain all existing timing/order records"
+      },
+      "activeClassification": "no_test",
+      "runtimeWaitBindingRequired": false
+    }
+  ],
+  "familyContexts": [
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "family.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1",
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1",
+      "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.node-sample.v1",
+      "profileId": "profile.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1",
+      "childName": "Lucas Ellis",
+      "childStillId": "level3-roster-v2.030",
+      "prototypeDemographics": {
+        "ageYears": 14,
+        "sexLabel": "Male"
+      },
+      "parentName": "Sarah Ellis",
+      "parentRelationship": "mother",
+      "parentCount": 1,
+      "parentPlacement": "same_room_throughout",
+      "metadataSource": "tools/character-mapping/level3-roster-complete-v2/roster.json",
+      "profileValuesBasis": "editorial_art_contract_not_disease_probability",
+      "evidenceClaimIds": [
+        "claim.pediatric-neck-thoracic-gu.node-inadequate-fna",
+        "claim.pediatric-neck-thoracic-gu.progressive-node-assessment"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "family.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1",
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1",
+      "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.v1",
+      "profileId": "profile.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1",
+      "childName": "Grace Turner",
+      "childStillId": "level3-roster-v2.027",
+      "prototypeDemographics": {
+        "ageYears": 11,
+        "sexLabel": "Female"
+      },
+      "parentName": "James Turner",
+      "parentRelationship": "father",
+      "parentCount": 1,
+      "parentPlacement": "same_room_throughout",
+      "metadataSource": "tools/character-mapping/level3-roster-complete-v2/roster.json",
+      "profileValuesBasis": "editorial_art_contract_not_disease_probability",
+      "evidenceClaimIds": [
+        "claim.pediatric-neck-thoracic-gu.mediastinal-anesthesia-risk",
+        "claim.pediatric-neck-thoracic-gu.mediastinal-peripheral-biopsy",
+        "claim.pediatric-neck-thoracic-gu.node-inadequate-fna"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "family.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+      "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+      "profileId": "profile.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+      "childName": "Noah Wells",
+      "childStillId": "level3-roster-v2.022",
+      "prototypeDemographics": {
+        "ageYears": 5,
+        "sexLabel": "Male"
+      },
+      "parentName": "Daniel Wells",
+      "parentRelationship": "father",
+      "parentCount": 1,
+      "parentPlacement": "same_room_throughout",
+      "metadataSource": "tools/character-mapping/level3-roster-complete-v2/roster.json",
+      "profileValuesBasis": "editorial_art_contract_not_disease_probability",
+      "evidenceClaimIds": [
+        "claim.pediatric-neck-thoracic-gu.proximal-meatus-nonpalpable-gonads",
+        "claim.pediatric-neck-thoracic-gu.xx-nonpalpable-adrenal-evaluation",
+        "claim.pediatric-neck-thoracic-gu.cah-past-infancy-initial-screen",
+        "claim.pediatric-neck-thoracic-gu.cah-borderline-confirmation"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "family.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness-salvage.v1",
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness-salvage.v1",
+      "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2",
+      "profileId": "profile.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness-salvage.v1",
+      "childName": "Isla Chen",
+      "childStillId": "level3-roster-v2.021",
+      "prototypeDemographics": {
+        "ageYears": 6,
+        "sexLabel": "Female"
+      },
+      "parentName": "Mei Chen",
+      "parentRelationship": "mother",
+      "parentCount": 1,
+      "parentPlacement": "same_room_throughout",
+      "metadataSource": "tools/character-mapping/level3-roster-complete-v2/roster.json",
+      "profileValuesBasis": "editorial_art_contract_not_disease_probability",
+      "evidenceClaimIds": [
+        "claim.pediatric-neck-thoracic-gu.cdh-physiology",
+        "claim.pediatric-neck-thoracic-gu.cdh-stabilization-before-repair",
+        "claim.pediatric-neck-thoracic-gu.cdh-cahs-perfusion-readiness-2026",
+        "claim.pediatric-neck-thoracic-gu.cdh-cahs-oxygen-readiness-2026",
+        "claim.pediatric-neck-thoracic-gu.cdh-cahs-pressure-readiness-2026",
+        "claim.pediatric-neck-thoracic-gu.cdh-cahs-repair-support-2026",
+        "claim.pediatric-neck-thoracic-gu.cdh-cahs-ecmo-consideration-2026"
+      ]
+    }
+  ],
+  "familyRegistry": {
+    "beforeCount": 20,
+    "afterCount": 24,
+    "beforeSha256": "8ce0fd8265aabb096dadc92bb42a2a538d9194c3896c458e7c3184d129fcf45c",
+    "afterSha256": "200c354f793202a1a9dd8b9683ec6b989f90063d188401e9e57a4c5e5b7f51ca"
+  },
+  "rawLengthResiduals": [],
+  "lint": {
+    "accepted": {
+      "cases": 4,
+      "nodeOccurrences": 4,
+      "uniqueVariants": 4,
+      "concepts": 4,
+      "profileContexts": 8,
+      "variantsWithFindings": 4,
+      "findings": 7,
+      "tutorialSequenceVariants": 0,
+      "missingAuthoredVersion": 0,
+      "missingEducationalTier": 0,
+      "approvalRecordOnlyMetadata": 0,
+      "variantsWithCompleteRationales": 4,
+      "variantsWithMultipleDefinitions": 0,
+      "byPriorityStage": {
+        "4": 4
+      },
+      "byOptionCount": {
+        "3": 4
+      },
+      "variantsByRule": {
+        "ambiguous-cervical-term": 1,
+        "key-only-word-overlap": 1,
+        "negative-aligned-to-distractor": 2,
+        "unique-key-abbreviation": 1
+      }
+    },
+    "wholeBank": {
+      "cases": 1340,
+      "nodeOccurrences": 1535,
+      "uniqueVariants": 1530,
+      "concepts": 844,
+      "profileContexts": 4930,
+      "variantsWithFindings": 880,
+      "findings": 1849,
+      "tutorialSequenceVariants": 0,
+      "missingAuthoredVersion": 0,
+      "missingEducationalTier": 252,
+      "approvalRecordOnlyMetadata": 35,
+      "variantsWithCompleteRationales": 817,
+      "variantsWithMultipleDefinitions": 0,
+      "byPriorityStage": {
+        "0": 728,
+        "1": 372,
+        "2": 185,
+        "3": 183,
+        "4": 62
+      },
+      "byOptionCount": {
+        "3": 742,
+        "4": 788
+      },
+      "variantsByRule": {
+        "ambiguous-cervical-term": 24,
+        "availability-permission-cue": 9,
+        "case-detail-decision-cue": 1,
+        "case-detail-key-rationale-overlap": 45,
+        "convergence": 91,
+        "heterogeneous-option-category": 84,
+        "key-length-disparity": 58,
+        "key-only-phrase-overlap": 71,
+        "key-only-word-overlap": 371,
+        "key-test-name-in-context": 16,
+        "lead-in-decision-principle": 15,
+        "near-duplicate-options": 39,
+        "negative-aligned-to-distractor": 87,
+        "option-absolute": 64,
+        "option-alone": 58,
+        "option-explanation": 26,
+        "option-generic-individualization": 8,
+        "option-length-disparity": 189,
+        "option-specificity-disparity": 14,
+        "supplied-clinical-conclusion": 4,
+        "unexplained-negative-imaging": 5,
+        "unique-key-abbreviation": 105,
+        "unique-key-test-name": 30,
+        "unnamed-treatment-action": 3
+      }
+    }
+  },
+  "levelFiveInputs": [
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "beforeSha256": "bfc1c6c3051d46543b6f2ca13efa90d2683924d78f6d15506aef468eb90c538f",
+      "afterSha256": "73ebbee54704c8cc86d0bba3851844ff7674c6033a8e493f39c41bce52227a83",
+      "recordedSha256": "6d9870d53383af7da6ee7547ba702410a2545882876faa1696c0e1217fae311c",
+      "alreadyUnboundAtIntake": true
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "beforeSha256": "80f335e1752faa411561443223f30b8a59e0d1a4dd65d89641db04ae6e21a017",
+      "afterSha256": "485749eb369c0f499b0e34a9ae616f803e22ce4e81d500dc056abf2f0dea8ba1",
+      "recordedSha256": "a57ffcec34d75e2e337790f1ac0d71e4bfdc8f79d53cdb28596e00ead60413e4",
+      "alreadyUnboundAtIntake": true
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "beforeSha256": "32ca68874463e954dfccdd211145fa410aaf61bc351001ccc9dd651523a244cd",
+      "afterSha256": "c1149f878874858589737930b2c458173cdf2bb98a41a4b51fe18f486260c027",
+      "recordedSha256": "7db1b1253c7d3064adb0602360925c0739bb65c719603507c3fa09a6732ba245",
+      "alreadyUnboundAtIntake": true
+    }
+  ],
+  "newUnboundClinicalRuntimeInputs": [
+    {
+      "path": "packages/clinical-content/src/question-program-batch6-accepted-data-20261112.ts",
+      "sha256": "0855b1ba9ecead9905e770765a644504556fb0e8f9309cd409d65223656c855f",
+      "presentInOldBinding": false
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch6-accepted-20261112.ts",
+      "sha256": "39fccc832bc746049e0f5e5ba908687c12480f49e8d058f5b9ccb8c6d0e21903",
+      "presentInOldBinding": false
+    }
+  ],
+  "integrationFiles": [
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.ts",
+      "beforeSha256": "626a052bac091812c2ef6053d7e56bed18c88849a093de767d6f14a0c54d9ab0",
+      "afterSha256": "49c8f1e34b93d9815e5e9ec5cbda1c46e41ac0c46c74440c24a903d35e6f0883"
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "beforeSha256": "bfc1c6c3051d46543b6f2ca13efa90d2683924d78f6d15506aef468eb90c538f",
+      "afterSha256": "73ebbee54704c8cc86d0bba3851844ff7674c6033a8e493f39c41bce52227a83"
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "beforeSha256": "80f335e1752faa411561443223f30b8a59e0d1a4dd65d89641db04ae6e21a017",
+      "afterSha256": "485749eb369c0f499b0e34a9ae616f803e22ce4e81d500dc056abf2f0dea8ba1"
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "beforeSha256": "32ca68874463e954dfccdd211145fa410aaf61bc351001ccc9dd651523a244cd",
+      "afterSha256": "c1149f878874858589737930b2c458173cdf2bb98a41a4b51fe18f486260c027"
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+      "beforeSha256": "3b6fc7b62b82f10ea479763712d3a162f79e8cb45795f9cac2a98562dc2b33a1",
+      "afterSha256": "48701ac7e09fa126495651704c394b3e2d6a38b79a845547826bb1796d187442"
+    },
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+      "beforeSha256": "01172c6077d5ae3bfb088dea92d9e7b1b5adf705934fa34573bcf03647dac4a0",
+      "afterSha256": "e41a312ffec4044f65249c93456184cf7d52fee6b2c1ecb476ef14079d8f6af6"
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch5-acceptance-test-support.ts",
+      "beforeSha256": "2cf42b758da44118496e5040df47a6b9c55e5c12ce17ad429da54dabd1818d93",
+      "afterSha256": "59538549c39905e03cab96f9e78701d38c2230361733ce18ce6a30fbe44e88e8"
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch5-acceptance-20261111.test.ts",
+      "beforeSha256": "956f776eff2111652772200d150bfff89d1fd99bf8f0fe74a77b144d75e1b535",
+      "afterSha256": "61eabde7376a4e7cf6c642c9bf1fce49ad8a7ce273fa0e3a9ef9fdf32855a2f6"
+    },
+    {
+      "path": "packages/clinical-content/src/patient-library-wording-repair.test.ts",
+      "beforeSha256": "67a9111614379910e0ec74d7d12a560b2ece2c71b72aa882ef83254673e39015",
+      "afterSha256": "0b8b930277de9faffac2951bf3b845ba7591bcae88edb8a2051cd1d8a44c7b16"
+    },
+    {
+      "path": "packages/clinical-content/src/question-topic-pediatric-neck-thoracic-gu-20261111.test.ts",
+      "beforeSha256": "25da8728a513ee4e208393f842207dcb1859ec398b1a47649d14d57a3106061b",
+      "afterSha256": "27b512628162ba999e3e54e0dddff6334966cd32382eeba7d387889a787f7e45"
+    },
+    {
+      "path": "packages/clinical-content/src/question-topic-wound-healing-immunology-20261111.test.ts",
+      "beforeSha256": "9bdb26b6888aae0aab6422fa1f0da25b4ecadefd148b2204c44642eea1961366",
+      "afterSha256": "f938877b47ae0ec9387f9790eb333c18dd0bd5cc4c655824bbf4fee3a82b8a40"
+    }
+  ],
+  "domainFixtureFiles": [],
+  "protectedInputs": [
+    {
+      "path": "packages/clinical-content/src/question-topic-pediatric-neck-thoracic-gu-20261111.ts",
+      "beforeSha256": "cc088d37bf249056798b48ab7c88182c7f71df4e8730f447299844c9ae55ce00",
+      "currentSha256": "cc088d37bf249056798b48ab7c88182c7f71df4e8730f447299844c9ae55ce00",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/question-topic-pediatric-neck-thoracic-gu-20261111.json",
+      "beforeSha256": "04e860c5cb46939647d1f905d25a649c110625419a829de58ee9a680e841d160",
+      "currentSha256": "04e860c5cb46939647d1f905d25a649c110625419a829de58ee9a680e841d160",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/sources-question-topic-pediatric-neck-thoracic-gu-20261111.json",
+      "beforeSha256": "90b58544791bce0a1aaa510116e0a751aed350faa3f690719099be0af98e225c",
+      "currentSha256": "90b58544791bce0a1aaa510116e0a751aed350faa3f690719099be0af98e225c",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/question-topic-pediatric-neck-thoracic-gu-review-salvage-20261111.json",
+      "beforeSha256": "c30c43d7cdfc85f97ce8ee631595ed69ab63437a92d5d128b3d0a313665d2f33",
+      "currentSha256": "c30c43d7cdfc85f97ce8ee631595ed69ab63437a92d5d128b3d0a313665d2f33",
+      "unchanged": true
+    }
+  ],
+  "observedConcurrentChanges": []
+}

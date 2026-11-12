@@ -1,0 +1,236 @@
+[
+  {
+    "id": "question.vascular-aorta.female-threshold.v2",
+    "nodeId": "node.vascular-aorta.female-threshold.v2",
+    "title": "Female aneurysm repair assessment using the full sac diameter",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The standalone presentation and exhibit never identify the measured aortic segment. 'Outside aortic measurement' and 'aortic ultrasound measurements' do not explicitly establish an abdominal, infrarenal aneurysm. The intended female AAA threshold should not depend on inferring location from an omitted companion or an internal identifier."
+    ],
+    "cues": [],
+    "fairness": [
+      "Assuming an ordinary infrarenal AAA, elective vascular repair assessment is the best offered plan for the supplied full sac measurement and clinical fitness. Assessment appropriately leaves procedure selection and individual risk discussion open. The explanation distinguishes the two organizations' recommendation wording rather than asserting identical recommendations.",
+      "The meaningful steps are selecting the outer-wall rather than flowing-channel dimension and applying a sex-specific management boundary. The two ultrasound intervals represent different errors, although their common modality makes the referral choice a structural outlier; that pattern alone does not establish the key.",
+      "Apart from the missing anatomical location, this single-node composition contains its own measurements and symptom/functional context. No prior answer or feedback is needed. This is high-yield aneurysm assessment, with qualitative moderate difficulty rather than measured difficulty.",
+      "Review scope and limits for this entire report: only the nine current status=salvage candidate presentations, updates, exhibits, tasks, options and explanations were judged. Kept-unchanged, retired, accepted, parked and held material was not adjudicated; three parked records and two held policies were noted only. Prior PASS and author self-check claims were not accepted as evidence. This was an offline editorial/clinical plausibility review, not fresh guideline verification, runtime verification or clinical approval. All candidates remain needs_clinician_review; highYield is a qualitative general-surgery judgment, not a verified exam-frequency claim."
+    ],
+    "suggestions": [
+      "Identify the aneurysm as abdominal/infrarenal in the visible presentation or exhibit, using the supported case anatomy. Retain the raw outer-wall and flowing-channel measurements and the distinction between repair assessment and automatic operation.",
+      "Delete the dispensable sentence 'The original ultrasound measurements are shown below.' The exhibit already supplies that information.",
+      "Re-review the exact repaired standalone version; do not silently overwrite a previously frozen question or treat this report as clinical sign-off."
+    ]
+  },
+  {
+    "id": "question.vascular-aorta.graft-source-control.v1",
+    "nodeId": "node.vascular-aorta.graft-source-control.v1",
+    "title": "Infected aortic graft with duodenal communication",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Which definitive source-control plan",
+        "why": "This preselects the treatment property that separates the options. Against graft retention or covering the graft, the only removal-plus-bowel-reconstruction choice can be selected by ordinary language about eliminating a source, with little need to distinguish definitive treatment from bridging clinically."
+      },
+      {
+        "phrase": "the multidisciplinary hospital assessment finds no prohibitive operative condition",
+        "why": "This supplies an operative-eligibility conclusion on top of preserved pressure, organ function and independence. It rehearses the boundary needed to reject the nonoperative competitors rather than leaving that application to the resident."
+      }
+    ],
+    "fairness": [
+      "Graft removal with arterial reconstruction and repair/reconstruction of the involved bowel is the defensible best offered definitive strategy for the described stable, operable patient with persistent infection and graft-enteric communication. No confident clinical inaccuracy in that ranking was identified offline.",
+      "Covered relining can be relevant as a bridge in hemorrhage or in selected high-risk circumstances, and suppressive therapy can be relevant when surgery is unsuitable. The current stem supplies both the definitive-treatment goal and the operative conclusion, so neither distractor remains a close decision at the stated stage.",
+      "The standalone context is coherent: prior open infrarenal grafting, delayed fever/bacteremia/melena and the current CTA/culture findings are all present. No missing predecessor is required. Aortoenteric fistula and graft-infection management are high-yield, but this version is predominantly recognition followed by an already signposted removal decision rather than two consequential inferences."
+    ],
+    "suggestions": [
+      "Use a neutral treatment-plan task instead of naming definitive source control. Keep the observed hemodynamic, organ-function and functional facts; replace the blanket operability conclusion only with supported decision-critical observations, not invented risk scores.",
+      "Make the closest competing strategy a plausible plan at the same treatment stage, with a supported patient feature that requires the learner to distinguish bridging from definitive treatment. Do not manufacture hemorrhagic instability or an unsupported operative-risk rule merely to make the item harder.",
+      "If the exact question must remain frozen, record this difficulty/cue limitation for manager disposition rather than claiming the new standalone context independently satisfies the two-step standard."
+    ]
+  },
+  {
+    "id": "question.vascular-aorta.growing-sac-source.v1",
+    "nodeId": "node.vascular-aorta.growing-sac-source.v1",
+    "title": "Reassessing an uncertain source in an enlarging post-EVAR sac",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The new standalone presentation supplies the earlier sac size, branch-associated filling and intact interfaces. The update supplies a comparable larger measurement, an uncertain current origin despite arterial/delayed acquisitions, and clinical stability. The question can be answered without an earlier endoleak-classification node.",
+      "The learner must reject anchoring on the earlier branch source and then choose an angiographic assessment that can identify attachment/component inflow before selecting a branch target. Aortography is the best offered initial assessment; branch-selective studies may subsequently contribute but do not replace evaluation of the possible direct graft source.",
+      "'Graft-limb junction' overlaps with 'graft junctions,' but the update also names a lumbar branch matching a competing choice. This is necessary localization evidence rather than a unique nonmedical wording match. All three options are specific angiographic assessments with comparable scope of wording; no decisive length, absolute, convergence or teaching-sentence shortcut was found.",
+      "The large same-method change and unresolved source make the investigation consequential without relying on a newly invented intervention cutoff. The explanation is appropriately conditional about what problem-solving angiography can establish. This is high-yield endoleak workup, moderately demanding because the old source remains a plausible anchoring error."
+    ],
+    "suggestions": [
+      "Preserve the earlier branch-source history, comparable serial measurements and explicit limitations of the current multiphase CTA. Do not relabel the current leak type before the decision or add a universal sac-growth threshold."
+    ]
+  },
+  {
+    "id": "question.vascular-aorta.measurement-comparison.v2",
+    "nodeId": "node.vascular-aorta.measurement-comparison.v2",
+    "title": "Reconciling discordant measurement planes before judging aneurysm growth",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'He had no abdominal or back symptoms at the first surveillance visit' does not establish symptom status at the later report being acted on. A new symptomatic presentation would change the urgency; the task should not require assuming continued absence of symptoms.",
+      "The visible record says 'aortic' throughout without identifying the aneurysm segment. Specify the abdominal/infrarenal location if the explanation is applying AAA growth and surveillance decisions."
+    ],
+    "cues": [
+      {
+        "phrase": "Complete arterial thin-section volume / Complete arterial thin-section volume",
+        "why": "Together with the presentation's 'original arterial CT volumes,' this repeats the material named in 'Reconstruct the serial CT volumes for matched measurements.' Availability of adequate source data is necessary, but the repeated permission weakens the acquisition-versus-reconstruction inference. State it once."
+      }
+    ],
+    "fairness": [
+      "Reconstructing adequate existing volumes in comparable planes is the best way to adjudicate the reported change. The calculation is correct: 5.3 minus 4.6 is 0.7 cm. Different planes prevent assuming that this is biological growth; they do not prove that all of it is artifact.",
+      "'Refer for repair evaluation based on serial enlargement' is not the same as committing to repair. Specialist evaluation can legitimately include remeasurement and can occur while a discrepancy is reconciled. The present task does not clearly make referral and matched reconstruction mutually exclusive, so dismissing all repair evaluation as premature is stronger than the visible facts support.",
+      "The intended two steps are meaningful: recognize a potentially oblique-versus-orthogonal measurement comparison, then use available source volumes to resolve whether a management-changing trajectory is real. This is a high-yield practical imaging/repair decision, with moderate potential difficulty. The standalone source records are present; current symptom chronology and decision-stage overlap need repair.",
+      "The explanation's conditional wording about confirmed growth is appropriate. This offline review does not newly verify an exact guideline growth threshold."
+    ],
+    "suggestions": [
+      "State symptom status at the later surveillance assessment and identify the measured aortic segment using supported facts.",
+      "Frame a specific next imaging/measurement decision within an already established vascular evaluation, or otherwise make clear which decision is deferred until the measurements are reconciled. Do not make a reasonable specialist referral the wrong answer by equating evaluation with an irreversible repair decision.",
+      "Use credible alternatives at that same decision stage, such as strategies for adjudicating the discrepant studies, with data that resolve whether new acquisition is necessary. Retain both plane descriptions and source adequacy, but remove duplicate availability prose."
+    ]
+  },
+  {
+    "id": "question.vascular-aorta.new-malperfusion.v1",
+    "nodeId": "node.vascular-aorta.new-malperfusion.v1",
+    "title": "New renal malperfusion despite improved pain and pressure control",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "The treating aortic team documents usable proximal sealing and iliac access anatomy for TEVAR.",
+        "why": "This explicitly endorses feasibility of the named keyed procedure and is the only option-specific eligibility statement. It lets a nonmedical reader match 'TEVAR' to 'TEVAR with reassessment of renal perfusion,' weakening the open-versus-endovascular decision."
+      }
+    ],
+    "fairness": [
+      "The standalone presentation now establishes descending dissection anatomy, initially preserved renal enhancement and urine output. The update supplies subsequent functional deterioration and true-lumen compression. The temporal contrast is complete without prior medication-choice feedback.",
+      "The first consequential inference survives: improved pain and pressure do not establish successful treatment when renal function and perfusion worsen. The second is selecting central repair with reassessment rather than assuming pressure control or the initial procedure guarantees branch recovery. These are high-yield complicated type-B dissection decisions.",
+      "Given the stated anatomy and clinical deterioration, TEVAR with renal reassessment is the best offered strategy; open replacement is a real but less favored competitor in the supplied context, and continued medical observation fails to address the demonstrated inflow problem. No confident error in this ranking was identified offline.",
+      "Anatomical suitability is decision-critical and must not simply disappear to avoid cueing. The problem is its answer-naming, authored eligibility formulation, not the inclusion of access/sealing information. The remaining case supports moderate rather than hard difficulty."
+    ],
+    "suggestions": [
+      "Replace the TEVAR-naming permission with a brief neutral, source-supported description of the access and landing anatomy needed to rank the procedures. Avoid inventing device dimensions or exact eligibility cutoffs.",
+      "Retain the initial-to-current renal trajectory and the improved pain/pressure findings. Recheck that the anatomical information resolves the open-versus-endovascular comparison without announcing the preferred procedure."
+    ]
+  },
+  {
+    "id": "question.vascular-aorta.residual-static-branch.v1",
+    "nodeId": "node.vascular-aorta.residual-static-branch.v1",
+    "title": "Persistent renal branch obstruction after successful central repair",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The short clinic frame and update establish the completed TEVAR, sealed entry, expanded central lumen and continuing renal lesion. The dissection mechanism is explicit in the flap observations. The task therefore stands alone without needing the preceding decision to perform TEVAR or a hidden post-procedure result.",
+      "The learner must distinguish persistent branch-level obstruction from unresolved central dynamic obstruction, then target the remaining mechanism. Branch stenting is the best offered treatment for the fixed renal segment with a persistent gradient and weak enhancement; distal aortic fenestration and proximal graft extension target different problems.",
+      "'Does not change during the cardiac cycle' is an observation used to infer the mechanism, not a pre-answer diagnosis label. The necessary left-renal wording naturally recurs in the treatment choice, but no pure wording shortcut distinguishes renal stenting from aortic maneuvers that can also affect renal perfusion without medical knowledge.",
+      "The proximal-extension distractor is weakened by a documented sealed entry, but the fenestration alternative remains a credible resident mechanism error. The combination of treatment response, lesion location and hemodynamic consequence supports two consequential steps and moderate difficulty. Static-versus-dynamic malperfusion is a relevant board-level aortic concept, though the procedural detail is more specialized than basic AAA referral.",
+      "No confident clinical error was identified offline. The explanation appropriately limits the inference to a residual fixed branch lesion; it does not claim all renal dysfunction after TEVAR requires stenting."
+    ],
+    "suggestions": [
+      "Keep the central-repair response and persistent branch gradient/enhancement findings together. Do not insert 'static malperfusion' before the choice or add an unsupported numerical gradient threshold."
+    ]
+  },
+  {
+    "id": "question.vascular-aorta.six-cm-referral.v1",
+    "nodeId": "node.vascular-aorta.six-cm-referral.v1",
+    "title": "Repair referral for a large aneurysm despite a small patent lumen",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Arrange annual aortic ultrasound surveillance / Arrange three-year aortic ultrasound surveillance",
+        "why": "Both distractors are the same nonintervention strategy with different intervals, while the key is the only referral. This does not prove the key by grammar alone, but it makes a large-number-versus-small-number comparison sufficient to discard both competitors; there is no close remaining care decision once the full diameter is recognized."
+      }
+    ],
+    "fairness": [
+      "Elective vascular repair evaluation is the defensible best offered answer for the described asymptomatic, functionally well man with a 6.0-cm infrarenal AAA. Mural thrombus does not make the flowing lumen the aneurysm diameter. No confident clinical inaccuracy was identified offline.",
+      "The new presentation and update are self-contained. The preventive-care origin, actual ultrasound result, symptoms and fitness are supplied; the task does not need the former screening question. 'The next outside record' is unnecessary sequence framing but does not create a substantive gap.",
+      "The item tests an important, high-yield misconception, but both potential steps are routine recall: choose the already labeled outer-wall diameter, then recall that a large fit-patient AAA merits referral. There is no competing patient consideration that changes this application. Two surveillance intervals do not make the second step consequential at resident level.",
+      "This easy classification is a qualitative editorial prediction, not a claim about resident performance. No explicit accepted foundational exception is established by the candidate text being reviewed."
+    ],
+    "suggestions": [
+      "Retain the full-sac-versus-patent-lumen teaching objective, but introduce a supported clinically consequential comparison or patient factor that requires application, with at least one credible alternative at the same decision stage. Do not merely add more laboratory values or a second implausible surveillance interval.",
+      "If the objective cannot sustain two consequential steps without changing its meaning, request an explicit foundational-role decision or merge/retirement consideration through the manager. Do not relabel this version hard or silently change its stable concept to an unrelated operative-planning objective.",
+      "Any proposed replacement is a new reviewable version; leave frozen prior definitions intact."
+    ]
+  },
+  {
+    "id": "question.vascular-aorta.small-male-surveillance.v2",
+    "nodeId": "node.vascular-aorta.small-male-surveillance.v2",
+    "title": "Surveillance imaging after inadequate ultrasound and a severe contrast reaction",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The explanation invokes 'the fact that ultrasound was useful previously,' but this standalone case supplies earlier CT measurements, not a successful prior ultrasound. That is an unsupported historical assertion in the visible explanation.",
+      "The explanation's 'when CT is contraindicated' is broader than the actual comparison. The described reaction concerns iodinated contrast; it does not itself contraindicate all CT, including noncontrast CT."
+    ],
+    "cues": [
+      {
+        "phrase": "cannot trace the posterior sac boundary through bowel gas on the acquired supine and lateral views",
+        "why": "This is necessary adequacy information, but in the current three-option set it immediately eliminates the repeated ultrasound choice. Its pairing with the contrast-reaction history leaves the only unmentioned modality as the key."
+      },
+      {
+        "phrase": "During the last iodinated-contrast injection he developed wheezing, generalized hives and hypotension requiring epinephrine.",
+        "why": "The severe-reaction history is legitimate decision-critical information, not something to hide. Nevertheless, with plain CTA and already unsuccessful ultrasound as the only competitors, it functions as the second explicit exclusion and lets MRI win by elimination rather than a close imaging-plan comparison."
+      }
+    ],
+    "fairness": [
+      "MRI is a reasonable best offered examination when current ultrasound cannot define the sac and there is a serious previous iodinated-contrast reaction. Plain repeat duplex does not solve the stated acoustic limitation, and routine CTA carries a relevant avoidable exposure. No confident error in the keyed ranking was identified offline.",
+      "The explanation should distinguish avoiding iodinated contrast from declaring the CT modality absolutely contraindicated. The need for contrast, alternative protocols and circumstances permitting re-exposure are separate clinical questions; this offline review does not prescribe a new premedication rule or claim re-exposure is never possible.",
+      "The current ultrasound failure, prior severe reaction and lack of new pain are all supplied, so the imaging decision itself stands alone. The historical ultrasound-success statement in the feedback does not. The earlier matched CT sizes establish surveillance context but do not help distinguish the offered modalities once the two explicit exclusions appear.",
+      "Surveillance adequacy and imaging selection are high-yield, but this particular option set is easy. There are two observations, yet each directly removes one competitor; it does not satisfy the owner's stronger requirement for two consequential resident-level reasoning steps."
+    ],
+    "suggestions": [
+      "Remove the unsupported assertion that ultrasound previously succeeded. Explain instead that older CT measurements cannot establish the current diameter after the incomplete examination.",
+      "Limit the contrast explanation to the serious prior iodinated-contrast reaction and the specific CTA alternative; do not say that all CT is contraindicated.",
+      "Rework the comparison around clinically credible imaging strategies that address the present acquisition need, rather than repeat an already inadequate study versus an unqualified contrast exposure. Use a supported distinction in what must be measured or visualized to make the choice consequential; do not invent a new imaging contraindication or protocol.",
+      "If retained as focused safety/recognition practice, obtain an explicit basic-role acceptance instead of treating its two exclusions as moderate two-step reasoning."
+    ]
+  },
+  {
+    "id": "question.vascular-aorta.stable-branch-flow.v1",
+    "nodeId": "node.vascular-aorta.stable-branch-flow.v1",
+    "title": "Branch-associated endoleak with an unchanged aneurysm sac",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The presentation supplies infrarenal EVAR, absence of symptoms and the observed branch-associated filling with intact attachments/overlaps. The exhibit supplies the later size and filling pattern. The reference to the 'later surveillance study' is therefore resolved within this single-node case; no future enlargement or earlier feedback is required.",
+      "The learner must infer the branch-associated leak mechanism and combine it with unchanged sac size to choose surveillance instead of embolizing every visible leak. The same leak mechanism with consequential sac growth would require a different evaluation/management decision. This supports two consequential steps.",
+      "Continued imaging surveillance is the defensible best offered plan. Lumbar/sac embolization is a credible overtreatment error; proximal cuff extension treats a different source. The intact-interface observations reduce the cuff's plausibility for a clinical reason, while the embolization-versus-surveillance distinction remains live.",
+      "'Delayed lumbar branch filling' also matches the embolization distractor, so lexical overlap does not uniquely identify the key. No diagnosis label, pre-answer management rule, rhetorical absolute, convergence pattern or uniquely explanatory option reveals surveillance. Serial stability is relevant evidence, not a teaching sentence.",
+      "The original constructed table is sufficient for its numerical comparison; the case does not falsely promise an absent scan. This is high-yield post-EVAR follow-up with moderate predicted difficulty. No confident clinical error was identified offline, and no universal treatment threshold or surveillance interval is newly asserted."
+    ],
+    "suggestions": [
+      "Preserve both source-pattern observations and serial sac size. Keep management teaching in the explanation, and do not add an unsupported exact growth cutoff or imply that every persistent branch leak requires embolization."
+    ]
+  }
+]

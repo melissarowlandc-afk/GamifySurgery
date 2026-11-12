@@ -1,0 +1,583 @@
+[
+  {
+    "id": "question.topic.transplant-immunosuppression.renal-biopsy.v1",
+    "nodeId": "node.topic.transplant-immunosuppression.renal-biopsy.v1",
+    "title": "Persistent kidney-allograft dysfunction: investigation",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Biopsy is the best listed cause-defining investigation for persistent dysfunction after the represented volume and structural assessment. Missed doses raise suspicion without establishing rejection. Plasma BK testing is useful concurrently but does not replace tissue classification; scintigraphy has less incremental value here.",
+      "Two consequential steps remain: interpret why the initial assessment does not explain the sustained dysfunction, then select the investigation that distinguishes parenchymal causes. This is a core transplant workup decision.",
+      "The negative structural findings are necessary clinical boundaries, not a reliable nonmedical wording shortcut. Options are parallel investigations; no unique length, absolute, teaching sentence or key-only task phrase selects the answer.",
+      "First node is self-contained. Its explanation appropriately stops before naming the next node's treatment. A target-range tacrolimus result does not exclude every form of calcineurin-inhibitor injury; the explanation is appropriately limited to excessive measured exposure.",
+      "Scope of this report: all 23 proposed executable nodes (20 new and 3 rewritten) were reviewed against their candidate visible fields. The 3 kept records, including 2 parked drafts, 29 retired/replacement input records and other held/unkeyed records are noted but not re-reviewed. No standalone exhibit is present in these candidate nodes. PASS is editorial, not clinical approval; all drafts still require Melissa Rowland's exact-version sign-off. This offline review did not verify sources, runtime waits or rendering, and highYield is qualitative general-surgery relevance, not measured examination frequency."
+    ],
+    "suggestions": [
+      "Preserve the distinction between a prioritized tissue investigation and concurrent viral testing; do not teach that BK testing is unnecessary in graft dysfunction."
+    ]
+  },
+  {
+    "id": "question.topic.transplant-immunosuppression.cellular-steroids.v1",
+    "nodeId": "node.topic.transplant-immunosuppression.cellular-steroids.v1",
+    "title": "Initial treatment of a cellular graft-injury pattern",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The biopsy describes interstitial inflammation and tubulitis but does not state whether arteries were represented or whether intimal arteritis/aggressive vascular injury was present. Absence of microvascular inflammation is not the same information.",
+      "When selected independently, this node lacks the prior node's ongoing graft dysfunction; the generic presentation only says an outside transplant admission is being reviewed."
+    ],
+    "cues": [],
+    "fairness": [
+      "Methylprednisolone is a defensible initial treatment for the intended nonaggressive cellular process. However, the steroid-versus-ATG distinction depends partly on severity/vascular findings that the visible record does not supply. Do not infer their absence from omitted findings. This is an underspecification concern, not a claim that the proposed drug is clinically wrong.",
+      "Interpreting the tissue/infection findings and then choosing initial rather than rescue therapy are two consequential steps. The competing therapies are real and similarly phrased; necessary BK and humoral studies should not be deleted to manufacture difficulty.",
+      "The sequence follows the biopsy node coherently and its earlier explanation does not disclose methylprednisolone. The central concept is high yield."
+    ],
+    "suggestions": [
+      "Provide a source-supported biopsy description that establishes the intended cellular severity and arterial assessment; do not invent a Banff grade or threshold.",
+      "Briefly retain the persistent graft dysfunction in this node's update so the treatment indication survives independent selection.",
+      "Have the clinician confirm the steroid-versus-ATG ranking against the completed biopsy description."
+    ]
+  },
+  {
+    "id": "question.topic.transplant-immunosuppression.cellular-rescue.v1",
+    "nodeId": "node.topic.transplant-immunosuppression.cellular-rescue.v1",
+    "title": "Persistent cellular rejection after steroid treatment",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Rabbit ATG is the best listed escalation given continued dysfunction after a completed steroid course, repeat active interstitial/tubular lymphocytic injury and contemporaneous exclusion of the represented viral/humoral alternatives. The wording 'consider' appropriately avoids a universal rescue prescription.",
+      "Two decisions are consequential: establish that the persistent injury remains cellular rather than infer its mechanism from steroid failure, then select lymphocyte depletion at the rescue stage. Plasma exchange/IVIG and maintenance reduction are meaningful mechanism errors.",
+      "This is a separate single-node case and includes the prior treatment and repeat tissue record needed to stand alone. It does not require seeing the earlier steroid question. No reliable nonmedical cue selects ATG, although the summarized humoral exclusion makes the item moderate rather than hard."
+    ],
+    "suggestions": [
+      "Preserve the repeat-biopsy and treatment-response evidence; do not shorten this into 'steroids failed, choose ATG.'"
+    ]
+  },
+  {
+    "id": "question.topic.transplant-immunosuppression.bk-plasma-before-reduction.v1",
+    "nodeId": "node.topic.transplant-immunosuppression.bk-plasma-before-reduction.v1",
+    "title": "Isolated BK viruria and maintenance treatment",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Maintaining the regimen with repeat plasma assessment is the best listed plan for the supplied isolated urinary detection, negative contemporaneous plasma result and stable graft function. The wording does not invent a treatment threshold or monitoring interval.",
+      "The resident must distinguish the significance of the specimen compartments, then decide whether the finding justifies the consequential risk of reducing immunosuppression. Immediate reduction is a credible error; leflunomide is a weaker but recognizable treatment misconception.",
+      "Shared repeat-plasma wording appears in every option, so it does not select the key. 'Maintenance' in the task applies to all three plans. The negative plasma result is decision-critical evidence requiring medical interpretation, not a vocabulary giveaway.",
+      "This first node is self-contained. Its explanation distinguishes viruria from DNAemia/nephropathy without explicitly giving the later biopsy-proven treatment answer. The infection-versus-rejection balance is high yield."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.transplant-immunosuppression.bk-biopsy-reduction.v1",
+    "nodeId": "node.topic.transplant-immunosuppression.bk-biopsy-reduction.v1",
+    "title": "Biopsy-supported BK nephropathy: treatment direction",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Supervised stepwise maintenance reduction is the best listed direction for the combined plasma/tissue findings in the explicitly low-risk setting without a separate rejection component. Steroid escalation reverses that direction; adding cidofovir is not an equally supported routine alternative.",
+      "The resident interprets the tissue and viral trajectory, then balances infection control against graft rejection risk. Low immunologic risk and the absence of concurrent rejection are legitimate boundaries; retaining them is fairer than hiding those treatment-critical conditions.",
+      "No option has a reliable nonmedical wording advantage. Increase/reduce/add are parallel treatment directions. The reduction choice is less drug-specific, but does specify the intervention being selected rather than an empty individualized-care slogan.",
+      "The later admission is coherent with earlier viruria. The new update supplies the dysfunction, repeated plasma detection and biopsy evidence needed independently. Prior feedback scaffolds the distinction but does not name this treatment. This is high-yield transplant infection management."
+    ],
+    "suggestions": [
+      "Keep the low-risk/no-concurrent-rejection boundary attached to this exact version; do not generalize its answer to every BK-positive recipient."
+    ]
+  },
+  {
+    "id": "question.topic.transplant-immunosuppression.bk-function-discordance.v1",
+    "nodeId": "node.topic.transplant-immunosuppression.bk-function-discordance.v1",
+    "title": "Renewed dysfunction after BK improvement",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'After the represented maintenance reduction' does not identify the preceding BK nephropathy if this later node is selected independently. The presentation itself contains no diagnosis or treatment history."
+    ],
+    "cues": [
+      {
+        "phrase": "The renewed decline has not been sampled.",
+        "why": "Names an omitted sampling action immediately before the only tissue-sampling choice; it directs a reader to biopsy without interpreting the post-reduction biology."
+      },
+      {
+        "phrase": "adequate graft flow/drainage",
+        "why": "Together with 'Repeat radionuclide perfusion study', this makes one distractor look like repeating an already settled investigation. Earlier feedback has also explained why urine BK is not the decisive compartment, leaving biopsy by elimination."
+      }
+    ],
+    "fairness": [
+      "Repeat biopsy is clinically defensible for renewed unexplained dysfunction; no confident clinical error is identified. Undetectable plasma BK does not by itself establish the cause of new graft injury.",
+      "The important potential lesson is discordance between virologic improvement and graft function. The current choices let the learner bypass that interpretation through a named omission and two low-value repeat tests, so two consequential steps are not effectively tested.",
+      "The three-part chronology is coherent when read together, but prior urine-versus-plasma feedback weakens the final distractor set."
+    ],
+    "suggestions": [
+      "Delete the named sampling omission; retain the actual trajectory and necessary structural assessment.",
+      "Restate briefly that maintenance immunosuppression was reduced for biopsy-supported BK disease.",
+      "Compare plausible responses to discordant graft and viral trajectories, such as tissue reassessment versus a specific empiric immunosuppression change or continued surveillance, with sufficient observations to distinguish them. Re-solve the new choices clinically rather than merely renaming the repeat tests."
+    ]
+  },
+  {
+    "id": "question.topic.transplant-immunosuppression.tac-high-exposure.v1",
+    "nodeId": "node.topic.transplant-immunosuppression.tac-high-exposure.v1",
+    "title": "Tacrolimus interaction and excess exposure",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "A verified predose tacrolimus concentration then exceeded the service's target",
+        "why": "The only option that changes tacrolimus is 'Reduce or temporarily interrupt tacrolimus'. An above-target drug level matched to a reduction of that same drug answers the item without using clarithromycin, the renal findings or tremor."
+      },
+      {
+        "phrase": "Reduce or temporarily interrupt tacrolimus",
+        "why": "The key uniquely offers a flexible two-action response, while both distractors simply reduce a different drug. This reinforces the direct target-level match."
+      }
+    ],
+    "fairness": [
+      "The drug interaction, renal dysfunction and tremor support the intended tacrolimus adjustment; addressing the antibiotic interaction concurrently is correctly represented. No unsupported dose is given.",
+      "This is high-yield pharmacology, but the tested operation is currently matching an excessive concentration to its drug. The other maintenance drugs are not credible competing targets for this exposure problem.",
+      "The node stands alone and the later stable visit is plausible. Its explanation explicitly teaches a verified predose/trough boundary that further simplifies the next node."
+    ],
+    "suggestions": [
+      "Retain the clinically necessary exposure and symptom evidence, but change the decision so the interaction or response trajectory affects the plan rather than merely identifying the named high drug.",
+      "Use comparably specific management alternatives that address the same tacrolimus problem and differ in a supported sequencing or interaction-management decision. Avoid invented dose-reduction percentages or holding thresholds.",
+      "If retained as a simple medication-safety recognition item, obtain explicit acceptance of that basic role instead of labeling it a difficult two-step resident question."
+    ]
+  },
+  {
+    "id": "question.topic.transplant-immunosuppression.tac-sample-validity.v1",
+    "nodeId": "node.topic.transplant-immunosuppression.tac-sample-validity.v1",
+    "title": "Mislabelled tacrolimus trough collection",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Intended tacrolimus monitoring question' is less concrete than naming the actual decision about the reported result and current dose."
+    ],
+    "cues": [
+      {
+        "phrase": "A verified predose tacrolimus concentration",
+        "why": "The preceding node supplies this collection definition, and its explanation calls the result a 'verified high trough'. The later key, 'Collect tacrolimus immediately before the next dose', repeats the taught definition."
+      },
+      {
+        "phrase": "a specimen labeled tacrolimus trough",
+        "why": "The options only ask when to draw a trough. Once the definition is known, the administration discrepancy and recovered clinical course are unnecessary to selecting the before-dose choice."
+      }
+    ],
+    "fairness": [
+      "The keyed predose collection is correct for the intended trough, and the explanation correctly distinguishes a printed test name from actual collection timing.",
+      "This is one collection-definition skill rather than two consequential decisions. The important safety issue is whether to change medication on an invalid high result; the task does not make the learner decide that.",
+      "The later visit is coherent and the update is independently understandable, although 'the tremor has resolved' references prior context. The earlier explanation substantially scaffolds the answer."
+    ],
+    "suggestions": [
+      "Ask for the next monitoring/medication action, using invalid timing plus recovered graft function to distinguish repeat correctly timed testing from an immediate dose change.",
+      "Offer comparable concrete plans, and revise earlier feedback so it does not rehearse the exact scored collection answer.",
+      "If the sole objective remains trough timing, seek explicit basic-skill acceptance and label the difficulty honestly."
+    ]
+  },
+  {
+    "id": "question.topic.transplant-immunosuppression.ptld-discordant-tissue.v1",
+    "nodeId": "node.topic.transplant-immunosuppression.ptld-discordant-tissue.v1",
+    "title": "Progressive lymphadenopathy despite falling EBV DNA",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Representative tissue biopsy is the best listed diagnostic priority for progressive nodal disease and an unclassifiable aspirate. Falling blood EBV does not classify the lesion; PET/CT can contribute to staging or target selection but does not replace tissue diagnosis.",
+      "The resident must interpret discordant blood and lesion trajectories, then recognize that the previous specimen did not establish a tissue diagnosis. The explicit sample inadequacy is necessary evidence rather than an invented omission cue.",
+      "All options are investigations of comparable scope. Staging versus diagnosis is a real clinical distinction here, not a grammatical task mismatch. No strong nonmedical cue uniquely selects biopsy.",
+      "This first node is self-contained and its explanation does not give the next immunosuppression answer. PTLD evaluation is high yield; the exact biopsy technique is appropriately outside this task."
+    ],
+    "suggestions": [
+      "Remove the learner-facing editorial sentence beginning 'This item selects'; keep the clinical distinction that tissue diagnosis is needed without adding an unsupported technique/handling rule."
+    ]
+  },
+  {
+    "id": "question.topic.transplant-immunosuppression.ptld-reduce-is.v1",
+    "nodeId": "node.topic.transplant-immunosuppression.ptld-reduce-is.v1",
+    "title": "Immunosuppression after PTLD diagnosis",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "The later tissue record establishes polymorphic B-cell PTLD",
+        "why": "Providing a diagnosis is legitimate in management questions, but here it supplies all interpretation needed for the remaining single association: PTLD leads to reduced immunosuppression. The added staging and graft observations do not create a genuine competing decision."
+      }
+    ],
+    "fairness": [
+      "Supervised reduction is a defensible initial component of care in this setting. The item does not claim it is the entire oncology regimen, which is appropriate.",
+      "Increase/continue/reduce is a direction-only option set; increasing CNI exposure has little credibility after explicit PTLD, stable graft function and no rejection. The neutral phrasing does not turn this into difficult two-step reasoning.",
+      "The later biopsy coherently follows the tissue-investigation node and is self-contained. Prior feedback does not directly disclose the answer. The underlying PTLD/immunosuppression principle is high yield."
+    ],
+    "suggestions": [
+      "Retain the diagnosis if the objective is management, but introduce a source-supported competing graft or disease-course consideration that actually changes the initial plan, with specific same-stage alternatives.",
+      "Do not expand into the held CD20 escalation question without separate evidence and authorization. If this remains a foundation-level direction question, request explicit basic-role acceptance."
+    ]
+  },
+  {
+    "id": "question.topic.transplant-immunosuppression.cmv-tissue-not-blood.v1",
+    "nodeId": "node.topic.transplant-immunosuppression.cmv-tissue-not-blood.v1",
+    "title": "Persistent transplant diarrhea with negative plasma CMV",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Ileocolonoscopy with mucosal biopsy best distinguishes the represented mucosal causes, including CMV disease and mycophenolate-related injury. Repeated negative plasma testing does not exclude localized gastrointestinal CMV; an immunity assay does not establish the cause of colitis.",
+      "Two steps remain: recognize the limits of a negative blood result in this clinical setting, then choose a test that can assess the organ process and its competing cause. Mycophenolate is a useful alternative explanation rather than decorative medication history.",
+      "The negative plasma results weaken the repeat-plasma option, but they are indispensable to the tested misconception, and the immune-assay alternative still requires medical understanding. No unique wording, length, absolute or diagnostic label supplies the answer.",
+      "The first node is self-contained. The subsequent tissue result and treatment questions follow coherently; this explanation does not name the later antiviral route. The concept is relevant to common transplant infection testing."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.transplant-immunosuppression.cmv-severe-route.v1",
+    "nodeId": "node.topic.transplant-immunosuppression.cmv-severe-route.v1",
+    "title": "Initial antiviral route for gastrointestinal CMV",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "prevented reliable oral medication intake",
+        "why": "Supplies the route interpretation before the decision, eliminating the oral option by ordinary language. The remaining choice is basic initial-drug recall, not an independently inferred severity/absorption decision."
+      },
+      {
+        "phrase": "Oral valganciclovir with renal dose adjustment",
+        "why": "Paired with 'Intravenous ganciclovir with renal dose adjustment', the similar drug names suggest a route pair, while foscarnet is the naming outlier. This is a weaker lexical hint, but combined with the explicit oral-route exclusion it further simplifies the set."
+      }
+    ],
+    "fairness": [
+      "Intravenous ganciclovir with renal adjustment is the defensible listed initial plan for the supplied tissue diagnosis and inability to take reliable oral treatment. Foscarnet has no represented resistance or intolerance indication. No confident clinical inaccuracy is identified.",
+      "The diagnosis is legitimately established for a management task, but the route conclusion is also supplied; the current item tests a familiar first-line drug association with a preselected route.",
+      "The tissue result coherently follows the earlier investigation. The update and common presentation provide enough context for independent selection. The antiviral principle is high yield."
+    ],
+    "suggestions": [
+      "Retain actual vomiting/intake observations needed for a fair route decision, while removing the authored conclusion about reliable oral exposure.",
+      "Make the drug decision consequential through a supported competing toxicity, prior-treatment or response consideration and clinically credible same-stage alternatives. A wording-only replacement of the oral-intake sentence will not by itself create difficulty.",
+      "If retained as initial-treatment recognition, explicitly accept that easier educational purpose."
+    ]
+  },
+  {
+    "id": "question.topic.transplant-immunosuppression.cmv-leukopenia.v1",
+    "nodeId": "node.topic.transplant-immunosuppression.cmv-leukopenia.v1",
+    "title": "Leukopenia during active CMV treatment",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'White-cell counts fall' does not establish the degree or clinical significance of leukopenia/neutropenia. A falling count can remain normal; the reader cannot tell how strongly a medication change is indicated.",
+      "'Adjust mycophenolate' does not say reduce, hold or otherwise change it, while the competing options prescribe explicit changes."
+    ],
+    "cues": [
+      {
+        "phrase": "Adjust mycophenolate and retain valganciclovir",
+        "why": "The key alone uses an unspecified flexible adjustment. It is easier to defend than the specific antiviral reductions/substitution offered as alternatives, creating an individualized-answer advantage."
+      }
+    ],
+    "fairness": [
+      "The intended principle is defensible: do not underdose an appropriately renal-adjusted antiviral during required CMV treatment merely because of leukopenia; address other marrow-suppressive therapy and count support. Letermovir is not an interchangeable routine treatment substitute in this scenario.",
+      "It remains uncertain from the visible count description whether mycophenolate modification is required now rather than monitoring/support while preserving both drugs. This is missing decision-critical information, not a claim that the intended management direction is wrong.",
+      "There are potentially two consequential steps: interpret the cytopenia in the context of renal dosing and ongoing antiviral need, then choose which treatment to modify. The later course is coherent and sufficiently summarizes the prior CMV treatment to stand alone."
+    ],
+    "suggestions": [
+      "Supply a clinician-reviewed description or supported values showing clinically meaningful cytopenia, including the relevant neutrophil information if it drives action. Do not invent a treatment threshold.",
+      "Specify the intended mycophenolate action at the same level of precision as the alternatives and confirm that it is uniquely appropriate under the supplied graft/rejection-risk context.",
+      "Preserve the verified renal dose and ongoing treatment indication; they are necessary to distinguishing a justified renal adjustment from inappropriate antiviral underexposure."
+    ]
+  },
+  {
+    "id": "question.topic.transplant-immunosuppression.post-transfusion-screen.v1",
+    "nodeId": "node.topic.transplant-immunosuppression.post-transfusion-screen.v1",
+    "title": "Compatibility testing after a sensitizing event",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Changed compatibility assessment' is an abstract task description; the concrete issue is whether the recipient's current antibody status is represented by the stored specimen."
+    ],
+    "cues": [
+      {
+        "phrase": "The donor's ABO and HLA typing were completed and have not changed.",
+        "why": "Explicitly dismisses both donor-retesting distractors. The key is the only recipient test; a reader can match the changed recipient to that option without knowing sensitization biology."
+      },
+      {
+        "phrase": "archived specimen collected before that transfusion",
+        "why": "Repeats the same before/after contrast already supplied in the opening sentence. Combined with the unchanged-donor sentence, it leaves an obvious update-the-recipient answer."
+      }
+    ],
+    "fairness": [
+      "Updated recipient HLA-antibody characterization is defensible after the represented transfusion. The explanation correctly avoids specifying an unsupported sampling interval.",
+      "The principle is high yield, but repeating stable donor genotype/blood group is not a credible near-miss. The current node is a single sensitization association with explicit elimination of both competitors.",
+      "This first node stands alone and provides a coherent transition to the subsequent donor-antigen comparison."
+    ],
+    "suggestions": [
+      "Remove the sentence declaring both donor alternatives unchanged and replace the option set with plausible recipient compatibility investigations or specimen-use plans.",
+      "Make the sensitizing-event chronology determine which current evidence is needed; state enough laboratory context to avoid ranking equally indicated tests without a reason.",
+      "Do not invent a post-transfusion testing interval to manufacture a second step."
+    ]
+  },
+  {
+    "id": "question.topic.transplant-immunosuppression.donor-antigen-specificity.v1",
+    "nodeId": "node.topic.transplant-immunosuppression.donor-antigen-specificity.v1",
+    "title": "Donor antigen matching against recipient antibodies",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Least represented donor-specific antibody concern' is awkward wording that obscures a simple comparison. It is appropriately bounded, but could state the exact compatibility question more naturally."
+    ],
+    "cues": [
+      {
+        "phrase": "recipient antibodies directed to HLA-A2 and HLA-B7",
+        "why": "The key, 'His friend: HLA-A11 and HLA-B44', is the only option with neither printed target. Literal symbol matching solves the item without medical knowledge or interpreting a clinical consequence."
+      }
+    ],
+    "fairness": [
+      "The friend is the uniquely defensible answer to the narrowly limited represented-antigen question. The disclaimer about further crossmatch work appropriately prevents claiming complete compatibility or authorization to transplant.",
+      "The antigen components themselves are balanced across the four options; this is not a majority-component convergence problem. The problem is that avoidance of two supplied labels is the whole scored operation.",
+      "The current antibody profile makes the second node self-contained and the prior sensitization node follows coherently. Kinship is incidental because no actual relationship-dependent tradeoff must be resolved.",
+      "Donor-specific antibodies versus donor relationship is a high-yield principle, but this implementation is a one-step matching exercise."
+    ],
+    "suggestions": [
+      "Either explicitly accept a foundational antigen-matching exercise or redesign around a source-supported compatibility decision in which interpreting the antibody/antigen result changes the next action.",
+      "Use concrete parallel workup decisions and retain the boundary that this limited panel does not establish overall compatibility. Avoid inventing antibody strength or crossmatch thresholds."
+    ]
+  },
+  {
+    "id": "question.topic.transplant-immunosuppression.mtor-open-wound.v1",
+    "nodeId": "node.topic.transplant-immunosuppression.mtor-open-wound.v1",
+    "title": "Elective mTOR conversion with an open incision",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Replace tacrolimus with sirolimus for maintenance",
+        "why": "Together with 'Replace tacrolimus with everolimus for maintenance', this creates two similarly worded conversion options and one continuation outlier. Both alternatives share the same clinically relevant class problem; a single mTOR-wound fact eliminates both."
+      }
+    ],
+    "fairness": [
+      "Deferring an elective mTOR conversion is defensible with an open surgical wound and tolerable tremor. No confident inaccuracy is identified.",
+      "The mild symptom and stable graft largely remove the competing reason to change tacrolimus. Distinguishing sirolimus from everolimus does not matter to the tested wound concern, so there is no genuine second decision.",
+      "The standalone node is complete and the wound observation is necessary clinical information. mTOR-associated wound-healing concerns are high yield; the present distractor pair makes the application easy."
+    ],
+    "suggestions": [
+      "Replace one interchangeable mTOR distractor with a distinct, clinically credible same-stage regimen plan.",
+      "Require interpretation of a supported competing CNI adverse-effect or recovery consideration that changes whether/how conversion should proceed. Preserve wound status rather than hiding the contraindicating observation.",
+      "Do not create exact timing or dose rules without support; alternatively seek acceptance as an easy safety-recognition item."
+    ]
+  },
+  {
+    "id": "question.topic.transplant-immunosuppression.pregnancy-switch.v1",
+    "nodeId": "node.topic.transplant-immunosuppression.pregnancy-switch.v1",
+    "title": "Preconception antimetabolite selection",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "reviewing fetal medication risks",
+        "why": "The only option that removes the current antimetabolite is 'Replace mycophenolate with azathioprine'; the other two merely retain it at the same or lower dose. The explicit risk framing and unique replacement choice support an answer shortcut."
+      }
+    ],
+    "fairness": [
+      "Substitution of mycophenolate with a pregnancy-compatible alternative under the transplant team is the defensible direction among these choices. The explanation correctly rejects the assumption that a lower mycophenolate dose establishes fetal safety.",
+      "The visible context does not require a second inference beyond the familiar mycophenolate-pregnancy association. Stable graft function and specialist involvement do not create a competing plan.",
+      "The node is self-contained and the later azathioprine interaction follows coherently. This is a high-yield adverse-effect concept; no exact transition interval should be inferred from this draft."
+    ],
+    "suggestions": [
+      "Move generic fetal-risk teaching out of the vignette unless it describes an essential patient goal, and make any additional patient information affect the medication decision.",
+      "Use a supported competing graft/stability or transition-sequencing issue with realistic alternatives, rather than two degrees of continuing the same teratogenic drug.",
+      "If the intended purpose is basic preconception medication recognition, seek explicit acceptance of that role instead of calling it two-step."
+    ]
+  },
+  {
+    "id": "question.topic.transplant-immunosuppression.aza-allopurinol.v1",
+    "nodeId": "node.topic.transplant-immunosuppression.aza-allopurinol.v1",
+    "title": "Azathioprine interaction and a misleading gout substitute",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Stopping allopurinol is the best listed additional change in the represented cytopenic interaction. Substituting febuxostat does not resolve the relevant xanthine-oxidase interaction, and unchanged tacrolimus exposure/renal function does not support tacrolimus reduction as the solution.",
+      "Two consequential steps remain: attribute the new marrow findings to the azathioprine/allopurinol combination, then reject a superficially plausible gout-drug substitution that shares the interaction. The exposure chronology is necessary evidence, not a sufficient nonmedical route to excluding febuxostat.",
+      "The service is already addressing cytopenias and assessing azathioprine, so the question is reasonably limited to an additional medication change rather than a complete marrow-suppression treatment plan. No dose correction is asserted.",
+      "The node explicitly restates the current regimen and deferred pregnancy attempts, so it stands alone and coherently follows the substitution node. This is high-yield drug-interaction knowledge."
+    ],
+    "suggestions": [
+      "Explain after answering why febuxostat is also unsuitable with azathioprine; this is the most valuable close-distractor lesson and is missing from the main explanation.",
+      "Clarify that stopping allopurinol is the selected additional action while azathioprine/cytopenia management continues. Replace 'This question does not choose between those strategies' with a clinical statement that does not appear to disown the action just selected."
+    ]
+  },
+  {
+    "id": "question.topic.transplant-immunosuppression.hyperacute-review.v1",
+    "nodeId": "node.topic.transplant-immunosuppression.hyperacute-review.v1",
+    "title": "Immediate graft injury and preformed antibody evidence",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Focused event review' asks for an abstract review theme rather than a defined clinical or laboratory decision. 'Review cellular rejection control' is particularly vague.",
+      "The cell type and assay underlying 'reacted with donor cells' are unspecified, which becomes consequential when the following node reports a negative HLA antibody/cell-binding evaluation."
+    ],
+    "cues": [
+      {
+        "phrase": "Archived recipient serum drawn before implantation reacted with donor cells",
+        "why": "The key 'Review preimplantation antibody compatibility' echoes the sample timing and immune-reactivity description. Selecting a review label adds no distinct action after recognizing the supplied classic pattern."
+      }
+    ],
+    "fairness": [
+      "The combined immediate injury, endothelial immune deposits, microvascular thrombi and pre-event donor reactivity support the intended preformed-antibody concern; the explanation appropriately avoids claiming exclusive causation.",
+      "However, mechanism recognition followed by a synonymous review category is one classification, not two consequential steps. The core hyperacute-rejection concept is high yield, but the action is insufficiently concrete.",
+      "This node is answerable independently. Across the pair, the earlier positive donor-cell result and later negative HLA/cell-binding record are potentially confusing. Different targets or methods could reconcile them; the text does not identify such a distinction, so this review does not declare the laboratory results impossible."
+    ],
+    "suggestions": [
+      "Ask a concrete supported event-investigation decision rather than a broad review theme, with alternatives representing plausible errors at that same stage.",
+      "Clarify the target and timing of the donor-cell reaction enough to distinguish it from the next node's HLA assessment, or revise the case chronology so the findings are explicitly compatible.",
+      "Preserve the control result and microvascular evidence; do not make timing alone establish the mechanism."
+    ]
+  },
+  {
+    "id": "question.topic.transplant-immunosuppression.abo-archive.v1",
+    "nodeId": "node.topic.transplant-immunosuppression.abo-archive.v1",
+    "title": "ABO pathway and pretreatment compatibility evidence",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Reconcile ABO records using preimplantation serum' does not specify what clinical question the archive review will answer or what is being assessed in that serum. Records reconciliation is too broad to make the proposed action concrete.",
+      "The current negative 'HLA antibody/cell-binding evaluation' appears inconsistent with the prior donor-cell reaction unless different cells, methods or targets are intended. That distinction is not visible.",
+      "When selected independently, 'for the event' has no description of the graft event beyond the generic presentation; the reason to reconstruct pretreatment compatibility is underexplained."
+    ],
+    "cues": [],
+    "fairness": [
+      "The intended two decisions are meaningful: distinguish the ABO pathway from HLA testing, then choose evidence obtained before plasma exchange to assess the pre-event state. A negative HLA evaluation does not resolve ABO compatibility.",
+      "The four combinations balance ABO/HLA and pre/post-treatment components, so majority-component convergence does not select the key. The sample timing is necessary evidence rather than a prohibited hint.",
+      "The intended ABO/preimplantation answer is defensible at the broad level asked, but uniqueness of a specific archive plan cannot be fully assessed while 'reconcile' remains undefined. No assertion that all ABO-incompatible transplantation is prohibited is made.",
+      "ABO versus HLA compatibility is high yield. This particular archive formulation is less directly testable than a concrete interpretation or action, and the paired-record ambiguity requires repair before passing."
+    ],
+    "suggestions": [
+      "State the event and the precise question being answered about the pre-treatment ABO pathway, with concrete parallel archive/interpretation plans.",
+      "Reconcile the earlier positive donor-cell reaction and current negative HLA/cell-binding result explicitly without inventing assay specificity.",
+      "Retain the distinction between pre-event and post-plasma-exchange evidence, but do not expand into held assay/allocation or specimen-handling teaching without supported review."
+    ]
+  },
+  {
+    "id": "question.topic.transplant-immunosuppression.active-amr-backbone.v1",
+    "nodeId": "node.topic.transplant-immunosuppression.active-amr-backbone.v1",
+    "title": "Treatment backbone for active antibody-mediated rejection",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "The integrated report identified active antibody-mediated rejection without a cellular component or chronic transplant glomerulopathy.",
+        "why": "Supplies the mechanism and disease-phase interpretations of all preceding raw findings. It also removes the cellular alternative before the options, leaving a standard named-diagnosis-to-treatment association."
+      }
+    ],
+    "fairness": [
+      "Plasma exchange/IVIG is the defensible listed consensus backbone for the represented acute active process, with baseline therapy/steroids already addressed. The explanation properly acknowledges weak comparative evidence and does not claim an optimal universal regimen or extrapolate to chronic active AMR.",
+      "Naming a diagnosis in a management question is not inherently unfair. Here, however, no additional consequential constraint must be interpreted; ATG and maintenance reduction are mechanism-mismatch foils rather than close management alternatives.",
+      "The standalone case is complete. AMR recognition and treatment are high yield, but the current item is basic treatment recall, not difficult two-step reasoning."
+    ],
+    "suggestions": [
+      "If the objective includes mechanism interpretation, remove the integrated diagnosis label while retaining supported raw tissue, antibody and chronicity findings needed for a unique classification.",
+      "Alternatively retain the diagnosis and test a genuinely distinct, supported care-phase decision with credible same-stage alternatives. Do not imply stronger comparative evidence for a particular regimen than is available.",
+      "Reassess difficulty after the repair; merely lengthening the pathology description will not make routine regimen recall hard."
+    ]
+  },
+  {
+    "id": "question.topic.transplant-immunosuppression.dgf-biopsy.v1",
+    "nodeId": "node.topic.transplant-immunosuppression.dgf-biopsy.v1",
+    "title": "Persisting delayed graft function: cause-defining investigation",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Through the represented surveillance course' provides no usable clinical chronology. The resident cannot tell whether this is the immediate postoperative course or sufficiently persistent unexplained dysfunction at a later reassessment."
+    ],
+    "cues": [
+      {
+        "phrase": "Serial Doppler studies show patent graft vessels, and urinary drainage is adequate.",
+        "why": "Against 'Repeat graft Doppler ultrasonography' and 'Perform radionuclide graft scintigraphy', both alternatives revisit structural/perfusion questions already presented as settled. The only new diagnostic modality is biopsy. Necessary normal findings should remain, but this option set makes them an elimination scaffold."
+      }
+    ],
+    "fairness": [
+      "Biopsy is a reasonable cause-defining investigation during persistent delayed function, and delayed function alone cannot distinguish preservation injury from rejection. No confident clinical inaccuracy in that principle is identified.",
+      "The timing/trajectory is too vague to establish how urgently biopsy should be prioritized over continued reassessment. The explanation's qualified 'can warrant biopsy' is less definite than the task's best-next-investigation ranking. This requires clarification rather than an invented universal day threshold.",
+      "The first node is independently understandable but largely repeats the earlier persistent-dysfunction biopsy construct. The offered choices do not require a distinct two-step delayed-function inference.",
+      "Delayed graft function is high yield and the subsequent recovery node follows coherently."
+    ],
+    "suggestions": [
+      "Replace 'represented surveillance course' with a concrete, source-supported clinical chronology and trajectory sufficient to justify the intended reassessment; do not invent a universal postoperative cutoff.",
+      "Use credible competing cause-assessment or management plans at the current stage, rather than two already-resolved perfusion investigations.",
+      "Make this node test what is distinctive about delayed function or consolidate redundant biopsy-selection coverage while preserving stable concept/history rules."
+    ]
+  },
+  {
+    "id": "question.topic.transplant-immunosuppression.dgf-cni-continuation.v1",
+    "nodeId": "node.topic.transplant-immunosuppression.dgf-cni-continuation.v1",
+    "title": "Tacrolimus during recovering delayed graft function",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Continuing the selected tacrolimus regimen is the best listed plan with biopsy-described tubular injury, improving graft function and verified target exposure. Prior dialysis alone is not a sufficient reason to withhold CNI until complete recovery. The explanation correctly calls for reassessment if toxicity or deterioration emerges.",
+      "The resident must distinguish recovering delayed function from ongoing drug toxicity/rejection, then weigh continuation against reflex withholding or substitution. Withholding a potentially nephrotoxic CNI is a credible competing error; the response trajectory actually changes that decision.",
+      "The options compare concrete CNI plans with similar scope. Improving urine output/creatinine and target exposure are legitimate clinical evidence, not a unique lexical cue. No convergence or explanatory-option shortcut identifies the key.",
+      "The biopsy and earlier dialysis history are restated sufficiently for independent selection. The sequence follows the cause-evaluation node coherently, and its prior explanation did not disclose the continuation answer. This is high-yield transplant medication reasoning."
+    ],
+    "suggestions": [
+      "In post-answer feedback, briefly explain why immediate sirolimus substitution is not a justified default response to this recovering course, without implying an unseen wound complication or inventing a conversion timeline."
+    ]
+  }
+]

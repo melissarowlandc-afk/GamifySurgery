@@ -1,0 +1,630 @@
+[
+  {
+    "id": "question.topic.colon-diverticular-lower-bleeding.first-presentation-ct.v1",
+    "nodeId": "node.topic.colon-diverticular-lower-bleeding.first-presentation-ct.v1",
+    "title": "Initial imaging for overlapping colonic and urinary symptoms",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Contrast-enhanced abdominopelvic CT is the best offered investigation: interpret focal inflammatory abdominal findings despite urinary symptoms, then select broad cross-sectional evaluation rather than a stone-focused study or acute colonoscopy. This is high-yield moderate application.",
+      "Absence of hematuria does not exclude a stone; the explanation appropriately rests on the overall presentation. No confident clinical inaccuracy identified.",
+      "The retrospective clinic frame is understandable. The subsequent CT-result node follows coherently, and this explanation does not reveal its antibiotic decision.",
+      "Review scope for the entire array: all 25 candidates, comprising 4 rewrites and 21 new nodes. Only after/candidate visible text and preceding visible explanations informed judgments, not author gates or difficulty claims. Fourteen retire-and-replace historical records, one retained historical drop hold and three unkeyed boundaries were noted but not scored; there are no kept-unchanged candidates. No network or fresh source verification was performed. PASS is editorial only; all clinical drafts remain needs_clinician_review. Difficulty and high-yield judgments are qualitative, not measured exam frequencies."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.colon-diverticular-lower-bleeding.selected-supportive-care.v1",
+    "nodeId": "node.topic.colon-diverticular-lower-bleeding.selected-supportive-care.v1",
+    "title": "Selective antibiotic omission with previous C. difficile",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The task requests an initial outpatient plan while offering inpatient treatment; it also says initial after describing a subsequent reassessment. Anchor the decision at that reassessment."
+    ],
+    "cues": [
+      {
+        "phrase": "Which initial outpatient plan best fits {patientName}'s CT findings and subsequent assessment?",
+        "why": "The word outpatient eliminates 'Use inpatient intravenous antibiotics with serial reassessment' without interpreting clinical data."
+      }
+    ],
+    "fairness": [
+      "Supportive care with reassessment is the best offered plan: interpret an improving uncomplicated course and then weigh antibiotic benefit against recurrent antibiotic-associated harm. Oral antibiotics remain a recognizable competitor.",
+      "The preceding imaging explanation does not disclose antibiotic omission. The update supplies enough CT and clinical information to stand alone with the shared presentation.",
+      "No confident clinical inaccuracy identified. The high-yield two-step decision is moderate, but one distractor is nonfunctional because of task wording."
+    ],
+    "suggestions": [
+      "Ask which care plan fits the reassessment without preselecting disposition.",
+      "Keep trajectory, immune status, intake and prior C. difficile history. Compare credible plans at the same decision stage and recheck the admission distractor after removing the cue."
+    ]
+  },
+  {
+    "id": "question.topic.colon-diverticular-lower-bleeding.post-abscess-colonoscopy.v1",
+    "nodeId": "node.topic.colon-diverticular-lower-bleeding.post-abscess-colonoscopy.v1",
+    "title": "Colonic examination after recovery from a diverticular abscess",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "His records contained no colorectal screening examination.",
+        "why": "Names a missing examination immediately supplied by the colonoscopy option; this becomes completion of an announced omission."
+      },
+      {
+        "phrase": "His only prior endoscopy report described the esophagus, stomach and duodenum.",
+        "why": "The elementary upper-versus-lower mismatch rehearses why the previous examination cannot satisfy this task."
+      },
+      {
+        "phrase": "Repeat contrast-enhanced CT of the abdomen and pelvis",
+        "why": "CT resolution has already been reported, with no residual problem to reassess. This is a completed-work foil."
+      }
+    ],
+    "fairness": [
+      "Complete colonoscopy after recovery is the best offered answer in this unscreened patient with a complicated episode. No confident clinical inaccuracy identified.",
+      "The later elective-treatment decision follows coherently and is not disclosed by this explanation. This node is self-contained.",
+      "The concept is high yield, but recognizing upper endoscopy and recalling a follow-up rule do not constitute two consequential resident-level steps."
+    ],
+    "suggestions": [
+      "Use a clinically meaningful adequacy or timing problem in an actual prior colonic evaluation, supported by observations that change the next action.",
+      "Do not cross the separately held recent-adequate-colonoscopy boundary without clinician resolution. If no difficult fair variant is supportable, request an explicit basic-item role.",
+      "Replace the already successful CT assessment with a credible diagnostic alternative at the same recovery stage."
+    ]
+  },
+  {
+    "id": "question.topic.colon-diverticular-lower-bleeding.elective-burden-after-abscess.v1",
+    "nodeId": "node.topic.colon-diverticular-lower-bleeding.elective-burden-after-abscess.v1",
+    "title": "Elective sigmoid resection after recurrent burdensome disease",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "he preferred resection to further recurrences",
+        "why": "Directly names the treatment keyed as 'Schedule an elective sigmoid colectomy'; the preference can be matched without clinical weighing."
+      },
+      {
+        "phrase": "Start oral mesalamine maintenance therapy",
+        "why": "A weak clinical competitor for recurrent diverticular disease; it supplies little discrimination. This is distractor implausibility rather than a lexical shortcut by itself."
+      }
+    ],
+    "fairness": [
+      "Elective resection is reasonable given burden, recovery, risk assessment and informed preference. The concern is answer disclosure, not a confident clinical error.",
+      "The prior colonoscopy task coherently leads to the negative examination reported here. The update stands alone with the shared presentation.",
+      "Elective decision-making is high yield, but the stem has already completed the weighing and selected the procedure."
+    ],
+    "suggestions": [
+      "Retain meaningful informed preferences but express priorities without naming the operation.",
+      "Introduce a supported competing consideration that actually changes management, such as interpretation of recurrent inflammatory versus persistent noninflammatory symptoms.",
+      "Do not merely delete preference and leave equally reasonable elective policies."
+    ]
+  },
+  {
+    "id": "question.topic.colon-diverticular-lower-bleeding.first-episode-with-urinary-symptoms.v1",
+    "nodeId": "node.topic.colon-diverticular-lower-bleeding.first-episode-with-urinary-symptoms.v1",
+    "title": "Initial investigation of suspected bowel-bladder communication",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Interpret recurrent infections and pneumaturia without instrumentation as possible bowel-bladder communication, then choose cross-sectional evaluation of cause and extent. Cystoscopy is a credible narrower alternative; CT best addresses the combined abdominal and urinary findings.",
+      "Absence of catheterization is decision-critical context rather than improper distractor deletion. No confident clinical inaccuracy identified.",
+      "The explanation supports the diagnostic inference without prescribing the later operation. Subsequent CT and treatment follow-up are coherent.",
+      "This is high-yield moderate application; the classic symptom pattern does not justify a hard rating."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.colon-diverticular-lower-bleeding.symptomatic-colovesical-fistula.v1",
+    "nodeId": "node.topic.colon-diverticular-lower-bleeding.symptomatic-colovesical-fistula.v1",
+    "title": "Definitive treatment of persistent sigmoid-to-bladder communication",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Plan bladder repair with the sigmoid left in place",
+        "why": "The appended omission announces that the plan leaves the named diseased source untreated; it reads as a critique rather than a neutral treatment label."
+      },
+      {
+        "phrase": "Use repeated culture-directed urinary antibiotic courses",
+        "why": "Repeats the strategy already described as failing to end recurrent infections, leaving only one apparently definitive plan."
+      }
+    ],
+    "fairness": [
+      "Resection of the involved sigmoid is the best offered definitive treatment after infection control in this fit symptomatic patient. The explanation appropriately separates precise bladder technique.",
+      "The update supplies the communication and tumor assessment, so the later node is coherent and independently usable. Earlier feedback already directs attention to adjacent bowel and bladder.",
+      "A supplied structural diagnosis followed by its standard operation against conspicuously incomplete alternatives is easy high-yield recall, not two consequential steps. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": [
+      "Introduce a supported patient-specific timing or operative-strategy tradeoff if two-step difficulty is required.",
+      "Use neutral complete treatment plans and avoid appending an explicit omission to mark the wrong answer.",
+      "Do not invent a ranking of bladder techniques merely to increase difficulty."
+    ]
+  },
+  {
+    "id": "question.topic.colon-diverticular-lower-bleeding.post-recovery-alarm-colonoscopy.v1",
+    "nodeId": "node.topic.colon-diverticular-lower-bleeding.post-recovery-alarm-colonoscopy.v1",
+    "title": "Diagnostic examination despite a prior adequate colonoscopy",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The previous colonoscopy is only dated 'before this illness'. If recency matters to the intended challenge, the reader cannot assess it.",
+      "The 'next routine surveillance visit' does not identify a relevant surveillance program or justify delaying evaluation of current symptoms."
+    ],
+    "cues": [
+      {
+        "phrase": "Perform colonoscopy to assess the persistent colonic change",
+        "why": "Only the key states a rationale matching the persistent symptoms. The CT option defers to routine surveillance and stool DNA offers screening instead of an equally plausible diagnostic plan."
+      }
+    ],
+    "fairness": [
+      "New altered stool caliber, weight loss and focal thickening justify diagnostic evaluation despite an earlier negative examination. Colonoscopy is the best offered answer; no confident clinical inaccuracy identified.",
+      "There is a meaningful two-step high-yield objective: reinterpret new alarm findings despite prior reassurance, then choose a diagnostic examination. Weak alternatives lower discrimination.",
+      "The subsequent narrowing/obstruction node follows logically. This explanation does not disclose its treatment."
+    ],
+    "suggestions": [
+      "State relevant chronology without inventing a mandatory interval.",
+      "Use equally neutral diagnostic-plan labels; remove the key's rationale clause and unexplained routine-surveillance delay.",
+      "Replace the screening-only foil with a credible diagnostic competitor whose limitation must be inferred from the case."
+    ]
+  },
+  {
+    "id": "question.topic.colon-diverticular-lower-bleeding.symptomatic-sigmoid-stricture.v1",
+    "nodeId": "node.topic.colon-diverticular-lower-bleeding.symptomatic-sigmoid-stricture.v1",
+    "title": "Treatment of persistent fixed sigmoid obstruction",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Distinguish fixed mechanical obstruction from recurrent inflammation using narrowing, proximal dilation and absent surrounding inflammatory findings, then choose resection rather than another antibiotic course or dilation. Dilation is a credible competing error.",
+      "Resection is the best offered plan. These findings do not prove a benign cause or exclude malignancy, but that uncertainty does not rescue the dilation alternative. The explanation preserves the need to evaluate the underlying cause and should not be read as establishing benign pathology.",
+      "The prior investigation leads coherently to this colonoscopy result. The update independently supplies narrowing and current obstructive physiology.",
+      "High-yield moderate surgical application; no confident clinical inaccuracy identified."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.colon-diverticular-lower-bleeding.large-accessible-abscess.v1",
+    "nodeId": "node.topic.colon-diverticular-lower-bleeding.large-accessible-abscess.v1",
+    "title": "Source control for a large localized diverticular abscess",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Interpret a sizable localized collection with preserved physiology, then choose drainage plus antibiotics rather than antibiotics without drainage or immediate resection. Size, containment and clinical state jointly determine the action.",
+      "A documented safe percutaneous route is necessary to distinguish source-control approaches; it does not itself establish the indication for drainage. Retain this meaningful feasibility fact.",
+      "The 6-cm measurement is a case observation, not a newly asserted cutoff. No borderline threshold claim or confident clinical inaccuracy is identified.",
+      "Later worsening is a coherent new event rather than a contradiction of the initial plan. This is high-yield moderate reasoning, not hard."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.colon-diverticular-lower-bleeding.failed-abscess-source-control.v1",
+    "nodeId": "node.topic.colon-diverticular-lower-bleeding.failed-abscess-source-control.v1",
+    "title": "Escalation when the drain misses the worsening source",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Proceed to operative control of the undrained source",
+        "why": "The option supplies the interpretation 'undrained source' that the resident should derive. Only this option explicitly addresses the new collection."
+      },
+      {
+        "phrase": "antibiotics active against the cultured organisms",
+        "why": "Together with a collapsed drained cavity and a separate inaccessible collection, this pre-disqualifies broadening antibiotics. The datum is useful, but the current options largely test serial elimination."
+      }
+    ],
+    "fairness": [
+      "Worsening illness and an enlarging inaccessible collection support operative source control. Enlarging a catheter in a different collapsed cavity does not address the anatomy.",
+      "The high-yield objective has two consequential steps: recognize the drain-target mismatch and select escalation. Wording and option design unnecessarily reveal the inference.",
+      "The second node coherently follows initial drainage and restates the anatomy sufficiently to stand alone. The first explanation teaches source control but does not prescribe management of the new inaccessible collection.",
+      "No confident clinical inaccuracy identified."
+    ],
+    "suggestions": [
+      "Label the operative plan neutrally without 'undrained source'.",
+      "Retain anatomy and safe-access facts. Improve the competing plans so one requires genuine interpretation rather than contradicting an explicit statement.",
+      "Do not remove access information merely to make operative versus percutaneous management ambiguous."
+    ]
+  },
+  {
+    "id": "question.topic.colon-diverticular-lower-bleeding.gross-perforation-source-control.v1",
+    "nodeId": "node.topic.colon-diverticular-lower-bleeding.gross-perforation-source-control.v1",
+    "title": "Source control for feculent diverticular perforation",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'The founder reviews the sequential operative records with him' adds no decision information, although the retrospective clinic frame is understandable."
+    ],
+    "cues": [],
+    "fairness": [
+      "Resection is the best offered procedure for the disrupted diseased sigmoid with diffuse fecal contamination. No confident clinical inaccuracy identified.",
+      "This is direct recognition of gross perforation followed by a standard operation. Urgency findings should remain, but lavage and simple closure are weak competitors for residents in this exact presentation.",
+      "The reconstruction node follows coherently. This explanation partly scaffolds it by naming physiology and bowel condition as the next decision dimensions.",
+      "This is a high-yield safety decision, not a hard two-step resident item."
+    ],
+    "suggestions": [
+      "Request an explicitly accepted foundational/safety role or change the scored objective to a genuinely competing source-control decision supported by the findings.",
+      "Preserve fecal contamination and full-thickness perforation; never hide urgency to manufacture difficulty.",
+      "Remove decorative framing and avoid rehearsing the next scored discriminator."
+    ]
+  },
+  {
+    "id": "question.topic.colon-diverticular-lower-bleeding.stable-primary-reconstruction.v1",
+    "nodeId": "node.topic.colon-diverticular-lower-bleeding.stable-primary-reconstruction.v1",
+    "title": "Reconstruction after sigmoid resection in a selected stable patient",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "Standalone context is incomplete: the presentation says emergency abdominal surgery and the update says 'After source resection'; the feculent diverticular perforation appears only in the prior node.",
+      "The learner explanation ends with an editorial review instruction instead of explaining the closest competing operation."
+    ],
+    "cues": [
+      {
+        "phrase": "Reconstruction is considered separately after resection and assessment of physiology and bowel condition.",
+        "why": "The preceding explanation rehearses the dimensions immediately tested. This is sequence scaffolding rather than a standalone answer leak, but lowers independent difficulty."
+      }
+    ],
+    "fairness": [
+      "Primary anastomosis with diversion is a defensible preferred offered reconstruction in these favorable conditions. Hartmann is not intrinsically incorrect in every such patient; explain the conditional preference rather than an absolute.",
+      "Host risk, physiology and bowel suitability create a meaningful high-yield two-step decision. The favorable checklist and weak staged-reconstruction competitor keep it moderate.",
+      "The paired sequence is coherent, but independent-node contamination context is missing. No confident clinical inaccuracy is asserted in this offline review."
+    ],
+    "suggestions": [
+      "Restate the emergency diverticular perforation and contamination context briefly in this node.",
+      "Explain the conditional preference over Hartmann and obtain clinician confirmation of the exact ranking.",
+      "Move review-status instructions out of learner feedback and reduce preceding answer-specific scaffolding within the authorized revision lane."
+    ]
+  },
+  {
+    "id": "question.topic.colon-diverticular-lower-bleeding.immunosuppressed-antibiotic-decision.v1",
+    "nodeId": "node.topic.colon-diverticular-lower-bleeding.immunosuppressed-antibiotic-decision.v1",
+    "title": "Antibiotic treatment and disposition in a transplant recipient",
+    "verdict": "FAIL",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "Antibiotic eligibility is conflated with route and admission. The task does not establish a pathway uniquely resolving outpatient versus inpatient treatment.",
+      "Substantial chronic lung disease is introduced only in the next node, although baseline comorbidity could matter to this earlier disposition."
+    ],
+    "cues": [
+      {
+        "phrase": "after outpatient treatment of her first CT-confirmed sigmoid inflammatory episode",
+        "why": "The presentation reveals the historical disposition before asking the resident to choose outpatient versus inpatient care."
+      },
+      {
+        "phrase": "she ate without vomiting and pain was controlled with oral medication",
+        "why": "Together with an arranged early reassessment, this previews oral/outpatient care without settling all host-risk concerns sufficiently to make admission wrong."
+      }
+    ],
+    "fairness": [
+      "Antibiotics are well motivated by tacrolimus/mycophenolate use. Inpatient intravenous antibiotics and observation nevertheless remain defensible for an immunosuppressed transplant recipient; normal vital signs, oral tolerance and preserved renal function alone do not establish that the competing disposition is incorrect.",
+      "The explanation calls outpatient oral treatment the proposed plan rather than resolving that competing choice. This review does not claim outpatient care is prohibited; the scoring failure is the absence of one securely distinguishable best answer.",
+      "The next node's pulmonary comorbidity requires a coherent shared history; unseen later information cannot fairly score this node.",
+      "This is a high-yield two-step issue, but ambiguity is not legitimate hard difficulty. FAIL concerns the current scored version, not the topic."
+    ],
+    "suggestions": [
+      "Rebuild around one decision: establish common disposition and compare antibiotic strategies, or make disposition the objective with clinician-supported information that actually resolves it.",
+      "Remove the retrospective outpatient answer disclosure.",
+      "Make chronic comorbidity consistent across the case and have Melissa confirm the exact transplant-management boundary. Do not invent an admission threshold."
+    ]
+  },
+  {
+    "id": "question.topic.colon-diverticular-lower-bleeding.high-risk-recovered-observation.v1",
+    "nodeId": "node.topic.colon-diverticular-lower-bleeding.high-risk-recovered-observation.v1",
+    "title": "Elective management after recovery in a high-risk transplant recipient",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Chronic lung disease first appears after an acute disposition decision where relevant baseline comorbidity should have been available."
+    ],
+    "cues": [
+      {
+        "phrase": "she preferred to continue nonsurgical care while symptoms remained absent",
+        "why": "Essentially states the keyed nonoperative plan; the resident need not weigh treatment choices."
+      },
+      {
+        "phrase": "Pulmonary assessment documented substantial operative risk from chronic lung disease.",
+        "why": "Supplies the risk interpretation rather than observations, reinforcing the already stated nonsurgical answer."
+      },
+      {
+        "phrase": "Continue nonoperative follow-up with a recurrence response plan",
+        "why": "The key alone includes a reassuring contingency plan, beside surgery and an unsupported maintenance-drug strategy."
+      }
+    ],
+    "fairness": [
+      "Observation is reasonable after recovery given supplied risk and informed preference. Acute antibiotic eligibility does not itself mandate elective colectomy; this is a valuable high-yield distinction.",
+      "The later timeline is coherent and the update stands alone with the presentation, but it dictates the answer instead of requiring two consequential steps.",
+      "No confident clinical inaccuracy identified."
+    ],
+    "suggestions": [
+      "State patient priorities without naming nonsurgical treatment and use supported functional-risk observations rather than only a risk conclusion.",
+      "Compare credible elective plans at the same scope with equivalent follow-up detail; avoid mesalamine as filler.",
+      "Resolve the shared chronic-lung-disease history with the preceding node."
+    ]
+  },
+  {
+    "id": "question.topic.colon-diverticular-lower-bleeding.ongoing-bleeding-cta.v1",
+    "nodeId": "node.topic.colon-diverticular-lower-bleeding.ongoing-bleeding-cta.v1",
+    "title": "Localization during continuing significant lower-GI hemorrhage",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Interpret repeated hypotension during further large-volume bleeding despite replacement as ongoing significant hemorrhage, then select CTA instead of a delayed prepared examination or less precise scintigraphic localization.",
+      "CTA is the best offered study while resuscitation continues. Upper-tract assessment and failed preparation establish meaningful sequencing context rather than merely naming an unavailable service.",
+      "The subsequent multiphase findings follow coherently. This explanation does not disclose the next angiographic treatment.",
+      "High-yield moderate application, with no confident clinical inaccuracy identified; the alternatives do not sustain a hard rating."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.colon-diverticular-lower-bleeding.positive-cta-embolization.v1",
+    "nodeId": "node.topic.colon-diverticular-lower-bleeding.positive-cta-embolization.v1",
+    "title": "Interpreting contrast extravasation to select hemostasis",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Interpret a new arterial focus that enlarges into the lumen as active extravasation; ongoing hemorrhage and failed preparation then favor selective angiography with possible embolization over immediate colectomy or another preparation attempt.",
+      "The update independently supplies the positive study and ongoing course. Earlier feedback does not name embolization, so the sequential decision remains distinct.",
+      "The prose phase observations are usable and no missing image is promised. This review did not verify image rendering.",
+      "High-yield moderate two-step reasoning. No confident clinical inaccuracy or equally good second offered plan identified."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.colon-diverticular-lower-bleeding.stable-bleed-colonoscopy.v1",
+    "nodeId": "node.topic.colon-diverticular-lower-bleeding.stable-bleed-colonoscopy.v1",
+    "title": "Investigation after bleeding has clinically stopped",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Obtain immediate CT angiography for active-source localization",
+        "why": "The label teaches its indication ('active-source') against an explicitly stopped bleed; immediate versus nonemergent wording offers a shortcut."
+      },
+      {
+        "phrase": "Arrange nonemergent inpatient colonoscopy after preparation",
+        "why": "The key bundles modality, preparation and reassuring timing, whereas alternatives emphasize active localization or immediate testing."
+      }
+    ],
+    "fairness": [
+      "Prepared nonemergent colonoscopy is the best offered inpatient investigation after bleeding stops with no source established. No confident clinical inaccuracy identified.",
+      "There is a meaningful high-yield inference about bleeding phase followed by test selection; explanatory option wording lowers discrimination.",
+      "The stem lacks a full discharge-risk assessment if the objective is inpatient versus outpatient care. That is not another key among the current options; keep the objective limited to inpatient investigation.",
+      "The subsequent colonoscopy and visible-vessel node follow coherently; this explanation does not reveal clipping."
+    ],
+    "suggestions": [
+      "Decide whether modality or timing is being tested. Use neutral comparable labels for modality, or realistic timings of the same procedure for timing.",
+      "Preserve serial stability and absence of further blood loss.",
+      "Keep inpatient context explicit when discharge disposition is outside the scored decision."
+    ]
+  },
+  {
+    "id": "question.topic.colon-diverticular-lower-bleeding.nonbleeding-vessel-treatment.v1",
+    "nodeId": "node.topic.colon-diverticular-lower-bleeding.nonbleeding-vessel-treatment.v1",
+    "title": "Treatment of a nonbleeding diverticular visible vessel",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Options mix ending the examination with individual therapeutic maneuvers. 'Inject dilute epinephrine' does not clearly say whether it is the complete treatment endpoint."
+    ],
+    "cues": [],
+    "fairness": [
+      "Clipping is the best offered endpoint for an exposed diverticular vessel despite absent current flow. Washing without treatment is inadequate for the intended high-risk stigma; temporary injection is not equivalent definitive treatment.",
+      "This important high-yield rule remains direct recognition followed by a standard treatment association. No competing morphology, failed therapy or other consequential constraint creates a second applied step.",
+      "The preceding explanation does not disclose treatment. The new findings are self-contained and coherent.",
+      "No confident clinical inaccuracy identified. This option set does not establish a hierarchy among other definitive diverticular techniques."
+    ],
+    "suggestions": [
+      "Request an explicitly accepted foundational role or add a supported second consequential observation that changes the appropriate treatment.",
+      "Make all options complete intended hemostatic plans so adjunctive injection is not confused with a definitive endpoint.",
+      "Do not add ligation-versus-clipping rankings from the held boundary without clinician/source resolution."
+    ]
+  },
+  {
+    "id": "question.topic.colon-diverticular-lower-bleeding.rebleed-after-clipping.v1",
+    "nodeId": "node.topic.colon-diverticular-lower-bleeding.rebleed-after-clipping.v1",
+    "title": "Escalation after recurrent bleeding despite endoscopic clipping",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Interpret recurrent active, localized, significant bleeding after initial endoscopic treatment, then choose angiographic hemostasis before surgical rescue. Repeat endoscopy is a credible alternative whose suitability depends on the current blood-filled colon and instability.",
+      "Selective angiography with possible embolization is the best offered plan. No confident clinical inaccuracy identified.",
+      "The node independently supplies prior treatment, recurrence, localization and current physiology. Subsequent failure of endoscopic and radiologic interventions is coherent.",
+      "High-yield moderate application. This overlaps the positive-CTA node elsewhere in the packet; that is content redundancy rather than a standalone scoring defect."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.colon-diverticular-lower-bleeding.localized-surgical-rescue.v1",
+    "nodeId": "node.topic.colon-diverticular-lower-bleeding.localized-surgical-rescue.v1",
+    "title": "Extent of rescue surgery for localized ascending-colon bleeding",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "CTA, endoscopy and angiography all localized active bleeding to the ascending segment.",
+        "why": "Supplies a completed concordant localization conclusion. With resection already selected, the resident merely maps ascending colon to right colectomy."
+      },
+      {
+        "phrase": "many sigmoid diverticula but no left-colon bleeding stigma",
+        "why": "Explicitly contrasts the sigmoid alternative with absent local bleeding evidence, leaving little competing interpretation."
+      },
+      {
+        "phrase": "CTA supplies a current anatomic target.",
+        "why": "Earlier feedback already emphasizes the same target; this follow-up largely repeats the localization lesson."
+      }
+    ],
+    "fairness": [
+      "Right colectomy is the best offered extent after failed nonsurgical treatment with credible ascending-colon localization. Incidental sigmoid diverticula do not justify sigmoid resection.",
+      "The sequence is coherent and the update stands alone, but the decision to operate and the decisive localization are both already stated.",
+      "High-yield rescue-surgery principle with no confident clinical inaccuracy identified. The present task is easy anatomy matching, not two-step reasoning."
+    ],
+    "suggestions": [
+      "Provide interpretable raw localization records and a meaningful reliability distinction that changes operative extent.",
+      "Maintain one defensible target; do not manufacture unresolved conflicting tests to simulate difficulty.",
+      "Alternatively request an explicitly accepted foundational role."
+    ]
+  },
+  {
+    "id": "question.topic.colon-diverticular-lower-bleeding.high-risk-hartmann.v1",
+    "nodeId": "node.topic.colon-diverticular-lower-bleeding.high-risk-hartmann.v1",
+    "title": "Definitive reconstruction in a physiologically high-risk patient",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Integrate vasopressor dependence, steroid exposure, severe lung disease and edematous bowel, then distinguish avoiding an anastomosis from merely diverting one. Hartmann is the best offered definitive reconstruction.",
+      "Definitive abdominal closure legitimately scopes the offered decision. It should not be interpreted as generally ruling out damage-control surgery in unstable patients.",
+      "The word 'closure' overlaps abdominal and rectal-stump closure, but these are different structures and either anastomotic option also permits abdominal closure. This weak lexical overlap does not determine the key.",
+      "The standalone record supplies disease, operative stage and host risk. High-yield moderate reasoning; no confident clinical inaccuracy identified."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.colon-diverticular-lower-bleeding.healthy-resection-boundaries.v1",
+    "nodeId": "node.topic.colon-diverticular-lower-bleeding.healthy-resection-boundaries.v1",
+    "title": "Proximal and distal boundaries for elective sigmoid resection",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The presentation concerns planned clinic surgery, but the update describes bowel texture and tension after mobilization and the task calls this operative anatomy. Clarify whether this is operative-record review or explicitly hypothetical intraoperative findings."
+    ],
+    "cues": [
+      {
+        "phrase": "Remove the diseased sigmoid and join descending colon to rectum",
+        "why": "Convergence selects the key without medicine: descending colon is the proximal partner in two of three choices; rectum is the distal partner in two of three; only the key combines both majority components."
+      }
+    ],
+    "fairness": [
+      "Sigmoid resection with descending-colon-to-rectum anastomosis is the best offered plan. Distinguishing incidental proximal diverticula from disease while choosing a rectal distal target is a meaningful high-yield surgical objective.",
+      "No confident clinical inaccuracy identified. The two-component decision could be moderate, but option structure bypasses it.",
+      "This standalone case has an internal chronology defect rather than dependence on an earlier node."
+    ],
+    "suggestions": [
+      "Repair convergence using a clinically credible balanced option design and re-attack with clinical findings hidden.",
+      "Do not pad the set with an implausible fourth operation solely to balance wording; split the objective if necessary.",
+      "Make the operative stage consistent across presentation, update and task."
+    ]
+  },
+  {
+    "id": "question.topic.colon-diverticular-lower-bleeding.continue-secondary-aspirin.v1",
+    "nodeId": "node.topic.colon-diverticular-lower-bleeding.continue-secondary-aspirin.v1",
+    "title": "Distinguishing secondary-prevention aspirin from nonaspirin NSAIDs",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Infer secondary prevention from prior myocardial infarction, then weigh cardiovascular benefit separately from avoidable naproxen exposure after hemorrhage. Continue aspirin and discontinue naproxen is the best offered discharge plan.",
+      "The four-way matrix balances each medicine's continuation and discontinuation; it does not assemble the key from majority components. Similar wording expresses genuine opposite plans rather than duplicates.",
+      "The explanation appropriately says generally indicated and does not invent a restart deadline. No confident clinical inaccuracy identified.",
+      "The standalone record includes hemostasis and both indications. This is a high-yield moderate medication-safety decision."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.colon-diverticular-lower-bleeding.stop-primary-prevention-aspirin.v1",
+    "nodeId": "node.topic.colon-diverticular-lower-bleeding.stop-primary-prevention-aspirin.v1",
+    "title": "Reassessing primary-prevention aspirin after hemorrhage",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Distinguish risk factors and family history from established vascular disease, then reassess preventive aspirin after significant hemorrhage. Discontinuation is the best offered plan; clopidogrel substitution does not create a secondary-prevention indication.",
+      "Absence of prior vascular events and other antiplatelet indications is necessary information. Do not delete it merely because it makes classification possible.",
+      "The standalone record supplies indications and resolved hemorrhage. No confident clinical inaccuracy identified; feedback does not impose an unsupported universal rule.",
+      "High-yield low-moderate application rather than hard reasoning; indication classification followed by a benefit/harm decision provides two consequential steps."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.colon-diverticular-lower-bleeding.flat-vascular-lesion-treatment.v1",
+    "nodeId": "node.topic.colon-diverticular-lower-bleeding.flat-vascular-lesion-treatment.v1",
+    "title": "Endoscopic treatment of superficial cecal vascular lesions",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "There was no focal exposed vessel within a diverticulum.",
+        "why": "Directly denies the morphology taught in the clipping concept. This functions as a tailored exclusion for the clip distractor rather than adding necessary positive characterization."
+      }
+    ],
+    "fairness": [
+      "Argon plasma coagulation is a defensible best offered treatment for flat superficial oozing vascular lesions. This review does not establish that clips are categorically inappropriate for every angioectasia; avoid implying a universal hierarchy.",
+      "Recognizing classic angioectasia and recalling APC is a diagnosis-treatment association, not two independently consequential applied steps. Epinephrine is again a weak definitive-treatment competitor.",
+      "The standalone story is coherent. No actual exhibit is supplied, but no image is promised and the observations are readable.",
+      "The concept is high yield. No confident clinical inaccuracy is asserted; concerns are difficulty, tailored exclusion and insufficient explanation of the closest modality."
+    ],
+    "suggestions": [
+      "Remove the tailored negative about a diverticular vessel while retaining positive morphology.",
+      "If two-step difficulty is required, use supported lesion or treatment-history observations that materially change the favored definitive technique.",
+      "Explain why APC suits this morphology and why the closest alternative is less suitable without claiming unsupported universal superiority. A reviewed original exhibit could improve interpretation but must actually be supplied before it is promised."
+    ]
+  }
+]

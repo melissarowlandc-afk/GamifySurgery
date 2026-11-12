@@ -1,0 +1,1147 @@
+[
+  {
+    "id": "A02",
+    "title": "HIDA after equivocal gallbladder ultrasound",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Review-six scope: 73 packet versions (43 main and 30 context). Independently re-reviewed only the sixteen review-five REVISE entries using their after fields; the review-only key marker, titles, author responses and rationales were not evidence for solving them. Inspected actual node order and prior feedback only for the expressly requested sequence/scaffold audit. Read question-authoring.2026-11-02.v9, the round-six handoff/responses and relevant local claim/source mappings.",
+      "Counts, independently reassessed 16: {\"total\":16,\"verdict\":{\"PASS\":5,\"REVISE\":11,\"FAIL\":0},\"difficulty\":{\"easy\":8,\"moderate\":8,\"hard\":0},\"twoStep\":8}. Overall 73: {\"total\":73,\"verdict\":{\"PASS\":62,\"REVISE\":11,\"FAIL\":0},\"difficulty\":{\"easy\":13,\"moderate\":55,\"hard\":5},\"twoStep\":60}. Overall difficulty/twoStep includes carried ratings for 57 preservation-only entries; these are predictions, not learner performance or a fresh difficulty claim for changed sequences.",
+      "Preservation method: the saved snapshot's review array exactly matches the immutable current review-five report. Compared exact JSON.stringify UTF-8 bytes without normalization against that snapshot, and independently loaded current assembled TypeScript through the read-only source loader. Checked question objects plus complaint, presentation, patient display name, canonical demographics, all instantiation profiles and the full target node. This establishes field/version preservation; regenerated packet files as a whole are not claimed byte-identical.",
+      "Preservation result: all 57 review-five PASS question versions, including B01/B10/B29, and all eleven owner-approved question/case-node projections are exact. Exactly the specified sixteen after objects changed. All 73 current packet after projections match current assembled source. Eight preserved versions have changed preceding feedback: B03, B11, B12, B17, B18, B19, B21 and B22. These changes are individually flagged; B19 is the clearest material loss of independent reasoning.",
+      "Limits: no Git, installs, network, external messages or files other than this report were used for mutations. Existing local source metadata/claims were checked but external documents were not retrieved or independently authenticated. Editorial PASS is not clinical approval; new clinical drafts remain needs_clinician_review. The eleven owner approvals are separately verified below and excluded from the 73-item verdict/difficulty denominator.",
+      "Exact-value audit of revised after fields: 0.6 mm in B18-context is explicitly identified in its local claim/ledger as constructed specimen data, not a treatment cutoff; B36 numbers are explicitly constructed pilot inputs with stated denominators. The manometry items use laboratory-relative observations. No newly asserted unsupported exact clinical cutoff was identified; no new threshold is proposed. Preserved PASS versions were not clinically re-reviewed.",
+      "Most common remaining patterns: obvious same-stage referral versus unsupported waiting prerequisites; interpretation tasks that reduce to directional or local-versus-unsampled wording; one missing decision-critical negative (B17-context); majority-component convergence and prior-feedback leakage (B19-context); unique stain repetition (B24); and a sole untested comparison cue that bypasses the QI data (B36).",
+      "Owner-approved preservation-only A04: question.gs028f.nutrition.refeeding-insulin-phosphate-shift.v2.r2. Melissa Rowland approval record, exact question object and live case/node projection are byte-identical to the saved review-five baseline. Before/after SHA-256 of the defined case/node projection: b85697043fed6eae5f2bdb6de48269bbe0ed73ccdb5ea8b37356a518ceb1cbfc. No clinical or difficulty reassessment.",
+      "Owner-approved preservation-only A08: question.wound.secondary-intention-healing.v1.r2. Melissa Rowland approval record, exact question object and live case/node projection are byte-identical to the saved review-five baseline. Before/after SHA-256 of the defined case/node projection: 992fe245287443d6853e55e0735adccfa92bb724584d5562abcf8b4f7a7de043. No clinical or difficulty reassessment.",
+      "Owner-approved preservation-only A11: question.differentiated-thyroid-cancer.individualized-surgical-extent.v1.r4. Melissa Rowland approval record, exact question object and live case/node projection are byte-identical to the saved review-five baseline. Before/after SHA-256 of the defined case/node projection: 65be40ac3950a9188b57d6462465c33d6806d20ea062da01080a1e34badc0441. No clinical or difficulty reassessment.",
+      "Owner-approved preservation-only A17: question.adrenal-incidentaloma.pheochromocytoma-before-biopsy.v3.r3. Melissa Rowland approval record, exact question object and live case/node projection are byte-identical to the saved review-five baseline. Before/after SHA-256 of the defined case/node projection: 81f6175d82efa5e4445a1d2a619e22fc04b160f3a71037db91568d25b6d9c121. No clinical or difficulty reassessment.",
+      "Owner-approved preservation-only A22: question.statistics-ethics.fisher-exact.v2.r3. Melissa Rowland approval record, exact question object and live case/node projection are byte-identical to the saved review-five baseline. Before/after SHA-256 of the defined case/node projection: 5746d736e296bcefcaf29032f0a4c1461bcd100ca7c17aea98a5364974071e73. No clinical or difficulty reassessment.",
+      "Owner-approved preservation-only A23: question.statistics-ethics.risk-ratio-odds-ratio.v4.r3. Melissa Rowland approval record, exact question object and live case/node projection are byte-identical to the saved review-five baseline. Before/after SHA-256 of the defined case/node projection: c37e875881ada775cca01d47c46d4927d2da78ca740a887a5c128f263e907bde. No clinical or difficulty reassessment.",
+      "Owner-approved preservation-only A27: question.gs028g.laparoscopy-respiratory.co2-absorption.v2.r3. Melissa Rowland approval record, exact question object and live case/node projection are byte-identical to the saved review-five baseline. Before/after SHA-256 of the defined case/node projection: a864e2779ed7a0cf78cdab2e2a0c1a4e7923aa1fb4ede5bac7b3e73c1d61b142. No clinical or difficulty reassessment.",
+      "Owner-approved preservation-only A28: question.gs028g.merkel-cell.integrated-diagnosis.v1.r3. Melissa Rowland approval record, exact question object and live case/node projection are byte-identical to the saved review-five baseline. Before/after SHA-256 of the defined case/node projection: b4f6cef9236c8d8d193e5ce0639c2eff8f8313ea473ebb48ed2d5b2c72eb820e. No clinical or difficulty reassessment.",
+      "Owner-approved preservation-only A30: question.gs028g.peristomal-skin.restore-seal.v1.r4. Melissa Rowland approval record, exact question object and live case/node projection are byte-identical to the saved review-five baseline. Before/after SHA-256 of the defined case/node projection: 740cefabeafddd12ec8ae4c97988b00ea148541b091aab8764f3376657c6f073. No clinical or difficulty reassessment.",
+      "Owner-approved preservation-only A38: question.pediatric-clinic.shrinking-mobile-neck-nodes.v2.r3. Melissa Rowland approval record, exact question object and live case/node projection are byte-identical to the saved review-five baseline. Before/after SHA-256 of the defined case/node projection: 6c3799efe7686929bd0961f6b8822b38b53073fcc78372501e4aa65b511a0922. No clinical or difficulty reassessment.",
+      "Owner-approved preservation-only A40: question.pediatric-clinic.upper-midline-lump.v1.r4. Melissa Rowland approval record, exact question object and live case/node projection are byte-identical to the saved review-five baseline. Before/after SHA-256 of the defined case/node projection: aa2549d4b78eae3b0fc9cd8d5da351ff429621bd89d7bdbbf2fdce013cd54a24. No clinical or difficulty reassessment.",
+      "Preservation-only PASS: question.cholecystitis.hida-after-equivocal-ultrasound.v2.r6. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 44203d21fb7f41193fb9035033ca4722cf8a9646c7bb6148c834e4bb22cfb6ca. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "A06",
+    "title": "Classify nipple discharge patterns",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.pathologic-nipple-discharge.pathologic-vs-physiologic-recognition.v1.r6. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 9d485872710a129296b3b2a986df5a939ea7af01ce0b7a96fd17cee65eca1d0c. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "A06-context",
+    "title": "Select diagnostic imaging for pathologic discharge",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.pathologic-nipple-discharge.diagnostic-imaging.v1.r7. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 e5f5121d54aa1911e39b6d4b17d410b881d822bc489b18735e0d8334ea138634. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "A25",
+    "title": "Perioperative ART continuity",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.gs028g.hiv-perioperative.art-continuity.v1.r7. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 b896de67ecff70c29069d915779cf708021bb2a310a920aeefb7e84aa5ae16e6. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "A25-context",
+    "title": "Apply benzodiazepine-antagonist contraindication after seizure control",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.gs028g.hiv-perioperative.booster-midazolam-interaction.v1.r8. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 466bf1fc7c4c956789e0c9dfbde9af2a27104506923b14f89a6adc1b8a02a806. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B01",
+    "title": "Manometric recognition of achalasia",
+    "verdict": "PASS",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.achalasia.manometric-recognition.v1.r4. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 67f055553b13043c7a7363977a8750c363f3db973ee55406cd91dc1925239600. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed.",
+      "Accepted-basic version preserved exactly, including repaired B29 where applicable; no new basic-role or clinical approval is granted."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B01-context",
+    "title": "Resolve technical and symptom-protocol limitations in motility testing",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.achalasia.high-resolution-manometry.v1.r6. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 cbb7c5df16af8283d05afca000014452a7e49495f1c57403b1b77098c42b4572. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B02",
+    "title": "Manometric recognition of achalasia",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.achalasia.manometric-recognition.v2.r4. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 dc980bedc9cbf9ea4723e5ff70a8d6a2b885ba8555356f6f1faad161dbd959a5. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B02-context",
+    "title": "Resolve technical and symptom-protocol limitations in motility testing",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.achalasia.high-resolution-manometry.v2.r6. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 cbd66bd9b2959322e4d77858b6123fbc5300b0921d0df6befd76e1876351b444. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B03",
+    "title": "Manometric recognition of achalasia",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.achalasia.manometric-recognition.v3.r5. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 87cba1c4198c5e6d75c565d8e92b083baba832605101a4f2367f6429c8e3d9d0. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed.",
+      "CHANGE FLAG outside the frozen question fields: preceding visibleHistory changed from question.achalasia.high-resolution-manometry.v3.r6 to question.achalasia.high-resolution-manometry.v3.r7; returned result text is unchanged, but feedback/teachingPoint changed. The full visible sequence is not byte-unchanged."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B03-context",
+    "title": "Interpret provocative motility responses before further planning",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "the contraction after each sequence is weaker than the patient's baseline contractions",
+        "why": "The plainly directional word 'weaker' maps to 'Reduced contractile reserve' rather than 'Preserved contractile reserve'. A test-wise reader can choose this half of the matrix without distinguishing suppression during swallowing from post-sequence augmentation."
+      },
+      {
+        "phrase": "junction relaxation remains within the laboratory range and pressure does not build up throughout the esophagus",
+        "why": "Normal-range relaxation plus explicitly absent pressure buildup maps directly to 'outflow obstruction not demonstrated'. Combining this with weaker -> reduced selects the full key through two verbal translations."
+      }
+    ],
+    "fairness": [
+      "The keyed limited interpretation is consistent with the local claim.qq20261102e.hrm-reserve-versus-outflow. No confident physiological error is alleged, and the item appropriately avoids diagnosing achalasia or assigning all symptoms to these responses.",
+      "The update is now necessary, and the food-trigger/test-name cue is repaired. However, two balanced component choices do not by themselves create two substantive reasoning steps. For a typical PGY-2/3 resident, the displayed directional descriptions and binary labels make this easy rather than a difficult protocol interpretation.",
+      "The normal inhibition during the sequence is a potentially useful competing observation, but neither the options nor task requires explaining its distinction from the overtly weaker post-sequence contraction. The endoscopy negative establishes context rather than eliminating one of these four interpretations.",
+      "No preceding feedback is listed or present before this runtime node. The later opioid-reconciliation result was not used to solve this item. Qualitative laboratory comparisons introduce no exact numerical cutoff."
+    ],
+    "suggestions": [
+      "Make inhibition versus reserve the actual competing interpretation, with similarly scoped options that distinguish what the within-sequence and post-sequence responses establish; do not allow weaker/reduced plus normal/not-demonstrated to encode the complete answer.",
+      "Have a motility reviewer specify a consequential report conclusion or next planning decision that depends on integrating these responses. Use original supported trace observations and comparably plausible alternatives; merely replacing 'weaker' with a synonym or adding arbitrary numbers will not repair the shortcut.",
+      "Preserve the passed B03 version and its medication context. Keep any newly revised physiological conclusions needs_clinician_review."
+    ]
+  },
+  {
+    "id": "B04",
+    "title": "Manometric recognition of achalasia",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.achalasia.manometric-recognition.v4.r4. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 f06d5426a9c67273d77617236ea7f848995dd9d6345a622b0fb413dda5bdade6. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B04-context",
+    "title": "Resolve technical and symptom-protocol limitations in motility testing",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.achalasia.high-resolution-manometry.v4.r5. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 1e32390e9b1c0dec626d4a2092d5180a21a51f364ac5e17ee4151ecec3284c99. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B05",
+    "title": "Resolve occult-groin imaging and symptom discordance",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "standing and supine cine loops through the photographed inguinal site during cough and Valsalva",
+        "why": "Partial test-wise elimination: these details closely match the offered repeat 'Groin ultrasound with standing strain and cine loops', making repetition less attractive. This is also decision-critical acquisition evidence, not an unnecessary exclusion; it does not by itself distinguish pelvic MRI from the hip-focused alternative."
+      }
+    ],
+    "fairness": [
+      "The learner must determine whether the prior examination actually tested the reported site/provocation and then choose a protocol addressing persistent groin uncertainty despite a separately reproduced hip ache. This is a meaningful two-step sequence and a moderate, lower-end resident item.",
+      "Pelvic MRI is a defensible best offered next investigation after the documented targeted dynamic study. Hip arthrography addresses the competing deep ache but does not resolve the intermittent superficial swelling; simply repeating the documented protocol is the closest sequencing error.",
+      "The local groin-imaging claims support a context-specific next investigation, not an absolute prohibition on repeat ultrasound or a universal MRI hierarchy. No photograph is treated as proof of hernia. Specialist review of the particular protocol/ranking remains necessary; no confident clinical error or missing numerical criterion was identified.",
+      "All three options are actual imaging protocols with similar length and specificity. No static-only foil, uniquely cautious label, patient-preference tie-breaker or prior-feedback answer disclosure remains. The negative acquisition is necessary to this distinction."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B05-context",
+    "title": "Apply symptom attribution to a demonstrated inguinal hernia",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "the groin lump still makes the patient stop lifting; pressing it back allows lifting to resume",
+        "why": "This explicit symptom-to-reduction-to-function chain states the attribution needed for referral. Even without knowledge of hernia management, an unresolved work-limiting problem relieved by reversing the lump favors obtaining help now."
+      },
+      {
+        "phrase": "Rehabilitation continues for the residual rotation discomfort.",
+        "why": "Repeats the key's 'ongoing rehabilitation' circumstance. Once the lump has been declared the separate work-limiting problem, the background treatment supplies no credible reason to delay referral."
+      },
+      {
+        "phrase": "Refer after repeat imaging documents progression",
+        "why": "Introduces a prerequisite for which the vignette supplies no clinical rationale. Together with waiting until rehabilitation finishes, it leaves the key as the only option addressing the explicitly persistent functional problem now."
+      }
+    ],
+    "fairness": [
+      "Elective hernia referral during continuing care for a separate hip symptom is defensible; consultation is not a promise that surgery will relieve all pain. The described reduction and interval history do not establish a need for emergency surgery.",
+      "The uniquely combined-care key is fixed, but changing the foils to two unexplained delays makes the decision easier. For PGY-2/3 residents this remains the single rule 'refer a function-limiting reducible hernia', with its trigger directly narrated.",
+      "The current update is required to establish a hernia, but removing the rehabilitation comparison after establishing persistent reduction-responsive limitation leaves the same referral answer. Two trajectories are present without two demanding inferences.",
+      "The revised preceding B05 feedback discusses imaging adequacy rather than giving this referral answer. The main problem is the current update/options, not a prior-feedback leak."
+    ],
+    "suggestions": [
+      "Retain reducibility and actual function observations for fairness. Replace the two unsupported waiting prerequisites with clinically credible, same-stage management policies that differ on a real unresolved attribution or response question.",
+      "Make the interval evidence change the ranking of two initially reasonable plans; avoid narrating the entire causal chain and then asking only whether to refer now. A clinician should specify the competing consideration without inventing a symptom-duration or size threshold.",
+      "Keep rehabilitation common to all choices and preserve the passed shared presentation. Do not reintroduce a uniquely comprehensive key or relabel this as accepted basic."
+    ]
+  },
+  {
+    "id": "B06",
+    "title": "Resolve occult-groin imaging and symptom discordance",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.inguinal-hernia.equivocal-exam-ultrasound.v2.r6. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 cb31018395278cd2cb57b067cebc760f0f1358b75d8d57bc9fc2cddc790637cf. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B06-context",
+    "title": "Apply symptom attribution to a demonstrated inguinal hernia",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "walking has progressed to sustained jogging",
+        "why": "Supplies an unopposed improvement trajectory favoring continuation of the existing plan; there is no countervailing new clinical burden to interpret."
+      },
+      {
+        "phrase": "Work shifts are completed without interruption.",
+        "why": "Alongside unchanged reducibility and improving exercise tolerance, this explicitly removes the principal functional reason to change hernia management in this option set."
+      },
+      {
+        "phrase": "Continue observation while advancing rehabilitation",
+        "why": "The only continuation option is contrasted with two 'Start repair planning' choices. With improvement and no new limiting symptom supplied, a generic continue-what-is-working heuristic identifies the key."
+      }
+    ],
+    "fairness": [
+      "Continuing the established observation/rehabilitation course is a defensible best offered adjustment for this improving man with a reducible hernia. Elective repair could still be discussed according to informed preference; the question should not imply that it is prohibited.",
+      "The revision removes the direct adduction/rehabilitation name match. Nevertheless, persistent imaging alone is too weak a competing consideration against uninterrupted work and improved running to create resident-level difficulty.",
+      "The interval update earns a reassessment but not two substantive reasoning steps as displayed. Both alternatives start the same unsupported escalation; their timing difference does not make both credible competitors.",
+      "The preceding frozen result already separates the mildly symptomatic protrusion from the limiting attachment pain. Its feedback does not name observation, but this favorable later course reinforces the same simple attribution. No new quantitative cutoff is needed."
+    ],
+    "suggestions": [
+      "Keep the improving course and reducibility but compare policies that are each plausible for an actual residual clinical uncertainty, rather than two variants of escalation based only on unchanged imaging.",
+      "Make the residual symptom pattern or a competing functional outcome require interpretation before choosing a change; a single new authoritative causal sentence would recreate the old defect.",
+      "Preserve the passed B06 fields and do not manufacture surgical urgency, a duration threshold, or a patient preference solely to force the key."
+    ]
+  },
+  {
+    "id": "B07",
+    "title": "Resolve occult-groin imaging and symptom discordance",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "Groin ultrasound with standing strain and cine loops",
+        "why": "Weak lexical advantage: this is the only option literally repeating the task's 'groin' location. Pelvic MRI also covers the relevant region and includes strain, so location matching alone does not reliably distinguish the two plausible dynamic studies. The clinical protocol name is justified rather than an artificial synonym needing removal."
+      }
+    ],
+    "fairness": [
+      "Two steps are now available: recognize that an attachment-centered examination after the event is not a completed assessment of the photographed inguinal swelling, then choose targeted dynamic assessment rather than treat it as an adequate negative study requiring escalation. Moderate at the lower end for residents.",
+      "Targeted dynamic ultrasound is a defensible first completion of the unanswered groin assessment. Dynamic pelvic MRI remains a medically reasonable alternative pathway, but does not displace a targeted first assessment merely because an outside scan exists. The item should retain this context-specific ranking rather than teach MRI is wrong after every technically limited study.",
+      "The marker/photo mismatch is necessary evidence, not an interpretive 'inconclusive' label. The new MRI option no longer self-disqualifies as static, and all options have comparable protocol detail. Local pubic tenderness makes the alternative pelvic assessment credible; hip arthrography is the weaker but anatomically related alternative.",
+      "No preceding feedback precedes this node. No exact size, duration, sensitivity or universal sequencing threshold is asserted. The local source mapping explicitly treats this technical sequence as an application requiring clinical review."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B07-context",
+    "title": "Apply symptom attribution to a demonstrated inguinal hernia",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "Lifting the relative still produces the lump and makes the patient set the relative down; the episode eases after the lump is reduced.",
+        "why": "States both the functional limitation and its reversible mechanical attribution. The referral trigger is essentially supplied before the timing task."
+      },
+      {
+        "phrase": "The attachment exercise program continues.",
+        "why": "Matches the key's ongoing-rehabilitation timing while leaving no stated reason for rehabilitation to be a prerequisite for referral."
+      },
+      {
+        "phrase": "Refer after rehabilitation is completed",
+        "why": "An unsupported delay after the stem has separated improving attachment symptoms from persisting reduction-responsive interruption. Paired with waiting for imaging progression, it makes immediate referral the only sensible offered response to the narrated problem."
+      }
+    ],
+    "fairness": [
+      "Referral while rehabilitation continues is defensible. The clinical problem is not falsely declared irreducible or emergent, and consultation does not commit the patient to an operation.",
+      "The new common rehabilitation background fixes the uniquely complete-key flaw, but both alternatives now defer the same obvious referral for unsupported prerequisites. This remains too easy for PGY-2/3 residents and not two demanding reasoning steps.",
+      "The wording says the patient 'has completed an exercise trial' while the program continues. These can mean an initial trial followed by maintenance, but the 'after rehabilitation is completed' foil makes that stage distinction unnecessarily fuzzy.",
+      "Preceding B07 feedback concerns acquisition adequacy and does not directly reveal referral timing. The residual issue is the current causal narrative and weak delay alternatives."
+    ],
+    "suggestions": [
+      "Clarify the completed trial versus ongoing program chronology if completion remains relevant; do not use that ambiguity to create difficulty.",
+      "Compare clinically credible policies for a genuine residual attribution or treatment-response question, at equal scope. Retain the important reduction/functional data but require their interpretation rather than repeating a fully assigned cause and asking whether to seek referral.",
+      "Keep the passed shared case fields intact. Any new decision-critical circumstance must be supported and reviewed, not an invented imaging-growth or rehabilitation-duration rule."
+    ]
+  },
+  {
+    "id": "B08",
+    "title": "Resolve occult-groin imaging and symptom discordance",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.inguinal-hernia.equivocal-exam-ultrasound.v1.r5. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 d0bf7d74f739845d2617cf74d08351b8d4dbd5e76bc99b07d2ad8849d3ad42f8. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B08-context",
+    "title": "Apply symptom attribution to a demonstrated inguinal hernia",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "makes the patient put the load down; the episode settles when the lump is reduced",
+        "why": "Directly supplies the new function-limiting, reduction-responsive trigger for referral. A reader need not reconcile the earlier MRI interpretation to select help now."
+      },
+      {
+        "phrase": "The attachment program continues, and the protrusion remains reducible.",
+        "why": "Provides the key's ongoing-treatment circumstance and elective framing; the three offered timing choices do not create a close decision from it."
+      },
+      {
+        "phrase": "Refer after repeat imaging documents progression",
+        "why": "The option substitutes an unsupported imaging prerequisite for a functional problem already established by the update; its apparent caution makes it an easy elimination rather than a credible alternative."
+      }
+    ],
+    "fairness": [
+      "The new chronology legitimately changes the earlier painless-protrusion story: improved trunk-flexion symptoms coexist with later work interruption during protrusion episodes. This is consistent rather than a contradiction of the frozen earlier result.",
+      "Elective referral is defensible. The question does not need a new exact symptom-duration or hernia-size threshold to justify discussion, and no confident medical error is alleged.",
+      "Despite real interval change, the learner can ignore the earlier result and choose the key from the new explicit causal chain alone. The follow-up therefore does not require the claimed comparison of earlier versus later attribution; for residents it remains easy single-rule application.",
+      "The preceding feedback concerns imaging target/coverage and does not tell the learner to refer. The difficulty defect is the weak timing alternatives, not the existence of prior legitimate clinical information."
+    ],
+    "suggestions": [
+      "Keep the later trajectory and its chronology, but make knowledge of the initial and later findings necessary to distinguish two plausible next plans.",
+      "Replace arbitrary wait-for-rehabilitation/wait-for-imaging options with supported same-stage alternatives arising from the residual clinical uncertainty. Do not disguise the same referral trigger with synonyms.",
+      "Preserve the frozen B08 version and clinically necessary reducibility information; do not add urgency or an exact interval merely to make the question harder."
+    ]
+  },
+  {
+    "id": "B09",
+    "title": "Resolve cystic thyroid-node imaging/cytology discordance",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.differentiated-thyroid-cancer.preoperative-nodal-ultrasound.v3.r6. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 c6be7c6ce3f95f83d4f2ee88e3ce99fd2f59414c82fce1bd5af614c4f08f9435. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B10",
+    "title": "Escalate complicated stoma prolapse",
+    "verdict": "PASS",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.stoma-prolapse.urgent-surgical-escalation.v4.r4. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 2da06b664f6f2660e50bfff7099c083105bf4d4bbff20bf997eed15fcfd1fa52. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed.",
+      "Accepted-basic version preserved exactly, including repaired B29 where applicable; no new basic-role or clinical approval is granted."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B11",
+    "title": "Sentinel-node staging discussion for melanoma",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.melanoma.sentinel-node-staging.v2.r4. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 de880a628b1f8058d344c0159e2bdabba0ff9524fcedbd969cc76bd6c50e8681. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed.",
+      "CHANGE FLAG outside the frozen question fields: preceding visibleHistory changed from question.pigmented-skin-lesion.complete-diagnostic-biopsy.v2.r6 to question.pigmented-skin-lesion.complete-diagnostic-biopsy.v2.r7; returned result text is unchanged, but feedback/teachingPoint changed. The full visible sequence is not byte-unchanged."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B11-context",
+    "title": "Interpret mapped partial specimens before melanoma planning",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "The new task genuinely uses the update: interpret the irregular junctional architecture and nuclear changes as local melanocytic atypia, then limit that finding to the mapped sampled sector rather than claim absence of invasion in a different residual focus. Moderate at the lower end for residents; it does not amount to a definitive melanoma diagnosis.",
+      "The four component combinations are balanced. A cautious residual-status answer narrows to two choices, and the learner still must retain the positive cytological finding rather than discard a partial sample. The exact closure-feasibility sentence no longer distinguishes any option because excision is shared context.",
+      "The key makes no unsupported claim that scant dermis proves no invasion or that junctional atypia itself establishes an invasive depth. The named abnormal cells and mapping support the limited two-part conclusion; no equally defensible distractor was identified from the supplied fields.",
+      "The specimen-location distinction is decision-critical and passes the deletion test for this new interpretation task. There is no prior feedback before this node. The new local-evidence claim is an original application of existing sampling guidance and still requires dermatopathology sign-off."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B12",
+    "title": "Apply regional-node evidence before sentinel staging",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.melanoma.sentinel-node-staging.v4.r5. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 e3738cb4c27f54dae34a66e12a59beb9c299d25de28c9a00a06db6546e1039a3. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed.",
+      "CHANGE FLAG outside the frozen question fields: preceding visibleHistory changed from question.pigmented-skin-lesion.complete-diagnostic-biopsy.v4.r6 to question.pigmented-skin-lesion.complete-diagnostic-biopsy.v4.r7; returned result text is unchanged, but feedback/teachingPoint changed. The full visible sequence is not byte-unchanged."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B12-context",
+    "title": "Interpret mapped partial specimens before melanoma planning",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "The report diagnoses a nevus in that submitted fragment.",
+        "why": "Supplies a named local diagnosis rather than raw findings to interpret. Accepting that expressly local report maps directly to 'Sampled edge explained' without a pathology inference."
+      },
+      {
+        "phrase": "the changing irregular center lies beyond the punch circle",
+        "why": "Direct spatial matching selects assessment of residual architecture over reviewing existing edge sections. A nonmedical reader can retain the local report and decline to extrapolate it beyond the circle."
+      },
+      {
+        "phrase": "Sampled edge unexplained",
+        "why": "Repeated in two distractors despite an explicit diagnosis of the sampled fragment and no local discordance. Together with the other foil's 'Whole lesion explained', it leaves the key as the only ordinary local-scope conclusion."
+      }
+    ],
+    "fairness": [
+      "The key is a defensible limited interpretation if the benign nevus report is locally concordant. A pale peripheral appearance alone does not comprehensively establish clinical-pathological concordance, so 'explained' should mean accounted for at that sampled site rather than conclusively validated pathology.",
+      "The update now matters and the old automatic-excision defect is repaired. However, the new item reduces to named local result plus an explicitly separate center; the options make accepting, overextending or rejecting the same stated result a simple scope exercise.",
+      "This is too easy for typical PGY-2/3 residents. It does not require a substantive pathology interpretation followed by a distinct planning inference, unlike a raw compartment/cytology task.",
+      "The task already requests excision, whereas two choices focus on reviewing existing edge sections. That does not make them grammatically invalid completion goals, but it further weakens their practical plausibility. The frozen closure-feasibility statement is not itself a cue among these assessments."
+    ],
+    "suggestions": [
+      "Use supported raw findings or a real local concordance issue that requires interpreting the mapped specimen before deciding what the residual assessment must resolve; do not merely state the diagnosis and place the important area outside the circle.",
+      "Give each alternative a credible evidence interpretation at the same scope. Avoid two unexplained-edge answers without an actual reason to distrust the local report, and avoid a whole-lesion claim no submitted specimen could establish.",
+      "Preserve the passed shared presentation and benign-fragment fact where required. Have dermatopathology confirm the limited use of 'explained'; do not invent lesion-wide malignancy or a mandatory extra procedure."
+    ]
+  },
+  {
+    "id": "B13",
+    "title": "Oncologic regional resection for colon cancer",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.colon-cancer.oncologic-regional-resection.v1.r3. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 775e60986a131e4c0ba7116ff05e7d9cc3ac0c6a2c715a67a9b980b604f3bf38. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B13-context",
+    "title": "Preoperative cross-sectional staging for colon cancer",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.colon-cancer.preoperative-cross-sectional-staging.v1.r4. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 6b1be8aefcaf0fb95361cb0dabb5d476dc4e8cc5fa117086a821ad5fe710d3c5. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B14",
+    "title": "Oncologic regional resection for colon cancer",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.colon-cancer.oncologic-regional-resection.v2.r3. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 d179f929bc2406e1d41ffefa39d7d624619e46f88ad453041c26ec0a485ecd24. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B14-context",
+    "title": "Complete colon staging from actual prior imaging",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.colon-cancer.preoperative-cross-sectional-staging.v2.r5. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 54213c9544da5868676b4041cfd880469317d1085e6a4685adc1dffa48756c38. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B15",
+    "title": "Oncologic regional resection for colon cancer",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.colon-cancer.oncologic-regional-resection.v3.r4. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 03ed8a0512f6a4a4d334cf4d44a196ef3b8ae37140ad179e55c787192a6bcc67. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B15-context",
+    "title": "Complete colon staging from actual prior imaging",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.colon-cancer.preoperative-cross-sectional-staging.v3.r6. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 2faf7f43048c08107793f1e4aaa7199c806eb83962b2ab0b91362e494a7079cb. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B16",
+    "title": "Oncologic regional resection for colon cancer",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.colon-cancer.oncologic-regional-resection.v4.r3. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 f168d4749d6490b4834f85459ad4c11b5002976e005d4567421b84d9972a2278. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B16-context",
+    "title": "Preoperative cross-sectional staging for colon cancer",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.colon-cancer.preoperative-cross-sectional-staging.v4.r4. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 e6288dab15aa3d8994edfb5ec03bdb995c0412519163fa0b3435f72e650c855c. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B17",
+    "title": "Sentinel-node staging discussion for melanoma",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.melanoma.sentinel-node-staging.v1.r4. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 0e5803657bb87641cbf907703afe24843d055c7b5afeb2c8b9829636745b6e2e. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed.",
+      "CHANGE FLAG outside the frozen question fields: preceding visibleHistory changed from question.pigmented-skin-lesion.complete-diagnostic-biopsy.v1.r6 to question.pigmented-skin-lesion.complete-diagnostic-biopsy.v1.r7; returned result text is unchanged, but feedback/teachingPoint changed. The full visible sequence is not byte-unchanged."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B17-context",
+    "title": "Interpret mapped partial specimens before melanoma planning",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "The raised focus remains elsewhere in the residual pigmented area on the map.",
+        "why": "Straight spatial exclusion supplies 'residual-lesion invasion unassessed' and eliminates both excluded-invasion options. This necessary mapping cannot supply the missing local invasion information."
+      }
+    ],
+    "fairness": [
+      "Decision-critical omission: 'The fragment shows melanoma cells within the epidermis; dermis is present beneath that sector' does not state that the represented dermis is free of melanoma. Epidermal involvement plus the presence of dermis does not logically establish confinement to epidermis. The keyed 'Sampled sector in situ' relies on a negative the reader has not been given.",
+      "With the fields read literally, the distinction between sampled-sector in situ and sampled-sector invasive is underdetermined; the separate residual focus remains unassessed in either case. This is an information gap rather than a confident assertion that the intended diagnosis is clinically wrong.",
+      "The authored later explanation says 'Melanoma confined to the sampled epidermis', but that extra confinement statement is post-answer and cannot repair the displayed item. It was not used as evidence for the answer.",
+      "The intended item is easy for a PGY-2/3 resident: epidermis/in-situ recognition plus an explicitly different unsampled focus. Ambiguity does not make it a hard item. The balanced matrix fixes a unique-caution cue but does not establish resident-level two-step application."
+    ],
+    "suggestions": [
+      "State the actual observation needed to classify the sampled sector, for example that examined dermis contains no melanoma cells, if that is the intended supported pathology report. Do not replace this with an answer label such as 'in situ', and do not omit a necessary negative merely to avoid cues.",
+      "After repairing the evidence gap, re-solve all four options. Then create a consequential, source-supported local-versus-residual planning distinction that requires more than anatomy-term recognition and a different map location.",
+      "Obtain dermatopathology review of compartment wording and keep the exact passed companion and its later pathology intact."
+    ]
+  },
+  {
+    "id": "B18",
+    "title": "Apply regional-node evidence before sentinel staging",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.melanoma.sentinel-node-staging.v3.r5. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 6f6816a59c935f25ae0e86fedf8cf9c388f886052ee8f68b0c04650afef91ab6. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed.",
+      "CHANGE FLAG outside the frozen question fields: preceding visibleHistory changed from question.pigmented-skin-lesion.complete-diagnostic-biopsy.v3.r6 to question.pigmented-skin-lesion.complete-diagnostic-biopsy.v3.r7; returned result text is unchanged, but feedback/teachingPoint changed. The full visible sequence is not byte-unchanged."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B18-context",
+    "title": "Interpret mapped partial specimens before melanoma planning",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "invasive atypical melanocytes at the deep cut surface",
+        "why": "With the next sentence measuring to that same cut surface, plain truncation logic directly favors a lower bound over an upper bound or an exact maximum; the options expose that rule."
+      },
+      {
+        "phrase": "Retain exactly 0.6 mm; use it as the maximum depth",
+        "why": "This is the only option committing to a final maximum despite explicitly residual tissue and tumor at the cut surface, so an uncertainty heuristic eliminates it immediately."
+      }
+    ],
+    "fairness": [
+      "Retaining at least the measured depth is defensible; the task now makes the measurement relevant instead of using it as decoration for an excision decision. Three alternatives await completion, so caution alone no longer identifies the key.",
+      "Nevertheless, the score is still one measurement-bound inference. 'Preserve the bound' and 'await maximum' are two parts of the same truncation rule, not interpretation followed by a distinct clinical decision. Easy for the requested resident audience.",
+      "The local claim.qq20261102e.transected-depth-lower-bound and source ledger explicitly identify 0.6 mm as a constructed specimen observation, not a sourced clinical threshold. I do not flag that number as an unsupported treatment cutoff or infer any sentinel-node indication from it.",
+      "No confident numerical or clinical error is alleged. This review does not independently authenticate the externally cited guidance, and the exact measurement/report formulation still needs pathology review."
+    ],
+    "suggestions": [
+      "Retain the valid lower-bound interpretation, but make it consequential to a second, genuinely competing report/planning decision supported by the available specimen evidence.",
+      "If adding a threshold-dependent decision, supply every necessary feature and a source that directly supports the exact threshold; do not import one from memory or use 0.6 mm itself as a management rule.",
+      "If this remains only lower/upper/exact/unknown recognition, seek explicit independent acceptance for a foundational role instead of presenting it as a resident two-step item; no basic exemption is granted by this review."
+    ]
+  },
+  {
+    "id": "B19",
+    "title": "Specialist-planned biopsy of a suspicious soft-tissue mass",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.soft-tissue-mass.specialist-planned-biopsy.v1.r4. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 fb717bb0ab89aec23eb68df69e668ab55d9b3de70b0b5a4c2f264d3fbbb4c345. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed.",
+      "CHANGE FLAG outside the frozen question fields: preceding visibleHistory changed from question.soft-tissue-mass.extremity-mri.v1.r6 to question.soft-tissue-mass.extremity-mri.v1.r7; returned result text is unchanged, but feedback/teachingPoint changed. The full visible sequence is not byte-unchanged.",
+      "Material scaffold flag: new preceding feedback says 'a viable target does not justify contaminating a separate uninvolved compartment' and identifies the rectus-femoris corridor. This supplies B19's tract discriminator before its biopsy-method/tract choices. Its carried moderate/twoStep rating describes the prior reviewed version, not independently validated current-sequence difficulty. See B19-context REVISE; the frozen B19 fields were not reassessed or edited."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B19-context",
+    "title": "Integrate enhancement and compartment anatomy in biopsy planning",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "Increased signal",
+        "why": "Table convergence: this appears for Q and R, while P is the signal outlier. The more common signal behavior can be combined with the more common corridor without knowing MRI interpretation."
+      },
+      {
+        "phrase": "Anterior, through rectus femoris",
+        "why": "This appears for P and R, while Q is the corridor outlier. R is the sole region possessing both majority table components; choosing the column that is never the odd one out identifies the key."
+      },
+      {
+        "phrase": "a viable target does not justify contaminating a separate uninvolved compartment",
+        "why": "SEQUENCE-ONLY cue in this node's feedback, not evidence used to solve this node: it teaches the decisive tract rule immediately before unchanged B19 asks about anterior rectus versus medial adductor paths. The later item loses independent tract reasoning even though its own fields are byte-unchanged."
+      },
+      {
+        "phrase": "Region R supplies both the supported enhancement information and a corridor through rectus femoris.",
+        "why": "SEQUENCE-ONLY feedback explicitly names the favored compartment/corridor immediately before the same anatomy is reused in B19. The changed scaffold narrows that later four-option item to the two anterior-path choices, leaving mainly core-versus-open recall."
+      }
+    ],
+    "fairness": [
+      "In isolation the current key is defensible: compare matched pre/postcontrast signal rather than call baseline brightness enhancement, then evaluate the route through the involved versus a separate compartment. This is moderate two-step reasoning when the convergence shortcut is ignored.",
+      "The options have equal length, grammar and procedural scope; neither enhancing target alone nor anterior access alone is sufficient. No exact enhancement cutoff, needle dimension or automatic malignancy diagnosis is introduced.",
+      "The local enhancement claim records one adequate primary consensus source, and the compartment claim distinguishes older technique guidance from current corroboration. No new independent source verification occurred here. The qualitative imaging/corridor model still requires MSK/sarcoma review.",
+      "The changed node is actually first in the runtime case despite the '-context' ID. No earlier feedback precedes it. Its new feedback precedes frozen B19; therefore byte-preserving B19 does not preserve its former unscaffolded difficulty. B19's report entry carries its old rating only for the mandated preservation-only scope.",
+      "The initial planning table uses P/Q/R, then the unchanged returned MRI result uses A/B for the same mass without a mapping. This need not be medically contradictory, but the sequence does not explain whether these are new or renamed targets. Do not silently assume the reader can transfer region identities."
+    ],
+    "suggestions": [
+      "Remove the majority-components shortcut by revising the medically plausible target observations/choices so R is not simply the sole column with both common features. Do not pad the table with an implausible fourth plan merely to make a formal matrix.",
+      "Protect the exact passed B19 fields: move target-specific tract teaching until after B19, or revise the earlier task/feedback to assess a distinct imaging question that does not pre-answer its tract decision. Holding back teaching alone may not suffice if the preceding scored task rehearses the same rule.",
+      "Make target nomenclature/chronology coherent while preserving frozen B19's A/B result; change the new context side rather than silently editing the passed node.",
+      "If the owner deliberately wants teaching followed by rehearsal, obtain explicit acceptance of that scaffold and reassess the sequence's difficulty instead of carrying B19's prior two-step prediction as a new finding."
+    ]
+  },
+  {
+    "id": "B20",
+    "title": "Specialist-planned biopsy of a suspicious soft-tissue mass",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.soft-tissue-mass.specialist-planned-biopsy.v2.r4. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 7fd53f79875b7c0900556ee4326b95d811dd7945ca2ebf1b4dd07da49634bfc0. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B20-context",
+    "title": "Assess local MRI adequacy before soft-tissue biopsy",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.soft-tissue-mass.extremity-mri.v2.r6. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 06dfa1b39495ea34aa0ba42f796e61ca5ca46aaaad428e9dcc34ce2e19f31286. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B21",
+    "title": "Management of a clearly characterized asymptomatic colonic lipoma",
+    "verdict": "PASS",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.colonic-lipoma.management.patient-to-plan.v1.r3. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 e4accb2a47a4d47d5700b4f606cec80c92fbe20d3df5226b3d068ca4090c1e09. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed.",
+      "CHANGE FLAG outside the frozen question fields: preceding visibleHistory changed from question.colonic-lipoma.recognition.patient-to-diagnosis.v1.r6 to question.colonic-lipoma.recognition.patient-to-diagnosis.v1.r7; returned result text is unchanged, but feedback/teachingPoint changed. The full visible sequence is not byte-unchanged.",
+      "New preceding feedback includes 'or change the passed management premise', an authoring-status phrase in learner-facing text. See B21-context feedback cleanup note; no alteration to this frozen question was found."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B21-context",
+    "title": "Distinguish clinical characterization from histologic confirmation",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "normal colonic mucosa",
+        "why": "Partial compatibility cue: it echoes the earlier intact surface and makes an 'Inconsistent with imaging' answer less attractive. It does not distinguish the two compatible options or establish that the deeper lesion was sampled; the tissue-depth inference remains necessary."
+      }
+    ],
+    "fairness": [
+      "The resident must identify crypts and lamina propria as mucosal constituents, relate that sample to the third-layer mass, and distinguish a compatible surface result from histologic proof of the lesion. Moderate at the lower end; two substantive linked evidence interpretations remain.",
+      "The explicit absent-fat/submucosa teaching sentence and already-excluded mucosal-diagnosis distractors are removed. Both compatibility and confirmation assertions occur twice, so neither caution nor an option-length/grammar outlier selects the complete key.",
+      "Normal overlying mucosa can be compatible with the supplied imaging without histologically confirming the mass. No equally defensible distractor or confident medical error was identified, reading the listed specimen constituents as the reported sampled tissue.",
+      "The update passes the deletion test for confirmation status. It does not create a need for repeat biopsy or change the frozen management premise. There is no prior feedback before this node.",
+      "The specific tissue-provenance claim records one adequate ESGE source plus an anatomical application; the broader imaging phenotype has separate prior mappings. This is an offline editorial assessment and not new clinical approval.",
+      "Sequence check: the new feedback adds 'This distinction does not create an indication for another biopsy or change the passed management premise.' The latter is authoring metadata in learner-facing text and should be removed. It does not directly select among B21's surveillance/removal/no-follow-up options; the standalone interpretation PASS is not a fresh approval of the later item's difficulty."
+    ],
+    "suggestions": [
+      "Remove 'or change the passed management premise' from learner-facing feedback. Preserve the clinical distinction without referring to review status; the frozen B21 fields should remain unchanged."
+    ]
+  },
+  {
+    "id": "B22",
+    "title": "Management of a clearly characterized asymptomatic colonic lipoma",
+    "verdict": "PASS",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.colonic-lipoma.management.patient-to-plan.v2.r3. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 507370d2345b3736eb32d055928623da1618e2076a35f45f66f51ec01591007b. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed.",
+      "CHANGE FLAG outside the frozen question fields: preceding visibleHistory changed from question.colonic-lipoma.recognition.patient-to-diagnosis.v2.r6 to question.colonic-lipoma.recognition.patient-to-diagnosis.v2.r7; returned result text is unchanged, but feedback/teachingPoint changed. The full visible sequence is not byte-unchanged.",
+      "New preceding feedback includes 'nor a reason by itself to repeat sampling', partially scaffolding this question by discouraging its repeat-endoscopy distractor. The existing easy/twoStep=false rating is retained, not newly measured. See B22-context."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B22-context",
+    "title": "Distinguish clinical characterization from histologic confirmation",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "The learner must infer actual specimen depth from epithelium, crypts and lamina propria instead of accepting 'bite-on-bite' or 'benign' as proof of lesion sampling, then distinguish compatibility with the imaging from lesional confirmation. Moderate resident application with two linked evidence inferences.",
+      "The technique name creates a credible overconfidence error. The actual constituent list is necessary; it no longer explicitly names absent fat/submucosa or supplies an interpretation label. All options concern the same imaged lesion, with balanced components and comparable wording.",
+      "The keyed distinction is defensible. A benign surface sample need not contradict the classic imaged submucosal phenotype and does not prove its histology. This does not assert that bite-on-bite biopsy never reaches lesions or mandate another biopsy.",
+      "The list of constituents is interpreted as the actual tissue represented in the submitted levels. If that is not intended as a complete specimen description, clarification would be needed, but no positive lesional tissue is otherwise supplied. No prior feedback precedes this node.",
+      "The local single-source provenance limitation remains; clinical sign-off of the exact GI/pathology formulation is still required. No new quantitative rule is introduced.",
+      "Sequence check: new feedback says 'nor a reason by itself to repeat sampling', which discourages the unchanged B22 repeat-endoscopy distractor before that question appears. This is a partial scaffold, not a full solution of surveillance/removal versus no lesion-directed care. B22 remains preservation-only and its prior easy rating is carried forward; do not represent the sequence as independent assessment of repeat-biopsy reasoning."
+    ],
+    "suggestions": [
+      "Keep discussion of whether to repeat sampling until after the management question when independent assessment of that alternative is intended. Feedback on this interpretation can end with what the specimen does and does not establish."
+    ]
+  },
+  {
+    "id": "B23",
+    "title": "Avoid routine prophylactic splenectomy in proximal gastric cancer",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.gastric-adenocarcinoma.post-endoscopy-splenic-referral.v1.r3. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 8166ec02aa21e5fc96f3d5183dbf8e2684aa041ba1bc82d09269ae0081b6785f. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B24",
+    "title": "Pathologic recognition of gastric MALT lymphoma",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "Small CD20-positive B cells",
+        "why": "The initial presentation specifically names this cell/stain combination, which is repeated only in the keyed exhibit column. A reader can match the stain token without interpreting gland architecture."
+      },
+      {
+        "phrase": "Irregular groups of small CD20-positive cells",
+        "why": "Only Area B repeats CD20-positive; Areas A and C use generic lymphoid/large-cell descriptions. With the task asking which area matters for the known small B-cell process, that unique repetition points directly to B before considering epithelial infiltration."
+      }
+    ],
+    "fairness": [
+      "The new options genuinely have equal scope and no uniquely cautious/unclassified label. Properly solved, the task calls for interpreting reactive-appearing follicular architecture, small-cell gland infiltration/disruption and scattered large cells before prioritizing the most relevant field; moderate two-step reasoning is available.",
+      "Area B is a defensible field to prioritize for integrated subtype assessment. This wording does not claim that the field alone establishes a definitive lymphoma subtype or that lymphoepithelial lesions are universally necessary or specific.",
+      "The earlier preserved glands and the new deeper-level disrupted glands can coexist across sampled levels and areas; no contradiction is inferred. Sparse large cells do not by themselves establish a large-cell lymphoma component. Exact field interpretation still needs hematopathology review.",
+      "The new morphology repairs the prior noncommittal-key problem, but the unique immunostain repetition leaves an avoidable medical-knowledge-free route to the same answer. No exact numerical threshold is involved."
+    ],
+    "suggestions": [
+      "Remove the unique CD20 repetition from Area B, for example by describing its small-cell arrangement under a shared, clinically accurate stain context, while retaining the architectural observations that should decide the answer.",
+      "Do not invent uniform stain expression across all three areas merely to balance wording. Have hematopathology specify what is actually shared and keep field descriptions at comparable specificity.",
+      "Retain the identical-scope area options and the integrated-classification wording. Re-run the cue attack with the gland-relationship row hidden: the remaining cell labels should not still uniquely nominate B."
+    ]
+  },
+  {
+    "id": "B25",
+    "title": "Choose gastric MALT care from post-eradication trajectory",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.gastric-malt.eradication-response-reassessment.v1.r4. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 cac35df881d30281358df254419cb482b8c6519b6bfc2a634975544b8c7aeb02. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B25-context",
+    "title": "Apply gastric lymphoma morphology to the treatment pathway",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.gastric-malt.pathology-profile-selection.v1.r5. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 21687fb55ecd1dd31f2872aa3a582b32b4e53147f6c4847ea8a05ae2337d5bc0. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B26",
+    "title": "Apply uncertainty to a target-benefit decision",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.statistics-ethics.p-value.v2.r6. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 e3d5a997361f1ae416a6458125bb4f5663eea7fbd66ba8babcb0e30891530398. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B27",
+    "title": "Interpret a p-value",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.statistics-ethics.p-value.v1.r4. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 9af8c14d21e1dfcebe5d3b7e63d446261c9948a5061b2e6d650478105cb6c758. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B28",
+    "title": "Distinguish risk ratio and odds ratio",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.statistics-ethics.risk-ratio-odds-ratio.v3.r3. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 776b9ca9907ac09cbf6f70d41901eeb6c49922111c4bcb0adfab4f58708d434f. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B29",
+    "title": "Arrange adult support after endoscopic sedation",
+    "verdict": "PASS",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.variety3.sedation-discharge-ride.v1.r5. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 b002fb7bcac2d62b77dc9463a128b91e95992cc3b3e011094a64307628863400. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed.",
+      "Accepted-basic version preserved exactly, including repaired B29 where applicable; no new basic-role or clinical approval is granted."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B30",
+    "title": "Apply gastric lymphoma morphology to the treatment pathway",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.gastric-malt.integrated-pathology-diagnosis.v1.r5. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 c275d121ee417f9f4aaf967e50d36fdb8a105168c7af06c0fe09fab2e97349ad. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B30-context",
+    "title": "Choose gastric MALT care from post-eradication trajectory",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.gastric-malt.localized-hpylori-positive-initial-treatment.v1.r4. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 311126be1f193594f816e03f51d8d960136c18920544a1a2c2588fb9fe509886. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B31",
+    "title": "Interpret a p-value",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.statistics-ethics.p-value.v4.r3. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 05fbea0069dea413c575062fe783b9295e5604462c5894eae09a2afc6df172c3. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B32",
+    "title": "Apply vascular, contents and duct findings to collection treatment",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.pseudocyst.symptomatic-endoscopic-drainage.v1.r5. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 2955dff167ede10f2d4301f3ce807df9258b96bcc50e1f909c0845ecef51bca5. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B32-context",
+    "title": "Complete collection imaging for a specific intervention question",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.pseudocyst.contrast-ct-characterization.v1.r5. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 37fb0c356af0c7c828e9f52861b50218fd35614f5df681c8e412c2eb60694cab. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B33",
+    "title": "Apply vascular, contents and duct findings to collection treatment",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.pseudocyst.symptomatic-endoscopic-drainage.v2.r4. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 5871f10f19339031f6a009b8427da062973a19e683b8a3bf758f764862d0651c. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B33-context",
+    "title": "Complete collection imaging for a specific intervention question",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.pseudocyst.contrast-ct-characterization.v2.r5. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 657a9df2a4a38e15656ac3c111c16d0327e20d582b88b786af22f0e2d11bd9e4. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B34",
+    "title": "Apply vascular, contents and duct findings to collection treatment",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.pseudocyst.symptomatic-endoscopic-drainage.v3.r4. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 4a7969713a3e18058b1e5f6ae5bd848343a2a1d4ce8d973b8a34e372fdcd0800. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B34-context",
+    "title": "Complete collection imaging for a specific intervention question",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.pseudocyst.contrast-ct-characterization.v3.r5. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 ad763795faa438de87396e857010d4d34758fda97ccceedc8235d95f95e7b6aa. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B35",
+    "title": "Apply vascular, contents and duct findings to collection treatment",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.pseudocyst.symptomatic-endoscopic-drainage.v4.r4. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 89ceba709d39a577a624ef9672e508b7c653301ce25c67038feb75b7edb77297. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B35-context",
+    "title": "Complete collection imaging for a specific intervention question",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.pseudocyst.contrast-ct-characterization.v4.r5. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 0465a9444ccd28fd003785115d3fd62e933f73af9e027a05252dd83bb3f1b8ae. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B36",
+    "title": "Act and iterate after a PDSA test",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "Current-list manual entry versus current-list prefill",
+        "why": "Only this comparison contains a workflow absent from the exhibit: current-list prefill. Both distractors simply compare two already displayed columns. A 'next test means the only untested combination' heuristic selects the key without reading any outcome value."
+      }
+    ],
+    "fairness": [
+      "The new data create a real two-factor question: compare manual source choices to see the agreement/contact pattern, compare prior-source entry methods to see the time pattern, then test whether current-source prefill combines advantages. Properly solved, this is moderate two-step QI reasoning, not a medical-knowledge question.",
+      "The key is a defensible exploratory next comparison, not proof that prefilling will preserve accuracy or improve outcomes. Ten visits per workflow and the stated minute/count denominators are coherent; all numbers are explicitly constructed.",
+      "The alternatives repeat comparisons already present. Repeating a small pilot could be defensible for reproducibility, so those comparisons are not inherently clinically wrong; but as written, novelty gives the key an editorial advantage independent of the claimed tradeoff/control inference.",
+      "The contacts row reinforces the agreement pattern but is not essential to deciding this key. The larger defect is that all numeric rows can be hidden and the only new combination still stands out. This violates the intended data-dependent decision despite the improved table.",
+      "No unsupported clinical threshold, rollout criterion, empirical effect size or gameplay correctness statistic is asserted."
+    ],
+    "suggestions": [
+      "Offer comparably plausible new controlled comparisons or adaptations so novelty is not unique to the key; each should address the same stated improvement aim and retain record-agreement checks.",
+      "Require the source-versus-entry evidence to distinguish those comparisons. A clinician/QI reviewer should confirm the alternatives are real decision errors rather than two repeats included merely as foils.",
+      "Keep the explicit constructed-data label and compatible denominators. Do not treat the three small pilot groups as proof of causation or guarantee the missing combination will succeed."
+    ]
+  },
+  {
+    "id": "B37",
+    "title": "Resolve breast imaging/core-biopsy discordance",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.inflammatory-breast-cancer.core-biopsy-confirmation.v4.r5. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 24f188d953695da2c0fd068aedd6fa1fd606947bdc9c0904f0d80c08d70f6ef9. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B37-context",
+    "title": "Neoadjuvant sequence for stage III inflammatory breast cancer",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.inflammatory-breast-cancer.neoadjuvant-sequence.v4.r3. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 e8a05f43130948ea7d42916882265ea5db481593de3863cf9c64ced7237bbb73. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B38",
+    "title": "Interpret a confidence interval",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.statistics-ethics.confidence-interval.v1.r3. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 a431c6dbefae45cb121990947a826aacd5ebb9a129a6d847e86faaf09c00e11d. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B39",
+    "title": "Interpret a p-value",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.statistics-ethics.p-value.v3.r4. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 20f387115b9787a6be316ff08cb58fbb38d240987289b2aa1eb8aec9bdc2d8cd. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B40",
+    "title": "Sequence treatment of recurrent ulcer bleeding",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.peptic-ulcer-bleeding.visible-vessel-treat.v1.r6. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 824ed88b732e3aca4bc470ac172f0688937385d9e81228cd928f3da3ca28f69c. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B40-context",
+    "title": "Recognize failed repeat ulcer hemostasis and select rescue",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.peptic-ulcer-bleeding.visible-vessel-inadequate-monotherapy.v1.r5. Exact UTF-8 JSON.stringify bytes for after (variant ID, Presentation, Current update, Exhibit, Task, Options) match the saved review-five packet in tools/question-quality/fixtures/adversarial-r6-before-20261102.json; SHA-256 62b11e73901d16120b22e30754428e84ce7eb601ae1e76dd7fbdc1029ad42f89. Live question object and case/node projection also match exactly. Difficulty/twoStep and prior clinical limitations are carried from review five, not independently reassessed."
+    ],
+    "suggestions": []
+  }
+]

@@ -1,0 +1,225 @@
+[
+  {
+    "id": "question.topic.trauma-initial-abdomen.crash-fascial-closure.v2",
+    "nodeId": "node.topic.trauma-initial-abdomen.crash-fascial-closure.v2",
+    "title": "Abdominal closure with unresolved bowel viability",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Negative-pressure temporary abdominal closure is the best offered abdominal-wall plan: the resident must distinguish systemic recovery and technically tolerated approximation from resolution of the intra-abdominal reason to retain access. The separate segment's mixed response to warming makes definitive closure premature despite otherwise favorable closure observations.",
+      "Primary fascial closure is a credible error if the resident focuses on recovered physiology and tension-free approximation. Skin closure with deferred fascial reconstruction is less appropriate when a temporary access strategy remains possible and no wall loss is described. No decisive wording, length, convergence, absolute or diagnosis-label shortcut was identified.",
+      "The re-exploration update supplies packs, bowel continuity, residual concern and current physiology without relying on the two parked predecessors. Named patient, age, sex and historical hospital decision point are coherent. The short complaint does not disclose the answer.",
+      "Review scope for this report: nine revised executable nodes; nine pass-preserved nodes and four parked attempts receive no new verdict. Five unkeyed holds are noted but excluded. Prior visible clinical text was considered only where needed for sequence assessment. This is an offline editorial review of candidate fields, not fresh source verification, runtime verification or clinical approval; all nine drafts still require Melissa Rowland's exact-version clinical sign-off. Difficulty and high-yield judgments are qualitative."
+    ],
+    "suggestions": [
+      "Optional feedback clarification: keeping the abdomen accessible does not replace assessment and appropriate treatment of clearly nonviable bowel. Distinguish a planned reassessment of uncertain tissue from leaving established necrosis untreated; do not add an unsupported takeback interval."
+    ]
+  },
+  {
+    "id": "question.topic.trauma-initial-abdomen.belt-evolving-repeat-imaging.v2",
+    "nodeId": "node.topic.trauma-initial-abdomen.belt-evolving-repeat-imaging.v2",
+    "title": "Evolving concern after equivocal bowel imaging",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Repeat contrast-enhanced CT is the best offered next step. The resident must recognize that increasing tenderness and pulse undermine an unchanged observation plan, then distinguish that increased suspicion from the current findings that would favor immediate operative control. Stable circulation, a soft abdomen and the actual prior CT findings are decision-critical rather than gratuitous reassurance.",
+      "The options are parallel next-management actions, and neither a task-word match nor a conspicuous qualifier identifies the key. The six-hour history is an elapsed clinical observation, not an authored runtime test wait. This review does not independently verify a universal repeat-imaging interval.",
+      "The prior node teaches why initial inpatient observation was appropriate; it does not state the current repeat-CT answer. The new trajectory changes the decision, and the update repeats enough of the original acquisition and findings to stand alone. The sequence is coherent.",
+      "No confident clinical inaccuracy was identified in the supplied explanation. This ranking should not be generalized into a rule that exploration is inappropriate whenever guarding or a direct CT sign is absent."
+    ],
+    "suggestions": [
+      "Retain the explicit trajectory and current examination. If expanding feedback, explain why observation has become insufficient here without claiming that a direct perforation sign is always required before exploration."
+    ]
+  },
+  {
+    "id": "question.topic.trauma-initial-abdomen.liver-infected-bile-collection.v2",
+    "nodeId": "node.topic.trauma-initial-abdomen.liver-infected-bile-collection.v2",
+    "title": "Recurrent collection after drain displacement",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "The catheter curl lies in abdominal-wall tissue rather than inside the fluid.",
+        "why": "This explicitly describes a tube in the wrong place; the uniquely matching option is 'Image-guided placement of a replacement collection drain'. A nonmedical reader can choose replacement from the mechanical mismatch without reasoning through the competing source-control procedures."
+      },
+      {
+        "phrase": "The cavity abuts the lateral wall along a path without intervening bowel or pleura",
+        "why": "The additional access-permission sentence rehearses why the keyed image-guided route is feasible, after displacement has already selected replacement. It makes the decision easier rather than adding an independent consequential inference."
+      },
+      {
+        "phrase": "Injected contrast fills the tract and returns at the skin; the deep fluid cavity does not opacify.",
+        "why": "The injection record could support a useful localization inference, but here it duplicates the already explicit CT conclusion. Two concordant statements of the same failure do not create two-step reasoning."
+      }
+    ],
+    "fairness": [
+      "Replacement drainage is a defensible best initial source-control procedure for the presented recurrent localized collection and displaced catheter. ERCP addresses an ongoing duct leak but does not itself drain this cavity; operative washout is less compelling with the stated stability, localization and accessible route. No confident clinical inaccuracy was identified.",
+      "The explanation appropriately separates restoring drainage from later treatment of persistent duct leakage. However, the current option set measures recognition of an explicitly misplaced tube more than a difficult biliary-complication decision.",
+      "The update supplies the prior drainage, initial response and recurrence and can stand alone. The earlier liver/arterial-bleeding nodes do not disclose the replacement-drain answer. Moving from that admission to a subsequent collection is coherent, although the intervening drainage is introduced in this update."
+    ],
+    "suggestions": [
+      "Keep the high-yield distinction between drainage of an infected cavity and treatment of an ongoing duct leak. Rebuild the item around observations that require distinguishing these two problems rather than announcing that the tube is outside the collection.",
+      "Use a nonredundant catheter/output and imaging record, preserving enough data for a unique best action. Compare credible procedures at the same stage and retain actual access constraints only when needed to resolve a real alternative.",
+      "If the explicit displacement scenario is retained, seek an expressly accepted foundational troubleshooting role; do not call it a difficult two-step resident item."
+    ]
+  },
+  {
+    "id": "question.topic.trauma-initial-abdomen.bladder-acquisition.v2",
+    "nodeId": "node.topic.trauma-initial-abdomen.bladder-acquisition.v2",
+    "title": "Adequate bladder imaging after pelvic trauma",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Retrograde CT cystography is the best offered acquisition. The resident must recognize the continuing bladder-injury concern despite upper-tract imaging, then judge why passive excreted contrast in an apposed bladder does not provide an adequate cystographic assessment.",
+      "The acquired-series and administration record establishes what was actually performed, avoiding an ambiguity between missing exported images and an unperformed acquisition. The existing catheter and insertion history make an immediate urethrogram a less persuasive next test in this record; they should not be taught as absolute exclusion of urethral injury.",
+      "'With bladder distension' names a clinically meaningful protocol component. In this option set it is not sufficient to identify the answer without understanding why passive filling is inadequate; it is not a rationale sentence or a uniquely comprehensive combined plan. No decisive nonmedical shortcut was identified.",
+      "The clinical record is self-contained. Its explanation discusses acquisition adequacy without disclosing the next node's bone-fragment indication for repair. The subsequent cystogram is a coherent result of this decision."
+    ],
+    "suggestions": [
+      "Optional feedback improvement: distinguish active retrograde filling from merely waiting for additional excreted contrast, without introducing an unsupported filling-volume threshold or claiming that easy catheter passage rules out every urethral injury."
+    ]
+  },
+  {
+    "id": "question.topic.trauma-initial-abdomen.bladder-intraperitoneal-repair.v2",
+    "nodeId": "node.topic.trauma-initial-abdomen.bladder-intraperitoneal-repair.v2",
+    "title": "Bladder repair for a complicated extraperitoneal injury",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Primary bladder repair with catheter drainage is the best offered plan. The resident must identify the extraperitoneal distribution, then recognize that an intraluminal bone fragment changes the usual catheter-management pathway. Stability and lack of diffuse peritonitis do not remove that local complication.",
+      "The fragment is a necessary observed complication, not an author-supplied diagnosis such as 'complicated extraperitoneal rupture'. Catheter drainage with follow-up imaging is a credible error after recognizing the extraperitoneal location. Suprapubic drainage changes the route without addressing the fragment. The options share drainage language, but that overlap does not uniquely assemble or reveal the repair key.",
+      "The task and current update stand alone with the mechanism in the presentation. The preceding acquisition explanation does not teach this repair indication. Cystography followed by inspection supplies a coherent management decision.",
+      "The historical node ID contains 'intraperitoneal', but that ID is not part of the permitted learner-visible fields and was not treated as a cue or a clinical assertion. The visible explanation correctly identifies the current injury as extraperitoneal."
+    ],
+    "suggestions": [
+      "Optional explanation clarification: explicitly include addressing the protruding bone fragment during repair, so the teaching point is not merely suturing around an unresolved mechanical lesion."
+    ]
+  },
+  {
+    "id": "question.topic.trauma-initial-abdomen.renal-no-hematuria-protocol.v2",
+    "nodeId": "node.topic.trauma-initial-abdomen.renal-no-hematuria-protocol.v2",
+    "title": "Upper urinary tract imaging after deceleration",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The task refers to the patient's 'abdominal and upper urinary tract injuries' before an injury has been demonstrated. This presupposes the interpretation that the mechanism and flank findings were supposed to motivate; 'suspected injury' would accurately state the current stage."
+    ],
+    "cues": [
+      {
+        "phrase": "IV-contrast CT with arterial, venous and excretory acquisitions",
+        "why": "This key contains every component of the competing 'IV-contrast CT with arterial and venous acquisitions' plus one extra acquisition, with no competing cost or patient-specific limitation. Choosing the most comprehensive superset is a viable test-taking shortcut."
+      },
+      {
+        "phrase": "abdominal and upper urinary tract injuries",
+        "why": "The broad task requests coverage of both regions, favoring the broadest protocol over renal ultrasonography. It also supplies an injury framing instead of letting the resident decide what the apparently reassuring urine/FAST findings establish."
+      }
+    ],
+    "fairness": [
+      "Contrast CT including evaluation of urinary excretion is a defensible best choice among these options given the mechanism and flank findings; clear urine and a negative FAST do not settle the upper-tract concern. No confident clinical inaccuracy is asserted from this offline review.",
+      "The offered choices largely precommit to imaging, so deciding whether to investigate despite absent hematuria is not a consequential choice the learner must resolve. The remaining scored distinction is selecting the inclusive protocol. Multiple phases and multiple observations do not by themselves establish two-step reasoning.",
+      "The explanation's 'named complete protocol' risks being learned as a universally required acquisition recipe. The necessity of every separately named phase is not independently verified here and should remain a clinical-review question rather than an absolute claim.",
+      "The initial record stands alone and its completed-CT successor follows coherently. The current explanation does not reveal the later node's observation-versus-intervention decision."
+    ],
+    "suggestions": [
+      "Use a neutral task about evaluating suspected injury, without presupposing a confirmed upper-tract injury.",
+      "Replace the inclusive-key/subset-foil structure with comparably scoped acquisition plans that each represent a credible protocol error. A documented prior acquisition with a genuinely unresolved vascular-versus-urinary question could make choosing the additional assessment consequential; support any new clinical facts before authoring them.",
+      "Explain the function of the needed acquisition rather than calling one memorized phase list 'complete'. Obtain clinical confirmation of the precise protocol wording; do not invent phase timing or dose thresholds."
+    ]
+  },
+  {
+    "id": "question.topic.trauma-initial-abdomen.duodenum-contained-wall-injury.v2",
+    "nodeId": "node.topic.trauma-initial-abdomen.duodenum-contained-wall-injury.v2",
+    "title": "Persistent obstruction during duodenal hematoma care",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Nutritional support' does not indicate the route, tolerance or adequacy of ongoing support. That context matters when ranking continued nonoperative care against an operation in a stable patient whose collection is shrinking.",
+      "'Sixteen days later' and 'gastric drainage has not declined' establish persistence but not whether there has been any return of passage or a clinically meaningful change over serial assessments. The CT improvement and functional nonresponse point in different directions, and the exact escalation boundary remains underdefined."
+    ],
+    "cues": [
+      {
+        "phrase": "no extraluminal gas, contrast leak or destructive loss of the duodenal wall",
+        "why": "These observations are legitimate safety and anatomy information, but the final 'destructive loss' clause makes bypass a weak third competitor. The meaningful contest is evacuation versus continued support; three labels do not establish three credible alternatives. Do not remove necessary perforation findings simply to disguise the answer."
+      }
+    ],
+    "fairness": [
+      "There is a genuine two-step objective: distinguish radiographic shrinkage from functional recovery, then decide whether persistent obstruction warrants escalation. This is a useful trauma concept, and ambiguity should not be counted as hard difficulty.",
+      "Operative evacuation is plausible, but I cannot confidently establish that continued decompression is indefensible in this stable, radiographically improving patient from the supplied fields. The elapsed duration should not silently function as an absolute operative cutoff. This is an unresolved ranking concern, not a confident assertion that the proposed operation is clinically wrong.",
+      "The explanation says escalation 'is supported' but does not establish why it is the single best immediate plan over continued support in this particular improving record. It also does not explain why evacuation, rather than another intervention, is the appropriate form of escalation beyond preserved wall anatomy.",
+      "The update supplies the initial treatment and follow-up course and therefore stands alone even though it is the first active node. The next node follows an exploration chosen here, but its newly discovered tear needs the continuity clarification recorded in that node's review."
+    ],
+    "suggestions": [
+      "Have Melissa resolve the conditional evacuation-versus-continued-care ranking before accepting a single key. If both remain reasonable under the presented course, hold or change the scored decision rather than inventing a mandatory day threshold.",
+      "Use concise, supported observations about serial functional response and tolerance of ongoing support to make a real failure of nonoperative management distinguishable from slow improvement. Do not add unsupported complications merely to force surgery.",
+      "Replace the weak bypass alternative with a clinically credible same-stage competitor if one can be supported. Explain the patient-specific reason for escalation in feedback, including the limitation of time elapsed as a stand-alone trigger."
+    ]
+  },
+  {
+    "id": "question.topic.trauma-initial-abdomen.duodenum-repair-scope.v2",
+    "nodeId": "node.topic.trauma-initial-abdomen.duodenum-repair-scope.v2",
+    "title": "Repair of a delayed duodenal defect",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The new 'separate lateral D2 tear' with localized bile staining appears at exploration after sixteen days of clinically improving, apparently contained wall injury and a repeat CT without leak. An occult contained perforation is possible, but the narrative does not state whether this was a pre-existing contained tear or a defect encountered or created while evacuating/debriding the hematoma. That distinction affects how the resident interprets the delayed-injury risk.",
+      "When presented without the preceding node, the current update says only 'persistent obstruction'; it does not state the duration or prior nonoperative course. Yet the explanation explicitly relies on choosing direct repair 'despite delayed discovery'. The later node therefore does not fully reproduce its intended competing consideration when encountered alone.",
+      "'After hemorrhage control' in the physiology exhibit introduces a treatment phase not described in this obstruction course. It is not necessarily impossible, but it is an unexplained chronology change rather than useful background."
+    ],
+    "cues": [],
+    "fairness": [
+      "Given the current operative observations, primary transverse repair is a defensible best option: perfused edges, limited tissue loss, tolerated approximation and preserved lumen support a direct repair despite the concern associated with delay. Resection and routine pyloric exclusion are credible over-escalation errors.",
+      "The approximation observations are decision-critical raw technical findings, not a cue to delete. No decisive nonmedical wording, convergence or length shortcut was identified. The known operative defect is appropriate background for a repair-selection task.",
+      "The intended two-step decision is to assess local repair feasibility, then weigh it against the delayed course and present physiology. That competing context is clearer in sequence than when the node stands alone. Its moderate rating assumes the missing chronology is understood; the gap must not be used to inflate difficulty.",
+      "I am not asserting that an occult delayed duodenal perforation or direct repair is medically impossible or incorrect. The revision request is to make the actual operative story and decision stage explicit. Prior feedback does not directly name primary transverse repair, although 'otherwise preserved duodenum' weakly preconditions a limited intervention."
+    ],
+    "suggestions": [
+      "State briefly in this node how long the obstruction has been managed and why exploration is occurring, so delayed discovery is a visible consideration even without prior feedback.",
+      "Clarify whether the tear is an occult contained traumatic perforation, newly evolved injury or an operative defect, and align the preceding CT/course and localized contamination with that explanation. If no supported coherent continuation is intended, make this a separate case rather than implying an unexplained transition.",
+      "Remove the stray hemorrhage-control wording or supply the relevant event if it truly belongs to this course. Preserve the measured geometry, observed tissue response and lumen findings; do not turn them into invented universal repair cutoffs."
+    ]
+  },
+  {
+    "id": "question.topic.trauma-initial-abdomen.jejunum-primary-repair.v2",
+    "nodeId": "node.topic.trauma-initial-abdomen.jejunum-primary-repair.v2",
+    "title": "Jejunal devascularization and reconstruction",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Jejunal resection with immediate anastomosis is the best offered plan. The resident must first recognize that mesenteric separation and persistent nonperfusion outweigh the small antimesenteric opening, then distinguish the indication to resect from the separate physiology and tissue conditions governing reconstruction.",
+      "Direct suture closure represents anchoring on defect circumference; deferred reconstruction represents applying a staged strategy despite favorable current physiology and viable bowel beyond the injured segment. Those are distinct consequential errors rather than two names for the same rule.",
+      "The options have comparable specificity and identical anatomic scope. The two resection choices do not reveal whether resection is correct, and 'immediate' versus 'deferred' is the actual clinical decision rather than an editorial absolute. No decisive wording, length or convergence cue was identified.",
+      "The patient, mechanism, complete bowel examination, local viability findings and current physiology are all present in this standalone node. The explanation appropriately distinguishes size from perfusion and reconstruction from staged discontinuity. No confident clinical inaccuracy was identified."
+    ],
+    "suggestions": [
+      "Preserve the conflict between the small opening and mesenteric devascularization. Do not convert the fictional circumference, blood pressure or pH observations into universal treatment thresholds in subsequent teaching or variants."
+    ]
+  }
+]

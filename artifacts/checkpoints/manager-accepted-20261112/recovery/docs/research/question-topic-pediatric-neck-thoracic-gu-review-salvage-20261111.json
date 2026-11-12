@@ -1,0 +1,166 @@
+[
+  {
+    "id": "question.pediatric-neck-thoracic-gu.20261111.node-sample.v1",
+    "nodeId": "node.pediatric-neck-thoracic-gu.20261111.node-sample",
+    "title": "Act on nonrepresentative node sampling",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Scope for this report: six current status=salvage nodes only, using candidate Presentation, Current update, Exhibit, Task, option labels and Explanation. Option-author rationales, author gates and prior PASS claims were not treated as evidence. Kept-unchanged, retired, parked, held and other nonsalvage records were excluded. The id field is the questionVariantId. All six cases have one node; no later-part sequencing is applicable.",
+      "The named 14-year-old boy, outside specimen and present examination are sufficient for standalone interpretation. The task identifies the patient, site and diagnostic decision without needing the removed companion.",
+      "Excisional biopsy is the best offered plan for a persistently enlarging fixed pediatric cervical node after nonrepresentative sampling. Repeat FNA is a credible less-invasive competitor, but the concerning clinical course and need for representative tissue favor excision. Surveillance wrongly treats an unsampled target as benign. This does not imply that every inadequate pediatric FNA mandates excision.",
+      "Two consequential steps: recognize blood/fat without lymphoid tissue as failure to assess the target, then integrate continued enlargement and fixation to choose tissue acquisition rather than surveillance or another limited sample. Replacing this with adequate benign tissue and a regressing examination could change the plan.",
+      "Cue attack: 'no lymphoid tissue is represented' is necessary specimen-adequacy information, not an instruction to select excision; both sampling options remain linguistically compatible. Repeated 'cervical node' is shared across all options. No unique length, absolute, convergence or diagnosis-label shortcut identified. The explanation appropriately withholds a cancer diagnosis.",
+      "High-yield judgment: discordance between reassuring sampling and a concerning neck mass is a practical surgical diagnostic problem. Difficulty is a qualitative prediction, not measured performance.",
+      "All report verdicts are offline editorial judgments, not fresh source verification or clinical approval. No network, source-accuracy audit or runtime rendering/timing audit was performed. No confident clinical inaccuracy identified here; all exact drafts remain needs_clinician_review pending Melissa Rowland's sign-off."
+    ],
+    "suggestions": [
+      "Retain the specimen contents and interval behavior together; do not replace them with a label such as inadequate biopsy or suspected lymphoma.",
+      "No required scored-content repair. Preserve the exact version unless a separately authorized revision is made."
+    ]
+  },
+  {
+    "id": "question.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.v1",
+    "nodeId": "node.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy",
+    "title": "Choose a safer tissue route with mediastinal compression",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Standalone: the case supplies the subsequent hospital setting, positional symptoms, CT airway compression, available peripheral target and observed cooperation. No prior node or its feedback is needed. The initial clinic attendance and subsequent father/clinician chart review can be read chronologically; the task names the hospital team receiving the recommendation.",
+      "Local-anesthetic cervical-node excision is the best offered plan. The deep-sedation needle option is a meaningful trap: a smaller procedure does not necessarily avoid the physiologic hazard. Thoracoscopy under general anesthesia is less attractive when peripheral tissue is available. The key is a specialist plan, not permission to perform an awake excision in any child or setting.",
+      "Two consequential steps: infer anesthesia/position-related risk from supine breathlessness plus tracheal narrowing, then choose a diagnostic target and anesthetic approach that can supply tissue with less exposure to that risk. Removing the compression findings or the accessible target changes the comparison.",
+      "Cue attack: 'She remained calm during an awake needle procedure' and 'The left supraclavicular node is accessible' favor feasibility of the key, but are necessary constraints; deleting them would weaken its fairness. Neither repeats an option verbatim, and deciding between local anesthesia, deep sedation and general anesthesia still requires clinical knowledge. No rhetorical absolute, length outlier or convergence pattern identified.",
+      "The explanation appropriately connects the route and anesthetic risk after the choice. Prior cooperation with a needle is not proof that excision will be tolerated; the specialist team must still assess feasibility. This limitation does not make the two offered sedated mediastinal approaches equally preferable.",
+      "High-yield judgment: avoiding hazardous anesthesia in a child with a compressive anterior mediastinal mass is a consequential surgical safety concept. No confident clinical inaccuracy identified in the permitted text; independent current-source verification and clinical approval were outside this offline review."
+    ],
+    "suggestions": [
+      "No required scored-content repair. Preserve both the airway observations and practical peripheral-target/cooperation information.",
+      "Keep the local-anesthetic approach conditional on specialist assessment; do not strengthen the explanation into a guarantee that prior needle tolerance establishes excision tolerance."
+    ]
+  },
+  {
+    "id": "question.pediatric-neck-thoracic-gu.20261111.negative-exploration.v1",
+    "nodeId": "node.pediatric-neck-thoracic-gu.20261111.negative-exploration",
+    "title": "Tailor fixation to operative findings",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The explanation says 'not recommended by this consensus' without identifying the consensus in the allowed learner-facing fields. The named source appears in author-only option rationale, which cannot repair that unexplained reference. This does not obscure the task, but weakens the standalone feedback."
+    ],
+    "cues": [
+      {
+        "phrase": "no bell-clapper deformity is identified",
+        "why": "The exhibit supplies the clinically relevant anatomical classification rather than requiring its interpretation. Alongside 'No cord twist or ischemic testicular change' and 'normal' attachments, the text strongly funnels toward the only no-fixation option. These are useful safety facts, but their interpreted presentation collapses the proposed reasoning demand."
+      },
+      {
+        "phrase": "It accounts for the focal tenderness.",
+        "why": "This is an author-supplied causal conclusion. The learner is explicitly told that the removed appendage explains the symptoms, further resolving the clinical inference before the fixation decision."
+      }
+    ],
+    "fairness": [
+      "Standalone completeness is otherwise good: Ben's age/sex, retrospective operative setting, right-sided findings and removed appendage are all present. No original acute-scrotum companion is required.",
+      "Closing without routine testicular fixation is a defensible best answer under the described normal attachments and alternative pathology. Bilateral fixation imports the rule for confirmed testicular torsion; unilateral fixation imports symptom laterality. No confident clinical inaccuracy is alleged. The precise consensus recommendation has not been independently verified in this no-network review.",
+      "The problem is cognitive level rather than an ambiguous key. The text already supplies no testicular torsion, no bell-clapper anatomy and the explanation for tenderness. Choosing none versus one versus both is application of one remaining fixation rule. Counting recognition of the explicitly named appendage plus recall of that rule as two consequential steps would overstate the demand.",
+      "The options are short and grammatically comparable. There is no length or convergence giveaway. A nonmedical reader could nevertheless favor no additional intervention from the accumulation of normal/negative findings and the stated resolution of the cause; medical knowledge is needed to confirm that inference.",
+      "Acute-scrotum exploration and distinguishing appendage torsion from testicular torsion are high-yield. The detailed negative-exploration fixation policy is narrower; this item currently provides foundational practice rather than a difficult resident decision."
+    ],
+    "suggestions": [
+      "For a revised version, remove 'It accounts for the focal tenderness' and give operative observations rather than duplicating them with a named normal-anatomy conclusion. Do not remove findings needed to exclude true torsion or establish the fixation indication.",
+      "Rebuild the decision around a source-supported operative finding that changes the extent of fixation or further exploration, with credible same-stage plans. The learner should have to interpret that finding and apply its consequence; simply deleting 'bell-clapper' from this otherwise unchanged item will not necessarily make it moderate.",
+      "If this exact narrow rule cannot support a meaningful competing decision, seek explicit acceptance as an intentionally easy foundational item instead of labelling it two-step. That exception is not granted by this review.",
+      "Identify the relevant consensus in feedback or replace the dangling reference with a self-contained explanation of the limited recommendation. Preserve frozen versions; any material objective change requires the project's concept-version discipline."
+    ]
+  },
+  {
+    "id": "question.pediatric-neck-thoracic-gu.20261111.pyogenic-drainage.v1",
+    "nodeId": "node.pediatric-neck-thoracic-gu.20261111.pyogenic-drainage",
+    "title": "Escalate persistent suppuration after medical treatment",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The task and chronology are understandable, but the update and treatment-response row repeat the same systemic-versus-local contrast. The repeated wording adds reading without a second inference.",
+      "The feedback calls this an 'acute pyogenic presentation' and contrasts an 'indolent mycobacterial-node operation', while the standalone presentation gives no illness-onset history. Tenderness, fever, inflammatory change and progression support the intended interpretation, but the explicit acute-versus-indolent distinction is better established in feedback than in the case."
+    ],
+    "cues": [
+      {
+        "phrase": "Arrange elective whole-node excision after recovery",
+        "why": "The question asks about an enlarging, tender focal problem now. 'Elective' and 'after recovery' make this choice a delayed-stage outlier before a reader understands the clinical distinction between drainage and excision."
+      },
+      {
+        "phrase": "enlarged and become fluctuant",
+        "why": "This is clinically useful evidence, not an improper fact to conceal. However, together with 'Fluid and mobile debris' it points directly to the sole drainage choice. The other diagnostic interpretation is not developed enough to make this more than a familiar collection-to-drainage association."
+      }
+    ],
+    "fairness": [
+      "Standalone: Liam's age/sex, retrospective hospital decision, intravenous treatment and ultrasound findings are supplied. No prior companion is needed to choose the intended plan, and no later-part continuity issue remains.",
+      "Surgical drainage assessment is the best offered answer for the described enlarging fluctuant collection. The key appropriately requests assessment rather than declaring that every collection must immediately undergo a particular procedure. Continued medical observation is less attractive in the stated focal course; delayed elective node excision does not address the current problem.",
+      "There is no confident clinical inaccuracy identified. Without an onset history, I would not claim the text definitively excludes every indolent infectious process. This is a limitation of the explanation's asserted distinction, not a finding that elective excision is an equally good answer here.",
+      "The systemic improvement is a plausible distraction, but the key remains the same if that improvement is deleted: progressive fluctuance plus a fluid collection leads straight to drainage assessment. The exhibit largely restates this trigger. That is insufficient for the requested two consequential steps at PGY-2/3 level, even though the teaching point is clinically useful.",
+      "High-yield judgment: reassessing source control despite improved systemic symptoms is central surgical practice. Difficulty should come from credible competing interpretations of response or source, not from a delayed-operation foil or repeated evidence of an obvious collection."
+    ],
+    "suggestions": [
+      "Give a concise, source-supported onset and treatment course sufficient to support the intended acute-versus-indolent distinction; do not invent a required antibiotic duration, abscess-size cutoff or drainage threshold.",
+      "Replace the 'after recovery' foil with a credible plan addressing the same current decision. If drainage versus excision is the intended discrimination, make both interpretations genuinely plausible initially and supply observations that resolve them; version a materially changed construct.",
+      "Make the response evidence change the decision rather than merely accompany an obvious drainage trigger. Consolidate the duplicated response text, then repeat the deletion test and cover-the-options test on the revised case.",
+      "If the objective remains uncomplicated source-control recognition, seek explicit foundational-item acceptance instead of claiming moderate/hard two-step reasoning. Preserve the existing exact version pending that decision."
+    ]
+  },
+  {
+    "id": "question.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+    "nodeId": "node.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+    "title": "Recognize the need for chromosomal assessment",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Standalone: the case supplies Noah's age, clinical gender presentation, genital findings, completed 46,XX result, clinical stability and biochemical stage. The question asks for a prioritized biochemical study, not a complete DSD workup or a new chromosome test. Calling Noah a boy is not contradicted by the karyotype and does not settle gonadal anatomy or gender identity.",
+      "Baseline 17-hydroxyprogesterone is the best offered initial study. AMH addresses a competing question about testicular tissue; the completed chromosome result makes adrenal virilization a higher-priority explanation to assess. A stimulated steroid profile is a credible adrenal-investigation competitor, but no baseline biochemical result yet justifies moving directly to the characterization stage in this stable case.",
+      "Two consequential steps: reinterpret the external anatomy and nonpalpable gonads in light of 46,XX, then select an initial adrenal screen rather than a testicular-tissue marker or a later-stage stimulated profile. A different chromosome result or an already borderline baseline result changes that comparison.",
+      "Cue attack: 'No steroid measurements have yet been obtained' gives the necessary stage; it does not uniquely match the key because both baseline and stimulated steroid investigations could answer the wording. Two options use 'Baseline serum', so this is not a key-only grammatical cue. No diagnosis label, convergence or rhetorical absolute identifies the answer without clinical knowledge.",
+      "The explanation supplies early-morning collection and assay details after the answer, and explicitly avoids representing one test as a complete workup. No confident clinical inaccuracy identified. The claimed Endocrine Society recommendation was not freshly verified; exact guideline applicability and assay details remain for clinical sign-off.",
+      "High-yield judgment: genital anomalies with nonpalpable gonads require recognition of possible DSD/adrenal disease before surgery. Baseline-versus-stimulation sequencing adds a useful, moderately demanding distinction, although it is more specialized than recognition alone."
+    ],
+    "suggestions": [
+      "No required scored-content repair. Preserve the completed karyotype, stable clinical state and absence of prior biochemical testing; these make the offered studies rankable.",
+      "Do not expose the authoring title as a clinical task heading: its reference to chromosomal assessment describes an already completed step, whereas the actual task correctly asks for biochemical testing."
+    ]
+  },
+  {
+    "id": "question.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2",
+    "nodeId": "node.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2",
+    "title": "Sequence diaphragmatic repair with physiology",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Standalone: the presentation explicitly separates Isla's current age of six years from the neonatal record at four days. The repair-sequencing task refers to that recorded ICU decision, and all necessary trends are reproduced. No previous neonatal-management node is required.",
+      "Planning repair while continuing ICU support is the best offered plan under the sustained oxygenation/perfusion observations, preserved ventricular function and pulmonary pressure now below simultaneous systemic pressure. Continued stabilization before reconsideration is a credible error if residual pulmonary hypertension or intubation is mistaken for an absolute barrier. ECMO escalation is a weaker competitor because the record does not describe failure of conventional support.",
+      "Two consequential steps: integrate respiratory/perfusion data and interpret pulmonary pressure relative to systemic pressure, then decide whether residual support needs warrant deferring repair. The pulmonary pressure of 45 mmHg cannot be treated as a universal standalone readiness cutoff. Worsening perfusion/support or a different relative pressure pattern could reverse the decision.",
+      "Cue attack: 'fell from 75 to 45 mmHg' is favorable raw trend data, but does not itself teach the relative-pressure interpretation. All three options are concrete sequencing plans of similar length; none uniquely repeats the numerical findings or advertises a rationale. The known congenital diaphragmatic hernia diagnosis is appropriate background for a timing task, not disclosure of its answer.",
+      "The explanation appropriately limits the key to planning/consideration with multidisciplinary confirmation rather than automatic clearance. No confident clinical inaccuracy identified. The exact current CAHS readiness criteria and applicability were not independently verified in this offline review; the supplied numbers are not endorsed as new thresholds.",
+      "High-yield judgment: CDH repair follows physiological stabilization rather than anatomic urgency or mandatory complete normalization. The question is moderately demanding because apparently abnormal residual pulmonary pressure and continued intubation must be weighed against the actual trajectory; it is not hard merely because several measurements appear."
+    ],
+    "suggestions": [
+      "No required scored-content repair. Retain simultaneous systemic pressure and the sustained perfusion/support observations; a falling pulmonary-pressure number by itself would not carry the same inference.",
+      "Preserve the explicit neonatal-record age and the explanation's distinction between planning repair and unconditional operative clearance."
+    ]
+  }
+]

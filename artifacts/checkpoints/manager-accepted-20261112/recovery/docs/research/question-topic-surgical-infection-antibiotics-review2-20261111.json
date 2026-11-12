@@ -1,0 +1,296 @@
+[
+  {
+    "id": "question.topic.surgical-infection-antibiotics.postdrain-antibiotic-need.v2",
+    "nodeId": "node.topic.surgical-infection-antibiotics.postdrain-antibiotic-need.v2",
+    "title": "Systemic treatment after incisional drainage",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Review scope for this array: all 13 current executable proposedQuestions, comprising two rewrites and eleven new candidates, including the two pass-preserved new candidates. The two original Keep records, twenty retirement proposals, two parked repairs, parked retained replacement, inherited held versions/recorded holds/withheld points and unkeyed material were noted but not adjudicated. No prior verdict or author self-assessment determined these judgments.",
+      "Offline editorial review of Presentation, Current update, Exhibit, Task, option labels and Explanation under question-authoring.2026-11-08.v15 and AGENTS.md presentation guidance. Input JSON SHA256: ac6199fa217d2159c037274d42c432055022ba7748a67c6d9796df965ae7c838. No network or fresh source verification was performed. PASS is not clinical approval; drafts remain needs_clinician_review. Difficulty and highYield are qualitative resident-level judgments, not measured performance or verified exam frequencies. Runtime rendering, randomization, wait metadata and source-ledger completeness are outside this text-only review.",
+      "Not starting a systemic antibiotic is the single best offered plan for the decompressed, improving superficial wound without spreading cellulitis, systemic illness or immunocompromise. Neither susceptible organism identity nor availability of an active oral agent creates a treatment indication. No confident clinical inaccuracy identified.",
+      "The resident must reconcile a positive MSSA culture with the postdrainage response, then decide whether either active drug is indicated. Cephalexin is a credible overtreatment temptation; trimethoprim-sulfamethoxazole supplies another active oral prescription rather than the former unrelated escalation in route.",
+      "The negative-treatment option is necessarily different from the two treatment options, but its wording does not independently disclose correctness. Improvement and host findings are necessary clinical evidence, not a nonmedical wording shortcut. Name, age/sex, short complaint and complete standalone task are present."
+    ],
+    "suggestions": [
+      "Retain the positive culture and both active oral alternatives. Do not remove the source-control, response or host findings in pursuit of difficulty."
+    ]
+  },
+  {
+    "id": "question.topic.surgical-infection-antibiotics.pelvic-source-route.v2",
+    "nodeId": "node.topic.surgical-infection-antibiotics.pelvic-source-route.v2",
+    "title": "Source control for a localized postoperative pelvic collection",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Image-guided catheter drainage is the best offered action for the substantial confined collection, persistent focal illness and described access corridor. Continued medical treatment fails to address the collection; exploration is less appropriate than the available less invasive source-control route in this stated stable, localized presentation.",
+      "Two judgments remain: recognize the need for source control despite active antibiotics, then use distribution, access anatomy and examination to choose its route. These are common general-surgery decisions, although this is at the easier end of moderate rather than a stretch item.",
+      "The corridor and examination are decision-critical observations. They should not be deleted as alleged cues: without them exploration could become more defensible. No option uniquely repeats a diagnostic label or rationale sentence. No confident clinical inaccuracy identified; the explanation appropriately avoids equating absent contrast escape with proof that every leak is excluded.",
+      "The retrospective hospital decision is clearly distinguished from the current clinic visit. It precedes drainage, specimen interpretation and duration decisions coherently. Later results were not used to solve this node."
+    ],
+    "suggestions": [
+      "Retain the explicit access anatomy and localized examination. Do not advertise this straightforward source-control comparison as hard."
+    ]
+  },
+  {
+    "id": "question.topic.surgical-infection-antibiotics.fresh-source-sample.v2",
+    "nodeId": "node.topic.surgical-infection-antibiotics.fresh-source-sample.v2",
+    "title": "Choosing the microbiologic reference specimen",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The sentence 'the task is to interpret existing reports, not order another culture' is author-facing instruction inside the clinical update. The task already asks which existing report to use."
+    ],
+    "cues": [
+      {
+        "phrase": "Direct needle entry before catheter placement; sterile collection container",
+        "why": "The uniquely positive 'sterile collection container' description reinforces the direct sample against two visibly reused drainage-system specimens. The provenance is essential, but the extra cleanliness label can help a reader select the favored specimen without interpreting the organisms or clinical response."
+      }
+    ],
+    "fairness": [
+      "The insertion needle specimen is the defensible primary guide among these three reports. A disinfected port does not make a sample from an established drainage system equivalent to direct initial cavity sampling. No confident clinical inaccuracy identified in that limited ranking; it must not become a universal instruction to disregard all subsequent isolates regardless of clinical course.",
+      "This principally tests one specimen-provenance rule. The task never requires selecting or changing a regimen. Removing the particular organisms and most response observations still leaves the same best specimen; naming its susceptibility report is not a second consequential decision.",
+      "The device isolates and clinical improvement could support a valuable treatment-interpretation question, but here the learner can answer from the collection-history column. This is useful high-yield microbiology at easy predicted difficulty.",
+      "The update independently states drainage, the site, chronology and current treatment response. It follows the route-selection node coherently, and that preceding explanation does not give away specimen priority. Named age/sex and short complaint are suitable."
+    ],
+    "suggestions": [
+      "Remove the meta-instruction and the redundant 'sterile collection container' qualifier while preserving collection route and catheter chronology.",
+      "Make specimen validity consequential to a specific antimicrobial decision: compare equally concrete plans that differ in how they use the original and device isolates. Supply the actual susceptibility and clinical information needed to distinguish those plans; do not add an unsupported resistance rule.",
+      "If the objective must remain simply choosing a reference specimen, seek explicit acceptance as a focused foundational item rather than claiming two-step resident difficulty."
+    ]
+  },
+  {
+    "id": "question.topic.surgical-infection-antibiotics.adequate-control-duration.v2",
+    "nodeId": "node.topic.surgical-infection-antibiotics.adequate-control-duration.v2",
+    "title": "Antibacterial endpoint after pelvic source control",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Stopping is the single best offered endpoint in this explicitly recovered patient after four full active post-control days, with no residual fluid cavity, continuing communication, bloodstream infection or other treatment indication. This conclusion is conditional on the stated adequacy of source control and is not a universal four-day rule for every abdominal infection.",
+      "The learner must distinguish persistent fat stranding and a retained drain from evidence of an uncontrolled fluid source, then choose a treatment endpoint. Extending therapy to drain removal is a recognizable clinical error. Waiting for disappearance of stranding is the weaker competitor, but still targets a distinct clinical-versus-radiographic endpoint error.",
+      "The recovery findings are necessary to make stopping fair. The options are parallel endpoints; neither option length nor a uniquely explanatory phrase identifies the key. No confident clinical inaccuracy identified in the supplied conditional explanation. Predicted difficulty is at the easier end of moderate.",
+      "The full update restates the procedure, completed treatment, source findings and present status, so it stands alone. It follows the day-2 specimen node coherently. Prior feedback discusses source validity, not the four-day stopping answer. The retrospective presentation keeps this hospital-stage imaging separate from an unannounced new clinic order."
+    ],
+    "suggestions": [
+      "Keep the distinction between absent fluid cavity and residual inflammatory stranding. Preserve the explicit absence of another treatment indication and the separate drain-management plan."
+    ]
+  },
+  {
+    "id": "question.topic.surgical-infection-antibiotics.failure-imaging.v2",
+    "nodeId": "node.topic.surgical-infection-antibiotics.failure-imaging.v2",
+    "title": "Retrieving a completed enhanced CT series",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": false,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "The originating radiologist can open the complete acquired study immediately.",
+        "why": "This availability sentence almost states the keyed action, 'Review the originating CT's enhanced series.' Combined with an unchanged examination and a same-morning acquisition, it makes retrieving the missing export the obvious option without surgical knowledge."
+      },
+      {
+        "phrase": "precontrast series only; no enhanced series in export",
+        "why": "The explicit missing-series label matches the only option offering review of that series. The table becomes a document-completion exercise rather than a clinical source-assessment problem."
+      }
+    ],
+    "fairness": [
+      "Reviewing the already acquired enhanced images is the reasonable first action under the exact stable, unchanged and immediately reviewable circumstances. There is no confident clinical inaccuracy in that limited answer, and the explanation properly avoids delaying urgent care if circumstances change.",
+      "The tested inference is acquisition-versus-export completeness; the next action simply retrieves the named missing material. Repeat CT and ultrasonography are weak competitors after the narrative explicitly promises an immediately accessible current complete study. No second consequential clinical interpretation is required.",
+      "Postoperative source assessment is high-yield, but this particular export-log retrieval distinction is principally workflow literacy. I would not count this executable task as a commonly tested surgical-infection concept merely because fever and pelvic tenderness frame it.",
+      "The update and task clearly identify the retrospective decision, patient and first action. This is standalone and has no sequence-dependency problem."
+    ],
+    "suggestions": [
+      "Recenter the task on a clinical uncertainty that changes source assessment or management, using actual findings and credible same-stage alternatives. Keep acquisition adequacy explicit where it is genuinely necessary for fairness.",
+      "If transfer completeness is the intended objective, retain this as an explicitly accepted easy workflow exercise rather than padding it into a difficult infection question.",
+      "Do not simply delete immediate access while leaving the same key: that could make repeat imaging reasonable and create ambiguity."
+    ]
+  },
+  {
+    "id": "question.topic.surgical-infection-antibiotics.closure-prophylaxis.v2",
+    "nodeId": "node.topic.surgical-infection-antibiotics.closure-prophylaxis.v2",
+    "title": "Postoperative prescription and drain-culture reconciliation",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Discontinuing the carried-forward cefazolin is the single best offered medication plan. The operative chronology supports a prophylactic origin, while the benign clinical course and indwelling-port culture do not independently establish an infection needing treatment. Mesh and a retained drain do not by themselves supply that indication.",
+      "The added MSSA report creates a consequential second judgment: reconstruct the original antibiotic indication, then decide whether the subsequent culture supplies a new treatment indication. Oral cephalexin is a credible attempted conversion for someone who mistakes susceptibility for a need to treat.",
+      "The task uses a somewhat artificial 'cefazolin-related' phrase, but the exact medication decision is clear. All choices refer to that same medication plan, so the overlap does not uniquely favor the key. No confident clinical inaccuracy identified.",
+      "The discharge prescription's route is not stated explicitly, although cefazolin implies parenteral administration. This does not change the offered decision, but a medication-reconciliation record could label the route for realism. The named patient, age/sex, complaint and standalone chronology are consistent."
+    ],
+    "suggestions": [
+      "Optional polish: ask which medication plan is appropriate and label the carried-forward cefazolin route in the medication record. Preserve the new device-culture conflict and clinical reassessment findings."
+    ]
+  },
+  {
+    "id": "question.topic.surgical-infection-antibiotics.mrsa-prophylaxis.v2",
+    "nodeId": "node.topic.surgical-infection-antibiotics.mrsa-prophylaxis.v2",
+    "title": "Procedure-specific prophylaxis with MRSA carriage",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Cefazolin plus vancomycin is the best offered regimen for the stated mesh procedure, documented MRSA carriage and beta-lactam tolerance. Gentamicin does not replace the required MRSA-directed component or the preferred routine prophylactic component in this comparison. No confident clinical inaccuracy identified in the limited offered ranking.",
+      "The two consequential judgments are the procedure's baseline prophylactic coverage and how documented carriage modifies it. The error is substituting or adding the wrong component rather than forgetting that prophylaxis is needed.",
+      "Every option contains two drugs, and each drug appears in two options. There is no majority-component convergence, uniquely long key, or rationale embedded in an option. MRSA is legitimate known microbiology for this management task, not a supplied diagnosis answering a diagnosis question.",
+      "The historical preoperative stage is clear despite the present clinic frame. The next node concerns redosing, and this explanation does not disclose its clock or interval. The planned decolonization does not claim proven eradication."
+    ],
+    "suggestions": [
+      "Retain balanced two-drug labels and the procedure, allergy/tolerance and carriage information. Keep redosing instructions out of this node's feedback."
+    ]
+  },
+  {
+    "id": "question.topic.surgical-infection-antibiotics.cefazolin-redosing.v1",
+    "nodeId": "node.topic.surgical-infection-antibiotics.cefazolin-redosing.v1",
+    "title": "Cefazolin redosing clock",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The 11:30 dose is the best offered answer under the stated normal renal function, ongoing operation and non-substantial blood loss. The four-hour interval is counted from administration, not incision. No confident clinical inaccuracy identified; this offline review did not freshly verify the dosing source.",
+      "This is one familiar timing rule plus elementary elapsed-time calculation. The incision time supplies a real common error, but selecting the correct clock origin and adding the interval are not two consequential clinical decisions. Normal renal function and absence of substantial blood loss remove rather than create competing dosing considerations.",
+      "The labels contain no reliable nonmedical shortcut to the key. Matching 11:30 to the task is not sufficient evidence of a cue, since giving a dose now versus later is precisely the decision. The weakness is cognitive depth rather than confusing wording.",
+      "The preceding regimen question does not reveal the redosing rule. This node independently supplies the actual drug, administration time, incision time, present operative stage and relevant physiology; 'The initial regimen was administered' is unnecessary but not a dependency preventing standalone use.",
+      "This is a new executable candidate even though its exact version is marked pass-preserved. The present rating independently assesses its difficulty against the requested standard; it is not permission to overwrite any frozen or previously accepted version."
+    ],
+    "suggestions": [
+      "Either obtain explicit acceptance as a focused foundational redosing item or create a new version with a supported competing intraoperative consideration that actually changes the timing decision.",
+      "Preserve the dose-versus-incision clock error. Do not manufacture difficulty with harder arithmetic, an invented blood-loss cutoff or an unsupported renal dosing interval.",
+      "Preserve the existing exact version while the manager adjudicates this difficulty finding."
+    ]
+  },
+  {
+    "id": "question.topic.surgical-infection-antibiotics.severe-esbl-regimen.v1",
+    "nodeId": "node.topic.surgical-infection-antibiotics.severe-esbl-regimen.v1",
+    "title": "Definitive therapy for severe invasive CTX-M infection",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "ceftriaxone-resistant",
+        "why": "This directly eliminates 'Intravenous ceftriaxone plus metronidazole' by matching the drug name to an explicit resistance label. Even a reader with little medical knowledge can discard that option. The result is necessary microbiology; the repair is a credible comparator, not hiding resistance."
+      }
+    ],
+    "fairness": [
+      "Meropenem is the single best offered regimen for the invasive CTX-M-associated E. coli infection with ongoing vasopressor need despite the reported piperacillin-tazobactam susceptibility. No confident clinical inaccuracy identified in this severe-context ranking.",
+      "There is a meaningful two-step conflict between interpreting the resistance phenotype/invasive syndrome and deciding whether an apparently susceptible non-carbapenem is adequate. The piperacillin-tazobactam comparator can make this moderately difficult.",
+      "The ceftriaxone-plus-metronidazole option does not credibly compete for a resident once ceftriaxone resistance is explicitly reported. Anaerobic coverage does not rescue treatment of the resistant bloodstream isolate. Thus a three-choice item effectively becomes a two-choice comparison.",
+      "The explanation asserts the preferred regimen but does not teach why the closest susceptible alternative loses. It should explain the limitation of relying on that in-vitro result in this invasive ESBL context, rather than only restating that meropenem is supported.",
+      "The retrospective patient, condition and decision are clear and standalone. The pass-preserved label was not treated as evidence of adequacy, and this finding does not authorize alteration of a frozen exact version."
+    ],
+    "suggestions": [
+      "In a new version, replace the explicitly resistant ceftriaxone regimen with a clinically credible alternative whose limitation follows from supplied severity, organism or pharmacologic information. A clinician-reviewed comparison involving another active carbapenem could test the severe-illness distinction if its exact ranking is supported.",
+      "Retain piperacillin-tazobactam susceptibility as the main conflict, and add a short post-answer explanation of why it does not control the choice in this invasive phenotype.",
+      "Preserve the exact existing version pending manager adjudication; no silent repair of a prior PASS."
+    ]
+  },
+  {
+    "id": "question.topic.surgical-infection-antibiotics.culture-directed-narrowing.v2",
+    "nodeId": "node.topic.surgical-infection-antibiotics.culture-directed-narrowing.v2",
+    "title": "Narrowing a remaining post-control antibiotic course",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Ceftriaxone plus metronidazole is the best offered stewardship choice when the reliable first-entry specimen identifies these susceptible organisms, the source is controlled and the patient is improving. Meropenem and cefepime plus metronidazole are active, but their additional spectrum is not justified by the supplied findings. This is a best-choice ranking, not a claim that those drugs would fail microbiologically.",
+      "The resident must assemble coverage for both organisms, then use specimen reliability, response and remaining-course context to choose the narrower adequate regimen. The table deliberately leaves all offered regimens active, preserving a real de-escalation decision.",
+      "No unique label overlap, majority-component convergence or explanatory option identifies the key. Meropenem's shorter single-drug label reflects a genuine regimen difference rather than an artificial cue. The task does not explicitly instruct the learner to select the narrowest drug.",
+      "Day 2 and ongoing remaining treatment distinguish this from a completed-course stopping decision. That makes the choice fair without pretending this report alone proves a universally required duration. No confident clinical inaccuracy identified.",
+      "The retrospective stage, source, timing and specimen history are stated within this standalone node. Patient age/sex and complaint are consistent."
+    ],
+    "suggestions": [
+      "Retain the all-active comparator set and the clear course stage. The explanation can be shortened by deleting repeated contrasts with a hypothetical completed four-day course."
+    ]
+  },
+  {
+    "id": "question.topic.surgical-infection-antibiotics.anaerobic-coverage.v2",
+    "nodeId": "node.topic.surgical-infection-antibiotics.anaerobic-coverage.v2",
+    "title": "Enteric coverage and a concurrent antiarrhythmic",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Cefepime plus metronidazole is the single best offered regimen. Aerobic-only processing cannot establish absence of anaerobes from the leaking enteric source, while ongoing sotalol makes the otherwise active ciprofloxacin-containing option less appropriate because of additive arrhythmic risk. No confident clinical inaccuracy identified; the precise labeling claim in the explanation was not freshly verified offline.",
+      "Both axes are consequential: interpret the microbiology's sampling/processing limit to preserve anaerobic coverage, then account for the medication interaction when choosing between susceptible antipseudomonal agents. Solving only one axis leaves two options.",
+      "The four labels form a balanced component set. Each antipseudomonal drug occurs twice and metronidazole occurs twice; there is no convergence advantage. Susceptibility is supplied for both antipseudomonal choices. No option contains a rationale or an absolute, and the source/medication task does not name the interaction.",
+      "The question is hard because a resident must combine antimicrobial spectrum with a medication-specific safety constraint, not because of missing data. The source-control timing and current medication are clear within a standalone retrospective hospital decision. This is clinically relevant surgical antimicrobial selection, although exact exam frequency is not asserted."
+    ],
+    "suggestions": [
+      "Keep the balanced four-option structure and both susceptible agents. Do not add a pre-answer QT warning, which would supply the second inference."
+    ]
+  },
+  {
+    "id": "question.topic.surgical-infection-antibiotics.invasive-candida-treatment.v2",
+    "nodeId": "node.topic.surgical-infection-antibiotics.invasive-candida-treatment.v2",
+    "title": "Treating Candida from a newly accessed abdominal source",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Adding micafungin while continuing the active antibacterial regimen is the best offered plan for Candida recovered from direct initial access to the infected cavity in this persistently severely ill patient. C. glabrata, pending susceptibility and recent azole exposure make empiric fluconazole a less appropriate offered choice. No confident clinical inaccuracy identified.",
+      "The first consequential judgment is whether this source isolate warrants antifungal treatment rather than dismissal as a device isolate. The second is selection of the initial antifungal class using severity, species and prior exposure. The latter is strongly supported by several concordant findings, so this is moderate rather than hard.",
+      "The shared piperacillin-tazobactam component is balanced across all plans. The no-antifungal option names an actual alternative, and neither antifungal label contains an embedded explanation. Candida identification is legitimate microbiology for a treatment question. Repetition of fluconazole between prior exposure and an option is a clinical association requiring knowledge, not a sufficient nonmedical giveaway.",
+      "The specimen is explicitly from first access to a previously undrained cavity; it does not silently inherit the interpretation of an old drain sample. Continued source follow-up prevents the task from implying that antifungal addition replaces source assessment. The hospital-stage chronology is clear and standalone."
+    ],
+    "suggestions": [
+      "Preserve the distinction between a direct source specimen and a longstanding device culture, and keep susceptibility pending. Do not generalize the explanation to every postoperative Candida isolate."
+    ]
+  },
+  {
+    "id": "question.topic.surgical-infection-antibiotics.old-drain-colonization.v2",
+    "nodeId": "node.topic.surgical-infection-antibiotics.old-drain-colonization.v2",
+    "title": "A new drain isolate after a completed treatment course",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Not restarting therapy is the best offered plan given the completed course, documented control, recovery and provenance of the new isolate. A falling but still elevated leukocyte count does not independently establish treatment failure. Neither active antipseudomonal drug acquires an indication merely because the device sample reports susceptibility. No confident clinical inaccuracy identified in this conditional conclusion.",
+      "The two judgments are the significance of a disinfected-port isolate from a catheter present throughout recovery and whether the clinical trajectory justifies restarting a completed course. Persistent leukocytosis supplies a real competing concern rather than an entirely normalized recovery vignette.",
+      "The no-treatment choice differs from the two restart choices because that is the decision being tested. There is no independent grammatical, length or rationale cue selecting it. Cefepime is the stronger overtreatment temptation; meropenem additionally represents unnecessarily broad escalation, so this is moderate at most.",
+      "The update establishes catheter persistence through a completed four-day course and later recovery; an invented exact catheter-age threshold is unnecessary. The standalone clinic narrative, patient details and task are coherent. The explanation appropriately requires reassessment for new illness rather than treating all future drain cultures as harmless."
+    ],
+    "suggestions": [
+      "Optional concision: remove 'no blood cultures were obtained' unless a blood-culture decision is added; its absence does not distinguish any current option and could distract from the actual specimen and clinical trajectory.",
+      "Retain the falling leukocyte-count trend and the disinfected-port detail because they make the treatment-indication judgment consequential."
+    ]
+  }
+]

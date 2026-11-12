@@ -1,0 +1,262 @@
+[
+  {
+    "id": "R01",
+    "nodeId": "node.topic.thyroid-nodules-cancer.r01.v2",
+    "title": "A benign aspirate from a different thyroid target",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The defensible best answer is ultrasound-guided right-nodule FNA. The specimen and needle records establish that the benign result concerns the left lesion; the separate right lesion has measured suspicious morphology and sufficient size to support sampling. Neither whole-gland reassurance nor immediate diagnostic lobectomy follows from these findings.",
+      "Two consequential interpretations remain: limit the benign result to its actual target, then apply the right lesion's risk features to choose initial tissue assessment. The side labels are necessary provenance, not a key-only wording match; every option concerns the right lesion. This is moderate application of core nodule assessment, not a hard item merely because two nodules are described.",
+      "The standalone case supplies the patient's age, sex, short complaint, prior sampling and current findings. No earlier node or explanation is required. No confident clinical inaccuracy identified.",
+      "Scope for this report: all twelve current revised executable candidates, reviewed from after/candidate Presentation, Current update, Exhibit, Task, Options and Explanation. Input packet SHA-256: 66f955f386944628ea6ad134f53eac0d4b400d09c68d0b7334002c6222482b15. The seven unchanged pass-preserved nodes R02, R08, N01, N02, N06, N13 and N19 and seven parked nodes R03, N07, N08, N09, N10, N11 and N20 were noted and excluded. The original three kept and 54 proposed retire-and-replace audit records, historical F14 hold, withdrawn attempt and withheld teaching points were not adjudicated. No additional newly authored executable item appears in this return. All twelve reviewed candidates are singletons; the preserved N01/N02 multipart is outside this re-review.",
+      "Review-wide limits: author gates and prior verdicts were not accepted as evidence of quality; review-only key markers/order were not treated as learner cues. Difficulty and highYield are qualitative judgments, not measured performance or verified exam frequencies. This offline editorial review performed no network/source retrieval and grants no clinical approval; drafts remain needs_clinician_review. Runtime name substitution, answer randomization, wait rendering and implementation bindings were not tested. Only the requested report is written."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "R04",
+    "nodeId": "node.topic.thyroid-nodules-cancer.r04.v2",
+    "title": "Incomplete examination after postoperative voice change",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "gagging ended the examination when the tip was above the epiglottis",
+        "why": "The explicitly aborted examination advertises an unfinished task. Completing the scope becomes an obvious next action before the learner needs to analyze the recorded anatomy. This is a partial completion cue, not a diagnosis disclosure; it does not by itself distinguish every offered modality."
+      }
+    ],
+    "fairness": [
+      "Awake flexible laryngoscopy is the best offered next examination for persistent post-thyroidectomy dysphonia with possible aspiration when fold movement has not been documented. The swallow study is clinically relevant but does not replace evaluating the vocal folds. No confident clinical inaccuracy identified.",
+      "The added prior-scope history does not create a second consequential inference as written. Removing it still leaves persistent postoperative voice change requiring laryngeal visualization; saying the examination ended early supplies its inadequacy rather than leaving a competing interpretation to resolve. CT is a weak competitor without an established unexplained paralysis or other structural question. This remains a high-yield first-assessment rule.",
+      "The four-week chronology, age, sex and symptoms are clear. The standalone task does not depend on another node. Gagging during an earlier attempt does not itself make a repeat awake flexible examination inappropriate."
+    ],
+    "suggestions": [
+      "Use a clinically supported prior report that appears reassuring but whose actual observation or task coverage must be interpreted, and make that interpretation change the next examination. Avoid merely announcing an aborted examination. Preserve the voice and aspiration findings.",
+      "Offer plausible examinations for the residual uncertainty at the same stage. If no genuine competing interpretation can be supplied, seek explicit acceptance as foundational postoperative assessment rather than claiming difficult two-step reasoning."
+    ]
+  },
+  {
+    "id": "R06",
+    "nodeId": "node.topic.thyroid-nodules-cancer.r06.v2",
+    "title": "Cross-sectional mapping when invasive thyroid cancer is suspected",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Neck and mediastinal CT with IV contrast is the defensible best offered study. Retroclavicular nodal disease, the posterior interface, dysphagia and ipsilateral fold immobility establish a reason for cross-sectional operative mapping beyond the completed ultrasound.",
+      "The resident must infer possible deep/invasive disease and then weigh useful contrast-enhanced anatomy against a possible later radioiodine course. Noncontrast CT is a credible iodine-avoidance error; the two CT labels are parallel. Mentioning radioiodine introduces a real competing consideration rather than announcing that contrast is permissible.",
+      "The known papillary diagnosis appropriately precedes a different management task. Renal function and the absence of an acute airway problem support the proposed elective assessment. No confident clinical inaccuracy identified; this review does not establish a particular postcontrast radioiodine interval.",
+      "This is a complete standalone case. It does not require the earlier mapping or later nodal-surgery task to supply the cancer diagnosis, imaging findings or current decision."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "N03",
+    "nodeId": "node.topic.thyroid-nodules-cancer.n03.v2",
+    "title": "A fluid-only aspirate from a purely cystic lesion",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Ultrasound observation is the best offered plan. The pre-aspiration images describe a purely cystic lesion, and the current residual cavity is asymptomatic. A Bethesda I label on its fluid does not automatically establish the same repeat-biopsy need as an inadequately sampled solid nodule.",
+      "The learner must interpret the relationship between original morphology and specimen contents, then decide whether the usual nondiagnostic-cytology pathway applies. Repeat FNA is a credible overapplication of that pathway; diagnostic lobectomy is premature. This tests a practical exception to a core rule rather than recognition of a supplied benign diagnosis.",
+      "The absence of a solid component and pressure symptoms is decision-critical, not gratuitous exclusion of distractors. The case gives the pre- and post-aspiration chronology and stands alone. No confident clinical inaccuracy identified. The broad observation label does not justify inventing a specific follow-up interval."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "N04",
+    "nodeId": "node.topic.thyroid-nodules-cancer.n04.v2",
+    "title": "Suspicious morphology after one adequate benign aspirate",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Repeat ultrasound-guided FNA is the defensible best answer at the supplied follow-up. Persistent suspicious morphology is documented, the one benign specimen was adequate and from the correct lesion, and there is no separate compressive or structural indication making lobectomy the preferred immediate step.",
+      "The consequential work is to reconcile suspicious imaging with genuine benign cytology, then choose repeat sampling rather than either reassurance or immediate surgical diagnosis. The record distinguishes this from an incorrect-target specimen and from repeated concordant benign samples. These are common nodule-management errors.",
+      "The joint review is not a key-only action because review has already occurred in shared context; every choice is a subsequent plan. The explanation accurately limits the reassurance from one benign aspirate without claiming that benign cytology is useless. No confident clinical inaccuracy identified.",
+      "The one-year chronology and unchanged punctate foci are explicit. The singleton supplies all necessary context and does not require a prior-node result."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "N05",
+    "nodeId": "node.topic.thyroid-nodules-cancer.n05.v2",
+    "title": "Autonomous nodule with persistent mechanical symptoms",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Right thyroid lobectomy is the strongest offered treatment. Progressive dysphagia despite normalized free hormones and documented right-sided esophageal compression make a structural problem consequential; the contralateral lesion has undergone two adequate target-confirmed benign samplings.",
+      "The resident must distinguish successful biochemical control from unresolved mechanical disease, then choose treatment extent using the contralateral evidence. Iodine-131 remains a real treatment for autonomy, while total thyroidectomy is a plausible overextension in a patient with bilateral nodules. Both alternatives are materially less favored by the supplied record, not inherently invalid treatments in all patients.",
+      "The preference for definitive treatment does not uniquely select lobectomy because all three options propose definitive treatment. The contralateral workup is necessary to the extent decision. No confident clinical inaccuracy identified; the explanation appropriately says surgery is the stronger offered choice rather than asserting that radioiodine can never reduce compressive symptoms.",
+      "The standalone presentation includes function, structural imaging and prior tissue results. No former companion node is needed to establish either lesion's workup."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "N12",
+    "nodeId": "node.topic.thyroid-nodules-cancer.n12.v2",
+    "title": "Residual T3 excess before nonurgent thyroidectomy",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Further methimazole titration with deferral of the nonurgent operation is the best offered plan. T3 remains elevated despite a normal free T4 and controlled resting pulse; the suppressed TSH is not the finding that establishes residual hormone excess here.",
+      "Two consequential decisions survive the option set: identify the persisting disease-directed treatment need instead of escalating symptom blockade, then apply incomplete biochemical control to elective operative timing. The balanced four-choice matrix prevents a majority-component or uniquely comprehensive-key shortcut.",
+      "Stable dysphagia and absence of an acute airway problem are needed to distinguish elective preparation from an urgent exception. The explanation does not invent a dose or a treatment interval. No confident clinical inaccuracy identified; it should not be generalized to prohibit every operation before biochemical normalization in every circumstance.",
+      "The singleton gives the known diagnosis, current drugs, response and operative urgency. No earlier treatment-response question is needed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "N14",
+    "nodeId": "node.topic.thyroid-nodules-cancer.n14.v2",
+    "title": "Rising antibodies despite unquantifiable thyroglobulin",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Chest CT is the strongest offered next study. The sustained later anti-thyroglobulin antibody rise prevents treating unquantifiable immunometric thyroglobulin as reassuring; an adequate current neck survey does not explain that trajectory. The absence of prior radioiodine matters when ranking routine radioiodine surveillance scanning.",
+      "The learner must interpret the assay limitation and serial trend, then select a study beyond the already assessed neck while considering the treatment history. The same-assay specification and postoperative chronology earn their place. This is a challenging application of high-yield thyroid-cancer surveillance principles.",
+      "Repeating an already complete cervical ultrasound is a weak distractor, but it does not expose a unique answer without medical knowledge: both chest CT and a radioiodine whole-body scan are new studies. The remaining distinction requires clinical interpretation, so there is no decisive novelty-only cue.",
+      "No confident clinical inaccuracy identified. The antibody rise is a reason to investigate, not proof of recurrence or lung metastases. Current guideline details governing imaging sequence were not independently reverified under the no-network constraint; this editorial PASS is not clinical sign-off or a universal imaging algorithm.",
+      "The exhibit supplies readable dates, units, assay type and all serial values. The singleton provides surgical and radioiodine history and the current structural assessment without relying on an earlier node."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "N15",
+    "nodeId": "node.topic.thyroid-nodules-cancer.n15.v2",
+    "title": "Completion surgery with newly documented unilateral fold immobility",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Laryngeal-function reassessment' does not specify what is to be arranged or how it differs from the current laryngoscopy. The intended answer appears to mean interval reassessment before deciding on completion surgery, but that timing and conditional treatment plan are supplied only in the explanation.",
+      "'First postoperative clinic review' establishes early follow-up generally, but the actual interval since surgery is not stated. This is relevant when the explanation relies on observing the course of a new dysfunction; an exact universal recovery cutoff should not be invented."
+    ],
+    "cues": [
+      {
+        "phrase": "Laryngeal-function reassessment",
+        "why": "This is the only cautious information-gathering option beside two definitive interventions. The newly changed voice and immobile fold direct a general 'reassess before doing more' response without requiring the learner to reconcile the oncologic reason for completion with its timing."
+      }
+    ],
+    "fairness": [
+      "Deferring a nonurgent contralateral procedure while assessing the course of newly documented ipsilateral dysfunction is clinically defensible. The large primary makes completion a meaningful oncologic consideration. No confident clinical inaccuracy is asserted in the intended plan.",
+      "The answer set does not fairly compare that complete conditional plan with its alternatives: it compares an underspecified reassessment with immediate surgery or ablation. The cancer size can be ignored while choosing the uniquely cautious option, so the intended two-step tradeoff is not required by the current item.",
+      "The explanation's 'Recovery must be assessed' should mean reassessing function and the course of dysfunction, not an absolute requirement that recovery actually occur before any future contralateral operation. Persistent dysfunction requires an individualized specialist decision rather than indefinite automatic deferral.",
+      "The case is standalone and retains the operative stop, current fold findings and final pathology. There is no dependency on a former companion, but the proposed next step needs to be explicit."
+    ],
+    "suggestions": [
+      "State the postoperative timing and name interval laryngoscopy or specialist laryngeal review as the actual proposed assessment, with its purpose in the completion-surgery plan. Do not add an unsupported fixed recovery deadline.",
+      "Compare complete cancer-management plans of equivalent scope, each addressing both the remaining lobe and the nerve finding. Require the large-primary indication and the current functional finding to distinguish the key; avoid one generic reassessment option against two irreversible interventions.",
+      "If the retained choices can still be solved simply by avoiding immediate contralateral surgery, classify the item as foundational safety/timing practice and seek explicit acceptance of that role."
+    ]
+  },
+  {
+    "id": "N16",
+    "nodeId": "node.topic.thyroid-nodules-cancer.n16.v2",
+    "title": "Compartment surgery after an inaccurately labeled prior neck operation",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "right level-IIa and level-IV nodal lesions",
+        "why": "The literal level labels allow exclusion of 'Right IV/Vb compartment dissection' by simple coverage matching. This weakens one foil but does not select the key: 'Excision of the sampled right nodes' also covers both documented targets. The compartment-versus-targeted-removal decision still requires medical reasoning."
+      }
+    ],
+    "fairness": [
+      "Right IIa/III/IV/Vb compartment dissection is the best offered operation for the supplied resectable multilevel disease after prior removal of a single node. The lower-neck field omits proven IIa disease, while another isolated-node excision repeats the limitation of the earlier procedure.",
+      "The learner must reconcile the referral's 'neck dissection' label with what the operative and pathology records actually establish, then choose a compartment-oriented operation. That interpretation matters when distinguishing an inadequately treated compartment from recurrence after a genuinely comprehensive prior dissection.",
+      "The level names are decision-critical and should not be hidden to avoid the partial cue. Exact operative extent still requires specialist clinical review, particularly in reoperative anatomy; the explanation appropriately limits the principle to feasibility. No confident clinical inaccuracy identified, and the item should not be generalized to mandate reoperation for every small persistent node.",
+      "The singleton gives prior thyroid surgery, the actual prior nodal procedure, current mapping, tissue confirmation and resectability findings. No earlier nodal-workup question is needed."
+    ],
+    "suggestions": [
+      "For a future harder variant, use a clinically credible competing field or reoperative strategy that also addresses all known involved levels; do not simply obscure the level labels. The current key remains defensible despite the one weak foil."
+    ]
+  },
+  {
+    "id": "N17",
+    "nodeId": "node.topic.thyroid-nodules-cancer.n17.v2",
+    "title": "Repeat thyroid sampling and a local calcitonin adjunct",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": false,
+    "clarityIssues": [
+      "The explanation says a 'specimen-specific adjunct' was requested, but the visible task only asks which repeat sampling request best addresses the lesion. The explanation should not introduce a narrower task after the answer.",
+      "Serum calcitonin is a blood investigation, while washout is a specimen-local adjunct. Combining each with a target under 'sampling request' is understandable but blurs whether the question tests tissue acquisition or laboratory characterization."
+    ],
+    "cues": [
+      {
+        "phrase": "Saved needle images place the earlier pass in the fluid.",
+        "why": "Together with the explicitly inconclusive aspirate, this marks the fluid-compartment options as repetitions of the unsuccessful step. A learner can favor the solid component through a general 'try the unsampled part' strategy without using the cytologic lineage clues."
+      },
+      {
+        "phrase": "Serum calcitonin is above the laboratory interval.",
+        "why": "Serum calcitonin has already been obtained, and both serum options simply repeat that named test. Combined with the target cue, the key uniquely changes both the unsuccessful sampled compartment and the already completed measurement. Balanced component frequencies do not remove this novelty shortcut."
+      }
+    ],
+    "fairness": [
+      "Targeting the solid component for repeat cytology with a selected calcitonin-washout adjunct is clinically defensible in this unresolved possible medullary-lineage setting. No confident clinical inaccuracy is asserted. Mild or unspecified serum calcitonin elevation by itself is not a definitive MTC diagnosis, and the question should preserve that uncertainty.",
+      "The intended specimen-provenance and lineage reasoning is not necessary to solve this option matrix. Both mistakes repeat work explicitly described as already performed; cytologic details and the magnitude or interpretation of the serum abnormality can be ignored. Consequently the item does not establish two consequential medical steps despite its four balanced labels.",
+      "The underlying importance of representative thyroid sampling and MTC recognition is high. The scored washout-versus-repeat-serum distinction is narrower specialist detail, so highYield is false for this exact objective, not for medullary cancer as a topic. No exam-frequency claim was verified.",
+      "This is a standalone case. It contains the fluid-target record and exhausted cell block locally; no earlier question is required. The feedback does not improperly expose an answer to a subsequent executable node in the current composition."
+    ],
+    "suggestions": [
+      "Retain the true specimen limitations, but replace at least the already-completed serum-test foil with a genuinely competing, same-stage diagnostic plan. Have a clinician establish the supported discriminator before choosing that competitor; do not assume that cytology with appropriate immunostaining and calcitonin washout are mutually exclusive alternatives.",
+      "Make the actual task agree with the explanation. Do not repair it merely by asking for a specimen-local adjunct, which would grammatically eliminate serum choices and make the shortcut stronger.",
+      "Either construct a consequential decision about what the available tissue and biochemical findings establish, or seek an explicitly accepted focused sampling exercise. Re-attack the replacement options with the lineage clues hidden: a unique 'do the two new things' answer should not remain."
+    ]
+  },
+  {
+    "id": "N18",
+    "nodeId": "node.topic.thyroid-nodules-cancer.n18.v2",
+    "title": "Incidental medullary carcinoma after unilateral thyroid surgery",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Calcitonin/CEA and neck-ultrasound surveillance is the defensible best offered plan in the supplied incidental post-lobectomy setting: the tumor was completely excised, no pathogenic germline RET variant is reported, postoperative calcitonin is unquantifiable and imaging shows no residual disease. Automatic application of the initial untreated-MTC operation rule is the central competing error.",
+      "The resident must first distinguish an incidental postoperative diagnosis from initial surgical planning, then integrate hereditary, biochemical and structural evidence to decide whether completion is indicated. The two completion options are credible surgery-resident misconceptions. The longer surveillance label names a concrete follow-up plan rather than a generic 'individualized management' escape.",
+      "The RET, calcitonin and imaging negatives are decision-critical and should remain visible. A known medullary diagnosis is appropriate for this management task; it does not answer the postoperative extent question. This is a challenging exception within a high-yield cancer-surgery topic.",
+      "No confident clinical inaccuracy identified. The exact incidental-MTC completion recommendation and its application still require Melissa's clinical sign-off; this no-network review does not claim fresh guideline verification. Surveillance here is not a declaration of cure or a rule that completion can never become appropriate.",
+      "The three-month postoperative chronology, germline result, biochemical values and residual-lobe imaging make the case self-contained. It does not require N17 or any earlier thyroid-lineage question."
+    ],
+    "suggestions": []
+  }
+]

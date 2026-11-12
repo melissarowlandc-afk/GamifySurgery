@@ -1,0 +1,264 @@
+[
+  {
+    "id": "question.topic.critical-respiratory-ventilation.ards-prone-escalation.v2",
+    "nodeId": "node.topic.critical-respiratory-ventilation.ards-prone-escalation.v2",
+    "title": "Prone positioning after protective ventilation",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The detached presentation establishes aspiration and invasive ventilation, but neither it nor the current update establishes ARDS or describes the lung-imaging pattern. The task now stands without the earlier ARDS case, so that diagnostic context cannot be assumed.",
+      "?Later hospital entry? and the explanation?s ?An improved plateau? imply an earlier comparison that this standalone node does not show. The current plateau is given; its improvement is not."
+    ],
+    "cues": [
+      {
+        "phrase": "The spine is stable and the abdomen is closed.",
+        "why": "This isolated pair of positioning-related negatives draws attention toward proning. It is a modest cue, not sufficient reason to remove necessary positioning-safety information."
+      }
+    ],
+    "fairness": [
+      "58/0.80 = 72.5 mm Hg, so the explanation?s approximate oxygenation ratio is correct. In established ARDS with persistent severe impairment after protective optimization, prone positioning is the defensible next offered step; acceptable plateau pressure does not establish adequate oxygenation.",
+      "The concern is missing syndrome context, not a confident claim that the proposed treatment is clinically wrong. Aspiration-associated hypoxemia alone does not establish the ARDS population underlying the escalation claim. Supply the diagnosis or sufficient observed context before treating that evidence as applicable.",
+      "Continued supine care tests mistaken reassurance from plateau pressure; immediate ECMO cannulation tests premature escalation. The record supports neither as the preferred next step once the ARDS premise is established. The explanation should not imply that every ECMO candidate must first complete every conventional intervention regardless of contraindications.",
+      "Predicted moderate: interpret oxygenation relative to support, then choose an escalation stage. This is a high-yield critical-care decision. No preceding feedback supplies the key.",
+      "Offline editorial review only: no source was newly retrieved, and PASS elsewhere in this report is not Melissa Rowland?s clinical sign-off. Conditional recommendations and exact patient applicability remain subject to clinician review."
+    ],
+    "suggestions": [
+      "Add established ARDS to the historical management context, or supply concise imaging/etiology observations supporting it; a known diagnosis is appropriate when escalation rather than diagnosis is being tested.",
+      "Replace the unsupported comparison with the current plateau observation, or show the earlier value if the improvement is necessary to the competing interpretation.",
+      "Retain necessary positioning-safety facts, but avoid expanding them into an answer-specific eligibility checklist. Re-solve the detached node without any parked companion."
+    ]
+  },
+  {
+    "id": "question.topic.critical-respiratory-ventilation.pressure-assessment.v2",
+    "nodeId": "node.topic.critical-respiratory-ventilation.pressure-assessment.v2",
+    "title": "Static pressure after a flow-dependent peak-pressure change",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The task asks which reassessment should precede a proposed tidal-volume increase, but the table already supplies passive plateau pressure after the flow change, at matched delivered volume and measured total PEEP. No new interval change or measurement-quality doubt explains why repeating that same assessment is now required.",
+      "The actual delivered tidal volume, its relationship to predicted body weight, and the reason for proposing an increase are absent. They are not needed to interpret the pressure pattern, but the item cannot establish whether volume escalation itself is appropriate."
+    ],
+    "cues": [
+      {
+        "phrase": "same delivered volume and measured total PEEP of 8 cm H2O / Reassess passive plateau at matched volume and total PEEP",
+        "why": "The key uniquely echoes the full controlled-condition description and reads like the most comprehensively qualified repeat. Matching those words helps select it without interpreting the pressure comparisons."
+      }
+    ],
+    "fairness": [
+      "The mechanics inference is sound: the initial peak and plateau increases occur together, and reducing flow subsequently lowers peak without reversing the higher plateau. At unchanged volume and total PEEP this does not establish recovery of static mechanics.",
+      "The new investigation ranking is artificial: all three pressures have already been measured under the relevant conditions. A current peak reading is flow-dependent; another total-PEEP measurement addresses no supplied uncertainty; another plateau reading repeats the deciding result. The preferred pressure variable is defensible, but the need for the proposed next test is not established.",
+      "Predicted moderate for the underlying two consequential inferences: distinguish resistive from static contributions, then judge the proposed escalation. As written, the scored action underuses that reasoning.",
+      "This first mechanics node is understandable independently. Its feedback teaches the pressure distinction relevant to the companion, but does not directly name the companion?s humidification intervention."
+    ],
+    "suggestions": [
+      "Use the already acquired measurements to ask what conclusion or action follows regarding the proposal, with equally specific competing plans; alternatively, create a genuine, clinically supported uncertainty that a new measurement resolves.",
+      "If the scored choice becomes an actual tidal-volume change, supply the decision-critical volume/PBW and clinical indication rather than inventing a universal safe-pressure threshold.",
+      "Balance the options? conditions and specificity. Avoid making only the key repeat the full controlled-measurement wording."
+    ]
+  },
+  {
+    "id": "question.topic.critical-respiratory-ventilation.secretion-response.v2",
+    "nodeId": "node.topic.critical-respiratory-ventilation.secretion-response.v2",
+    "title": "Device-dependent resistance after airway clearance",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The present controlled comparison is readable by itself. In sequence, however, plateau is now 20 rather than the preceding node?s 26 and peak is now 39 rather than 32. ?Next hospital entry? does not explain this intervening change; clarify that these are a later baseline and its own matched comparisons.",
+      "The explanation?s ?supported offered route? and comparison with ?every alternative replacement device? read as defenses of the option set rather than concise teaching of the bedside decision."
+    ],
+    "cues": [
+      {
+        "phrase": "heat-and-moisture exchanger (HME) / Switch to active heated humidification",
+        "why": "The exhibit repeatedly toggles the named heat/moisture device, and only the key names heat/humidification. A nonmedical reader can follow the reversible device effect and match the semantic family without understanding peak versus plateau pressure."
+      },
+      {
+        "phrase": "HME briefly removed for assessment / Original HME returned",
+        "why": "The on/off/rechallenge pattern singles out one device while the other options change unrelated treatment dimensions. The raw experiment is legitimate evidence, but this option set lets the learner ignore the plateau column entirely."
+      }
+    ],
+    "fairness": [
+      "Constant plateau with a reproducible device-dependent change in peak supports a resistive contribution from the HME. Active heated humidification is a reasonable offered way to remove that contribution while maintaining humidification. The item does not establish that it is superior to replacing a faulty HME, and should not teach that broader claim.",
+      "Bronchodilator therapy does not address the demonstrated device dependence. Lower tidal volume does not target that resistance and is not indicated by an isolated peak change at the supplied plateau. Thus there is one defensible offered answer, but the alternatives are too remote after this exhibit.",
+      "Predicted easy in this exact option set. There is a potential mechanics-to-intervention chain, but wording and the reversible experiment bypass the intended medical first step; two consequential clinical steps are not actually required.",
+      "Ventilator resistance troubleshooting is high yield. The exact forced choice of humidifier is narrower than the central exam concept. Prior mechanics feedback further reduces independent interpretation demand."
+    ],
+    "suggestions": [
+      "Keep the controlled observations, but compare credible actions at the same device/circuit-management stage so heat/moisture word matching cannot identify the answer. Supply supported facts that distinguish those alternatives; do not simply add fresh-HME replacement as a second defensible key.",
+      "If a unique, meaningful next-action ranking cannot be supported, merge or park this narrow follow-up rather than calling the current label match a difficult item.",
+      "Clarify the later baseline and reduce the explanation to the pressure interpretation, appropriate humidification requirement, and closest credible error."
+    ]
+  },
+  {
+    "id": "question.topic.critical-respiratory-ventilation.expiratory-time.v1",
+    "nodeId": "node.topic.critical-respiratory-ventilation.expiratory-time.v1",
+    "title": "Air trapping despite hypercapnia",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The negative expiratory flow at the next inspiration, elevated measured total relative to set PEEP, and high rate support incomplete exhalation. The sign and units are sufficiently explicit even though a full waveform is not displayed.",
+      "Reducing rate addresses expiratory time. Increasing rate or volume is a credible attempt to correct PaCO2 that can worsen this pattern. Stable blood pressure and the supplied pH allow the question to focus on the ventilator adjustment rather than an unmentioned emergency decompression.",
+      "One best offered answer is defensible. The explanation avoids asserting a universal tolerated pH or an exact rate prescription. No confident clinical inaccuracy identified in this offline review.",
+      "Predicted moderate: identify dynamic air trapping, then prioritize expiratory time over immediate normalization of PaCO2. This is high-yield ventilator physiology. The opposing rate choices and volume choice remain comparable actions; being the only decrease is not a stand-alone verbal key without interpreting the data.",
+      "This executable new-gap item is assessed independently of its previous editorial PASS. It is standalone and has no preceding feedback leakage."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.critical-respiratory-ventilation.sbt-readiness.v2",
+    "nodeId": "node.topic.critical-respiratory-ventilation.sbt-readiness.v2",
+    "title": "SBT readiness despite an elevated RSBI",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The patient has improving disease, wakefulness, spontaneous effort, satisfactory oxygenation on modest support and stable circulation. The completed comfortable index measurement is explicitly distinguished from a trial aborted for distress.",
+      "Proceeding to a monitored SBT is defensible despite the isolated RSBI value. Continuing assist-control or requiring gradual pressure-support reduction represents treating the screening index as a mandatory barrier; neither is compelled by the supplied observed clinical state.",
+      "The explanation appropriately separates an index from actual intolerance and does not invent a new cutoff. Exact contemporary guideline wording was not independently verified because this assignment prohibits network use; no confident clinical error is alleged.",
+      "Predicted moderate: reconcile a concerning traditional screening result with actual readiness, then select a monitored assessment rather than prolonged support. This is high-yield liberation practice.",
+      "No direct wording shortcut, absolute, diagnostic-label giveaway or unique comprehensive key found. Comfort and hemodynamic observations are necessary eligibility information rather than removable hints. The item stands independently and does not teach the next node?s oxygen-concentration issue."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.critical-respiratory-ventilation.sbt-fio2.v2",
+    "nodeId": "node.topic.critical-respiratory-ventilation.sbt-fio2.v2",
+    "title": "Interpreting an SBT performed at higher oxygen concentration",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The before/during table makes both support withdrawal and oxygen escalation visible. Calling the trial ?recorded as tolerated? is a report to evaluate, not proof that all extubation criteria were satisfied.",
+      "An unassisted trial is a valid method. Better saturation at higher FiO2 does not establish tolerance at the earlier concentration. Repeating at the earlier FiO2 is the best offered way to resolve that uncertainty; adding pressure support while retaining the higher FiO2 does not resolve it, and immediate extubation relies on an incompletely assessed oxygen condition.",
+      "The explanation correctly identifies its recommendation as conditional and very low certainty. Treat this as the best assessment among the offered plans, not proof of actual SBT failure, a universal extubation prohibition at FiO2 0.60, or a universal requirement for zero pressure support. This offline review cannot newly verify the exact recommendation.",
+      "Predicted moderate: distinguish a legitimate trial method from a confounded oxygenation comparison, then choose the assessment that resolves the confounding. The first two choices share repeating a trial and the last two share FiO2 0.60; component frequency does not uniquely assemble the key.",
+      "The earlier SBT-readiness explanation does not disclose the oxygen-condition decision. The table includes its own baseline, so the node stands alone with the presentation. The historical progression from readiness to trial assessment is coherent."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.critical-respiratory-ventilation.extubation-clearance.v2",
+    "nodeId": "node.topic.critical-respiratory-ventilation.extubation-clearance.v2",
+    "title": "Extubation after improvement in secretion clearance",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "?At the preceding FiO2? depends on the earlier node for the actual oxygen condition. Include the relevant current oxygen requirement if this later task is meant to stand alone.",
+      "The new earlier failed-cough assessment is temporally plausible, but arrives only in the final node. Make clear that it preceded the present improved clearance rather than implying an unshown result of the immediately preceding oxygen trial."
+    ],
+    "cues": [
+      {
+        "phrase": "she does not need suction to sustain a clear airway / Continue intubation for secretion management",
+        "why": "The stem largely supplies the airway-readiness conclusion and directly neutralizes the only continued-intubation option. Little functional interpretation remains beyond accepting that stated conclusion."
+      },
+      {
+        "phrase": "Her history has no chronic heart or lung disease.",
+        "why": "This is legitimate risk information, but in the three-choice set it explicitly removes the familiar indication for the other extubation plan after the preceding sentence removes retention. The item becomes a checklist of why each distractor loses."
+      }
+    ],
+    "fairness": [
+      "Tolerating a trial plus effective present cough/clearance and command following makes extubation to oxygen defensible. Persistent thick secretions in an earlier assessment do not require continued intubation after effective clearance returns.",
+      "Preventive NIV is not routinely the default for an otherwise low-risk patient. However, absence of chronic heart/lung disease is not an exhaustive definition of low extubation-failure risk; the explanation should avoid implying that it excludes every other relevant risk factor. No confident incorrect key is asserted.",
+      "Predicted easy: the update supplies successful trial tolerance and an explicit clear-airway conclusion, then the options contrast the routine plan with keeping a now-unnecessary tube or routine preventive support. The intended second decision is weak rather than a substantial resident tradeoff.",
+      "The preceding oxygen-trial explanation explicitly links satisfactory reassessment to tube removal; the new update then supplies that successful result. This scaffolding further lowers difficulty. Airway clearance versus breathing-trial success is high yield, but the current version does not make both consequential inferences necessary."
+    ],
+    "suggestions": [
+      "Give the actual current oxygen condition and concise chronology so the node is independently interpretable.",
+      "Replace the clear-airway conclusion with supported functional observations and build a credible residual airway-versus-support decision. Do not remove essential airway protection findings merely to make the case harder.",
+      "If the intended role is straightforward confirmation of readiness, seek an explicit foundational exception instead of calling it a difficult two-step item. Otherwise revise the sequence/feedback as well as the final question.",
+      "Keep any preventive-NIV teaching specific to the supplied risk profile; add decision-critical risk information only when it genuinely distinguishes the offered plans."
+    ]
+  },
+  {
+    "id": "question.topic.critical-respiratory-ventilation.copd-niv.v2",
+    "nodeId": "node.topic.critical-respiratory-ventilation.copd-niv.v2",
+    "title": "Initial support for an acidotic COPD exacerbation",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The baseline and current gases distinguish compensated baseline hypercapnia from an acute acidotic change. Persistent distress after bronchodilator treatment, preserved alertness/clearance and stable blood pressure support an initial monitored bilevel-mask strategy.",
+      "High-flow oxygen does not provide the same ventilatory treatment for this acidotic exacerbation. Immediate invasive ventilation is not the preferred first offered strategy in the supplied alert, hemodynamically stable patient with adequate airway function. Both are plausible support-stage errors rather than grammatical foils.",
+      "The explanation appropriately avoids a pH-only rule. No confident clinical inaccuracy identified; exact guideline statements were not newly verified offline.",
+      "Predicted moderate, toward the easier end: integrate acute-on-chronic gas change and airway/clinical state, then choose the support route. This is a central, commonly tested respiratory-support concept.",
+      "The COPD diagnosis is appropriate context for a management task. The neutral presentation no longer reveals initial mask support. All three options are parallel, specific support strategies without a conspicuous wording or length outlier. The item stands independently."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.critical-respiratory-ventilation.copd-niv-failure.v2",
+    "nodeId": "node.topic.critical-respiratory-ventilation.copd-niv-failure.v2",
+    "title": "Reassessing an improving response to bilevel support",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The learner-facing explanation ends with revision history: ?This is an earlier response-assessment objective; the original later danger signs and urgent intubation decision are preserved in the historical version.? That is authoring-process information, not clinical feedback, and can confuse which findings belong to this patient now."
+    ],
+    "cues": [
+      {
+        "phrase": "respiratory rate falls from 30 to 23/min, accessory-muscle use decreases, pH rises from 7.28 to 7.33 and PaCO2 falls from 70 to 62 mm Hg",
+        "why": "Every supplied trend favors improvement and all airway/hemodynamic observations remain favorable. A generic ?continue what is working? strategy selects the key without resolving a competing signal."
+      },
+      {
+        "phrase": "in a patient not immediately deteriorating / this is not a pH-alone rule",
+        "why": "The preceding node?s explanation has already taught the conditions favoring bilevel support. The follow-up preserves those conditions and improves the gases, substantially rehearsing continued NIV over immediate intubation."
+      },
+      {
+        "phrase": "Continue monitored bilevel ventilation",
+        "why": "Only the key retains the treatment just described as improving all findings. Its extra ?monitored? qualifier also makes it the uniquely cautious option, though the word alone is not the main defect."
+      }
+    ],
+    "fairness": [
+      "Continuing monitored NIV is clinically defensible: effort and gas exchange improve while airway function and circulation remain adequate. Residual acidemia/hypercapnia alone does not establish treatment failure.",
+      "Immediate intubation has no new deterioration to justify it; switching to high-flow oxygen would remove ventilatory assistance despite unresolved acidosis. The earlier explanation already says oxygen is not a substitute for bilevel support in this presentation, so the current option pair tests previously supplied conclusions.",
+      "Predicted easy in sequence. Recognizing a favorable trend and choosing continuation does not create two consequential resident decisions when both alternatives have already been explained away. The underlying response-assessment concept is high yield.",
+      "The chronology is coherent and the update contains its own before/after values, so it stands alone clinically. Standalone clarity does not repair the preceding-feedback leakage. No confident clinical inaccuracy in the intended management is identified."
+    ],
+    "suggestions": [
+      "Remove authoring/version-history commentary from the learner explanation.",
+      "Rebuild the follow-up around a clinically supported competing trajectory or actionable residual problem that changes the decision despite one reassuring dimension. Do not add arbitrary time, pH or PaCO2 cutoffs.",
+      "Review and version the preceding feedback if needed so it does not explicitly defeat both later alternatives. If retaining uncomplicated improvement, obtain an explicit foundational role rather than labeling the item difficult."
+    ]
+  },
+  {
+    "id": "question.topic.critical-respiratory-ventilation.postextubation-rescue.v1",
+    "nodeId": "node.topic.critical-respiratory-ventilation.postextubation-rescue.v1",
+    "title": "Established post-extubation respiratory failure",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The combination of marked oxygenation impairment despite high-flow oxygen, rising PaCO2, falling pH and progressive fatigue establishes more than an isolated saturation problem. Reintubation is the defensible best offered plan.",
+      "Further oxygen escalation does not resolve worsening ventilation/fatigue. Rescue bilevel support is a credible near-miss because NIV is useful in other settings, but this is established failure after extubation in a non-COPD medical patient rather than prophylaxis or a specified responsive exception.",
+      "The explanation preserves the conditional nature and population limits of the NIV recommendation instead of declaring NIV universally wrong after extubation. Exact guidance was not newly verified offline; no confident clinical inaccuracy identified in this specific deteriorating record.",
+      "Predicted moderate: interpret combined oxygenation/ventilation deterioration, then distinguish rescue from prophylactic or population-specific NIV use. This is a high-yield airway-support decision.",
+      "The task?s ?deterioration? label does not itself select between rescue NIV and intubation. The medical/non-COPD/nonoperative context is necessary for fairness, not a lexical giveaway. Choices are parallel support plans. This standalone executable new-gap item is assessed independently of its prior editorial PASS."
+    ],
+    "suggestions": []
+  }
+]

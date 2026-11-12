@@ -1,0 +1,133 @@
+[
+  {
+    "id": "question.topic.small-bowel-obstruction-ileus.initial-observation.v2",
+    "nodeId": "node.topic.small-bowel-obstruction-ileus.initial-observation.v2",
+    "title": "Initial treatment of recurrent adhesive obstruction",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The task asks for the initial strategy, but both operative options say 'during this admission'. An operation later in the admission after a failed trial is compatible with starting nonoperative treatment now. The choices need the same decision time.",
+      "The retrospective clinic frame is understandable with the update, but 'current obstruction' unnecessarily sounds like a new clinic problem. Identify the hospital admission decision in the task."
+    ],
+    "cues": [
+      {
+        "phrase": "Perform laparoscopic adhesiolysis during this admission / Perform open adhesiolysis during this admission",
+        "why": "Two near-duplicate operation labels contrast with a single nonoperative label. No observation discriminates open from laparoscopic treatment. A test-wise reader can suspect that both surgical choices rise or fall together and favor the singleton without resolving the clinical findings. This is a structural cue, not a logically guaranteed answer."
+      },
+      {
+        "phrase": "Two previous admissions with a similar CT pattern had resolved with decompression",
+        "why": "Together with treatment already being underway and the choice 'Continue the inpatient nonoperative treatment trial', this creates a repeat-the-successful-plan shortcut. Prior response is legitimate history, but here it reinforces the only nonoperative option instead of generating a credible competing decision."
+      }
+    ],
+    "fairness": [
+      "An initial monitored nonoperative trial is the defensible intended answer for the supplied examination and CT findings. Recurrence by itself does not establish an immediate operative indication. No confident clinical inaccuracy was identified in that explanation.",
+      "The timing overlap prevents the two operative choices from being cleanly wrong as written. Their main shared error would be operating immediately rather than conducting the initial trial; that timing is not actually stated.",
+      "This tests a central general-surgery decision, but the uniformly reassuring assessment and two variants of the same premature operation leave one elementary management rule. Inferring obstruction and then applying that rule does not produce two consequential competing decisions here.",
+      "As the first node, it establishes a coherent baseline for the later new-pain reassessment. Its explanation does not give away the later CT acquisition choice.",
+      "This report is an offline editorial and clinical-reasoning review of the supplied visible content, not fresh source verification or clinical approval. High-yield and difficulty labels are qualitative judgments, not measured exam frequencies or performance estimates. All exact draft versions still require Melissa Rowland's clinical sign-off."
+    ],
+    "suggestions": [
+      "Align every option with the initial decision now; distinguish an immediate operation from an initial monitored trial rather than predicting what might occur at any point in the admission.",
+      "Replace the open-versus-laparoscopic duplicate distractors with distinct, credible plans at the same decision stage. Use a supported patient-specific conflict that actually changes the initial action; do not manufacture a time threshold or remove necessary safety findings.",
+      "Recheck resident difficulty after the option repair. If the intended objective remains uncomplicated initial nonoperative eligibility, seek an explicit foundational-role decision instead of labeling this version moderate or hard."
+    ]
+  },
+  {
+    "id": "question.topic.small-bowel-obstruction-ileus.contrast-assessment.v2",
+    "nodeId": "node.topic.small-bowel-obstruction-ileus.contrast-assessment.v2",
+    "title": "Imaging after a changed obstruction course",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The new persistent localized pain requires interpretation despite maintained blood pressure, normal lactate and the initially reassuring scan. The second decision distinguishes a transit study from renewed assessment of anatomy and enhancement, making intravenous-contrast CT the best offered imaging plan.",
+      "The 48-hour interval makes a contrast transit assessment a credible wrong-stage choice. Noncontrast CT is a recognizable alternative but does not supply the same enhancement information. The task appropriately asks which imaging plan to use, rather than claiming that imaging must precede surgery in every deteriorating patient.",
+      "No confident clinical inaccuracy was identified. The explanation correctly avoids treating normal lactate as exclusion of threatened bowel and separates transit information from viability. The absence of guarding or rebound helps define the present decision without hiding emergency findings.",
+      "No reliable wording-only shortcut was found. The CT alternatives have parallel labels and the task does not name perfusion, intravenous contrast or a diagnostic conclusion. The shared words 'intravenous' and 'contrast' do not uniquely identify the answer.",
+      "The node follows the initial nonoperative decision coherently. Its update restates the admission imaging, treatment and changed course, so it is understandable with the shared presentation even when the preceding question is not shown. The preceding explanation does not rehearse this specific imaging answer.",
+      "Reassessing evolving obstruction and understanding the limits of reassuring laboratory findings are high-yield resident concepts. The difficulty is moderate because the reassuring findings and expected transit-testing stage compete with the new clinical change, not because information is withheld."
+    ],
+    "suggestions": [
+      "Preserve the distinction between the earlier scan and the new localized pain, the raw examination findings and the neutral imaging task. PASS is editorial only and does not constitute clinical approval."
+    ]
+  },
+  {
+    "id": "question.topic.small-bowel-obstruction-ileus.postoperative-imaging.v2",
+    "nodeId": "node.topic.small-bowel-obstruction-ileus.postoperative-imaging.v2",
+    "title": "Postoperative vomiting after initial bowel recovery",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The presentation says 'persistent vomiting and distension before oral intake was established', but the update says she 'passed flatus and tolerated liquids on postoperative day 2' and developed vomiting on day 5. This leaves the resident deciding whether symptoms persisted from surgery or began after recovery. If 'oral intake' means a full diet, that distinction is unstated and still obscures the relevant chronology."
+    ],
+    "cues": [],
+    "fairness": [
+      "CT with intravenous contrast is the defensible best offered investigation for persistent postoperative symptoms requiring assessment of obstruction and complications. No confident clinical inaccuracy was identified in that selection or the explanation; colonic gas does not by itself settle the cause.",
+      "The chronology conflict matters because recurrent symptoms after initial bowel recovery and persistent postoperative dysfunction are different histories. The explanation relies on the former while the presentation suggests the latter.",
+      "The options largely reduce the task to choosing standard contrast-enhanced CT for a postoperative abdominal problem. Deleting the day-2 recovery and colonic-gas details still leaves CT as the obvious best offered test for the remaining persistent symptoms. Those findings therefore do not earn a second consequential inference in this option set.",
+      "No reliable nonmedical key cue, grammatical outlier or diagnosis label giveaway was found. Parallel wording has improved presentation, but it does not make the noncontrast and transit-study alternatives equally competitive for this broad diagnostic question.",
+      "There is only one active decision in this case; parked later nodes were not assessed as executable companions. The node is otherwise self-contained with the shared presentation. Postoperative ileus versus mechanical obstruction is high yield, but this version mainly tests initial imaging selection."
+    ],
+    "suggestions": [
+      "Make the presentation and update describe the same course: initial tolerance and bowel function followed by new symptoms, if that is the intended history. Remove the conflicting pre-intake summary rather than adding an interpretive diagnosis.",
+      "For resident-level difficulty, make a supported finding or actual prior-study limitation change the appropriate next investigation among credible same-stage alternatives. Apply the deletion test to the recovery history and gas pattern after rewriting.",
+      "Do not add an invented imaging protocol, contrast contraindication or postoperative timing rule just to force a harder answer. If the retained objective is simply initial CT selection, request an explicit foundational-role decision."
+    ]
+  },
+  {
+    "id": "question.topic.small-bowel-obstruction-ileus.rygb-negative-assessment.v2",
+    "nodeId": "node.topic.small-bowel-obstruction-ileus.rygb-negative-assessment.v2",
+    "title": "Persistent pain after Roux-en-Y gastric bypass despite negative studies",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The options do not specify a common decision horizon. 'Repeat contrast-enhanced CT during a current pain episode' can occur now, while 'Perform diagnostic laparoscopy during this admission' can occur afterward. The choices can describe successive steps rather than mutually exclusive next plans.",
+      "'Continue inpatient decompression' presupposes decompression, but the update lists bowel rest, intravenous replacement and antiemetics without documenting it. This is a small treatment-continuity gap."
+    ],
+    "cues": [],
+    "fairness": [
+      "Persistent acute pain and vomiting after Roux-en-Y gastric bypass despite unrevealing evaluation support concern for an occult internal hernia and a low threshold for diagnostic laparoscopy. The normal lactate and negative CT do not establish its absence. No confident clinical inaccuracy was identified in those principles.",
+      "The phrase 'obtained between attacks while she was pain-free' gives a concrete reason a resident might choose CT during symptoms. This is a legitimate competing clinical consideration, not a wording-only cue. The explanation argues against relying on the earlier scan but does not directly explain why obtaining a new scan during active pain is inferior in this exact stable patient.",
+      "I cannot establish from the permitted visible content that prompt repeat imaging before exploration is categorically an incorrect plan here. This is uncertainty about the exact ranking, not a claim that laparoscopy is clinically wrong. The broad 'during this admission' wording further prevents a unique next-action comparison.",
+      "There are two consequential judgments: interpret the limitations of negative studies in altered anatomy, then decide whether persistent symptoms justify invasive assessment rather than further imaging or observation. This is a high-yield moderate reasoning target; unresolved option overlap must not be counted as difficulty.",
+      "No reliable key-only lexical match, length outlier, convergence pattern, absolute or pre-answer diagnosis disclosure was found. The single active node supplies its own workup and chronology and requires no unseen prior answer."
+    ],
+    "suggestions": [
+      "Compare immediate next strategies on the same time horizon. Specify whether repeat CT is being offered before a decision about exploration, and make the operative choice describe prompt exploration rather than any operation sometime during the admission.",
+      "Have Melissa resolve the exact comparison between CT during an active episode and prompt laparoscopy for this supplied course. If the scan timing remains in the stem, the explanation must address that strongest alternative directly with supported reasoning. Do not invent a symptom-duration threshold or add peritonitis simply to eliminate the competition.",
+      "Either document the relevant decompression already performed or describe the observation option without implying an undocumented intervention. Retain the limitation of negative CT and the stated evidence uncertainty."
+    ]
+  },
+  {
+    "id": "question.topic.small-bowel-obstruction-ileus.gallstone-bowel-intervention.v2",
+    "nodeId": "node.topic.small-bowel-obstruction-ileus.gallstone-bowel-intervention.v2",
+    "title": "Bowel intervention for gallstone obstruction with viable ileum",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Enterolithotomy with bowel closure is the defensible best offered intervention: the CT localizes an intraluminal obstructing cause, and the operative observations support bowel preservation. Neither adhesiolysis nor resection is comparably appropriate for the supplied findings. No confident clinical inaccuracy was identified in the explanation.",
+      "Two distinct interpretations are present: infer the obstructing mechanism from the CT pattern, then use viability findings to choose extraction rather than resection. The second matters clinically, but both are elementary recognitions in this version; twoStep true is not a claim of moderate difficulty.",
+      "The only operative competitor is resection of explicitly intact, pink, peristaltic bowel with palpable mesenteric pulsation and no full-thickness injury. 'Old omental adhesions' offer little credible competition with a density already located inside the bowel at the transition. A prepared PGY-2/3 is unlikely to face a difficult ranking here.",
+      "No reliable nonmedical key shortcut was found. The viability observations are necessary clinical information, not unfair cues merely because they support preservation. The options are parallel procedures of comparable length, and no diagnosis label supplies the answer before the choice.",
+      "The standalone operative decision follows coherently from the admission CT, and the task appropriately limits itself to the bowel intervention. It does not force an unsupported simultaneous biliary-fistula decision. Gallstone ileus and preservation versus resection are recognizable high-yield general-surgery concepts."
+    ],
+    "suggestions": [
+      "Retain the raw viability findings and the limited bowel-intervention task. Do not make the bowel assessment ambiguous simply to increase difficulty.",
+      "If this must be a moderate or hard resident item, rebuild around a sourced operative finding that makes a real alternative tempting and changes the procedure, rather than adding incidental adhesions to a classic viable-bowel extraction case. Obtain clinical review of that new boundary before keying it.",
+      "If the intended purpose is foundational recognition and preservation of viable bowel, seek explicit acceptance of that easy role. This version should not be presented as a difficult item merely because it contains two valid interpretive steps."
+    ]
+  }
+]

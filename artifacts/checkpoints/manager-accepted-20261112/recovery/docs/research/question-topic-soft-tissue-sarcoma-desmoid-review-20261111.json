@@ -1,0 +1,468 @@
+[
+  {
+    "id": "mri-acquisition-comparison",
+    "nodeId": "node.topic-soft-tissue-sarcoma-desmoid.mri-acquisition-comparison.20261111.v1",
+    "title": "Calf MRI acquisition comparison",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": false,
+    "clarityIssues": [
+      "The task asks broadly for an additional comparison for calf-mass planning without specifying the unresolved clinical question. The explanation assumes that establishing enhancement of the intrinsically bright region is that question.",
+      "The presentation reports precontrast brightness but gives no observation about that region on the postcontrast images. The learner is selecting a generic acquisition principle rather than resolving an actual conflicting finding."
+    ],
+    "cues": [
+      {
+        "phrase": "before and after contrast",
+        "why": "Only this option spans both contrast states. With a stem organized around a precontrast/postcontrast mismatch, a reader can choose the controlled comparison without interpreting a tumor finding. The other options offer only postcontrast or only precontrast images."
+      }
+    ],
+    "fairness": [
+      "Comparable acquisition settings are a reasonable way to distinguish intrinsic signal from enhancement; no definite clinical error is identified. However, the broad planning task does not itself establish why this comparison takes priority over other characterization sequences.",
+      "The exact MRI protocol ranking was not externally verified in this offline review. It needs clinician/MSK confirmation, not an inference of approval from this report.",
+      "The subsequent calf-biopsy node supplies its own completed MRI findings and does not depend on remembering this answer. This explanation does not disclose the later compartment or biopsy-method answer.",
+      "This exact sequence-optimization exercise is less clearly high-yield for general-surgery boards than interpreting imaging adequacy to choose a biopsy or operative plan. Difficulty and yield here are qualitative judgments, not measured exam frequencies."
+    ],
+    "suggestions": [
+      "Identify the actual unresolved clinical question and show the necessary acquisition observations in a compact constructed record; do not state the correction itself in the lead-in.",
+      "Tie the interpretation to a consequential planning decision, with plausible competing acquisition or sampling plans. If the intended task remains only matching pre/postcontrast acquisition settings, treat its specialist scope and single-rule difficulty explicitly rather than calling it a difficult two-step resident item.",
+      "All judgments in this report use the supplied visible candidate text and preceding visible explanations only. They are offline editorial review and do not confer clinical approval."
+    ]
+  },
+  {
+    "id": "calf-core-tract",
+    "nodeId": "node.topic-soft-tissue-sarcoma-desmoid.calf-core-tract.20261111.v1",
+    "title": "Calf biopsy target, corridor and method",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must recognize that the B corridor crosses an additional compartment despite its more intense enhancement, then combine the acceptable corridor with the preferred initial tissue-sampling method. Both decisions alter the plan.",
+      "All four options cross the same two methods with the same two targets, so component frequency and uniquely comprehensive wording do not select the answer. Greater enhancement provides a plausible competing attraction rather than identifying the key.",
+      "A posterior image-guided core of A is the single best offered initial plan under the supplied mapping. Both targets are solid enhancing intramass tissue, and the record supplies avoidance of visible neurovascular structures. Open biopsy is a recognizable escalation error rather than another equally preferred initial method.",
+      "The prior MRI explanation does not teach the corridor or method choice. The current update and table restate the tumor location, target viability and route anatomy sufficiently for this later node to stand alone.",
+      "The precise constructed procedural corridors still require clinician/anatomical sign-off; this offline review identifies no confident anatomical contradiction and does not certify procedural safety."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "forearm-biopsy-correspondence",
+    "nodeId": "node.topic-soft-tissue-sarcoma-desmoid.forearm-biopsy-correspondence.20261111.v1",
+    "title": "Off-target forearm biopsy and repeat sampling",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The benign pathology must first be restricted to the tissue actually sampled. The learner must then distinguish a correctable targeting failure from failure of a representative core that could justify escalation to open sampling.",
+      "The documented core throw and feasible repeat route are decision-critical observations. They do not say which biopsy method to select. Repeating the word intramass in the key is not a decisive nonmedical shortcut because both other procedures also explicitly sample the mass.",
+      "A corrected specialist image-guided core is the best offered plan. Planned incisional biopsy is possible in the broader workup but is not equally preferred merely because the first needle missed the lesion; aspiration is a credible architecture-versus-cytology error.",
+      "The standalone presentation, specimen report and needle-location exhibit contain the needed context. No confident clinical inaccuracy is identified; exact procedural preference remains subject to clinician approval."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "thoracic-staging",
+    "nodeId": "node.topic-soft-tissue-sarcoma-desmoid.thoracic-staging.20261111.v1",
+    "title": "Distant staging of high-grade extremity sarcoma",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "chest radiograph",
+        "why": "The stem singles out the chest and the key is the only dedicated chest study. This gives a location-matching shortcut, although the negative radiograph is clinically legitimate information and should not simply be deleted."
+      }
+    ],
+    "fairness": [
+      "Chest CT is the conventional best offered staging study for the supplied high-grade UPS. Neither a normal radiograph nor absent respiratory symptoms establishes adequate pulmonary staging.",
+      "The task is clear, but the question chiefly asks for recall of the standard staging test. PET/CT is a plausible over-staging error; brain MRI has little patient-specific attraction in this vignette.",
+      "The later RT node explicitly supplies the chest CT result and remains coherent and independent of remembering this answer. Its treatment-sequence answer is not given here."
+    ],
+    "suggestions": [
+      "Make adequacy of an actual prior staging examination or a meaningful staging discrepancy determine what must be done next, using comparable plausible staging plans.",
+      "Retain the high-yield pulmonary-staging concept, but do not label ordinary test recall as two consequential steps or pad the set with an unrelated organ study."
+    ]
+  },
+  {
+    "id": "rt-sequence",
+    "nodeId": "node.topic-soft-tissue-sarcoma-desmoid.rt-sequence.20261111.v1",
+    "title": "Preoperative versus postoperative extremity radiotherapy",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The phrase 'anticipates difficult wound healing at this site' gives the conclusion without the patient-specific wound or reconstructive observations supporting it.",
+      "The explanation follows a description of postoperative RT with 'This accepted sequence uses smaller volumes and can reduce late fibrosis'. Its antecedent appears to be the keyed postoperative sequence, although the sentence evidently describes preoperative RT. This can teach the opposite tradeoff."
+    ],
+    "cues": [
+      {
+        "phrase": "The reconstructive surgeon anticipates difficult wound healing at this site.",
+        "why": "This summarizes the very wound-risk interpretation that is supposed to contribute to the sequencing decision. It functions as an answer-rationale scaffold rather than an observation the resident evaluates."
+      }
+    ],
+    "fairness": [
+      "Interpreting local progression and balancing the acute wound risk against later RT morbidity can support two consequential steps. The next node follows a documented negative chest CT and contains sufficient staging context to stand alone.",
+      "Surgery followed by RT is plausible, but the supplied nonquantified growth, thinning skin and anticipated wound difficulty do not firmly establish how urgent surgery is or why preoperative RT is inferior for this exact patient. Both sequences can be reasonable; this is a patient-specific ranking uncertainty, not a claim that the key is categorically wrong.",
+      "Tumor size and a concrete local extent/reconstruction description would also help establish why surgery with surveillance is not a selected lower-risk alternative. Do not invent a size threshold or urgency interval.",
+      "The prior staging explanation does not disclose this sequencing answer."
+    ],
+    "suggestions": [
+      "Provide source-supported observations about tumor extent, actual skin compromise, progression and the planned closure that distinguish the two RT sequences; have the clinician confirm that they yield one best answer.",
+      "Rewrite the feedback with explicit subjects: preoperative RT versus postoperative RT. Explain each sequence's tradeoff without an ambiguous 'This accepted sequence' reference.",
+      "Retain necessary wound-risk information, but replace the unsupported conclusion with the specific findings from which that risk is inferred."
+    ]
+  },
+  {
+    "id": "planned-negative-margin",
+    "nodeId": "node.topic-soft-tissue-sarcoma-desmoid.planned-negative-margin.20261111.v1",
+    "title": "Close negative anatomical margin after preoperative RT",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must classify the ink-negative intact epineurial boundary as a close negative margin, then interpret it in the context of completed preoperative RT before recommending further local treatment.",
+      "Surveillance is the best offered action; neither sacrificing an uninvolved nerve nor an automatic boost follows from this record. The options represent recognizable over-treatment errors rather than competing equally indicated treatments.",
+      "The negative findings are necessary to distinguish this scenario from residual disease and are not avoidable diagnosis disclosure. No option is uniquely long or assembled by majority components.",
+      "The standalone patient has an explicit preoperative-RT and postoperative-surgery chronology. It does not depend on the different thigh patient's RT-sequencing answer.",
+      "No confident inaccuracy is identified. The exact margin/boost application still requires named clinician approval; an editorial PASS does not establish a universal margin-width rule."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "unplanned-bed-clearance",
+    "nodeId": "node.topic-soft-tissue-sarcoma-desmoid.unplanned-bed-clearance.20261111.v1",
+    "title": "Positive-margin unplanned excision despite negative bed MRI",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must reconcile no discrete MRI mass with tumor at multiple inked margins, then choose feasible definitive bed clearance rather than treat imaging as proof of microscopic clearance.",
+      "Re-excision of the scar and tumor bed is the single best offered plan in this localized, operable situation. Definitive RT is a plausible alternative when re-excision is unsuitable; the supplied anatomy makes that distinction clinically relevant here.",
+      "The statement that major nerves and vessels need not be sacrificed is necessary to establish the comparative morbidity of re-excision. It does not resolve the key pathology-versus-imaging inference on its own.",
+      "The explanation appropriately leaves subsequent RT assessment dependent on the final local-risk context instead of claiming that re-excision necessarily completes all treatment. The standalone record has a coherent chronology."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "rps-biopsy",
+    "nodeId": "node.topic-soft-tissue-sarcoma-desmoid.rps-biopsy.20261111.v1",
+    "title": "Initial tissue diagnosis of a retroperitoneal mass",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "The sarcoma radiologist has mapped a percutaneous corridor to the mass.",
+        "why": "This previews the percutaneous approach and weakens the only operative competitor. It does not distinguish core from aspiration, but it reduces the task to recalling which needle specimen is preferred."
+      }
+    ],
+    "fairness": [
+      "A specialist-planned coaxial core is the best offered procedure for this indeterminate solid retroperitoneal lesion. No confident clinical error is identified in that ranking.",
+      "The task already calls the lesion retroperitoneal and asks only for a tissue-diagnosis procedure. The kidney relationship, absent fat and absent metastases do not create a second scored decision among these three choices; core remains the answer without most of that material.",
+      "The following node supplies the biopsy diagnosis and operative anatomy independently. This explanation does not disclose the later histotype-specific resection extent."
+    ],
+    "suggestions": [
+      "Build the question around a meaningful specimen-adequacy, target-selection or procedural-route problem whose interpretation changes the biopsy plan.",
+      "Keep necessary access/safety findings in neutral form, and compare plausible plans at the same decision stage instead of counting lesion localization plus generic core-biopsy recall as two steps."
+    ]
+  },
+  {
+    "id": "rps-histotype-resection",
+    "nodeId": "node.topic-soft-tissue-sarcoma-desmoid.rps-histotype-resection.20261111.v1",
+    "title": "Leiomyosarcoma resection involving the vena cava",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "preserved planes around the right kidney and colon",
+        "why": "Together with the explicitly involved, reconstructible cava, this produces a near-direct organ inclusion/exclusion map for the key. The limited option set allows matching the described structures rather than independently resolving the histotype-specific extent."
+      },
+      {
+        "phrase": "Intralesional tumor debulking, preserving cava, kidney and colon",
+        "why": "This is a visibly incomplete operation for a localized tumor whose involved vessel has already been declared reconstructible. It is a weak third competitor and contrasts with the key's uniquely balanced preservation/removal plan."
+      }
+    ],
+    "fairness": [
+      "Tumor plus involved cava resection with preservation of uninvolved kidney and colon is clinically plausible for the stated LMS. No definite key error is identified, and necessary anatomy should not be withheld to manufacture difficulty.",
+      "The main issue is discrimination: the item supplies diagnosis, vessel reconstructibility and organ separability, then offers a directly matching operation against excess organ removal and gross debulking. The intended histotype distinction is high-yield, but the visible item does not convincingly require two consequential inferences.",
+      "The initial biopsy explanation does not reveal this organ-resection answer. The current update repeats the diagnosis, involved vessel, other organ relationships and absence of metastases, so it stands alone.",
+      "The exact vascular operation and organ-sparing ranking remain matters for specialist/clinical confirmation; no independently verified procedural claim is made by this offline review."
+    ],
+    "suggestions": [
+      "Retain the critical anatomy, but compare credible complete oncologic operations and remove the gross-debulking filler.",
+      "Make the histotype or an interpretable organ-interface finding genuinely resolve a contested resection extent. Use a supported, clinician-reviewed constructed report rather than adding unsupported operative anatomy.",
+      "If the item remains a direct illustration of selective organ resection in LMS, label its difficulty honestly and obtain explicit acceptance of that educational purpose."
+    ]
+  },
+  {
+    "id": "rps-radiotherapy-boundary",
+    "nodeId": "node.topic-soft-tissue-sarcoma-desmoid.rps-radiotherapy-boundary.20261111.v1",
+    "title": "Radiotherapy in resectable retroperitoneal leiomyosarcoma",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Preoperative downsizing is not needed to complete that operation.",
+        "why": "The sentence supplies a treatment-planning conclusion that directly discourages a preoperative option. A learner need not infer the operative objective from the record. It also risks presenting lack of a downsizing need as the general reason to omit RT."
+      }
+    ],
+    "fairness": [
+      "Proceeding to resection without routine perioperative RT is a defensible best offered local sequence for the supplied resectable retroperitoneal LMS. The explanation appropriately distinguishes this setting from extremity sarcoma.",
+      "The actual discrimination is recall of a histotype/site-specific RT boundary. The diagnosis and resectability are already supplied, and the extra downsizing conclusion does not create an independent inference.",
+      "The preceding operative explanation reinforces complete surgery but does not state the RT answer. This update and task restate enough histotype, stage and resectability information to answer independently, although 'planned intact vascular resection' is less concrete than restating the cava operation.",
+      "The absence of established routine benefit should not be expanded into a claim that RT is never used in any retroperitoneal sarcoma. Current exact indications were not independently verified offline."
+    ],
+    "suggestions": [
+      "Remove the downsizing conclusion and use necessary observed anatomy or treatment objectives if they truly affect the answer.",
+      "Either introduce a source-supported finding that changes the local-treatment decision or acknowledge that this is a high-yield single-rule application requiring explicit educational acceptance.",
+      "Keep histotype-specific limitations in the feedback; do not manufacture a competing liposarcoma RT indication without verified supporting criteria."
+    ]
+  },
+  {
+    "id": "desmoid-function-course",
+    "nodeId": "node.topic-soft-tissue-sarcoma-desmoid.desmoid-function-course.20261111.v1",
+    "title": "Stable desmoid with improving usual function",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "she now completes her usual work and reports less pain",
+        "why": "Every supplied trajectory points toward improvement and there is no competing threat. Continuing observation is the intuitive lowest-intervention choice even without knowing desmoid biology. This is legitimate outcome information, but the option set gives it no real competing interpretation."
+      }
+    ],
+    "fairness": [
+      "Continued surveillance is the best offered plan for the stable lesion, improved pain and recovered usual function. Surgery and sorafenib are active treatments without a patient-specific trigger here.",
+      "The wording correctly describes completion of usual work rather than silently substituting modified duties. That repairs an important interpretation issue but does not by itself create a difficult two-step decision.",
+      "The later operative node explicitly introduces subsequent growth and recurrent functional limitation, so the change in course is coherent. This explanation previews the broad progression-to-surgery threshold but does not supply the later narrow-versus-wide margin answer."
+    ],
+    "suggestions": [
+      "Use a meaningful, clinically supported discrepancy between structural course and actual attempted function that the resident must reconcile, with competing plans that remain plausible until that interpretation.",
+      "Do not remove necessary functional observations or make surveillance unsafe for difficulty. If this exact clearly improving course is retained, classify it as easy single-rule practice rather than two-step resident challenge."
+    ]
+  },
+  {
+    "id": "desmoid-postoperative-margin",
+    "nodeId": "node.topic-soft-tissue-sarcoma-desmoid.desmoid-postoperative-margin.20261111.v1",
+    "title": "Microscopic desmoid margin after grossly complete removal",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The positive microscopic margin creates a genuine competing concern despite improving symptoms and no gross residual mass. The learner must distinguish microscopic margin involvement from persistent gross/progressive disease, then weigh the desmoid-specific significance against additional functional loss.",
+      "Surveillance is the best offered plan under this grossly complete, improving postoperative scenario. Re-excision and adjuvant RT represent plausible overapplication of malignant-sarcoma margin rules.",
+      "The explanation uses appropriately limited language: the margin can be accepted and does not automatically require treatment. It does not claim that imaging excludes microscopic disease or that RT is never appropriate.",
+      "This is a separate named patient and standalone postoperative record. The operative-extent node's explanation is not preceding feedback in this case, so it does not directly give away the answer within the encounter.",
+      "Exact postoperative desmoid margin/RT practice remains a clinician-review boundary; this offline editorial PASS is not independent verification of a universal R1 management rule."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "desmoid-hereditary-evaluation",
+    "nodeId": "node.topic-soft-tissue-sarcoma-desmoid.desmoid-hereditary-evaluation.20261111.v1",
+    "title": "Mesenteric desmoid and familial adenomatous polyposis evaluation",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Colorectal evaluation' is slightly narrower than the combined colon-examination and germline-evaluation plans offered. Naming both components in the neutral task would better state the complete decision."
+    ],
+    "cues": [],
+    "fairness": [
+      "Colonoscopy with APC-focused germline evaluation is the best offered plan for the combination of mesenteric desmoid and a father with early numerous adenomas. Absent bleeding does not make stool screening adequate to assess suspected polyposis.",
+      "The four-option matrix is balanced: each examination and gene pathway appears twice, with no majority-component convergence. The diagnosis label is appropriate background for a hereditary-evaluation task rather than an illicit answer label.",
+      "The father with numerous adenomas already supplies the classic polyposis association. CTNNB1 negativity adds little to choosing between APC and mismatch repair in this particular vignette. Selecting the associated gene and colonoscopy amounts to two familiar linked recalls, not two consequential interpretations.",
+      "The later progression node does not need the result of this germline workup to choose among its offered treatments; it supplies its own current disease course. The hereditary feedback does not disclose the drug answer."
+    ],
+    "suggestions": [
+      "Preserve the high-yield desmoid/polyposis association, but introduce an interpretable prior tumor, colorectal or family-test result that changes what evaluation remains necessary; use verified claims and do not invent genetic exclusion rules.",
+      "Compare credible same-stage investigation plans rather than routine stool screening against direct evaluation of an explicitly strong polyposis history.",
+      "Ask explicitly for the colorectal and hereditary evaluation plan if both components remain in every option."
+    ]
+  },
+  {
+    "id": "desmoid-mesenteric-escalation",
+    "nodeId": "node.topic-soft-tissue-sarcoma-desmoid.desmoid-mesenteric-escalation.20261111.v1",
+    "title": "Progressive mesenteric desmoid with high surgical morbidity",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Which active-treatment plan' preselects escalation even though one option is continued surveillance. The intended decision includes whether to intervene, so the lead-in should not settle that component."
+    ],
+    "cues": [
+      {
+        "phrase": "active-treatment plan",
+        "why": "The task tells the resident that active treatment is wanted, weakening surveillance before the progression evidence has been interpreted."
+      },
+      {
+        "phrase": "resection would require extensive small-bowel sacrifice",
+        "why": "With intervention already selected by the task, this explicit major harm points away from the only other active treatment and toward the sole drug option. No knowledge of nirogacestat is needed to select it."
+      }
+    ],
+    "fairness": [
+      "An adult systemic option is a defensible best offered approach to persistent symptomatic progression with highly morbid mesenteric-root surgery and no acute complication. The lack of obstruction or ischemia is necessary safety information and should remain.",
+      "The explanation appropriately identifies nirogacestat as one option rather than asserting superiority over all systemic agents. The item's weakness is that it does not meaningfully test selection of this particular agent.",
+      "The hereditary node's explanation does not reveal this treatment choice. The later update includes the progression, symptoms, anatomy and emergency exclusions needed to stand alone.",
+      "No definite clinical inaccuracy is identified. Current drug eligibility, precautions and comparative systemic choices were not independently checked in this offline review."
+    ],
+    "suggestions": [
+      "Use a neutral 'current management plan' task so the resident must actually decide whether escalation is warranted.",
+      "Retain necessary anatomy and emergency exclusions, but build a credible competing management decision instead of a sole medication against explicitly destructive surgery and a lead-in-excluded observation plan.",
+      "Do not add another active drug as a distractor unless verified patient-specific criteria establish one best answer; otherwise test the systemic-versus-local-treatment decision without pretending to assess drug ranking."
+    ]
+  },
+  {
+    "id": "mdm2-sampling-limit",
+    "nodeId": "node.topic-soft-tissue-sarcoma-desmoid.mdm2-sampling-limit.20261111.v1",
+    "title": "Molecular assessment of a deep lipomatous lesion",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "The sarcoma pathologist considers the morphology insufficient to classify the whole lesion.",
+        "why": "This supplies the sampling/morphology limitation that the item title suggests the learner should infer. The remaining choice is the familiar fatty-tumor molecular marker."
+      }
+    ],
+    "fairness": [
+      "MDM2 amplification assessment on representative lesional tissue is the best offered test for the stated deep lipomatous differential. CTNNB1 and SS18 concern different tumor families and do not compete closely here.",
+      "The options are parallel and have equal qualification, so there is no length or convergence shortcut. The weakness is a single association after the need for more classification has been announced.",
+      "Saying 'on representative lesional tissue' in all options does not test whether the existing core is representative or how a new sample should be selected. This draft does not actually score resolution of its sampling problem.",
+      "The explanation correctly avoids equating MDM2 amplification with dedifferentiation. The next node supplies specialist representative sampling and its result, so it is chronologically coherent and self-contained. This feedback does not state the later margin strategy."
+    ],
+    "suggestions": [
+      "Show the specimen-to-imaging correspondence and require a decision about what the current sample establishes and what tissue assessment is still needed.",
+      "Use credible alternative specimen/testing plans rather than unrelated gene-family labels if the objective is sampling adequacy. Preserve the MDM2-versus-dedifferentiation distinction in feedback.",
+      "If the intended objective is only selecting the molecular marker, identify it honestly as single-rule recall rather than a difficult sampling-limit application."
+    ]
+  },
+  {
+    "id": "alt-function-preserving-resection",
+    "nodeId": "node.topic-soft-tissue-sarcoma-desmoid.alt-function-preserving-resection.20261111.v1",
+    "title": "Extremity ALT resection near the femoral bundle",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "a plane for intact removal along its capsule",
+        "why": "This nearly describes the keyed complete marginal excision before the learner chooses a plan. Coupled with explicit femoral-nerve sacrifice for wider surgery, it makes the key the only complete, function-preserving operation."
+      },
+      {
+        "phrase": "Definitive external-beam radiotherapy retaining the mass",
+        "why": "The added 'retaining the mass' emphasizes an undesirable consequence for a symptomatic, explicitly removable tumor. It makes this competitor read like a critique rather than a comparably framed treatment."
+      }
+    ],
+    "fairness": [
+      "Marginal intact excision preserving the bundle is a defensible best offered plan for the supplied extremity ALT without dedifferentiation. The diagnosis is legitimate background for a management question; it is not itself an illicit diagnostic cue.",
+      "The visible item nevertheless supplies the pathology conclusion and a feasible capsule-plane operation, leaving direct application of the ALT margin rule. The wide-operation alternative tests over-treatment, but the RT alternative is weak in this explicitly operable scenario.",
+      "The prior MDM2 explanation does not reveal the operative margin answer. The current update independently states the confirmed subtype, absence of dedifferentiation, symptoms and operative relationship, so the later part stands alone.",
+      "No definite clinical key error is identified. Exact margin feasibility and treatment recommendations require clinical approval."
+    ],
+    "suggestions": [
+      "Remove the outcome-laden 'retaining the mass' wording and compare credible local plans with comparable scope.",
+      "Make an interpretable pathology or imaging finding materially determine the appropriate margin strategy instead of supplying both the classification and the keyed operative plane as conclusions.",
+      "Retain real nerve-risk information; do not create difficulty by hiding the functional consequence or inventing a margin threshold."
+    ]
+  },
+  {
+    "id": "advanced-systemic-intensity",
+    "nodeId": "node.topic-soft-tissue-sarcoma-desmoid.advanced-systemic-intensity.20261111.v1",
+    "title": "First-line systemic treatment intensity for metastatic UPS",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Cardiac and organ assessment supports anthracycline treatment' is an eligibility conclusion rather than the findings supporting it. It is adequate as background if eligibility is not being tested, but cannot count as an inference performed by the learner."
+    ],
+    "cues": [
+      {
+        "phrase": "He prioritizes avoiding severe toxicity over the greatest possible early shrinkage.",
+        "why": "This states the exact toxicity-versus-response rationale rehearsed in the explanation. The options then make 'Single-agent doxorubicin' the only single-drug regimen against two combinations, allowing a fewer-drugs shortcut without sarcoma knowledge."
+      },
+      {
+        "phrase": "Single-agent doxorubicin",
+        "why": "Only the key advertises treatment intensity with an explicit modifier. That wording amplifies the preference cue even though drug count alone is not a valid general predictor of comparative toxicity."
+      }
+    ],
+    "fairness": [
+      "Doxorubicin monotherapy is a plausible best offered fit for this anthracycline-eligible patient without an urgent reduction goal. The low burden and absence of threatened organs are clinically useful facts.",
+      "The item supplies both eligibility and the governing treatment preference, so selecting the least intensified standard option does not require two independent interpretations.",
+      "The description of gemcitabine/docetaxel as an active later-line regimen should not be read as an absolute prohibition on its use in other settings. No categorical inaccuracy is asserted here; current histotype-specific first-line comparisons need clinician verification, which this offline review did not perform.",
+      "This is a standalone, clearly staged metastatic case with no sequence-continuity issue."
+    ],
+    "suggestions": [
+      "Retain authentic patient goals, but express them in concrete functional terms rather than reciting the comparative-regimen teaching sentence.",
+      "Use parallel regimen labels and a credible treatment tradeoff that requires interpreting the disease behavior and an actual patient constraint. Removing 'Single-agent' alone will not fix the fewer-drugs shortcut.",
+      "Verify any added comparative regimen boundary before using it to establish a unique key; do not manufacture a cardiac cutoff, toxicity rate or response threshold."
+    ]
+  },
+  {
+    "id": "desmoid-operative-extent",
+    "nodeId": "node.topic-soft-tissue-sarcoma-desmoid.desmoid-operative-extent.20261111.v1",
+    "title": "Extent of abdominal-wall desmoid resection",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "the tumor can be removed intact, with a narrow posterior muscle interface",
+        "why": "This almost states the keyed grossly complete resection accepting a narrow posterior margin. The remaining choices either add explicitly described functional loss or deliberately retain tumor."
+      },
+      {
+        "phrase": "Intralesional debulking retaining the posterior tumor interface",
+        "why": "Gross debulking is a weak competitor after the stem explicitly establishes feasible intact removal. It lets the key emerge as the only complete operation without the described extra harm."
+      }
+    ],
+    "fairness": [
+      "A grossly complete function-preserving resection accepting a narrow margin is a defensible best offered strategy once surgery has been selected for this progressing abdominal-wall desmoid. No definite clinical key error is identified.",
+      "The decision to intervene is already made in the stem; the scored decision is operative extent. The current options require direct application of the margin principle rather than two consequential steps.",
+      "The earlier stable/improving surveillance node and this later growing/painful course are coherent. The update explains the change and independently supplies the selected treatment and operative anatomy.",
+      "Earlier feedback announces that progression can justify surgery, but does not give the margin-width answer. This node's own explanation would disclose the key to a subsequent microscopic-margin question; that postoperative question is currently a separate patient/case, so no within-case leakage occurs.",
+      "The feedback appropriately distinguishes acceptance of a narrow or microscopic margin from deliberate gross residual disease. Exact clinical acceptability still needs clinician sign-off."
+    ],
+    "suggestions": [
+      "Replace the intralesional-debulking filler with a credible same-stage strategy and avoid phrasing the planning record as the keyed operation.",
+      "Use a supported finding that genuinely changes the resection strategy or postoperative decision, with enough anatomy to retain one defensible answer.",
+      "Preserve the separate postoperative case so the current explanation does not become its immediate answer scaffold."
+    ]
+  }
+]

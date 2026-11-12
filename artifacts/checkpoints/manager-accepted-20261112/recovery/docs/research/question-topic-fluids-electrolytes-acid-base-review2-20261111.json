@@ -1,0 +1,245 @@
+[
+  {
+    "id": "potassium-provenance",
+    "nodeId": "node.topic.fluids-electrolytes-acid-base.potassium-provenance.v1",
+    "title": "Current potassium result after an earlier specimen-related elevation",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Current plasma potassium 6.7, rather than the prior serum-plasma discrepancy, supports immediate monitored hospital assessment. Repeating the artifact explanation or choosing an outpatient binder would miss the current escalation decision. A reassuring ECG does not settle the potassium risk.",
+      "Two consequential steps remain: distinguish the earlier specimen effect from the current paired elevation, then choose the appropriate disposition. The platelet count and ECG provide credible competing information. This is high-yield perioperative electrolyte reasoning.",
+      "The standalone presentation identifies a named 52-year-old woman; the task is complete and no preceding explanation is needed. No material nonmedical wording, length, convergence or diagnosis-label shortcut was identified.",
+      "Review scope: all 11 current proposed executable nodes were independently assessed from their current Presentation, Current update, Exhibit, Task, option labels and Explanation, including the three retained candidate versions rather than accepting their earlier PASS labels. The original inventory's three Keep and 30 Retire-and-replace records, eight parked drafts, source-held material, one unkeyed slot and four withheld teaching points were noted but not adjudicated. Archived superseded candidate versions were excluded. Current cases each contain one node; no current multi-part sequence was assumed.",
+      "Review limitations: no network, new source verification, Git, runtime execution or clinical approval. Clinical conclusions are bounded offline judgments; difficulty and high-yield ratings are qualitative, not measured performance or verified examination frequencies. Runtime randomization and wait displays cannot be established from the permitted visible text. All draft clinical versions still require Melissa Rowland's exact-version clinical sign-off. Key-first review markers were ignored as learner cues."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "current-corrected-gap",
+    "nodeId": "node.topic.fluids-electrolytes-acid-base.current-corrected-gap.v2",
+    "title": "Albumin-adjusted gap and the next cause-directed panel",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Independent calculation gives AG 140 - 112 - 16 = 12 and adjustment 0.25 * (40 - 16) = 6, yielding 18 mmol/L against the supplied upper reference of 16. The pH/PCO2/bicarbonate combination is internally coherent.",
+      "The resident must recognize a concealed elevated-gap component despite diarrhoea and then select plasma lactate and beta-hydroxybutyrate rather than characterize stool losses or pursue renal acidification first. Those alternatives answer the same diagnostic-stage task. The small adjusted elevation warrants investigation; it does not establish a particular acid or exclude concurrent gastrointestinal bicarbonate loss.",
+      "The formula is a legitimate calculation aid, not a worked answer or a named keyed investigation. Persistent low albumin and simultaneous sampling give a coherent standalone record. The task does not require information from an earlier part. The concept is high-yield acid-base evaluation, with moderate application difficulty."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "hyperkalaemia-substrate",
+    "nodeId": "node.topic.fluids-electrolytes-acid-base.hyperkalaemia-substrate.v2",
+    "title": "Potassium shifting and subsequent glucose support",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "After insulin-glucose, the UKKA pathway adds glucose infusion when pretreatment glucose is below 7 mmol/L.",
+        "why": "The aid names both components of the keyed option. A reader can compare 4.6 with 7 and match insulin-glucose plus glucose infusion without interpreting potassium, calcium's effect or the ECG response. This bypasses both intended clinical discriminators."
+      },
+      {
+        "phrase": "IV insulin-glucose; subsequent glucose infusion",
+        "why": "This option uniquely reproduces the complete regimen stated in the aid. The balanced two-by-two matrix avoids majority-component convergence, but does not repair direct answer rehearsal."
+      }
+    ],
+    "fairness": [
+      "The keyed plan is clinically defensible under the supplied pathway: calcium-related electrical improvement does not establish potassium removal or intracellular shifting, and the stated glucose criterion applies to 4.6 mmol/L. No confident clinical inaccuracy is identified.",
+      "The salbutamol alternatives are adjunct-for-principal-treatment errors; subsequent saline does not supply the stated glucose support. However, the supplied sentence eliminates these distinctions by naming the intended combination. The calcium and QRS rows can be deleted without making the answer harder to select.",
+      "The presentation and historical decision time are coherent and self-contained. Acute hyperkalaemia treatment is high-yield; the exact subsequent-glucose rule is pathway-specific rather than a universal board rule. As written, this is easy rule matching, not two consequential clinical steps."
+    ],
+    "suggestions": [
+      "Remove the complete keyed regimen from the aid. Retain any necessary local glucose-support criterion in neutral form that does not also name the correct potassium-shifting drug.",
+      "Rebuild the decision around a supported patient-specific treatment or response constraint so that interpreting persistent potassium elevation and deciding substrate support each changes the chosen plan. Re-solve all alternatives after the edit; do not create a new threshold.",
+      "Apply the deletion test: the calcium/ECG and glucose data must each be needed. If the supported content can only sustain one-rule recall, seek explicit acceptance as a basic item or park it rather than label it moderate or hard."
+    ]
+  },
+  {
+    "id": "hyponatraemia-loss-replacement",
+    "nodeId": "node.topic.fluids-electrolytes-acid-base.hyponatraemia-loss-replacement.v2",
+    "title": "Thiazide-confounded urine sodium and initial replacement",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Hypotonic hyponatraemia, recent thiazide exposure and substantial postural pressure/pulse changes make assessed 0.9% saline replacement the best offered initial fluid plan. High urine sodium does not establish SIAD in this medication context. Alertness without new confusion or seizure helps distinguish the offered hypertonic strategy.",
+      "Two consequential steps are present: qualify the urine finding using medication exposure and infer a depletion component, then choose replacement rather than restriction or symptom-driven hypertonic treatment. Fluid restriction remains a recognizable error for someone anchoring on the concentrated sodium-containing urine. This is high-yield surgical fluid management.",
+      "Withholding the thiazide, collecting urine before fluids and specifying the historical hospital stage make the standalone chronology coherent. The explanation appropriately requires close monitoring; it does not imply an unrestricted saline infusion. No confident clinical inaccuracy or nonmedical answer cue was identified."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "hyponatraemia-relowering",
+    "nodeId": "node.topic.fluids-electrolytes-acid-base.hyponatraemia-relowering.v2",
+    "title": "Excess sodium correction with continuing dilute diuresis",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The task requests a fluid-and-medication plan, but two options contain no medication. This preselects the response category rather than asking a neutral management question.",
+      "Postural circulatory change and Circulation restored are interpretations rather than the actual reassessment observations. They are understandable, but supply part of the intended clinical inference."
+    ],
+    "cues": [
+      {
+        "phrase": "fluid-and-medication plan",
+        "why": "Only Stop saline; give dextrose water and desmopressin includes a medication. The key can be selected by task-option grammar without understanding sodium physiology."
+      },
+      {
+        "phrase": "rise >8 mmol/L within 24 hours is excessive.",
+        "why": "Providing a necessary risk-adjusted limit is legitimate, but here the visible 11-point rise plus the word excessive makes the only active reversal plan conspicuous against observation and continued saline. The option set fails to preserve a second meaningful discriminator after the arithmetic."
+      },
+      {
+        "phrase": "Circulation restored",
+        "why": "This authored conclusion, repeated in substance by circulation improved, makes continued saline replacement an easily discarded foil. The key is also the only option adding a treatment for the newly announced problem."
+      }
+    ],
+    "fairness": [
+      "Independent subtraction confirms a rise of 11 mmol/L in eight hours. Chronic sodium 110, advanced liver disease, initial marked hypokalaemia and ongoing high-volume dilute urine make specialist-directed free water plus desmopressin a defensible best offered plan. Stopping saline and monitoring does not address the already excessive rise and continuing water loss in this stated high-risk setting.",
+      "No confident clinical inaccuracy is identified. The explanation appropriately describes relowering as reasonable in this risk context rather than mandatory after every sodium increase. The optimal exact relowering regimen remains a clinician decision; this offline review does not validate a dose or universal threshold.",
+      "The chronology stands alone. Prevention of osmotic demyelination and management of water diuresis are high-yield. The underlying construct could require two steps, but the current task cue and weak alternatives allow an easy answer without interpreting the urine physiology."
+    ],
+    "suggestions": [
+      "Ask neutrally for the next management plan so all options answer the same task.",
+      "Keep the chronicity, risk factors, serial sodium and urine data and any necessary verified correction limit. Replace categorical circulatory conclusions with concise actual observations.",
+      "Compare credible plans at the same rescue decision stage, with monitoring and specialist involvement shared. Use clinician-verified alternatives that separate reversing the accumulated rise from controlling continued water loss, so both observations affect the answer. Do not substitute another obviously incomplete or unsafe caricature."
+    ]
+  },
+  {
+    "id": "siad-fluid-plan",
+    "nodeId": "node.topic.fluids-electrolytes-acid-base.siad-fluid-plan.v1",
+    "title": "Postoperative hypotonic hyponatraemia and initial ongoing fluids",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The combined hypotonic serum, concentrated sodium-containing urine, examination and stated endocrine/renal/diuretic exclusions support inappropriate water retention. Initial total-fluid restriction is the best offered plan; the record does not establish failure of restriction that would justify selecting the salt/loop alternative first.",
+      "The resident must interpret the mechanism and then place the treatment in the correct sequence. This is a high-yield, moderately difficult distinction from postoperative volume depletion and premature second-line treatment. The task and options are clear and comparable.",
+      "The change from 125 to 124 occurred with both 2.8 L oral intake and saline. It cannot isolate a causal effect of saline itself. The explanation's overall inference is supported by the other findings and does not require that causal claim.",
+      "The standalone record supplies the necessary context, age and sex. Necessary exclusions are not diagnosis labels naming the key, and the post-answer explanation does not leak into another active node. No material nonmedical cue was identified."
+    ],
+    "suggestions": [
+      "If polishing this version, label the exhibit row as the sodium course during the recorded total intake rather than implying an isolated saline challenge. Preserve the distinction in later feedback. This is a precision improvement, not a prerequisite for the current best answer."
+    ]
+  },
+  {
+    "id": "gastric-chloride-replacement",
+    "nodeId": "node.topic.fluids-electrolytes-acid-base.gastric-chloride-replacement.v2",
+    "title": "Persistent alkalosis after gastric drainage ends",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The pH, PCO2 and bicarbonate are internally consistent with metabolic alkalosis. Low pretreatment urine chloride despite higher urine sodium supports a chloride-depleted maintaining process after the initiating gastric loss ends. Sodium chloride replacement with continued potassium chloride is the best offered addition.",
+      "The resident must distinguish the maintaining physiology from the ended loss and from an inference based on urine sodium, then select replacement instead of pharmacologic bicarbonate loss or mineralocorticoid blockade. Acetazolamide is particularly unattractive with current hypokalaemia, while spironolactone does not address the demonstrated chloride-depletion pattern. These are recognizable neighboring management errors.",
+      "The no-fluid/no-diuretic sampling context and absence of oedema are relevant to interpreting urine chloride and choosing replacement, not gratuitous feasibility permissions. The choices have different routes but comparable specificity and all answer the addition-to-potassium task. The classic mechanism remains high-yield and moderately difficult, rather than a hard stretch item.",
+      "The standalone historical reassessment is coherent. No confident clinical inaccuracy, unique wording-match shortcut or preceding-feedback dependence was identified."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "dka-potassium-sequence",
+    "nodeId": "node.topic.fluids-electrolytes-acid-base.dka-potassium-sequence.v2",
+    "title": "Unresolved ketoacidosis with treatment-emergent hypokalaemia",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Current glucose 9 does not establish DKA resolution: beta-hydroxybutyrate 3.6, pH 7.29 and bicarbonate 14 indicate persistent metabolic disease. Current potassium 3.2 is below the explicitly supplied insulin safety condition. Potassium correction and a confirming recheck before resuming IV insulin are the best offered sequence.",
+      "The supplied potassium condition deliberately reduces recall burden and narrows the timing dimension, but does not identify which of the two potassium-first choices is correct. The resident must still integrate persistent ketosis despite glucose improvement and apply the potassium constraint. Unlike a complete regimen sentence, the aid does not name the answer's insulin route or transition decision.",
+      "The two-by-two option components are balanced: first versus concurrent potassium and IV versus maintenance basal-bolus each occur twice. There is no majority-component convergence. The two closest errors are premature transition after glucose improvement and continuing insulin despite the current potassium result.",
+      "This high-yield sequence has moderate difficulty. The current and pretreatment record, ongoing dextrose and kidney/urine context make the question standalone. No confident clinical inaccuracy was identified; the item does not claim that all DKA in every setting requires an IV route."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "dka-resolution-transition",
+    "nodeId": "node.topic.fluids-electrolytes-acid-base.dka-resolution-transition.v1",
+    "title": "DKA resolution despite urine ketones and low bicarbonate",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Blood beta-hydroxybutyrate 0.4 and venous pH 7.34 support the resolution relation described in the explanation despite bicarbonate 17 and positive urine ketones. The sodium/chloride/bicarbonate values give a gap of 9, consistent with the proposed non-gap residual acid-base pattern. Basal-bolus insulin with IV overlap is the best offered transition for the eating, stable patient who has not received basal insulin.",
+      "Two consequential steps remain: distinguish biochemical resolution from misleading residual markers, then choose a transition that preserves insulin coverage. Continuing IV treatment is a credible error if bicarbonate or urine ketones are over-weighted; correction-scale insulin misses basal coverage. This is high-yield and moderately difficult.",
+      "The medication-sheet omission is decision-critical rather than sufficient by itself to answer: it does not establish whether the metabolic episode has resolved. Likewise, DKA in the exhibit caption is an appropriate known diagnosis for this management task.",
+      "The currently standalone wrapper is coherent. Later in that outside admission refers to the admission already named in the presentation, and the exhibit and medication record provide the needed reassessment without the earlier potassium question or its explanation. This verdict does not approve future recombination into a multi-part case."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "hhs-tonicity-response",
+    "nodeId": "node.topic.fluids-electrolytes-acid-base.hhs-tonicity-response.v2",
+    "title": "HHS fluid composition during falling osmolality",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Independent arithmetic confirms glucose falls 8 mmol/L over two hours, or 4 per hour, and measured osmolality falls 6 mOsm/kg, or 3 per hour. Sodium rises only 1 mmol/L while glucose falls. The improving circulation, remaining depletion and falling osmolality support the offered 0.9% sodium chloride composition with ongoing rate reassessment.",
+      "The two consequential steps are interpreting the coupled glucose/sodium/osmolality trajectory and applying it to fluid composition. Moving to 0.45% saline because sodium rises or selecting free water prematurely are recognizable errors. The existing saline treatment is relevant baseline information, not an instruction to keep it regardless of response.",
+      "Separating composition from infusion rate prevents the key from authorizing an unchanged rate. The named HHS diagnosis is appropriate for a treatment-response task. This is high-yield metabolic fluid management with moderate difficulty; the exact response limits and eventual rate require clinician verification rather than inference of a universal regimen.",
+      "The historical two-hour record stands alone and options are parallel fluid compositions. No confident clinical inaccuracy or material nonmedical cue was identified."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "mixed-gas-reassessment",
+    "nodeId": "node.topic.fluids-electrolytes-acid-base.mixed-gas-reassessment.v2",
+    "title": "Interval CO2 change during controlled ventilation",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "controlled mechanical ventilation",
+        "why": "Repeated in the update and exhibit caption, this matches the only ventilator-focused option. The setting is clinically legitimate, but the remaining option set does not require a second interpretation to choose that matching pathway."
+      },
+      {
+        "phrase": "Ventilator delivery and effective CO2 elimination",
+        "why": "This is the only option naming CO2, the only changing displayed acid-base component besides pH. Bicarbonate, sodium/chloride and lactate are identical across columns. Simple change detection and label matching selects the key without calculating expected compensation or recognizing either mixed disorder."
+      }
+    ],
+    "fairness": [
+      "The gases are internally coherent. With bicarbonate 16, the explanation's expected PCO2 is 32 +/-2; earlier PCO2 25 and current 39 fall on opposite sides. Ventilation delivery/effective CO2 elimination is a defensible focused reassessment. Stable displayed metabolic measurements favor that priority over the offered perfusion or renal assessments.",
+      "No specific ventilator setting or cause is claimed, appropriately. Stable lactate and electrolytes do not prove that all circulatory or renal disease is absent, but the task asks about the interval gas change, for which the key is best.",
+      "Mixed acid-base analysis and perioperative ventilation are high-yield. The current item tests recognition of the changing component, not two consequential steps: the compensation calculation in the explanation is unnecessary to select the answer. Easy difficulty reflects that shortcut, not clinical ambiguity.",
+      "The standalone record is coherent and clearly specifies controlled ventilation. There is no later-part dependency or missing prior result. No confident clinical inaccuracy was identified."
+    ],
+    "suggestions": [
+      "Retain necessary anaesthetic and ventilation context, but replace the respiratory-versus-two-unchanged-metabolic-domain choice set with clinically credible competing reassessments at the same stage.",
+      "Supply clinician-verified observations that make the compensation interpretation change a concrete next assessment; for example, distinguish competing explanations within a genuinely unresolved ventilation/CO2 problem without assuming an unprovided ventilator setting or cause.",
+      "Hide the explanation and ask whether a reader who only notices which table row changes can still choose the key. If yes, revise the construct or seek explicit acceptance as basic recognition rather than calling it a hard mixed-disorder item."
+    ]
+  }
+]

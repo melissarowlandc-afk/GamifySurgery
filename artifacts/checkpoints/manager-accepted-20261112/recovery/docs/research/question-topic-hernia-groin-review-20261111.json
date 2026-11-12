@@ -1,0 +1,572 @@
+[
+  {
+    "id": "question.topic.hernia-groin.marked-femoral-repair.v1",
+    "nodeId": "node.topic.hernia-groin.marked-femoral-repair.v1",
+    "title": "Marked femoral swelling: timing of repair",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The anatomical exhibit does not identify its modality or the examiner/report supplying these observations."
+    ],
+    "cues": [
+      {
+        "phrase": "pressing here does not reproduce the marked lump",
+        "why": "The second exhibit row explicitly dismisses the competing target instead of requiring the learner to reconcile it."
+      }
+    ],
+    "fairness": [
+      "Elective repair is the defensible offered answer for this reducing, nontender femoral hernia; the record does not establish an emergency.",
+      "The intended anatomical inference fails the deletion test: a nonpregnant woman with a confirmed groin hernia still merits timely repair assessment if the marker actually corresponds to the inguinal defect. Thus distinguishing the two routes does not change the offered action.",
+      "This report is an offline editorial review of candidate-visible fields, not source verification or clinical approval. PASS entries also remain needs_clinician_review."
+    ],
+    "suggestions": [
+      "Make target localization change an actual repair or investigation decision, with clinically credible alternatives and a supported patient-specific discriminator. Do not obscure the current stability findings.",
+      "Identify the source of the anatomical observations and remove a competing lesion that does not affect the decision."
+    ]
+  },
+  {
+    "id": "question.topic.hernia-groin.selected-observation.v1",
+    "nodeId": "node.topic.hernia-groin.selected-observation.v1",
+    "title": "Separate activity-limiting pain from an incidental inguinal protrusion",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Observation with return precautions is the best offered hernia policy: actual usual lifting is tolerated despite the protrusion, while a different activity reproduces pain at the adductor attachment.",
+      "The two steps are symptom attribution using the discordant activity/site findings, then applying the selected-male observation option with the patient's preference. Elective repair is a credible temptation but is not the best response to the demonstrated limiting symptom.",
+      "The preference is legitimate decision information, not an instruction to observe regardless of findings. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": [
+      "Preserve the distinction between the activity actually completed and the painful activity, and the explanation's limited claim about symptom attribution."
+    ]
+  },
+  {
+    "id": "question.topic.hernia-groin.interval-symptom-shift.v1",
+    "nodeId": "node.topic.hernia-groin.interval-symptom-shift.v1",
+    "title": "New reduction-responsive lifting limitation after observation",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "focal inguinal pressure makes him put the load down as the lump appears",
+        "why": "Together with resolution on reduction, this spells out the symptomatic-hernia trigger; the offered alternatives contain no genuine unresolved competing decision."
+      },
+      {
+        "phrase": "with return precautions and reassessment if the hernia changes",
+        "why": "The preceding explanation rehearses the change-of-policy boundary before this follow-up."
+      }
+    ],
+    "fairness": [
+      "Elective repair assessment is defensible and the interval chronology is coherent. The current update is understandable independently of the earlier question.",
+      "The sequence contrasts the same observation-versus-referral rule twice. Repeat ultrasound has no new diagnostic uncertainty to resolve; continued surveillance ignores the clearly stated functional goal. These unsupported delays do not provide resident-level competition.",
+      "The new data matter to the answer, but a consequential second inference is not required in this option set."
+    ],
+    "suggestions": [
+      "Retain the functional update but test a distinct remaining decision with credible competitors, or merge it into the initial symptom-attribution objective.",
+      "Remove 'Rehabilitation continues in every offered plan' unless it changes a real choice; it is editorial scaffolding in patient-facing text."
+    ]
+  },
+  {
+    "id": "question.topic.hernia-groin.partial-block-response.v1",
+    "nodeId": "node.topic.hernia-groin.partial-block-response.v1",
+    "title": "Interpret discordant superficial and deep responses to a nerve block",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Both symptoms return to their previous pattern' is imprecise after stating that the deep ache never changed; clarify that the burning returns while the deep ache persists."
+    ],
+    "cues": [
+      {
+        "phrase": "The superficial component has an injection-responsive contribution",
+        "why": "This is a near-tautological restatement of 'clothing no longer provokes burning' after injection."
+      },
+      {
+        "phrase": "Both pain components are localized to the injected nerves",
+        "why": "The broad claim is contradicted directly by the unchanged deep ache."
+      },
+      {
+        "phrase": "Neither pain component is informed by the injection",
+        "why": "The opposite extreme is contradicted directly by the improved burning, leaving the only cautious middle statement."
+      }
+    ],
+    "fairness": [
+      "The keyed limited interpretation and explanation's specificity caveat are reasonable. The observation does not prove a unique nerve or justify a particular operation.",
+      "This tests reading a response pattern rather than two consequential clinical steps; 'both/neither/some' allows elimination without medical knowledge."
+    ],
+    "suggestions": [
+      "Replace the extreme interpretations with comparably qualified, clinically plausible inferences about what the block can establish, and make that distinction affect a concrete next decision.",
+      "Keep the distinction between a responsive component and proof of a specific causal nerve."
+    ]
+  },
+  {
+    "id": "question.topic.hernia-groin.negative-study-mri.v1",
+    "nodeId": "node.topic.hernia-groin.negative-study-mri.v1",
+    "title": "Further imaging after an adequate negative dynamic groin study",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The explanation introduces 'the held mixed-pain MRI-versus-hip-versus-block question,' which is internal review context with no patient-facing meaning."
+    ],
+    "cues": [
+      {
+        "phrase": "Repeat the same dynamic groin ultrasound",
+        "why": "'The same' advertises repetition of a fully acquired and reviewed study rather than a credible alternative acquisition."
+      },
+      {
+        "phrase": "Examination reproduces no separate hip or adductor pain",
+        "why": "This explicitly removes the rationale for the hip-focused distractor."
+      }
+    ],
+    "fairness": [
+      "Dynamic pelvic/groin MRI is a defensible next study for persistent unresolved symptoms after the described ultrasound. No confident clinical error identified.",
+      "The only new investigation aimed at the symptomatic region wins after the text disposes of both alternatives. Complete acquisition review is appropriate information, but this option set turns it into elimination rather than difficult interpretation."
+    ],
+    "suggestions": [
+      "Use investigations with genuine competing indications and supply observations that distinguish their value; do not use an unchanged completed study as filler.",
+      "Remove internal held-item commentary from the explanation. Preserve acquisition adequacy and do not manufacture an indication to repeat imaging."
+    ]
+  },
+  {
+    "id": "question.topic.hernia-groin.partial-wall-urgency.v1",
+    "nodeId": "node.topic.hernia-groin.partial-wall-urgency.v1",
+    "title": "Threatened partial-circumference femoral bowel entrapment",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Emergency exploration is the best offered intervention given fixed tenderness and substantially diminished bowel-wall enhancement. Stool passage does not make manual reduction or elective discharge appropriate.",
+      "The learner must reconcile preserved bowel transit with partial-wall entrapment, then recognize suspected ischemia and reject taxis. The misleadingly reassuring transit finding is consequential.",
+      "The hospital-review frame places initial support and surgical assessment at the correct care stage. The explanation appropriately distinguishes threatened viability from proven irreversible necrosis."
+    ],
+    "suggestions": [
+      "Preserve both the partial-circumference anatomy and perfusion finding; do not remove urgency information to raise difficulty."
+    ]
+  },
+  {
+    "id": "question.topic.hernia-groin.medial-defect-plan.v1",
+    "nodeId": "node.topic.hernia-groin.medial-defect-plan.v1",
+    "title": "Symptomatic medial inguinal defect versus static cord fat",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Plan inguinal posterior-wall reinforcement' is less concrete than naming a repair operation; it can be confused with the posterior operative approach, which is a different distinction."
+    ],
+    "cues": [
+      {
+        "phrase": "displaces the canal wall",
+        "why": "This maps directly to the only wall-reinforcement option."
+      },
+      {
+        "phrase": "Fat alongside the cord remains unchanged",
+        "why": "The static-versus-moving contrast makes isolated cord-fat excision an overtly mismatched target."
+      }
+    ],
+    "fairness": [
+      "Repair assessment for a function-limiting reducing inguinal hernia is reasonable. No confident clinical error identified.",
+      "The direct-versus-indirect inference does not change the offered action: symptomatic inguinal defects can require repair regardless of that classification. Observation and isolated fat excision do not provide close management competitors here.",
+      "The explanation's statement that no unique mesh technique is established is appropriate, but does not cure the vague operative label."
+    ],
+    "suggestions": [
+      "Use a specific clinically supported repair or planning decision in which the anatomical interpretation changes management, with same-stage alternatives.",
+      "Avoid implying that posterior-wall reinforcement specifies a posterior surgical approach."
+    ]
+  },
+  {
+    "id": "question.topic.hernia-groin.new-component-ultrasound.v1",
+    "nodeId": "node.topic.hernia-groin.new-component-ultrasound.v1",
+    "title": "Assess an unexamined new postoperative groin contour",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "It contains no acquisition of the patient-marked repair site",
+        "why": "This names the missing action answered verbatim by targeted ultrasound."
+      },
+      {
+        "phrase": "Groin ultrasound at the marked site during standing strain",
+        "why": "The key is substantially longer and carries the exact target/provocation correction; the other options are less specifically tailored."
+      }
+    ],
+    "fairness": [
+      "Targeted dynamic ultrasound is a defensible initial evaluation of this new intermittent contour. The older adductor acquisition is not a negative study of the repair site.",
+      "An MRI is not intrinsically an incorrect investigation of postoperative groin symptoms; its lower priority here depends on the initial targeted-ultrasound sequence, not an assertion that it cannot evaluate recurrence.",
+      "The acquisition omission and highly specific key permit a language-level solution, despite the clinically useful intended distinction."
+    ],
+    "suggestions": [
+      "Describe the acquisition record neutrally and balance target/protocol detail across all imaging choices. Require interpretation of what the earlier study actually establishes rather than naming a missing keyed action.",
+      "Keep the new pressure/contour separate from the older injection-responsive burning; do not replace that distinction with a diagnosis label."
+    ]
+  },
+  {
+    "id": "question.topic.hernia-groin.anterior-recurrence-plane.v1",
+    "nodeId": "node.topic.hernia-groin.anterior-recurrence-plane.v1",
+    "title": "Select the repair plane after an anterior mesh repair",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "He has not had pelvic surgery or a preperitoneal repair",
+        "why": "The latter clause supplies the plane conclusion that the operative report should require the resident to infer."
+      },
+      {
+        "phrase": "Open anterior Lichtenstein mesh repair",
+        "why": "Both distractors are explicitly labelled 'Open anterior'; the key is the only differently labelled approach, enhancing the unused-plane shortcut."
+      }
+    ],
+    "fairness": [
+      "TEP is the best offered repair after the described anterior operation, with relevant expertise and no stated pelvic constraint. No confident clinical inaccuracy identified.",
+      "The raw operative report could support two steps, but the explicit denial of a prior preperitoneal repair removes much of the first inference. The current item is straightforward opposite-plane recall."
+    ],
+    "suggestions": [
+      "Remove the explicit prior-plane conclusion while retaining relevant surgical history. Let the operative anatomy establish the prior plane.",
+      "Use equally natural operation names and a credible surgical-history complication or competing interpretation if needed; do not invent contraindications simply to manufacture difficulty."
+    ]
+  },
+  {
+    "id": "question.topic.hernia-groin.posterior-recurrence-plane.v1",
+    "nodeId": "node.topic.hernia-groin.posterior-recurrence-plane.v1",
+    "title": "Recognize a prior open posterior repair before reoperation",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The report describes posterior/preperitoneal mesh despite a groin incision. An offered anterior Lichtenstein repair follows the opposite-plane principle; both TAPP and TEP re-enter the used posterior compartment.",
+      "The two steps are interpretation of the actual mesh plane rather than the incision label, then selection of the opposite repair approach.",
+      "The follow-up coherently supplies the targeted study result and operative record. Its current update states the confirmed symptomatic recurrence and necessary history, so it stands alone. The earlier explanation teaches investigation adequacy, not this repair-plane answer."
+    ],
+    "suggestions": [
+      "Preserve the open-incision versus actual-mesh-plane distinction and the explicit interval result."
+    ]
+  },
+  {
+    "id": "question.topic.hernia-groin.both-planes-expertise.v1",
+    "nodeId": "node.topic.hernia-groin.both-planes-expertise.v1",
+    "title": "Recurrent hernia after both operative compartments have been used",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The task asks for the next repair, but the key selects a referral/planning stage while the alternatives schedule specific operations."
+    ],
+    "cues": [
+      {
+        "phrase": "Refer for repair planning by a complex-hernia surgeon",
+        "why": "It is the only cautious specialist-planning answer between two immediate routine procedures."
+      },
+      {
+        "phrase": "Schedule routine TEP repair in the ambulatory service",
+        "why": "'Routine' and 'ambulatory service' advertise mismatch with repeated operations and dense scar; the Lichtenstein distractor uses the same framing."
+      }
+    ],
+    "fairness": [
+      "Specialist planning is reasonable after failure in both compartments. The record does not establish one universally required repeat operation.",
+      "That appropriate uncertainty makes the referral key conspicuous. A reader can choose specialist assessment for the complex history without interpreting either operative plane."
+    ],
+    "suggestions": [
+      "Compare concrete plans at the same care stage, removing 'routine' as a distractor warning label.",
+      "Make a supported observation change which specialist assessment or repair-planning step is needed. Do not force a unique operation where the evidence permits individualized expert management."
+    ]
+  },
+  {
+    "id": "question.topic.hernia-groin.woman-femoral-coverage.v1",
+    "nodeId": "node.topic.hernia-groin.woman-femoral-coverage.v1",
+    "title": "Elective repair approach in a woman with incompletely assessed groin anatomy",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "its recorded field ends at that ligament",
+        "why": "The scan's missing coverage is stated explicitly, but it does not actually change the offered recommendation in this patient."
+      },
+      {
+        "phrase": "She has no previous pelvic operation and can undergo general anesthesia",
+        "why": "This removes constraints to the single laparo-endoscopic option rather than introducing a competing interpretation."
+      }
+    ],
+    "fairness": [
+      "TAPP is a defensible preferred offered approach for a nonpregnant woman in an experienced service; the explanation correctly avoids claiming superiority over TEP.",
+      "Deleting the entire ambiguous scan/neck description leaves essentially the same population-based recommendation. The exhibit-like anatomical information is therefore not a consequential first step.",
+      "The explanation relies on nonpregnancy; if that qualification is required for the teaching point, it should be explicit rather than inferred solely from age."
+    ],
+    "suggestions": [
+      "Make a specific finding alter the planning decision, or revise the objective to the actual single population rule and seek an explicit basic-role exception.",
+      "Retain any genuine anesthesia/history constraints needed for fairness, but remove decorative anatomy. Clarify pregnancy status if clinically relevant to the option ranking."
+    ]
+  },
+  {
+    "id": "question.topic.hernia-groin.acute-reduction-selection.v1",
+    "nodeId": "node.topic.hernia-groin.acute-reduction-selection.v1",
+    "title": "Select an initial intervention for acute irreducibility without ischemic features",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Since a lifting episode' gives no elapsed chronology for the irreducible lump. The symptom course cannot be interpreted fully without knowing when the episode occurred."
+    ],
+    "cues": [
+      {
+        "phrase": "Monitored analgesia and surgical rescue are part of that service's care",
+        "why": "This previews the 'gentle monitored manual reduction' key. Monitored hospital care is legitimate safety context, but the phrase closely rehearses the offered intervention."
+      }
+    ],
+    "fairness": [
+      "A monitored gentle reduction attempt is defensible when strangulation is not suspected; the stated absence of worsening pain, guarding, skin change or systemic deterioration supports that distinction.",
+      "The missing onset interval limits confidence in ranking taxis against immediate exploration. I am not asserting an absolute time cutoff or that elapsed duration by itself forbids reduction.",
+      "The two intended steps are assessing ischemia concern from the acute presentation and choosing reduction versus surgery. Overnight deferral is a weak competitor."
+    ],
+    "suggestions": [
+      "Give concrete symptom onset and evolution, including whether the change was recent or prolonged, without inventing a universal threshold.",
+      "Keep the hospital safety setting but avoid wording that rehearses the key. Have the clinician confirm taxis versus exploration for the completed exact presentation."
+    ]
+  },
+  {
+    "id": "question.topic.hernia-groin.spontaneous-reduction-viability.v1",
+    "nodeId": "node.topic.hernia-groin.spontaneous-reduction-viability.v1",
+    "title": "Inspect bowel after spontaneous reduction during emergency repair",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "before the bowel could be inspected",
+        "why": "This named omission maps directly to 'Inspect the reduced bowel laparoscopically'."
+      },
+      {
+        "phrase": "the operative team has laparoscopic expertise",
+        "why": "The method-specific availability clause reinforces the only inspection option."
+      }
+    ],
+    "fairness": [
+      "Laparoscopic inspection is a reasonable offered next step after spontaneous reduction of bowel with prior ischemic concern. Disappearance is not proof of viability, and CT concern alone does not establish the need for resection.",
+      "The options compare inspection with closing before assessment or resecting before assessment. They test an elementary assessment-before-treatment rule rather than two consequential steps.",
+      "The current hospital-operation snapshot is coherent and self-contained."
+    ],
+    "suggestions": [
+      "Preserve the prior ischemic concern and the need to evaluate viability. Build a genuine same-stage assessment decision using clinically supported operative findings, or seek explicit acceptance as an easy safety item.",
+      "Do not increase difficulty by hiding whether the bowel has been inspected or by inventing viability thresholds."
+    ]
+  },
+  {
+    "id": "question.topic.hernia-groin.resection-mesh-eligibility.v1",
+    "nodeId": "node.topic.hernia-groin.resection-mesh-eligibility.v1",
+    "title": "Mesh eligibility after controlled bowel resection",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Allow' describes eligibility, 'restrict' describes prohibition, and 'defer' describes scheduling; the options do not have matching decision scope."
+    ],
+    "cues": [
+      {
+        "phrase": "Allow permanent macroporous synthetic mesh repair",
+        "why": "The key is the only permissive policy; the alternatives mandate delay or categorical restriction. This lets cautious wording substitute for judging the field."
+      }
+    ],
+    "fairness": [
+      "The intended clean-contaminated field interpretation followed by mesh-eligibility judgment is substantive. Bowel resection without spillage should not be treated as interchangeable with gross contamination.",
+      "The explanation appropriately limits the claim to eligibility and weak evidence. A primary tissue repair is not necessarily an incorrect operation; the distractor is wrong only because it restricts all reinforcement to tissue repair.",
+      "The follow-up supplies the operative field independently and follows coherently from the emergency node. The earlier explanation does not supply the material answer. The cited guideline claim was not independently source-verified in this no-network review."
+    ],
+    "suggestions": [
+      "Use parallel, equally qualified material-eligibility policies and keep eligibility distinct from a uniquely preferred operation.",
+      "Preserve the operative contamination observations and uncertainty statement; obtain clinical confirmation of the exact comparison rather than converting weak evidence into a mandatory mesh rule."
+    ]
+  },
+  {
+    "id": "question.topic.hernia-groin.gross-spillage-tissue-repair.v1",
+    "nodeId": "node.topic.hernia-groin.gross-spillage-tissue-repair.v1",
+    "title": "Repair a small directly closable groin defect after gross spillage",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Primary tissue closure is a defensible best offered strategy for the stable patient with gross enteric contamination and a small tension-free closable defect.",
+      "The learner must distinguish gross spillage from controlled bowel resection, then use defect closability to distinguish primary repair from biologic reinforcement. The tension information is necessary rather than gratuitous permission.",
+      "The explanation acknowledges the recommendation's age and low certainty. Its exact less-than-3-cm attribution was not independently verified here; this editorial PASS is not validation of that threshold or clinical approval."
+    ],
+    "suggestions": [
+      "Retain field contamination, stability and closability. Keep the low-certainty limitation and have the named clinician confirm the exact cited threshold before approving the teaching claim."
+    ]
+  },
+  {
+    "id": "question.topic.hernia-groin.cpip-treatment-interval.v1",
+    "nodeId": "node.topic.hernia-groin.cpip-treatment-interval.v1",
+    "title": "Avoid premature pain surgery after recently starting specialist care",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Medication adjustment and injection therapy' does not describe the actual treatment trial or response; the explanation invokes minimum intervals without teaching the relevant interval distinction concretely."
+    ],
+    "cues": [
+      {
+        "phrase": "She entered a specialist hernia/pain program two weeks ago",
+        "why": "This makes the only continuation option an obvious cautious answer against two irreversible operations."
+      },
+      {
+        "phrase": "This result neither establishes a single cause for both symptoms nor selects a particular operation",
+        "why": "The preceding block explanation already warns against jumping to either offered pain operation."
+      }
+    ],
+    "fairness": [
+      "Continuing a newly begun structured program is defensible; time since the hernia operation does not equal an adequate trial of pain treatment.",
+      "The follow-up chronology and current update stand alone, but the sequence and three-option set strongly scaffold the answer. There is no real contest among remaining nonoperative management decisions.",
+      "No confident clinical inaccuracy identified. I have not independently verified a guideline minimum interval and do not propose a new one."
+    ],
+    "suggestions": [
+      "Compare plausible concrete next treatment steps using a supported regimen and response record, while preserving necessary duration information.",
+      "If retaining a timing objective, make elapsed postoperative time versus actual treatment exposure consequential without pairing the cautious key only with plainly premature operations; avoid rehearsing that exact discriminator in earlier feedback."
+    ]
+  },
+  {
+    "id": "question.topic.hernia-groin.testicular-pain-source.v1",
+    "nodeId": "node.topic.hernia-groin.testicular-pain-source.v1",
+    "title": "Distinguish testicular-content pain from cutaneous postrepair pain",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "ongoing ache within the right testicle",
+        "why": "The location is supplied directly and maps to the only scrotal-content evaluation option."
+      },
+      {
+        "phrase": "Urological assessment of the scrotal contents",
+        "why": "This repeats the repeatedly emphasized anatomical target, while skin findings and the absent impulse pre-dismiss the competing groin routes."
+      }
+    ],
+    "fairness": [
+      "Urological evaluation is a defensible next step for this persistent testicular-content pain. The history avoids the obvious acute severe-pain emergency presentation.",
+      "Normal cutaneous testing does not exclude every neuropathic contribution, and absence of an impulse does not exclude every recurrence. The key need not make either stronger claim.",
+      "The current item largely matches an already-localized symptom to the appropriate specialty; it does not require a second consequential inference."
+    ],
+    "suggestions": [
+      "Use a genuine competing pain-source interpretation with raw findings that change a specific next investigation or referral, retaining the acute safety history.",
+      "Keep feedback limited to why the next evaluation is warranted, without treating the supplied negatives as definitive exclusion tests."
+    ]
+  },
+  {
+    "id": "question.topic.hernia-groin.local-anesthesia-selection.v1",
+    "nodeId": "node.topic.hernia-groin.local-anesthesia-selection.v1",
+    "title": "Choose anesthesia for an older patient's open inguinal repair",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "previously needed catheterization after spinal anesthesia",
+        "why": "This names an adverse experience with one offered alternative."
+      },
+      {
+        "phrase": "severe chronic pulmonary disease",
+        "why": "Together with the spinal history and explicit ability to cooperate, the details form a one-fact-per-option elimination ladder."
+      }
+    ],
+    "fairness": [
+      "Local infiltration by an experienced team is a defensible favored approach for this reducing hernia and planned open repair. The history does not make general or spinal anesthesia universally contraindicated, and the explanation appropriately avoids that claim.",
+      "This is high-yield anesthesia selection but is currently a straightforward rule applied after the two alternatives are visibly disfavored, not two consequential reasoning steps."
+    ],
+    "suggestions": [
+      "Preserve necessary anesthesia feasibility and patient history. Introduce a supported competing consideration or a concrete anesthetic-plan decision that cannot be solved by separately eliminating general and spinal techniques.",
+      "Do not add drug doses, unsupported contraindications or hidden cooperation constraints to manufacture difficulty."
+    ]
+  },
+  {
+    "id": "question.topic.hernia-groin.posterior-mesh-weight.v1",
+    "nodeId": "node.topic.hernia-groin.posterior-mesh-weight.v1",
+    "title": "Mesh-weight choice for posterior repair of a broad direct defect",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": false,
+    "highYield": false,
+    "clarityIssues": [
+      "'Broad' does not define the large-defect setting invoked in the explanation.",
+      "'Posterior repair' is broader than the laparo-endoscopic/TEP context established in the prior node; the later task should name the planned technique when shown independently."
+    ],
+    "cues": [],
+    "fairness": [
+      "The intended heavier-mesh preference in laparo-endoscopic repair, particularly a large direct defect, is plausible; I do not identify a confident clinical error. The precise scope and pain-outcome comparison require clinician/source confirmation.",
+      "The current update supplies both the direct-defect classification and posterior plan, leaving a specialized guideline recommendation to recall rather than two consequential steps.",
+      "The sequence is coherent and earlier feedback does not teach mesh weight. However, the later node loses technique specificity when selected alone.",
+      "Mesh selection is important, but this exact technique-specific weight comparison is a narrower guideline detail; this offline review does not establish it as commonly tested ABSITE/board content. The feedback does not directly answer the patient's lightweight-mesh pain question for the planned operation."
+    ],
+    "suggestions": [
+      "State the actual laparo-endoscopic technique and use supported observations sufficient to establish the relevant defect category without inventing a numerical threshold.",
+      "Address the pain question directly with the verified limitation for that operation; do not merely contrast it with open Lichtenstein outcomes.",
+      "Require a meaningful interpretation or tradeoff beyond recalling the recommendation, and confirm this narrow objective's testing priority."
+    ]
+  },
+  {
+    "id": "question.topic.hernia-groin.pregnancy-groin-vessels.v1",
+    "nodeId": "node.topic.hernia-groin.pregnancy-groin-vessels.v1",
+    "title": "Pregnancy-associated venous groin swelling",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Pregnancy is repeated in the presentation and update without adding decision information."
+    ],
+    "cues": [
+      {
+        "phrase": "Repeated dynamic views show no protruding bowel or fat sac",
+        "why": "This directly undercuts the elective hernia-repair option."
+      },
+      {
+        "phrase": "Observe the groin swelling with return precautions",
+        "why": "It is the only conservative option against two operations for a painless uncomplicated swelling in pregnancy."
+      }
+    ],
+    "fairness": [
+      "The findings support round-ligament varicosities and observation is a defensible plan; the explanation appropriately acknowledges the limited evidence base.",
+      "The Doppler findings fail the consequential-step test: uncomplicated reducible groin swelling in pregnancy may also be observed if it is a hernia, so distinguishing these two possibilities does not uniquely change the offered management.",
+      "The two operative distractors are not credible competitors in the stated uncomplicated scenario. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": [
+      "Make the interpreted vascular finding alter a real investigation or management decision, or seek explicit acceptance as a basic recognition item.",
+      "Do not introduce unsupported anticoagulation, procedural rules or thresholds. Preserve reassessment for new concerning symptoms and the evidence limitation."
+    ]
+  }
+]

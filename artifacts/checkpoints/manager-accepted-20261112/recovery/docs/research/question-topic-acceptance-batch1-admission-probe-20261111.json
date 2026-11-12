@@ -1,0 +1,817 @@
+{
+  "checkedOn": "2026-11-11",
+  "scope": "Current runtime and current balance; existing Examination Room placed with real commands, no capability, eligibility or topic overlay.",
+  "fixture": "Existing Level4 QA clinic with one operational room.examination; all historical review cases remain in clinic. No ICU/dialysis/trauma service invented.",
+  "initialFixtureLimitation": "The immutable first probe had no examination room; eight cases correctly failed capability.examination there. This follow-up supplies that existing buildable room rather than editing source requirements or refreshing intake.",
+  "cases": [
+    {
+      "topic": "small-bowel-obstruction-ileus",
+      "caseId": "case.topic.small-bowel-obstruction-ileus.closed-loop.v1",
+      "questionVariantIds": [
+        "question.topic.small-bowel-obstruction-ileus.closed-loop-normal-lactate.v1"
+      ],
+      "requiredClinicalSetting": "clinic",
+      "requiredCapabilityIds": [],
+      "earliestFacilityStage": 2,
+      "eligibilityIssue": null,
+      "receipt": {
+        "operationId": "topic.probe.admit",
+        "commandType": "ADMIT_PATIENT",
+        "status": "applied",
+        "message": "Patient is approaching the clinic.",
+        "facilityTick": 0
+      },
+      "clinicAdmissible": true,
+      "frozenQuestionVariantIds": [
+        "question.topic.small-bowel-obstruction-ileus.closed-loop-normal-lactate.v1"
+      ],
+      "initialProbe": {
+        "setting": "clinic",
+        "routineEligible": true,
+        "earliestFacilityStage": 2,
+        "requiredCapabilityIds": [],
+        "fixture": "Existing Level4 rooms QA state; current runtime and exact candidate definitions, no predicate overlay.",
+        "eligibility": null,
+        "receipt": {
+          "operationId": "topic.capture.admit",
+          "commandType": "ADMIT_PATIENT",
+          "status": "applied",
+          "message": "Patient is approaching the clinic.",
+          "facilityTick": 0
+        },
+        "clinicEligible": true,
+        "frozenQuestionVariantIds": [
+          "question.topic.small-bowel-obstruction-ileus.closed-loop-normal-lactate.v1"
+        ]
+      }
+    },
+    {
+      "topic": "small-bowel-obstruction-ileus",
+      "caseId": "case.topic.small-bowel-obstruction-ileus.transit-course.v1",
+      "questionVariantIds": [
+        "question.topic.small-bowel-obstruction-ileus.postcontrast-deterioration.v1"
+      ],
+      "requiredClinicalSetting": "clinic",
+      "requiredCapabilityIds": [],
+      "earliestFacilityStage": 2,
+      "eligibilityIssue": null,
+      "receipt": {
+        "operationId": "topic.probe.admit",
+        "commandType": "ADMIT_PATIENT",
+        "status": "applied",
+        "message": "Patient is approaching the clinic.",
+        "facilityTick": 0
+      },
+      "clinicAdmissible": true,
+      "frozenQuestionVariantIds": [
+        "question.topic.small-bowel-obstruction-ileus.postcontrast-deterioration.v1"
+      ],
+      "initialProbe": {
+        "setting": "clinic",
+        "routineEligible": true,
+        "earliestFacilityStage": 2,
+        "requiredCapabilityIds": [],
+        "fixture": "Existing Level4 rooms QA state; current runtime and exact candidate definitions, no predicate overlay.",
+        "eligibility": null,
+        "receipt": {
+          "operationId": "topic.capture.admit",
+          "commandType": "ADMIT_PATIENT",
+          "status": "applied",
+          "message": "Patient is approaching the clinic.",
+          "facilityTick": 0
+        },
+        "clinicEligible": true,
+        "frozenQuestionVariantIds": [
+          "question.topic.small-bowel-obstruction-ileus.postcontrast-deterioration.v1"
+        ]
+      }
+    },
+    {
+      "topic": "small-bowel-obstruction-ileus",
+      "caseId": "case.topic.small-bowel-obstruction-ileus.virgin-abdomen.v1",
+      "questionVariantIds": [
+        "question.topic.small-bowel-obstruction-ileus.virgin-abdomen-observation.v1"
+      ],
+      "requiredClinicalSetting": "clinic",
+      "requiredCapabilityIds": [],
+      "earliestFacilityStage": 2,
+      "eligibilityIssue": null,
+      "receipt": {
+        "operationId": "topic.probe.admit",
+        "commandType": "ADMIT_PATIENT",
+        "status": "applied",
+        "message": "Patient is approaching the clinic.",
+        "facilityTick": 0
+      },
+      "clinicAdmissible": true,
+      "frozenQuestionVariantIds": [
+        "question.topic.small-bowel-obstruction-ileus.virgin-abdomen-observation.v1"
+      ],
+      "initialProbe": {
+        "setting": "clinic",
+        "routineEligible": true,
+        "earliestFacilityStage": 2,
+        "requiredCapabilityIds": [],
+        "fixture": "Existing Level4 rooms QA state; current runtime and exact candidate definitions, no predicate overlay.",
+        "eligibility": null,
+        "receipt": {
+          "operationId": "topic.capture.admit",
+          "commandType": "ADMIT_PATIENT",
+          "status": "applied",
+          "message": "Patient is approaching the clinic.",
+          "facilityTick": 0
+        },
+        "clinicEligible": true,
+        "frozenQuestionVariantIds": [
+          "question.topic.small-bowel-obstruction-ileus.virgin-abdomen-observation.v1"
+        ]
+      }
+    },
+    {
+      "topic": "critical-renal-organ-support",
+      "caseId": "case.topic.critical-renal-organ-support.circuit-anticoagulation.v1",
+      "questionVariantIds": [
+        "question.topic.critical-renal-organ-support.citrate-bleeding-circuit.v1"
+      ],
+      "requiredClinicalSetting": "clinic",
+      "requiredCapabilityIds": [
+        "capability.examination"
+      ],
+      "earliestFacilityStage": 4,
+      "eligibilityIssue": null,
+      "receipt": {
+        "operationId": "topic.probe.admit",
+        "commandType": "ADMIT_PATIENT",
+        "status": "applied",
+        "message": "Patient is approaching the clinic.",
+        "facilityTick": 0
+      },
+      "clinicAdmissible": true,
+      "frozenQuestionVariantIds": [
+        "question.topic.critical-renal-organ-support.citrate-bleeding-circuit.v1"
+      ],
+      "initialProbe": {
+        "setting": "clinic",
+        "routineEligible": true,
+        "earliestFacilityStage": 4,
+        "requiredCapabilityIds": [
+          "capability.examination"
+        ],
+        "fixture": "Existing Level4 rooms QA state; current runtime and exact candidate definitions, no predicate overlay.",
+        "eligibility": "This patient requires unavailable clinic capability capability.examination.",
+        "receipt": {
+          "operationId": "topic.capture.admit",
+          "commandType": "ADMIT_PATIENT",
+          "status": "rejected",
+          "message": "This patient requires unavailable clinic capability capability.examination.",
+          "facilityTick": 0
+        },
+        "clinicEligible": false,
+        "frozenQuestionVariantIds": []
+      }
+    },
+    {
+      "topic": "critical-renal-organ-support",
+      "caseId": "case.topic.critical-renal-organ-support.kidney-recovery.v1",
+      "questionVariantIds": [
+        "question.topic.critical-renal-organ-support.trial-off-crrt.v2"
+      ],
+      "requiredClinicalSetting": "clinic",
+      "requiredCapabilityIds": [
+        "capability.examination"
+      ],
+      "earliestFacilityStage": 4,
+      "eligibilityIssue": null,
+      "receipt": {
+        "operationId": "topic.probe.admit",
+        "commandType": "ADMIT_PATIENT",
+        "status": "applied",
+        "message": "Patient is approaching the clinic.",
+        "facilityTick": 0
+      },
+      "clinicAdmissible": true,
+      "frozenQuestionVariantIds": [
+        "question.topic.critical-renal-organ-support.trial-off-crrt.v2"
+      ],
+      "initialProbe": {
+        "setting": "clinic",
+        "routineEligible": true,
+        "earliestFacilityStage": 4,
+        "requiredCapabilityIds": [
+          "capability.examination"
+        ],
+        "fixture": "Existing Level4 rooms QA state; current runtime and exact candidate definitions, no predicate overlay.",
+        "eligibility": "This patient requires unavailable clinic capability capability.examination.",
+        "receipt": {
+          "operationId": "topic.capture.admit",
+          "commandType": "ADMIT_PATIENT",
+          "status": "rejected",
+          "message": "This patient requires unavailable clinic capability capability.examination.",
+          "facilityTick": 0
+        },
+        "clinicEligible": false,
+        "frozenQuestionVariantIds": []
+      }
+    },
+    {
+      "topic": "critical-shock-resuscitation",
+      "caseId": "case.critical-shock-resuscitation.fluid-assessment.v1",
+      "questionVariantIds": [
+        "question.critical-shock-resuscitation.choose-valid-fluid-test.v1",
+        "question.critical-shock-resuscitation.response-versus-fluid-risk.v1"
+      ],
+      "requiredClinicalSetting": "clinic",
+      "requiredCapabilityIds": [],
+      "earliestFacilityStage": 4,
+      "eligibilityIssue": null,
+      "receipt": {
+        "operationId": "topic.probe.admit",
+        "commandType": "ADMIT_PATIENT",
+        "status": "applied",
+        "message": "Patient is approaching the clinic.",
+        "facilityTick": 0
+      },
+      "clinicAdmissible": true,
+      "frozenQuestionVariantIds": [
+        "question.critical-shock-resuscitation.choose-valid-fluid-test.v1",
+        "question.critical-shock-resuscitation.response-versus-fluid-risk.v1"
+      ],
+      "initialProbe": {
+        "setting": "clinic",
+        "routineEligible": true,
+        "earliestFacilityStage": 4,
+        "requiredCapabilityIds": [],
+        "fixture": "Existing Level4 rooms QA state; current runtime and exact candidate definitions, no predicate overlay.",
+        "eligibility": null,
+        "receipt": {
+          "operationId": "topic.capture.admit",
+          "commandType": "ADMIT_PATIENT",
+          "status": "applied",
+          "message": "Patient is approaching the clinic.",
+          "facilityTick": 0
+        },
+        "clinicEligible": true,
+        "frozenQuestionVariantIds": [
+          "question.critical-shock-resuscitation.choose-valid-fluid-test.v1",
+          "question.critical-shock-resuscitation.response-versus-fluid-risk.v1"
+        ]
+      }
+    },
+    {
+      "topic": "critical-shock-resuscitation",
+      "caseId": "case.critical-shock-resuscitation.reassess-shock-mechanism.v2",
+      "questionVariantIds": [
+        "question.critical-shock-resuscitation.echo-for-persistent-shock.v2"
+      ],
+      "requiredClinicalSetting": "clinic",
+      "requiredCapabilityIds": [],
+      "earliestFacilityStage": 4,
+      "eligibilityIssue": null,
+      "receipt": {
+        "operationId": "topic.probe.admit",
+        "commandType": "ADMIT_PATIENT",
+        "status": "applied",
+        "message": "Patient is approaching the clinic.",
+        "facilityTick": 0
+      },
+      "clinicAdmissible": true,
+      "frozenQuestionVariantIds": [
+        "question.critical-shock-resuscitation.echo-for-persistent-shock.v2"
+      ],
+      "initialProbe": {
+        "setting": "clinic",
+        "routineEligible": true,
+        "earliestFacilityStage": 4,
+        "requiredCapabilityIds": [],
+        "fixture": "Existing Level4 rooms QA state; current runtime and exact candidate definitions, no predicate overlay.",
+        "eligibility": null,
+        "receipt": {
+          "operationId": "topic.capture.admit",
+          "commandType": "ADMIT_PATIENT",
+          "status": "applied",
+          "message": "Patient is approaching the clinic.",
+          "facilityTick": 0
+        },
+        "clinicEligible": true,
+        "frozenQuestionVariantIds": [
+          "question.critical-shock-resuscitation.echo-for-persistent-shock.v2"
+        ]
+      }
+    },
+    {
+      "topic": "appendix-appendicitis",
+      "caseId": "case.topic.appendix-appendicitis.persistent-pain.v2",
+      "questionVariantIds": [
+        "question.topic.appendix-appendicitis.persistent-pain-exploration.v1",
+        "question.topic.appendix-appendicitis.invasive-adenocarcinoma-resection.v2"
+      ],
+      "requiredClinicalSetting": "clinic",
+      "requiredCapabilityIds": [],
+      "earliestFacilityStage": 3,
+      "eligibilityIssue": null,
+      "receipt": {
+        "operationId": "topic.probe.admit",
+        "commandType": "ADMIT_PATIENT",
+        "status": "applied",
+        "message": "Patient is approaching the clinic.",
+        "facilityTick": 0
+      },
+      "clinicAdmissible": true,
+      "frozenQuestionVariantIds": [
+        "question.topic.appendix-appendicitis.persistent-pain-exploration.v1",
+        "question.topic.appendix-appendicitis.invasive-adenocarcinoma-resection.v2"
+      ],
+      "initialProbe": {
+        "setting": "clinic",
+        "routineEligible": true,
+        "earliestFacilityStage": 3,
+        "requiredCapabilityIds": [],
+        "fixture": "Existing Level4 rooms QA state; current runtime and exact candidate definitions, no predicate overlay.",
+        "eligibility": null,
+        "receipt": {
+          "operationId": "topic.capture.admit",
+          "commandType": "ADMIT_PATIENT",
+          "status": "applied",
+          "message": "Patient is approaching the clinic.",
+          "facilityTick": 0
+        },
+        "clinicEligible": true,
+        "frozenQuestionVariantIds": [
+          "question.topic.appendix-appendicitis.persistent-pain-exploration.v1",
+          "question.topic.appendix-appendicitis.invasive-adenocarcinoma-resection.v2"
+        ]
+      }
+    },
+    {
+      "topic": "appendix-appendicitis",
+      "caseId": "case.topic.appendix-appendicitis.peritoneal-mucin.v2",
+      "questionVariantIds": [
+        "question.topic.appendix-appendicitis.peritoneal-mucin-referral.v2"
+      ],
+      "requiredClinicalSetting": "clinic",
+      "requiredCapabilityIds": [],
+      "earliestFacilityStage": 3,
+      "eligibilityIssue": null,
+      "receipt": {
+        "operationId": "topic.probe.admit",
+        "commandType": "ADMIT_PATIENT",
+        "status": "applied",
+        "message": "Patient is approaching the clinic.",
+        "facilityTick": 0
+      },
+      "clinicAdmissible": true,
+      "frozenQuestionVariantIds": [
+        "question.topic.appendix-appendicitis.peritoneal-mucin-referral.v2"
+      ],
+      "initialProbe": {
+        "setting": "clinic",
+        "routineEligible": true,
+        "earliestFacilityStage": 3,
+        "requiredCapabilityIds": [],
+        "fixture": "Existing Level4 rooms QA state; current runtime and exact candidate definitions, no predicate overlay.",
+        "eligibility": null,
+        "receipt": {
+          "operationId": "topic.capture.admit",
+          "commandType": "ADMIT_PATIENT",
+          "status": "applied",
+          "message": "Patient is approaching the clinic.",
+          "facilityTick": 0
+        },
+        "clinicEligible": true,
+        "frozenQuestionVariantIds": [
+          "question.topic.appendix-appendicitis.peritoneal-mucin-referral.v2"
+        ]
+      }
+    },
+    {
+      "topic": "appendix-appendicitis",
+      "caseId": "case.topic.appendix-appendicitis.goblet-cell-pathology.v1",
+      "questionVariantIds": [
+        "question.topic.appendix-appendicitis.goblet-cell-oncologic-resection.v1"
+      ],
+      "requiredClinicalSetting": "clinic",
+      "requiredCapabilityIds": [],
+      "earliestFacilityStage": 3,
+      "eligibilityIssue": null,
+      "receipt": {
+        "operationId": "topic.probe.admit",
+        "commandType": "ADMIT_PATIENT",
+        "status": "applied",
+        "message": "Patient is approaching the clinic.",
+        "facilityTick": 0
+      },
+      "clinicAdmissible": true,
+      "frozenQuestionVariantIds": [
+        "question.topic.appendix-appendicitis.goblet-cell-oncologic-resection.v1"
+      ],
+      "initialProbe": {
+        "setting": "clinic",
+        "routineEligible": true,
+        "earliestFacilityStage": 3,
+        "requiredCapabilityIds": [],
+        "fixture": "Existing Level4 rooms QA state; current runtime and exact candidate definitions, no predicate overlay.",
+        "eligibility": null,
+        "receipt": {
+          "operationId": "topic.capture.admit",
+          "commandType": "ADMIT_PATIENT",
+          "status": "applied",
+          "message": "Patient is approaching the clinic.",
+          "facilityTick": 0
+        },
+        "clinicEligible": true,
+        "frozenQuestionVariantIds": [
+          "question.topic.appendix-appendicitis.goblet-cell-oncologic-resection.v1"
+        ]
+      }
+    },
+    {
+      "topic": "appendix-appendicitis",
+      "caseId": "case.topic.appendix-appendicitis.net-staging.v2",
+      "questionVariantIds": [
+        "question.topic.appendix-appendicitis.net-regional-resection.v2"
+      ],
+      "requiredClinicalSetting": "clinic",
+      "requiredCapabilityIds": [],
+      "earliestFacilityStage": 3,
+      "eligibilityIssue": null,
+      "receipt": {
+        "operationId": "topic.probe.admit",
+        "commandType": "ADMIT_PATIENT",
+        "status": "applied",
+        "message": "Patient is approaching the clinic.",
+        "facilityTick": 0
+      },
+      "clinicAdmissible": true,
+      "frozenQuestionVariantIds": [
+        "question.topic.appendix-appendicitis.net-regional-resection.v2"
+      ],
+      "initialProbe": {
+        "setting": "clinic",
+        "routineEligible": true,
+        "earliestFacilityStage": 3,
+        "requiredCapabilityIds": [],
+        "fixture": "Existing Level4 rooms QA state; current runtime and exact candidate definitions, no predicate overlay.",
+        "eligibility": null,
+        "receipt": {
+          "operationId": "topic.capture.admit",
+          "commandType": "ADMIT_PATIENT",
+          "status": "applied",
+          "message": "Patient is approaching the clinic.",
+          "facilityTick": 0
+        },
+        "clinicEligible": true,
+        "frozenQuestionVariantIds": [
+          "question.topic.appendix-appendicitis.net-regional-resection.v2"
+        ]
+      }
+    },
+    {
+      "topic": "trauma-initial-abdomen",
+      "caseId": "case.topic.trauma-initial-abdomen.belt-bowel-evolution.v2",
+      "questionVariantIds": [
+        "question.topic.trauma-initial-abdomen.belt-equivocal-observation.v1",
+        "question.topic.trauma-initial-abdomen.belt-evolving-repeat-imaging.v2"
+      ],
+      "requiredClinicalSetting": "clinic",
+      "requiredCapabilityIds": [
+        "capability.examination"
+      ],
+      "earliestFacilityStage": 0,
+      "eligibilityIssue": null,
+      "receipt": {
+        "operationId": "topic.probe.admit",
+        "commandType": "ADMIT_PATIENT",
+        "status": "applied",
+        "message": "Patient is approaching the clinic.",
+        "facilityTick": 0
+      },
+      "clinicAdmissible": true,
+      "frozenQuestionVariantIds": [
+        "question.topic.trauma-initial-abdomen.belt-equivocal-observation.v1",
+        "question.topic.trauma-initial-abdomen.belt-evolving-repeat-imaging.v2"
+      ],
+      "initialProbe": {
+        "setting": "clinic",
+        "routineEligible": true,
+        "earliestFacilityStage": 0,
+        "requiredCapabilityIds": [
+          "capability.examination"
+        ],
+        "fixture": "Existing Level4 rooms QA state; current runtime and exact candidate definitions, no predicate overlay.",
+        "eligibility": "This patient requires unavailable clinic capability capability.examination.",
+        "receipt": {
+          "operationId": "topic.capture.admit",
+          "commandType": "ADMIT_PATIENT",
+          "status": "rejected",
+          "message": "This patient requires unavailable clinic capability capability.examination.",
+          "facilityTick": 0
+        },
+        "clinicEligible": false,
+        "frozenQuestionVariantIds": []
+      }
+    },
+    {
+      "topic": "trauma-initial-abdomen",
+      "caseId": "case.topic.trauma-initial-abdomen.pelvic-mixed-hemorrhage.v2",
+      "questionVariantIds": [
+        "question.topic.trauma-initial-abdomen.pelvis-packing-after-angio.v1",
+        "question.topic.trauma-initial-abdomen.pelvis-recurrent-arterial-focus.v1"
+      ],
+      "requiredClinicalSetting": "clinic",
+      "requiredCapabilityIds": [
+        "capability.examination"
+      ],
+      "earliestFacilityStage": 0,
+      "eligibilityIssue": null,
+      "receipt": {
+        "operationId": "topic.probe.admit",
+        "commandType": "ADMIT_PATIENT",
+        "status": "applied",
+        "message": "Patient is approaching the clinic.",
+        "facilityTick": 0
+      },
+      "clinicAdmissible": true,
+      "frozenQuestionVariantIds": [
+        "question.topic.trauma-initial-abdomen.pelvis-packing-after-angio.v1",
+        "question.topic.trauma-initial-abdomen.pelvis-recurrent-arterial-focus.v1"
+      ],
+      "initialProbe": {
+        "setting": "clinic",
+        "routineEligible": true,
+        "earliestFacilityStage": 0,
+        "requiredCapabilityIds": [
+          "capability.examination"
+        ],
+        "fixture": "Existing Level4 rooms QA state; current runtime and exact candidate definitions, no predicate overlay.",
+        "eligibility": "This patient requires unavailable clinic capability capability.examination.",
+        "receipt": {
+          "operationId": "topic.capture.admit",
+          "commandType": "ADMIT_PATIENT",
+          "status": "rejected",
+          "message": "This patient requires unavailable clinic capability capability.examination.",
+          "facilityTick": 0
+        },
+        "clinicEligible": false,
+        "frozenQuestionVariantIds": []
+      }
+    },
+    {
+      "topic": "trauma-initial-abdomen",
+      "caseId": "case.topic.trauma-initial-abdomen.bladder-protocol-and-repair.v2",
+      "questionVariantIds": [
+        "question.topic.trauma-initial-abdomen.bladder-acquisition.v2",
+        "question.topic.trauma-initial-abdomen.bladder-intraperitoneal-repair.v2"
+      ],
+      "requiredClinicalSetting": "clinic",
+      "requiredCapabilityIds": [
+        "capability.examination"
+      ],
+      "earliestFacilityStage": 0,
+      "eligibilityIssue": null,
+      "receipt": {
+        "operationId": "topic.probe.admit",
+        "commandType": "ADMIT_PATIENT",
+        "status": "applied",
+        "message": "Patient is approaching the clinic.",
+        "facilityTick": 0
+      },
+      "clinicAdmissible": true,
+      "frozenQuestionVariantIds": [
+        "question.topic.trauma-initial-abdomen.bladder-acquisition.v2",
+        "question.topic.trauma-initial-abdomen.bladder-intraperitoneal-repair.v2"
+      ],
+      "initialProbe": {
+        "setting": "clinic",
+        "routineEligible": true,
+        "earliestFacilityStage": 0,
+        "requiredCapabilityIds": [
+          "capability.examination"
+        ],
+        "fixture": "Existing Level4 rooms QA state; current runtime and exact candidate definitions, no predicate overlay.",
+        "eligibility": "This patient requires unavailable clinic capability capability.examination.",
+        "receipt": {
+          "operationId": "topic.capture.admit",
+          "commandType": "ADMIT_PATIENT",
+          "status": "rejected",
+          "message": "This patient requires unavailable clinic capability capability.examination.",
+          "facilityTick": 0
+        },
+        "clinicEligible": false,
+        "frozenQuestionVariantIds": []
+      }
+    },
+    {
+      "topic": "trauma-initial-abdomen",
+      "caseId": "case.topic.trauma-initial-abdomen.pancreatic-duct-location.v2",
+      "questionVariantIds": [
+        "question.topic.trauma-initial-abdomen.pancreas-distal-duct-operation.v1"
+      ],
+      "requiredClinicalSetting": "clinic",
+      "requiredCapabilityIds": [
+        "capability.examination"
+      ],
+      "earliestFacilityStage": 0,
+      "eligibilityIssue": null,
+      "receipt": {
+        "operationId": "topic.probe.admit",
+        "commandType": "ADMIT_PATIENT",
+        "status": "applied",
+        "message": "Patient is approaching the clinic.",
+        "facilityTick": 0
+      },
+      "clinicAdmissible": true,
+      "frozenQuestionVariantIds": [
+        "question.topic.trauma-initial-abdomen.pancreas-distal-duct-operation.v1"
+      ],
+      "initialProbe": {
+        "setting": "clinic",
+        "routineEligible": true,
+        "earliestFacilityStage": 0,
+        "requiredCapabilityIds": [
+          "capability.examination"
+        ],
+        "fixture": "Existing Level4 rooms QA state; current runtime and exact candidate definitions, no predicate overlay.",
+        "eligibility": "This patient requires unavailable clinic capability capability.examination.",
+        "receipt": {
+          "operationId": "topic.capture.admit",
+          "commandType": "ADMIT_PATIENT",
+          "status": "rejected",
+          "message": "This patient requires unavailable clinic capability capability.examination.",
+          "facilityTick": 0
+        },
+        "clinicEligible": false,
+        "frozenQuestionVariantIds": []
+      }
+    },
+    {
+      "topic": "trauma-initial-abdomen",
+      "caseId": "case.topic.trauma-initial-abdomen.contained-renal-compartment.v2",
+      "questionVariantIds": [
+        "question.topic.trauma-initial-abdomen.renal-contained-hematoma.v1"
+      ],
+      "requiredClinicalSetting": "clinic",
+      "requiredCapabilityIds": [
+        "capability.examination"
+      ],
+      "earliestFacilityStage": 0,
+      "eligibilityIssue": null,
+      "receipt": {
+        "operationId": "topic.probe.admit",
+        "commandType": "ADMIT_PATIENT",
+        "status": "applied",
+        "message": "Patient is approaching the clinic.",
+        "facilityTick": 0
+      },
+      "clinicAdmissible": true,
+      "frozenQuestionVariantIds": [
+        "question.topic.trauma-initial-abdomen.renal-contained-hematoma.v1"
+      ],
+      "initialProbe": {
+        "setting": "clinic",
+        "routineEligible": true,
+        "earliestFacilityStage": 0,
+        "requiredCapabilityIds": [
+          "capability.examination"
+        ],
+        "fixture": "Existing Level4 rooms QA state; current runtime and exact candidate definitions, no predicate overlay.",
+        "eligibility": "This patient requires unavailable clinic capability capability.examination.",
+        "receipt": {
+          "operationId": "topic.capture.admit",
+          "commandType": "ADMIT_PATIENT",
+          "status": "rejected",
+          "message": "This patient requires unavailable clinic capability capability.examination.",
+          "facilityTick": 0
+        },
+        "clinicEligible": false,
+        "frozenQuestionVariantIds": []
+      }
+    },
+    {
+      "topic": "trauma-initial-abdomen",
+      "caseId": "case.topic.trauma-initial-abdomen.limited-jejunum-defect.v2",
+      "questionVariantIds": [
+        "question.topic.trauma-initial-abdomen.jejunum-primary-repair.v2"
+      ],
+      "requiredClinicalSetting": "clinic",
+      "requiredCapabilityIds": [
+        "capability.examination"
+      ],
+      "earliestFacilityStage": 0,
+      "eligibilityIssue": null,
+      "receipt": {
+        "operationId": "topic.probe.admit",
+        "commandType": "ADMIT_PATIENT",
+        "status": "applied",
+        "message": "Patient is approaching the clinic.",
+        "facilityTick": 0
+      },
+      "clinicAdmissible": true,
+      "frozenQuestionVariantIds": [
+        "question.topic.trauma-initial-abdomen.jejunum-primary-repair.v2"
+      ],
+      "initialProbe": {
+        "setting": "clinic",
+        "routineEligible": true,
+        "earliestFacilityStage": 0,
+        "requiredCapabilityIds": [
+          "capability.examination"
+        ],
+        "fixture": "Existing Level4 rooms QA state; current runtime and exact candidate definitions, no predicate overlay.",
+        "eligibility": "This patient requires unavailable clinic capability capability.examination.",
+        "receipt": {
+          "operationId": "topic.capture.admit",
+          "commandType": "ADMIT_PATIENT",
+          "status": "rejected",
+          "message": "This patient requires unavailable clinic capability capability.examination.",
+          "facilityTick": 0
+        },
+        "clinicEligible": false,
+        "frozenQuestionVariantIds": []
+      }
+    },
+    {
+      "topic": "critical-respiratory-ventilation",
+      "caseId": "case.topic.critical-respiratory-ventilation.air-trapping.v1",
+      "questionVariantIds": [
+        "question.topic.critical-respiratory-ventilation.expiratory-time.v1"
+      ],
+      "requiredClinicalSetting": "clinic",
+      "requiredCapabilityIds": [],
+      "earliestFacilityStage": 0,
+      "eligibilityIssue": null,
+      "receipt": {
+        "operationId": "topic.probe.admit",
+        "commandType": "ADMIT_PATIENT",
+        "status": "applied",
+        "message": "Patient is approaching the clinic.",
+        "facilityTick": 0
+      },
+      "clinicAdmissible": true,
+      "frozenQuestionVariantIds": [
+        "question.topic.critical-respiratory-ventilation.expiratory-time.v1"
+      ],
+      "initialProbe": {
+        "setting": "clinic",
+        "routineEligible": true,
+        "earliestFacilityStage": 0,
+        "requiredCapabilityIds": [],
+        "fixture": "Existing Level4 rooms QA state; current runtime and exact candidate definitions, no predicate overlay.",
+        "eligibility": null,
+        "receipt": {
+          "operationId": "topic.capture.admit",
+          "commandType": "ADMIT_PATIENT",
+          "status": "applied",
+          "message": "Patient is approaching the clinic.",
+          "facilityTick": 0
+        },
+        "clinicEligible": true,
+        "frozenQuestionVariantIds": [
+          "question.topic.critical-respiratory-ventilation.expiratory-time.v1"
+        ]
+      }
+    },
+    {
+      "topic": "critical-respiratory-ventilation",
+      "caseId": "case.topic.critical-respiratory-ventilation.extubation-rescue.v1",
+      "questionVariantIds": [
+        "question.topic.critical-respiratory-ventilation.postextubation-rescue.v1"
+      ],
+      "requiredClinicalSetting": "clinic",
+      "requiredCapabilityIds": [],
+      "earliestFacilityStage": 0,
+      "eligibilityIssue": null,
+      "receipt": {
+        "operationId": "topic.probe.admit",
+        "commandType": "ADMIT_PATIENT",
+        "status": "applied",
+        "message": "Patient is approaching the clinic.",
+        "facilityTick": 0
+      },
+      "clinicAdmissible": true,
+      "frozenQuestionVariantIds": [
+        "question.topic.critical-respiratory-ventilation.postextubation-rescue.v1"
+      ],
+      "initialProbe": {
+        "setting": "clinic",
+        "routineEligible": true,
+        "earliestFacilityStage": 0,
+        "requiredCapabilityIds": [],
+        "fixture": "Existing Level4 rooms QA state; current runtime and exact candidate definitions, no predicate overlay.",
+        "eligibility": null,
+        "receipt": {
+          "operationId": "topic.capture.admit",
+          "commandType": "ADMIT_PATIENT",
+          "status": "applied",
+          "message": "Patient is approaching the clinic.",
+          "facilityTick": 0
+        },
+        "clinicEligible": true,
+        "frozenQuestionVariantIds": [
+          "question.topic.critical-respiratory-ventilation.postextubation-rescue.v1"
+        ]
+      }
+    }
+  ],
+  "admissibleCases": 19,
+  "inadmissibleCases": 0
+}

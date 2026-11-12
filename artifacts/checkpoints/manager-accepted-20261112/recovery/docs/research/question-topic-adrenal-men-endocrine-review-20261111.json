@@ -1,0 +1,549 @@
+[
+  {
+    "id": "question.topic.adrenal-men-endocrine.cortisol-screen.v1",
+    "nodeId": "node.topic.adrenal-men-endocrine.cortisol-screen.v1",
+    "title": "Initial cortisol screen for an incidental adrenal lesion",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "DST is the defensible best option for the represented initial incidentaloma evaluation. Normal blood pressure/potassium and the unenhanced low-attenuation lesion help constrain the other hormonal axes; urinary free cortisol is a credible but weaker screen for subtle autonomy.",
+      "No decisive nonmedical wording shortcut identified. However, recognizing an incidentaloma and recalling its standard cortisol screen supplies the answer without consequential interpretation of the 4.2-cm/6-HU combination. Counting imaging recognition as a separate step overstates difficulty.",
+      "First node is coherent and self-contained; no later suppression result was used to judge it. The concept is high-yield resident knowledge, but this version does not meet the requested reasoning target."
+    ],
+    "suggestions": [
+      "Build the decision around an actual interpretive obstacle, such as a documented prior screen whose acquisition or interval clinical course changes whether and how to repeat it; retain credible competing endocrine plans.",
+      "Alternatively seek explicit acceptance as foundational screening practice. Do not describe this exact version as moderate two-step reasoning merely because benign imaging and hormonal secretion are different concepts."
+    ]
+  },
+  {
+    "id": "question.topic.adrenal-men-endocrine.benign-imaging-followup.v1",
+    "nodeId": "node.topic.adrenal-men-endocrine.benign-imaging-followup.v1",
+    "title": "Imaging follow-up of a homogeneous low-attenuation lesion",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Suppresses into the laboratory reference range' does not explicitly distinguish a post-dexamethasone suppression limit from an ordinary serum cortisol reference interval. This does not change the imaging key but should not teach that the intervals are interchangeable."
+    ],
+    "cues": [],
+    "fairness": [
+      "Homogeneity and 6 HU on the unenhanced acquisition support the keyed imaging plan under the guideline framework identified in the explanation. The size exceeding four centimeters provides a meaningful competing concern; no confident clinical inaccuracy identified.",
+      "The later node remains interpretable with the initial presentation and update, but deleting the entire update leaves the imaging answer unchanged. Its position after DST adds chronology, not another consequential inference.",
+      "Both distractors seek additional characterization. Neither tests the especially plausible error of scheduling interval surveillance because of lesion size. The prior explanation distinguishes imaging from endocrine assessment without explicitly stating the follow-up key."
+    ],
+    "suggestions": [
+      "Compare no further imaging with a concrete interval-surveillance plan and one credible additional-characterization plan; source any interval used.",
+      "Make this an independently framed imaging decision, or give it new acquisition/comparison information that actually changes the imaging conclusion rather than using a normal DST as its update.",
+      "If the cortisol result remains, identify it as below the laboratory's post-DST suppression limit."
+    ]
+  },
+  {
+    "id": "question.topic.adrenal-men-endocrine.confirm-cortisol-autonomy.v1",
+    "nodeId": "node.topic.adrenal-men-endocrine.confirm-cortisol-autonomy.v1",
+    "title": "Confirmation of an abnormal incidentaloma cortisol screen",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The stem emphasizes absent dexamethasone exposure measurement, but the keyed label does not specify how validity of the repeated test will be assessed. Repeating an identical potentially confounded test is not necessarily a validity repair."
+    ],
+    "cues": [
+      {
+        "phrase": "The outside report contains no dexamethasone exposure measurement or basal ACTH result.",
+        "why": "Names the missing workup components immediately before the only option containing 'basal ACTH'; the learner can fill the named omission rather than interpret endocrine findings."
+      },
+      {
+        "phrase": "Repeat overnight DST and measure basal ACTH",
+        "why": "The key uniquely combines a repeat of the named abnormal test with the explicitly missing measurement; the other options are single specialized tests."
+      }
+    ],
+    "fairness": [
+      "Repeat confirmation with attention to test validity and ACTH independence is the defensible stage; the supplied record does not establish a need for high-dose DST or CRH testing.",
+      "An absent dexamethasone concentration is not by itself proof that the original test was invalid. No confident clinical error is asserted, but the text should distinguish missing information from demonstrated interference.",
+      "Standalone chronology is clear. The exact options mainly contrast a complete basic workup with premature specialized studies, leaving little resident-level competition."
+    ],
+    "suggestions": [
+      "Replace the named-omission sentence with relevant observed administration, medication or acquisition details, supported by the existing clinical evidence process.",
+      "Give all alternatives comparable confirmation/etiology plans and specify the actual validity repair in the selected plan. Keep repeat confirmation and basal ACTH conceptually separate from automatic attribution to the visible nodule."
+    ]
+  },
+  {
+    "id": "question.topic.adrenal-men-endocrine.classify-before-localizing.v1",
+    "nodeId": "node.topic.adrenal-men-endocrine.classify-before-localizing.v1",
+    "title": "Biochemical classification before choosing a cortisol source",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Repeated concordant cortisol abnormalities and absence of exogenous exposure support moving to cause classification. Basal ACTH is the best offered next step before assigning significance to either anatomical focus.",
+      "Both imaging distractors are anchored to actual competing findings. The laboratory-versus-imaging distinction is clinically consequential, not a grammatical filter imposed by the task; no decisive nonmedical cue identified.",
+      "The two steps are recognizing sufficient evidence to pursue endogenous source evaluation and resisting two plausible imaging anchors until the ACTH pathway is established. Standalone presentation and task supply the needed context.",
+      "No confident clinical inaccuracy identified. This offline editorial PASS is not independent source verification or clinical approval."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.adrenal-men-endocrine.unilateral-overt-cortisol.v1",
+    "nodeId": "node.topic.adrenal-men-endocrine.unilateral-overt-cortisol.v1",
+    "title": "Operative target in overt adrenal cortisol excess",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "a unilateral 3-cm homogeneous left adrenal lesion and a normal right gland",
+        "why": "Maps directly to the only unilateral left-sided operation. With no competing pituitary finding, ordinary lesion-removal logic can select the key without using ACTH. The observations are legitimate; the weak option set creates the shortcut."
+      }
+    ],
+    "fairness": [
+      "The symptoms, repeated cortisol excess, suppressed ACTH and unilateral lesion support left adrenalectomy; no equally defensible offered alternative identified.",
+      "The normal opposite gland makes bilateral removal a weak distractor, and pituitary surgery lacks both biochemical and anatomical support. Deleting the cortisol/ACTH details still strongly points to the same option by the remaining anatomy and operative framing.",
+      "This is a coherent first part and a high-yield treatment principle, but the nominal classify-then-operate chain is not sustained by credible competitors."
+    ],
+    "suggestions": [
+      "Make functional attribution consequential using genuinely competing anatomical findings or a different supported operative decision, with options representing close clinical errors.",
+      "Preserve the necessary localization facts; do not create difficulty by hiding the contralateral anatomy or suppressing essential ACTH information."
+    ]
+  },
+  {
+    "id": "question.topic.adrenal-men-endocrine.post-cortisol-replacement.v1",
+    "nodeId": "node.topic.adrenal-men-endocrine.post-cortisol-replacement.v1",
+    "title": "Replacement after removal of an overt cortisol source",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'At follow-up' suggests a completed discharge, while 'the inpatient team asks' and the discharge-record task place the decision before discharge. State whether this is pre-discharge planning or review of an already discharged patient's regimen.",
+      "The alternatives name hormone classes rather than actual medicines, despite the owner requirement to name the proposed treatment."
+    ],
+    "cues": [],
+    "fairness": [
+      "The defensible key is glucocorticoid replacement while the suppressed axis recovers. An anatomically preserved contralateral gland does not establish immediate cortisol sufficiency; routine mineralocorticoid replacement is not the expected response to this secondary suppression.",
+      "The two consequential steps are inferring functional suppression of the preserved axis and selecting the affected replacement pathway. The preceding explanation does not disclose the replacement answer.",
+      "The later item can stand alone when its supplied original presentation and current update are displayed. Its clinical reasoning is sound, but the temporal frame needs repair."
+    ],
+    "suggestions": [
+      "Place the consultation explicitly before hospital discharge, or make the clinic task a clearly retrospective review of the discharge plan.",
+      "Use parallel specific regimens, such as hydrocortisone versus fludrocortisone versus no replacement, without inventing doses or recovery durations.",
+      "Explain directly that mineralocorticoid secretion is generally preserved in this ACTH-suppression setting; the current final sentence about lifelong replacement does not fully explain why temporary mineralocorticoid replacement is also the wrong choice."
+    ]
+  },
+  {
+    "id": "question.topic.adrenal-men-endocrine.repeat-prepared-arr.v1",
+    "nodeId": "node.topic.adrenal-men-endocrine.repeat-prepared-arr.v1",
+    "title": "Reassessment of a potentially false-negative aldosterone screen",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'After preparation' does not state the actual corrective plan. The explanation carries details that the selected answer leaves generic.",
+      "The medication is described by its effect rather than named; the learner is given the mechanism that should be interpreted."
+    ],
+    "cues": [
+      {
+        "phrase": "a renin-raising diuretic",
+        "why": "Preinterprets the medication's effect on the very assay being questioned. It lowers the reasoning needed to distrust the negative result."
+      },
+      {
+        "phrase": "The treating clinician can safely revise the regimen for repeat assessment.",
+        "why": "Announces feasibility and purpose of the keyed repeat plan. A nonmedical reader can match 'repeat assessment' to 'Repeat aldosterone and renin after preparation.'"
+      }
+    ],
+    "fairness": [
+      "Hypertension and spontaneous hypokalemia sustain suspicion despite a screen obtained with low potassium and interfering medication. A properly prepared repeat is the defensible offered next step.",
+      "Suppression testing and CT/AVS are later stages, so the choices do not force comparison between plausible ways to resolve this particular flawed acquisition.",
+      "The first node is coherent, but the mechanistic label and permission sentence supply the inference rather than testing it."
+    ],
+    "suggestions": [
+      "Name the actual medication and show the relevant potassium and sampling record without calling the drug renin-raising.",
+      "State the actual potassium/medication correction in a concrete plan and compare credible alternative responses to the flawed screen. Preserve a real safety constraint only if it changes which plan is appropriate."
+    ]
+  },
+  {
+    "id": "question.topic.adrenal-men-endocrine.overt-aldo-no-suppression.v1",
+    "nodeId": "node.topic.adrenal-men-endocrine.overt-aldo-no-suppression.v1",
+    "title": "Overt aldosterone phenotype and the next testing pathway",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The prepared aldosterone/PRA results, spontaneous hypokalemia, resistant clinical phenotype and interest in surgery support the represented overt branch and subsequent functional lateralization. A routine suppression-first path and CT-directed surgery embody different credible errors.",
+      "The keyed pathway requires two consequential judgments: whether additional suppression is needed, then whether anatomical localization alone establishes the operative side. The three CT-containing plans do not create a unique majority-component key.",
+      "The repeat update changes the answer from the first node and provides meaningful progression. Prior feedback requires reliable biochemical diagnosis but does not disclose this overt-result exception. The later node is self-contained with its included presentation and update.",
+      "The exact assay-specific numerical exception is a current-guidance detail, not freshly verified in this no-network review. No confident inaccuracy identified; clinical sign-off should verify the stated threshold and assay pairing before release. High-yield status refers to the PA workup decision, not a claim that this exact numerical exception has measured exam frequency."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.adrenal-men-endocrine.ct-needs-avs.v1",
+    "nodeId": "node.topic.adrenal-men-endocrine.ct-needs-avs.v1",
+    "title": "Functional lateralization before aldosterone-directed surgery",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "AVS is the defensible best offered investigation for this 56-year-old operative candidate with confirmed primary aldosteronism. A unilateral nodule does not establish unilateral secretion.",
+      "Both alternatives merely further characterize an already imaged nodule. The key is the familiar named functional test; there is no new biochemical or acquisition conflict to resolve before choosing it.",
+      "No decisive nonmedical lexical cue identified. This is nevertheless predominantly a single workup-rule recall item, not two consequential steps. Its first-node chronology is coherent."
+    ],
+    "suggestions": [
+      "Use a supported conflict in available localization evidence or adequacy that changes the next investigation, with genuinely competing localization plans.",
+      "Consider consolidating foundational AVS selection into feedback around the stronger later AVS interpretation task rather than scoring a separate routine recall node. Do not introduce an unsourced young-patient exception to manufacture difficulty."
+    ]
+  },
+  {
+    "id": "question.topic.adrenal-men-endocrine.avs-contralateral-nodule.v1",
+    "nodeId": "node.topic.adrenal-men-endocrine.avs-contralateral-nodule.v1",
+    "title": "AVS lateralization opposite the visible adrenal nodule",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The table supports the explanation's arithmetic: cortisol selectivity is 10 on the right and 20 on the left; aldosterone/cortisol is 6 versus 1, producing a lateralization ratio of 6. No arithmetic error identified.",
+      "Right adrenalectomy is the defensible best offered treatment given the stated desire for surgery, operative candidacy and functional localization. Left surgery follows the tempting anatomical nodule; medical treatment misses the supported operative opportunity but remains appropriate in a different preference or eligibility setting.",
+      "The learner must establish usable sampling, normalize secretion and reconcile a right functional source with a left anatomical finding. The explicit stimulated protocol and clearly separated values avoid a borderline-threshold dispute; no new cutoff is invented in this review.",
+      "The preceding AVS-selection explanation does not teach the calculation or its right-sided result. The later node progresses coherently and stands alone with the included presentation, update and exhibit. No decisive wording or component-convergence cue identified."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.adrenal-men-endocrine.avs-technical-failure.v1",
+    "nodeId": "node.topic.adrenal-men-endocrine.avs-technical-failure.v1",
+    "title": "Failed selective sampling before AVS lateralization",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The right cortisol/peripheral ratio is 22/20 = 1.1, whereas the left is 400/20 = 20. The purported right sample does not support standard bilateral stimulated AVS interpretation. Repeating expert sampling is the best offered localization plan for a patient choosing surgery only after a unilateral source is demonstrated.",
+      "Using the aldosterone/cortisol ratios without checking selectivity could misleadingly appear to support the CT nodule. The two consequential steps are assessing sampling validity and determining whether the existing evidence can support a side-directed operation.",
+      "Both adrenal samples are neutrally labeled; 'Right-labeled sample' does not uniquely announce the invalid side because the left uses the same construction. No decisive nonmedical cue identified.",
+      "The standalone presentation, exhibit and task are coherent. No confident clinical inaccuracy identified; the explanation appropriately limits its conclusion to standard bilateral interpretation rather than claiming that every incomplete AVS record is universally useless."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.adrenal-men-endocrine.bilateral-pa-medical.v1",
+    "nodeId": "node.topic.adrenal-men-endocrine.bilateral-pa-medical.v1",
+    "title": "Nonlateralizing aldosterone secretion despite a visible nodule",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Renal function and current potassium permit mineralocorticoid receptor antagonist treatment with monitoring.",
+        "why": "States eligibility for the keyed drug class and repeats its monitoring component. It replaces observed safety data with an answer-specific permission sentence."
+      }
+    ],
+    "fairness": [
+      "The adequate bilateral selectivity and equal corrected secretion support medical treatment rather than unilateral adrenalectomy. Spironolactone with monitoring is the defensible best offered answer.",
+      "The computed ratios, experienced-center completeness label and explicit drug permission largely deliver both interpretation and management readiness. Right adrenalectomy has neither imaging nor functional support and is particularly weak.",
+      "The standalone case is coherent and the underlying concept is high-yield, but this exact wording permits answering without meaningful interpretation of the AVS data."
+    ],
+    "suggestions": [
+      "Replace the permission sentence with concise actual potassium and renal-function observations, using supported values only where they matter.",
+      "Use raw or meaningfully conflicting localization information and a credible alternative management error; do not add calculations solely as busywork. Reconsider the unsupported right-sided operation as a distractor."
+    ]
+  },
+  {
+    "id": "question.topic.adrenal-men-endocrine.metanephrine-collection.v1",
+    "nodeId": "node.topic.adrenal-men-endocrine.metanephrine-collection.v1",
+    "title": "Marginal metanephrine result with mismatched collection conditions",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "collected seated during a painful visit and interpreted using a supine reference interval",
+        "why": "The explicit seated/supine mismatch is paired with 'Repeat plasma metanephrines under supine conditions' as the only corrective acquisition plan. A nonmedical reader can match the named mismatch to its repair. The necessary acquisition observations should remain; the alternatives need strengthening."
+      },
+      {
+        "phrase": "Repeat whole-body FDG-PET/CT",
+        "why": "Repeats the already represented staging modality without a new acquisition or distribution question. Along with another anatomical scan, it leaves the key as the sole option addressing the newly described problem."
+      }
+    ],
+    "fairness": [
+      "Standardized repeat biochemical testing is the defensible offered next investigation for a marginal result obtained under unsuitable comparison conditions. Cancer history and FDG uptake do not exclude a functional adrenal tumor.",
+      "The cancer/tissue decision supplies a meaningful clinical consequence, but the actual option set is dominated by two imaging plans that do not resolve the acquisition issue. The second step is not independently demanded by the choices.",
+      "First-node chronology is clear. The explanation's endocrine-safety wording also scaffolds the later biopsy task and must be included when judging that task's difficulty."
+    ],
+    "suggestions": [
+      "Compare credible endocrine confirmation/acquisition plans at the same stage, with a supported patient-specific reason favoring one.",
+      "Retain the real collection and reference-interval facts rather than concealing the invalid comparison. Make the consequence for tissue sampling emerge from interpretation, not from unrelated completed-test foils."
+    ]
+  },
+  {
+    "id": "question.topic.adrenal-men-endocrine.biopsy-after-positive-metanephrines.v1",
+    "nodeId": "node.topic.adrenal-men-endocrine.biopsy-after-positive-metanephrines.v1",
+    "title": "Biopsy decision after markedly abnormal standardized metanephrines",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "FDG uptake and a cancer history do not settle the endocrine safety question.",
+        "why": "The preceding node's explanation explicitly teaches the same safety priority tested by the later biopsy-versus-endocrine-assessment task. This is a sequence cue, not leakage from the current node's post-answer explanation."
+      },
+      {
+        "phrase": "Defer biopsy for endocrine tumor assessment",
+        "why": "It is the only cautious endocrine response, against two ways of performing the same challenged biopsy. The paired procedure distractors do not create two distinct credible competing decisions."
+      }
+    ],
+    "fairness": [
+      "The markedly elevated values obtained under the laboratory protocol warrant endocrine evaluation before adrenal biopsy; changing needle technique does not resolve the concern. The intended key is defensible, and the explanation appropriately avoids claiming a universal numeric diagnostic threshold.",
+      "The update meaningfully changes the biochemical evidence, and a standalone learner can understand the decision with the included earlier presentation. In the full sequence, however, the prior safety explanation plus two near-equivalent biopsy distractors reduce it to a rehearsed recognition rule.",
+      "This is an important safety concept, but no separate accepted safety/onboarding exception is established by the presented question."
+    ],
+    "suggestions": [
+      "Retain the safety facts and move this to an explicitly accepted foundational role, or redesign it to test a distinct remaining clinical decision after the first node's feedback.",
+      "Do not increase difficulty by hiding the abnormal biochemical result or implying a different needle makes an unevaluated functional tumor safe to biopsy."
+    ]
+  },
+  {
+    "id": "question.topic.adrenal-men-endocrine.men2-cross-organ-workup.v1",
+    "nodeId": "node.topic.adrenal-men-endocrine.men2-cross-organ-workup.v1",
+    "title": "MEN2 cross-organ testing before thyroid surgery",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Metanephrine assessment and calcium/PTH evaluation are the defensible offered plan for the RET-associated medullary carcinoma and stone history. Lack of classic spells does not remove the preoperative pheochromocytoma concern.",
+      "The four-option component matrix is balanced: each adrenal and companion-organ component appears twice. No unique convergence or length cue identified.",
+      "The task remains a syndrome-organ association recall item. Supplying medullary carcinoma plus RET effectively gives the syndrome; selecting its familiar screening panel is not two consequential steps simply because the panel includes two organs.",
+      "The first node is coherent and high-yield. Its explanation does not explicitly give the later operation-order answer."
+    ],
+    "suggestions": [
+      "Use prior organ-specific results, acquisition limitations or a competing current clinical priority that changes the next required test, while preserving the essential preoperative safety screen.",
+      "Alternatively seek explicit foundational acceptance or merge the association teaching into the later operative-priority case. Keep the balanced option structure if a panel comparison remains."
+    ]
+  },
+  {
+    "id": "question.topic.adrenal-men-endocrine.men2-operative-priority.v1",
+    "nodeId": "node.topic.adrenal-men-endocrine.men2-operative-priority.v1",
+    "title": "Operative order with competing MEN2 disease priorities",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The repeated marked metanephrine elevations with an adrenal mass support addressing the functional adrenal tumor before elective thyroid or parathyroid intervention after appropriate preparation.",
+      "Node-positive medullary carcinoma is a credible competing priority. The patent airway and mild nonacute hypercalcemic course are necessary urgency information, not gratuitous negatives that should be removed to make the question harder.",
+      "The learner must interpret three organ-specific findings and rank their operative sequence despite an oncologically significant neck finding. The key is not the only named operation or the uniquely comprehensive plan.",
+      "The later update introduces the decisive functional results and urgency context. Earlier feedback names screening targets without stating the operative order; the node stands alone with its supplied presentation and update. No confident clinical inaccuracy or decisive nonmedical cue identified."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.adrenal-men-endocrine.alpha-before-beta.v1",
+    "nodeId": "node.topic.adrenal-men-endocrine.alpha-before-beta.v1",
+    "title": "Initial blockade for a functional adrenal tumor",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Doxazosin is the defensible best initial oral agent among these options for a hypertensive patient with convincing catecholamine excess. Metoprolol before alpha blockade is inappropriate; labetalol is a credible mixed-blockade misconception rather than an equivalent initial dedicated alpha-blockade strategy.",
+      "The simultaneous hypertension and tachycardia create competing treatment impulses. The learner identifies the functional syndrome and chooses the safe initial receptor strategy despite the rate-control temptation.",
+      "All three labels are concise drug names, with no explanatory qualifiers or unique word overlap. 'No adrenergic preparation has begun' establishes the decision stage and does not uniquely repeat a drug name.",
+      "The first node is coherent and high-yield. Difficulty is at the lower end of moderate for a prepared resident, with the labetalol competitor carrying much of the discrimination. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.adrenal-men-endocrine.tachycardia-after-alpha.v1",
+    "nodeId": "node.topic.adrenal-men-endocrine.tachycardia-after-alpha.v1",
+    "title": "Persistent tachycardia after alpha blockade",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The update gives neither the current pulse nor an actual blood pressure, although it replaces the initial 174/102 and 108/min findings with 'low-normal' pressure and persistent tachycardia. Severity and hemodynamic tolerance matter to whether further medication is appropriate.",
+      "The supplied update establishes sinus rhythm but does not show the clinical importance of the remaining tachycardia. Do not silently reuse the initial pulse as the new post-treatment value."
+    ],
+    "cues": [],
+    "fairness": [
+      "Adding beta blockade while continuing established alpha blockade is the defensible intended strategy if persistent tachycardia warrants treatment and the current pressure tolerates it. Increasing alpha blockade at low-normal pressure or removing alpha protection are weaker choices.",
+      "The two consequential steps can be present: interpret the response and assess other causes, then select additive rate control while maintaining vascular protection. However, the current qualitative observations leave the severity/tolerance boundary less clear than the confident explanation implies.",
+      "The later node follows coherently and can stand alone with its presentation and update. Prior feedback teaches initial alpha blockade but does not explicitly give this subsequent medication change. No decisive nonmedical lexical cue identified; the concern is missing clinical specificity, not a confident claim that beta blockade is wrong."
+    ],
+    "suggestions": [
+      "Supply actual repeat pulse/BP observations and any relevant ongoing symptoms so the learner can distinguish clinically important residual tachycardia from a finding that merits observation or further assessment.",
+      "Keep the negative evaluation concise and retain only alternatives that genuinely compete at the observed treatment stage. Do not invent a universal heart-rate or blood-pressure cutoff."
+    ]
+  },
+  {
+    "id": "question.topic.adrenal-men-endocrine.remaining-gland-cortex.v1",
+    "nodeId": "node.topic.adrenal-men-endocrine.remaining-gland-cortex.v1",
+    "title": "Cortical preservation in the only remaining adrenal gland",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Which operation should be offered ... after discussion' does not establish the patient's priority after that discussion. More than one operation can reasonably be offered in a preference-sensitive decision."
+    ],
+    "cues": [
+      {
+        "phrase": "an experienced adrenal surgeon finds complete removal without capsule disruption feasible while retaining cortex",
+        "why": "Gives an expert feasibility conclusion that nearly paraphrases 'Cortical-sparing right adrenalectomy.' It supplies the judgment the learner is nominally asked to make."
+      },
+      {
+        "phrase": "a substantial rim of cortex",
+        "why": "Reinforces the cortex-preservation wording unique to the key, especially when paired with the explicit expert endorsement. Anatomy is needed, but the additional conclusion turns it into answer rehearsal."
+      }
+    ],
+    "fairness": [
+      "Cortical-sparing surgery is a reasonable operation to offer in this hereditary remaining-gland setting, and the explanation correctly avoids promising steroid independence.",
+      "Total adrenalectomy remains a defensible alternative for a patient who prioritizes avoiding remnant recurrence and accepts lifelong replacement. The visible task and patient information do not resolve that tradeoff sufficiently to make 'should be offered' uniquely select one operation.",
+      "Percutaneous ablation is a weak peer to the two established surgical choices in this resectable case. The apparent difficulty comes partly from an unresolved preference-sensitive ranking, not valid two-step reasoning.",
+      "The standalone chronology is coherent. This is a high-yield hereditary endocrine tradeoff, but no confident claim is made that one universal operative policy applies."
+    ],
+    "suggestions": [
+      "Ask a precisely bounded question about which operation can achieve complete tumor removal while offering a chance of retained endogenous steroid production, or provide a balanced, decision-relevant patient preference that resolves the recurrence-versus-replacement tradeoff.",
+      "Replace the pre-answer expert endorsement with necessary observed anatomy and preserve any genuine oncologic constraint. Use feedback to explain feasibility, recurrence and possible steroid dependence.",
+      "Have the clinician confirm the exact operative comparison; do not key a universal preference-sensitive choice simply because cortical-sparing surgery is feasible."
+    ]
+  },
+  {
+    "id": "question.topic.adrenal-men-endocrine.suspected-acc-pathway.v1",
+    "nodeId": "node.topic.adrenal-men-endocrine.suspected-acc-pathway.v1",
+    "title": "Management pathway for a suspicious primary adrenal malignancy",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Hormonal evaluation, including metanephrines, has been completed' gives completion status rather than results. This does not invalidate expert referral, but leaves the endocrine context incompletely specified for the linked operative pathway."
+    ],
+    "cues": [
+      {
+        "phrase": "Expert adrenal oncology assessment for resection",
+        "why": "The only broad expert-assessment plan is compared with committing to a needle procedure or surveillance for a large irregular possibly invasive mass. Generic caution and the conspicuously aggressive imaging description favor the key before the specific biopsy principle must be known."
+      }
+    ],
+    "fairness": [
+      "Expert oncologic resection assessment is the defensible offered pathway. Routine adrenal biopsy is not required to establish a resectable suspected primary cortical malignancy, and surveillance is poorly supported by the represented morphology.",
+      "The absence of another cancer and negative distant staging support the intended primary-adrenal context. Nevertheless, the choices mainly contrast sensible specialist assessment with two weak plans, rather than a close resident-level decision.",
+      "The first node is coherent. Its explanation points toward resection but does not explicitly disclose the later open en bloc operative technique. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": [
+      "State the clinically relevant hormonal results, without treating 'completed' as equivalent to normal or adequately prepared.",
+      "Compare concrete plausible oncologic evaluation/resection pathways at the same decision stage, using the primary-versus-metastatic or resectability context to determine the answer.",
+      "Remove the generic expert-assessment advantage without replacing it with an unsupported obligatory biopsy."
+    ]
+  },
+  {
+    "id": "question.topic.adrenal-men-endocrine.invasive-acc-operation.v1",
+    "nodeId": "node.topic.adrenal-men-endocrine.invasive-acc-operation.v1",
+    "title": "Operative plan for adrenal tumor invading the kidney",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "the involved adrenal-kidney tissue can be removed together",
+        "why": "Translates directly into 'Open en bloc adrenal and involved renal resection.' The update gives the operative solution as an expert feasibility statement instead of leaving a meaningful planning inference."
+      },
+      {
+        "phrase": "Priya can undergo the proposed operation.",
+        "why": "An unnamed 'proposed operation' has effectively just been described as combined removal. This permission sentence endorses that plan before the options."
+      }
+    ],
+    "fairness": [
+      "For the represented localized resectable invasive tumor, complete intact en bloc removal of involved tissue is the defensible offered goal. Separating an invaded plane or deliberately debulking potentially completely resectable disease are inferior alternatives.",
+      "The update does change contact into confirmed invasion, and the sequence is coherent. However, it then supplies the operative consequence. The later task stands alone with its context but tests matching an already stated plan.",
+      "The earlier resection explanation further weakens the debulking foil. No confident clinical inaccuracy identified; the explanation appropriately distinguishes actual invasion from mere abutment."
+    ],
+    "suggestions": [
+      "Retain evidence distinguishing actual invasion from contact and remove the sentence prescribing combined removal plus the vague feasibility endorsement.",
+      "Use credible competing operative plans whose ranking depends on observed invasion, intact removal and resectability. Keep relevant operative fitness information factual if it changes the choice.",
+      "Do not turn mere contact into a universal nephrectomy rule when rewriting the case."
+    ]
+  },
+  {
+    "id": "question.topic.adrenal-men-endocrine.indeterminate-growth-action.v1",
+    "nodeId": "node.topic.adrenal-men-endocrine.indeterminate-growth-action.v1",
+    "title": "Management after interval growth of an indeterminate adrenal lesion",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The arithmetic is correct: 38 minus 30 is 8 mm, and 8/30 is approximately 27%. The observations exceed both growth components described in the explanation over the represented nine-month interval.",
+      "The learner must interpret relative and absolute growth using comparable measurements, then decide whether the previously chosen surveillance plan remains appropriate. Expert resection reassessment is the defensible offered response; growth itself is not proof of malignancy.",
+      "The established surveillance decision is a credible inertia trap. The task does not call the growth 'significant' or name a crossed threshold, so the conclusion is not supplied before answering. The standalone chronology is clear.",
+      "The exact guideline criterion has not been freshly source-verified under the no-network constraint; no confident error is identified. This is a clinical growth-management question, so the statistics single-skill exception does not apply merely because a percentage is computed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.adrenal-men-endocrine.hormonal-reassessment-trigger.v1",
+    "nodeId": "node.topic.adrenal-men-endocrine.hormonal-reassessment-trigger.v1",
+    "title": "Hormonal reassessment despite stable benign adrenal imaging",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Repeat adrenal washout CT' presumes a prior washout study, whereas the supplied prior/current imaging description only establishes an unenhanced CT. This is a minor but avoidable chronology mismatch."
+    ],
+    "cues": [
+      {
+        "phrase": "Her homogeneous 2-cm adrenal nodule remains unchanged at 7 HU on unenhanced CT.",
+        "why": "Stable imaging is contrasted with worsening metabolic findings, but the key is the only hormonal test and both distractors pursue anatomy/malignancy. The structure allows a test-category shortcut instead of choosing among credible endocrine investigations. The imaging facts themselves are necessary and should remain."
+      }
+    ],
+    "fairness": [
+      "Repeat cortisol assessment is the defensible best offered investigation when relevant comorbidities worsen after an initially normal adrenal evaluation. Stable benign morphology does not exclude newly relevant hormonal activity.",
+      "Whole-body PET/CT and another characterization CT are weak competitors in the explicitly unchanged low-attenuation lesion. The clinical change is consequential in principle, but this option set does not require a second substantive inference.",
+      "The standalone time course is otherwise clear. No confident clinical inaccuracy identified in the key or the explanation's statement that a subsequent result would not automatically mandate surgery."
+    ],
+    "suggestions": [
+      "Compare credible endocrine reassessment strategies or actual alternative explanations using patient-specific observations that resolve the choice.",
+      "Keep stable imaging as the competing reassurance signal, but replace imaging-only foils and correct the unsupported 'Repeat' washout history.",
+      "Preserve the distinction between deciding to reassess hormone secretion and deciding on surgery."
+    ]
+  }
+]

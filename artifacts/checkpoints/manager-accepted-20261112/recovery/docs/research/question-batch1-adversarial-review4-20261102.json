@@ -1,0 +1,1508 @@
+[
+  {
+    "id": "A02",
+    "title": "HIDA after equivocal gallbladder ultrasound",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "The common duct is not dilated; bilirubin is within the laboratory reference range.",
+        "why": "Weakens the duct-imaging alternative, but does not distinguish the two scintigraphy protocols without clinical knowledge. Necessary localization, not a sufficient shortcut."
+      }
+    ],
+    "fairness": [
+      "Exact five visible fields and version match the pre-round-four snapshot. Inflammatory findings versus ultrasound components, then filling versus emptying protocols, still support one best offered answer.",
+      "Scope of this report: 73 versions (43 main plus 30 context questions). Judgments use only the current after Presentation, Current update, Exhibit, Task and Options. Prior responses, explanations and future results are not evidence of quality. Difficulty is an uncalibrated PGY-2/3 prediction; PASS is editorial, not clinical approval.",
+      "All 27 retained PASS versions and three accepted-basic versions match the saved pre-round-four packet; B01/B10 overlap those groups. The eleven separate owner-approved versions also match baseline live presentation, complaint, profiles, question version, task, update, exhibit and choice fields. They are outside these two packets and are not added to the 73-item denominator.",
+      "No network was used. Local source ledgers were checked for claim mappings and exact-value provenance; their accounts of external verification were not independently authenticated. No new exact clinical cutoff is proposed."
+    ],
+    "suggestions": [
+      "Retain the necessary observations and close protocol alternatives."
+    ]
+  },
+  {
+    "id": "A06",
+    "title": "Classify nipple discharge patterns",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Exact visible fields/version unchanged. Spontaneous unilateral discharge remains concerning despite a concurrent medication-associated prolactin explanation; the crossed plan alternatives require both distinctions. No new fairness defect found."
+    ],
+    "suggestions": [
+      "Retain; the medication name and raw discharge observations are decision-relevant rather than answer labels."
+    ]
+  },
+  {
+    "id": "A06-context",
+    "title": "Select diagnostic imaging for pathologic discharge",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Exact visible fields/version unchanged. Implant-integrity MRI does not answer the same question as symptom-directed breast investigation. All choices include targeted ultrasound, so overlap does not identify the key. The protocol distinction leaves a defensible best offered pathway."
+    ],
+    "suggestions": [
+      "Retain the actual outside MRI sequences and contrast status."
+    ]
+  },
+  {
+    "id": "A25",
+    "title": "Perioperative ART continuity",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Exact visible fields/version unchanged. The named ART combination must be interpreted before choosing both continuity and midazolam route. Oral midazolam is a proposed plan to evaluate, not a reason to select it. The crossed choices remain fair."
+    ],
+    "suggestions": [
+      "Retain; do not turn route-specific monitoring into a general assurance that all midazolam use is safe."
+    ]
+  },
+  {
+    "id": "A25-context",
+    "title": "Apply benzodiazepine-antagonist contraindication after seizure control",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "The convulsions without recovery identify a serious seizure-control indication, while shallow breathing creates a credible reason to consider reversal. The learner must distinguish reversal of sedation from antagonizing treatment of that seizure state. Supported ventilation makes withholding the antagonist an actionable instruction rather than ignoring respiratory depression.",
+      "Withhold versus give-now/give-after-another-drug is an intentional timing decision; the short negative key has no unique explanatory padding. The local claim claim.qq20261102c.flumazenil-seizure-control-contraindication maps this boundary to the DailyMed label. This offline review does not independently verify the label.",
+      "The task is specifically the reversal instruction. It would be incomplete as a comprehensive seizure/airway management plan, but does not purport to be one."
+    ],
+    "suggestions": [
+      "Retain for anesthesia/neurology confirmation of the exact scenario. Keep assisted ventilation and the seizure course; neither is a dispensable cue."
+    ]
+  },
+  {
+    "id": "B01",
+    "title": "Manometric recognition of achalasia",
+    "verdict": "PASS",
+    "difficulty": "easy",
+    "twoStep": false,
+    "basicVerdict": "ACCEPT_BASIC",
+    "cues": [],
+    "fairness": [
+      "Exact visible fields/version unchanged. This is straightforward pressure-pattern recognition, with one defensible offered diagnosis. Ease is acceptable only for the already accepted foundational role, not as a resident challenge."
+    ],
+    "suggestions": [
+      "Retain the accepted basic designation."
+    ]
+  },
+  {
+    "id": "B01-context",
+    "title": "Resolve technical and symptom-protocol limitations in motility testing",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "No endoscopically assisted placement was attempted.",
+        "why": "Names the untried maneuver that appears only in the key, allowing a missing-step matching strategy without interpreting the pressure recording."
+      },
+      {
+        "phrase": "Manometry with endoscopic catheter placement",
+        "why": "Repeats the specifically highlighted missing maneuver. Unlike the other choices, it lacks an initial 'Obtain'; this is a small grammar outlier, not the main defect."
+      }
+    ],
+    "fairness": [
+      "Failure to cross the junction followed by an assisted attempt is a defensible pathway; FLIP is a real complementary alternative rather than an absurd distractor. The meaningful reasoning is recognizing an uninterpretable junction acquisition and selecting how to complete it.",
+      "The current cue weakens that reasoning. The local ledger describes assisted completion as a case-specific application, not proof that every failed study must be repeated before FLIP. The comparison needs specialist confirmation, particularly when retching/tolerance is the obstacle."
+    ],
+    "suggestions": [
+      "Delete the sentence naming unattempted endoscopic assistance; the blind-advancement record already describes what was tried. Preserve the catheter position and reason the test stopped.",
+      "Use parallel procedure labels. Ask the clinician to confirm that assisted completion is preferred for this particular failed attempt; if tolerance makes FLIP equally appropriate, change the clinical circumstances or option set rather than declare FLIP universally inferior."
+    ]
+  },
+  {
+    "id": "B02",
+    "title": "Manometric recognition of achalasia",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Exact visible fields/version unchanged. Position-dependent relaxation measurements compete with absent contractility in every swallow. This requires classification and the resulting corroboration/treatment decision, rather than matching a diagnosis label.",
+      "The exact DCI/protocol values are retained, not newly introduced this round. Clinical classification confirmation remains separate from this editorial retention."
+    ],
+    "suggestions": [
+      "Retain the primary/secondary-position distinction and close outflow-obstruction alternative."
+    ]
+  },
+  {
+    "id": "B02-context",
+    "title": "Resolve technical and symptom-protocol limitations in motility testing",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "no spaced-swallow series or alternate-position series is saved.",
+        "why": "Explicitly advertises an incomplete protocol; only the key completes testing, while both distractors commit to treatment from that incomplete assessment."
+      },
+      {
+        "phrase": "Repeat a complete high-resolution manometry study",
+        "why": "The reassuring word 'complete' directly repairs the announced absence. A test-wise reader can choose it without knowing deglutitive inhibition."
+      }
+    ],
+    "fairness": [
+      "The saved swallowing sequence does not justify either offered treatment classification, so repeat adequate testing is defensible. The problem is difficulty, not a confident clinical error.",
+      "Too easy for the stated resident goal: the diagnostic-workup-versus-premature-treatment contrast removes the need to understand why overlapping swallows distort the tracing. The current two-step claim is not earned."
+    ],
+    "suggestions": [
+      "Keep the actual acquisition sequence but compare plausible ways of resolving it at the same decision stage, such as appropriately specified repeat acquisition versus a clinically credible complementary study.",
+      "Have the distinguishing choice depend on interpretation of rapid-swallow inhibition, not on choosing the only option that obtains missing data. Do not remove the acquisition information needed for fairness."
+    ]
+  },
+  {
+    "id": "B03",
+    "title": "Manometric recognition of achalasia",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "The prescribing team can supervise a medication adjustment, and the patient can maintain oral intake during reassessment.",
+        "why": "Favors the reassessment axis, but applies to two alternatives and supplies genuine feasibility/safety context. It cannot choose the motility interpretation by itself."
+      }
+    ],
+    "fairness": [
+      "The elevated junction relaxation measure and premature contractions must be distinguished from distal spasm, then interpreted in light of oxycodone exposure before irreversible treatment planning. Withdrawal/reassessment and pattern classification are both needed.",
+      "No arbitrary washout period or dose was added. 'Coordinated opioid withdrawal' should remain a supervised plan rather than imply abrupt discontinuation. The current update resolves the earlier inability-to-reassess problem."
+    ],
+    "suggestions": [
+      "Retain the dual-axis choices and supervised feasibility information; specialist review should confirm the medication-associated classification language."
+    ]
+  },
+  {
+    "id": "B03-context",
+    "title": "Resolve technical and symptom-protocol limitations in motility testing",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "none of the water swallows reproduces it.",
+        "why": "Pairs the symptom-trigger mismatch with an option that simply supplies food instead of water."
+      },
+      {
+        "phrase": "The study has no meal or provocative-swallow recording.",
+        "why": "Names the missing test-meal component that only the key offers."
+      },
+      {
+        "phrase": "High-resolution manometry with another water-swallow series",
+        "why": "'Another' repeats the explicitly unsuccessful provocation, making the closest-looking alternative self-defeating."
+      }
+    ],
+    "fairness": [
+      "Provocative meal assessment is a defensible offered next test for the supplied symptom discrepancy. Structural and eosinophilic exclusion are useful clinical background.",
+      "Too easy for residents as written: food causes symptoms, water does not, and the key is the only food-based investigation. This is a direct repair rule rather than two substantive inferences."
+    ],
+    "suggestions": [
+      "Remove the sentence naming the absent meal recording and the dismissive 'another' option wording.",
+      "Rebuild the comparison around credible investigations for persistent solid-food dysphagia, with enough actual findings to distinguish a provocative motility study from a supported alternative. Obtain source support before adding protocol details."
+    ]
+  },
+  {
+    "id": "B04",
+    "title": "Manometric recognition of achalasia",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Exact visible fields/version unchanged. Marked resistance and weight loss still require investigation for secondary junction disease despite achalasia-like physiology. The raw DCI range and trace description support the physiology interpretation.",
+      "Both pattern classification and the secondary-lesion assessment must be correct; the crossed choices remain fair. No new clinical or presentation defect was identified in the retained version."
+    ],
+    "suggestions": [
+      "Retain the measured pressure findings, weight trajectory and actual endoscopic resistance rather than an interpreted secondary-disease label."
+    ]
+  },
+  {
+    "id": "B04-context",
+    "title": "Resolve technical and symptom-protocol limitations in motility testing",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "The report's numerical conclusion competes with raw evidence of catheter displacement and absent gastric baseline. Recognizing that the junction value is not trustworthy, then choosing an assisted pressure acquisition rather than merely accepting the report, requires technical knowledge.",
+      "The named tests are necessary alternatives. Neither 'endoscopic catheter placement' nor its rationale is explicitly supplied by the stem. FLIP is clinically plausible, but the record describes one failed outside acquisition rather than unsuccessful assisted completion; the keyed next attempt is defensible among these choices.",
+      "Local claim claim.qq20261102c.hrm-incomplete-placement supports the acquisition limitation, with case-specific ranking still requiring motility review."
+    ],
+    "suggestions": [
+      "Retain, with clinician confirmation of assisted manometry versus FLIP for this acquisition failure. Align option grammar without adding rationales."
+    ]
+  },
+  {
+    "id": "B05",
+    "title": "Resolve occult-groin imaging and symptom discordance",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "The outside ultrasound was obtained supine at rest with the probe over the painful hip-flexor origin.",
+        "why": "Contrasts an at-rest, differently located scan with a swelling triggered by lifting. A reader can infer the test never examined the problem without medical knowledge."
+      },
+      {
+        "phrase": "The saved images do not include coughing or straining.",
+        "why": "Announces the missing dynamic component; only the key supplies it."
+      },
+      {
+        "phrase": "Hernia unresolved; dynamic groin ultrasound",
+        "why": "Only this option permits uncertainty after an obviously incomplete examination; both distractors make definitive opposite diagnoses."
+      }
+    ],
+    "fairness": [
+      "Repeating a targeted dynamic examination is defensible. The report's negative result does not establish exclusion, and a photograph alone need not establish a repair indication.",
+      "Too easy for residents: the alternatives are overconfident diagnoses versus a plainly incomplete test. No second clinical inference is required."
+    ],
+    "suggestions": [
+      "Keep sufficient acquisition facts to establish the limitation, but remove the redundant omission sentence.",
+      "Use a credible competing next investigation or a genuinely plausible alternate pain-management plan rather than both 'excluded' and 'established' extremes. Supply a source-supported discriminator if ranking ultrasound against MRI."
+    ]
+  },
+  {
+    "id": "B05-context",
+    "title": "Apply symptom attribution to a demonstrated inguinal hernia",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "Hip rotation reproduces a separate deep ache.",
+        "why": "Explicitly partitions two problems; the key is the only option that deals with both without dismissing either."
+      },
+      {
+        "phrase": "Discuss elective hernia repair without hip assessment",
+        "why": "The 'without' clause advertises neglect of the second documented complaint."
+      },
+      {
+        "phrase": "Discuss hernia repair and hip-pain assessment",
+        "why": "Combines the useful component of each distractor, a classic convergence/completeness shortcut."
+      }
+    ],
+    "fairness": [
+      "A repair discussion plus evaluation of the other pain source is reasonable. A minimally symptomatic reducible hernia in a man can also be observed; the stem does not quantify burden or patient goals enough to portray observation as categorically wrong.",
+      "Too easy as a 'remember both complaints' item, and the broad discussion key is more inclusive than the alternatives."
+    ],
+    "suggestions": [
+      "Replace the 'without hip assessment' distractor with a realistic management sequence that does not announce an omission.",
+      "Specify the actual clinical decision and meaningful symptom burden/goals, then compare equally comprehensive plans. Do not invent a preference solely to force surgery or promise that repair cures the deep pain."
+    ]
+  },
+  {
+    "id": "B06",
+    "title": "Resolve occult-groin imaging and symptom discordance",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "An experienced examiner",
+        "why": "An author-supplied quality endorsement weakens the repeat-ultrasound choice before the reader evaluates the actual saved views. The acquisition details already establish what was tested."
+      }
+    ],
+    "fairness": [
+      "Adequate dynamic ultrasound with the actual symptoms reproduced is a meaningful change from an incomplete study. MRI can investigate occult hernia and musculoskeletal pathology.",
+      "The competing sports-medicine assessment with reassessment is also defensible: the described limiting pain is reproduced at a tender adductor attachment, and no hernia appeared during the recorded contour change. The stem lacks a reason that advanced imaging must precede a conservative musculoskeletal assessment. A general recommendation that MRI can follow negative ultrasound does not uniquely rank these choices.",
+      "This is meaningful two-step reasoning, but unresolved ranking is not legitimate difficulty."
+    ],
+    "suggestions": [
+      "Remove 'An experienced examiner' and retain the actual examination conditions.",
+      "Clarify the remaining diagnostic concern and why it changes the next action despite the adequate scan, or compare imaging strategies under an explicit already-made decision to obtain further imaging. Alternatively accept the conservative assessment pathway if that fits the intended case; do not invent failed treatment or preferences without support."
+    ]
+  },
+  {
+    "id": "B06-context",
+    "title": "Apply symptom attribution to a demonstrated inguinal hernia",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "the protrusion is not tender and straining does not reproduce the limiting pain; resisted adduction reproduces the usual medial thigh pain.",
+        "why": "The negative/positive pairing labels one lesion as painless and the other as the exact pain source. The options then restate 'Muscle pain', 'Hernia pain' and 'Combined pain'."
+      }
+    ],
+    "fairness": [
+      "Observation of a painless reducible hernia in this man while treating the musculoskeletal complaint is defensible. The record does not prove that a provocation test uniquely establishes every source of pain, but the task asks for the best initial plan rather than certainty.",
+      "Too easy for the resident target: the binary symptom attribution is supplied almost verbatim and no competing evidence has to be weighed."
+    ],
+    "suggestions": [
+      "Keep necessary symptom localization but remove redundant reassurance and diagnosis-to-plan labels that simply echo it.",
+      "Test a genuinely competing attribution or management-sequencing decision using supported observations. If retaining this exact straightforward case, seek explicit acceptance of an easy role rather than resurrecting the rejected basic designation."
+    ]
+  },
+  {
+    "id": "B07",
+    "title": "Resolve occult-groin imaging and symptom discordance",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "the operator examined a site lateral to the photographed lump.",
+        "why": "An explicit wrong-site test invites 'test the correct site' without clinical reasoning."
+      },
+      {
+        "phrase": "The report's skin marker and the patient's photograph place the two sites on opposite sides of the inguinal crease.",
+        "why": "Repeats the same mismatch, making 'unresolved' the only sensible diagnosis-certainty choice."
+      },
+      {
+        "phrase": "Hernia excluded; hip-directed rehabilitation",
+        "why": "The alternative declares exclusion from a test that visibly missed the site; hip rehabilitation is also less grounded here than in B05, with no hip-motion findings."
+      }
+    ],
+    "fairness": [
+      "Targeted repeat ultrasound is reasonable after a wrong-site examination, but the two definitive alternatives are not close resident errors under these explicit conditions.",
+      "Too easy; location matching is the whole decision. The directions 'lateral' and 'opposite sides of the inguinal crease' should also be checked for coherent anatomy rather than used as a vague marker of error."
+    ],
+    "suggestions": [
+      "Use one clear, anatomically interpretable localization observation rather than two statements of wrong-site acquisition.",
+      "Offer realistic competing next steps and an observation that clinically distinguishes them. Avoid importing the hip-rehabilitation alternative unchanged from a different vignette."
+    ]
+  },
+  {
+    "id": "B07-context",
+    "title": "Apply symptom attribution to a demonstrated inguinal hernia",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "A different tender point at the adductor origin produces discomfort only with resisted hip adduction.",
+        "why": "Separately labels the second complaint, making the combined answer obvious."
+      },
+      {
+        "phrase": "Discuss elective hernia repair without hip assessment",
+        "why": "States an intentional omission of an explicitly documented problem."
+      },
+      {
+        "phrase": "Discuss hernia repair and hip-pain assessment",
+        "why": "Converges the repair and musculoskeletal-assessment components while the alternatives each neglect one."
+      }
+    ],
+    "fairness": [
+      "Repair discussion and separate musculoskeletal assessment are reasonable, but observation with conservative treatment can remain a reasonable patient-centered initial plan when symptom severity and goals are unspecified.",
+      "The task's broad 'discussion' wording gives the key an inclusiveness advantage over a specific trial. This does not establish resident-level difficulty."
+    ],
+    "suggestions": [
+      "Compare plans at the same scope and remove the 'without' omission.",
+      "Use the clinical burden and intended decision to distinguish repair discussion from watchful waiting, without adding an artificial preference to select the key. Do not conflate pain near the adductor origin with a proven hip-joint diagnosis."
+    ]
+  },
+  {
+    "id": "B08",
+    "title": "Resolve occult-groin imaging and symptom discordance",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "Two independently reviewed dynamic groin ultrasound examinations",
+        "why": "Discourages repeating the same examination, but the accompanying coverage/provocation findings justify this. It does not itself decide MRI versus exploration."
+      }
+    ],
+    "fairness": [
+      "Interpreting adequately negative provoked studies in the setting of persistent contour symptoms and musculoskeletal provocation, then selecting cross-sectional problem solving before invasive exploration, supports a defensible best answer.",
+      "No key-only rationale, length outlier or certainty label. Dynamic MRI is a next investigation here, not a claim that every negative ultrasound mandates MRI. The clinical ranking remains subject to groin-specialist review."
+    ],
+    "suggestions": [
+      "Retain the actual scan coverage and symptom reproduction. The independent-review endorsement can be shortened if the same acquisition facts are preserved."
+    ]
+  },
+  {
+    "id": "B08-context",
+    "title": "Apply symptom attribution to a demonstrated inguinal hernia",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "The visible protrusion causes no discomfort with strain; resisted trunk flexion reproduces the limiting suprapubic pain.",
+        "why": "Directly assigns pain away from the hernia and toward the attachment; the options simply attach management to those same labels."
+      }
+    ],
+    "fairness": [
+      "The keyed conservative initial approach is defensible for a painless reducible inguinal finding in this man. The study and symptom mapping do not justify repair as treatment for the explicitly separate limiting pain.",
+      "Too easy for residents despite several observations: the deciding interpretation is effectively provided. This is not a new clinical inaccuracy."
+    ],
+    "suggestions": [
+      "Replace the label-and-plan alternatives with realistic competing initial plans at the same scope.",
+      "Require weighing a meaningful competing observation or a consequential sequencing decision; do not remove the necessary symptom facts merely to create ambiguity. No automatic basic exception is accepted."
+    ]
+  },
+  {
+    "id": "B09",
+    "title": "Resolve cystic thyroid-node imaging/cytology discordance",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "the saved needle image shows no pass through the solid rim.",
+        "why": "Explicitly tells the reader the target was missed, while only the key obtains a new specimen."
+      },
+      {
+        "phrase": "The outside neck ultrasound includes central and lateral compartments.",
+        "why": "Together with the detailed node description, it preemptively eliminates the repeat-whole-neck-ultrasound option."
+      },
+      {
+        "phrase": "Repeat node FNA with cytology and thyroglobulin washout",
+        "why": "The key is the only targeted diagnostic completion; the alternative FNA wording defers sampling behind a scan already described as complete."
+      }
+    ],
+    "fairness": [
+      "Cystic-fluid sampling does not resolve the suspicious solid-rim findings, so the keyed repeat targeted assessment is defensible. Thyroglobulin washout has interpretation limitations with an intact thyroid; its presence should not be taught as independently diagnostic.",
+      "The 12-mm observation is mapped in claim.qq20261102c.thyroid-cystic-node-discordance, not an invented new threshold. The actual offered key does not explicitly say to sample the solid rim, which is the crucial technical correction.",
+      "Too easy: both competing paths accept or repeat an obviously inadequate step instead of offering a credible alternative way to resolve the suspicious node."
+    ],
+    "suggestions": [
+      "Make the key explicitly target the solid component, not merely repeat an unspecified FNA.",
+      "Compare credible specimen or staging plans with parallel specificity, and retain enough imaging/cytology information to distinguish them. Avoid adding more option-specific negatives as the sole source of difficulty."
+    ]
+  },
+  {
+    "id": "B10",
+    "title": "Escalate complicated stoma prolapse",
+    "verdict": "PASS",
+    "difficulty": "easy",
+    "twoStep": false,
+    "basicVerdict": "ACCEPT_BASIC",
+    "cues": [
+      {
+        "phrase": "cannot be gently returned",
+        "why": "Weakens the manual-reduction/outpatient path, but is an essential danger finding in the accepted safety-recognition task."
+      }
+    ],
+    "fairness": [
+      "Exact visible fields/version unchanged. Obstructive symptoms with a nonreducible swollen prolapse support escalation over outpatient review. Intentionally easy safety recognition remains fair; do not market it as difficult resident reasoning."
+    ],
+    "suggestions": [
+      "Retain the accepted basic/safety role and the red flags."
+    ]
+  },
+  {
+    "id": "B11",
+    "title": "Sentinel-node staging discussion for melanoma",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Exact visible fields/version unchanged. The depth supports considering sentinel staging despite benign-appearing basin imaging, and planned reconstruction makes timing consequential. No new fairness defect found."
+    ],
+    "suggestions": [
+      "Retain normal basin observations and the reconstruction sequence; they test meaningful misconceptions."
+    ]
+  },
+  {
+    "id": "B11-context",
+    "title": "Resolve partial skin-biopsy and microstaging limitations",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "The report does not give a reliable maximum invasive thickness.",
+        "why": "Supplies the interpretation that the diagnostic workup is inadequate; only the key completes diagnosis before staging."
+      },
+      {
+        "phrase": "the surrounding lax skin can be brought together around the entire lesion without tension.",
+        "why": "Preselects feasibility of complete removal; this is legitimate clinical information but reinforces the only diagnosis-first choice."
+      },
+      {
+        "phrase": "using the current specimen report",
+        "why": "Both distractors explicitly depend on a report the stem has already called unreliable."
+      }
+    ],
+    "fairness": [
+      "A sample from the flat edge cannot establish what remains in the raised focus. Completion before definitive staging is a defensible key. The phrase 'atypical melanocytes along the epidermal junction and reaches the deep specimen edge' needs pathology review: what tissue/process reaches the deep edge is unclear, and junctional atypia alone is not a measured invasive melanoma.",
+      "Too easy through explicit unreliability plus two alternatives knowingly using that unreliable report. The second inference is supplied."
+    ],
+    "suggestions": [
+      "Describe the actual specimen depth, sampled site and retained raised focus; remove the interpretive 'reliable maximum' sentence if those observations establish the limitation.",
+      "Offer a credible targeted diagnostic alternative rather than two plans explicitly using a discredited report. Have the pathologist clarify whether the specimen is tangentially truncated epidermis, invasive tumor at the base, or only an unsampled-component problem."
+    ]
+  },
+  {
+    "id": "B12",
+    "title": "Apply regional-node evidence before sentinel staging",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "Distant staging has not yet been completed.",
+        "why": "Signals missing work that is repeated in the key, but both the key and dissection alternative include distant staging. Medical knowledge is still needed to choose its sequence and reject sentinel staging of an already proven-positive node."
+      }
+    ],
+    "fairness": [
+      "Malignant melanocytes from the suspicious regional node distinguish proven regional disease from occult-node staging. The decision then concerns staging and multidisciplinary planning before committing to dissection. That is a defensible best offered pathway.",
+      "The 1.5-mm primary thickness is a constructed observation, not a new treatment cutoff. The option does not commit to a specific systemic regimen or automatically mandate node dissection."
+    ],
+    "suggestions": [
+      "Retain the proven node result and sequencing alternatives. The final sentence can be shortened to an objective record of available staging studies without changing what is known."
+    ]
+  },
+  {
+    "id": "B12-context",
+    "title": "Resolve partial skin-biopsy and microstaging limitations",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "The changing asymmetric center remains, with a different surface pattern from the sampled area.",
+        "why": "Clearly announces that the benign fragment did not represent the target; the answer becomes 'sample what remains'."
+      },
+      {
+        "phrase": "the surrounding lax skin can be brought together around the entire lesion without tension.",
+        "why": "Makes complete excision uniquely convenient, reducing the repeat-punch alternative to an obvious partial-sampling compromise."
+      }
+    ],
+    "fairness": [
+      "Complete diagnostic excision is defensible for an accessible suspicious residual lesion. A correctly targeted punch is not inherently invalid, but the visible closure feasibility favors completion here.",
+      "Too easy for the intended resident application: changing, unsampled center versus peripheral nevus is direct sampling-adequacy recognition. The clinician/pathologist review sentence does not add their actual conclusion and cannot serve as evidence of concordance."
+    ],
+    "suggestions": [
+      "Remove the bare clinician/pathologist-meeting sentence unless it supplies a decision-relevant observation.",
+      "Make the closest diagnostic alternative credible and require an actual sampling/planning distinction, or explicitly seek acceptance of an easier role. Preserve sufficient anatomy and lesion extent to justify complete versus partial sampling."
+    ]
+  },
+  {
+    "id": "B13",
+    "title": "Oncologic regional resection for colon cancer",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Exact visible fields/version unchanged. Raw lymphovascular invasion must be recognized and translated into regional resection despite a scar and negative radiologic nodal staging. The local-excision and surveillance alternatives remain distinguishable."
+    ],
+    "suggestions": [
+      "Retain; negative imaging must not be taught to exclude microscopic nodal risk."
+    ]
+  },
+  {
+    "id": "B13-context",
+    "title": "Preoperative cross-sectional staging for colon cancer",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "covers the lung bases through the pelvis",
+        "why": "Points toward missing thoracic coverage, but the normal chest radiograph is a competing completed test whose adequacy requires clinical knowledge. Retained scoped-imaging overlap is acceptable."
+      }
+    ],
+    "fairness": [
+      "Exact visible fields/version unchanged. Complete the missing diagnostic chest assessment while retaining adequate abdominopelvic imaging; the provided normal radiograph does not make all offered staging routes equivalent."
+    ],
+    "suggestions": [
+      "Retain the actual coverage and modality detail."
+    ]
+  },
+  {
+    "id": "B14",
+    "title": "Oncologic regional resection for colon cancer",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Exact visible fields/version unchanged. Poor differentiation must be inferred from the gland-poor malignant architecture, then used to select regional surgery rather than local scar treatment despite negative imaging. No new fairness concern."
+    ],
+    "suggestions": [
+      "Retain the raw histologic description and comparable treatment options."
+    ]
+  },
+  {
+    "id": "B14-context",
+    "title": "Complete colon staging from actual prior imaging",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "The whole-body staging coverage is already adequate, but the small single-phase liver finding remains uncharacterized. The learner must distinguish targeted characterization from another staging survey or tissue acquisition; liver is shared by the MRI and biopsy options, so organ overlap alone cannot solve it.",
+      "Local claim claim.qq20261102c.colon-indeterminate-liver-mri expressly maps the subcentimeter scenario to ACR criteria. The 8-mm focus is a fictional observation, not a new follow-up threshold. Kidney function supplies eligibility rather than naming the chosen modality.",
+      "MRI is a defensible best offered investigation; the item does not claim that all PET or liver biopsy is inappropriate. One-source provenance and exact radiologic ranking still need clinician confirmation."
+    ],
+    "suggestions": [
+      "Retain the acquisition phase, small-lesion detail and close biopsy/PET alternatives."
+    ]
+  },
+  {
+    "id": "B15",
+    "title": "Oncologic regional resection for colon cancer",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Exact visible fields/version unchanged. Deep-margin involvement and unmeasurable invasion depth must be integrated rather than allowing the negative sampled lymphovascular finding or CT to clear the lesion. The surgical-fitness statement supports the offered broad management choice."
+    ],
+    "suggestions": [
+      "Retain the margin/depth uncertainty and avoid converting absence in sampled sections into definitive exclusion."
+    ]
+  },
+  {
+    "id": "B15-context",
+    "title": "Complete colon staging from actual prior imaging",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "No upper-lung images were acquired.",
+        "why": "Explicitly states the coverage gap answered by 'whole-chest' in the key; the prior start/end description already supplies that fact."
+      },
+      {
+        "phrase": "Diagnostic whole-chest CT",
+        "why": "Only the key is both 'Diagnostic' and covers the whole region the stem says is missing; the PET option labels its CT as merely localization."
+      }
+    ],
+    "fairness": [
+      "Completing diagnostic chest CT while retaining adequate abdominal/pelvic MRI is defensible. The small lung nodule makes an actual cross-sectional chest assessment clinically relevant.",
+      "Too easy for the requested application rewrite: the question is solved by filling the named coverage gap. The nodule does not materially create a new decision because the same answer follows without it."
+    ],
+    "suggestions": [
+      "Remove the redundant 'No upper-lung images' sentence and avoid making 'diagnostic' unique to the key.",
+      "Use a clinically credible coverage/protocol alternative whose adequacy must be interpreted, or redesign around a genuine finding that changes the next investigation. Do not add an unsupported nodule-size cutoff."
+    ]
+  },
+  {
+    "id": "B16",
+    "title": "Oncologic regional resection for colon cancer",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Exact visible fields/version unchanged. Fragmentation plus tumor within an endothelial-lined channel creates risk not resolved by a normal staging scan. The best offered broad plan remains regional colectomy."
+    ],
+    "suggestions": [
+      "Retain the histologic findings; the scar is not evidence that regional treatment is unnecessary."
+    ]
+  },
+  {
+    "id": "B16-context",
+    "title": "Preoperative cross-sectional staging for colon cancer",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Exact visible fields/version unchanged. A negative FDG study and localization-only CT must be distinguished from complete diagnostic staging. Repeated modality names are essential to the actual protocol comparison and do not uniquely identify the key."
+    ],
+    "suggestions": [
+      "Retain the outside acquisition details and do not imply every PET-CT has a nondiagnostic CT component."
+    ]
+  },
+  {
+    "id": "B17",
+    "title": "Sentinel-node staging discussion for melanoma",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Exact visible fields/version unchanged. Sentinel staging despite benign-appearing nodes and its timing relative to reconstruction remain the two decisions. No new defect found in the retained version."
+    ],
+    "suggestions": [
+      "Retain; confirm exact reconstruction/staging sequencing during clinical sign-off."
+    ]
+  },
+  {
+    "id": "B17-context",
+    "title": "Resolve partial skin-biopsy and microstaging limitations",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "The raised central focus remains; its surface was not included in the specimen diagram.",
+        "why": "Advertises the unsampled component; only the key completes diagnosis before committing to one of two incompatible definitive plans."
+      },
+      {
+        "phrase": "using an in-situ margin plan",
+        "why": "This distractor applies the partial specimen's explicit label to the visibly unsampled remainder."
+      },
+      {
+        "phrase": "using an invasive-disease plan",
+        "why": "The other distractor commits to the opposite depth category without a specimen; together the two extremes make diagnostic completion the safe middle."
+      }
+    ],
+    "fairness": [
+      "Diagnostic completion of the residual suspicious lesion is defensible. The intact accessible lesion and limited peripheral sample supply the necessary information.",
+      "Too easy for PGY-2/3 residents: both treatment distractors depend on unsupported whole-lesion conclusions. The inference is a generic 'obtain the missing specimen' rule."
+    ],
+    "suggestions": [
+      "Compare realistic diagnostic-completion strategies rather than two definitively staged operations before representative tissue.",
+      "Preserve the actual sampled site and residual focus, but require a consequential, source-supported distinction beyond recognizing an obviously incomplete biopsy."
+    ]
+  },
+  {
+    "id": "B18",
+    "title": "Apply regional-node evidence before sentinel staging",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "the submitted material contains blood without lymphoid tissue.",
+        "why": "Weakens accepting the negative aspirate, but is a necessary raw adequacy observation. It does not alone establish whether to use a targeted node sample or sentinel mapping."
+      },
+      {
+        "phrase": "The saved needle image does not enter the abnormal cortex.",
+        "why": "Makes the sampling miss explicit and duplicates the blood-only clue. It lowers difficulty, but the key still requires distinguishing suspicious-node diagnosis from occult-basin staging."
+      }
+    ],
+    "fairness": [
+      "The abnormal node cannot be cleared by this blood-only miss. Targeted core of that node is a defensible best offered plan before sentinel staging or surveillance.",
+      "The distinction between sampling a suspicious known node and looking for occult basin disease is a real resident error, so two-step reasoning remains despite the conspicuous sampling defect. A repeat targeted FNA could also be reasonable in practice, but it is not an offered competing answer.",
+      "The 1.8-mm depth is a constructed case measurement, not an invented rule."
+    ],
+    "suggestions": [
+      "Retain the targeted-node-versus-sentinel decision. Consider keeping only one unequivocal adequacy observation to avoid redundant cueing, while preserving why the aspirate cannot clear the node."
+    ]
+  },
+  {
+    "id": "B18-context",
+    "title": "Resolve partial skin-biopsy and microstaging limitations",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "with deeper tumor beyond the section's edge not measurable.",
+        "why": "Directly declares the reported minimum depth inadequate for the definitive plan proposed in a distractor."
+      },
+      {
+        "phrase": "using the minimum depth",
+        "why": "Advertises the exact underestimation error after the stem has told the reader deeper tumor is unmeasurable."
+      },
+      {
+        "phrase": "Punch biopsy of the adjacent flat pigmented area",
+        "why": "Samples a flat adjacent region despite the named firm residual focus, an obviously mismatched target rather than a close error."
+      }
+    ],
+    "fairness": [
+      "A transected invasive lesion with a substantial residual focus supports diagnostic completion before final microstaging decisions. The 0.6-mm value is explicitly a minimum observation; the item should not imply it is the final depth.",
+      "Too easy for the resident aim: both distractors tell the reader how they ignore the missing depth or wrong target. No unsupported threshold is needed to reject them."
+    ],
+    "suggestions": [
+      "Replace the adjacent-flat-area punch with a realistically targeted completion strategy and remove the distractor's self-incriminating 'minimum depth' wording.",
+      "Keep raw deep-margin involvement and the residual focus, then have the clinician define the observation that makes complete excision preferable to the closest diagnostic alternative."
+    ]
+  },
+  {
+    "id": "B19",
+    "title": "Specialist-planned biopsy of a suspicious soft-tissue mass",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Exact visible fields/version unchanged. Both targets enhance, while the brighter target has a less favorable cross-compartment route. Choosing viable tissue and a tract compatible with definitive surgery still requires interpreting anatomy, not just matching 'enhancing' to an option."
+    ],
+    "suggestions": [
+      "Retain the competing target and route advantages and parallel biopsy labels."
+    ]
+  },
+  {
+    "id": "B19-context",
+    "title": "Assess local MRI adequacy before soft-tissue biopsy",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "The outside MRI was requested as a knee examination.",
+        "why": "Labels the current scan as the wrong anatomical scope while the key is whole-thigh MRI."
+      },
+      {
+        "phrase": "the proximal palpable end lies above the acquired field.",
+        "why": "A nonmedical reader can infer the need to enlarge the scan; the repeat-knee distractor repeats the stated mistake."
+      },
+      {
+        "phrase": "no transverse section contains the entire mass with the adjacent neurovascular bundle.",
+        "why": "Adds another explicit completeness failure that only the key repairs."
+      }
+    ],
+    "fairness": [
+      "MRI encompassing the whole lesion and relevant relationships before biopsy is defensible. Whole-thigh coverage here should describe an appropriate local protocol, not a universal mandate to scan an entire limb.",
+      "Too easy: this is a field-of-view matching exercise with one competent option. The provided enhancement information does not create a competing diagnostic choice."
+    ],
+    "suggestions": [
+      "Retain one clear coverage observation and replace repeat knee MRI with a plausible local acquisition or target-planning alternative.",
+      "Make the decision depend on which missing anatomical relationship changes biopsy planning, with adequate data to rank the alternatives. Do not simply pad the existing omission list."
+    ]
+  },
+  {
+    "id": "B20",
+    "title": "Specialist-planned biopsy of a suspicious soft-tissue mass",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Exact visible fields/version unchanged. The best sampling route and brightest target are deliberately separated; the learner must prioritize representative sampling without crossing an additional compartment. The paired technique choices remain credible."
+    ],
+    "suggestions": [
+      "Retain the anatomy and balanced target descriptions."
+    ]
+  },
+  {
+    "id": "B20-context",
+    "title": "Assess local MRI adequacy before soft-tissue biopsy",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "no post-injection series appears in the export.",
+        "why": "Names the missing contrast component, which only the key supplies."
+      },
+      {
+        "phrase": "covers the full palpable mass and adjacent neurovascular structures.",
+        "why": "Explicitly removes the rationale for the competing full-arm coverage option, leaving one stated missing dimension."
+      }
+    ],
+    "fairness": [
+      "Contrast-enhanced MRI can help distinguish viable tissue for targeting, consistent with claim.qq20261102c.sarcoma-enhancement-biopsy-target. Fluid-sensitive brightness alone does not establish that distinction.",
+      "The wording only says post-injection images are absent from an export, not that they were never acquired. Retrieving omitted existing sequences may be preferable to repeating the examination; the acquisition status is missing. This is an ambiguity in the next plan, not proof that repeat MRI is clinically wrong.",
+      "Too easy even if the sequences truly were not obtained: complete coverage plus absent contrast directly maps to the sole contrast option."
+    ],
+    "suggestions": [
+      "State from the acquisition log whether contrast was actually administered; if data exist elsewhere, make retrieval a possible next step rather than silently assume a new scan is needed.",
+      "Test an actual target-viability or protocol decision with credible comparable options. Remove redundant coverage reassurance only if it is not needed to rank the revised choices."
+    ]
+  },
+  {
+    "id": "B21",
+    "title": "Management of a clearly characterized asymptomatic colonic lipoma",
+    "verdict": "PASS",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "Jamie Taylor reports unchanged bowel habits and has not noticed pain or rectal bleeding.",
+        "why": "Makes the asymptomatic status explicit and weakens removal, but is necessary to the care decision rather than a removable giveaway."
+      }
+    ],
+    "fairness": [
+      "Exact visible fields/version unchanged. The characteristic lesion and asymptomatic status still support no lesion-specific follow-up; no new fairness defect found.",
+      "This remains easy recognition-to-management for PGY-2/3 residents. Per the user's limited recheck of unchanged PASS versions, difficulty is recorded without reopening its accepted exact wording or inventing a basic exception."
+    ],
+    "suggestions": [
+      "Retain the exact passed version; count it as easy in the bank's difficulty mix."
+    ]
+  },
+  {
+    "id": "B21-context",
+    "title": "Reconcile mucosal sampling with a characteristic subepithelial lesion",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "The current endoscopic and wall-layer observations are documented above.",
+        "why": "An unnecessary author direction points the reader back to the decisive reassuring findings rather than leaving them to weigh the specimen."
+      },
+      {
+        "phrase": "No additional lesion tissue sampling",
+        "why": "The key is a no-intervention plan versus two invasive biopsy techniques. That category difference is legitimate if clinical interpretation drives it, but here the classic pattern already resolves the choice before the new update."
+      }
+    ],
+    "fairness": [
+      "A normal superficial specimen does not sample a submucosal lesion; characteristic lipoma findings can nevertheless make additional sampling unnecessary. This is defensible and not a claim that a negative mucosal biopsy excludes malignancy.",
+      "The new update fails the difficulty deletion test: removing it leaves the same key for the same classic lipoma presentation. A resident can recognize lipoma and choose no biopsy without performing the proposed specimen-reconciliation step.",
+      "Too easy; the rejected basic designation cannot be restored by calling this an application item. Local claim claim.qq20261102c.classic-lipoma-normal-mucosal-sample supports plausibility, not measured difficulty."
+    ],
+    "suggestions": [
+      "Remove the directive pointing 'above'. Make the specimen information actually change a consequential decision or replace this duplicate context task with a genuinely distinct objective.",
+      "Do not add atypical imaging to the shared presentation without revisiting the passed downstream no-follow-up question; preserve its exact clinical premise."
+    ]
+  },
+  {
+    "id": "B22",
+    "title": "Management of a clearly characterized asymptomatic colonic lipoma",
+    "verdict": "PASS",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "Jamie Taylor reports unchanged bowel habits and has not noticed pain or rectal bleeding.",
+        "why": "Weakens intervention, but establishes the clinically relevant asymptomatic setting; retain it."
+      }
+    ],
+    "fairness": [
+      "Exact visible fields/version unchanged. A clearly characterized asymptomatic lipoma supports no lesion-specific follow-up over repeat tissue sampling or removal.",
+      "Easy for residents, but the requested brief retained-version check identifies no new fairness defect. Prior PASS is preserved without relabelling this as an accepted basic item."
+    ],
+    "suggestions": [
+      "Retain the exact passed version and represent its difficulty honestly."
+    ]
+  },
+  {
+    "id": "B22-context",
+    "title": "Reconcile mucosal sampling with a characteristic subepithelial lesion",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "The lesion's deformability and wall-layer study are those documented in the current examination above.",
+        "why": "An unnecessary pointer tells the reader which reassuring observations to privilege."
+      },
+      {
+        "phrase": "No additional lesion tissue sampling",
+        "why": "The no-biopsy key contrasts with two biopsy techniques. The distinction requires recognizing the classic lipoma, but the newly added specimen history is not needed to make it."
+      }
+    ],
+    "fairness": [
+      "A mucosal-only bite-on-bite specimen is not representative of a submucosal lesion; its negativity should not be treated as histologic clearance. The characteristic current endoscopic/EUS appearance can independently justify no further tissue.",
+      "The same answer survives deletion of the whole update. Thus the proposed sampling-adequacy inference is optional, and this remains an easy classic-lipoma management rule rather than a difficult application question.",
+      "No confident clinical inaccuracy or invented numeric threshold found; the issue is construct and difficulty."
+    ],
+    "suggestions": [
+      "Remove the explicit 'above' teaching pointer and avoid counting recognition followed by its routine management rule as two substantive steps.",
+      "Use a different context decision in which the specimen result changes the plan while preserving the passed companion's clinical premise, or obtain an explicit educational-role decision rather than silently relabel basic."
+    ]
+  },
+  {
+    "id": "B23",
+    "title": "Avoid routine prophylactic splenectomy in proximal gastric cancer",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "CT shows a visible fat strip between the stomach and the pancreas and spleen.",
+        "why": "Weakens adjacent-organ resection, but does not determine lymphadenectomy extent. This is necessary invasion information in a two-axis plan, not a complete answer shortcut."
+      }
+    ],
+    "fairness": [
+      "Exact visible fields/version unchanged. Depth/location and lack of adjacent-organ involvement must be used together to select the lymphadenectomy and splenic plan. No new fairness defect found."
+    ],
+    "suggestions": [
+      "Retain the raw depth and organ-plane observations; do not substitute an interpreted 'no need for splenectomy' sentence."
+    ]
+  },
+  {
+    "id": "B24",
+    "title": "Pathologic recognition of gastric MALT lymphoma",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "Keep the classification open and obtain correlated histologic assessment",
+        "why": "A broad, cautious workup option is set against two definitive diagnostic commitments. It has a generic safest-answer advantage rather than specifying a comparably concrete decision."
+      },
+      {
+        "phrase": "Assign reactive gastritis and end the lymphoma assessment",
+        "why": "'End the lymphoma assessment' advertises dismissal of a clonal finding and makes this alternative less credible than a measured reactive interpretation with follow-up."
+      }
+    ],
+    "fairness": [
+      "Clonality alone does not establish MALT, and preserved gland epithelium does not exclude it. An open classification is defensible on these limited findings; the current task appropriately avoids unsupported ranking of repeat endoscopy versus molecular testing.",
+      "This could be a moderate application item if the alternatives expressed comparable levels of diagnostic confidence. As written, uncertainty in the stem plus the uniquely noncommittal key provides a test-taking escape.",
+      "The remaining block and one-site sampling details do not uniquely prescribe the next tissue procedure, and the current key should not be read as doing so. Local claim claim.qq20261102c.gastric-clonality-classification-boundary records that limitation."
+    ],
+    "suggestions": [
+      "Make all choices parallel interpretations of what the existing evidence establishes, with comparable follow-up scope; remove 'end the lymphoma assessment'.",
+      "Replace the open-ended phrase 'correlated histologic assessment' with a specific, supported assessment goal without reintroducing an unproved biopsy-versus-molecular-test hierarchy. Preserve both the clonality result and the limited architecture."
+    ]
+  },
+  {
+    "id": "B25",
+    "title": "Choose gastric MALT care from post-eradication trajectory",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "There is no new deep wall extension or nodal disease on reassessment.",
+        "why": "Favors observation over escalation, but is a necessary adverse-progression check. Molecular persistence and residual histology remain credible competing reasons to treat, so it does not solve the item without medical knowledge."
+      }
+    ],
+    "fairness": [
+      "The learner must distinguish persistent molecular clonality from progressive lymphoma, then integrate symptom, endoscopic and histologic regression to choose surveillance rather than immediate radiotherapy or another eradication course. This is a substantive, defensible application.",
+      "The six-week-from-start and two-week-off-PPI wording is explicitly mapped by claim.qq20261102c.hpylori-test-conditions to the local BSH source record. It is not unsupported merely because it is exact. This review did not retrieve that guideline independently.",
+      "The record should distinguish the date of infection reassessment from later lymphoma-response assessments; it does not specify a mandatory cancer-response deadline. If an unusually long antimicrobial course or intervening suppressive therapy occurred, those facts would matter, but none should be invented to make the item fail."
+    ],
+    "suggestions": [
+      "Retain the competing molecular and clinical trajectories. Clinical sign-off should confirm the test chronology and actual eradication completion rather than generalize six weeks into a universal lymphoma-response cutoff."
+    ]
+  },
+  {
+    "id": "B25-context",
+    "title": "Apply gastric lymphoma morphology to the treatment pathway",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "rather than in confluent groups",
+        "why": "Highlights the precise morphology separating scattered larger cells from transformation. It is close to an option-specific negative, but the learner still must know its significance and select the corresponding initial care; retain the observation rather than a diagnostic label."
+      }
+    ],
+    "fairness": [
+      "A gland-infiltrating small B-cell process with individually dispersed larger cells supports the indolent MALT pathway rather than automatically assigning a large-cell lymphoma. H. pylori and gastric confinement then inform initial care.",
+      "The larger-cell observation is a real competing feature, not merely an added decorative fact. The local ledger explicitly supports the transformation boundary while reserving exact morphology for hematopathology review. No unsupported Ki-67, percentage, or time threshold was introduced."
+    ],
+    "suggestions": [
+      "Retain the architectural description and three diagnosis/care plans. Do not replace it with 'no transformation' or imply isolated larger cells alone establish a different lymphoma."
+    ]
+  },
+  {
+    "id": "B26",
+    "title": "Apply uncertainty to a target-benefit decision",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "another efficacy study has no role",
+        "why": "An absolute futility claim is easy to reject from an imprecise interval even without a disciplined analysis."
+      },
+      {
+        "phrase": "Clinical equivalence is established by nonsignificance; stop comparative efficacy work",
+        "why": "Combines the familiar nonsignificance-equals-equivalence error with an extreme stop-work recommendation."
+      },
+      {
+        "phrase": "Target benefit is plausible but unconfirmed; a more precise study could resolve it",
+        "why": "Only the key is cautiously conditional; every distractor makes an emphatic final decision. Tone alone favors it."
+      },
+      {
+        "phrase": "Target benefit is established by the point estimate; proceed with routine adoption",
+        "why": "The qualifier 'by the point estimate' announces the error under the explicitly supplied entire-interval criterion."
+      }
+    ],
+    "fairness": [
+      "The interval includes both a target-sized benefit and zero/harm, so the key is mathematically defensible. The approximate p-value 0.4 is consistent with the estimate/interval to the precision stated. The protocol's 4-point target is visibly fictional, not an unsupported clinical threshold.",
+      "There are two legitimate judgments (target status and planning under uncertainty), but the unbalanced certainty/rationale wording makes the current version easy for residents."
+    ],
+    "suggestions": [
+      "Use parallel, concise paired conclusions, such as target confirmed/excluded/unresolved plus comparably scoped planning choices; move the explanations about nonsignificance and point estimates to feedback.",
+      "Remove 'has no role', 'stop' and the uniquely cautious tone. Keep the explicit hypothetical decision criteria, which are necessary for fairness."
+    ]
+  },
+  {
+    "id": "B27",
+    "title": "Interpret a p-value",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Exact visible fields/version unchanged. The null test and clinically targeted hypothetical effect are separate: p=0.03 rejects zero while the interval does not establish the full target benefit. The crossed options do not privilege a uniquely cautious or lengthy key."
+    ],
+    "suggestions": [
+      "Retain the defined interval rule and the labelled constructed data."
+    ]
+  },
+  {
+    "id": "B28",
+    "title": "Distinguish risk ratio and odds ratio",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Exact visible fields/version unchanged. At fixed control risk 0.40, control odds are 2/3; applying 0.60 gives intervention odds 0.40 and risk 0.40/1.40, approximately 29%. The 24% choice captures treating the odds ratio as a risk ratio.",
+      "The fixed common covariate profile makes the conversion fair; no population marginal-risk interpretation is silently assumed."
+    ],
+    "suggestions": [
+      "Retain the fixed-profile qualification and numerical alternatives."
+    ]
+  },
+  {
+    "id": "B29",
+    "title": "Arrange adult support after endoscopic sedation",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "basicVerdict": "ACCEPT_BASIC",
+    "cues": [],
+    "fairness": [
+      "FROZEN / NOT RE-REVIEWED at the user's direction. The five visible fields and variant match the pre-round-four snapshot. REVISE, easy, false and ACCEPT_BASIC are carried forward solely to preserve the existing schema and prior unresolved status; they are not fresh verdicts or reassessments.",
+      "Await the manager's freeze/repair decision. This entry is excluded from the fresh difficulty/verdict assessment counts and identified separately in the summary."
+    ],
+    "suggestions": [
+      "Keep frozen pending the manager decision; do not treat accepted basic intent as clearance of the unresolved item."
+    ]
+  },
+  {
+    "id": "B30",
+    "title": "Apply gastric lymphoma morphology to the treatment pathway",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "The gland-infiltrating small atypical B-cell architecture must outweigh a negative fusion assay, then H. pylori and localized stage inform initial care. The negative molecular result is a credible competing feature rather than a guarantee against MALT.",
+      "The fusion-negative finding is not used to infer a precise eradication-response probability. Local claims claim.qq20261102c.gastric-negative-fusion-not-exclusion and claim.qq20261102c.gastric-eradication-response-pathway support the intended distinction, subject to clinical confirmation.",
+      "Options are comparable interpretation-plus-initial-plan statements. Repeating 'gastric' or 'infection' does not isolate the key."
+    ],
+    "suggestions": [
+      "Retain the morphologic/molecular conflict and avoid treating a negative BIRC3-MALT1 assay as proof of either benignity or treatment success."
+    ]
+  },
+  {
+    "id": "B30-context",
+    "title": "Choose gastric MALT care from post-eradication trajectory",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "there is no confluent large-cell component.",
+        "why": "Excludes a competing aggressive histology not actually offered as an answer. It is nevertheless important for the proposed localized low-grade treatment pathway, not an eliminator of the three listed options."
+      }
+    ],
+    "fairness": [
+      "Progressive symptomatic localized disease, including enlarging ulceration, bleeding and increasing infiltrate, is materially different from regressing residual disease. The learner must distinguish progression from persistent microscopic disease before choosing local escalation.",
+      "Radiotherapy is a defensible best among observation, another eradication course and local treatment, given the documented low-grade localized restaging. The question is a longitudinal care plan, not a substitute for acute bleeding stabilization.",
+      "The exact infection-reassessment timing is supported in the local mapping claim.qq20261102c.hpylori-test-conditions. It is not a new lymphoma-failure deadline; the timing of serial cancer-response studies remains unspecified rather than implicitly six weeks."
+    ],
+    "suggestions": [
+      "Retain the explicit progressive trajectory and restaging. Clinical sign-off should verify the infection-test chronology and ensure the narrative does not imply a fixed six-week lymphoma-response cutoff."
+    ]
+  },
+  {
+    "id": "B31",
+    "title": "Interpret a p-value",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Exact visible fields/version unchanged. The superiority result does not establish a difference, and the 90% interval is not within the stated equivalence margins. The supplied testing rules make the paired conclusion fair.",
+      "The hypothetical margins are not presented as clinical standards. No new numerical inconsistency found."
+    ],
+    "suggestions": [
+      "Retain both intervals and the explicit two-one-sided-test protocol."
+    ]
+  },
+  {
+    "id": "B32",
+    "title": "Apply vascular, contents and duct findings to collection treatment",
+    "verdict": "REVISE",
+    "difficulty": "hard",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "then collection drainage if required",
+        "why": "The key's conditional component is more flexible than the surgical combined procedure, but the endoscopic-first alternative also has 'if required', so tone/convergence alone does not select the correct order."
+      }
+    ],
+    "fairness": [
+      "The arterial-density cavity and communicating channel with blood loss require recognition of a vascular complication before choosing the sequence of vascular control and collection intervention. That is genuine difficult application.",
+      "The phrase 'pulse and blood pressure remain near the post-resuscitation observations' does not establish hemodynamic stability: no actual post-resuscitation observations or direction of response are given. A patient can remain persistently unstable at those same values. That omission matters when ranking embolization-first against operative arterial control.",
+      "The local ledger supports vascular control before routine drainage and explicitly leaves individualized rescue surgery open. This is missing decision-critical physiology, not a confident claim that embolization is clinically wrong."
+    ],
+    "suggestions": [
+      "Replace the circular post-resuscitation comparison with actual observations/trend and whether ongoing support is escalating, without inventing a universal stability cutoff.",
+      "Specify the availability/timeliness of vascular and operative expertise only to the extent needed to make one route best. Recheck the surgical alternative once the patient's actual response is clear."
+    ]
+  },
+  {
+    "id": "B32-context",
+    "title": "Complete collection imaging for a specific intervention question",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "No arterial acquisition was obtained.",
+        "why": "Names a missing phase, but does not by itself establish that the enhancing focus and bleeding need angiography. It is necessary to explain why the prior CT has not answered the vascular question."
+      }
+    ],
+    "fairness": [
+      "A marginal enhancing focus, melena and hemoglobin fall after pancreatitis must be interpreted as a possible arterial complication; the learner then chooses vascular characterization rather than another portal-venous examination or duct MRI.",
+      "Return near the preceding clinical observations after resuscitation makes CT-based investigation defensible among the offered imaging choices. This is not a rule to delay therapeutic hemorrhage control in ongoing instability. Raw hemodynamic observations would be clearer than relative wording.",
+      "No new phase-timing or hemodynamic cutoff is stated. Local claim claim.qq20261102c.pancreatic-arterial-focus-before-drainage supports the intended evaluation."
+    ],
+    "suggestions": [
+      "Retain the enhancing focus and bleeding findings. Clarify the actual resuscitation response when this case is clinically signed off, without adding an arbitrary stability threshold."
+    ]
+  },
+  {
+    "id": "B33",
+    "title": "Apply vascular, contents and duct findings to collection treatment",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "add necrosectomy if required",
+        "why": "The key is the only explicitly conditional debridement plan and can look safer than the alternatives. Here the condition is the actual step-up strategy being tested, not padding; choosing it still requires interpreting nonliquid contents and the clinical course."
+      },
+      {
+        "phrase": "Transpapillary duct stenting alone, followed by collection reassessment",
+        "why": "'Alone' emphasizes the limitation of this alternative. It should describe the intended strategy rather than act as a dismissive qualifier."
+      }
+    ],
+    "fairness": [
+      "The learner must recognize a walled necrotic collection from its contents and select an initial intervention sequence for persistent obstruction/nutritional failure rather than treating all debris with immediate necrosectomy. Drainage-first with reassessment is a defensible best offered plan.",
+      "No sepsis/organ failure is clinically relevant context, not proof that intervention is unnecessary. The item does not assert a fixed maturation interval or require necrosectomy for every fragment.",
+      "Direct endoscopic necrosectomy can be a specialist-selected strategy in some circumstances; the local ledger describes the step-up approach conditionally. Exact ranking and access technique need pancreatic-endoscopy review, but no supplied feature requires immediate debridement over the keyed initial plan."
+    ],
+    "suggestions": [
+      "Retain the step-up decision and actual collection contents. Remove 'alone' if the plain stenting label conveys the same competing plan, and avoid teaching that immediate necrosectomy is universally inappropriate."
+    ]
+  },
+  {
+    "id": "B33-context",
+    "title": "Complete collection imaging for a specific intervention question",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "The uncertain CT description is appropriately scoped to fluid versus nonliquid contents, not a generic 'inconclusive' label. The learner must identify the unresolved internal-content question and choose a modality capable of answering it rather than an invasive duct study.",
+      "MRI is a defensible offered next assessment before intervention; repeating the same CT without a specified new protocol is less helpful for the described limitation. The presence of MRCP in the label does not make MRI mandatory for every collection.",
+      "Local claim claim.qq20261102c.pancreatic-mri-contents supports this use. No new quantitative threshold or diagnostic certainty is invented."
+    ],
+    "suggestions": [
+      "Retain the concrete imaging uncertainty. If revising the repeat-CT option, specify a genuinely different supported protocol rather than an unexplained repeat."
+    ]
+  },
+  {
+    "id": "B34",
+    "title": "Apply vascular, contents and duct findings to collection treatment",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "Stomach and duodenum are separated from the collection by intervening bowel.",
+        "why": "Strongly weakens transmural drainage, but is necessary access information. It does not distinguish a duct-directed strategy from percutaneous drainage without understanding duct continuity and the leak."
+      }
+    ],
+    "fairness": [
+      "A small communicating fluid-only collection, continuity of the main duct and unsuitable direct transmural access must be integrated to select transpapillary treatment. This is substantive anatomy-to-route reasoning with a defensible best offered discussion plan.",
+      "The local claim claim.qq20261102c.pancreatic-partial-leak-bridge maps the fictional 4-cm collection to a previously sourced small-collection scenario, with low-quality/single-source support explicitly recorded. It is not an invented universal size threshold.",
+      "MRCP continuity does not prove that a particular leak can be bridged endoscopically. The task asks which plan to discuss, not that successful bridging is guaranteed; exact site/technical feasibility still needs specialist confirmation."
+    ],
+    "suggestions": [
+      "Retain duct continuity and access anatomy. Clinical sign-off should confirm that the described side leak is reachable for the intended transpapillary strategy; do not imply all communicating collections require this route."
+    ]
+  },
+  {
+    "id": "B34-context",
+    "title": "Complete collection imaging for a specific intervention question",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "The CT establishes the collection and access problem but leaves a clinically consequential duct question unresolved. Choosing MRCP requires connecting duct continuity/communication to eventual route planning, rather than selecting MRI merely because CT was performed.",
+      "ERCP is a credible alternative because it can diagnose and treat a duct leak. The current task is to characterize an uncertain duct before selecting intervention; a noninvasive map is defensible as the next investigation. The record does not establish a known bridgeable leak requiring immediate therapeutic ERCP.",
+      "The local duct-mapping claim acknowledges low-quality evidence and does not make secretin a hidden mandatory resource. The 4-cm observation is sourced as a constructed scenario, not a new rule."
+    ],
+    "suggestions": [
+      "Retain the diagnostic-planning framing and confirm MRCP-versus-therapeutic-ERCP ranking with the endoscopist. Do not describe ERCP as universally wrong or add an arbitrary size/timing threshold."
+    ]
+  },
+  {
+    "id": "B35",
+    "title": "Apply vascular, contents and duct findings to collection treatment",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "A collection that collapsed during temporary drainage has reaccumulated after drain removal.",
+        "why": "Discourages repeating the identical temporary strategy. This is meaningful response history, not an interpretive label; the viable gland and discontinuous duct still must be interpreted to choose a sustainable route."
+      },
+      {
+        "phrase": "Transmural drainage with planned long-term plastic-stent drainage",
+        "why": "Slightly longer and more specific than the alternatives, but the stent material/duration strategy defines the intended distinction and is not a rationale appended only to the key."
+      }
+    ],
+    "fairness": [
+      "The disconnected viable upstream gland explains recurrent secretion despite temporary collapse. Recognizing that mechanism and distinguishing sustained transmural drainage from bridging a noncontinuous duct is genuinely difficult application.",
+      "The key is defensible among these endoscopic plans. Local claim claim.qq20261102c.pancreatic-disconnected-long-term-drainage explicitly records low-quality evidence; this is not proof of universal indefinite stenting or exclusion of later surgery.",
+      "No exact duration, guaranteed cure or novel quantitative cutoff is asserted. The absent connecting segment on MRCP supports the working anatomy but warrants specialist confirmation before technical treatment."
+    ],
+    "suggestions": [
+      "Retain the recurrence and viability/duct findings. Keep the low-quality-evidence limitation in review/feedback and avoid extending this plan into a universal rule for all collections."
+    ]
+  },
+  {
+    "id": "B35-context",
+    "title": "Complete collection imaging for a specific intervention question",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Recurrent collection, a viable upstream tail and enzyme-rich prior drain fluid require inference of a continuing duct-source problem. The learner must then choose mapping of continuity rather than repeat generic CT or proceed directly to an invasive pancreatogram.",
+      "MRCP is a defensible next planning investigation, particularly when the upstream relationship is the unresolved question. ERCP remains a clinically plausible therapeutic alternative after the anatomy is defined, not an inherently invalid test.",
+      "'Far above the serum sample' is a relative constructed observation, not an invented diagnostic ratio cutoff. Local claim claim.qq20261102c.pancreatic-duct-mapping records the limits of evidence."
+    ],
+    "suggestions": [
+      "Retain the combined recurrence, viability and fluid observations. Specialist review should confirm the intended MRI/MRCP protocol without making unprovided secretin availability a hidden requirement."
+    ]
+  },
+  {
+    "id": "B36",
+    "title": "Act and iterate after a PDSA test",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "Staff currently copy the signed visit medication list into the form by hand.",
+        "why": "States the exact baseline repeated only in the key's first arm; both distractors begin with a different source or entry mode."
+      },
+      {
+        "phrase": "the latest dispensing record still contains the previous prescriptions.",
+        "why": "Explicitly labels the competing record source as stale before any comparison is interpreted."
+      },
+      {
+        "phrase": "The team wants to reduce the extra form work",
+        "why": "Preselects the process component whose increase the exhibit was supposed to make the learner discover."
+      }
+    ],
+    "fairness": [
+      "Holding source constant while changing entry method is a defensible next local comparison. The problem is not that one-factor comparisons are always mandatory, but that the key is the only option starting from the stated actual workflow.",
+      "Deleting the entire workload table leaves the answer unchanged: the goal, baseline and stale competing source already select it. The purported workload inference is unnecessary, so this is easy one-step design recognition rather than two-step application.",
+      "The caption says totals across the same ten uses, while the last row concerns repeat contacts in the next 20 visits. Those denominators can coexist only if their relationship is explained; as written the table's sampling frame is inconsistent. Values are fictional, not unsupported clinical thresholds."
+    ],
+    "suggestions": [
+      "Make the table determine which process component to test, rather than naming extra form work in advance.",
+      "Use comparisons grounded in the same real baseline and comparably current sources so the learner must isolate the relevant process change rather than reject stale records or invented baselines.",
+      "Separate the ten-use process-time sample from the twenty-visit balancing-outcome sample, or use one explicitly coherent denominator."
+    ]
+  },
+  {
+    "id": "B37",
+    "title": "Resolve breast imaging/core-biopsy discordance",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "the needle track remains below that area.",
+        "why": "Makes the missed target explicit, but recognizing why this does not resolve the suspicious parenchymal lesion and choosing core rather than skin-only sampling still requires clinical knowledge."
+      },
+      {
+        "phrase": "Sections contain adipose tissue and scant fibrous stroma.",
+        "why": "Reinforces the sampling miss. This is raw specimen evidence rather than a summary 'inconclusive' label, though one unequivocal adequacy observation may suffice."
+      }
+    ],
+    "fairness": [
+      "Persistent inflammatory breast changes plus a suspicious parenchymal area cannot be cleared by a core that demonstrably missed it. Repeat image-guided parenchymal core is a defensible best offered plan; skin punch remains a plausible but insufficient substitute for the unsampled breast target.",
+      "The skin-punch alternative creates a real tissue-purpose distinction, unlike options that simply accept the missed core. The task is complete and does not leak future staging.",
+      "Local claim claim.qq20261102c.breast-core-target-discordance allows other repeat techniques in practice. This option set need not establish core as universally superior to vacuum-assisted or surgical sampling."
+    ],
+    "suggestions": [
+      "Retain the parenchymal-target versus skin-sampling distinction. Consider removing one redundant missed-target observation, but preserve actual image/specimen discordance rather than replacing it with an interpretive label."
+    ]
+  },
+  {
+    "id": "B37-context",
+    "title": "Neoadjuvant sequence for stage III inflammatory breast cancer",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Exact visible fields/version unchanged. The conditional response to systemic therapy does not erase the inflammatory presentation's implications for local treatment. The task clearly separates current stage/biomarkers from a hypothetical future response.",
+      "The alternatives remain competing local strategies rather than options excluded by unrelated negatives. No new fairness defect identified."
+    ],
+    "suggestions": [
+      "Retain the explicitly conditional response and complete local-treatment task."
+    ]
+  },
+  {
+    "id": "B38",
+    "title": "Interpret a confidence interval",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Exact visible fields/version unchanged. Multiplying the fixed 20% control risk by 0.40 and 1.20 gives intervention risks of 8% and 24%, hence differences of -12 and +4 percentage points. The +5-point hypothetical margin is outside that interval.",
+      "The fixed-reference-risk assumption makes the interval translation fair; the options require calculation before applying the protocol conclusion."
+    ],
+    "suggestions": [
+      "Retain the fixed-risk assumption and visibly hypothetical margin."
+    ]
+  },
+  {
+    "id": "B39",
+    "title": "Interpret a p-value",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Exact visible fields/version unchanged. The zero-effect test and a minimum worthwhile reduction are different conclusions: the narrow negative interval excludes zero but also excludes a full 1-point reduction under the stated protocol.",
+      "The study values are constructed and mathematically coherent to the displayed precision. No novel clinical threshold is asserted."
+    ],
+    "suggestions": [
+      "Retain the crossed conclusion options and stated target rule."
+    ]
+  },
+  {
+    "id": "B40",
+    "title": "Sequence treatment of recurrent ulcer bleeding",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "no repeat endoscopic hemostasis has yet been attempted.",
+        "why": "Names the untried action repeated by the key and uses 'yet' to imply it is due next. The first-EGD narrative already supplies the relevant stage."
+      },
+      {
+        "phrase": "The first examination recorded a directly accessible ulcer target",
+        "why": "Supports repeat endoscopy and weakens rescue procedures; access is legitimate decision-critical information, but combined with the explicit untried-action sentence it heavily preselects the key."
+      }
+    ],
+    "fairness": [
+      "The key is defensible: recurrent bleeding after initially successful therapy is different from persistent failure of a second therapeutic attempt. Resuscitation response, access and equal availability make endoscopy versus angiography/surgery a real sequencing decision.",
+      "The exact 118/72 pressure and 94/min pulse are constructed observations, not taught cutoffs. Local claim claim.qq20261102c.ulcer-rebleeding-repeat-endoscopy maps the sequence to the recorded ESGE guideline; this offline review cannot verify its correction notice.",
+      "This is a useful moderate application item once the redundant named-action hint is removed; no confident clinical error is identified."
+    ],
+    "suggestions": [
+      "Delete the 'no repeat ... yet' sentence. Let the documented first successful procedure and subsequent recurrence establish the stage.",
+      "Retain actual response to resuscitation and target-access information; preserve comparable availability without adding a sentence that says repeat endoscopy is appropriate."
+    ]
+  },
+  {
+    "id": "B40-context",
+    "title": "Recognize failed repeat ulcer hemostasis and select rescue",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "Repeated suction and irrigation cannot maintain a view for another accurately placed device.",
+        "why": "Weakens another endoscopic attempt, but is necessary technical information explaining why failure cannot simply be corrected with another device. It does not choose embolization over surgery without clinical knowledge."
+      }
+    ],
+    "fairness": [
+      "The documented failed second attempt and inability to maintain access distinguish this from uncomplicated recurrence after first success. The learner must recognize that boundary and choose angiographic rescue over another endoscopy or immediate operative rescue.",
+      "The current vital signs and available teams support a defensible offered embolization pathway, without defining a universal vital-sign threshold or claiming surgery is never required. The duodenal location is coherent with the presentation.",
+      "Local claim claim.qq20261102c.ulcer-failed-repeat-embolization maps the sequence to the current recorded guideline, with one-source/correction-access limitations preserved. Clinical sign-off remains necessary."
+    ],
+    "suggestions": [
+      "Retain the actual repeat-treatment failure, view/access limitation and available rescue pathways. Do not replace them with a teaching label such as 'failed repeat hemostasis therefore embolize'."
+    ]
+  }
+]

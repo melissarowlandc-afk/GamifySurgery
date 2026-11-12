@@ -1,0 +1,1171 @@
+[
+  {
+    "id": "A02",
+    "title": "HIDA after equivocal gallbladder ultrasound",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Review-seven scope: 73 packet items (43 main, 30 context). Independently re-reviewed only the eleven specified changed items using after Presentation, Current update, Exhibit, Task and Options, ignoring review-only key markers and author rationales when testing answer cues. Read question-authoring.2026-11-02.v10 and the final author handoff. Separately inspected preceding runtime results/feedback for sequence leakage. The remaining 62 items are preservation-only; eleven owner approvals are separately verified.",
+      "Counts, independently re-reviewed eleven: {\"total\":11,\"verdict\":{\"PASS\":6,\"REVISE\":5,\"FAIL\":0},\"difficulty\":{\"easy\":4,\"moderate\":7,\"hard\":0},\"twoStep\":7}. Overall 73: {\"total\":73,\"verdict\":{\"PASS\":68,\"REVISE\":5,\"FAIL\":0},\"difficulty\":{\"easy\":9,\"moderate\":59,\"hard\":5},\"twoStep\":64}. Overall difficulty/twoStep includes carried review-six ratings for 62 preservation-only entries; these are qualitative predictions, not measured performance or a fresh difficulty claim for changed sequences.",
+      "Preservation method: independently loaded current assembled TypeScript using the read-only source loader; compared exact JSON.stringify UTF-8 bytes, without normalization, to tools/question-quality/fixtures/adversarial-r7-before-20261102.json. The snapshot review array exactly equals the current review-six report. All 73 after projections and visible-history projections match assembled source. Exactly the specified eleven after objects changed. All 62 frozen question objects and target-node/shared-case projections, including B01/B10/B29, and all eleven approvals match. This verifies version/field serialization, not byte identity of whole regenerated packet files.",
+      "Sequence scope: all 30 nonempty prior-history projections were inspected. Five frozen later items have newly changed preceding feedback: B03, B12, B17, B18 and B19. B19's prior tract giveaway is removed; B18 retains explicit eligibility-topic scaffolding. Frozen B21/B22 caveats are real and retained, not newly caused by round seven. Other existing thematic scaffolds do not directly supply a later key; their inherited difficulty ratings were not reopened.",
+      "Fallback checks: all eleven recorded fallback nodes and their SHA-256 values match the original pre-batch snapshot, and every provenance source hash matches its current local source file. Each of the five REVISE entries names and compares its fallback. Reversion is not new editorial/clinical approval, and preserving current shared fields can create a hybrid requiring manager sequence review.",
+      "Limits: offline editorial review only. Local atomic claims/source ledgers informed narrow clinical uncertainty checks; no external source was retrieved or independently authenticated. No Git, installs, network, agents, clinical mutations or fallback application. The only file written is docs/research/question-batch1-adversarial-review7-20261102.json. PASS does not clinically approve new content; the revised clinical drafts remain needs_clinician_review.",
+      "Most common remaining defects: the sole failed activity names the assessment target; explicit absence/difference of the other symptoms removes the distractors; document-location discrepancy uniquely matches the only correlation action. B36 instead retains two reasonable controlled experiments without a sufficient priority criterion. Four revised items remain too easy, and none is predicted hard.",
+      "Owner-approved preservation-only A04: question.gs028f.nutrition.refeeding-insulin-phosphate-shift.v2.r2. Melissa Rowland approval record, question object and case/node projection are exact against the saved review-six baseline. Projection SHA-256: b85697043fed6eae5f2bdb6de48269bbe0ed73ccdb5ea8b37356a518ceb1cbfc. No clinical/difficulty reassessment; excluded from the 73-item counts.",
+      "Owner-approved preservation-only A08: question.wound.secondary-intention-healing.v1.r2. Melissa Rowland approval record, question object and case/node projection are exact against the saved review-six baseline. Projection SHA-256: 992fe245287443d6853e55e0735adccfa92bb724584d5562abcf8b4f7a7de043. No clinical/difficulty reassessment; excluded from the 73-item counts.",
+      "Owner-approved preservation-only A11: question.differentiated-thyroid-cancer.individualized-surgical-extent.v1.r4. Melissa Rowland approval record, question object and case/node projection are exact against the saved review-six baseline. Projection SHA-256: 65be40ac3950a9188b57d6462465c33d6806d20ea062da01080a1e34badc0441. No clinical/difficulty reassessment; excluded from the 73-item counts.",
+      "Owner-approved preservation-only A17: question.adrenal-incidentaloma.pheochromocytoma-before-biopsy.v3.r3. Melissa Rowland approval record, question object and case/node projection are exact against the saved review-six baseline. Projection SHA-256: 81f6175d82efa5e4445a1d2a619e22fc04b160f3a71037db91568d25b6d9c121. No clinical/difficulty reassessment; excluded from the 73-item counts.",
+      "Owner-approved preservation-only A22: question.statistics-ethics.fisher-exact.v2.r3. Melissa Rowland approval record, question object and case/node projection are exact against the saved review-six baseline. Projection SHA-256: 5746d736e296bcefcaf29032f0a4c1461bcd100ca7c17aea98a5364974071e73. No clinical/difficulty reassessment; excluded from the 73-item counts.",
+      "Owner-approved preservation-only A23: question.statistics-ethics.risk-ratio-odds-ratio.v4.r3. Melissa Rowland approval record, question object and case/node projection are exact against the saved review-six baseline. Projection SHA-256: c37e875881ada775cca01d47c46d4927d2da78ca740a887a5c128f263e907bde. No clinical/difficulty reassessment; excluded from the 73-item counts.",
+      "Owner-approved preservation-only A27: question.gs028g.laparoscopy-respiratory.co2-absorption.v2.r3. Melissa Rowland approval record, question object and case/node projection are exact against the saved review-six baseline. Projection SHA-256: a864e2779ed7a0cf78cdab2e2a0c1a4e7923aa1fb4ede5bac7b3e73c1d61b142. No clinical/difficulty reassessment; excluded from the 73-item counts.",
+      "Owner-approved preservation-only A28: question.gs028g.merkel-cell.integrated-diagnosis.v1.r3. Melissa Rowland approval record, question object and case/node projection are exact against the saved review-six baseline. Projection SHA-256: b4f6cef9236c8d8d193e5ce0639c2eff8f8313ea473ebb48ed2d5b2c72eb820e. No clinical/difficulty reassessment; excluded from the 73-item counts.",
+      "Owner-approved preservation-only A30: question.gs028g.peristomal-skin.restore-seal.v1.r4. Melissa Rowland approval record, question object and case/node projection are exact against the saved review-six baseline. Projection SHA-256: 740cefabeafddd12ec8ae4c97988b00ea148541b091aab8764f3376657c6f073. No clinical/difficulty reassessment; excluded from the 73-item counts.",
+      "Owner-approved preservation-only A38: question.pediatric-clinic.shrinking-mobile-neck-nodes.v2.r3. Melissa Rowland approval record, question object and case/node projection are exact against the saved review-six baseline. Projection SHA-256: 6c3799efe7686929bd0961f6b8822b38b53073fcc78372501e4aa65b511a0922. No clinical/difficulty reassessment; excluded from the 73-item counts.",
+      "Owner-approved preservation-only A40: question.pediatric-clinic.upper-midline-lump.v1.r4. Melissa Rowland approval record, question object and case/node projection are exact against the saved review-six baseline. Projection SHA-256: aa2549d4b78eae3b0fc9cd8d5da351ff429621bd89d7bdbbf2fdce013cd54a24. No clinical/difficulty reassessment; excluded from the 73-item counts.",
+      "Preservation-only PASS: question.cholecystitis.hida-after-equivocal-ultrasound.v2.r6. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 44203d21fb7f41193fb9035033ca4722cf8a9646c7bb6148c834e4bb22cfb6ca.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: b62798ea78ff6dac3a56c0080a09f4b2dd8405d1480907d4e3d6825ecff59d4d. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "A06",
+    "title": "Classify nipple discharge patterns",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.pathologic-nipple-discharge.pathologic-vs-physiologic-recognition.v1.r6. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 9d485872710a129296b3b2a986df5a939ea7af01ce0b7a96fd17cee65eca1d0c.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 650a5114be4f424050333db98103cbb1ce74f35ec73f915875efea1dd091cee8. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "A06-context",
+    "title": "Select diagnostic imaging for pathologic discharge",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.pathologic-nipple-discharge.diagnostic-imaging.v1.r7. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: e5f5121d54aa1911e39b6d4b17d410b881d822bc489b18735e0d8334ea138634.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 421f3b78774b30699daf2de4239e6641f430934ef7dcda85f8dbb148f609d404. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "A25",
+    "title": "Perioperative ART continuity",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.gs028g.hiv-perioperative.art-continuity.v1.r7. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: b896de67ecff70c29069d915779cf708021bb2a310a920aeefb7e84aa5ae16e6.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 7e66042a1644bfdf04b941b5bcab5fff97c5bbb79497206e40211212758e0e39. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "A25-context",
+    "title": "Apply benzodiazepine-antagonist contraindication after seizure control",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.gs028g.hiv-perioperative.booster-midazolam-interaction.v1.r8. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 466bf1fc7c4c956789e0c9dfbde9af2a27104506923b14f89a6adc1b8a02a806.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: cc4ab1db396b39e9fd0d3d8d225c8cbfb08002683fabcc375c2b6d7e655ec2a5. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B01",
+    "title": "Manometric recognition of achalasia",
+    "verdict": "PASS",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.achalasia.manometric-recognition.v1.r4. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 67f055553b13043c7a7363977a8750c363f3db973ee55406cd91dc1925239600.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 311a1a5c6ad9b7b659abc201d78176678d7faca9c11e7045e29e9121a502b6da. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment.",
+      "Accepted-basic role and exact version preserved. No new basic exemption or clinical approval is granted."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B01-context",
+    "title": "Resolve technical and symptom-protocol limitations in motility testing",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.achalasia.high-resolution-manometry.v1.r6. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: cbb7c5df16af8283d05afca000014452a7e49495f1c57403b1b77098c42b4572.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: e4fd97a794700ea342ec366b5e97cd0a7ce31f7dbd58ed0d99e38de2ec2c7935. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B02",
+    "title": "Manometric recognition of achalasia",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.achalasia.manometric-recognition.v2.r4. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: dc980bedc9cbf9ea4723e5ff70a8d6a2b885ba8555356f6f1faad161dbd959a5.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 2341da8b0abbf8e5e36ea3c85d03c270e1cb385e965f1c6a1b092671e682d5ce. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B02-context",
+    "title": "Resolve technical and symptom-protocol limitations in motility testing",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.achalasia.high-resolution-manometry.v2.r6. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: cbd66bd9b2959322e4d77858b6123fbc5300b0921d0df6befd76e1876351b444.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: e51ea6b8804e4059d1df83c5979c777186894de84caf1326ce1d7ae0904f611b. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B03",
+    "title": "Manometric recognition of achalasia",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.achalasia.manometric-recognition.v3.r5. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 87cba1c4198c5e6d75c565d8e92b083baba832605101a4f2367f6429c8e3d9d0.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 13485d6d08cb9f28e806b77be062380bcd2417756ab834fe1bf6a60ac38aa785. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment.",
+      "Sequence preservation exception: preceding feedback/teachingPoint changed in round seven while this item and the preceding returned-result text remain exact. This report judges the scaffold separately; the carried difficulty rating is not a fresh rating of the full sequence.",
+      "Sequence check: B03-context now teaches reserve versus outflow interpretation, but does not state the later achalasia-like/opioid reassessment combination. The later medication and pressure-pattern information remains necessary."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B03-context",
+    "title": "Interpret provocative motility responses before further planning",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "Which change should be requested",
+        "why": "Minor lead-in presupposition: it makes the retain/retain choice less attractive before the physiology is interpreted. It does not identify which of the other three corrections is right; not a sufficient answer shortcut."
+      }
+    ],
+    "fairness": [
+      "The key is defensible: distinguish inhibition during rapid swallows from absent post-sequence augmentation, then judge the separate outflow conclusion against pressure/junction observations despite reproduced discomfort. Baseline propagation alone does not answer the reserve question. This is moderate application for PGY-2/3, rather than the old weaker/reduced word match.",
+      "The four retain/revise combinations have equal grammar, scope and component frequency. Normal-range findings are necessary observations for the outflow comparison, not removable negatives. 'Technically adequate' establishes interpretability without giving the physiological answer.",
+      "The draft's 'both provocative responses as normal' is an intentionally contestable report, not an authoritative pre-answer teaching sentence. The limited correction is supported by the local reserve/outflow claim; it does not establish a final motor diagnosis or symptom cause. Motility review of the qualitative protocol remains necessary.",
+      "No feedback precedes this node. Its new feedback does not identify the opioid issue or the later B03 motor-pattern key; that later item's own findings remain necessary."
+    ],
+    "suggestions": [
+      "Optional wording cleanup for a future version: ask 'Which report disposition is appropriate?' so retain/retain is a grammatically credible response. This minor issue does not require reverting the present version.",
+      "Keep the distinct protocol phases and symptom-versus-pressure conflict; do not insert the later opioid reconciliation or a final motility label into this precursor."
+    ]
+  },
+  {
+    "id": "B04",
+    "title": "Manometric recognition of achalasia",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.achalasia.manometric-recognition.v4.r4. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: f06d5426a9c67273d77617236ea7f848995dd9d6345a622b0fb413dda5bdade6.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 38d21f84d0d25667c9d1d04ec14971484ced1fee88517fb5a3efe11a83e8d204. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B04-context",
+    "title": "Resolve technical and symptom-protocol limitations in motility testing",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.achalasia.high-resolution-manometry.v4.r5. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 1e32390e9b1c0dec626d4a2092d5180a21a51f364ac5e17ee4151ecec3284c99.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 9a1508bf82677ffaba09ed10306916ef370f93665124d5c6a206378b4f37e9ac. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B05",
+    "title": "Resolve occult-groin imaging and symptom discordance",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "standing and supine cine loops through the photographed inguinal site during cough and Valsalva",
+        "why": "Partial test-wise elimination: these details closely match the offered repeat 'Groin ultrasound with standing strain and cine loops', making repetition less attractive. This is also decision-critical acquisition evidence, not an unnecessary exclusion; it does not by itself distinguish pelvic MRI from the hip-focused alternative."
+      }
+    ],
+    "fairness": [
+      "Preservation-only PASS: question.inguinal-hernia.equivocal-exam-ultrasound.v4.r7. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 251218a09c980d058bd620bdd2fc698b584d6d2df19518b45e1980fe39ef11f2.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 29024a32bd87b3acce078271556b1a6f666581c9ae95a0b9f9ae09f9ff496724. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B05-context",
+    "title": "Prioritize care when groin findings have competing symptom sources",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "Cannot reach the low shelf; hip rotation reproduces this ache",
+        "why": "The sole failed task explicitly names hip and matches 'Hip-focused musculoskeletal assessment'. A reader can link the task's limiting activity to the only hip option without interpreting competing mechanisms."
+      },
+      {
+        "phrase": "Continues standing work",
+        "why": "Paired with a painless contour, this makes the hernia column the successful-work column rather than a credible cause of the requested remaining limitation."
+      },
+      {
+        "phrase": "Completes the resisted task",
+        "why": "Together with only brief pubic discomfort, this pre-eliminates the attachment option. The exhibit becomes one failed task versus two completed tasks."
+      },
+      {
+        "phrase": "no discomfort is reported",
+        "why": "The hernia-related column explicitly lacks the symptom the question is asking to address; this reinforces elimination rather than requiring a clinical attribution."
+      }
+    ],
+    "fairness": [
+      "Hip-focused assessment is a defensible priority on the displayed observations, and no confident clinical inaccuracy is alleged. The table describes a later reassessment, so it need not contradict the earlier reduction-responsive lifting difficulty.",
+      "Too easy for PGY-2/3: the only functionally failed task contains the keyed organ name. The two nominal steps collapse into matching the failed row to its assessment label.",
+      "The earlier MRI-result history gives a real competing prior attribution, but the current table explicitly clears that attribution and the other distractor. Merely changing chronology does not protect difficulty.",
+      "The constrained task asks about the currently limiting activity, not a categorical assertion that the demonstrated hernia needs no care. Necessary functional and safety information should not simply be deleted."
+    ],
+    "suggestions": [
+      "Use current observations in which two candidate mechanisms actually overlap during the same limiting activity, then make a supported examination or response distinction decide which assessment comes first. Avoid placing 'hip rotation' in the only failed-task cell while both alternative columns explicitly show preserved function.",
+      "Fallback question.inguinal-hernia.symptomatic-elective-repair.v4 is WORSE overall for resident difficulty: it supplies a confirmed activity-limiting hernia in both update and task and contrasts elective consultation with emergency exploration and presumed strain. It removes the current symptom-priority problem by reverting to a simpler objective, not by fixing it.",
+      "If the manager applies that recorded fallback, reconcile its ultrasound wording with the frozen MRI-result sequence, restore only the specified item/bindings, and preserve the passed companion. No fallback is applied or independently approved here."
+    ]
+  },
+  {
+    "id": "B06",
+    "title": "Resolve occult-groin imaging and symptom discordance",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.inguinal-hernia.equivocal-exam-ultrasound.v2.r6. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: cb31018395278cd2cb57b067cebc760f0f1358b75d8d57bc9fc2cddc790637cf.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 789a77b0ab965e52503bde643707c58389e510fa10cb6e931c6f088a8c725a15. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B06-context",
+    "title": "Prioritize care when groin findings have competing symptom sources",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "The key is defensible: completed shifts do not establish tolerance of the original duties when a colleague handles the crates; the attempted return to lifting localizes the new interruption to the reducible groin contour. That supports hernia assessment while graded activity continues.",
+      "Moderate, at the easier end for PGY-2/3. The learner must distinguish exposure from functional recovery, then reprioritize assessment despite better jogging and persistent adduction discomfort. This is a meaningful change from the earlier attachment-limited exercise history.",
+      "Both the original attachment symptoms and an observation strategy remain plausible until the actual duty log and attempted task are read. All options retain graded activity, and neither length nor a uniquely comprehensive plan identifies the key.",
+      "The observed contour withdrawal establishes reducibility; it does not claim pain relief from reduction or mandate surgery. No exact timing or threshold is introduced. The prior imaging feedback does not select the new care priority."
+    ],
+    "suggestions": [
+      "Retain the modified-duty information and the observed attempt; those distinguish recovery from avoided exposure. Do not replace them with 'persistent symptomatic hernia' or an author summary that assigns the cause.",
+      "Clinical sign-off should confirm the assessment priority; this PASS does not prescribe an operation or approve the new clinical version."
+    ]
+  },
+  {
+    "id": "B07",
+    "title": "Resolve occult-groin imaging and symptom discordance",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "Groin ultrasound with standing strain and cine loops",
+        "why": "Weak lexical advantage: this is the only option literally repeating the task's 'groin' location. Pelvic MRI also covers the relevant region and includes strain, so location matching alone does not reliably distinguish the two plausible dynamic studies. The clinical protocol name is justified rather than an artificial synonym needing removal."
+      }
+    ],
+    "fairness": [
+      "Preservation-only PASS: question.inguinal-hernia.equivocal-exam-ultrasound.v3.r7. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 8106533034185c8119ca3f94a80dc0a23c125a33788a105aa8c3e98937275fae.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 955d0d2a3232c40ed90f4a89951abf55cc4eff57fe5c41000f588921901d6a9a. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B07-context",
+    "title": "Prioritize care when groin findings have competing symptom sources",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "During coughing it appears without pain.",
+        "why": "Pre-eliminates the hernia target when paired with successful transfer despite the visible contour."
+      },
+      {
+        "phrase": "A transfer from a raised chair is completed while the contour is visible.",
+        "why": "Supplies a successful hernia-present task against a failed/painful hernia-absent task. Combined with the painless cough, the exhibit-like narrative does the attribution for the learner."
+      },
+      {
+        "phrase": "hip rotation produces a different deep ache",
+        "why": "Explicitly declares the hip symptom different from the target difficulty, removing the hip distractor."
+      },
+      {
+        "phrase": "Resisted adduction reproduces the low-chair pain",
+        "why": "This names the sole matching provocation after the other two targets have been separated. In the visible sequence, the earlier result has already associated resisted adduction with pubic-attachment pain."
+      },
+      {
+        "phrase": "The patient has completed an exercise trial for pubic-attachment pain and can now resist adduction with less discomfort.",
+        "why": "SEQUENCE-ONLY, preceding returned result: supplies the attachment/adduction association needed to map the new matching provocation to 'Attachment assessment'. This is existing case history, not newly changed feedback, but it reduces independent later inference."
+      }
+    ],
+    "fairness": [
+      "Attachment assessment is a defensible next focus. Maintenance after an initial supervised phase now resolves the prior ambiguity about a completed versus ongoing exercise program.",
+      "Too easy for the requested residents in the visible sequence: two alternatives are explicitly separated from the target pain, and the remaining provocation has already been named as attachment-related. The crossed chair tasks are better observations than a referral-timing permission, but do not produce two demanding decisions here.",
+      "The changed symptom trajectory is explicitly later, so it is not intrinsically inconsistent with the earlier hernia-associated transfer difficulty. Current observations should supersede the older attribution without being treated as proof that the hernia has no ongoing clinical relevance.",
+      "The prior imaging feedback does not itself give the assessment key. The relevant scaffold is the earlier returned symptom/attachment mapping; distinguish that from the current no-pain/different-pain elimination."
+    ],
+    "suggestions": [
+      "Keep the chronology and maintenance clarification. For a resident item, use competing explanations for the same transfer difficulty rather than expressly painless hernia behavior plus an expressly different hip pain. Make a supported functional or examination distinction necessary after both candidates remain credible.",
+      "Fallback question.inguinal-hernia.symptomatic-elective-repair.v3 is WORSE overall: its task explicitly calls the confirmed hernia activity-limiting and asks for the routine elective plan against observation, emergency exploration and presumed strain. It restores a simpler, strongly cued objective rather than the intended reassessment reasoning.",
+      "Any fallback must be restored as its original item/version with sequence consistency checked; do not restore the entire case or infer a new approval from the archived record."
+    ]
+  },
+  {
+    "id": "B08",
+    "title": "Resolve occult-groin imaging and symptom discordance",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.inguinal-hernia.equivocal-exam-ultrasound.v1.r5. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: d0bf7d74f739845d2617cf74d08351b8d4dbd5e76bc99b07d2ad8849d3ad42f8.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 199986953fb3e823a5b812a898ad5f6223efebb7e7c0703797916400faf16b83. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B08-context",
+    "title": "Prioritize care when groin findings have competing symptom sources",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "no longer reproduces the original suprapubic pain",
+        "why": "Explicitly removes the original attachment explanation before the assessment comparison."
+      },
+      {
+        "phrase": "the familiar superficial ache occurs while the groin contour is visible",
+        "why": "Directly couples the new limiting symptom with the hernia-like finding while both competing causes are separately dismissed; little attribution is left to perform."
+      },
+      {
+        "phrase": "the patient distinguishes from the work episodes",
+        "why": "Explicitly declares the hip-related ache irrelevant to the requested change, eliminating the second non-key option."
+      }
+    ],
+    "fairness": [
+      "Hernia assessment while rehabilitation continues is defensible on the stated new activity-limiting symptoms. The key is an assessment priority, not a mandatory repair or emergency intervention.",
+      "Too easy for PGY-2/3: after the original attachment pain resolves and the hip pain is expressly different, the only remaining assessment target is the contour-associated ache. Recognize the remaining cause, then repeat its name as an assessment, is not substantive two-step reasoning.",
+      "The earlier MRI-result attribution is preserved and the update explicitly follows it, so the new trajectory is possible. The problem is over-resolved alternatives, not a confident clinical contradiction.",
+      "Parallel options and common continuation of rehabilitation fix the former uniquely comprehensive-key issue. The preceding imaging feedback does not give away the later care priority."
+    ],
+    "suggestions": [
+      "Replace the one-negative-per-distractor structure with a current functional comparison in which at least two observed causes remain credible; require a supported response or provocation distinction to determine priority. Preserve reducibility and enough information for a safe single best answer.",
+      "Fallback question.inguinal-hernia.symptomatic-elective-repair.v1 is WORSE overall for resident difficulty: the task repeats that ultrasound has confirmed a hernia limiting usual activities and points to elective consultation against weak alternatives. Reversion removes the new objective rather than making it challenging.",
+      "The fallback's ultrasound language also needs reconciliation with the frozen MRI-result pathway. Restore only the recorded item/concept/timing scope; do not silently change the passed companion or treat a hybrid presentation as an approved original."
+    ]
+  },
+  {
+    "id": "B09",
+    "title": "Resolve cystic thyroid-node imaging/cytology discordance",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.differentiated-thyroid-cancer.preoperative-nodal-ultrasound.v3.r6. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: c6be7c6ce3f95f83d4f2ee88e3ce99fd2f59414c82fce1bd5af614c4f08f9435.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 31ae92220f5a8d06805aff087c84e7d8bc47adc11d9c451cb07840ebb3dda4c7. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B10",
+    "title": "Escalate complicated stoma prolapse",
+    "verdict": "PASS",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.stoma-prolapse.urgent-surgical-escalation.v4.r4. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 2da06b664f6f2660e50bfff7099c083105bf4d4bbff20bf997eed15fcfd1fa52.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 87469675748615caf40f8c1828fbeaca709ef34a56785ee0096d642d2ef655d9. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment.",
+      "Accepted-basic role and exact version preserved. No new basic exemption or clinical approval is granted."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B11",
+    "title": "Sentinel-node staging discussion for melanoma",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.melanoma.sentinel-node-staging.v2.r4. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: de880a628b1f8058d344c0159e2bdabba0ff9524fcedbd969cc76bd6c50e8681.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 96c40aa73d044afb11a330756074047d3edb2e4e86ad773be782a02376af2610. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment.",
+      "Sequence check: the unchanged earlier feedback limits a partial specimen to its mapped sector. It does not give the later sentinel-node versus reconstruction timing decision."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B11-context",
+    "title": "Interpret mapped partial specimens before melanoma planning",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.pigmented-skin-lesion.complete-diagnostic-biopsy.v2.r7. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 519cc4a21ec9bb642b2115aab73e4d4edd29ef31c839de63ced928db2bd65921.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 1ce717deafe87ee7120655fc70b13af20e7a0edb51544d9031159cf7d10f0ca8. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B12",
+    "title": "Apply regional-node evidence before sentinel staging",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.melanoma.sentinel-node-staging.v4.r5. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: e3738cb4c27f54dae34a66e12a59beb9c299d25de28c9a00a06db6546e1039a3.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 1ab97ee1fade31e290e2cd07f56b2558c94efbe456a25e0b3de67fd475e8c53b. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment.",
+      "Sequence preservation exception: preceding feedback/teachingPoint changed in round seven while this item and the preceding returned-result text remain exact. This report judges the scaffold separately; the carried difficulty rating is not a fresh rating of the full sequence.",
+      "Sequence check: the revised precursor concerns site provenance; it does not teach distant staging before node-positive treatment planning. The later positive regional sample remains the decisive new evidence."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B12-context",
+    "title": "Interpret mapped partial specimens before melanoma planning",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "The outside request labels the punch as central.",
+        "why": "Sets up a plain document-location discrepancy rather than a clinical inference."
+      },
+      {
+        "phrase": "The procedure photograph shows the punch opening touching the pale lateral border",
+        "why": "Contradicts the central label and uniquely repeats 'procedure photograph' in the key. The answer can be selected by matching discrepant documents without knowledge of melanocytic pathology."
+      },
+      {
+        "phrase": "Correlate the submitted site with the procedure photograph",
+        "why": "The key is the only provenance/correlation action; both distractors are technical re-examinations of the same fragment. The discrepancy singles out the sole different action category."
+      },
+      {
+        "phrase": "Serial photographs show enlargement of the medial focus while the pale lateral border has the same outline.",
+        "why": "Further supplies the local-benign versus changing-unsampled explanation, making extra levels or stains of the fragment less competitive before any pathology reasoning."
+      }
+    ],
+    "fairness": [
+      "Reconciling the site record is a reasonable first issue, and a benign fragment need not contradict a changing residual lesion. Neither additional levels nor immunostains alone can establish where the submitted tissue originated.",
+      "Too easy for PGY-2/3 and not two-step: find central-versus-lateral mismatch, then choose the only option that says correlate the photograph. The other clinical description does not have to be understood to score correctly.",
+      "The task's 'ask the pathology review to resolve first' should not imply that pathology alone can authenticate the collection site; correlation requires the procedural record and clinician. The key is defensible as a multidisciplinary request, not proof the fragment was mislabeled.",
+      "No new confident clinical inaccuracy is alleged. Later B12 staging remains independent because this feedback does not teach the node-positive staging sequence."
+    ],
+    "suggestions": [
+      "Use equally scoped clinicopathologic correlation requests, with competing specimen maps or observations that require the learner to decide what tissue each report can support. Remove the sole photograph-specific option, rather than disguising 'photograph' with a synonym.",
+      "Fallback question.pigmented-skin-lesion.complete-diagnostic-biopsy.v4 is WORSE overall for the intended resident challenge: complete diagnostic excision of an accessible suspicious lesion versus superficial shave, partial punch and definitive wide excision is straightforward recall. It avoids the current document-matching cue by abandoning the provenance objective, not by satisfying the two-step standard.",
+      "Clear the new update/exhibit when explicitly restoring the recorded fallback, preserve the frozen shared presentation and later staging item, and have the manager check the hybrid sequence. The fallback is not newly passed by this report."
+    ]
+  },
+  {
+    "id": "B13",
+    "title": "Oncologic regional resection for colon cancer",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.colon-cancer.oncologic-regional-resection.v1.r3. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 775e60986a131e4c0ba7116ff05e7d9cc3ac0c6a2c715a67a9b980b604f3bf38.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: c816d6eebd20ba2f510c3c13836e45ec44411d956623f40adb2bde269e2c5d25. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B13-context",
+    "title": "Preoperative cross-sectional staging for colon cancer",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.colon-cancer.preoperative-cross-sectional-staging.v1.r4. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 6b1be8aefcaf0fb95361cb0dabb5d476dc4e8cc5fa117086a821ad5fe710d3c5.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: cba40087f4ac381ff1ef2346580af4999f721e783704786bf94125fb4fed4d68. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B14",
+    "title": "Oncologic regional resection for colon cancer",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.colon-cancer.oncologic-regional-resection.v2.r3. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: d179f929bc2406e1d41ffefa39d7d624619e46f88ad453041c26ec0a485ecd24.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 75ae971c492a3ac9e192db1885eb89fa38615de4834fd42730a5854ffe02a05e. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B14-context",
+    "title": "Complete colon staging from actual prior imaging",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.colon-cancer.preoperative-cross-sectional-staging.v2.r5. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 54213c9544da5868676b4041cfd880469317d1085e6a4685adc1dffa48756c38.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: cbc25e66478da668d25194a3ee6afd0c836eb34aa601eb2806068ec2c0b3e4ba. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B15",
+    "title": "Oncologic regional resection for colon cancer",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.colon-cancer.oncologic-regional-resection.v3.r4. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 03ed8a0512f6a4a4d334cf4d44a196ef3b8ae37140ad179e55c787192a6bcc67.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 2d96a2808ae2803ace37c88a82656477dd7b217b1eb428c824833adc64bc6957. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B15-context",
+    "title": "Complete colon staging from actual prior imaging",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.colon-cancer.preoperative-cross-sectional-staging.v3.r6. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 2faf7f43048c08107793f1e4aaa7199c806eb83962b2ab0b91362e494a7079cb.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 1a5c991a55d050b415f24ce7ac2f459864213bcdcc6db02f8444359cced0a388. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B16",
+    "title": "Oncologic regional resection for colon cancer",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.colon-cancer.oncologic-regional-resection.v4.r3. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: f168d4749d6490b4834f85459ad4c11b5002976e005d4567421b84d9972a2278.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: ef0e04941043773e8a5af9d276c5f87718f9ed4e3f84da2a834772713e08b409. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B16-context",
+    "title": "Preoperative cross-sectional staging for colon cancer",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.colon-cancer.preoperative-cross-sectional-staging.v4.r4. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: e6288dab15aa3d8994edfb5ec03bdb995c0412519163fa0b3435f72e650c855c.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: cdca842334bb8ad8856c69cc220dd1a48ef667a70999f02e10b0be9255e6a229. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B17",
+    "title": "Sentinel-node staging discussion for melanoma",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.melanoma.sentinel-node-staging.v1.r4. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 0e5803657bb87641cbf907703afe24843d055c7b5afeb2c8b9829636745b6e2e.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: e32fcc67cc263821f2c867acfae8255d661b61cc88e645a3f1a1a1ec1a6fef30. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment.",
+      "Sequence preservation exception: preceding feedback/teachingPoint changed in round seven while this item and the preceding returned-result text remain exact. This report judges the scaffold separately; the carried difficulty rating is not a fresh rating of the full sequence.",
+      "Sequence check: the revised precursor teaches diagnostic versus treatment extent after a partial specimen; it does not supply sentinel-node timing relative to reconstruction."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B17-context",
+    "title": "Select diagnostic extent after a locally in-situ partial specimen",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "The missing decision-critical negative is repaired: the represented dermis explicitly contains none of the melanoma cells. This supports the sampled sector's epidermal confinement without extrapolating that status to the residual raised focus.",
+      "The key is defensible: first recognize the limit of a peripheral partial specimen, then choose complete diagnostic assessment rather than commit the entire lesion to an in-situ treatment extent. The incisional option tests whether another partial sample is preferable despite the stated ability to remove the lesion.",
+      "Moderate at the easier end for PGY-2/3. The proposed treatment based on the peripheral report is a credible sequencing error; the options now compare real diagnostic versus therapeutic extents rather than just spatial labels.",
+      "The lax-skin observation favors feasibility of complete sampling but is necessary to rank the partial-biopsy alternative fairly. It does not on its own distinguish diagnostic excision from the offered wide excision. Options have comparable scope and no rationale or uniquely cautious qualifier.",
+      "No confident clinical error is identified. Exact procedure terminology and narrow diagnostic extent still require clinician review. Feedback does not teach the later sentinel-node/reconstruction timing key."
+    ],
+    "suggestions": [
+      "Retain the explicit dermal negative and specimen map. Do not turn 'dermis represented' back into an unstated absence-of-invasion assumption.",
+      "Keep diagnostic excision distinct from definitive treatment extent in clinical review; do not add an unsourced numerical margin or import the later invasive thickness into this question."
+    ]
+  },
+  {
+    "id": "B18",
+    "title": "Apply regional-node evidence before sentinel staging",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.melanoma.sentinel-node-staging.v3.r5. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 6f6816a59c935f25ae0e86fedf8cf9c388f886052ee8f68b0c04650afef91ab6.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 52c292363f1cde75d3ef5ef5e45a59a32e93d46314abbf8d87a4ca145f86bc4b. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment.",
+      "Sequence preservation exception: preceding feedback/teachingPoint changed in round seven while this item and the preceding returned-result text remain exact. This report judges the scaffold separately; the carried difficulty rating is not a fresh rating of the full sequence.",
+      "Sequence check: the precursor now explicitly supports a sentinel-node discussion in a clinically node-negative setting. This is general eligibility scaffolding, not the key to the later abnormal-node/nonrepresentative-aspirate decision. Targeted core biopsy still requires interpreting the new node findings. Do not claim a fresh independent eligibility test."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B18-context",
+    "title": "Integrate partial depth records before a nodal-staging discussion",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "1.8 mm",
+        "why": "Partial arithmetic shortcut only: a reader can recognize that a later smaller measurement does not erase a greater established depth, reducing four options to the two 1.8-mm options. This is the necessary measurement interpretation, not a complete nonmedical route to the nodal-discussion answer."
+      }
+    ],
+    "fairness": [
+      "The key is defensible: preserve the greater demonstrated invasive extent across mapped specimens, then recognize that uncertainty about a still-greater maximum need not prevent a supported staging discussion. The latest smaller, transected measurement does not replace the earlier valid deeper measurement.",
+      "Moderate two-step reasoning for PGY-2/3. The retained-depth versus latest-report error and the defer-all-planning-until-completion error are distinct; either component alone leaves two options. All four options have equal scope and no majority-component convergence.",
+      "The local ledger distinguishes the constructed 1.8-mm/0.6-mm observations from the separately mapped greater-than-1-mm discussion guidance. No new threshold is inferred here. The limited discussion, clinically nonpalpable nodes and ongoing completion sampling are explicit; this is not an order for immediate sentinel-node biopsy.",
+      "Cross-specimen validity, mapped same-lesion provenance and the exact discussion boundary still require dermatopathology/clinical sign-off. The local claims are an application of prior guidance, not freshly verified external evidence.",
+      "SEQUENCE: new feedback explicitly discusses sentinel staging and therefore scaffolds general eligibility in later B18. It does not reveal the later key, targeted core biopsy: the subsequently abnormal node and nonrepresentative aspiration must still be interpreted. This is topic overlap, not an independent new eligibility assessment."
+    ],
+    "suggestions": [
+      "Retain the distinction between a discussion being supported and a procedure being selected; do not convert the lower bound into a final whole-lesion depth.",
+      "Carry the later B18 topic scaffold transparently. Keep its abnormal-node/aspirate decision separate and do not claim the later question independently tests unprompted sentinel eligibility."
+    ]
+  },
+  {
+    "id": "B19",
+    "title": "Specialist-planned biopsy of a suspicious soft-tissue mass",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.soft-tissue-mass.specialist-planned-biopsy.v1.r4. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: fb717bb0ab89aec23eb68df69e668ab55d9b3de70b0b5a4c2f264d3fbbb4c345.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 9172e47982528bb2053a96d01a827bd003c01d1bac849af2e36bf259ef01d3d9. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment.",
+      "Sequence preservation exception: preceding feedback/teachingPoint changed in round seven while this item and the preceding returned-result text remain exact. This report judges the scaffold separately; the carried difficulty rating is not a fresh rating of the full sequence.",
+      "Sequence check: the former target/tract and rectus/adductor scaffold has been removed. The precursor now concerns matched MRI acquisitions; its task and feedback do not select the later corridor or core-versus-open procedure. A/B labels first appear in the returned result. The prior specific leakage is resolved; the old difficulty rating is still carried, not recalibrated."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B19-context",
+    "title": "Check MRI acquisition comparability before biopsy targeting",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "The key is defensible as a proposed additional comparison: recognize that native T1 brightness and a simultaneous suppression change complicate an enhancement inference, then select a comparison that holds suppression constant while changing contrast status.",
+      "Moderate two-step application for PGY-2/3. The same-postcontrast/different-plane and precontrast/different-signal comparisons are coherent alternatives but do not isolate the same contrast-related question. No option is uniquely long, cautious or explanatory; the key and a distractor both contain 'both with fat suppression'.",
+      "The wording identifies an outside study being supplemented locally rather than treating an absent export as proof an acquisition never occurred. It asks for a comparison, not an immediate repeat contrast dose. Nevertheless, the exact sequence priority is a technical clinical inference: the local source ledger records only one adequate consensus source and explicitly requests MSK radiology confirmation. No universal mandatory sequence or confident clinical error is asserted here.",
+      "SEQUENCE: the earlier P/Q/R target/tract table is gone. This node's current task, options and feedback do not teach the rectus/adductor corridor or core-versus-open key in frozen B19. A/B first occur in its returned result. The specific review-six scaffold and label-continuity defects are resolved."
+    ],
+    "suggestions": [
+      "Obtain the recorded MSK radiology confirmation of this exact constructed sequence comparison; retain the limitation rather than presenting the local claim as fresh independent external verification.",
+      "Keep later target/tract selection out of this precursor. Avoid turning its feedback into a blanket assertion that all unmatched routine MRI sequences are diagnostically useless."
+    ]
+  },
+  {
+    "id": "B20",
+    "title": "Specialist-planned biopsy of a suspicious soft-tissue mass",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.soft-tissue-mass.specialist-planned-biopsy.v2.r4. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 7fd53f79875b7c0900556ee4326b95d811dd7945ca2ebf1b4dd07da49634bfc0.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: d7cd64ee3db8db1b81223c9cc8f837784c0383d0a6ff44baf3e1d1e8261736fa. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B20-context",
+    "title": "Assess local MRI adequacy before soft-tissue biopsy",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.soft-tissue-mass.extremity-mri.v2.r6. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 06dfa1b39495ea34aa0ba42f796e61ca5ca46aaaad428e9dcc34ce2e19f31286.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: e4cf267f3752d47281b1c8cba4f5f9c946f29617b72baca60a082a96a7acd97a. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B21",
+    "title": "Management of a clearly characterized asymptomatic colonic lipoma",
+    "verdict": "PASS",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "or change the passed management premise",
+        "why": "SEQUENCE-ONLY, preceding B21-context feedback: exposes authoring/approval language to the learner and signals that the established management answer should remain unchanged. This is a learner-text defect, not clinical evidence. Frozen item verdicts are retained under the requested preservation-only scope."
+      }
+    ],
+    "fairness": [
+      "Preservation-only PASS: question.colonic-lipoma.management.patient-to-plan.v1.r3. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: e4accb2a47a4d47d5700b4f606cec80c92fbe20d3df5226b3d068ca4090c1e09.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: dadd401599e92a3af97b2855b5209b2bc39599ebb92eab695e7f8700350c8874. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment.",
+      "Frozen caveat is substantiated, not resolved. The preceding no-additional-biopsy statement reinforces continuity of the benign characterization, and the passed-management wording is inappropriate learner-facing metadata. It does not explicitly teach a surveillance interval or prove the no-follow-up key. The unchanged easy/twoStep=false rating remains carried."
+    ],
+    "suggestions": [
+      "Manager should explicitly accept this as a scaffolded frozen sequence or authorize a separately versioned cleanup of the precursor feedback. Remove the authoring-status sentence in that future version; do not silently edit the frozen PASS or treat this report as approval of the defect."
+    ]
+  },
+  {
+    "id": "B21-context",
+    "title": "Distinguish clinical characterization from histologic confirmation",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "normal colonic mucosa",
+        "why": "Partial compatibility cue: it echoes the earlier intact surface and makes an 'Inconsistent with imaging' answer less attractive. It does not distinguish the two compatible options or establish that the deeper lesion was sampled; the tissue-depth inference remains necessary."
+      },
+      {
+        "phrase": "or change the passed management premise",
+        "why": "POST-ANSWER/SEQUENCE-ONLY: this phrase is in this node's feedback, not evidence for solving this node. It appears before B21 and creates the documented authoring-language/management-continuity cue. Exact frozen PASS remains preserved."
+      }
+    ],
+    "fairness": [
+      "Preservation-only PASS: question.colonic-lipoma.recognition.patient-to-diagnosis.v1.r7. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 76e7b5a96b9870d514a039b06a6f3c925e413cdd999eba6e5e96a2b7257a5c8d.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 7163f8e2fec5b7a6b7b7634b957cd07443b7e90cdd062387f7f70564e03e2230. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment.",
+      "Feedback caveat confirmed in current runtime source and unchanged from round-six entry. This is a genuine presentation/sequence defect despite exact-version preservation. Its own scored question was not re-reviewed."
+    ],
+    "suggestions": [
+      "Refer the frozen feedback caveat to the manager for explicit acceptance or a separately authorized future version; do not alter this frozen node in this review."
+    ]
+  },
+  {
+    "id": "B22",
+    "title": "Management of a clearly characterized asymptomatic colonic lipoma",
+    "verdict": "PASS",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "nor a reason by itself to repeat sampling",
+        "why": "SEQUENCE-ONLY, preceding B22-context feedback: discourages the subsequent repeat-endoscopy/tissue-sampling distractor before the learner answers B22. It does not fully choose between no follow-up and removal, but reduces independent discrimination."
+      }
+    ],
+    "fairness": [
+      "Preservation-only PASS: question.colonic-lipoma.management.patient-to-plan.v2.r3. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 507370d2345b3736eb32d055928623da1618e2076a35f45f66f51ec01591007b.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 22d503b6df28a2079a38cae417900937ef0d781b8ddf60e3615e2a3b5d2217c1. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment.",
+      "Frozen caveat is substantiated: the precursor explicitly discourages repeating sampling, which is one of this item's three options. It leaves a remaining management distinction and does not make the key medically false, but the sequence is partially taught rehearsal. The carried easy/twoStep=false rating does not establish unscaffolded resident difficulty."
+    ],
+    "suggestions": [
+      "If independent management assessment is required in a future authorized version, move the repeat-sampling caution until after B22 or make the precursor feedback stop at specimen representation. Preserve the frozen scored version unless the manager authorizes a new version."
+    ]
+  },
+  {
+    "id": "B22-context",
+    "title": "Distinguish clinical characterization from histologic confirmation",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "nor a reason by itself to repeat sampling",
+        "why": "POST-ANSWER/SEQUENCE-ONLY: this node's feedback discourages the later B22 repeat-sampling distractor. This is not a pre-answer cue for B22-context itself. Frozen PASS is retained under the requested scope."
+      }
+    ],
+    "fairness": [
+      "Preservation-only PASS: question.colonic-lipoma.recognition.patient-to-diagnosis.v2.r7. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 4e3f8aa66af6aa33d991a01309038bd8138f7362909e906d85b15e72c0b385eb.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 2f35f9b60072e640b787401fcfc824a5b330ccb57e37ae1649a1be3d6135c89e. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment.",
+      "Feedback caveat confirmed in assembled runtime order and byte-unchanged from the round-six snapshot. Preserve its item verdict but do not claim its feedback leaves the later task independent."
+    ],
+    "suggestions": [
+      "Manager acceptance must distinguish a frozen PASS question from acceptance of scaffolded later difficulty; any cleanup belongs to an explicitly authorized version."
+    ]
+  },
+  {
+    "id": "B23",
+    "title": "Avoid routine prophylactic splenectomy in proximal gastric cancer",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.gastric-adenocarcinoma.post-endoscopy-splenic-referral.v1.r3. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 8166ec02aa21e5fc96f3d5183dbf8e2684aa041ba1bc82d09269ae0081b6785f.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 93800662542199870ed110e2324f44b23984b28ff208b92d942879fcb2580f91. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B24",
+    "title": "Pathologic recognition of gastric MALT lymphoma",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "The unique CD20 cue is removed. With the gland-relationship row hidden, all three areas describe small lymphocytes, and no area repeats a key-only stain. The identical-scope area choices offer no length, grammar or convergence shortcut.",
+      "Proper solving requires distinguishing follicular/reactive-appearing architecture and scattered larger cells from the small-cell gland-infiltrating pattern, then judging which field contributes most to integrated subtype assessment alongside the existing lineage/clonality record. Moderate for PGY-2/3; the task does not merely ask what CD20 means.",
+      "Area B is a defensible field to prioritize. Earlier sections with preserved glands can coexist with deeper levels showing focal epithelial disruption. The question does not claim that a clonal B-cell population or this one field independently proves a definitive subtype.",
+      "The disruption wording is necessary morphology rather than an explanatory 'diagnostic' label. A generic 'damaged tissue sounds important' guess is possible but does not uniquely follow from the competing lymphoid descriptions without interpretation. No confident clinical inaccuracy or unsupported numerical threshold is identified; hematopathology review remains necessary."
+    ],
+    "suggestions": [
+      "Retain the shared neutral small-lymphocyte descriptions and integrated-assessment task. Do not restore CD20 to only the keyed area or relabel the epithelial finding as diagnostic before the answer.",
+      "Keep sparse large cells distinct from a demonstrated confluent large-cell component; avoid expanding this PASS into standalone histologic confirmation."
+    ]
+  },
+  {
+    "id": "B25",
+    "title": "Choose gastric MALT care from post-eradication trajectory",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.gastric-malt.eradication-response-reassessment.v1.r4. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: cac35df881d30281358df254419cb482b8c6519b6bfc2a634975544b8c7aeb02.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 83d9c4071e404d0f074119de275f2a8a041dc5b59c9448eb4732fe31d81e1892. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B25-context",
+    "title": "Apply gastric lymphoma morphology to the treatment pathway",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.gastric-malt.pathology-profile-selection.v1.r5. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 21687fb55ecd1dd31f2872aa3a582b32b4e53147f6c4847ea8a05ae2337d5bc0.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 4df590b6db77cac27c0c85dc4d9baeae0d777e6b0160d035d02d51036ff032b0. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B26",
+    "title": "Apply uncertainty to a target-benefit decision",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.statistics-ethics.p-value.v2.r6. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: e3d5a997361f1ae416a6458125bb4f5663eea7fbd66ba8babcb0e30891530398.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: b8da0006911082622c4247d3b1bb3d045ed1108d42ceb15adc11475144c616c4. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B27",
+    "title": "Interpret a p-value",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.statistics-ethics.p-value.v1.r4. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 9af8c14d21e1dfcebe5d3b7e63d446261c9948a5061b2e6d650478105cb6c758.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 7ab63c222157ce259c1da0978e963ad52007b09ce3828ed14ff0a4f63ae8c407. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B28",
+    "title": "Distinguish risk ratio and odds ratio",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.statistics-ethics.risk-ratio-odds-ratio.v3.r3. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 776b9ca9907ac09cbf6f70d41901eeb6c49922111c4bcb0adfab4f58708d434f.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: c6f52f1ae616e31bd6279cda767568adc8fe40a4c4304151f5e835bfa7ff43c0. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B29",
+    "title": "Arrange adult support after endoscopic sedation",
+    "verdict": "PASS",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.variety3.sedation-discharge-ride.v1.r5. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: b002fb7bcac2d62b77dc9463a128b91e95992cc3b3e011094a64307628863400.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 720f7e38276ae51d77bc821f4a67068aca476ceacdff15ff05eb58d8593b0d66. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment.",
+      "Accepted-basic role and exact version preserved. No new basic exemption or clinical approval is granted."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B30",
+    "title": "Apply gastric lymphoma morphology to the treatment pathway",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.gastric-malt.integrated-pathology-diagnosis.v1.r5. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: c275d121ee417f9f4aaf967e50d36fdb8a105168c7af06c0fe09fab2e97349ad.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 6dccab2799868acaddad0362745fbd2a0b4467fc6d666a4a56531fb17544356e. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B30-context",
+    "title": "Choose gastric MALT care from post-eradication trajectory",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.gastric-malt.localized-hpylori-positive-initial-treatment.v1.r4. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 311126be1f193594f816e03f51d8d960136c18920544a1a2c2588fb9fe509886.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 725cc3d48396d9fe9079d7babb755fbffd9a58bff6979a0b6dd8d70130133605. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B31",
+    "title": "Interpret a p-value",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.statistics-ethics.p-value.v4.r3. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 05fbea0069dea413c575062fe783b9295e5604462c5894eae09a2afc6df172c3.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 71e162ead712e6a48dce5dc9959e363bbe81cdc4586cd36aa1ee09c5dfbb8e35. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B32",
+    "title": "Apply vascular, contents and duct findings to collection treatment",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.pseudocyst.symptomatic-endoscopic-drainage.v1.r5. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 2955dff167ede10f2d4301f3ce807df9258b96bcc50e1f909c0845ecef51bca5.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 6930e0c011841619d4711d240e7f1e557cea6aa8991fd1fc825711144431f55d. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B32-context",
+    "title": "Complete collection imaging for a specific intervention question",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.pseudocyst.contrast-ct-characterization.v1.r5. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 37fb0c356af0c7c828e9f52861b50218fd35614f5df681c8e412c2eb60694cab.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 473c6033fcbe399d1645f6cfa6dd115a9ef6b27d58e92ae256544486235dd588. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B33",
+    "title": "Apply vascular, contents and duct findings to collection treatment",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.pseudocyst.symptomatic-endoscopic-drainage.v2.r4. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 5871f10f19339031f6a009b8427da062973a19e683b8a3bf758f764862d0651c.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: e1211bd71fce40005ef61c0b7e86e0855be6ad6514ab784d99e4073a549db600. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B33-context",
+    "title": "Complete collection imaging for a specific intervention question",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.pseudocyst.contrast-ct-characterization.v2.r5. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 657a9df2a4a38e15656ac3c111c16d0327e20d582b88b786af22f0e2d11bd9e4.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 25beed19aac3fab05003b982a8c13b0bf53bb702f1dba59f0bfce0dc1304a845. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B34",
+    "title": "Apply vascular, contents and duct findings to collection treatment",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.pseudocyst.symptomatic-endoscopic-drainage.v3.r4. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 4a7969713a3e18058b1e5f6ae5bd848343a2a1d4ce8d973b8a34e372fdcd0800.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 010392ab0dac10320439c661519ae156b19dc96af67267b5d91e845fd13d5168. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B34-context",
+    "title": "Complete collection imaging for a specific intervention question",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.pseudocyst.contrast-ct-characterization.v3.r5. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: ad763795faa438de87396e857010d4d34758fda97ccceedc8235d95f95e7b6aa.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: d78d52abdf5c836a9b3c5f35d6065505124f9cbe40da65eb0cbd75ac64af08fb. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B35",
+    "title": "Apply vascular, contents and duct findings to collection treatment",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.pseudocyst.symptomatic-endoscopic-drainage.v4.r4. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 89ceba709d39a577a624ef9672e508b7c653301ce25c67038feb75b7edb77297.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 8001b590df6dbf4a1ba2e958cf0bd1fdb2cf3a0ea0af9c77f3fc97b7bf0dd713. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B35-context",
+    "title": "Complete collection imaging for a specific intervention question",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.pseudocyst.contrast-ct-characterization.v4.r5. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 0465a9444ccd28fd003785115d3fd62e933f73af9e027a05252dd83bb3f1b8ae.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 77aa512ca4b3a96af29494be1299f2f57919ba675a4aac3535f6c00b4fcd5b4d. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B36",
+    "title": "Act and iterate after a PDSA test",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "The unique-novelty cue is repaired: all three choices include a new prefilled workflow, and the first two each hold source constant. The data are now needed to compare agreement and burden; there is no simple wording or key-length shortcut.",
+      "However, a unique priority is not established. L manual versus L prefill offers more apparent time-saving headroom (50 minutes), while N manual versus N prefill tests automation of an already efficient, fully agreeing structured source (15 minutes). Both fit the stated aim of reducing entry work while retaining agreement and both are controlled comparisons.",
+      "The item supplies no implementation feasibility, source-use frequency, prefill cost, need to retain source L, or explicit rule that absolute manual burden determines priority. The M prefill result does not establish the prefill time or agreement for either L or N. Larger baseline burden makes the key reasonable, but does not make the competing N test clearly wrong.",
+      "The cross-source N-manual versus L-prefill comparison confounds source and method if the desired inference is the method effect. Eliminating that distractor still leaves two defensible next tests. This is a priority ambiguity, not evidence that the keyed experiment is clinically unsafe.",
+      "Moderate intended two-step QI reasoning: identify accuracy/burden patterns, then choose a controlled informative adaptation. The unresolved ranking must not be called hard. All counts and times are explicitly constructed; contacts duplicate the agreement ranking and do not resolve L versus N."
+    ],
+    "suggestions": [
+      "For a unique key, define the decision criterion and supply the operational facts that distinguish the two controlled tests, without merely telling the learner to choose source L. Alternatively, keep the source constant across all options and compare credible entry adaptations using data on burden and agreement that actually rank them.",
+      "Do not assume the observed M prefill time transfers to either L or N, or that the larger manual total alone proves the best first investment. Keep the question about a testable next-cycle hypothesis, not guaranteed benefit.",
+      "Fallback question.quality-improvement.pdsa-act-and-iterate.v3 is WORSE overall for the owner's resident-challenge goal: its stem announces a missed symptom aim, longer planning and 'no specific correctable defect', strongly steering 'Abandon this version and test another idea'. It avoids this particular L-versus-N ambiguity by reverting to a different, heavily cued decision, and the adequacy of a single pilot to reject repetition/adaptation still deserves review.",
+      "That fallback also describes an investigational gastroparesis pathway, whereas the frozen current presentation describes a medication-form workflow. An isolated node reversion is not automatically a coherent hybrid case. The manager must reconcile the recorded restore constraint and visible sequence; no fallback is applied or approved here."
+    ]
+  },
+  {
+    "id": "B37",
+    "title": "Resolve breast imaging/core-biopsy discordance",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.inflammatory-breast-cancer.core-biopsy-confirmation.v4.r5. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 24f188d953695da2c0fd068aedd6fa1fd606947bdc9c0904f0d80c08d70f6ef9.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: b9a37e1ec03990276e4da08a3978df1a5dea79a1d21d3d0b64d9a978bfc53669. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B37-context",
+    "title": "Neoadjuvant sequence for stage III inflammatory breast cancer",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.inflammatory-breast-cancer.neoadjuvant-sequence.v4.r3. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: e8a05f43130948ea7d42916882265ea5db481593de3863cf9c64ced7237bbb73.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 64d29cdd9d06d439e35c0a4f0ef779a7dfb758c444dcec451ce437aa2c6d0b49. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B38",
+    "title": "Interpret a confidence interval",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.statistics-ethics.confidence-interval.v1.r3. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: a431c6dbefae45cb121990947a826aacd5ebb9a129a6d847e86faaf09c00e11d.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: a29a45ec8cbc5d772de2e25c2a29eb32465b497c1ea9663fb0b59ce58ab1092c. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B39",
+    "title": "Interpret a p-value",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.statistics-ethics.p-value.v3.r4. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 20f387115b9787a6be316ff08cb58fbb38d240987289b2aa1eb8aec9bdc2d8cd.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: ee6b7638499050026d02ae7dcca9eb0899e21dff447945b2887f6615560c05fb. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B40",
+    "title": "Sequence treatment of recurrent ulcer bleeding",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.peptic-ulcer-bleeding.visible-vessel-treat.v1.r6. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 824ed88b732e3aca4bc470ac172f0688937385d9e81228cd928f3da3ca28f69c.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 93112503875ca2008a0f2d237525498fbca4f405fc4df7bec6146102b4e4b27f. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "B40-context",
+    "title": "Recognize failed repeat ulcer hemostasis and select rescue",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "Preservation-only PASS: question.peptic-ulcer-bleeding.visible-vessel-inadequate-monotherapy.v1.r5. Exact UTF-8 JSON.stringify bytes of the after fields match the saved review-six packet in tools/question-quality/fixtures/adversarial-r7-before-20261102.json. After-field SHA-256: 62b11e73901d16120b22e30754428e84ce7eb601ae1e76dd7fbdc1029ad42f89.",
+      "The assembled question object and full target-node/shared-case projection also match that snapshot byte-for-byte under the same serialization. Projection includes complaint, presentation, patient display name, canonical demographics, all instantiation profiles and full target node. Projection SHA-256: 54ca9b1f2e4928fbaf4b10d0e71de8033052c2a5c51434f1c404da16d78a3c2c. Verdict, difficulty and twoStep are carried from review six, not a new clinical or difficulty assessment."
+    ],
+    "suggestions": []
+  }
+]

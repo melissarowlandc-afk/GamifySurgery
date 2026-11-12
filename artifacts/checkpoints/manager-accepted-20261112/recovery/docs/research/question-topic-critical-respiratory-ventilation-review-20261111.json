@@ -1,0 +1,336 @@
+[
+  {
+    "id": "question.topic.critical-respiratory-ventilation.ards-pbw-order.v1",
+    "nodeId": "node.topic.critical-respiratory-ventilation.ards-pbw-order.v1",
+    "title": "Initial ARDS tidal-volume order",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The task calls this an initial order although a 500-mL breath and plateau measurement have already been delivered. Distinguish selecting the first protective prescription from adjusting an established protective prescription.",
+      "PBW is not expanded on first use. Residents will usually recognize it, but 'predicted body weight' is clearer than an unexplained worksheet abbreviation."
+    ],
+    "cues": [
+      {
+        "phrase": "Checked PBW",
+        "why": "Only one of the three weights receives a validation adjective. Together with 'lung-protective ventilation plan', this gives the worksheet an answer-selecting label rather than requiring an independent interpretation."
+      },
+      {
+        "phrase": "Set tidal volume to 300 mL / Set tidal volume to 450 mL / Set tidal volume to 540 mL",
+        "why": "All three choices are the same multiplier applied to the three displayed weights. A reader can identify the shared multiplier from the numbers and then select the uniquely 'Checked' weight without knowing the prescription rule."
+      }
+    ],
+    "fairness": [
+      "300 mL is the defensible initial 6-mL/kg predicted-weight choice among these options. The explanation appropriately requires subsequent pressure and gas reassessment; no confident clinical inaccuracy identified.",
+      "The oxygenation values and elevated plateau do not distinguish these three weight calculations. Removing them leaves the answer unchanged: weight selection plus multiplication is one rule application, not two consequential clinical decisions.",
+      "The named age/sex clinic frame is consistent, and the task identifies the historical patient. Initial lung-protective ventilation is a high-yield resident concept.",
+      "Review scope: 13 non-held candidate nodes are evaluated in this array. The candidate ards-pressure-limit node carries release hold review.n3.ards-weight-change-versus-tidal-volume-basis.v2 and is excluded, as requested. Historical kept, retired, parked and held records are not adjudicated. This is an offline editorial review, not source re-verification or Melissa Rowland's clinical approval; that limitation applies to every entry."
+    ],
+    "suggestions": [
+      "Remove the asymmetric 'Checked' label, expand PBW, and make the temporal wording consistent with the actual order being selected.",
+      "Either obtain explicit acceptance for a foundational single-rule item or redesign the options so a clinically meaningful finding changes the chosen plan after the weight calculation. Do not count the multiplication itself as a second consequential step or duplicate the separately held pressure-limit decision."
+    ]
+  },
+  {
+    "id": "question.topic.critical-respiratory-ventilation.ards-prone-escalation.v1",
+    "nodeId": "node.topic.critical-respiratory-ventilation.ards-prone-escalation.v1",
+    "title": "Prone positioning after protective ventilation",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Which additional respiratory-support intervention' does not accommodate the option to continue the existing intervention. The task should ask for the next respiratory-support plan."
+    ],
+    "cues": [
+      {
+        "phrase": "additional respiratory-support intervention / Continue supine protective ventilation",
+        "why": "Without medical knowledge, the task rules out the continuation option because it is not an additional intervention. This removes the intended continue-versus-escalate decision before the oxygenation data are interpreted."
+      }
+    ],
+    "fairness": [
+      "The constructed PaO2/FiO2 ratio is approximately 73, despite adjusted protective support. Proning is the defensible best offered next plan; improved plateau does not resolve the oxygenation problem, and immediate ECMO cannulation is premature without assessment of conventional rescue strategies.",
+      "There are two meaningful steps: interpret oxygenation in relation to support, then select the escalation stage. Severe ARDS support sequencing is high yield.",
+      "The later entry follows the earlier volume adjustment coherently, repeats the necessary current pressure and oxygenation data, and does not depend on recalling the prior numerical volume. Prior explanations do not teach proning. The intervening held node is not approved by this sequence assessment.",
+      "The spine and abdominal observations are relevant to positioning feasibility. They are not themselves nonmedical answer matches and should not be deleted merely to obscure the intended plan."
+    ],
+    "suggestions": [
+      "Use a neutral complete task such as 'Which respiratory-support plan should have been chosen next for Nina Cole at this assessment?' Retain continuation as a genuine alternative and recheck the options with the revised task."
+    ]
+  },
+  {
+    "id": "question.topic.critical-respiratory-ventilation.pressure-assessment.v1",
+    "nodeId": "node.topic.critical-respiratory-ventilation.pressure-assessment.v1",
+    "title": "Assessment of a peak-pressure rise",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "peak-pressure rise / Measure an end-inspiratory occlusion pressure",
+        "why": "The key is the only option that explicitly measures a pressure, matching the task's requested problem. The alternatives are anatomical examinations. This is a wording/category advantage even though all three are assessments."
+      }
+    ],
+    "fairness": [
+      "An inspiratory hold is a defensible first discriminating assessment in this passive, stable, volume-controlled record. There is no clear clinical error in the key or the explanation.",
+      "The main demand is recalling which measurement separates resistive from static loading. Stability just permits that assessment; the options do not make a second consequential interpretation necessary. Bronchoscopy is a relatively invasive initial competitor without a supplied airway finding.",
+      "Pressure mechanics is high yield. The named patient, historical stage and task are clear, and the later secretion item follows acquisition of the missing pressure coherently."
+    ],
+    "suggestions": [
+      "Compare genuinely competing bedside assessments at the same immediate stage, with neutral parallel labels, rather than one pressure measurement against invasive airway and pleural examinations.",
+      "For a routine resident item, add a supported acquisition or clinical discrepancy that changes which assessment is appropriate; otherwise seek explicit acceptance as foundational mechanics recognition. Avoid inventing difficulty by withholding the passive/stability conditions."
+    ]
+  },
+  {
+    "id": "question.topic.critical-respiratory-ventilation.secretion-response.v1",
+    "nodeId": "node.topic.critical-respiratory-ventilation.secretion-response.v1",
+    "title": "Airway intervention after a resistive pressure change",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "visible secretions in the endotracheal tube / Preoxygenate and suction the endotracheal tube",
+        "why": "The only option repeating the named tube removes the plainly visible material. A reader can match this observation to suction without interpreting either pressure."
+      },
+      {
+        "phrase": "Preoxygenate and suction the endotracheal tube",
+        "why": "The key uniquely bundles a preparatory safety action with treatment; the competing options are single interventions. The preparation belongs in common procedural context or feedback rather than giving only the key a completeness advantage."
+      }
+    ],
+    "fairness": [
+      "The widened peak-minus-plateau difference with unchanged static pressure supports an increased resistive component, and coarse sounds plus visible secretions make suction the best offered immediate action. Bronchodilation can coexist with secretion management, but this record supports suction priority. No confident clinical error identified.",
+      "The pressure comparison can be deleted without changing the answer. The intended mechanics-then-treatment reasoning is therefore bypassable, and prior feedback already prepares the dynamic/static distinction.",
+      "The update repeats the prior and current values and relevant ventilator conditions, so the second part is coherent and understandable without remembering earlier measurements. Airway obstruction and ventilator troubleshooting are high yield."
+    ],
+    "suggestions": [
+      "Use parallel intervention labels, moving routine preoxygenation instruction to feedback or shared context.",
+      "Rebuild the decision around a response to an actual airway-clearance attempt or another supported competing observation so the pressure trend changes the next action. Do not simply delete necessary airway findings while preserving a suction key that would then be underdetermined."
+    ]
+  },
+  {
+    "id": "question.topic.critical-respiratory-ventilation.expiratory-time.v1",
+    "nodeId": "node.topic.critical-respiratory-ventilation.expiratory-time.v1",
+    "title": "Ventilator adjustment for incomplete expiration",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The flow label identifies the observation as expiratory, so the negative sign is interpretable without an absent waveform image. Measured total PEEP is clearly distinguished from set PEEP.",
+      "The learner must infer incomplete emptying from persisting expiratory flow and the PEEP difference, then resist increasing minute ventilation in response to the rising PaCO2. Reducing rate is the best of these three offered adjustments.",
+      "Both distractors are recognizable attempts to improve CO2 clearance and become harmful choices through the supplied mechanical pattern. The directional opposition in the options does not identify the key without physiology knowledge.",
+      "The known asthma diagnosis is legitimate context for the different management task. The explanation does not invent a universal permissible pH or rate. No confident clinical inaccuracy or competing equally good listed action identified.",
+      "This is a self-contained, high-yield obstructive-ventilation decision; difficulty comes from a real gas-exchange versus emptying tradeoff."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.critical-respiratory-ventilation.sbt-readiness.v1",
+    "nodeId": "node.topic.critical-respiratory-ventilation.sbt-readiness.v1",
+    "title": "SBT readiness despite an elevated screening index",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'A brief unsupported sample' does not establish whether this was merely an index measurement or a breathing trial stopped for intolerance. Duration need not become a new cutoff, but the observed breathing effort, tolerance and reason for ending the sample are decision-critical.",
+      "Expand 'rapid shallow breathing index (RSBI)' in the update; its definition currently appears only indirectly in an option."
+    ],
+    "cues": [
+      {
+        "phrase": "A brief unsupported sample reports an RSBI / Repeat the rapid shallow breathing index assessment",
+        "why": "One distractor repeats the just-completed measurement without any stated acquisition problem. This creates a repeat-versus-new-assessment shortcut and weakens the closest alternative."
+      }
+    ],
+    "fairness": [
+      "The intended distinction between screening readiness and requiring an RSBI gate is useful and high yield. If the unsupported sample was tolerated and technically interpretable, a monitored SBT is defensible despite the isolated index.",
+      "Not requiring calculation of an index does not make a measured adverse respiratory pattern irrelevant. The absent effort/tolerance observations leave uncertainty about whether the index is an isolated screen or evidence of actual trial failure; I am not asserting that 118 itself contraindicates an SBT.",
+      "SIMV rate reduction is a weak modern competitor, leaving most discrimination to the underspecified sample-versus-trial distinction. The intended two steps are integrating readiness observations and deciding how much weight to place on the index; ambiguity is not credited as hard difficulty.",
+      "The later trial sequence is chronologically coherent, but it does not retrospectively supply the missing tolerance information for this first decision."
+    ],
+    "suggestions": [
+      "State the observed effort and tolerance during the short measurement and why it ended. Preserve the elevated index rather than explaining away its interpretation before answering.",
+      "Make the nearest alternative a specific, plausible response to the supplied breathing pattern at the same decision stage. Recheck the SBT-versus-defer/reassess ranking with Melissa; do not infer that optional RSBI screening means every high measured index should be ignored."
+    ]
+  },
+  {
+    "id": "question.topic.critical-respiratory-ventilation.sbt-fio2.v1",
+    "nodeId": "node.topic.critical-respiratory-ventilation.sbt-fio2.v1",
+    "title": "Interpreting an SBT performed at increased FiO2",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Minimal-support' does not specify the actual pressure support and PEEP used. This matters when an option proposes adding pressure support.",
+      "The task asks for a plan 'before an extubation decision' while one option makes that decision."
+    ],
+    "cues": [
+      {
+        "phrase": "before an extubation decision / Extubate to the trial oxygen concentration",
+        "why": "The task linguistically excludes immediate extubation before the learner evaluates whether the trial supports it."
+      },
+      {
+        "phrase": "charted as tolerated. Sarah remains comfortable, but",
+        "why": "The adversative wording announces a defect in an apparently successful test. FiO2 is the only changed support variable displayed, and only one repeat option corrects it; the item can be answered as a test-comparison puzzle."
+      }
+    ],
+    "fairness": [
+      "Reassessment without the increased oxygen support is a defensible best plan among these choices. The explanation appropriately describes conditional, very-low-certainty guidance rather than an absolute extubation prohibition; no confident clinical inaccuracy identified.",
+      "The intended interpretation-then-reassessment task is bypassed by the lead-in and weak pressure-support alternative. Recognizing different test conditions is worthwhile, but the current execution is not a difficult two-step resident item.",
+      "The before/during oxygen data make the update understandable independently of the prior RSBI answer. Prior feedback does not disclose the FiO2 rule. Valid SBT conditions are high yield, although recall of the exact conditional guideline wording is less valuable than its physiological application."
+    ],
+    "suggestions": [
+      "Ask neutrally for the next liberation plan, remove the editorial 'but', and state the actual support conditions needed to compare the offered actions.",
+      "Use credible competing plans that require interpreting the oxygenation response, rather than a task-excluded extubation and unsupported pressure escalation. Retain the evidence-certainty limitation in feedback."
+    ]
+  },
+  {
+    "id": "question.topic.critical-respiratory-ventilation.extubation-clearance.v1",
+    "nodeId": "node.topic.critical-respiratory-ventilation.extubation-clearance.v1",
+    "title": "Airway clearance after a tolerated SBT",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Her cough does not move secretions into the endotracheal tube; pooled secretions repeatedly require suction / Continue intubation and airway clearance",
+        "why": "The update states an immediately unresolved clearance problem, and only the key explicitly addresses clearance. The two extubation options differ in oxygen/support device but neither addresses the dominant problem."
+      }
+    ],
+    "fairness": [
+      "Continuing intubation while addressing ineffective clearance is the best offered plan. A cuff leak and a tolerated SBT do not establish effective airway clearance. No confident clinical error identified.",
+      "This is a single decisive safety finding overriding reassuring results; the normal SBT and cuff leak are not two independent consequential inferences. The current distractors do little to challenge a resident who recognizes the clearance problem.",
+      "The repeated trial, alertness and cough observations are present in this update. It follows the preceding trial reassessment coherently and stands alone; prior explanations do not teach the secretion key. The distinction between ventilatory readiness and airway function is high yield."
+    ],
+    "suggestions": [
+      "Do not remove the necessary unsafe-clearance observations to manufacture difficulty. Either explicitly seek acceptance as a foundational safety-recognition item or develop a different supported reassessment boundary where actual clearance trajectory changes the extubation plan.",
+      "Keep common airway care in shared context and compare parallel concrete airway plans, avoiding a uniquely comprehensive key."
+    ]
+  },
+  {
+    "id": "question.topic.critical-respiratory-ventilation.copd-niv.v1",
+    "nodeId": "node.topic.critical-respiratory-ventilation.copd-niv.v1",
+    "title": "Initial support for acute-on-chronic COPD ventilatory failure",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The baseline cell under 'PaO2 / oxygen condition' contains only 'Room air', so the table mixes an unreported baseline PaO2 with an actual current value. Mark an unavailable value explicitly or separate the columns."
+    ],
+    "cues": [
+      {
+        "phrase": "an acute COPD exacerbation that initially received mask support / Start bilevel mask ventilation",
+        "why": "The shared presentation reveals the historical initial support action before the question asks the learner to select it. Only one option is mask support. The gases, work of breathing and airway assessment can all be ignored."
+      }
+    ],
+    "fairness": [
+      "Without the leak, the acute fall in pH with rising PaCO2, persistent work of breathing and preserved alertness/clearance support bilevel NIV over oxygen alone or immediate intubation. No confident clinical error identified.",
+      "The intended two steps are recognizing acute-on-chronic ventilatory failure and assessing suitability for noninvasive support. The presentation supplies the answer, so those steps are not required in the actual item; its current difficulty is easy.",
+      "COPD NIV selection is high yield. The named age/sex and initial hospital time point are clear. The later failure and recovery stages are coherent, but the shared presentation should not disclose this first answer."
+    ],
+    "suggestions": [
+      "Delete 'that initially received mask support' from the presentation. The initial support can become known in the next update after the learner has answered this node.",
+      "Clarify the baseline exhibit cell, then independently re-review the repaired item; the underlying gas-plus-airway reasoning could support a moderate two-step question once the answer leak is removed."
+    ]
+  },
+  {
+    "id": "question.topic.critical-respiratory-ventilation.copd-niv-failure.v1",
+    "nodeId": "node.topic.critical-respiratory-ventilation.copd-niv-failure.v1",
+    "title": "Escalation during deteriorating NIV",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Invasive ventilation is the single defensible best offered choice given worsening ventilation, markedly reduced responsiveness and pooled secretions. Increasing mask assistance does not resolve the airway-function problem. No confident clinical inaccuracy identified.",
+      "The diminished responsiveness and inability to handle secretions already determine the action. The saturation/gas contrast is educational but can be deleted without changing the answer, so the claimed two-step oxygenation-versus-ventilation interpretation is not necessary.",
+      "This is an easy high-yield rescue/safety recognition item, not a nonmedical wording giveaway. Necessary danger signs must remain; their clarity should not be treated as an authoring defect to be hidden.",
+      "The update states the active support and current trajectory, follows the initial NIV decision coherently, and stands alone without memorizing the previous gases. Prior feedback also prepares the deterioration boundary, further limiting difficulty."
+    ],
+    "suggestions": [
+      "Seek explicit acceptance as an intentional safety-recognition exception, or author a different earlier response-assessment decision with credible competing next actions. Do not weaken airway danger signs while preserving this urgent intubation key.",
+      "If a moderate/hard item is required, make both the trajectory and a supported NIV-performance observation consequential, with clinician review of the resulting escalation boundary and no invented pH cutoff."
+    ]
+  },
+  {
+    "id": "question.topic.critical-respiratory-ventilation.copd-planned-extubation.v1",
+    "nodeId": "node.topic.critical-respiratory-ventilation.copd-planned-extubation.v1",
+    "title": "Planned extubation with preventive NIV",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The learner must recognize return to a compensated chronic baseline rather than demand normal PaCO2, then choose immediate post-extubation support for an older patient with chronic respiratory disease and hypercapnia during the trial. Both observations affect the plan.",
+      "Standard oxygen is a credible alternative because low-flow oxygen meets the recorded oxygenation need; preventive ventilatory support requires an additional risk-based inference. Continued intubation represents a recognizable error about chronic PaCO2 rather than an arbitrary absurd option.",
+      "Immediate bilevel support is a defensible best choice for this selected profile, and the explanation appropriately avoids ranking all possible HFNC/NIV combinations or extending prophylaxis to every extubation. Offline assessment does not independently verify the exact guideline population or constitute clinical sign-off.",
+      "The chronology explicitly advances from invasive support to a tolerated SBT with intact clearance. Current and pre-illness gases are repeated, so the node is interpretable with its shared presentation and update. Prior NIV-failure feedback does not teach the preventive post-extubation decision.",
+      "The earlier use of mask support is historical context at this stage, not a reliable answer shortcut: returning to it after a prior failure requires recognizing the changed clinical phase. Preventive versus rescue support and chronic hypercapnia are high-yield distinctions."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.critical-respiratory-ventilation.delivery-flow-assessment.v1",
+    "nodeId": "node.topic.critical-respiratory-ventilation.delivery-flow-assessment.v1",
+    "title": "Flow assessment after a falling mixed-venous saturation",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "A pulmonary-artery catheter and repeated indirect calorimetry are present, but the record does not state whether cardiac-output measurements are available from that monitoring. This does not make echo wrong, but leaves the claimed clinical priority incompletely motivated."
+    ],
+    "cues": [
+      {
+        "phrase": "Catheter position and sample labels are verified / Repeat the complete blood count / Repeat the arterial blood gas",
+        "why": "The data have been collected and explicitly validated; both distractors simply repeat represented carriage measurements. Only the key introduces a new assessment. A test-wise reader can select the new investigation without interpreting the direction or magnitude of the venous change."
+      }
+    ],
+    "fairness": [
+      "At unchanged oxygen consumption, the larger arterial-to-mixed-venous oxygen-content difference supports lower flow. The direction of the inference is internally consistent: hemoglobin rises while the arterial-minus-venous saturation gap also widens. No exact oxygen-content constant or new clinical threshold is required to assess that direction.",
+      "Doppler echo can assess output and cardiac contributors, and it is the best offered investigation once the measurements are trusted. That does not establish it is the uniquely prioritized real-world investigation in every pulmonary-artery-catheter setting; this uncertainty is a ranking/context limitation, not a confident clinical inaccuracy.",
+      "The underlying physiology could support moderate two-step reasoning, but the only-new-test structure lets the learner bypass it. Deleting the actual numbers still leaves the same test-taking preference.",
+      "Oxygen content, extraction and flow are high-yield physiology; ranking echo over redundant repeats has less educational value. The single-node historical clinic record is otherwise understandable and contains a named age/sex patient."
+    ],
+    "suggestions": [
+      "Clarify what flow information is actually available and the specific unresolved clinical question, without simply announcing that echo is missing.",
+      "Compare equally novel, clinically plausible investigations, or ask a concrete flow-dependent decision whose ranking changes with the paired observations. Preserve sample validity and stable consumption, which are necessary assumptions; do not remove them just to make repeat tests plausible.",
+      "Have Melissa resolve the exact investigation priority in the revised context; retain the explanation's refusal to infer a specific shock subtype or treatment from these measurements alone."
+    ]
+  },
+  {
+    "id": "question.topic.critical-respiratory-ventilation.postextubation-rescue.v1",
+    "nodeId": "node.topic.critical-respiratory-ventilation.postextubation-rescue.v1",
+    "title": "Rescue after established post-extubation deterioration",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The learner must interpret combined worsening oxygenation, ventilation and fatigue despite existing support, then distinguish rescue of established post-extubation failure from preventive NIV. Reintubation is the best offered plan.",
+      "Rescue bilevel support is a credible near-miss for an acidotic patient who has not been described as profoundly obtunded; choosing against it requires attention to population and clinical phase. Merely increasing oxygen support does not address the worsening ventilatory trajectory.",
+      "The explicit medical, nonoperative and non-COPD context legitimately defines the population rather than naming the key. These findings should not be removed as alleged cues. The explanation preserves conditional guidance and exceptions; no confident clinical inaccuracy identified in the stated scenario.",
+      "This standalone node supplies the preceding extubation, current support, gas trend, work of breathing and unsuccessful initial airway measures. It does not require remembering a separate prophylaxis question. Rescue sequencing is a high-yield critical-care concept.",
+      "This is an offline editorial PASS for the exact supplied content, not independent verification of every guideline exception or named-clinician approval."
+    ],
+    "suggestions": []
+  }
+]

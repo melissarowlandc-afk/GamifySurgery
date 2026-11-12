@@ -1,0 +1,80 @@
+[
+  {
+    "id": "question.topic.critical-respiratory-ventilation.copd-planned-extubation.v1",
+    "nodeId": "node.topic.critical-respiratory-ventilation.copd-planned-extubation.v1",
+    "title": "Extubation strategy after recovery to chronic hypercapnic baseline",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Scope: independent review of the four status=salvage candidate contexts in salvageRound, using their presentation, current update, exhibit, task, options and explanation. Kept-unchanged, retired, parked, held and other non-salvage records are outside this review; their presence does not confer acceptance. Earlier reviewer verdicts and author self-checks were not used as evidence of correctness. No network or fresh source verification was performed. PASS is editorial only; every reviewed draft remains needs_clinician_review pending Melissa Rowland's exact-version approval.",
+      "The standalone presentation identifies Robert, age 70, male, and the COPD admission. The update supplies the invasive-support history, successful breathing trial, airway function and both baseline and current gases. 'Later hospital entry' refers intelligibly to that admission; no prior scored answer or explanation is needed. The complete task asks for an airway plan at the documented recovery stage, rather than an intervention in today's clinic.",
+      "The resident must recognize that a normal pH with PaCO2 near the pre-illness value does not require continued intubation, then distinguish readiness for tube removal from the need for preventive support afterward. COPD, age and persistent hypercapnia make immediate bilevel support the best offered plan. Ordinary nasal oxygen is a credible competing plan after a successful trial, but omits the preventive ventilatory strategy for this risk profile.",
+      "Cue attack: 'tolerates an SBT' and 'Low-flow oxygen maintains the trial’s oxygenation' establish relevant observations, but neither identifies bilevel support without clinical knowledge; the latter could tempt the oxygen distractor. 'Continue intubation until PaCO2 normalizes' is a concrete, clinically familiar normalization error rather than a rhetorical 'always/never' foil. The two extubation options have parallel wording and comparable length. No unique wording match, teaching sentence, convergence or diagnosis-label shortcut selects the key.",
+      "Predicted moderate: baseline-versus-normal interpretation changes whether the tube stays, and risk assessment changes support after removal. Both distinctions are high-yield ventilator-liberation decisions. This is not a hard item: the successful trial and preserved clearance deliberately resolve basic readiness uncertainty.",
+      "No confident clinical inaccuracy identified. 'Low-flow oxygen' is less specific than a recorded oxygen setting, but the stated tolerated trial and maintained oxygenation suffice to rank these options; the task does not ask for an exact oxygen prescription. The explanation appropriately confines preventive NIV to a selected profile and does not claim superiority over every alternative post-extubation regimen. Its exact guideline support was not newly verified offline."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.critical-respiratory-ventilation.sbt-readiness.v2",
+    "nodeId": "node.topic.critical-respiratory-ventilation.sbt-readiness.v2",
+    "title": "Proceeding to an SBT despite a concerning isolated RSBI",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Sarah's named age/sex presentation and current update supply the illness trajectory, spontaneous effort, oxygen requirement, hemodynamics and observed breathing behavior. The index measurement is explicitly complete rather than terminated for distress. This distinction makes the record intelligible without a preceding question or an invented trial-duration rule. The task is complete and all options address the present liberation pathway.",
+      "A monitored SBT is the best offered next step after integrating the improving illness, oxygenation on modest support and cardiovascular stability. The discordant RSBI is a reason to examine readiness carefully, not proof that an SBT has failed. Continuing assist-control or requiring a pressure-support taper treats the isolated index as a barrier despite the other supplied findings. Those are plausible resident errors, not equally supported necessities in this record.",
+      "Cue attack: 'she remains comfortable, with no accessory-muscle use' and 'The measurement ends when its scheduled recording is complete' favor proceeding, but they distinguish an isolated concerning measurement from actual intolerance and are needed for fairness. They do not state that RSBI can be bypassed. 'breathing trial' occurs in both the key and taper option, and the task's 'liberation plan' does not uniquely match the key. No option is conspicuously longer, uniquely comprehensive or qualified with an explanatory criticism of itself.",
+      "Predicted moderate: infer readiness from several clinical domains, reconcile that inference with the concerning index, and choose direct monitored testing rather than a delay or unnecessary taper. Removing the index would make the item substantially easier. SBT readiness and misuse of a single weaning parameter are high-yield concepts; difficulty here depends partly on familiarity with evolving liberation recommendations, not on a novel physiologic puzzle.",
+      "No confident clinical inaccuracy identified. The explanation properly distinguishes an index from demonstrated clinical intolerance and does not infer extubation readiness from this assessment alone. Exact AARC wording and currency were not freshly verified; the numerical observation should not be promoted into a new universal cutoff. Editorial PASS does not constitute clinical approval."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.critical-respiratory-ventilation.sbt-fio2.v2",
+    "nodeId": "node.topic.critical-respiratory-ventilation.sbt-fio2.v2",
+    "title": "Interpreting a tolerated breathing trial performed at increased FiO2",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The exhibit contains its own before-trial and during-trial support, FiO2, saturation and respiratory-rate observations. Sarah's presentation establishes the intubated pneumonia recovery context. 'Next hospital entry' is a minor chronological remnant, but no unseen earlier entry is needed to understand or solve this single-node case. The table is clearly labelled fictional, and the task asks for a specific liberation plan.",
+      "The learner must distinguish removal of ventilatory assistance from increased oxygen supplementation, then choose a reassessment that tests the unresolved oxygenation condition. The higher saturation cannot establish tolerance at FiO2 0.35 when it was measured at 0.60. Repeating an unassisted trial at the earlier concentration is the best offered way to resolve that uncertainty; adding support while retaining 0.60 changes the wrong variable, and extubating at 0.60 accepts the incomplete assessment.",
+      "Cue attack: 'The trial is recorded as tolerated' supplies a report for the resident to scrutinize, not the keyed conclusion. 'Repeat an unassisted trial at FiO2 0.35' is the only option with 0.35, but the number also occurs in the actual baseline and is decision-critical. Choosing the lone lower number is not justified by wording alone. 'Repeat' is shared by two options and 0.60 by two options, so majority-component convergence does not assemble the key. The caption and column labels do not explain the answer.",
+      "Predicted moderate: separate an acceptable unassisted trial method from a confounded oxygen comparison, then select the corrective assessment. The superficially reassuring saturation and reported tolerance create a consequential error opportunity. This tests a high-yield liberation principle, although the precise unchanged-FiO2 recommendation is a narrower point than basic extubation readiness.",
+      "No confident clinical inaccuracy identified in the offered ranking. The record does not prove that Sarah failed the trial, cannot tolerate FiO2 0.35, or could never be extubated at 0.60. The reason for increasing oxygen is not stated; the key is therefore a reassessment of uncertainty, not a diagnosis of worsening lung disease. Airway-clearance and consciousness findings are also absent, so this record must not be treated as a complete extubation-clearance assessment. Those omissions do not make either alternative the better offered plan.",
+      "The explanation acknowledges conditional guidance with very low certainty. This supports a bounded best-offered-answer interpretation, not an absolute prohibition or a claim that every supported SBT is invalid. The exact recommendation was not freshly checked offline and remains subject to named clinician review. There is no later node or prior feedback in the candidate context to create a sequence cue."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.critical-respiratory-ventilation.copd-niv.v2",
+    "nodeId": "node.topic.critical-respiratory-ventilation.copd-niv.v2",
+    "title": "Selecting initial support for acute-on-chronic hypercapnic respiratory failure",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Robert's age, sex, COPD admission, treatment stage, work of breathing, alertness, secretion clearance and blood pressure are explicit. The exhibit supplies both arterial-gas time points and the oxygen conditions without needing another node. 'initial hospital assessment' is compatible with an initial support decision after bronchodilator treatment; it does not imply that the current outpatient encounter is the emergency.",
+      "The change from pH 7.38/PaCO2 50 to pH 7.28/PaCO2 70 indicates an acute ventilatory deterioration on a hypercapnic baseline. Persistent respiratory effort calls for ventilatory assistance, while alertness, secretion clearance and stable blood pressure make an initial bilevel-mask strategy preferable to immediate invasive ventilation among these choices. High-flow nasal oxygen is a plausible oxygenation-focused error but is not the preferred substitute for bilevel assistance in this supplied acidotic COPD presentation.",
+      "Cue attack: 'acute COPD exacerbation' names the underlying disease appropriately for a support-selection task; it does not state whether oxygen, NIV or intubation is indicated. 'He is alert and clears oral secretions' narrows airway risk through observations rather than declaring NIV eligibility. 'Start bilevel mask ventilation', 'Start high-flow nasal oxygen' and 'Start invasive endotracheal ventilation' are parallel, similarly specific actions. No unique task-to-key phrase, length outlier, convergence, absolute or pre-answer teaching sentence identifies the key without medical reasoning.",
+      "Predicted moderate at the easier end: interpret the acute change rather than treat chronic hypercapnia in isolation, then use airway function and clinical stability to choose the support route. The oxygen-focused alternative and premature-intubation alternative represent different consequential errors. This is a core, commonly tested respiratory-support decision, but the supplied findings make the pattern relatively recognizable for a prepared resident.",
+      "No confident clinical inaccuracy identified. The numbers are observations, not universal pH or PaCO2 thresholds for intubation. The explanation appropriately combines gas interpretation with clinical state and does not claim that alertness guarantees NIV success. No later response or escalation node remains, and no prior feedback is needed. Exact guideline currency was not newly verified offline; PASS is editorial and the draft remains needs_clinician_review."
+    ],
+    "suggestions": []
+  }
+]

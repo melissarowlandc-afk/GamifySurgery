@@ -1,0 +1,369 @@
+[
+  {
+    "id": "question.topic.liver-malignancy.hcc-acquisition.v1",
+    "nodeId": "node.topic.liver-malignancy.hcc-acquisition.v1",
+    "title": "Nora Patel: characterize a lesion after an incomplete CT acquisition",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Multiphasic liver MRI is the best offered next investigation. The resident must distinguish an incomplete acquisition from a completed but indeterminate examination, then combine lesion size and cirrhosis with that distinction to choose diagnostic imaging over surveillance or immediate biopsy.",
+      "The record explicitly says the phases were not performed; it does not confuse missing exported images with missing acquisition. This necessary observation should remain. The phase vocabulary is medically relevant rather than an unfair key-only lexical match.",
+      "The presentation, exhibit and task are sufficient without a previous node. No confident clinical inaccuracy or equally strong offered alternative was identified.",
+      "Review-wide limitation: this is an offline editorial and clinical-reasoning review of the candidate visible text, not fresh source verification or clinical sign-off. Difficulty and high-yield judgments are qualitative, not measured performance or verified exam frequencies. Every candidate remains needs_clinician_review, including editorial PASS items. Retained, retired/replaced-by-existing, parked and withheld records were not reassessed. Runtime randomization, rendering and wait metadata were outside this visible-text review."
+    ],
+    "suggestions": [
+      "Retain the actual acquisition record and the complete separated task. Do not add dynamic CT as another choice without a patient-specific reason to prefer MRI; it could create a second defensible answer.",
+      "Keep the explanation focused on acquisition adequacy. Do not expand it to state the next node's exact diagnostic criterion or keyed disposition."
+    ]
+  },
+  {
+    "id": "question.topic.liver-malignancy.hcc-imaging-diagnosis.v1",
+    "nodeId": "node.topic.liver-malignancy.hcc-imaging-diagnosis.v1",
+    "title": "Nora Patel: imaging-based HCC diagnosis after MRI",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "HCC staging and treatment planning",
+        "why": "All three options supply HCC as the shared destination. This gives away the diagnostic interpretation that is supposed to be the first inference and leaves a familiar need-for-confirmation rule."
+      },
+      {
+        "phrase": "A biopsy decision follows adequate characterization when uncertainty persists.",
+        "why": "This preceding node's visible explanation rehearses the biopsy-versus-no-biopsy discriminator immediately before a technically adequate, classic MRI report. It reduces the later decision's independence, although it does not by itself specify the imaging diagnosis."
+      }
+    ],
+    "fairness": [
+      "The cirrhotic setting, 2.6-cm size, nonrim arterial enhancement and reported nonperipheral washout support imaging-based HCC diagnosis among these options. No mandatory biopsy indication is supplied. No confident clinical inaccuracy was identified.",
+      "The chronology is coherent and the current presentation plus report can be answered independently of the first node. The problem is ease and supplied interpretation, not missing clinical data.",
+      "Reading a classic pattern followed by choosing no redundant confirmation is a narrow rule application here; the shared HCC label and preceding feedback prevent two consequential independent steps."
+    ],
+    "suggestions": [
+      "Remove the common diagnostic destination from the answer labels and compare specific next actions whose appropriateness depends on interpreting the imaging in this risk population.",
+      "Introduce a supported, clinically meaningful competing interpretation or evidence-status distinction that changes the next action. Keep acquisition adequacy and the observed enhancement pattern; do not make the task harder by omitting them.",
+      "Review the first node's feedback together with the revised follow-up, and preserve the first node's exact PASS unless a separately reviewed version is created."
+    ]
+  },
+  {
+    "id": "question.topic.liver-malignancy.hcc-raw-reserve.v2",
+    "nodeId": "node.topic.liver-malignancy.hcc-raw-reserve.v2",
+    "title": "Elaine Brooks: resection versus transplantation or ablation",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Resection assessment is the best offered priority for this solitary peripheral tumor with preserved synthetic function, no supplied clinical evidence of significant portal hypertension, and a limited resection map. The tumor burden also makes transplant referral a plausible resident error rather than a random foil.",
+      "The resident must interpret reserve and portal-hypertension observations, then integrate tumor size and operative anatomy to rank the three treatments. The 4.6-cm size makes thermal ablation a less attractive competitor without inventing a new numerical rule.",
+      "The resection map is decision-critical feasibility information, not a sufficient answer by itself: poor reserve or portal hypertension could still change the priority. The three options name concrete treatments at the same assessment stage.",
+      "The explanation appropriately limits the answer to assessment rather than operative clearance. This standalone item is coherent. No confident clinical inaccuracy or equally strong offered priority was identified; current guideline confirmation remains outside this offline review."
+    ],
+    "suggestions": [
+      "Retain the distinction between tumor-burden eligibility and the best initial treatment assessment. Do not turn the explanation into a universal claim that transplantation or ablation is prohibited.",
+      "Preserve the raw reserve and portal-hypertension findings rather than replacing them with a resection-eligible label."
+    ]
+  },
+  {
+    "id": "question.topic.liver-malignancy.hcc-portal-flow.v1",
+    "nodeId": "node.topic.liver-malignancy.hcc-portal-flow.v1",
+    "title": "Omar Bennett: HCC with main portal-vein tumor occlusion",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Medical-oncology assessment for systemic therapy is the best offered pathway. Macrovascular tumor extension changes the interpretation of an otherwise small tumor, and main portal occlusion creates a separate perfusion concern for routine chemoembolization.",
+      "The resident must interpret the vascular staging and then use portal perfusion plus preserved function/activity to rank systemic therapy, chemoembolization and standard transplantation. Patent hepatic arteries can tempt an embolization choice but do not resolve the portal-flow problem.",
+      "The supplied HCC diagnosis is legitimate for this management task. The word standard appropriately bounds the transplant comparison; it is not a rhetorical absolute or an independent nonmedical route to the key.",
+      "The explanation preserves the distinction between routine chemoembolization and specialist locoregional exceptions. This standalone case is coherent, and no confident clinical inaccuracy was identified. Exact current systemic regimens and selected-center exceptions were not verified offline."
+    ],
+    "suggestions": [
+      "Keep the explicit tumor nature of the portal occlusion; changing it to an unspecified thrombus would materially change the staging inference.",
+      "Retain the limited claim about routine chemoembolization and standard transplantation rather than generalizing to all arterial treatments or all transplant protocols."
+    ]
+  },
+  {
+    "id": "question.topic.liver-malignancy.crlm-curative-assessment.v1",
+    "nodeId": "node.topic.liver-malignancy.crlm-curative-assessment.v1",
+    "title": "Lena Ortiz: curative assessment of bilobar colorectal metastases",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Which treatment assessment should be prioritized is broader than the actual resectability decision. The exhibit has already supplied a surgical plan covering every known site."
+    ],
+    "cues": [
+      {
+        "phrase": "Right hepatectomy and a small segment II wedge encompass the six mapped sites.",
+        "why": "This is an authored treatment solution, not just a disease map. Matching the explicitly supplied operation to HPB-surgery assessment largely bypasses the intended inference about bilobar distribution and lesion count."
+      },
+      {
+        "phrase": "after colon resection and completion of an outside course of systemic therapy",
+        "why": "Together with all lesions decreasing and the fully supplied operation, this makes further systemic therapy look like repeating a completed step while the key follows the named next plan. This is a sequence cue, not a claim that further chemotherapy is clinically never useful."
+      }
+    ],
+    "fairness": [
+      "HPB resection assessment is defensible. The lesion count and bilobar distribution do not alone exclude surgery; six lesions including a deep 5.2-cm target also make ablation less competitive.",
+      "The stated 45% is a constructed patient measurement, not proof of universally adequate functional reserve after chemotherapy. The assessment wording and later vascular review avoid a confident clinical error, but the explanation must not be read as operative clearance.",
+      "The later detailed outflow map can coherently reveal a new problem after an initial referral. This first node stands alone, but the present surgical solution and weak competitors make it a one-step referral match."
+    ],
+    "suggestions": [
+      "Replace the statement that the operation encompasses all six sites with neutral distribution and remnant observations that the learner must use to evaluate complete clearance.",
+      "Ask a concrete unresolved decision at the same planning stage and compare credible strategies. Make number/distribution compete with a meaningful functional or technical constraint rather than merely supplying a finished operation.",
+      "Preserve the distinction between initial resection assessment and the later outflow-dependent operative decision; do not reveal the next node's problem in this node's feedback."
+    ]
+  },
+  {
+    "id": "question.topic.liver-malignancy.crlm-remnant-outflow.v1",
+    "nodeId": "node.topic.liver-malignancy.crlm-remnant-outflow.v1",
+    "title": "Lena Ortiz: segment IV drainage after middle hepatic-vein removal",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": false,
+    "clarityIssues": [
+      "The remnant volume is unchanged from the earlier plan requires the previous exhibit. The current node does not restate the amount or functional distribution of remaining liver, so it does not fully stand alone.",
+      "Right hepatectomy with middle-hepatic-vein reconstruction names a specific operative strategy, while the explanation retreats to assessing whether reconstruction can preserve drainage. Those are different levels of commitment."
+    ],
+    "cues": [
+      {
+        "phrase": "The right-sided resection must include the middle hepatic vein.",
+        "why": "The key alone repeats middle-hepatic-vein and supplies a repair to the named structure; the alternatives concern portal flow or chemotherapy. With the task already announcing a new resectability problem, this permits a strong word-to-repair shortcut. The anatomical observation itself is necessary and should not simply be deleted."
+      }
+    ],
+    "fairness": [
+      "There is a genuine two-step anatomical inference: identify dependence of retained segment IV on the vein being removed, then distinguish venous drainage from remnant volume and inflow. Portal embolization does not directly restore the lost venous outlet.",
+      "The map establishes an outflow concern but does not establish reconstructibility, the tributaries that can be preserved/reimplanted, or whether sufficient functional liver would remain if segment IV were sacrificed. I cannot confirm that the specifically named reconstruction is uniquely justified from these observations. This is an unresolved technical feasibility question, not an assertion that reconstruction is wrong.",
+      "The sequence is coherent as an escalation from initial assessment to a detailed vascular review, and prior feedback does not reveal the drainage answer. Independence is weakened by the reference to the earlier remnant plan.",
+      "Functional remnant outflow is high-yield general-surgery knowledge. Selecting this exact venous reconstruction from a sparse sectoral map is a more specialized HPB decision; highYield is false for the current exact task, not for the underlying outflow principle."
+    ],
+    "suggestions": [
+      "Either ask which remnant functional problem requires resolution before surgery, using parallel competing planning actions, or supply a clinician-reviewed operative map sufficient to compare genuinely feasible operative strategies.",
+      "Make all choices operate at the same level of commitment. Do not key a definitive reconstruction while explaining only a need for feasibility assessment.",
+      "Restate the minimum relevant remnant information in the current update and make the anatomy, rather than a unique vein-name match, determine the decision. Have an HPB clinician resolve the exact reconstruction choice before retaining it as the key."
+    ]
+  },
+  {
+    "id": "question.topic.liver-malignancy.crlm-portal-target.v1",
+    "nodeId": "node.topic.liver-malignancy.crlm-portal-target.v1",
+    "title": "Marcus Lee: portal embolization before right hepatectomy",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Segments V-VIII",
+        "why": "The planned-resection row is reproduced directly in Right portal branches to segments V-VIII, and the portal map supplies the right-to-V-VIII translation. A reader can match the exact segment set to the key with little anatomical reasoning."
+      },
+      {
+        "phrase": "the hospital team has selected portal embolization",
+        "why": "The meaningful procedure-selection decision is already made. The remaining task tests one flow-diversion rule, not an interpretation of reserve followed by a treatment decision."
+      }
+    ],
+    "fairness": [
+      "Right portal branches to V-VIII are the appropriate target among these options for the supplied right hepatectomy. Including segment IV would compromise part of the intended remnant; embolizing the left side reverses the intended diversion. No confident clinical error was identified.",
+      "The task is complete and stands alone. The selected procedure and explicit branch map make it straightforward; translating a supplied segment set and recalling embolize-the-resection-side is not two consequential steps here.",
+      "Portal embolization and preservation of the future liver remnant are high-yield, but the second portal-target node repeats substantially the same operation-to-branch matching skill."
+    ],
+    "suggestions": [
+      "Keep the procedure mechanism but make a real patient-specific anatomical discrepancy or competing remnant plan change the territory selected. Supply the actual observations needed to resolve it rather than withholding the portal map.",
+      "Avoid making the correct option a verbatim copy of the resection segment set. Have the learner infer a consequential remnant relationship, with clinically credible competing territories.",
+      "If retained as foundational anatomy practice instead, seek explicit acceptance of that easy role rather than describing it as a two-step resident challenge."
+    ]
+  },
+  {
+    "id": "question.topic.liver-malignancy.crlm-restaging-biology.v2",
+    "nodeId": "node.topic.liver-malignancy.crlm-restaging-biology.v2",
+    "title": "Marcus Lee: oncologic progression despite remnant growth",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "The selected procedure does not guarantee that later reserve or oncologic staging will permit surgery.",
+        "why": "The preceding portal-target explanation explicitly rehearses the later reserve-versus-oncology decision. The new node then supplies successful reserve assessment and overt progression."
+      },
+      {
+        "phrase": "Systemic-treatment reassessment with the oncology team",
+        "why": "This is the only reassessment option against two committed local operations. Multiple new bilateral lung lesions and numerous new liver lesions make both operations visibly incomplete, so the uniquely cautious broad plan wins without a close comparison."
+      }
+    ],
+    "fairness": [
+      "Systemic-treatment reassessment is the best offered plan for new widespread hepatic and biopsy-confirmed pulmonary progression. The explanation correctly avoids treating all limited extrahepatic disease as an absolute surgical exclusion.",
+      "Both surgical distractors disregard the pulmonary progression, and neither is a close contender in the described state. The conclusion is clinically defensible but substantially easier than the requested resident-level reasoning.",
+      "The update follows portal embolization coherently and supplies enough current information to stand alone. The favorable reserve conclusion is already given, so the learner does not independently interpret it; removing that row leaves the same key."
+    ],
+    "suggestions": [
+      "Replace the unsupported proceed-with-surgery competitors with specific credible plans at the same reassessment stage, or rebuild the interval scenario so interpreting the actual progression pattern changes a genuinely plausible surgical plan.",
+      "Remove the preceding explanation's direct rehearsal of the follow-up objective when revising that node, and reassess the complete sequence.",
+      "Retain all findings necessary to distinguish progressive disseminated disease from potentially treatable limited disease. Do not create difficulty by hiding established metastases."
+    ]
+  },
+  {
+    "id": "question.topic.liver-malignancy.crlm-disappearing-map.v2",
+    "nodeId": "node.topic.liver-malignancy.crlm-disappearing-map.v2",
+    "title": "Gabriel Reed: mapping a metastasis no longer measurable on CT",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Pretreatment liver MRI",
+        "why": "The key alone uses the modality already named as demonstrating the original lesion. Matching the prior successful modality is a nonmedical shortcut, although it is not by itself a complete clinical justification."
+      }
+    ],
+    "fairness": [
+      "Hepatobiliary-contrast MRI is a defensible best preoperative mapping study among the offered tests for a treated colorectal metastasis no longer measurable on CT. Contrast-enhanced ultrasound is a clinically credible comparator, so this is more demanding than a plainly excluded-test item.",
+      "The explanation appropriately distinguishes radiographic disappearance from eradication and leaves truly occult-site treatment unresolved. I did not identify a confident clinical inaccuracy; comparative modality performance and availability-dependent exceptions were not freshly verified offline.",
+      "All choices already require further imaging and baseline correlation. Therefore the learner need not decide whether disappearance permits omission of the original site; the scored task is principally recall of the preferred mapping modality. A plausible two-step narrative in feedback does not make both steps consequential to the choice.",
+      "This node stands alone and coherently leads to a subsequently reidentified lesion. Its explanation does not disclose the next node's duct-related treatment answer."
+    ],
+    "suggestions": [
+      "Build the competing next plans around a real consequence of the discordant studies, so interpretation of apparent disappearance changes the selected action rather than being shared by every option.",
+      "Retain credible imaging competitors and specify any decision-critical protocol or mapping limitation. Do not resolve the disputed treatment of a truly occult site merely to manufacture a second step.",
+      "Present the baseline location and current observations neutrally, avoiding a modality-name match as the simplest route to the answer."
+    ]
+  },
+  {
+    "id": "question.topic.liver-malignancy.crlm-central-duct.v2",
+    "nodeId": "node.topic.liver-malignancy.crlm-central-duct.v2",
+    "title": "Gabriel Reed: local treatment beside the left hepatic duct",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The current report says No other lesions are identified but does not specify liver versus complete restaging. The earlier node supplies negative extrahepatic staging; clarify that scope if the later node must stand alone."
+    ],
+    "cues": [
+      {
+        "phrase": "the HPB map supports a limited parenchymal resection",
+        "why": "This supplies the treatment feasibility conclusion in nearly the same words as Limited resection of the segment IV lesion. A reader can choose the key without understanding thermal injury to a central duct."
+      }
+    ],
+    "fairness": [
+      "The intended choice of resection over microwave ablation is clinically plausible for an isolated small lesion immediately adjacent to a major bile duct, assuming the proposed limited operation can achieve appropriate clearance while preserving the duct. No universal superiority of resection over ablation should be inferred.",
+      "The key is supported principally by the supplied HPB conclusion; the actual margin/duct-preservation geometry is not shown. I cannot independently establish limited-resection feasibility from a 3-mm relationship alone. This is a feasibility uncertainty, not a confident claim that the operation is wrong.",
+      "The follow-up is coherent: a previously occult site is reidentified and a new local relationship becomes relevant. Prior feedback does not supply the duct-specific answer, but the current exhibit does supply the preferred treatment.",
+      "The intended size-versus-duct-risk tradeoff is high-yield. As written, the learner can bypass it, so the item does not realize two consequential steps. The explanation also fails to plainly state the ablation-related bile-duct injury mechanism."
+    ],
+    "suggestions": [
+      "Replace the supports-a-limited-resection conclusion with a clinician-reviewed neutral operative/anatomic description sufficient to establish clearance and duct preservation without naming the preferred plan.",
+      "Retain the small lesion and close duct relationship so that ablation remains a credible initial temptation defeated by its specific risk. Explain that risk explicitly after the answer, without inventing a universal distance cutoff.",
+      "Clarify current extrahepatic staging and preserve the distinction between selection of local treatment and any separate systemic-treatment sequencing decision."
+    ]
+  },
+  {
+    "id": "question.topic.liver-malignancy.icca-tissue.v3",
+    "nodeId": "node.topic.liver-malignancy.icca-tissue.v3",
+    "title": "Amelia Stone: tissue diagnosis after adequate atypical liver imaging",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The explanation's tumor remains uncharacterized is imprecise: the enhancement pattern does characterize the mass as concerning for a nonclassic HCC malignancy pattern, even though histologic identity remains unresolved."
+    ],
+    "cues": [
+      {
+        "phrase": "Both dedicated multiphasic CT and contrast MRI have adequate vascular phases.",
+        "why": "Against Repeat dedicated multiphasic liver MRI, this makes one distractor a repeat of an explicitly completed adequate investigation with no new protocol or target. Keep the adequacy data, but replace the disposable repeated-test foil."
+      },
+      {
+        "phrase": "Image-guided core biopsy of the intrahepatic mass",
+        "why": "Once the completed MRI is dismissed, this is the only option that directly samples the supplied mass; Serum AFP measurement is a much less specific competitor. The option set permits selection without interpreting the enhancement pattern."
+      }
+    ],
+    "fairness": [
+      "Tissue sampling is a defensible next step for this cirrhotic patient with a suspicious nonclassic enhancement pattern after adequate multiphasic imaging. AFP cannot establish a specific diagnosis in this setting. No confident clinical inaccuracy was identified in the intended key.",
+      "The narrow case should not teach that every radiographically suspected, potentially resectable intrahepatic cholangiocarcinoma universally requires preoperative biopsy. The explanation should bind the tissue recommendation to this patient's unresolved diagnostic pathway.",
+      "The node stands alone and its later biopsy-confirmed result is coherent. However, the enhancement row is not needed to defeat either offered distractor; this fails the deletion test for the supposed interpretive first step."
+    ],
+    "suggestions": [
+      "Keep the completed acquisition facts and the observed enhancement pattern, but replace the redundant MRI and weak AFP competition with specific credible next plans that the pattern actually separates.",
+      "Describe the unresolved issue as histologic identity or tumor type rather than absence of any imaging characterization.",
+      "Constrain the explanation to this atypical cirrhotic-liver scenario and have the exact biopsy-versus-direct-treatment boundary clinically reviewed if a stronger treatment-pathway competitor is introduced."
+    ]
+  },
+  {
+    "id": "question.topic.liver-malignancy.icca-resection-pathway.v2",
+    "nodeId": "node.topic.liver-malignancy.icca-resection-pathway.v2",
+    "title": "Amelia Stone: resection assessment for localized intrahepatic cholangiocarcinoma",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The update says completed HPB staging review, but the keyed next action is another HPB assessment without specifying what remains unresolved. Formal remnant evaluation appears only in the explanation.",
+      "The current standalone fields do not restate the 4.4-cm size from the previous node, which helps judge the thermal-ablation alternative."
+    ],
+    "cues": [
+      {
+        "phrase": "HPB assessment for margin-negative hepatic resection",
+        "why": "This repeats the already named HPB review and is the only option carrying an explicit favorable treatment goal, margin-negative. The options provide no similarly concrete scope for systemic therapy or ablation."
+      },
+      {
+        "phrase": "localized intrahepatic cholangiocarcinoma",
+        "why": "The task supplies the established histology and localized stage, which is legitimate management context, but here that combination already points to the broad surgery-assessment key. The detailed pedicle map adds little to choosing that referral over the two weak competitors."
+      }
+    ],
+    "fairness": [
+      "Resection assessment is a defensible priority for localized intrahepatic cholangiocarcinoma, and the mass involving central pedicles is not an attractive routine thermal-ablation target. No confident clinical inaccuracy was identified in that limited assessment claim.",
+      "The clinical course does not establish the adequacy of a small right-posterior remnant after a major resection in cirrhosis. The current assessment wording appropriately stops short of clearance, but this means the genuinely consequential reserve decision is deferred rather than tested.",
+      "The biopsy-to-treatment chronology is coherent and the next portal-embolization node can follow formal remnant assessment. The current task remains a general localized-cancer-to-surgery match rather than an independently consequential interpretation of the supplied anatomy."
+    ],
+    "suggestions": [
+      "Name the unresolved decision after the completed HPB review and compare concrete plans at that stage, instead of asking for another broad referral priority.",
+      "Make the pedicle anatomy or reserve observations change the action being selected. If proposing an operation rather than an assessment, supply the decision-critical functional and technical information and obtain clinical review of the competing plans.",
+      "Restate only the prior size/staging information needed for an independent later-node answer, and remove the uniquely favorable margin-negative qualifier or balance option scope without padding."
+    ]
+  },
+  {
+    "id": "question.topic.liver-malignancy.icca-portal-target.v1",
+    "nodeId": "node.topic.liver-malignancy.icca-portal-target.v1",
+    "title": "Amelia Stone: embolization territories before left trisectionectomy",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Formal assessment finds the right-posterior remnant insufficient for immediate surgery",
+        "why": "The update explicitly names the sector to preserve. The key is the only option that omits right-posterior; both alternatives include it. A simple preserve-the-named-remnant exclusion bypasses interpretation of the operation."
+      },
+      {
+        "phrase": "Segments II, III, IV, V and VIII.",
+        "why": "The complete resection set plus Left branch: II-IV and Right-anterior branch: V and VIII directly assembles the keyed pair. The operation-to-sector translation that the explanation calls the first step has already been supplied."
+      }
+    ],
+    "fairness": [
+      "Left and right-anterior portal branches are the appropriate offered targets for the stated left trisectionectomy leaving VI-VII. The options are parallel, and each branch appears in two options, so there is no independent frequency-convergence cue.",
+      "The later node follows the earlier resection assessment coherently, supplies enough current information to stand alone, and is not given away by the preceding explanation. Its own update and map provide the shortcut.",
+      "The more elaborate segment set does not create a second consequential decision: the procedure, remnant insufficiency and retained sector are all preinterpreted. This repeats the same basic mechanism tested by the right-hepatectomy portal-target node.",
+      "The mechanism and sectoral anatomy are high-yield. No confident clinical inaccuracy was identified; this finding concerns difficulty and cue resistance rather than a wrong target."
+    ],
+    "suggestions": [
+      "Rebuild the item around a real anatomical or planning discrepancy that changes the embolization plan, with sufficient observations for the resident to resolve it. Do not merely remove the map and turn the task into unsupported anatomy recall.",
+      "Avoid redundantly naming the retained sector, listing all resected segments and translating every branch when those three statements perform the same inference for the learner.",
+      "Differentiate this sibling from the right-hepatectomy node through a consequential constraint, or seek explicit acceptance of a foundational single-rule variant rather than claiming hard two-step reasoning."
+    ]
+  }
+]

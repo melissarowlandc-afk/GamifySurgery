@@ -1,0 +1,948 @@
+[
+  {
+    "id": "H1-01",
+    "title": "Marked groin compartment and observation eligibility",
+    "round": 2,
+    "status": "draft_awaiting_independent_review",
+    "reviewStatus": "needs_clinician_review",
+    "pipelinePassed": false,
+    "releaseReady": false,
+    "acceptanceAllowed": false,
+    "caseId": "case.harden1.groin-observation-eligibility.20261110.r2",
+    "nodeId": "node.harden1.groin-observation-eligibility.20261110.r2",
+    "conceptId": "concept.groin-hernia.femoral-defect-repair-priority.v3",
+    "sourceView": "harden1-round2",
+    "sharedCandidateId": "H1-HERNIA-r2",
+    "afterDuplicateForProvenance": false,
+    "uniqueScoredCandidateCount": 1,
+    "originalFlaggedVariantId": "question.groin-hernia.ultrasound-type.v1",
+    "keyOrderNotice": "key shown first for review only; runtime answer choices are randomized",
+    "ownerNote": "The ultrasound findings should prompt the player to identify the hernia type.",
+    "ownerNoteResolution": "The player attributes the skin-marked swelling to a raw neck compartment, distinguishing a separate direct defect, then chooses its watchful-waiting eligibility. No type is named before answering.",
+    "beforeRole": "Unaccepted harden1 round1 shared candidate; preserved byte for byte.",
+    "before": {
+      "variantId": "question.groin-hernia.ultrasound-type-and-intervention.v2",
+      "Presentation": "Elliot Reed, a 59-year-old man, presents to the surgery clinic with a newly tender right groin lump. He still passes stool and has not vomited.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "keyValue",
+        "caption": "Targeted groin ultrasound",
+        "items": [
+          {
+            "label": "Sac neck",
+            "value": "Inferior to the inguinal ligament; medial to the common femoral vein."
+          },
+          {
+            "label": "Bowel at the neck",
+            "value": "Part of one bowel wall protrudes through the opening. The remaining lumen stays within the abdomen."
+          },
+          {
+            "label": "Compression",
+            "value": "The protruding wall remains at the opening."
+          },
+          {
+            "label": "Doppler",
+            "value": "No mural signal in the protruding wall. Adjacent bowel has mural signal at the same settings."
+          }
+        ]
+      },
+      "Task": "Which hernia type and hernia-directed intervention fit these findings in Elliot Reed?",
+      "Options": [
+        "**KEY:** Femoral hernia; operative exploration",
+        "Femoral hernia; manual reduction",
+        "Indirect inguinal hernia; operative exploration",
+        "Indirect inguinal hernia; manual reduction"
+      ]
+    },
+    "after": {
+      "variantId": "question.groin-hernia.ultrasound-type-and-intervention.v3",
+      "Presentation": "Elliot Reed, a 59-year-old man, has an intermittent right groin lump. It is painless during usual activities.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "keyValue",
+        "caption": "Targeted groin ultrasound: constructed findings",
+        "items": [
+          {
+            "label": "At the skin marker",
+            "value": "A bowel-containing sac has its neck below the inguinal ligament, medial to the common femoral vein. It empties when supine."
+          },
+          {
+            "label": "Separate cranial finding",
+            "value": "Fat protrudes through a defect above the inguinal ligament, medial to the inferior epigastric vessels."
+          }
+        ]
+      },
+      "Task": "Which hernia accounts for Elliot Reed's marked lump, and is watchful waiting appropriate for that hernia?",
+      "Options": [
+        "**KEY:** Femoral hernia; watchful waiting is unsuitable",
+        "Femoral hernia; watchful waiting is reasonable",
+        "Direct inguinal hernia; watchful waiting is unsuitable",
+        "Direct inguinal hernia; watchful waiting is reasonable"
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Femoral hernia; operative exploration",
+          "The below-ligament neck medial to the vein identifies the femoral route. The trapped partial wall with absent mural signal raises concern for strangulation despite the patent remaining lumen; emergency operative exploration is appropriate rather than a manual reduction attempt."
+        ],
+        [
+          "Femoral hernia; manual reduction",
+          "This identifies the route correctly and applies an intervention appropriate for selected acute nonreducing hernias without suspected strangulation. It overweights stool passage: the reported mural perfusion raises a different concern even while the remaining lumen permits passage."
+        ],
+        [
+          "Indirect inguinal hernia; operative exploration",
+          "This recognizes threatened bowel but misclassifies the neck. An indirect inguinal sac enters above the ligament, lateral to the inferior epigastric vessels, rather than through the reported compartment."
+        ],
+        [
+          "Indirect inguinal hernia; manual reduction",
+          "This combines two plausible misreadings: assigning an inguinal route from a groin lump and treating continued intestinal passage as evidence that a reduction attempt is appropriate. Both the neck compartment and mural findings oppose that combination."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Femoral hernia; watchful waiting is unsuitable",
+          "The marked sac neck follows the femoral canal. Painless spontaneous reduction does not extend the selected male inguinal observation strategy to a femoral hernia; offer elective repair planning."
+        ],
+        [
+          "Femoral hernia; watchful waiting is reasonable",
+          "This identifies the marked compartment but overgeneralizes the watchful-waiting evidence for selected men with inguinal hernias to femoral anatomy."
+        ],
+        [
+          "Direct inguinal hernia; watchful waiting is unsuitable",
+          "This assigns the separate cranial defect to the marked swelling and also denies the observation option that can be reasonable for a minimally symptomatic man with a reducible inguinal hernia."
+        ],
+        [
+          "Direct inguinal hernia; watchful waiting is reasonable",
+          "This is a reasonable classification and observation option for the separate cranial finding. It misattributes that finding to the marked lump, whose neck is in the other compartment."
+        ]
+      ]
+    },
+    "explanation": {
+      "before": "The neck below the inguinal ligament and medial to the vein identifies a femoral hernia.\nA trapped portion of bowel wall can lose perfusion while the remaining lumen still permits passage: a Richter-type configuration. Suspected strangulation warrants emergency operative exploration, rather than manual reduction.\nThe closest error is femoral hernia with manual reduction: stool passage does not establish wall viability. Reduction can be appropriate in selected acute nonreducing hernias without suspected strangulation. This asks the hernia-directed intervention, not the first resuscitation order or repair technique.",
+      "after": "The sac at the marker passes below the ligament, medial to the vein: femoral anatomy. The separate cranial defect is direct inguinal.\nA painless reducing course can support watchful waiting for selected men with an inguinal hernia; femoral anatomy instead supports elective repair planning.\nThe nearest error identifies the femoral hernia correctly but extends the inguinal observation rule to it. This is not an emergency exploration or reduction question."
+    },
+    "inference": "Identify which reported neck corresponds to the marker; then apply the compartment-specific boundary of watchful waiting despite painless reduction.",
+    "focus": "The marked neck, not the separate cranial defect or the painless course, identifies the condition whose observation eligibility is being judged.",
+    "whatChanged": "New stable competing-finding case and materially changed v3 objective; no emergency, failed reduction or independent Doppler shortcut. The live classification/management pair remains exact and accepted phosphate is not edited.",
+    "reviewResponse": [
+      {
+        "note": "Named vessel can shorten classification by lexical matching.",
+        "response": "Two actual neck findings compete and the task specifies the skin marker. Both necessary vascular landmarks remain. The named femoral landmark can still help classification, but cannot choose between the two femoral observation judgments. This residual is acknowledged, not hidden by renaming anatomy."
+      },
+      {
+        "note": "Absent mural signal makes exploration obvious independently of classification.",
+        "response": "Create a new stable case and objective, not an acute case with a danger finding withheld. Anatomy now changes whether the selected male inguinal watchful-waiting option applies. No independent ischemia trigger dictates the answer."
+      },
+      {
+        "note": "Compression reads as a prior failed therapeutic reduction.",
+        "response": "No compression or reduction attempt is described. Spontaneous positional emptying is an observation, not a failed treatment or permission statement."
+      },
+      {
+        "note": "Bowel configuration is unnecessary once danger findings are present.",
+        "response": "Remove partial-wall, lumen and Doppler material. Each ultrasound row now contributes a real competing anatomical interpretation; the task identifies the marked swelling explicitly."
+      },
+      {
+        "note": "Joint options are a balanced complete 2x2, not a unique frequency cue.",
+        "response": "Retain a complete 2x2. Both classifications and both observation judgments appear twice; no component-frequency or uniquely comprehensive key. The single residual convergence heuristic is reported unsuppressed if emitted."
+      }
+    ],
+    "holdStatus": "none",
+    "sourceVerificationHold": null,
+    "supportingEvidenceClaimIds": [
+      "claim.harden1r2.20261110.femoral-route",
+      "claim.harden1r2.20261110.direct-route",
+      "claim.harden1r2.20261110.inguinal-observation",
+      "claim.harden1r2.20261110.femoral-repair",
+      "claim.harden1r2.20261110.stable-boundary"
+    ],
+    "selfCheck": {
+      "reviewer": "author; not independent review or Melissa Rowland clinical sign-off",
+      "manualReviewCompleted": true,
+      "coverTheKey": {
+        "attack": "Named vascular landmarks are retained, with a different actual neck at the marker and at the separate cranial defect. The femoral landmark can assist classification, but leaves both observation judgments. All four options combine a classification and the same observation decision; painless reduction tempts overextension of inguinal observation evidence.",
+        "rawLintWarnings": [
+          {
+            "id": "30120db12231304c",
+            "rule": "convergence",
+            "severity": "advisory",
+            "message": "The key combines components reused across options; inspect whether the combinations cue a shortlist.",
+            "evidence": [
+              {
+                "field": "answerChoices.label",
+                "text": "Femoral",
+                "start": 0,
+                "end": 7,
+                "choiceId": "choice.harden1r2.20261110.groin.key"
+              },
+              {
+                "field": "answerChoices.label",
+                "text": "unsuitable",
+                "start": 36,
+                "end": 46,
+                "choiceId": "choice.harden1r2.20261110.groin.key"
+              }
+            ],
+            "metrics": {
+              "components": [
+                "femoral",
+                "unsuitable"
+              ],
+              "optionCoverage": [
+                {
+                  "choiceId": "choice.harden1r2.20261110.groin.key",
+                  "sharedComponentDensity": 0.4,
+                  "components": [
+                    "femoral",
+                    "unsuitable"
+                  ]
+                },
+                {
+                  "choiceId": "choice.harden1r2.20261110.groin.d1",
+                  "sharedComponentDensity": 0.4,
+                  "components": [
+                    "femoral"
+                  ]
+                },
+                {
+                  "choiceId": "choice.harden1r2.20261110.groin.d2",
+                  "sharedComponentDensity": 0.5,
+                  "components": [
+                    "unsuitable"
+                  ]
+                },
+                {
+                  "choiceId": "choice.harden1r2.20261110.groin.d3",
+                  "sharedComponentDensity": 0.5,
+                  "components": []
+                }
+              ]
+            },
+            "occurrences": [
+              {
+                "caseId": "case.harden1.groin-observation-eligibility.20261110.r2",
+                "profileIds": [
+                  "canonical",
+                  "profile.harden1r2.20261110.groin"
+                ],
+                "ranges": [
+                  {
+                    "start": 0,
+                    "end": 7
+                  },
+                  {
+                    "start": 36,
+                    "end": 46
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "sameDecisionStageAndCategory": "All four are a named groin diagnosis plus the suitability of the same watchful-waiting strategy; no diagnostic test versus treatment mixture.",
+      "reasoningSteps": [
+        "Attribute the marked sac using its neck, distinguishing a real separate cranial defect.",
+        "Decide whether the inguinal observation evidence applies to the marked compartment in this man."
+      ],
+      "closestCredibleError": "Femoral hernia; watchful waiting is reasonable: recognizes the anatomy but overextends selected male inguinal observation evidence.",
+      "decidingFinding": "The skin-marked sac neck is below the ligament and medial to the vein; the clinically reassuring reduction does not change its compartment.",
+      "counterfactuals": [
+        {
+          "change": "Move the skin marker to the separate cranial defect and keep the painless reducing course.",
+          "result": "Direct inguinal hernia; watchful waiting is reasonable. The task asks eligibility, not whether elective repair could also be offered."
+        },
+        {
+          "change": "Remove both anatomical neck rows.",
+          "result": "Neither diagnosis is established; the item becomes unanswerable and must be withheld."
+        },
+        {
+          "change": "Keep the marked femoral neck but remove the positional-emptying row.",
+          "result": "The elective observation question loses its stable reducibility context; do not infer normal perfusion or a failed reduction."
+        }
+      ],
+      "residentDifficulty": {
+        "predicted": "moderate",
+        "measured": false,
+        "reason": "Competing anatomically genuine findings and inappropriate generalization of a reasonable management strategy; urgency cannot bypass classification.",
+        "residual": "Canonical landmark recognition may still make this easy for experienced residents. This is an author prediction for independent review, not a passed hardening claim."
+      },
+      "singleDefensibleBestAnswer": "The marked femoral compartment is not the selected inguinal watchful-waiting population. Asking eligibility avoids two defensible inguinal options (observation and elective repair).",
+      "deletionTest": "Name/age/sex are presentation requirements. Symptom function and spontaneous reduction define the observation comparator; skin marker identifies the target; separate defect supplies the nearest credible misattribution. No caregiver, availability, permission, failed-reduction or patient-preference cue.",
+      "basicAccepted": false,
+      "requiresIndependentReview": true
+    },
+    "conceptVersion": {
+      "meaning": "new_version",
+      "newConceptId": "concept.groin-hernia.femoral-defect-repair-priority.v3",
+      "previousConceptIds": [
+        "concept.groin-hernia.femoral-defect-repair-priority.v2",
+        "concept.groin-hernia.femoral-defect-repair-priority.v1",
+        "concept.groin-ultrasound.proximal-neck-localization.v2"
+      ],
+      "reason": "The unaccepted acute bowel-viability/exploration objective is replaced by stable symptom-site attribution and observation eligibility with a competing direct defect. Neither the old live separate-node meaning nor the unaccepted acute v2 is silently rescored.",
+      "historyMigration": "None. Old concepts, questions, source views, frozen encounters and FSRS histories stay exact. This separate candidate is not default-admitted."
+    },
+    "lint": {
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [
+        {
+          "id": "9b51254e203295eb",
+          "rule": "convergence",
+          "severity": "advisory",
+          "message": "The key combines components reused across options; inspect whether the combinations cue a shortlist.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "Femoral",
+              "start": 0,
+              "end": 7,
+              "choiceId": "choice.harden1.20261110.groin.key"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "operative",
+              "start": 16,
+              "end": 25,
+              "choiceId": "choice.harden1.20261110.groin.key"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "exploration",
+              "start": 26,
+              "end": 37,
+              "choiceId": "choice.harden1.20261110.groin.key"
+            }
+          ],
+          "metrics": {
+            "components": [
+              "femoral",
+              "operative",
+              "exploration"
+            ],
+            "optionCoverage": [
+              {
+                "choiceId": "choice.harden1.20261110.groin.key",
+                "sharedComponentDensity": 0.75,
+                "components": [
+                  "femoral",
+                  "operative",
+                  "exploration"
+                ]
+              },
+              {
+                "choiceId": "choice.harden1.20261110.groin.d1",
+                "sharedComponentDensity": 0.75,
+                "components": [
+                  "femoral"
+                ]
+              },
+              {
+                "choiceId": "choice.harden1.20261110.groin.d2",
+                "sharedComponentDensity": 0.8,
+                "components": [
+                  "operative",
+                  "exploration"
+                ]
+              },
+              {
+                "choiceId": "choice.harden1.20261110.groin.d3",
+                "sharedComponentDensity": 0.8,
+                "components": []
+              }
+            ]
+          },
+          "occurrences": [
+            {
+              "caseId": "case.harden1.groin-wall-threat.20261110",
+              "profileIds": [
+                "canonical",
+                "profile.harden1.20261110.groin"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 7
+                },
+                {
+                  "start": 16,
+                  "end": 25
+                },
+                {
+                  "start": 26,
+                  "end": 37
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "after": [
+        {
+          "id": "30120db12231304c",
+          "rule": "convergence",
+          "severity": "advisory",
+          "message": "The key combines components reused across options; inspect whether the combinations cue a shortlist.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "Femoral",
+              "start": 0,
+              "end": 7,
+              "choiceId": "choice.harden1r2.20261110.groin.key"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "unsuitable",
+              "start": 36,
+              "end": 46,
+              "choiceId": "choice.harden1r2.20261110.groin.key"
+            }
+          ],
+          "metrics": {
+            "components": [
+              "femoral",
+              "unsuitable"
+            ],
+            "optionCoverage": [
+              {
+                "choiceId": "choice.harden1r2.20261110.groin.key",
+                "sharedComponentDensity": 0.4,
+                "components": [
+                  "femoral",
+                  "unsuitable"
+                ]
+              },
+              {
+                "choiceId": "choice.harden1r2.20261110.groin.d1",
+                "sharedComponentDensity": 0.4,
+                "components": [
+                  "femoral"
+                ]
+              },
+              {
+                "choiceId": "choice.harden1r2.20261110.groin.d2",
+                "sharedComponentDensity": 0.5,
+                "components": [
+                  "unsuitable"
+                ]
+              },
+              {
+                "choiceId": "choice.harden1r2.20261110.groin.d3",
+                "sharedComponentDensity": 0.5,
+                "components": []
+              }
+            ]
+          },
+          "occurrences": [
+            {
+              "caseId": "case.harden1.groin-observation-eligibility.20261110.r2",
+              "profileIds": [
+                "canonical",
+                "profile.harden1r2.20261110.groin"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 7
+                },
+                {
+                  "start": 36,
+                  "end": 46
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "suppressedFindings": 0,
+      "advisoryDisposition": "A complete balanced 2x2 has no uniquely frequent component. Raw heuristic results retained; no linter rule or budget relaxed."
+    },
+    "fallback": {
+      "variantId": "question.groin-hernia.ultrasound-type.v1",
+      "conceptId": "concept.groin-hernia.ultrasound-compartment-classification.v1",
+      "caseId": "case.inguinal-hernia.caregiving-strain",
+      "nodeId": "node.flags3.groin-ultrasound-classification.20261107",
+      "policy": "Keep exact current accepted flags3 pair unless this separately reviewed draft is accepted."
+    },
+    "frozenPreservation": {
+      "sourceReleaseSha256": "47a6a6d612cba57177c3b6df1fa3d2954bc110b1e9bfce951b1aa5baf249a73e",
+      "candidateCaseSha256": "775640f9032293ab910a76c6bcfd4df01ea7f74386b9eec58bcfe9d1549a62f2",
+      "candidateQuestionSha256": "0db80fb9acf5ffff2e07c174113f42ab9b94e5a582b2e63bc009a3a945b6b025",
+      "previousRoundSourceSha256": "d7b5a4751ac104d5ed6fa26307295bd86faf0a0a37d6cf2de2758d28a3a6c36b"
+    }
+  },
+  {
+    "id": "H1-02",
+    "title": "Marked groin compartment and observation eligibility",
+    "round": 2,
+    "status": "draft_awaiting_independent_review",
+    "reviewStatus": "needs_clinician_review",
+    "pipelinePassed": false,
+    "releaseReady": false,
+    "acceptanceAllowed": false,
+    "caseId": "case.harden1.groin-observation-eligibility.20261110.r2",
+    "nodeId": "node.harden1.groin-observation-eligibility.20261110.r2",
+    "conceptId": "concept.groin-hernia.femoral-defect-repair-priority.v3",
+    "sourceView": "harden1-round2",
+    "sharedCandidateId": "H1-HERNIA-r2",
+    "afterDuplicateForProvenance": true,
+    "uniqueScoredCandidateCount": 1,
+    "originalFlaggedVariantId": "question.inguinal-hernia.symptomatic-elective-repair.v3.r12",
+    "keyOrderNotice": "key shown first for review only; runtime answer choices are randomized",
+    "ownerNote": "The ultrasound findings should prompt the player to identify the hernia type.",
+    "ownerNoteResolution": "The player attributes the skin-marked swelling to a raw neck compartment, distinguishing a separate direct defect, then chooses its watchful-waiting eligibility. No type is named before answering.",
+    "beforeRole": "Unaccepted harden1 round1 shared candidate; preserved byte for byte.",
+    "before": {
+      "variantId": "question.groin-hernia.ultrasound-type-and-intervention.v2",
+      "Presentation": "Elliot Reed, a 59-year-old man, presents to the surgery clinic with a newly tender right groin lump. He still passes stool and has not vomited.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "keyValue",
+        "caption": "Targeted groin ultrasound",
+        "items": [
+          {
+            "label": "Sac neck",
+            "value": "Inferior to the inguinal ligament; medial to the common femoral vein."
+          },
+          {
+            "label": "Bowel at the neck",
+            "value": "Part of one bowel wall protrudes through the opening. The remaining lumen stays within the abdomen."
+          },
+          {
+            "label": "Compression",
+            "value": "The protruding wall remains at the opening."
+          },
+          {
+            "label": "Doppler",
+            "value": "No mural signal in the protruding wall. Adjacent bowel has mural signal at the same settings."
+          }
+        ]
+      },
+      "Task": "Which hernia type and hernia-directed intervention fit these findings in Elliot Reed?",
+      "Options": [
+        "**KEY:** Femoral hernia; operative exploration",
+        "Femoral hernia; manual reduction",
+        "Indirect inguinal hernia; operative exploration",
+        "Indirect inguinal hernia; manual reduction"
+      ]
+    },
+    "after": {
+      "variantId": "question.groin-hernia.ultrasound-type-and-intervention.v3",
+      "Presentation": "Elliot Reed, a 59-year-old man, has an intermittent right groin lump. It is painless during usual activities.",
+      "Current update": null,
+      "Exhibit": {
+        "kind": "keyValue",
+        "caption": "Targeted groin ultrasound: constructed findings",
+        "items": [
+          {
+            "label": "At the skin marker",
+            "value": "A bowel-containing sac has its neck below the inguinal ligament, medial to the common femoral vein. It empties when supine."
+          },
+          {
+            "label": "Separate cranial finding",
+            "value": "Fat protrudes through a defect above the inguinal ligament, medial to the inferior epigastric vessels."
+          }
+        ]
+      },
+      "Task": "Which hernia accounts for Elliot Reed's marked lump, and is watchful waiting appropriate for that hernia?",
+      "Options": [
+        "**KEY:** Femoral hernia; watchful waiting is unsuitable",
+        "Femoral hernia; watchful waiting is reasonable",
+        "Direct inguinal hernia; watchful waiting is unsuitable",
+        "Direct inguinal hernia; watchful waiting is reasonable"
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Femoral hernia; operative exploration",
+          "The below-ligament neck medial to the vein identifies the femoral route. The trapped partial wall with absent mural signal raises concern for strangulation despite the patent remaining lumen; emergency operative exploration is appropriate rather than a manual reduction attempt."
+        ],
+        [
+          "Femoral hernia; manual reduction",
+          "This identifies the route correctly and applies an intervention appropriate for selected acute nonreducing hernias without suspected strangulation. It overweights stool passage: the reported mural perfusion raises a different concern even while the remaining lumen permits passage."
+        ],
+        [
+          "Indirect inguinal hernia; operative exploration",
+          "This recognizes threatened bowel but misclassifies the neck. An indirect inguinal sac enters above the ligament, lateral to the inferior epigastric vessels, rather than through the reported compartment."
+        ],
+        [
+          "Indirect inguinal hernia; manual reduction",
+          "This combines two plausible misreadings: assigning an inguinal route from a groin lump and treating continued intestinal passage as evidence that a reduction attempt is appropriate. Both the neck compartment and mural findings oppose that combination."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Femoral hernia; watchful waiting is unsuitable",
+          "The marked sac neck follows the femoral canal. Painless spontaneous reduction does not extend the selected male inguinal observation strategy to a femoral hernia; offer elective repair planning."
+        ],
+        [
+          "Femoral hernia; watchful waiting is reasonable",
+          "This identifies the marked compartment but overgeneralizes the watchful-waiting evidence for selected men with inguinal hernias to femoral anatomy."
+        ],
+        [
+          "Direct inguinal hernia; watchful waiting is unsuitable",
+          "This assigns the separate cranial defect to the marked swelling and also denies the observation option that can be reasonable for a minimally symptomatic man with a reducible inguinal hernia."
+        ],
+        [
+          "Direct inguinal hernia; watchful waiting is reasonable",
+          "This is a reasonable classification and observation option for the separate cranial finding. It misattributes that finding to the marked lump, whose neck is in the other compartment."
+        ]
+      ]
+    },
+    "explanation": {
+      "before": "The neck below the inguinal ligament and medial to the vein identifies a femoral hernia.\nA trapped portion of bowel wall can lose perfusion while the remaining lumen still permits passage: a Richter-type configuration. Suspected strangulation warrants emergency operative exploration, rather than manual reduction.\nThe closest error is femoral hernia with manual reduction: stool passage does not establish wall viability. Reduction can be appropriate in selected acute nonreducing hernias without suspected strangulation. This asks the hernia-directed intervention, not the first resuscitation order or repair technique.",
+      "after": "The sac at the marker passes below the ligament, medial to the vein: femoral anatomy. The separate cranial defect is direct inguinal.\nA painless reducing course can support watchful waiting for selected men with an inguinal hernia; femoral anatomy instead supports elective repair planning.\nThe nearest error identifies the femoral hernia correctly but extends the inguinal observation rule to it. This is not an emergency exploration or reduction question."
+    },
+    "inference": "Identify which reported neck corresponds to the marker; then apply the compartment-specific boundary of watchful waiting despite painless reduction.",
+    "focus": "The marked neck, not the separate cranial defect or the painless course, identifies the condition whose observation eligibility is being judged.",
+    "whatChanged": "New stable competing-finding case and materially changed v3 objective; no emergency, failed reduction or independent Doppler shortcut. The live classification/management pair remains exact and accepted phosphate is not edited.",
+    "reviewResponse": [
+      {
+        "note": "Named vessel can shorten classification by lexical matching.",
+        "response": "Two actual neck findings compete and the task specifies the skin marker. Both necessary vascular landmarks remain. The named femoral landmark can still help classification, but cannot choose between the two femoral observation judgments. This residual is acknowledged, not hidden by renaming anatomy."
+      },
+      {
+        "note": "Absent mural signal makes exploration obvious independently of classification.",
+        "response": "Create a new stable case and objective, not an acute case with a danger finding withheld. Anatomy now changes whether the selected male inguinal watchful-waiting option applies. No independent ischemia trigger dictates the answer."
+      },
+      {
+        "note": "Compression reads as a prior failed therapeutic reduction.",
+        "response": "No compression or reduction attempt is described. Spontaneous positional emptying is an observation, not a failed treatment or permission statement."
+      },
+      {
+        "note": "Bowel configuration is unnecessary once danger findings are present.",
+        "response": "Remove partial-wall, lumen and Doppler material. Each ultrasound row now contributes a real competing anatomical interpretation; the task identifies the marked swelling explicitly."
+      },
+      {
+        "note": "Joint options are a balanced complete 2x2, not a unique frequency cue.",
+        "response": "Retain a complete 2x2. Both classifications and both observation judgments appear twice; no component-frequency or uniquely comprehensive key. The single residual convergence heuristic is reported unsuppressed if emitted."
+      }
+    ],
+    "holdStatus": "none",
+    "sourceVerificationHold": null,
+    "supportingEvidenceClaimIds": [
+      "claim.harden1r2.20261110.femoral-route",
+      "claim.harden1r2.20261110.direct-route",
+      "claim.harden1r2.20261110.inguinal-observation",
+      "claim.harden1r2.20261110.femoral-repair",
+      "claim.harden1r2.20261110.stable-boundary"
+    ],
+    "selfCheck": {
+      "reviewer": "author; not independent review or Melissa Rowland clinical sign-off",
+      "manualReviewCompleted": true,
+      "coverTheKey": {
+        "attack": "Named vascular landmarks are retained, with a different actual neck at the marker and at the separate cranial defect. The femoral landmark can assist classification, but leaves both observation judgments. All four options combine a classification and the same observation decision; painless reduction tempts overextension of inguinal observation evidence.",
+        "rawLintWarnings": [
+          {
+            "id": "30120db12231304c",
+            "rule": "convergence",
+            "severity": "advisory",
+            "message": "The key combines components reused across options; inspect whether the combinations cue a shortlist.",
+            "evidence": [
+              {
+                "field": "answerChoices.label",
+                "text": "Femoral",
+                "start": 0,
+                "end": 7,
+                "choiceId": "choice.harden1r2.20261110.groin.key"
+              },
+              {
+                "field": "answerChoices.label",
+                "text": "unsuitable",
+                "start": 36,
+                "end": 46,
+                "choiceId": "choice.harden1r2.20261110.groin.key"
+              }
+            ],
+            "metrics": {
+              "components": [
+                "femoral",
+                "unsuitable"
+              ],
+              "optionCoverage": [
+                {
+                  "choiceId": "choice.harden1r2.20261110.groin.key",
+                  "sharedComponentDensity": 0.4,
+                  "components": [
+                    "femoral",
+                    "unsuitable"
+                  ]
+                },
+                {
+                  "choiceId": "choice.harden1r2.20261110.groin.d1",
+                  "sharedComponentDensity": 0.4,
+                  "components": [
+                    "femoral"
+                  ]
+                },
+                {
+                  "choiceId": "choice.harden1r2.20261110.groin.d2",
+                  "sharedComponentDensity": 0.5,
+                  "components": [
+                    "unsuitable"
+                  ]
+                },
+                {
+                  "choiceId": "choice.harden1r2.20261110.groin.d3",
+                  "sharedComponentDensity": 0.5,
+                  "components": []
+                }
+              ]
+            },
+            "occurrences": [
+              {
+                "caseId": "case.harden1.groin-observation-eligibility.20261110.r2",
+                "profileIds": [
+                  "canonical",
+                  "profile.harden1r2.20261110.groin"
+                ],
+                "ranges": [
+                  {
+                    "start": 0,
+                    "end": 7
+                  },
+                  {
+                    "start": 36,
+                    "end": 46
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "sameDecisionStageAndCategory": "All four are a named groin diagnosis plus the suitability of the same watchful-waiting strategy; no diagnostic test versus treatment mixture.",
+      "reasoningSteps": [
+        "Attribute the marked sac using its neck, distinguishing a real separate cranial defect.",
+        "Decide whether the inguinal observation evidence applies to the marked compartment in this man."
+      ],
+      "closestCredibleError": "Femoral hernia; watchful waiting is reasonable: recognizes the anatomy but overextends selected male inguinal observation evidence.",
+      "decidingFinding": "The skin-marked sac neck is below the ligament and medial to the vein; the clinically reassuring reduction does not change its compartment.",
+      "counterfactuals": [
+        {
+          "change": "Move the skin marker to the separate cranial defect and keep the painless reducing course.",
+          "result": "Direct inguinal hernia; watchful waiting is reasonable. The task asks eligibility, not whether elective repair could also be offered."
+        },
+        {
+          "change": "Remove both anatomical neck rows.",
+          "result": "Neither diagnosis is established; the item becomes unanswerable and must be withheld."
+        },
+        {
+          "change": "Keep the marked femoral neck but remove the positional-emptying row.",
+          "result": "The elective observation question loses its stable reducibility context; do not infer normal perfusion or a failed reduction."
+        }
+      ],
+      "residentDifficulty": {
+        "predicted": "moderate",
+        "measured": false,
+        "reason": "Competing anatomically genuine findings and inappropriate generalization of a reasonable management strategy; urgency cannot bypass classification.",
+        "residual": "Canonical landmark recognition may still make this easy for experienced residents. This is an author prediction for independent review, not a passed hardening claim."
+      },
+      "singleDefensibleBestAnswer": "The marked femoral compartment is not the selected inguinal watchful-waiting population. Asking eligibility avoids two defensible inguinal options (observation and elective repair).",
+      "deletionTest": "Name/age/sex are presentation requirements. Symptom function and spontaneous reduction define the observation comparator; skin marker identifies the target; separate defect supplies the nearest credible misattribution. No caregiver, availability, permission, failed-reduction or patient-preference cue.",
+      "basicAccepted": false,
+      "requiresIndependentReview": true
+    },
+    "conceptVersion": {
+      "meaning": "new_version",
+      "newConceptId": "concept.groin-hernia.femoral-defect-repair-priority.v3",
+      "previousConceptIds": [
+        "concept.groin-hernia.femoral-defect-repair-priority.v2",
+        "concept.groin-hernia.femoral-defect-repair-priority.v1",
+        "concept.groin-ultrasound.proximal-neck-localization.v2"
+      ],
+      "reason": "The unaccepted acute bowel-viability/exploration objective is replaced by stable symptom-site attribution and observation eligibility with a competing direct defect. Neither the old live separate-node meaning nor the unaccepted acute v2 is silently rescored.",
+      "historyMigration": "None. Old concepts, questions, source views, frozen encounters and FSRS histories stay exact. This separate candidate is not default-admitted."
+    },
+    "lint": {
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [
+        {
+          "id": "9b51254e203295eb",
+          "rule": "convergence",
+          "severity": "advisory",
+          "message": "The key combines components reused across options; inspect whether the combinations cue a shortlist.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "Femoral",
+              "start": 0,
+              "end": 7,
+              "choiceId": "choice.harden1.20261110.groin.key"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "operative",
+              "start": 16,
+              "end": 25,
+              "choiceId": "choice.harden1.20261110.groin.key"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "exploration",
+              "start": 26,
+              "end": 37,
+              "choiceId": "choice.harden1.20261110.groin.key"
+            }
+          ],
+          "metrics": {
+            "components": [
+              "femoral",
+              "operative",
+              "exploration"
+            ],
+            "optionCoverage": [
+              {
+                "choiceId": "choice.harden1.20261110.groin.key",
+                "sharedComponentDensity": 0.75,
+                "components": [
+                  "femoral",
+                  "operative",
+                  "exploration"
+                ]
+              },
+              {
+                "choiceId": "choice.harden1.20261110.groin.d1",
+                "sharedComponentDensity": 0.75,
+                "components": [
+                  "femoral"
+                ]
+              },
+              {
+                "choiceId": "choice.harden1.20261110.groin.d2",
+                "sharedComponentDensity": 0.8,
+                "components": [
+                  "operative",
+                  "exploration"
+                ]
+              },
+              {
+                "choiceId": "choice.harden1.20261110.groin.d3",
+                "sharedComponentDensity": 0.8,
+                "components": []
+              }
+            ]
+          },
+          "occurrences": [
+            {
+              "caseId": "case.harden1.groin-wall-threat.20261110",
+              "profileIds": [
+                "canonical",
+                "profile.harden1.20261110.groin"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 7
+                },
+                {
+                  "start": 16,
+                  "end": 25
+                },
+                {
+                  "start": 26,
+                  "end": 37
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "after": [
+        {
+          "id": "30120db12231304c",
+          "rule": "convergence",
+          "severity": "advisory",
+          "message": "The key combines components reused across options; inspect whether the combinations cue a shortlist.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "Femoral",
+              "start": 0,
+              "end": 7,
+              "choiceId": "choice.harden1r2.20261110.groin.key"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "unsuitable",
+              "start": 36,
+              "end": 46,
+              "choiceId": "choice.harden1r2.20261110.groin.key"
+            }
+          ],
+          "metrics": {
+            "components": [
+              "femoral",
+              "unsuitable"
+            ],
+            "optionCoverage": [
+              {
+                "choiceId": "choice.harden1r2.20261110.groin.key",
+                "sharedComponentDensity": 0.4,
+                "components": [
+                  "femoral",
+                  "unsuitable"
+                ]
+              },
+              {
+                "choiceId": "choice.harden1r2.20261110.groin.d1",
+                "sharedComponentDensity": 0.4,
+                "components": [
+                  "femoral"
+                ]
+              },
+              {
+                "choiceId": "choice.harden1r2.20261110.groin.d2",
+                "sharedComponentDensity": 0.5,
+                "components": [
+                  "unsuitable"
+                ]
+              },
+              {
+                "choiceId": "choice.harden1r2.20261110.groin.d3",
+                "sharedComponentDensity": 0.5,
+                "components": []
+              }
+            ]
+          },
+          "occurrences": [
+            {
+              "caseId": "case.harden1.groin-observation-eligibility.20261110.r2",
+              "profileIds": [
+                "canonical",
+                "profile.harden1r2.20261110.groin"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 7
+                },
+                {
+                  "start": 36,
+                  "end": 46
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "suppressedFindings": 0,
+      "advisoryDisposition": "A complete balanced 2x2 has no uniquely frequent component. Raw heuristic results retained; no linter rule or budget relaxed."
+    },
+    "fallback": {
+      "variantId": "question.inguinal-hernia.symptomatic-elective-repair.v3.r12",
+      "conceptId": "concept.groin-hernia.femoral-defect-repair-priority.v1",
+      "caseId": "case.inguinal-hernia.caregiving-strain",
+      "nodeId": "node.inguinal-hernia.caregiving-strain.2",
+      "policy": "Keep exact current accepted flags3 pair unless this separately reviewed draft is accepted."
+    },
+    "frozenPreservation": {
+      "sourceReleaseSha256": "47a6a6d612cba57177c3b6df1fa3d2954bc110b1e9bfce951b1aa5baf249a73e",
+      "candidateCaseSha256": "775640f9032293ab910a76c6bcfd4df01ea7f74386b9eec58bcfe9d1549a62f2",
+      "candidateQuestionSha256": "0db80fb9acf5ffff2e07c174113f42ab9b94e5a582b2e63bc009a3a945b6b025",
+      "previousRoundSourceSha256": "d7b5a4751ac104d5ed6fa26307295bd86faf0a0a37d6cf2de2758d28a3a6c36b"
+    }
+  }
+]

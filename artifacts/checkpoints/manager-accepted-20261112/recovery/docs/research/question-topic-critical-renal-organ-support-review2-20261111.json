@@ -1,0 +1,238 @@
+[
+  {
+    "id": "question.topic.critical-renal-organ-support.congestion-directed-oliguria.v1",
+    "nodeId": "node.topic.critical-renal-organ-support.congestion-directed-oliguria.v1",
+    "title": "Initial treatment of oliguria with fluid accumulation",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The best offered treatment is IV furosemide for decongestion. Weight gain, new pulmonary findings and absent stroke-volume response must be integrated before choosing a diuretic rather than further fluid or immediate extracorporeal support. This is a common postoperative AKI management distinction.",
+      "Catheter patency, preserved circulation, modest current oxygen support and controlled potassium/pH supply the important competing-treatment context. The explanation appropriately identifies decongestion as the purpose; it does not claim that diuretics reverse kidney injury.",
+      "The ineffective crystalloid challenge is legitimate response evidence, not an answer-specific teaching sentence. The options are concrete and comparable treatment actions; no decisive wording, length, convergence or diagnosis-label shortcut was found.",
+      "The named patient, age, sex and short complaint are present. The clinic frame clearly refers to a hospital decision, and the first node needs no previous answer.",
+      "Review scope: all nine current executable proposedNodes were independently assessed using their current presentation, update, exhibit, task, option labels and explanation, including visible prior feedback. Author self-assessments and prior PASS labels were not evidence of quality. Two parked comparisons, three unkeyed slots, three withheld teaching points and one withdrawn candidate were noted but not scored; the assignment has no kept-unchanged or retired inventory rows. This is an offline editorial review, not fresh source verification or clinical approval. Difficulty and high-yield judgments are qualitative; every draft remains needs_clinician_review. Runtime randomization, timing metadata and actual rendering were outside the requested visible-text review."
+    ],
+    "suggestions": [
+      "No substantive repair required. Optional feedback refinement: explicitly distinguish relieving congestion from improving renal recovery, and briefly explain why the current presentation permits a diuretic trial before kidney replacement.",
+      "Across the packet, the repeated clinic/referring-hospital framing can be shortened without obscuring where care occurs. Keep each separated task complete and retain the patient's demographics. This repetition alone does not invalidate a question."
+    ]
+  },
+  {
+    "id": "question.topic.critical-renal-organ-support.diuretic-confounded-indices.v2",
+    "nodeId": "node.topic.critical-renal-organ-support.diuretic-confounded-indices.v2",
+    "title": "Assessment of recurrent oliguria after fluid losses",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The exhibit says oxygen 'remains at 2 L/min', whereas the preceding node last reports 3 L/min. The change is clinically plausible, but the intervening improvement is not stated.",
+      "The FEUrea option names only paired urine and serum urea. Calculating fractional urea excretion also requires paired urine and serum creatinine; the literal proposed measurements are incomplete."
+    ],
+    "cues": [
+      {
+        "phrase": "next volume-management decision",
+        "why": "The task identifies the decision dimension before the learner interprets the competing edema and external-loss findings. Together with the uniquely physiologic 'stroke-volume response' option, it steers selection away from urine investigations. FEUrea remains a plausible clinical competitor, so this is a partial shortcut rather than a complete layperson solution."
+      }
+    ],
+    "fairness": [
+      "Passive leg raising with measured stroke volume is the best offered assessment for the immediate question. The resident must reconcile negative measured balance and falling MAP with persistent extravascular fluid findings, then select a reversible assessment rather than equate edema with adequate effective circulating volume. This supports moderate two-step application.",
+      "Urine microscopy may help assess AKI etiology but does not directly answer the immediate volume-response question. FEUrea is a credible misconception after diuretics, but its option must describe a technically complete measurement rather than become wrong through an omitted analyte.",
+      "The explanation correctly separates preload responsiveness from an automatic instruction to administer fluid. No new cutoff or guarantee of benefit is needed.",
+      "The interval findings change the clinical problem after the first node. Its explanation does not disclose passive leg raising. The current exhibit provides the treatment history and conflicting findings needed even without answering the preceding node; repair the oxygen chronology."
+    ],
+    "suggestions": [
+      "Replace the FEUrea label with a complete, parallel test description, such as calculating fractional urea excretion from paired blood and urine chemistries; specify the required creatinine measurements if listing analytes.",
+      "State that oxygen support decreased to 2 L/min, or explicitly introduce an intervening 2 L/min baseline.",
+      "Use a neutral task asking which assessment should come next for recurrent oliguria. Recheck whether the interval losses and circulation findings, rather than the task's chosen management dimension, distinguish the offered investigations. Preserve the necessary pulmonary-risk observations."
+    ]
+  },
+  {
+    "id": "question.topic.critical-renal-organ-support.rrt-treatment-response.v1",
+    "nodeId": "node.topic.critical-renal-organ-support.rrt-treatment-response.v1",
+    "title": "Kidney-replacement decision after metabolic improvement",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Serial chemistry and fluid-balance assessment is the best offered plan. The marked creatinine rise and oliguria create a real temptation to initiate replacement; the response of potassium/pH and the current organ-support findings instead support continued reassessment.",
+      "This requires separating injury severity from a current extracorporeal support indication, then choosing surveillance rather than immediate replacement or a prognostic stress test. It is high-yield moderate application, not evidence that a particular creatinine value is safe indefinitely.",
+      "The furosemide stress test addresses prognosis rather than replacing assessment of current complications. No additional immediate dialysis indication is supplied. The key and explanation retain reassessment rather than declaring the patient recovered.",
+      "The alternatives are different plans at the present decision point, with comparable label length and no uniquely explanatory key. Improved values are necessary clinical response data, not a nonmedical wording giveaway.",
+      "The first node stands alone. Its explanation teaches the distinction between injury and support need without naming the next node's pulmonary-fluid treatment answer."
+    ],
+    "suggestions": [
+      "No required repair. A short post-answer sentence explaining the prognostic role of the furosemide stress test would make the closest test-selection error more instructive."
+    ]
+  },
+  {
+    "id": "question.topic.critical-renal-organ-support.rrt-refractory-pulmonary-fluid.v1",
+    "nodeId": "node.topic.critical-renal-organ-support.rrt-refractory-pulmonary-fluid.v1",
+    "title": "Escalation for pulmonary fluid accumulation despite diuretics",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Urgent kidney replacement with fluid removal is the best offered escalation. The resident must connect accumulating balance and minimal urine to the pulmonary deterioration, then use the failed escalated loop-diuretic course and major hypoxemia to reject another pharmacologic attempt as the primary next strategy.",
+      "Adding chlorothiazide is a clinically meaningful competitor for less urgent diuretic resistance; switching loop drugs is another recognizable error. Their inferiority here comes from the current respiratory deterioration and observed response, not rhetorical option wording.",
+      "This supports escalation to extracorporeal support; it does not establish that CVVHD is universally superior to every intermittent or hybrid modality. No other replacement modality is offered, so that broader ranking is not required for this single best answer.",
+      "The earlier improvement followed by new positive balance, failed diuresis and escalating respiratory support is coherent. Current findings are sufficient independently of the earlier answer. Prior feedback does not explicitly supply this treatment choice.",
+      "The severity also requires ongoing urgent respiratory assessment. The renal intervention should not be read as a substitute for airway/ventilatory care; omission of an airway option does not create a second correct option in this renal-support comparison."
+    ],
+    "suggestions": [
+      "No required repair to the offered comparison. Keep the explanation focused on the indication for urgent fluid removal and avoid inferring a universal modality preference from this item."
+    ]
+  },
+  {
+    "id": "question.topic.critical-renal-organ-support.uf-clearance-separation.v1",
+    "nodeId": "node.topic.critical-renal-organ-support.uf-clearance-separation.v1",
+    "title": "Separating net fluid removal from solute clearance",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Pausing net fluid removal improves MAP.",
+        "why": "This directly rehearses the first component of 'Set net removal to zero and continue clearance'. With the second response sentence, the reader can assemble the answer by retaining what helps and avoiding what hurts without interpreting the physiological data."
+      },
+      {
+        "phrase": "Potassium still rises when solute-clearance treatment is interrupted.",
+        "why": "This directly rejects stopping clearance and supplies the second component of the key. The two explicit treatment-response statements mirror both halves of one option; the preceding passive-leg-raise finding becomes largely redundant."
+      }
+    ],
+    "fairness": [
+      "Zero net removal with continued clearance is clinically defensible on the stated responses. The item supplies evidence of removal intolerance and continuing solute need; no confident clinical inaccuracy was found.",
+      "The important ICU concept is high-yield, but this exact presentation has already performed the consequential component-separation decision. Multiple observations and a two-component answer do not make it two-step reasoning.",
+      "The chronology follows the pulmonary-fluid escalation coherently, and the current exhibit establishes active CRRT, respiratory improvement and both response patterns without requiring a remembered prior answer. Earlier feedback does not itself disclose this prescription adjustment.",
+      "The explanation should remain limited to this responsive course. It does not establish that clearance must continue during every form of severe extracorporeal-treatment intolerance."
+    ],
+    "suggestions": [
+      "Version a new resident-level item rather than silently altering a previously frozen definition. Retain the support requirement and raw perfusion/respiratory observations, but avoid providing both components of the final prescription through explicit successful and unsuccessful stop trials.",
+      "For example, retain the cumulative-removal course, rising vasopressor need and measured stroke-volume response, then require the learner to infer removal intolerance while independently evaluating continuing solute need. Have the clinician confirm that the revised observations still distinguish zero net removal from interrupting the entire treatment.",
+      "Re-attack all three prescription choices after the repair. If the response-matching form is intentionally retained, it needs explicit acceptance as an easy teaching item rather than a claim of hard two-step resident reasoning."
+    ]
+  },
+  {
+    "id": "question.topic.critical-renal-organ-support.pressure-acquisition.v2",
+    "nodeId": "node.topic.critical-renal-organ-support.pressure-acquisition.v2",
+    "title": "Validity of a bladder-pressure measurement",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The proposed repeat specifies supine position and end expiration but leaves relaxation and correction of the stated excessive instillation implicit. The explanation describes a more complete acquisition than the selected action label. This is incomplete specification, not proof that the intended repeat would be performed incorrectly."
+    ],
+    "cues": [
+      {
+        "phrase": "during coughing, with the head of bed elevated and 100 mL instilled into the bladder",
+        "why": "Three conspicuously detailed technique deviations surround one measurement. The repeat option explicitly reverses the positional/respiratory details, while both distractors change modality. A test-wise reader can select the apparent repair without interpreting the organ findings."
+      },
+      {
+        "phrase": "Repeat bladder pressure supine at end expiration",
+        "why": "Only this option answers the conspicuous technique problem with a tailored correction. Deleting the renal/ventilatory trajectory leaves essentially the same technique-recall task, so the additional observations do not earn a second consequential inference."
+      }
+    ],
+    "fairness": [
+      "Repeating a technically compromised transvesical measurement is the best offered next investigation while the reported blood pressure is stable. CT may investigate an abdominal cause, and renal ultrasound may investigate obstruction, but neither validates this measurement.",
+      "The explanation's small-volume, relaxed supine end-expiratory measurement and zero reference are consistent with the familiar standardized approach. Exact numeric technique requirements were not freshly source-verified in this offline review; no invented replacement threshold is proposed.",
+      "The content is high-yield, but the current item tests recognition and correction of an obvious acquisition defect rather than two consequential clinical steps. Its difficulty should not be raised merely by withholding safety information.",
+      "This is a standalone acquisition case. The separately presented drainage case contains old acquisition history; it is not an additional executable node to score here."
+    ],
+    "suggestions": [
+      "Reduce the conspicuous cluster of technique defects to the supported finding actually needed, and make interpretation of measurement validity change a real next decision. Compare credible plans at the same stage rather than one bespoke correction against two generic imaging alternatives.",
+      "Make the proposed repeat technically complete, with comparable specificity across options. Keep exact procedural values tied to clinician-verified evidence rather than adding new cutoffs.",
+      "If the intended objective remains simple measurement-technique recall, label and seek acceptance for that easy role instead of calling it a two-step resident item."
+    ]
+  },
+  {
+    "id": "question.topic.critical-renal-organ-support.pressure-fluid-drainage.v1",
+    "nodeId": "node.topic.critical-renal-organ-support.pressure-fluid-drainage.v1",
+    "title": "Initial decompression with free intraperitoneal fluid",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The Current update reproduces an entire earlier question, three option labels, their rationales and feedback. Even though it is headed 'Earlier outside ICU record', it competes visually with the actual task and makes the reader parse a second question that is not being asked.",
+      "The current rate and severity of renal/respiratory deterioration are qualitative. Earlier stable blood pressure and falling lactate are reassuring, but the exact urgency boundary between a catheter attempt and immediate operation is not fully described."
+    ],
+    "cues": [
+      {
+        "phrase": "Which decompressive intervention",
+        "why": "The task supplies the treatment direction that should follow interpretation of the valid pressure and organ changes. It also weakens CRRT as a same-stage competitor before the learner uses those data."
+      },
+      {
+        "phrase": "a safe percutaneous window",
+        "why": "This directly matches the catheter option and supplies an explicit feasibility conclusion. Accessibility is genuinely decision-critical and must not simply be deleted, but in combination with the prespecified decompressive task it substantially narrows the item to one procedural comparison."
+      }
+    ],
+    "fairness": [
+      "A large accessible free-fluid component makes an initial percutaneous drainage attempt defensible. Decompressive laparotomy is also a real treatment for pressure-related organ dysfunction; the bowel-wall swelling makes it important not to imply that draining fluid necessarily resolves the problem.",
+      "I cannot confidently call the catheter key clinically wrong. Equally, this visible text does not establish a universal rule ranking catheter drainage above surgery for every similar pressure/organ trajectory. The exact timing comparison needs named clinician adjudication; this is uncertainty rather than an asserted guideline conflict.",
+      "CRRT with net fluid removal is a weak distractor for an explicitly decompressive intervention. It should not be taught as an equivalent substitute for timely direct decompression of a clinically important intra-abdominal pressure problem.",
+      "The earlier acquisition explanation appropriately supports validity of the repeated measurements and does not name catheter drainage. However, the task has already selected decompression; deleting much of the pressure/organ evidence still leaves the same catheter-versus-operation comparison. This limits the claimed two-step difficulty.",
+      "The sequence of flawed acquisition followed by valid repeated pressures is coherent, and the current exhibit has enough context to be presented independently. The high-yield concept is retained, but the unnecessary historical option/rationale display obscures it."
+    ],
+    "suggestions": [
+      "Replace the historical question-and-answer dump with a brief factual account of the earlier acquisition and repeat, preserving the clinically relevant chronology. Keep full historical review material outside the learner's Current update.",
+      "Use a neutral next-management task so the resident must infer whether pressure-related organ deterioration changes care. Preserve valid pressure technique, actual organ findings and the accessible-fluid anatomy.",
+      "Have Melissa adjudicate the exact catheter-versus-operation comparison using the current deterioration, surgical assessment and feasibility of prompt drainage/reassessment. Add only supported decision-critical observations; if they cannot distinguish the actions, hold that comparison rather than invent a timing or pressure cutoff.",
+      "Rebuild any third option as a credible same-stage management error without implying that CRRT substitutes for required abdominal decompression. Version any repair; do not silently overwrite frozen content."
+    ]
+  },
+  {
+    "id": "question.topic.critical-renal-organ-support.citrate-bleeding-circuit.v1",
+    "nodeId": "node.topic.critical-renal-organ-support.citrate-bleeding-circuit.v1",
+    "title": "CRRT anticoagulation after bleeding and circuit clotting",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Regional citrate is the best offered strategy: the resident must weigh persistent hemorrhage risk against demonstrated failure of anticoagulant-free circuits, then choose circuit anticoagulation that limits systemic exposure.",
+      "The circuit and bleeding observations make both competing errors meaningful. Avoiding anticoagulation is tempting after hemorrhage but has already interrupted needed therapy; systemic heparin addresses clotting at the cost of greater systemic anticoagulant exposure.",
+      "The current circulation and metabolic findings support considering citrate; they do not guarantee that citrate accumulation cannot occur. The explanation appropriately retains metabolic monitoring rather than declaring the strategy risk-free.",
+      "The options are parallel specific anticoagulation strategies. The word 'regional' requires relevant clinical understanding to distinguish it from systemic anticoagulation; it is not merely a uniquely cautious explanatory answer. Prior circuit failure is necessary treatment-response evidence, not a sufficient layperson cue to choose between the two remaining drugs.",
+      "The standalone record provides the named patient's age, sex, bleeding history, circuit course and current condition. It does not depend on either parked citrate comparison. This is a useful general-surgery ICU concept."
+    ],
+    "suggestions": [
+      "No required repair. Keep the feedback's monitoring qualification and avoid broadening normal current lactate/bilirubin into an absolute safety rule."
+    ]
+  },
+  {
+    "id": "question.topic.critical-renal-organ-support.trial-off-crrt.v2",
+    "nodeId": "node.topic.critical-renal-organ-support.trial-off-crrt.v2",
+    "title": "Continuing a monitored interruption of CRRT",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Continuing the monitored trial off CRRT is the best offered plan at this reassessment. Actual off-treatment chemistry and balance, spontaneous urine output and stable support needs must be interpreted against a rising creatinine before deciding whether any replacement is currently needed.",
+      "Restarting CRRT and switching to intermittent dialysis are concrete competing support plans. The shared monitoring sentence appropriately prevents the key from being uniquely cautious or comprehensive.",
+      "The creatinine increase is a credible trap: an on-circuit value is influenced by extracorporeal clearance, and a subsequent rise does not by itself establish an immediate replacement indication. The explanation does not claim that intrinsic function has normalized.",
+      "The stated eight-hour interruption and 1.6 L urine output are observations in this patient, not validated universal liberation cutoffs. Continuing a reassessed trial is defensible; guaranteed durable recovery would not be established by these data.",
+      "This standalone record supplies the actual interruption, before/after values and continuing surveillance. It does not depend on a previous correct answer. The key's use of 'continue' matches a genuine current treatment state, with a meaningful creatinine conflict still requiring clinical interpretation."
+    ],
+    "suggestions": [
+      "No required repair. Retain the actual off-treatment observations and shared monitoring. Do not turn the observation interval or urine volume into a universal stopping rule, and keep the conclusion limited to the current monitored trial."
+    ]
+  }
+]

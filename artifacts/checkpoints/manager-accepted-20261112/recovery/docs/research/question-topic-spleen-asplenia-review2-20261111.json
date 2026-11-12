@@ -1,0 +1,340 @@
+[
+  {
+    "id": "question.spleen-asplenia.itp-etiology.20261111.v1",
+    "nodeId": "node.spleen-asplenia.itp-etiology.20261111.v1",
+    "title": "Low platelet count — initial etiologic evaluation",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The repeat samples, absence of clumping and schistocytes, preserved other cell lines and examination support genuine isolated thrombocytopenia. The resident must then choose secondary-cause testing rather than a purported confirmatory antibody assay or routine invasive marrow examination. HIV/HCV testing is the single best offered next investigation.",
+      "The completed-work entry supplies necessary workup status without naming the missing viral tests. Large platelets are clinical evidence, not a nonmedical wording match. The explanation appropriately avoids equating negative viral testing with proof of primary ITP.",
+      "This is a self-contained single-node case: age, sex, presentation, findings and a complete investigation task are supplied; no previous answer or future result is needed.",
+      "Report-wide scope: all 14 current after/candidate nodes were reviewed independently, including the five labelled pass-preserved. Historical kept, retired, parked and held material is excluded. Review-only key placement and author quality claims were not evidence of quality. Difficulty and highYield are qualitative judgments, not measured difficulty or verified exam frequencies. No network or source retrieval was performed; PASS is editorial and does not confer clinical approval or independently authenticate current guideline statements. Input JSON SHA256: bb54aa2ef71258521713f328c1bf0872feb8bc6fd785b38db0861615846fcc21.",
+      "Report-wide presentation limit: these judgments use the specified visible fields. Actual runtime substitution, rendering, wait previews and randomization were not tested. All 14 candidate cases contain one decision node and no current update; there is no active later scored part to assess."
+    ],
+    "suggestions": [
+      "Optional precision improvement: ask which investigation should be obtained next in the initial etiologic evaluation, rather than implying one paired test completes every aspect of an ITP workup. The existing explanation already supplies the appropriate limitation."
+    ]
+  },
+  {
+    "id": "question.spleen-asplenia.felty-arthritis-response.20261111.v1",
+    "nodeId": "node.spleen-asplenia.felty-arthritis-response.20261111.v1",
+    "title": "Recurrent infections — discordant Felty treatment response",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The task requests a disease-modifying treatment change, but one option is a surgical evaluation. A resident can reasonably read the task as requesting a DMARD choice before considering the case.",
+      "The presentation promises 'Later entries' about an infection admission and follow-up, but the standalone candidate supplies no such sequence. This is leftover framing from a longer case."
+    ],
+    "cues": [
+      {
+        "phrase": "Which disease-modifying treatment change",
+        "why": "In a rheumatology context this preselects the medication category and weakens 'Refer for elective splenectomy evaluation' before clinical interpretation. All options should compete under a neutral treatment-plan task."
+      },
+      {
+        "phrase": "Start specialist-monitored methotrexate treatment",
+        "why": "Only the medication key advertises specialist monitoring. This adds a favorable safety qualifier to the key while the alternative medication is simply increased; the monitoring belongs in common context or feedback."
+      }
+    ],
+    "fairness": [
+      "The intended two steps are valid: distinguish improved articular disease from persistent neutropenia/infections, then reconsider the disease-directed treatment rather than escalate a joint-effective agent or proceed prematurely to surgery.",
+      "Methotrexate is a defensible best offered approach in a patient whose disease-modifying treatment has consisted of etanercept and who has no active infection or stated renal/hepatic barrier. No confident clinical error is identified. Felty treatment evidence and sequencing are less secure than the option wording might suggest; the explanation appropriately acknowledges limited evidence.",
+      "The supplied syndrome label is acceptable for this management task. The surgical indication and failure of medical management are board-relevant; this is not merely a syndrome-recognition question. There is no active downstream node, but the obsolete promise of later entries impairs standalone presentation."
+    ],
+    "suggestions": [
+      "Ask which treatment plan best addresses the persistent neutropenia and infection course, using a neutral lead-in that admits both medical and surgical options.",
+      "Use comparable action labels, removing the key-only monitoring qualifier while retaining monitoring in the explanation.",
+      "Delete the promise of an outside-hospital admission and later follow-up from this standalone presentation. Preserve the actual discordant response and current safety observations."
+    ]
+  },
+  {
+    "id": "question.spleen-asplenia.hs-biliary-operation.20261111.v1",
+    "nodeId": "node.spleen-asplenia.hs-biliary-operation.20261111.v1",
+    "title": "Postprandial pain — extent of surgery in hereditary spherocytosis",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The symptomatic gallstones justify a gallbladder operation; the sustained compensated hematologic course does not independently justify adding splenectomy. These are two consequential assessments of operative extent, not merely recognition of pigment stones.",
+      "Cholecystectomy is the single best offered operation. Both combined operations embody the credible mistake of adding splenic surgery because gallstones occur in HS. The options are parallel operations, and the shorter key is a naturally shorter procedure rather than an explanatory outlier.",
+      "The absent transfusions, activity limitation and splenic pain are necessary evidence about splenic indications. They should not be deleted as generic negative cues. No exact severity threshold is needed to rank this patient's offered procedures.",
+      "The standalone case contains its diagnosis, symptom pattern, ultrasound and longitudinal hematologic observations. No earlier explanation supplies the answer. The explanation correctly avoids ranking total versus partial surgery in someone who has no established splenic indication."
+    ],
+    "suggestions": [
+      "Optional shortening: remove 'The episodes have prompted an elective gallbladder operation discussion'; the presentation and actual biliary findings already establish that context. Preserve both the biliary and hematologic observations."
+    ]
+  },
+  {
+    "id": "question.spleen-asplenia.hs-response-morphology.20261111.v1",
+    "nodeId": "node.spleen-asplenia.hs-response-morphology.20261111.v1",
+    "title": "Blood-film follow-up — persistent spherocytes after splenectomy",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The question is understandable, but 'Continue planned hematologic surveillance' never states what that existing plan is. It is much less concrete than the competing CT and corticosteroid actions."
+    ],
+    "cues": [
+      {
+        "phrase": "Exercise tolerance restored",
+        "why": "Together with 'no new fatigue, jaundice or transfusion requirement' and biochemical values 'within the laboratory reference ranges', the prose repeatedly reassures the reader. Against a generic surveillance key and two escalations, a broad avoid-intervention heuristic competes strongly with the intended membrane-defect inference. These necessary response findings should be retained, but the decision and distractors need strengthening."
+      },
+      {
+        "phrase": "Continue planned hematologic surveillance",
+        "why": "This is the only nonspecific, conservative option; the two alternatives each introduce a conspicuous new intervention. Its vague scope makes it easier to choose without deciding what the persistent morphology actually warrants."
+      }
+    ],
+    "fairness": [
+      "The key and explanation are clinically defensible: splenectomy does not correct the inherited membrane defect, and persistent spherocytes do not by themselves establish recurrent hemolysis. Howell-Jolly bodies are compatible with the postoperative state. No confident clinical inaccuracy is identified.",
+      "Corticosteroids for hemolysis are poorly competitive in this known hereditary disorder with normal hemolysis markers. The task mostly tests the single familiar rule that morphology can persist despite clinical response; attaching a routine follow-up action does not create a second difficult decision.",
+      "This is high-yield physiology, but the exact item is easy for the target resident audience. It stands alone and has no sequence or chronology defect."
+    ],
+    "suggestions": [
+      "If retained as a scored resident application item, supply a supported, genuinely competing postoperative finding and ask a concrete investigation or management decision that changes when clinical hemolysis recurs; do not manufacture an unsupported laboratory threshold.",
+      "Replace the steroid foil with a credible error at the same decision stage and specify comparable follow-up or investigation plans.",
+      "Alternatively seek explicit acceptance as focused basic physiology practice. Do not call the present version hard or two-step simply because it asks for a plan."
+    ]
+  },
+  {
+    "id": "question.spleen-asplenia.rituximab-vaccine-response.20261111.v1",
+    "nodeId": "node.spleen-asplenia.rituximab-vaccine-response.20261111.v1",
+    "title": "Preoperative vaccines — recent anti-B-cell therapy",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must distinguish adequate vaccine-to-operation lead time from inadequate expected vaccine response after recent rituximab, then choose reassessment/revaccination planning rather than accept the doses or repeat them during the same period of depletion.",
+      "The key says 'indicated revaccination', not automatic immediate redosing on an arbitrary date. It is the best offered vaccination plan. The nonurgent operative context makes longitudinal reassessment feasible without turning a delay into a universal surgical rule.",
+      "B-cell depletion is relevant clinical evidence, not an author-supplied conclusion that the vaccines failed. The displayed dates create a meaningful competing interpretation: three weeks before surgery can appear adequate if the treatment record is ignored.",
+      "No confident clinical error is identified from this offline review. The explanation's exact CDC timing attribution was not independently reverified, and peripheral B-cell recovery should not be read as a validated guarantee of vaccine responsiveness or a universal standalone scheduling rule.",
+      "The standalone candidate supplies its treatment, vaccine and proposed operative chronology. No prior node or explanation is required."
+    ],
+    "suggestions": [
+      "At clinical sign-off, confirm the exact revaccination recommendation for doses given after anti-B-cell therapy and retain the distinction between elapsed time, immune recovery and specialist assessment. Do not convert the explanation into an automatic operation date or B-cell-count cutoff."
+    ]
+  },
+  {
+    "id": "question.spleen-asplenia.itp-early-timing.20261111.v2",
+    "nodeId": "node.spleen-asplenia.itp-early-timing.20261111.v2",
+    "title": "Low platelet count — early splenectomy versus effective medical treatment",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "She is willing to continue injections while an elective operation is deferred.",
+        "why": "This sentence rehearses both the keyed continuation and the intended deferral. Against 'Continue weekly romiplostim treatment', 'Schedule elective splenectomy after preparation' and 'Withdraw romiplostim with platelet surveillance', it nearly supplies the whole plan without requiring the resident to decide the timing."
+      }
+    ],
+    "fairness": [
+      "Continuing an effective therapy is clinically defensible with resolved bleeding, a substantial decline and recurrent bleeding during interruption, and only five months of diagnosed ITP. Withdrawal is not supported by this response trajectory. No confident clinical error is identified.",
+      "The intended two steps are meaningful: distinguish treatment dependence from remission, then weigh disease duration against the wish to avoid maintenance. The final goal sentence supplies the second step's resolution and makes the actual displayed question easier than that design.",
+      "Patient preferences and feasibility of continued treatment are legitimate decision-critical facts. The repair must retain them in neutral terms rather than deleting the information that makes medical bridging acceptable.",
+      "The rewritten standalone case has the diagnosis, duration, treatment response and patient goals it needs; the similarly worded presentation of another ITP case creates no within-case sequence dependency. Current timing guidance was not independently verified online."
+    ],
+    "suggestions": [
+      "Describe near-term injection burden, tolerability and ability to continue treatment without announcing that an operation is deferred. Keep the longer-term desire to stop maintenance as the competing consideration.",
+      "Retain the interruption/rechallenge evidence and five-month disease duration so the resident must choose the bridge and decide timing. Reassess difficulty after the preference sentence no longer paraphrases the answer."
+    ]
+  },
+  {
+    "id": "question.spleen-asplenia.vaccine-operative-calendar.20261111.v2",
+    "nodeId": "node.spleen-asplenia.vaccine-operative-calendar.20261111.v2",
+    "title": "Preoperative vaccination — product history and operative timing",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must identify the indicated vaccine from the verified administration history and then apply the elective preoperative interval. All four combinations are represented equally, so neither the vaccine component nor the date component identifies the key by convergence.",
+      "Hib on November 11 with surgery on November 25 is the best offered combination under the stated deferrable elective setting. The alternatives isolate two credible errors: adding PPSV23 after PCV20 and retaining inadequate elective lead time.",
+      "The arithmetic is correct: November 25 is fourteen days after November 11, while November 16 is five days after it. These are clinical calendar intervals, not gameplay test waits. The complete record with no Hib entry and the absence of urgency are necessary discriminators.",
+      "No confident clinical error is identified. The exact contemporary vaccine guidance was not independently reverified, so editorial PASS does not establish current guideline authority. The explanation appropriately distinguishes urgent surgery.",
+      "The single-node case supplies its own date, indication, vaccine history and task; no prior part is needed."
+    ],
+    "suggestions": [
+      "Preserve the balanced four-option matrix and the explicit elective/nonurgent context. At clinical sign-off, confirm that the reconciled MenACWY/MenB statement is intended to mean their preparation is already addressed, rather than requiring the learner to infer their status."
+    ]
+  },
+  {
+    "id": "question.spleen-asplenia.hs-persistent-severity.20261111.v2",
+    "nodeId": "node.spleen-asplenia.hs-persistent-severity.20261111.v2",
+    "title": "Surgical timing — transient marrow suppression versus persistent severe HS",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The later reticulocytosis and hemolysis markers distinguish the current state from the acute near-absent reticulocyte production. Recurrent transfusion requirements and persistent work limitation then support elective splenectomy assessment rather than indefinite waiting for reticulocyte recovery.",
+      "The key is assessment, not immediate surgery or an unsupported choice between total and partial removal. That scope makes it defensible despite the absence of exact dates for the three later visits. The item should not be used to teach a precise time-to-operation rule.",
+      "Both distractors answer the longer-term planning task. Waiting for reticulocyte recovery is a meaningful clinical misreading of the serial data, rather than an option defeated merely by a shared word. Continuing observation competes with the severity and function evidence.",
+      "The patient is described as unable to complete his usual work; this is genuine functional limitation, not an inference from successful modified duties. The historical illness and subsequent visits form a coherent record within one standalone node. No later scored part is implied by the task.",
+      "No confident clinical inaccuracy is identified. The operative-indication decision is high-yield; the numbers serve as patient observations rather than invented universal thresholds."
+    ],
+    "suggestions": [
+      "Optional wording cleanup: shorten 'Continue surveillance without splenectomy assessment' to a positive observation/support plan. The explicit negation of the key is unnecessary even though it does not independently reveal the correct clinical choice.",
+      "If future versions ask when to operate rather than whether to assess, add supported chronology and recovery information; do not infer a timing threshold from these undated visits."
+    ]
+  },
+  {
+    "id": "question.spleen-asplenia.xerocytosis-operative-stop.20261111.v2",
+    "nodeId": "node.spleen-asplenia.xerocytosis-operative-stop.20261111.v2",
+    "title": "Splenectomy consultation — reclassification of inherited hemolysis",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The new membrane-study and pathogenic PIEZO1 findings undermine the presumed HS label. The resident must then recognize that the different inherited disorder changes the safety of splenectomy, including the tempting partial-splenectomy compromise.",
+      "Withdrawing the plan and returning to hematology is the single best offered action. The explanation correctly directs away from carrying the HS operation forward and does not invent a numerical thrombotic risk.",
+      "The clinical results are highly discriminating, but no option repeats PIEZO1, xerocytosis or the ektacytometry label. The withdrawal option is somewhat longer because it contains a destination, yet remains a concrete operative disposition rather than generic individualized planning.",
+      "This is a less common disease, but recognizing a major contraindication to splenectomy in inherited hemolysis is a high-value surgical testing concept. Specialist molecular recall should support that safety decision, not become the sole objective. Difficulty is moderate for this audience; rarity alone is not grounds to call it hard.",
+      "The earlier referral diagnosis and new results are explicitly distinguished, so the standalone case is coherent and does not require an earlier node. No confident clinical error is identified."
+    ],
+    "suggestions": [
+      "Retain the raw laboratory findings and the total-versus-partial competitors. Keep the explanatory focus on the change in operative risk rather than expanding into rare gene trivia."
+    ]
+  },
+  {
+    "id": "question.spleen-asplenia.pcv20-completed.20261111.v2",
+    "nodeId": "node.spleen-asplenia.pcv20-completed.20261111.v2",
+    "title": "Vaccine record review — administered PCV20",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The record is clear, but the signed entry, lot, injection site, cancelled alternative order and absence of alternative administration repeatedly establish the same fact. The record-reconciliation frame is longer than the actual decision requires."
+    ],
+    "cues": [],
+    "fairness": [
+      "No dose is a defensible single best answer for the displayed PCV20 history and non-transplant setting under the schedule described. PPSV23 is the plausible PCV15-sequence confusion; repeat PCV20 is a weaker competitor. No confident clinical error is identified, but current recommendations were not independently reverified.",
+      "The cancelled-order entry is legitimate evidence, not a sufficient nonmedical shortcut to the final answer: the learner still needs vaccine knowledge. Nevertheless, the record already resolves the apparent discrepancy. What remains is the single rule that documented PCV20 completes this sequence; looking past an explicitly cancelled PCV15 order does not provide a substantial second clinical inference.",
+      "This is high-yield prevention knowledge but easy in its present form. It is self-contained, and neither age nor elapsed time creates a competing action among the options once PCV20 is explicitly established.",
+      "The symmetric PCV15 sibling uses the same ordered-versus-administered device. These are not active multipart cases, but repeated exposure will make the administrative device even less discriminating."
+    ],
+    "suggestions": [
+      "For the requested resident-level difficulty, use a supported additional patient circumstance or genuinely consequential sequence distinction that changes which action follows the reconciled record. Do not make the record ambiguous to simulate difficulty.",
+      "Alternatively shorten this to an explicitly accepted focused schedule-recall item. Remove redundant administrative detail and do not label it two-step on the strength of the cancelled order."
+    ]
+  },
+  {
+    "id": "question.spleen-asplenia.menb-missing-coverage.20261111.v2",
+    "nodeId": "node.spleen-asplenia.menb-missing-coverage.20261111.v2",
+    "title": "Vaccine record review — meningococcal coverage in older asplenia",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must interpret the dated MenACWY course and recent booster, then recognize a separate risk-based MenB indication despite age 61. Repeating MenACWY and applying only the routine young-adult MenB window are credible, different errors.",
+      "Starting a MenB primary series is the single best offered action under the stated risk history and complete administration record. The question does not require an invented product, dose interval or exact future schedule.",
+      "The exhaustive administration record is necessary to establish missing coverage. MenB being a different vaccine label is not itself a sufficient nonmedical cue: deciding whether to add it, repeat ACWY or defer requires knowledge of distinct coverage and risk-based indications.",
+      "The task is complete and the case stands alone. The repeated age in the exhibit is unnecessary but not confusing. No confident clinical error is identified; current age-independent risk guidance remains for exact-version clinical verification."
+    ],
+    "suggestions": [
+      "Preserve the older age, asplenia, complete record and recent ACWY booster because each distinguishes a plausible alternative. The duplicate age can be removed for brevity."
+    ]
+  },
+  {
+    "id": "question.spleen-asplenia.pcv15-unfinished.20261111.v2",
+    "nodeId": "node.spleen-asplenia.pcv15-unfinished.20261111.v2",
+    "title": "Vaccine completion — administered PCV15",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The discrepancy is already resolved by the heading 'Actual administration' and the explicit cancellation of PCV20. Lot and injection-site detail repeats that resolution without adding a decision."
+    ],
+    "cues": [],
+    "fairness": [
+      "PPSV23 is the single best offered action for the documented PCV15-only sequence and long elapsed interval under the displayed schedule. Repeating PCV15 to restart and giving no dose are recognizable schedule mistakes. No confident clinical error is identified; contemporary guidance was not independently reverified.",
+      "There is no reliable wording-only route to PPSV23, but the author has already told the resident which product was administered. The remaining work is schedule recall, including the familiar principle that a delayed series is not restarted. These related facts do not become two consequential interpretive steps because a cancelled order is also listed.",
+      "The exact item is easy and high-yield, not unfair. It supplies all necessary patient and record context and does not depend on another node. Its near-mirror PCV20 sibling reduces novelty across repeated exposure."
+    ],
+    "suggestions": [
+      "Either obtain explicit acceptance as concise basic vaccine-sequence practice or redesign around a supported patient/history distinction that actually changes the completion plan.",
+      "Remove redundant proof of administration after resolving the record. Preserve enough reliable documentation to keep a single best answer; do not conceal which product was given.",
+      "Differentiate the resident error from the PCV20 sibling rather than merely reversing the cancelled and administered products."
+    ]
+  },
+  {
+    "id": "question.spleen-asplenia.menb-booster.20261111.v2",
+    "nodeId": "node.spleen-asplenia.menb-booster.20261111.v2",
+    "title": "Vaccine follow-up — separate booster schedules and MenB product",
+    "verdict": "REVISE",
+    "difficulty": "hard",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The lead-in presupposes that a dose should be given, even though one option is to give no dose. This weakens the genuine due-versus-not-due decision the dates are supposed to test."
+    ],
+    "cues": [
+      {
+        "phrase": "Which meningococcal dose should be given",
+        "why": "The wording tells the learner that some dose is due and makes 'Give no meningococcal dose at this visit' sound nonresponsive before either schedule is interpreted."
+      },
+      {
+        "phrase": "Trumenba: January 10, 2020; March 10, 2020; July 10, 2020; July 10, 2021; November 10, 2023.",
+        "why": "Trumenba is the only offered product name also printed in the history. A same-name matching heuristic favors 'Give one Trumenba dose at this visit'. Product history is necessary, so retain it; the item needs a neutral due-versus-not-due task to ensure that matching alone is insufficient."
+      }
+    ],
+    "fairness": [
+      "The clinical decision is otherwise strong: distinguish the MenB maintenance interval from the recent ACWY booster, then maintain MenB product continuity and avoid adding an ACWY component that is not due. These are consequential, integrated steps.",
+      "The last MenB entry is three years and one day before the visit, while the ACWY entry is one year and one day before it. Thus the explanation's approximate elapsed times are coherent. The presented Trumenba primary-series dates are internally coherent.",
+      "A Trumenba booster is the best offered plan under the described recommendations. Bexsero tests product interchangeability; Penbraya tests whether both components are currently indicated. No confident clinical error is identified. The explanation's categorical claim about combined-product use and current product recommendations require clinical source verification; this offline review does not establish an exception-free rule.",
+      "The hard rating reflects coordination of two schedules and product selection, not confusion or date arithmetic alone. The broad prevention objective is high-yield; proprietary brand distinctions are a narrower component. The case contains all its own records and has no active multipart dependency."
+    ],
+    "suggestions": [
+      "Ask 'Which meningococcal vaccination plan is appropriate at this visit?' so giving no dose remains a genuine alternative.",
+      "Retain the necessary brand history. Re-attack the revised option set with medical knowledge covered: ensure at least one credible alternative cannot be rejected merely because its product name differs from the history, and that the dates must still be used.",
+      "Confirm the combined-product statement and same-product requirement at clinical sign-off, including whether the explanation needs a qualification rather than 'only'."
+    ]
+  },
+  {
+    "id": "question.spleen-asplenia.abscess-initial-control.20261111.v2",
+    "nodeId": "node.spleen-asplenia.abscess-initial-control.20261111.v2",
+    "title": "Hospital record review — initial splenic abscess source control",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must interpret a stable, localized, unruptured infection and the liquid, unseptated cavity, then choose source control while accounting for substantial pulmonary operative risk. Drainage, splenectomy and continued antibiotic management are recognizable competing treatment strategies.",
+      "An image-guided catheter drainage attempt is the best offered initial plan. The CT observations support accessibility without explicitly calling the collection drainable, and the explanation properly retains antibiotics rather than treating drainage as their replacement.",
+      "The anatomy and respiratory history favor the key, but they do so clinically, not through answer-label repetition or a teaching sentence announcing eligibility. The item does not require an invented antibiotic-failure duration. Splenectomy remains a credible treatment rather than an absurd distractor, and the explanation appropriately avoids claiming every later collection is drainable.",
+      "No confident clinical error is identified. Size, exact access route and procedural feasibility are not fully specified, so this should remain an initial image-guided drainage assessment/attempt, not a guarantee of technical success. The visible record does not establish a precise size cutoff or a universally mandatory approach.",
+      "The historical decision point is explicitly identified, so the clinic setting does not imply that the patient currently has untreated sepsis. All required initial data are present in this standalone node; no later treatment or prior scored answer is needed."
+    ],
+    "suggestions": [
+      "Optional shortening: remove the presentation's reference to 'subsequent hospital records' because this standalone task only uses the initial decision point.",
+      "Keep culture-directed antibiotics as shared ongoing care when comparing source-control plans. Preserve the explanation's limited claim of a drainage attempt and avoid deriving an exact size or duration rule from this record."
+    ]
+  }
+]

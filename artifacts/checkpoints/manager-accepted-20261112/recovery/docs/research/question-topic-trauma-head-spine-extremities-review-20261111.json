@@ -1,0 +1,431 @@
+[
+  {
+    "id": "question.topic.trauma-head-spine-extremities.focal-change-ct.v1",
+    "nodeId": "node.topic.trauma-head-spine-extremities.focal-change-ct.v1",
+    "title": "New focal motor change after head injury",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The later examination is identifiable in the exhibit, but 'for Daniel's later neurologic examination' is awkward: the investigation evaluates a change, not an examination.",
+      "Intubation and eye responses add GCS detail without making the unchanged best motor response a consequential competing interpretation in the offered options."
+    ],
+    "cues": [
+      {"phrase": "arterial carbon dioxide is 40 mmHg", "why": "Together with unchanged ventilator settings, this explicitly disposes of 'Repeat arterial blood-gas analysis'; a nonmedical reader can see that the offered repeat repeats an already reported measurement."},
+      {"phrase": "Urgent noncontrast head CT", "why": "Only this investigation is labelled urgent, giving it a priority-language advantage in a task asking what to prioritize."}
+    ],
+    "fairness": [
+      "Urgent CT is the defensible best offered investigation for a confirmed new unilateral deficit after head trauma. No confident clinical inaccuracy identified.",
+      "The current question does not meaningfully test the proposed best-GCS trap: none of the choices relies on unchanged best motor response, and the repeat gas is already answered.",
+      "This is an offline editorial review of all 19 executable candidate nodes using the specified visible fields; key position and author self-assessments were not treated as evidence. No source verification or clinical approval is claimed. The 18 retirement proposals and one unkeyed BCVI gap are not scored; historical held records are only noted. Existing focal-change holds remain unresolved."
+    ],
+    "suggestions": [
+      "Ask which investigation should evaluate the new motor change, and balance urgency language across choices.",
+      "Replace the already-completed gas foil with a credible competing assessment at this decision stage. If the unchanged best-GCS construct is retained, make that actual decision error compete with escalation while preserving the focal findings.",
+      "Keep the later CT result out of this node; the current sequence correctly does so."
+    ]
+  },
+  {
+    "id": "question.topic.trauma-head-spine-extremities.acute-sdh-evacuation.v1",
+    "nodeId": "node.topic.trauma-head-spine-extremities.acute-sdh-evacuation.v1",
+    "title": "Acute subdural evacuation despite preserved responsiveness",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The reported 12 mm acute subdural thickness supports evacuation despite modest shift and retained command following. Observation and ICP-directed medical treatment are credible errors if the learner overweights those reassuring findings, but are not equally good substitutes here.",
+      "Interpret the discordant size, shift and examination, then choose operative rather than observational or pressure-directed management. The named diagnosis is appropriate because the task tests management, not diagnosis.",
+      "The right-sided collection coheres with left-arm weakness. This node has enough current examination and CT information to stand alone with its case presentation. Earlier feedback prompts structural reassessment but does not supply the evacuation criterion.",
+      "Editorial PASS does not resolve the case's carried holds or confer clinician approval."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.trauma-head-spine-extremities.negative-head-ct-disposition.v1",
+    "nodeId": "node.topic.trauma-head-spine-extremities.negative-head-ct-disposition.v1",
+    "title": "Disposition after negative head CT during apixaban use",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'There is no additional indication being considered for antithrombotic treatment in this exercise' introduces a medication-treatment issue that none of the choices asks the learner to resolve. It can confuse the existing apixaban indication with the disposition decision."
+    ],
+    "cues": [
+      {"phrase": "Which discharge-stage plan", "why": "The task partly selects home discharge before comparing it with two admission choices; 'disposition' would be neutral."},
+      {"phrase": "No other injury or medical indication for admission was identified", "why": "This global admission conclusion risks ruling out both admission options by wording. Necessary observations and home support should remain, but the conclusion should not decide the task."},
+      {"phrase": "Observation admission with brain MRI", "why": "This is a weak alternative to the genuine routine-repeat-CT misconception; it supplies little resident-level competition in this negative-CT, unchanged-examination scenario."}
+    ],
+    "fairness": [
+      "The discharge key is defensible for the stated negative CT, baseline examination and reliable home support. The explanation appropriately includes delayed-hemorrhage precautions rather than implying zero risk.",
+      "No confident clinical inaccuracy identified. The existing owner hold on this boundary remains unresolved; this review does not adjudicate or remove it.",
+      "The normal examination, improving course and support are necessary fairness information, not reasons to remove all reassuring findings. The present construction mostly tests one anticoagulation/disposition rule."
+    ],
+    "suggestions": [
+      "Ask which disposition is appropriate and remove the irrelevant sentence about additional antithrombotic indications.",
+      "Replace the broad admission-eligibility conclusion with actual findings. Compare plausible disposition strategies and make one supported patient-specific consideration materially affect the routine-admission misconception.",
+      "If retained as focused guideline recall, obtain explicit acceptance of that basic educational role instead of calling it a difficult two-step item."
+    ]
+  },
+  {
+    "id": "question.topic.trauma-head-spine-extremities.pelvic-binder-correction.v1",
+    "nodeId": "node.topic.trauma-head-spine-extremities.pelvic-binder-correction.v1",
+    "title": "Correcting pelvic binder position",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {"phrase": "The binder remains tight", "why": "Directly undermines the only tightening alternative while the exhibit emphasizes a different binder level."},
+      {"phrase": "Remove the binder and continue padded transport", "why": "In an actively transfused pelvic-ring injury this is an obviously less protective plan, leaving the anatomical correction as the only sensible adjustment."}
+    ],
+    "fairness": [
+      "The described high binder position supports recentering over the greater trochanters. No confident clinical inaccuracy identified.",
+      "The hemodynamic trajectory establishes urgency but does not change the keyed landmark correction: the same answer follows without it. This remains a landmark recall item with a clinical wrapper."
+    ],
+    "suggestions": [
+      "Either seek explicit acceptance as a brief safety/technique item or redesign around a genuine mechanical-treatment decision in which position and response both change the action.",
+      "Use credible temporary-stabilization alternatives and preserve the necessary anatomical observation; do not obscure the location merely to make the question harder."
+    ]
+  },
+  {
+    "id": "question.topic.trauma-head-spine-extremities.pelvic-blush-embolization.v1",
+    "nodeId": "node.topic.trauma-head-spine-extremities.pelvic-blush-embolization.v1",
+    "title": "Pelvic arterial extravasation despite improved pressure",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Pressure during the scan is supplied, but the immediate post-scan trajectory at the treatment decision is less explicit. The distinction matters if a stronger packing-versus-angiography competitor is introduced."
+    ],
+    "cues": [
+      {"phrase": "Pelvic stabilization with serial hemoglobin testing", "why": "The sequence has already performed binder correction and still reports ongoing transfusion. This choice largely repeats completed support while only the key offers a new targeted bleeding intervention."},
+      {"phrase": "Definitive pelvic fixation as the next intervention", "why": "Definitive reconstruction is a weak competitor during continuing hemorrhage resuscitation, so the apparent two-step interpretation has little meaningful competition."}
+    ],
+    "fairness": [
+      "An enlarging arterial contrast focus and continuing transfusion support angiography/embolization among these options. No confident clinical inaccuracy identified.",
+      "The returned data are necessary and the sequence is coherent. The node can stand alone with the supplied injury context; prior binder feedback does not give away embolization.",
+      "Although the learner can interpret extravasation and consider the response, the options reduce the scored decision to recognition of active arterial bleeding."
+    ],
+    "suggestions": [
+      "Replace definitive fixation with a clinically credible competing hemorrhage-control strategy, then supply the current response and workflow facts needed to distinguish it fairly.",
+      "Keep actual perfusion and transfusion observations rather than announcing that angiography is feasible or preferred."
+    ]
+  },
+  {
+    "id": "question.topic.trauma-head-spine-extremities.cervical-deficit-mri.v1",
+    "nodeId": "node.topic.trauma-head-spine-extremities.cervical-deficit-mri.v1",
+    "title": "Persistent neurologic deficit after negative cervical CT",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {"phrase": "with multiplanar reconstructions and no motion limitation", "why": "Directly disposes of 'Repeat cervical CT with reconstructions' by stating that exactly that adequate study is already complete. These adequacy facts are necessary, but the repeat is a spent foil."},
+      {"phrase": "Flexion-extension cervical radiographs", "why": "A weak next-study alternative during an acute persistent neurologic deficit; the remaining novel study is MRI."}
+    ],
+    "fairness": [
+      "MRI is the defensible next study for persistent bilateral neurologic findings unexplained by an adequate bony CT. No confident clinical inaccuracy identified.",
+      "The observations support cord localization, but the option set permits the simpler rule 'persistent deficit plus negative CT means MRI' without consequential competing interpretation."
+    ],
+    "suggestions": [
+      "Retain scan adequacy and the raw neurologic observations; improve the alternatives rather than deleting information needed to establish the CT limitation.",
+      "Use a credible competing localization or evaluation pathway that the supplied distribution and course actually distinguish, or accept this explicitly as a basic imaging-safety item."
+    ]
+  },
+  {
+    "id": "question.topic.trauma-head-spine-extremities.cervical-progressive-compression.v1",
+    "nodeId": "node.topic.trauma-head-spine-extremities.cervical-progressive-compression.v1",
+    "title": "Progressive deficit with cervical cord compression",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The explanation contrasts the MRI with a fracture-negative CT that is not restated in this node. The choice is still answerable independently, but the feedback should remain understandable when this later node is selected alone."
+    ],
+    "cues": [
+      {"phrase": "Hand strength worsens during observation", "why": "Makes continued serial examination the already-failing approach; only decompression actively addresses the reported indentation."},
+      {"phrase": "Inpatient rehabilitation with assisted mobilization", "why": "Offers recovery care during active neurologic deterioration, an implausibly premature alternative rather than a difficult resident error."}
+    ],
+    "fairness": [
+      "Worsening deficits with a persistent compressive lesion support early spine-team decompression. No confident clinical inaccuracy identified.",
+      "The sequence is clinically coherent and prior MRI feedback does not prescribe decompression. Current findings are sufficient to answer without the preceding node.",
+      "The task asks for a definitive plan, while serial observation and rehabilitation are different care stages; this further narrows the choice without substantive reasoning."
+    ],
+    "suggestions": [
+      "Use a neutral treatment-plan task and credible competing spine-management strategies at the same decision stage.",
+      "If retaining the progressive emergency presentation, label and seek acceptance of a safety-recognition role; do not manufacture ambiguity by hiding the deterioration.",
+      "Restate the relevant earlier CT finding in brief if the explanation continues to rely on it in standalone delivery."
+    ]
+  },
+  {
+    "id": "question.topic.trauma-head-spine-extremities.bcvi-screening-cta.v1",
+    "nodeId": "node.topic.trauma-head-spine-extremities.bcvi-screening-cta.v1",
+    "title": "Vascular screening after a transverse-foramen fracture",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The fracture location must be translated into arterial risk despite a normal neurologic examination, then into the appropriate vascular imaging modality. Duplex is a credible modality error and cord MRI a credible wrong-target error.",
+      "CTA is the best offered screening study. No confident clinical inaccuracy or missing decision-critical fact identified.",
+      "The CTA option names more anatomy than its competitors, but arterial imaging is represented in two choices and the stem does not echo carotid/vertebral labels. This is not a convincing knowledge-free key selector."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.trauma-head-spine-extremities.bcvi-antithrombotic-plan.v1",
+    "nodeId": "node.topic.trauma-head-spine-extremities.bcvi-antithrombotic-plan.v1",
+    "title": "Antithrombotic treatment versus stenting for BCVI",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The learner must interpret the intimal injury and narrowing, then choose treatment while weighing absent bleeding contraindications against absence of an intervention-driving complication. Observation and routine stenting represent consequential errors.",
+      "Aspirin is defensible among the offered options. The item does not claim that aspirin is uniquely superior to all other antithrombotic agents; none is offered as a competing key.",
+      "The current CTA and bleeding assessment allow standalone answering with the shared presentation. Earlier feedback teaches why to screen but does not supply the treatment choice.",
+      "The explanation's 'nonprogressive' is stronger than a single returned CTA establishes, but there is no documented progression requiring intervention. This is a precision issue, not a competing-key defect."
+    ],
+    "suggestions": [
+      "For precision, describe the absence of reported progression rather than asserting proven nonprogression from a single study."
+    ]
+  },
+  {
+    "id": "question.topic.trauma-head-spine-extremities.limb-vascular-imaging.v1",
+    "nodeId": "node.topic.trauma-head-spine-extremities.limb-vascular-imaging.v1",
+    "title": "Abnormal ABI in a perfused injured limb",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must reconcile a warm foot and retained function with abnormal pulse/ABI findings, then distinguish imaging from both observation and immediate exploration.",
+      "CTA is the best offered assessment in this stable patient without the supplied hard signs. The ABI value is clearly abnormal rather than a borderline measurement that would make repeat measurement equally defensible.",
+      "Listing absent hard signs establishes the imaging-versus-operation boundary; these are necessary clinical observations, not nonmedical wording eliminations. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.trauma-head-spine-extremities.limb-shunt-before-fixation.v1",
+    "nodeId": "node.topic.trauma-head-spine-extremities.limb-shunt-before-fixation.v1",
+    "title": "Reperfusion and stabilization sequence for an ischemic limb",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must recognize the newly threatened but viable limb and reconcile urgent reperfusion with a grossly unstable skeleton. Temporary shunting bridges these competing priorities.",
+      "All choices describe actual operative sequences; fixation first delays perfusion, while definitive repair first risks the reconstruction during subsequent skeletal work. Shunting is the defensible best offered sequence under these facts.",
+      "Only the key includes three stages, but its additional step is the tested clinical technique rather than explanatory padding; counting stages alone does not establish correctness.",
+      "The update explicitly changes the previously warm foot to a cool pulseless foot, so the sequence is coherent. The current CTA, operative control, skeletal instability and viability findings also support standalone delivery. Earlier feedback does not teach shunting."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.trauma-head-spine-extremities.compartment-clinical-release.v1",
+    "nodeId": "node.topic.trauma-head-spine-extremities.compartment-clinical-release.v1",
+    "title": "Clinical compartment syndrome with palpable pulses",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {"phrase": "Pain rises despite increasing analgesic use", "why": "Directly marks the analgesia/serial-examination choice as the already-failing plan."},
+      {"phrase": "Urgent leg fasciotomy", "why": "The only urgent treatment competes with continued failed support and another diagnostic delay in an extensively signposted progressive emergency."}
+    ],
+    "fairness": [
+      "Progressive pain, passive-stretch pain, tense swelling and sensory change after dressing release support immediate fasciotomy; palpable pulses do not exclude compartment syndrome. No confident clinical inaccuracy identified.",
+      "This is an important safety concept, but recognition followed by its standard treatment does not yield two consequential decisions when both alternatives postpone treatment and the examination is so classic."
+    ],
+    "suggestions": [
+      "Retain the warning signs and seek explicit safety-recognition acceptance, or redesign the objective around a real assessment-versus-treatment boundary with credible alternatives.",
+      "If the task tests the need for pressure confirmation, offer that actual competing plan and make clinical examination reliability explicit; do not weaken emergency findings solely to manufacture difficulty."
+    ]
+  },
+  {
+    "id": "question.topic.trauma-head-spine-extremities.compartment-incomplete-release.v1",
+    "nodeId": "node.topic.trauma-head-spine-extremities.compartment-incomplete-release.v1",
+    "title": "Persistent symptoms after incomplete leg fasciotomy",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {"phrase": "Deep posteromedial fullness persists", "why": "Almost directly matches 'deep posterior compartment release'; the alternative compartments are explicitly described as soft."},
+      {"phrase": "Anterior, lateral and superficial posterior fascia were opened", "why": "Combined with 'soleus attachment ... was left intact', the operation note names completed sites and advertises the omitted access. Selecting the only remaining compartment can replace anatomical reasoning."},
+      {"phrase": "Complete the deep posterior compartment release", "why": "'Complete' agrees with the narrated omission, whereas the other release repeats already soft, opened compartments."}
+    ],
+    "fairness": [
+      "Completing an unreleased deep posterior compartment is the defensible answer to the supplied operative record and persistent findings. No confident clinical inaccuracy identified.",
+      "The sequence coheres with the preceding fasciotomy decision and contains enough postoperative detail to stand alone. Earlier feedback does not reveal the missing compartment, but this node's own wording does.",
+      "Potentially valuable applied surgical anatomy has been reduced to a named-omission and location-matching task."
+    ],
+    "suggestions": [
+      "Retain technically accurate operative observations but require interpretation of access and residual muscle/sensory findings rather than repeating the keyed compartment's name in the examination.",
+      "Compare plausible corrections at the same operative stage, with clinician-checked anatomy that distinguishes them. Avoid solving the cue merely by replacing anatomical terms with awkward synonyms."
+    ]
+  },
+  {
+    "id": "question.topic.trauma-head-spine-extremities.compartment-unreliable-exam.v1",
+    "nodeId": "node.topic.trauma-head-spine-extremities.compartment-unreliable-exam.v1",
+    "title": "Compartment assessment when sedation limits examination",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Repeat arterial duplex ultrasound' implies an earlier duplex that the visible record never describes."
+    ],
+    "cues": [
+      {"phrase": "direct pressure monitoring capability", "why": "Names the capability used by 'Serial intracompartmental pressure measurement' and no other option. This is a direct answer-specific availability cue."},
+      {"phrase": "with repeated limb examinations", "why": "Together with the singled-out pressure capability, this rehearses the exact monitoring plan subsequently explained as correct."}
+    ],
+    "fairness": [
+      "Pressure measurement as an adjunct to serial examinations is defensible in this sedated high-risk patient. The explanation correctly describes supplementation, not a universal isolated pressure cutoff.",
+      "No confident clinical inaccuracy identified. The civilian setting can remain if needed to define the intended clinical context; explicitly naming the keyed capability is unnecessary with these alternatives.",
+      "After the capability sentence, little remains beyond matching an unreliable examination to the named monitoring tool."
+    ],
+    "suggestions": [
+      "Remove the answer-specific capability statement while retaining the setting and ability to perform ongoing observation in neutral terms.",
+      "Change 'Repeat' to an initial duplex unless a prior study and its limitations are actually supplied.",
+      "Make examination reliability and the evolving findings distinguish credible diagnostic strategies; do not add unsupported pressure thresholds."
+    ]
+  },
+  {
+    "id": "question.topic.trauma-head-spine-extremities.pelvic-packing-persistent-shock.v1",
+    "nodeId": "node.topic.trauma-head-spine-extremities.pelvic-packing-persistent-shock.v1",
+    "title": "Persistent pelvic hemorrhage after embolization",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Pressure again falls' leaves unclear whether shock persisted continuously through embolization or recurred after a durable response; that chronology affects repeat angiography versus packing.",
+      "The record does not state how interval pelvic hematoma enlargement was established at the reassessment."
+    ],
+    "cues": [
+      {"phrase": "Completion runs show no further arterial extravasation", "why": "Risks making repeat angiography a completed-test foil if read as proof that arterial bleeding can no longer occur, although clinically it is only a time-specific result."},
+      {"phrase": "Definitive internal fixation of the pelvic ring", "why": "An implausibly definitive reconstruction during recurrent shock; it does not provide a strong third hemorrhage-control competitor."}
+    ],
+    "fairness": [
+      "Packing is plausible for ongoing nonarterial pelvic hemorrhage after embolization, and inferring the residual source before choosing complementary control is a useful two-step objective.",
+      "Uniqueness is not secure: negative completion runs do not exclude a missed, recurrent or newly apparent arterial source during subsequent hypotension. Repeat angiography can remain defensible. This is a clinician-adjudication uncertainty, not a claim that packing is wrong.",
+      "The explanation moves from 'can arise' from other sources to a preferred intervention without sufficiently resolving the competing arterial explanation. A negative repeat abdominal ultrasound is helpful but not absolute exclusion of every other bleeding source.",
+      "The moderate rating describes the intended source-and-sequence reasoning; unresolved ambiguity should not be counted as hard difficulty."
+    ],
+    "suggestions": [
+      "Have Melissa adjudicate the closest alternative and the exact clinical conditions favoring packing over repeat angiography.",
+      "Specify the temporal response to embolization, objective ongoing hemorrhage findings and any genuinely decision-critical logistical constraints using supported facts. Do not invent a cutoff or simply label the bleeding venous.",
+      "Replace definitive fixation with a credible hemorrhage-control alternative once the intended decision boundary is established."
+    ]
+  },
+  {
+    "id": "question.topic.trauma-head-spine-extremities.cervical-incomplete-acquisition.v1",
+    "nodeId": "node.topic.trauma-head-spine-extremities.cervical-incomplete-acquisition.v1",
+    "title": "Incomplete cervical CT before collar clearance",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {"phrase": "The scan was stopped before the lower cervical levels were acquired", "why": "Directly supplies the missing-work instruction answered by 'complete cervical CT'; the report repeats the same omission."},
+      {"phrase": "EAST conditional CT-based clearance pathway", "why": "The named modality in the presentation further favors completing CT over MRI before the learner has to interpret the clinical context."}
+    ],
+    "fairness": [
+      "Completing the unacquired anatomy while maintaining the collar is defensible. Unlike an absent export, the acquisition log explicitly proves the anatomy was not scanned; this is a sound fairness distinction.",
+      "No confident clinical inaccuracy identified. However, the duplicated omission plus the named pathway makes this a straightforward completeness check, not two consequential steps.",
+      "The shared presentation is needed to identify the hospital's clearance approach. No later completed study should be shown before this decision."
+    ],
+    "suggestions": [
+      "Keep one clear acquisition record; remove the redundant restatement of the same missing levels.",
+      "Either accept a basic acquisition-safety role or require a meaningful comparison between evidence adequacy and another supported patient consideration. Do not conceal the fact of nonacquisition to force uncertainty.",
+      "Review the first explanation together with the second task because it teaches the later CT-clearance rule."
+    ]
+  },
+  {
+    "id": "question.topic.trauma-head-spine-extremities.cervical-obtunded-clearance.v1",
+    "nodeId": "node.topic.trauma-head-spine-extremities.cervical-obtunded-clearance.v1",
+    "title": "Collar removal after adequate negative CT in an obtunded adult",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {"phrase": "under the hospital's adopted pathway", "why": "The presentation names a 'CT-based clearance pathway', and only the key repeats 'under the CT-based pathway'. This is a direct task/presentation/option wording match."},
+      {"phrase": "The unacquired lower levels prevent use of the high-quality CT clearance pathway", "why": "The preceding node's explanation teaches the exact missing condition; this node supplies it and asks for the rehearsed consequence."},
+      {"phrase": "A new high-quality multidetector CT", "why": "The quality conclusion plus a second complete-source-review row largely certifies eligibility in advance. Actual acquisition observations are useful; repeated eligibility reassurance adds little inference."}
+    ],
+    "fairness": [
+      "Collar removal is defensible under the explicitly adopted conditional pathway with the supplied negative adequate CT and no focal discrepancy. No confident clinical inaccuracy identified.",
+      "The case is coherent and the current findings stand alone when the shared presentation accompanies it. Without that presentation, the reference to the adopted pathway is incomplete.",
+      "After the first explanation, this is protocol recall rather than independent two-step reasoning. The named pathway legitimately limits clinical ambiguity, but its wording need not appear only in the keyed option."
+    ],
+    "suggestions": [
+      "Place the adopted pathway in shared context and use parallel plain collar plans without repeating its name only in the key.",
+      "Avoid certifying eligibility twice; retain the raw adequacy findings needed for fair application.",
+      "Redesign the second node around a distinct consequential discrepancy, or explicitly treat it as scaffolded reinforcement rather than a difficult independent scored objective."
+    ]
+  },
+  {
+    "id": "question.topic.trauma-head-spine-extremities.limb-expanding-hematoma.v1",
+    "nodeId": "node.topic.trauma-head-spine-extremities.limb-expanding-hematoma.v1",
+    "title": "Expanding hematoma despite preserved distal pulses",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must recognize expansion beyond marked borders with recurrent bleeding as a hard vascular sign, then choose exploration despite stable systemic pressure and palpable distal pulses.",
+      "CTA is a credible competing sequencing error in a stable patient. The single track and lack of associated skeletal injury narrow the localization problem that might otherwise favor preoperative imaging.",
+      "Operative exploration is the defensible best answer for this isolated penetrating-injury scenario. No confident clinical inaccuracy identified.",
+      "The progression is reported as observations rather than the diagnosis label 'expanding hematoma'; the explanation appropriately supplies that label after answering."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.trauma-head-spine-extremities.limb-normal-abi-disposition.v1",
+    "nodeId": "node.topic.trauma-head-spine-extremities.limb-normal-abi-disposition.v1",
+    "title": "Disposition after normal penetrating-limb vascular assessment",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {"phrase": "The wound has been cleaned and closed", "why": "Together with an entirely normal completed assessment, this gives the narrative a discharge-ready ending before the disposition decision."},
+      {"phrase": "Discharge with vascular precautions and scheduled follow-up", "why": "The key is the longest and only explicitly safety-complete follow-up plan; 'CTA before discharge' omits the same routine discharge safeguards, creating an avoidable completeness advantage."}
+    ],
+    "fairness": [
+      "The reliable normal examination, normal ABI and lack of an associated admission indication support discharge with follow-up. No confident clinical inaccuracy identified.",
+      "The normal examination and ABI are necessary to the disposition rule; they should not be removed to manufacture ambiguity. As written, all findings align and no meaningful competing patient consideration requires a second inference.",
+      "This is a useful high-yield counterpart to the abnormal-ABI case, but repetition of the opposite side of one rule does not itself establish resident-level difficulty."
+    ],
+    "suggestions": [
+      "Put routine wound care, precautions and follow-up in common context and compare parallel decisions about imaging, admission or discharge.",
+      "Introduce a supported, clinically meaningful competing consideration only if it changes interpretation of otherwise reassuring testing; otherwise seek explicit acceptance as focused basic vascular-triage practice."
+    ]
+  }
+]

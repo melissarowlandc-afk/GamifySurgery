@@ -1,0 +1,329 @@
+[
+  {
+    "id": "question.topic.pancreas-acute-pancreatitis.early-oral.v1.r2",
+    "nodeId": "node.topic.pancreas-acute-pancreatitis.early-oral.v1.r2",
+    "title": "Oral diet advancement after inadequate provision",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The exhibit says 'Clear-liquid trays: 600 kcal', '560 kcal consumed' and 'All served liquids taken'. All versus 560 of 600 is an avoidable internal inconsistency in the very data the resident must interpret."
+    ],
+    "cues": [],
+    "fairness": [
+      "Low-fat soft oral diet is the best offered plan: distinguish inadequate provision from inability to consume an adequate diet, then choose advancement rather than invasive support. The constructed calorie prescription is not presented as a universal clinical threshold.",
+      "The elevated lipase is a relevant competing misconception, not a contraindication to feeding. No confident clinical inaccuracy was identified in the feeding explanation.",
+      "This node stands alone. Review-wide limitation: clinical judgments are an offline assessment of the supplied after/candidate text, without new source verification; PASS does not confer clinical approval. Difficulty and high-yield ratings are qualitative predictions, not measured performance or verified examination frequency."
+    ],
+    "suggestions": [
+      "Make the intake statements consistent: describe nearly all offered liquids as consumed, or reconcile the supplied and consumed totals. Preserve the distinction between provision and achieved intake.",
+      "Remove the explanation's unused reference to stopping opioids unless opioid exposure is part of the tested record. The item otherwise supports two consequential steps and does not need a more elaborate vignette."
+    ]
+  },
+  {
+    "id": "question.acute-pancreatitis.mild-biliary-chole-before-discharge.v2.topic20261111.r1.r2",
+    "nodeId": "node.topic.pancreas-acute-pancreatitis.chole-after-sphincterotomy.v1.r2",
+    "title": "Cholecystectomy after duct clearance and sphincterotomy",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Discharge and repeat CT before booking cholecystectomy",
+        "why": "This is the only plan adding an unexplained investigation and prerequisite. Its unsupported extra step weakens the distractor before the resident applies the post-sphincterotomy prevention principle."
+      }
+    ],
+    "fairness": [
+      "Same-admission laparoscopic cholecystectomy is the defensible best answer for the described recovered patient with residual gallbladder stones. Sphincterotomy does not remove the gallbladder source; no confident clinical error was identified.",
+      "The presentation already establishes uncomplicated recovery. Deleting the entire current update leaves the same answer. Duct clearance followed by gallbladder prevention is a useful distinction, but the offered case reduces to recall that sphincterotomy does not replace cholecystectomy.",
+      "The standalone chronology is coherent. It does not require a previous ERCP question or its explanation."
+    ],
+    "suggestions": [
+      "Keep the prevention concept, but compare credible timing/source-prevention plans rather than inserting an unindicated CT requirement.",
+      "If the resident-level two-step goal is retained, use a clinically supported recovery or complication finding that actually changes operative timing, with alternatives reasonable before interpreting that finding. Preserve necessary operative-suitability information; do not create difficulty by hiding it.",
+      "Otherwise propose this exact simple construct for explicit foundational acceptance or consolidation, rather than labeling it a difficult two-step item."
+    ]
+  },
+  {
+    "id": "question.topic.pancreas-acute-pancreatitis.nonresponse-ct.v1.r2",
+    "nodeId": "node.topic.pancreas-acute-pancreatitis.nonresponse-ct.v1.r2",
+    "title": "Complication imaging with a prior severe contrast reaction",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The explanation discusses 'renal recovery', but the visible record supplies only a current creatinine of 0.9 mg/dL and no earlier renal dysfunction.",
+      "'Contrast-sparing' is imprecise: pancreatic MRI may use gadolinium. The relevant distinction here is avoiding iodinated contrast, not necessarily avoiding every contrast agent."
+    ],
+    "cues": [
+      {
+        "phrase": "Which complication-imaging examination is most appropriate",
+        "why": "The task already commits to complication imaging and every option is an imaging examination. The purported first step of deciding whether this course needs imaging cannot affect the answer. This is supplied inference, not an independent medical-knowledge-free selection of MRI."
+      }
+    ],
+    "fairness": [
+      "Pancreatic MRI with MRCP is the best offered choice given a severe prior iodinated-contrast reaction and a need to assess complications. The early unenhanced CT does not adequately settle later complications.",
+      "Once the task supplies the indication, the choice is largely the familiar contrast-reaction-to-alternative-modality rule. The day-4 course does not earn a separate consequential step in this option set.",
+      "The item stands alone; the clinical episode and scan chronology are otherwise understandable. No newly verified modality protocol or absolute contrast prohibition is asserted by this review."
+    ],
+    "suggestions": [
+      "Say normal current renal function rather than renal recovery, and explain avoidance of iodinated contrast specifically.",
+      "Ask a neutral next assessment plan and include a credible observation/reassessment alternative, so the illness course must establish a need for new imaging before the reaction record selects the modality.",
+      "If detailed necrosis characterization is the objective, specify the intended MRI examination sufficiently for that purpose without inventing a protocol or implying MRCP alone assesses all complications."
+    ]
+  },
+  {
+    "id": "question.topic.pancreas-acute-pancreatitis.sterile-necrosis-antibiotics.v1.r2",
+    "nodeId": "node.topic.pancreas-acute-pancreatitis.sterile-necrosis-antibiotics.v1.r2",
+    "title": "Gas after collection drainage and antibiotic decisions",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Observation with repeat infection assessment is the best offered plan. The resident must contextualize new cavity gas after instrumentation and then use the untreated improving clinical trajectory to decide whether infection-directed treatment is warranted.",
+      "Empirical antibiotics are a credible error when gas and a transient temperature are overweighted. Aspiration is not a necessary prerequisite in this improving scenario. Negative blood cultures appropriately do not establish sterility.",
+      "The temporal information is necessary evidence, not a pre-answer diagnosis label. Options have comparable scope and all address the current infection decision. No confident clinical inaccuracy was identified.",
+      "The mature collection and completed drainage are fully stated, so the node works independently of earlier imaging or drainage tasks."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.pancreas-acute-pancreatitis.enteral-before-parenteral.v1.r2",
+    "nodeId": "node.topic.pancreas-acute-pancreatitis.enteral-before-parenteral.v1.r2",
+    "title": "Nutrition route during prolonged intestinal dysfunction",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Parenteral nutrition is the best offered route for the stated required support. The resident must distinguish diffuse intestinal dysfunction from isolated gastric intolerance, then recognize why bypassing the stomach does not solve the demonstrated delivery problem.",
+      "Nasojejunal feeding is a credible competitor because enteral support is generally preferred; persistent small-bowel dilation and lack of contrast progression, alongside the clinical course, distinguish this case. Nasogastric feeding has already failed.",
+      "The task is route selection, not a universal day for initiating parenteral nutrition. 'Several days' would not independently establish an exact initiation threshold; the explanation appropriately avoids one. No confident clinical inaccuracy was identified at the stated scope.",
+      "Standalone context is sufficient. In the proposed nonexecuting nutrition sequence, subsequent recovery of distal transit can coherently change the route; this explanation invites reassessment but does not reveal the later nasojejunal answer."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.pancreas-acute-pancreatitis.gastric-intolerance.v1.r2",
+    "nodeId": "node.topic.pancreas-acute-pancreatitis.gastric-intolerance.v1.r2",
+    "title": "Postpyloric feeding after gastric-route failure",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Nasojejunal feeding is the preferred offered temporary plan: interpret proximal compression with preserved distal passage, then bypass the failed gastric route while using the functioning intestine.",
+      "Further prokinetic escalation is a plausible competing response to gastric intolerance, but persistent vomiting after a trial and the compression findings favor changing route. Parenteral nutrition remains a fallback if enteral access or delivery fails, not the preferred first response to this supplied record.",
+      "The observations support an attempt at postpyloric delivery, not a guarantee of technical tube-placement success. The explanation retains that limit. No confident clinical inaccuracy was identified.",
+      "This later assessment stands alone because it supplies the current feeding failure and distal transit evidence. In the proposed nutrition sequence, it can follow diffuse dysfunction resolving with residual proximal compression; the previous explanation does not specify this answer."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.pancreas-acute-pancreatitis.moderate-resuscitation.v1.r2",
+    "nodeId": "node.topic.pancreas-acute-pancreatitis.moderate-resuscitation.v1.r2",
+    "title": "Persistent volume deficit after an initial bolus",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "An additional LR bolus followed by reassessment is the best offered response. The resident must reconcile reassuring resting pressure and positive balance with positional hypotension, oliguria and rising concentration markers, then choose further resuscitation rather than merely continuing or stopping replacement.",
+      "Oral tolerance does not establish adequate replacement, and a positive chart balance does not establish adequate intravascular volume. These are real competing interpretations, rather than an authored hypovolemia label.",
+      "The vignette does not justify a fixed bolus volume or schedule, and neither the option nor explanation prescribes one. No confident clinical inaccuracy was identified.",
+      "This standalone node establishes its own initial bolus and response. It does not depend on the unchanged fluid-overload item or authorize combining the two exact versions without a sequence review."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.pancreas-acute-pancreatitis.responding-infected-necrosis.v1.r2",
+    "nodeId": "node.topic.pancreas-acute-pancreatitis.responding-infected-necrosis.v1.r2",
+    "title": "Postponing intervention during a response to antibiotics",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Continue antibiotics and postpone drainage with close reassessment is the best offered plan. The resident must distinguish established infection from uncontrolled infection by interpreting the acquired response, then apply that response to intervention timing before encapsulation.",
+      "Immediate percutaneous drainage is the closest credible alternative: infection is a real indication to consider intervention, but improving organ function and intake support postponement. Open necrosectomy is a weaker, historically plausible failure to apply a step-up approach.",
+      "The explanation correctly makes delay conditional and avoids requiring eventual drainage or a fixed intervention date. No confident clinical inaccuracy was identified.",
+      "The standalone node supplies infection evidence, treatment and subsequent response. The proposed day-18 deterioration can coherently follow this transient response. This feedback teaches the conditional nature of delay but does not supply the later route choice."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.pancreas-acute-pancreatitis.deteriorating-early-necrosis.v1.r2",
+    "nodeId": "node.topic.pancreas-acute-pancreatitis.deteriorating-early-necrosis.v1.r2",
+    "title": "Source control before encapsulation during deterioration",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Percutaneous catheter drainage now is the best offered plan. Escalating support despite active antibiotics and resuscitation makes continued waiting inappropriate; the liquid lateral target and surrounding anatomy then support catheter access rather than primary open necrosectomy.",
+      "Waiting for encapsulation and operating because infection is uncontrolled are both recognizable competing errors. The bowel-enhancement and bleeding observations help avoid confusing this presentation with a separate operative catastrophe; they should not be deleted merely as negatives.",
+      "The explanation does not turn the calendar day into a mandatory intervention threshold. No confident clinical inaccuracy was identified.",
+      "The current node contains the infection evidence, treatment failure and anatomy needed to stand alone. In the proposed sequence, day-17 improvement followed by day-18 deterioration is coherent. Prior feedback reduces the novelty of the timing rule, but the current anatomy still requires a new route decision; the combined sequence is not granted an independent difficulty PASS here."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.pancreas-acute-pancreatitis.lateral-necrosis-drainage.v1.r2",
+    "nodeId": "node.topic.pancreas-acute-pancreatitis.lateral-necrosis-drainage.v1.r2",
+    "title": "Initial access to lateral walled necrosis",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Which initial drainage approach",
+        "why": "The task announces both intervention and drainage before the resident interprets the illness course; it also favors the two options literally labeled drainage over the differently categorized necrosectomy option."
+      },
+      {
+        "phrase": "Colon separated it from the stomach and duodenum",
+        "why": "Against 'EUS-guided transgastric collection drainage', the explicit barrier makes that route easy to eliminate. Combined with the task's drainage-versus-necrosectomy category cue, the option set leaves little consequential reasoning. The anatomy is necessary safety information; the defect is the competitors, not the presence of this observation."
+      }
+    ],
+    "fairness": [
+      "Retroperitoneal percutaneous drainage is the defensible best initial approach among these options. Persistent illness and the accessible lateral liquid component support intervention; transgastric access through intervening colon is not a reasonable alternative.",
+      "No confident clinical inaccuracy was identified, but the task gives away the indication/initial step and the option set makes route selection largely elimination. A continuous main duct does not distinguish these offered initial strategies.",
+      "This node stands alone. It can precede the catheter-failure case coherently, and its explanation does not explicitly reveal VARD. That sequence compatibility does not repair this node's individual difficulty."
+    ],
+    "suggestions": [
+      "Use a neutral intervention-plan task and make every choice answer it at the same stage and category. Avoid contrasting two drainage labels with a debridement label under a task that already requests drainage.",
+      "Retain the intervening colon and access anatomy, but add a genuinely credible competing plan whose ranking depends on treatment response, collection contents or access feasibility. Do not fabricate a safe transgastric path or hide the barrier to create competition.",
+      "If no supported competing decision remains, consolidate this anatomy teaching with the stronger drainage-failure item or seek explicit acceptance as foundational material."
+    ]
+  },
+  {
+    "id": "question.topic.pancreas-acute-pancreatitis.failed-drainage-vard.v1.r2",
+    "nodeId": "node.topic.pancreas-acute-pancreatitis.failed-drainage-vard.v1.r2",
+    "title": "Step-up debridement after effective liquid drainage",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Video-assisted retroperitoneal debridement is the best offered next procedure. The resident must interpret patent catheters plus collapse of the liquid spaces as achieved drainage with persistent solid burden, then choose an escalation and route compatible with the remaining anatomy.",
+      "Catheter upsizing with irrigation is a credible close alternative, not an absurd distractor. Persistence of illness despite emptied liquid spaces and bulky residual material favors debridement here. This does not establish that further catheter strategies can never work in other patients.",
+      "The intervening colon makes transgastric necrosectomy unsuitable, but that exclusion alone does not resolve VARD versus catheter optimization. The catheter study and follow-up CT therefore have a genuine consequence. No confident clinical inaccuracy was identified.",
+      "The standalone node includes the previous procedure, elapsed course, drain performance, antibiotic response and access anatomy. In the proposed drainage sequence, escalation follows actual acquired failure rather than a hypothetical result, and the preceding explanation does not name this answer."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.pancreas-acute-pancreatitis.asymptomatic-collection.v1.r2",
+    "nodeId": "node.topic.pancreas-acute-pancreatitis.asymptomatic-collection.v1.r2",
+    "title": "Collection follow-up after symptom resolution",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The current update and exhibit repeat the same restored meal intake and resolved vomiting. This adds reading without adding a separate decision."
+    ],
+    "cues": [
+      {
+        "phrase": "eating her usual meals without recurrent pain or vomiting and her weight had stabilized",
+        "why": "This complete favorable summary, reinforced by 'no fever, jaundice or bleeding' and 'no biliary or bowel obstruction', settles the present indication before the historical comparison is used. It is supplied clinical interpretation/scaffolding rather than an independent word-match giveaway."
+      }
+    ],
+    "fairness": [
+      "Clinical follow-up without drainage is the clear best answer. Size and persistence do not independently mandate drainage of an otherwise uncomplicated asymptomatic collection. The explanation appropriately does not claim proof that opioids caused all earlier symptoms.",
+      "Deleting the opioid/bowel history and the entire referral-to-current comparison leaves the same answer from the current symptom-free assessment. The resident need not attribute symptom change or interpret unchanged imaging to select observation; the second step is not consequential.",
+      "No confident clinical inaccuracy was identified. The standalone chronology is coherent, and the task is complete. This is not an executable continuation of the other Sofia case."
+    ],
+    "suggestions": [
+      "Remove duplicated current findings. Keep the size-alone misconception, but do not count the historical attribution table as a second scored inference when current asymptomatic status settles the decision.",
+      "For a two-step revision, supply a genuinely unresolved current indication whose interpretation changes management and compare credible plans. Preserve safety negatives and avoid manufacturing symptoms solely to make observation less obvious.",
+      "Alternatively consolidate with a collection-indication question or request explicit foundational acceptance."
+    ]
+  },
+  {
+    "id": "question.topic.pancreas-acute-pancreatitis.symptomatic-transmural.v1.r2",
+    "nodeId": "node.topic.pancreas-acute-pancreatitis.symptomatic-transmural.v1.r2",
+    "title": "Internal drainage of a symptomatic apposed fluid collection",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Which preferred initial drainage approach should be recommended' is redundant; 'Which initial management plan is most appropriate' would state a cleaner neutral task if the indication is meant to be tested."
+    ],
+    "cues": [
+      {
+        "phrase": "preferred initial drainage approach",
+        "why": "The task supplies the intervention decision and restricts every answer to drainage. Persistent symptoms cannot serve as an independent first reasoning step when drainage is already stipulated."
+      },
+      {
+        "phrase": "neither bowel nor a vessel crossed the contact area",
+        "why": "Together with direct gastric apposition and the exhaustive arterial negatives, the report reads like a favorable access checklist. These are clinically useful safety observations, not grounds for deleting them; the current competitors do not make interpreting them difficult."
+      }
+    ],
+    "fairness": [
+      "EUS-guided transmural drainage is the best offered initial approach for the symptomatic, mature, fluid-only collection apposed to the stomach with the described access findings. Surgical cystogastrostomy and percutaneous drainage are possible alternatives but have no patient-specific advantage in this vignette.",
+      "No confident clinical inaccuracy was identified. The explanation correctly avoids making duct continuity a universal prerequisite for endoscopic management.",
+      "The question tests the standard favorable-anatomy-to-EUS route rule. Removing the symptom history leaves the same answer to the stipulated drainage-route task, so the claimed indication-plus-route pair is not two consequential steps.",
+      "The case stands alone. Its current symptoms differ from the other Sofia item, but no executable multipart linkage makes those separate presentations contradictory."
+    ],
+    "suggestions": [
+      "Use a neutral management task if deciding whether to intervene is part of the objective, and provide clinically credible competitors at that same decision stage.",
+      "For a difficult route/sequence item, introduce only a supported finding that changes an otherwise reasonable drainage plan, such as a genuinely relevant vascular, contents or duct issue; do not simply add more favorable eligibility negatives.",
+      "Keep safety-critical anatomy visible. If the intended objective remains uncomplicated apposition-to-EUS selection, classify it honestly as foundational and seek that separate acceptance."
+    ]
+  },
+  {
+    "id": "question.topic.pancreas-acute-pancreatitis.unexplained-etiology-eus.v1.r2",
+    "nodeId": "node.topic.pancreas-acute-pancreatitis.unexplained-etiology-eus.v1.r2",
+    "title": "Completing an interrupted etiologic EUS examination",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": false,
+    "clarityIssues": [
+      "'Examination stopped before scope passage through the pylorus' and 'Examination terminated at that point; the archive contains the acquired views' repeat the decisive acquisition fact."
+    ],
+    "cues": [
+      {
+        "phrase": "Repeat EUS for a complete pancreatic examination",
+        "why": "'Complete' directly repairs an examination explicitly described as stopped/terminated with 'body and tail views only'. A reader needs little pancreatic knowledge to choose completion over rereading the same incomplete record."
+      },
+      {
+        "phrase": "the archive contains the acquired views",
+        "why": "This expressly closes the missing-export possibility and eliminates 'Expert reread of the archived EUS examination' through a records-coverage rule rather than clinical interpretation."
+      }
+    ],
+    "fairness": [
+      "Repeat EUS to complete the pancreatic examination is the best offered investigation. An expert reread cannot create missing acquired views, and diagnostic ERCP is not the preferred general etiologic examination in this supplied setting.",
+      "The explanation appropriately acknowledges MRI/MRCP as another reasonable real-world option. No confident clinical inaccuracy was identified in the offered ranking; however, the record does not contain a full alcohol/medication history, so it should not imply that all nonstructural etiologies have been excluded.",
+      "Idiopathic pancreatitis evaluation is clinically important, but the scored discriminator here is generic terminated-acquisition versus reread logistics. As written, that is not a high-yield pancreatic board concept and does not require two consequential clinical steps.",
+      "The node is self-contained, with no prior question needed. The reassuring discharge summary and contradictory procedure chronology are understandable; they are simply over-explicit for the intended difficulty."
+    ],
+    "suggestions": [
+      "Replace the clerical completion-versus-reread construct with a clinically consequential residual etiologic question. Compare credible investigations based on what a technically adequate prior examination did and did not assess, rather than an explicitly terminated study versus its reread.",
+      "Provide the relevant etiologic history if the revised question relies on calling the episode unexplained. Retain necessary acquisition limitations, but remove repeated declarations of incompleteness and the uniquely remedial 'complete' phrasing.",
+      "Do not repair this by hiding which views were actually acquired. If no fair high-yield distinction can be supported, consolidate or park the construct instead of inflating its difficulty."
+    ]
+  }
+]

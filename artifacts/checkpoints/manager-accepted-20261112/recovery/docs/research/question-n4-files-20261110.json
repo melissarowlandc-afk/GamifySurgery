@@ -1,0 +1,261 @@
+{
+  "checkedOn": "2026-11-10",
+  "scope": "Explicit owned paths only; no Git inventory. Local raw test logs omitted, public-safe summaries in validation receipt.",
+  "counts": {
+    "modified": 10,
+    "new": 21,
+    "appended": 1,
+    "total": 32
+  },
+  "files": [
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.ts",
+      "status": "modified",
+      "beforeSha256": "e4bfc30484cc1dcc168c68dc798e838ce2111c5f492fcf0a0354305158fcae61",
+      "role": "Explicit clinical-only authorized delta; immutable original in migration fixture.",
+      "bytes": 417402,
+      "afterSha256": "cc05d21e43357d1f80f6500a3c53868acf06aa2f43461b1012ba28971daf7e8a"
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "status": "modified",
+      "beforeSha256": "d1db6c1d311f08b0030cd2e9694860f70663add57317b73b82a369f87f1a85ff",
+      "role": "Explicit clinical-only authorized delta; immutable original in migration fixture.",
+      "bytes": 73003,
+      "afterSha256": "5fffcaa36446800168f2c3362cff2c357f7726a9f4cc44afdb065f804ec630dd"
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "status": "modified",
+      "beforeSha256": "000dfad4b8f836b66c7e81cdcf409d5fb7f46e2bc1751f44e67313dce3281043",
+      "role": "Explicit clinical-only authorized delta; immutable original in migration fixture.",
+      "bytes": 8800,
+      "afterSha256": "9b9217631c612cf22b5237808d4eedf0b065472d165190bfbcec2b691921ae5b"
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "status": "modified",
+      "beforeSha256": "d8d58233291b8b31ad52f950ed31e924f914284b6d89565cdb23f394054ad565",
+      "role": "Explicit clinical-only authorized delta; immutable original in migration fixture.",
+      "bytes": 197735,
+      "afterSha256": "2c6af289ba8b2d47d79390d40eaae53fe412fcb1dff638c8019aeee2661eae36"
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+      "status": "modified",
+      "beforeSha256": "aec3c2acf53900743bd060833d9a3fdb51e82d6a52783d72a3dcd2145cec18a3",
+      "role": "Explicit clinical-only authorized delta; immutable original in migration fixture.",
+      "bytes": 6649,
+      "afterSha256": "36dad57b9c1f31b4900af8c2b163101b2eb2082ebc173c62896f1a84303f67c8"
+    },
+    {
+      "path": "packages/clinical-content/src/question-harden1-n3r4-acceptance-test-support.ts",
+      "status": "modified",
+      "beforeSha256": "673eb53ba621031555ccbc55e9e930764e43db51482d633ddcd4954c9aceafdd",
+      "role": "Explicit clinical-only authorized delta; immutable original in migration fixture.",
+      "bytes": 4779,
+      "afterSha256": "0a2b2370e96d2ac3c28941499fc6188ad1a4cefb73c81d7a229906e70cb7596a"
+    },
+    {
+      "path": "packages/clinical-content/src/question-harden1-n3r4-acceptance-20261110.test.ts",
+      "status": "modified",
+      "beforeSha256": "8c488117164c0ec32709c19b093c42d2e5de7ff5a93d2e27eb05068f4ed15b30",
+      "role": "Explicit clinical-only authorized delta; immutable original in migration fixture.",
+      "bytes": 6043,
+      "afterSha256": "59413788d5d5421d12b79a44107bd56d60a86638aecc5d9183452cf8e52cc2a0"
+    },
+    {
+      "path": "packages/clinical-content/src/question-harden1-round2-20261110.test.ts",
+      "status": "modified",
+      "beforeSha256": "c1be8bbc9bdea0032493d9df3a0c830cc5dec1f3f63929e72dd1f67abad46e9e",
+      "role": "Explicit clinical-only authorized delta; immutable original in migration fixture.",
+      "bytes": 6723,
+      "afterSha256": "b4ba37830da65ffc95c9e24b5104ef2e55af1ddb2ab1c9eb7a3d958e3d1bcec7"
+    },
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+      "status": "modified",
+      "beforeSha256": "f25208a36cfde86cd861c23933fc0ef9fe8fd23b07574f0890c7316ac9127cea",
+      "role": "Explicit clinical-only authorized delta; immutable original in migration fixture.",
+      "bytes": 12810,
+      "afterSha256": "8f80190c42fb9afbf2167dc13c05e9a8ce3e7343b1920ce50d1203b51536f0ed"
+    },
+    {
+      "path": "packages/clinical-content/src/pilot-content.test.ts",
+      "status": "modified",
+      "beforeSha256": "b985253b1805228fe8a956e4e543136fca61e361c105e034aeb920b114003ae2",
+      "role": "Explicit clinical-only authorized delta; immutable original in migration fixture.",
+      "bytes": 24165,
+      "afterSha256": "7d12ea5fce9e0c931ff76365d38cc0ad69f62dcfea83947282f1ebc148f9c946"
+    },
+    {
+      "path": "packages/clinical-content/src/question-n4-accepted-20261110.ts",
+      "status": "new",
+      "role": "Exact accepted runtime source and tests",
+      "bytes": 12828,
+      "afterSha256": "fb1f5367740d1da8d0c8608818912ef8ae5b20401277bd93be82bb96223af6b3"
+    },
+    {
+      "path": "packages/clinical-content/src/question-n4-acceptance-test-support.ts",
+      "status": "new",
+      "role": "Exact accepted runtime source and tests",
+      "bytes": 3566,
+      "afterSha256": "8cf0f25391eeda7684c625b9b1d63785ed06880321408940ef33beb8c2fb75db"
+    },
+    {
+      "path": "packages/clinical-content/src/question-n4-acceptance-20261110.test.ts",
+      "status": "new",
+      "role": "Exact accepted runtime source and tests",
+      "bytes": 6932,
+      "afterSha256": "9a99b4b85cd738baaa37c1ffdc7a261e6b6dab61db80d965fc647877ba24e735"
+    },
+    {
+      "path": "apps/player/src/questionN4SaveCompatibility.test.ts",
+      "status": "new",
+      "role": "Real source /format3 /journal witness only",
+      "bytes": 13721,
+      "afterSha256": "112b0b2345bba400b3ab35b28afb5552942170396f0a649ac9032bfd580c40a4"
+    },
+    {
+      "path": "tools/question-quality/capture-question-n4-acceptance-20261110.mjs",
+      "status": "new",
+      "role": "Offline capture and verification",
+      "bytes": 5940,
+      "afterSha256": "51ae254aa0aa98e665ea04218c5cb32ae09d9061a9879ecb92c878e360c574a0"
+    },
+    {
+      "path": "tools/question-quality/integrate-question-n4-acceptance-20261110.mjs",
+      "status": "new",
+      "role": "Offline capture and verification",
+      "bytes": 6620,
+      "afterSha256": "9e1d36775f1e0cbd99e5def68cf5a025d961d2989de6d2f376fbd64569a71647"
+    },
+    {
+      "path": "tools/question-quality/record-question-n4-source-migration-20261110.mjs",
+      "status": "new",
+      "role": "Offline capture and verification",
+      "bytes": 946,
+      "afterSha256": "88154022fb56d37d0a9a061e2d5ec81bc23ca91994a0ef7977ae6493d48c2058"
+    },
+    {
+      "path": "tools/question-quality/review-question-n4-acceptance-20261110.mjs",
+      "status": "new",
+      "role": "Offline capture and verification",
+      "bytes": 11031,
+      "afterSha256": "6d362e5166bc66c415450bb122472031b871ad41edf59c45d5933363c7c9883b"
+    },
+    {
+      "path": "tools/question-quality/record-question-n4-validation-20261110.mjs",
+      "status": "new",
+      "role": "Offline capture and verification",
+      "bytes": 5787,
+      "afterSha256": "b73501585bc7bead6940d3a058bb95b790f258aac34b440543e1db8fd4004f3a"
+    },
+    {
+      "path": "tools/question-quality/record-question-n4-files-20261110.mjs",
+      "status": "new",
+      "role": "Offline capture and verification",
+      "bytes": 3739,
+      "afterSha256": "f704b99cbed27f41bc5eb94d7e8f81510b9daaa5dc81f6033ea4002eead6213a"
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-n4-acceptance-before-20261110.json",
+      "status": "new",
+      "role": "Immutable before state and authorized migration",
+      "bytes": 3277612,
+      "afterSha256": "b9b01bc55840513f8643dab473c535fd913e6a376cbb534a696899ea90cd11ad"
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-n4-acceptance-source-migration-20261110.json",
+      "status": "new",
+      "role": "Immutable before state and authorized migration",
+      "bytes": 803511,
+      "afterSha256": "6227c1bb92e0c39240431d9802037a354c99e9ededed0bbffa16a23442016dd3"
+    },
+    {
+      "path": "tools/question-quality/question-n4-acceptance-lint-20261110.json",
+      "status": "new",
+      "role": "Raw lint and scoped receipts",
+      "bytes": 12176,
+      "afterSha256": "b013cbf62e0512da3ad6fae086fa1dc7057a16e6dfa679020f8d0135bd19e735"
+    },
+    {
+      "path": "tools/question-quality/question-n4-acceptance-scope-20261110.json",
+      "status": "new",
+      "role": "Raw lint and scoped receipts",
+      "bytes": 13086,
+      "afterSha256": "1613d524fcb42087e5935c39b983f6de46353323793acf9473e2f0f8a4d33084"
+    },
+    {
+      "path": "docs/execplans/question-n4-acceptance-20261110.md",
+      "status": "new",
+      "role": "Bounded execution plan",
+      "bytes": 5480,
+      "afterSha256": "b3fc07b45ef57b29cf93afaadb5b3fe571f0606ff438bde9ca36f0a113efe1e3"
+    },
+    {
+      "path": "docs/research/question-n4-manager-decision-20261110.md",
+      "status": "new",
+      "role": "Decision /handoff /frozen packet /runtime task list /validation",
+      "bytes": 5098,
+      "afterSha256": "9697ae51832c49bfe35bc5b005ee202a459fdfc9da2092be7ba0fe798be04550"
+    },
+    {
+      "path": "docs/research/question-n4-acceptance-handoff-20261110.md",
+      "status": "new",
+      "role": "Decision /handoff /frozen packet /runtime task list /validation",
+      "bytes": 15166,
+      "afterSha256": "f1f68669d28d890819358ecf95de961885ad9aff9931fa6c5566a0a977631354"
+    },
+    {
+      "path": "docs/research/question-n4-accepted-20261110.json",
+      "status": "new",
+      "role": "Decision /handoff /frozen packet /runtime task list /validation",
+      "bytes": 52744,
+      "afterSha256": "5950650efd2b3dc53583ea8fb9703bbd01db103d2bf30b5a9c416ecaaecc6f0c"
+    },
+    {
+      "path": "docs/research/question-n4-runtime-integration-20261110.json",
+      "status": "new",
+      "role": "Decision /handoff /frozen packet /runtime task list /validation",
+      "bytes": 12771,
+      "afterSha256": "a71c020e08eaa0f237932348a4143a01fad227a15ed0dbb93bac8c2a829416d1"
+    },
+    {
+      "path": "docs/research/question-n4-validation-20261110.json",
+      "status": "new",
+      "role": "Decision /handoff /frozen packet /runtime task list /validation",
+      "bytes": 25416,
+      "afterSha256": "ef5a2ffd6cc1b3d53c43129c55a32d5cb5e571b9a5f96df4a9ea162d57442844"
+    },
+    {
+      "path": "docs/handoffs/CURRENT_THREAD_HANDOFF.md",
+      "status": "appended",
+      "role": "Shared handoff append; full captured prefix retained.",
+      "bytes": 923956,
+      "afterSha256": "367dc52e43698c02e43ed1fcb0bd7fb755993a9ddfcdcd088a6f284b6a9f6e82"
+    },
+    {
+      "path": "docs/research/question-n4-files-20261110.json",
+      "status": "new",
+      "role": "This receipt; self-hash intentionally omitted."
+    }
+  ],
+  "originalHandoffPrefix": {
+    "path": "docs/handoffs/CURRENT_THREAD_HANDOFF.md",
+    "bytes": 918057,
+    "sha256": "6f732542d5e7a8d49ef225ed3edb1d2656e888a599a4e28a17bcb1c2ca168ac4",
+    "preserved": true
+  },
+  "domainRuntimeEdits": 0,
+  "sessionViewModelEdits": 0,
+  "preservedLanes": [
+    "packages/game-domain runtime",
+    "apps/player session/cloud/view models",
+    "N4 authoring and review files",
+    "Level5 evidence/pins",
+    "supabase",
+    "release worktree"
+  ],
+  "selfHashPolicy": "All owned outputs except this receipt are hashed after the final shared-handoff append."
+}

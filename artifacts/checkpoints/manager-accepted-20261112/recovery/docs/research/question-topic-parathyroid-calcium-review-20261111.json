@@ -1,0 +1,569 @@
+[
+  {
+    "id": "question.topic.parathyroid-calcium.r01.v1",
+    "nodeId": "node.topic.parathyroid-calcium.r01.v1",
+    "title": "Initial biochemical assessment of hypercalcemia",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Repeat calcium, albumin and intact PTH is the best offered initial investigation. No confident clinical inaccuracy identified.",
+      "The stone does not create a second consequential inference: the answer follows from an isolated elevated calcium without a PTH result. PTHrP and urinary clearance are downstream branches, so this remains basic first-test recall.",
+      "First node is coherent and self-contained; its explanation does not disclose R02's operative answer. This is a high-yield diagnostic sequence, but the present task does not meet the resident reasoning target.",
+      "All entries are offline editorial reviews of candidate visible fields and preceding candidate feedback, not source re-verification or clinical approval. Runtime rendering and wait estimates cannot be established from these fields."
+    ],
+    "suggestions": [
+      "Introduce a meaningful conflict in the prior calcium/PTH record or a decision-relevant sampling issue, then compare plausible next biochemical assessments. Do not add extra laboratory values unless their interpretation changes the choice."
+    ]
+  },
+  {
+    "id": "question.topic.parathyroid-calcium.r02.v1",
+    "nodeId": "node.topic.parathyroid-calcium.r02.v1",
+    "title": "Stone-associated PHPT despite a reference-range PTH",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Have not supported an inherited calcium disorder' summarizes a completed workup rather than showing its result; understandable here because inherited-disorder testing is not the scored decision."
+    ],
+    "cues": [],
+    "fairness": [
+      "Parathyroidectomy assessment is the single best offered pathway: recognize that a reference-range PTH is inappropriate during hypercalcemia, then apply documented recurrent stone disease.",
+      "The two competing nonsurgical pathways are less appropriate as the recommendation at this stage; no refusal or operative contraindication is supplied. No confident clinical inaccuracy identified.",
+      "The four-week update follows R01 coherently, supplies the needed results, and supports the task without relying on a previously correct answer. R01 feedback does not give away the operative indication."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.parathyroid-calcium.r03.v1",
+    "nodeId": "node.topic.parathyroid-calcium.r03.v1",
+    "title": "Completing skeletal assessment in PHPT",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Which additional skeletal investigation' does not specify whether the decision is completion of density-site acquisition or assessment for occult vertebral fracture.",
+      "The exhibit identifies two acquired DXA sites but does not establish whether vertebral fracture assessment has already been done."
+    ],
+    "cues": [],
+    "fairness": [
+      "Distal one-third-radius DXA completes the missing density site, but vertebral fracture assessment is also a defensible additional component of PHPT skeletal evaluation. Absence of reported fractures does not establish absence of occult vertebral fractures.",
+      "The explanation ranks VFA by a narrower goal, 'complete the absent recommended forearm density acquisition,' that the task never states. The options cannot be uniquely ranked under the broad task as written.",
+      "Even after narrowing the task, identifying the omitted third site is one rule, not two consequential clinical steps. This is high-yield content, but should not be made difficult through an ambiguous goal."
+    ],
+    "suggestions": [
+      "Resolve the competing VFA indication explicitly. Either ask a clearly scoped density-acquisition question and acknowledge its basic difficulty, or supply an actual acquisition/interpretation problem with a consequential next decision.",
+      "Do not simply delete VFA and replace it with an implausible investigation; build competing plans that address the same defined objective."
+    ]
+  },
+  {
+    "id": "question.topic.parathyroid-calcium.r04.v1",
+    "nodeId": "node.topic.parathyroid-calcium.r04.v1",
+    "title": "Age-based operative assessment in biochemically established PHPT",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The best offered pathway is parathyroidectomy assessment: infer PTH-dependent hypercalcemia despite a PTH within range, then recognize the independent age criterion despite reassuring organ assessment.",
+      "The normal renal and skeletal findings are decision-relevant competitors rather than gratuitous exclusions. Surveillance is a real alternative if surgery is not selected, but does not negate recommending operative assessment.",
+      "The standalone record supplies repeat testing, mimic evaluation and the relevant age. No confident clinical inaccuracy or material wording shortcut identified."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.parathyroid-calcium.r05.v1",
+    "nodeId": "node.topic.parathyroid-calcium.r05.v1",
+    "title": "Urinary calcium evaluation of familial hypercalcemia",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "repeatedly mild hypercalcemia",
+        "why": "Together with the completed serum pattern, this makes 'Repeat serum calcium, albumin and intact PTH' a conspicuously redundant option. The key is the only offered investigation that adds the missing type of measurement."
+      }
+    ],
+    "fairness": [
+      "Concurrent serum and 24-hour urinary calcium/creatinine is the best offered biochemical investigation. No confident clinical inaccuracy identified.",
+      "Family history points directly to the familiar FHH workup; repeat serum studies and PTHrP provide little competition after the nonsuppressed-PTH pattern is given. Recognize-a-pattern then recall-its-test does not create two consequential steps here.",
+      "R05 is a coherent first node and its feedback does not explicitly supply R06's genetic-panel answer."
+    ],
+    "suggestions": [
+      "Make collection adequacy, a real confound, or a discordant family result change the next biochemical action. Compare credible tests or preparation strategies at that same stage.",
+      "Retain enough medication, renal and vitamin D information to make the selected interpretation fair; do not manufacture difficulty by withholding it."
+    ]
+  },
+  {
+    "id": "question.topic.parathyroid-calcium.r06.v1",
+    "nodeId": "node.topic.parathyroid-calcium.r06.v1",
+    "title": "Genetic clarification after low calcium clearance and familial disease",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Genetic evaluation is the best offered next investigation after an interpretable low clearance ratio plus multiple affected relatives. The explanation appropriately avoids treating the ratio as independently diagnostic.",
+      "Interpret the ratio in the family/medication/renal context, then choose diagnostic clarification rather than localization for an assumed operation. Repeating an adequate collection is the closest plausible sequencing error.",
+      "R05 feedback scaffolds the purpose of the collection but does not state the genetic-panel answer. The current update and retained presentation give the needed data without requiring the earlier answer.",
+      "No confident clinical inaccuracy identified; this editorial PASS does not establish the completeness or yield of a particular genetic assay."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.parathyroid-calcium.n01.v1",
+    "nodeId": "node.topic.parathyroid-calcium.n01.v1",
+    "title": "Thiazide exposure during urinary calcium testing",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Review thiazide therapy' does not specify what changes before recollection; merely reviewing the medication could leave the confound unchanged.",
+      "'Replace cholecalciferol' is ambiguous between replenishing vitamin D and substituting another drug; no cholecalciferol use is described."
+    ],
+    "cues": [
+      {
+        "phrase": "Hydrochlorothiazide was taken throughout collection",
+        "why": "The only named exposure maps directly to the only option saying 'thiazide therapy'; the other modifying option targets a measurement already stated to be normal."
+      },
+      {
+        "phrase": "vitamin D are within range",
+        "why": "This explicitly undercuts the cholecalciferol distractor, leaving a medication-review versus unchanged-medications choice."
+      }
+    ],
+    "fairness": [
+      "Thiazide exposure is a valid reason to reconsider interpretation of a low clearance ratio. The keyed direction is reasonable, but its action is less concrete than the explanation and later node assume.",
+      "The ratio's actual value adds little to choosing the uniquely named confound-removal pathway. The task is easy despite a clinically important principle.",
+      "N02 assumes supervised withdrawal has occurred, whereas N01's chosen action only promises review. Make that transition explicit rather than implying that review equals withdrawal."
+    ],
+    "suggestions": [
+      "Name the clinician-supervised preparation change precisely without inventing a washout interval.",
+      "Use credible alternative strategies requiring interpretation of the actual collection and medication record; avoid eliminating a distractor solely with a normal vitamin D sentence."
+    ]
+  },
+  {
+    "id": "question.topic.parathyroid-calcium.n02.v1",
+    "nodeId": "node.topic.parathyroid-calcium.n02.v1",
+    "title": "Persistent familial pattern after a negative genetic panel",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Serial calcium review and first-degree-relative testing is the best offered investigation. A negative panel does not, by itself, establish sporadic PHPT or justify localization.",
+      "The resident must interpret residual diagnostic uncertainty after the confound is removed and genetic testing is negative, then choose a family/longitudinal investigation. Localization is a credible consequential error; PTHrP is a weaker distractor.",
+      "The update explicitly establishes thiazide withdrawal, repeat collection and the negative panel. It remains answerable with the case presentation even if N01 was missed; N01 feedback does not supply this answer.",
+      "Existing mother/uncle records are relevant evidence, not proof that every useful first-degree relative has already been tested. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.parathyroid-calcium.n03.v1",
+    "nodeId": "node.topic.parathyroid-calcium.n03.v1",
+    "title": "Secondary drivers of normocalcemic PTH elevation",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "25-hydroxyvitamin D is below the laboratory range, and her diet contains little calcium",
+        "why": "The key uniquely repairs both explicitly named deficiencies. The two alternatives address neither and are more aggressive than correcting the supplied abnormalities."
+      },
+      {
+        "phrase": "Restore calcium intake and replace cholecalciferol",
+        "why": "The key is the only combined corrective plan, whereas the other options are single interventions."
+      }
+    ],
+    "fairness": [
+      "Correction of calcium intake and vitamin D is the best offered step before assigning normocalcemic PHPT. No confident clinical inaccuracy identified.",
+      "This is a direct deficiency-to-replacement match rather than two consequential inferences. Cinacalcet in a normocalcemic record is particularly weak competition.",
+      "The first node and its later follow-up are chronologically coherent; the later ionized-calcium result is not exposed here."
+    ],
+    "suggestions": [
+      "Build a real interpretation/management conflict around treatment response or an adequately characterized residual abnormality, with comparable specific plans.",
+      "Use 'supplement vitamin D with cholecalciferol' or similarly clear replacement wording. Do not add a second unrelated disease solely to raise difficulty."
+    ]
+  },
+  {
+    "id": "question.topic.parathyroid-calcium.n04.v1",
+    "nodeId": "node.topic.parathyroid-calcium.n04.v1",
+    "title": "Elevated ionized calcium despite normal total calcium",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Hypercalcemic PHPT is the best offered biochemical classification: repeated elevated ionized calcium with elevated PTH is incompatible with the normocalcemic label, after the described reassessment.",
+      "The total-versus-ionized distinction is high-yield and a plausible resident trap. However, the task ends at classification; interpreting multiple measurements and selecting their diagnosis is still one scored inference.",
+      "N03's feedback explains correction of secondary drivers, but does not give away the later ionized-calcium result. The update clearly changes the earlier normal-calcium state and is necessary to the answer.",
+      "No confident clinical inaccuracy identified. A longer catalogue of exclusions should not be added merely to create apparent complexity."
+    ],
+    "suggestions": [
+      "Have the interpreted ionized/total calcium discrepancy change a concrete next assessment or treatment decision, with plausible competing actions and all necessary criteria.",
+      "Keep the repeated ionized results and clear interval correction; do not replace them with the diagnostic label."
+    ]
+  },
+  {
+    "id": "question.topic.parathyroid-calcium.n05.v1",
+    "nodeId": "node.topic.parathyroid-calcium.n05.v1",
+    "title": "Operative relevance of isolated radial osteoporosis in PHPT",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Parathyroidectomy assessment is the best offered pathway. The postmenopausal patient's radial T-score identifies skeletal involvement despite reassuring axial sites and relatively modest calcium elevation.",
+      "Interpret site-specific bone density, then apply its operative consequence; surveillance based on the axial sites is a credible competing error.",
+      "The comparison does not require averaging DXA sites or treating the normal hip/spine as a veto. The table is necessary to the decision. No confident clinical inaccuracy or unfair wording shortcut identified."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.parathyroid-calcium.n06.v1",
+    "nodeId": "node.topic.parathyroid-calcium.n06.v1",
+    "title": "Silent renal calculus as a PHPT operative indication",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Three-site bone density is above operative thresholds' is an authored eligibility conclusion rather than actual skeletal findings; 'above' is also awkward when the relevant low-density result is expressed as a negative T-score."
+    ],
+    "cues": [],
+    "fairness": [
+      "Parathyroidectomy assessment is the best offered recommendation for imaging-documented nephrolithiasis in confirmed PHPT, even without colic. No confident clinical inaccuracy identified.",
+      "The update directly supplies the single qualifying finding. The task is one-rule application: silent stone still counts. Neither cinacalcet nor surveillance presents a developed patient-specific competing consideration.",
+      "The short standalone update is coherent and necessary, but it does not create two consequential reasoning steps."
+    ],
+    "suggestions": [
+      "Replace the interpreted bone-threshold statement with concise observations or remove irrelevant skeletal detail.",
+      "Use a genuine uncertainty in the renal finding or a competing patient-specific management constraint that changes the next action, with evidence sufficient to resolve it; otherwise retain only with an explicitly accepted basic teaching role."
+    ]
+  },
+  {
+    "id": "question.topic.parathyroid-calcium.n07.v1",
+    "nodeId": "node.topic.parathyroid-calcium.n07.v1",
+    "title": "Operative indication despite nonlocalizing imaging",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Endocrine-surgery referral is the best offered pathway. The resident must separate a localization failure from established disease and then preserve the fracture-associated surgical indication.",
+      "The fracture and negative localization create a meaningful conflict; deleting the imaging would remove the misconception being tested. Cinacalcet and surveillance represent plausible substitution errors.",
+      "The task is clear and the referral destination is specific. No confident clinical inaccuracy identified. N07 feedback supports pursuing surgery but does not prescribe N08's bilateral strategy."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.parathyroid-calcium.n08.v1",
+    "nodeId": "node.topic.parathyroid-calcium.n08.v1",
+    "title": "Discordant localization and operative strategy",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Ultrasound identifies a left-inferior extrathyroidal candidate; sestamibi SPECT/CT identifies a right-superior focus",
+        "why": "The options mirror the two conflicting sides, while the key is the only plan that encompasses both. A reader can choose the inclusive option without knowing parathyroid surgical planning."
+      },
+      {
+        "phrase": "Focused left-inferior parathyroidectomy",
+        "why": "This and 'Focused right-superior parathyroidectomy' are symmetric foils; no supplied observation privileges either, making 'Bilateral parathyroid exploration' structurally dominant."
+      }
+    ],
+    "fairness": [
+      "Bilateral exploration is a defensible best strategy for the supplied discordance. No confident clinical inaccuracy identified.",
+      "Do not infer that all focused approaches are universally inappropriate: approach can depend on additional localization, intraoperative PTH and surgeon strategy. The offered side-only plans omit those features, making them weak competitors.",
+      "N07 to N08 is coherent: repeat studies identify competing candidates after initially nonlocalizing studies. N07 does not disclose the exact key, but the new option structure still makes the task easy."
+    ],
+    "suggestions": [
+      "Compare complete credible operative strategies with stated use of localization and intraoperative assessment, rather than unsupported left versus right guesses.",
+      "Preserve the observed discordance; make its interpretation alter a real operative plan without using the only comprehensive option as a shortcut."
+    ]
+  },
+  {
+    "id": "question.topic.parathyroid-calcium.n09.v1",
+    "nodeId": "node.topic.parathyroid-calcium.n09.v1",
+    "title": "Hungry-bone physiology versus postoperative PTH deficiency",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The postoperative time course and ongoing replacement are only described qualitatively. The learner can rank mechanisms, but cannot infer a specific persistence category from this record.",
+      "'PTH within range' is described in the explanation as 'preserved PTH'; a laboratory-range result during hypocalcemia is not necessarily an appropriate physiologic response."
+    ],
+    "cues": [
+      {
+        "phrase": "magnesium within range",
+        "why": "This directly removes the only magnesium-based choice, leaving a two-way mechanism comparison. It is useful safety data, but the option set does not make productive use of it."
+      }
+    ],
+    "fairness": [
+      "The high-turnover preoperative record plus low phosphate favors skeletal mineral uptake as the best offered explanation.",
+      "Do not teach that reference-range PTH excludes postoperative PTH insufficiency during hypocalcemia. The low phosphate and skeletal context, rather than normal-range PTH alone, are the stronger discriminator. Mixed contributions remain possible; the record does not prove they are absent.",
+      "This is a single mechanism-classification task. It may require moderate interpretation, but a mechanism and its synonymous label are not two consequential steps.",
+      "The historical hospital review is coherent with current comfort on treatment. No acute untreated emergency is implied."
+    ],
+    "suggestions": [
+      "Revise the explanation to acknowledge that PTH must be interpreted relative to calcium; do not use 'preserved' as proof against PTH deficiency.",
+      "Supply the relevant observed trend and ask for a concrete replacement/monitoring decision if a two-step item is intended. Avoid invented duration cutoffs and keep acute electrolyte management within its assigned scope."
+    ]
+  },
+  {
+    "id": "question.topic.parathyroid-calcium.n10.v1",
+    "nodeId": "node.topic.parathyroid-calcium.n10.v1",
+    "title": "Activated vitamin D for postsurgical hypoparathyroidism",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Magnesium, kidney function and 25-hydroxyvitamin D within range",
+        "why": "Two of the three choices target measurements explicitly stated to be normal. The learner can remove 'Increase cholecalciferol' and 'Add magnesium chloride' without interpreting the PTH/phosphate pattern."
+      }
+    ],
+    "fairness": [
+      "Adding calcitriol is the best offered medication change for the described persistent low-PTH hypocalcemic state. No confident clinical inaccuracy identified.",
+      "The biochemical interpretation and active-vitamin-D rationale could support two-step reasoning, but the actual distractors allow the PTH and phosphate data to be bypassed.",
+      "The 14-month interval is clear, and the outpatient replacement review is coherent. Exact urgency or dosing cannot be inferred from 'below range'; neither is asked."
+    ],
+    "suggestions": [
+      "Retain magnesium and vitamin D results needed for fairness, but replace the explicitly excluded supplement choices with credible calcium/active-vitamin-D management alternatives.",
+      "Make the PTH/phosphate interpretation or an observed treatment response necessary to distinguish those alternatives; do not manufacture a dose threshold."
+    ]
+  },
+  {
+    "id": "question.topic.parathyroid-calcium.n11.v1",
+    "nodeId": "node.topic.parathyroid-calcium.n11.v1",
+    "title": "Elevated PTH with normocalcemia after parathyroidectomy",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "25-hydroxyvitamin D was below range and dietary calcium was substantially restricted",
+        "why": "The key repeats both deficits as their repairs, whereas the two alternatives escalate parathyroid treatment."
+      },
+      {
+        "phrase": "Replace cholecalciferol, restore intake and monitor calcium",
+        "why": "The key is the uniquely comprehensive three-component plan and directly matches the update."
+      }
+    ],
+    "fairness": [
+      "Correcting the identified secondary drivers with calcium monitoring is the best offered plan; isolated elevated PTH with normal calcium does not establish recurrent hypercalcemic PHPT.",
+      "The prior-operation context is clinically useful, but the supplied deficiency-to-replacement match defeats the intended reasoning challenge.",
+      "The earlier nine-month stage is clearly identified and does not conflict with N12's later abnormal result. However, the explanation explicitly states that localization is premature without biochemical confirmation, rehearsing N12's subsequent key."
+    ],
+    "suggestions": [
+      "Replace the direct deficit-repair shortcut with a genuine response or competing interpretation that changes the plan.",
+      "Keep adequate feedback for this node, but redesign N12 to test a distinct remaining decision rather than removing necessary teaching solely to hide the next answer."
+    ]
+  },
+  {
+    "id": "question.topic.parathyroid-calcium.n12.v1",
+    "nodeId": "node.topic.parathyroid-calcium.n12.v1",
+    "title": "Renewed hypercalcemia before reoperative localization",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "calcium, albumin and creatinine",
+        "why": "This exact list makes the missing PTH conspicuous; the only option that adds it is the repeat biochemical panel."
+      },
+      {
+        "phrase": "Localization and reoperative planning are premature when recurrent PHPT has not been biochemically established.",
+        "why": "This preceding N11 explanation states the rule that directly selects this node's laboratory-confirmation answer over 4D CT. It is prior visible feedback, not leakage from N12's own explanation."
+      }
+    ],
+    "fairness": [
+      "Repeat calcium, albumin and intact PTH is the best offered investigation before assuming recurrent PHPT from a new calcium elevation and incidental focus.",
+      "The prior documented normocalcemic interval makes inherited lifelong hypercalcemia a weak alternative, so the panel distractor contributes little.",
+      "The later chronology is coherent and the task is answerable from the retained presentation/update. Independence of difficulty fails: preceding feedback already teaches the scored decision, and the item largely repeats R01's first-test rule.",
+      "No confident clinical inaccuracy identified; suspected recurrence is appropriately distinguished from confirmed recurrence."
+    ],
+    "suggestions": [
+      "After biochemical confirmation, test a distinct reoperative decision using meaningful discordant or incomplete prior data and credible same-stage investigations.",
+      "If retaining biochemical confirmation as the objective, change the preceding sequence or coverage arrangement and add a real interpretive problem; do not claim independent two-step difficulty from an incidental scan foil."
+    ]
+  },
+  {
+    "id": "question.topic.parathyroid-calcium.n13.v1",
+    "nodeId": "node.topic.parathyroid-calcium.n13.v1",
+    "title": "Native versus active vitamin D in nondialysis CKD",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Cholecalciferol is the best offered recommendation for vitamin D depletion with modest PTH elevation in the stated nondialysis setting.",
+      "The resident must interpret the renal stage and degree of PTH abnormality, then distinguish correction of a modifiable driver from reflex use of active vitamin D or a calcimimetic. Calcitriol is a credible competing renal-treatment error.",
+      "The explanation appropriately limits routine active-vitamin-D use rather than claiming it is never used in CKD. No confident clinical inaccuracy identified.",
+      "The historical nondialysis stage is explicit. N14 supplies a later dialysis state, so the pair does not require treating those stages as simultaneous. The later operative answer is not disclosed here."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.parathyroid-calcium.n14.v1",
+    "nodeId": "node.topic.parathyroid-calcium.n14.v1",
+    "title": "Refractory renal hyperparathyroidism with dose-limiting toxicity",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Persistently in a markedly elevated band' is vague for the severity assessment. The recorded symptoms and dose responses support concern, but a meaningful documented trajectory would be clearer without inventing a surgical cutoff."
+    ],
+    "cues": [
+      {
+        "phrase": "Higher cinacalcet doses produced symptomatic hypocalcemia; higher calcitriol doses raised phosphate despite documented binder use.",
+        "why": "The update explicitly says both offered dose escalations have already caused trouble. With referral as the only alternative, a reader can select it without interpreting the renal hyperparathyroidism."
+      }
+    ],
+    "fairness": [
+      "Parathyroidectomy assessment is a reasonable best offered step for medically refractory severe renal hyperparathyroidism with treatment-limiting adverse effects.",
+      "The adverse effects are clinically necessary; the problem is the two unmodified escalation foils, not the inclusion of those observations. No confident clinical inaccuracy identified.",
+      "N13's earlier CKD visit and the later dialysis record are coherently separated. The update does all of the exclusion work, so this is not a hard two-step decision despite the longer story."
+    ],
+    "suggestions": [
+      "Use credible alternative management plans that respond to the actual toxicity rather than simply repeating the failed escalations.",
+      "Provide a concise observed disease/control trajectory sufficient to judge refractoriness; do not introduce an unsupported numerical threshold or force a renal operative-extent question beyond the evidence."
+    ]
+  },
+  {
+    "id": "question.topic.parathyroid-calcium.n15.v1",
+    "nodeId": "node.topic.parathyroid-calcium.n15.v1",
+    "title": "Medical calcium lowering when PHPT surgery is not undertaken",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Cinacalcet is the best offered calcium-lowering medicine. Alendronate's skeletal role and cholecalciferol's deficiency role do not make them equivalent answers to this task.",
+      "The diagnosis, nonsurgical pathway and treatment target are all supplied; the only remaining step is recalling which drug lowers calcium. This is high-yield pharmacology but not two-step resident reasoning.",
+      "Stable clinical status and operative-risk assessment are appropriate context, not inherently unfair permission cues. The degree of hypercalcemia is unspecified, so the item establishes drug choice better than it establishes a need to start treatment at that moment.",
+      "No confident clinical inaccuracy identified."
+    ],
+    "suggestions": [
+      "Add a consequential distinction between calcium control and another genuine treatment target using a response or competing finding, then compare credible plans.",
+      "If the task is intended to determine whether to start medication, supply the patient-specific reason for treatment. Otherwise explicitly frame medication selection after that decision, and seek acceptance as basic practice rather than claiming difficulty."
+    ]
+  },
+  {
+    "id": "question.topic.parathyroid-calcium.n16.v1",
+    "nodeId": "node.topic.parathyroid-calcium.n16.v1",
+    "title": "Separate skeletal treatment from biochemical control in PHPT",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Add alendronate",
+        "why": "This is the only option directed at a new target. The other two are opposite changes to cinacalcet, even though the stem already states successful calcium control."
+      },
+      {
+        "phrase": "Increase cinacalcet",
+        "why": "Together with 'Withdraw cinacalcet', this produces two weak modifications of a working regimen rather than credible competing ways to address the new bone result."
+      }
+    ],
+    "fairness": [
+      "Adding alendronate is the best offered response to the untreated osteoporotic skeletal target while calcium is controlled. No confident clinical inaccuracy identified.",
+      "The intended two-step reasoning is sound: interpret the low hip density despite biochemical response, then select therapy with the appropriate target.",
+      "The current choices weaken that reasoning through a unique new-drug option and poorly motivated cinacalcet changes. The skeletal result is needed, but the comparator plans need repair.",
+      "The standalone chronology is clear. Operative risk explains the nonsurgical pathway without supplying the bone-directed drug name."
+    ],
+    "suggestions": [
+      "Retain the distinct calcium and bone targets, but replace the unsupported increase/withdrawal foils with clinically credible plans at the same stage.",
+      "Include only patient-specific eligibility facts needed to distinguish the chosen bone treatment; do not add blanket assurances or invent contraindications."
+    ]
+  },
+  {
+    "id": "question.topic.parathyroid-calcium.n17.v1",
+    "nodeId": "node.topic.parathyroid-calcium.n17.v1",
+    "title": "Miami intraoperative PTH criterion and operative endpoint",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Otherwise localized single-gland PHPT case' reads as an established gland-count diagnosis; before exploration is concluded, 'localized candidate gland' would better distinguish localization from proof of single-gland disease."
+    ],
+    "cues": [
+      {
+        "phrase": "no second abnormal gland was seen",
+        "why": "This explicitly undermines 'Resect another ipsilateral parathyroid gland', making the third choice an unjustified removal rather than a credible response to an inadequate ioPTH decline."
+      }
+    ],
+    "fairness": [
+      "The keyed endpoint is correct under the named conventional Miami criterion: 80 is less than half of the higher baseline, 180; its remaining above the laboratory interval does not itself invalidate the criterion.",
+      "Selecting the correct baseline, calculating the decline and applying the operative consequence are substantive steps. This is high-yield surgical reasoning, not a statistics-style exercise.",
+      "Extending exploration is a credible error if the wrong baseline or a normalization requirement is used. Blindly resecting an unspecified additional gland is not a similarly credible alternative.",
+      "No independent rule conflict is alleged here. A named standard criterion can be tested as board knowledge; any local modification would need to be stated."
+    ],
+    "suggestions": [
+      "Replace the arbitrary second-gland-resection option with a credible next sampling or exploration plan, with timing and criteria made explicit and supported.",
+      "Describe preoperative localization without asserting that single-gland disease is already proven. Preserve the competing baselines and above-reference final value, which create the useful challenge."
+    ]
+  },
+  {
+    "id": "question.topic.parathyroid-calcium.n18.v1",
+    "nodeId": "node.topic.parathyroid-calcium.n18.v1",
+    "title": "Invasive parathyroid mass and oncologic resection",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "could not be separated from the adjacent ipsilateral thyroid tissue",
+        "why": "This overlaps the thyroid component of the key, but it is necessary anatomic evidence for operative extent, not an unfair extraneous hint. Retain it; the learner must interpret invasive behavior rather than match a diagnosis label."
+      }
+    ],
+    "fairness": [
+      "En bloc parathyroidectomy with ipsilateral thyroid lobectomy is the best offered strategy for the suspected locally invasive parathyroid malignancy.",
+      "The resident must infer oncologic concern from operative behavior, then choose an intact resection strategy rather than capsular dissection or an operation for multigland hyperplasia.",
+      "The explanation correctly treats malignancy as suspected rather than histologically proved. Actual resection extent depends on the involved structures; the option should not be read as a complete operative prescription for every possible extension.",
+      "The stopped outside exploration and later specialist review are coherent. No confident clinical inaccuracy identified; invasion and operative strategy are high-yield endocrine-surgery content."
+    ],
+    "suggestions": []
+  }
+]

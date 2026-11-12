@@ -1,0 +1,204 @@
+[
+  {
+    "id": "question.topic.trauma-initial-abdomen.belt-equivocal-observation.v1",
+    "nodeId": "node.topic.trauma-initial-abdomen.belt-equivocal-observation.v1",
+    "title": "Observation after equivocal CT in seat-belt trauma",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Scope: this array reviews only the nine current pass-preserved nodes. The nine revised nodes, four parked nodes and five unkeyed holds receive no verdict here; the preceding revised renal node was read only for its effect on the preserved follow-up. Historical records and author self-assessments were not used to supply missing candidate facts. This offline editorial review is not source re-verification or Melissa Rowland's clinical approval; all drafts remain needs_clinician_review. Difficulty and high-yield judgments are qualitative, not measured performance or verified exam-frequency claims.",
+      "The clinic frame explicitly says that each question's 'now' means the recorded hospital decision point. Caleb's named age/sex presentation and the CT/examination record identify an acute historical decision, not a new outpatient trauma evaluation. The complete task asks for both setting and assessment after this CT.",
+      "Inpatient observation with serial abdominal examinations is the best offered plan. First interpret unexplained interloop fluid and mesenteric stranding as an abnormal, potentially evolving injury record; then use stable circulation and the nonperitoneal examination to choose observation over discharge or immediate exploration. Both under-recognition and premature operation are credible resident errors in this high-yield blunt bowel-injury decision.",
+      "The phrases 'no solid-organ injury, wall defect or extraluminal air' and 'no guarding or rebound' are necessary discriminators, not a plain-language announcement that injury is absent. No key-only wording overlap, explanatory option, convergence pattern or length outlier selects observation without clinical interpretation. The explanation does not equate absent direct perforation signs with a negative CT. No confident clinical inaccuracy identified.",
+      "This first node stands alone. The clinic follow-up does not disclose the historical management or subsequent bowel outcome. Later revised-node quality is outside this report."
+    ],
+    "suggestions": [
+      "Retain the distinction between equivocal abnormal CT findings and a completely negative CT, together with the historical hospital decision frame.",
+      "Optional shared-frame tightening: 'As the clinic founder' adds no clinical information; retain the sentence defining the historical decision point if shortening the introduction."
+    ]
+  },
+  {
+    "id": "question.topic.trauma-initial-abdomen.spleen-arterial-intervention.v1",
+    "nodeId": "node.topic.trauma-initial-abdomen.spleen-arterial-intervention.v1",
+    "title": "Stable splenic injury with ongoing vascular bleeding",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Monitored nonoperative care with serial assessment' is an umbrella description that can include 'Splenic angiography with possible embolization.' A knowledgeable resident must infer that the second option means observation without an immediate procedure, although the label never states that distinction. This is a retained option-scope problem, not a new contradiction introduced by the clinic frame."
+    ],
+    "cues": [],
+    "fairness": [
+      "Angiography with possible embolization is the preferred intended plan: contrast outside the artery enlarging on later images supports ongoing vascular bleeding, whereas a sustained response without further support supports an endovascular route. Observation risks undertreating the vascular finding; laparotomy is less appropriate with the stated response and no other visceral injury. No confident clinical error in that intended ranking was identified.",
+      "The option labels nevertheless overlap semantically. The first review treated clarification as optional; under the requested unambiguous single-best-answer standard, make the observation alternative explicit before accepting this version. Do not teach that embolization is outside nonoperative splenic management.",
+      "Two consequential steps are present: interpret the contrast behavior rather than equating restored blood pressure with controlled bleeding, then choose the control route using the response trajectory. This is a high-yield moderate resident decision; the hemoglobin fall corroborates the trajectory and is not an intervention threshold.",
+      "The historical frame, named 36-year-old man, examination and complete task remain coherent and sufficient in isolation. 'Sustained on reassessment without further support' is decision-critical physiology, not an availability hint. 'Possible embolization' describes the proposed angiographic plan; there is no compelling nonmedical phrase-match, absolute, convergence or option-length shortcut. The explanation belongs after the answer and does not leak into a later active splenic node."
+    ],
+    "suggestions": [
+      "Replace the ambiguous alternative with a concrete observation plan, for example 'Observation with serial examinations and hemoglobin checks'; put shared monitoring in common context if needed. Recheck that the three options now compare observation, endovascular intervention and operation at the same decision point.",
+      "Clarify in feedback that angiographic embolization can be part of nonoperative management, while observation without immediate vascular treatment is less appropriate for the supplied findings. Preserve the clinical data and historical frame; no new threshold or clinical fact is needed."
+    ]
+  },
+  {
+    "id": "question.topic.trauma-initial-abdomen.liver-grade-versus-physiology.v1",
+    "nodeId": "node.topic.trauma-initial-abdomen.liver-grade-versus-physiology.v1",
+    "title": "High-grade hepatic injury with stable physiology",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Hepatic angiography with empiric embolization",
+        "why": "Nonblocking weakness: 'empiric' uniquely signals a less targeted intervention and may make this distractor easier to reject. It also identifies the actual proposed intervention in a record with no arterial target; it does not by itself distinguish observation from laparotomy. Do not count it as a source of difficulty."
+      }
+    ],
+    "fairness": [
+      "Monitored nonoperative hepatic care is the best offered plan. The resident must weigh a substantial anatomic grade against serial stability and a nonperitoneal examination, then decide whether there is an indication for arterial intervention. Grade-driven surgery and unnecessary embolization are recognizable errors. This sits at the easier end of moderate, not hard; its value is the high-yield grade-versus-physiology decision.",
+      "'No arterial extravasation' and 'no blood/vasopressor requirement; hemoglobin unchanged' are essential management data. The observation choice is concrete in this historical hospital context, and 'empiric embolization' specifies a competing action rather than another umbrella nonoperative plan. No equally good alternative is apparent among these choices.",
+      "Maya's clinic attendance does not imply outpatient management of the recorded grade IV injury. The 42-year-old woman's presentation, exhibit and task are sufficient as the first node. The explanation appropriately limits its claim to grade not requiring laparotomy by itself; it does not claim that grade is irrelevant to monitoring or rescue planning. No confident clinical inaccuracy identified.",
+      "The initial record does not reveal the later bleeding event. Its explanation mentions absence of a vascular focus but does not name the subsequent complication or its procedure. This creates some legitimate conceptual scaffolding without answering the next preserved node."
+    ],
+    "suggestions": [
+      "Retain a monitored hospital plan and avoid converting this into outpatient observation merely because the patient now attends clinic.",
+      "If revising distractors later, reassess whether 'empiric' is needed to state the real competing plan; do not replace it with a vague angiography label that creates a new management ambiguity."
+    ]
+  },
+  {
+    "id": "question.topic.trauma-initial-abdomen.liver-delayed-arterial-bleeding.v1",
+    "nodeId": "node.topic.trauma-initial-abdomen.liver-delayed-arterial-bleeding.v1",
+    "title": "Delayed arterial bleeding into the biliary tract",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Selective hepatic angiography and embolization is the best offered procedure. Papillary blood and a sac communicating with a hepatic arterial branch establish the bleeding pathway; maintained unsupported circulation then favors targeted endovascular control. ERCP is a plausible wrong-target response to a biliary presentation, while laparotomy treats bleeding with a more invasive route than this physiology requires. No confident clinical inaccuracy identified.",
+      "'Communicates with a hepatic arterial branch' is clinically necessary evidence. 'Hepatic' also appears in the operative alternative, so an organ-word match does not uniquely select the key. Understanding why a biliary stent does not control the described arterial source requires medical knowledge. Options are procedure labels of comparable scope without rationale-bearing qualifiers or rhetorical absolutes.",
+      "This is a high-yield complication and a moderate two-step task: localize the bleeding mechanism from the endoscopic/imaging relationship, then select its control method using the physiology. A familiar reader may recognize hemobilia quickly, but must still distinguish arterial control from treating the biliary lumen.",
+      "'During admission' clearly places the update within the historical hospitalization. The current update plus CT independently supplies the prior hepatic injury, present bleeding, arterial lesion and current physiology; the original injury grade and an earlier correct answer are not needed. The transition from initial observation is coherent. Earlier feedback does not prescribe embolization or give away this complication."
+    ],
+    "suggestions": [
+      "Keep the papillary observation, arterial communication and current unsupported circulation visible when this later node is displayed independently.",
+      "Keep hemobilia/pseudoaneurysm diagnostic labels in post-answer teaching rather than adding them to the presentation or exhibit."
+    ]
+  },
+  {
+    "id": "question.topic.trauma-initial-abdomen.pelvis-packing-after-angio.v1",
+    "nodeId": "node.topic.trauma-initial-abdomen.pelvis-packing-after-angio.v1",
+    "title": "Persistent pelvic hemorrhage after arterial control",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Preperitoneal pelvic packing is the best supplied rescue procedure. First interpret persistent shock after mechanical stabilization and completed arterial treatment as compatible with remaining venous/bony bleeding; then target the pelvic compartment rather than automatically repeat arterial treatment or explore the peritoneal cavity. This is a high-yield moderate sequence decision, not a claim that packing must always precede angiography.",
+      "The record supplies 'Selective pelvic arterial runs show no further extravasation' and 'no intraperitoneal injury' with ongoing instability. These findings weaken the competing routes, but interpreting a completion angiogram and distinguishing retroperitoneal from intraperitoneal control still requires clinical knowledge. Packing is not merely the sole untried choice: intraperitoneal exploration is also untried. No convincing nonmedical novelty, wording-match or length cue identifies the key.",
+      "A negative completion angiogram does not prove all arterial bleeding impossible. The explanation appropriately says residual bleeding 'can come from venous or bony sources.' Repeat embolization would be more competitive with a new arterial target or evidence the initial treatment was incomplete; neither is supplied. No confident clinical inaccuracy identified; the precise rescue sequence remains subject to clinician review rather than offline protocol verification.",
+      "Dylan's historical record contains the prior CT, stabilization, embolization and current condition in one exhibit, so the first node stands alone. The clinic frame does not ask the clinic to perform packing or establish a new capability requirement."
+    ],
+    "suggestions": [
+      "Preserve the completed arterial treatment, continuing mechanical stabilization and exclusion of a competing intraperitoneal source.",
+      "Retain the conditional explanation; do not turn a negative completion angiogram into proof of a uniquely venous source or export this rescue order as a universal pelvic-trauma algorithm."
+    ]
+  },
+  {
+    "id": "question.topic.trauma-initial-abdomen.pelvis-recurrent-arterial-focus.v1",
+    "nodeId": "node.topic.trauma-initial-abdomen.pelvis-recurrent-arterial-focus.v1",
+    "title": "Recurrent arterial pelvic bleeding after packing",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Pelvic angiography with embolization is the best offered procedure. The expanding pool connected to an arterial branch supplies a current target despite earlier benefit from packing. The resident must identify the changed bleeding component and change treatment rather than repeat the previously effective intervention. This supports a moderate two-step, high-yield judgment.",
+      "'Packing remains positioned' does not prove packing has controlled every source and does not prohibit repeat packing in other circumstances. The important discriminator is the new arterial-connected expanding pool. 'No new intraperitoneal abnormality' is a necessary compartment distinction, not a teaching statement. The key and packing alternative both name the pelvis; there is no unique plain-language location match or explanatory distractor that solves the item without medical interpretation.",
+      "The support trajectory is less detailed than in the splenic node, but 'BP remains 112/66 mmHg during support' describes maintained circulation rather than an isolated improved pressure, and CT has already localized the target. The key remains preferable among the supplied procedures. Do not infer a universal blood-pressure threshold or that needing transfusion is equivalent to being unsupported and stable. No confident clinical inaccuracy identified.",
+      "The current update explicitly supplies prior packing, initial response, recurrent bleeding, ongoing support and new CT. It is answerable without remembering the earlier angiogram or selecting packing correctly. The later focal finding changes the correct action; prior feedback about possible venous/bony bleeding does not disclose this new arterial result. Historical 'now' remains clear under the clinic frame."
+    ],
+    "suggestions": [
+      "If the wording is expanded in a future authorized revision, describe whether support needs are stable or escalating rather than adding an invented numeric eligibility cutoff.",
+      "Keep both the interval response to packing and the new vascular finding; neither an isolated pressure nor the fact of prior packing should become the whole decision rule."
+    ]
+  },
+  {
+    "id": "question.topic.trauma-initial-abdomen.renal-isolated-urine-leak.v1",
+    "nodeId": "node.topic.trauma-initial-abdomen.renal-isolated-urine-leak.v1",
+    "title": "Initial observation of a contained calyceal urine leak",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Monitored nonoperative renal care is the best offered initial plan. The resident must interpret preserved perfusion and downstream urinary opacification alongside a calyceal leak, then distinguish this record from a disrupted outflow pathway or a complicated leak needing intervention. Automatic stenting of every extravasation and operative repair of a stable collecting-system injury are plausible overtreatment errors. This is a moderate, high-yield two-step task.",
+      "The raw finding 'Delayed images opacify the pelvis and ureter through to the bladder' preserves the need to interpret continuity. It does not say that the patient qualifies for observation. 'Without fever or an enlarging collection' supplies complication information needed to rank stenting. The alternatives have comparable procedural/care scope; no obvious phrase match, absolute, convergence or unusually qualified key solves the question without medical knowledge.",
+      "The explanation is acceptable for this initial decision, but absent fever and collection growth are not an exhaustive definition of every symptomatic leak. Neither the stem nor explanation should be generalized to worsening pain, ileus, obstruction or other evolving complications. No confident clinical inaccuracy identified in the stated initial management ranking.",
+      "The preceding revised renal explanation says what the complete CT protocol evaluates, including urinary continuity; it does not state the management of a calyceal leak. That is limited scaffolding, not the answer. The current update provides the completed study, urinary continuity, absence of arterial bleeding and stable course, so the preserved node stands alone and coherently follows initial imaging. Iris's age/sex and historical admission remain supplied by the clinic presentation."
+    ],
+    "suggestions": [
+      "Preserve the initial-decision wording and the distinction between a small uncomplicated leak and an evolving symptomatic collection.",
+      "When teaching after the answer, avoid implying that fever and enlargement are the only reasons urinary extravasation might need intervention."
+    ]
+  },
+  {
+    "id": "question.topic.trauma-initial-abdomen.pancreas-distal-duct-operation.v1",
+    "nodeId": "node.topic.trauma-initial-abdomen.pancreas-distal-duct-operation.v1",
+    "title": "Procedure for distal pancreatic main-duct transection",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Distal pancreatectomy is the preferred standard answer for the adult distal duct-disrupting injury described at laparotomy. The learner must integrate transection location and main-duct division, then select definitive surgery in a patient whose physiology permits it. Perfused distal tissue makes preservation/reconstruction tempting but does not restore duct continuity. The comparison with drainage and reconstruction makes this moderate rather than a mere anatomy-label question; duct status and location are high-yield trauma concepts.",
+      "'Left of superior mesenteric vessels' is necessary anatomical evidence rather than a literal match to 'Distal pancreatectomy.' 'Tissue toward the splenic hilum remains perfused' supports a real preservation temptation, and the normalizing physiology distinguishes definitive surgery from abbreviated care. There is no pre-answer instruction to preserve tissue, named diagnostic grade, absolute or length outlier selecting the key.",
+      "Pancreaticojejunostomy can be considered in selected circumstances; the best-answer ranking must not be taught as proof that reconstruction is impossible. No patient-specific feature here establishes such an exception to the standard distal resection approach. No confident clinical inaccuracy identified, but the exact reconstructive comparison remains subject to clinician sign-off, not fresh source verification in this offline review.",
+      "The feedback explains duct disruption versus a duct-intact injury but does not address the closest preservation competitor. This limits teaching quality without making the question unanswerable. Miles's historical operative stage is explicit, and 'at this operation' prevents confusion with a clinic procedure. The node is standalone with the relevant anatomy and physiology supplied."
+    ],
+    "suggestions": [
+      "Improve post-answer feedback by explaining why distal resection is preferred over pancreaticojejunostomy in the stated adult trauma setting, using verified claims and retaining selected reconstructive exceptions.",
+      "Do not invent an anatomic-length cutoff, contraindication or tissue-viability problem to dismiss reconstruction. Preserve the current duct, location and physiology findings."
+    ]
+  },
+  {
+    "id": "question.topic.trauma-initial-abdomen.renal-contained-hematoma.v1",
+    "nodeId": "node.topic.trauma-initial-abdomen.renal-contained-hematoma.v1",
+    "title": "Contained renal hematoma with a separate operative bleeding source",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Leave Gerota fascia and kidney undisturbed",
+        "why": "Nonblocking option-pattern risk: this is the sole 'Leave' choice against two 'Open Gerota fascia' choices. Its outlier status is visible without medical knowledge, but does not logically make it correct. The shared opening step represents two distinct renal interventions; adding a filler fourth option or obscuring the operative choices would not improve the item."
+      }
+    ],
+    "fairness": [
+      "Leaving the renal compartment undisturbed is the best offered action. The resident must attribute the active bleeding to the identified mesenteric injury while interpreting a separately contained lateral hematoma, then resist opening that compartment merely because the patient is hypotensive. The unstable patient supplies a consequential competing consideration; this is a moderate two-step, high-yield blunt retroperitoneal-trauma decision.",
+      "'Stays the same size during exposure; no pulsation, free rupture or progressive expansion' is behavior that must be interpreted in the blunt lateral hematoma setting, not a statement that no renal intervention is indicated. The two opening options are distinct repair versus removal decisions, and the key is not the longest, most qualified or uniquely comprehensive option. The visible action outlier does not replace knowledge of the compartment rule and its exceptions.",
+      "No confident clinical inaccuracy identified. The explanation correctly limits the conclusion to a contained nonexpanding zone-II hematoma with a separate bleeding source. It should not be generalized to unexplained ongoing instability, a different mechanism, expanding or ruptured hematoma, or other retroperitoneal zones.",
+      "Noah's named age/sex presentation explicitly identifies historical laparotomy; the exhibit supplies the operation's indication, active source, current resuscitation and renal findings. 'During this exploration' remains a complete historical task. This standalone node requires no unseen earlier decision or eventual outcome, and the clinic reframing creates no contradiction."
+    ],
+    "suggestions": [
+      "Retain the blunt mechanism, lateral location, observed hematoma behavior and identified separate bleeding source; these are the facts that prevent an unsafe blanket rule.",
+      "Do not manufacture option symmetry by adding an implausible fourth action. Recheck the leave/open pattern if a future clinically credible alternative is available."
+    ]
+  }
+]

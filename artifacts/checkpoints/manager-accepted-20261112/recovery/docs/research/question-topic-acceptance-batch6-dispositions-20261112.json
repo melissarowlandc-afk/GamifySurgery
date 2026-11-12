@@ -1,0 +1,300 @@
+{
+  "checkedOn": "2026-11-11",
+  "requested": 4,
+  "accepted": 4,
+  "cases": 4,
+  "skipped": 0,
+  "stageAdjustments": [],
+  "eligibilityAdjustments": [],
+  "items": [
+    {
+      "nodeId": "node.pediatric-neck-thoracic-gu.20261111.node-sample",
+      "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.node-sample.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-pediatric-neck-thoracic-gu-review-salvage-20261111.json",
+        "record": {
+          "id": "question.pediatric-neck-thoracic-gu.20261111.node-sample.v1",
+          "nodeId": "node.pediatric-neck-thoracic-gu.20261111.node-sample",
+          "title": "Act on nonrepresentative node sampling",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Scope for this report: six current status=salvage nodes only, using candidate Presentation, Current update, Exhibit, Task, option labels and Explanation. Option-author rationales, author gates and prior PASS claims were not treated as evidence. Kept-unchanged, retired, parked, held and other nonsalvage records were excluded. The id field is the questionVariantId. All six cases have one node; no later-part sequencing is applicable.",
+            "The named 14-year-old boy, outside specimen and present examination are sufficient for standalone interpretation. The task identifies the patient, site and diagnostic decision without needing the removed companion.",
+            "Excisional biopsy is the best offered plan for a persistently enlarging fixed pediatric cervical node after nonrepresentative sampling. Repeat FNA is a credible less-invasive competitor, but the concerning clinical course and need for representative tissue favor excision. Surveillance wrongly treats an unsampled target as benign. This does not imply that every inadequate pediatric FNA mandates excision.",
+            "Two consequential steps: recognize blood/fat without lymphoid tissue as failure to assess the target, then integrate continued enlargement and fixation to choose tissue acquisition rather than surveillance or another limited sample. Replacing this with adequate benign tissue and a regressing examination could change the plan.",
+            "Cue attack: 'no lymphoid tissue is represented' is necessary specimen-adequacy information, not an instruction to select excision; both sampling options remain linguistically compatible. Repeated 'cervical node' is shared across all options. No unique length, absolute, convergence or diagnosis-label shortcut identified. The explanation appropriately withholds a cancer diagnosis.",
+            "High-yield judgment: discordance between reassuring sampling and a concerning neck mass is a practical surgical diagnostic problem. Difficulty is a qualitative prediction, not measured performance.",
+            "All report verdicts are offline editorial judgments, not fresh source verification or clinical approval. No network, source-accuracy audit or runtime rendering/timing audit was performed. No confident clinical inaccuracy identified here; all exact drafts remain needs_clinician_review pending Melissa Rowland's sign-off."
+          ],
+          "suggestions": [
+            "Retain the specimen contents and interval behavior together; do not replace them with a label such as inadequate biopsy or suspected lymphoma.",
+            "No required scored-content repair. Preserve the exact version unless a separately authorized revision is made."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1",
+          "sha256": "85e8f9a7990c75623c8f0404945a4a89b27075cd13cad0e4c41a6a736eedcdf7",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "pediatric-neck-thoracic-gu",
+      "status": "accepted",
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1",
+      "reason": "Complete PASS-only case admitted through its existing clinic participant route.",
+      "runtimeAdmissionIssue": null,
+      "unlistedSiblingIds": []
+    },
+    {
+      "nodeId": "node.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy",
+      "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-pediatric-neck-thoracic-gu-review-salvage-20261111.json",
+        "record": {
+          "id": "question.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.v1",
+          "nodeId": "node.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy",
+          "title": "Choose a safer tissue route with mediastinal compression",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Standalone: the case supplies the subsequent hospital setting, positional symptoms, CT airway compression, available peripheral target and observed cooperation. No prior node or its feedback is needed. The initial clinic attendance and subsequent father/clinician chart review can be read chronologically; the task names the hospital team receiving the recommendation.",
+            "Local-anesthetic cervical-node excision is the best offered plan. The deep-sedation needle option is a meaningful trap: a smaller procedure does not necessarily avoid the physiologic hazard. Thoracoscopy under general anesthesia is less attractive when peripheral tissue is available. The key is a specialist plan, not permission to perform an awake excision in any child or setting.",
+            "Two consequential steps: infer anesthesia/position-related risk from supine breathlessness plus tracheal narrowing, then choose a diagnostic target and anesthetic approach that can supply tissue with less exposure to that risk. Removing the compression findings or the accessible target changes the comparison.",
+            "Cue attack: 'She remained calm during an awake needle procedure' and 'The left supraclavicular node is accessible' favor feasibility of the key, but are necessary constraints; deleting them would weaken its fairness. Neither repeats an option verbatim, and deciding between local anesthesia, deep sedation and general anesthesia still requires clinical knowledge. No rhetorical absolute, length outlier or convergence pattern identified.",
+            "The explanation appropriately connects the route and anesthetic risk after the choice. Prior cooperation with a needle is not proof that excision will be tolerated; the specialist team must still assess feasibility. This limitation does not make the two offered sedated mediastinal approaches equally preferable.",
+            "High-yield judgment: avoiding hazardous anesthesia in a child with a compressive anterior mediastinal mass is a consequential surgical safety concept. No confident clinical inaccuracy identified in the permitted text; independent current-source verification and clinical approval were outside this offline review."
+          ],
+          "suggestions": [
+            "No required scored-content repair. Preserve both the airway observations and practical peripheral-target/cooperation information.",
+            "Keep the local-anesthetic approach conditional on specialist assessment; do not strengthen the explanation into a guarantee that prior needle tolerance establishes excision tolerance."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1",
+          "sha256": "b316588fbed2436e00fe16c285d1d75e31df26f166fd828fce228486936ddae5",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "pediatric-neck-thoracic-gu",
+      "status": "accepted",
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1",
+      "reason": "Complete PASS-only case admitted through its existing clinic participant route.",
+      "runtimeAdmissionIssue": null,
+      "unlistedSiblingIds": []
+    },
+    {
+      "nodeId": "node.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+      "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-pediatric-neck-thoracic-gu-review-salvage-20261111.json",
+        "record": {
+          "id": "question.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+          "nodeId": "node.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+          "title": "Recognize the need for chromosomal assessment",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Standalone: the case supplies Noah's age, clinical gender presentation, genital findings, completed 46,XX result, clinical stability and biochemical stage. The question asks for a prioritized biochemical study, not a complete DSD workup or a new chromosome test. Calling Noah a boy is not contradicted by the karyotype and does not settle gonadal anatomy or gender identity.",
+            "Baseline 17-hydroxyprogesterone is the best offered initial study. AMH addresses a competing question about testicular tissue; the completed chromosome result makes adrenal virilization a higher-priority explanation to assess. A stimulated steroid profile is a credible adrenal-investigation competitor, but no baseline biochemical result yet justifies moving directly to the characterization stage in this stable case.",
+            "Two consequential steps: reinterpret the external anatomy and nonpalpable gonads in light of 46,XX, then select an initial adrenal screen rather than a testicular-tissue marker or a later-stage stimulated profile. A different chromosome result or an already borderline baseline result changes that comparison.",
+            "Cue attack: 'No steroid measurements have yet been obtained' gives the necessary stage; it does not uniquely match the key because both baseline and stimulated steroid investigations could answer the wording. Two options use 'Baseline serum', so this is not a key-only grammatical cue. No diagnosis label, convergence or rhetorical absolute identifies the answer without clinical knowledge.",
+            "The explanation supplies early-morning collection and assay details after the answer, and explicitly avoids representing one test as a complete workup. No confident clinical inaccuracy identified. The claimed Endocrine Society recommendation was not freshly verified; exact guideline applicability and assay details remain for clinical sign-off.",
+            "High-yield judgment: genital anomalies with nonpalpable gonads require recognition of possible DSD/adrenal disease before surgery. Baseline-versus-stimulation sequencing adds a useful, moderately demanding distinction, although it is more specialized than recognition alone."
+          ],
+          "suggestions": [
+            "No required scored-content repair. Preserve the completed karyotype, stable clinical state and absence of prior biochemical testing; these make the offered studies rankable.",
+            "Do not expose the authoring title as a clinical task heading: its reference to chromosomal assessment describes an already completed step, whereas the actual task correctly asks for biochemical testing."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+          "sha256": "a49e762de3581c9ecb9fe5b94cf76e27747bfe3e50342d92620fee5746ec19db",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "pediatric-neck-thoracic-gu",
+      "status": "accepted",
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+      "reason": "Complete PASS-only case admitted through its existing clinic participant route.",
+      "runtimeAdmissionIssue": null,
+      "unlistedSiblingIds": []
+    },
+    {
+      "nodeId": "node.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2",
+      "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-pediatric-neck-thoracic-gu-review-salvage-20261111.json",
+        "record": {
+          "id": "question.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2",
+          "nodeId": "node.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2",
+          "title": "Sequence diaphragmatic repair with physiology",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Standalone: the presentation explicitly separates Isla's current age of six years from the neonatal record at four days. The repair-sequencing task refers to that recorded ICU decision, and all necessary trends are reproduced. No previous neonatal-management node is required.",
+            "Planning repair while continuing ICU support is the best offered plan under the sustained oxygenation/perfusion observations, preserved ventricular function and pulmonary pressure now below simultaneous systemic pressure. Continued stabilization before reconsideration is a credible error if residual pulmonary hypertension or intubation is mistaken for an absolute barrier. ECMO escalation is a weaker competitor because the record does not describe failure of conventional support.",
+            "Two consequential steps: integrate respiratory/perfusion data and interpret pulmonary pressure relative to systemic pressure, then decide whether residual support needs warrant deferring repair. The pulmonary pressure of 45 mmHg cannot be treated as a universal standalone readiness cutoff. Worsening perfusion/support or a different relative pressure pattern could reverse the decision.",
+            "Cue attack: 'fell from 75 to 45 mmHg' is favorable raw trend data, but does not itself teach the relative-pressure interpretation. All three options are concrete sequencing plans of similar length; none uniquely repeats the numerical findings or advertises a rationale. The known congenital diaphragmatic hernia diagnosis is appropriate background for a timing task, not disclosure of its answer.",
+            "The explanation appropriately limits the key to planning/consideration with multidisciplinary confirmation rather than automatic clearance. No confident clinical inaccuracy identified. The exact current CAHS readiness criteria and applicability were not independently verified in this offline review; the supplied numbers are not endorsed as new thresholds.",
+            "High-yield judgment: CDH repair follows physiological stabilization rather than anatomic urgency or mandatory complete normalization. The question is moderately demanding because apparently abnormal residual pulmonary pressure and continued intubation must be weighed against the actual trajectory; it is not hard merely because several measurements appear."
+          ],
+          "suggestions": [
+            "No required scored-content repair. Retain simultaneous systemic pressure and the sustained perfusion/support observations; a falling pulmonary-pressure number by itself would not carry the same inference.",
+            "Preserve the explicit neonatal-record age and the explanation's distinction between planning repair and unconditional operative clearance."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness-salvage.v1",
+          "sha256": "00390c84bbe70a132bff5facd7e612aec81836f5fbff9f91136db68ad32c18c1",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "pediatric-neck-thoracic-gu",
+      "status": "accepted",
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness-salvage.v1",
+      "reason": "Complete PASS-only case admitted through its existing clinic participant route.",
+      "runtimeAdmissionIssue": null,
+      "unlistedSiblingIds": []
+    }
+  ],
+  "replacements": [
+    {
+      "replaces": "case.pediatric-clinic.growing-firm-neck-node",
+      "with": "question.pediatric-neck-thoracic-gu.20261111.node-sample.v1"
+    },
+    {
+      "replaces": "case.pediatric-clinic.retractile-testis-remains-scrotal",
+      "with": "question.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2"
+    }
+  ],
+  "consolidations": [],
+  "frozen": [
+    {
+      "topic": "pediatric-neck-thoracic-gu",
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1",
+      "rawCaseSha256": "85e8f9a7990c75623c8f0404945a4a89b27075cd13cad0e4c41a6a736eedcdf7",
+      "retainedCaseSha256": "85e8f9a7990c75623c8f0404945a4a89b27075cd13cad0e4c41a6a736eedcdf7",
+      "nodes": [
+        {
+          "nodeId": "node.pediatric-neck-thoracic-gu.20261111.node-sample",
+          "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.node-sample.v1",
+          "conceptId": "concept.pediatric-neck-thoracic-gu.inadequate-node-sample-escalation.v1",
+          "nodeSha256": "d97a9db1bd0cffff9be6c3996b0cf65ac7f8de5db8f67d516c4f00a5c9d7f8d5",
+          "questionSha256": "94ee9b63c563de2afe4a059bab6e6d527b4f924edd21bea3dcf3185d5769df11",
+          "reviewPath": "docs/research/question-topic-pediatric-neck-thoracic-gu-review-salvage-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "pediatric-neck-thoracic-gu",
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1",
+      "rawCaseSha256": "b316588fbed2436e00fe16c285d1d75e31df26f166fd828fce228486936ddae5",
+      "retainedCaseSha256": "bd680e03ea042e564c127678b0467d51ee13149f63cbeffd32572eca9467d721",
+      "nodes": [
+        {
+          "nodeId": "node.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy",
+          "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.v1",
+          "conceptId": "concept.pediatric-neck-thoracic-gu.mediastinal-peripheral-biopsy-route.v1",
+          "nodeSha256": "5ca23439b805b1c0082d8486587c12ae6690482b786dc18bb03efd708b195a67",
+          "questionSha256": "44d2c25a7211bd62c4ad873978614f6a175f9bb56414f864a94223356b2abb71",
+          "reviewPath": "docs/research/question-topic-pediatric-neck-thoracic-gu-review-salvage-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "pediatric-neck-thoracic-gu",
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+      "rawCaseSha256": "a49e762de3581c9ecb9fe5b94cf76e27747bfe3e50342d92620fee5746ec19db",
+      "retainedCaseSha256": "163ebf7a0c95d0737f576a0c2f8d96b1479a7c3dd78e4509652cc974eb21b40b",
+      "nodes": [
+        {
+          "nodeId": "node.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+          "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+          "conceptId": "concept.pediatric-neck-thoracic-gu.proximal-hypospadias-gonadal-workup.v2",
+          "nodeSha256": "a3ce3363c547bd628616269a7bb87ec5c257e344c9cba9fbbf33e762a8d07118",
+          "questionSha256": "3d26940603545eb9223b06fab256286f295fef4b58871930b47d3fcc904de64e",
+          "reviewPath": "docs/research/question-topic-pediatric-neck-thoracic-gu-review-salvage-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "pediatric-neck-thoracic-gu",
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness-salvage.v1",
+      "rawCaseSha256": "00390c84bbe70a132bff5facd7e612aec81836f5fbff9f91136db68ad32c18c1",
+      "retainedCaseSha256": "ba65719f1552473b6919896dd6314410f12179008e246f22fc44c07d58b8f2a6",
+      "nodes": [
+        {
+          "nodeId": "node.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2",
+          "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2",
+          "conceptId": "concept.pediatric-neck-thoracic-gu.cdh-physiologic-readiness.v1",
+          "nodeSha256": "46e5aa89112a265d0cf2017dbf27068926dd994d66ab671f21aabc3a4f94a82e",
+          "questionSha256": "154613bc903f12cc13f5f6c4ae0401731312f36e7731bfc20d4a86b52b2a3246",
+          "reviewPath": "docs/research/question-topic-pediatric-neck-thoracic-gu-review-salvage-20261111.json"
+        }
+      ]
+    }
+  ],
+  "retirementCoverage": [
+    {
+      "legacyCaseId": "case.pediatric-clinic.growing-firm-neck-node",
+      "primaryTargetCaseId": "case.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1",
+      "allTargetCaseIds": [
+        "case.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1"
+      ],
+      "reason": "Declared source-audit replacement."
+    },
+    {
+      "legacyCaseId": "case.pediatric-clinic.retractile-testis-remains-scrotal",
+      "primaryTargetCaseId": "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+      "allTargetCaseIds": [
+        "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1"
+      ],
+      "reason": "Declared source-audit replacement."
+    }
+  ],
+  "duplicateContexts": [],
+  "sourceViews": [
+    {
+      "name": "topic-batch6-pediatric-neck-thoracic-gu",
+      "cases": 4,
+      "nodes": 4,
+      "sha256": "51c69bd360532acf227f708a1e3ed75427d80c2e0d12f64b6c7b512a8cb03867"
+    }
+  ],
+  "presentationCorrections": {
+    "path": "tools/question-quality/fixtures/question-topic-acceptance-batch6-literal-name-corrections-20261112.json",
+    "sha256": "fc84022f3f4af1b13db0c0a194761a3ee4500272c7bbacc199106b11b923e338",
+    "caseIds": [
+      "case.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1",
+      "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+      "case.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness-salvage.v1"
+    ],
+    "fields": 6
+  },
+  "timingOrderAdjustments": [],
+  "noTestClassificationAdjustments": []
+}

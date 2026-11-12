@@ -1,0 +1,387 @@
+[
+  {
+    "id": "question.topic.thoracic-lung-pleura-mediastinum.screening-exposure.v2",
+    "nodeId": "node.topic.thoracic-lung-pleura-mediastinum.screening-exposure.v2",
+    "title": "Cumulative smoking exposure and screening schedule",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Annual low-dose CT is the defensible answer under the explicitly named USPSTF framework: the constructed exposure totals 23 pack-years, and age, quit interval, symptoms and willingness are supplied. The two-year alternative is a schedule-recall error, not a close patient-specific competitor.",
+      "There are two operations, calculating cumulative exposure and applying eligibility, but both are straightforward. This is a clinical screening question with arithmetic, not a statistics-methods item eligible for the minimal single-skill exception.",
+      "Review-wide limitation: this is an offline editorial review of the current candidate presentations, updates, exhibits, tasks, options and explanations. No external source verification was performed; PASS does not constitute clinical approval, and difficulty/highYield are qualitative judgments rather than measured exam frequencies. All 17 active candidate nodes, including six pass-preserved drafts, are assessed; historical kept, retired, held and parked records are excluded from scoring."
+    ],
+    "suggestions": [
+      "Keep the clear cumulative-exposure computation and parallel options, but add a supported, genuinely competing eligibility consideration whose observed findings change screening eligibility, rather than merely adding more smoking periods or arithmetic.",
+      "Alternatively seek explicit acceptance as focused basic screening practice; do not represent the current version as a difficult routine resident item."
+    ]
+  },
+  {
+    "id": "question.topic.thoracic-lung-pleura-mediastinum.psp-contralateral.v2",
+    "nodeId": "node.topic.thoracic-lung-pleura-mediastinum.psp-contralateral.v2",
+    "title": "Referral after a contralateral spontaneous pneumothorax",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "previously worked as an airline pilot and now works in an office / surgical referral if he resumes flying",
+        "why": "The retired occupation supplies a conspicuous setup for one distractor. Its conditional trigger is visibly absent, allowing that option to be discounted without understanding pneumothorax recurrence indications."
+      }
+    ],
+    "fairness": [
+      "A resolved opposite-side episode after a previous spontaneous pneumothorax supports thoracic consultation. Low concern is not refusal; the question correctly distinguishes consultation from a mandated operation.",
+      "Recognizing the left-then-right pattern and recalling its referral indication is effectively one rule. Neither waiting for another right event nor waiting for a return to aviation supplies a sufficiently close second clinical decision."
+    ],
+    "suggestions": [
+      "Remove the former-pilot distraction unless it changes a real remaining decision. Preserve the side-specific chronology.",
+      "Rebuild around a supported competing prevention decision after recurrence classification, with concrete clinical observations separating the offered plans. If no distinct fair decision can be supported within this objective, retain it only with an explicitly accepted basic role rather than manufacturing difficulty."
+    ]
+  },
+  {
+    "id": "question.topic.thoracic-lung-pleura-mediastinum.psp-size-symptoms.v2",
+    "nodeId": "node.topic.thoracic-lung-pleura-mediastinum.psp-size-symptoms.v2",
+    "title": "Pneumothorax management after symptom reassessment",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The chronology clearly separates limiting pain at arrival from minimal symptoms at the decision time. The resident must interpret that change and weigh it against persistent radiographic size before selecting management.",
+      "Under the named BTS approach, observation with follow-up is the best offered fit for the stable, minimally symptomatic patient who prefers home care. Aspiration is not universally wrong; the explanation appropriately limits its ranking to this patient and does not turn the constructed 3 cm measurement into an intervention threshold.",
+      "Home support, return access and preference are legitimate eligibility/context information here rather than a unique wording match to the key. The retrospective clinic frame and hospital reassessment task are coherent."
+    ],
+    "suggestions": [
+      "Preserve the reassessment chronology, named guideline framework and preference-sensitive explanation. Do not change the feedback to claim that aspiration is categorically inappropriate."
+    ]
+  },
+  {
+    "id": "question.topic.thoracic-lung-pleura-mediastinum.us-at-procedure.v2",
+    "nodeId": "node.topic.thoracic-lung-pleura-mediastinum.us-at-procedure.v2",
+    "title": "Aspiration target and image-guidance selection",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": false,
+    "clarityIssues": [
+      "The earlier seated skin mark creates a third localization narrative even though both current reports already settle the offered targets. It adds reading without changing the current decision."
+    ],
+    "cues": [
+      {
+        "phrase": "Fluid is confined to a posterior left costophrenic locule / No fluid window is seen at the lateral chest-wall recess",
+        "why": "These explicit location statements delete both lateral-recess choices by literal matching; the learner need not interpret pleural anatomy."
+      },
+      {
+        "phrase": "Rib shadow and aerated lung obscure the posterior locule margins",
+        "why": "After the target is explicitly supplied, the report announces that ultrasound cannot show it. The only remaining modality-target combination is CT plus posterior locule. The balanced option matrix avoids convergence but does not rescue difficulty."
+      }
+    ],
+    "fairness": [
+      "CT-guided posterior aspiration is the best offered plan on the stated localization findings. No confident clinical error is identified; real procedural safety still depends on a planned safe access route.",
+      "Two answer components are present, but both are supplied by direct report-to-option matching. This is not two consequential resident-level inferences.",
+      "Safe contemporaneous pleural localization is important. The exact CT-versus-ultrasound posterior-locule matrix is a narrower procedural niche than the most commonly tested general-surgery pleural decisions; highYield is false for this particular scored distinction, not for pleural procedural safety generally."
+    ],
+    "suggestions": [
+      "Use a verified constructed localization exhibit with the observations needed to interpret the target and safe route, rather than prose that expressly eliminates each incorrect matrix component. Preserve essential safety information.",
+      "Remove the historical skin mark if it remains irrelevant after the redesign. If this stays a simple safety-recognition item, request explicit basic-purpose acceptance instead of claiming moderate difficulty."
+    ]
+  },
+  {
+    "id": "question.topic.thoracic-lung-pleura-mediastinum.negative-cytology-target.v2",
+    "nodeId": "node.topic.thoracic-lung-pleura-mediastinum.negative-cytology-target.v2",
+    "title": "Tissue diagnosis after negative pleural cytology",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "The abnormal pleura has not been sampled",
+        "why": "This is an explicit named omission immediately before the only option that samples pleura. It gives the intended next action rather than leaving the resident to reconcile the negative fluid result with the tissue abnormality."
+      },
+      {
+        "phrase": "posterolateral parietal nodule / Image-guided parietal pleural core biopsy",
+        "why": "The unique repeated anatomical label reinforces the named-omission cue. Anatomy is clinically legitimate, but in this set it also singles out the tissue option."
+      }
+    ],
+    "fairness": [
+      "Pleural tissue sampling is the defensible best offered investigation for recurrent fluid with nodular pleural abnormalities despite negative fluid cytology. A negative cell-block result does not rule out malignancy; thoracoscopy is correctly acknowledged as a separate valid tissue route.",
+      "Fifty milliliters and cell-block processing describe a reasonable specimen submission, not proof of diagnostic sensitivity or cellular adequacy. The explanation should not imply that repeat cytology is useful only after an inadequately handled specimen.",
+      "The present text largely supplies the inference through the unsampled-lesion sentence, making the diagnostic decision easier than the underlying concept warrants."
+    ],
+    "suggestions": [
+      "Delete the explicit unsampled-pleura sentence; the chronology already identifies what was obtained. Retain the negative fluid result and actual pleural observations.",
+      "Reassess difficulty after removing the scaffold. Use a supported specimen-adequacy or target-selection conflict if a second consequential inference is still absent; do not add an arbitrary extra negative.",
+      "Keep feedback clear that repeat cytology can have incremental yield, while explaining why visible pleural abnormality favors tissue in this case."
+    ]
+  },
+  {
+    "id": "question.topic.thoracic-lung-pleura-mediastinum.pleural-drainage.v1",
+    "nodeId": "node.topic.thoracic-lung-pleura-mediastinum.pleural-drainage.v1",
+    "title": "Pleural drainage despite systemic improvement",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must distinguish improving systemic findings from persistent pleural infection requiring source control, then select initial catheter drainage rather than continued observation or immediate operative escalation.",
+      "The collection conditions make the low pH interpretable and the ultrasound supplies access information. These are needed for fairness, not gratuitous exclusions. Intercostal drainage is the defensible best initial option in the supplied record.",
+      "This is a standalone historical review, so its decision does not depend on a preceding diagnostic question. No later drain-malposition results are exposed here."
+    ],
+    "suggestions": [
+      "Preserve the competing systemic trajectory and valid pleural-fluid result. The sentence about the founder reviewing source-control decisions can be shortened as nonessential framing, without changing the clinical decision."
+    ]
+  },
+  {
+    "id": "question.topic.thoracic-lung-pleura-mediastinum.drain-sideholes.v2",
+    "nodeId": "node.topic.thoracic-lung-pleura-mediastinum.drain-sideholes.v2",
+    "title": "Malpositioned pleural drain before intrapleural therapy",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The explanation introduces 'partial withdrawal' and an 'exposed wound', but the visible record establishes only the current side-hole positions. It does not say whether the drain migrated after initially correct placement or was malpositioned from insertion."
+    ],
+    "cues": [
+      {
+        "phrase": "before further intrapleural treatment / Combined tPA and DNase through the existing drain",
+        "why": "The task asks for a step before the very treatment offered as a distractor. That temporal wording discounts tPA/DNase without requiring interpretation of the catheter position."
+      }
+    ],
+    "fairness": [
+      "Persistent infected fluid plus extrathoracic side holes makes correcting drainage access more defensible than administering intrapleural drugs through this catheter. The distinction between tip location and the entire fenestrated segment is consequential and useful.",
+      "The ranking of new-site insertion over a controlled guidewire exchange is not adequately established by the visible chronology. I am uncertain whether the cited procedural rule against reusing a partially withdrawn drain tract applies categorically to the offered guidewire exchange; this is not a claim that exchange is definitely correct.",
+      "Do not equate advancing an exposed existing tube with sterile over-wire replacement without explicit evidence supporting that equivalence. The current explanation makes a stronger exclusion than the supplied facts justify."
+    ],
+    "suggestions": [
+      "Use a neutral task asking for the next drainage plan, without 'before further intrapleural treatment'.",
+      "If partial withdrawal is the intended discriminator, supply its actual recorded chronology and relevant exposure findings. Have Melissa verify the exact new-site-versus-guidewire-exchange ranking against the applicable procedural guidance before accepting the key.",
+      "If that precise comparison cannot be supported, compare correction of objectively inadequate access with another credible drainage strategy whose ranking follows from the stated observations. Do not invent a universal prohibition on guidewire exchange."
+    ]
+  },
+  {
+    "id": "question.topic.thoracic-lung-pleura-mediastinum.mpe-assess-response.v1",
+    "nodeId": "node.topic.thoracic-lung-pleura-mediastinum.mpe-assess-response.v1",
+    "title": "Assessing symptom response before definitive pleural palliation",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The small diagnostic sample establishes malignant fluid but leaves symptom contribution and expansion unresolved. COPD provides a real competing explanation for breathlessness rather than decorative comorbidity.",
+      "Therapeutic thoracentesis is the best offered next assessment before committing to a definitive pleural intervention. Talc and IPC are credible downstream alternatives, and the supplied unresolved response question makes this sequencing comparison fair.",
+      "The next node supplies a later IPC infection as a historical event. This explanation does not give away whether to retain or remove an infected catheter."
+    ],
+    "suggestions": [
+      "Preserve the distinction between diagnostic sampling and therapeutic assessment. In the multipart case, keep the later IPC placement explicitly historical rather than implying that the learner's thoracentesis answer itself performed IPC placement."
+    ]
+  },
+  {
+    "id": "question.topic.thoracic-lung-pleura-mediastinum.ipc-infection-response.v1",
+    "nodeId": "node.topic.thoracic-lung-pleura-mediastinum.ipc-infection-response.v1",
+    "title": "Retaining a functioning IPC during improving pleural infection",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Cloudy fluid, fever and culture growth support infection rather than an isolated colonization result. The resident then must integrate treatment response, drainage function and the absence of tunnel findings to choose the catheter plan.",
+      "Continuing antibiotics with drainage through the functioning IPC is the defensible best option in this improving course. The explanation appropriately avoids an unconditional retain-the-device rule.",
+      "The later part is coherent with prior malignant effusion care and stands alone for the current device decision: it supplies IPC placement, infection observations, function and response. The earlier thoracentesis explanation does not rehearse this key. The intervening definitive-management decision is skipped but is not needed to solve this node."
+    ],
+    "suggestions": [
+      "Retain the explicit later-course transition and the current infection/response observations. Do not expand earlier feedback to teach this catheter-retention answer before the later part is shown."
+    ]
+  },
+  {
+    "id": "question.topic.thoracic-lung-pleura-mediastinum.mpe-lung-expansion.v2",
+    "nodeId": "node.topic.thoracic-lung-pleura-mediastinum.mpe-lung-expansion.v2",
+    "title": "Recurrent symptomatic malignant fluid with nonexpansion",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Repeated symptom improvement establishes a meaningful drainage target; recurrent symptoms and the post-drainage anatomy then determine which ongoing strategy is most suitable. The air-fluid space is not used in isolation to diagnose nonexpandable lung.",
+      "Persistent broad separation with a visceral rind supports poor pleural apposition, making talc less suitable. Rapid recurrent symptomatic fluid, active ambulatory care and available catheter support favor IPC over repeated aspirations among these choices.",
+      "Repeat aspiration can remain reasonable with different goals or a very short anticipated course; the explanation correctly acknowledges this instead of declaring it universally wrong. No such competing constraint is supplied here.",
+      "The independent presentation supplies prior cytology, response trajectory and post-drainage findings, so this version does not depend on seeing the separately retained assessment node."
+    ],
+    "suggestions": [
+      "Preserve the actual response trajectory and pleural observations, along with the limited explanation of why IPC is favored here. Do not convert this into an automatic treatment rule based on malignant cytology alone."
+    ]
+  },
+  {
+    "id": "question.topic.thoracic-lung-pleura-mediastinum.mediastinal-tissue-staging.v2",
+    "nodeId": "node.topic.thoracic-lung-pleura-mediastinum.mediastinal-tissue-staging.v2",
+    "title": "Initial nodal staging with a competing inflammatory explanation",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must avoid both treating PET uptake as proven metastasis and dismissing it as infection, then select the initial tissue-staging route for an accessible paratracheal node.",
+      "Systematic endosonographic sampling is the defensible preferred initial option. Mediastinoscopy is a credible tissue alternative rather than an absurd foil; repeat PET does not resolve histology before the proposed operation.",
+      "The absence of prior nodal sampling establishes the initial staging phase and does not uniquely select the key because two options obtain tissue. The explanation properly leaves the negative-endosonography follow-up outside this question rather than asserting a blanket subsequent operation."
+    ],
+    "suggestions": [
+      "Preserve the initial-staging scope and accessible nodal location. Any later question about adequate negative endosonography needs its own current evidence and adequacy findings; this PASS does not decide that controversy."
+    ]
+  },
+  {
+    "id": "question.topic.thoracic-lung-pleura-mediastinum.pleural-dissemination-plan.v1",
+    "nodeId": "node.topic.thoracic-lung-pleura-mediastinum.pleural-dissemination-plan.v1",
+    "title": "Treatment pathway after a malignant pleural result",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must recognize that a separate positive pleural result changes disease extent despite negative sampled mediastinal nodes, then select a systemic-treatment pathway rather than a local surgical or definitive locoregional plan.",
+      "Matched adenocarcinoma in adequate pleural cytology plus separate pleural nodules supports medical-oncology systemic-treatment planning. The explanation does not overstate negative nodal sampling as whole-mediastinal clearance or prescribe an unsupported drug regimen.",
+      "The standalone wrapper supplies the known lung primary, proposed operation and both relevant results. It does not require the preceding staging question to have been seen, and no earlier feedback within this case gives away the decision."
+    ],
+    "suggestions": [
+      "Keep the two tissue compartments distinct and avoid adding a pre-answer metastatic-stage label. Preserve the pathway-level task rather than introducing regimen or exceptional local-treatment decisions without their necessary context."
+    ]
+  },
+  {
+    "id": "question.topic.thoracic-lung-pleura-mediastinum.growing-nodule-pet.v2",
+    "nodeId": "node.topic.thoracic-lung-pleura-mediastinum.growing-nodule-pet.v2",
+    "title": "Growing nonavid nodule and biopsy-route anatomy",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Matched CT technique and substantial interval growth must be weighed against a nonavid PET; the resident must then use airway access and bullae along needle trajectories to rank two plausible biopsy routes.",
+      "Navigational bronchoscopic sampling is the best offered plan. The bronchus-to-lesion relationship and percutaneous-path bullae are legitimate anatomical discriminators, not arbitrary permissions or diagnosis labels. Both routes require clinical knowledge to compare.",
+      "Local expertise and actual technical feasibility matter, as the explanation acknowledges. The item supports a favored offered route rather than a universal bronchoscopy rule, and does not claim that PET negativity proves benignity.",
+      "The chronology is independently specified; no previous nodule question is needed. The harder rating comes from two competing decisions, not missing information or numerical complexity."
+    ],
+    "suggestions": [
+      "Preserve both the serial-imaging conflict and the route-specific anatomy. Do not simplify the explanation to 'PET can miss cancer' and thereby omit the second scored decision."
+    ]
+  },
+  {
+    "id": "question.topic.thoracic-lung-pleura-mediastinum.mediastinal-mri.v1",
+    "nodeId": "node.topic.thoracic-lung-pleura-mediastinum.mediastinal-mri.v1",
+    "title": "Characterizing an indeterminate prevascular lesion",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "A protein-rich cyst and a solid lesion remain in the radiology differential",
+        "why": "The report supplies the precise cystic-versus-solid characterization problem that the acquisition details were meant to establish. This is an interpretive scaffold, not a diagnosis error. It reduces the task to selecting the familiar characterization modality."
+      },
+      {
+        "phrase": "current mediastinal imaging question / Chest MRI with lesion characterization",
+        "why": "The key is the option most directly labeled as resolving lesion characterization; PET is explicitly framed as metabolic characterization and biopsy as tissue acquisition. This reinforces the supplied problem statement, although it is not a complete knowledge-free solution by itself."
+      }
+    ],
+    "fairness": [
+      "MRI is the defensible best offered next investigation. A single postcontrast attenuation cannot establish enhancement, and the explanation correctly identifies that limitation.",
+      "The acquisition limitation is largely redundant once the differential explicitly names the unanswered characterization question. Removing it would leave essentially the same modality-recall item. A sensible clinical answer and a prior PASS label do not establish two-step difficulty."
+    ],
+    "suggestions": [
+      "Keep the observed acquisition and lesion findings but remove the authored differential if inferring its unresolved nature is the intended first step. Ensure the remaining report still gives enough information for a fair question.",
+      "Use comparable investigations addressing a genuine residual uncertainty, or introduce a supported acquisition/lesion conflict that changes the next action. Re-review difficulty rather than assuming that deletion alone creates a hard item.",
+      "Because this candidate is marked pass-preserved, treat the finding as a manager review request; do not silently overwrite its frozen version."
+    ]
+  },
+  {
+    "id": "question.topic.thoracic-lung-pleura-mediastinum.thymic-resection-plan.v2",
+    "nodeId": "node.topic.thoracic-lung-pleura-mediastinum.thymic-resection-plan.v2",
+    "title": "Upfront thymectomy versus biopsy or limited excision",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must judge whether the solid thymic-bed lesion and preserved planes support an upfront resection strategy, then distinguish complete thymectomy from limited mass excision under the explicitly named guideline.",
+      "Complete thymectomy is the defensible best offered plan for the described high-probability localized thymic epithelial lesion. Normal markers and absent systemic symptoms do not prove histology; the explanation correctly states those limits.",
+      "The absence of prior tissue does not uniquely cue biopsy or resection; it creates the intended competing decision. The named guideline bounds a potentially practice-dependent comparison without specifying the correct operation in the task.",
+      "Although the presentation refers to prior MRI, its actual relevant findings are supplied in this singleton. It stands alone without the MRI-selection node."
+    ],
+    "suggestions": [
+      "Preserve the named framework and the probabilistic language about likely pathology. Do not generalize this to all prevascular masses or imply that normal germ-cell markers exclude every alternative."
+    ]
+  },
+  {
+    "id": "question.topic.thoracic-lung-pleura-mediastinum.invasive-mediastinal-core.v1",
+    "nodeId": "node.topic.thoracic-lung-pleura-mediastinum.invasive-mediastinal-core.v1",
+    "title": "Tissue strategy for an invasive nodal mediastinal mass",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Systemic symptoms, vessel relationships and additional nodes argue against treating location alone as proof of a readily resectable thymoma. The resident then must choose a tissue method that preserves architecture rather than cytology alone.",
+      "Core biopsy is the best offered initial plan. FNA is a credible specimen-choice error, while immediate complete thymectomy is inappropriate to assume from this invasive/nodal presentation. A later need for additional tissue would not negate the initial ranking.",
+      "The parasternal route establishes feasible pleura-sparing access for both needle options, so it does not select core over FNA by a unique permission cue. Normal AFP and beta-hCG are appropriately not treated as diagnostic proof."
+    ],
+    "suggestions": [
+      "Preserve the distinction between a tissue-first strategy and the type of tissue required. Avoid turning the explanation into a blanket claim that any core biopsy will definitively classify every mediastinal lymphoma or other mass."
+    ]
+  },
+  {
+    "id": "question.topic.thoracic-lung-pleura-mediastinum.thymic-neuromuscular-assessment.v2",
+    "nodeId": "node.topic.thoracic-lung-pleura-mediastinum.thymic-neuromuscular-assessment.v2",
+    "title": "Fatigable bulbar symptoms and preoperative respiratory assessment",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "No antibody or respiratory-muscle testing has been performed",
+        "why": "This names both missing components of the keyed bundle. 'Antibody' maps directly to AChR antibodies and 'respiratory-muscle' maps to inspiratory pressure, allowing selection of the intended combination without independently determining the two assessment objectives."
+      },
+      {
+        "phrase": "room-air saturation is 98% / arterial blood gas and pulse oximetry",
+        "why": "Pulse oximetry is visibly already recorded, making half of each gas-exchange alternative look like repeat completed work. This is not enough by itself to establish those plans are wrong, but it strengthens the named-omission shortcut."
+      }
+    ],
+    "fairness": [
+      "The clinical pattern supports assessment for myasthenia and respiratory-muscle weakness, and AChR antibodies with FVC and maximal inspiratory pressure is the defensible best offered bundle. Normal resting oxygen saturation does not establish normal respiratory-muscle reserve.",
+      "The matrix is balanced and does not have majority-component convergence. Nevertheless, the pre-answer sentence supplies the two assessment categories, undermining the intended recognition-then-respiratory-assessment reasoning.",
+      "The explanation appropriately avoids diagnosing crisis or granting operative clearance from these observations. The current normal speech and lack of overt distress make an investigation-plan question understandable, while bulbar symptoms still warrant clinical assessment."
+    ],
+    "suggestions": [
+      "Delete the sentence naming the absent antibody and respiratory-muscle tests; the record can simply present the actual symptoms and observations.",
+      "Retain normal saturation as a clinically relevant potential misconception, but make the competing respiratory assessments credible rather than relying on a visibly repeated pulse-oximetry measurement as the error.",
+      "Re-solve the revised matrix with the key hidden. Count twoStep as true only if the learner must infer the neuromuscular process and independently choose how to assess respiratory function from the remaining findings."
+    ]
+  }
+]

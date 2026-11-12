@@ -1,0 +1,369 @@
+[
+  {
+    "id": "question.vascular-aorta.screening.v1",
+    "nodeId": "node.vascular-aorta.screening.v1",
+    "title": "Initial abdominal aortic screening",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {"phrase": "he had never had abdominal aortic imaging", "why": "Supplies the conclusion the learner was meant to draw from the chest acquisition boundary. It weakens the no-additional-imaging competitor before eligibility or modality is considered."}
+    ],
+    "fairness": ["Ultrasound is the defensible best offered screening plan for this asymptomatic 69-year-old male ever-smoker. No confident clinical inaccuracy identified.", "The subsequent ultrasound/repair decision follows coherently and is not disclosed by this explanation."],
+    "suggestions": ["Retain the actual prior scan coverage and remove the redundant conclusion about never having abdominal imaging. Reassess whether the remaining record requires a consequential coverage inference; otherwise seek explicit acceptance as foundational screening practice rather than claiming resident-level two-step difficulty.", "Review scope: all 26 candidate nodes were assessed, including the two rewritten meanings and 24 new meanings. Ten retirement/replacement proposals and two unkeyed withheld decisions are noted but not scored; there are no kept-unchanged candidates. Findings use candidate visible content and prior candidate feedback, not author self-ratings. This is an offline editorial/clinical-plausibility review without fresh source verification; difficulty is predicted, and PASS is not Melissa Rowland's exact-version clinical approval. Runtime rendering, wait previews and source provenance were not independently validated."]
+  },
+  {
+    "id": "question.vascular-aorta.six-cm-referral.v1",
+    "nodeId": "node.vascular-aorta.six-cm-referral.v1",
+    "title": "Outer sac diameter and repair referral",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": ["The learner must distinguish the aneurysm's outer diameter from its flowing channel and use that distinction to choose repair evaluation versus surveillance. The two sizes make the surveillance error concrete.", "Symptoms, functional status and major competing illness are sufficiently addressed for a referral decision. No competing offered plan is equally appropriate.", "The update is coherent after screening and contains the result needed to answer without recalling the prior choice. Prior screening feedback does not disclose the diameter rule."],
+    "suggestions": ["Retain the lumen-versus-sac discriminator and comparable action labels. Keep PASS separate from clinical approval."]
+  },
+  {
+    "id": "question.vascular-aorta.measurement-comparison.v1",
+    "nodeId": "node.vascular-aorta.measurement-comparison.v1",
+    "title": "Reconciling different aortic measurement planes",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {"phrase": "perpendicular to the aortic centerline", "why": "The key repeats the earlier report's distinctive measurement phrase while the repeat-CT foil explicitly repeats the new axial protocol. The wording largely identifies the preferred correction."},
+      {"phrase": "Both original CT datasets are available", "why": "Availability is legitimate, but combined with the explicit plane mismatch and a task already requiring an imaging correction, it makes reuse of those datasets the only sensible offered action."}
+    ],
+    "fairness": ["Reformatting and comparable orthogonal measurements are a defensible best answer. The issue is low discrimination rather than a demonstrated wrong key.", "Elapsed time would be needed to judge a growth rate, but this task appropriately stops before that judgment. Do not invent a growth threshold."],
+    "suggestions": ["Make the resident interpret a concise measurement/acquisition exhibit and decide whether the apparent change warrants additional acquisition or a change in management. Compare credible approaches to the actual uncertainty rather than repeating the stated problematic protocol as a foil.", "Preserve dataset adequacy and availability when necessary; removing those facts without replacing them would make retrieval versus repeat acquisition unfair."]
+  },
+  {
+    "id": "question.vascular-aorta.small-male-surveillance.v1",
+    "nodeId": "node.vascular-aorta.small-male-surveillance.v1",
+    "title": "Surveillance after matched AAA measurements",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": ["The time between the two matched studies is not stated. The node should not imply that a growth-rate assessment has been completed from diameters alone."],
+    "cues": [],
+    "fairness": ["Annual ultrasound is consistent with the intended uncomplicated male AAA diameter-band rule. The item supplies the corrected size and adequate ultrasound visualization, so selecting among intervals is essentially single-rule recall.", "The sequence is coherent, but the preceding feedback has already taught the measurement correction. This node does not independently retest that inference, and the corrected current diameter alone selects the intended answer."],
+    "suggestions": ["If routine surveillance eligibility depends on the serial comparison, state its actual interval and relevant trajectory without inventing a growth cutoff.", "Add a clinically consequential competing surveillance consideration or seek explicit acceptance as foundational interval practice. Do not count the prior node's measurement inference as this node's second step."]
+  },
+  {
+    "id": "question.vascular-aorta.symptomatic-small-aaa.v1",
+    "nodeId": "node.vascular-aorta.symptomatic-small-aaa.v1",
+    "title": "New pain in a smaller intact AAA",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {"phrase": "should have replaced surveillance", "why": "The task rules out both surveillance options before the learner interprets the symptoms. Only the repair-evaluation answer can satisfy the wording."},
+      {"phrase": "the hospital evaluation identifies no competing abdominal or spinal cause", "why": "This broad authored exclusion further supplies the attribution instead of showing the observations that distinguish the closest competing explanation."}
+    ],
+    "fairness": ["New persistent aortic-localized pain and tenderness support inpatient repair assessment despite intact imaging and a diameter below the usual asymptomatic threshold. No confident clinical inaccuracy identified.", "The chronology clearly changes the earlier asymptomatic premise, and the update contains the new decision-critical findings. The task itself, however, defeats the options."],
+    "suggestions": ["Ask neutrally which plan was appropriate at that admission; remove the instruction that surveillance must be replaced.", "Retain genuine safety findings and use concrete relevant evaluation findings instead of a blanket exclusion of other causes. Compare credible plans at that stage rather than one active plan against two unsupported delays."]
+  },
+  {
+    "id": "question.vascular-aorta.female-threshold.v1",
+    "nodeId": "node.vascular-aorta.female-threshold.v1",
+    "title": "Repair evaluation for an asymptomatic woman",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": ["Repair evaluation is a defensible offered plan at the stated size and functional status. This wording does not mandate a specific operation.", "The exact strength of sex-specific size recommendations and the boundary with continued surveillance require clinician/source confirmation; this offline review does not establish a universal mandatory repair threshold.", "As written, sex plus an explicitly established diameter selects a familiar threshold rule. Stable serial size adds a misconception but little independent interpretation."],
+    "suggestions": ["If retained as resident application, introduce a real competing consideration that changes the referral decision and is resolved by observations, rather than adding more statements of fitness.", "Explain the actual source-supported recommendation and its limitations after answering. Preserve evaluation-versus-mandatory-operation distinctions and avoid presenting all women's thresholds as a universal rule."]
+  },
+  {
+    "id": "question.vascular-aorta.pelvic-inflow.v1",
+    "nodeId": "node.vascular-aorta.pelvic-inflow.v1",
+    "title": "Iliac repair with one remaining pelvic inflow artery",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": ["Nonaneurysmal distal landing segments establish a useful principle, but do not clearly establish that the right iliac branch device can be deployed in this anatomy."],
+    "cues": [
+      {"phrase": "both common iliac arteries enlarged through their bifurcations", "why": "The bilateral distal-common-iliac landing foil directly contradicts the stated extent of disease and is much weaker than a genuine competing pelvic-inflow strategy."}
+    ],
+    "fairness": ["Recognizing that left internal-iliac occlusion leaves the right artery as the remaining direct pelvic inflow and preserving it during exclusion is a worthwhile two-step decision.", "The keyed configuration is defensible if branch-device anatomy is suitable; nonaneurysmal landing zones alone leave uncertainty about that specific technical selection. This is an adequacy concern, not a claim that the proposed device is contraindicated.", "The node follows the prior referral coherently, and the update restates the relevant planning anatomy without needing the earlier answer."],
+    "suggestions": ["Supply only the relevant branch-device anatomic observations needed to establish suitability, with supported criteria; alternatively test the inflow-preservation strategy without overcommitting to a particular device.", "Replace the clearly aneurysmal landing-zone foil with a plausible configuration error. Keep the occluded-versus-patent side distinction and re-solve all options."]
+  },
+  {
+    "id": "question.vascular-aorta.stable-branch-flow.v1",
+    "nodeId": "node.vascular-aorta.stable-branch-flow.v1",
+    "title": "Branch-associated flow with an unchanged EVAR sac",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": ["The learner must interpret the delayed branch-associated route and then use unchanged sac size to distinguish surveillance from embolization. The leak description does not itself prescribe treatment.", "Intact attachments weaken the cuff option for a clinical reason, not a grammatical shortcut. Continued surveillance is the defensible best offered action.", "The explanation does not disclose the next node's angiographic plan or the later component failure."],
+    "suggestions": ["Keep the source-and-sac-behavior combination. The constructed table is appropriately labeled; avoid adding a universal intervention cutoff without direct supporting evidence."]
+  },
+  {
+    "id": "question.vascular-aorta.growing-sac-source.v1",
+    "nodeId": "node.vascular-aorta.growing-sac-source.v1",
+    "title": "Reassessing an enlarging EVAR sac with uncertain inflow",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": ["The meaningful decision is to question the earlier branch-leak attribution when a larger sac and indeterminate graft-junction flow appear, then investigate a potential direct graft-related source before selective branch treatment.", "The three choices are angiographic assessments at the same stage. Aortography is a defensible first offered assessment; selective collateral studies might subsequently be needed but do not replace assessment of the uncertain graft interface.", "The update supplies the current uncertainty even if earlier feedback is not recalled. Prior advice that source and sac behavior matter is general scaffolding, not disclosure of this selected assessment."],
+    "suggestions": ["Retain the distinction between an earlier documented pattern and an uncertain current source. Do not convert the task into an unsupported universal rule that selective studies are never useful."]
+  },
+  {
+    "id": "question.vascular-aorta.component-gap-repair.v1",
+    "nodeId": "node.vascular-aorta.component-gap-repair.v1",
+    "title": "Repairing a separated EVAR component",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {"phrase": "Adequate overlap can be obtained between the existing components with an additional covered limb", "why": "The update states the corrective device and successful bridging mechanism before the learner chooses the covered-graft bridge."},
+      {"phrase": "Both attachment sites remain sealed", "why": "This is clinically useful localization, but in this option set it also explicitly removes the proximal-cuff alternative, leaving little work after the supplied bridge plan."}
+    ],
+    "fairness": ["A covered bridging repair is defensible for a demonstrated component separation with suitable overlap. No confident clinical inaccuracy identified.", "The evolution from initially intact overlaps to a later separation is coherent. The current update stands alone; the difficulty problem is the supplied repair, not missing chronology."],
+    "suggestions": ["Replace the sentence prescribing an additional covered limb with neutral anatomic observations sufficient to assess repair feasibility.", "Use credible alternative repairs of the demonstrated defect, or change the task to make distinguishing the defect from another plausible source consequential. Do not remove necessary seal information merely to obscure the answer."]
+  },
+  {
+    "id": "question.vascular-aorta.proximal-seal-repair.v1",
+    "nodeId": "node.vascular-aorta.proximal-seal-repair.v1",
+    "title": "Proximal attachment leak despite stable sac size",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": ["The learner must infer an attachment-related leak from its route and act despite unchanged sac diameter. This contrasts meaningfully with surveillance for stable branch-associated flow.", "A remaining healthy proximal segment makes extension a defensible best offered plan; actual device sizing is outside this strategy question. The task's proximal localization is necessary context rather than a sufficient nonmedical answer rule.", "No confident clinical inaccuracy or equally appropriate offered alternative identified."],
+    "suggestions": ["Preserve the unchanged-sac distractor premise and the actual contrast route. Keep detailed device feasibility subject to normal clinical planning rather than implying that any healthy neck length is sufficient."]
+  },
+  {
+    "id": "question.vascular-aorta.rupture-ct-planning.v1",
+    "nodeId": "node.vascular-aorta.rupture-ct-planning.v1",
+    "title": "Imaging at a stable suspected rupture assessment",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {"phrase": "recorded stable assessment", "why": "The task supplies the stability classification instead of leaving interpretation of repeated pressure and mental status to the learner."}
+    ],
+    "fairness": ["Urgent CTA for planning in the described stable suspected rupture is a defensible best answer. No confident inaccuracy identified.", "Restricting the task to imaging and offering repeat duplex after an already diagnostic bedside ultrasound removes much of the consequential imaging-versus-immediate-treatment decision. The remaining task is largely modality recall.", "The later confirmed rupture is not disclosed here, and this explanation does not give away the subsequent repair approach."],
+    "suggestions": ["Use a neutral next-step task if the intended inference is whether the patient's trajectory permits planning imaging. Retain observed physiology rather than announcing stability in the lead-in.", "Compare credible actions at that actual stage without inventing a pressure cutoff or stripping out necessary urgency information."]
+  },
+  {
+    "id": "question.vascular-aorta.rupture-evar.v1",
+    "nodeId": "node.vascular-aorta.rupture-evar.v1",
+    "title": "Repair approach after confirmed rupture",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {"phrase": "Emergency endovascular aneurysm repair", "why": "Convergence: emergency occurs in two options and endovascular occurs in two options; the key uniquely combines the repeated components."},
+      {"phrase": "the selected graft's instructions-for-use requirements are satisfied", "why": "This supplies the procedural-eligibility inference. Together with the stated availability of both methods, the remaining distinction is the guideline preference."}
+    ],
+    "fairness": ["Rupture, preserved pressure, suitable anatomy and expertise support emergency EVAR as the intended best offered approach. Preserved pressure does not make elective repair appropriate.", "The third choice is a plainly inappropriate delay after rupture is established, rather than a serious competing repair decision.", "The node follows CTA coherently and contains the relevant new findings, but the option matrix undermines independent reasoning."],
+    "suggestions": ["Remove the convergence pattern and replace the elective-repair foil with a credible same-stage alternative, or redesign the decision so urgency itself must be inferred with balanced options.", "Where technical suitability is the intended inference, supply the supported observations rather than a completed eligibility conclusion. Do not replace it with arbitrary device thresholds."]
+  },
+  {
+    "id": "question.vascular-aorta.ascending-emergency.v1",
+    "nodeId": "node.vascular-aorta.ascending-emergency.v1",
+    "title": "Distal entry tear with ascending extension",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": ["The distal entry and ascending extension create a real classification trap. The learner must classify by involved aorta and choose the corresponding emergency pathway despite preserved pressure.", "The medical option is not an equivalent definitive plan for the supplied acute ascending involvement. Interim impulse therapy remains compatible with arranging surgery and is not negated by this task.", "No confident clinical inaccuracy or nonmedical option-selection shortcut identified."],
+    "suggestions": ["Keep the distinction between entry location and ascending involvement. The word 'founder' is unnecessary framing but does not change the answer; a plain reference to reviewing the admission CTA would be cleaner."]
+  },
+  {
+    "id": "question.vascular-aorta.initial-type-b.v1",
+    "nodeId": "node.vascular-aorta.initial-type-b.v1",
+    "title": "Initial treatment of uncomplicated descending dissection",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {"phrase": "He has no conduction disease, active bronchospasm or decompensated heart failure", "why": "This clustered medication-permission sentence points toward the only drug regimen, while neither competing answer contains medication."},
+      {"phrase": "Intravenous esmolol, then nicardipine if pressure remains high", "why": "The key is the only medical option and uniquely contains an ordered, conditional plan; the two alternatives are short urgent operations. Choosing medical care automatically answers the untested sequencing detail."}
+    ],
+    "fairness": ["Initial monitored impulse control is defensible for the supplied descending dissection without rupture or malperfusion, and the drug sequence is clinically coherent.", "The question cannot discriminate knowledge of beta blockade before vasodilation because no competing medical sequence is offered. Several normal findings establish uncomplicated disease, but the choices make the final selection elementary."],
+    "suggestions": ["Choose one focused objective: medical-versus-interventional management with a genuine competing complication, or initial drug sequencing with comparable regimens. Do not claim the unopposed sequencing detail as a second tested inference.", "Retain contraindication information only to the extent needed for the selected close alternatives, preferably as ordinary clinical observations rather than an option-specific permission list."]
+  },
+  {
+    "id": "question.vascular-aorta.new-malperfusion.v1",
+    "nodeId": "node.vascular-aorta.new-malperfusion.v1",
+    "title": "New renal malperfusion despite improved pressure and pain",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": ["The clinical response and new organ dysfunction pull in different directions. Urine output, creatinine and new asymmetric renal enhancement with true-lumen compression support a clinically consequential malperfusion inference rather than nonspecific creatinine attribution.", "Intervention with TEVAR and reassessment is the defensible best offered plan given the stated access and sealing anatomy. Continuing observation misses the new complication.", "The update clearly changes the original uncomplicated course. Prior explanation teaches initial therapy but does not supply the current intervention. Its own feedback anticipates reassessment, not the later branch-stent answer."],
+    "suggestions": ["Preserve both the apparent symptomatic improvement and objective new perfusion failure. Avoid making creatinine rise by itself diagnostic of malperfusion."]
+  },
+  {
+    "id": "question.vascular-aorta.residual-static-branch.v1",
+    "nodeId": "node.vascular-aorta.residual-static-branch.v1",
+    "title": "Persistent renal branch obstruction after central repair",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": ["The learner must distinguish a fixed intrabranch lesion from persistent central dynamic obstruction using the response to TEVAR, branch flap, nonvarying narrowing and pressure gradient, then select the corresponding intervention.", "Branch stenting is the defensible best offered treatment. Septal fenestration is a credible competing mechanism-specific action; extending an already effective proximal repair does not address the demonstrated branch lesion.", "The update restates the completed repair and residual findings sufficiently to stand alone. Prior feedback mentions central dynamic compression and reassessment but does not name the static lesion or its treatment."],
+    "suggestions": ["Retain the response-to-treatment observations and branch pressure evidence. The technical detail is justified by a consequential mechanism-specific action; do not add unsupported numeric gradients."]
+  },
+  {
+    "id": "question.vascular-aorta.lsa-coronary-inflow.v1",
+    "nodeId": "node.vascular-aorta.lsa-coronary-inflow.v1",
+    "title": "Preserving pedicled LIMA inflow during elective TEVAR",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": ["The learner must infer coronary dependence on subclavian inflow and then distinguish two prophylactic revascularization techniques, rather than merely recognize the risk of arm ischemia.", "A patent pedicled LIMA and occluded native LAD provide a defensible reason to prefer bypass over transposition involving proximal subclavian interruption. No confident clinical inaccuracy identified, but the exact technique comparison remains a specialist clinical-sign-off point in this offline review.", "The delayed-bypass option is less appropriate because arm symptoms do not monitor the threatened coronary territory. The two before-coverage options prevent timing alone from identifying the key."],
+    "suggestions": ["Retain the pedicled graft origin, patency and native LAD status. Keep the explanation specific to this coronary-dependent anatomy rather than declaring transposition universally unsuitable."]
+  },
+  {
+    "id": "question.vascular-aorta.post-tevar-cord-rescue.v1",
+    "nodeId": "node.vascular-aorta.post-tevar-cord-rescue.v1",
+    "title": "Neurologic rescue after TEVAR and hypotension",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": ["Bilateral leg findings, preserved limb pulses and unchanged cranial/upper-limb function require localization before choosing cord-perfusion rescue rather than limb reperfusion or renewed pressure reduction.", "Hypotension is a necessary causal observation, not a removable cue. The rescue activation is defensible; the explanation appropriately calls for specialist drainage assessment rather than claiming that normal coagulation tests establish every condition for immediate drain insertion.", "The long-segment postoperative phase is coherent after elective TEVAR planning and is understandable from the update. The preceding LIMA explanation does not teach this neurologic rescue answer."],
+    "suggestions": ["Preserve the distinction between activating perfusion/drainage rescue and inserting a drain without procedural assessment. If a future version asks specifically for drain placement, supply relevant antithrombotic exposure and other procedural safety information rather than relying solely on platelet count and coagulation tests."]
+  },
+  {
+    "id": "question.vascular-aorta.small-embolizing-paa.v1",
+    "nodeId": "node.vascular-aorta.small-embolizing-paa.v1",
+    "title": "Small popliteal aneurysm with distal embolization",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": ["The task asks for an aneurysm plan, but the key selects a particular operation while the explanation says the exact operation still depends on assessment and conduit anatomy."],
+    "cues": [],
+    "fairness": ["Blue toes with preserved pedal pulses, mural thrombus and digital occlusions support distal embolization; the complication changes the significance of the small aneurysm diameter. That is a useful two-step objective.", "The case supports repair evaluation more clearly than it establishes exclusion and bypass as the selected operation. Operative fitness, suitable conduit and reconstruction anatomy are not supplied. This is overspecification of the key rather than a confident assertion that bypass would be wrong.", "The alternative anticoagulation plan is a meaningful temptation, but its lack of definitive source treatment should be explained after answering."],
+    "suggestions": ["Either provide the decision-critical assessment supporting the named operation or make every option a comparably specific strategy at the repair-versus-surveillance stage. Avoid a generic individualized-planning key.", "Explain why treating embolic risk without addressing the aneurysm source is less appropriate here, and preserve the distinction between an embolizing viable limb and an acutely threatened limb."]
+  },
+  {
+    "id": "question.vascular-aorta.associated-aneurysm-survey.v1",
+    "nodeId": "node.vascular-aorta.associated-aneurysm-survey.v1",
+    "title": "Completing the associated aneurysm survey",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {"phrase": "Repeat abdominal aortic duplex ultrasound", "why": "The label announces repetition immediately after a complete normal abdominal CTA is supplied. It advertises why the option is unnecessary."},
+      {"phrase": "right lower extremity from common femoral to pedal vessels", "why": "Combined with the complete abdominal study, this leaves the left-sided option as the obvious missing counterpart. The record interpretation is mostly a coverage checklist rather than two consequential clinical inferences."}
+    ],
+    "fairness": ["Contralateral popliteal screening is the defensible best offered study. The associated AAA/PAA concept is high yield, and no confident clinical inaccuracy is identified.", "The acquisition records avoid mistaking absent exported images for absent acquisition, but the completeness statements and repeat-test foil make the item easy.", "The workup is chronologically coherent and the update is sufficient with the shared PAA presentation. Prior repair feedback does not disclose the screening association."],
+    "suggestions": ["Keep an authentic acquisition-adequacy distinction if that is the objective, but compare equally plausible additional studies without labeling one as a redundant repeat.", "If the purpose remains simple associated-aneurysm recall, request explicit foundational acceptance rather than asserting two-step resident difficulty."]
+  },
+  {
+    "id": "question.vascular-aorta.excluded-sac-compression.v1",
+    "nodeId": "node.vascular-aorta.excluded-sac-compression.v1",
+    "title": "Compressive excluded popliteal sac after bypass",
+    "verdict": "REVISE",
+    "difficulty": "hard",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": ["The sequence moves from an 18-mm aneurysm to an enlarging sac causing neural and venous symptoms without an interval or current size. It is plausible, but the compressed chronology makes the evolution difficult to picture."],
+    "cues": [],
+    "fairness": ["The learner must distinguish a functioning bypass from a still-perfused excluded sac and address the compressive consequence. The closest competitor is residual-branch embolization, not revision of the patent bypass.", "Symptomatic compression supports decompression, but the explanation only rejects bypass revision and never explains why branch embolization is less appropriate for this patient's current symptoms. I am not asserting that decompression is an incorrect key; the exact ranking against embolization needs clinician confirmation and clearer justification.", "The update identifies the completed operation and current anatomy sufficiently to stand alone, although the time course should be clearer."],
+    "suggestions": ["Add a clinically plausible interval and observed progression sufficient to establish the current compressive problem; do not invent a size threshold.", "Have the clinician adjudicate decompression versus inflow embolization for the stated severity, then explain the closest alternative explicitly. Name control of persistent inflow as part of the operative strategy if required by the intended procedure, rather than suggesting decompression without treatment of the perfused source."]
+  },
+  {
+    "id": "question.vascular-aorta.graft-bleed-imaging.v1",
+    "nodeId": "node.vascular-aorta.graft-bleed-imaging.v1",
+    "title": "Bleeding and bacteremia after aortic grafting",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {"phrase": "Repeat upper endoscopy through the proximal duodenum", "why": "The record just states that this scope was examined without a source; no change in examination adequacy or target is offered. The word repeat advertises the same already-completed workup as a weak foil."},
+      {"phrase": "CT angiography of the aortic graft and adjacent bowel", "why": "Only this option names both salient structures in the presentation, while the competing endoscopy repeats the explicitly completed region. This creates a partial wording shortcut even before the graft-enteric complication is inferred."}
+    ],
+    "fairness": ["Prior grafting, bacteremia and melena warrant concern for an infected graft-enteric complication; CTA is the defensible best offered investigation in the stated stable interval.", "A limited negative endoscopy does not exclude that complication. The task has a valid diagnostic inference followed by a test-selection decision, but the closest endoscopic alternative is deliberately restricted to the already examined target.", "The explanation does not disclose the definitive source-control answer in the next node."],
+    "suggestions": ["Compare credible investigations of the remaining uncertainty and label their scope in a parallel way. Do not use an identical completed examination as a disposable foil unless an actual reason to repeat it is supplied.", "Retain hemodynamic context, the graft history and the actual endoscopic coverage; do not turn the negative examination into an exclusion of graft-enteric disease."]
+  },
+  {
+    "id": "question.vascular-aorta.graft-source-control.v1",
+    "nodeId": "node.vascular-aorta.graft-source-control.v1",
+    "title": "Definitive treatment of infected graft-enteric communication",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": ["The learner must interpret persistent infection plus a graft-to-bowel channel and distinguish definitive source control from hemorrhage bridging or suppressive therapy.", "Graft removal with vascular and bowel reconstruction is the defensible best offered definitive strategy in the stated operable patient. The alternatives can have roles in other settings, which makes stability and operability necessary information rather than gratuitous permission.", "The update follows imaging coherently and contains enough current information to answer independently. Earlier feedback identifies concern for a complication but does not prescribe this definitive operation."],
+    "suggestions": ["Keep the explicit definitive-treatment task and persistent-infection observations. Do not imply that suppressive treatment or endovascular bridging has no role in inoperable or unstable patients."]
+  },
+  {
+    "id": "question.vascular-aorta.marfan-repair-approach.v1",
+    "nodeId": "node.vascular-aorta.marfan-repair-approach.v1",
+    "title": "Repair strategy for native-aortic Marfan TAAA",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": ["A known syndrome is appropriate because this is a management task. Native landing-zone tissue, intact aneurysm, fitness and technical feasibility of alternatives require the resident to separate technical possibility from long-term preferred strategy.", "Open repair is a defensible preferred approach in this supplied setting. Branched and hybrid alternatives are specific same-stage competitors, not nonsensical options.", "No confident clinical inaccuracy identified. The exact recommendation remains subject to clinician review; this offline PASS does not freshly verify the cited guideline or make open repair universal for every patient with heritable disease."],
+    "suggestions": ["Retain native-versus-prosthetic landing-zone information and the intact, operable context. Keep explanation language about preference within this setting rather than an absolute prohibition of endovascular treatment."]
+  },
+  {
+    "id": "question.vascular-aorta.visceral-pseudo-treatment.v1",
+    "nodeId": "node.vascular-aorta.visceral-pseudo-treatment.v1",
+    "title": "New splenic arterial cavity after pancreatitis",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": ["The explanation gives 'extra-organ location' diagnostic or management weight without making clear why location outside the pancreas matters independently of the demonstrated arterial wall defect."],
+    "cues": [
+      {"phrase": "Prompt splenic-artery embolization assessment", "why": "This is the sole active treatment pathway and an assessment-level label, whereas both competitors commit to specific imaging-surveillance policies. That asymmetry makes the key easier to select than a comparison of equally concrete plans."}
+    ],
+    "fairness": ["The new arterial communication through a wall defect after pancreatitis supports a pseudoaneurysm inference, and its small size and current stability do not make ordinary true-aneurysm size surveillance the best offered plan.", "The intended treatment-assessment key is defensible. I do not identify a confident clinical inaccuracy, but extra-pancreatic location should not be taught as an independent defining criterion without a clear supported reason.", "The two surveillance distractors test essentially the same delay error rather than two distinct close alternatives."],
+    "suggestions": ["Focus the explanation on acquired wall disruption and arterial communication; remove or substantiate the claimed role of extra-organ location.", "Compare plans at the same decision stage and specificity, with one credible size-based surveillance error and another genuinely distinct alternative. Preserve the small-size/stability conflict rather than making the item harder through unsupported embolization anatomy or thresholds."]
+  }
+]

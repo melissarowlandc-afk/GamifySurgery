@@ -1,0 +1,529 @@
+[
+  {
+    "id": "question.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v1",
+    "nodeId": "node.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v1",
+    "title": "MH family risk and surgical testing sequence",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Proceeding with the represented nontriggering pathway while arranging specialist assessment is the best offered recommendation. A prior uneventful exposure and a negative panel without a known familial variant do not resolve the affected sibling's risk.",
+      "Two consequential decisions remain: interpret the family/testing evidence, then distinguish safe anesthetic preparation from a requirement to finish diagnostic testing. Testing-first and prophylactic dantrolene are recognizable competing errors.",
+      "The readiness details are necessary conditions for the proposed action, not an instruction that it is safe to proceed. They should not be deleted merely to make the question harder. First node; no preceding explanation supplies its answer.",
+      "Review scope for this entire report: only candidate visible fields and preceding candidate explanations were used to judge items. All 22 rewritten/new nodes were reviewed; six kept records, 69 retirement/replacement proposals, and historical held/withheld records were noted without adjudicating their old questions. No sources were retrieved or independently verified. PASS is editorial, not clinical approval; all candidates remain needs_clinician_review. Difficulty and highYield are qualitative judgments, not measured difficulty or verified examination frequency. Runtime name substitution, randomization and wait displays were not inspected."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.anesthesia-analgesia-pharmacology.mh-uneventful-recovery.v1",
+    "nodeId": "node.topic.anesthesia-analgesia-pharmacology.mh-uneventful-recovery.v1",
+    "title": "Recovery after uneventful nontriggering anesthesia",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The task asks broadly about postoperative care after colectomy, whereas the intended decision is whether MH susceptibility adds recovery surveillance. Ordinary discharge criteria should clearly mean the anesthetic recovery criteria in addition to the operation's requirements."
+    ],
+    "cues": [
+      {
+        "phrase": "awake, breathing comfortably and moving normally; serial observations show no rigidity or dark urine",
+        "why": "This uniformly reassuring checklist maps to the only ordinary-care option. Both alternatives are variations of serial creatine-kinase surveillance, so there is little competing interpretation."
+      }
+    ],
+    "fairness": [
+      "Routine postanesthesia recovery is the best offered MH-specific plan after the represented uneventful course. No confident clinical error is identified in that principle.",
+      "The update follows the earlier plan coherently and contains the recovery observations needed when shown with the presentation. The first explanation does not explicitly reveal the recovery rule.",
+      "This is primarily application of one susceptibility-versus-event rule; the normal observations do not create a second consequential decision."
+    ],
+    "suggestions": [
+      "Narrow the task to MH-specific additional surveillance, while retaining ordinary surgical recovery requirements.",
+      "Replace the two overlapping CK plans with distinct credible recovery decisions that turn on a supported clinical course. If the uncomplicated course is retained, seek explicit acceptance as a focused foundational item rather than call it a difficult resident item."
+    ]
+  },
+  {
+    "id": "question.topic.anesthesia-analgesia-pharmacology.mh-early-drug.v1",
+    "nodeId": "node.topic.anesthesia-analgesia-pharmacology.mh-early-drug.v1",
+    "title": "Early malignant hyperthermia treatment",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Dantrolene is the best offered drug for progressive CO2 elevation and rigidity during sevoflurane exposure despite the recorded initial measures. A temperature still near baseline does not make the proposed rescue unfair.",
+      "No strong medical-knowledge-free wording cue was found: drug labels are parallel and brief. The problem is clinical distractor quality. Flumazenil has no represented benzodiazepine problem, and lipid emulsion has no represented local-anesthetic exposure.",
+      "This classic syndrome-to-antidote association is one recognition chain, not two consequential steps. High importance does not establish moderate or hard difficulty. The retrospective checkpoint itself is clear."
+    ],
+    "suggestions": [
+      "Keep the early temperature finding and the necessary resuscitation context.",
+      "Compare credible actions at the same early MH decision point, with a finding that changes treatment sequencing, or explicitly obtain acceptance as an emergency-recognition exception. Do not add obscure drug names just to increase difficulty."
+    ]
+  },
+  {
+    "id": "question.topic.anesthesia-analgesia-pharmacology.last-lipid-rescue.v1",
+    "nodeId": "node.topic.anesthesia-analgesia-pharmacology.last-lipid-rescue.v1",
+    "title": "Lipid rescue for systemic local-anesthetic toxicity",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Intramuscular epinephrine",
+        "why": "This is the only nonintravenous option beside two intravenous rescue agents during ongoing cardiovascular resuscitation. The route makes the anaphylaxis foil easier to reject without resolving the competing mechanisms; it does not by itself uniquely identify the key."
+      }
+    ],
+    "fairness": [
+      "Lipid emulsion is the best offered additional rescue for the exposure-linked neurologic prodrome and cardiovascular toxicity. Airway and circulatory support are already represented.",
+      "Metallic taste, tinnitus and collapse during bupivacaine administration make a classic recognition item. Selecting its antidote does not add a second consequential inference.",
+      "This first node supplies the LAST diagnosis in feedback. Later nodes must therefore test treatment decisions, not count reidentification of LAST as another step."
+    ],
+    "suggestions": [
+      "Retain the important exposure chronology, but compare credible rescue sequencing or response-dependent choices within this syndrome if resident-level difficulty is required.",
+      "Use route- and stage-comparable alternatives, or request explicit acceptance as a focused emergency-recognition item."
+    ]
+  },
+  {
+    "id": "question.topic.anesthesia-analgesia-pharmacology.last-seizure-drug.v1",
+    "nodeId": "node.topic.anesthesia-analgesia-pharmacology.last-seizure-drug.v1",
+    "title": "Seizure control during hemodynamically unstable LAST",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Intravenous propofol induction bolus / Intravenous thiopental induction bolus",
+        "why": "Both distractors carry the same full-induction qualifier while midazolam has none. The two choices advertise a larger anesthetic intervention in an already hypotensive patient, leaving the short, unqualified drug as the cautious outlier."
+      }
+    ],
+    "fairness": [
+      "Midazolam is the best offered seizure-control drug in this unstable circulation. The important reasoning is to interpret persistent instability and apply it to anticonvulsant selection; recognizing LAST again is not a step.",
+      "The sequence is coherent. The update plus original presentation supplies the necessary seizure and cardiovascular context without needing the prior correct answer.",
+      "The explanation says that drugs are not equally suitable but does not plainly explain the relevant hemodynamic disadvantage of the competing induction boluses."
+    ],
+    "suggestions": [
+      "Put all three treatment labels at comparable dosing/administration specificity, with clinician-reviewed regimens; do not make both distractors wrong by adding a qualifier omitted from the key.",
+      "Explain the seizure-control and circulatory tradeoff directly in feedback, without inventing an exact dose or implying that any benzodiazepine administration is risk-free."
+    ]
+  },
+  {
+    "id": "question.topic.anesthesia-analgesia-pharmacology.last-wide-complex.v1",
+    "nodeId": "node.topic.anesthesia-analgesia-pharmacology.last-wide-complex.v1",
+    "title": "Adjunct for persistent broad-complex toxicity",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": false,
+    "clarityIssues": [
+      "Persistent tachycardia with poor perfusion raises an immediate electrical-treatment decision. 'Rhythm-directed adjunct' and generic 'resuscitation' do not clearly locate this drug choice relative to the indicated rhythm/electrical management.",
+      "The final update names lipid therapy and benzodiazepine treatment but relies on the original presentation for the local-anesthetic exposure. It stands alone only with that presentation retained."
+    ],
+    "cues": [],
+    "fairness": [
+      "The intended reasoning is to interpret persistent conduction toxicity after seizure control and select an adjunct compatible with local-anesthetic toxicity. Sodium bicarbonate is a plausible intended answer; this offline review does not independently verify the explanation's AHA attribution or establish a general preference over all other rhythm treatments.",
+      "Lidocaine is a recognizable wrong-treatment-for-this-cause error. Magnesium is less compelling for the explicitly monomorphic rhythm than for a torsades-type rhythm. No strong nonmedical wording cue was found.",
+      "The exact bicarbonate-as-LAST-adjunct objective is more specialized than core LAST recognition, lipid rescue and seizure treatment. highYield=false is a relative general-surgery prioritization judgment, not a claim that it cannot be tested.",
+      "The preceding explanations do not disclose bicarbonate, and the clinical progression is otherwise coherent."
+    ],
+    "suggestions": [
+      "Specify the status of pulse and appropriate electrical/rhythm treatment, and make explicit that the question concerns an additional toxicology-directed medication while those measures continue.",
+      "Have the clinician verify the exact guideline indication and distractor ranking before acceptance; preserve 'reasonable adjunct' uncertainty instead of promoting it to a universal first-line rule.",
+      "Use a trace or sufficiently specific supported electrical observations if interpreting conduction physiology is the intended second step. Do not create a new unsourced cutoff."
+    ]
+  },
+  {
+    "id": "question.topic.anesthesia-analgesia-pharmacology.nmb-measurement.v1",
+    "nodeId": "node.topic.anesthesia-analgesia-pharmacology.nmb-measurement.v1",
+    "title": "Conflicting neuromuscular recovery observations",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The checked adductor-pollicis ratio supports residual block despite command following, head lift and the reassuring eye-muscle ratio. Addressing rocuronium and reassessing is the best offered instruction.",
+      "Two consequential steps are present: resolve conflicting measurements and then choose the intervention target before extubation. Fentanyl makes naloxone a plausible target-confusion error without displacing the measured motor deficit.",
+      "The choices are distinguishable and the tracheal tube and ventilation remain in place. The key does not assert that blocker reversal alone completes extubation readiness.",
+      "The first-node explanation appropriately resolves this decision without naming the later opioid-recurrence answer. No confident clinical inaccuracy or nonmedical shortcut was identified."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.anesthesia-analgesia-pharmacology.recovery-target-after-sugammadex.v1",
+    "nodeId": "node.topic.anesthesia-analgesia-pharmacology.recovery-target-after-sugammadex.v1",
+    "title": "Respiratory depression after successful motor reversal",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "titrated naloxone briefly restores regular deeper breaths; shallow breathing then returns",
+        "why": "The update names the successful intervention, and the key repeats 'Titrated intravenous naloxone.' With no benzodiazepine exposure represented and motor recovery already restored, a repeat-what-worked shortcut nearly solves the item. The response is legitimate data; the option set makes it overly decisive."
+      }
+    ],
+    "fairness": [
+      "Naloxone is the best offered additional antagonist during continued respiratory support. No confident clinical error is identified.",
+      "The prior node has already taught the motor-monitoring issue. This update then demonstrates both motor correction and successful naloxone response; the remaining answer is essentially supplied. Flumazenil has no represented exposure to address.",
+      "The later checkpoint follows coherently and is answerable with its update and presentation. It substantially overlaps the separate opioid-recurrence-target candidate."
+    ],
+    "suggestions": [
+      "Retain the measured motor recovery and drug-response observations, but make the scored decision a distinct remaining problem with credible response-dependent alternatives.",
+      "Consider merging the duplicated recurrence objective with the fuller mixed-drug David Chen item. Do not count the already-resolved first-node motor interpretation as a new consequential step."
+    ]
+  },
+  {
+    "id": "question.topic.anesthesia-analgesia-pharmacology.cisatracurium-antagonist.v1",
+    "nodeId": "node.topic.anesthesia-analgesia-pharmacology.cisatracurium-antagonist.v1",
+    "title": "Antagonist selection after cisatracurium",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Neostigmine with glycopyrrolate and monitoring is the best offered plan for the represented cisatracurium recovery. Sugammadex and flumazenil do not provide the relevant reversal.",
+      "The ratio is clinically useful, but deleting it still leaves neostigmine as the only option that can reverse the named blocker. Thus blocker identity alone solves the choice; measured depth does not earn a consequential second step.",
+      "The labels are sufficiently parallel and no strong medical-knowledge-free cue was identified. Flumazenil is a weak distractor because no benzodiazepine problem is represented."
+    ],
+    "suggestions": [
+      "Make the degree of spontaneous recovery change the choice between credible reversal/timing plans for the same blocker, while retaining ventilation and quantitative reassessment.",
+      "Use clinician-supported eligibility conditions; do not invent a new numerical threshold or count drug-class recall followed by reversal recall as two-step reasoning."
+    ]
+  },
+  {
+    "id": "question.topic.anesthesia-analgesia-pharmacology.nmb-no-antagonist.v1",
+    "nodeId": "node.topic.anesthesia-analgesia-pharmacology.nmb-no-antagonist.v1",
+    "title": "No reversal after documented spontaneous recovery",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "awake, following commands and breathing adequately / returned to its pre-block value of 0.97 on repeated measurement",
+        "why": "Every supplied recovery observation endorses completion, and the only option that avoids another drug matches that repeated reassurance. This is a semantic shortcut rather than a misleading measurement conflict."
+      }
+    ],
+    "fairness": [
+      "No blocker antagonist is the best offered instruction after valid recovery has been documented. The explanation correctly retains ordinary extubation assessment.",
+      "Severe renal impairment does not change the best answer in this fully recovered patient. It adds a second reason to question one distractor, rather than a competing decision the learner must resolve.",
+      "This is a useful avoidance-of-unnecessary-treatment rule, but the presented version does not require two consequential steps."
+    ],
+    "suggestions": [
+      "Remove renal impairment if it remains irrelevant to the decision.",
+      "Either obtain acceptance for focused recovery-rule practice or introduce a supported conflict in measurement validity or clinical recovery that genuinely changes the antagonist decision. Preserve clearly sufficient data for one best answer."
+    ]
+  },
+  {
+    "id": "question.topic.anesthesia-analgesia-pharmacology.paralysis-delivery-gap.v1",
+    "nodeId": "node.topic.anesthesia-analgesia-pharmacology.paralysis-delivery-gap.v1",
+    "title": "Anesthetic delivery interruption during paralysis",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "the propofol tubing had separated from the intravenous cannula / Restore intravenous anesthetic delivery",
+        "why": "A visibly disconnected drug line followed by the only repair-the-delivery option can be solved without knowing the distinction between paralysis and anesthesia. The mechanical fault explicitly supplies the action."
+      }
+    ],
+    "fairness": [
+      "Restoring appropriate anesthetic delivery is the best offered priority while ventilation continues. More paralysis does not replace anesthesia, and motor recovery is not the immediate repair of anesthetic failure.",
+      "This important awareness-prevention concept is reduced to an obvious equipment-repair choice. Neither additional rocuronium nor sugammadex plausibly repairs the demonstrated delivery failure.",
+      "The exact disconnected-line observation should not simply be hidden to manufacture uncertainty about a real safety event."
+    ],
+    "suggestions": [
+      "Compare credible immediate anesthetic-delivery or rescue strategies under a meaningful supported constraint if this must be a resident reasoning item.",
+      "Alternatively obtain explicit acceptance as a brief safety-recognition item; do not label it moderate or two-step merely because paralysis persists."
+    ]
+  },
+  {
+    "id": "question.topic.anesthesia-analgesia-pharmacology.opioid-recurrence-target.v1",
+    "nodeId": "node.topic.anesthesia-analgesia-pharmacology.opioid-recurrence-target.v1",
+    "title": "Response-directed reversal after mixed anesthetic exposure",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Repeat titrated naloxone is the best offered intervention for recurrent respiratory depression after documented improvement with naloxone, while respiratory support continues.",
+      "The mixed fentanyl/midazolam/rocuronium exposure makes the alternatives clinically meaningful: interpret the response and documented motor recovery, then target the recurrent component. The explanation appropriately does not exclude mixed contributors.",
+      "Repeating naloxone in the stem and option is necessary response data, not by itself an unfair lexical cue. Unlike the Marcus follow-up, this is the first scored decision and the benzodiazepine competitor has an actual represented exposure.",
+      "The interpretation is high-yield and moderately discriminating, not a hard item. Feedback does not prescribe the next node's delivery mode."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.anesthesia-analgesia-pharmacology.opioid-maintenance-delivery.v1",
+    "nodeId": "node.topic.anesthesia-analgesia-pharmacology.opioid-maintenance-delivery.v1",
+    "title": "Ongoing naloxone delivery after repeated recurrence",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Over differing observed intervals' does not say whether recurrence is frequent enough to make an infusion preferable to clinically titrated intermittent intravenous dosing.",
+      "The key says only 'maintenance infusion'; the explanation adds the important response-adjusted property that is absent from the option."
+    ],
+    "cues": [
+      {
+        "phrase": "ongoing delivery / maintenance infusion",
+        "why": "The sustained-treatment wording favors the one maintenance-labeled choice, while both distractors are labeled intermittent. This is a modest semantic cue, not proof that an infusion is wrong."
+      }
+    ],
+    "fairness": [
+      "An infusion is a reasonable and often preferable approach after repeated recurrent opioid respiratory depression. However, intermittent intravenous naloxone remains potentially defensible under the unspecified frequency and observation conditions; the packet does not establish that the offered intermittent plan is inadequate.",
+      "Duration of effect and the need for titratable ongoing reversal can support two consequential steps. Prior feedback establishes the target drug but does not itself answer the delivery-mode question.",
+      "The update is coherent and restates repeated responses sufficiently for later-node presentation. No exact dosing formula or unsupported interval should be inferred."
+    ],
+    "suggestions": [
+      "Supply a clinically supported trajectory showing why intermittent rescue is failing to sustain the desired respiratory endpoint or why ongoing titratable delivery is needed; avoid an invented frequency cutoff.",
+      "Make the compared plans equally explicit about response-based titration, monitoring and the analgesia goal. Have the clinician resolve the closest intermittent-IV alternative before accepting a unique key."
+    ]
+  },
+  {
+    "id": "question.topic.anesthesia-analgesia-pharmacology.opioid-respiratory-endpoint.v1",
+    "nodeId": "node.topic.anesthesia-analgesia-pharmacology.opioid-respiratory-endpoint.v1",
+    "title": "Naloxone endpoint versus wakefulness and analgesia",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The update says 'repeated observations,' but the explanation dismisses stopping after 'one satisfactory checkpoint.' Those are not the same stated observation history.",
+      "The elapsed course on the infusion is unspecified, leaving uncertainty about whether this is the first successful titration check or a sustained recovery assessment suitable for considering discontinuation."
+    ],
+    "cues": [],
+    "fairness": [
+      "Maintaining the current rate is plausible when respiratory function has just been restored after repeated recurrence and pain remains tolerable. Escalating simply to abolish dozing is not supported by the represented respiratory endpoint.",
+      "Stopping cannot be ranked confidently from the visible course without knowing whether sufficient sustained recovery has occurred. This is a missing trajectory constraint, not a claim that the keyed action is clinically wrong.",
+      "The useful two-step problem is to distinguish ventilation from full wakefulness and balance that endpoint against prior recurrence and analgesia. The preceding infusion explanation does not supply that endpoint.",
+      "The original presentation supplies one recurrence; if earlier updates are not carried into a standalone selection, this node should restate the recent repeated recurrences that justified the infusion."
+    ],
+    "suggestions": [
+      "State qualitatively whether this is an early reassessment after starting/titrating the infusion versus a sustained stable course; use verified timing only if an exact interval is needed.",
+      "Align the explanation with the actual repeated observations, and retain the recurrence history in the later node's own visible context. Re-solve maintain versus discontinue with the clinician."
+    ]
+  },
+  {
+    "id": "question.topic.anesthesia-analgesia-pharmacology.boosted-midazolam-route.v1",
+    "nodeId": "node.topic.anesthesia-analgesia-pharmacology.boosted-midazolam-route.v1",
+    "title": "Cobicistat interaction and midazolam route",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Usual repeated increments' does not define the competing intravenous plan well enough: usual procedural dosing may itself involve careful response-based titration.",
+      "'Dose-reduction consideration' describes a consideration rather than a concrete administration instruction."
+    ],
+    "cues": [
+      {
+        "phrase": "Use monitored intravenous titration with dose-reduction consideration",
+        "why": "The key assembles both majority components: monitored intravenous administration appears in choices one and three, while dose-reduction consideration appears in choices one and two. Component convergence can identify it without knowing the interaction."
+      }
+    ],
+    "fairness": [
+      "The proposed oral-versus-parenteral distinction is clinically plausible for boosted protease-inhibitor therapy. Exact drug-label wording and the repeated-dose ranking were not independently verified in this offline review.",
+      "Interpreting the cobicistat-containing regimen and applying a route-specific sedation plan is a consequential two-step objective. The current convergent labels undermine it.",
+      "The question does not require ART interruption or an invented dose. The necessary monitoring and titration conditions should remain explicit."
+    ],
+    "suggestions": [
+      "Remove the majority-component pattern using three genuinely distinct, equally qualified plans, or a balanced set if every additional option is credible.",
+      "Define the competing IV administration approaches concretely enough that the answer does not depend on what 'usual' means. Obtain clinician confirmation of the exact interaction instruction without adding unsourced doses."
+    ]
+  },
+  {
+    "id": "question.topic.anesthesia-analgesia-pharmacology.ventilation-recording.v1",
+    "nodeId": "node.topic.anesthesia-analgesia-pharmacology.ventilation-recording.v1",
+    "title": "Ventilation monitoring despite preserved oxygen saturation",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The task asks for an added recording, but serial blood hemoglobin measurements are a different category from the two continuous waveform recordings."
+    ],
+    "cues": [
+      {
+        "phrase": "Serial blood hemoglobin measurements",
+        "why": "This is the only serial blood-test option among continuous waveform choices. It is a category outlier and an implausible way to assess the stated changing breathing pattern."
+      }
+    ],
+    "fairness": [
+      "Expired-CO2 waveform monitoring plus direct observation is the best offered addition. Reliable oxygen saturation during supplemental oxygen does not establish adequate ventilation.",
+      "The reliable pulse signal and explicit shallow, infrequent breaths leave little reason to select another oximeter; hemoglobin measurement does not meaningfully compete. The item tests one familiar oxygenation-versus-ventilation distinction.",
+      "The explanation appropriately warns that waveform loss also requires patient and sampling/equipment assessment. No confident clinical error is identified."
+    ],
+    "suggestions": [
+      "Retain oxygen administration, respiratory observations and reliable saturation because they define the intended misconception.",
+      "For a resident reasoning item, compare credible respiratory assessment or intervention paths using a usable waveform/response observation that changes the decision. Otherwise seek acceptance as focused foundational monitoring practice."
+    ]
+  },
+  {
+    "id": "question.topic.anesthesia-analgesia-pharmacology.lap-co2-response.v1",
+    "nodeId": "node.topic.anesthesia-analgesia-pharmacology.lap-co2-response.v1",
+    "title": "CO2 rise after laparoscopic insufflation",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Adjust pulmonary ventilation' does not state the direction of the proposed ventilatory change. The task otherwise identifies a clear first checkpoint."
+    ],
+    "cues": [
+      {
+        "phrase": "Adjust pulmonary ventilation to the added CO2 load",
+        "why": "The key contains the causal interpretation, 'added CO2 load,' while the other labels merely name actions. It echoes the CO2-insufflation story and gives the key an explanatory advantage."
+      },
+      {
+        "phrase": "before changing ventilation",
+        "why": "Both distractors repeat this clause, so every offered plan already endorses changing ventilation. Their extra prerequisite makes the direct ventilation option the structurally simplest shared action."
+      }
+    ],
+    "fairness": [
+      "A ventilatory response to absorbed insufflation CO2 is the best offered action given the gradual trend, unchanged ventilation, zero inspiratory baseline and stable temperature/circulation.",
+      "There is a valid two-step objective: distinguish added load from rebreathing or a developing hypermetabolic pattern, then choose a response. It is moderate at most; option rationales should not do that interpretation for the learner.",
+      "The first-node explanation does not reveal the later pressure-related hemodynamic decision."
+    ],
+    "suggestions": [
+      "Use a concrete ventilation action such as increasing minute ventilation and reassessing, with the exact wording clinically reviewed.",
+      "Remove the causal explanation from the key and the shared 'before changing ventilation' clauses from the other labels. Compare immediate actions at equal specificity while preserving the raw observations."
+    ]
+  },
+  {
+    "id": "question.topic.anesthesia-analgesia-pharmacology.lap-pressure-intervention.v1",
+    "nodeId": "node.topic.anesthesia-analgesia-pharmacology.lap-pressure-intervention.v1",
+    "title": "Pressure-related cardiovascular and respiratory effects",
+    "verdict": "FAIL",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The update says insufflation pressure was already increased and reduced, and the chart already shows recovery after reduction. The task then asks what change should have been discussed at an undefined 'second checkpoint,' while the key orders that same reduction again.",
+      "It is unclear whether the decision is retrospective before the completed reduction or current after the response. Those states require different information and actions."
+    ],
+    "cues": [
+      {
+        "phrase": "After reduction / Returns toward prior value / Temporarily reduce insufflation pressure and reassess the response",
+        "why": "The table explicitly demonstrates that the keyed intervention worked across four rows, then the key repeats it. A nonmedical reader can choose the previously successful reduction without interpreting preload, ejection fraction or plateau pressure."
+      }
+    ],
+    "fairness": [
+      "The represented reversible changes are compatible with a pressure-related contribution; this verdict does not allege that the physiology is false.",
+      "The scored task is defective as written: the intended action and its response are already completed, and no new need to repeat the intervention is specified. The interpretive explanation cannot restore a missing decision point.",
+      "Even with the full preceding case, the chronology remains unclear. Prior CO2 feedback is not the cause of the leak; the current exhibit itself supplies the answer.",
+      "This is a high-yield physiologic domain, but the visible version is an easy repeat-the-successful-action item rather than two consequential inferences."
+    ],
+    "suggestions": [
+      "Rebuild the scored checkpoint. Either show only the pre-intervention change and ask for the next action, or retain the intervention-response comparison and ask a genuinely distinct subsequent planning/interpretation decision.",
+      "If testing preload versus contractility and compliance versus resistance, ensure those interpretations actually change the offered decision. Do not show the future successful intervention before a task asking the learner to select it.",
+      "State where the observations were obtained if the advanced cardiac measurements are retained, without adding unsupported precision. Re-review the rewritten node as a new exact version."
+    ]
+  },
+  {
+    "id": "question.topic.anesthesia-analgesia-pharmacology.methemoglobin-confirmation.v1",
+    "nodeId": "node.topic.anesthesia-analgesia-pharmacology.methemoglobin-confirmation.v1",
+    "title": "Discordant oxygen measurements after benzocaine",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Measured hemoglobin fractions by co-oximetry are the best offered additional measurement. The exposure, persistent discoloration, reliable low pulse-oximeter reading and high arterial oxygen tension with calculated saturation create a coherent dyshemoglobin concern.",
+      "Two useful steps are present: interpret why the oxygen observations disagree, then choose a measurement that resolves the disagreement rather than repeat the same calculation or ordinary two-wavelength measurement.",
+      "The measurement methods must be named in the choices; 'measured' versus 'calculated' is the tested distinction, not gratuitous teaching. The original presentation does not name methemoglobinemia.",
+      "The feedback establishes the diagnosis for the next node but does not reveal the later G6PD-related treatment limitation. No confident clinical inaccuracy was identified."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.anesthesia-analgesia-pharmacology.methylene-blue-hemolysis.v1",
+    "nodeId": "node.topic.anesthesia-analgesia-pharmacology.methylene-blue-hemolysis.v1",
+    "title": "Hemolysis and low G6PD activity after methylene blue",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Methemoglobin remained above its reference interval' does not establish a clinical need for additional antidote treatment. The severity and symptoms at reassessment are unspecified."
+    ],
+    "cues": [],
+    "fairness": [
+      "Withholding further methylene blue is the best offered instruction with demonstrated low G6PD activity and a hemolytic pattern. This review does not assert that the original team knew of G6PD deficiency before treatment.",
+      "The G6PD result alone defeats both repeat-dose choices. Deleting the hemoglobin, bilirubin, haptoglobin and antiglobulin results leaves the same answer, so interpreting hemolysis is not a consequential second step in this option set.",
+      "The prior confirmation explanation does not disclose this treatment limitation. The update coherently states the confirmed diagnosis, drug administration and new findings, and stands alone with the original presentation.",
+      "No strong medical-knowledge-free wording cue is present; the weakness is a single contraindication rule and two versions of the same contraindicated action."
+    ],
+    "suggestions": [
+      "If retaining this exact withholding objective, seek acceptance as focused safety practice rather than claim that the removable hemolysis panel creates difficulty.",
+      "For a more consequential management task, provide the clinically necessary current severity and compare specific credible alternatives under the G6PD constraint, with clinician-verified evidence. Do not invent a treatment threshold or remove necessary safety information merely to obscure the contraindication.",
+      "Avoid implying that any residual elevation above the reference interval automatically requires another antidote dose."
+    ]
+  },
+  {
+    "id": "question.topic.anesthesia-analgesia-pharmacology.ponv-rescue-class.v1",
+    "nodeId": "node.topic.anesthesia-analgesia-pharmacology.ponv-rescue-class.v1",
+    "title": "Rescue antiemetic after failed prophylaxis",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'While those drugs were active' is an authored pharmacologic conclusion rather than the administration chronology from which the resident should judge early prophylaxis failure."
+    ],
+    "cues": [
+      {
+        "phrase": "Intravenous droperidol / Intravenous ondansetron / Intravenous granisetron",
+        "why": "Both distractors visibly share the '-setron' ending and one repeats the prophylactic drug. In a failure-of-prophylaxis story, the lone differently named drug becomes an odd-one-out shortcut even without detailed class knowledge."
+      }
+    ],
+    "fairness": [
+      "Droperidol is the plausible best offered different-class rescue in this early monitored setting with a reassuring QTc. No confident clinical inaccuracy is asserted; exact use conditions were not independently source-verified.",
+      "The task is a familiar rescue-class rule after the stem has already supplied the active-drug premise. Identifying two same-class alternatives does not establish two consequential steps.",
+      "The explanation appropriately retains assessment for medication and mechanical causes rather than assuming all postoperative vomiting is routine PONV."
+    ],
+    "suggestions": [
+      "Replace 'while those drugs were active' with a concise supported administration/recovery chronology that preserves the necessary timing distinction.",
+      "Avoid a lone different-class drug against two visibly similar same-class drugs. Compare credible rescue decisions with a patient-specific constraint that changes the preferred choice, or obtain acceptance for focused single-rule practice.",
+      "Do not introduce an unsourced repeat-dose interval to make the item appear more precise."
+    ]
+  },
+  {
+    "id": "question.topic.anesthesia-analgesia-pharmacology.awake-airway-strategy.v1",
+    "nodeId": "node.topic.anesthesia-analgesia-pharmacology.awake-airway-strategy.v1",
+    "title": "Anticipated difficult intubation with difficult ventilation",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Securing the trachea awake before induction is the best offered strategy given prior difficult intubation and mask ventilation, persistent anatomical limitations and current cooperation.",
+      "Two consequential considerations interact: infer persisting airway difficulty from the record and anatomy, then incorporate the difficulty of ventilation rescue when choosing the awake-versus-asleep sequence. Difficult laryngoscopy alone is not the entire argument.",
+      "The choices compare concrete airway-securing sequences at the same planning stage. The repeated 'induce general anesthesia before' wording defines the genuine decision boundary rather than assembling the key from majority components.",
+      "Comfortable resting breathing does not guarantee safe rescue after induction. The explanation appropriately leaves the awake device and procedural details to the anesthesia team. No confident clinical error or nonmedical wording shortcut was identified."
+    ],
+    "suggestions": []
+  }
+]

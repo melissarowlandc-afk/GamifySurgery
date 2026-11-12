@@ -1,0 +1,485 @@
+[
+  {
+    "id": "A02",
+    "title": "Imaging after inconclusive gallbladder ultrasound",
+    "reviewStatus": "needs_clinician_review",
+    "ownerStatus": "awaiting_round_two_review",
+    "keyOrderNotice": "key shown first for review only; runtime options are randomized",
+    "reviewDisplayNote": "Synthetic canonical profile; any patientName placeholder is rendered as Jamie Taylor for this review only.",
+    "caseId": "case.gs028c.acute-cholecystitis.a-stones-without-secondary-signs",
+    "conceptId": "concept.cholecystitis.hida-after-equivocal-ultrasound",
+    "before": {
+      "variantId": "question.cholecystitis.hida-after-equivocal-ultrasound.v2.r3",
+      "Presentation": "Jamie Taylor, a 37-year-old woman, comes to the clinic with sustained right-upper-quadrant pain, nausea and inflammatory laboratory findings. Ultrasound shows gallstones, but the gallbladder inflammatory findings are inconclusive. The patient is stable; further imaging can be arranged at the receiving hospital without an availability constraint.",
+      "Current update": null,
+      "Exhibit": null,
+      "Task": "Which investigation should be arranged next for Jamie Taylor's suspected acute cholecystitis?",
+      "Options": [
+        "**KEY:** Hepatobiliary scintigraphy",
+        "Contrast-enhanced abdominal CT",
+        "Biliary magnetic resonance imaging"
+      ]
+    },
+    "after": {
+      "variantId": "question.cholecystitis.hida-after-equivocal-ultrasound.v2.r4",
+      "Presentation": "Jamie Taylor, a 37-year-old woman, comes to the clinic with sustained right-upper-quadrant pain, nausea and inflammatory laboratory findings. Ultrasound shows gallstones, but the gallbladder inflammatory findings are inconclusive.",
+      "Current update": null,
+      "Exhibit": null,
+      "Task": "Which investigation should be arranged next for Jamie Taylor's suspected acute cholecystitis?",
+      "Options": [
+        "**KEY:** Hepatobiliary scintigraphy",
+        "Contrast-enhanced abdominal CT",
+        "Biliary magnetic resonance imaging"
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Hepatobiliary scintigraphy",
+          "Targets the unresolved gallbladder question after inconclusive ultrasound."
+        ],
+        [
+          "Contrast-enhanced abdominal CT",
+          "Prioritizes a broader abdominal survey when the remaining question concerns gallbladder inflammation."
+        ],
+        [
+          "Biliary magnetic resonance imaging",
+          "Prioritizes detailed biliary anatomy over resolving the remaining gallbladder question."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Hepatobiliary scintigraphy",
+          "Targets the unresolved gallbladder question after inconclusive ultrasound."
+        ],
+        [
+          "Contrast-enhanced abdominal CT",
+          "Prioritizes a broader abdominal survey when the remaining question concerns gallbladder inflammation."
+        ],
+        [
+          "Biliary magnetic resonance imaging",
+          "Prioritizes detailed biliary anatomy over resolving the remaining gallbladder question."
+        ]
+      ]
+    },
+    "inference": "Choose additional imaging for the unresolved gallbladder diagnosis after equivocal ultrasound.",
+    "focus": "Confirm that the clinical question, without an availability preference, supports the intended single best investigation. The source ranking is not a universal imaging algorithm.",
+    "whatChanged": "Deleted the entire stability/availability sentence. Retained the symptoms, inflammatory findings and inconclusive ultrasound; no replacement setting sentence points at the key.",
+    "supportingEvidenceClaimIds": [
+      "claim.gs028c.cholecystitis.hida-after-equivocal-us",
+      "claim.qq20261028.cholecystitis.comparative-imaging"
+    ],
+    "companionVariants": [],
+    "clinicalMeaning": "Stable concept objective retained; exact clinical equivalence requires named clinician review."
+  },
+  {
+    "id": "A06",
+    "title": "Interpreting two nipple-discharge patterns",
+    "reviewStatus": "needs_clinician_review",
+    "ownerStatus": "awaiting_round_two_review",
+    "keyOrderNotice": "key shown first for review only; runtime options are randomized",
+    "reviewDisplayNote": "Synthetic canonical profile; any patientName placeholder is rendered as Jamie Taylor for this review only.",
+    "caseId": "case.gs028b.nipple-discharge.paired-bloody-single-duct",
+    "conceptId": "concept.pathologic-nipple-discharge.pathologic-vs-physiologic-recognition",
+    "before": {
+      "variantId": "question.pathologic-nipple-discharge.pathologic-vs-physiologic-recognition.v1.r2",
+      "Presentation": "Jamie Taylor, a 42-year-old woman, visits the clinic after noticing intermittent small blood-stained spots inside the left side of the bra. Examination localizes the discharge to one duct. The discharge has appeared during ordinary activity as well as at the visit.",
+      "Current update": null,
+      "Exhibit": null,
+      "Task": "Which feature of this nipple discharge most strongly supports a pathologic rather than a physiologic pattern?",
+      "Options": [
+        "**KEY:** Spontaneous single-duct discharge",
+        "Intermittent episodes of discharge",
+        "Small volume of discharge"
+      ]
+    },
+    "after": {
+      "variantId": "question.pathologic-nipple-discharge.pathologic-vs-physiologic-recognition.v1.r3",
+      "Presentation": "Jamie Taylor, a 42-year-old woman, visits the clinic after finding rust-coloured spots inside the left side of the bra between examinations. During the visit, compression produces pale fluid from several openings on each nipple; a reddish drop is also seen at one left-sided opening.",
+      "Current update": null,
+      "Exhibit": null,
+      "Task": "Which interpretation best accounts for Jamie Taylor's nipple-discharge history?",
+      "Options": [
+        "**KEY:** Pathologic left-sided episodes; physiologic expressed secretion",
+        "Physiologic left-sided episodes; physiologic expressed secretion",
+        "Endocrine-mediated left-sided episodes; endocrine-mediated expressed secretion"
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Spontaneous single-duct discharge",
+          "Uses the pattern that warrants pathologic-discharge evaluation; it does not identify a specific underlying lesion."
+        ],
+        [
+          "Intermittent episodes of discharge",
+          "Intermittent timing can seem reassuring or concerning, but does not classify the pattern as reliably as the origin and spontaneity."
+        ],
+        [
+          "Small volume of discharge",
+          "The amount can distract from the more informative pattern; scant discharge can still warrant evaluation."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Pathologic left-sided episodes; physiologic expressed secretion",
+          "Distinguishes the unilateral staining episodes from the bilateral secretion elicited during examination; one pattern need not explain every observation."
+        ],
+        [
+          "Physiologic left-sided episodes; physiologic expressed secretion",
+          "Overweights the bilateral expressed fluid and treats the separate left-sided history as reassuring."
+        ],
+        [
+          "Endocrine-mediated left-sided episodes; endocrine-mediated expressed secretion",
+          "Attributes the combined history to a systemic endocrine explanation because pale fluid can be expressed from both breasts, underweighting the focal reddish episodes."
+        ]
+      ]
+    },
+    "inference": "Separate two observed patterns and decide which interpretation accounts for both, rather than selecting an explicitly labelled feature.",
+    "focus": "Confirm that the unprovoked left-sided history is sufficiently clear and that the endocrine interpretation is a credible competing error. The conceptual target remains pattern classification, not a specific breast lesion.",
+    "whatChanged": "Replaced a single classic feature list with mixed raw observations. All three choices interpret both the between-examination episodes and the expressed secretion, with parallel grammar and credible overgeneralization errors.",
+    "supportingEvidenceClaimIds": [
+      "claim.discharge.pathologic-pattern",
+      "claim.qq20261029.discharge.mixed-pattern",
+      "claim.qq20261029.discharge.endocrine-alternative"
+    ],
+    "companionVariants": [
+      {
+        "id": "A06-context",
+        "before": "question.pathologic-nipple-discharge.diagnostic-imaging.v1.r3",
+        "after": "question.pathologic-nipple-discharge.diagnostic-imaging.v1.r4",
+        "whatChanged": "Versioned the companion because its shared presentation changed; removed the redundant request-for-evaluation wording."
+      }
+    ],
+    "clinicalMeaning": "Stable concept objective retained; exact clinical equivalence requires named clinician review."
+  },
+  {
+    "id": "A11",
+    "title": "Initial surgery for confined thyroid cancer",
+    "reviewStatus": "needs_clinician_review",
+    "ownerStatus": "awaiting_round_two_review",
+    "keyOrderNotice": "key shown first for review only; runtime options are randomized",
+    "reviewDisplayNote": "Synthetic canonical profile; any patientName placeholder is rendered as Jamie Taylor for this review only.",
+    "caseId": "case.gs028b.differentiated-thyroid-cancer.paired-malignant-cytology",
+    "conceptId": "concept.differentiated-thyroid-cancer.individualized-surgical-extent",
+    "before": {
+      "variantId": "question.differentiated-thyroid-cancer.individualized-surgical-extent.v1.r3",
+      "Presentation": "Jamie Taylor, a 43-year-old woman, presents after thyroid FNA returned papillary thyroid carcinoma. No dedicated preoperative central or lateral neck-node mapping has been completed.",
+      "Current update": "Neck ultrasound shows a 2 cm papillary thyroid carcinoma confined to one lobe, with no gross extension beyond the thyroid, no suspicious cervical nodes and a normal-appearing contralateral lobe. Staging has not identified distant metastases. The patient has chosen surgery and asks to preserve uninvolved thyroid tissue when an appropriate operation allows it.",
+      "Exhibit": null,
+      "Task": "Which initial operation is most appropriate for Jamie Taylor's papillary thyroid carcinoma?",
+      "Options": [
+        "**KEY:** Lobectomy",
+        "Total thyroidectomy",
+        "Subtotal thyroidectomy"
+      ]
+    },
+    "after": {
+      "variantId": "question.differentiated-thyroid-cancer.individualized-surgical-extent.v1.r4",
+      "Presentation": "Jamie Taylor, a 43-year-old woman, presents after thyroid FNA returned papillary thyroid carcinoma. No dedicated preoperative central or lateral neck-node mapping has been completed.",
+      "Current update": "Neck ultrasound shows a 2 cm papillary thyroid carcinoma confined to one lobe, with no gross extension beyond the thyroid, no suspicious cervical nodes and a normal-appearing contralateral lobe. Staging has not identified distant metastases. The patient has chosen surgery.",
+      "Exhibit": null,
+      "Task": "Which initial operation is most appropriate for Jamie Taylor's papillary thyroid carcinoma?",
+      "Options": [
+        "**KEY:** Lobectomy",
+        "Total thyroidectomy",
+        "Subtotal thyroidectomy"
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Lobectomy",
+          "Applies the confined unilateral tumor findings and tissue-preservation goal to an eligible initial operation."
+        ],
+        [
+          "Total thyroidectomy",
+          "A cancer diagnosis can prompt a more extensive operation, but that is less aligned with this eligible patient's stated tissue-preservation goal."
+        ],
+        [
+          "Subtotal thyroidectomy",
+          "Attempts a compromise on tissue preservation but is not the guideline's lobectomy-based initial approach for this profile."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Lobectomy",
+          "Applies the 2025 ATA initial-surgery recommendation to the stated unilateral 2 cm, intrathyroidal, node-negative and nonmetastatic profile."
+        ],
+        [
+          "Total thyroidectomy",
+          "Extends treatment beyond the recommended initial extent for this stated profile without another supplied indication for contralateral surgery."
+        ],
+        [
+          "Subtotal thyroidectomy",
+          "Treats subtotal resection as an intermediate cancer operation; it is not the recommended initial operation for this profile."
+        ]
+      ]
+    },
+    "inference": "Apply the disease-extent recommendation for initial surgery without using an explicit preference to identify the limited operation.",
+    "focus": "Named clinician must confirm the ATA 2025 recommendation and absence of an alternative supplied indication for total thyroidectomy. The existing 2 cm observation is unchanged. No blanket rule for all thyroid cancers is taught.",
+    "whatChanged": "Removed the tissue-preservation request entirely. Retained the selected-surgery status and staging facts; mapped the recommendation explicitly to current ATA guidance rather than relying on a preference to break a tie.",
+    "supportingEvidenceClaimIds": [
+      "claim.dtc.extent",
+      "claim.dtc.lobectomy-boundary",
+      "claim.qq20261029.thyroid.initial-lobectomy"
+    ],
+    "companionVariants": [],
+    "clinicalMeaning": "Stable concept objective retained; exact clinical equivalence requires named clinician review."
+  },
+  {
+    "id": "A25",
+    "title": "Reconciling perioperative antiretroviral instructions",
+    "reviewStatus": "needs_clinician_review",
+    "ownerStatus": "awaiting_round_two_review",
+    "keyOrderNotice": "key shown first for review only; runtime options are randomized",
+    "reviewDisplayNote": "Synthetic canonical profile; any patientName placeholder is rendered as Jamie Taylor for this review only.",
+    "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+    "conceptId": "concept.gs028g.hiv-perioperative.art-continuity",
+    "before": {
+      "variantId": "question.gs028g.hiv-perioperative.art-continuity.v1.r3",
+      "Presentation": "Jamie Taylor, a 43-year-old woman, visits the clinic before elective hernia repair at an outside surgical service. HIV is well controlled on a prescribed ritonavir-boosted antiretroviral regimen. The patient can swallow, and the prescribed medicines are available.",
+      "Current update": null,
+      "Exhibit": null,
+      "Task": "Which perioperative antiretroviral medication plan is most appropriate for this elective operation?",
+      "Options": [
+        "**KEY:** Keep the complete regimen",
+        "Suspend the complete regimen",
+        "Omit the regimen's booster"
+      ]
+    },
+    "after": {
+      "variantId": "question.gs028g.hiv-perioperative.art-continuity.v1.r4",
+      "Presentation": "Jamie Taylor, a 43-year-old woman, visits the clinic before elective hernia repair at an outside surgical service. The clinic medication list records a ritonavir-boosted antiretroviral regimen being taken as prescribed. A generic preoperative instruction sheet includes these medicines among those to pause for the operation.",
+      "Current update": null,
+      "Exhibit": null,
+      "Task": "Which perioperative antiretroviral plan should be sent to Jamie Taylor's surgical team?",
+      "Options": [
+        "**KEY:** Continue the complete prescribed regimen",
+        "Interrupt the complete prescribed regimen",
+        "Withhold ritonavir and maintain the other agents"
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Keep the complete regimen",
+          "Recognizes feasible regimen continuity rather than repeating a stated permission to continue ART."
+        ],
+        [
+          "Suspend the complete regimen",
+          "Overgeneralizes perioperative medication withholding to an effective regimen that can be administered."
+        ],
+        [
+          "Omit the regimen's booster",
+          "Attempts to avoid interaction concerns by removing part of a regimen without coordinated review."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Continue the complete prescribed regimen",
+          "Reconciles the generic withholding instruction with the need to avoid an unnecessary interruption of a feasible prescribed regimen."
+        ],
+        [
+          "Interrupt the complete prescribed regimen",
+          "Applies a generic perioperative withholding instruction to ART without medication-specific review."
+        ],
+        [
+          "Withhold ritonavir and maintain the other agents",
+          "Attempts to reduce interaction concerns by removing ritonavir and continuing an incomplete regimen without coordinated review."
+        ]
+      ]
+    },
+    "inference": "Reconcile a generic stop instruction with regimen continuity, while recognizing that deleting a booster is a different error rather than a safe compromise.",
+    "focus": "Confirm feasible administration and clinical plausibility of the instruction conflict without adding an unsupported fasting or drug-dosing rule. The companion separately tests a specific drug interaction; no new concept objective is intended.",
+    "whatChanged": "Removed the permission-like swallowing/availability sentence and the generic well-controlled reassurance. Added a concrete conflicting instruction to interpret. Rebuilt three parallel plans around full continuity, blanket interruption and partial-regimen continuation; no filler or exact interruption interval.",
+    "supportingEvidenceClaimIds": [
+      "claim.gs028g.hiv-perioperative.art-continuity",
+      "claim.gs028g.hiv-perioperative.art-continuity.fact2",
+      "claim.gs028g.hiv-perioperative.art-continuity.fact3",
+      "claim.gs028g.hiv-perioperative.art-continuity.fact4"
+    ],
+    "companionVariants": [
+      {
+        "id": "A25-context",
+        "before": "question.gs028g.hiv-perioperative.booster-midazolam-interaction.v1.r3",
+        "after": "question.gs028g.hiv-perioperative.booster-midazolam-interaction.v1.r4",
+        "whatChanged": "Versioned the companion for the shared medication-reconciliation context; its interaction decision is unchanged."
+      }
+    ],
+    "clinicalMeaning": "Stable concept objective retained; exact clinical equivalence requires named clinician review."
+  },
+  {
+    "id": "A30",
+    "title": "Recurrent peristomal skin injury",
+    "reviewStatus": "needs_clinician_review",
+    "ownerStatus": "awaiting_round_two_review",
+    "keyOrderNotice": "key shown first for review only; runtime options are randomized",
+    "reviewDisplayNote": "Synthetic canonical profile; any patientName placeholder is rendered as Jamie Taylor for this review only.",
+    "caseId": "case.gs028g.peristomal-skin.paired-wide-opening",
+    "conceptId": "concept.gs028g.peristomal-skin.restore-seal",
+    "before": {
+      "variantId": "question.gs028g.peristomal-skin.restore-seal.v1.r3",
+      "Presentation": "Jamie Taylor, a 43-year-old woman, visits the clinic with burning around an ileostomy. Moist erosions form a ring around the stoma where effluent has contacted the skin. Skin farther out under the adhesive is intact. The stoma is viable, and the patient is well.",
+      "Current update": "With the pouch removed, the nurse sees that the cutout extends beyond the stoma base and leaves the eroded ring exposed to effluent.",
+      "Exhibit": null,
+      "Task": "Which appliance-care change should be made for Jamie Taylor's peristomal skin problem?",
+      "Options": [
+        "**KEY:** Resize the opening to the stoma",
+        "Switch the adhesive to another product",
+        "Apply antifungal powder under the pouch",
+        "Increase the frequency of pouch changes"
+      ]
+    },
+    "after": {
+      "variantId": "question.gs028g.peristomal-skin.restore-seal.v1.r4",
+      "Presentation": "Jamie Taylor, a 43-year-old woman, visits the clinic with recurrent burning around an ileostomy. Examination shows a moist red ring immediately beside the stoma, with intact skin farther out under the adhesive. The stoma is viable, and the patient feels well.",
+      "Current update": "The removed barrier shows moisture around its inner edge, although the outer adhesive border remains attached.",
+      "Exhibit": null,
+      "Task": "Which next step is most appropriate for Jamie Taylor's recurrent peristomal skin injury?",
+      "Options": [
+        "**KEY:** Reassess pouch fit with the ostomy nurse",
+        "Switch to a different adhesive brand",
+        "Start topical antifungal treatment",
+        "Schedule more frequent routine pouch changes"
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Resize the opening to the stoma",
+          "Targets continued effluent contact at the observed fit problem with ostomy-nurse guidance."
+        ],
+        [
+          "Switch the adhesive to another product",
+          "Treats the injury as adhesive intolerance despite the intact more peripheral adhesive-contact skin and exposed-ring pattern."
+        ],
+        [
+          "Apply antifungal powder under the pouch",
+          "Treats a competing cause of peristomal rash without correcting the demonstrated exposure pathway."
+        ],
+        [
+          "Increase the frequency of pouch changes",
+          "Responds to wetness but leaves the opening-to-stoma mismatch in place."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Reassess pouch fit with the ostomy nurse",
+          "Uses the distribution and removed-appliance observations to prioritize assessment of the seal and fit before prescribing a particular product or opening dimension."
+        ],
+        [
+          "Switch to a different adhesive brand",
+          "Treats the complaint as an adhesive-product problem without first explaining the observed distribution and inner-edge moisture."
+        ],
+        [
+          "Start topical antifungal treatment",
+          "Treats a competing rash mechanism before assessing the appliance and the source of the recurrent contact injury."
+        ],
+        [
+          "Schedule more frequent routine pouch changes",
+          "May form part of an individualized plan, but selecting a new routine interval alone does not assess why this appliance repeatedly fails at the affected skin."
+        ]
+      ]
+    },
+    "inference": "Infer a recurrent appliance-contact problem from the skin distribution and removed-barrier observations, then choose fit assessment rather than an empiric product or interval change.",
+    "focus": "Confirm a single best next step. The observations support assessment/refitting but do not establish an exact cutout defect, product choice or wear interval. Prior diagnosis feedback remains legitimate scaffolding.",
+    "whatChanged": "Removed the explicit oversized-cutout mechanism and the presentation clause interpreting effluent contact. Used observable skin and barrier findings; the key now calls for assessment of fit, without assuming a demonstrated dimension that the vignette no longer supplies.",
+    "supportingEvidenceClaimIds": [
+      "claim.gs028g.peristomal-skin.restore-seal",
+      "claim.gs028g.peristomal-skin.restore-seal.fact2",
+      "claim.gs028g.peristomal-skin.restore-seal.fact3",
+      "claim.gs028g.peristomal-skin.restore-seal.fact4",
+      "claim.qq20261028.peristomal.fit-exposure"
+    ],
+    "companionVariants": [
+      {
+        "id": "A30-context",
+        "before": "question.gs028g.peristomal-skin.effluent-irritation.v1.r3",
+        "after": "question.gs028g.peristomal-skin.effluent-irritation.v1.r4",
+        "whatChanged": "Versioned the companion because the shared presentation now contains raw morphology rather than a supplied effluent-contact explanation."
+      }
+    ],
+    "clinicalMeaning": "Stable concept objective retained; exact clinical equivalence requires named clinician review."
+  },
+  {
+    "id": "A40",
+    "title": "Localizing an abdominal-wall hernia",
+    "reviewStatus": "needs_clinician_review",
+    "ownerStatus": "awaiting_round_two_review",
+    "keyOrderNotice": "key shown first for review only; runtime options are randomized",
+    "reviewDisplayNote": "Synthetic canonical profile; any patientName placeholder is rendered as Ella Morgan for this review only.",
+    "caseId": "case.pediatric-clinic.upper-midline-lump",
+    "conceptId": "concept.umbilical-epigastric-hernia.clinical-recognition",
+    "before": {
+      "variantId": "question.pediatric-clinic.upper-midline-lump.v1.r3",
+      "Presentation": "Ella Morgan, a 6-year-old girl, visits the clinic with her mother, Rachel Morgan, who remains in the same room throughout the visit. Her mother points out a small focal lump in Ella's upper abdominal midline. Examination identifies a small abdominal-wall gap with protruding fat at that site, above the navel. Ella is comfortable.",
+      "Current update": null,
+      "Exhibit": null,
+      "Task": "Which diagnosis best explains Ella Morgan's abdominal-wall lump?",
+      "Options": [
+        "**KEY:** Epigastric hernia",
+        "Umbilical hernia",
+        "Inguinal canal hernia"
+      ]
+    },
+    "after": {
+      "variantId": "question.pediatric-clinic.upper-midline-lump.v1.r4",
+      "Presentation": "Ella Morgan, a 6-year-old girl, visits the clinic with her mother, Rachel Morgan, who remains in the same room throughout the visit. Her mother points out a small focal lump in Ella's upper abdominal midline. Examination identifies a small abdominal-wall gap with protruding fat at that site, above the navel. Her previous abdominal operation used a right-lower-quadrant incision. Ella is comfortable.",
+      "Current update": null,
+      "Exhibit": null,
+      "Task": "Which diagnosis best explains Ella Morgan's abdominal-wall lump?",
+      "Options": [
+        "**KEY:** Epigastric hernia",
+        "Spigelian hernia",
+        "Incisional hernia",
+        "Lumbar hernia"
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Epigastric hernia",
+          "Uses the location and focal fat-containing wall defect rather than absence of bulges elsewhere."
+        ],
+        [
+          "Umbilical hernia",
+          "Confuses a nearby midline location with the navel itself."
+        ],
+        [
+          "Inguinal canal hernia",
+          "Overgeneralizes a common pediatric hernia category without using the examination site."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Epigastric hernia",
+          "Uses the focal upper-midline fat-containing wall defect; the previous incision is at a different site."
+        ],
+        [
+          "Spigelian hernia",
+          "Confuses a lateral abdominal-wall defect near the semilunar line with the observed midline defect."
+        ],
+        [
+          "Incisional hernia",
+          "Overweights the operative history without matching the current defect to the prior incision."
+        ],
+        [
+          "Lumbar hernia",
+          "Confuses a posterior or flank wall defect with the anterior upper-midline finding."
+        ]
+      ]
+    },
+    "inference": "Localize the defect and relate it to the operative history among competing abdominal-wall hernias.",
+    "focus": "Still an anatomical-recognition task, with stronger same-category competitors. Confirm pediatric plausibility. Morgagni is diaphragmatic and is excluded from this abdominal-wall option set; no new diagnosis or concept meaning is intended.",
+    "whatChanged": "Replaced umbilical/inguinal competitors with Spigelian, incisional and lumbar hernias. Added the location of the prior incision as decision-critical raw history, without an option-by-option negative list. Morgagni is not used because its compartment differs.",
+    "supportingEvidenceClaimIds": [
+      "claim.pediatric-clinic.epigastric-fat-defect",
+      "claim.qq20261029.hernia.spigelian",
+      "claim.qq20261029.hernia.incisional",
+      "claim.qq20261029.hernia.lumbar"
+    ],
+    "companionVariants": [],
+    "clinicalMeaning": "Stable concept objective retained; exact clinical equivalence requires named clinician review."
+  }
+]

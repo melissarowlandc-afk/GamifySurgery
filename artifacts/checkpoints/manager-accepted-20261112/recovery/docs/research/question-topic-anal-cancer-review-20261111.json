@@ -1,0 +1,338 @@
+[
+  {
+    "id": "question.topic.anal-cancer.sample-provenance.v1",
+    "nodeId": "node.topic.anal-cancer.sample-provenance.v1",
+    "title": "Biopsy target after benign tissue from another site",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The task asks for a 'sampling procedure', but 'Deeper sections of the outside tissue block' processes an existing sample rather than sampling the patient. This category mismatch partially eliminates a distractor before clinical reasoning."
+    ],
+    "cues": [
+      {
+        "phrase": "A separate soft skin tag lies posterior to the anal verge.",
+        "why": "Together with the specimen label, 'separate' makes the wrong-target problem explicit. A reader can match the remaining mass to the only choice naming that mass without interpreting the histology. The anatomic distinction is necessary, but this option set does not make its interpretation demanding."
+      },
+      {
+        "phrase": "Anoscopy-guided biopsy of the canal mass",
+        "why": "Only this option repeats the unresolved 'canal'/'mass' target. The two other choices concern a swab or the already benign block; the key wins by target matching."
+      }
+    ],
+    "fairness": [
+      "Scope for this entire report: all 12 proposed executable nodes were reviewed using their candidate presentation, update, exhibit, task, option labels and explanation, with earlier candidate feedback considered for sequence effects. Four kept originals, seven retirement/replacement source records and two unkeyed holds were noted but not adjudicated. Review-only answer ordering and markers were not treated as cues. No statistics items occur.",
+      "This is an offline editorial review, not clinical approval or a fresh evidence verification. Difficulty and high-yield flags are qualitative judgments, not measured performance or verified exam frequencies. Every draft remains needs_clinician_review pending Melissa Rowland's exact-version sign-off.",
+      "Biopsy of the actual canal mass is the single defensible best choice among these options. Benign tissue from a different site neither excludes cancer in this mass nor makes another swab diagnostic. No confident clinical inaccuracy identified.",
+      "The first node is self-contained and the patient, age, sex and site are consistent. Its explanation appropriately precedes cancer staging and does not reveal the later regional-node treatment answer.",
+      "Representative tissue and screening-versus-diagnosis are high-yield concepts, but the deliberately distinct mass and soft tag reduce the purported two steps to an obvious target match."
+    ],
+    "suggestions": [
+      "Use a neutral complete task asking which diagnostic step to arrange, so tissue acquisition and review of existing tissue can compete fairly.",
+      "For a resident-level item, replace the plainly unrelated benign-tag foil with a supported specimen-adequacy or target-localization problem in which reviewing existing tissue and obtaining new tissue are initially credible; give the exact specimen observations that resolve that choice. Preserve the distinction between tissue represented and tissue actually sampled.",
+      "If retaining this straightforward wrong-site safety lesson, seek explicit basic-recognition acceptance rather than labeling it moderate two-step reasoning."
+    ]
+  },
+  {
+    "id": "question.topic.anal-cancer.local-staging-record.v1",
+    "nodeId": "node.topic.anal-cancer.local-staging-record.v1",
+    "title": "Retrieving an already acquired pelvic MRI",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": false,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "The archive contains the full series.",
+        "why": "Directly supplies the location and completeness of the information needed by 'Specialist review of the archived pelvic MRI'. Retrieval beats repeating acquisition by ordinary reading, without knowledge of anal-cancer staging."
+      },
+      {
+        "phrase": "No diagnostic pelvic series appears on the transferred media.",
+        "why": "Explicitly names a transfer omission, immediately after affirming completed acquisition. The only option addressing that named omission is review of the archive."
+      },
+      {
+        "phrase": "pelvic staging review",
+        "why": "The task's 'review' also matches the sole review option; both alternatives request a new acquisition. The key is uniquely the nonduplicative information-retrieval plan."
+      }
+    ],
+    "fairness": [
+      "Reviewing the existing diagnostic MRI is a reasonable single best next step. The acquisition log correctly distinguishes missing transferred images from a scan that was never acquired. No confident clinical inaccuracy identified.",
+      "PET/CT can serve a different staging purpose, so feedback should not imply it has no role. It does not resolve this explicitly stated missing-MRI-review problem better than retrieving the existing series.",
+      "The biopsy update follows the preceding node coherently and supplies the diagnosis if this node is encountered independently. The subsequent MRI result can reasonably clarify the indeterminate CT interface.",
+      "Deleting the CT findings would leave the same answer. The assessed decision is chiefly record retrieval; the high-yield local-versus-distant staging distinction is background rather than a consequential inference."
+    ],
+    "suggestions": [
+      "Choose whether this is an explicitly basic record-retrieval exercise or an anal-cancer staging item; do not claim both levels of reasoning.",
+      "For the staging objective, present completed studies and the specific unresolved clinical question, then compare credible investigations at the same stage. Make the actual local-extent finding change the next action instead of stating that a completed diagnostic series awaits review.",
+      "Do not repair the cue by simply hiding whether the MRI was acquired or available; that would make retrieval versus repetition ambiguous."
+    ]
+  },
+  {
+    "id": "question.topic.anal-cancer.regional-node-treatment.v1",
+    "nodeId": "node.topic.anal-cancer.regional-node-treatment.v1",
+    "title": "Regional inguinal disease and definitive initial treatment",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must classify inguinal spread as regional, then select definitive chemoradiation rather than a disseminated-disease regimen or primary APR. Sphincter involvement supplies a credible surgical misconception without making APR correct.",
+      "Concurrent radiation, fluorouracil and mitomycin is a defensible single best initial treatment among these options for the stated anal-canal SCC without distant disease. No confident clinical inaccuracy or equally good distractor identified.",
+      "A known histologic diagnosis is appropriate for this treatment task. 'No other metastatic site identified' does not label the inguinal node as distant; the learner still has to classify its geography. The necessary negative distant workup should remain.",
+      "Options are specific treatment plans with no meaningful length, grammar, absolute, explanatory-label or convergence giveaway. Choosing the radiation option requires medical knowledge.",
+      "The MRI resolves the prior CT uncertainty about the vaginal interface. Histology, site, nodal result and distant assessment are repeated locally, so the node stands alone. Earlier feedback supplies no regional-node classification or regimen.",
+      "This is a core surgery-board distinction with moderate predicted difficulty; no evidence supports calling its difficulty measured."
+    ],
+    "suggestions": [
+      "No required editorial change. Preserve the nodal location, histology and distant-disease assessment, and keep the regional-versus-distant interpretation after answering."
+    ]
+  },
+  {
+    "id": "question.topic.anal-cancer.cytology-to-histology.v1",
+    "nodeId": "node.topic.anal-cancer.cytology-to-histology.v1",
+    "title": "Histologic evaluation after abnormal anal cytology",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "no anal tissue specimen submitted",
+        "why": "Names the missing action. Only 'High-resolution anoscopy with directed biopsies' supplies tissue; the reader need not interpret the particular cytologic abnormality to identify that option."
+      },
+      {
+        "phrase": "Repeat anal cytology and HPV testing",
+        "why": "Repeats both tests already presented as completed and abnormal. Against an MRI labeled for staging and a tissue-acquisition option, it makes simple diagnostic-sequence elimination easy."
+      }
+    ],
+    "fairness": [
+      "HRA with directed biopsies is the defensible next investigation for this high-grade screening result. A normal digital examination does not clear the abnormal cytology. No confident clinical inaccuracy or competing best answer identified.",
+      "The explanation's broad phrase 'Abnormal cytologic screening requires HRA-directed histologic assessment' should stay anchored to this high-grade result; it is not a complete algorithm for every possible cytology/HPV combination.",
+      "The named 48-year-old man with HIV, screening context and task are clear and self-contained. The sequence into histology and lesion management is coherent; this explanation does not disclose the treatment key.",
+      "Abnormal-screen follow-up is useful high-yield content, but this is a single familiar escalation rule. 'No palpable anal lesion' does not create a substantial second inference against these weak alternatives."
+    ],
+    "suggestions": [
+      "Delete the explicit missing-tissue sentence; retain the actual screening result and examination findings.",
+      "To retain a resident-level scored node, supply a supported, genuinely competing interpretation of the completed evaluation, such as documented targeting or sampling adequacy, and compare credible next diagnostic actions. Do not manufacture difficulty by adding unsupported screening cutoffs.",
+      "Alternatively designate this as foundational screening follow-up and obtain explicit basic-item acceptance.",
+      "Make the explanation refer to this high-grade cytology result rather than appearing to prescribe one pathway for all abnormal anal screening."
+    ]
+  },
+  {
+    "id": "question.topic.anal-cancer.treat-intraepithelial-lesion.v1",
+    "nodeId": "node.topic.anal-cancer.treat-intraepithelial-lesion.v1",
+    "title": "Treating biopsy-confirmed noninvasive high-grade lesions",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must interpret full-thickness atypia with intact basement membrane and sampled stroma free of invasive nests, then choose treatment rather than monitoring despite virologic suppression. Those are consequential histologic and management distinctions.",
+      "HRA-guided electrocautery is a defensible best choice among the three options. Monitoring represents a credible management error; invasive-cancer chemoradiation overcalls the stated tissue findings. No confident clinical inaccuracy identified.",
+      "The lack of invasive nests in represented tissue is necessary for fairness, not an expendable cue. 'Two accessible flat epithelial lesions' is a relevant procedural observation. The explanation properly avoids claiming electrocautery is superior to all other HSIL treatments.",
+      "'Lesion-directed management' can encompass the offered monitoring plan and does not explicitly say treatment is mandatory. The options have no decisive nonmedical phrase match, outlier or convergence shortcut.",
+      "The HRA/biopsy results follow the prior investigation coherently. The current exhibit plus the patient presentation supply the necessary histology and HIV context independently. Prior feedback teaches acquisition of histology, not this treatment choice.",
+      "Recognition and treatment of HSIL in an adult with HIV is a relevant colorectal prevention concept. Difficulty is moderate rather than hard."
+    ],
+    "suggestions": [
+      "No required editorial change. Preserve the actual negative invasion observation and the distinction between adequate HIV control and management of the epithelial lesions."
+    ]
+  },
+  {
+    "id": "question.topic.anal-cancer.new-nodule-after-hsil.v1",
+    "nodeId": "node.topic.anal-cancer.new-nodule-after-hsil.v1",
+    "title": "New suspicious nodule despite negative cytology",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Anoscopy with directed biopsy of the nodule",
+        "why": "Only this option names the task's 'new anal nodule'. The other options are the same repeat-screening and staging-MRI alternatives already rejected in the first node."
+      },
+      {
+        "phrase": "The swab and palpation answer different questions.",
+        "why": "This exact earlier-node explanation preteaches why swab results do not settle a tissue lesion. Returning the same biopsy-versus-swab-versus-MRI choice mostly rehearses that distinction."
+      },
+      {
+        "phrase": "the present nodule is a new finding",
+        "why": "Repeats 'New indurated ulcerated anal-canal nodule' and 'new focal pain'. The repeated novelty reinforces the targeted-nodule choice rather than adding decision information."
+      }
+    ],
+    "fairness": [
+      "Directed biopsy is the defensible best investigation. Negative cytology does not exclude malignancy in a clinically suspicious nodule, and MRI does not replace tissue diagnosis. No confident clinical inaccuracy identified.",
+      "The six-month interval is a case observation, not a universal threshold for biopsy. The change from treated flat lesions to a new painful indurated nodule is coherent and independently stated; this is not an unexplained change of lesion.",
+      "The original screening-review presentation is historical by this node, but the update makes the current visit intelligible. A new standalone presentation could be shorter and more current without changing the clinical decision.",
+      "This is a high-yield diagnostic safety principle. In this exact sequence it is easy recognition with repeated answer structure, not a fresh two-step resident problem; negative cytology adds a plausible error but not enough competition to overcome the scaffold."
+    ],
+    "suggestions": [
+      "Retain the suspicious examination and negative swab; do not hide red flags to create difficulty. Remove the repeated assertion that the nodule is new.",
+      "Give this follow-up a distinct supported decision, such as choosing between credible tissue-sampling approaches when targeting or depth actually matters, with the observations needed to distinguish them. Do not reuse the first node's biopsy-versus-screening-versus-MRI set.",
+      "If the intended objective remains simply biopsy despite a negative screen, request basic-recognition acceptance or merge it into unscored follow-up teaching rather than claiming another independent moderate item."
+    ]
+  },
+  {
+    "id": "question.topic.anal-cancer.irradiated-groin-recurrence.v1",
+    "nodeId": "node.topic.anal-cancer.irradiated-groin-recurrence.v1",
+    "title": "Salvage of isolated recurrence in a previously irradiated groin",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must localize failure to a groin node rather than the controlled primary, then account for prior groin irradiation when choosing local salvage. The radiation-plan observation materially distinguishes surgery from a radiation-naive nodal pathway.",
+      "Right inguinal dissection is a defensible best option for this isolated mobile biopsy-confirmed recurrence among the offered plans. APR does not address an isolated groin target. No confident clinical inaccuracy identified.",
+      "Reirradiation can be a specialized individualized consideration; prior radiation should not be taught as an absolute ban. The current explanation appropriately says the findings support dissection planning rather than 'automatic' repeat chemoradiation. This review does not establish an exact dose, dissection extent or universal salvage rule.",
+      "Both dissection and groin chemoradiation name the right groin, so target-word matching cannot choose between them. The negative primary-site and distant assessments are needed to establish this salvage setting, not removable distractor-specific padding.",
+      "This standalone case supplies the original diagnosis, prior treatment field, current histology and restaging. It tests a useful surgical salvage distinction, although less ubiquitous than initial anal-SCC chemoradiation or salvage APR."
+    ],
+    "suggestions": [
+      "No required editorial change. Preserve the prior radiation-field information and qualified multidisciplinary planning language; do not turn the answer into a categorical prohibition of every reirradiation approach."
+    ]
+  },
+  {
+    "id": "question.topic.anal-cancer.metastatic-first-systemic-line.v1",
+    "nodeId": "node.topic.anal-cancer.metastatic-first-systemic-line.v1",
+    "title": "Systemic treatment line after prior radiosensitizing chemotherapy",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": false,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The clinically relevant distinction is whether previous fluorouracil/mitomycin with radiation constitutes the platinum-treated advanced-disease setting for checkpoint monotherapy. The resident must interpret that history, then choose the combination appropriate to an initial systemic line for disseminated recurrence.",
+      "Retifanlimab with carboplatin/paclitaxel is a defensible intended best option; prior radiosensitization is not synonymous with progression on platinum therapy. No confident clinical inaccuracy identified. This offline review does not independently verify the current indication, jurisdictional availability or drug-label exceptions; the exact regimen still needs clinician verification.",
+      "The multiple bilateral visceral sites establish disseminated disease rather than a local salvage problem. Independence in daily activities is useful function context, not proof of every chemotherapy or immunotherapy eligibility criterion. No supplied fact establishes a contraindication or platinum intolerance that would make monotherapy equally appropriate.",
+      "The longest option is the combination, but the names are inherently longer and the other two choices do not mechanically converge on it. Word matching cannot distinguish combination treatment from monotherapy without knowing the treatment-line rule. The repeated old fluorouracil/mitomycin regimen is the weakest distractor.",
+      "The case stands alone with relevant diagnosis, distribution and prior therapy. General metastatic-versus-local treatment intent is high yield; the exact newer retifanlimab combination/monotherapy indication distinction is narrower medical-oncology detail. I would not count this exact node as established commonly tested core ABSITE coverage."
+    ],
+    "suggestions": [
+      "No required editorial wording change. Treat this as supplemental current systemic-therapy coverage rather than evidence that a core surgical board concept has been covered at hard difficulty.",
+      "At clinical sign-off, verify the exact contemporary line-of-therapy indication and the explanation's progression/intolerance wording. Do not generalize the option to every patient regardless of treatment eligibility."
+    ]
+  },
+  {
+    "id": "question.topic.anal-cancer.clear-margin-observation.v1",
+    "nodeId": "node.topic.anal-cancer.clear-margin-observation.v1",
+    "title": "Surveillance after favorable anal-margin SCC excision",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must integrate site, small size, differentiation, lack of adverse histology and clearance to recognize a favorable local-excision situation, then choose surveillance rather than treating every anal SCC with chemoradiation or performing further excision.",
+      "Surveillance is a defensible single best option among those offered. The explicitly generous negative margin makes wider re-excision a weaker choice without requiring a disputed close-margin boundary. No confident clinical inaccuracy identified.",
+      "The task's 'anal-margin' label supplies anatomy but does not by itself establish suitability for surveillance. Grade, extent, nodal status and excision findings still matter. Those observations should not be deleted merely because they favor the correct plan.",
+      "The 12-mm clearance is an observed fictional specimen value, not an authored universal threshold. The explanation does not assert an exact cutoff. Neither all-negative findings nor shorter surveillance wording produces a medically reliable nonknowledge shortcut: one still must know the excision exception.",
+      "The standalone case is clear and internally consistent. It is a core canal-versus-margin management concept, moderate toward the easy end for residents familiar with the exception. The separate poor-grade sibling is not earlier visible feedback for this case."
+    ],
+    "suggestions": [
+      "No required editorial change. Optionally remove the post-answer author-facing aside 'no minimum margin cutoff is taught' and keep the explanation focused on the patient's eligibility and surveillance plan."
+    ]
+  },
+  {
+    "id": "question.topic.anal-cancer.adverse-margin-histology.v1",
+    "nodeId": "node.topic.anal-cancer.adverse-margin-histology.v1",
+    "title": "Poor differentiation after complete anal-margin excision",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The task is understandable, but the treatment choice does not say whether chemoradiation is postoperative adjuvant treatment. With the tumor already excised and 12-mm clear margins, that distinction matters to the claim being taught."
+    ],
+    "cues": [],
+    "fairness": [
+      "The resident can identify poor differentiation as an adverse feature despite small size and generous clearance, then consider treatment escalation. That is potentially a consequential two-step application and the option wording does not disclose the key nonmedically.",
+      "Unresolved clinical ranking: exclusion from a favorable local-excision pathway does not, by itself, demonstrate that this exact already-completely-excised patient must receive postoperative fluorouracil/mitomycin chemoradiation rather than surveillance. The explanation asserts the transition without establishing the postoperative recommendation. I cannot independently certify that exact ranking from these visible fields and an offline review.",
+      "This is not a confident declaration that chemoradiation is wrong, nor that surveillance is definitely equivalent. It is a specific uncertainty about postoperative management after wide negative clearance that needs exact-case clinician adjudication before the key can be independently accepted.",
+      "Wider re-excision is not a persuasive way to correct poor differentiation when the supplied clearance is already generous. The meaningful competition is surveillance versus additional oncologic therapy; the explanation should resolve that competition directly with an applicable supported recommendation.",
+      "The case stands alone and coherently differs from the favorable sibling by grade. Grade-sensitive selection is high yield, but uncertainty about the postoperative recommendation must not be counted as legitimate hard-item difficulty."
+    ],
+    "suggestions": [
+      "Have Melissa adjudicate the exact postoperative scenario and verify a recommendation applicable to a small, node-negative, poorly differentiated anal-margin SCC already excised with wide negative margins. Do not treat a general exclusion from initial local-excision eligibility as sufficient proof of the exact adjuvant regimen.",
+      "If the postoperative choice is supported, explicitly label the chemoradiation plan as postoperative/adjuvant and explain why observation is inferior despite complete clearance, retaining any evidence limitation.",
+      "If that ranking cannot be supported, change the scenario to an initial-treatment decision before definitive excision, with supported findings distinguishing local excision from chemoradiation, or leave this particular postoperative question unkeyed. Do not invent a margin cutoff."
+    ]
+  },
+  {
+    "id": "question.topic.anal-cancer.confirm-local-recurrence.v1",
+    "nodeId": "node.topic.anal-cancer.confirm-local-recurrence.v1",
+    "title": "Tissue diagnosis of a new nodule in a treated scar",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Dedicated diagnostic T2 and diffusion images show focal scar-site thickening.",
+        "why": "The distractor 'Repeat pelvic MRI with diffusion imaging' repeats the specifically completed study without any acquisition problem or interval change. It is a disposable repeat-test foil."
+      },
+      {
+        "phrase": "Anoscopy-guided biopsy of the scar nodule",
+        "why": "Only this option directly names the new nodule in the task and examination. Combined with an explicitly nondiagnostic MRI, the set strongly advertises targeted tissue acquisition."
+      },
+      {
+        "phrase": "Obtain histology before selecting radical salvage treatment.",
+        "why": "This is legitimate post-answer teaching for the current investigation, but 'radical salvage treatment' previews the next node's only radical surgical salvage option. It is a sequence cue, not leakage into the current answer."
+      }
+    ],
+    "fairness": [
+      "Biopsy is the defensible next diagnostic investigation. The late new bleeding nodule after a documented complete response warrants confirmation; indeterminate imaging is not proof of recurrence. No confident clinical inaccuracy identified.",
+      "PET/CT can have a restaging role, but it does not replace histologic confirmation of an accessible suspicious local lesion. The wording should preserve that distinction rather than imply PET/CT is never appropriate.",
+      "The initial node is self-contained, and the subsequent positive biopsy follows coherently. The original 18-month timing and prior flat scar differentiate this case from an early, still-regressing post-treatment lesion without inventing a response cutoff.",
+      "Biopsy before radical salvage is high yield, but the options make this an easy 'obtain tissue after indeterminate imaging' rule. The chronology is appropriate context; it does not make the repeat-MRI distractor competitive or create a robust second reasoning step."
+    ],
+    "suggestions": [
+      "Remove the repeat-diffusion-MRI foil unless an actual new adequacy or interval issue makes repetition clinically credible; any such issue must be explicitly supplied and supported.",
+      "For the next-node explanation boundary, end with a neutral diagnostic rationale such as obtaining histology to distinguish recurrence from treatment-related change; do not preview radical salvage treatment.",
+      "If no distinct difficult diagnostic decision remains, use confirmation as an unscored transition into the salvage case or request explicit basic-item acceptance. Do not introduce the held early-response timing controversy merely to make this item harder."
+    ]
+  },
+  {
+    "id": "question.topic.anal-cancer.salvage-local-failure.v1",
+    "nodeId": "node.topic.anal-cancer.salvage-local-failure.v1",
+    "title": "Salvage treatment for resectable isolated local failure",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Obtain histology before selecting radical salvage treatment.",
+        "why": "The preceding node's explanation has already announced radical salvage as the coming treatment direction. The new positive biopsy now unlocks the sole operation, 'Salvage abdominoperineal resection', without requiring a fresh choice of treatment intent."
+      },
+      {
+        "phrase": "confirmed local failure",
+        "why": "The task supplies a classification the staging findings could otherwise require the learner to establish. Alongside the prior radical-salvage scaffold, it further weakens the disseminated-disease treatment competitor."
+      }
+    ],
+    "fairness": [
+      "Salvage APR is a defensible best plan among the choices for biopsy-confirmed isolated anal-canal recurrence after definitive chemoradiation with described resection planes. No confident clinical inaccuracy or equally good offered alternative identified.",
+      "Preserved planes and negative distant assessment support consideration of resection; independence in daily activities is useful context but not a complete preoperative fitness determination. The explanation appropriately recommends multidisciplinary planning rather than declaring an operation already fully cleared.",
+      "The biopsy, prior treatment and restaging are all present, so this node is clinically self-contained. The later MRI extent is compatible with the earlier scar-site finding; the sequence is coherent.",
+      "Judged independently without the prior explanation, this could be a moderate two-step application of disease distribution/resectability and salvage treatment. In the actual supplied sequence, the earlier feedback and current task supply too much of that inference; difficulty and twoStep here reflect the encountered sequence.",
+      "Salvage APR versus further definitive chemoradiation or metastatic systemic therapy is a core high-yield surgery-board decision. Its current weakness is instructional leakage, not an incorrect treatment key."
+    ],
+    "suggestions": [
+      "Revise the preceding confirmation-node explanation to teach the need for tissue without naming radical salvage. This is required to repair the encountered item even though the leak resides in a companion node.",
+      "Ask neutrally which cancer-treatment plan to recommend for Maria's anal-canal cancer, letting the biopsy, treatment history, extent and distant assessment establish whether the problem is isolated local failure.",
+      "Retain the actual resection-plane and distant-disease findings. Re-review the repaired complete sequence before claiming moderate two-step difficulty; do not hide necessary staging information or label this exact version independently passed."
+    ]
+  }
+]

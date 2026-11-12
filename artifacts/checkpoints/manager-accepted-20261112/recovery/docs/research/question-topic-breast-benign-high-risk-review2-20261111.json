@@ -1,0 +1,281 @@
+[
+  {
+    "id": "question.topic.breast-benign-high-risk.solid-target-core.v2",
+    "nodeId": "node.topic.breast-benign-high-risk.solid-target-core.v2",
+    "title": "Breast biopsy review",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "She prefers to avoid an open diagnostic operation if a reliable needle diagnosis can still be obtained.",
+        "why": "This closely rehearses the keyed plan. With only one needle procedure offered, a reader can select it from the preference without interpreting the acquisition images or histology. The conditional wording does not sufficiently protect the item from that shortcut."
+      }
+    ],
+    "fairness": [
+      "Review scope for this report: the 12 current revised v2 nodes in the top-level proposals/authoredCases, using only candidate presentation, update, exhibit, task, options and explanation. The four pass-preserved candidates, seven parked attempts, original kept/retirement records and retained source holds were noted but not re-adjudicated. Archived v1 items are not current candidates. Input JSON SHA-256: c1a41e4186606b513910fffb7c02507282e59169c6f4da7edfaa068cae09518a.",
+      "All difficulty and testability ratings are qualitative editorial judgments. This offline review makes no new source-verification or clinical-approval claim; all draft versions still need Melissa Rowland's clinical sign-off. Runtime rendering and wait estimates cannot be validated from the permitted visible text alone.",
+      "Repeat image-guided core is a defensible best offered plan for a documented sampling miss and this preference. Surveillance does not resolve the suspicious unsampled mass. Excision remains a clinically reasonable diagnostic route, although less aligned with the stated preference; the explanation appropriately avoids making repeat core universal.",
+      "The objective is high-yield tissue-imaging correlation, but the preference and option set reduce the actual task to an easy selection. The apparent acquisition-interpretation step can be bypassed. The standalone case supplies its history and complete task; no prior node is needed."
+    ],
+    "suggestions": [
+      "Retain the raw acquisition and histology observations, but remove the embedded needle-versus-open rationale. If preference is necessary for a unique best answer, state it briefly and neutrally rather than describing the desired diagnostic pathway.",
+      "Rebuild the competing plans around a consequential, supported acquisition or sequencing distinction that still requires reading the exhibit. Recheck that an informed resident can rank the alternatives; do not manufacture difficulty by concealing the sampling miss."
+    ]
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.acquisition-site.v2",
+    "nodeId": "node.topic.breast-benign-high-risk.acquisition-site.v2",
+    "title": "Persistent breast thickening",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": false,
+    "clarityIssues": [
+      "The separate 2-o'clock cyst adds a second site without changing the current 8-o'clock decision: all options already target 8 o'clock. Its detailed description creates reading burden rather than a consequential comparison."
+    ],
+    "cues": [
+      {
+        "phrase": "the underlying strip is not depicted",
+        "why": "Paired with 'Review stored ultrasound' versus 'Reacquire ultrasound', this explicitly identifies the missing visual information. A reader needs little breast knowledge to choose a new image rather than review images already described as obscured. The observation is necessary, but the option set turns it into the answer rule."
+      }
+    ],
+    "fairness": [
+      "Reacquiring the obscured target is a reasonable next action with the supplied non-alarming examination and inadequate targeted ultrasound. The negative mammographic study does not establish that ultrasound visualized the tissue. No confident clinical inaccuracy is identified.",
+      "Reviewing the same obscured sweeps is a weak competitor, and the case supplies no strong reason to proceed directly to core before completing targeted imaging. Thus identifying an unusable image and requesting its replacement are one straightforward adequacy decision, not two consequential clinical steps.",
+      "Adequate evaluation of a palpable breast finding is important, but this exact marker-shadow/reacquisition distinction is a generic technical check rather than a high-yield ABSITE discrimination. The standalone task is complete and needs no preceding result."
+    ],
+    "suggestions": [
+      "Remove the unrelated cyst detail unless its interpretation changes the next action.",
+      "Build a supported clinical decision around how the actual examination and acquisition adequacy change management, with plausible competing actions at the same stage. Alternatively seek explicit acceptance as an easy acquisition-literacy item; do not label this version moderate or hard."
+    ]
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.discharge-imaging.v2",
+    "nodeId": "node.topic.breast-benign-high-risk.discharge-imaging.v2",
+    "title": "Nipple staining",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Mammography obtained for these episodes",
+        "why": "This makes the option 'Diagnostic mammography with targeted ultrasound' visibly repeat a completed examination. The repeated-test foil can be rejected without interpreting the discharge."
+      },
+      {
+        "phrase": "Diagnostic mammography with targeted ultrasound / Contrast breast MRI with targeted ultrasound / Targeted right retroareolar ultrasound",
+        "why": "Ultrasound is the shared component of three choices, while the key is the sole unbundled version and the only choice naming the affected side and retroareolar target. Component convergence and unequal specificity favor it even before the clinical data are used."
+      }
+    ],
+    "fairness": [
+      "Spontaneous unilateral red-brown discharge requires evaluation despite separately expressed bilateral multiduct fluid. Targeted ultrasound is a defensible next examination after the documented mammographic assessment; no confident clinical error is identified.",
+      "The two proposed inferences are symptom interpretation and workup sequencing, but the repeated-test foil and bundled options substantially bypass that reasoning. The initial spontaneous history and repeated current observation also make the symptom distinction unusually explicit.",
+      "Pathologic nipple discharge, including in men, is high-yield. The standalone case contains the completed workup and a complete next-step task; no prior-node dependency exists."
+    ],
+    "suggestions": [
+      "Use equally scoped, comparably specific next-investigation choices. Avoid making two options add an unnecessary test to the same ultrasound that forms the key.",
+      "Keep the completed mammographic assessment for fairness, but compare real remaining decisions rather than automatically repeating that examination as a disposable foil.",
+      "Keep one sufficient account of spontaneous discharge and the genuinely competing expressed-fluid observation; remove redundant confirmation if it adds no decision information. Re-attack the new options with the clinical presentation hidden."
+    ]
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.adh-residual.v2",
+    "nodeId": "node.topic.breast-benign-high-risk.adh-residual.v2",
+    "title": "Biopsy follow-up",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must reconcile the needle/specimen evidence with the displaced clip to identify the actual sampled field, then use multifocal ADH and substantial residual abnormal calcification to choose diagnostic excision rather than further vacuum sampling. Both location and procedure matter.",
+      "Posterior-field excision is the defensible best offered plan. The benign-appearing retroareolar calcium and documented acquisition prevent the clip from being a substitute for the target. Repeat posterior vacuum biopsy is the closest credible error; ADH already represented in several foci with substantial residual abnormality favors excision. This does not imply that every ADH diagnosis invariably requires the same treatment.",
+      "The two-by-two procedure/location alternatives balance both components, so convergence does not assemble a unique key. No giveaway diagnosis is supplied for a diagnosis task: ADH is appropriately a prerequisite to this management decision.",
+      "ADH management and radiologic-pathologic localization are high-yield. The table and complete task stand alone, with no later part or preceding-feedback dependency. No confident clinical inaccuracy is identified."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.premenopausal-prevention.v2",
+    "nodeId": "node.topic.breast-benign-high-risk.premenopausal-prevention.v2",
+    "title": "Biopsy follow-up",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must interpret ongoing regular menses as a relevant limitation on the aromatase-inhibitor option, then apply the prior proximal DVT to tamoxifen risk reduction. The combination changes the otherwise tempting preventive prescription after ADH; neither observation by itself resolves the entire offered set.",
+      "Withholding the offered endocrine drugs while continuing surveillance is the defensible best answer. Completion of anticoagulation does not erase the DVT history for this preventive tamoxifen decision. The explanation appropriately addresses prevention rather than importing treatment rules for established invasive cancer.",
+      "The no-medication choice is structurally different from the two prescriptions, but it is a concrete plan at the same decision stage, and wording alone does not establish its correctness. Menstrual and thrombosis observations are decision-critical, not gratuitous distractor exclusions.",
+      "Risk reduction after atypia and endocrine-agent eligibility are high-yield. The standalone presentation supplies the excision result and makes surveillance common to all choices. No previous ADH node or explanation is needed; no confident clinical inaccuracy is identified."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.lobular-discordance.v2",
+    "nodeId": "node.topic.breast-benign-high-risk.lobular-discordance.v2",
+    "title": "Breast biopsy review",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must distinguish acquisition through the intended target from pathology that explains the target, then act on the unresolved increasing distortion rather than apply a blanket observation rule for classic LCIS. The histologic label does not itself answer this management question.",
+      "Localized surgical excision is a defensible best offered plan after this extensive targeted vacuum acquisition still fails to explain the increasing distortion. Surveillance ignores the discordance. Repeat vacuum sampling is the closest competitor; the already targeted central and radiating sampling makes simply repeating that same plan less persuasive.",
+      "Do not generalize the explanation to a prohibition on repeat percutaneous sampling for every discordant biopsy. That broader ranking is context-dependent; this offline review identifies no confident inaccuracy in the narrower presented case.",
+      "Concordance and the distinction between incidental classic LCIS and an unexplained imaging target are high-yield. This standalone case restates its current target and does not depend on the earlier calcification case or feedback."
+    ],
+    "suggestions": [
+      "Optional brevity edit: the reference to a separate previously sampled calcification group can be removed if this remains a standalone encounter; it does not determine the offered plan. Re-review any changed exact version."
+    ]
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.radial-scar-surveillance.v2",
+    "nodeId": "node.topic.breast-benign-high-risk.radial-scar-surveillance.v2",
+    "title": "Distortion biopsy review",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "She can attend imaging follow-up and prefers to avoid diagnostic surgery when the current tissue adequately resolves the finding.",
+        "why": "This supplies the conditional observation rule and explicitly favors follow-up over the surgical distractor. The remaining repeat-biopsy option is weak when the exhibit describes sampling throughout the target with no remaining distortion. A reader can strongly favor the only nonprocedural option without understanding radial-scar management."
+      },
+      {
+        "phrase": "current record and preference",
+        "why": "The task draws renewed attention to the preference that already favors the key, amplifying the pre-answer management scaffold."
+      }
+    ],
+    "fairness": [
+      "Surveillance is a defensible best fit for a represented radial scar without atypia, no remaining distortion and the stated preference. The explanation fairly acknowledges that excision is an available counseling option rather than intrinsically incorrect.",
+      "The problem is discrimination rather than a confident clinical error. The broad goal plus two procedural alternatives lets the reader bypass much of the intended concordance reasoning. No supported clinical reason is supplied for the repeat-vacuum distractor to remain a close competitor.",
+      "Selective management of radial scars is a useful high-yield breast concept, but this version does not establish two consequential independent steps. It is complete as a standalone case, without inherited feedback or missing prior results."
+    ],
+    "suggestions": [
+      "Keep necessary patient preference in neutral language, but remove the conditional tissue-adequacy rule and the repeated preference prompt in the task.",
+      "Use a supported clinical distinction that changes the next action and makes the closest alternative credible. Do not merely delete the preference while leaving two equally defensible management options.",
+      "Remove the repeated 'No palpable mass' observation from the exhibit if the opening's nonpalpable status already supplies that information."
+    ]
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.cavity-solid-core.v2",
+    "nodeId": "node.topic.breast-benign-high-risk.cavity-solid-core.v2",
+    "title": "Growing breast mass",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The learner must identify the microscopic fat-injury pattern, establish that the solid nodule rather than only its adjacent fluid was represented, and integrate same-target regression before choosing follow-up despite the prior phyllodes history. These observations distinguish postoperative change from an inadequately evaluated recurrent lesion.",
+      "Clinical and targeted ultrasound follow-up is the defensible best offered plan. Repeat tissue sampling and excision are plausible reactions to a new nodule after phyllodes, but the representative benign tissue and regressing matched lesion make them less appropriate now. No confident clinical inaccuracy is identified.",
+      "The numerical size change describes this fictional course rather than a universal threshold. The follow-up option is somewhat longer, but its clinical/ultrasound pairing does not independently reveal the key; all choices are concrete next plans.",
+      "Postoperative fat necrosis and imaging-pathology concordance are high-yield. The presentation supplies the prior surgery, aspiration and current biopsy, so this standalone case is coherent without an earlier node. The explanation's mention of fluid cytology is not needed to solve the task."
+    ],
+    "suggestions": [
+      "Optional feedback cleanup: omit 'from fluid cytology' unless a cytology result is actually part of the visible history. Keep the distinction between fluid aspiration and representative solid-tissue cores."
+    ]
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.borderline-final-faces.v2",
+    "nodeId": "node.topic.breast-benign-high-risk.borderline-final-faces.v2",
+    "title": "Phyllodes margin review",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": false,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "a margin below 3 mm supports re-excision",
+        "why": "Together with 'Short suture marks lateral' and 'Short suture at this face; nearest tumor-to-ink distance 2 mm', this provides a complete nonmedical lookup route to lateral re-excision. The only remaining work is comparing numbers and translating a label."
+      }
+    ],
+    "fairness": [
+      "Under the explicitly supplied policy, lateral cavity re-excision is uniquely supported: face A maps to lateral, while the superior and other reported distances are outside the supplied re-excision band. The case does not ask the resident to guess an unstated policy.",
+      "The exact UK consensus thresholds have not been independently source-verified in this no-network review. No confident clinical inaccuracy is asserted. The explanation appropriately identifies them as limited-evidence policy rather than a biological recurrence threshold.",
+      "Suture translation plus application of an explicitly printed inequality is not two consequential clinical inferences. Phyllodes local control is testable, but this exact foreign-policy lookup is not a high-yield ABSITE objective in its current form. The standalone specimen record is otherwise clear and complete."
+    ],
+    "suggestions": [
+      "Replace the elementary orientation lookup with a clinically consequential, supported distinction in what the specimen record establishes about the final margin or remaining target, while keeping any necessary policy explicit.",
+      "Do not create difficulty by simply hiding disputed margin thresholds. If no supported higher-value decision is available, request explicit acceptance as easy policy-application practice or omit it from the difficult resident set.",
+      "Preserve the policy's limited-evidence scope and obtain exact-source/clinician confirmation before making any clinical claim beyond the supplied hypothetical rule."
+    ]
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.lactation-ultrasound.v2",
+    "nodeId": "node.topic.breast-benign-high-risk.lactation-ultrasound.v2",
+    "title": "Persistent breast swelling",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must distinguish residual heterogeneous inflammatory tissue from a recurrent drainable collection, then use matched imaging and clinical regression to choose follow-up rather than immediate core biopsy of every persistent palpable area. The absence of an enclosed fluid space rules out repeat aspiration for a clinically necessary reason; it does not alone choose follow-up over biopsy.",
+      "Interval examination and targeted ultrasound is the defensible best offered plan for the improving, non-drainable residual finding. The prior culture-directed treatment and resolved erythema support that course. The explanation requires follow-up through resolution and renewed assessment for progression, rather than dismissing all lactational masses.",
+      "The size values describe observed regression rather than a management cutoff. Post-treatment lactational collections versus residual tissue are high-yield. The complete standalone presentation and comparison do not require prior-node results or teaching.",
+      "No confident clinical inaccuracy is identified. The explanation's statement about mammography does not affect the current answer because mammography is not an offered alternative."
+    ],
+    "suggestions": [
+      "Optional brevity edit: remove the unrelated final mammography sentence from feedback so the explanation remains focused on the tested residual-lesion decision."
+    ]
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.abscess-source-control.v2",
+    "nodeId": "node.topic.breast-benign-high-risk.abscess-source-control.v2",
+    "title": "Persistent breast swelling",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "She prefers to avoid an open incision and reduce the need for repeated drainage visits.",
+        "why": "This maps directly onto both distractor labels: 'Operative incision and drainage' and 'Repeat image-guided needle aspiration'. It leaves catheter drainage as the only choice compatible with both plainly worded wishes before the aspiration records are interpreted."
+      }
+    ],
+    "fairness": [
+      "Image-guided catheter drainage is a defensible best fit for recurrent refilling of a communicating cavity and these goals. The absence of skin necrosis and systemic toxicity is useful context rather than an error. No confident clinical inaccuracy is identified.",
+      "Repeat aspiration and open drainage can also be appropriate in selected cases; the explanation correctly avoids a universal catheter-superiority claim or a mandatory two-aspiration cutoff. The preference makes the ranking understandable but simultaneously makes the question easy.",
+      "The intended interpretation of local persistence despite improvement on antibiotics is not needed to reject either distractor as worded. Thus the record does not earn two consequential steps in this option set. Abscess drainage and source control are high-yield; the standalone case includes all prior procedures needed for the task."
+    ],
+    "suggestions": [
+      "Keep any clinically necessary goal, but avoid a two-part preference that individually names the two rejected procedures.",
+      "Compare remaining plausible plans whose ranking depends on a sourced clinical feature of the recurrence, anatomy or response. If evidence cannot distinguish them without the explicit preference elimination, retain this as easy counseling/application only after explicit acceptance, rather than claiming difficult two-step reasoning.",
+      "Retain the explanation's uncertainty and prohibition on treating two aspirations as a universal threshold."
+    ]
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.milk-contact.v2",
+    "nodeId": "node.topic.breast-benign-high-risk.milk-contact.v2",
+    "title": "Persistent breast swelling",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must distinguish protected direct feeding from the separate contaminated collection pathway, then translate both exposure assessments into the plan for the next feed and this specific bottle. MRSA does not automatically imply that both routes have the same disposition.",
+      "Continue direct feeding under the described protected arrangement and discard the exposed collection is the defensible best offered answer for this healthy term infant. Visible clarity does not undo the documented drainage-to-flange-to-milk contact. The explanation appropriately limits the discard instruction to this collection and calls for cleaning and reassessment before reuse.",
+      "The four choices form a balanced two-by-two matrix with no component-majority or length cue. The contamination makes the bottle decision straightforward, but does not reveal whether protected direct breastfeeding should continue. Both route-specific observations remain necessary to choose the full plan.",
+      "Breastfeeding management during a treated breast abscess is high-yield. The standalone case specifies the infant context, wound protection and actual collection exposure without dependence on a previous abscess node. No confident clinical inaccuracy is identified; this editorial PASS is not clinical approval."
+    ],
+    "suggestions": []
+  }
+]

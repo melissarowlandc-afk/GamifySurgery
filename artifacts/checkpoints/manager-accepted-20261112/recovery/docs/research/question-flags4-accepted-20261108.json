@@ -1,0 +1,219 @@
+[
+  {
+    "id": "F4-01",
+    "title": "Phosphate handling after nutrition restarts",
+    "round": "acceptance",
+    "status": "manager_accepted_draft",
+    "reviewStatus": "needs_clinician_review",
+    "pipelinePassed": false,
+    "releaseReady": false,
+    "acceptanceAllowed": true,
+    "ownerFlagId": "F4-01",
+    "ownerNote": "Answer choices don't make sense",
+    "ownerNoteResolution": "Replaces four repetitive catabolic/anabolic permutations with three parallel phosphate-handling processes. A complete task asks for the link between carbohydrate reintroduction and the observed serum change. The anabolic interpretation and insulin mechanism move to post-answer feedback.",
+    "originalFlaggedVariantId": "question.gs028f.nutrition.refeeding-insulin-phosphate-shift.v3",
+    "holdStatus": "none",
+    "sourceVerificationHold": null,
+    "sourceHoldScope": null,
+    "sourceView": "flags4-accepted",
+    "caseId": "case.gs028f.nutrition.c1-metabolic-transition",
+    "nodeId": "node.gs028f.nutrition.c1-metabolic-transition.1",
+    "conceptId": "concept.gs028f.nutrition.refeeding-insulin-phosphate-shift",
+    "previousConceptId": "concept.gs028f.nutrition.refeeding-insulin-phosphate-shift",
+    "keyOrderNotice": "key shown first for review only; runtime answer choices are randomized",
+    "reviewDisplayNote": "Before is the exact captured live v3, with Maya Chen rendering its patient-name token and original canonical age/sex retained. After is the new named draft. Options are key-first only in this technical packet.",
+    "beforeRole": "Exact independently reviewed flags4 r1 candidate; original live v3 remains the frozen fallback.",
+    "before": {
+      "variantId": "question.gs028f.nutrition.refeeding-insulin-phosphate-shift.v3.r1",
+      "Presentation": "Maya Chen, a 31-year-old woman, is reviewed after a monitored nutrition restart following prolonged poor intake.",
+      "Current update": "Serum phosphate fell as carbohydrate feeding resumed.",
+      "Exhibit": null,
+      "Task": "Which physiological process links carbohydrate reintroduction to Maya Chen's phosphate decline?",
+      "Options": [
+        "**KEY:** Increased cellular uptake of phosphate",
+        "Increased urinary excretion of phosphate",
+        "Decreased intestinal absorption of phosphate"
+      ]
+    },
+    "after": {
+      "variantId": "question.gs028f.nutrition.refeeding-insulin-phosphate-shift.v3.r2",
+      "Presentation": "Maya Chen, a 31-year-old woman, is reviewed after a monitored nutrition restart following prolonged poor intake.",
+      "Current update": null,
+      "Exhibit": null,
+      "Task": "Which physiological process links carbohydrate reintroduction to Maya Chen's phosphate decline?",
+      "Options": [
+        "**KEY:** Increased cellular uptake of phosphate",
+        "Increased urinary excretion of phosphate",
+        "Decreased intestinal absorption of phosphate"
+      ]
+    },
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Increased cellular uptake of phosphate",
+          "Carbohydrate reintroduction can increase insulin-associated cellular uptake, moving phosphate from the circulation into cells. This is the feeding-related mechanism being asked about."
+        ],
+        [
+          "Increased urinary excretion of phosphate",
+          "This selects removal from the body rather than redistribution into cells. It confuses a different route of phosphate handling with the metabolic response to carbohydrate reintroduction."
+        ],
+        [
+          "Decreased intestinal absorption of phosphate",
+          "This treats the lower serum concentration as reduced transfer from the intestine. It does not identify the insulin-linked redistribution associated with carbohydrate reintroduction."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Increased cellular uptake of phosphate",
+          "Carbohydrate reintroduction can increase insulin-associated cellular uptake, moving phosphate from the circulation into cells. This is the feeding-related mechanism being asked about."
+        ],
+        [
+          "Increased urinary excretion of phosphate",
+          "This selects removal from the body rather than redistribution into cells. It confuses a different route of phosphate handling with the metabolic response to carbohydrate reintroduction."
+        ],
+        [
+          "Decreased intestinal absorption of phosphate",
+          "This treats the lower serum concentration as reduced transfer from the intestine. It does not identify the insulin-linked redistribution associated with carbohydrate reintroduction."
+        ]
+      ]
+    },
+    "explanation": {
+      "before": "Carbohydrate reintroduction increases insulin-associated phosphate uptake into cells as metabolism shifts toward synthesis.\nThe renal and intestinal options describe removal or reduced entry, rather than this redistribution.\nA phosphate fall by itself does not establish refeeding syndrome.",
+      "after": "Carbohydrate reintroduction increases insulin-associated phosphate uptake into cells as metabolism shifts toward synthesis.\nThe renal and intestinal options describe removal or reduced entry, rather than this redistribution.\nA phosphate fall by itself does not establish refeeding syndrome."
+    },
+    "inference": "Relate the observed phosphate decline to the resumption of carbohydrate after poor intake. Then: Distinguish redistribution into cells from removal through kidneys or reduced entry through the intestine.",
+    "focus": "The task asks for the metabolic link to carbohydrate reintroduction after undernutrition, not for a diagnosis from an isolated low phosphate measurement. The recorded insulin-associated cellular-uptake claim supplies that link.",
+    "whatChanged": "Delete only the redundant Current update; preserve the complete task, all options/rationales/feedback and the patient header. Version r2 records the context trim. Manager accepts the owner-note resolution; difficulty remains future work.",
+    "reviewResponse": {
+      "ownerNote": "Answer choices don't make sense",
+      "response": "Replaces four repetitive catabolic/anabolic permutations with three parallel phosphate-handling processes. A complete task asks for the link between carbohydrate reintroduction and the observed serum change. The anabolic interpretation and insulin mechanism move to post-answer feedback.",
+      "independentReview": "REVISE only for easy recall; no FAIL, fairness or accuracy issue. Manager explicitly accepts as an owner-note resolution.",
+      "redundancy": "Current update removed: the complete task already names carbohydrate reintroduction and the patient phosphate decline. No clinical information needed for the task is lost.",
+      "difficulty": "Easy recall remains; not independently PASS, not relabelled hard/two-step, and not a release blocker under this manager decision."
+    },
+    "selfCheck": {
+      "reviewer": "author; not independent review or clinical sign-off",
+      "manualReviewCompleted": true,
+      "coverTheKey": {
+        "attack": "Hide the key: there is no pre-answer insulin, cellular uptake, anabolic label, treatment recommendation or key-specific mechanism description. Phosphate appears in every option. Each option has five words, the same noun phrase structure and a single physiological process. The task does not ask for the whole-body phosphate balance or diagnose a syndrome.",
+        "lintWarnings": []
+      },
+      "sameDecisionStageAndCategory": {
+        "category": "Physiological phosphate-handling processes: direction of movement plus anatomical destination or source.",
+        "assessment": "All three choices are candidate explanations for the same serum change, rather than mixtures of diagnoses, laboratory tests and treatments."
+      },
+      "reasoningSteps": [
+        "Relate the observed phosphate decline to the resumption of carbohydrate after poor intake.",
+        "Distinguish redistribution into cells from removal through kidneys or reduced entry through the intestine."
+      ],
+      "closestCredibleError": "The intestinal option substitutes reduced gut entry for redistribution; the renal option treats a fall in serum concentration as loss from the body. Both answer the same mechanism task, rather than introducing a different management stage. Poor intake is not described as malabsorption.",
+      "decidingFinding": "The task asks for the metabolic link to carbohydrate reintroduction after undernutrition, not for a diagnosis from an isolated low phosphate measurement. The recorded insulin-associated cellular-uptake claim supplies that link.",
+      "counterfactual": "If the question instead established ongoing phosphate loss or impaired absorption and asked for that process, one of the alternative handling routes could be appropriate. Those diagnoses and their criteria are not asserted or tested here.",
+      "residentDifficulty": "Easy per independent review. Explicit manager acceptance of the owner-note resolution; future difficulty work is not a blocker.",
+      "singleDefensibleBestAnswer": "Carbohydrate reintroduction can increase insulin-associated cellular uptake, moving phosphate from the circulation into cells. This is the feeding-related mechanism being asked about.",
+      "deletionTest": "The redundant seven-word update is absent. The unchanged task still states the exposure, patient and phosphate decline. Header, options and explanation are exact reviewed bytes.",
+      "options": [
+        {
+          "label": "Increased cellular uptake of phosphate",
+          "isKey": true,
+          "words": 5,
+          "rationale": "Carbohydrate reintroduction can increase insulin-associated cellular uptake, moving phosphate from the circulation into cells. This is the feeding-related mechanism being asked about.",
+          "temptation": "Apply the recorded feeding-related redistribution mechanism."
+        },
+        {
+          "label": "Increased urinary excretion of phosphate",
+          "isKey": false,
+          "words": 5,
+          "rationale": "This selects removal from the body rather than redistribution into cells. It confuses a different route of phosphate handling with the metabolic response to carbohydrate reintroduction.",
+          "temptation": "This selects removal from the body rather than redistribution into cells. It confuses a different route of phosphate handling with the metabolic response to carbohydrate reintroduction."
+        },
+        {
+          "label": "Decreased intestinal absorption of phosphate",
+          "isKey": false,
+          "words": 5,
+          "rationale": "This treats the lower serum concentration as reduced transfer from the intestine. It does not identify the insulin-linked redistribution associated with carbohydrate reintroduction.",
+          "temptation": "This treats the lower serum concentration as reduced transfer from the intestine. It does not identify the insulin-linked redistribution associated with carbohydrate reintroduction."
+        }
+      ],
+      "clinicalAndSourceLimit": "The sole recorded direct mechanism source is the background physiology in a 2023 neurocritical cohort report. AuSPEN supports the diagnostic caution, not a new causal exclusion algorithm. No clinical diagnosis, exact phosphate value, feeding interval/rate, incidence or management plan is inferred. Sources are reused offline with their original 2026-10-07 access/check dates.",
+      "sourceUncertaintyIsNotDifficulty": true,
+      "basicAccepted": false,
+      "reasoningClassification": "Foundational applied physiology / one recall chain, per independent reviewer; author two-step claim superseded."
+    },
+    "supportingEvidenceClaimIds": [
+      "claim.flags4.20261108.carbohydrate-phosphate-uptake",
+      "claim.flags4.20261108.anabolic-transition",
+      "claim.flags4.20261108.diagnostic-boundary"
+    ],
+    "conceptVersion": {
+      "meaning": "same",
+      "reason": "Unchanged carbohydrate/insulin-associated phosphate-uptake objective. Delete only the Current update already restated in the complete task; no new clinical fact or FSRS migration.",
+      "previousConceptId": "concept.gs028f.nutrition.refeeding-insulin-phosphate-shift",
+      "newConceptId": "concept.gs028f.nutrition.refeeding-insulin-phosphate-shift",
+      "historyMigration": "None; preserve previous definitions, frozen encounters and FSRS identity."
+    },
+    "lint": {
+      "version": "question-cue-lint.2026-11-04.v8",
+      "before": [],
+      "after": [],
+      "beforeCount": 0,
+      "afterCount": 0,
+      "profileContexts": 2,
+      "suppressedFindings": 0
+    },
+    "visibleHistory": {
+      "before": {
+        "chiefComplaint": "Nutrition follow-up",
+        "presentation": "Maya Chen, a 31-year-old woman, is reviewed after a monitored nutrition restart following prolonged poor intake.",
+        "stem": "Which physiological process links carbohydrate reintroduction to Maya Chen's phosphate decline?",
+        "currentUpdate": "Serum phosphate fell as carbohydrate feeding resumed."
+      },
+      "after": {
+        "chiefComplaint": "Nutrition follow-up",
+        "presentation": "Maya Chen, a 31-year-old woman, is reviewed after a monitored nutrition restart following prolonged poor intake.",
+        "stem": "Which physiological process links carbohydrate reintroduction to Maya Chen's phosphate decline?"
+      }
+    },
+    "encounterContinuity": {
+      "previousNodeIds": [
+        "node.gs028f.nutrition.c1-metabolic-transition.1"
+      ],
+      "candidateNodeIds": [
+        "node.gs028f.nutrition.c1-metabolic-transition.1"
+      ],
+      "sameSingleNode": true,
+      "requiresManagerCompositionReview": false,
+      "change": "Same single-node case, header/profile and concept; only the redundant update and exact variant identity change from the reviewed candidate. One projection row/header replaces the legacy v3 for fresh selection."
+    },
+    "fallback": {
+      "variantId": "question.gs028f.nutrition.refeeding-insulin-phosphate-shift.v3",
+      "conceptId": "concept.gs028f.nutrition.refeeding-insulin-phosphate-shift",
+      "caseId": "case.gs028f.nutrition.c1-metabolic-transition",
+      "nodeId": "node.gs028f.nutrition.c1-metabolic-transition.1",
+      "policy": "Exact legacy v3 remains archived for open/frozen encounters and stable FSRS history. Fresh default selection uses only the accepted r2 tuple."
+    },
+    "frozenPreservation": {
+      "reviewedSourceSha256": "c74ad1bafc355076c4483c60e919b740aaed9ebaa17c02f909a053519ac4b4d9",
+      "reviewedCaseSha256": "f01dabbda2aec34e5fd2dcfebb9ad64f310ad1e82b02650b8d22219124daf94e",
+      "reviewedNodeSha256": "e96d2b3474075d29083a415f8ee7c5f169b66884c6904d6942e7daeb08348a58",
+      "reviewedQuestionSha256": "7628045868eeb80ac2a0993dccbee34e76867951cad2b67a80b83a9f983e8bdc",
+      "acceptedSourceSha256": "ae92408582c12638d88fb8b1a4d86f96b150437eb4135488b23c162dbae95cbd",
+      "acceptedCaseSha256": "bf78cea4beb101646c67a97133b81cb87d6482be4fbc268b846d38c6a2853ffe",
+      "acceptedNodeSha256": "1838e5f43de94e7477e408afe5a55d79824e6246bbc66220c86df5b1adcc693c",
+      "acceptedQuestionSha256": "a2ce917b57eaa58d71f5a16feac7c95d9d650719b104d7c98fe244ec1d51c8d7",
+      "acceptedTimingSha256": "8cd0a5bdb0cd1a47a071b0e10fe8e2798220bc4a7cf98eda67dcf2b7d204e0b4",
+      "exactReviewedTask": true,
+      "exactReviewedOptions": true,
+      "exactReviewedExplanation": true,
+      "onlyContextDeletion": true
+    },
+    "accepted": true,
+    "clinicalApproval": false,
+    "questionVariantId": "question.gs028f.nutrition.refeeding-insulin-phosphate-shift.v3.r2",
+    "managerDecision": "docs/research/question-flags4-manager-decision-20261108.md",
+    "independentVerdict": "REVISE",
+    "independentDifficulty": "easy",
+    "independentTwoStep": false,
+    "ownerNoteResolved": true
+  }
+]

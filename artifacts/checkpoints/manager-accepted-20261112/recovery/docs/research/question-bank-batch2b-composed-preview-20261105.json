@@ -1,0 +1,1207 @@
+{
+  "generatedOn": "2026-11-05",
+  "label": "key shown first for review only; runtime choices are randomized",
+  "clinicalApproval": false,
+  "releaseAuthorized": false,
+  "purpose": "Exact composed source/header/accepted/fallback preview for sixteen manager-directed 2b acceptances; other lanes are preserved.",
+  "sourceView": "batch2b-round2",
+  "acceptedCount": 16,
+  "affectedCases": 16,
+  "mixedCases": [
+    {
+      "caseId": "case.gs028b.post-neoadjuvant-breast.paired-marker-residual",
+      "acceptedNodeId": "node.gs028b.post-neoadjuvant-breast.paired-marker-residual.1",
+      "fallbackNodeIds": [
+        "node.gs028b.post-neoadjuvant-breast.paired-marker-residual.2"
+      ],
+      "clinicalConsistency": "The header and mapping gate remain noninflammatory, localized disease in the same conservation field; the retained second node still describes feasible margins, radiotherapy eligibility and the same conservation preference.",
+      "sequenceLimitation": "The accepted first update already establishes breast conservation for the bracketing task. The preserved old follow-up then repeats the local-treatment decision, so it is coherent but rehearsed/easy. This integration does not claim that old node passed independent review; queue a separately versioned follow-up improvement, without altering the current live fallback in this milestone.",
+      "decision": "Accept B2B24 as directed; preserve the old second node and exact gate bytes. No unaccepted B2b neighbor is imported."
+    }
+  ],
+  "cases": [
+    {
+      "caseId": "case.gs028e.mis-principles.c3-phrenic-pathway",
+      "acceptanceId": "B2B01",
+      "headerSource": "batch2b-round2",
+      "runtimeDefinitionSha256": "f5a3670ab6ed9ff53a1b3489c40ea52419ab2ec230498fae3612c390fad9b295",
+      "mixed": false,
+      "beforePresentation": "Jamie Taylor, a 42-year-old woman, returns after outside laparoscopic cholecystectomy with a nearly resolved mild shoulder ache. Vital signs and shoulder/abdominal examinations are reassuring, with normal shoulder motion and no chest pain, dyspnea, fever, increasing abdominal pain, vomiting, jaundice or wound change.",
+      "Presentation": "Jamie Taylor, a 42-year-old woman, is reviewed on the ward after laparoscopic cholecystectomy and drainage of a subhepatic collection. The drain still refills with bile. An acute postoperative pulmonary embolus is being treated with intravenous heparin.",
+      "profiles": [
+        {
+          "id": "profile.gs028e.mis-principles.c3-phrenic-pathway.female.42",
+          "demographics": {
+            "ageYears": 42,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 42-year-old woman, is reviewed on the ward after laparoscopic cholecystectomy and drainage of a subhepatic collection. The drain still refills with bile. An acute postoperative pulmonary embolus is being treated with intravenous heparin."
+        },
+        {
+          "id": "profile.gs028e.mis-principles.c3-phrenic-pathway.male.42",
+          "demographics": {
+            "ageYears": 42,
+            "sexLabel": "Male"
+          },
+          "Presentation": "Jamie Taylor, a 42-year-old man, is reviewed on the ward after laparoscopic cholecystectomy and drainage of a subhepatic collection. The drain still refills with bile. An acute postoperative pulmonary embolus is being treated with intravenous heparin."
+        },
+        {
+          "id": "profile.gs028e.mis-principles.c3-phrenic-pathway.female.68",
+          "demographics": {
+            "ageYears": 68,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 68-year-old woman, is reviewed on the ward after laparoscopic cholecystectomy and drainage of a subhepatic collection. The drain still refills with bile. An acute postoperative pulmonary embolus is being treated with intravenous heparin."
+        },
+        {
+          "id": "profile.gs028e.mis-principles.c3-phrenic-pathway.male.68",
+          "demographics": {
+            "ageYears": 68,
+            "sexLabel": "Male"
+          },
+          "Presentation": "Jamie Taylor, a 68-year-old man, is reviewed on the ward after laparoscopic cholecystectomy and drainage of a subhepatic collection. The drain still refills with bile. An acute postoperative pulmonary embolus is being treated with intravenous heparin."
+        }
+      ],
+      "nodes": [
+        {
+          "nodeId": "node.gs028e.mis-principles.c3-phrenic-pathway.1",
+          "questionVariantId": "question.postlaparoscopy.benign-referred-shoulder-pain.v2.r6",
+          "conceptId": "concept.postlaparoscopy.shoulder-pain-biliary-localization.v2",
+          "disposition": "manager_accepted_2b",
+          "Current update": null,
+          "Exhibit": {
+            "kind": "table",
+            "caption": "Current hepatobiliary and treatment records",
+            "columnHeaders": [
+              "Observation"
+            ],
+            "rowHeaders": [
+              "Duct series",
+              "Drainage",
+              "Medication"
+            ],
+            "cells": [
+              [
+                "Contrast passes through both hepatic ducts and the common duct into the duodenum. A side channel at the cystic-duct stump fills the drained cavity."
+              ],
+              [
+                "The cavity has contracted around the drain; bile continues to enter the catheter."
+              ],
+              [
+                "Intravenous heparin is entered on the current administration chart for the pulmonary embolus."
+              ]
+            ]
+          },
+          "Task": "Which endoscopic intervention should be planned for Jamie Taylor?",
+          "Options": [
+            "**KEY:** Biliary plastic stenting",
+            "Biliary sphincterotomy",
+            "Covered biliary metal stenting"
+          ],
+          "feedback": "The anatomy supports internal diversion of a communicating minor leak. A stent can be inserted without dividing the papilla, avoiding the additional sphincterotomy bleeding exposure while anticoagulation remains necessary. Papillary division can lower resistance but creates a higher-bleeding-risk intervention here. It is not interchangeable with stent diversion in this anticoagulated patient. Covered metal stents have a role in selected complex or refractory leaks. Ongoing output after external drainage does not by itself establish failure of initial plastic-stent diversion.",
+          "teachingPoint": "The anatomy supports internal diversion of a communicating minor leak. A stent can be inserted without dividing the papilla, avoiding the additional sphincterotomy bleeding exposure while anticoagulation remains necessary.",
+          "resultGate": null
+        }
+      ]
+    },
+    {
+      "caseId": "case.gs028e.immunology.c3-historical-kidney-event",
+      "acceptanceId": "B2B02",
+      "headerSource": "batch2b-round2",
+      "runtimeDefinitionSha256": "87aa6abec5a2ad7169d68f38de042b6e956042f94a4e12d52aaccb9110cd78a8",
+      "mixed": false,
+      "beforePresentation": "Jamie Taylor, a 41-year-old woman, is stable in clinic and asks about a remote outside kidney-transplant event. The transplant team established the historical diagnosis as hyperacute antibody-mediated rejection. Current graft care is managed by that team.",
+      "Presentation": "Jamie Taylor, a 41-year-old woman, attends a transplant-event review after a kidney graft became mottled and stopped producing urine at reperfusion. Both major vessels were patent. The tissue contains endothelial immunoglobulin and complement with capillary thrombi.",
+      "profiles": [
+        {
+          "id": "profile.gs028e.immunology.c3-historical-kidney-event.female.41",
+          "demographics": {
+            "ageYears": 41,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 41-year-old woman, attends a transplant-event review after a kidney graft became mottled and stopped producing urine at reperfusion. Both major vessels were patent. The tissue contains endothelial immunoglobulin and complement with capillary thrombi."
+        },
+        {
+          "id": "profile.gs028e.immunology.c3-historical-kidney-event.male.41",
+          "demographics": {
+            "ageYears": 41,
+            "sexLabel": "Male"
+          },
+          "Presentation": "Jamie Taylor, a 41-year-old man, attends a transplant-event review after a kidney graft became mottled and stopped producing urine at reperfusion. Both major vessels were patent. The tissue contains endothelial immunoglobulin and complement with capillary thrombi."
+        },
+        {
+          "id": "profile.gs028e.immunology.c3-historical-kidney-event.female.64",
+          "demographics": {
+            "ageYears": 64,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 64-year-old woman, attends a transplant-event review after a kidney graft became mottled and stopped producing urine at reperfusion. Both major vessels were patent. The tissue contains endothelial immunoglobulin and complement with capillary thrombi."
+        },
+        {
+          "id": "profile.gs028e.immunology.c3-historical-kidney-event.male.64",
+          "demographics": {
+            "ageYears": 64,
+            "sexLabel": "Male"
+          },
+          "Presentation": "Jamie Taylor, a 64-year-old man, attends a transplant-event review after a kidney graft became mottled and stopped producing urine at reperfusion. Both major vessels were patent. The tissue contains endothelial immunoglobulin and complement with capillary thrombi."
+        }
+      ],
+      "nodes": [
+        {
+          "nodeId": "node.gs028e.immunology.c3-historical-kidney-event.1",
+          "questionVariantId": "question.immunology.preformed-antibody-hyperacute-rejection.v1.r6",
+          "conceptId": "concept.transplant.class-ii-crossmatch-target-and-window.v1",
+          "disposition": "manager_accepted_2b",
+          "Current update": null,
+          "Exhibit": {
+            "kind": "table",
+            "caption": "Compatibility archive",
+            "columnHeaders": [
+              "Record"
+            ],
+            "rowHeaders": [
+              "Before implantation",
+              "Stored antibody panel",
+              "After the event"
+            ],
+            "cells": [
+              [
+                "A donor T-cell complement-dependent crossmatch was negative. Separate preimplantation recipient serum remains archived."
+              ],
+              [
+                "The preimplantation serum reacts with donor-matched HLA-DQ antigen beads."
+              ],
+              [
+                "Recipient serum was also collected after graft failure; donor T-cell and B-cell aliquots are retained."
+              ]
+            ]
+          },
+          "Task": "Which flow-cytometric crossmatch should be requested for Jamie Taylor's event review?",
+          "Options": [
+            "**KEY:** Preimplantation serum with donor B cells",
+            "Preimplantation serum with donor T cells",
+            "Post-event serum with donor B cells",
+            "Post-event serum with donor T cells"
+          ],
+          "feedback": "B cells provide the class-II target relevant to the DQ signal; the pre-event specimen can address whether reactivity preceded the injury. This uses the correct time window but does not provide the same class-II cell target. A negative earlier T-cell result does not settle that question. This targets the relevant cell population, but a result obtained only from post-event serum cannot establish pre-existing reactivity. This combines a less relevant cell target with a specimen that cannot establish the pre-event state.",
+          "teachingPoint": "B cells provide the class-II target relevant to the DQ signal; the pre-event specimen can address whether reactivity preceded the injury.",
+          "resultGate": null
+        }
+      ]
+    },
+    {
+      "caseId": "case.gs028b.differentiated-thyroid-cancer.a-completed-negative",
+      "acceptanceId": "B2B06",
+      "headerSource": "batch2b-round2",
+      "runtimeDefinitionSha256": "0be8fceb3551016319922eba0f1d82b658bee16f492170aa7bf7c4339660f104",
+      "mixed": false,
+      "beforePresentation": "Jamie Taylor, a 43-year-old woman, reviews a completed preoperative neck ultrasound after malignant thyroid cytology. It documents no suspicious central or lateral nodes and no gross extrathyroidal extension.",
+      "Presentation": "Jamie Taylor, a 43-year-old woman, attends after thyroid cytology reports papillary carcinoma. The clinician reviews the radiologist's neck-ultrasound report: a lateral neck node has a 12-mm short axis, fluid in its centre and a peripheral tissue component containing punctate echogenic foci. The earlier aspirate contains macrophages and proteinaceous fluid. Its washout thyroglobulin is detectable, and the procedure images show the needle crossing the thyroid before entering the central fluid.",
+      "profiles": [
+        {
+          "id": "profile.gs028b.differentiated-thyroid-cancer.a-completed-negative.female.43",
+          "demographics": {
+            "ageYears": 43,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 43-year-old woman, attends after thyroid cytology reports papillary carcinoma. The clinician reviews the radiologist's neck-ultrasound report: a lateral neck node has a 12-mm short axis, fluid in its centre and a peripheral tissue component containing punctate echogenic foci. The earlier aspirate contains macrophages and proteinaceous fluid. Its washout thyroglobulin is detectable, and the procedure images show the needle crossing the thyroid before entering the central fluid."
+        },
+        {
+          "id": "profile.gs028b.differentiated-thyroid-cancer.a-completed-negative.male.43",
+          "demographics": {
+            "ageYears": 43,
+            "sexLabel": "Male"
+          },
+          "Presentation": "Jamie Taylor, a 43-year-old man, attends after thyroid cytology reports papillary carcinoma. The clinician reviews the radiologist's neck-ultrasound report: a lateral neck node has a 12-mm short axis, fluid in its centre and a peripheral tissue component containing punctate echogenic foci. The earlier aspirate contains macrophages and proteinaceous fluid. Its washout thyroglobulin is detectable, and the procedure images show the needle crossing the thyroid before entering the central fluid."
+        },
+        {
+          "id": "profile.gs028b.differentiated-thyroid-cancer.a-completed-negative.female.68",
+          "demographics": {
+            "ageYears": 68,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 68-year-old woman, attends after thyroid cytology reports papillary carcinoma. The clinician reviews the radiologist's neck-ultrasound report: a lateral neck node has a 12-mm short axis, fluid in its centre and a peripheral tissue component containing punctate echogenic foci. The earlier aspirate contains macrophages and proteinaceous fluid. Its washout thyroglobulin is detectable, and the procedure images show the needle crossing the thyroid before entering the central fluid."
+        },
+        {
+          "id": "profile.gs028b.differentiated-thyroid-cancer.a-completed-negative.male.68",
+          "demographics": {
+            "ageYears": 68,
+            "sexLabel": "Male"
+          },
+          "Presentation": "Jamie Taylor, a 68-year-old man, attends after thyroid cytology reports papillary carcinoma. The clinician reviews the radiologist's neck-ultrasound report: a lateral neck node has a 12-mm short axis, fluid in its centre and a peripheral tissue component containing punctate echogenic foci. The earlier aspirate contains macrophages and proteinaceous fluid. Its washout thyroglobulin is detectable, and the procedure images show the needle crossing the thyroid before entering the central fluid."
+        }
+      ],
+      "nodes": [
+        {
+          "nodeId": "node.gs028b.differentiated-thyroid-cancer.a-completed-negative.1",
+          "questionVariantId": "question.differentiated-thyroid-cancer.preoperative-nodal-ultrasound.v4.r5",
+          "conceptId": "concept.dtc.representative-node-target-and-assay.v1",
+          "disposition": "manager_accepted_2b",
+          "Current update": null,
+          "Exhibit": null,
+          "Task": "Which repeat neck-node sampling request should be made for Jamie Taylor?",
+          "Options": [
+            "**KEY:** Peripheral tissue: cytology and thyroglobulin washout",
+            "Central cyst fluid: cytology and thyroglobulin washout",
+            "Peripheral tissue: cytology and flow cytometry",
+            "Central cyst fluid: cytology and flow cytometry"
+          ],
+          "feedback": "The sampled fluid did not represent the suspicious tissue. Representative nodal cytology with selected thyroglobulin washout addresses the thyroid-metastasis question; use a nodal approach that avoids thyroid contamination. Repeating a relevant assay on the same nonrepresentative compartment can reproduce an uninterpretable result rather than resolve the tissue/morphology discordance. This targets tissue, but flow cytometry addresses a different competing lymphoid process; it is not the preferred adjunct for this thyroid-cancer nodal question. Both the sampled compartment and ancillary test leave the thyroid-related nodal concern inadequately assessed.",
+          "teachingPoint": "The sampled fluid did not represent the suspicious tissue. Representative nodal cytology with selected thyroglobulin washout addresses the thyroid-metastasis question; use a nodal approach that avoids thyroid contamination.",
+          "resultGate": null
+        }
+      ]
+    },
+    {
+      "caseId": "case.gs028b.post-neoadjuvant-breast.b-diffuse-residual",
+      "acceptanceId": "B2B08",
+      "headerSource": "batch2b-round2",
+      "runtimeDefinitionSha256": "65ba527de610a837c54f86039e72bd8e472b609f61beb511d84512aad04209bb",
+      "mixed": false,
+      "beforePresentation": "Jamie Taylor, a 46-year-old woman, presents after neoadjuvant therapy with diffuse multicentric residual disease spanning separate breast regions. A satisfactory single conservation resection is not feasible.",
+      "Presentation": "Jamie Taylor, a 46-year-old woman, returns after neoadjuvant therapy for breast cancer. Before treatment, warmth, erythema and skin pitting developed rapidly across most of the breast; a skin biopsy contained carcinoma within dermal lymphatic channels and an axillary core contained metastatic carcinoma. The current examination shows resolution of the skin changes, and the breast and axillary lesions are no longer palpable.",
+      "profiles": [
+        {
+          "id": "profile.gs028b.post-neoadjuvant-breast.b-diffuse-residual.female.46",
+          "demographics": {
+            "ageYears": 46,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 46-year-old woman, returns after neoadjuvant therapy for breast cancer. Before treatment, warmth, erythema and skin pitting developed rapidly across most of the breast; a skin biopsy contained carcinoma within dermal lymphatic channels and an axillary core contained metastatic carcinoma. The current examination shows resolution of the skin changes, and the breast and axillary lesions are no longer palpable."
+        },
+        {
+          "id": "profile.gs028b.post-neoadjuvant-breast.b-diffuse-residual.female.62",
+          "demographics": {
+            "ageYears": 62,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 62-year-old woman, returns after neoadjuvant therapy for breast cancer. Before treatment, warmth, erythema and skin pitting developed rapidly across most of the breast; a skin biopsy contained carcinoma within dermal lymphatic channels and an axillary core contained metastatic carcinoma. The current examination shows resolution of the skin changes, and the breast and axillary lesions are no longer palpable."
+        }
+      ],
+      "nodes": [
+        {
+          "nodeId": "node.gs028b.post-neoadjuvant-breast.b-diffuse-residual.1",
+          "questionVariantId": "question.breast-cancer-after-neoadjuvant-therapy.breast-conservation-selection.v2.r2",
+          "conceptId": "concept.breast.inflammatory-phenotype-after-neoadjuvant-response.v1",
+          "disposition": "manager_accepted_2b",
+          "Current update": null,
+          "Exhibit": {
+            "kind": "table",
+            "caption": "Before and after systemic therapy",
+            "columnHeaders": [
+              "Before treatment",
+              "Current examination/imaging"
+            ],
+            "rowHeaders": [
+              "Skin",
+              "Breast focus",
+              "Axilla"
+            ],
+            "cells": [
+              [
+                "Diffuse pitting and erythema; dermal lymphatic tumour emboli",
+                "Skin thickening and erythema have resolved."
+              ],
+              [
+                "Biopsy-proven invasive carcinoma with an inserted marker",
+                "A small enhancing focus remains at the marked site."
+              ],
+              [
+                "Core-biopsy-proven nodal metastasis with an inserted marker",
+                "The marked node has a thin cortex and is no longer enlarged."
+              ]
+            ]
+          },
+          "Task": "Which breast and axillary operation should be discussed for Jamie Taylor?",
+          "Options": [
+            "**KEY:** Mastectomy with axillary dissection",
+            "Mastectomy with targeted axillary dissection",
+            "Lumpectomy with axillary dissection",
+            "Lumpectomy with targeted axillary dissection"
+          ],
+          "feedback": "The initial skin/lymphatic presentation establishes an inflammatory phenotype whose operative approach is not de-escalated merely because skin and nodal appearances respond. Targeted de-escalation can be considered in selected noninflammatory settings; the pretreatment inflammatory presentation changes the axillary boundary here. This recognizes the nodal issue but treats current response as sufficient to substitute breast conservation for the inflammatory-disease operation. This applies both breast and axillary de-escalation from a selected noninflammatory pathway to the wrong original phenotype.",
+          "teachingPoint": "The initial skin/lymphatic presentation establishes an inflammatory phenotype whose operative approach is not de-escalated merely because skin and nodal appearances respond.",
+          "resultGate": null
+        }
+      ]
+    },
+    {
+      "caseId": "case.gs028c.acute-mesenteric-ischemia.b-guarding-and-shock",
+      "acceptanceId": "B2B09",
+      "headerSource": "batch2b-round2",
+      "runtimeDefinitionSha256": "92b31e08affc7ef63d868ce9c0463c665c133eb35a8f168799fbb46f072fddc6",
+      "mixed": false,
+      "beforePresentation": "Jamie Taylor, a 65-year-old woman, develops a high-risk acute mesenteric ischemia presentation in the clinic with worsening hypotension, diffuse rebound tenderness, and involuntary guarding. Emergency support is underway, and the receiving hospital has operative capability.",
+      "Presentation": "Jamie Taylor, a 65-year-old woman, is in theatre for mesenteric arterial occlusion. Flow has been restored and a perforated black segment has been removed. The remaining loops contain alternating dusky and pink areas; the edges are swollen. Arterial pH remains below the laboratory interval, the patient is cold and vasopressors are still being used.",
+      "profiles": [
+        {
+          "id": "profile.gs028c.acute-mesenteric-ischemia.b-guarding-and-shock.female.65",
+          "demographics": {
+            "ageYears": 65,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 65-year-old woman, is in theatre for mesenteric arterial occlusion. Flow has been restored and a perforated black segment has been removed. The remaining loops contain alternating dusky and pink areas; the edges are swollen. Arterial pH remains below the laboratory interval, the patient is cold and vasopressors are still being used."
+        },
+        {
+          "id": "profile.gs028c.acute-mesenteric-ischemia.b-guarding-and-shock.male.65",
+          "demographics": {
+            "ageYears": 65,
+            "sexLabel": "Male"
+          },
+          "Presentation": "Jamie Taylor, a 65-year-old man, is in theatre for mesenteric arterial occlusion. Flow has been restored and a perforated black segment has been removed. The remaining loops contain alternating dusky and pink areas; the edges are swollen. Arterial pH remains below the laboratory interval, the patient is cold and vasopressors are still being used."
+        },
+        {
+          "id": "profile.gs028c.acute-mesenteric-ischemia.b-guarding-and-shock.female.80",
+          "demographics": {
+            "ageYears": 80,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 80-year-old woman, is in theatre for mesenteric arterial occlusion. Flow has been restored and a perforated black segment has been removed. The remaining loops contain alternating dusky and pink areas; the edges are swollen. Arterial pH remains below the laboratory interval, the patient is cold and vasopressors are still being used."
+        },
+        {
+          "id": "profile.gs028c.acute-mesenteric-ischemia.b-guarding-and-shock.male.80",
+          "demographics": {
+            "ageYears": 80,
+            "sexLabel": "Male"
+          },
+          "Presentation": "Jamie Taylor, a 80-year-old man, is in theatre for mesenteric arterial occlusion. Flow has been restored and a perforated black segment has been removed. The remaining loops contain alternating dusky and pink areas; the edges are swollen. Arterial pH remains below the laboratory interval, the patient is cold and vasopressors are still being used."
+        }
+      ],
+      "nodes": [
+        {
+          "nodeId": "node.gs028c.acute-mesenteric-ischemia.b-guarding-and-shock.1",
+          "questionVariantId": "question.acute-mesenteric-ischemia.peritonitis-exploration.v3.r2",
+          "conceptId": "concept.mesenteric-ischaemia.post-revascularization-bowel-staging.v1",
+          "disposition": "manager_accepted_2b",
+          "Current update": null,
+          "Exhibit": null,
+          "Task": "Which bowel plan should be used for Jamie Taylor at this operation?",
+          "Options": [
+            "**KEY:** Stapled ends with planned re-exploration",
+            "Primary anastomosis with planned re-exploration",
+            "Stapled ends with definitive closure",
+            "Primary anastomosis with definitive closure"
+          ],
+          "feedback": "Physiological derangement and uncertain remaining viability support staged reassessment rather than immediate anastomosis and definitive closure. The second look addresses viability uncertainty, but immediate joining of swollen bowel during ongoing physiological derangement adds a separate risk. This avoids an immediate join but omits the planned reassessment needed for uncertain residual viability. This assumes both physiological readiness for a join and resolved viability despite the current observations.",
+          "teachingPoint": "Physiological derangement and uncertain remaining viability support staged reassessment rather than immediate anastomosis and definitive closure.",
+          "resultGate": null
+        }
+      ]
+    },
+    {
+      "caseId": "case.gs028b.post-neoadjuvant-breast.a-residual-palpable",
+      "acceptanceId": "B2B10",
+      "headerSource": "batch2b-round2",
+      "runtimeDefinitionSha256": "d7549eb807f7e2321388c4c1e7541038702131bd0c0130b7294094fb74e76d6e",
+      "mixed": false,
+      "beforePresentation": "Jamie Taylor, a 45-year-old woman, returns after neoadjuvant therapy with a smaller but still palpable unifocal breast lesion. Baseline imaging and the biopsy-site marker are available.",
+      "Presentation": "Jamie Taylor, a 45-year-old woman, returns after neoadjuvant therapy. The mass is smaller, with a residual firm area lateral to the original biopsy marker.",
+      "profiles": [
+        {
+          "id": "profile.gs028b.post-neoadjuvant-breast.a-residual-palpable.female.45",
+          "demographics": {
+            "ageYears": 45,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 45-year-old woman, returns after neoadjuvant therapy. The mass is smaller, with a residual firm area lateral to the original biopsy marker."
+        },
+        {
+          "id": "profile.gs028b.post-neoadjuvant-breast.a-residual-palpable.female.61",
+          "demographics": {
+            "ageYears": 61,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 61-year-old woman, returns after neoadjuvant therapy. The mass is smaller, with a residual firm area lateral to the original biopsy marker."
+        }
+      ],
+      "nodes": [
+        {
+          "nodeId": "node.gs028b.post-neoadjuvant-breast.a-residual-palpable.1",
+          "questionVariantId": "question.breast-cancer-after-neoadjuvant-therapy.response-mapping.v2.r1",
+          "conceptId": "concept.breast-cancer-after-neoadjuvant-therapy.response-mapping",
+          "disposition": "manager_accepted_2b",
+          "Current update": null,
+          "Exhibit": {
+            "kind": "table",
+            "caption": "Records for operative mapping",
+            "columnHeaders": [
+              "Original record",
+              "Current record"
+            ],
+            "rowHeaders": [
+              "Biopsy-proven site",
+              "Palpable finding"
+            ],
+            "cells": [
+              [
+                "Marker within the sampled cancer on the pretreatment images",
+                "Marker lies in a nonenhancing scarred bed medial to the smaller enhancing focus"
+              ],
+              [
+                "Firm lesion at the biopsy-proven site",
+                "Firm remnant lies within the lateral enhancing focus, separate from the marker"
+              ]
+            ]
+          },
+          "Task": "Which localization plan should be arranged for Jamie Taylor?",
+          "Options": [
+            "**KEY:** Localize the enhancing focus and original marker",
+            "Localize the enhancing focus and palpable remnant",
+            "Localize the pretreatment outline and original marker",
+            "Localize the pretreatment outline and palpable remnant"
+          ],
+          "feedback": "The response has separated the palpable/enhancing remnant from the original marked bed. Current distribution and the known original site both need to be incorporated. Both targets describe the current lateral remnant, leaving the original marked bed unaccounted for. This is tempting if a clinical response is treated as disappearance of the known site. The original map and marker matter, but copying the entire old outline does not integrate the changed residual distribution. This combines an unchanged original outline with examination rather than integrating the residual imaging and marked biopsy bed.",
+          "teachingPoint": "The response has separated the palpable/enhancing remnant from the original marked bed. Current distribution and the known original site both need to be incorporated.",
+          "resultGate": null
+        }
+      ]
+    },
+    {
+      "caseId": "case.gs028d.dialysis-access.b-arm-swelling",
+      "acceptanceId": "B2B17",
+      "headerSource": "batch2b-round2",
+      "runtimeDefinitionSha256": "01535bc8e344ce5db3de8ce2afa0d1da4df962b67bb430e3cecb403d9c477dee",
+      "mixed": false,
+      "beforePresentation": "Jamie Taylor, a 36-year-old woman, has new persistent swelling of the AV-access arm and a dialysis report of reduced delivered flow, without bleeding or acute limb threat.",
+      "Presentation": "Jamie Taylor, a 36-year-old woman, on haemodialysis has progressive swelling of the fistula arm and aching during sessions. Delivered flow has fallen with the same needle arrangement, and puncture sites ooze longer after removal. New veins are visible across the ipsilateral upper chest. A previous dialysis catheter entered the internal jugular vein on that side. The hand is warm and finger movement is preserved.",
+      "profiles": [
+        {
+          "id": "profile.gs028d.dialysis-access.b-arm-swelling.female.36",
+          "demographics": {
+            "ageYears": 36,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 36-year-old woman, on haemodialysis has progressive swelling of the fistula arm and aching during sessions. Delivered flow has fallen with the same needle arrangement, and puncture sites ooze longer after removal. New veins are visible across the ipsilateral upper chest. A previous dialysis catheter entered the internal jugular vein on that side. The hand is warm and finger movement is preserved."
+        },
+        {
+          "id": "profile.gs028d.dialysis-access.b-arm-swelling.male.36",
+          "demographics": {
+            "ageYears": 36,
+            "sexLabel": "Male"
+          },
+          "Presentation": "Jamie Taylor, a 36-year-old man, on haemodialysis has progressive swelling of the fistula arm and aching during sessions. Delivered flow has fallen with the same needle arrangement, and puncture sites ooze longer after removal. New veins are visible across the ipsilateral upper chest. A previous dialysis catheter entered the internal jugular vein on that side. The hand is warm and finger movement is preserved."
+        },
+        {
+          "id": "profile.gs028d.dialysis-access.b-arm-swelling.female.65",
+          "demographics": {
+            "ageYears": 65,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 65-year-old woman, on haemodialysis has progressive swelling of the fistula arm and aching during sessions. Delivered flow has fallen with the same needle arrangement, and puncture sites ooze longer after removal. New veins are visible across the ipsilateral upper chest. A previous dialysis catheter entered the internal jugular vein on that side. The hand is warm and finger movement is preserved."
+        },
+        {
+          "id": "profile.gs028d.dialysis-access.b-arm-swelling.male.65",
+          "demographics": {
+            "ageYears": 65,
+            "sexLabel": "Male"
+          },
+          "Presentation": "Jamie Taylor, a 65-year-old man, on haemodialysis has progressive swelling of the fistula arm and aching during sessions. Delivered flow has fallen with the same needle arrangement, and puncture sites ooze longer after removal. New veins are visible across the ipsilateral upper chest. A previous dialysis catheter entered the internal jugular vein on that side. The hand is warm and finger movement is preserved."
+        }
+      ],
+      "nodes": [
+        {
+          "nodeId": "node.gs028d.dialysis-access.b-arm-swelling.1",
+          "questionVariantId": "question.dialysis-access.clinical-dysfunction-referral.v4.r2",
+          "conceptId": "concept.dialysis-access.symptomatic-central-outflow-assessment.v1",
+          "disposition": "manager_accepted_2b",
+          "Current update": null,
+          "Exhibit": null,
+          "Task": "Which investigation should be requested for Jamie Taylor?",
+          "Options": [
+            "**KEY:** Fistulography including central venous outflow",
+            "Digital arterial pressures with access compression",
+            "Compression duplex of the deep arm veins"
+          ],
+          "feedback": "The combined dialysis-performance and collateral pattern points toward an outflow problem extending beyond the cannulation segment; the study must include the central route. This can address an access-related hand-perfusion problem, but the current swelling/collateral/bleeding pattern is not best localized to that mechanism. Arm-vein thrombosis is a credible cause of swelling, but an access/central-outflow study better integrates the dialysis changes, collateral route and catheter history.",
+          "teachingPoint": "The combined dialysis-performance and collateral pattern points toward an outflow problem extending beyond the cannulation segment; the study must include the central route.",
+          "resultGate": null
+        }
+      ]
+    },
+    {
+      "caseId": "case.gs028d.geriatrics.b-mobility-nutrition",
+      "acceptanceId": "B2B21",
+      "headerSource": "batch2b-round2",
+      "runtimeDefinitionSha256": "734dca0f0d7d4f2fac4d544f074c2004e2db1175de2c73ddf35df8e560c8b178",
+      "mixed": false,
+      "beforePresentation": "Jamie Taylor, a 68-year-old woman, has mobility and nutrition vulnerabilities before major gastric surgery and will recover in the hospital.",
+      "Presentation": "Jamie Taylor, a 68-year-old woman, is in hospital after gastric surgery. A long-standing home prescription is clonazepam every evening; the inpatient administration record shows several usual evening doses omitted. The patient now has coarse tremor, sweating, inattention and visual misperceptions, and repeatedly pulls at drains despite family presence, reorientation and correction of pain and bladder distension.",
+      "profiles": [
+        {
+          "id": "profile.gs028d.geriatrics.b-mobility-nutrition.female.68",
+          "demographics": {
+            "ageYears": 68,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 68-year-old woman, is in hospital after gastric surgery. A long-standing home prescription is clonazepam every evening; the inpatient administration record shows several usual evening doses omitted. The patient now has coarse tremor, sweating, inattention and visual misperceptions, and repeatedly pulls at drains despite family presence, reorientation and correction of pain and bladder distension."
+        },
+        {
+          "id": "profile.gs028d.geriatrics.b-mobility-nutrition.male.68",
+          "demographics": {
+            "ageYears": 68,
+            "sexLabel": "Male"
+          },
+          "Presentation": "Jamie Taylor, a 68-year-old man, is in hospital after gastric surgery. A long-standing home prescription is clonazepam every evening; the inpatient administration record shows several usual evening doses omitted. The patient now has coarse tremor, sweating, inattention and visual misperceptions, and repeatedly pulls at drains despite family presence, reorientation and correction of pain and bladder distension."
+        },
+        {
+          "id": "profile.gs028d.geriatrics.b-mobility-nutrition.female.80",
+          "demographics": {
+            "ageYears": 80,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 80-year-old woman, is in hospital after gastric surgery. A long-standing home prescription is clonazepam every evening; the inpatient administration record shows several usual evening doses omitted. The patient now has coarse tremor, sweating, inattention and visual misperceptions, and repeatedly pulls at drains despite family presence, reorientation and correction of pain and bladder distension."
+        },
+        {
+          "id": "profile.gs028d.geriatrics.b-mobility-nutrition.male.80",
+          "demographics": {
+            "ageYears": 80,
+            "sexLabel": "Male"
+          },
+          "Presentation": "Jamie Taylor, a 80-year-old man, is in hospital after gastric surgery. A long-standing home prescription is clonazepam every evening; the inpatient administration record shows several usual evening doses omitted. The patient now has coarse tremor, sweating, inattention and visual misperceptions, and repeatedly pulls at drains despite family presence, reorientation and correction of pain and bladder distension."
+        }
+      ],
+      "nodes": [
+        {
+          "nodeId": "node.gs028d.geriatrics.b-mobility-nutrition.1",
+          "questionVariantId": "question.postoperative-delirium.multicomponent-prevention-plan.v4.r2",
+          "conceptId": "concept.postoperative-delirium.benzodiazepine-withdrawal-exception.v1",
+          "disposition": "manager_accepted_2b",
+          "Current update": null,
+          "Exhibit": null,
+          "Task": "Which medication should be given for Jamie Taylor's current episode?",
+          "Options": [
+            "**KEY:** Lorazepam",
+            "Haloperidol",
+            "Dexmedetomidine"
+          ],
+          "feedback": "The actual home exposure and interruption make withdrawal a relevant driver; a benzodiazepine can treat that mechanism rather than merely suppress the behaviour. An antipsychotic can be considered for selected severe behavioural symptoms but does not substitute for treatment of a benzodiazepine-withdrawal mechanism. Monitored sedative strategies have selected roles; they do not replace addressing the withdrawal driver in this presented first medication decision.",
+          "teachingPoint": "The actual home exposure and interruption make withdrawal a relevant driver; a benzodiazepine can treat that mechanism rather than merely suppress the behaviour.",
+          "resultGate": null
+        }
+      ]
+    },
+    {
+      "caseId": "case.gs028c.mild-biliary-pancreatitis.b-discharge-rounds",
+      "acceptanceId": "B2B23",
+      "headerSource": "batch2b-round2",
+      "runtimeDefinitionSha256": "1ae6dc45d49eaccedf51d7b28c83d1aafb51ce998959004384e83d85dd4f67ff",
+      "mixed": false,
+      "beforePresentation": "Jamie Taylor, a 30-year-old woman, asks in clinic about a recent discharge after mild biliary pancreatitis. The hospital record shows resolved pain, tolerated diet, no local pancreatic complication or persistent organ dysfunction, and available surgical expertise before discharge.",
+      "Presentation": "Jamie Taylor, a 30-year-old woman, is reviewed during a gallstone-pancreatitis admission. Pain has subsided and meals are now tolerated. The current CT shows a persisting peripancreatic fluid-and-debris collection beside areas that did not enhance on the earlier scan. Gallstones remain; bilirubin is now within its reporting interval and the duct study shows passage into the duodenum without a filling defect.",
+      "profiles": [
+        {
+          "id": "profile.gs028c.mild-biliary-pancreatitis.b-discharge-rounds.female.30",
+          "demographics": {
+            "ageYears": 30,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 30-year-old woman, is reviewed during a gallstone-pancreatitis admission. Pain has subsided and meals are now tolerated. The current CT shows a persisting peripancreatic fluid-and-debris collection beside areas that did not enhance on the earlier scan. Gallstones remain; bilirubin is now within its reporting interval and the duct study shows passage into the duodenum without a filling defect."
+        },
+        {
+          "id": "profile.gs028c.mild-biliary-pancreatitis.b-discharge-rounds.male.30",
+          "demographics": {
+            "ageYears": 30,
+            "sexLabel": "Male"
+          },
+          "Presentation": "Jamie Taylor, a 30-year-old man, is reviewed during a gallstone-pancreatitis admission. Pain has subsided and meals are now tolerated. The current CT shows a persisting peripancreatic fluid-and-debris collection beside areas that did not enhance on the earlier scan. Gallstones remain; bilirubin is now within its reporting interval and the duct study shows passage into the duodenum without a filling defect."
+        },
+        {
+          "id": "profile.gs028c.mild-biliary-pancreatitis.b-discharge-rounds.female.60",
+          "demographics": {
+            "ageYears": 60,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 60-year-old woman, is reviewed during a gallstone-pancreatitis admission. Pain has subsided and meals are now tolerated. The current CT shows a persisting peripancreatic fluid-and-debris collection beside areas that did not enhance on the earlier scan. Gallstones remain; bilirubin is now within its reporting interval and the duct study shows passage into the duodenum without a filling defect."
+        },
+        {
+          "id": "profile.gs028c.mild-biliary-pancreatitis.b-discharge-rounds.male.60",
+          "demographics": {
+            "ageYears": 60,
+            "sexLabel": "Male"
+          },
+          "Presentation": "Jamie Taylor, a 60-year-old man, is reviewed during a gallstone-pancreatitis admission. Pain has subsided and meals are now tolerated. The current CT shows a persisting peripancreatic fluid-and-debris collection beside areas that did not enhance on the earlier scan. Gallstones remain; bilirubin is now within its reporting interval and the duct study shows passage into the duodenum without a filling defect."
+        }
+      ],
+      "nodes": [
+        {
+          "nodeId": "node.gs028c.mild-biliary-pancreatitis.b-discharge-rounds.1",
+          "questionVariantId": "question.acute-pancreatitis.mild-biliary-chole-before-discharge.v3.r2",
+          "conceptId": "concept.biliary-pancreatitis.local-complication-before-cholecystectomy.v1",
+          "disposition": "manager_accepted_2b",
+          "Current update": null,
+          "Exhibit": null,
+          "Task": "Which biliary treatment plan should be arranged for Jamie Taylor?",
+          "Options": [
+            "**KEY:** Interval cholecystectomy; no ERCP",
+            "Same-admission cholecystectomy; no ERCP",
+            "Interval cholecystectomy; ERCP",
+            "Same-admission cholecystectomy; ERCP"
+          ],
+          "feedback": "The local complication changes the timing despite clinical improvement; the current duct findings do not establish a separate ERCP indication. This applies the mild uncomplicated pancreatitis timing pathway to a patient with a persisting local complication. Deferring the operation does not itself create a need for duct intervention in the current record. This combines the uncomplicated timing assumption with a duct procedure not established by the supplied findings.",
+          "teachingPoint": "The local complication changes the timing despite clinical improvement; the current duct findings do not establish a separate ERCP indication.",
+          "resultGate": null
+        }
+      ]
+    },
+    {
+      "caseId": "case.gs028b.post-neoadjuvant-breast.paired-marker-residual",
+      "acceptanceId": "B2B24",
+      "headerSource": "batch2b-round2",
+      "runtimeDefinitionSha256": "228a2f3649c62eb789f815ae9d018399de89a8d22fb4a795606223182dcc936d",
+      "mixed": true,
+      "beforePresentation": "Jamie Taylor, a 42-year-old woman, presents after completing neoadjuvant therapy for noninflammatory breast cancer. The mass is no longer palpable, and a marker was placed at the original biopsy site before treatment.",
+      "Presentation": "Jamie Taylor, a 42-year-old woman, has completed neoadjuvant therapy for noninflammatory breast cancer. The original mass cannot now be felt. A marker was placed before therapy.",
+      "profiles": [
+        {
+          "id": "profile.gs028b.post-neoadjuvant-breast.paired-marker-residual.female.42",
+          "demographics": {
+            "ageYears": 42,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 42-year-old woman, has completed neoadjuvant therapy for noninflammatory breast cancer. The original mass cannot now be felt. A marker was placed before therapy."
+        },
+        {
+          "id": "profile.gs028b.post-neoadjuvant-breast.paired-marker-residual.female.58",
+          "demographics": {
+            "ageYears": 58,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 58-year-old woman, has completed neoadjuvant therapy for noninflammatory breast cancer. The original mass cannot now be felt. A marker was placed before therapy."
+        }
+      ],
+      "nodes": [
+        {
+          "nodeId": "node.gs028b.post-neoadjuvant-breast.paired-marker-residual.1",
+          "questionVariantId": "question.breast-cancer-after-neoadjuvant-therapy.response-mapping.v1.r2",
+          "conceptId": "concept.breast-cancer-after-neoadjuvant-therapy.response-mapping",
+          "disposition": "manager_accepted_2b",
+          "Current update": "Breast conservation is the established operative approach. The surgeon requests image-guided bracketing within the mapped quadrant. The original biopsy bed is marked M. The current MRI enhancement ends at E. A stereotactic specimen from C contains ducts filled by markedly atypical epithelial cells with central necrosis; the examined cores show no stromal invasion.",
+          "Exhibit": {
+            "kind": "image",
+            "caption": "Constructed one-quadrant localization map; not to scale.",
+            "assetPath": "clinical-exhibits/batch2b-r2-b24-breast-map.png",
+            "description": "Along the mapped quadrant from medial to lateral are M, E, C and P. M is the original biopsy marker. Current MRI enhancement extends from M to E. Mammographic calcifications extend from M through E to C. P marks the old outer palpable outline. Sample C was taken at the calcification edge. All points are within the same planned conservation field.",
+            "width": 820,
+            "height": 1080
+          },
+          "Task": "Which endpoints should be requested for Jamie Taylor's bracketing?",
+          "Options": [
+            "**KEY:** M to C",
+            "M to E",
+            "M to P"
+          ],
+          "feedback": "The residual calcification field has malignant in-situ histology at C, so the MRI enhancement edge is not the complete target. Include the original marked bed and that residual field. This covers the original bed and MRI enhancement but stops short of the biopsy-supported residual calcification field. The old palpable outline is not automatically the current localization boundary; the map identifies the residual field and original marked site.",
+          "teachingPoint": "The residual calcification field has malignant in-situ histology at C, so the MRI enhancement edge is not the complete target. Include the original marked bed and that residual field.",
+          "resultGate": {
+            "id": "gate.gs028b.marker-residual",
+            "resultTypeId": "service.diagnostic_breast_imaging",
+            "pendingLabel": "Post-treatment breast mapping pending",
+            "resultNarrative": "Post-treatment imaging shows localized unifocal residual disease around the original marker with feasible localization for surgery.",
+            "readiness": "all",
+            "allowedServiceRouteIds": [
+              "route.diagnostic_breast_imaging.outsourced"
+            ]
+          }
+        },
+        {
+          "nodeId": "node.gs028b.post-neoadjuvant-breast.paired-marker-residual.2",
+          "questionVariantId": "question.breast-cancer-after-neoadjuvant-therapy.breast-conservation-selection.v1",
+          "conceptId": "concept.breast-cancer-after-neoadjuvant-therapy.breast-conservation-selection",
+          "disposition": "retained_current_live_fallback",
+          "Current update": "Returned breast mapping shows localized unifocal residual disease around the marker, with reliable localization, feasible negative margins and acceptable cosmesis, radiation eligibility, no overriding genetic contraindication, and a preference for conservation.",
+          "Exhibit": null,
+          "Task": "Which local-treatment plan best fits the patient's stated conservation goal?",
+          "Options": [
+            "**KEY:** Breast-conserving surgery plus radiotherapy",
+            "Mastectomy with reconstruction discussion",
+            "Radiotherapy without breast surgery",
+            "Medical-oncology follow-up without local surgery"
+          ],
+          "feedback": "Conservation eligibility depends on residual extent, localization, margin feasibility, radiotherapy, biology/genetics, and patient preference—not response alone.",
+          "teachingPoint": null,
+          "resultGate": null
+        }
+      ]
+    },
+    {
+      "caseId": "case.gs028c.acute-cholecystitis.b-hida-confirmed",
+      "acceptanceId": "B2B25",
+      "headerSource": "batch2b-round2",
+      "runtimeDefinitionSha256": "70ba572df3c3aed908e5091fb1c9f0e31ebd98982ba29f0cacb13c320b140a6d",
+      "mixed": false,
+      "beforePresentation": "Jamie Taylor, a 47-year-old woman, brings an outside HIDA result to the clinic after ongoing biliary pain and inflammatory findings. The study confirms acute cholecystitis after an equivocal ultrasound. There is no shock, anesthetic contraindication, or organ failure, and hospital surgical expertise is available.",
+      "Presentation": "Jamie Taylor, a 47-year-old woman, is in theatre for acute gallbladder inflammation. Dense fused tissue joins the infundibulum to the hilum; the lower gallbladder cannot be separated from the liver and both entering tubular structures have not been exposed. Opening the gallbladder releases impacted stones. The remaining neck wall is thin, necrotic and splits under gentle handling.",
+      "profiles": [
+        {
+          "id": "profile.gs028c.acute-cholecystitis.b-hida-confirmed.female.47",
+          "demographics": {
+            "ageYears": 47,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 47-year-old woman, is in theatre for acute gallbladder inflammation. Dense fused tissue joins the infundibulum to the hilum; the lower gallbladder cannot be separated from the liver and both entering tubular structures have not been exposed. Opening the gallbladder releases impacted stones. The remaining neck wall is thin, necrotic and splits under gentle handling."
+        },
+        {
+          "id": "profile.gs028c.acute-cholecystitis.b-hida-confirmed.male.47",
+          "demographics": {
+            "ageYears": 47,
+            "sexLabel": "Male"
+          },
+          "Presentation": "Jamie Taylor, a 47-year-old man, is in theatre for acute gallbladder inflammation. Dense fused tissue joins the infundibulum to the hilum; the lower gallbladder cannot be separated from the liver and both entering tubular structures have not been exposed. Opening the gallbladder releases impacted stones. The remaining neck wall is thin, necrotic and splits under gentle handling."
+        },
+        {
+          "id": "profile.gs028c.acute-cholecystitis.b-hida-confirmed.female.62",
+          "demographics": {
+            "ageYears": 62,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 62-year-old woman, is in theatre for acute gallbladder inflammation. Dense fused tissue joins the infundibulum to the hilum; the lower gallbladder cannot be separated from the liver and both entering tubular structures have not been exposed. Opening the gallbladder releases impacted stones. The remaining neck wall is thin, necrotic and splits under gentle handling."
+        },
+        {
+          "id": "profile.gs028c.acute-cholecystitis.b-hida-confirmed.male.62",
+          "demographics": {
+            "ageYears": 62,
+            "sexLabel": "Male"
+          },
+          "Presentation": "Jamie Taylor, a 62-year-old man, is in theatre for acute gallbladder inflammation. Dense fused tissue joins the infundibulum to the hilum; the lower gallbladder cannot be separated from the liver and both entering tubular structures have not been exposed. Opening the gallbladder releases impacted stones. The remaining neck wall is thin, necrotic and splits under gentle handling."
+        }
+      ],
+      "nodes": [
+        {
+          "nodeId": "node.gs028c.acute-cholecystitis.b-hida-confirmed.1",
+          "questionVariantId": "question.cholecystitis.fit-patient-index-admission-cholecystectomy.v2.r2",
+          "conceptId": "concept.cholecystectomy.subtotal-type-from-remnant-tissue.v1",
+          "disposition": "manager_accepted_2b",
+          "Current update": null,
+          "Exhibit": null,
+          "Task": "Which operative completion plan should be used for Jamie Taylor?",
+          "Options": [
+            "**KEY:** Fenestrating subtotal cholecystectomy",
+            "Reconstituting subtotal cholecystectomy",
+            "Fundus-first total cholecystectomy"
+          ],
+          "feedback": "The anatomy calls for a bailout rather than continued total dissection, and the remaining wall is not a sound basis for a closed remnant. An open-remnant subtotal strategy with appropriate drainage is the offered fit. This is a genuine subtotal alternative, but it requires a safely closable remnant; the actual wall quality changes that choice. A top-down total operation does not itself resolve the fused lower anatomy or justify continuing to the uncertain hilum.",
+          "teachingPoint": "The anatomy calls for a bailout rather than continued total dissection, and the remaining wall is not a sound basis for a closed remnant. An open-remnant subtotal strategy with appropriate drainage is the offered fit.",
+          "resultGate": null
+        }
+      ]
+    },
+    {
+      "caseId": "case.gs028d.hyperkalaemia.a-dehydration-result",
+      "acceptanceId": "B2B30",
+      "headerSource": "batch2b-round2",
+      "runtimeDefinitionSha256": "51c7a6043847395bcf1db48549fc75b361e82879edc3a7ee762cfafc88cf5b8e",
+      "mixed": false,
+      "beforePresentation": "Jamie Taylor, a 31-year-old woman with recent gastrointestinal fluid loss, returns to clinic when an outside laboratory calls with a repeat non-haemolysed potassium of 6.5 mmol/L. The sample is confirmed and the patient is available for immediate transfer.",
+      "Presentation": "Jamie Taylor, a 31-year-old woman, is receiving intravenous insulin during admission after developing postoperative nausea and rapid breathing. Dapagliflozin was stopped on admission. Circulation and urine output have improved during treatment. Potassium is within its reporting interval on the latest specimen.",
+      "profiles": [
+        {
+          "id": "profile.gs028d.hyperkalaemia.a-dehydration-result.female.31",
+          "demographics": {
+            "ageYears": 31,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 31-year-old woman, is receiving intravenous insulin during admission after developing postoperative nausea and rapid breathing. Dapagliflozin was stopped on admission. Circulation and urine output have improved during treatment. Potassium is within its reporting interval on the latest specimen."
+        },
+        {
+          "id": "profile.gs028d.hyperkalaemia.a-dehydration-result.male.31",
+          "demographics": {
+            "ageYears": 31,
+            "sexLabel": "Male"
+          },
+          "Presentation": "Jamie Taylor, a 31-year-old man, is receiving intravenous insulin during admission after developing postoperative nausea and rapid breathing. Dapagliflozin was stopped on admission. Circulation and urine output have improved during treatment. Potassium is within its reporting interval on the latest specimen."
+        },
+        {
+          "id": "profile.gs028d.hyperkalaemia.a-dehydration-result.female.64",
+          "demographics": {
+            "ageYears": 64,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 64-year-old woman, is receiving intravenous insulin during admission after developing postoperative nausea and rapid breathing. Dapagliflozin was stopped on admission. Circulation and urine output have improved during treatment. Potassium is within its reporting interval on the latest specimen."
+        },
+        {
+          "id": "profile.gs028d.hyperkalaemia.a-dehydration-result.male.64",
+          "demographics": {
+            "ageYears": 64,
+            "sexLabel": "Male"
+          },
+          "Presentation": "Jamie Taylor, a 64-year-old man, is receiving intravenous insulin during admission after developing postoperative nausea and rapid breathing. Dapagliflozin was stopped on admission. Circulation and urine output have improved during treatment. Potassium is within its reporting interval on the latest specimen."
+        }
+      ],
+      "nodes": [
+        {
+          "nodeId": "node.gs028d.hyperkalaemia.a-dehydration-result.1",
+          "questionVariantId": "question.hyperkalaemia.severe-community-result-transfer.v4.r2",
+          "conceptId": "concept.diabetic-ketoacidosis.ongoing-insulin-substrate.v1",
+          "disposition": "manager_accepted_2b",
+          "Current update": null,
+          "Exhibit": {
+            "kind": "table",
+            "caption": "Constructed simultaneous treatment panels",
+            "columnHeaders": [
+              "Before insulin",
+              "Current"
+            ],
+            "rowHeaders": [
+              "Glucose (mmol/L)",
+              "Beta-hydroxybutyrate (mmol/L)",
+              "Bicarbonate (mmol/L)",
+              "Arterial pH",
+              "Arterial CO2 (mmHg)"
+            ],
+            "cells": [
+              [
+                "12.8",
+                "5.1"
+              ],
+              [
+                "5.8",
+                "4.0"
+              ],
+              [
+                "9",
+                "11"
+              ],
+              [
+                "7.21",
+                "7.24"
+              ],
+              [
+                "23",
+                "26"
+              ]
+            ]
+          },
+          "Task": "Which infusion plan should be used now for Jamie Taylor?",
+          "Options": [
+            "**KEY:** Continue insulin with glucose infusion",
+            "Stop insulin with glucose infusion",
+            "Continue insulin with isotonic saline infusion",
+            "Stop insulin with isotonic saline infusion"
+          ],
+          "feedback": "Glucose has fallen without resolution of the ketone acidosis. Insulin remains needed for that metabolic process; glucose provides substrate while it continues. This responds to the glucose trajectory but abandons insulin treatment while substantial ketone acidosis remains. This continues treatment of ketogenesis but does not address the changed glucose/substrate requirement. This treats the glucose number as the endpoint despite the persistent metabolic process.",
+          "teachingPoint": "Glucose has fallen without resolution of the ketone acidosis. Insulin remains needed for that metabolic process; glucose provides substrate while it continues.",
+          "resultGate": null
+        }
+      ]
+    },
+    {
+      "caseId": "case.gs028d.acid-base.b-malnutrition-gap",
+      "acceptanceId": "B2B33",
+      "headerSource": "batch2b-round2",
+      "runtimeDefinitionSha256": "642f24fb4e47478b28cc9cf99ff7b71490436ddbd5ba3d0ea9dbcc5b34bf524a",
+      "mixed": false,
+      "beforePresentation": "Jamie Taylor, a 38-year-old woman recovering from prolonged poor intake has a complete outside blood-gas and chemistry panel showing metabolic acidosis with low albumin.",
+      "Presentation": "Jamie Taylor, a 38-year-old woman, is in hospital with nausea and rapid breathing after surgery. The medicine list includes dapagliflozin. Intake has been limited during the admission.",
+      "profiles": [
+        {
+          "id": "profile.gs028d.acid-base.b-malnutrition-gap.female.38",
+          "demographics": {
+            "ageYears": 38,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 38-year-old woman, is in hospital with nausea and rapid breathing after surgery. The medicine list includes dapagliflozin. Intake has been limited during the admission."
+        },
+        {
+          "id": "profile.gs028d.acid-base.b-malnutrition-gap.male.38",
+          "demographics": {
+            "ageYears": 38,
+            "sexLabel": "Male"
+          },
+          "Presentation": "Jamie Taylor, a 38-year-old man, is in hospital with nausea and rapid breathing after surgery. The medicine list includes dapagliflozin. Intake has been limited during the admission."
+        },
+        {
+          "id": "profile.gs028d.acid-base.b-malnutrition-gap.female.63",
+          "demographics": {
+            "ageYears": 63,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 63-year-old woman, is in hospital with nausea and rapid breathing after surgery. The medicine list includes dapagliflozin. Intake has been limited during the admission."
+        },
+        {
+          "id": "profile.gs028d.acid-base.b-malnutrition-gap.male.63",
+          "demographics": {
+            "ageYears": 63,
+            "sexLabel": "Male"
+          },
+          "Presentation": "Jamie Taylor, a 63-year-old man, is in hospital with nausea and rapid breathing after surgery. The medicine list includes dapagliflozin. Intake has been limited during the admission."
+        }
+      ],
+      "nodes": [
+        {
+          "nodeId": "node.gs028d.acid-base.b-malnutrition-gap.1",
+          "questionVariantId": "question.metabolic-acidosis.albumin-corrected-anion-gap.v2.r2",
+          "conceptId": "concept.acid-base.euglycaemic-risk-with-mixed-gas.v1",
+          "disposition": "manager_accepted_2b",
+          "Current update": null,
+          "Exhibit": {
+            "kind": "table",
+            "caption": "Current paired gas and chemistry; all relations use this laboratory's intervals",
+            "columnHeaders": [
+              "Observation"
+            ],
+            "rowHeaders": [
+              "pH",
+              "Arterial CO2",
+              "Bicarbonate",
+              "Raw anion gap",
+              "Albumin",
+              "Glucose"
+            ],
+            "cells": [
+              [
+                "At the upper end of the interval"
+              ],
+              [
+                "Below"
+              ],
+              [
+                "Below"
+              ],
+              [
+                "Above"
+              ],
+              [
+                "Below"
+              ],
+              [
+                "Within"
+              ]
+            ]
+          },
+          "Task": "Which assay should be prioritized for Jamie Taylor?",
+          "Options": [
+            "**KEY:** Blood beta-hydroxybutyrate",
+            "Urinary ammonium excretion",
+            "Serum salicylate concentration"
+          ],
+          "feedback": "A near-normal pH and glucose do not resolve the elevated-gap component. The SGLT2 exposure and perioperative intake context make blood ketone assessment important. This targets selected non-gap renal causes; the current gap and drug/context signal point elsewhere first. This is a credible cause of some mixed respiratory/metabolic patterns, but the documented drug and perioperative context give a specific competing test priority here.",
+          "teachingPoint": "A near-normal pH and glucose do not resolve the elevated-gap component. The SGLT2 exposure and perioperative intake context make blood ketone assessment important.",
+          "resultGate": null
+        }
+      ]
+    },
+    {
+      "caseId": "case.bread-butter.perianal-abscess.perianal-swelling",
+      "acceptanceId": "B2B39",
+      "headerSource": "batch2b-round2",
+      "runtimeDefinitionSha256": "1fbdc524418fa90fe966ccee424d0fd16a0b86273ef05ed3c3486ba604408ba9",
+      "mixed": false,
+      "beforePresentation": "Jamie Taylor is a 31-year-old woman who has a focal red, fluctuant superficial perianal swelling with marked tenderness. Vitals are normal, with no Crohn disease, recurrence, immune compromise, or deep pelvic symptom.",
+      "Presentation": "Jamie Taylor, a 31-year-old woman, with a kidney transplant takes tacrolimus, mycophenolate and prednisone. A recurrent perianal cavity has been opened and irrigated under anaesthesia; the cavity has collapsed. The patient is afebrile. Platelet count, neutrophil count and coagulation results are within their laboratory intervals.",
+      "profiles": [
+        {
+          "id": "profile.bread-butter.perianal-abscess.perianal-swelling.female.31",
+          "demographics": {
+            "ageYears": 31,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 31-year-old woman, with a kidney transplant takes tacrolimus, mycophenolate and prednisone. A recurrent perianal cavity has been opened and irrigated under anaesthesia; the cavity has collapsed. The patient is afebrile. Platelet count, neutrophil count and coagulation results are within their laboratory intervals."
+        },
+        {
+          "id": "profile.bread-butter.perianal-abscess.perianal-swelling.male.31",
+          "demographics": {
+            "ageYears": 31,
+            "sexLabel": "Male"
+          },
+          "Presentation": "Jamie Taylor, a 31-year-old man, with a kidney transplant takes tacrolimus, mycophenolate and prednisone. A recurrent perianal cavity has been opened and irrigated under anaesthesia; the cavity has collapsed. The patient is afebrile. Platelet count, neutrophil count and coagulation results are within their laboratory intervals."
+        },
+        {
+          "id": "profile.bread-butter.perianal-abscess.perianal-swelling.female.52",
+          "demographics": {
+            "ageYears": 52,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 52-year-old woman, with a kidney transplant takes tacrolimus, mycophenolate and prednisone. A recurrent perianal cavity has been opened and irrigated under anaesthesia; the cavity has collapsed. The patient is afebrile. Platelet count, neutrophil count and coagulation results are within their laboratory intervals."
+        },
+        {
+          "id": "profile.bread-butter.perianal-abscess.perianal-swelling.male.52",
+          "demographics": {
+            "ageYears": 52,
+            "sexLabel": "Male"
+          },
+          "Presentation": "Jamie Taylor, a 52-year-old man, with a kidney transplant takes tacrolimus, mycophenolate and prednisone. A recurrent perianal cavity has been opened and irrigated under anaesthesia; the cavity has collapsed. The patient is afebrile. Platelet count, neutrophil count and coagulation results are within their laboratory intervals."
+        }
+      ],
+      "nodes": [
+        {
+          "nodeId": "node.bread-butter.perianal-abscess.perianal-swelling.1",
+          "questionVariantId": "question.perianal-abscess.prompt-drainage.v2.r2",
+          "conceptId": "concept.anorectal-fistula.tract-and-transplant-host-plan.v1",
+          "disposition": "manager_accepted_2b",
+          "Current update": null,
+          "Exhibit": {
+            "kind": "table",
+            "caption": "MRI and operative tract record",
+            "columnHeaders": [
+              "Observation"
+            ],
+            "rowHeaders": [
+              "Course",
+              "Remaining cavity"
+            ],
+            "cells": [
+              [
+                "The tract crosses the upper part of the external sphincter before reaching the skin opening."
+              ],
+              [
+                "The opened cavity drains freely; inspection identifies no separate undrained pocket."
+              ]
+            ]
+          },
+          "Task": "Which tract and adjunctive plan should be used for Jamie Taylor?",
+          "Options": [
+            "**KEY:** Loose draining seton with systemic antibiotics",
+            "Lay-open fistulotomy with systemic antibiotics",
+            "Loose draining seton with local wound care",
+            "Lay-open fistulotomy with local wound care"
+          ],
+          "feedback": "The high sphincter-crossing tract favors drainage/staged planning rather than routine division; the transplant immunosuppressive regimen remains relevant despite normal neutrophils and no fever. The host component is addressed, but laying open this upper sphincter-crossing tract creates an avoidable continence risk. The tract strategy fits, but normal neutrophils do not remove the supplied immunosuppressive exposure from the antibiotic decision. This misses both the tract-related function boundary and the host indication.",
+          "teachingPoint": "The high sphincter-crossing tract favors drainage/staged planning rather than routine division; the transplant immunosuppressive regimen remains relevant despite normal neutrophils and no fever.",
+          "resultGate": null
+        }
+      ]
+    },
+    {
+      "caseId": "case.bread-butter.perianal-abscess.painful-sitting",
+      "acceptanceId": "B2B40",
+      "headerSource": "batch2b-round2",
+      "runtimeDefinitionSha256": "e7d23f76e68bff304e04322dddba5821d389383fb64f5d04ae76c5976516ec75",
+      "mixed": false,
+      "beforePresentation": "Jamie Taylor is a 31-year-old woman who has worsening pain with sitting and a visible fluctuant superficial perianal abscess. Vitals are normal, with no Crohn disease, recurrence, immune compromise, or deep pelvic symptom.",
+      "Presentation": "Jamie Taylor, a 31-year-old woman, has a newly drained perianal abscess and a single tract. Before this episode, the patient had intermittent flatus leakage and staining after a previous anal sphincterotomy. Digital examination shows reduced resting tone.",
+      "profiles": [
+        {
+          "id": "profile.bread-butter.perianal-abscess.painful-sitting.female.31",
+          "demographics": {
+            "ageYears": 31,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 31-year-old woman, has a newly drained perianal abscess and a single tract. Before this episode, the patient had intermittent flatus leakage and staining after a previous anal sphincterotomy. Digital examination shows reduced resting tone."
+        },
+        {
+          "id": "profile.bread-butter.perianal-abscess.painful-sitting.male.31",
+          "demographics": {
+            "ageYears": 31,
+            "sexLabel": "Male"
+          },
+          "Presentation": "Jamie Taylor, a 31-year-old man, has a newly drained perianal abscess and a single tract. Before this episode, the patient had intermittent flatus leakage and staining after a previous anal sphincterotomy. Digital examination shows reduced resting tone."
+        },
+        {
+          "id": "profile.bread-butter.perianal-abscess.painful-sitting.female.52",
+          "demographics": {
+            "ageYears": 52,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 52-year-old woman, has a newly drained perianal abscess and a single tract. Before this episode, the patient had intermittent flatus leakage and staining after a previous anal sphincterotomy. Digital examination shows reduced resting tone."
+        },
+        {
+          "id": "profile.bread-butter.perianal-abscess.painful-sitting.male.52",
+          "demographics": {
+            "ageYears": 52,
+            "sexLabel": "Male"
+          },
+          "Presentation": "Jamie Taylor, a 52-year-old man, has a newly drained perianal abscess and a single tract. Before this episode, the patient had intermittent flatus leakage and staining after a previous anal sphincterotomy. Digital examination shows reduced resting tone."
+        }
+      ],
+      "nodes": [
+        {
+          "nodeId": "node.bread-butter.perianal-abscess.painful-sitting.1",
+          "questionVariantId": "question.perianal-abscess.prompt-drainage.v3.r2",
+          "conceptId": "concept.anorectal-fistula.function-before-low-tract-division.v1",
+          "disposition": "manager_accepted_2b",
+          "Current update": null,
+          "Exhibit": {
+            "kind": "table",
+            "caption": "Tract and baseline function records",
+            "columnHeaders": [
+              "Observation"
+            ],
+            "rowHeaders": [
+              "Current tract",
+              "Prior operation"
+            ],
+            "cells": [
+              [
+                "The tract enters near the anal verge and crosses only the lowest external sphincter fibres."
+              ],
+              [
+                "The previous operation divided internal sphincter fibres in another quadrant."
+              ]
+            ]
+          },
+          "Task": "Which tract procedure should be used for Jamie Taylor at this stage?",
+          "Options": [
+            "**KEY:** Loose draining seton",
+            "Primary fistulotomy",
+            "Cutting seton placement"
+          ],
+          "feedback": "The low course does not erase the existing functional deficit and prior sphincter division; drainage with later sphincter-preserving planning avoids automatically adding division now. A low tract can be suitable for selected patients with preserved function, but the actual baseline function changes that boundary. Gradual division is still division; the label does not resolve the existing functional risk.",
+          "teachingPoint": "The low course does not erase the existing functional deficit and prior sphincter division; drainage with later sphincter-preserving planning avoids automatically adding division now.",
+          "resultGate": null
+        }
+      ]
+    },
+    {
+      "caseId": "case.gs028b.preoperative-nutrition.b-oral-inadequate",
+      "acceptanceId": "B2B42",
+      "headerSource": "batch2b-round2",
+      "runtimeDefinitionSha256": "7907fc5e6a22ab8d95721d846c37f9f4886e8e92ecb350e2d26118b40a0fcad2",
+      "mixed": false,
+      "beforePresentation": "Jamie Taylor, a 43-year-old woman, presents before elective surgery with a functional gastrointestinal tract and safe enteral access, but oral intake remains inadequate despite an individualized oral plan.",
+      "Presentation": "Jamie Taylor, a 43-year-old woman, is in hospital after repeated vomiting during oral and nasogastric nutrition. After feeds are paused, a substantial amount of unchanged formula remains in the gastric aspirate. Investigation was requested for the vomiting: endoscopy passes through an open pylorus, and the accompanying bowel study shows passage through nondilated small-bowel loops to the colon.",
+      "profiles": [
+        {
+          "id": "profile.gs028b.preoperative-nutrition.b-oral-inadequate.female.43",
+          "demographics": {
+            "ageYears": 43,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 43-year-old woman, is in hospital after repeated vomiting during oral and nasogastric nutrition. After feeds are paused, a substantial amount of unchanged formula remains in the gastric aspirate. Investigation was requested for the vomiting: endoscopy passes through an open pylorus, and the accompanying bowel study shows passage through nondilated small-bowel loops to the colon."
+        },
+        {
+          "id": "profile.gs028b.preoperative-nutrition.b-oral-inadequate.male.43",
+          "demographics": {
+            "ageYears": 43,
+            "sexLabel": "Male"
+          },
+          "Presentation": "Jamie Taylor, a 43-year-old man, is in hospital after repeated vomiting during oral and nasogastric nutrition. After feeds are paused, a substantial amount of unchanged formula remains in the gastric aspirate. Investigation was requested for the vomiting: endoscopy passes through an open pylorus, and the accompanying bowel study shows passage through nondilated small-bowel loops to the colon."
+        },
+        {
+          "id": "profile.gs028b.preoperative-nutrition.b-oral-inadequate.female.68",
+          "demographics": {
+            "ageYears": 68,
+            "sexLabel": "Female"
+          },
+          "Presentation": "Jamie Taylor, a 68-year-old woman, is in hospital after repeated vomiting during oral and nasogastric nutrition. After feeds are paused, a substantial amount of unchanged formula remains in the gastric aspirate. Investigation was requested for the vomiting: endoscopy passes through an open pylorus, and the accompanying bowel study shows passage through nondilated small-bowel loops to the colon."
+        },
+        {
+          "id": "profile.gs028b.preoperative-nutrition.b-oral-inadequate.male.68",
+          "demographics": {
+            "ageYears": 68,
+            "sexLabel": "Male"
+          },
+          "Presentation": "Jamie Taylor, a 68-year-old man, is in hospital after repeated vomiting during oral and nasogastric nutrition. After feeds are paused, a substantial amount of unchanged formula remains in the gastric aspirate. Investigation was requested for the vomiting: endoscopy passes through an open pylorus, and the accompanying bowel study shows passage through nondilated small-bowel loops to the colon."
+        }
+      ],
+      "nodes": [
+        {
+          "nodeId": "node.gs028b.preoperative-nutrition.b-oral-inadequate.1",
+          "questionVariantId": "question.preoperative-nutrition.oral-enteral-first-line.v2.r2",
+          "conceptId": "concept.nutrition.gastric-versus-postpyloric-delivery.v1",
+          "disposition": "manager_accepted_2b",
+          "Current update": null,
+          "Exhibit": null,
+          "Task": "Which nutrition access should be discussed next for Jamie Taylor?",
+          "Options": [
+            "**KEY:** Nasojejunal feeding",
+            "Central parenteral feeding",
+            "Gastrostomy feeding"
+          ],
+          "feedback": "The observed delivery problem is gastric; a postpyloric trial can address that compartment before treating the entire enteral route as unusable. Parenteral support is appropriate at an oral/enteral failure or contraindication boundary, but the current record has not established failure of postpyloric delivery. A different entry into the stomach does not solve the actual gastric delivery/intolerance pattern.",
+          "teachingPoint": "The observed delivery problem is gastric; a postpyloric trial can address that compartment before treating the entire enteral route as unusable.",
+          "resultGate": null
+        }
+      ]
+    }
+  ]
+}

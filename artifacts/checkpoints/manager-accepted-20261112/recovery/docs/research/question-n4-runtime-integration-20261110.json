@@ -1,0 +1,267 @@
+{
+  "checkedOn": "2026-11-10",
+  "scope": "Read-only accepted-only integration handoff; no runtime file edited. Authoring-group membership is not an instruction to install unaccepted topics.",
+  "affinity": [
+    {
+      "caseId": "case.n4.cholecystectomy-neck-plane-bailout.v1",
+      "questionVariantId": "question.n4.cholecystectomy-neck-plane-bailout.v1",
+      "conceptId": "concept.gs028g.subtotal-cholecystectomy.safe-bailout",
+      "requiredClinicalSetting": "ambulatory_surgery",
+      "requiredCapabilityIds": [
+        "capability.ambulatory_or",
+        "capability.staff.or_nurse",
+        "capability.periop_recovery"
+      ],
+      "intendedLine": "income.ambulatory_operation",
+      "recognized": true,
+      "mechanism": "founder-consults.ts:procedureConsultKind /procedureConsultPresentations; ambulatory_surgery setting, no concept-ID allowlist",
+      "action": "Already recognized: preserve.",
+      "format3WitnessLine": "income.ambulatory_operation"
+    },
+    {
+      "caseId": "case.n4.colonic-wall-pattern-after-mucosal-biopsy.v1",
+      "questionVariantId": "question.n4.colonic-wall-pattern-after-mucosal-biopsy.v1",
+      "conceptId": "concept.colonic-lipoma.endoscopic-recognition.v3",
+      "requiredClinicalSetting": "endoscopy",
+      "requiredCapabilityIds": [
+        "capability.endoscopy",
+        "capability.periop_recovery"
+      ],
+      "intendedLine": "income.endoscopy",
+      "recognized": true,
+      "mechanism": "founder-consults.ts:endoscopicFindingConcepts",
+      "action": "Already recognized: preserve.",
+      "format3WitnessLine": "income.endoscopy"
+    },
+    {
+      "caseId": "case.n4.venous-ulcer-contralateral-pressure-trap.v1",
+      "questionVariantId": "question.n4.venous-ulcer-contralateral-pressure-trap.v1",
+      "conceptId": "concept.venous-leg-ulcer.arterial-assessment-before-compression",
+      "requiredClinicalSetting": "clinic",
+      "requiredCapabilityIds": [
+        "capability.wound_ostomy_clinic"
+      ],
+      "intendedLine": "income.wound_care",
+      "recognized": true,
+      "mechanism": "clinic-consult-topics.ts:woundConcepts",
+      "action": "Already recognized: preserve.",
+      "format3WitnessLine": "income.wound_care"
+    },
+    {
+      "caseId": "case.n4.incisional-pocket-above-retained-mesh.v1",
+      "questionVariantId": "question.n4.incisional-pocket-above-retained-mesh.v1",
+      "conceptId": "concept.superficial-incisional-ssi.open-drain",
+      "requiredClinicalSetting": "clinic",
+      "requiredCapabilityIds": [
+        "capability.wound_ostomy_clinic"
+      ],
+      "intendedLine": "income.wound_care",
+      "recognized": false,
+      "mechanism": "clinic-consult-topics.ts:woundConcepts",
+      "action": "Add this accepted concept ID to the identified topic list.",
+      "format3WitnessLine": "income.app_consult"
+    },
+    {
+      "caseId": "case.n4.ventral-controlled-enterotomy-mesh-material.v2",
+      "questionVariantId": "question.n4.ventral-controlled-enterotomy-mesh-material.v2",
+      "conceptId": "concept.n4r2.mesh-material-and-contact-compartment",
+      "requiredClinicalSetting": "ambulatory_surgery",
+      "requiredCapabilityIds": [
+        "capability.ambulatory_or",
+        "capability.staff.or_nurse",
+        "capability.periop_recovery"
+      ],
+      "intendedLine": "income.ambulatory_operation",
+      "recognized": true,
+      "mechanism": "founder-consults.ts:procedureConsultKind /procedureConsultPresentations; ambulatory_surgery setting, no concept-ID allowlist",
+      "action": "Already recognized: preserve.",
+      "format3WitnessLine": "income.ambulatory_operation"
+    },
+    {
+      "caseId": "case.n4.unexpected-deep-mass-during-lipoma-excision.v2",
+      "questionVariantId": "question.n4.unexpected-deep-mass-during-lipoma-excision.v2",
+      "conceptId": "concept.soft-tissue-mass.extremity-mri.v2",
+      "requiredClinicalSetting": "ambulatory_surgery",
+      "requiredCapabilityIds": [
+        "capability.ambulatory_or",
+        "capability.staff.or_nurse",
+        "capability.periop_recovery"
+      ],
+      "intendedLine": "income.ambulatory_operation",
+      "recognized": true,
+      "mechanism": "founder-consults.ts:procedureConsultKind /procedureConsultPresentations; ambulatory_surgery setting, no concept-ID allowlist",
+      "action": "Already recognized: preserve.",
+      "format3WitnessLine": "income.ambulatory_operation"
+    },
+    {
+      "caseId": "case.n4.ulcer-recurrent-bleeding-after-clips.v2",
+      "questionVariantId": "question.n4.ulcer-recurrent-bleeding-after-clips.v2",
+      "conceptId": "concept.peptic-ulcer-bleeding.endoscopic-hemostasis-modality.v2",
+      "requiredClinicalSetting": "endoscopy",
+      "requiredCapabilityIds": [
+        "capability.endoscopy",
+        "capability.periop_recovery"
+      ],
+      "intendedLine": "income.endoscopy",
+      "recognized": true,
+      "mechanism": "founder-consults.ts:endoscopicFindingConcepts",
+      "action": "Already recognized: preserve.",
+      "format3WitnessLine": "income.endoscopy"
+    },
+    {
+      "caseId": "case.n4.cholangiogram-lucencies-and-proximal-coverage.v1",
+      "questionVariantId": "question.n4.cholangiogram-lucencies-and-proximal-coverage.v1",
+      "conceptId": "concept.n4r2.cholangiogram-quality-before-duct-treatment",
+      "requiredClinicalSetting": "ambulatory_surgery",
+      "requiredCapabilityIds": [
+        "capability.ambulatory_or",
+        "capability.staff.or_nurse",
+        "capability.periop_recovery"
+      ],
+      "intendedLine": "income.ambulatory_operation",
+      "recognized": true,
+      "mechanism": "founder-consults.ts:procedureConsultKind /procedureConsultPresentations; ambulatory_surgery setting, no concept-ID allowlist",
+      "action": "Already recognized: preserve.",
+      "format3WitnessLine": "income.ambulatory_operation"
+    }
+  ],
+  "topicAdditions": [
+    {
+      "conceptId": "concept.superficial-incisional-ssi.open-drain",
+      "list": "clinic-consult-topics.ts:woundConcepts",
+      "caseId": "case.n4.incisional-pocket-above-retained-mesh.v1"
+    }
+  ],
+  "acceptedDiagnosticOrderExport": "QUESTION_N4_ACCEPTED_TEST_ORDER_RECORDS",
+  "acceptedDiagnosticOrderInstallTarget": "packages/game-domain/src/test-choice-orders.ts",
+  "acceptedDiagnosticOrderTargetArray": "EXACT_TEST_CHOICE_ORDER_RECORDS",
+  "acceptedDiagnosticOrderPatchInstructions": [
+    "Import QUESTION_N4_ACCEPTED_TEST_ORDER_RECORDS from @gamify-surgery/clinical-content.",
+    "Append ...QUESTION_N4_ACCEPTED_TEST_ORDER_RECORDS to EXACT_TEST_CHOICE_ORDER_RECORDS.",
+    "Keep all existing rows, exact labels/profiles and future_planned non-execution dispositions; do not add result gates or execute the operation already in progress."
+  ],
+  "acceptedDiagnosticOrders": [
+    {
+      "caseId": "case.n4.colonic-wall-pattern-after-mucosal-biopsy.v1",
+      "nodeId": "node.n4.colonic-wall-pattern-after-mucosal-biopsy.v1",
+      "questionVariantId": "question.n4.colonic-wall-pattern-after-mucosal-biopsy.v1",
+      "choiceId": "choice.n4.colonic-wall-pattern-after-mucosal-biopsy.biopsy",
+      "choiceLabel": "Obtain deeper bite-on-bite mucosal samples",
+      "timingProfileId": "timing.test.biopsy",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    },
+    {
+      "caseId": "case.n4.venous-ulcer-contralateral-pressure-trap.v1",
+      "nodeId": "node.n4.venous-ulcer-contralateral-pressure-trap.v1",
+      "questionVariantId": "question.n4.venous-ulcer-contralateral-pressure-trap.v1",
+      "choiceId": "choice.n4.venous-ulcer-contralateral-pressure-trap.toe",
+      "choiceLabel": "Left toe pressure test with digital waveforms",
+      "timingProfileId": "timing.test.vascular_physiology",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    },
+    {
+      "caseId": "case.n4.venous-ulcer-contralateral-pressure-trap.v1",
+      "nodeId": "node.n4.venous-ulcer-contralateral-pressure-trap.v1",
+      "questionVariantId": "question.n4.venous-ulcer-contralateral-pressure-trap.v1",
+      "choiceId": "choice.n4.venous-ulcer-contralateral-pressure-trap.exercise",
+      "choiceLabel": "Left exercise ankle-brachial pressure test",
+      "timingProfileId": "timing.test.vascular_physiology",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    },
+    {
+      "caseId": "case.n4.venous-ulcer-contralateral-pressure-trap.v1",
+      "nodeId": "node.n4.venous-ulcer-contralateral-pressure-trap.v1",
+      "questionVariantId": "question.n4.venous-ulcer-contralateral-pressure-trap.v1",
+      "choiceId": "choice.n4.venous-ulcer-contralateral-pressure-trap.cta",
+      "choiceLabel": "Left-leg computed tomography angiography",
+      "timingProfileId": "timing.test.ct_angiography",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    },
+    {
+      "caseId": "case.n4.unexpected-deep-mass-during-lipoma-excision.v2",
+      "nodeId": "node.n4.unexpected-deep-mass-during-lipoma-excision.v2",
+      "questionVariantId": "question.n4.unexpected-deep-mass-during-lipoma-excision.v2",
+      "choiceId": "choice.n4.unexpected-deep-mass-during-lipoma-excision.v2.close",
+      "choiceLabel": "Close the wound, then obtain regional MRI and a planned core biopsy",
+      "timingProfileId": "timing.test.biopsy_staging",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    },
+    {
+      "caseId": "case.n4.unexpected-deep-mass-during-lipoma-excision.v2",
+      "nodeId": "node.n4.unexpected-deep-mass-during-lipoma-excision.v2",
+      "questionVariantId": "question.n4.unexpected-deep-mass-during-lipoma-excision.v2",
+      "choiceId": "choice.n4.unexpected-deep-mass-during-lipoma-excision.v2.incise",
+      "choiceLabel": "Take an incisional biopsy, then obtain regional MRI and staging",
+      "timingProfileId": "timing.test.biopsy_staging",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    },
+    {
+      "caseId": "case.n4.unexpected-deep-mass-during-lipoma-excision.v2",
+      "nodeId": "node.n4.unexpected-deep-mass-during-lipoma-excision.v2",
+      "questionVariantId": "question.n4.unexpected-deep-mass-during-lipoma-excision.v2",
+      "choiceId": "choice.n4.unexpected-deep-mass-during-lipoma-excision.v2.excise",
+      "choiceLabel": "Complete a marginal excision, then use the specimen for diagnosis",
+      "timingProfileId": "timing.test.biopsy",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    },
+    {
+      "caseId": "case.n4.cholangiogram-lucencies-and-proximal-coverage.v1",
+      "nodeId": "node.n4.cholangiogram-lucencies-and-proximal-coverage.v1",
+      "questionVariantId": "question.n4.cholangiogram-lucencies-and-proximal-coverage.v1",
+      "choiceId": "choice.n4.cholangiogram-lucencies-and-proximal-coverage.v1.repeat",
+      "choiceLabel": "De-air the injection system and repeat ductal imaging",
+      "timingProfileId": "timing.test.radiography",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    }
+  ],
+  "timingStatus": "Eight classifications installed in clinical-content; eight exact future_planned diagnostic orders are exported only. No domain execution/route binding was edited.",
+  "familyStatus": "No accepted item is pediatric; install zero N4 family bindings.",
+  "excluded": "Do not add the returned pedunculated-polyp/post-impaction/testis/new groin/other7 REVISE topic meanings or parked/held items.",
+  "procedureSourceBoundary": "The existing N4 handoff reports unsourced ordinary OR fallback. This milestone proves real-source admission and frozen reopen, not a global source-only admission guarantee. Preserve source eligibility fixes with the domain owner; no manifest/reopen gate is proposed.",
+  "inspectedRuntimeFiles": [
+    {
+      "path": "packages/game-domain/src/founder-consults.ts",
+      "sha256": "647575a8a4ab556b441feba019607f0c573defa86f0896dee2611b1197ccfa2c",
+      "editedByThisMilestone": false
+    },
+    {
+      "path": "packages/game-domain/src/clinic-consult-topics.ts",
+      "sha256": "7480671744d0fb1f129716fd4fc83eb7b3a63b832b153a702c9e621c262cf976",
+      "editedByThisMilestone": false
+    },
+    {
+      "path": "packages/game-domain/src/clinical-case-eligibility.ts",
+      "sha256": "92238a6416d765813e7e154e4bc4173a5bd19c89ecbad1a9a9769cde0f3c73a8",
+      "editedByThisMilestone": false
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "sha256": "573f4c6156d7c1819db74ad87e9a6413482a8a4e4f64d0563f3510f50e12a983",
+      "editedByThisMilestone": false
+    }
+  ]
+}

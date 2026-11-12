@@ -1,0 +1,238 @@
+[
+  {
+    "id": "question.topic.esophagus-structural-inflammatory-emergencies.suspicious-stricture-negative-tissue.v2",
+    "nodeId": "node.topic.esophagus-structural-inflammatory-emergencies.suspicious-stricture-negative-tissue.v2",
+    "title": "Tissue acquisition after negative mucosal biopsies of an esophageal narrowing",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "CT shows asymmetric thickening centered within the wall at that segment",
+        "why": "Only 'EUS-guided needle sampling of the thickened wall' repeats the stated target and its abnormality. Both alternatives say 'mucosal'. A reader can match wall to wall without knowing what EUS establishes or how esophageal biopsies work."
+      },
+      {
+        "phrase": "Two hospital endoscopies",
+        "why": "Together with documented sampling on 'both examinations', this makes 'Repeat mucosal forceps biopsies' an explicitly unsuccessful repeat. The remaining mucosal-resection foil still names the same already-benign tissue compartment. These are necessary provenance observations, but this option set converts them into an elimination shortcut."
+      }
+    ],
+    "fairness": [
+      "EUS-guided needle sampling is the defensible best offered procedure: benign surface samples do not resolve an intramural abnormality. No confident clinical inaccuracy identified. This does not establish that EUS sampling is technically feasible in every nontraversable stricture; the item does not state that this narrowing is nontraversable.",
+      "The high-yield issue is the limited meaning of negative superficial tissue in a suspicious narrowing. Here the proposed compartment inference and procedural application collapse into direct lexical matching, so two consequential steps do not survive the cue attack.",
+      "The standalone case supplies the prior procedures, represented sites and CT location explicitly. It needs no earlier node or feedback and contains no separate exhibit.",
+      "Review scope: all 11 active candidate nodes were reviewed, including six pass-preserved candidates and five revised candidates. The seven parked attempts, two kept historical records, retired/replaced historical rows and two recorded holds were noted but not re-reviewed. No archived before version was used to supply missing learner information. No active case is multipart; there are no separate candidate exhibits. Titles, keys, author self-checks and prior verdicts were not treated as evidence that an item passes. Only the requested report was written; no Git, installations or network were used.",
+      "This is an offline editorial review against the authoring standard and owner presentation guidance, not fresh source verification or Melissa Rowland's clinical approval. All drafts remain needs_clinician_review. Difficulty, two-step and high-yield judgments are qualitative, not measured performance or verified exam-frequency claims. Runtime randomization, rendered patient-name substitution, wait previews and service bindings are outside the supplied visible-field review and are not certified here."
+    ],
+    "suggestions": [
+      "Retain the actual biopsy provenance and CT observations; do not conceal the compartment distinction to manufacture difficulty.",
+      "Rebuild the competing acquisition plans so the key is not the only option naming the abnormal compartment. Use a clinician-supported access, sampling-adequacy or target distinction that changes which otherwise credible procedure is best; keep option labels parallel and put their reasons in feedback.",
+      "If a credible second decision cannot be supported, seek explicit acceptance as a focused foundational specimen-scope item rather than presenting this version as difficult resident reasoning."
+    ]
+  },
+  {
+    "id": "question.topic.esophagus-structural-inflammatory-emergencies.eoe-fibrosis-after-remission.v1",
+    "nodeId": "node.topic.esophagus-structural-inflammatory-emergencies.eoe-fibrosis-after-remission.v1",
+    "title": "Persistent obstructive symptoms despite EoE inflammatory control",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The standalone update opens 'The focal biopsies were benign', but its presentation mentions only food-bolus removal and later records. No focal lesion or focal biopsy site has been introduced. The reader cannot tell whether those specimens represent the persistent fixed narrowing or a different finding.",
+      "'Adequate follow-up samples from both levels' also retains a definite reference without identifying the two levels in this standalone case. The intended inflammatory-response evidence is understandable, but the reader should not need the removed earlier node to reconstruct specimen locations."
+    ],
+    "cues": [],
+    "fairness": [
+      "Continuing budesonide and arranging graded dilation is the best offered plan under the stated adequate inflammatory response and persistent fixed obstruction. Drug escalation mistakes ongoing dysphagia for ongoing inflammation; repeat biopsies mistake a mechanical limitation for unresolved inflammatory assessment.",
+      "Two consequential steps remain: interpret the discordance between histologic response and obstructive symptoms, then add mechanical treatment while preserving inflammatory control. Neither a uniquely comprehensive option nor simple wording overlap supplies both steps. This is a high-yield EoE management distinction.",
+      "No confident clinical inaccuracy identified. A standard endoscope not traversing a segment does not itself prove that adequate samples could not have been obtained by another approach or at another examination; no technical impossibility is asserted here.",
+      "The treatment decision remains solvable, but the standalone split leaves unresolved specimen references. The REVISE verdict concerns this visible context, not a reversal of the underlying treatment judgment. No preceding explanation is now available to supply those references or rehearse the answer."
+    ],
+    "suggestions": [
+      "Restore a concise description of the focal target and its biopsy result in the standalone context, specifying whether it is the current fixed segment. Identify the locations meant by 'both levels' using the actual authored clinical record.",
+      "Keep the histology-versus-lumen conflict and the three competing treatment plans. Do not add a diagnostic conclusion such as 'fibrotic stricture' before the choice.",
+      "Preserve the archived exact version; route any new visible-context version through the applicable review process rather than silently altering an exact previously passed context."
+    ]
+  },
+  {
+    "id": "question.topic.esophagus-structural-inflammatory-emergencies.bone-film-complication-imaging.v1",
+    "nodeId": "node.topic.esophagus-structural-inflammatory-emergencies.bone-film-complication-imaging.v1",
+    "title": "Investigation of worsening symptoms after a negative swallowed-bone radiograph",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Contrast-enhanced CT of the neck and chest is the best offered next investigation given spreading chest pain, fever and focal neck tenderness after possible bone ingestion. The problem is no longer just whether a luminal foreign body remains. Direct endoscopy is a credible competing plan if the learner underweights the evolving complication evidence.",
+      "Two consequential steps remain: reject false reassurance from the negative films, then interpret the new trajectory as requiring assessment beyond the lumen before choosing an extraction pathway. The repeat-film option is weaker, but the CT-versus-endoscopy comparison sustains moderate difficulty.",
+      "No confident clinical error identified. Preserved breathing and saliva passage are clinically useful context, not proof of absence of injury. The explanation does not prescribe an unsupported exact timing threshold or guarantee what CT will find.",
+      "The standalone hospital-chart review supplies its own initial symptoms, prior test and subsequent change. The presentation reveals the swallowed-bone history but does not reveal the complication being assessed. There is no earlier-node dependency or answer-rehearsing feedback. This is a high-yield foreign-body complication decision."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.esophagus-structural-inflammatory-emergencies.perforation-after-negative-film.v2",
+    "nodeId": "node.topic.esophagus-structural-inflammatory-emergencies.perforation-after-negative-film.v2",
+    "title": "Imaging after postendoscopy symptoms and a negative chest radiograph",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Repeat upright chest radiography",
+        "why": "This option and 'Repeat diagnostic upper endoscopy' explicitly repeat completed procedures while the key is the only new investigation. One repeats the already-negative test and the other repeats the procedure after which symptoms began. Novelty and narrative structure let a nonmedical reader favor CT without understanding perforation imaging."
+      },
+      {
+        "phrase": "can swallow small sips and has no iodinated-contrast contraindication",
+        "why": "These observations can legitimately establish protocol feasibility, but here they map directly to the uniquely detailed option 'Chest CT with intravenous and water-soluble oral contrast'. With no credible competing contrast study, this becomes an additional permission cue."
+      }
+    ],
+    "fairness": [
+      "Chest CT with the specified contrast protocol is the defensible best offered investigation. Persistent pain, tachycardia and dyspnea after instrumentation warrant further assessment despite no free air on the radiograph. No confident clinical inaccuracy identified in that plan or the explanation.",
+      "The protocol is now explicit and the presentation does not announce a diagnosed injury. However, removing the competing contrast esophagram has left two weak repeat-procedure foils. Recognizing possible perforation is high yield, but the present options do not require a second consequential discrimination.",
+      "The exact necessity and local use of oral contrast should not be generalized beyond this supplied case from this offline review. The item need not claim that this is the only valid imaging pathway in all suspected perforations.",
+      "The standalone retrospective task is complete, its chronology is coherent and it does not depend on another node. The deficiency is cue-resistant difficulty, not missing context or a confidently wrong key."
+    ],
+    "suggestions": [
+      "Use clinically credible competing diagnostic pathways at the same stage, with a supported patient-specific finding that actually resolves their ranking. Do not simply restore an equally defensible esophagram without that discriminator.",
+      "Avoid making the key the only new test or the only fully specified protocol. Keep genuinely necessary contrast-safety observations, but make the alternatives plausible under the same shared eligibility context.",
+      "If the intended lesson remains recognition of possible perforation despite a negative radiograph, seek explicit acceptance as a safety-recognition item and label its difficulty honestly."
+    ]
+  },
+  {
+    "id": "question.topic.esophagus-structural-inflammatory-emergencies.contained-perforation-surveillance.v2",
+    "nodeId": "node.topic.esophagus-structural-inflammatory-emergencies.contained-perforation-surveillance.v2",
+    "title": "Initial management of a contained esophageal leak in a stable patient",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Inpatient surveillance without an initial closure procedure is the best offered initial plan when the leak drains back into the lumen, there is no pleural spill or distal obstruction, physiology is stable after resuscitation, and supportive treatment is underway at a regional esophageal unit.",
+      "Two consequential steps remain: distinguish contained drainage from uncontrolled contamination, then integrate physiology, native-esophagus status and monitored-care setting to decide whether immediate closure is necessary. Covered stenting is a credible temptation to close every demonstrated defect; thoracoscopic repair is a credible escalation error.",
+      "The findings favor monitored nonoperative care; they do not establish that a covered stent is intrinsically wrong for every contained leak. The explanation appropriately calls stenting a selected option rather than asserting an absolute prohibition. No confident clinical error identified. Exact patient-level procedural selection still requires clinical sign-off.",
+      "'Without an initial closure procedure' describes the actual competing management choice rather than an obviously incomplete distractor. Supportive treatment is shared context, so the key is not uniquely comprehensive. The eligibility observations are decision-critical and should not be removed merely because they support the answer.",
+      "The standalone update supplies the leak anatomy, post-resuscitation course and treatment setting. The task no longer presupposes an intervention. No earlier question or feedback is needed. This is a high-yield perforation-management distinction."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.esophagus-structural-inflammatory-emergencies.free-perforation-repair.v1",
+    "nodeId": "node.topic.esophagus-structural-inflammatory-emergencies.free-perforation-repair.v1",
+    "title": "Repair strategy after free esophageal leakage and operative debridement",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Reinforced primary closure with feeding access is the best offered reconstruction for a focal defect with bleeding debrided edges, healthy adjacent esophagus and tension-free approximation. Contamination has been drained; its presence does not by itself mandate diversion or esophagectomy.",
+      "The learner must interpret operative observations as repairable viable tissue, then weigh that against the prior free leak and pleural contamination when choosing preservation versus diversion or resection. This is a high-yield operative decision with two consequential steps and moderate predicted difficulty.",
+      "The options have comparable scope and all include feeding access. The observations about bleeding and approximation are necessary operative findings, not a named 'primary-repair candidate' conclusion. No confident clinical error identified in the explanation.",
+      "The known esophageal injury is an appropriate prerequisite for this reconstruction task. 'Later records show' is anchored by the hospital-injury presentation, and the update independently supplies the indication for exploration and its findings. The removed preceding nodes are not necessary to solve this standalone decision."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.esophagus-structural-inflammatory-emergencies.caustic-loss-enhancement.v1",
+    "nodeId": "node.topic.esophagus-structural-inflammatory-emergencies.caustic-loss-enhancement.v1",
+    "title": "Caustic injury with full-thickness nonenhancement despite stable blood pressure",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Emergency exploration and removal of nonviable tissue is the best offered pathway given full-wall nonenhancement on a technically adequate contrast study. Preserved blood pressure and absence of free gas do not negate that finding.",
+      "Two consequential steps remain: distinguish meaningful absent wall enhancement from inadequate contrast delivery, then recognize that apparent physiologic stability and no free gas do not justify waiting for perforation before operative treatment. Endoscopic grading is a credible competing habit that the learner must rank against the CT evidence.",
+      "No confident clinical inaccuracy identified. The explanation distinguishes nonviability from inflammation without inventing a numerical cutoff or claiming that any lesser enhancement abnormality mandates resection. Exact imaging interpretation remains a clinical-review matter.",
+      "The standalone historical task includes the causative event, imaging adequacy and physiology, and supplies no future operative result. Its known caustic-ingestion context is not an answer label. This is high-yield emergency assessment rather than recall of an isolated imaging term."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.esophagus-structural-inflammatory-emergencies.caustic-complex-stricture.v2",
+    "nodeId": "node.topic.esophagus-structural-inflammatory-emergencies.caustic-complex-stricture.v2",
+    "title": "Initial dilation strategy for complex native-esophageal strictures after reconstruction",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Wire-guided balloon dilation with fluoroscopic guidance is the best offered procedure for the long, angulated, multiple and nontraversable native-esophageal narrowings. A wire alone does not erase the additional technical concern represented by that anatomy. A fully covered stent is premature as the first attempted stricture treatment in this supplied setting.",
+      "Two related decisions are consequential: choose initial dilation rather than escalation to a stent, then select the guidance appropriate to complex anatomy. Both dilation alternatives are wire-guided, leaving a real technical distinction rather than an obviously unsafe blind-bougie foil. Difficulty is moderate, not hard.",
+      "'No dilation has yet been attempted' is necessary treatment-history information for ranking the stent option. 'Without fluoroscopic guidance' names a real competing technique; it is not a rhetorical 'treatment alone' caricature. Neither phrase independently selects between the two dilation approaches.",
+      "No confident clinical inaccuracy identified. The vignette explicitly locates the retained native segment above a patent anastomosis and conduit, making postoperative anatomy coherent. It does not describe an anastomotic stricture as though the original thoracic segment were still present.",
+      "The standalone case supplies the prior resection, subsequent reconstruction, current lesion locations and treatment history. It does not require the preceding caustic-necrosis question or its feedback. Complex caustic-stricture management is high yield; the detailed guidance choice is narrower than the broader emergency topic."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.esophagus-structural-inflammatory-emergencies.zenker-limited-neck-access.v1",
+    "nodeId": "node.topic.esophagus-structural-inflammatory-emergencies.zenker-limited-neck-access.v1",
+    "title": "Treatment of a symptomatic proximal pouch with limited neck extension",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Flexible endoscopic septum division is the best offered approach for the symptomatic pouch in the presence of fixed neck immobility and a history indicating substantial anesthetic burden. Rigid stapling is constrained by exposure; open surgery remains a plausible but more burdensome alternative.",
+      "The learner must interpret the post-swallow pouch emptying and cough as relevant to symptoms, then apply the access and anesthetic history to choose among established procedures. Knowing that rigid access is difficult does not by itself decide between flexible and open treatment. The independent COPD/anesthetic information makes that remaining comparison consequential.",
+      "No confident clinical inaccuracy identified. The explanation correctly stops short of promising that flexible treatment avoids general anesthesia or aspiration risk in every patient. Actual anesthesia planning remains individualized after specialist assessment.",
+      "The anatomy is described without naming Zenker in the task, and the labels are parallel specific procedures. Neck immobility is a necessary constraint, not gratuitous permission for the key. The standalone presentation and update are coherent and complete. This is a high-yield diverticular-treatment decision."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.esophagus-structural-inflammatory-emergencies.cancer-local-margin-retreatment.v2",
+    "nodeId": "node.topic.esophagus-structural-inflammatory-emergencies.cancer-local-margin-retreatment.v2",
+    "title": "Treatment of a visible scar-edge focus after low-risk intramucosal cancer resection",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Expert endoscopic submucosal dissection of the visible focus is the best offered treatment. The lateral mucosal margin and visible focus create a local residual-neoplasia problem, while the supplied deep margin, grade and absence of submucosal or lymphovascular invasion do not independently require esophagectomy.",
+      "Two consequential steps remain: distinguish local mucosal persistence from regional-risk pathology, then recognize that a raised focus needs resection and tissue assessment before field ablation. The scarred location further supports the offered advanced resection technique. Ablation of a Barrett segment and escalation to esophagectomy represent distinct credible errors.",
+      "No confident clinical inaccuracy identified. The wording says scar location 'favors' expert dissection rather than asserting that every small scar-edge lesion requires ESD. This offline review does not establish ESD as uniquely preferable to every possible endoscopic resection technique; EMR is not an offered competitor, and exact technical selection requires clinical sign-off.",
+      "Procedure fitness is stated for both surgical and advanced endoscopic care, so availability does not uniquely grant the key. 'Visible focus' refers to a clinically necessary resection target rather than a diagnosis label that supplies the whole answer. The option set still requires interpretation of the pathology and surface findings.",
+      "The standalone case supplies the original specimen, follow-up finding and procedural setting without relying on another node. Local-margin versus regional-risk management and resection before ablation are high yield; scar-specific ESD technique is a narrower component."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.esophagus-structural-inflammatory-emergencies.cancer-clear-margins-lymphovascular.v1",
+    "nodeId": "node.topic.esophagus-structural-inflammatory-emergencies.cancer-clear-margins-lymphovascular.v1",
+    "title": "Regional treatment after clear-margin resection with deep invasion and lymphatic involvement",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Referral for esophagectomy with regional lymphadenectomy is the best offered plan for the fit patient with deep submucosal invasion and tumor in lymphatic spaces despite locally clear margins and negative gross staging. Neither repeat scar resection nor surveillance addresses the represented regional-risk problem.",
+      "Two consequential interpretations remain: separate complete local removal from the risk implied by depth and lymphatic involvement, then recognize that absent enlarged or PET-detected nodes does not resolve microscopic regional disease risk. The reassuring margin and staging findings create credible competing errors rather than supplying the conclusion.",
+      "Repeat scar resection is a weaker foil than surveillance, but the conflict between clear margins, negative staging and adverse pathology sustains moderate difficulty. The task asks for a treatment plan, and every option answers that task at comparable scope.",
+      "No confident clinical inaccuracy identified. The explanation appropriately limits its conclusion to the offered plans rather than claiming that surgery is universally superior to every definitive chemoradiation strategy for squamous carcinoma.",
+      "The standalone case gives the cancer type, pathology, completed staging and functional context. No earlier explanation or omitted result is required. This is a high-yield distinction between local endoscopic clearance and oncologic adequacy."
+    ],
+    "suggestions": []
+  }
+]

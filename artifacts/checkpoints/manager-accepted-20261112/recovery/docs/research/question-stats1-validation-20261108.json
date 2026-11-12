@@ -1,0 +1,114 @@
+{
+  "checkedOn": "2026-11-08",
+  "results": {
+    "clinicalBaseline": {
+      "cwd": "packages/clinical-content",
+      "command": "npm.cmd test -- --pool=threads",
+      "logPath": ".local-dev/question-stats1-20261108/clinical-baseline.log",
+      "logSha256": "ba94ce3543502ec8f9d2e70d171fd9f0a8efdc0fa77d94545cffff63cdf220c2",
+      "exitCode": 0,
+      "fileSummary": "123 passed (123)",
+      "testSummary": "1362 passed (1362)",
+      "duration": "27.85s (transform 33.24s, setup 0ms, import 353.84s, tests 30.89s, environment 14ms)"
+    },
+    "clinical": {
+      "cwd": "packages/clinical-content",
+      "command": "npm.cmd test -- --pool=threads",
+      "logPath": ".local-dev/question-stats1-20261108/clinical-close.log",
+      "logSha256": "51a743ec5a7d521ea40c9403f7940777452e1f27a9b0c0d4ca31dd09b4ea696d",
+      "exitCode": 0,
+      "fileSummary": "124 passed (124)",
+      "testSummary": "1473 passed (1473)",
+      "duration": "39.37s (transform 58.43s, setup 0ms, import 509.80s, tests 37.95s, environment 25ms)"
+    },
+    "typecheck": {
+      "cwd": ".",
+      "command": "npm.cmd run typecheck",
+      "logPath": ".local-dev/question-stats1-20261108/typecheck-close.log",
+      "logSha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06",
+      "exitCode": 0,
+      "fileSummary": null,
+      "testSummary": null,
+      "duration": null,
+      "workspaces": [
+        "@gamify-surgery/clinical-context-workbench",
+        "@gamify-surgery/player",
+        "@gamify-surgery/balance-config",
+        "@gamify-surgery/clinical-authoring",
+        "@gamify-surgery/clinical-content",
+        "@gamify-surgery/clinical-research",
+        "@gamify-surgery/game-domain"
+      ]
+    },
+    "lint": {
+      "cwd": ".",
+      "command": "npm.cmd run clinical:lint:test",
+      "logPath": ".local-dev/question-stats1-20261108/lint-tests.log",
+      "logSha256": "600ce69446e4a328662e8c77485a2c183397cadd0e0577c096694c4756e19ecc",
+      "exitCode": 0,
+      "fileSummary": null,
+      "testSummary": null,
+      "duration": null,
+      "tests": 33,
+      "passed": 33,
+      "failed": 0,
+      "durationMs": 2996.6776
+    }
+  },
+  "addedClinicalTests": 111,
+  "focusedRun": {
+    "command": "npm.cmd test -- --pool=threads src/question-stats1-20261108.test.ts src/question-flags3-20261107.test.ts",
+    "filesPassed": 2,
+    "testsPassed": 126,
+    "failed": 0,
+    "durationSeconds": 6.44
+  },
+  "mathematicalChecks": "Independently calculated table denominators, sensitivity/specificity/PPV, collection-cohort PPV, prevalence direction, RR/OR, odds-to-risk conversion, ARR/NNT, power/beta, interval null/target inclusion, interval widths, chi-square expected cells, Fisher sparsity and outcome-dependent response denominators.",
+  "reproductionCommands": [
+    "node tools/question-quality/author-question-stats1-20261108.mjs --check",
+    "node tools/question-quality/review-question-stats1-20261108.mjs --check",
+    "node tools/question-quality/check-question-stats1-20261108.mjs --check"
+  ],
+  "candidateCueLint": {
+    "before": 55,
+    "after": 0,
+    "variants": 64,
+    "profileContexts": 128,
+    "suppressed": 0
+  },
+  "wordCounts": {
+    "beforeProse": {
+      "min": 16,
+      "max": 74,
+      "mean": 55.390625,
+      "median": 57
+    },
+    "afterProse": {
+      "min": 5,
+      "max": 9,
+      "mean": 5.75,
+      "median": 5
+    },
+    "beforeCombined": {
+      "min": 44,
+      "max": 128,
+      "mean": 103.609375,
+      "median": 105.5
+    },
+    "afterCombined": {
+      "min": 12,
+      "max": 34,
+      "mean": 24.40625,
+      "median": 24
+    },
+    "beforeOver60": 61,
+    "afterOver45": 0,
+    "afterOver60": 0
+  },
+  "existingRuntimeChanges": [],
+  "levelFiveBoundInputChanges": [],
+  "shipManifestUnchanged": true,
+  "liveReleaseUnchanged": true,
+  "clinicalApproval": false,
+  "reviewGate": "Await independent review and exact manager acceptance. Author checks and green tests are not clinical approval."
+}

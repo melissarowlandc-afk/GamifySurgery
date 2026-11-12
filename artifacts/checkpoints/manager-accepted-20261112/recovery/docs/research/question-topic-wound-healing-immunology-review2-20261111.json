@@ -1,0 +1,374 @@
+[
+  {
+    "id": "question.topic.wound-healing-immunology.prepared-bed.v1",
+    "nodeId": "node.topic.wound-healing-immunology.prepared-bed.v1",
+    "title": "Coverage after a changed recipient bed",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The current adherent bleeding covering must supersede the historical bare cortex; residual edge tension then distinguishes graft coverage from direct closure. Split-thickness grafting is the single best offered next step.",
+      "The tension finding is necessary decision information, not an instruction to choose the key. Repeating template placement represents anchoring on the earlier bed; direct closure represents confusing vascular readiness with mechanical feasibility.",
+      "The explanation appropriately limits the inference to this observed bed. Standalone presentation and task contain the necessary reconstruction context; no earlier scored answer is needed.",
+      "Review scope: all 16 current executable candidate nodes, including five preserved candidate PASS versions, were assessed from their visible fields. The nine incumbent Keep records, retirement proposals, historical superseded candidates, thirteen parked attempts and held records were noted but not scored. No statistics items or current multipart cases are present. This is an offline editorial review, not source re-verification or clinical approval; all candidates remain needs_clinician_review. Difficulty and high-yield judgments are qualitative, not measured exam frequencies."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.wound-healing-immunology.graft-fluid.v2",
+    "nodeId": "node.topic.wound-healing-immunology.graft-fluid.v2",
+    "title": "Fluid beneath a still-viable graft",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must distinguish an interface collection from loss of graft viability, then choose evacuation with preservation rather than replacement. Pink tissue with punctate bleeding supports attempted salvage without guaranteeing take.",
+      "Two options appropriately share evacuation, so recognizing fluid alone cannot select the answer. Increased compression is a plausible failure to address the interposed collection. No option is uniquely qualified by an explanatory rationale.",
+      "No confident clinical error identified in the offered ranking or explanation. The standalone record supplies its own preceding and current checks; no prior feedback is necessary."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.wound-healing-immunology.graft-shear.v2",
+    "nodeId": "node.topic.wound-healing-immunology.graft-shear.v2",
+    "title": "Graft displacement during wrist movement",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Wrist flexion elongates the staple openings and translates the sheet across the bed",
+        "why": "The mechanical failure is effectively demonstrated in everyday terms; 'Refix the sheet and add joint immobilization' directly reverses the described motion. Neither competitor addresses motion."
+      },
+      {
+        "phrase": "between the outer dressing and the sheet",
+        "why": "The location explicitly defeats 'drain the deep interface' by superficial-versus-deep word matching. Coupled with a red bleeding bed, both distractors concern problems the exhibit has already removed."
+      }
+    ],
+    "fairness": [
+      "Refixation and immobilization are the defensible offered answer; the problem is weak discrimination, not an identified incorrect key.",
+      "Localization of the fluid is necessary and should remain. However, recognizing motion followed by selecting the only motion-control plan does not establish two consequential resident-level steps.",
+      "The explanation's reference to an otherwise vascular bed should not imply that bed vascularity alone proves graft viability. If regrafting is to be a serious competitor, the condition of the graft itself needs to matter.",
+      "The standalone record supplies the prior evacuation, so the sequence is coherent without the graft-fluid item."
+    ],
+    "suggestions": [
+      "Keep the observed fluid location and dynamic findings, but compare credible complete stabilization or salvage plans rather than deep drainage and bed debridement already contradicted by the record.",
+      "Make a supported graft-viability or fixation finding change the choice between those plans; do not manufacture a threshold or add decorative measurements. If only basic shear recognition is supported, seek explicit acceptance of that narrower purpose rather than calling the item moderate or hard."
+    ]
+  },
+  {
+    "id": "question.topic.wound-healing-immunology.graft-thickness.v1",
+    "nodeId": "node.topic.wound-healing-immunology.graft-thickness.v1",
+    "title": "Graft choice across a finger flexion crease",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The vascular recipient bed permits grafting, but the functional crease makes later contraction consequential. The small available donor segment and primary donor closure resolve a real limitation of choosing full thickness.",
+      "Unmeshed full-thickness autograft is favored among these choices. Unmeshed thin split thickness is the closest credible competitor; wide meshing is weaker but belongs to the same decision category.",
+      "The donor description supports feasibility without naming the graft type. The explanation does not claim that full thickness is universally superior. The standalone record supplies the release result and donor assessment."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.wound-healing-immunology.preclosure-function.v2",
+    "nodeId": "node.topic.wound-healing-immunology.preclosure-function.v2",
+    "title": "Functional assessment of a palmar finger wound",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The clinically relevant injured finger is not identified. Naming it would make the requested independent flexor maneuvers more concrete and avoid assuming identical isolation technique for every digit. This is a precision issue, not proof of an incorrect key."
+    ],
+    "cues": [
+      {
+        "phrase": "the following functional maneuvers have not yet been performed",
+        "why": "This is an author-written missing-step announcement. It adds no clinical observation and frames the task as choosing an omitted examination from a checklist."
+      },
+      {
+        "phrase": "Test PIP and DIP flexion separately against resistance",
+        "why": "The key contains the 'flexion' component of one alternative and the 'PIP and DIP ... separately' component of the other. It is the convergence option combining the most detailed parts of both competitors."
+      }
+    ],
+    "fairness": [
+      "Independent resisted flexor testing is the best offered assessment for this palmar wound with preserved light movement and pain under load. No confident clinical inaccuracy identified in that ranking.",
+      "Palmar injury to flexor assessment is primarily an anatomy-to-examination association. The abnormal loaded function supports concern, but the item stops before its interpretation changes a closure or referral decision.",
+      "Composite grip is a credible incomplete examination; isolated extension is substantially less competitive once the palmar location is supplied. The standalone context is complete and does not need a preceding node."
+    ],
+    "suggestions": [
+      "Name the injured finger and remove the sentence announcing the unperformed maneuvers.",
+      "Use same-scope examination plans without a component-convergence key. For resident application, provide actual findings from appropriately performed isolated maneuvers and ask how their discordance with preserved gross movement changes the next wound-care decision; preserve the distinct objective of any separate referral item."
+    ]
+  },
+  {
+    "id": "question.topic.wound-healing-immunology.partial-tendon-referral.v2",
+    "nodeId": "node.topic.wound-healing-immunology.partial-tendon-referral.v2",
+    "title": "Referral after incomplete tendon assessment",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "before hand referral",
+        "why": "Both distractors impose an extra prerequisite on the same referral, while the key alone permits direct assessment. They repeat the same delay error rather than offer genuinely competing dispositions."
+      },
+      {
+        "phrase": "was obscured by air and was not assessed",
+        "why": "This necessary limitation already defeats reassurance from ultrasound. With all choices including splinting and referral, it leaves only the plainly safer direct-referral route versus two added imaging hurdles."
+      }
+    ],
+    "fairness": [
+      "Direct hand-surgery assessment is the best offered disposition given painful weak resisted flexion and incomplete wound-level assessment. The visible segment's continuity cannot clear the unseen segment.",
+      "Additional imaging can be useful in real care, as the explanation acknowledges. The wording makes it a referral prerequisite rather than testing when imaging would meaningfully change management. Do not teach that ultrasound or MRI is generally inappropriate.",
+      "This is a valid safety message but does not meet the standard's requirement for a difficult remaining decision instead of an indicated referral against unsupported delays.",
+      "The standalone item includes examination, attempted inspection and imaging adequacy; no earlier preclosure answer leaks into it."
+    ],
+    "suggestions": [
+      "Keep the unassessed wound-level segment explicit; do not remove essential adequacy information to create difficulty.",
+      "Move prompt referral into shared background care and test a supported unresolved assessment or planning decision using comparable specific alternatives. Alternatively retain this as a clearly accepted safety-recognition item, without claiming two-step resident difficulty."
+    ]
+  },
+  {
+    "id": "question.topic.wound-healing-immunology.dirty-completed-series.v1",
+    "nodeId": "node.topic.wound-healing-immunology.dirty-completed-series.v1",
+    "title": "Tetanus prophylaxis after a contaminated wound",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Soil contamination must be classified despite completed irrigation, then the completed series, elapsed interval and immune history must be applied separately to active and passive prophylaxis. Vaccine without TIG is the best offered answer.",
+      "The complete four-combination option set is balanced: no component majority, unusually long answer or wording-only match selects the key. Negative vaccine/TIG labels are necessary treatment distinctions rather than rhetorical absolutes.",
+      "The explanation is consistent with the standard dirty-wound pathway as understood offline. This review does not newly verify current guidance.",
+      "Although 'now' and 'same outside encounter' survive removal of earlier parts, the standalone presentation identifies that encounter and the task is complete; no missing prior result is required."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.wound-healing-immunology.dirty-uncertain-series.v1",
+    "nodeId": "node.topic.wound-healing-immunology.dirty-uncertain-series.v1",
+    "title": "Tetanus prophylaxis with an undocumented primary series",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must resist equating a remembered shot with a completed primary series, then combine that evidence status with a soil-contaminated puncture to select vaccine plus TIG.",
+      "The current healing status is temporally distinct from the encounter being audited. The task and explanation consistently ask about prophylaxis at that encounter, not whether a well patient currently has tetanus.",
+      "The balanced active/passive matrix contains the credible errors of vaccine alone and reliance on passive prophylaxis. No confident clinical error identified from the supplied fields; independent current-source verification was outside this offline review.",
+      "This standalone case contains the complete relevant history and has no earlier feedback dependency."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.wound-healing-immunology.clean-incomplete-series.v2",
+    "nodeId": "node.topic.wound-healing-immunology.clean-incomplete-series.v2",
+    "title": "Clean minor wound in a never-vaccinated adult",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "no puncture tract, soil, saliva or devitalized tissue",
+        "why": "The exhaustive exclusion list walks through dirty-wound criteria, supplying nearly the whole classification instead of requiring interpretation of a concise wound description. It is a teaching checklist more than a natural observation."
+      }
+    ],
+    "fairness": [
+      "Starting primary vaccination without TIG is the single best offered plan. The never-vaccinated history avoids ambiguous catch-up timing, and no confident clinical error is identified.",
+      "There are two relevant decisions: classify the wound and distinguish active immunization from TIG. Both are elementary and explicitly scaffolded here; twoStep=true does not make this a moderate or hard resident item.",
+      "The four-combination options are balanced and do not have a key-only length or convergence problem. The main weakness is difficulty and checklist framing, not an unfair option set.",
+      "The standalone task and chronology are clear. No statistics exception or explicitly accepted basic purpose is evident in the visible content."
+    ],
+    "suggestions": [
+      "Replace the exclusion checklist with the minimal natural mechanism and wound observations needed to establish a clean minor cut.",
+      "If the learning purpose is foundational clean-wound prophylaxis, request explicit acceptance of that easy purpose. Otherwise use a source-supported, internally complete vaccine-history or wound-classification interpretation that changes the active/passive plan; do not reintroduce an unresolved interval or invent a cutoff."
+    ]
+  },
+  {
+    "id": "question.topic.wound-healing-immunology.hiv-recent-series.v2",
+    "nodeId": "node.topic.wound-healing-immunology.hiv-recent-series.v2",
+    "title": "TIG exception despite recent vaccination",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The recent completed series argues against another vaccine dose, while HIV changes the passive-prophylaxis decision for the contaminated puncture. These are independent consequential components, and choosing neither is a credible error.",
+      "TIG without another tetanus-containing vaccine is the best offered answer under the stated HIV dirty-wound exception. Antiretroviral treatment does not itself establish an exemption. No additional CD4 cutoff should be invented to repair this item.",
+      "The complete option matrix is balanced; the medical-history label does not reveal which prophylaxis component changes. The explanation states the exception without claiming a dose or schedule.",
+      "No confident clinical inaccuracy identified offline; the exact guideline exception remains subject to clinician sign-off. Standalone chronology and decision point are complete."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.wound-healing-immunology.normal-acute-tryptase.v2",
+    "nodeId": "node.topic.wound-healing-immunology.normal-acute-tryptase.v2",
+    "title": "Paired tryptase and limits of mechanism attribution",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Mast-cell activation unsupported' is not specific about whether support from the paired assay or from the entire clinical event is being judged. The task asks about both, and the event itself is strongly suggestive."
+    ],
+    "cues": [
+      {
+        "phrase": "No agent-specific allergy testing has yet been performed.",
+        "why": "This named missing test heavily cues 'IgE mechanism unresolved' and eliminates half the matrix without interpreting tryptase. It also risks suggesting that agent-specific testing is a simple binary switch establishing the event's mechanism."
+      },
+      {
+        "phrase": "Mast-cell activation unsupported; IgE mechanism established",
+        "why": "For this systemic event, the combination is an unusually strained conclusion and a weak distractor. Equal component frequencies do not make every combination a credible clinical interpretation."
+      }
+    ],
+    "fairness": [
+      "The worked comparison is correct: 1.2 times 3.0 plus 2 equals 5.6, and 7.2 exceeds it. A normal population-range flag does not negate this relative rise. The explanation appropriately avoids diagnosing a culprit or proving IgE mediation.",
+      "The criterion itself and exact sampling interpretation were not externally re-verified under the no-network constraint; no new threshold is proposed by this review.",
+      "The useful task is individualized biochemical interpretation. Appending an already-cued mechanism-status label does not add a consequential clinical decision, and it is not a statistics item eligible for the minimal single-skill exception.",
+      "This standalone record supplies baseline, acute timing and recovery; no earlier answer or subsequent specialist result is needed."
+    ],
+    "suggestions": [
+      "Specify whether the answer concerns biochemical evidence of event-associated activation, avoiding the unqualified word 'unsupported'.",
+      "Remove the named-omission scaffold and the implausible matrix combination. Build a single consequential follow-up decision around the discordance between the population flag and the patient's change, with comparable specific alternatives and an explicit distinction between activation evidence and culprit attribution. Retain the correct arithmetic in feedback."
+    ]
+  },
+  {
+    "id": "question.topic.wound-healing-immunology.confirmed-preparation-allergy.v2",
+    "nodeId": "node.topic.wound-healing-immunology.confirmed-preparation-allergy.v2",
+    "title": "Antiseptic choice and chlorhexidine-coated catheter",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Chlorhexidine allergy was diagnosed.",
+        "why": "Together with 'The proposed antimicrobial catheter coating contains chlorhexidine', this explicitly supplies the ingredient-avoidance answer. No medical inference is needed to eliminate both coated-catheter choices."
+      },
+      {
+        "phrase": "The record contains no prior reaction to povidone-iodine.",
+        "why": "Placed immediately after the shrimp-derived iodine label, this steers the remaining use-versus-test decision. The only surviving knowledge demand is the familiar shellfish/iodine misconception."
+      }
+    ],
+    "fairness": [
+      "Povidone-iodine with an uncoated catheter is the best offered plan on the stated history. Shrimp allergy does not itself establish povidone-iodine allergy, and the known chlorhexidine allergy appropriately extends to a relevant coated device.",
+      "The diagnosis is legitimate background for management; its presence is not itself an error. The problem is that the device half merely repeats it, while the preparation half is a separate simple misconception. This is not two consequential reasoning steps.",
+      "The matrix is frequency-balanced, so there is no majority-component convergence. The shortcut arises from explicit ingredient matching, not from the number of repeated components.",
+      "The standalone specialist report supplies the needed background; no earlier tryptase question is required."
+    ],
+    "suggestions": [
+      "Put established chlorhexidine avoidance and the uncoated device into shared background care, then test one substantive remaining preparation decision with credible alternatives.",
+      "For a harder version, use a supported uncertainty in the actual allergy evaluation or a clinically relevant product constraint that the resident must interpret. Do not remove necessary allergy information or add unsourced product relationships merely to obscure the answer. Alternatively seek acceptance as focused foundational allergy-safety teaching."
+    ]
+  },
+  {
+    "id": "question.topic.wound-healing-immunology.glove-new-immediate-event.v2",
+    "nodeId": "node.topic.wound-healing-immunology.glove-new-immediate-event.v2",
+    "title": "New immediate reaction after an earlier negative latex assay",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Chlorhexidine preparation was first used for venous access during emergency treatment.",
+        "why": "The explicit post-onset timestamp excludes the chlorhexidine choice through ordinary chronology. It is necessary causal information, but makes this particular competitor nonfunctional."
+      },
+      {
+        "phrase": "Repeat delayed patch assessment of rubber chemicals",
+        "why": "This offers repetition of an already completed, clinically relevant assessment while the task asks about a newly documented event. The label also advertises 'delayed' against a three-minute systemic reaction."
+      }
+    ],
+    "fairness": [
+      "Current evaluation for immediate latex-protein sensitization is the best targeted assessment among these options; neither the old negative assay nor a separate contact-allergy diagnosis settles the new reaction.",
+      "The explanation correctly stops short of proving the culprit from chronology alone. Other actual pre-onset exposures would matter in a comprehensive workup, but the targeted task does not claim that latex is definitively causal.",
+      "Deleting the entire earlier allergy history leaves the same obvious answer: natural-rubber exposure before immediate symptoms, chlorhexidine after symptoms. The history therefore does not make the prior-negative/current-event conflict consequential to selection.",
+      "This standalone sequence is temporally coherent and preserves the earlier negative result; the remaining issue is difficulty, not a demonstrated clinical inaccuracy."
+    ],
+    "suggestions": [
+      "Preserve the exposure chronology and distinct immediate versus contact mechanisms. Replace post-onset chlorhexidine testing and repeated established patch assessment with credible same-stage assessments that genuinely remain in contention.",
+      "Make the earlier assay's timing or evidentiary limitation alter the chosen assessment under supported criteria. If the supplied record cannot uniquely rank credible alternatives, retain only an explicitly accepted foundational recognition purpose rather than inventing a harder key."
+    ]
+  },
+  {
+    "id": "question.topic.wound-healing-immunology.scar-contracture.v1",
+    "nodeId": "node.topic.wound-healing-immunology.scar-contracture.v1",
+    "title": "Localizing persistent elbow extension loss",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Equal active and passive endpoints require a mechanical explanation; tightening and blanching of the anterior skin band then localize the demonstrated restraint. Persistent limitation despite therapy makes scar release a consequential next consideration.",
+      "Capsular and tendon procedures are same-stage anatomic competitors. Maintained bony alignment alone would not exclude capsular restriction, but the complete dynamic skin findings favor the offered scar procedure.",
+      "The repeated scar terminology is necessary context, not a disclosed diagnosis of the cause of all stiffness. The explanation appropriately leaves the exact rearrangement design to specialist assessment.",
+      "The standalone case supplies prior therapy and current function. No confident clinical inaccuracy or answer-changing ambiguity identified."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.wound-healing-immunology.scar-like-nodule.v2",
+    "nodeId": "node.topic.wound-healing-immunology.scar-like-nodule.v2",
+    "title": "Persistent nodule after superficial sampling",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The specimen came from the correct site but did not represent the persistent deeper target. The resident must recognize an acquisition limitation, then distinguish obtaining adequate new tissue from additional processing or reinterpretation of the existing material.",
+      "A new incisional specimen is the best offered diagnostic step. More sections and specialist review are credible responses to other pathology problems, but neither can supply tissue absent from the submitted specimen.",
+      "The depth statements are decision-critical rather than removable hints. The explanation does not infer malignancy from growth or declare superficial granulation tissue false; it limits what that sample can establish.",
+      "Standalone acquisition, pathology and current examination are coherent. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.wound-healing-immunology.flap-exploration.v2",
+    "nodeId": "node.topic.wound-healing-immunology.flap-exploration.v2",
+    "title": "Threatened free flap despite an audible arterial signal",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Tense violaceous tissue, almost immediate refill and brisk dark bleeding support impaired outflow despite an audible arterial signal. The resident must then distinguish urgent evaluation of a correctable pedicle problem from native arterial imaging or premature leech offloading.",
+      "Urgent microsurgical pedicle exploration is the best offered step for the recorded deterioration. Warm digits and distal pulses address native-limb circulation without establishing adequate flap perfusion.",
+      "The explanation appropriately distinguishes temporary offloading from repair of an obstructed pedicle. It does not claim that leeches never have a salvage role or prescribe an exact salvage deadline.",
+      "The phrase about a surgically correctable lesion neither established nor excluded is redundant author commentary; the raw findings already support the decision. It does not uniquely select the key because all options still concern evaluation or management before/at exploration.",
+      "The task explicitly asks what was warranted in the historical record, avoiding confusion with the well patient's current clinic status. No confident clinical inaccuracy identified offline."
+    ],
+    "suggestions": [
+      "Optional tightening: remove 'The record had not yet established a surgically correctable lesion or excluded one.' Keep the raw skin-paddle, pulse and monitoring observations. The present verdict does not depend on that sentence."
+    ]
+  }
+]

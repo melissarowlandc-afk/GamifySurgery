@@ -1,0 +1,110 @@
+{
+  "checkedOn": "2026-11-08",
+  "namedFamilies": [
+    "arr-nnt",
+    "bias-confounding",
+    "chi-square",
+    "confidence-interval",
+    "errors-power",
+    "fisher-exact",
+    "independent-t",
+    "one-way-anova",
+    "p-value",
+    "paired-t",
+    "predictive-value-prevalence",
+    "rank-sum",
+    "risk-ratio-odds-ratio",
+    "sensitivity-specificity",
+    "signed-rank",
+    "study-design"
+  ],
+  "nodes": 64,
+  "cases": 64,
+  "concepts": 18,
+  "liveBeforeSha256": "0fbd0efc0502cb47e463a07ea2c8a74e6ce992876f27442ec5597b17cc5273cf",
+  "liveAfterSha256": "0fbd0efc0502cb47e463a07ea2c8a74e6ce992876f27442ec5597b17cc5273cf",
+  "catalogUnchanged": true,
+  "manifestUnchanged": true,
+  "globalTimingUnchanged": true,
+  "sourceView": "stats1-round1",
+  "sourceViewSha256": "70163dd78bd9a0aa31bc8ade3714722a951d61ce5def1a86daccbbd0a4ca0b7f",
+  "newVariants": 64,
+  "newConceptIds": [],
+  "defaultOrBarrelImportsNewModules": false,
+  "wordCounts": {
+    "beforeProse": {
+      "min": 16,
+      "max": 74,
+      "mean": 55.390625,
+      "median": 57
+    },
+    "afterProse": {
+      "min": 5,
+      "max": 9,
+      "mean": 5.75,
+      "median": 5
+    },
+    "beforeCombined": {
+      "min": 44,
+      "max": 128,
+      "mean": 103.609375,
+      "median": 105.5
+    },
+    "afterCombined": {
+      "min": 12,
+      "max": 34,
+      "mean": 24.40625,
+      "median": 24
+    },
+    "beforeOver60": 61,
+    "afterOver45": 0,
+    "afterOver60": 0
+  },
+  "employeeCases": 52,
+  "patientCases": 12,
+  "existingSourceChanges": [
+    {
+      "path": "packages/clinical-content/src/question-flags3-acceptance-test-support.ts",
+      "beforeSha256": "af6bf04b16f7c3b4d1dab9284761283b460e88afa9d47c0efad7ba77eacad737",
+      "afterSha256": "9a084a6535ea1f3a98eab7eab07597b52a6b4c3e4f647eb374b088d0f22b3008"
+    },
+    {
+      "path": "docs/clinical/question-authoring-standard.md",
+      "beforeSha256": "c45acfe30886d82d91d7392a3b591334ac697a9f4c2991fa0e124acd8824fa4c",
+      "afterSha256": "87689076b8ab2126973d5d7972ad300ad096c5ebabca999aee291f316256f671"
+    }
+  ],
+  "additionalStatistics": [
+    {
+      "id": "SX01",
+      "caseId": "case.n2.negative-predictive-value-denominator.v1",
+      "questionVariantId": "question.n2.negative-predictive-value-denominator.v2",
+      "conceptId": "concept.n2r2.negative-result-population-and-protocol",
+      "status": "Outside the sixteen explicitly named families; inventoried and unchanged under the stated named-family scope assumption. No content, concept, acceptance or live change."
+    },
+    {
+      "id": "SX02",
+      "caseId": "case.n2.positive-likelihood-ratio.v1",
+      "questionVariantId": "question.n2.positive-likelihood-ratio.v2",
+      "conceptId": "concept.n2r2.positive-test-odds-and-investigation",
+      "status": "Outside the sixteen explicitly named families; inventoried and unchanged under the stated named-family scope assumption. No content, concept, acceptance or live change."
+    },
+    {
+      "id": "SX03",
+      "caseId": "case.n2.mcnemar-paired-binary-outcomes.v1",
+      "questionVariantId": "question.n2.mcnemar-paired-binary-outcomes.v3",
+      "conceptId": "concept.n2r2.linked-binary-analysis-and-pilot-decision",
+      "status": "Outside the sixteen explicitly named families; inventoried and unchanged under the stated named-family scope assumption. No content, concept, acceptance or live change."
+    },
+    {
+      "id": "SX04",
+      "caseId": "case.n2.equivalence-margin-versus-null-test.v1",
+      "questionVariantId": "question.n2.equivalence-margin-versus-null-test.v2",
+      "conceptId": "concept.n2r2.equivalence-and-safety-implementation",
+      "status": "Outside the sixteen explicitly named families; inventoried and unchanged under the stated named-family scope assumption. No content, concept, acceptance or live change."
+    }
+  ],
+  "changedExistingLevelFiveBoundInputs": [],
+  "shipManifestEdited": false,
+  "holds": []
+}

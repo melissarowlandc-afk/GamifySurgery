@@ -1,0 +1,506 @@
+{
+  "checkedOn": "2026-11-05",
+  "scope": "Exact fresh whole-case delta, unchanged historical identities, immutable captures and unrelated-lane protection. No evidence rebind or release-tree edits.",
+  "defaultBefore": {
+    "cases": 1136,
+    "nodes": 1449,
+    "uniqueQuestions": 1444,
+    "activeConcepts": 442,
+    "registeredConcepts": 598,
+    "sha256": "e55903f57c02a79d32172b439163e85ee6f577d56ca3b4f3ca4d1877bf24fc3a"
+  },
+  "defaultAfter": {
+    "cases": 1136,
+    "nodes": 1447,
+    "uniqueQuestions": 1442,
+    "activeConcepts": 444,
+    "registeredConcepts": 600,
+    "sha256": "9d22fca317de853e1647bac1c4b2e727600627ccf9edb9acbe1e784ff927d98f"
+  },
+  "unchangedDefaultCases": 1134,
+  "changedCases": [
+    {
+      "id": "G03",
+      "caseId": "case.gs028c.palpable-breast.paired-dense-focal",
+      "beforeSha256": "d1e4c36adda962d3c71886571f59cc04875f696872ebdc151bb4b4fdf02c2f8a",
+      "afterSha256": "f3c8bfc0d1b7ddccf6a6dd6db3ddc1758ffb7d25c59bca604ad084c827c25dd8",
+      "retiredFreshQuestionIds": [
+        "question.palpable-breast.negative-mammogram-targeted-us.v1",
+        "question.palpable-breast.suspicious-mass-biopsy-despite-negative-imaging.v1"
+      ],
+      "admittedQuestionId": "question.palpable-breast.negative-mammogram-targeted-us.v1.r4",
+      "retainedOldConceptIds": [
+        "concept.palpable-breast.negative-mammogram-targeted-us",
+        "concept.palpable-breast.suspicious-mass-biopsy-despite-negative-imaging"
+      ],
+      "newConceptId": "concept.palpable-breast.completed-imaging-clinical-target.v1",
+      "reviewStatus": "needs_clinician_review",
+      "clinicalApproval": false
+    },
+    {
+      "id": "G05",
+      "caseId": "case.asymptomatic-phpt.incidental-calcium",
+      "beforeSha256": "1b7ba7688e3deab3a9f7f5384c3f8845f2722a89f58d830ce751eb71f54af468",
+      "afterSha256": "6687400885952c629d985de543379ed647ef013bd0c6d3c2c2cbb1a1e274843a",
+      "retiredFreshQuestionIds": [
+        "question.asymptomatic-phpt.three-site-dxa.v1",
+        "question.asymptomatic-phpt.age-based-surgery.v1"
+      ],
+      "admittedQuestionId": "question.asymptomatic-phpt.age-based-surgery.v1.r3",
+      "retainedOldConceptIds": [
+        "concept.asymptomatic-phpt.three-site-dxa",
+        "concept.asymptomatic-phpt.age-based-surgery"
+      ],
+      "newConceptId": "concept.phpt.inherited-calcium-before-localization.v2",
+      "reviewStatus": "needs_clinician_review",
+      "clinicalApproval": false
+    }
+  ],
+  "manifest": {
+    "beforeId": "question-ship.2026-11-05.v2",
+    "afterId": "question-ship.2026-11-05.v3",
+    "beforeAccepted": 62,
+    "afterAccepted": 64,
+    "legacyBindings": 1423,
+    "replacements": [
+      {
+        "replaces": "case.gs028c.palpable-breast.paired-dense-focal",
+        "with": "question.palpable-breast.negative-mammogram-targeted-us.v1.r4"
+      },
+      {
+        "replaces": "case.asymptomatic-phpt.incidental-calcium",
+        "with": "question.asymptomatic-phpt.age-based-surgery.v1.r3"
+      }
+    ],
+    "newN3Acceptances": 0
+  },
+  "timing": {
+    "before": 2213,
+    "after": 2215,
+    "oldPrefixSha256": "37c2a72afea9b9c0fbd5c9e5b3cf8d9807e3ac1e1191f1ba27259e939cad1bcb",
+    "newRecords": 2
+  },
+  "exactPlannedOrders": [
+    {
+      "caseId": "case.gs028c.palpable-breast.paired-dense-focal",
+      "nodeId": "node.gs028c.palpable-breast.paired-dense-focal.1",
+      "questionVariantId": "question.palpable-breast.negative-mammogram-targeted-us.v1.r4",
+      "choiceId": "choice.flags2r3.20261105.g03.key",
+      "choiceLabel": "Breast-team tissue sampling",
+      "timingProfileId": "timing.test.biopsy",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    },
+    {
+      "caseId": "case.gs028c.palpable-breast.paired-dense-focal",
+      "nodeId": "node.gs028c.palpable-breast.paired-dense-focal.1",
+      "questionVariantId": "question.palpable-breast.negative-mammogram-targeted-us.v1.r4",
+      "choiceId": "choice.flags2r3.20261105.g03.d1",
+      "choiceLabel": "Contrast-enhanced breast MRI",
+      "timingProfileId": "timing.test.breast_mri",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    },
+    {
+      "caseId": "case.gs028c.palpable-breast.paired-dense-focal",
+      "nodeId": "node.gs028c.palpable-breast.paired-dense-focal.1",
+      "questionVariantId": "question.palpable-breast.negative-mammogram-targeted-us.v1.r4",
+      "choiceId": "choice.flags2r3.20261105.g03.d2",
+      "choiceLabel": "Breast examination with interval ultrasonography",
+      "timingProfileId": "timing.test.ultrasound",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    },
+    {
+      "caseId": "case.asymptomatic-phpt.incidental-calcium",
+      "nodeId": "node.asymptomatic-phpt.incidental-calcium.2",
+      "questionVariantId": "question.asymptomatic-phpt.age-based-surgery.v1.r3",
+      "choiceId": "choice.flags2r3.20261105.g05.key",
+      "choiceLabel": "Biochemical surveillance",
+      "timingProfileId": "timing.test.basic_labs",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    }
+  ],
+  "protectedUnchangedCount": 153,
+  "protectedUnchanged": [
+    "packages/clinical-content/src/question-new-n3-20261105.test.ts",
+    "packages/clinical-content/src/question-new-n3-20261105.ts",
+    "packages/clinical-content/src/question-new-n3-evidence-20261105.ts",
+    "packages/clinical-content/src/question-new-n3-level3.ts",
+    "packages/clinical-content/src/question-new-n3-level4.ts",
+    "packages/clinical-content/src/question-new-n3-round2-20261105.ts",
+    "packages/clinical-content/src/question-new-n3-round2-evidence-20261105.ts",
+    "packages/clinical-content/src/question-new-n3-round2-level3-nutrition.ts",
+    "packages/clinical-content/src/question-new-n3-round2-level3-specialty.ts",
+    "packages/clinical-content/src/question-new-n3-round2-level4-critical.ts",
+    "packages/clinical-content/src/question-new-n3-round2-level4-foregut.ts",
+    "packages/clinical-content/src/question-new-n3-round2-level4-oncology.ts",
+    "packages/clinical-content/src/question-new-n3-round2-types.ts",
+    "packages/clinical-content/src/question-new-n3-round3-20261105.ts",
+    "packages/clinical-content/src/question-new-n3-round3-candidates.ts",
+    "packages/clinical-content/src/question-new-n3-round3-evidence-20261105.ts",
+    "packages/clinical-content/src/question-new-n3-round3-source-20261105.ts",
+    "packages/clinical-content/src/question-new-n3-round3-types.ts",
+    "packages/clinical-content/src/question-new-n3-types.ts",
+    "packages/game-domain/src/question-new-n3-round2-test-orders.ts",
+    "packages/game-domain/src/question-new-n3-round3-test-orders.ts",
+    "packages/game-domain/src/question-new-n3-test-orders.ts",
+    "apps/player/src/session/cloud/automaticResolution.test.ts",
+    "apps/player/src/session/cloud/automaticResolution.ts",
+    "apps/player/src/session/cloud/cache.test.ts",
+    "apps/player/src/session/cloud/cache.ts",
+    "apps/player/src/session/cloud/campaignPreview.ts",
+    "apps/player/src/session/cloud/checkDeadline.ts",
+    "apps/player/src/session/cloud/CloudAccount.test.tsx",
+    "apps/player/src/session/cloud/CloudAccount.tsx",
+    "apps/player/src/session/cloud/codec.fixtures.test.ts",
+    "apps/player/src/session/cloud/codec.test.ts",
+    "apps/player/src/session/cloud/codec.ts",
+    "apps/player/src/session/cloud/codec.worker.ts",
+    "apps/player/src/session/cloud/codecCache.ts",
+    "apps/player/src/session/cloud/codecCompression.test.ts",
+    "apps/player/src/session/cloud/codecCompression.ts",
+    "apps/player/src/session/cloud/codecEvidence.test.ts",
+    "apps/player/src/session/cloud/codecEvidence.ts",
+    "apps/player/src/session/cloud/codecEvidencePages.test.ts",
+    "apps/player/src/session/cloud/codecEvidencePages.ts",
+    "apps/player/src/session/cloud/codecGoldenVectors.json",
+    "apps/player/src/session/cloud/codecGoldenVectors.sql",
+    "apps/player/src/session/cloud/codecJson.ts",
+    "apps/player/src/session/cloud/codecOwnership.ts",
+    "apps/player/src/session/cloud/codecTasks.ts",
+    "apps/player/src/session/cloud/codecTestSupport.ts",
+    "apps/player/src/session/cloud/codecWire.ts",
+    "apps/player/src/session/cloud/codecWorker.test.ts",
+    "apps/player/src/session/cloud/codecWorker.ts",
+    "apps/player/src/session/cloud/codecWorkerMessageTestSupport.ts",
+    "apps/player/src/session/cloud/codecWorkerNative.test.ts",
+    "apps/player/src/session/cloud/codecWorkerNativeTestSupport.ts",
+    "apps/player/src/session/cloud/codecWorkerQueue.test.ts",
+    "apps/player/src/session/cloud/codecWorkerTestSupport.ts",
+    "apps/player/src/session/cloud/coordinator.test.ts",
+    "apps/player/src/session/cloud/coordinator.ts",
+    "apps/player/src/session/cloud/copySelection.ts",
+    "apps/player/src/session/cloud/diagnosticWorkloadPerformance.test.ts",
+    "apps/player/src/session/cloud/documentReopen.test.ts",
+    "apps/player/src/session/cloud/entryLarge.test.tsx",
+    "apps/player/src/session/cloud/entryPerformanceTestSupport.ts",
+    "apps/player/src/session/cloud/entryPreparation.test.ts",
+    "apps/player/src/session/cloud/entryStorage.ts",
+    "apps/player/src/session/cloud/entryTimings.test.ts",
+    "apps/player/src/session/cloud/entryTimings.ts",
+    "apps/player/src/session/cloud/fakeTransport.deleteCampaign.test.ts",
+    "apps/player/src/session/cloud/fakeTransport.ts",
+    "apps/player/src/session/cloud/gameSession.test.tsx",
+    "apps/player/src/session/cloud/gameSession.ts",
+    "apps/player/src/session/cloud/importCampaigns.test.ts",
+    "apps/player/src/session/cloud/importCampaigns.ts",
+    "apps/player/src/session/cloud/index.ts",
+    "apps/player/src/session/cloud/journalCodec.ts",
+    "apps/player/src/session/cloud/journalWarm.test.ts",
+    "apps/player/src/session/cloud/journalWarm.ts",
+    "apps/player/src/session/cloud/lifecycle.test.ts",
+    "apps/player/src/session/cloud/nativeOpeningProof.test.ts",
+    "apps/player/src/session/cloud/networkRequestBudget.ts",
+    "apps/player/src/session/cloud/olderCopies.ts",
+    "apps/player/src/session/cloud/openingDeadline.test.tsx",
+    "apps/player/src/session/cloud/openingDiagnostic.test.ts",
+    "apps/player/src/session/cloud/openingDiagnostic.ts",
+    "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+    "apps/player/src/session/cloud/operationalBuildController.test.tsx",
+    "apps/player/src/session/cloud/operationalController.test.tsx",
+    "apps/player/src/session/cloud/operationalControllerTestSupport.tsx",
+    "apps/player/src/session/cloud/operationalEngine.nativeWorker.testSupport.mjs",
+    "apps/player/src/session/cloud/operationalEngine.worker.ts",
+    "apps/player/src/session/cloud/operationalEngineClient.test.ts",
+    "apps/player/src/session/cloud/operationalEngineClient.ts",
+    "apps/player/src/session/cloud/operationalEngineDev.test.ts",
+    "apps/player/src/session/cloud/operationalEngineDifferential.test.ts",
+    "apps/player/src/session/cloud/operationalEngineDispatch.test.ts",
+    "apps/player/src/session/cloud/operationalEngineDispatch.ts",
+    "apps/player/src/session/cloud/operationalEngineNativeTestSupport.ts",
+    "apps/player/src/session/cloud/operationalEnginePerformance.test.ts",
+    "apps/player/src/session/cloud/operationalEngineProcessor.test.ts",
+    "apps/player/src/session/cloud/operationalEngineProcessor.ts",
+    "apps/player/src/session/cloud/operationalEngineProtocol.ts",
+    "apps/player/src/session/cloud/operationalEvidenceMirror.test.ts",
+    "apps/player/src/session/cloud/operationalEvidenceMirror.ts",
+    "apps/player/src/session/cloud/operationalFreeze.test.ts",
+    "apps/player/src/session/cloud/operationalFreeze.ts",
+    "apps/player/src/session/cloud/operationalSession.test.ts",
+    "apps/player/src/session/cloud/operationalSessionEngine.ts",
+    "apps/player/src/session/cloud/operationalSessionPerformance.test.tsx",
+    "apps/player/src/session/cloud/operationalSessionTestSupport.ts",
+    "apps/player/src/session/cloud/operationalSessionView.ts",
+    "apps/player/src/session/cloud/operationalStatePatch.test.ts",
+    "apps/player/src/session/cloud/operationalStatePatch.ts",
+    "apps/player/src/session/cloud/operationalViewProjection.ts",
+    "apps/player/src/session/cloud/orderedSessionWork.ts",
+    "apps/player/src/session/cloud/prepareSnapshotTick.test.ts",
+    "apps/player/src/session/cloud/prepareSnapshotTick.ts",
+    "apps/player/src/session/cloud/priorRecovery.test.ts",
+    "apps/player/src/session/cloud/progress.ts",
+    "apps/player/src/session/cloud/reopenSelection.test.ts",
+    "apps/player/src/session/cloud/reopenSelection.ts",
+    "apps/player/src/session/cloud/requestLoad.test.ts",
+    "apps/player/src/session/cloud/retainedCopies.ts",
+    "apps/player/src/session/cloud/savePolicy.test.ts",
+    "apps/player/src/session/cloud/scopeData.ts",
+    "apps/player/src/session/cloud/separateCampaign.test.ts",
+    "apps/player/src/session/cloud/snapshotCodec.test.ts",
+    "apps/player/src/session/cloud/snapshotCodec.ts",
+    "apps/player/src/session/cloud/snapshotConceptCompatibility.test.ts",
+    "apps/player/src/session/cloud/snapshotLearning.ts",
+    "apps/player/src/session/cloud/snapshotMeasurements.test.ts",
+    "apps/player/src/session/cloud/snapshotReopenOperations.test.ts",
+    "apps/player/src/session/cloud/snapshotRpcRoundTrip.test.ts",
+    "apps/player/src/session/cloud/snapshotSaves.test.ts",
+    "apps/player/src/session/cloud/snapshotSqlContract.test.ts",
+    "apps/player/src/session/cloud/snapshotTailBounds.test.ts",
+    "apps/player/src/session/cloud/storageGrowth.test.ts",
+    "apps/player/src/session/cloud/storageRecovery.test.ts",
+    "apps/player/src/session/cloud/storageRetry.ts",
+    "apps/player/src/session/cloud/supabaseTransport.deleteCampaign.test.ts",
+    "apps/player/src/session/cloud/supabaseTransport.test.ts",
+    "apps/player/src/session/cloud/supabaseTransport.ts",
+    "apps/player/src/session/cloud/syncFixtureSupport.ts",
+    "apps/player/src/session/cloud/syncTestSupport.ts",
+    "apps/player/src/session/cloud/tickPerformance.test.ts",
+    "apps/player/src/session/cloud/tickPerformanceTestSupport.ts",
+    "apps/player/src/session/cloud/transport.ts",
+    "apps/player/src/session/cloud/uploadRaces.test.ts",
+    "apps/player/src/session/cloud/verifiedCopyCache.test.ts",
+    "apps/player/src/session/cloud/verifiedCopyCache.ts",
+    "apps/player/src/session/cloud/verifiedEvidenceText.test.ts",
+    "apps/player/src/session/cloud/verifiedEvidenceText.ts",
+    "apps/player/src/session/cloud/watchdogs.test.ts",
+    "apps/player/src/session/cloud/writerIdentity.test.ts",
+    "apps/player/src/session/cloud/writerIdentity.ts"
+  ],
+  "relatedN3TestChanges": [
+    {
+      "path": "packages/clinical-content/src/question-new-n3-round2-20261105.test.ts",
+      "beforeSha256": "45b30ab75952589b400cd7cadf4847c24628acd9ca43fdd9ca0c28529eeef48f",
+      "afterSha256": "dcf877d760c92604660921a23dd550bebd2b52307e7f1498b8623afb77bfcb55"
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n3-round3-20261105.test.ts",
+      "beforeSha256": "cf12df76f5756edfb642475a28368b157d2d3abea7c09ebd53304e6012dcc72a",
+      "afterSha256": "dc57e620b6fc636c2da12c40078b88eca62fbe087c95a3688f7142601fb15056"
+    }
+  ],
+  "frozenRound3Files": [
+    {
+      "path": "docs/research/question-flags2-round3-20261105.json",
+      "sha256": "cca9837cc5a2d53d32b6ee4bfb27cde9b12559d98cfdb7af5ffd901c7bef5c83"
+    },
+    {
+      "path": "docs/research/sources-question-flags2-round3-20261105.json",
+      "sha256": "33962f1a22ac4e60afdcc704fb4cfcaf0c58aa38096608007ef61a347be2d76c"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-round3-20261105-data.ts",
+      "sha256": "e4e4a94d23ffdf04f37e9130edc1e27b6698c481232eba56aac31e10a2119af3"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-round3-20261105.ts",
+      "sha256": "091c23056f38aab98a78b193a6d47f1cf4faf6e449844be6bf68374c1e370110"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-round3-evidence-20261105.ts",
+      "sha256": "d0494466d8dcfd701c614ea7142ca2f1bed0e62c07da349af32624738f3e2b3a"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-round3-retained-input-20261105.ts",
+      "sha256": "4521f3ceb55e980322b935e219b2daec42dddcf2ad83009c6f7ddd03f53177d8"
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-flags2-round3-before-20261105.json",
+      "sha256": "b76219ada8e1f4c798a28d7de99fea488449fd7011d7d232c17f3aea95acbf8c"
+    }
+  ],
+  "existingChanges": [
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.ts",
+      "beforeSha256": "e29038894c101d0618970fb10c4367919e24a773725a8dd16ee781f4b82e7a3f",
+      "afterSha256": "1ac690d5dfb7773becbfd78f998f0d5269f59289ba555f0c28e5059727285a19"
+    },
+    {
+      "path": "packages/clinical-content/src/question-ship-projection.ts",
+      "beforeSha256": "099b803a240828b1a432e2e13d8bc6ff15fad2b61a38e4ef026962b98da8a033",
+      "afterSha256": "f21b1a1c7521c3706ff2fd7513fd4fe1e22db4f199a9fc8861a1fb1ea57f4aac"
+    },
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest-validation.ts",
+      "beforeSha256": "aa6d130a159f98cc98037749911f33b554bcc2fbd90c6467608754b09e3d5517",
+      "afterSha256": "b5b4a869e64ae70eca8a024bd36b0886f13f667e005a0adcfc7bce3c72c73a11"
+    },
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+      "beforeSha256": "75b53e39ac9fc7af8d101aa995a89f8bc59c30d515cfdd50b6b12000c13251cc",
+      "afterSha256": "b7ced2972ffdd31c96f1e2c30c329d17f2ddbca792d73e37702f9f53a6438c6a"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-round3-20261105.test.ts",
+      "beforeSha256": "1b5d002d5527fb99e673781fb8ba26bbe033e9df782beb732c2d99a75a931ea7",
+      "afterSha256": "f3d614eda5cb2728b08143d851dc72672d82a56630649ba313e7e7b336be420b"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-round2-20261105.test.ts",
+      "beforeSha256": "12c61884c91d7cc32a3e41d4b81f4d081c91691058b2edbb47c81f3046294170",
+      "afterSha256": "a5ccc257a25ba99a52e0a6ae771bba060912e4f64aec1500926c30a31fdfe2c3"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-20261105.test.ts",
+      "beforeSha256": "0f4cf7fd88191e81c974757479d20bda4a910e33d26a7fdf7fbcdee83da246ef",
+      "afterSha256": "11861280eb2cdeaa87d70854d7f6235d29405951dc52acdbe1e627bb9b3b7df9"
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "beforeSha256": "c32b49d34012d3fe7d137def1a12d7945cd78a009569a953b8f797fac2e16e2f",
+      "afterSha256": "4e9ee3b1e50b4d33c0b2569254eda75fc60c57f3c91be8f39c51a898d797804c"
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "beforeSha256": "6ea9bf16cbea99857b8381918d6e7ecc247c14349626da51597dd3930f438bba",
+      "afterSha256": "ee124fd210f55353e3568e3a701248b742fa09ed2f1af9c3dc06fc302f329905"
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "beforeSha256": "cc88021bf4693cf2bf0224faeb8507f6b20c2d5f6fc3a173af13fdc652cb0d4a",
+      "afterSha256": "7f2d9129e930cd1654dc71415a5b7c514341e13c8d994edc41214d94c65f4e54"
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+      "beforeSha256": "348794ee234dbff9a80a43e20d21fe141ecd7476719c93a270a0a7ac1f6f6bca",
+      "afterSha256": "038ffe79733b2defa18e94b1f6f48ad2033b3bab319187802f46e65861589cbb"
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "beforeSha256": "5555c3a8b0f57197e469d670e7fb27ae2da34970e2b3cc29f737ef42e1e43575",
+      "afterSha256": "0e692d44de8c72f1d2dd89a18debc05e78fd4da679b2e5b8b15964ef5e9198c1"
+    },
+    {
+      "path": "apps/player/src/questionShipSaveCompatibility.test.ts",
+      "beforeSha256": "ef91e35c062eea64057ca790b903fd1b51032a65c7303293478795823b3b590e",
+      "afterSha256": "491ea06eb684602c6c08449e1bdc70a0c6fb0d619b5a72221554712a450e7233"
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n3-round2-20261105.test.ts",
+      "beforeSha256": "45b30ab75952589b400cd7cadf4847c24628acd9ca43fdd9ca0c28529eeef48f",
+      "afterSha256": "dcf877d760c92604660921a23dd550bebd2b52307e7f1498b8623afb77bfcb55"
+    },
+    {
+      "path": "packages/clinical-content/src/question-new-n3-round3-20261105.test.ts",
+      "beforeSha256": "cf12df76f5756edfb642475a28368b157d2d3abea7c09ebd53304e6012dcc72a",
+      "afterSha256": "dc57e620b6fc636c2da12c40078b88eca62fbe087c95a3688f7142601fb15056"
+    },
+    {
+      "path": "packages/clinical-content/src/question-bank-batch2b-acceptance-20261105.test.ts",
+      "beforeSha256": "113771968cfd81eb317369e3d4bc14ea603b2d7e8e046ed02921907ca14ad336",
+      "afterSha256": "e3d3dd3598e16b2788eeabd8f83b348d6cb510850dc667eb1450f01c5a19640a"
+    },
+    {
+      "path": "packages/game-domain/tests/board-expansion-batch.test.ts",
+      "beforeSha256": "34da7d250a606131f81f279c792b1d346ea1ac1bff32e0777ed0f3f3ef735354",
+      "afterSha256": "8fa6261b46c985cf8fd48cb7c523e361d09f0f29481e8e9e19306c789609dffa"
+    }
+  ],
+  "changedRuntimeInputs": [
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.ts",
+      "beforeSha256": "e29038894c101d0618970fb10c4367919e24a773725a8dd16ee781f4b82e7a3f",
+      "afterSha256": "1ac690d5dfb7773becbfd78f998f0d5269f59289ba555f0c28e5059727285a19"
+    },
+    {
+      "path": "packages/clinical-content/src/question-ship-projection.ts",
+      "beforeSha256": "099b803a240828b1a432e2e13d8bc6ff15fad2b61a38e4ef026962b98da8a033",
+      "afterSha256": "f21b1a1c7521c3706ff2fd7513fd4fe1e22db4f199a9fc8861a1fb1ea57f4aac"
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "beforeSha256": "6ea9bf16cbea99857b8381918d6e7ecc247c14349626da51597dd3930f438bba",
+      "afterSha256": "ee124fd210f55353e3568e3a701248b742fa09ed2f1af9c3dc06fc302f329905"
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "beforeSha256": "c32b49d34012d3fe7d137def1a12d7945cd78a009569a953b8f797fac2e16e2f",
+      "afterSha256": "4e9ee3b1e50b4d33c0b2569254eda75fc60c57f3c91be8f39c51a898d797804c"
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "beforeSha256": "cc88021bf4693cf2bf0224faeb8507f6b20c2d5f6fc3a173af13fdc652cb0d4a",
+      "afterSha256": "7f2d9129e930cd1654dc71415a5b7c514341e13c8d994edc41214d94c65f4e54"
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "beforeSha256": "5555c3a8b0f57197e469d670e7fb27ae2da34970e2b3cc29f737ef42e1e43575",
+      "afterSha256": "0e692d44de8c72f1d2dd89a18debc05e78fd4da679b2e5b8b15964ef5e9198c1"
+    }
+  ],
+  "newRuntimeInputs": [
+    {
+      "path": "packages/clinical-content/src/question-ship-case-replacements.ts",
+      "sha256": "47825c6e6b01e386b84151e0cec3bdf5c473c6c4301cb6f6ad26f789248097d8"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags2-whole-case-accepted-20261105.ts",
+      "sha256": "5944767b8a5e02b5c5217af7735061a05ec4b582e35407f4535af2e8f4983ecf"
+    }
+  ],
+  "levelFive": {
+    "evidencePath": "tools/qa/level-five-integration-results-20261012.json",
+    "evidenceSha256": "dead50020355be0bc328ff4557cd40199763097a8aa01baa3f8944d22492a8d5",
+    "rebound": false,
+    "changedExistingBoundInputs": [
+      {
+        "path": "packages/clinical-content/src/index.ts",
+        "beforeSha256": "6ea9bf16cbea99857b8381918d6e7ecc247c14349626da51597dd3930f438bba",
+        "afterSha256": "ee124fd210f55353e3568e3a701248b742fa09ed2f1af9c3dc06fc302f329905",
+        "recordedEvidenceSha256": "a57ffcec34d75e2e337790f1ac0d71e4bfdc8f79d53cdb28596e00ead60413e4"
+      },
+      {
+        "path": "packages/clinical-content/src/synthetic-content.ts",
+        "beforeSha256": "c32b49d34012d3fe7d137def1a12d7945cd78a009569a953b8f797fac2e16e2f",
+        "afterSha256": "4e9ee3b1e50b4d33c0b2569254eda75fc60c57f3c91be8f39c51a898d797804c",
+        "recordedEvidenceSha256": "6d9870d53383af7da6ee7547ba702410a2545882876faa1696c0e1217fae311c"
+      },
+      {
+        "path": "packages/clinical-content/src/answer-choice-timing.ts",
+        "beforeSha256": "cc88021bf4693cf2bf0224faeb8507f6b20c2d5f6fc3a173af13fdc652cb0d4a",
+        "afterSha256": "7f2d9129e930cd1654dc71415a5b7c514341e13c8d994edc41214d94c65f4e54",
+        "recordedEvidenceSha256": "7db1b1253c7d3064adb0602360925c0739bb65c719603507c3fa09a6732ba245"
+      },
+      {
+        "path": "packages/game-domain/src/test-choice-orders.ts",
+        "beforeSha256": "5555c3a8b0f57197e469d670e7fb27ae2da34970e2b3cc29f737ef42e1e43575",
+        "afterSha256": "0e692d44de8c72f1d2dd89a18debc05e78fd4da679b2e5b8b15964ef5e9198c1",
+        "recordedEvidenceSha256": "522c3fbd3b3503f4b6d74f38e7dbd994b98727a3037b0374f86e58dbf5a41639"
+      }
+    ],
+    "changedRuntimeFilesNotCurrentlyListed": [
+      "packages/clinical-content/src/question-ship-manifest.ts",
+      "packages/clinical-content/src/question-ship-projection.ts"
+    ],
+    "newRuntimeDependenciesNotCurrentlyListed": [
+      "packages/clinical-content/src/question-ship-case-replacements.ts",
+      "packages/clinical-content/src/question-flags2-whole-case-accepted-20261105.ts"
+    ]
+  },
+  "testOnlyNewFiles": [
+    "packages/clinical-content/src/question-ship-case-replacements-test-support.ts",
+    "packages/clinical-content/src/question-ship-case-replacements.test.ts"
+  ],
+  "noDomainAdmissionCheckAdded": true,
+  "noSaveOrJournalFormatChanged": true,
+  "noNewClinicalAuthoring": true
+}

@@ -1,0 +1,41 @@
+[
+  {
+    "id": "question.vascular-venous-lymphatic-access.pe-imaging-contrast-reaction.20261111.v1",
+    "nodeId": "node.vascular-venous-lymphatic-access.pe-imaging-contrast-reaction.20261111.v1",
+    "title": "PE imaging after a severe iodinated-contrast reaction: standalone salvage",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The task, 'Which study best fits that diagnostic point in Adrian Carter's outside-hospital record?', leaves the clinical objective implicit. 'That diagnostic point' depends on another display field, and 'best fits' does not explicitly request the next investigation of his acute postoperative chest symptoms. The combined presentation is understandable, but the separated task does not satisfy the owner's complete-task requirement.",
+      "The retrospective clinic review is coherent: the presentation identifies Adrian, his age and sex, the outside admission, and the relevant diagnostic time point. There is no missing companion result, current update or exhibit needed to understand this single node."
+    ],
+    "cues": [
+      {
+        "phrase": "Prior iodinated contrast caused bronchospasm and hypotension requiring epinephrine. / CT pulmonary angiography with iodinated contrast",
+        "why": "The exact substance is repeated in one distractor after an obviously serious adverse event. A reader can reject that option through ordinary harm avoidance without knowing PE imaging. The reaction history is decision-critical and should remain; the problem is that this option set lets it perform nearly all the discrimination."
+      },
+      {
+        "phrase": "breathlessness / Ventilation-perfusion lung imaging / Bilateral proximal-leg venous duplex",
+        "why": "After the contrast option is removed, ordinary body-site matching favors 'lung' over 'leg'. Knowing that leg duplex can contribute to a PE workup is not necessary to reach the key. This is a semantic shortcut rather than an exact-word key overlap."
+      }
+    ],
+    "fairness": [
+      "Among the offered choices, V/Q lung imaging is a defensible best answer for the represented pulmonary presentation, maintained circulation, clear chest radiograph and prior severe iodinated-contrast reaction. I identify no confident clinical inaccuracy in the candidate key or explanation. This is an offline review without new source verification, not clinical approval; the draft remains needs_clinician_review.",
+      "CTPA is a meaningful standard-test competitor, but the stated reaction makes straightforward repeat exposure less appropriate here. The explanation appropriately discusses this represented situation; a severe prior reaction should not be generalized into an absolute claim that contrast can never be used.",
+      "Proximal-leg duplex is not medically absurd: a positive result can establish venous thromboembolism and affect management. However, no leg findings or failed pulmonary investigation make it the preferred first study in this presentation, and a negative result would not exclude PE. The broad wording 'best fits' unnecessarily obscures the intended pulmonary diagnostic objective; this is a wording weakness, not a finding that duplex is an equally good key in the supplied case.",
+      "PE diagnostic testing and contrast constraints are high-yield general-surgery examination concepts. Difficulty is predicted easy for residents, not measured: the familiar severe-reaction-to-V/Q association and weak surviving competitor dominate. Recognizing the postoperative pulmonary syndrome and then recalling the alternative test are nominal steps, but the option shortcut bypasses the syndrome interpretation. The current item therefore does not meet the owner's requirement for two consequential reasoning steps.",
+      "The normal radiograph supports the intended test choice, but the options do not require the learner to use that observation to resolve a close competing plan. Deleting it would likely leave the same answer accessible through the contrast/body-site shortcut. Retain necessary clinical observations while improving the competing decision.",
+      "All three choices are concrete investigations with reasonably parallel labels. The key is not uniquely long, qualified or comprehensive; no convergence, rhetorical absolute, pre-answer teaching sentence or explicit diagnosis label independently gives it away. The post-answer explanation is not counted as a pre-answer cue.",
+      "The afterCase contains one decision node. No preceding feedback rehearses its answer, no later PE confirmation is disclosed, and no subsequent part needs continuity review. Only this status-salvage candidate is assessed; kept-unchanged, retired, parked and held material, including the excluded companion, receives no verdict here. Runtime timing and rendering are outside this candidate-text review."
+    ],
+    "suggestions": [
+      "Make the task explicit without naming the diagnosis to be inferred: for example, 'Which study should be obtained next to investigate Adrian Carter's sudden postoperative pleuritic pain and breathlessness during the outside admission?'",
+      "Retain the observed severe reaction, clear chest radiograph and historical time point. Do not remove necessary safety information to manufacture difficulty or replace the observed reaction with a vague allergy label.",
+      "For the requested resident difficulty, rebuild the decision around a supported unresolved PE workup, such as discordance or a nondiagnostic result whose technical adequacy must be interpreted before selecting the next action. Supply the actual findings and relevant constraints, and compare three credible plans at the same decision stage. Identify the observation that makes the closest alternative wrong and show that changing that observation would change the preferred action; merely adding a negative leg study or more history to the existing options would not establish a second consequential step.",
+      "If the exact question is retained for its useful foundational contrast-constraint lesson, obtain explicit acceptance of that easy instructional role instead of describing this version as a difficult two-step resident item. This review does not alter any previously frozen version.",
+      "Add a short post-answer explanation of the closest alternative: a positive proximal-leg duplex can establish VTE, whereas a negative study cannot exclude PE. The current explanation addresses CTPA but omits why the remaining offered study is less appropriate. Any revised clinical wording still requires evidence mapping and Melissa Rowland's exact-version clinical sign-off."
+    ]
+  }
+]

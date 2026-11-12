@@ -1,0 +1,2254 @@
+{
+  "checkedOn": "2026-11-11",
+  "requested": 43,
+  "accepted": 26,
+  "cases": 20,
+  "skipped": 17,
+  "stageAdjustments": [
+    {
+      "caseId": "case.vascular-aorta.screening-review.v2",
+      "before": 0,
+      "after": 1,
+      "reason": "Preserve the existing registered meaning's facility-stage floor."
+    }
+  ],
+  "items": [
+    {
+      "suffix": "aortic-repair-sequence.20261111.v1",
+      "nodeId": "node.trauma-thoracic.aortic-repair-sequence.20261111.v1",
+      "questionVariantId": "question.trauma-thoracic.aortic-repair-sequence.20261111.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-trauma-thoracic-review2-20261111.json",
+        "record": {
+          "id": "question.trauma-thoracic.aortic-repair-sequence.20261111.v1",
+          "nodeId": "node.trauma-thoracic.aortic-repair-sequence.20261111.v1",
+          "title": "Sequence repair of a stable aortic injury",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Treating the urgent expanding cranial hematoma before TEVAR is the defensible best sequence under the supplied stable, non-extravasating grade 3 aortic course. Medical surveillance alone does not adequately address the stated repair-requiring lesion.",
+            "Two consequential judgments remain: distinguish a repair indication from an immediate aortic emergency, then prioritize the competing urgent intracranial operation. The urgent neurosurgical indication is necessary decision information, not an unfair word cue.",
+            "The task asks for sequence, not anticoagulation or exact blood-pressure targets. It does not require guessing omitted quantitative thresholds or timing intervals.",
+            "The completed aortic diagnosis, suitability for TEVAR, perfusion and competing injury are all restated, so the second node stands alone. Earlier feedback about CT acquisition does not rehearse the sequence.",
+            "No confident clinical inaccuracy identified. The explanation's attribution to current SVS guidance has not been independently verified in this network-free review."
+          ],
+          "suggestions": [
+            "Keep stability and the urgent associated-injury indication explicit. Avoid adding unsourced exact delay intervals or blood-pressure targets.",
+            "Preserve this exact version unless a separately authorized correction is needed; its inclusion here does not grant clinical sign-off."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.trauma-thoracic.aortic-course.20261111.v1",
+          "sha256": "2481a7da483ab1091e859390ef69a45f1fa41afae93ebc2add76a5d2fde626ff",
+          "unlistedSiblingIds": [
+            "node.trauma-thoracic.aortic-acquisition.20261111.v2"
+          ]
+        },
+        {
+          "caseId": "case.trauma-thoracic.aortic-course.20261111.v1",
+          "sha256": "3afe615952141606f829555f4e32efc7536585bcfc0b6fdc0be65d52d2a257c9",
+          "unlistedSiblingIds": [
+            "node.trauma-thoracic.aortic-acquisition.20261111.v1"
+          ]
+        }
+      ],
+      "topic": "trauma-thoracic",
+      "status": "skipped",
+      "caseId": "case.trauma-thoracic.aortic-course.20261111.v1",
+      "reason": "Reviewed case includes scored nodes outside the manager PASS list.",
+      "unlistedSiblingIds": [
+        "node.trauma-thoracic.aortic-acquisition.20261111.v2",
+        "node.trauma-thoracic.aortic-acquisition.20261111.v1"
+      ]
+    },
+    {
+      "suffix": "bci-normalpair-other-admission.20261111.v1",
+      "nodeId": "node.trauma-thoracic.bci-normalpair-other-admission.20261111.v1",
+      "questionVariantId": "question.trauma-thoracic.bci-normalpair-other-admission.20261111.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-trauma-thoracic-review2-20261111.json",
+        "record": {
+          "id": "question.trauma-thoracic.bci-normalpair-other-admission.20261111.v1",
+          "nodeId": "node.trauma-thoracic.bci-normalpair-other-admission.20261111.v1",
+          "title": "Separate cardiac rule-out from other admission needs",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Trauma-ward admission for respiratory care is best among the offered dispositions. Normal completed cardiac screening does not resolve persistent oxygen need, inadequate inspiration or secretion clearance despite treatment.",
+            "Two consequential judgments are tested: remove a BCI-specific reason for telemetry, then independently assess whether the noncardiac injuries still require admission. Discharge and cardiac-observation admission represent different credible errors.",
+            "The respiratory wording overlaps the respiratory-care option, but the observations are essential to disposition; they are not a diagnosis label or a nonmedical giveaway. The normal cardiac pair remains necessary to rank telemetry.",
+            "This standalone node contains the treatment response needed to decide disposition. No confident clinical inaccuracy identified; the record does not establish an additional indication for a higher level of care."
+          ],
+          "suggestions": [
+            "Preserve the treatment-response observations and the distinction between cardiac clearance and discharge readiness.",
+            "Optional tightening: remove the current-update sentence announcing that the disposition note is being opened; the exhibit already supplies the record."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.trauma-thoracic.cardiac-disposition.20261111.v1",
+          "sha256": "176e36cb86275418000dbd43621075f49a8ab8e24378698f473ed6f413170398",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "trauma-thoracic",
+      "status": "accepted",
+      "caseId": "case.trauma-thoracic.cardiac-disposition.20261111.v1",
+      "reason": "Complete PASS-only case admitted in the existing clinic.",
+      "unlistedSiblingIds": []
+    },
+    {
+      "suffix": "bci-persistent-arrhythmia.20261111.v2",
+      "nodeId": "node.trauma-thoracic.bci-persistent-arrhythmia.20261111.v2",
+      "questionVariantId": "question.trauma-thoracic.bci-persistent-arrhythmia.20261111.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-trauma-thoracic-review2-20261111.json",
+        "record": {
+          "id": "question.trauma-thoracic.bci-persistent-arrhythmia.20261111.v2",
+          "nodeId": "node.trauma-thoracic.bci-persistent-arrhythmia.20261111.v2",
+          "title": "Resolve an inadequate echocardiographic assessment",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "TEE is the defensible best next imaging choice for an unresolved structural/function assessment after repeated nondiagnostic transthoracic views in this course. CT and MRI are less appropriate substitutes for the immediate question as presented.",
+            "The learner must connect the new rhythm/perfusion change to an unresolved cardiac assessment, then account for the actual acoustic-window failure when choosing the next modality. The failed examination is necessary information, not an unfair instruction to select TEE.",
+            "The chronology follows the initially stable cardiac assessment coherently. The update supplies the new indication, completed investigation and inadequacy, so the decision also stands alone with the common presentation.",
+            "No confident clinical inaccuracy identified. The final explanation sentence should be read as a conditional about this imaging question, not as permission to ignore persistent arrhythmia after any normal TTE."
+          ],
+          "suggestions": [
+            "Retain the actual failed visualization findings and the new course. Keep the explanation limited to the imaging decision; ongoing rhythm management is outside this task.",
+            "If tightening feedback, replace the broad final counterfactual with a statement that further imaging depends on whether an adequate study resolves the clinical question."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.trauma-thoracic.cardiac-course.20261111.v1",
+          "sha256": "0b5ae6debc97a0e9a40d5fd8af0caf90feed935f8d8ef2f5e1fe0dd9c625ee57",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "trauma-thoracic",
+      "status": "accepted",
+      "caseId": "case.trauma-thoracic.cardiac-course.20261111.v1",
+      "reason": "Complete PASS-only case admitted in the existing clinic.",
+      "unlistedSiblingIds": []
+    },
+    {
+      "suffix": "bci-selective-imaging.20261111.v2",
+      "nodeId": "node.trauma-thoracic.bci-selective-imaging.20261111.v2",
+      "questionVariantId": "question.trauma-thoracic.bci-selective-imaging.20261111.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-trauma-thoracic-review2-20261111.json",
+        "record": {
+          "id": "question.trauma-thoracic.bci-selective-imaging.20261111.v2",
+          "nodeId": "node.trauma-thoracic.bci-selective-imaging.20261111.v2",
+          "title": "Select cardiac assessment after an abnormal screen",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Monitored reassessment without immediate imaging is the best of these plans: the conduction finding is unchanged from before injury, and the current course does not supply an additional structural or ischemic imaging indication. The elevated troponin is not dismissed.",
+            "The task now compares additional imaging while telemetry and serial biomarkers are shared care; it no longer falsely treats those measures as mutually exclusive with echocardiography. TTE could become appropriate with a changed clinical question, but that does not make routine immediate TTE the best answer here.",
+            "Two consequential judgments remain: distinguish an old ECG abnormality from the new biomarker finding, then apply current physiology to the imaging decision. No confident clinical inaccuracy identified.",
+            "The subsequent arrhythmia and nondiagnostic TTE introduce new information. This explanation does not name TEE or give away the later modality choice.",
+            "Scope: this report reviews all 13 active candidate nodes, including four pass-preserved authored candidates; it does not inherit their previous verdicts. The five parked nodes, 19 historical inventory records, two existing holds and three unkeyed slots are noted but not graded. No external source verification was performed. PASS is an editorial judgment, not Melissa Rowland's clinical approval."
+          ],
+          "suggestions": [
+            "Keep the immediate-imaging scope and shared monitoring explicit. Do not remove the baseline ECG or stability observations to manufacture difficulty.",
+            "Optional tightening: shorten the presentation's record-opening narration; it contributes no clinical discriminator."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.trauma-thoracic.cardiac-course.20261111.v1",
+          "sha256": "0b5ae6debc97a0e9a40d5fd8af0caf90feed935f8d8ef2f5e1fe0dd9c625ee57",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "trauma-thoracic",
+      "status": "accepted",
+      "caseId": "case.trauma-thoracic.cardiac-course.20261111.v1",
+      "reason": "Complete PASS-only case admitted in the existing clinic.",
+      "unlistedSiblingIds": []
+    },
+    {
+      "suffix": "chest-drain-organ-trajectory.20261111.v1",
+      "nodeId": "node.trauma-thoracic.chest-drain-organ-trajectory.20261111.v1",
+      "questionVariantId": "question.trauma-thoracic.chest-drain-organ-trajectory.20261111.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-trauma-thoracic-review2-20261111.json",
+        "record": {
+          "id": "question.trauma-thoracic.chest-drain-organ-trajectory.20261111.v1",
+          "nodeId": "node.trauma-thoracic.chest-drain-organ-trajectory.20261111.v1",
+          "title": "Handle a drain with an unintended organ trajectory",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Retaining the tube while obtaining contrast CT mapping is the best next plan for this stable patient with an organ-traversing catheter and incompletely assessed adjacent vessels. Blind removal or retraction before defining the injury can worsen bleeding.",
+            "The task requires interpreting the abnormal trajectory as more than poor pleural drainage, then using hemodynamic stability and incomplete vascular assessment to select controlled investigation before manipulation.",
+            "The ultrasound finding is appropriately supplied for a management question. All three options pair a tube action with an assessment; no option-length, convergence or generic-safe-plan cue uniquely identifies the key.",
+            "The standalone update supplies the essential acquired finding and perfusion state. The explanation appropriately includes surgical-team involvement rather than portraying CT as definitive management. No confident clinical inaccuracy identified."
+          ],
+          "suggestions": [
+            "Retain stability and incomplete vascular assessment. Do not add an unsupported quantitative bleeding threshold or imply that every misplaced tube must always remain indefinitely.",
+            "Optional tightening: remove the sentence announcing the reassessment record."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.trauma-thoracic.drain-complication.20261111.v1",
+          "sha256": "640a28bad61b18dfe00e81a907d196ef4f6a1cd305ae8732cb37380947c55f30",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "trauma-thoracic",
+      "status": "accepted",
+      "caseId": "case.trauma-thoracic.drain-complication.20261111.v1",
+      "reason": "Complete PASS-only case admitted in the existing clinic.",
+      "unlistedSiblingIds": []
+    },
+    {
+      "suffix": "retained-hemothorax.20261111.v2",
+      "nodeId": "node.trauma-thoracic.retained-hemothorax.20261111.v2",
+      "questionVariantId": "question.trauma-thoracic.retained-hemothorax.20261111.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-trauma-thoracic-review2-20261111.json",
+        "record": {
+          "id": "question.trauma-thoracic.retained-hemothorax.20261111.v2",
+          "nodeId": "node.trauma-thoracic.retained-hemothorax.20261111.v2",
+          "title": "Treat retained blood after hemorrhage control",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Early VATS evacuation is a defensible best answer for substantial loculated traumatic clot with incomplete expansion in a recovered, spontaneously breathing patient. An additional drain addresses free fluid less well than the demonstrated clot; fibrinolysis remains a clinically plausible comparator.",
+            "The learner must distinguish a patent tube draining fluid from adequate evacuation of organized pleural contents, then reassess treatment in the now-stable postoperative state rather than reuse the earlier unstable-bleeding approach.",
+            "The explanation appropriately states a conditional recommendation and preserves fibrinolysis as a selected alternative. The specific comparison after a recent thoracotomy still needs clinician confirmation; this offline review does not independently verify that subgroup or current guideline wording.",
+            "The update independently supplies the prior operation, achieved hemostasis, current physiology and CT findings. It follows the preceding node coherently and is not answered by the earlier explanation. No confident clinical inaccuracy identified."
+          ],
+          "suggestions": [
+            "Retain the conditional recommendation and patient-specific operative-risk framing; do not turn VATS into an absolute rule.",
+            "The renal-function sentence does not distinguish the offered treatments in the visible case; remove it unless a concrete relevant risk is actually being tested.",
+            "Confirm the postoperative application with Melissa during clinical sign-off rather than treating this editorial PASS as source verification."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.trauma-thoracic.bleeding-course.20261111.v1",
+          "sha256": "7d89038f9ae53ca8f4aace52c1cddd3c67bf2ca9892b23d900ca39b6d2ec0700",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "trauma-thoracic",
+      "status": "accepted",
+      "caseId": "case.trauma-thoracic.bleeding-course.20261111.v1",
+      "reason": "Complete PASS-only case admitted in the existing clinic.",
+      "unlistedSiblingIds": []
+    },
+    {
+      "suffix": "rib-fixation-weaning.20261111.v2",
+      "nodeId": "node.trauma-thoracic.rib-fixation-weaning.20261111.v2",
+      "questionVariantId": "question.trauma-thoracic.rib-fixation-weaning.20261111.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-trauma-thoracic-review2-20261111.json",
+        "record": {
+          "id": "question.trauma-thoracic.rib-fixation-weaning.20261111.v2",
+          "nodeId": "node.trauma-thoracic.rib-fixation-weaning.20261111.v2",
+          "title": "Reassess rib stabilization after failed liberation",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Rib stabilization is a defensible best next addition among the offered plans after recovery from shock, persistent severely displaced segmental fractures, improving pulmonary findings and failed liberation despite analgesic care.",
+            "The learner must distinguish improving parenchymal injury from persistent chest-wall mechanical failure, then choose correction of that barrier rather than simply repeat support or commit to prolonged weaning. Both the interval improvement and actual failed trials matter.",
+            "Paradoxical movement is a legitimate necessary observation, not a diagnosis label. The known fracture pattern does not by itself answer the question; current physiological recovery and failure despite treatment determine why reassessment is appropriate now.",
+            "The active update supplies the preceding recovery, fracture morphology, treatment and failed trials; it stands alone without the parked shock-priority node. No preceding fixation feedback supplies the answer.",
+            "No confident clinical inaccuracy identified. The key should be interpreted as the next treatment strategy, not a guarantee that stabilization produces successful extubation; the explanation appropriately uses 'supports ... assessment'."
+          ],
+          "suggestions": [
+            "Preserve the contrast between improving lung findings and persistent mechanical failure during actual trials.",
+            "Keep clinician confirmation of operative candidacy and avoid unsupported exact timing thresholds. Do not promise ventilator liberation as an inevitable outcome of stabilization."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.trauma-thoracic.chestwall-course.20261111.v1",
+          "sha256": "3e2ab0862fea326ed33609f4f6a5d0391d23a8834e3b78fde54de3b8bbaefb61",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "trauma-thoracic",
+      "status": "accepted",
+      "caseId": "case.trauma-thoracic.chestwall-course.20261111.v1",
+      "reason": "Complete PASS-only case admitted in the existing clinic.",
+      "unlistedSiblingIds": []
+    },
+    {
+      "suffix": "thoracic-bleeding-control.20261111.v1",
+      "nodeId": "node.trauma-thoracic.thoracic-bleeding-control.20261111.v1",
+      "questionVariantId": "question.trauma-thoracic.thoracic-bleeding-control.20261111.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-trauma-thoracic-review2-20261111.json",
+        "record": {
+          "id": "question.trauma-thoracic.thoracic-bleeding-control.20261111.v1",
+          "nodeId": "node.trauma-thoracic.thoracic-bleeding-control.20261111.v1",
+          "title": "Escalate thoracic bleeding care from physiology",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Thoracotomy is the best of the offered hemorrhage-control approaches in the repeated loss-of-perfusion course. Low drain output is not reliable reassurance when a large collection remains and blood pressure depends on continuing transfusion.",
+            "The two consequential steps are to reject a misleading drainage-output interpretation, then use physiological instability to choose the operative approach over thoracoscopy or an embolization pathway.",
+            "The alternatives are parallel procedures addressing hemostasis. Necessary perfusion and alternative-source observations are not wording-only cues; they discriminate clinically meaningful paths.",
+            "The next node explicitly establishes successful hemostasis and a later stable state. This explanation does not disclose the later retained-clot treatment. No confident clinical inaccuracy identified."
+          ],
+          "suggestions": [
+            "Preserve the mismatch between low drainage and ongoing physiological failure. Do not replace it with an unsupported exact output threshold.",
+            "Optional tightening: the current-update sentence can be shortened while retaining that drainage and blood replacement have occurred."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.trauma-thoracic.bleeding-course.20261111.v1",
+          "sha256": "7d89038f9ae53ca8f4aace52c1cddd3c67bf2ca9892b23d900ca39b6d2ec0700",
+          "unlistedSiblingIds": []
+        },
+        {
+          "caseId": "case.trauma-thoracic.bleeding-course.20261111.v1",
+          "sha256": "71000d7f6d2af7d31d0080a4ef6e55ae2331cfe984e4a1844a935c3228992632",
+          "unlistedSiblingIds": [
+            "node.trauma-thoracic.retained-hemothorax.20261111.v1"
+          ]
+        }
+      ],
+      "topic": "trauma-thoracic",
+      "status": "accepted",
+      "caseId": "case.trauma-thoracic.bleeding-course.20261111.v1",
+      "reason": "Complete PASS-only case admitted in the existing clinic.",
+      "unlistedSiblingIds": [
+        "node.trauma-thoracic.retained-hemothorax.20261111.v1"
+      ]
+    },
+    {
+      "suffix": "ascending-emergency.v1",
+      "nodeId": "node.vascular-aorta.ascending-emergency.v1",
+      "questionVariantId": "question.vascular-aorta.ascending-emergency.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-aorta-review-20261111.json",
+        "record": {
+          "id": "question.vascular-aorta.ascending-emergency.v1",
+          "nodeId": "node.vascular-aorta.ascending-emergency.v1",
+          "title": "Distal entry tear with ascending extension",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The distal entry and ascending extension create a real classification trap. The learner must classify by involved aorta and choose the corresponding emergency pathway despite preserved pressure.",
+            "The medical option is not an equivalent definitive plan for the supplied acute ascending involvement. Interim impulse therapy remains compatible with arranging surgery and is not negated by this task.",
+            "No confident clinical inaccuracy or nonmedical option-selection shortcut identified."
+          ],
+          "suggestions": [
+            "Keep the distinction between entry location and ascending involvement. The word 'founder' is unnecessary framing but does not change the answer; a plain reference to reviewing the admission CTA would be cleaner."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-aorta.retrograde-ascending-extension.v1",
+          "sha256": "beaee4863e144ef5130a8648e55df53bf676c6a54b2d46d1c98bdfa83e79aa83",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "vascular-aorta",
+      "status": "accepted",
+      "caseId": "case.vascular-aorta.retrograde-ascending-extension.v1",
+      "reason": "Complete PASS-only case admitted in the existing clinic.",
+      "unlistedSiblingIds": []
+    },
+    {
+      "suffix": "associated-aneurysm-survey.v2",
+      "nodeId": "node.vascular-aorta.associated-aneurysm-survey.v2",
+      "questionVariantId": "question.vascular-aorta.associated-aneurysm-survey.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-aorta-review2-20261111.json",
+        "record": {
+          "id": "question.vascular-aorta.associated-aneurysm-survey.v2",
+          "nodeId": "node.vascular-aorta.associated-aneurysm-survey.v2",
+          "title": "Identifying the missing associated-aneurysm study",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Left popliteal arterial duplex is the best offered additional study. The resident must identify the usual associated arterial screening targets, then distinguish a venous examination of the opposite leg from adequate arterial assessment and account for the existing aortic measurements.",
+            "Abdominal ultrasound is a credible failure to recognize the existing infrarenal aortic assessment. Thoracic CTA is a plausible overextension of aortic screening. The options are named investigations, and the exhibit does not label the left arterial survey as missing or inadequate.",
+            "The word left appears in both the record and answer, but only knowing that compressible veins do not assess a popliteal arterial aneurysm makes that match useful. I do not regard this necessary anatomic information as an unfair lexical cue.",
+            "The update explicitly remains in the same workup. The shared presentation establishes the right popliteal lesion and the table repeats its findings; no prior key is needed. The preceding explanation discusses embolization and repair without revealing survey targets. Associated PAA and AAA screening is high yield.",
+            "The recorded CTA coverage establishes the infrarenal aortic findings supplied here, not an examination of every abdominal or thoracic aortic segment. The explanation should keep its adequacy claim tied to the screening target; no confident reason to select a different offered study is identified."
+          ],
+          "suggestions": [
+            "Consider trimming the generic sentence announcing that the file contains studies; the table already conveys that information. Keep the acquisition coverage and venous-versus-arterial observations."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-aorta.small-popliteal-course.v2",
+          "sha256": "cbf8d1900110a88b0c1ad4ccb415957aeed017f315ba597a4faeab6b368fdb1b",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "vascular-aorta",
+      "status": "accepted",
+      "caseId": "case.vascular-aorta.small-popliteal-course.v2",
+      "reason": "Complete PASS-only case admitted in the existing clinic.",
+      "unlistedSiblingIds": []
+    },
+    {
+      "suffix": "female-threshold.v2",
+      "nodeId": "node.vascular-aorta.female-threshold.v2",
+      "questionVariantId": "question.vascular-aorta.female-threshold.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-aorta-review2-20261111.json",
+        "record": {
+          "id": "question.vascular-aorta.female-threshold.v2",
+          "nodeId": "node.vascular-aorta.female-threshold.v2",
+          "title": "Selecting the relevant AAA diameter and repair assessment",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Elective vascular repair assessment is the best offered plan. The resident must select maximum outer-wall diameter rather than flowing-channel diameter, then apply a sex-specific repair-assessment decision in a patient without a supplied major competing life-limiting illness.",
+            "The exhibit is consequential: selecting the smaller channel measurement plausibly directs the learner toward surveillance. The interval choices are credible neighboring plans. The correct answer is not uniquely long or qualified, and there is no key-only verbal match.",
+            "The explanation appropriately distinguishes a repair recommendation from a suggestion across guidelines and asks for assessment rather than asserting automatic surgery or selecting a procedure from sex alone. I have not independently reverified the exact guideline boundaries offline; no confident contradiction is identified.",
+            "The subsequent planning CTA is a clearly later record and adds the iliac anatomy needed for its separate task. This first node does not teach which side must be preserved. AAA measurement and repair selection are high yield."
+          ],
+          "suggestions": []
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-aorta.female-aortoiliac-planning.v2",
+          "sha256": "530b2da26af8e5b806ac011904a2ee3bedfaa37c1149ac888efb7e04286ab4bc",
+          "unlistedSiblingIds": [
+            "node.vascular-aorta.pelvic-inflow.v2"
+          ]
+        }
+      ],
+      "topic": "vascular-aorta",
+      "status": "skipped",
+      "caseId": "case.vascular-aorta.female-aortoiliac-planning.v2",
+      "reason": "Reviewed case includes scored nodes outside the manager PASS list.",
+      "unlistedSiblingIds": [
+        "node.vascular-aorta.pelvic-inflow.v2"
+      ]
+    },
+    {
+      "suffix": "graft-bleed-imaging.v2",
+      "nodeId": "node.vascular-aorta.graft-bleed-imaging.v2",
+      "questionVariantId": "question.vascular-aorta.graft-bleed-imaging.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-aorta-review2-20261111.json",
+        "record": {
+          "id": "question.vascular-aorta.graft-bleed-imaging.v2",
+          "nodeId": "node.vascular-aorta.graft-bleed-imaging.v2",
+          "title": "Unexplained bleeding and bacteremia after aortic grafting",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Multiphase abdominal CTA is the best offered investigation. The resident must link prosthetic aortic surgery, recurrent bacteremia and intermittent GI bleeding, then choose evaluation of the reconstruction and extraluminal tissues despite an unrevealing proximal endoscopic examination.",
+            "Push enteroscopy is a credible competing new examination because the previous study did not inspect the distal duodenum. Tagged-red-cell scintigraphy is a credible attempt to localize intermittent bleeding. Neither replaces evaluation of the suspected graft-related process.",
+            "The known limit of upper-endoscopy coverage is explicitly supplied without claiming that the whole duodenum was normal. Preserved pressure between episodes makes this an imaging-selection question rather than an unacknowledged immediate-control emergency. No confident clinical inaccuracy is identified.",
+            "All labels name investigations at the same stage and no pre-answer diagnosis label or unique wording match names CTA. The standalone chronology is clear, and the stem identifies the preceding test and hospital decision. Secondary aortoenteric fistula or graft infection in this setting is high yield."
+          ],
+          "suggestions": []
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-aorta.graft-diagnostic-review.v2",
+          "sha256": "4a312172f894259b82f2dd45f2884ec4191f19aba5823211cfcc3d7722accbec",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "vascular-aorta",
+      "status": "accepted",
+      "caseId": "case.vascular-aorta.graft-diagnostic-review.v2",
+      "reason": "Complete PASS-only case admitted in the existing clinic.",
+      "unlistedSiblingIds": []
+    },
+    {
+      "suffix": "graft-source-control.v1",
+      "nodeId": "node.vascular-aorta.graft-source-control.v1",
+      "questionVariantId": "question.vascular-aorta.graft-source-control.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-aorta-review-20261111.json",
+        "record": {
+          "id": "question.vascular-aorta.graft-source-control.v1",
+          "nodeId": "node.vascular-aorta.graft-source-control.v1",
+          "title": "Definitive treatment of infected graft-enteric communication",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The learner must interpret persistent infection plus a graft-to-bowel channel and distinguish definitive source control from hemorrhage bridging or suppressive therapy.",
+            "Graft removal with vascular and bowel reconstruction is the defensible best offered definitive strategy in the stated operable patient. The alternatives can have roles in other settings, which makes stability and operability necessary information rather than gratuitous permission.",
+            "The update follows imaging coherently and contains enough current information to answer independently. Earlier feedback identifies concern for a complication but does not prescribe this definitive operation."
+          ],
+          "suggestions": [
+            "Keep the explicit definitive-treatment task and persistent-infection observations. Do not imply that suppressive treatment or endovascular bridging has no role in inoperable or unstable patients."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-aorta.graft-infection-course.v1",
+          "sha256": "61bdf82c2ddb4d46855acb0df45096eb5aa81adb2b5b2aa1a706e729d114c00f",
+          "unlistedSiblingIds": [
+            "node.vascular-aorta.graft-bleed-imaging.v1"
+          ]
+        }
+      ],
+      "topic": "vascular-aorta",
+      "status": "skipped",
+      "caseId": "case.vascular-aorta.graft-infection-course.v1",
+      "reason": "Reviewed case includes scored nodes outside the manager PASS list.",
+      "unlistedSiblingIds": [
+        "node.vascular-aorta.graft-bleed-imaging.v1"
+      ]
+    },
+    {
+      "suffix": "growing-sac-source.v1",
+      "nodeId": "node.vascular-aorta.growing-sac-source.v1",
+      "questionVariantId": "question.vascular-aorta.growing-sac-source.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-aorta-review-20261111.json",
+        "record": {
+          "id": "question.vascular-aorta.growing-sac-source.v1",
+          "nodeId": "node.vascular-aorta.growing-sac-source.v1",
+          "title": "Reassessing an enlarging EVAR sac with uncertain inflow",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The meaningful decision is to question the earlier branch-leak attribution when a larger sac and indeterminate graft-junction flow appear, then investigate a potential direct graft-related source before selective branch treatment.",
+            "The three choices are angiographic assessments at the same stage. Aortography is a defensible first offered assessment; selective collateral studies might subsequently be needed but do not replace assessment of the uncertain graft interface.",
+            "The update supplies the current uncertainty even if earlier feedback is not recalled. Prior advice that source and sac behavior matter is general scaffolding, not disclosure of this selected assessment."
+          ],
+          "suggestions": [
+            "Retain the distinction between an earlier documented pattern and an uncertain current source. Do not convert the task into an unsupported universal rule that selective studies are never useful."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-aorta.changing-evar-sac.v2",
+          "sha256": "542c93cf18179af055ccf1790d050f704c97d59de5540f70b27dbe25118c80c1",
+          "unlistedSiblingIds": [
+            "node.vascular-aorta.component-gap-repair.v2"
+          ]
+        },
+        {
+          "caseId": "case.vascular-aorta.changing-evar-sac.v1",
+          "sha256": "6628e60665a384a5f9b84fd76f28d5d4538a74cdb9bc341c78c1619d267fb1fe",
+          "unlistedSiblingIds": [
+            "node.vascular-aorta.component-gap-repair.v1"
+          ]
+        }
+      ],
+      "topic": "vascular-aorta",
+      "status": "skipped",
+      "caseId": "case.vascular-aorta.changing-evar-sac.v2",
+      "reason": "Reviewed case includes scored nodes outside the manager PASS list.",
+      "unlistedSiblingIds": [
+        "node.vascular-aorta.component-gap-repair.v2",
+        "node.vascular-aorta.component-gap-repair.v1"
+      ]
+    },
+    {
+      "suffix": "initial-type-b.v2",
+      "nodeId": "node.vascular-aorta.initial-type-b.v2",
+      "questionVariantId": "question.vascular-aorta.initial-type-b.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-aorta-review2-20261111.json",
+        "record": {
+          "id": "question.vascular-aorta.initial-type-b.v2",
+          "nodeId": "node.vascular-aorta.initial-type-b.v2",
+          "title": "Persistent hypertension after rate response in acute dissection",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Adding intravenous nicardipine is the best offered change. The resident must distinguish an achieved rate response from persistent severe hypertension, then select additional pressure reduction while retaining initial beta blockade.",
+            "Increasing esmolol is a credible attempt to treat the residual pressure with the existing infusion. Diltiazem is a neighboring rate-control alternative. The unchanged PR interval, warm extremities and preserved systolic function do not supply a reason to replace the beta blocker.",
+            "The three choices are specific infusion actions of comparable length. Nicardipine is not named in the pre-answer record and there is no nonmedical wording shortcut to its pharmacology.",
+            "The known dissection anatomy appropriately frames a different treatment-response task. This standalone revision has no preceding explanation that supplies its answer. Sequencing rate and pressure control is high yield; no confident clinical inaccuracy is identified."
+          ],
+          "suggestions": []
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-aorta.impulse-response-review.v2",
+          "sha256": "8b081e8dce8892ec0c588eda35a3d86c0c053d50ff358d46f0deee6c355c457c",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "vascular-aorta",
+      "status": "accepted",
+      "caseId": "case.vascular-aorta.impulse-response-review.v2",
+      "reason": "Complete PASS-only case admitted in the existing clinic.",
+      "unlistedSiblingIds": []
+    },
+    {
+      "suffix": "lsa-coronary-inflow.v1",
+      "nodeId": "node.vascular-aorta.lsa-coronary-inflow.v1",
+      "questionVariantId": "question.vascular-aorta.lsa-coronary-inflow.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-aorta-review-20261111.json",
+        "record": {
+          "id": "question.vascular-aorta.lsa-coronary-inflow.v1",
+          "nodeId": "node.vascular-aorta.lsa-coronary-inflow.v1",
+          "title": "Preserving pedicled LIMA inflow during elective TEVAR",
+          "verdict": "PASS",
+          "difficulty": "hard",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The learner must infer coronary dependence on subclavian inflow and then distinguish two prophylactic revascularization techniques, rather than merely recognize the risk of arm ischemia.",
+            "A patent pedicled LIMA and occluded native LAD provide a defensible reason to prefer bypass over transposition involving proximal subclavian interruption. No confident clinical inaccuracy identified, but the exact technique comparison remains a specialist clinical-sign-off point in this offline review.",
+            "The delayed-bypass option is less appropriate because arm symptoms do not monitor the threatened coronary territory. The two before-coverage options prevent timing alone from identifying the key."
+          ],
+          "suggestions": [
+            "Retain the pedicled graft origin, patency and native LAD status. Keep the explanation specific to this coronary-dependent anatomy rather than declaring transposition universally unsuitable."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-aorta.tevar-inflow-and-neurology.v1",
+          "sha256": "4a3efb9bd4e1693085801b4eeebe567cec7efe9af0d806904f0f6d2e309e2df5",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "vascular-aorta",
+      "status": "accepted",
+      "caseId": "case.vascular-aorta.tevar-inflow-and-neurology.v1",
+      "reason": "Complete PASS-only case admitted in the existing clinic.",
+      "unlistedSiblingIds": []
+    },
+    {
+      "suffix": "marfan-repair-approach.v1",
+      "nodeId": "node.vascular-aorta.marfan-repair-approach.v1",
+      "questionVariantId": "question.vascular-aorta.marfan-repair-approach.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-aorta-review-20261111.json",
+        "record": {
+          "id": "question.vascular-aorta.marfan-repair-approach.v1",
+          "nodeId": "node.vascular-aorta.marfan-repair-approach.v1",
+          "title": "Repair strategy for native-aortic Marfan TAAA",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "A known syndrome is appropriate because this is a management task. Native landing-zone tissue, intact aneurysm, fitness and technical feasibility of alternatives require the resident to separate technical possibility from long-term preferred strategy.",
+            "Open repair is a defensible preferred approach in this supplied setting. Branched and hybrid alternatives are specific same-stage competitors, not nonsensical options.",
+            "No confident clinical inaccuracy identified. The exact recommendation remains subject to clinician review; this offline PASS does not freshly verify the cited guideline or make open repair universal for every patient with heritable disease."
+          ],
+          "suggestions": [
+            "Retain native-versus-prosthetic landing-zone information and the intact, operable context. Keep explanation language about preference within this setting rather than an absolute prohibition of endovascular treatment."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-aorta.heritable-native-taaa.v1",
+          "sha256": "32f0cf0ec864b902637347897f2e0a2b606a450e23e2bb14d53406010870e75a",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "vascular-aorta",
+      "status": "accepted",
+      "caseId": "case.vascular-aorta.heritable-native-taaa.v1",
+      "reason": "Complete PASS-only case admitted in the existing clinic.",
+      "unlistedSiblingIds": []
+    },
+    {
+      "suffix": "measurement-comparison.v2",
+      "nodeId": "node.vascular-aorta.measurement-comparison.v2",
+      "questionVariantId": "question.vascular-aorta.measurement-comparison.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-aorta-review2-20261111.json",
+        "record": {
+          "id": "question.vascular-aorta.measurement-comparison.v2",
+          "nodeId": "node.vascular-aorta.measurement-comparison.v2",
+          "title": "Reconciling apparently rapid AAA growth",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Matched reconstruction is the best immediate response to incompatible measurement planes when the complete source volumes are already available. The resident must distinguish measurement artifact from true interval enlargement, then choose a way to resolve the consequential discrepancy.",
+            "The apparent increase makes repair evaluation credible; the latest diameter makes interval surveillance credible. Neither interpretation is established until the measurements are comparable. Referral can occur concurrently in practice, but the offered referral specifically relies on serial enlargement that these reports have not yet established.",
+            "The exhibit supplies the actual acquisition and measurement distinction rather than a conclusion that the studies are incomparable. Availability of adequate source volumes is necessary to distinguish reconstruction from reacquisition.",
+            "The following node explicitly supplies matched measurements as a later outside-record result. The current explanation does not disclose its subsequent imaging-choice answer. The current task is complete and the measurement decision is high yield."
+          ],
+          "suggestions": []
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-aorta.measurement-surveillance-symptoms.v2",
+          "sha256": "69968719a70df9e1437f7f98108608d6ec2a2429b257105762bce21e12d66212",
+          "unlistedSiblingIds": [
+            "node.vascular-aorta.symptomatic-small-aaa.v2"
+          ]
+        }
+      ],
+      "topic": "vascular-aorta",
+      "status": "skipped",
+      "caseId": "case.vascular-aorta.measurement-surveillance-symptoms.v2",
+      "reason": "Reviewed case includes scored nodes outside the manager PASS list.",
+      "unlistedSiblingIds": [
+        "node.vascular-aorta.symptomatic-small-aaa.v2"
+      ]
+    },
+    {
+      "suffix": "new-malperfusion.v1",
+      "nodeId": "node.vascular-aorta.new-malperfusion.v1",
+      "questionVariantId": "question.vascular-aorta.new-malperfusion.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-aorta-review-20261111.json",
+        "record": {
+          "id": "question.vascular-aorta.new-malperfusion.v1",
+          "nodeId": "node.vascular-aorta.new-malperfusion.v1",
+          "title": "New renal malperfusion despite improved pressure and pain",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The clinical response and new organ dysfunction pull in different directions. Urine output, creatinine and new asymmetric renal enhancement with true-lumen compression support a clinically consequential malperfusion inference rather than nonspecific creatinine attribution.",
+            "Intervention with TEVAR and reassessment is the defensible best offered plan given the stated access and sealing anatomy. Continuing observation misses the new complication.",
+            "The update clearly changes the original uncomplicated course. Prior explanation teaches initial therapy but does not supply the current intervention. Its own feedback anticipates reassessment, not the later branch-stent answer."
+          ],
+          "suggestions": [
+            "Preserve both the apparent symptomatic improvement and objective new perfusion failure. Avoid making creatinine rise by itself diagnostic of malperfusion."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-aorta.descending-perfusion-course.v1",
+          "sha256": "fe82416765f641ad928b2db327cb2548a71693df45cd1b47bbbd0bf89712b989",
+          "unlistedSiblingIds": [
+            "node.vascular-aorta.initial-type-b.v1"
+          ]
+        }
+      ],
+      "topic": "vascular-aorta",
+      "status": "skipped",
+      "caseId": "case.vascular-aorta.descending-perfusion-course.v1",
+      "reason": "Reviewed case includes scored nodes outside the manager PASS list.",
+      "unlistedSiblingIds": [
+        "node.vascular-aorta.initial-type-b.v1"
+      ]
+    },
+    {
+      "suffix": "post-tevar-cord-rescue.v1",
+      "nodeId": "node.vascular-aorta.post-tevar-cord-rescue.v1",
+      "questionVariantId": "question.vascular-aorta.post-tevar-cord-rescue.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-aorta-review-20261111.json",
+        "record": {
+          "id": "question.vascular-aorta.post-tevar-cord-rescue.v1",
+          "nodeId": "node.vascular-aorta.post-tevar-cord-rescue.v1",
+          "title": "Neurologic rescue after TEVAR and hypotension",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Bilateral leg findings, preserved limb pulses and unchanged cranial/upper-limb function require localization before choosing cord-perfusion rescue rather than limb reperfusion or renewed pressure reduction.",
+            "Hypotension is a necessary causal observation, not a removable cue. The rescue activation is defensible; the explanation appropriately calls for specialist drainage assessment rather than claiming that normal coagulation tests establish every condition for immediate drain insertion.",
+            "The long-segment postoperative phase is coherent after elective TEVAR planning and is understandable from the update. The preceding LIMA explanation does not teach this neurologic rescue answer."
+          ],
+          "suggestions": [
+            "Preserve the distinction between activating perfusion/drainage rescue and inserting a drain without procedural assessment. If a future version asks specifically for drain placement, supply relevant antithrombotic exposure and other procedural safety information rather than relying solely on platelet count and coagulation tests."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-aorta.tevar-inflow-and-neurology.v1",
+          "sha256": "4a3efb9bd4e1693085801b4eeebe567cec7efe9af0d806904f0f6d2e309e2df5",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "vascular-aorta",
+      "status": "accepted",
+      "caseId": "case.vascular-aorta.tevar-inflow-and-neurology.v1",
+      "reason": "Complete PASS-only case admitted in the existing clinic.",
+      "unlistedSiblingIds": []
+    },
+    {
+      "suffix": "proximal-seal-repair.v1",
+      "nodeId": "node.vascular-aorta.proximal-seal-repair.v1",
+      "questionVariantId": "question.vascular-aorta.proximal-seal-repair.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-aorta-review-20261111.json",
+        "record": {
+          "id": "question.vascular-aorta.proximal-seal-repair.v1",
+          "nodeId": "node.vascular-aorta.proximal-seal-repair.v1",
+          "title": "Proximal attachment leak despite stable sac size",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The learner must infer an attachment-related leak from its route and act despite unchanged sac diameter. This contrasts meaningfully with surveillance for stable branch-associated flow.",
+            "A remaining healthy proximal segment makes extension a defensible best offered plan; actual device sizing is outside this strategy question. The task's proximal localization is necessary context rather than a sufficient nonmedical answer rule.",
+            "No confident clinical inaccuracy or equally appropriate offered alternative identified."
+          ],
+          "suggestions": [
+            "Preserve the unchanged-sac distractor premise and the actual contrast route. Keep detailed device feasibility subject to normal clinical planning rather than implying that any healthy neck length is sufficient."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-aorta.proximal-attachment-leak.v1",
+          "sha256": "d64d6a1027704ac4091c90640556df8e2d7f781ce33e09d8daa7274c5fd4c9e2",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "vascular-aorta",
+      "status": "accepted",
+      "caseId": "case.vascular-aorta.proximal-attachment-leak.v1",
+      "reason": "Complete PASS-only case admitted in the existing clinic.",
+      "unlistedSiblingIds": []
+    },
+    {
+      "suffix": "residual-static-branch.v1",
+      "nodeId": "node.vascular-aorta.residual-static-branch.v1",
+      "questionVariantId": "question.vascular-aorta.residual-static-branch.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-aorta-review-20261111.json",
+        "record": {
+          "id": "question.vascular-aorta.residual-static-branch.v1",
+          "nodeId": "node.vascular-aorta.residual-static-branch.v1",
+          "title": "Persistent renal branch obstruction after central repair",
+          "verdict": "PASS",
+          "difficulty": "hard",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The learner must distinguish a fixed intrabranch lesion from persistent central dynamic obstruction using the response to TEVAR, branch flap, nonvarying narrowing and pressure gradient, then select the corresponding intervention.",
+            "Branch stenting is the defensible best offered treatment. Septal fenestration is a credible competing mechanism-specific action; extending an already effective proximal repair does not address the demonstrated branch lesion.",
+            "The update restates the completed repair and residual findings sufficiently to stand alone. Prior feedback mentions central dynamic compression and reassessment but does not name the static lesion or its treatment."
+          ],
+          "suggestions": [
+            "Retain the response-to-treatment observations and branch pressure evidence. The technical detail is justified by a consequential mechanism-specific action; do not add unsupported numeric gradients."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-aorta.descending-perfusion-course.v1",
+          "sha256": "fe82416765f641ad928b2db327cb2548a71693df45cd1b47bbbd0bf89712b989",
+          "unlistedSiblingIds": [
+            "node.vascular-aorta.initial-type-b.v1"
+          ]
+        }
+      ],
+      "topic": "vascular-aorta",
+      "status": "skipped",
+      "caseId": "case.vascular-aorta.descending-perfusion-course.v1",
+      "reason": "Reviewed case includes scored nodes outside the manager PASS list.",
+      "unlistedSiblingIds": [
+        "node.vascular-aorta.initial-type-b.v1"
+      ]
+    },
+    {
+      "suffix": "screening.v2",
+      "nodeId": "node.vascular-aorta.screening.v2",
+      "questionVariantId": "question.vascular-aorta.screening.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-aorta-review2-20261111.json",
+        "record": {
+          "id": "question.vascular-aorta.screening.v2",
+          "nodeId": "node.vascular-aorta.screening.v2",
+          "title": "AAA screening after incompletely covering CTA",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The best offered answer is abdominal aortic ultrasound. The resident must recognize that acquisition ending at the celiac origin does not assess the infrarenal aorta, then apply preventive screening to an asymptomatic 69-year-old male former smoker. The examination title does not establish adequate prior screening.",
+            "CTA is a credible modality error and no additional imaging is a credible coverage error. Both imaging labels contain abdominal aortic, so lexical overlap does not uniquely identify ultrasound. The acquisition endpoint is necessary evidence, not an authored interpretation.",
+            "The retrospective visit and requested plan are clear; this standalone node does not need a prior answer. Screening eligibility and examination coverage are high-yield concepts, although the reasoning is moderate rather than hard.",
+            "Review scope: this report scores the 12 current revised executable nodes. Eleven pass-preserved records are unchanged and are not regraded; seven are current companions and four retain historical context only. The three parked records, retired baseline records and two unkeyed holds are not scored. Current companions were read only for sequence coherence and answer leakage. All clinical assessments here are offline editorial judgments, not fresh source verification or clinical approval; exact drafts remain needs_clinician_review."
+          ],
+          "suggestions": []
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-aorta.screening-review.v2",
+          "sha256": "0be65dc9359aff8304c12330b85efc336720630a99e365819e40babb27c2675a",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "vascular-aorta",
+      "status": "accepted",
+      "caseId": "case.vascular-aorta.screening-review.v2",
+      "reason": "Complete PASS-only case admitted in the existing clinic.",
+      "unlistedSiblingIds": []
+    },
+    {
+      "suffix": "six-cm-referral.v1",
+      "nodeId": "node.vascular-aorta.six-cm-referral.v1",
+      "questionVariantId": "question.vascular-aorta.six-cm-referral.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-aorta-review-20261111.json",
+        "record": {
+          "id": "question.vascular-aorta.six-cm-referral.v1",
+          "nodeId": "node.vascular-aorta.six-cm-referral.v1",
+          "title": "Outer sac diameter and repair referral",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The learner must distinguish the aneurysm's outer diameter from its flowing channel and use that distinction to choose repair evaluation versus surveillance. The two sizes make the surveillance error concrete.",
+            "Symptoms, functional status and major competing illness are sufficiently addressed for a referral decision. No competing offered plan is equally appropriate.",
+            "The update is coherent after screening and contains the result needed to answer without recalling the prior choice. Prior screening feedback does not disclose the diameter rule."
+          ],
+          "suggestions": [
+            "Retain the lumen-versus-sac discriminator and comparable action labels. Keep PASS separate from clinical approval."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-aorta.screen-to-repair.v1",
+          "sha256": "3d9973a02f4ac226d38b0ab30630643b9680b27ab62b8aa351d5f530894d7add",
+          "unlistedSiblingIds": [
+            "node.vascular-aorta.screening.v1"
+          ]
+        }
+      ],
+      "topic": "vascular-aorta",
+      "status": "skipped",
+      "caseId": "case.vascular-aorta.screen-to-repair.v1",
+      "reason": "Reviewed case includes scored nodes outside the manager PASS list.",
+      "unlistedSiblingIds": [
+        "node.vascular-aorta.screening.v1"
+      ]
+    },
+    {
+      "suffix": "small-embolizing-paa.v2",
+      "nodeId": "node.vascular-aorta.small-embolizing-paa.v2",
+      "questionVariantId": "question.vascular-aorta.small-embolizing-paa.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-aorta-review2-20261111.json",
+        "record": {
+          "id": "question.vascular-aorta.small-embolizing-paa.v2",
+          "nodeId": "node.vascular-aorta.small-embolizing-paa.v2",
+          "title": "Small popliteal aneurysm with distal embolic manifestations",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Repair planning with vascular surgery is the best offered strategy. The resident must connect recurrent blue toes and digital occlusions to thrombus in the popliteal dilation despite preserved pedal pulses, then distinguish a symptomatic embolizing lesion from an asymptomatic size-based surveillance problem.",
+            "Anticoagulation with follow-up is a credible effort to treat thromboembolism without addressing its continuing source; annual surveillance is the size-only error. These plans are concrete enough for a repair-versus-medical-management objective.",
+            "The question appropriately stops short of selecting open versus endovascular technique without conduit and repair-anatomy data. The word repair is not accompanied by a uniquely explanatory or qualified answer label. No confident clinical inaccuracy is identified.",
+            "The subsequent survey uses records from the same workup rather than claiming that an offered treatment has already occurred. This explanation does not name the associated-aneurysm screening targets, so it does not give the later answer. Symptomatic PAA management is high yield."
+          ],
+          "suggestions": []
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-aorta.small-popliteal-course.v2",
+          "sha256": "cbf8d1900110a88b0c1ad4ccb415957aeed017f315ba597a4faeab6b368fdb1b",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "vascular-aorta",
+      "status": "accepted",
+      "caseId": "case.vascular-aorta.small-popliteal-course.v2",
+      "reason": "Complete PASS-only case admitted in the existing clinic.",
+      "unlistedSiblingIds": []
+    },
+    {
+      "suffix": "small-male-surveillance.v2",
+      "nodeId": "node.vascular-aorta.small-male-surveillance.v2",
+      "questionVariantId": "question.vascular-aorta.small-male-surveillance.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-aorta-review2-20261111.json",
+        "record": {
+          "id": "question.vascular-aorta.small-male-surveillance.v2",
+          "nodeId": "node.vascular-aorta.small-male-surveillance.v2",
+          "title": "Surveillance after inadequate ultrasound and severe contrast reaction",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "MRI is the best offered study. The resident must recognize that an untraceable posterior sac boundary prevents a current diameter assessment, then account for the severe prior iodinated-contrast reaction when choosing cross-sectional imaging.",
+            "The prior CT measurements do not substitute for a current examination. Repeat duplex is less persuasive after the documented positional attempts, and routine CTA is less attractive after wheezing, hives and hypotension requiring epinephrine. These observations are decision-critical and should not be removed merely because they distinguish the choices.",
+            "The sequence advances explicitly to the following annual visit, repeats the pertinent matched measurements and states the absence of new pain. It can be answered from the shared presentation and current update without recalling the previous key. This is a practical, high-yield surveillance-modality decision.",
+            "No confident clinical inaccuracy is identified. The explanation should not be read as declaring all CT techniques categorically contraindicated: the offered comparator is iodinated-contrast CTA, and the safety and feasibility of alternative protocols are not tested."
+          ],
+          "suggestions": [
+            "For editorial precision, remove the unsupported historical aside that ultrasound was useful previously; the visible earlier measurements were CT measurements. State the reusable adequacy principle directly. This aside does not change the offered best answer."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-aorta.measurement-surveillance-symptoms.v2",
+          "sha256": "69968719a70df9e1437f7f98108608d6ec2a2429b257105762bce21e12d66212",
+          "unlistedSiblingIds": [
+            "node.vascular-aorta.symptomatic-small-aaa.v2"
+          ]
+        }
+      ],
+      "topic": "vascular-aorta",
+      "status": "skipped",
+      "caseId": "case.vascular-aorta.measurement-surveillance-symptoms.v2",
+      "reason": "Reviewed case includes scored nodes outside the manager PASS list.",
+      "unlistedSiblingIds": [
+        "node.vascular-aorta.symptomatic-small-aaa.v2"
+      ]
+    },
+    {
+      "suffix": "stable-branch-flow.v1",
+      "nodeId": "node.vascular-aorta.stable-branch-flow.v1",
+      "questionVariantId": "question.vascular-aorta.stable-branch-flow.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-aorta-review-20261111.json",
+        "record": {
+          "id": "question.vascular-aorta.stable-branch-flow.v1",
+          "nodeId": "node.vascular-aorta.stable-branch-flow.v1",
+          "title": "Branch-associated flow with an unchanged EVAR sac",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The learner must interpret the delayed branch-associated route and then use unchanged sac size to distinguish surveillance from embolization. The leak description does not itself prescribe treatment.",
+            "Intact attachments weaken the cuff option for a clinical reason, not a grammatical shortcut. Continued surveillance is the defensible best offered action.",
+            "The explanation does not disclose the next node's angiographic plan or the later component failure."
+          ],
+          "suggestions": [
+            "Keep the source-and-sac-behavior combination. The constructed table is appropriately labeled; avoid adding a universal intervention cutoff without direct supporting evidence."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-aorta.changing-evar-sac.v2",
+          "sha256": "542c93cf18179af055ccf1790d050f704c97d59de5540f70b27dbe25118c80c1",
+          "unlistedSiblingIds": [
+            "node.vascular-aorta.component-gap-repair.v2"
+          ]
+        },
+        {
+          "caseId": "case.vascular-aorta.changing-evar-sac.v1",
+          "sha256": "6628e60665a384a5f9b84fd76f28d5d4538a74cdb9bc341c78c1619d267fb1fe",
+          "unlistedSiblingIds": [
+            "node.vascular-aorta.component-gap-repair.v1"
+          ]
+        }
+      ],
+      "topic": "vascular-aorta",
+      "status": "skipped",
+      "caseId": "case.vascular-aorta.changing-evar-sac.v2",
+      "reason": "Reviewed case includes scored nodes outside the manager PASS list.",
+      "unlistedSiblingIds": [
+        "node.vascular-aorta.component-gap-repair.v2",
+        "node.vascular-aorta.component-gap-repair.v1"
+      ]
+    },
+    {
+      "suffix": "hcc-acquisition.v1",
+      "nodeId": "node.topic.liver-malignancy.hcc-acquisition.v1",
+      "questionVariantId": "question.topic.liver-malignancy.hcc-acquisition.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-liver-malignancy-review2-20261111.json",
+        "record": {
+          "id": "question.topic.liver-malignancy.hcc-acquisition.v1",
+          "nodeId": "node.topic.liver-malignancy.hcc-acquisition.v1",
+          "title": "Nora Patel: diagnostic imaging after incomplete CT acquisition",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Multiphasic contrast-enhanced liver MRI is the single best offered next study. The reader must recognize that the acquired CT cannot characterize the vascular pattern, then apply the cirrhotic setting and lesion size to choose diagnostic characterization over surveillance or immediate tissue sampling.",
+            "The explicit unperformed phases establish acquisition inadequacy rather than mere missing exported images. This is necessary evidence, not a gratuitous named omission; removing it would undermine the distinction being tested. No equally good offered alternative or confident clinical inaccuracy was identified.",
+            "The named patient, age, sex, short complaint and complete task are coherent. This first node stands alone. Its explanation gives a general subsequent biopsy principle but does not identify which lesion in the next node requires tissue.",
+            "Review-wide scope: all nine current proposedNodes were reviewed using their candidate presentation, current update, exhibit, task, option labels and explanation, including preceding visible explanations for the two paired cases. Historical author verdicts, keys and self-checks were not evidence for acceptance. Kept historical inventory, the existing retire-and-replace target, four parked drafts and six withheld teaching points were noted but not re-reviewed or included in verdict counts.",
+            "Review-wide limitation: offline editorial and clinical-reasoning review only, with no network, fresh source verification, runtime inspection or clinical sign-off. Difficulty and high-yield judgments are qualitative estimates, not measured resident performance or verified exam frequency. All nine drafts remain needs_clinician_review; PASS does not confer Melissa Rowland's approval. Runtime randomization, wait estimates and rendering cannot be certified from these visible fields."
+          ],
+          "suggestions": [
+            "Preserve the acquisition record and the distinction between completing characterization and obtaining tissue. Do not add another equally appropriate dynamic cross-sectional study as a distractor without a supported reason to prefer one modality.",
+            "Keep subsequent diagnostic criteria out of this node's feedback so that the follow-up still requires independent lesion interpretation."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.topic.liver-malignancy.dynamic-hcc.v1",
+          "sha256": "8e39bbebd08adb4b9bf3c0bfc2c8bed52de83dd5b844f806c095a3570ba35605",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "liver-malignancy",
+      "status": "accepted",
+      "caseId": "case.topic.liver-malignancy.dynamic-hcc.v1",
+      "reason": "Complete PASS-only case admitted in the existing clinic.",
+      "unlistedSiblingIds": []
+    },
+    {
+      "suffix": "hcc-imaging-diagnosis.v2",
+      "nodeId": "node.topic.liver-malignancy.hcc-imaging-diagnosis.v2",
+      "questionVariantId": "question.topic.liver-malignancy.hcc-imaging-diagnosis.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-liver-malignancy-review2-20261111.json",
+        "record": {
+          "id": "question.topic.liver-malignancy.hcc-imaging-diagnosis.v2",
+          "nodeId": "node.topic.liver-malignancy.hcc-imaging-diagnosis.v2",
+          "title": "Nora Patel: assign tissue sampling to two different enhancement patterns",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The best offered minimum plan is biopsy of segment VI with imaging classification of segment II. The cirrhotic setting, lesion sizes, adequate phases and distinct enhancement patterns support different diagnostic evidence requirements for the two lesions.",
+            "Two consequential steps remain: interpret each lesion independently, then assign sampling rather than treating both masses as the same tumor or requiring tissue from both. Neither lesion is named HCC in the pre-answer text. The options are comparable sampling assignments; their component frequencies do not uniquely identify the key.",
+            "Minimum required sampling and the absence of a separate trial or molecular indication bound the question appropriately. Biopsying both lesions could be reasonable for another purpose, but it is not the minimum required plan under the stated pathway. Equal accessibility of both lesions prevents access from selecting the answer.",
+            "The later MRI identifying a second lesion is a coherent interval event. The current presentation and report stand alone. Prior feedback about biopsy after adequate characterization offers some general scaffolding, but it does not supply the two enhancement-pattern interpretations or the segment-specific assignment. No confident clinical inaccuracy was identified."
+          ],
+          "suggestions": [
+            "Retain the minimum-required scope and lesion-specific observations; avoid changing the task to an unrestricted best-biopsy-plan question, which could make sampling both defensible.",
+            "Do not add LI-RADS conclusions or histologic labels to the exhibit. Keep the distinction between diagnostic necessity and optional additional tissue acquisition in the explanation."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.topic.liver-malignancy.dynamic-hcc.v1",
+          "sha256": "8e39bbebd08adb4b9bf3c0bfc2c8bed52de83dd5b844f806c095a3570ba35605",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "liver-malignancy",
+      "status": "accepted",
+      "caseId": "case.topic.liver-malignancy.dynamic-hcc.v1",
+      "reason": "Complete PASS-only case admitted in the existing clinic.",
+      "unlistedSiblingIds": []
+    },
+    {
+      "suffix": "hcc-portal-flow.v1",
+      "nodeId": "node.topic.liver-malignancy.hcc-portal-flow.v1",
+      "questionVariantId": "question.topic.liver-malignancy.hcc-portal-flow.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-liver-malignancy-review2-20261111.json",
+        "record": {
+          "id": "question.topic.liver-malignancy.hcc-portal-flow.v1",
+          "nodeId": "node.topic.liver-malignancy.hcc-portal-flow.v1",
+          "title": "Omar Bennett: prioritize therapy after main portal-vein tumor occlusion",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Systemic HCC therapy assessment is the best offered pathway. The resident must interpret macrovascular tumor extension despite a relatively small primary mass, then integrate portal perfusion and preserved clinical function to rank systemic treatment against chemoembolization and standard transplantation.",
+            "Patent arteries do not eliminate the concern created by main portal occlusion. Explicit tumor extension, rather than an unspecified portal thrombus, supplies the staging information needed for a fair comparison. The established HCC diagnosis is appropriate for this management task.",
+            "Standard HCC transplantation is a clinically useful scope restriction, not an unfair rhetorical absolute. The explanation avoids claiming that all specialist locoregional approaches are prohibited. No confident clinical inaccuracy was identified; selected-center exceptions and current drug choices were not verified offline.",
+            "The standalone presentation, short complaint and separated task are coherent. The three options name specific treatment pathways at comparable scope."
+          ],
+          "suggestions": [
+            "Keep tumor invasion explicit and maintain the distinction between routine chemoembolization and selected specialist alternatives.",
+            "Do not expand this item's explanation into unverified regimen selection or universal exclusion of every locoregional or investigational transplant approach."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.topic.liver-malignancy.hcc-portal-flow.v1",
+          "sha256": "f0f417d4e3f77a645c963280245b260ba70234d9e2e727e2e84653d11affea8c",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "liver-malignancy",
+      "status": "accepted",
+      "caseId": "case.topic.liver-malignancy.hcc-portal-flow.v1",
+      "reason": "Complete PASS-only case admitted in the existing clinic.",
+      "unlistedSiblingIds": []
+    },
+    {
+      "suffix": "hcc-raw-reserve.v2",
+      "nodeId": "node.topic.liver-malignancy.hcc-raw-reserve.v2",
+      "questionVariantId": "question.topic.liver-malignancy.hcc-raw-reserve.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-liver-malignancy-review2-20261111.json",
+        "record": {
+          "id": "question.topic.liver-malignancy.hcc-raw-reserve.v2",
+          "nodeId": "node.topic.liver-malignancy.hcc-raw-reserve.v2",
+          "title": "Elaine Brooks: prioritize HCC treatment using reserve and operative anatomy",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "HPB assessment for resection is the best offered priority. The learner must interpret synthetic function and portal-hypertension observations, then combine them with a solitary peripheral tumor and a limited-resection map. Favorable tumor burden alone does not determine that transplantation should be prioritized.",
+            "Transplant assessment is a plausible competing thought for a cirrhotic patient with a solitary tumor, while tumor size makes thermal ablation less compelling. These are concrete treatments compared at the same assessment stage rather than a vague planning answer against definitive procedures.",
+            "The resection map is necessary feasibility information, but cannot by itself establish the key: adverse reserve or portal-hypertension findings could change the choice. The explanation correctly limits its conclusion to assessment priority, not operative clearance or a prohibition of all alternatives.",
+            "The standalone presentation is coherent and complete. No confident clinical inaccuracy or equally strong offered first priority was identified. This judgment does not establish a new numerical reserve or ablation threshold."
+          ],
+          "suggestions": [
+            "Preserve the raw laboratory and endoscopic findings and the assessment-level task. Do not replace them with an author-supplied resection-eligible label.",
+            "Retain the explanation's distinction between transplant eligibility and preferred initial assessment."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.topic.liver-malignancy.hcc-favorable-resection.v1",
+          "sha256": "a12a856b02bd2bc86742dc67d1cf1daf08c15e6a34b4354f27d6653af2d41d55",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "liver-malignancy",
+      "status": "accepted",
+      "caseId": "case.topic.liver-malignancy.hcc-favorable-resection.v1",
+      "reason": "Complete PASS-only case admitted in the existing clinic.",
+      "unlistedSiblingIds": []
+    },
+    {
+      "suffix": "borderline-systemic-first.v2",
+      "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.borderline-systemic-first.v2",
+      "questionVariantId": "question.topic.pancreas-chronic-cysts-neoplasia.borderline-systemic-first.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-pancreas-chronic-cysts-neoplasia-review2-20261111.json",
+        "record": {
+          "id": "question.topic.pancreas-chronic-cysts-neoplasia.borderline-systemic-first.v2",
+          "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.borderline-systemic-first.v2",
+          "title": "Initial treatment sequencing with portomesenteric venous involvement",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The short irregular narrowed venous segment, patent vein above and below, absent arterial involvement and negative distant staging support the intended borderline rather than clearly resectable or permanently unresectable interpretation. Neoadjuvant chemotherapy with reassessment is the best offered initial pathway.",
+            "The real competing error is equating potentially reconstructible venous involvement with an automatic surgery-first indication. Anatomy must first be interpreted and then applied to treatment sequence; the surgical and palliative alternatives are clinically meaningful.",
+            "No confident clinical inaccuracy identified. The explanation properly avoids claiming that patency guarantees reconstruction. Exact anatomic classification and technical feasibility remain matters for specialist/clinician review; no unsupported angle threshold is required here.",
+            "Options are parallel and comparably specific. No material nonmedical cue identified. The later jaundice node explicitly supplies the treatment plan and new obstruction findings, so progression is coherent without making that later stent choice an answer already taught here."
+          ],
+          "suggestions": []
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.head-cancer-sequence.v2",
+          "sha256": "cc1a8f6c1df5d880f271602671d8953e1d1a302e3d646f646449dd045001e17e",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "pancreas-chronic-cysts-neoplasia",
+      "status": "accepted",
+      "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.head-cancer-sequence.v2",
+      "reason": "Complete PASS-only case admitted in the existing clinic.",
+      "unlistedSiblingIds": []
+    },
+    {
+      "suffix": "chronic-failed-stenting.v1",
+      "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.chronic-failed-stenting.v1",
+      "questionVariantId": "question.topic.pancreas-chronic-cysts-neoplasia.chronic-failed-stenting.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-pancreas-chronic-cysts-neoplasia-review-20261111.json",
+        "record": {
+          "id": "question.topic.pancreas-chronic-cysts-neoplasia.chronic-failed-stenting.v1",
+          "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.chronic-failed-stenting.v1",
+          "title": "Persistent obstructive chronic-pancreatitis pain after endotherapy",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The learner must distinguish improved malabsorption from persistent obstructive pain, interpret repeated brief responses to endotherapy, and select a drainage operation suited to the dilated duct without an enlarged head.",
+            "Repeat stenting and celiac plexus intervention are recognizable competing approaches. The repeated short-lived benefit plus duct anatomy support longitudinal pancreaticojejunostomy as the best offered intervention; no confident clinical inaccuracy identified.",
+            "The update provides the previous interventions, response and current anatomy, so the later part stands on its own with the shared presentation. The preceding enzyme explanation does not teach the operative answer.",
+            "The explanation's wording about a different treatment target is supported by the divergent symptom responses; it should not be read as proof that every component of the pain has only one cause."
+          ],
+          "suggestions": []
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.chronic-pancreatitis.v1",
+          "sha256": "1236969097a5ad5d1ef1e51f0bd3467106a48ad7b4f4dbab524e8797c3e7f913",
+          "unlistedSiblingIds": [
+            "node.topic.pancreas-chronic-cysts-neoplasia.pert-administration.v1"
+          ]
+        }
+      ],
+      "topic": "pancreas-chronic-cysts-neoplasia",
+      "status": "skipped",
+      "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.chronic-pancreatitis.v1",
+      "reason": "Reviewed case includes scored nodes outside the manager PASS list.",
+      "unlistedSiblingIds": [
+        "node.topic.pancreas-chronic-cysts-neoplasia.pert-administration.v1"
+      ]
+    },
+    {
+      "suffix": "functional-net-enucleation.v1",
+      "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.functional-net-enucleation.v1",
+      "questionVariantId": "question.topic.pancreas-chronic-cysts-neoplasia.functional-net-enucleation.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-pancreas-chronic-cysts-neoplasia-review-20261111.json",
+        "record": {
+          "id": "question.topic.pancreas-chronic-cysts-neoplasia.functional-net-enucleation.v1",
+          "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.functional-net-enucleation.v1",
+          "title": "Operation for a superficial localized insulinoma",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The learner integrates functional disease requiring treatment with a small superficial lesion separated from the main duct, then selects limited excision rather than a segmental resection. The neck location makes central pancreatectomy a recognizable alternative that the favorable local anatomy defeats.",
+            "Enucleation with intraoperative ultrasound is the best offered operation. No confident clinical inaccuracy identified in the supplied localization and operative principle.",
+            "The prior explanation identifies the importance of local anatomy but does not name the operation or supply the favorable distance. The update supplies the decisive observations and can be used with the shared presentation without remembering an earlier answer.",
+            "Options are actual operations with reasonably comparable specificity. 'With intraoperative ultrasound' adds a legitimate operative adjunct; it does not create a unique explanatory sentence or an answer-selecting convergence pattern.",
+            "The final sentence comparing a 'prior nonfunctioning NET case' is unnecessary cross-case teaching; all necessary facts for this node are present here, so it does not invalidate the decision."
+          ],
+          "suggestions": [
+            "Optional feedback cleanup: remove the reference to a 'prior nonfunctioning NET case' or make the comparison generic, since a separately selected encounter need not have preceded this one."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.functional-net.v1",
+          "sha256": "f6ce243068a02b1b4408c02c2aa47c8e2b2548e6be60c4765ea849b2c2661f96",
+          "unlistedSiblingIds": [
+            "node.topic.pancreas-chronic-cysts-neoplasia.functional-net-anatomic-study.v1"
+          ]
+        }
+      ],
+      "topic": "pancreas-chronic-cysts-neoplasia",
+      "status": "skipped",
+      "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.functional-net.v1",
+      "reason": "Reviewed case includes scored nodes outside the manager PASS list.",
+      "unlistedSiblingIds": [
+        "node.topic.pancreas-chronic-cysts-neoplasia.functional-net-anatomic-study.v1"
+      ]
+    },
+    {
+      "suffix": "ipmn-high-risk-plan.v1",
+      "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.ipmn-high-risk-plan.v1",
+      "questionVariantId": "question.topic.pancreas-chronic-cysts-neoplasia.ipmn-high-risk-plan.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-pancreas-chronic-cysts-neoplasia-review-20261111.json",
+        "record": {
+          "id": "question.topic.pancreas-chronic-cysts-neoplasia.ipmn-high-risk-plan.v1",
+          "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.ipmn-high-risk-plan.v1",
+          "title": "High-risk duct-communicating cyst: treatment planning",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Duct communication, marked main-duct dilation and an enhancing mural nodule require classification and then a management decision in a surgical candidate. Surgical referral is the best offered plan; sampling need not precede referral when the supplied imaging already establishes high-risk features.",
+            "The explanation appropriately separates high-risk morphology from proven invasive carcinoma and reserves final operative extent for specialist planning.",
+            "Prior feedback discusses initial characterization, not the thresholds or resection answer. The update restates the decisive findings and the task is complete with the shared patient presentation. No confident clinical inaccuracy or answer-selecting wording shortcut identified."
+          ],
+          "suggestions": []
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.duct-cyst.v1",
+          "sha256": "fbcf47f5a1c69bbd65b9044a1c3412c2bff2c832269aa8e7ba5e413536c7b3e3",
+          "unlistedSiblingIds": [
+            "node.topic.pancreas-chronic-cysts-neoplasia.cyst-duct-study.v1"
+          ]
+        }
+      ],
+      "topic": "pancreas-chronic-cysts-neoplasia",
+      "status": "skipped",
+      "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.duct-cyst.v1",
+      "reason": "Reviewed case includes scored nodes outside the manager PASS list.",
+      "unlistedSiblingIds": [
+        "node.topic.pancreas-chronic-cysts-neoplasia.cyst-duct-study.v1"
+      ]
+    },
+    {
+      "suffix": "ipmn-remnant-surveillance.v1",
+      "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.ipmn-remnant-surveillance.v1",
+      "questionVariantId": "question.topic.pancreas-chronic-cysts-neoplasia.ipmn-remnant-surveillance.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-pancreas-chronic-cysts-neoplasia-review-20261111.json",
+        "record": {
+          "id": "question.topic.pancreas-chronic-cysts-neoplasia.ipmn-remnant-surveillance.v1",
+          "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.ipmn-remnant-surveillance.v1",
+          "title": "Low-grade IPMN margin and pancreatic-remnant surveillance",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The learner must interpret low-grade dysplasia at a margin differently from invasive or high-grade disease, then preserve remnant surveillance despite the absence of invasive carcinoma. Completion pancreatectomy and discharge represent distinct, recognizable over- and undertreatment errors.",
+            "Surveillance is the best offered plan for this fit patient with low-grade margin dysplasia and no concerning remnant imaging feature. The retained remnant cyst also makes discontinuing imaging a poor answer here.",
+            "The explanation appropriately distinguishes resected IPMN from completely resected noninvasive MCN and does not invent a surveillance interval or cancer probability.",
+            "The task is complete, options are parallel management strategies, and no preceding node is needed. No confident clinical inaccuracy or answer-selecting wording shortcut identified; exact surveillance-policy details still require clinician review."
+          ],
+          "suggestions": []
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.ipmn-after-resection.v1",
+          "sha256": "c711782e44fd0f46cad9e564bbd51c4ad1381b43c22aae26cce85c56385ffc05",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "pancreas-chronic-cysts-neoplasia",
+      "status": "accepted",
+      "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.ipmn-after-resection.v1",
+      "reason": "Complete PASS-only case admitted in the existing clinic.",
+      "unlistedSiblingIds": []
+    },
+    {
+      "suffix": "mcn-large-symptomatic.v2",
+      "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.mcn-large-symptomatic.v2",
+      "questionVariantId": "question.topic.pancreas-chronic-cysts-neoplasia.mcn-large-symptomatic.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-pancreas-chronic-cysts-neoplasia-review2-20261111.json",
+        "record": {
+          "id": "question.topic.pancreas-chronic-cysts-neoplasia.mcn-large-symptomatic.v2",
+          "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.mcn-large-symptomatic.v2",
+          "title": "Resection evaluation despite limited bland cyst cytology",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "One best offered plan: distal-resection referral. The resident must integrate a presumed mucinous body-tail lesion and persistent compression, then recognize that scant bland cytology does not negate the management indication. Surveillance and repeat sampling represent credible overreliance on the negative cytology.",
+            "The explanation distinguishes presumed MCN from histologic proof and elevated CEA from invasive malignancy. No confident clinical inaccuracy identified; the exact management remains subject to clinician review.",
+            "The disappearance of B with persistent fullness makes the update consequential rather than decorative. The update repeats A's size, location and cyst features, so it can be answered with the shared presentation even without recalling the previous answer. Earlier feedback does not disclose resection.",
+            "No material wording-only cue, unique qualification, absolute or diagnosis label supplies the answer. Operative fitness and compression findings are necessary clinical context."
+          ],
+          "suggestions": []
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.two-cysts.v2",
+          "sha256": "f7c09c5a98261181bed710a3a2541b326651fedfa2207d3ff154e044e2ccfa55",
+          "unlistedSiblingIds": [
+            "node.topic.pancreas-chronic-cysts-neoplasia.prior-cyst-target.v2"
+          ]
+        }
+      ],
+      "topic": "pancreas-chronic-cysts-neoplasia",
+      "status": "skipped",
+      "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.two-cysts.v2",
+      "reason": "Reviewed case includes scored nodes outside the manager PASS list.",
+      "unlistedSiblingIds": [
+        "node.topic.pancreas-chronic-cysts-neoplasia.prior-cyst-target.v2"
+      ]
+    },
+    {
+      "suffix": "neoadjuvant-jaundice-drainage.v2",
+      "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.neoadjuvant-jaundice-drainage.v2",
+      "questionVariantId": "question.topic.pancreas-chronic-cysts-neoplasia.neoadjuvant-jaundice-drainage.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-pancreas-chronic-cysts-neoplasia-review2-20261111.json",
+        "record": {
+          "id": "question.topic.pancreas-chronic-cysts-neoplasia.neoadjuvant-jaundice-drainage.v2",
+          "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.neoadjuvant-jaundice-drainage.v2",
+          "title": "Biliary drainage before a neoadjuvant treatment course",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Progressive symptomatic obstructive jaundice before several cycles of chemotherapy favors drainage; the anticipated course then favors a metal rather than plastic stent among these choices. Deferring drainage until infection develops and selecting a less durable stent are distinct credible errors.",
+            "Plastic stenting can drain obstruction and is not inherently wrong care, but it is a less appropriate preferred strategy for the stated prolonged preoperative course. No confident clinical inaccuracy identified; the explanation avoids a universal device-design claim or invented bilirubin cutoff.",
+            "The absence of fever does not remove the need to address the obstruction, and unaltered anatomy supports the offered endoscopic route. These are decision-relevant observations, not direct naming of the key.",
+            "The update supplies the diagnosis, planned treatment and new findings, so the task stands with the shared presentation without requiring the learner to have answered the preceding node correctly. That node's explanation does not teach metal versus plastic selection. No material wording-only cue identified."
+          ],
+          "suggestions": []
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.head-cancer-sequence.v2",
+          "sha256": "cc1a8f6c1df5d880f271602671d8953e1d1a302e3d646f646449dd045001e17e",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "pancreas-chronic-cysts-neoplasia",
+      "status": "accepted",
+      "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.head-cancer-sequence.v2",
+      "reason": "Complete PASS-only case admitted in the existing clinic.",
+      "unlistedSiblingIds": []
+    },
+    {
+      "suffix": "net-growth-duct-proximity.v1",
+      "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.net-growth-duct-proximity.v1",
+      "questionVariantId": "question.topic.pancreas-chronic-cysts-neoplasia.net-growth-duct-proximity.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-pancreas-chronic-cysts-neoplasia-review-20261111.json",
+        "record": {
+          "id": "question.topic.pancreas-chronic-cysts-neoplasia.net-growth-duct-proximity.v1",
+          "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.net-growth-duct-proximity.v1",
+          "title": "Growing pancreatic NET with duct proximity and dilation",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Growth to the current tumor size and a new upstream duct effect require reconsidering surveillance; deep duct proximity then distinguishes enucleation from formal resection. These are two consequential decisions with plausible errors.",
+            "Distal pancreatectomy with regional node assessment is the best offered plan for this body lesion, given the current findings and operative fitness. The old low-grade sample does not negate subsequent structural progression.",
+            "The exact surveillance interval is not needed to rank these choices because current size and duct effects independently matter; it would be needed if the task were calculating a growth-rate criterion.",
+            "The update restates the current tumor, anatomy, staging and operative fitness. Prior feedback encourages reassessment but does not supply the enucleation-versus-resection discriminator. No confident clinical inaccuracy or nonmedical answer shortcut identified."
+          ],
+          "suggestions": []
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.nonfunctional-net.v1",
+          "sha256": "2b251aad4f60fd6f6ff002c041bf5ede4002ef5255e73662bbe88eb5862b89a3",
+          "unlistedSiblingIds": [
+            "node.topic.pancreas-chronic-cysts-neoplasia.small-nonfunctional-net.v1"
+          ]
+        }
+      ],
+      "topic": "pancreas-chronic-cysts-neoplasia",
+      "status": "skipped",
+      "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.nonfunctional-net.v1",
+      "reason": "Reviewed case includes scored nodes outside the manager PASS list.",
+      "unlistedSiblingIds": [
+        "node.topic.pancreas-chronic-cysts-neoplasia.small-nonfunctional-net.v1"
+      ]
+    },
+    {
+      "suffix": "postop-infected-collection-drain.v2",
+      "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.postop-infected-collection-drain.v2",
+      "questionVariantId": "question.topic.pancreas-chronic-cysts-neoplasia.postop-infected-collection-drain.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-pancreas-chronic-cysts-neoplasia-review2-20261111.json",
+        "record": {
+          "id": "question.topic.pancreas-chronic-cysts-neoplasia.postop-infected-collection-drain.v2",
+          "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.postop-infected-collection-drain.v2",
+          "title": "Source control for a separate undrained postoperative compartment",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The resident must interpret the catheter side-hole and compartment relationship, then select an appropriate intervention level for persistent infection with stable circulation and no generalized peritonitis. Antibiotic reassessment and operative washout are real competing escalation choices.",
+            "Image-guided catheter source control is the best offered initial addition. The explanation avoids promising that an old tract can simply be repositioned and allows procedural planning or escalation according to actual findings. No confident clinical inaccuracy identified.",
+            "The skin-to-collection path is a favorable clue, but it is a concrete anatomic observation needed to judge a drainage route, not an assertion that 'IR is available' or an instruction to choose the key. It still requires knowledge of source-control strategy. Option wording is parallel, with antibiotics common to all choices.",
+            "The hospital-versus-current-clinic chronology is explicit and prevents interpreting a past acute intervention as an outpatient procedure. This revised node stands alone; no earlier diagnosis or management answer is required. Collection dimensions and the antibiotic interval are not given, but the stated persistent infection and separate undrained compartment support the offered ranking without inventing thresholds."
+          ],
+          "suggestions": []
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.postoperative-source-control.v2",
+          "sha256": "733459c121fb509e451563a2344ba9a92714cdf63f7d0c9a8c5a879f052f8a19",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "pancreas-chronic-cysts-neoplasia",
+      "status": "accepted",
+      "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.postoperative-source-control.v2",
+      "reason": "Complete PASS-only case admitted in the existing clinic.",
+      "unlistedSiblingIds": []
+    },
+    {
+      "suffix": "postop-transient-drain-bleed.v1",
+      "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.postop-transient-drain-bleed.v1",
+      "questionVariantId": "question.topic.pancreas-chronic-cysts-neoplasia.postop-transient-drain-bleed.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-pancreas-chronic-cysts-neoplasia-review-20261111.json",
+        "record": {
+          "id": "question.topic.pancreas-chronic-cysts-neoplasia.postop-transient-drain-bleed.v1",
+          "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.postop-transient-drain-bleed.v1",
+          "title": "Transient postoperative drain bleeding and vascular investigation",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The learner must interpret a stopped bleed with a hemoglobin fall in the setting of enzyme-rich postoperative fluid as potentially important vascular bleeding, then choose urgent vascular imaging for the currently stable patient. Cessation is the plausible reassurance trap.",
+            "CT angiography is the best offered investigation. The supplied extraluminal drain bleeding and lack of luminal symptoms make initial upper endoscopy less appropriate, while MRCP does not evaluate the urgent vascular concern.",
+            "The update restates the pancreatic-fluid context, bleeding evidence and current circulation, so it is sufficiently independent of the previous answer. Earlier feedback teaches drainage rather than sentinel bleeding.",
+            "No confident clinical inaccuracy identified. 'Later in the same admission' leaves the interval after surgery and drain manipulation imprecise; this does not defeat urgent evaluation with a hemoglobin fall, but timing would help distinguish delayed vascular erosion from immediate procedural trauma.",
+            "The negative gastrointestinal symptoms are legitimate localization evidence rather than wording that literally matches the CTA option."
+          ],
+          "suggestions": [
+            "Optional chronology clarification: state the relationship of the bleed to surgery and the most recent drain manipulation using supported case observations; do not invent a universal timing cutoff."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.postoperative-record.v1",
+          "sha256": "933f9656fb32241362c0fa9222d98150ca12e55ed0735cdc1ca7ed2601adcfaa",
+          "unlistedSiblingIds": [
+            "node.topic.pancreas-chronic-cysts-neoplasia.postop-infected-collection-drain.v1"
+          ]
+        }
+      ],
+      "topic": "pancreas-chronic-cysts-neoplasia",
+      "status": "skipped",
+      "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.postoperative-record.v1",
+      "reason": "Reviewed case includes scored nodes outside the manager PASS list.",
+      "unlistedSiblingIds": [
+        "node.topic.pancreas-chronic-cysts-neoplasia.postop-infected-collection-drain.v1"
+      ]
+    },
+    {
+      "suffix": "postop-vomiting-inflammation.v1",
+      "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.postop-vomiting-inflammation.v1",
+      "questionVariantId": "question.topic.pancreas-chronic-cysts-neoplasia.postop-vomiting-inflammation.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-pancreas-chronic-cysts-neoplasia-review-20261111.json",
+        "record": {
+          "id": "question.topic.pancreas-chronic-cysts-neoplasia.postop-vomiting-inflammation.v1",
+          "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.postop-vomiting-inflammation.v1",
+          "title": "Postoperative vomiting with inflammation and altered drain output",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The learner must distinguish an isolated emptying problem from a secondary postoperative abdominal complication using the inflammatory course and abrupt drain-output change, then choose the appropriate anatomic investigation. The emptying study and MRCP represent different, plausible diagnostic targets.",
+            "Contrast-enhanced abdominal/pelvic CT is the best offered next investigation in the stable patient without generalized guarding. No confident clinical inaccuracy identified.",
+            "The historical hospital-review frame is explicit, and the update supplies the symptoms and physiologic context. It does not ask the present outpatient clinic to perform urgent inpatient care.",
+            "The explanation does not disclose the subsequent collection or its catheter position. The next node introduces new source-control information. No nonmedical wording shortcut identified."
+          ],
+          "suggestions": [
+            "Optional presentation cleanup: replace 'The founder reviews' with the clinician's role and keep one short sentence establishing that these are retrospective hospital decisions."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.postoperative-record.v1",
+          "sha256": "933f9656fb32241362c0fa9222d98150ca12e55ed0735cdc1ca7ed2601adcfaa",
+          "unlistedSiblingIds": [
+            "node.topic.pancreas-chronic-cysts-neoplasia.postop-infected-collection-drain.v1"
+          ]
+        }
+      ],
+      "topic": "pancreas-chronic-cysts-neoplasia",
+      "status": "skipped",
+      "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.postoperative-record.v1",
+      "reason": "Reviewed case includes scored nodes outside the manager PASS list.",
+      "unlistedSiblingIds": [
+        "node.topic.pancreas-chronic-cysts-neoplasia.postop-infected-collection-drain.v1"
+      ]
+    },
+    {
+      "suffix": "serous-symptomatic-plan.v1",
+      "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.serous-symptomatic-plan.v1",
+      "questionVariantId": "question.topic.pancreas-chronic-cysts-neoplasia.serous-symptomatic-plan.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-pancreas-chronic-cysts-neoplasia-review-20261111.json",
+        "record": {
+          "id": "question.topic.pancreas-chronic-cysts-neoplasia.serous-symptomatic-plan.v1",
+          "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.serous-symptomatic-plan.v1",
+          "title": "Symptomatic serous-pattern cyst with gastric compression",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The learner must recognize a likely benign serous phenotype and then distinguish benign biology from a symptomatic mechanical indication for surgery. Surveillance is a plausible error if benignity is overgeneralized.",
+            "The supplied gastric narrowing and concordant postprandial symptoms support resection evaluation. Cystgastrostomy is not appropriate treatment of the described epithelial cyst. The absence of a numerical size cutoff does not prevent this symptom-based decision.",
+            "The option lengths and categories are reasonably parallel, and the task is complete. The central-scar pattern is legitimate diagnostic evidence, not a verbatim answer label. No confident clinical inaccuracy or nonmedical answer shortcut identified."
+          ],
+          "suggestions": []
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.serous-compression.v1",
+          "sha256": "c483f04d010119522687b77007ed607a5d456dca8d14780c9031491c1b730c46",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "pancreas-chronic-cysts-neoplasia",
+      "status": "accepted",
+      "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.serous-compression.v1",
+      "reason": "Complete PASS-only case admitted in the existing clinic.",
+      "unlistedSiblingIds": []
+    }
+  ],
+  "replacements": [
+    {
+      "replaces": "case.gs028d.blunt-cardiac-injury.b-both-results-normal",
+      "with": "question.trauma-thoracic.bci-normalpair-other-admission.20261111.v1"
+    },
+    {
+      "replaces": "case.aaa.retired-carpenter",
+      "with": "question.vascular-aorta.screening.v2"
+    },
+    {
+      "replaces": "case.aaa.current-smoker",
+      "with": "question.vascular-aorta.small-embolizing-paa.v2"
+    },
+    {
+      "replaces": "case.hcc.resection.candidate-profile",
+      "with": "question.topic.liver-malignancy.hcc-raw-reserve.v2"
+    },
+    {
+      "replaces": "case.pancreatic-cyst.tail-lesion-review",
+      "with": "question.topic.pancreas-chronic-cysts-neoplasia.serous-symptomatic-plan.v1"
+    },
+    {
+      "replaces": "case.pancreatic-cyst.surveillance-question",
+      "with": "question.topic.pancreas-chronic-cysts-neoplasia.ipmn-remnant-surveillance.v1"
+    }
+  ],
+  "consolidations": [
+    {
+      "id": "topic-program.trauma-thoracic.20261111",
+      "program": "topic-program",
+      "replaces": [
+        "case.gs028d.blunt-cardiac-injury.a-bicycle-handlebar-impact",
+        "case.gs028d.blunt-cardiac-injury.a-fall-anterior-chest",
+        "case.gs028d.blunt-cardiac-injury.a-sports-chest-impact",
+        "case.gs028d.blunt-cardiac-injury.a-steering-wheel-impact",
+        "case.gs028d.blunt-cardiac-injury.b-both-results-abnormal",
+        "case.gs028d.blunt-cardiac-injury.b-isolated-troponin-elevation",
+        "case.gs028d.blunt-cardiac-injury.b-new-ecg-change"
+      ],
+      "with": "question.trauma-thoracic.bci-selective-imaging.20261111.v2",
+      "decision": "docs/research/question-topic-acceptance-batch2-20261111.md"
+    }
+  ],
+  "frozen": [
+    {
+      "topic": "trauma-thoracic",
+      "caseId": "case.trauma-thoracic.cardiac-course.20261111.v1",
+      "rawCaseSha256": "0b5ae6debc97a0e9a40d5fd8af0caf90feed935f8d8ef2f5e1fe0dd9c625ee57",
+      "retainedCaseSha256": "0b5ae6debc97a0e9a40d5fd8af0caf90feed935f8d8ef2f5e1fe0dd9c625ee57",
+      "nodes": [
+        {
+          "nodeId": "node.trauma-thoracic.bci-selective-imaging.20261111.v2",
+          "questionVariantId": "question.trauma-thoracic.bci-selective-imaging.20261111.v2",
+          "conceptId": "concept.trauma-thoracic.bci-selective-imaging.v1",
+          "nodeSha256": "e4dd35921e6e3178e29dfbcc4d2b17c6ac5421c6eeebbd8bf1a53364fcd36fd6",
+          "questionSha256": "b3326b595c307d7cebb99469f49ffb9e1d867370daabf4766c3a8d0dfdc741a5",
+          "reviewPath": "docs/research/question-topic-trauma-thoracic-review2-20261111.json"
+        },
+        {
+          "nodeId": "node.trauma-thoracic.bci-persistent-arrhythmia.20261111.v2",
+          "questionVariantId": "question.trauma-thoracic.bci-persistent-arrhythmia.20261111.v2",
+          "conceptId": "concept.trauma-thoracic.bci-arrhythmia-echo.v1",
+          "nodeSha256": "2bda5b8273e243459a357e33548cb772c2669804f612ac16d9fd4eeb98aa134a",
+          "questionSha256": "4764790e8ad7b2035cdd8d6f072c4647bb0d4de58f86e45c84aa01ae14ba3de5",
+          "reviewPath": "docs/research/question-topic-trauma-thoracic-review2-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "trauma-thoracic",
+      "caseId": "case.trauma-thoracic.cardiac-disposition.20261111.v1",
+      "rawCaseSha256": "176e36cb86275418000dbd43621075f49a8ab8e24378698f473ed6f413170398",
+      "retainedCaseSha256": "176e36cb86275418000dbd43621075f49a8ab8e24378698f473ed6f413170398",
+      "nodes": [
+        {
+          "nodeId": "node.trauma-thoracic.bci-normalpair-other-admission.20261111.v1",
+          "questionVariantId": "question.trauma-thoracic.bci-normalpair-other-admission.20261111.v1",
+          "conceptId": "concept.blunt-cardiac-injury.monitored-disposition",
+          "nodeSha256": "ddc7add889302a7e82915a37096d871d9394765457a34731bf687d58f3d20d7b",
+          "questionSha256": "54f85800e6457e89940405430bccc1d10b404c97af8969ecfc307192767e9f35",
+          "reviewPath": "docs/research/question-topic-trauma-thoracic-review2-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "trauma-thoracic",
+      "caseId": "case.trauma-thoracic.drain-complication.20261111.v1",
+      "rawCaseSha256": "640a28bad61b18dfe00e81a907d196ef4f6a1cd305ae8732cb37380947c55f30",
+      "retainedCaseSha256": "640a28bad61b18dfe00e81a907d196ef4f6a1cd305ae8732cb37380947c55f30",
+      "nodes": [
+        {
+          "nodeId": "node.trauma-thoracic.chest-drain-organ-trajectory.20261111.v1",
+          "questionVariantId": "question.trauma-thoracic.chest-drain-organ-trajectory.20261111.v1",
+          "conceptId": "concept.trauma-thoracic.chest-drain-organ-trajectory.v1",
+          "nodeSha256": "e78e190b090e36000151c491797d7335ef92149b3d2645d6ccc97537eab10c9d",
+          "questionSha256": "5d4383dafe34f42594f5b4468f00b05dd4fd42ccadec1cd63b0b05cdaae2439f",
+          "reviewPath": "docs/research/question-topic-trauma-thoracic-review2-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "trauma-thoracic",
+      "caseId": "case.trauma-thoracic.bleeding-course.20261111.v1",
+      "rawCaseSha256": "7d89038f9ae53ca8f4aace52c1cddd3c67bf2ca9892b23d900ca39b6d2ec0700",
+      "retainedCaseSha256": "7d89038f9ae53ca8f4aace52c1cddd3c67bf2ca9892b23d900ca39b6d2ec0700",
+      "nodes": [
+        {
+          "nodeId": "node.trauma-thoracic.thoracic-bleeding-control.20261111.v1",
+          "questionVariantId": "question.trauma-thoracic.thoracic-bleeding-control.20261111.v1",
+          "conceptId": "concept.trauma-thoracic.hemothorax-physiology-escalation.v1",
+          "nodeSha256": "1e5961ca4d63c7c01f47acdd1f878d44108e868b49cbc436a1cdf9605d461ba1",
+          "questionSha256": "ca90ecd8f55f3d2688643e57402c69292c7419610e6cc534e71db5f63feb36be",
+          "reviewPath": "docs/research/question-topic-trauma-thoracic-review2-20261111.json"
+        },
+        {
+          "nodeId": "node.trauma-thoracic.retained-hemothorax.20261111.v2",
+          "questionVariantId": "question.trauma-thoracic.retained-hemothorax.20261111.v2",
+          "conceptId": "concept.trauma-thoracic.retained-hemothorax-vats.v1",
+          "nodeSha256": "78c5a8143c7d24cf4caa04a245411cc516c6806d2f36ffcc1a8e32a5f6c592c7",
+          "questionSha256": "dd985a6e6320634a4388d175491a459d820e71a3cf800b89e379e917e62a022d",
+          "reviewPath": "docs/research/question-topic-trauma-thoracic-review2-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "trauma-thoracic",
+      "caseId": "case.trauma-thoracic.chestwall-course.20261111.v1",
+      "rawCaseSha256": "3e2ab0862fea326ed33609f4f6a5d0391d23a8834e3b78fde54de3b8bbaefb61",
+      "retainedCaseSha256": "3e2ab0862fea326ed33609f4f6a5d0391d23a8834e3b78fde54de3b8bbaefb61",
+      "nodes": [
+        {
+          "nodeId": "node.trauma-thoracic.rib-fixation-weaning.20261111.v2",
+          "questionVariantId": "question.trauma-thoracic.rib-fixation-weaning.20261111.v2",
+          "conceptId": "concept.trauma-thoracic.rib-fixation-failed-weaning.v1",
+          "nodeSha256": "5a871cc8b2b2376f4e2e8a4d8a8a1d25439e2f521df533e064c9a6c2e65f94e2",
+          "questionSha256": "cbdfbb202b841d9c6ead07c24555215b3a3ad14965357e277fa5cc366b866f43",
+          "reviewPath": "docs/research/question-topic-trauma-thoracic-review2-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "vascular-aorta",
+      "caseId": "case.vascular-aorta.screening-review.v2",
+      "rawCaseSha256": "0be65dc9359aff8304c12330b85efc336720630a99e365819e40babb27c2675a",
+      "retainedCaseSha256": "7b921bb2b12c210c12a310368ba55bd312c9bdac6876768498612c0a24a8bb29",
+      "nodes": [
+        {
+          "nodeId": "node.vascular-aorta.screening.v2",
+          "questionVariantId": "question.vascular-aorta.screening.v2",
+          "conceptId": "concept.aaa.one-time-ultrasound-screening",
+          "nodeSha256": "9db176c4c1e8494e35af673c07b953ff4a64840d40aebd6a98275671b8035f34",
+          "questionSha256": "4b9b901a269e6309999dea0a038a193d7ec53ace626c76470f223d31f818b49e",
+          "reviewPath": "docs/research/question-topic-vascular-aorta-review2-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "vascular-aorta",
+      "caseId": "case.vascular-aorta.proximal-attachment-leak.v1",
+      "rawCaseSha256": "d64d6a1027704ac4091c90640556df8e2d7f781ce33e09d8daa7274c5fd4c9e2",
+      "retainedCaseSha256": "d64d6a1027704ac4091c90640556df8e2d7f781ce33e09d8daa7274c5fd4c9e2",
+      "nodes": [
+        {
+          "nodeId": "node.vascular-aorta.proximal-seal-repair.v1",
+          "questionVariantId": "question.vascular-aorta.proximal-seal-repair.v1",
+          "conceptId": "concept.vascular-aorta.type-i-endoleak-prompt-seal-repair.v1",
+          "nodeSha256": "740bdfe58d1b870977b64878c6d1fcbc478b506b9ac7ee4b38c53be197281b32",
+          "questionSha256": "77fe03ae51505139ccbf349eb4a342d758109e346fec289fff10b9534f8adcc4",
+          "reviewPath": "docs/research/question-topic-vascular-aorta-review-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "vascular-aorta",
+      "caseId": "case.vascular-aorta.retrograde-ascending-extension.v1",
+      "rawCaseSha256": "beaee4863e144ef5130a8648e55df53bf676c6a54b2d46d1c98bdfa83e79aa83",
+      "retainedCaseSha256": "beaee4863e144ef5130a8648e55df53bf676c6a54b2d46d1c98bdfa83e79aa83",
+      "nodes": [
+        {
+          "nodeId": "node.vascular-aorta.ascending-emergency.v1",
+          "questionVariantId": "question.vascular-aorta.ascending-emergency.v1",
+          "conceptId": "concept.vascular-aorta.retrograde-ascending-dissection-emergency-repair.v1",
+          "nodeSha256": "5168dc9b24a39e652f33d4735f0998dc7f618161959382343541e5108751dad7",
+          "questionSha256": "92926b6946b7e72decd8d41cb6e055837b8877929cbc81a858c769db3a61c7a0",
+          "reviewPath": "docs/research/question-topic-vascular-aorta-review-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "vascular-aorta",
+      "caseId": "case.vascular-aorta.impulse-response-review.v2",
+      "rawCaseSha256": "8b081e8dce8892ec0c588eda35a3d86c0c053d50ff358d46f0deee6c355c457c",
+      "retainedCaseSha256": "8b081e8dce8892ec0c588eda35a3d86c0c053d50ff358d46f0deee6c355c457c",
+      "nodes": [
+        {
+          "nodeId": "node.vascular-aorta.initial-type-b.v2",
+          "questionVariantId": "question.vascular-aorta.initial-type-b.v2",
+          "conceptId": "concept.vascular-aorta.aortic-syndrome-vasodilation-after-rate-control.v1",
+          "nodeSha256": "eb6010593a7b7ff121f9e57f6588f985b7ef104e950c7b212864dadb38265b0a",
+          "questionSha256": "52a7e8e71b61d0a3b3b6cca8ce165967e78c7f3e3ff1c0a1c402eada8379e56d",
+          "reviewPath": "docs/research/question-topic-vascular-aorta-review2-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "vascular-aorta",
+      "caseId": "case.vascular-aorta.tevar-inflow-and-neurology.v1",
+      "rawCaseSha256": "4a3efb9bd4e1693085801b4eeebe567cec7efe9af0d806904f0f6d2e309e2df5",
+      "retainedCaseSha256": "4a3efb9bd4e1693085801b4eeebe567cec7efe9af0d806904f0f6d2e309e2df5",
+      "nodes": [
+        {
+          "nodeId": "node.vascular-aorta.lsa-coronary-inflow.v1",
+          "questionVariantId": "question.vascular-aorta.lsa-coronary-inflow.v1",
+          "conceptId": "concept.vascular-aorta.tevar-lsa-lima-inflow-preservation.v1",
+          "nodeSha256": "569459db19471ae9e5c020921d586dbff346cccda5649f2c549173b3622ab652",
+          "questionSha256": "3ca31b44a95df0f91f1fa4c16c7ddaf09a6769cb6ede051fd1a932de06b103c3",
+          "reviewPath": "docs/research/question-topic-vascular-aorta-review-20261111.json"
+        },
+        {
+          "nodeId": "node.vascular-aorta.post-tevar-cord-rescue.v1",
+          "questionVariantId": "question.vascular-aorta.post-tevar-cord-rescue.v1",
+          "conceptId": "concept.vascular-aorta.post-tevar-spinal-cord-perfusion-rescue.v1",
+          "nodeSha256": "070f23dab4ed47d897c6f71ca2b3fa898a23414ee481bd4f33b073e853d17828",
+          "questionSha256": "006a561a2b0d03794032c599687226a3adc6a722a3180f79a5295644c7a8bbe9",
+          "reviewPath": "docs/research/question-topic-vascular-aorta-review-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "vascular-aorta",
+      "caseId": "case.vascular-aorta.small-popliteal-course.v2",
+      "rawCaseSha256": "cbf8d1900110a88b0c1ad4ccb415957aeed017f315ba597a4faeab6b368fdb1b",
+      "retainedCaseSha256": "cbf8d1900110a88b0c1ad4ccb415957aeed017f315ba597a4faeab6b368fdb1b",
+      "nodes": [
+        {
+          "nodeId": "node.vascular-aorta.small-embolizing-paa.v2",
+          "questionVariantId": "question.vascular-aorta.small-embolizing-paa.v2",
+          "conceptId": "concept.vascular-aorta.small-popliteal-aneurysm-embolic-repair.v1",
+          "nodeSha256": "be271662f26a0a4616799ea8b0694ce55978473274055dc9d80d48e70f756e3d",
+          "questionSha256": "cfa9ccb74ffbd2facb8ad4eea03532207f2123d54428dda34fa0919d54b28d59",
+          "reviewPath": "docs/research/question-topic-vascular-aorta-review2-20261111.json"
+        },
+        {
+          "nodeId": "node.vascular-aorta.associated-aneurysm-survey.v2",
+          "questionVariantId": "question.vascular-aorta.associated-aneurysm-survey.v2",
+          "conceptId": "concept.vascular-aorta.popliteal-associated-aneurysm-survey-completeness.v1",
+          "nodeSha256": "fc466acbc0f4c827690c4dc284e4bcdfe5495b10621d48f0b8e13197308c028d",
+          "questionSha256": "e24e41d6f76db8005af049c571b533193092671c257c110e45986849d10306a5",
+          "reviewPath": "docs/research/question-topic-vascular-aorta-review2-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "vascular-aorta",
+      "caseId": "case.vascular-aorta.graft-diagnostic-review.v2",
+      "rawCaseSha256": "4a312172f894259b82f2dd45f2884ec4191f19aba5823211cfcc3d7722accbec",
+      "retainedCaseSha256": "4a312172f894259b82f2dd45f2884ec4191f19aba5823211cfcc3d7722accbec",
+      "nodes": [
+        {
+          "nodeId": "node.vascular-aorta.graft-bleed-imaging.v2",
+          "questionVariantId": "question.vascular-aorta.graft-bleed-imaging.v2",
+          "conceptId": "concept.vascular-aorta.aortic-graft-infection-bleeding-cross-sectional-evaluation.v1",
+          "nodeSha256": "4b8f8101f0ca0716058fe2f7b11e897cf19f7cacdeb430cdb9b731d3e76ebc69",
+          "questionSha256": "2d94506240109ceb88c947c57e89840c8f0b46bcc4cc946d3ea5cd8c29ef63c6",
+          "reviewPath": "docs/research/question-topic-vascular-aorta-review2-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "vascular-aorta",
+      "caseId": "case.vascular-aorta.heritable-native-taaa.v1",
+      "rawCaseSha256": "32f0cf0ec864b902637347897f2e0a2b606a450e23e2bb14d53406010870e75a",
+      "retainedCaseSha256": "32f0cf0ec864b902637347897f2e0a2b606a450e23e2bb14d53406010870e75a",
+      "nodes": [
+        {
+          "nodeId": "node.vascular-aorta.marfan-repair-approach.v1",
+          "questionVariantId": "question.vascular-aorta.marfan-repair-approach.v1",
+          "conceptId": "concept.vascular-aorta.marfan-intact-taaa-open-repair-selection.v1",
+          "nodeSha256": "6969a038d4803f5dfa0f763216c92f90f84d893c95fc84cb56503ac06a56f0a1",
+          "questionSha256": "8032f2dbcc1f465767e0a689fe1631cb93c960f6e724f381b88bd72a8ff01e89",
+          "reviewPath": "docs/research/question-topic-vascular-aorta-review-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "liver-malignancy",
+      "caseId": "case.topic.liver-malignancy.dynamic-hcc.v1",
+      "rawCaseSha256": "8e39bbebd08adb4b9bf3c0bfc2c8bed52de83dd5b844f806c095a3570ba35605",
+      "retainedCaseSha256": "8e39bbebd08adb4b9bf3c0bfc2c8bed52de83dd5b844f806c095a3570ba35605",
+      "nodes": [
+        {
+          "nodeId": "node.topic.liver-malignancy.hcc-acquisition.v1",
+          "questionVariantId": "question.topic.liver-malignancy.hcc-acquisition.v1",
+          "conceptId": "concept.topic.liver-malignancy.dynamic-acquisition.v1",
+          "nodeSha256": "05a0e68afde55da152bb6807d74e6d4da46dd6e1ffd558cb8cca5c1a73d33e46",
+          "questionSha256": "f9a228bd2ccd46ccba411c9671aa5a3f4dbef9ba5e2fb9e39cfefa5d8b0d2dee",
+          "reviewPath": "docs/research/question-topic-liver-malignancy-review2-20261111.json"
+        },
+        {
+          "nodeId": "node.topic.liver-malignancy.hcc-imaging-diagnosis.v2",
+          "questionVariantId": "question.topic.liver-malignancy.hcc-imaging-diagnosis.v2",
+          "conceptId": "concept.topic.liver-malignancy.mixed-imaging-tissue-selection.v1",
+          "nodeSha256": "effe3514994918953b037bb0070cd8c3abdb8262e939b8b3622c95ffe7f63681",
+          "questionSha256": "b04071740e613ef9832f55140f28c022f835d19f9979ae1bc8c1998972ad026b",
+          "reviewPath": "docs/research/question-topic-liver-malignancy-review2-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "liver-malignancy",
+      "caseId": "case.topic.liver-malignancy.hcc-favorable-resection.v1",
+      "rawCaseSha256": "a12a856b02bd2bc86742dc67d1cf1daf08c15e6a34b4354f27d6653af2d41d55",
+      "retainedCaseSha256": "a12a856b02bd2bc86742dc67d1cf1daf08c15e6a34b4354f27d6653af2d41d55",
+      "nodes": [
+        {
+          "nodeId": "node.topic.liver-malignancy.hcc-raw-reserve.v2",
+          "questionVariantId": "question.topic.liver-malignancy.hcc-raw-reserve.v2",
+          "conceptId": "concept.hcc.compensated-cirrhosis-resection-selection",
+          "nodeSha256": "e2093d487b3624eeb57dfca320d856ce8d05e2240661ea387a3524bd40e8d8bc",
+          "questionSha256": "99fa9358ef5a6740ba540b7ce0fe047c82be3e2892f79df56aa350a558c29139",
+          "reviewPath": "docs/research/question-topic-liver-malignancy-review2-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "liver-malignancy",
+      "caseId": "case.topic.liver-malignancy.hcc-portal-flow.v1",
+      "rawCaseSha256": "f0f417d4e3f77a645c963280245b260ba70234d9e2e727e2e84653d11affea8c",
+      "retainedCaseSha256": "f0f417d4e3f77a645c963280245b260ba70234d9e2e727e2e84653d11affea8c",
+      "nodes": [
+        {
+          "nodeId": "node.topic.liver-malignancy.hcc-portal-flow.v1",
+          "questionVariantId": "question.topic.liver-malignancy.hcc-portal-flow.v1",
+          "conceptId": "concept.topic.liver-malignancy.hcc-vascular-pathway.v1",
+          "nodeSha256": "820df346108462552fd717e191d1f2f7337b0aaf6d6d4f88f9b65e761040a28f",
+          "questionSha256": "5547c26f0b880ec46814d1544f2b6b34c13d98fad86f2d444f27de0e066f4a71",
+          "reviewPath": "docs/research/question-topic-liver-malignancy-review2-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "pancreas-chronic-cysts-neoplasia",
+      "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.head-cancer-sequence.v2",
+      "rawCaseSha256": "cc1a8f6c1df5d880f271602671d8953e1d1a302e3d646f646449dd045001e17e",
+      "retainedCaseSha256": "cc1a8f6c1df5d880f271602671d8953e1d1a302e3d646f646449dd045001e17e",
+      "nodes": [
+        {
+          "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.borderline-systemic-first.v2",
+          "questionVariantId": "question.topic.pancreas-chronic-cysts-neoplasia.borderline-systemic-first.v2",
+          "conceptId": "concept.pancreas-chronic-cysts-neoplasia.borderline-venous-neoadjuvant-sequence.v1",
+          "nodeSha256": "08f18e982cd5ae505fcfae1640305fad6bf81d8d91653f2c9b5ef31fa14ebc88",
+          "questionSha256": "2a7a4d0d81429d8c8ef0e776113807126f1d1d1bc0e6eaf60880b68126e3558d",
+          "reviewPath": "docs/research/question-topic-pancreas-chronic-cysts-neoplasia-review2-20261111.json"
+        },
+        {
+          "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.neoadjuvant-jaundice-drainage.v2",
+          "questionVariantId": "question.topic.pancreas-chronic-cysts-neoplasia.neoadjuvant-jaundice-drainage.v2",
+          "conceptId": "concept.pancreas-chronic-cysts-neoplasia.neoadjuvant-obstructive-jaundice-stent.v1",
+          "nodeSha256": "9b432960460da8e7525eccf5c093c3eb72f2fcf53acb8382e75b817da66dcf97",
+          "questionSha256": "21ecaade5dd2f18c0db3602e6aab9e7dc1d241a4809e1e673ae488f34c4dfefb",
+          "reviewPath": "docs/research/question-topic-pancreas-chronic-cysts-neoplasia-review2-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "pancreas-chronic-cysts-neoplasia",
+      "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.postoperative-source-control.v2",
+      "rawCaseSha256": "733459c121fb509e451563a2344ba9a92714cdf63f7d0c9a8c5a879f052f8a19",
+      "retainedCaseSha256": "733459c121fb509e451563a2344ba9a92714cdf63f7d0c9a8c5a879f052f8a19",
+      "nodes": [
+        {
+          "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.postop-infected-collection-drain.v2",
+          "questionVariantId": "question.topic.pancreas-chronic-cysts-neoplasia.postop-infected-collection-drain.v2",
+          "conceptId": "concept.pancreas-chronic-cysts-neoplasia.postop-collection-source-control.v1",
+          "nodeSha256": "fb2ea14fc23f5c388fd3705a908f0bab79605316b228584f168704f9b36c47d8",
+          "questionSha256": "4bcc323edf4ba697720165d649703c28a5ad632b3c7dc747ea556d4857a8bde5",
+          "reviewPath": "docs/research/question-topic-pancreas-chronic-cysts-neoplasia-review2-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "pancreas-chronic-cysts-neoplasia",
+      "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.serous-compression.v1",
+      "rawCaseSha256": "c483f04d010119522687b77007ed607a5d456dca8d14780c9031491c1b730c46",
+      "retainedCaseSha256": "c483f04d010119522687b77007ed607a5d456dca8d14780c9031491c1b730c46",
+      "nodes": [
+        {
+          "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.serous-symptomatic-plan.v1",
+          "questionVariantId": "question.topic.pancreas-chronic-cysts-neoplasia.serous-symptomatic-plan.v1",
+          "conceptId": "concept.pancreas-chronic-cysts-neoplasia.serous-compressive-symptoms.v1",
+          "nodeSha256": "4ced56220acea12b962d30d0248c1b577b6341e2bcedc3fbedebf17b4c85eee0",
+          "questionSha256": "c7f33a9b55408652c69cbc3552d2ca41226be4b17663446718053f655656f595",
+          "reviewPath": "docs/research/question-topic-pancreas-chronic-cysts-neoplasia-review-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "pancreas-chronic-cysts-neoplasia",
+      "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.ipmn-after-resection.v1",
+      "rawCaseSha256": "c711782e44fd0f46cad9e564bbd51c4ad1381b43c22aae26cce85c56385ffc05",
+      "retainedCaseSha256": "c711782e44fd0f46cad9e564bbd51c4ad1381b43c22aae26cce85c56385ffc05",
+      "nodes": [
+        {
+          "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.ipmn-remnant-surveillance.v1",
+          "questionVariantId": "question.topic.pancreas-chronic-cysts-neoplasia.ipmn-remnant-surveillance.v1",
+          "conceptId": "concept.pancreas-chronic-cysts-neoplasia.ipmn-remnant-low-grade-followup.v1",
+          "nodeSha256": "c543659a1c0c485ba28f1500b5cfea78f6cfe621b1f74aa2895084c809fb181f",
+          "questionSha256": "404bbcd69eea27f6c01cfa4c27a1104a4d2d8a63a4f41958b34e5336da2faa3a",
+          "reviewPath": "docs/research/question-topic-pancreas-chronic-cysts-neoplasia-review-20261111.json"
+        }
+      ]
+    }
+  ],
+  "sourceViews": [
+    {
+      "name": "topic-batch2-trauma-thoracic",
+      "cases": 5,
+      "nodes": 7,
+      "sha256": "e7fb33d0a4b18f1345d066458e8bd015406e63e59b6093156826ff0e12b98656"
+    },
+    {
+      "name": "topic-batch2-vascular-aorta",
+      "cases": 8,
+      "nodes": 10,
+      "sha256": "52a54b76c64cdcd6f37c7ab3440f257dbf63f3c48b8b6d7cfae7a1546053527f"
+    },
+    {
+      "name": "topic-batch2-liver-malignancy",
+      "cases": 3,
+      "nodes": 4,
+      "sha256": "30ebda2c31f62ed99b1ab4f7212b6e56d8c5b4320f309de6d2d33ed16fb30b9d"
+    },
+    {
+      "name": "topic-batch2-pancreas-chronic-cysts-neoplasia",
+      "cases": 4,
+      "nodes": 5,
+      "sha256": "27f7dec7ed910ddfd637ecbc4dd94594525cef7c1d140fc6037e0bc4ebcbe456"
+    }
+  ]
+}

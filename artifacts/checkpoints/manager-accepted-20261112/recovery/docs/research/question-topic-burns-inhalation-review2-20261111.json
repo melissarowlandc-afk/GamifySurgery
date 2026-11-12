@@ -1,0 +1,204 @@
+[
+  {
+    "id": "question.topic.burns-inhalation.deep-hand-referral.v2",
+    "nodeId": "node.topic.burns-inhalation.deep-hand-referral.v2",
+    "title": "Respond to a changed hand examination after dressing",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The historical dressing-visit frame and complete task make the decision understandable. The explanation's 'old wound-depth question' unnecessarily refers to an authoring/earlier-task distinction that this standalone node never actually asks."
+    ],
+    "cues": [
+      {
+        "phrase": "After a continuous elastic wrap was applied around the hand and wrist",
+        "why": "Together with immediate deterioration and 'The wrap felt taut over the swollen hand,' this directly identifies a newly applied tight object. A reader can select removal of that object over either operation using ordinary cause-and-effect reasoning, without interpreting burn depth or vascular findings. The chronology is necessary safety information; the problem is the weak competing decisions, not its inclusion."
+      },
+      {
+        "phrase": "Remove the circumferential dressing and reassess the hand",
+        "why": "This is the only reversible bedside action against two immediate operations. In this explicit post-wrap scenario it is an obvious first-action outlier. Shared reassessment wording equalizes length but does not create credible competition."
+      }
+    ],
+    "fairness": [
+      "Removing the dressing with immediate reassessment is the single defensible first action among the choices. Previously preserved perfusion, the new tight wrap, noncircumferential wound and soft forearm support it. No confident clinical inaccuracy identified; the explanation appropriately requires urgent escalation for persistent abnormal perfusion.",
+      "The patient, age/sex, short complaint, chronology and separated task are complete. This is a standalone node with no missing earlier answer or later-part dependency.",
+      "This tests an important burn/neurovascular safety action, but 'recognize the explicitly tight new wrap, then remove it' does not provide two consequential resident-level inferences. The surgical distractors do not make this a moderate item.",
+      "Review scope: the current proposals contain eight revised v2 nodes, ten pass-preserved nodes and four separately parked drafts. This report reviews all eight revised nodes; preserved, parked, kept-unchanged, retired and held records are noted but not re-adjudicated. Judgments use the candidate visible wording, not author self-checks or prior verdicts. This is an offline editorial review, not new source verification or clinical approval."
+    ],
+    "suggestions": [
+      "Retain the distal ischemia warnings and immediate removal/reassessment teaching. Seek explicit acceptance as an easy safety item, or keep it outside the requested resident-reasoning set.",
+      "If a moderate/hard item is required, change the scored decision to a genuinely unresolved next step after initial external-pressure relief, using supported reassessment findings that distinguish credible competing actions. Do not merely obscure the tight wrap or omit warning signs.",
+      "Make the explanation about this patient's new perfusion change rather than an 'old wound-depth question.'"
+    ]
+  },
+  {
+    "id": "question.topic.burns-inhalation.pain-exceeds-clinic.v2",
+    "nodeId": "node.topic.burns-inhalation.pain-exceeds-clinic.v2",
+    "title": "Match procedural burn care to capability",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Clinic dressing care with the effective oral premedication plan",
+        "why": "Only the key describes its treatment as 'effective.' That is an evaluative endorsement inside an answer label; the hospital and day-surgery alternatives receive no comparable qualifier."
+      },
+      {
+        "phrase": "next comparable dressing change after today's observed procedure",
+        "why": "After a fully successful, alert, unchanged-respiration procedure, 'comparable' asks the reader to repeat the success. The alternatives escalate to intravenous analgesia or general anesthesia without a new clinical reason. A nonmedical reader can follow that repeat-versus-escalate pattern."
+      }
+    ],
+    "fairness": [
+      "The clinic plan is the single best offered arrangement. The update importantly establishes tolerance of the actual previously painful movements and the complete dressing change, rather than relying on comfort at rest or a less demanding task. No confident clinical inaccuracy identified.",
+      "The capabilities, previous failures and newly observed response are clear. The named patient, demographics, short complaint and complete standalone task satisfy presentation requirements. There is no multi-part dependency.",
+      "Pain control and capability-appropriate burn care are high-yield practical concepts. Here, however, all relevant procedural and respiratory outcomes favor the same successful plan; neither escalation option is a close remaining competitor. The update changes the answer but does not by itself establish two consequential reasoning steps."
+    ],
+    "suggestions": [
+      "Remove 'effective' from the answer label; keep observed effectiveness in the clinical record for the learner to interpret.",
+      "For the requested difficulty, build a supported competing consideration involving the actual next procedure, observed analgesic response or required monitoring, so interpretation can meaningfully change the setting. Do not manufacture that competition by hiding today's full procedural success.",
+      "If the intended objective remains simply continuing a demonstrably successful comparable regimen, obtain explicit acceptance as an easy application item rather than calling it moderate or hard."
+    ]
+  },
+  {
+    "id": "question.topic.burns-inhalation.thermal-limb-release.v2",
+    "nodeId": "node.topic.burns-inhalation.thermal-limb-release.v2",
+    "title": "Relieve restrictive thermal eschar",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Forearm escharotomy followed by reassessment is the single best offered immediate intervention: first interpret worsening unilateral distal perfusion despite recovered systemic perfusion and external-pressure measures, then select the constraining tissue layer and release sequence.",
+      "Escharotomy versus fasciotomy is a consequential, commonly tested distinction. Arterial exploration is a weaker distractor, but reduced distal signals can tempt a learner to treat primary arterial pathology rather than external restriction. All options name parallel procedures with the same reassessment clause; no unique wording match, explanatory key or convergence shortcut was found.",
+      "The absence of crush/electrical injury does not prove that deep compartment syndrome is impossible. The item does not need that absolute: circumferential deep thermal injury supports initial eschar release, and the explanation explicitly allows deeper decompression when demonstrated or when perfusion fails to recover. No confident clinical inaccuracy identified.",
+      "The outside-record timeline, named patient and age/sex are sufficient to answer independently. There is only one current scored node; no preceding answer is required. The phrase 'first decision below' and chest-burn detail are residual framing, not a decision-changing ambiguity."
+    ],
+    "suggestions": [
+      "Retain failed external-pressure measures, the local-versus-systemic comparison and reassessment after release; do not replace them with an announced diagnosis.",
+      "Optional editorial cleanup: remove 'first' from 'first decision below' in this singleton and omit the chest detail if it has no remaining role. Do not present this as a difficult stretch item."
+    ]
+  },
+  {
+    "id": "question.topic.burns-inhalation.electrical-pigment-resuscitation.v2",
+    "nodeId": "node.topic.burns-inhalation.electrical-pigment-resuscitation.v2",
+    "title": "Reassess oliguria after electrical-injury resuscitation",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Reducing crystalloid while reassessing perfusion and balance is the single best offered direction. Interpret persistent oliguria in the context of recovered systemic perfusion, excluded bladder retention and accumulating respiratory/volume findings; then reverse continued fluid escalation despite the legitimate initial concern for pigment-associated renal injury.",
+      "Increasing fluid is a credible error because the patient has substantial muscle injury and worsening urine output; maintaining it is a credible failure to respond to the new overload evidence. The three labels differ only in infusion direction and provide no length, qualification, convergence or wording-overlap shortcut.",
+      "The task asks for direction, not an exact prescription. A current infusion rate would be needed to calculate a new rate, but its absence does not undermine the relative choice among increase, maintain and reduce in this stated course. No new fluid or urine-output threshold is required to solve it.",
+      "The explanation properly limits its conclusion: a change in crystalloid direction does not by itself determine a diuretic or dialysis decision. No confident clinical inaccuracy identified. The card supplies the earlier resuscitation and later review within one coherent standalone node; named patient, age/sex and complete task are present.",
+      "Electrical injury, occult muscle damage and reassessment of resuscitation rather than blindly chasing urine output are high-yield. The strong overload pattern makes this moderate, not hard."
+    ],
+    "suggestions": [
+      "Retain both the initial reason to give fluid and the subsequent contradictory volume/perfusion evidence. Preserve the narrow infusion-direction task and urgent renal assessment.",
+      "Optional brevity improvement: place the serial output, weight and balance in a compact record, without adding an interpretive heading such as 'fluid overload.'"
+    ]
+  },
+  {
+    "id": "question.topic.burns-inhalation.co-after-oxygen.v2",
+    "nodeId": "node.topic.burns-inhalation.co-after-oxygen.v2",
+    "title": "Escalate CO care using the clinical trajectory",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Treatment-assessment pathway' is less concrete than asking whether to request hyperbaric consultation now. The options compare obtaining an assessment during ongoing treatment with declaring a treatment pathway definitive, rather than parallel decisions at the same stage."
+    ],
+    "cues": [
+      {
+        "phrase": "Complete normobaric oxygen as the definitive treatment pathway",
+        "why": "'Definitive' makes this option a commitment to close escalation despite a visibly abnormal current neurologic assessment. The key, 'Obtain urgent hyperbaric-specialist assessment during oxygen treatment,' is the only option that keeps both treatment and further assessment available. The cautious-versus-final asymmetry favors it without requiring the intended CO reasoning."
+      }
+    ],
+    "fairness": [
+      "Urgent hyperbaric-specialist assessment is the best offered choice given the documented loss of consciousness, abnormal current retention assessment and pretreatment exposure evidence. The falling treated COHb must not be mistaken for resolution of the clinical concern. No confident clinical inaccuracy identified in that consultation recommendation.",
+      "The explanation correctly distinguishes a newly documented cognitive abnormality from demonstrated deterioration: no comparable initial retention assessment exists. It also asks for specialist assessment rather than asserting that every such patient must receive hyperbaric treatment; the exact treatment decision remains subject to specialist and clinician review.",
+      "There is a real two-step objective: interpret a post-treatment biomarker against the clinical record, then choose escalation. The multiple severity indicators make this moderate rather than hard; the option asymmetry weakens its measurement further.",
+      "The named patient, demographics, short complaint and standalone chronology are complete. All later findings and the retrieved EMS report are supplied within this node, with no earlier answer needed.",
+      "There are only two choices. I do not recommend inventing a filler third choice; a two-option format requires an explicit exception to the authoring standard, separately from repairing the wording. This review does not grant that exception or clinical approval."
+    ],
+    "suggestions": [
+      "Put continuing oxygen and neurologic monitoring in shared context, as already done, and compare concrete current escalation plans at equivalent scope. Ask directly about the next consultation/escalation decision.",
+      "Replace the premature 'definitive treatment pathway' declaration with a credible specified hospital observation/reassessment alternative, so the decision is immediate specialist consultation versus deferring it on the basis of apparent biochemical improvement. Keep the alternatives free of explanations that announce why one is wrong.",
+      "Preserve the explicit uncertainty about the cognitive baseline and the distinction between consultation and guaranteed hyperbaric treatment. Obtain a format exception if two credible options remain the best set."
+    ]
+  },
+  {
+    "id": "question.topic.burns-inhalation.lower-airway-assessment.v2",
+    "nodeId": "node.topic.burns-inhalation.lower-airway-assessment.v2",
+    "title": "Localize and address post-fire airway obstruction",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Flexible bronchoscopy is the single best offered next procedure. First interpret the peak-pressure rise with unchanged plateau during valid passive measurements as predominantly increased resistance; then integrate tube patency/position, particulate material and focal volume loss to select inspection and clearance of the lower airway.",
+      "Tube exchange represents mislocalizing resistance to the endotracheal tube; thoracostomy represents treating a pleural cause of an acute ventilatory change. The supplied tube and pleural observations appropriately discriminate urgent alternatives. These are medically meaningful negatives, not a plain-language announcement that the distractors are wrong.",
+      "A freely passing suction catheter does not absolutely exclude every tube-related problem, and pleural sliding only informs the regions assessed. Nevertheless, the full supplied pattern and adequate current oxygenation make bronchoscopy the best of these choices. The explanation does not require an absolute exclusion. No confident clinical inaccuracy identified.",
+      "The options are concise named procedures with comparable specificity. No diagnostic label, key-only task term, explanatory option or component-convergence cue was found. General airway mechanics are applied to a burn-specific particulate-obstruction problem, a high-yield resident decision.",
+      "The prior intubation is supplied as a completed event, so airway stabilization need not be reconstructed from another question. The retrospective record is coherent and independently answerable; the named patient, demographics and complete task are present. No separate image or exhibit is promised."
+    ],
+    "suggestions": [
+      "Retain the conditions making plateau pressure interpretable, the current tube assessment and acquired lobar findings. Avoid adding an 'airway cast' diagnosis or a pre-answer statement that bronchoscopy is needed.",
+      "This is a moderate applied item; the readily discriminating observations do not justify a hard label. Runtime testing/procedure wait presentation was not assessed from these text-only review fields."
+    ]
+  },
+  {
+    "id": "question.topic.burns-inhalation.temporary-burn-coverage.v2",
+    "nodeId": "node.topic.burns-inhalation.temporary-burn-coverage.v2",
+    "title": "Prepare the burn bed and select staged coverage",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Completing the necessary tangential excision and applying cadaveric allograft is the single best offered plan. The learner must interpret the central recipient bed independently of the bleeding margin, then select coverage using the still-open donor surfaces. Misreading either surface changes one consequential part of the operation.",
+      "The four choices form a balanced two-by-two set: each excision level and each coverage type appears twice. The key cannot be assembled from majority components, and all labels have comparable length, specificity and grammatical form.",
+      "The recipient-bed observations support further removal of the described adherent nonviable layer. The donor map supplies a real limit on immediate autografting rather than merely saying 'autograft unavailable.' Equipment availability does not provide a donor surface. The distractors represent using a partly prepared bed or choosing definitive coverage without a usable donor site.",
+      "No confident clinical inaccuracy identified. The explanation avoids inventing a donor-healing interval or fixed allograft deadline. The exact depth/extent of intraoperative excision still requires clinical judgment; the item asks for the staged strategy, not an unsupported measurement.",
+      "Burn excision, recipient-bed viability and temporary versus definitive coverage are high-yield. The two observations are fairly explicit, so this is moderate rather than hard. The later operation follows coherently from the original wound description, and all information needed for this singleton is present without prior feedback. Patient, age/sex and task are clear."
+    ],
+    "suggestions": [
+      "Retain the balanced option matrix and separate recipient/donor observations. Do not replace them with labels such as 'inadequate bed' or 'no usable donors,' which would supply the interpretation.",
+      "Optional shortening: reduce the earlier peripheral-healing narrative if it has no role beyond establishing the previously observed wound; preserve the central-versus-margin distinction at the actual operation."
+    ]
+  },
+  {
+    "id": "question.topic.burns-inhalation.feeding-new-hypoperfusion.v2",
+    "nodeId": "node.topic.burns-inhalation.feeding-new-hypoperfusion.v2",
+    "title": "Select a feeding route after perfusion recovery",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Low-rate postpyloric enteral feeding is the single best offered route in the stated current assessment. First distinguish the recovered perfusion/abdominal course from the earlier unsafe feeding episode; then interpret persistent vomiting and large gastric aspirates despite a prokinetic as a gastric-tolerance problem rather than failure of the entire enteral route.",
+      "Repeating gastric feeding is tempting because it was previously tolerated; parenteral nutrition is tempting after repeated gastric failure and the alarming earlier abdominal episode. The acquired course, ongoing inability to eat and failed prokinetic trial make postpyloric access the best remaining offered route. The low-rate qualifier is shared by both enteral choices and does not uniquely mark the key.",
+      "The clinical review's absence of current ischemic concern is a supplied safety assessment, not proof that normal lactate or a benign examination alone excludes ischemia. Keeping a clear assessment of this issue is necessary after the prior bloody drainage and shock. Do not remove it merely to make the item harder.",
+      "No confident clinical inaccuracy identified. I have not independently verified the adequacy of the unspecified prokinetic regimen or the evidentiary basis of the exact aspirate examples offline; the item does not ask for a dose or a numerical cutoff, and vomiting plus persistent large aspirates supplies the intended intolerance finding. Exact clinical wording remains subject to named clinician review.",
+      "The sequential course is fully supplied and coherent as one standalone record review; the earlier episode is not silently reinterpreted as safe feeding. The named patient, demographics, short complaint and complete task are present. Enteral eligibility, gastric intolerance and route escalation are high-yield, with moderate two-step application rather than hard discrimination."
+    ],
+    "suggestions": [
+      "Retain the earlier safety warnings, explicit current assessment and current failure of gastric delivery after a prokinetic. Avoid introducing a fixed restart interval or treating the reported aspirate values as a universal threshold.",
+      "Optional precision improvement at clinical sign-off: name the actual prokinetic treatment and relevant evaluation findings if they are documented and source-supported; do not invent a regimen or claim that one negative finding excludes ischemia."
+    ]
+  }
+]

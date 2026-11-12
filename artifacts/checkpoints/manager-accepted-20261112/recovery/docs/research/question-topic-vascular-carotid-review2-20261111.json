@@ -1,0 +1,153 @@
+[
+  {
+    "id": "question.vascular-carotid.retinal-cea.20261111.v2",
+    "nodeId": "node.vascular-carotid.hemispheric-priority.retinal-cea.20261111.v2",
+    "title": "Weakness follow-up",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The patient, symptom side, chronology and requested priority are clear. The separate task is complete. However, 'endarterectomy assessment' describes an evaluation whereas 'Carotid surveillance with medical prevention' describes a longitudinal treatment plan; the choices could specify the same decision stage more precisely."
+    ],
+    "cues": [
+      {
+        "phrase": "Both lesions are accessible through a standard neck exposure, and the procedural team meets audited guideline risk criteria.",
+        "why": "This supplies an operative-eligibility conclusion and steers toward the two procedural options over surveillance. It does not reveal left versus right without medical knowledge, but it removes much of the proposed second inference. The raw functional observations already provide useful patient information; the remaining task is largely choosing the symptomatic side."
+      }
+    ],
+    "fairness": [
+      "Left CEA assessment is the defensible best offered answer: right-hand weakness with language disturbance supports a left hemispheric event, and the corresponding severe stenosis is recent and symptomatic despite the larger opposite percentage. Symptom resolution and absence of established infarction do not make that episode asymptomatic. No confident clinical inaccuracy identified in the explanation.",
+      "The larger right-sided measurement is a legitimate clinical distractor, not a wording cue. Neither side-specific option is distinguished by length, grammar, an absolute or a unique phrase match. Medical knowledge is still required to select the side.",
+      "Difficulty is easy for the intended resident audience. With both arteries already severely narrowed and operative suitability essentially supplied, side localization nearly determines the answer. Recalling contralateral localization and then the familiar symptomatic-CEA rule does not establish two consequential reasoning steps under this standard. Surveillance is a weak competitor in this otherwise uncomplicated case.",
+      "Symptom attribution before prioritizing bilateral carotid disease is high-yield. That relevance does not make this exact version moderate or hard.",
+      "This is a standalone node with all necessary earlier observations included; there is no later part or preceding feedback to audit. The named patient, age, sex and short complaint are consistent. This offline editorial review does not confer clinical approval."
+    ],
+    "suggestions": [
+      "Retain the bilateral symptom-attribution objective and the tempting larger contralateral lesion, but introduce a supported, clinically meaningful observation that changes whether or when the symptomatic side should undergo intervention. Require interpretation of that observation in addition to localization; extra percentages or routine negatives will not create the missing decision.",
+      "Compare three specific plans at the same stage, with a credible reason a resident might choose each. Replace the blanket eligibility conclusion with only the supported observations actually needed to resolve that choice.",
+      "If the intended role is foundational symptomatic-side recognition, request explicit acceptance of that easy role rather than describing the current version as a difficult two-step resident item."
+    ]
+  },
+  {
+    "id": "question.vascular-carotid.older-cea.20261111.v2",
+    "nodeId": "node.vascular-carotid.recurrent-anticoagulated-events.older-cea.20261111.v2",
+    "title": "Recurrent weakness",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The chronology distinguishes the earlier team's attribution from the current evidence. The INR observations require interpretation; the presentation does not label anticoagulation therapeutic. Recurrent left-arm events and right cortical infarcts make the severe right carotid lesion consequential despite the competing AF history.",
+      "CEA is the defensible best offered plan after reassessing recurrent ipsilateral events during apparently adequate anticoagulation, with age and favorable neck anatomy distinguishing it from transfemoral CAS. Continued warfarin-based management is a credible anchoring error; transfemoral CAS is a credible procedure-selection error. AF remains a separate treatment indication, as the shared context and explanation acknowledge.",
+      "The first consequential step is integrating event territory and treatment adequacy to reconsider anticoagulation-based management. The second is choosing the revascularization route using the patient-specific operative context. These are different decisions, not two names for the same finding. Predicted difficulty is moderate, not measured.",
+      "No unique wording overlap, length outlier, absolute, explanatory distractor or convergence pattern identifies CEA without clinical knowledge. The common prevention wording is balanced. The initial cardiac attribution is historical information, not an author-supplied current diagnosis.",
+      "No confident clinical error identified. These observations do not prove that every embolus originated in the carotid, and the explanation appropriately calls for reassessment rather than claiming proof. The exact ESVS recurrence recommendation was not independently source-verified in this no-network, candidate-content review; clinical sign-off remains required.",
+      "Symptomatic-carotid management, competing embolic sources and age-sensitive procedure selection are high-yield. This is one self-contained node; no prior answer or later part supplies its discriminator. Name, age, sex, complaint and complete task are consistent."
+    ],
+    "suggestions": [
+      "Retain the competing AF history, serial INR observations, new ipsilateral cortical events and explicit transfemoral comparator. Avoid replacing those observations with labels such as therapeutic-anticoagulation failure or proven carotid embolism.",
+      "Keep the statement that AF prevention requires its own perioperative plan. Editorial PASS does not approve uninterrupted perioperative warfarin or a specific anticoagulation protocol, and the exact version remains needs_clinician_review."
+    ]
+  },
+  {
+    "id": "question.vascular-carotid.defer-large-infarct.20261111.v2",
+    "nodeId": "node.vascular-carotid.post-lysis-timing.defer-large-infarct.20261111.v2",
+    "title": "Stroke treatment review",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": false,
+    "clarityIssues": [
+      "'Plan CEA after further functional recovery' does not specify what deficit remains, what recovery is awaited or when that reassessment occurs. The stated object naming and independent dressing/walking do not supply a concrete unfinished recovery target.",
+      "'Plan CEA after six days from thrombolysis' specifies a lower temporal boundary but leaves the intended scheduling window vague. It is less precise than the explanation's conditional reassessment-based plan. The options mix two calendar-based choices with an undefined functional endpoint."
+    ],
+    "cues": [
+      {
+        "phrase": "She now names objects, dresses and walks independently, and her examination has remained stable.",
+        "why": "Against 'Plan CEA after further functional recovery', the plain-language account of recovered activities makes that option readily dismissible without knowing carotid timing. These are necessary clinical observations, but the offered recovery distractor does not make their interpretation difficult."
+      },
+      {
+        "phrase": "Plan CEA after six days from thrombolysis",
+        "why": "Only this option explicitly incorporates the prominently named treatment, 'received intravenous alteplase', into its timing rationale. The combination of a treatment-linked delayed option, an immediate option and an undefined recovery option encourages a cautious treatment-associated-delay shortcut. This is a partial structural cue, not proof that a lay reader knows the six-day interval."
+      }
+    ],
+    "fairness": [
+      "The candidate explanation describes the six-day deferral as a conditional ESVS recommendation and retains reassessment; I am not identifying that interval as a confident clinical error. Its exact applicability and the ranking of selected earlier intervention were not independently verified here. A conditional source-specific interval should not become a universal mandatory deadline through the answer wording.",
+      "The choices are not operationally clean alternatives: additional recovery could occur during the six-day interval, and the third choice does not explicitly mean the open-ended delay that its rationale assigns to it. Specify the actual competing plans rather than relying on feedback to define a wrong option.",
+      "The item mainly tests recall of the post-thrombolysis waiting recommendation. Recovery and small infarct observations dismiss a weak alternative; they do not create a second consequential decision among credible plans. Someone who knows the interval can answer directly. Obscurity of an exact calendar rule should not be counted as hard reasoning.",
+      "Early carotid intervention after nondisabling stroke is high-yield broadly. highYield is false for this exact scored distinction, which is dominated by recalling one conditional six-day recommendation rather than applying the more broadly testable timing/eligibility tradeoff. This is an editorial scope judgment, not an asserted examination-frequency statistic.",
+      "The record-review frame supplies age, sex, patient identity, treatment time and current findings. The task stands alone and there are no later parts. No current update or prior feedback adds a missing discriminator."
+    ],
+    "suggestions": [
+      "Replace the undefined recovery option with a specific, clinically credible competing timing plan supported by the applicable evidence. Make every choice comparable in scheduling precision and reassessment conditions; do not invent a new waiting interval to fill the set.",
+      "Build the decision around a supported interaction between actual neurologic/imaging evolution and the treatment history so both observations change the preferred action. If no fair three-option distinction survives, park this version or seek explicit acceptance as a focused guideline-recall item.",
+      "Have Melissa confirm the intended post-lysis timing framework and any selected early-intervention exceptions before treating one exact interval as the uniquely best clinical answer. Keep the conditional wording visible in the plan, not only in post-answer feedback."
+    ]
+  },
+  {
+    "id": "question.vascular-carotid.fresh-thrombosis.20261111.v2",
+    "nodeId": "node.vascular-carotid.awake-clamp-release.fresh-thrombosis.20261111.v2",
+    "title": "Operative record review",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The presentation says 'the same speech and right-hand tasks', but the exhibit changes both tasks: baseline 'Counts aloud and opens/closes the right hand normally' becomes 'Cannot name the displayed object and cannot sustain right-hand grip'. Counting is not object naming, and opening/closing is not sustained grip. This makes the explanation's claim that the same tasks newly failed more certain than the actual record supports.",
+      "'Immediately after closure and removal of the clamps' should specify arteriotomy closure and the immediate intraoperative clamp-release phase. In a record-review item whose management hinges on the phase, an unspecified 'closure' needlessly permits confusion with completed wound closure/postoperative recognition."
+    ],
+    "cues": [],
+    "fairness": [
+      "The intended rescue distinction is clinically coherent: a deficit first appearing immediately after restoration of flow during awake CEA differs from clamp intolerance and from a deficit first recognized later after a normal recovery. Stable systemic pressures and preserved performance during clamping are relevant observations rather than decorative data.",
+      "However, the table does not establish normal pre-release object naming or sustained grip. Automatic speech can differ from naming performance, and the hand tasks also sample different functions. The key relies on a new deficit at clamp release; document comparable before-and-after observations instead of assuming equivalence. This is a defect in the supplied record, not a claim that re-exploration is clinically wrong.",
+      "Once that observation is repaired, immediate re-exploration is the intended defensible best action for the specified awake clamp-release scenario. Urgent brain/carotid imaging is a credible competing perioperative pathway; a shunt is a plausible phase-selection error. The current explanation appropriately avoids claiming that the table proves thrombosis. The exact cited ESVS recommendation was not independently source-verified in this offline review.",
+      "The node supports two consequential steps: interpret the change relative to clamping/reperfusion, then choose the rescue sequence rather than a clamp-hypoperfusion response or later postoperative imaging pathway. Predicted difficulty is moderate. Repair the observation rather than adding more difficulty.",
+      "No persuasive nonmedical key-selection cue found. 'Immediate' in the task is legitimate urgency: the imaging option also says 'urgent', so urgency wording alone does not uniquely choose re-exploration. The three labels name concrete rescue actions of comparable scope.",
+      "Perioperative neurologic deterioration after CEA is high-yield. This standalone record-review node has no preceding explanation or later part; the full operative chronology is present but needs the narrow corrections above."
+    ],
+    "suggestions": [
+      "Use the identical observed speech and motor tasks before clamping, throughout clamping and immediately after clamp release. For example, document object naming and the same grip task in all three rows if those are the intended post-release failures. Keep the observations constructed and clinician-reviewed; do not imply that changing the test proves a new deficit.",
+      "Replace 'closure' with the exact intended operative stage and make clear the patient is still on the operating table immediately after clamp release. Retain the pressure trajectory and locoregional/awake context.",
+      "After those narrow repairs, recheck the explanation against the actual table. Preserve its distinction between an inferred rescue pathway and an unproven specific thrombus diagnosis."
+    ]
+  },
+  {
+    "id": "question.vascular-carotid.contralateral-larynx.20261111.v2",
+    "nodeId": "node.vascular-carotid.current-vocal-mobility.contralateral-larynx.20261111.v2",
+    "title": "Carotid operation planning",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The task is understandable, but 'Which assessment should inform ... airway planning' is broader than selecting the next assessment. Several investigations can inform aspects of planning; the intended immediate unresolved question is current bilateral vocal-fold mobility.",
+      "The explanation's 'A positive examination' does not name the finding. Persistent left-fold immobility would be clearer than an unspecified positive result."
+    ],
+    "cues": [
+      {
+        "phrase": "During the most recent audio-only follow-up",
+        "why": "The conspicuous 'audio-only' limitation signals that the missing step is looking at the larynx. This is an omission cue even though a recent assessment is described. It steers toward the visual examination without requiring the claimed reconciliation of recovered voice and unrecovered movement."
+      },
+      {
+        "phrase": "Gordon denies coughing with liquids",
+        "why": "Together with 'airway planning', this directly weakens the only swallowing-specific option. The negative is clinically plausible, but its effect in this set is to remove a distractor rather than make swallowing physiology a credible competing decision."
+      }
+    ],
+    "fairness": [
+      "Flexible laryngoscopy is the defensible best next offered assessment to establish current movement before contralateral CEA. Improved phonation and cough do not establish recovered mobility. Electromyography addresses a different unresolved issue, and swallowing assessment does not replace direct assessment of bilateral movement. No confident clinical inaccuracy identified in that central explanation.",
+      "The old examination already establishes concern about left-fold movement. Delete the voice-therapy and audio-follow-up sentences and flexible laryngoscopy remains the same best offered answer. Because every option is another test and none makes a credible decision contingent on whether current mobility has already been adequately assessed, the apparent recovery does not create a consequential second step.",
+      "Difficulty is easy: recognize the prior laryngeal movement problem and select the usual direct examination. Naming the visual observations rather than the diagnosis does not by itself create two-step application. Electromyography is a neighboring test, but the stem supplies no etiologic/prognostic question that makes it a close competitor at this stage.",
+      "Contralateral vocal-fold dysfunction before another neck operation is a high-yield safety concept. This verdict concerns the exact item's discrimination and cueing, not the importance of that concept.",
+      "The patient name, age, sex, complaint, operative side and prior opposite-side history are coherent. The earlier examination is contained within this standalone presentation; there is no hidden preceding node or later sequence to reconstruct. Clinical approval remains separate from this offline review."
+    ],
+    "suggestions": [
+      "Retain the necessary evidence about what the previous and current assessments actually established. Do not hide the absence of a current mobility examination merely to remove a cue. Instead, change the decision and competitors so interpreting assessment adequacy changes the next plan.",
+      "Compare concrete preoperative plans at the same decision stage using a supported current assessment, its actual adequacy and the contralateral operative consequence. Require a credible reason to consider each plan; do not add invented test limitations or a plainly unsafe proceed-without-assessment foil.",
+      "Use a neutral 'next assessment' or 'next preoperative plan' task rather than announcing the specific airway hazard. Replace 'A positive examination' in feedback with the actual mobility finding and its consequence.",
+      "If this remains a direct laryngoscopy-selection safety item, seek explicit acceptance as an easy recognition exception. Do not count the reassuring voice narrative as a second consequential inference."
+    ]
+  }
+]

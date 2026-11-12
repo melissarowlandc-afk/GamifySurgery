@@ -1,0 +1,1792 @@
+{
+  "checkedOn": "2026-11-11",
+  "allowConsolidation": false,
+  "requested": 41,
+  "accepted": 22,
+  "skipped": 19,
+  "acceptedCases": 18,
+  "replacements": [
+    {
+      "replaces": "case.gs028.small-bowel-obstruction.b-stable-no-red-flags",
+      "with": "question.topic.small-bowel-obstruction-ileus.closed-loop-normal-lactate.v1"
+    },
+    {
+      "replaces": "case.gs028.small-bowel-obstruction.b-peritoneal-signs",
+      "with": "question.topic.small-bowel-obstruction-ileus.postcontrast-deterioration.v1"
+    }
+  ],
+  "items": [
+    {
+      "suffix": "closed-loop-normal-lactate.v1",
+      "questionVariantId": "question.topic.small-bowel-obstruction-ileus.closed-loop-normal-lactate.v1",
+      "caseId": "case.topic.small-bowel-obstruction-ileus.closed-loop.v1",
+      "nodeId": "node.topic.small-bowel-obstruction-ileus.closed-loop-normal-lactate.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-small-bowel-obstruction-ileus-review-20261111.json",
+        "item": {
+          "id": "question.topic.small-bowel-obstruction-ileus.closed-loop-normal-lactate.v1",
+          "nodeId": "node.topic.small-bowel-obstruction-ileus.closed-loop-normal-lactate.v1",
+          "title": "Threatened closed-loop bowel despite normal lactate",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Urgent exploration is the single defensible best offered plan: the paired transition points and mesenteric geometry require interpretation, and reduced relative enhancement plus fluid make continued observation or a contrast challenge inappropriate.",
+            "Normal lactate, maintained blood pressure and partial pain relief create a credible competing reassurance error without excluding threatened bowel. The explanation appropriately describes concern for perfusion rather than claiming proven irreversible necrosis.",
+            "The task is complete and the standalone patient context supplies age, sex, prior operation and the relevant care stage. No hidden prior result is required.",
+            "The CT observations are clinical evidence, not diagnosis labels or nonmedical lexical shortcuts. No material length, convergence, absolute-language or teaching-sentence cue identified."
+          ],
+          "suggestions": [
+            "Retain the raw CT findings and conflicting clinical reassurance. Do not upgrade the prediction to hard solely because several radiologic signs are supplied.",
+            "Preserve the distinction between threatened perfusion requiring exploration and bowel already proved nonviable."
+          ]
+        }
+      },
+      "everyScoredNodeListed": true,
+      "unlistedSiblingIds": [],
+      "initialSkipReason": null,
+      "topic": "small-bowel-obstruction-ileus",
+      "status": "accepted",
+      "reason": "All scored nodes listed/PASS; clinic admission verified.",
+      "clinicRuntime": {
+        "clinicAdmissible": true,
+        "eligibilityIssue": null
+      },
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "postcontrast-deterioration.v1",
+      "questionVariantId": "question.topic.small-bowel-obstruction-ileus.postcontrast-deterioration.v1",
+      "caseId": "case.topic.small-bowel-obstruction-ileus.transit-course.v1",
+      "nodeId": "node.topic.small-bowel-obstruction-ileus.postcontrast-deterioration.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-small-bowel-obstruction-ileus-review-20261111.json",
+        "item": {
+          "id": "question.topic.small-bowel-obstruction-ileus.postcontrast-deterioration.v1",
+          "nodeId": "node.topic.small-bowel-obstruction-ileus.postcontrast-deterioration.v1",
+          "title": "Clinical deterioration after favorable contrast passage",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Urgent exploration is the best offered plan for new involuntary guarding and rebound. Earlier colonic contrast passage does not establish present bowel viability or override the changed examination.",
+            "The consequential conflict is a favorable prognostic test followed by a new clinical state: the learner must understand what the earlier test establishes and decide whether that information still supports observation. Repeating transit films and completing the original observation period represent anchoring errors.",
+            "Difficulty is at the lower end of moderate because the new peritoneal findings are overt; this should not be presented as a hard operative decision.",
+            "Presentation and update clearly separate initial improvement from later deterioration. This is a standalone node, so no prior scored explanation supplies the rule.",
+            "No material nonmedical wording shortcut identified. The known SBO diagnosis is appropriate background for a new management decision, not disclosure of a requested diagnosis."
+          ],
+          "suggestions": [
+            "Keep the favorable transit result and the subsequent clinical change together when displayed independently.",
+            "Retain the explanation's limited prognostic interpretation of contrast passage; do not turn it into a guarantee of resolution or evidence that contrast itself caused recovery."
+          ]
+        }
+      },
+      "everyScoredNodeListed": true,
+      "unlistedSiblingIds": [],
+      "initialSkipReason": null,
+      "topic": "small-bowel-obstruction-ileus",
+      "status": "accepted",
+      "reason": "All scored nodes listed/PASS; clinic admission verified.",
+      "clinicRuntime": {
+        "clinicAdmissible": true,
+        "eligibilityIssue": null
+      },
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "virgin-abdomen-observation.v1",
+      "questionVariantId": "question.topic.small-bowel-obstruction-ileus.virgin-abdomen-observation.v1",
+      "caseId": "case.topic.small-bowel-obstruction-ileus.virgin-abdomen.v1",
+      "nodeId": "node.topic.small-bowel-obstruction-ileus.virgin-abdomen-observation.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-small-bowel-obstruction-ileus-review-20261111.json",
+        "item": {
+          "id": "question.topic.small-bowel-obstruction-ileus.virgin-abdomen-observation.v1",
+          "nodeId": "node.topic.small-bowel-obstruction-ileus.virgin-abdomen-observation.v1",
+          "title": "Initial SBO management in a previously unoperated abdomen",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Continued supervised decompression and surgical reassessment is the best offered initial plan for this improving, nonperitoneal patient without an identified lesion or threatened segment.",
+            "The clinically consequential competing error is treating absence of prior surgery as an automatic indication for exploration. The resident must interpret the current anatomy and danger assessment, then decide how the unoperated abdomen changes management.",
+            "The oral-intake alternative is weaker than immediate exploration, but the central surgery-versus-observation comparison is credible. Difficulty is moderate, not hard.",
+            "The extensive negative findings have a clinical job: they assess a visible cause and urgent complication. They do not by themselves teach that an unoperated abdomen can receive a nonoperative trial; no material nonmedical key cue identified.",
+            "The explanation appropriately leaves cause and follow-up unresolved and does not declare adhesions proved or malignancy excluded. The complete single-node case stands alone."
+          ],
+          "suggestions": [
+            "Retain the distinction between a monitored initial trial and concluding that the cause is benign or established.",
+            "Keep the absence of prior surgery and the current danger assessment visible together. Future variants could strengthen the third option without changing this accepted central decision."
+          ]
+        }
+      },
+      "everyScoredNodeListed": true,
+      "unlistedSiblingIds": [],
+      "initialSkipReason": null,
+      "topic": "small-bowel-obstruction-ileus",
+      "status": "accepted",
+      "reason": "All scored nodes listed/PASS; clinic admission verified.",
+      "clinicRuntime": {
+        "clinicAdmissible": true,
+        "eligibilityIssue": null
+      },
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "contrast-assessment.v2",
+      "questionVariantId": "question.topic.small-bowel-obstruction-ileus.contrast-assessment.v2",
+      "caseId": "case.topic.small-bowel-obstruction-ileus.adhesive-course.v2",
+      "nodeId": "node.topic.small-bowel-obstruction-ileus.contrast-assessment.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-small-bowel-obstruction-ileus-review2-20261111.json",
+        "item": {
+          "id": "question.topic.small-bowel-obstruction-ileus.contrast-assessment.v2",
+          "nodeId": "node.topic.small-bowel-obstruction-ileus.contrast-assessment.v2",
+          "title": "Imaging after a changed obstruction course",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The new persistent localized pain requires interpretation despite maintained blood pressure, normal lactate and the initially reassuring scan. The second decision distinguishes a transit study from renewed assessment of anatomy and enhancement, making intravenous-contrast CT the best offered imaging plan.",
+            "The 48-hour interval makes a contrast transit assessment a credible wrong-stage choice. Noncontrast CT is a recognizable alternative but does not supply the same enhancement information. The task appropriately asks which imaging plan to use, rather than claiming that imaging must precede surgery in every deteriorating patient.",
+            "No confident clinical inaccuracy was identified. The explanation correctly avoids treating normal lactate as exclusion of threatened bowel and separates transit information from viability. The absence of guarding or rebound helps define the present decision without hiding emergency findings.",
+            "No reliable wording-only shortcut was found. The CT alternatives have parallel labels and the task does not name perfusion, intravenous contrast or a diagnostic conclusion. The shared words 'intravenous' and 'contrast' do not uniquely identify the answer.",
+            "The node follows the initial nonoperative decision coherently. Its update restates the admission imaging, treatment and changed course, so it is understandable with the shared presentation even when the preceding question is not shown. The preceding explanation does not rehearse this specific imaging answer.",
+            "Reassessing evolving obstruction and understanding the limits of reassuring laboratory findings are high-yield resident concepts. The difficulty is moderate because the reassuring findings and expected transit-testing stage compete with the new clinical change, not because information is withheld."
+          ],
+          "suggestions": [
+            "Preserve the distinction between the earlier scan and the new localized pain, the raw examination findings and the neutral imaging task. PASS is editorial only and does not constitute clinical approval."
+          ]
+        }
+      },
+      "everyScoredNodeListed": false,
+      "unlistedSiblingIds": [
+        "question.topic.small-bowel-obstruction-ileus.initial-observation.v2"
+      ],
+      "initialSkipReason": "Case contains scored nodes outside the manager PASS list.",
+      "topic": "small-bowel-obstruction-ileus",
+      "status": "skipped",
+      "reason": "Case contains scored nodes outside the manager PASS list.",
+      "clinicRuntime": null,
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "congestion-directed-oliguria.v1",
+      "questionVariantId": "question.topic.critical-renal-organ-support.congestion-directed-oliguria.v1",
+      "caseId": "case.topic.critical-renal-organ-support.oliguria-response.v1",
+      "nodeId": "node.topic.critical-renal-organ-support.congestion-directed-oliguria.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-critical-renal-organ-support-review2-20261111.json",
+        "item": {
+          "id": "question.topic.critical-renal-organ-support.congestion-directed-oliguria.v1",
+          "nodeId": "node.topic.critical-renal-organ-support.congestion-directed-oliguria.v1",
+          "title": "Initial treatment of oliguria with fluid accumulation",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The best offered treatment is IV furosemide for decongestion. Weight gain, new pulmonary findings and absent stroke-volume response must be integrated before choosing a diuretic rather than further fluid or immediate extracorporeal support. This is a common postoperative AKI management distinction.",
+            "Catheter patency, preserved circulation, modest current oxygen support and controlled potassium/pH supply the important competing-treatment context. The explanation appropriately identifies decongestion as the purpose; it does not claim that diuretics reverse kidney injury.",
+            "The ineffective crystalloid challenge is legitimate response evidence, not an answer-specific teaching sentence. The options are concrete and comparable treatment actions; no decisive wording, length, convergence or diagnosis-label shortcut was found.",
+            "The named patient, age, sex and short complaint are present. The clinic frame clearly refers to a hospital decision, and the first node needs no previous answer.",
+            "Review scope: all nine current executable proposedNodes were independently assessed using their current presentation, update, exhibit, task, option labels and explanation, including visible prior feedback. Author self-assessments and prior PASS labels were not evidence of quality. Two parked comparisons, three unkeyed slots, three withheld teaching points and one withdrawn candidate were noted but not scored; the assignment has no kept-unchanged or retired inventory rows. This is an offline editorial review, not fresh source verification or clinical approval. Difficulty and high-yield judgments are qualitative; every draft remains needs_clinician_review. Runtime randomization, timing metadata and actual rendering were outside the requested visible-text review."
+          ],
+          "suggestions": [
+            "No substantive repair required. Optional feedback refinement: explicitly distinguish relieving congestion from improving renal recovery, and briefly explain why the current presentation permits a diuretic trial before kidney replacement.",
+            "Across the packet, the repeated clinic/referring-hospital framing can be shortened without obscuring where care occurs. Keep each separated task complete and retain the patient's demographics. This repetition alone does not invalidate a question."
+          ]
+        }
+      },
+      "everyScoredNodeListed": false,
+      "unlistedSiblingIds": [
+        "question.topic.critical-renal-organ-support.diuretic-confounded-indices.v2"
+      ],
+      "initialSkipReason": "Case contains scored nodes outside the manager PASS list.",
+      "topic": "critical-renal-organ-support",
+      "status": "skipped",
+      "reason": "Case contains scored nodes outside the manager PASS list.",
+      "clinicRuntime": null,
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "rrt-treatment-response.v1",
+      "questionVariantId": "question.topic.critical-renal-organ-support.rrt-treatment-response.v1",
+      "caseId": "case.topic.critical-renal-organ-support.rrt-escalation.v1",
+      "nodeId": "node.topic.critical-renal-organ-support.rrt-treatment-response.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-critical-renal-organ-support-review2-20261111.json",
+        "item": {
+          "id": "question.topic.critical-renal-organ-support.rrt-treatment-response.v1",
+          "nodeId": "node.topic.critical-renal-organ-support.rrt-treatment-response.v1",
+          "title": "Kidney-replacement decision after metabolic improvement",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Serial chemistry and fluid-balance assessment is the best offered plan. The marked creatinine rise and oliguria create a real temptation to initiate replacement; the response of potassium/pH and the current organ-support findings instead support continued reassessment.",
+            "This requires separating injury severity from a current extracorporeal support indication, then choosing surveillance rather than immediate replacement or a prognostic stress test. It is high-yield moderate application, not evidence that a particular creatinine value is safe indefinitely.",
+            "The furosemide stress test addresses prognosis rather than replacing assessment of current complications. No additional immediate dialysis indication is supplied. The key and explanation retain reassessment rather than declaring the patient recovered.",
+            "The alternatives are different plans at the present decision point, with comparable label length and no uniquely explanatory key. Improved values are necessary clinical response data, not a nonmedical wording giveaway.",
+            "The first node stands alone. Its explanation teaches the distinction between injury and support need without naming the next node's pulmonary-fluid treatment answer."
+          ],
+          "suggestions": [
+            "No required repair. A short post-answer sentence explaining the prognostic role of the furosemide stress test would make the closest test-selection error more instructive."
+          ]
+        }
+      },
+      "everyScoredNodeListed": false,
+      "unlistedSiblingIds": [
+        "question.topic.critical-renal-organ-support.uf-clearance-separation.v1"
+      ],
+      "initialSkipReason": "Case contains scored nodes outside the manager PASS list.",
+      "topic": "critical-renal-organ-support",
+      "status": "skipped",
+      "reason": "Case contains scored nodes outside the manager PASS list.",
+      "clinicRuntime": null,
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "rrt-refractory-pulmonary-fluid.v1",
+      "questionVariantId": "question.topic.critical-renal-organ-support.rrt-refractory-pulmonary-fluid.v1",
+      "caseId": "case.topic.critical-renal-organ-support.rrt-escalation.v1",
+      "nodeId": "node.topic.critical-renal-organ-support.rrt-refractory-pulmonary-fluid.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-critical-renal-organ-support-review2-20261111.json",
+        "item": {
+          "id": "question.topic.critical-renal-organ-support.rrt-refractory-pulmonary-fluid.v1",
+          "nodeId": "node.topic.critical-renal-organ-support.rrt-refractory-pulmonary-fluid.v1",
+          "title": "Escalation for pulmonary fluid accumulation despite diuretics",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Urgent kidney replacement with fluid removal is the best offered escalation. The resident must connect accumulating balance and minimal urine to the pulmonary deterioration, then use the failed escalated loop-diuretic course and major hypoxemia to reject another pharmacologic attempt as the primary next strategy.",
+            "Adding chlorothiazide is a clinically meaningful competitor for less urgent diuretic resistance; switching loop drugs is another recognizable error. Their inferiority here comes from the current respiratory deterioration and observed response, not rhetorical option wording.",
+            "This supports escalation to extracorporeal support; it does not establish that CVVHD is universally superior to every intermittent or hybrid modality. No other replacement modality is offered, so that broader ranking is not required for this single best answer.",
+            "The earlier improvement followed by new positive balance, failed diuresis and escalating respiratory support is coherent. Current findings are sufficient independently of the earlier answer. Prior feedback does not explicitly supply this treatment choice.",
+            "The severity also requires ongoing urgent respiratory assessment. The renal intervention should not be read as a substitute for airway/ventilatory care; omission of an airway option does not create a second correct option in this renal-support comparison."
+          ],
+          "suggestions": [
+            "No required repair to the offered comparison. Keep the explanation focused on the indication for urgent fluid removal and avoid inferring a universal modality preference from this item."
+          ]
+        }
+      },
+      "everyScoredNodeListed": false,
+      "unlistedSiblingIds": [
+        "question.topic.critical-renal-organ-support.uf-clearance-separation.v1"
+      ],
+      "initialSkipReason": "Case contains scored nodes outside the manager PASS list.",
+      "topic": "critical-renal-organ-support",
+      "status": "skipped",
+      "reason": "Case contains scored nodes outside the manager PASS list.",
+      "clinicRuntime": null,
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "citrate-bleeding-circuit.v1",
+      "questionVariantId": "question.topic.critical-renal-organ-support.citrate-bleeding-circuit.v1",
+      "caseId": "case.topic.critical-renal-organ-support.circuit-anticoagulation.v1",
+      "nodeId": "node.topic.critical-renal-organ-support.citrate-bleeding-circuit.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-critical-renal-organ-support-review2-20261111.json",
+        "item": {
+          "id": "question.topic.critical-renal-organ-support.citrate-bleeding-circuit.v1",
+          "nodeId": "node.topic.critical-renal-organ-support.citrate-bleeding-circuit.v1",
+          "title": "CRRT anticoagulation after bleeding and circuit clotting",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Regional citrate is the best offered strategy: the resident must weigh persistent hemorrhage risk against demonstrated failure of anticoagulant-free circuits, then choose circuit anticoagulation that limits systemic exposure.",
+            "The circuit and bleeding observations make both competing errors meaningful. Avoiding anticoagulation is tempting after hemorrhage but has already interrupted needed therapy; systemic heparin addresses clotting at the cost of greater systemic anticoagulant exposure.",
+            "The current circulation and metabolic findings support considering citrate; they do not guarantee that citrate accumulation cannot occur. The explanation appropriately retains metabolic monitoring rather than declaring the strategy risk-free.",
+            "The options are parallel specific anticoagulation strategies. The word 'regional' requires relevant clinical understanding to distinguish it from systemic anticoagulation; it is not merely a uniquely cautious explanatory answer. Prior circuit failure is necessary treatment-response evidence, not a sufficient layperson cue to choose between the two remaining drugs.",
+            "The standalone record provides the named patient's age, sex, bleeding history, circuit course and current condition. It does not depend on either parked citrate comparison. This is a useful general-surgery ICU concept."
+          ],
+          "suggestions": [
+            "No required repair. Keep the feedback's monitoring qualification and avoid broadening normal current lactate/bilirubin into an absolute safety rule."
+          ]
+        }
+      },
+      "everyScoredNodeListed": true,
+      "unlistedSiblingIds": [],
+      "initialSkipReason": null,
+      "topic": "critical-renal-organ-support",
+      "status": "accepted",
+      "reason": "All scored nodes listed/PASS; clinic admission verified.",
+      "clinicRuntime": {
+        "clinicAdmissible": true,
+        "eligibilityIssue": null
+      },
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "trial-off-crrt.v2",
+      "questionVariantId": "question.topic.critical-renal-organ-support.trial-off-crrt.v2",
+      "caseId": "case.topic.critical-renal-organ-support.kidney-recovery.v1",
+      "nodeId": "node.topic.critical-renal-organ-support.trial-off-crrt.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-critical-renal-organ-support-review2-20261111.json",
+        "item": {
+          "id": "question.topic.critical-renal-organ-support.trial-off-crrt.v2",
+          "nodeId": "node.topic.critical-renal-organ-support.trial-off-crrt.v2",
+          "title": "Continuing a monitored interruption of CRRT",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Continuing the monitored trial off CRRT is the best offered plan at this reassessment. Actual off-treatment chemistry and balance, spontaneous urine output and stable support needs must be interpreted against a rising creatinine before deciding whether any replacement is currently needed.",
+            "Restarting CRRT and switching to intermittent dialysis are concrete competing support plans. The shared monitoring sentence appropriately prevents the key from being uniquely cautious or comprehensive.",
+            "The creatinine increase is a credible trap: an on-circuit value is influenced by extracorporeal clearance, and a subsequent rise does not by itself establish an immediate replacement indication. The explanation does not claim that intrinsic function has normalized.",
+            "The stated eight-hour interruption and 1.6 L urine output are observations in this patient, not validated universal liberation cutoffs. Continuing a reassessed trial is defensible; guaranteed durable recovery would not be established by these data.",
+            "This standalone record supplies the actual interruption, before/after values and continuing surveillance. It does not depend on a previous correct answer. The key's use of 'continue' matches a genuine current treatment state, with a meaningful creatinine conflict still requiring clinical interpretation."
+          ],
+          "suggestions": [
+            "No required repair. Retain the actual off-treatment observations and shared monitoring. Do not turn the observation interval or urine volume into a universal stopping rule, and keep the conclusion limited to the current monitored trial."
+          ]
+        }
+      },
+      "everyScoredNodeListed": true,
+      "unlistedSiblingIds": [],
+      "initialSkipReason": null,
+      "topic": "critical-renal-organ-support",
+      "status": "accepted",
+      "reason": "All scored nodes listed/PASS; clinic admission verified.",
+      "clinicRuntime": {
+        "clinicAdmissible": true,
+        "eligibilityIssue": null
+      },
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "choose-valid-fluid-test.v1",
+      "questionVariantId": "question.critical-shock-resuscitation.choose-valid-fluid-test.v1",
+      "caseId": "case.critical-shock-resuscitation.fluid-assessment.v1",
+      "nodeId": "node.critical-shock-resuscitation.choose-valid-fluid-test.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-critical-shock-resuscitation-review-20261111.json",
+        "item": {
+          "id": "question.critical-shock-resuscitation.choose-valid-fluid-test.v1",
+          "nodeId": "node.critical-shock-resuscitation.choose-valid-fluid-test.v1",
+          "title": "Choose a valid fluid-response assessment",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Review-wide scope: all 11 new executable nodes were reviewed using candidate presentations, updates, exhibits, tasks, option labels and explanations, including preceding visible explanations. No rewritten, kept-unchanged or retired executable records were present. The one unkeyed individualized-pressure-target hold and eight remaining research gaps were noted but not scored. Review-only keys and author self-assessments were not evidence of quality.",
+            "Review-wide limitation: this is an offline editorial and clinical-plausibility review, with no network or independent current-guideline verification. PASS does not establish source validity or clinical approval; every draft remains needs_clinician_review pending Melissa Rowland's exact-version approval. Difficulty and high-yield judgments are qualitative, not measured performance or verified exam-frequency claims.",
+            "Passive leg raising with direct stroke-volume measurement is the best offered assessment. The resident must reject the apparently actionable pulse-pressure variation because of acquisition conditions, then choose a measurement strategy compatible with those conditions. The respiratory diameter surrogate is a credible neighboring error but less dependable here.",
+            "The options have parallel verbs and comparable specificity. Neither the diagnosis label atrial fibrillation nor the displayed 22% supplies the answer without knowing the measurement assumptions. Repetition of variation does not uniquely identify the key.",
+            "The complete task, named 56-year-old patient and short complaint are present. The finite presentation repeats the same clinical context. This first node requires no preceding answer. The consultation wording is understandable as review of ICU care rather than a new clinic treatment encounter."
+          ],
+          "suggestions": [
+            "Retain both the rhythm and spontaneous-effort observations; do not remove necessary acquisition information in an attempt to make the item harder.",
+            "If acquisition detail is expanded, ensure the direct flow measurement is reliable despite beat-to-beat variability; do not imply that any isolated stroke-volume reading is sufficient in atrial fibrillation.",
+            "Across the five cases, optional presentation polish is to state explicitly that the named patient remains in the ICU and that the clinic consultation reviews the record. Preserve age, sex and short visit reason. Runtime wait displays and randomization were not demonstrated by this text-only review."
+          ]
+        }
+      },
+      "everyScoredNodeListed": true,
+      "unlistedSiblingIds": [],
+      "initialSkipReason": null,
+      "topic": "critical-shock-resuscitation",
+      "status": "accepted",
+      "reason": "All scored nodes listed/PASS; clinic admission verified.",
+      "clinicRuntime": {
+        "clinicAdmissible": true,
+        "eligibilityIssue": null
+      },
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "response-versus-fluid-risk.v1",
+      "questionVariantId": "question.critical-shock-resuscitation.response-versus-fluid-risk.v1",
+      "caseId": "case.critical-shock-resuscitation.fluid-assessment.v1",
+      "nodeId": "node.critical-shock-resuscitation.response-versus-fluid-risk.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-critical-shock-resuscitation-review-20261111.json",
+        "item": {
+          "id": "question.critical-shock-resuscitation.response-versus-fluid-risk.v1",
+          "nodeId": "node.critical-shock-resuscitation.response-versus-fluid-risk.v1",
+          "title": "Separate fluid responsiveness from fluid tolerance",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Increasing norepinephrine is the best offered next adjustment: marked hypotension persists despite substantial measured output, while the respiratory course deteriorated after fluid. The reversible stroke-volume rise is a genuine competing reason to consider fluid, so the learner must distinguish responsiveness from whether pursuing it is beneficial.",
+            "A positive passive-leg-raise response does not compel a bolus. Conversely, B-lines alone would not prove fluid-induced hydrostatic edema; the recommendation is supported by the combined oxygen trajectory, examination, flow and pressure findings. The explanation appropriately avoids claiming a proved edema mechanism.",
+            "Dobutamine is less compelling with vigorous contraction and substantial output. It is the weaker distractor, but the fluid-versus-pressor decision remains a consequential, credible comparison.",
+            "The preceding explanation teaches how to assess responsiveness, not whether this patient should receive fluid. The new respiratory and flow findings change the decision. The current update supplies norepinephrine use, and the current exhibit and shared presentation are sufficient without remembering the prior answer.",
+            "The task names the relevant decision dimensions without supplying their interpretation. Option labels are short and parallel; no nonmedical wording shortcut was identified."
+          ],
+          "suggestions": [
+            "Retain the positive reversible flow response and post-fluid respiratory deterioration together; their tension is the useful learning objective.",
+            "Keep the conclusion patient-specific. Do not generalize this example into a rule that B-lines always prohibit fluid or that positive fluid responsiveness always requires fluid. Exact clinical ranking remains for clinician sign-off."
+          ]
+        }
+      },
+      "everyScoredNodeListed": true,
+      "unlistedSiblingIds": [],
+      "initialSkipReason": null,
+      "topic": "critical-shock-resuscitation",
+      "status": "accepted",
+      "reason": "All scored nodes listed/PASS; clinic admission verified.",
+      "clinicRuntime": {
+        "clinicAdmissible": true,
+        "eligibilityIssue": null
+      },
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "inotrope-after-pressure-restored.v1",
+      "questionVariantId": "question.critical-shock-resuscitation.inotrope-after-pressure-restored.v1",
+      "caseId": "case.critical-shock-resuscitation.pressure-and-flow.v2",
+      "nodeId": "node.critical-shock-resuscitation.inotrope-after-pressure-restored.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-critical-shock-resuscitation-review-20261111.json",
+        "item": {
+          "id": "question.critical-shock-resuscitation.inotrope-after-pressure-restored.v1",
+          "nodeId": "node.critical-shock-resuscitation.inotrope-after-pressure-restored.v1",
+          "title": "Treat low flow despite restored arterial pressure",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Dobutamine is the best offered adjustment. The learner must recognize that an acceptable arterial pressure has not restored perfusion, then select flow support in the presence of low cardiac index and newly weak contraction rather than simply escalating pressure or giving more fluid.",
+            "The current perfusion findings, cardiac index, echocardiographic change and absent preload response provide a coherent basis for ranking the options. The explanation appropriately says dobutamine is a supported option and calls for reassessment; it does not claim that all alternative inotropic strategies are prohibited.",
+            "The prior explanation supplies some scaffolding by distinguishing inadequate pressure from substantial output and by discussing absent fluid response. It does not state the present dobutamine answer. The new low-output phenotype reverses the earlier treatment rationale, so the sequence still requires application rather than literal recall of prior feedback.",
+            "All current pressures, drugs, perfusion findings and flow observations are present in this node. It can be answered with the shared presentation without remembering previous numbers. 'Later' makes the new cardiac findings temporally possible rather than contradicting the earlier vigorous contraction.",
+            "No label-length, wording-overlap or convergence shortcut was identified. The correct choice requires knowing what the observations mean and what the drugs do."
+          ],
+          "suggestions": [
+            "Preserve the contrast between restored pressure and deteriorating perfusion, with measured low flow and a technically adequate preload assessment.",
+            "Repair the preceding node's ambiguous antimicrobial-course wording without adding a statement there that directly teaches when to choose dobutamine. Recheck this full sequence after any preceding-feedback revision."
+          ]
+        }
+      },
+      "everyScoredNodeListed": false,
+      "unlistedSiblingIds": [
+        "question.critical-shock-resuscitation.peripheral-norepinephrine.v2"
+      ],
+      "initialSkipReason": "Case contains scored nodes outside the manager PASS list.",
+      "topic": "critical-shock-resuscitation",
+      "status": "skipped",
+      "reason": "Case contains scored nodes outside the manager PASS list.",
+      "clinicRuntime": null,
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "lactate-perfusion-discordance.v1",
+      "questionVariantId": "question.critical-shock-resuscitation.lactate-perfusion-discordance.v1",
+      "caseId": "case.critical-shock-resuscitation.perfusion-and-pressure-target.v2",
+      "nodeId": "node.critical-shock-resuscitation.lactate-perfusion-discordance.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-critical-shock-resuscitation-review-20261111.json",
+        "item": {
+          "id": "question.critical-shock-resuscitation.lactate-perfusion-discordance.v1",
+          "nodeId": "node.critical-shock-resuscitation.lactate-perfusion-discordance.v1",
+          "title": "Integrate persistent lactate elevation with improving perfusion",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Maintaining the current MAP target is the best offered order. The learner must reconcile a still-elevated but falling lactate with improving bedside perfusion, then decide whether a further pressure or fluid intervention is justified.",
+            "The negative preload response weakens reflex volume loading; the improving examination and adequate current pressure weaken reflex target escalation. The explanation correctly leaves reassessment necessary rather than declaring the residual lactate harmless or proving a nonhypoperfusion cause.",
+            "The repeated 65 mm Hg value is necessary to compare maintaining versus changing the existing goal. It is not an unfair numeric match by itself: the main competing choice explicitly changes that goal, and the record must be interpreted to choose between them. The numerical labels do not create a convergent answer pattern.",
+            "The first node is self-contained with named age/sex, a short visit reason, a complete task and a coherent record. No confident clinical inaccuracy or equally strong offered alternative was identified. This does not establish 65 mm Hg as the universal goal for all patients."
+          ],
+          "suggestions": [
+            "Optional wording polish: replace 'on an unchanged norepinephrine target of 65 mm Hg' with a statement that the MAP goal is 65 mm Hg during norepinephrine treatment; the target is pressure, not drug dose.",
+            "Keep the falling trend and the actual bedside observations. Do not replace them with an authored conclusion that perfusion has normalized or teach that lactate can be disregarded."
+          ]
+        }
+      },
+      "everyScoredNodeListed": false,
+      "unlistedSiblingIds": [
+        "question.critical-shock-resuscitation.validate-pressure-measurement.v2"
+      ],
+      "initialSkipReason": "Case contains scored nodes outside the manager PASS list.",
+      "topic": "critical-shock-resuscitation",
+      "status": "skipped",
+      "reason": "Case contains scored nodes outside the manager PASS list.",
+      "clinicRuntime": null,
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "vasopressin-escalation.v2",
+      "questionVariantId": "question.critical-shock-resuscitation.vasopressin-escalation.v2",
+      "caseId": "case.critical-shock-resuscitation.pressure-and-flow.v2",
+      "nodeId": "node.critical-shock-resuscitation.vasopressin-escalation.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-critical-shock-resuscitation-review2-20261111.json",
+        "item": {
+          "id": "question.critical-shock-resuscitation.vasopressin-escalation.v2",
+          "nodeId": "node.critical-shock-resuscitation.vasopressin-escalation.v2",
+          "title": "Persistent low pressure with substantial flow during norepinephrine escalation",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Adding vasopressin is the single defensible best offered adjustment. The near-unchanged stroke volumes during passive leg raising do not support another preload-directed bolus, and current cardiac output of 7.6 L/min does not support choosing dobutamine for a demonstrated low-flow problem. Persistent low pressure despite increasing norepinephrine favors additional vasopressor support among these choices.",
+            "Two consequential steps remain: integrate pressure, output and reversible preload response to identify the dominant treatment problem, then choose the matching escalation. The observations are not replaced with a diagnosis label. Changing the flow or preload-response pattern would change the ranking.",
+            "No unique wording match, length outlier, convergence pattern, rhetorical absolute or pre-answer teaching sentence identifies the key. The three choices are concrete resuscitation adjustments. Mentioning increasing norepinephrine is legitimate decision information; it does not itself eliminate the fluid and inotrope competitors without clinical knowledge.",
+            "The isolated task is complete with the shared presentation, update and exhibit. Source control progressing from under way to complete is coherent, and antibiotic treatment clearly continues. The earlier route explanation supplies neither this key nor its pressure-versus-flow reasoning. Earlier unchanged preload response makes the fluid distractor less tempting in sequence, but the fresh measured output and pressure course still support a distinct decision.",
+            "For sequence review only, the preserved following inotrope node explicitly introduces later deterioration, new low cardiac index and diffuse weak contraction after pressure is maintained. This is a coherent changed state, not a contradiction of the current output. The current Explanation does not name the next keyed treatment. No new verdict is assigned to that preserved node.",
+            "The concept is high-yield surgical critical-care physiology and vasoactive management. Moderate is a qualitative prediction, not a measured result; this is not a hard question for a resident who can interpret the supplied hemodynamics.",
+            "No confident clinical inaccuracy was identified. The unspecified norepinephrine dose does not create a competing correct answer within this option set; this review does not establish a universal dose threshold or rule for choosing vasopressin over further norepinephrine titration. Offline editorial PASS is not source verification or clinical approval; retain needs_clinician_review."
+          ],
+          "suggestions": [
+            "Preserve the measured flow, reversible response and support trajectory together. Do not replace them with an authored vasodilatory-shock conclusion or add an unsupported dose cutoff.",
+            "Retain the explicit later-state transition before the preserved inotrope question. Keep any expanded feedback from naming its next answer."
+          ]
+        }
+      },
+      "everyScoredNodeListed": false,
+      "unlistedSiblingIds": [
+        "question.critical-shock-resuscitation.peripheral-norepinephrine.v2"
+      ],
+      "initialSkipReason": "Case contains scored nodes outside the manager PASS list.",
+      "topic": "critical-shock-resuscitation",
+      "status": "skipped",
+      "reason": "Case contains scored nodes outside the manager PASS list.",
+      "clinicRuntime": null,
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "echo-for-persistent-shock.v2",
+      "questionVariantId": "question.critical-shock-resuscitation.echo-for-persistent-shock.v2",
+      "caseId": "case.critical-shock-resuscitation.reassess-shock-mechanism.v2",
+      "nodeId": "node.critical-shock-resuscitation.echo-for-persistent-shock.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-critical-shock-resuscitation-review2-20261111.json",
+        "item": {
+          "id": "question.critical-shock-resuscitation.echo-for-persistent-shock.v2",
+          "nodeId": "node.critical-shock-resuscitation.echo-for-persistent-shock.v2",
+          "title": "Next structural assessment after limited transthoracic acquisition",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "TEE is the single defensible best offered next investigation for this persistently unstable patient with important cardiac structures unexamined. Contrast-enhanced TTE addresses a different limitation from failure to obtain the needed acoustic views; pulmonary artery catheterization could supply useful physiology but does not resolve the missing structural assessment as directly.",
+            "Two consequential steps are present: recognize that the useful local left-ventricular observation does not complete assessment of the high-filling-pressure, nonresponsive circulation; then distinguish failed acoustic access from a border-definition problem and select a suitable structural approach. Confusing those acquisition limitations makes contrast TTE a credible near miss.",
+            "The explicitly unacquired views and unexamined structures are necessary adequacy information, not an unsupported author diagnosis. They give a medically knowledgeable reader the discriminator but do not provide a nonmedical unique phrase match: both echo choices overlap with the prior examination, and none of the labels explains its own superiority. There is no portability/availability permission unique to the key or option-length cue favoring it.",
+            "The presentation identifies a named 54-year-old woman, the short complaint matches the current state, and the complete task specifies the decision after the reported examination. This is a standalone node with no preceding-answer contamination. The Explanation appropriately preserves the useful local observation rather than declaring the entire prior examination worthless.",
+            "The high-yield construct is adequate assessment of an unresolved shock mechanism and selection of the next investigation, not acquisition of specialized TEE views. Moderate is a qualitative prediction; the explicitly failed views make this more straightforward than a hard mixed-shock case.",
+            "No confident clinical inaccuracy was identified in the supplied text. The limited view cannot establish global left-ventricular function, exclude tamponade or diagnose a specific right-sided mechanism, and the Explanation does not make those claims. The exact described acquisition pattern and clinical ranking still require named clinician review. No current source verification was performed; editorial PASS does not change needs_clinician_review."
+          ],
+          "suggestions": [
+            "Preserve the distinction between valid local information and structures not assessed; do not replace the acquisition observations with a diagnostic conclusion.",
+            "Keep the contrast-TTE and invasive-hemodynamic alternatives, since their differing capabilities provide the meaningful discrimination. Do not imply that TEE is universally superior after every limited TTE or that the supplied pressures establish a specific diagnosis."
+          ]
+        }
+      },
+      "everyScoredNodeListed": true,
+      "unlistedSiblingIds": [],
+      "initialSkipReason": null,
+      "topic": "critical-shock-resuscitation",
+      "status": "accepted",
+      "reason": "All scored nodes listed/PASS; clinic admission verified.",
+      "clinicRuntime": {
+        "clinicAdmissible": true,
+        "eligibilityIssue": null
+      },
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "persistent-pain-exploration.v1",
+      "questionVariantId": "question.topic.appendix-appendicitis.persistent-pain-exploration.v1",
+      "caseId": "case.topic.appendix-appendicitis.persistent-pain.v2",
+      "nodeId": "node.topic.appendix-appendicitis.persistent-pain-exploration.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-appendix-appendicitis-review-20261111.json",
+        "item": {
+          "id": "question.topic.appendix-appendicitis.persistent-pain-exploration.v1",
+          "nodeId": "node.topic.appendix-appendicitis.persistent-pain-exploration.v1",
+          "title": "Progressive focal findings after negative CT",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Diagnostic laparoscopy is the defensible best offered action: the resident must reconcile a reassuring initial scan with subsequent involuntary guarding and change the management plan. Repeat imaging and continued observation represent credible overreliance on the earlier result.",
+            "The progression and guarding are necessary clinical discriminators, not a wording shortcut. Options have comparable specificity; no key-only overlap, convergence, rhetorical absolute or teaching sentence identifies the answer without clinical interpretation.",
+            "The first node is self-contained. Its explanation does not disclose the later tumor or oncologic operation.",
+            "Review scope: all 13 proposed executable nodes were reviewed, comprising one rewritten and 12 new items. Retired/replacement proposals and held/withheld records were noted but not graded. Judgments use the candidate visible fields and their sequence, not author self-assessments. This is an offline editorial review with no new source verification or clinical approval; PASS does not change needs_clinician_review. Difficulty and high-yield judgments are qualitative, not measured exam frequencies. Runtime rendering and wait previews are outside this text-only review."
+          ],
+          "suggestions": []
+        }
+      },
+      "everyScoredNodeListed": true,
+      "unlistedSiblingIds": [],
+      "initialSkipReason": null,
+      "topic": "appendix-appendicitis",
+      "status": "skipped",
+      "reason": "Four-to-one live rewrite exceeds the existing duplicate-target guard; parked pending manager scope decision.",
+      "clinicRuntime": {
+        "clinicAdmissible": true,
+        "eligibilityIssue": null
+      },
+      "blockedReplacementCases": [
+        "case.gs028c.appendicitis.a-atypical-older-adult",
+        "case.gs028c.appendicitis.a-competing-diagnoses",
+        "case.gs028c.appendicitis.a-equivocal-exam",
+        "case.gs028c.appendicitis.a-nondiagnostic-ultrasound"
+      ]
+    },
+    {
+      "suffix": "post-abscess-interval-appendectomy.v1",
+      "questionVariantId": "question.topic.appendix-appendicitis.post-abscess-interval-appendectomy.v1",
+      "caseId": null,
+      "nodeId": "node.topic.appendix-appendicitis.post-abscess-interval-appendectomy.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-appendix-appendicitis-review-20261111.json",
+        "item": {
+          "id": "question.topic.appendix-appendicitis.post-abscess-interval-appendectomy.v1",
+          "nodeId": "node.topic.appendix-appendicitis.post-abscess-interval-appendectomy.v1",
+          "title": "Persistent appendiceal lesion despite normal colonoscopy",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The resident must interpret normal luminal findings as insufficient to dismiss a persistent appendiceal mural lesion, then choose limited intact excision rather than surveillance or an unproven oncologic extension. Both distinctions affect the proposed care.",
+            "The later CT adds consequential localization and base-clearance information that the initial presentation lacked. This supports the extent decision rather than simply repeating an earlier conclusion.",
+            "The record supports interval appendectomy as the best offered plan in this fit older patient with persistent suspicious imaging. This is not a blanket recommendation for every patient after an abscess; the explanation appropriately limits the application.",
+            "The sequence is coherent, and the update independently supplies the colonoscopy and repeat-imaging results. Earlier feedback establishes a neoplasm workup but does not name the keyed operation. No decisive nonmedical wording shortcut identified."
+          ],
+          "suggestions": []
+        }
+      },
+      "everyScoredNodeListed": false,
+      "unlistedSiblingIds": [],
+      "initialSkipReason": "Not in active source; exact PASS survives only in a retained reviewed context containing unaccepted companions.",
+      "topic": "appendix-appendicitis",
+      "status": "skipped",
+      "reason": "Not in active source; exact PASS survives only in a retained reviewed context containing unaccepted companions.",
+      "clinicRuntime": null,
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "goblet-cell-oncologic-resection.v1",
+      "questionVariantId": "question.topic.appendix-appendicitis.goblet-cell-oncologic-resection.v1",
+      "caseId": "case.topic.appendix-appendicitis.goblet-cell-pathology.v1",
+      "nodeId": "node.topic.appendix-appendicitis.goblet-cell-oncologic-resection.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-appendix-appendicitis-review-20261111.json",
+        "item": {
+          "id": "question.topic.appendix-appendicitis.goblet-cell-oncologic-resection.v1",
+          "nodeId": "node.topic.appendix-appendicitis.goblet-cell-oncologic-resection.v1",
+          "title": "Goblet cell tumor despite historical carcinoid terminology",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The resident must reconcile the historical carcinoid label and focal neuroendocrine staining with infiltrative mucin-filled goblet-cell morphology, then choose the adenocarcinoma surgical pathway rather than applying a small-NET treatment rule. The 1.4-cm size creates a credible competing interpretation rather than arbitrary extra data.",
+            "Right hemicolectomy is a defensible offered plan for localized goblet cell adenocarcinoma under the guideline-based approach described. No confident clinical inaccuracy identified offline; exact-version clinical approval remains separate.",
+            "The cecal-cuff option is weaker because the base is clear, but appendectomy completion remains a meaningful near-miss under the historical terminology. No decisive nonmedical cue, convergence or option-length shortcut identified.",
+            "The complete pathology review, staging, colonoscopy and surgical fitness make this standalone node understandable without another case part."
+          ],
+          "suggestions": []
+        }
+      },
+      "everyScoredNodeListed": true,
+      "unlistedSiblingIds": [],
+      "initialSkipReason": null,
+      "topic": "appendix-appendicitis",
+      "status": "accepted",
+      "reason": "All scored nodes listed/PASS; clinic admission verified.",
+      "clinicRuntime": {
+        "clinicAdmissible": true,
+        "eligibilityIssue": null
+      },
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "invasive-adenocarcinoma-resection.v2",
+      "questionVariantId": "question.topic.appendix-appendicitis.invasive-adenocarcinoma-resection.v2",
+      "caseId": "case.topic.appendix-appendicitis.persistent-pain.v2",
+      "nodeId": "node.topic.appendix-appendicitis.invasive-adenocarcinoma-resection.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-appendix-appendicitis-review2-20261111.json",
+        "item": {
+          "id": "question.topic.appendix-appendicitis.invasive-adenocarcinoma-resection.v2",
+          "nodeId": "node.topic.appendix-appendicitis.invasive-adenocarcinoma-resection.v2",
+          "title": "Invasive appendiceal adenocarcinoma after complete specimen review",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Right hemicolectomy with regional nodes is the single best offered plan: the full specimen demonstrates infiltrative malignant glands extending into mesoappendiceal fat, staging does not demonstrate peritoneal or distant disease, and the patient is fit. A clear appendiceal base does not settle regional nodal management.",
+            "The two consequential steps are recognizing that a limited low-grade tip sample does not characterize the separate invasive proximal focus, then distinguishing regional oncologic resection from either surveillance or a peritoneal-treatment pathway. These are standard, testable appendiceal-neoplasm distinctions.",
+            "The words 'Expert permanent review of the entire specimen' establish sampling scope; they do not uniquely match an option. 'No distant lesions or deposits on serosal surfaces' is necessary staging information, not an unfair diagnosis giveaway. Options have comparable operative specificity and no convergence or absolute-wording shortcut was identified.",
+            "The follow-up coherently supplies the intervening appendectomy, complete pathology, staging and recovery. It stands alone with its presentation and update. The preceding exploration explanation does not teach the tumor operation.",
+            "This is an offline editorial judgment from the supplied candidate text, not fresh guideline verification or clinical approval. No confident clinical inaccuracy was identified; Melissa's exact-version clinical review remains necessary. The same verification limitation applies throughout this report."
+          ],
+          "suggestions": [
+            "Retain the complete-specimen versus tip-sample distinction, clear-margin finding and staging information; removing those would weaken the intended competing decisions."
+          ]
+        }
+      },
+      "everyScoredNodeListed": true,
+      "unlistedSiblingIds": [],
+      "initialSkipReason": null,
+      "topic": "appendix-appendicitis",
+      "status": "skipped",
+      "reason": "Four-to-one live rewrite exceeds the existing duplicate-target guard; parked pending manager scope decision.",
+      "clinicRuntime": {
+        "clinicAdmissible": true,
+        "eligibilityIssue": null
+      },
+      "blockedReplacementCases": [
+        "case.gs028c.appendicitis.a-atypical-older-adult",
+        "case.gs028c.appendicitis.a-competing-diagnoses",
+        "case.gs028c.appendicitis.a-equivocal-exam",
+        "case.gs028c.appendicitis.a-nondiagnostic-ultrasound"
+      ]
+    },
+    {
+      "suffix": "peritoneal-mucin-referral.v2",
+      "questionVariantId": "question.topic.appendix-appendicitis.peritoneal-mucin-referral.v2",
+      "caseId": "case.topic.appendix-appendicitis.peritoneal-mucin.v2",
+      "nodeId": "node.topic.appendix-appendicitis.peritoneal-mucin-referral.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-appendix-appendicitis-review2-20261111.json",
+        "item": {
+          "id": "question.topic.appendix-appendicitis.peritoneal-mucin-referral.v2",
+          "nodeId": "node.topic.appendix-appendicitis.peritoneal-mucin-referral.v2",
+          "title": "Site-specific pathology and mucinous peritoneal disease",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The diaphragmatic nodule contains mucinous epithelium at a separate peritoneal site. The negative pelvic nodule and clear appendiceal margin do not invalidate that positive specimen. This interpretation changes the relevant disease field and supports specialist assessment for cytoreduction and intraperitoneal therapy.",
+            "The key is an assessment pathway, not an assertion that immediate cytoreduction or HIPEC is mandatory despite no bulky residual disease. The explanation preserves that important distinction. Follow-up may ultimately be selected by the specialist team, but it should not be predetermined from the negative pelvic specimen and postoperative imaging.",
+            "The two steps are resolving the site-specific sampling evidence, then selecting peritoneal-disease assessment rather than regional colectomy or a preselected observation pathway. Appendiceal mucinous peritoneal spread is a standard board-relevant concept even though the clinical condition is uncommon.",
+            "All three options share 'Multidisciplinary review for' and name a concrete subsequent pathway. No uniquely cautious generic key, meaningful length outlier, absolute wording or nonmedical convergence shortcut was identified. The mucin and epithelial descriptions require medical interpretation rather than directly repeating an answer label.",
+            "The case is standalone and includes the operative specimens, complete primary review and postoperative staging. No earlier explanation is needed to establish the separate diaphragmatic finding."
+          ],
+          "suggestions": [
+            "Retain 'assessment' rather than guaranteed treatment in the explanation. Preserve the separate specimen labels; combining them into a global negative or positive summary would remove the interpretation being tested."
+          ]
+        }
+      },
+      "everyScoredNodeListed": true,
+      "unlistedSiblingIds": [],
+      "initialSkipReason": null,
+      "topic": "appendix-appendicitis",
+      "status": "accepted",
+      "reason": "All scored nodes listed/PASS; clinic admission verified.",
+      "clinicRuntime": {
+        "clinicAdmissible": true,
+        "eligibilityIssue": null
+      },
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "net-regional-resection.v2",
+      "questionVariantId": "question.topic.appendix-appendicitis.net-regional-resection.v2",
+      "caseId": "case.topic.appendix-appendicitis.net-staging.v2",
+      "nodeId": "node.topic.appendix-appendicitis.net-regional-resection.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-appendix-appendicitis-review2-20261111.json",
+        "item": {
+          "id": "question.topic.appendix-appendicitis.net-regional-resection.v2",
+          "nodeId": "node.topic.appendix-appendicitis.net-regional-resection.v2",
+          "title": "Appendiceal NET resection after characterization of liver lesions",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [
+            {
+              "phrase": "resolves both previously indeterminate lesions",
+              "why": "Minor preinterpretation: 'resolves' announces that the prior uncertainty has been settled before the learner reads the morphology. It does not reveal whether the lesions are benign or metastatic and does not independently select the key, so this is an optional tightening rather than a blocking cue."
+            }
+          ],
+          "fairness": [
+            "The MRI observations support simple cysts rather than a liver-biopsy requirement. The complete specimen then supplies a 2.6-cm well-differentiated NET, a clear base and a fit patient without demonstrated metastatic disease. Right hemicolectomy with regional nodes is the best offered plan under the usual size-based surgical teaching; no confident clinical inaccuracy was identified in this supplied scenario.",
+            "There are two consequential decisions: update the indeterminate CT findings using the acquired MRI morphology, then apply regional-resection reasoning despite favorable grade and a clear local margin. Incorrectly treating the lesions as unresolved changes the immediate action to biopsy; incorrectly equating a clear margin with adequate nodal treatment changes the action to follow-up.",
+            "The known neuroendocrine diagnosis is legitimate for a staging-and-management question. There is no need to hide it. The numerical tumor size is actual case data, not an invented probability or cutoff introduced by this review.",
+            "This is a standalone revision. Its presentation and update carry both the initial CT concern and the later MRI/pathology findings, with no dependence on the parked receptor-staging question. No preceding explanation supplies the MRI interpretation.",
+            "Appendiceal NET operative management is high yield. The liver imaging adds a meaningful staging issue rather than an unrelated second objective."
+          ],
+          "suggestions": [
+            "For cleaner interpretation, replace 'resolves both previously indeterminate lesions' with a neutral statement that the MRI evaluates those same two lesions, followed by the current observations.",
+            "Remove 'directly sourced' from learner-facing feedback. Explain the clinical principle there and keep provenance language in the evidence records."
+          ]
+        }
+      },
+      "everyScoredNodeListed": true,
+      "unlistedSiblingIds": [],
+      "initialSkipReason": null,
+      "topic": "appendix-appendicitis",
+      "status": "accepted",
+      "reason": "All scored nodes listed/PASS; clinic admission verified.",
+      "clinicRuntime": {
+        "clinicAdmissible": true,
+        "eligibilityIssue": null
+      },
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "postoperative-abscess-drainage.v2",
+      "questionVariantId": "question.topic.appendix-appendicitis.postoperative-abscess-drainage.v2",
+      "caseId": "case.topic.appendix-appendicitis.postoperative-source-control.v2",
+      "nodeId": "node.topic.appendix-appendicitis.postoperative-abscess-drainage.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-appendix-appendicitis-review2-20261111.json",
+        "item": {
+          "id": "question.topic.appendix-appendicitis.postoperative-abscess-drainage.v2",
+          "nodeId": "node.topic.appendix-appendicitis.postoperative-abscess-drainage.v2",
+          "title": "Source-control route for a localized postoperative pelvic abscess",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Persistent fever and focal pain during active antibiotics plus the organized gas-containing pelvic collection support source control. Stable physiology, no generalized peritonitis and the assessed access anatomy favor image-guided drainage over continued antibiotics without drainage or immediate operative exploration.",
+            "The two steps are recognizing that persistent illness reflects a drainable localized source despite stable circulation, then choosing an appropriate route from the access geometry and distribution of illness. These are high-yield surgical source-control decisions.",
+            "The description of bowel and major vessels relative to the posterior plane is necessary procedural evidence, not a generic 'drainage is available' permission. 'Pelvic' appears in both drainage options, and the task does not name the preferred route. No meaningful wording, absolute or convergence shortcut was identified.",
+            "The IV-only CT is not claimed to exclude a bowel leak. No enteric contrast is required merely to make initial percutaneous drainage defensible in this represented stable localized scenario. The explanation appropriately preserves reassessment and possible operation for an uncontrolled source or deterioration; it does not overstate what this scan proves.",
+            "The update supplies the relevant CT result and current treatment/physiology, so this node stands alone with the presentation. After the archive-review node it also follows coherently: the newly reviewed images change the next decision. Earlier feedback teaches image adequacy, not the drainage answer."
+          ],
+          "suggestions": [
+            "Retain the clinical course, access anatomy and distinction between no generalized peritonitis and proof of no leak. Do not replace those observations with an authored conclusion that the collection is 'suitable for drainage'."
+          ]
+        }
+      },
+      "everyScoredNodeListed": false,
+      "unlistedSiblingIds": [
+        "question.topic.appendix-appendicitis.postoperative-infection-imaging.v2"
+      ],
+      "initialSkipReason": "Case contains scored nodes outside the manager PASS list.",
+      "topic": "appendix-appendicitis",
+      "status": "skipped",
+      "reason": "Case contains scored nodes outside the manager PASS list.",
+      "clinicRuntime": null,
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "post-source-control-antibiotics.v2",
+      "questionVariantId": "question.topic.appendix-appendicitis.post-source-control-antibiotics.v2",
+      "caseId": "case.topic.appendix-appendicitis.postoperative-source-control.v2",
+      "nodeId": "node.topic.appendix-appendicitis.post-source-control-antibiotics.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-appendix-appendicitis-review2-20261111.json",
+        "item": {
+          "id": "question.topic.appendix-appendicitis.post-source-control-antibiotics.v2",
+          "nodeId": "node.topic.appendix-appendicitis.post-source-control-antibiotics.v2",
+          "title": "Antibiotic endpoint despite mild residual leukocytosis",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [
+            {
+              "phrase": "Stop antibiotic treatment",
+              "why": "The key is shorter than either continuation plan. This is a limited option-length cue, but a stop order naturally needs fewer words than a conditional continuation endpoint; it does not independently establish the correct answer. Do not add filler to the key merely to equalize length."
+            }
+          ],
+          "fairness": [
+            "The record gives documented source control without ongoing leakage, four days of active treatment after drainage, substantial clinical recovery and immunocompetence. A slightly elevated but substantially falling leukocyte count does not by itself make continued treatment the best of these options. No confident clinical inaccuracy was identified in the proposed stopping decision.",
+            "The two steps are interpreting the residual laboratory abnormality in the context of recovery and controlled infection, then applying a treatment endpoint rather than waiting for complete laboratory normalization. The elevated count is a credible resident trap; adequate source control is a necessary premise, not an inference that must be hidden.",
+            "Repeat CT before stopping is weaker than the leukocyte-normalization distractor because the patient is asymptomatic with documented source control, but it still represents a recognizable demand for radiographic resolution. All options address when to stop the same antibiotic course.",
+            "The explanation appropriately makes source control and recovery part of the endpoint, rather than teaching a universal fixed duration for every abdominal infection. Exact applicability remains for clinician sign-off; this review does not introduce a new duration or threshold.",
+            "The later clinic update resets the timeline clearly and supplies drainage, elapsed treatment, source-control status and current findings. It stands alone despite the historical fever in the shared presentation. The earlier drainage feedback says to continue antibiotics at the source-control stage but does not give this later stopping answer.",
+            "Antibiotic duration after adequate source control is high yield. This is moderate application of a familiar principle, not a hard item."
+          ],
+          "suggestions": [
+            "Optionally tighten all three labels to similarly concise endpoint plans, without concealing the distinction between stopping now, waiting for leukocyte normalization and waiting for repeat imaging.",
+            "Keep the mild residual leukocytosis and documented recovery; removing the competing laboratory signal would turn this into uncomplicated short-course recall."
+          ]
+        }
+      },
+      "everyScoredNodeListed": false,
+      "unlistedSiblingIds": [
+        "question.topic.appendix-appendicitis.postoperative-infection-imaging.v2"
+      ],
+      "initialSkipReason": "Case contains scored nodes outside the manager PASS list.",
+      "topic": "appendix-appendicitis",
+      "status": "skipped",
+      "reason": "Case contains scored nodes outside the manager PASS list.",
+      "clinicRuntime": null,
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "belt-equivocal-observation.v1",
+      "questionVariantId": "question.topic.trauma-initial-abdomen.belt-equivocal-observation.v1",
+      "caseId": "case.topic.trauma-initial-abdomen.belt-bowel-evolution.v2",
+      "nodeId": "node.topic.trauma-initial-abdomen.belt-equivocal-observation.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-trauma-initial-abdomen-review-preserved-20261111.json",
+        "item": {
+          "id": "question.topic.trauma-initial-abdomen.belt-equivocal-observation.v1",
+          "nodeId": "node.topic.trauma-initial-abdomen.belt-equivocal-observation.v1",
+          "title": "Observation after equivocal CT in seat-belt trauma",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Scope: this array reviews only the nine current pass-preserved nodes. The nine revised nodes, four parked nodes and five unkeyed holds receive no verdict here; the preceding revised renal node was read only for its effect on the preserved follow-up. Historical records and author self-assessments were not used to supply missing candidate facts. This offline editorial review is not source re-verification or Melissa Rowland's clinical approval; all drafts remain needs_clinician_review. Difficulty and high-yield judgments are qualitative, not measured performance or verified exam-frequency claims.",
+            "The clinic frame explicitly says that each question's 'now' means the recorded hospital decision point. Caleb's named age/sex presentation and the CT/examination record identify an acute historical decision, not a new outpatient trauma evaluation. The complete task asks for both setting and assessment after this CT.",
+            "Inpatient observation with serial abdominal examinations is the best offered plan. First interpret unexplained interloop fluid and mesenteric stranding as an abnormal, potentially evolving injury record; then use stable circulation and the nonperitoneal examination to choose observation over discharge or immediate exploration. Both under-recognition and premature operation are credible resident errors in this high-yield blunt bowel-injury decision.",
+            "The phrases 'no solid-organ injury, wall defect or extraluminal air' and 'no guarding or rebound' are necessary discriminators, not a plain-language announcement that injury is absent. No key-only wording overlap, explanatory option, convergence pattern or length outlier selects observation without clinical interpretation. The explanation does not equate absent direct perforation signs with a negative CT. No confident clinical inaccuracy identified.",
+            "This first node stands alone. The clinic follow-up does not disclose the historical management or subsequent bowel outcome. Later revised-node quality is outside this report."
+          ],
+          "suggestions": [
+            "Retain the distinction between equivocal abnormal CT findings and a completely negative CT, together with the historical hospital decision frame.",
+            "Optional shared-frame tightening: 'As the clinic founder' adds no clinical information; retain the sentence defining the historical decision point if shortening the introduction."
+          ]
+        }
+      },
+      "everyScoredNodeListed": true,
+      "unlistedSiblingIds": [],
+      "initialSkipReason": null,
+      "topic": "trauma-initial-abdomen",
+      "status": "accepted",
+      "reason": "All scored nodes listed/PASS; clinic admission verified.",
+      "clinicRuntime": {
+        "clinicAdmissible": true,
+        "eligibilityIssue": null
+      },
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "liver-grade-versus-physiology.v1",
+      "questionVariantId": "question.topic.trauma-initial-abdomen.liver-grade-versus-physiology.v1",
+      "caseId": "case.topic.trauma-initial-abdomen.liver-complication-chain.v2",
+      "nodeId": "node.topic.trauma-initial-abdomen.liver-grade-versus-physiology.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-trauma-initial-abdomen-review-preserved-20261111.json",
+        "item": {
+          "id": "question.topic.trauma-initial-abdomen.liver-grade-versus-physiology.v1",
+          "nodeId": "node.topic.trauma-initial-abdomen.liver-grade-versus-physiology.v1",
+          "title": "High-grade hepatic injury with stable physiology",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [
+            {
+              "phrase": "Hepatic angiography with empiric embolization",
+              "why": "Nonblocking weakness: 'empiric' uniquely signals a less targeted intervention and may make this distractor easier to reject. It also identifies the actual proposed intervention in a record with no arterial target; it does not by itself distinguish observation from laparotomy. Do not count it as a source of difficulty."
+            }
+          ],
+          "fairness": [
+            "Monitored nonoperative hepatic care is the best offered plan. The resident must weigh a substantial anatomic grade against serial stability and a nonperitoneal examination, then decide whether there is an indication for arterial intervention. Grade-driven surgery and unnecessary embolization are recognizable errors. This sits at the easier end of moderate, not hard; its value is the high-yield grade-versus-physiology decision.",
+            "'No arterial extravasation' and 'no blood/vasopressor requirement; hemoglobin unchanged' are essential management data. The observation choice is concrete in this historical hospital context, and 'empiric embolization' specifies a competing action rather than another umbrella nonoperative plan. No equally good alternative is apparent among these choices.",
+            "Maya's clinic attendance does not imply outpatient management of the recorded grade IV injury. The 42-year-old woman's presentation, exhibit and task are sufficient as the first node. The explanation appropriately limits its claim to grade not requiring laparotomy by itself; it does not claim that grade is irrelevant to monitoring or rescue planning. No confident clinical inaccuracy identified.",
+            "The initial record does not reveal the later bleeding event. Its explanation mentions absence of a vascular focus but does not name the subsequent complication or its procedure. This creates some legitimate conceptual scaffolding without answering the next preserved node."
+          ],
+          "suggestions": [
+            "Retain a monitored hospital plan and avoid converting this into outpatient observation merely because the patient now attends clinic.",
+            "If revising distractors later, reassess whether 'empiric' is needed to state the real competing plan; do not replace it with a vague angiography label that creates a new management ambiguity."
+          ]
+        }
+      },
+      "everyScoredNodeListed": false,
+      "unlistedSiblingIds": [
+        "question.topic.trauma-initial-abdomen.liver-infected-bile-collection.v2"
+      ],
+      "initialSkipReason": "Case contains scored nodes outside the manager PASS list.",
+      "topic": "trauma-initial-abdomen",
+      "status": "skipped",
+      "reason": "Case contains scored nodes outside the manager PASS list.",
+      "clinicRuntime": null,
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "liver-delayed-arterial-bleeding.v1",
+      "questionVariantId": "question.topic.trauma-initial-abdomen.liver-delayed-arterial-bleeding.v1",
+      "caseId": "case.topic.trauma-initial-abdomen.liver-complication-chain.v2",
+      "nodeId": "node.topic.trauma-initial-abdomen.liver-delayed-arterial-bleeding.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-trauma-initial-abdomen-review-preserved-20261111.json",
+        "item": {
+          "id": "question.topic.trauma-initial-abdomen.liver-delayed-arterial-bleeding.v1",
+          "nodeId": "node.topic.trauma-initial-abdomen.liver-delayed-arterial-bleeding.v1",
+          "title": "Delayed arterial bleeding into the biliary tract",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Selective hepatic angiography and embolization is the best offered procedure. Papillary blood and a sac communicating with a hepatic arterial branch establish the bleeding pathway; maintained unsupported circulation then favors targeted endovascular control. ERCP is a plausible wrong-target response to a biliary presentation, while laparotomy treats bleeding with a more invasive route than this physiology requires. No confident clinical inaccuracy identified.",
+            "'Communicates with a hepatic arterial branch' is clinically necessary evidence. 'Hepatic' also appears in the operative alternative, so an organ-word match does not uniquely select the key. Understanding why a biliary stent does not control the described arterial source requires medical knowledge. Options are procedure labels of comparable scope without rationale-bearing qualifiers or rhetorical absolutes.",
+            "This is a high-yield complication and a moderate two-step task: localize the bleeding mechanism from the endoscopic/imaging relationship, then select its control method using the physiology. A familiar reader may recognize hemobilia quickly, but must still distinguish arterial control from treating the biliary lumen.",
+            "'During admission' clearly places the update within the historical hospitalization. The current update plus CT independently supplies the prior hepatic injury, present bleeding, arterial lesion and current physiology; the original injury grade and an earlier correct answer are not needed. The transition from initial observation is coherent. Earlier feedback does not prescribe embolization or give away this complication."
+          ],
+          "suggestions": [
+            "Keep the papillary observation, arterial communication and current unsupported circulation visible when this later node is displayed independently.",
+            "Keep hemobilia/pseudoaneurysm diagnostic labels in post-answer teaching rather than adding them to the presentation or exhibit."
+          ]
+        }
+      },
+      "everyScoredNodeListed": false,
+      "unlistedSiblingIds": [
+        "question.topic.trauma-initial-abdomen.liver-infected-bile-collection.v2"
+      ],
+      "initialSkipReason": "Case contains scored nodes outside the manager PASS list.",
+      "topic": "trauma-initial-abdomen",
+      "status": "skipped",
+      "reason": "Case contains scored nodes outside the manager PASS list.",
+      "clinicRuntime": null,
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "pelvis-packing-after-angio.v1",
+      "questionVariantId": "question.topic.trauma-initial-abdomen.pelvis-packing-after-angio.v1",
+      "caseId": "case.topic.trauma-initial-abdomen.pelvic-mixed-hemorrhage.v2",
+      "nodeId": "node.topic.trauma-initial-abdomen.pelvis-packing-after-angio.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-trauma-initial-abdomen-review-preserved-20261111.json",
+        "item": {
+          "id": "question.topic.trauma-initial-abdomen.pelvis-packing-after-angio.v1",
+          "nodeId": "node.topic.trauma-initial-abdomen.pelvis-packing-after-angio.v1",
+          "title": "Persistent pelvic hemorrhage after arterial control",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Preperitoneal pelvic packing is the best supplied rescue procedure. First interpret persistent shock after mechanical stabilization and completed arterial treatment as compatible with remaining venous/bony bleeding; then target the pelvic compartment rather than automatically repeat arterial treatment or explore the peritoneal cavity. This is a high-yield moderate sequence decision, not a claim that packing must always precede angiography.",
+            "The record supplies 'Selective pelvic arterial runs show no further extravasation' and 'no intraperitoneal injury' with ongoing instability. These findings weaken the competing routes, but interpreting a completion angiogram and distinguishing retroperitoneal from intraperitoneal control still requires clinical knowledge. Packing is not merely the sole untried choice: intraperitoneal exploration is also untried. No convincing nonmedical novelty, wording-match or length cue identifies the key.",
+            "A negative completion angiogram does not prove all arterial bleeding impossible. The explanation appropriately says residual bleeding 'can come from venous or bony sources.' Repeat embolization would be more competitive with a new arterial target or evidence the initial treatment was incomplete; neither is supplied. No confident clinical inaccuracy identified; the precise rescue sequence remains subject to clinician review rather than offline protocol verification.",
+            "Dylan's historical record contains the prior CT, stabilization, embolization and current condition in one exhibit, so the first node stands alone. The clinic frame does not ask the clinic to perform packing or establish a new capability requirement."
+          ],
+          "suggestions": [
+            "Preserve the completed arterial treatment, continuing mechanical stabilization and exclusion of a competing intraperitoneal source.",
+            "Retain the conditional explanation; do not turn a negative completion angiogram into proof of a uniquely venous source or export this rescue order as a universal pelvic-trauma algorithm."
+          ]
+        }
+      },
+      "everyScoredNodeListed": true,
+      "unlistedSiblingIds": [],
+      "initialSkipReason": null,
+      "topic": "trauma-initial-abdomen",
+      "status": "accepted",
+      "reason": "All scored nodes listed/PASS; clinic admission verified.",
+      "clinicRuntime": {
+        "clinicAdmissible": true,
+        "eligibilityIssue": null
+      },
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "pelvis-recurrent-arterial-focus.v1",
+      "questionVariantId": "question.topic.trauma-initial-abdomen.pelvis-recurrent-arterial-focus.v1",
+      "caseId": "case.topic.trauma-initial-abdomen.pelvic-mixed-hemorrhage.v2",
+      "nodeId": "node.topic.trauma-initial-abdomen.pelvis-recurrent-arterial-focus.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-trauma-initial-abdomen-review-preserved-20261111.json",
+        "item": {
+          "id": "question.topic.trauma-initial-abdomen.pelvis-recurrent-arterial-focus.v1",
+          "nodeId": "node.topic.trauma-initial-abdomen.pelvis-recurrent-arterial-focus.v1",
+          "title": "Recurrent arterial pelvic bleeding after packing",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Pelvic angiography with embolization is the best offered procedure. The expanding pool connected to an arterial branch supplies a current target despite earlier benefit from packing. The resident must identify the changed bleeding component and change treatment rather than repeat the previously effective intervention. This supports a moderate two-step, high-yield judgment.",
+            "'Packing remains positioned' does not prove packing has controlled every source and does not prohibit repeat packing in other circumstances. The important discriminator is the new arterial-connected expanding pool. 'No new intraperitoneal abnormality' is a necessary compartment distinction, not a teaching statement. The key and packing alternative both name the pelvis; there is no unique plain-language location match or explanatory distractor that solves the item without medical interpretation.",
+            "The support trajectory is less detailed than in the splenic node, but 'BP remains 112/66 mmHg during support' describes maintained circulation rather than an isolated improved pressure, and CT has already localized the target. The key remains preferable among the supplied procedures. Do not infer a universal blood-pressure threshold or that needing transfusion is equivalent to being unsupported and stable. No confident clinical inaccuracy identified.",
+            "The current update explicitly supplies prior packing, initial response, recurrent bleeding, ongoing support and new CT. It is answerable without remembering the earlier angiogram or selecting packing correctly. The later focal finding changes the correct action; prior feedback about possible venous/bony bleeding does not disclose this new arterial result. Historical 'now' remains clear under the clinic frame."
+          ],
+          "suggestions": [
+            "If the wording is expanded in a future authorized revision, describe whether support needs are stable or escalating rather than adding an invented numeric eligibility cutoff.",
+            "Keep both the interval response to packing and the new vascular finding; neither an isolated pressure nor the fact of prior packing should become the whole decision rule."
+          ]
+        }
+      },
+      "everyScoredNodeListed": true,
+      "unlistedSiblingIds": [],
+      "initialSkipReason": null,
+      "topic": "trauma-initial-abdomen",
+      "status": "accepted",
+      "reason": "All scored nodes listed/PASS; clinic admission verified.",
+      "clinicRuntime": {
+        "clinicAdmissible": true,
+        "eligibilityIssue": null
+      },
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "renal-isolated-urine-leak.v1",
+      "questionVariantId": "question.topic.trauma-initial-abdomen.renal-isolated-urine-leak.v1",
+      "caseId": "case.topic.trauma-initial-abdomen.renal-stage-and-observe.v2",
+      "nodeId": "node.topic.trauma-initial-abdomen.renal-isolated-urine-leak.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-trauma-initial-abdomen-review-preserved-20261111.json",
+        "item": {
+          "id": "question.topic.trauma-initial-abdomen.renal-isolated-urine-leak.v1",
+          "nodeId": "node.topic.trauma-initial-abdomen.renal-isolated-urine-leak.v1",
+          "title": "Initial observation of a contained calyceal urine leak",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Monitored nonoperative renal care is the best offered initial plan. The resident must interpret preserved perfusion and downstream urinary opacification alongside a calyceal leak, then distinguish this record from a disrupted outflow pathway or a complicated leak needing intervention. Automatic stenting of every extravasation and operative repair of a stable collecting-system injury are plausible overtreatment errors. This is a moderate, high-yield two-step task.",
+            "The raw finding 'Delayed images opacify the pelvis and ureter through to the bladder' preserves the need to interpret continuity. It does not say that the patient qualifies for observation. 'Without fever or an enlarging collection' supplies complication information needed to rank stenting. The alternatives have comparable procedural/care scope; no obvious phrase match, absolute, convergence or unusually qualified key solves the question without medical knowledge.",
+            "The explanation is acceptable for this initial decision, but absent fever and collection growth are not an exhaustive definition of every symptomatic leak. Neither the stem nor explanation should be generalized to worsening pain, ileus, obstruction or other evolving complications. No confident clinical inaccuracy identified in the stated initial management ranking.",
+            "The preceding revised renal explanation says what the complete CT protocol evaluates, including urinary continuity; it does not state the management of a calyceal leak. That is limited scaffolding, not the answer. The current update provides the completed study, urinary continuity, absence of arterial bleeding and stable course, so the preserved node stands alone and coherently follows initial imaging. Iris's age/sex and historical admission remain supplied by the clinic presentation."
+          ],
+          "suggestions": [
+            "Preserve the initial-decision wording and the distinction between a small uncomplicated leak and an evolving symptomatic collection.",
+            "When teaching after the answer, avoid implying that fever and enlargement are the only reasons urinary extravasation might need intervention."
+          ]
+        }
+      },
+      "everyScoredNodeListed": false,
+      "unlistedSiblingIds": [
+        "question.topic.trauma-initial-abdomen.renal-no-hematuria-protocol.v2"
+      ],
+      "initialSkipReason": "Case contains scored nodes outside the manager PASS list.",
+      "topic": "trauma-initial-abdomen",
+      "status": "skipped",
+      "reason": "Case contains scored nodes outside the manager PASS list.",
+      "clinicRuntime": null,
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "pancreas-distal-duct-operation.v1",
+      "questionVariantId": "question.topic.trauma-initial-abdomen.pancreas-distal-duct-operation.v1",
+      "caseId": "case.topic.trauma-initial-abdomen.pancreatic-duct-location.v2",
+      "nodeId": "node.topic.trauma-initial-abdomen.pancreas-distal-duct-operation.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-trauma-initial-abdomen-review-preserved-20261111.json",
+        "item": {
+          "id": "question.topic.trauma-initial-abdomen.pancreas-distal-duct-operation.v1",
+          "nodeId": "node.topic.trauma-initial-abdomen.pancreas-distal-duct-operation.v1",
+          "title": "Procedure for distal pancreatic main-duct transection",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Distal pancreatectomy is the preferred standard answer for the adult distal duct-disrupting injury described at laparotomy. The learner must integrate transection location and main-duct division, then select definitive surgery in a patient whose physiology permits it. Perfused distal tissue makes preservation/reconstruction tempting but does not restore duct continuity. The comparison with drainage and reconstruction makes this moderate rather than a mere anatomy-label question; duct status and location are high-yield trauma concepts.",
+            "'Left of superior mesenteric vessels' is necessary anatomical evidence rather than a literal match to 'Distal pancreatectomy.' 'Tissue toward the splenic hilum remains perfused' supports a real preservation temptation, and the normalizing physiology distinguishes definitive surgery from abbreviated care. There is no pre-answer instruction to preserve tissue, named diagnostic grade, absolute or length outlier selecting the key.",
+            "Pancreaticojejunostomy can be considered in selected circumstances; the best-answer ranking must not be taught as proof that reconstruction is impossible. No patient-specific feature here establishes such an exception to the standard distal resection approach. No confident clinical inaccuracy identified, but the exact reconstructive comparison remains subject to clinician sign-off, not fresh source verification in this offline review.",
+            "The feedback explains duct disruption versus a duct-intact injury but does not address the closest preservation competitor. This limits teaching quality without making the question unanswerable. Miles's historical operative stage is explicit, and 'at this operation' prevents confusion with a clinic procedure. The node is standalone with the relevant anatomy and physiology supplied."
+          ],
+          "suggestions": [
+            "Improve post-answer feedback by explaining why distal resection is preferred over pancreaticojejunostomy in the stated adult trauma setting, using verified claims and retaining selected reconstructive exceptions.",
+            "Do not invent an anatomic-length cutoff, contraindication or tissue-viability problem to dismiss reconstruction. Preserve the current duct, location and physiology findings."
+          ]
+        }
+      },
+      "everyScoredNodeListed": true,
+      "unlistedSiblingIds": [],
+      "initialSkipReason": null,
+      "topic": "trauma-initial-abdomen",
+      "status": "accepted",
+      "reason": "All scored nodes listed/PASS; clinic admission verified.",
+      "clinicRuntime": {
+        "clinicAdmissible": true,
+        "eligibilityIssue": null
+      },
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "renal-contained-hematoma.v1",
+      "questionVariantId": "question.topic.trauma-initial-abdomen.renal-contained-hematoma.v1",
+      "caseId": "case.topic.trauma-initial-abdomen.contained-renal-compartment.v2",
+      "nodeId": "node.topic.trauma-initial-abdomen.renal-contained-hematoma.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-trauma-initial-abdomen-review-preserved-20261111.json",
+        "item": {
+          "id": "question.topic.trauma-initial-abdomen.renal-contained-hematoma.v1",
+          "nodeId": "node.topic.trauma-initial-abdomen.renal-contained-hematoma.v1",
+          "title": "Contained renal hematoma with a separate operative bleeding source",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [
+            {
+              "phrase": "Leave Gerota fascia and kidney undisturbed",
+              "why": "Nonblocking option-pattern risk: this is the sole 'Leave' choice against two 'Open Gerota fascia' choices. Its outlier status is visible without medical knowledge, but does not logically make it correct. The shared opening step represents two distinct renal interventions; adding a filler fourth option or obscuring the operative choices would not improve the item."
+            }
+          ],
+          "fairness": [
+            "Leaving the renal compartment undisturbed is the best offered action. The resident must attribute the active bleeding to the identified mesenteric injury while interpreting a separately contained lateral hematoma, then resist opening that compartment merely because the patient is hypotensive. The unstable patient supplies a consequential competing consideration; this is a moderate two-step, high-yield blunt retroperitoneal-trauma decision.",
+            "'Stays the same size during exposure; no pulsation, free rupture or progressive expansion' is behavior that must be interpreted in the blunt lateral hematoma setting, not a statement that no renal intervention is indicated. The two opening options are distinct repair versus removal decisions, and the key is not the longest, most qualified or uniquely comprehensive option. The visible action outlier does not replace knowledge of the compartment rule and its exceptions.",
+            "No confident clinical inaccuracy identified. The explanation correctly limits the conclusion to a contained nonexpanding zone-II hematoma with a separate bleeding source. It should not be generalized to unexplained ongoing instability, a different mechanism, expanding or ruptured hematoma, or other retroperitoneal zones.",
+            "Noah's named age/sex presentation explicitly identifies historical laparotomy; the exhibit supplies the operation's indication, active source, current resuscitation and renal findings. 'During this exploration' remains a complete historical task. This standalone node requires no unseen earlier decision or eventual outcome, and the clinic reframing creates no contradiction."
+          ],
+          "suggestions": [
+            "Retain the blunt mechanism, lateral location, observed hematoma behavior and identified separate bleeding source; these are the facts that prevent an unsafe blanket rule.",
+            "Do not manufacture option symmetry by adding an implausible fourth action. Recheck the leave/open pattern if a future clinically credible alternative is available."
+          ]
+        }
+      },
+      "everyScoredNodeListed": true,
+      "unlistedSiblingIds": [],
+      "initialSkipReason": null,
+      "topic": "trauma-initial-abdomen",
+      "status": "accepted",
+      "reason": "All scored nodes listed/PASS; clinic admission verified.",
+      "clinicRuntime": {
+        "clinicAdmissible": true,
+        "eligibilityIssue": null
+      },
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "belt-evolving-repeat-imaging.v2",
+      "questionVariantId": "question.topic.trauma-initial-abdomen.belt-evolving-repeat-imaging.v2",
+      "caseId": "case.topic.trauma-initial-abdomen.belt-bowel-evolution.v2",
+      "nodeId": "node.topic.trauma-initial-abdomen.belt-evolving-repeat-imaging.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-trauma-initial-abdomen-review3-20261111.json",
+        "item": {
+          "id": "question.topic.trauma-initial-abdomen.belt-evolving-repeat-imaging.v2",
+          "nodeId": "node.topic.trauma-initial-abdomen.belt-evolving-repeat-imaging.v2",
+          "title": "Evolving symptoms after equivocal bowel-trauma CT",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Repeat contrast-enhanced CT is the best of the offered plans: the resident must recognize a worsening trajectory after nonspecific initial findings, then distinguish the need for renewed investigation from either unchanged observation or immediate exploration.",
+            "The current update states the prior CT, elapsed interval, examination and hemodynamics. It stands alone and follows coherently from the preserved observation node. That earlier explanation recommends serial assessment but does not supply the repeat-CT answer.",
+            "The soft abdomen and absent involuntary guarding/rebound are necessary discrimination data, not gratuitous deletion of surgical danger signs. Increasing tenderness and tachycardia make unchanged serial examination a credible but less appropriate alternative.",
+            "No material wording, length, convergence, diagnostic-label or absolute-language shortcut identified. The prior CT is not a disposable foil: evolving findings give a reason to repeat it.",
+            "High-yield concept: recognition and reassessment of occult blunt bowel injury. The six-hour interval is case chronology, not a gameplay wait or a universal deadline. No confident clinical inaccuracy identified in this offline review; PASS is editorial only."
+          ],
+          "suggestions": [
+            "Retain the trajectory and decision-critical examination findings. In clinician sign-off, confirm the intended boundary between repeat imaging and exploration without converting these fictional observations into numeric treatment thresholds."
+          ]
+        }
+      },
+      "everyScoredNodeListed": true,
+      "unlistedSiblingIds": [],
+      "initialSkipReason": null,
+      "topic": "trauma-initial-abdomen",
+      "status": "accepted",
+      "reason": "All scored nodes listed/PASS; clinic admission verified.",
+      "clinicRuntime": {
+        "clinicAdmissible": true,
+        "eligibilityIssue": null
+      },
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "bladder-acquisition.v2",
+      "questionVariantId": "question.topic.trauma-initial-abdomen.bladder-acquisition.v2",
+      "caseId": "case.topic.trauma-initial-abdomen.bladder-protocol-and-repair.v2",
+      "nodeId": "node.topic.trauma-initial-abdomen.bladder-acquisition.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-trauma-initial-abdomen-review3-20261111.json",
+        "item": {
+          "id": "question.topic.trauma-initial-abdomen.bladder-acquisition.v2",
+          "nodeId": "node.topic.trauma-initial-abdomen.bladder-acquisition.v2",
+          "title": "Adequacy of bladder imaging after pelvic trauma",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Retrograde CT cystography is the best offered study. The resident must infer that persistent gross hematuria with pelvic fracture needs bladder evaluation, then recognize that excreted contrast in an underfilled bladder does not supply an adequate cystogram.",
+            "The acquisition log establishes what was actually obtained; the item does not equate a missing exported image with a missing acquisition. Upper-tract opacification explains why simply extending an excretory CT pathway is the closest protocol error.",
+            "The catheter history makes routine retrograde urethrography a weaker initial answer without asserting that easy catheter passage or absent meatal blood absolutely excludes urethral injury.",
+            "'Bladder walls remain apposed' and 'bladder distension' are related, but interpreting their diagnostic significance requires protocol knowledge. No independent nonmedical wording shortcut strong enough to determine the answer was identified.",
+            "The node is self-contained. Its explanation teaches acquisition adequacy, not the following node's repair exception. This is a high-yield trauma-imaging distinction. No confident clinical inaccuracy identified offline; PASS is editorial only."
+          ],
+          "suggestions": [
+            "Preserve the actual acquisition record and distinguish inadequate bladder evaluation from a negative result.",
+            "Do not expand the explanation into an absolute rule excluding urethral injury from the catheter observations."
+          ]
+        }
+      },
+      "everyScoredNodeListed": true,
+      "unlistedSiblingIds": [],
+      "initialSkipReason": null,
+      "topic": "trauma-initial-abdomen",
+      "status": "accepted",
+      "reason": "All scored nodes listed/PASS; clinic admission verified.",
+      "clinicRuntime": {
+        "clinicAdmissible": true,
+        "eligibilityIssue": null
+      },
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "bladder-intraperitoneal-repair.v2",
+      "questionVariantId": "question.topic.trauma-initial-abdomen.bladder-intraperitoneal-repair.v2",
+      "caseId": "case.topic.trauma-initial-abdomen.bladder-protocol-and-repair.v2",
+      "nodeId": "node.topic.trauma-initial-abdomen.bladder-intraperitoneal-repair.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-trauma-initial-abdomen-review3-20261111.json",
+        "item": {
+          "id": "question.topic.trauma-initial-abdomen.bladder-intraperitoneal-repair.v2",
+          "nodeId": "node.topic.trauma-initial-abdomen.bladder-intraperitoneal-repair.v2",
+          "title": "Extraperitoneal bladder injury complicated by a bone fragment",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Primary repair with urethral catheter drainage is the best offered plan. The resident must interpret the extraperitoneal leak distribution, then recognize that intraluminal bone makes the usual catheter-only approach inappropriate.",
+            "The urethral-catheter plan is a credible default for an uncomplicated extraperitoneal injury. Switching to suprapubic drainage does not remove the penetrating fragment, so it is a weaker but distinct management error.",
+            "The raw bony finding is decisive and must remain; it is not a diagnosis label or a wording match to the key. Options are parallel concrete bladder plans, with no uniquely long key, absolute-language cue or majority-component shortcut.",
+            "The update restates circulation, catheter function and current tests. It follows the preceding imaging question coherently and stands alone. Prior feedback about cystographic adequacy does not teach this treatment exception.",
+            "High-yield distinction: complicated versus uncomplicated extraperitoneal bladder trauma. The stale 'intraperitoneal' identifier is not learner-visible evidence and was not used to infer the answer. No confident clinical inaccuracy identified offline; PASS is editorial only."
+          ],
+          "suggestions": [
+            "In post-answer teaching, explicitly include management of the intraluminal bone fragment as part of repair so the explanation does not imply that closing around it is sufficient.",
+            "Preserve the extraperitoneal imaging findings and intact urethral drainage; do not turn the case into a simple intraperitoneal-rupture recall question."
+          ]
+        }
+      },
+      "everyScoredNodeListed": true,
+      "unlistedSiblingIds": [],
+      "initialSkipReason": null,
+      "topic": "trauma-initial-abdomen",
+      "status": "accepted",
+      "reason": "All scored nodes listed/PASS; clinic admission verified.",
+      "clinicRuntime": {
+        "clinicAdmissible": true,
+        "eligibilityIssue": null
+      },
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "jejunum-primary-repair.v2",
+      "questionVariantId": "question.topic.trauma-initial-abdomen.jejunum-primary-repair.v2",
+      "caseId": "case.topic.trauma-initial-abdomen.limited-jejunum-defect.v2",
+      "nodeId": "node.topic.trauma-initial-abdomen.jejunum-primary-repair.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-trauma-initial-abdomen-review3-20261111.json",
+        "item": {
+          "id": "question.topic.trauma-initial-abdomen.jejunum-primary-repair.v2",
+          "nodeId": "node.topic.trauma-initial-abdomen.jejunum-primary-repair.v2",
+          "title": "Small jejunal defect with adjacent mesenteric devascularization",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Resection with immediate anastomosis is the best offered plan. The small antimesenteric opening initially favors direct repair, but the torn mesentery and persistently nonviable-appearing adjacent bowel change the required extent of treatment.",
+            "The second consequential decision is reconstruction now versus staged discontinuity: perfused bowel beyond the injured segment, controlled bleeding, recovered physiology and lack of marked edema or diffuse soilage support immediate anastomosis.",
+            "The two resection choices prevent recognition of devascularization from completing the entire task. All options name the same jejunal site and are comparably specific; no material lexical, length, convergence or absolute-language shortcut identified.",
+            "The findings are deliberately decisive but clinically necessary. Do not misclassify all normal physiology as cueing when it distinguishes the deferred-reconstruction alternative.",
+            "This is a self-contained single-node case with a complete task. It tests high-yield small-bowel trauma decisions about viability and reconstruction. No confident clinical inaccuracy identified offline; PASS is editorial only."
+          ],
+          "suggestions": [
+            "Retain the conflict between a small wall defect and a larger perfusion injury, as well as the separate reconstruction evidence.",
+            "Keep the fictional physiologic values as observations rather than presenting them as universal thresholds for anastomosis."
+          ]
+        }
+      },
+      "everyScoredNodeListed": true,
+      "unlistedSiblingIds": [],
+      "initialSkipReason": null,
+      "topic": "trauma-initial-abdomen",
+      "status": "accepted",
+      "reason": "All scored nodes listed/PASS; clinic admission verified.",
+      "clinicRuntime": {
+        "clinicAdmissible": true,
+        "eligibilityIssue": null
+      },
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "expiratory-time.v1",
+      "questionVariantId": "question.topic.critical-respiratory-ventilation.expiratory-time.v1",
+      "caseId": "case.topic.critical-respiratory-ventilation.air-trapping.v1",
+      "nodeId": "node.topic.critical-respiratory-ventilation.expiratory-time.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-critical-respiratory-ventilation-review2-20261111.json",
+        "item": {
+          "id": "question.topic.critical-respiratory-ventilation.expiratory-time.v1",
+          "nodeId": "node.topic.critical-respiratory-ventilation.expiratory-time.v1",
+          "title": "Air trapping despite hypercapnia",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The negative expiratory flow at the next inspiration, elevated measured total relative to set PEEP, and high rate support incomplete exhalation. The sign and units are sufficiently explicit even though a full waveform is not displayed.",
+            "Reducing rate addresses expiratory time. Increasing rate or volume is a credible attempt to correct PaCO2 that can worsen this pattern. Stable blood pressure and the supplied pH allow the question to focus on the ventilator adjustment rather than an unmentioned emergency decompression.",
+            "One best offered answer is defensible. The explanation avoids asserting a universal tolerated pH or an exact rate prescription. No confident clinical inaccuracy identified in this offline review.",
+            "Predicted moderate: identify dynamic air trapping, then prioritize expiratory time over immediate normalization of PaCO2. This is high-yield ventilator physiology. The opposing rate choices and volume choice remain comparable actions; being the only decrease is not a stand-alone verbal key without interpreting the data.",
+            "This executable new-gap item is assessed independently of its previous editorial PASS. It is standalone and has no preceding feedback leakage."
+          ],
+          "suggestions": []
+        }
+      },
+      "everyScoredNodeListed": true,
+      "unlistedSiblingIds": [],
+      "initialSkipReason": null,
+      "topic": "critical-respiratory-ventilation",
+      "status": "accepted",
+      "reason": "All scored nodes listed/PASS; clinic admission verified.",
+      "clinicRuntime": {
+        "clinicAdmissible": true,
+        "eligibilityIssue": null
+      },
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "copd-planned-extubation.v1",
+      "questionVariantId": "question.topic.critical-respiratory-ventilation.copd-planned-extubation.v1",
+      "caseId": null,
+      "nodeId": "node.topic.critical-respiratory-ventilation.copd-planned-extubation.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-critical-respiratory-ventilation-review-20261111.json",
+        "item": {
+          "id": "question.topic.critical-respiratory-ventilation.copd-planned-extubation.v1",
+          "nodeId": "node.topic.critical-respiratory-ventilation.copd-planned-extubation.v1",
+          "title": "Planned extubation with preventive NIV",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The learner must recognize return to a compensated chronic baseline rather than demand normal PaCO2, then choose immediate post-extubation support for an older patient with chronic respiratory disease and hypercapnia during the trial. Both observations affect the plan.",
+            "Standard oxygen is a credible alternative because low-flow oxygen meets the recorded oxygenation need; preventive ventilatory support requires an additional risk-based inference. Continued intubation represents a recognizable error about chronic PaCO2 rather than an arbitrary absurd option.",
+            "Immediate bilevel support is a defensible best choice for this selected profile, and the explanation appropriately avoids ranking all possible HFNC/NIV combinations or extending prophylaxis to every extubation. Offline assessment does not independently verify the exact guideline population or constitute clinical sign-off.",
+            "The chronology explicitly advances from invasive support to a tolerated SBT with intact clearance. Current and pre-illness gases are repeated, so the node is interpretable with its shared presentation and update. Prior NIV-failure feedback does not teach the preventive post-extubation decision.",
+            "The earlier use of mask support is historical context at this stage, not a reliable answer shortcut: returning to it after a prior failure requires recognizing the changed clinical phase. Preventive versus rescue support and chronic hypercapnia are high-yield distinctions."
+          ],
+          "suggestions": []
+        }
+      },
+      "everyScoredNodeListed": false,
+      "unlistedSiblingIds": [],
+      "initialSkipReason": "Not in active source; exact PASS survives only in a retained reviewed context containing unaccepted companions.",
+      "topic": "critical-respiratory-ventilation",
+      "status": "skipped",
+      "reason": "Not in active source; exact PASS survives only in a retained reviewed context containing unaccepted companions.",
+      "clinicRuntime": null,
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "postextubation-rescue.v1",
+      "questionVariantId": "question.topic.critical-respiratory-ventilation.postextubation-rescue.v1",
+      "caseId": "case.topic.critical-respiratory-ventilation.extubation-rescue.v1",
+      "nodeId": "node.topic.critical-respiratory-ventilation.postextubation-rescue.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-critical-respiratory-ventilation-review2-20261111.json",
+        "item": {
+          "id": "question.topic.critical-respiratory-ventilation.postextubation-rescue.v1",
+          "nodeId": "node.topic.critical-respiratory-ventilation.postextubation-rescue.v1",
+          "title": "Established post-extubation respiratory failure",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The combination of marked oxygenation impairment despite high-flow oxygen, rising PaCO2, falling pH and progressive fatigue establishes more than an isolated saturation problem. Reintubation is the defensible best offered plan.",
+            "Further oxygen escalation does not resolve worsening ventilation/fatigue. Rescue bilevel support is a credible near-miss because NIV is useful in other settings, but this is established failure after extubation in a non-COPD medical patient rather than prophylaxis or a specified responsive exception.",
+            "The explanation preserves the conditional nature and population limits of the NIV recommendation instead of declaring NIV universally wrong after extubation. Exact guidance was not newly verified offline; no confident clinical inaccuracy identified in this specific deteriorating record.",
+            "Predicted moderate: interpret combined oxygenation/ventilation deterioration, then distinguish rescue from prophylactic or population-specific NIV use. This is a high-yield airway-support decision.",
+            "The task?s ?deterioration? label does not itself select between rescue NIV and intubation. The medical/non-COPD/nonoperative context is necessary for fairness, not a lexical giveaway. Choices are parallel support plans. This standalone executable new-gap item is assessed independently of its prior editorial PASS."
+          ],
+          "suggestions": []
+        }
+      },
+      "everyScoredNodeListed": true,
+      "unlistedSiblingIds": [],
+      "initialSkipReason": null,
+      "topic": "critical-respiratory-ventilation",
+      "status": "accepted",
+      "reason": "All scored nodes listed/PASS; clinic admission verified.",
+      "clinicRuntime": {
+        "clinicAdmissible": true,
+        "eligibilityIssue": null
+      },
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "sbt-readiness.v2",
+      "questionVariantId": "question.topic.critical-respiratory-ventilation.sbt-readiness.v2",
+      "caseId": "case.topic.critical-respiratory-ventilation.liberation.v2",
+      "nodeId": "node.topic.critical-respiratory-ventilation.sbt-readiness.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-critical-respiratory-ventilation-review2-20261111.json",
+        "item": {
+          "id": "question.topic.critical-respiratory-ventilation.sbt-readiness.v2",
+          "nodeId": "node.topic.critical-respiratory-ventilation.sbt-readiness.v2",
+          "title": "SBT readiness despite an elevated RSBI",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The patient has improving disease, wakefulness, spontaneous effort, satisfactory oxygenation on modest support and stable circulation. The completed comfortable index measurement is explicitly distinguished from a trial aborted for distress.",
+            "Proceeding to a monitored SBT is defensible despite the isolated RSBI value. Continuing assist-control or requiring gradual pressure-support reduction represents treating the screening index as a mandatory barrier; neither is compelled by the supplied observed clinical state.",
+            "The explanation appropriately separates an index from actual intolerance and does not invent a new cutoff. Exact contemporary guideline wording was not independently verified because this assignment prohibits network use; no confident clinical error is alleged.",
+            "Predicted moderate: reconcile a concerning traditional screening result with actual readiness, then select a monitored assessment rather than prolonged support. This is high-yield liberation practice.",
+            "No direct wording shortcut, absolute, diagnostic-label giveaway or unique comprehensive key found. Comfort and hemodynamic observations are necessary eligibility information rather than removable hints. The item stands independently and does not teach the next node?s oxygen-concentration issue."
+          ],
+          "suggestions": []
+        }
+      },
+      "everyScoredNodeListed": false,
+      "unlistedSiblingIds": [
+        "question.topic.critical-respiratory-ventilation.extubation-clearance.v2"
+      ],
+      "initialSkipReason": "Case contains scored nodes outside the manager PASS list.",
+      "topic": "critical-respiratory-ventilation",
+      "status": "skipped",
+      "reason": "Case contains scored nodes outside the manager PASS list.",
+      "clinicRuntime": null,
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "sbt-fio2.v2",
+      "questionVariantId": "question.topic.critical-respiratory-ventilation.sbt-fio2.v2",
+      "caseId": "case.topic.critical-respiratory-ventilation.liberation.v2",
+      "nodeId": "node.topic.critical-respiratory-ventilation.sbt-fio2.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-critical-respiratory-ventilation-review2-20261111.json",
+        "item": {
+          "id": "question.topic.critical-respiratory-ventilation.sbt-fio2.v2",
+          "nodeId": "node.topic.critical-respiratory-ventilation.sbt-fio2.v2",
+          "title": "Interpreting an SBT performed at higher oxygen concentration",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The before/during table makes both support withdrawal and oxygen escalation visible. Calling the trial ?recorded as tolerated? is a report to evaluate, not proof that all extubation criteria were satisfied.",
+            "An unassisted trial is a valid method. Better saturation at higher FiO2 does not establish tolerance at the earlier concentration. Repeating at the earlier FiO2 is the best offered way to resolve that uncertainty; adding pressure support while retaining the higher FiO2 does not resolve it, and immediate extubation relies on an incompletely assessed oxygen condition.",
+            "The explanation correctly identifies its recommendation as conditional and very low certainty. Treat this as the best assessment among the offered plans, not proof of actual SBT failure, a universal extubation prohibition at FiO2 0.60, or a universal requirement for zero pressure support. This offline review cannot newly verify the exact recommendation.",
+            "Predicted moderate: distinguish a legitimate trial method from a confounded oxygenation comparison, then choose the assessment that resolves the confounding. The first two choices share repeating a trial and the last two share FiO2 0.60; component frequency does not uniquely assemble the key.",
+            "The earlier SBT-readiness explanation does not disclose the oxygen-condition decision. The table includes its own baseline, so the node stands alone with the presentation. The historical progression from readiness to trial assessment is coherent."
+          ],
+          "suggestions": []
+        }
+      },
+      "everyScoredNodeListed": false,
+      "unlistedSiblingIds": [
+        "question.topic.critical-respiratory-ventilation.extubation-clearance.v2"
+      ],
+      "initialSkipReason": "Case contains scored nodes outside the manager PASS list.",
+      "topic": "critical-respiratory-ventilation",
+      "status": "skipped",
+      "reason": "Case contains scored nodes outside the manager PASS list.",
+      "clinicRuntime": null,
+      "blockedReplacementCases": []
+    },
+    {
+      "suffix": "copd-niv.v2",
+      "questionVariantId": "question.topic.critical-respiratory-ventilation.copd-niv.v2",
+      "caseId": "case.topic.critical-respiratory-ventilation.niv-reassessment.v2",
+      "nodeId": "node.topic.critical-respiratory-ventilation.copd-niv.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-critical-respiratory-ventilation-review2-20261111.json",
+        "item": {
+          "id": "question.topic.critical-respiratory-ventilation.copd-niv.v2",
+          "nodeId": "node.topic.critical-respiratory-ventilation.copd-niv.v2",
+          "title": "Initial support for an acidotic COPD exacerbation",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The baseline and current gases distinguish compensated baseline hypercapnia from an acute acidotic change. Persistent distress after bronchodilator treatment, preserved alertness/clearance and stable blood pressure support an initial monitored bilevel-mask strategy.",
+            "High-flow oxygen does not provide the same ventilatory treatment for this acidotic exacerbation. Immediate invasive ventilation is not the preferred first offered strategy in the supplied alert, hemodynamically stable patient with adequate airway function. Both are plausible support-stage errors rather than grammatical foils.",
+            "The explanation appropriately avoids a pH-only rule. No confident clinical inaccuracy identified; exact guideline statements were not newly verified offline.",
+            "Predicted moderate, toward the easier end: integrate acute-on-chronic gas change and airway/clinical state, then choose the support route. This is a central, commonly tested respiratory-support concept.",
+            "The COPD diagnosis is appropriate context for a management task. The neutral presentation no longer reveals initial mask support. All three options are parallel, specific support strategies without a conspicuous wording or length outlier. The item stands independently."
+          ],
+          "suggestions": []
+        }
+      },
+      "everyScoredNodeListed": false,
+      "unlistedSiblingIds": [
+        "question.topic.critical-respiratory-ventilation.copd-niv-failure.v2"
+      ],
+      "initialSkipReason": "Case contains scored nodes outside the manager PASS list.",
+      "topic": "critical-respiratory-ventilation",
+      "status": "skipped",
+      "reason": "Case contains scored nodes outside the manager PASS list.",
+      "clinicRuntime": null,
+      "blockedReplacementCases": []
+    }
+  ],
+  "sourceViews": [
+    {
+      "name": "topic-batch1-small-bowel-obstruction-ileus",
+      "cases": 3,
+      "nodes": 3,
+      "sha256": "83136275f951ced23345de2db79616392ecb2add03753eca293959b4a62e6d87"
+    },
+    {
+      "name": "topic-batch1-critical-renal-organ-support",
+      "cases": 2,
+      "nodes": 2,
+      "sha256": "84099fe66fe58ea6bd956d5af0af53ea548f93524e613d08668bcd369741eb27"
+    },
+    {
+      "name": "topic-batch1-critical-shock-resuscitation",
+      "cases": 2,
+      "nodes": 3,
+      "sha256": "a5fa1e89b34649c049f3b525f37d4e7232afd2b465422efcaa7d4dbbabba97cb"
+    },
+    {
+      "name": "topic-batch1-appendix-appendicitis",
+      "cases": 3,
+      "nodes": 3,
+      "sha256": "8529969781f7e0dbbab1ebf95a115499b2d7712db20a9c825bfcbbe36dcd3a3b"
+    },
+    {
+      "name": "topic-batch1-trauma-initial-abdomen",
+      "cases": 6,
+      "nodes": 9,
+      "sha256": "2d17ca4d905d2d34770e2c219a097ae098fd081c5526c661a5456626057be503"
+    },
+    {
+      "name": "topic-batch1-critical-respiratory-ventilation",
+      "cases": 2,
+      "nodes": 2,
+      "sha256": "df98ab0898bc26a26797c7aaa9f9a8f220925412e06e2c16ef4e48bfc2badd88"
+    }
+  ],
+  "nameTemplates": [
+    {
+      "caseId": "case.topic.critical-respiratory-ventilation.air-trapping.v1",
+      "field": "presentation",
+      "before": "Mark Price, a 44-year-old man, attends clinic after hospital discharge. The founder reviews his outside records from an admission for a severe asthma exacerbation.",
+      "after": "{patientName}, a 44-year-old man, attends clinic after hospital discharge. The founder reviews his outside records from an admission for a severe asthma exacerbation."
+    },
+    {
+      "caseId": "case.topic.critical-respiratory-ventilation.air-trapping.v1",
+      "field": "presentation",
+      "before": "Mark Price, a 44-year-old man, attends clinic after hospital discharge. The founder reviews his outside records from an admission for a severe asthma exacerbation.",
+      "after": "{patientName}, a 44-year-old man, attends clinic after hospital discharge. The founder reviews his outside records from an admission for a severe asthma exacerbation."
+    },
+    {
+      "caseId": "case.topic.critical-respiratory-ventilation.air-trapping.v1",
+      "field": "stem",
+      "before": "Which ventilator adjustment best fits Mark Price’s recorded pattern?",
+      "after": "Which ventilator adjustment best fits {patientName}’s recorded pattern?"
+    },
+    {
+      "caseId": "case.topic.critical-respiratory-ventilation.extubation-rescue.v1",
+      "field": "presentation",
+      "before": "Elena Marsh, a 55-year-old woman, attends clinic after hospital discharge. The founder reviews her outside records from a medical pneumonia admission requiring ventilation; she had no operation or chronic obstructive lung disease during that admission.",
+      "after": "{patientName}, a 55-year-old woman, attends clinic after hospital discharge. The founder reviews her outside records from a medical pneumonia admission requiring ventilation; she had no operation or chronic obstructive lung disease during that admission."
+    },
+    {
+      "caseId": "case.topic.critical-respiratory-ventilation.extubation-rescue.v1",
+      "field": "presentation",
+      "before": "Elena Marsh, a 55-year-old woman, attends clinic after hospital discharge. The founder reviews her outside records from a medical pneumonia admission requiring ventilation; she had no operation or chronic obstructive lung disease during that admission.",
+      "after": "{patientName}, a 55-year-old woman, attends clinic after hospital discharge. The founder reviews her outside records from a medical pneumonia admission requiring ventilation; she had no operation or chronic obstructive lung disease during that admission."
+    },
+    {
+      "caseId": "case.topic.critical-respiratory-ventilation.extubation-rescue.v1",
+      "field": "stem",
+      "before": "Which respiratory-support plan best fits Elena Marsh’s recorded post-extubation deterioration?",
+      "after": "Which respiratory-support plan best fits {patientName}’s recorded post-extubation deterioration?"
+    },
+    {
+      "caseId": "case.topic.critical-respiratory-ventilation.extubation-rescue.v1",
+      "field": "currentUpdate",
+      "before": "Hospital record: after planned extubation for pneumonia, Elena develops increasing accessory-muscle use and fatigue. On high-flow nasal oxygen at FiO2 0.60, PaO2 is 54 mm Hg. PaCO2 rises from 39 to 59 mm Hg and pH falls to 7.26. She remains tired despite repositioning and airway clearance.",
+      "after": "Hospital record: after planned extubation for pneumonia, {patientName} develops increasing accessory-muscle use and fatigue. On high-flow nasal oxygen at FiO2 0.60, PaO2 is 54 mm Hg. PaCO2 rises from 39 to 59 mm Hg and pH falls to 7.26. She remains tired despite repositioning and airway clearance."
+    }
+  ],
+  "learningSummaryNote": "Retained views use the existing projector summary rule (joined scored explanations). Respiratory literal patient names are mechanically replaced with the existing runtime token; every other clinical word, option, feedback and ID stays exact. Raw authoring case/node/question hashes are retained separately."
+}

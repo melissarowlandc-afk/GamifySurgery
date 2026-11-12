@@ -1,0 +1,28 @@
+[
+  {
+    "id": "question.topic.small-bowel-obstruction-ileus.contrast-assessment.v2",
+    "nodeId": "node.topic.small-bowel-obstruction-ileus.contrast-assessment.v2",
+    "title": "Imaging for new localized pain during nonoperative SBO care",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Reviewed the after/candidate visible content in salvageRound1.after for case.topic.small-bowel-obstruction-ileus.contrast-assessment-standalone.v1. Only one current salvage node is in scope; preserved, revised-but-not-salvage, retired, parked and held records are not adjudicated here. Historical verdicts and author self-checks are not evidence for this verdict.",
+      "The standalone case supplies Nora Hale's age, sex, prior operation, presenting symptoms, initial CT observations, treatment and subsequent change. The three-word complaint is appropriate for a retrospective clinic review. The past-tense update establishes the hospital chronology, and the task explicitly asks about imaging during that admission rather than management of her present clinic visit. There is no missing antecedent or absent exhibit needed to solve the item.",
+      "CT of the abdomen and pelvis with intravenous contrast is the single best offered imaging plan. Persistent localized pain developing during decompression raises concern for an evolving complication despite the earlier preserved enhancement, maintained blood pressure and normal lactate. The absence of involuntary guarding or rebound permits a meaningful imaging-selection question without presenting established peritonitis as something to investigate leisurely.",
+      "The enteral contrast series is a credible competing plan for assessing transit during a nonoperative obstruction course, but it does not answer the new concern about bowel-wall enhancement and regional anatomy. Noncontrast CT can assess obstruction anatomy but lacks the intravenous enhancement information sought here. Neither distractor is equally appropriate on the supplied facts. No contrast contraindication is stated; inventing one is unnecessary to challenge this key.",
+      "Two consequential steps are present: reinterpret the changed pain pattern as requiring renewed complication assessment rather than simply continued transit prognostication, then choose the imaging protocol suited to that question. The reassuring laboratory and hemodynamic observations create a plausible anchoring error. The noncontrast alternative is weaker than the enteral-series alternative, so predicted difficulty is moderate rather than hard. Reassessment of SBO and the limits of normal lactate and contrast transit are high-yield general-surgery concepts; this is an editorial judgment, not a measured examination frequency.",
+      "The nonmedical cue attack found no material shortcut. 'Preserved mural enhancement' describes an earlier observation rather than announcing current ischemia or the needed protocol. 'Persistent localized pain between cramping episodes' is a consequential symptom, not an author-supplied diagnosis. 'Which imaging plan' fits all three choices. All labels begin with 'Obtain' and have comparable length and specificity. The paired phrases 'with intravenous contrast' and 'without intravenous contrast' make the clinical contrast explicit but do not select one by grammar, convergence or an absolute. No option contains a teaching rationale or a uniquely comprehensive plan.",
+      "The explanation appropriately separates transit prediction from complication assessment, does not claim that intravenous-contrast CT proves viability, and does not treat normal lactate as exclusion of threatened bowel. It reserves urgent operative reassessment for new peritoneal findings. The 48-hour interval is case chronology rather than an asserted universal cutoff. No confident clinical inaccuracy was identified. This was an offline content review without external source verification; clinical approval remains needs_clinician_review pending Melissa Rowland's exact-version sign-off.",
+      "This is a single-node case. Its initial findings and treatment are restated in the update, so removal of the former scored companion leaves no dependency on a prior answer or feedback. There are no later parts to assess. Runtime rendering, answer randomization and wait-estimate display are outside the permitted visible-content review and are not certified by this PASS."
+    ],
+    "suggestions": [
+      "Retain the complete initial CT and interval-course context when presenting this node independently; keep its explanation after the answer so it does not supply the inference.",
+      "No mandatory wording repair. Preserve the distinction between the best imaging plan and a claim that every deteriorating obstruction patient must undergo CT before surgical reassessment.",
+      "Keep difficulty labelled moderate. Do not remove the normal lactate or absence of peritoneal findings to manufacture difficulty, and do not add a diagnosis label such as threatened bowel before the choice."
+    ]
+  }
+]

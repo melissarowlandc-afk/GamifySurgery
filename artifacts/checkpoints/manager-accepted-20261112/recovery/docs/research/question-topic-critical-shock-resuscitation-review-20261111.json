@@ -1,0 +1,300 @@
+[
+  {
+    "id": "question.critical-shock-resuscitation.choose-valid-fluid-test.v1",
+    "nodeId": "node.critical-shock-resuscitation.choose-valid-fluid-test.v1",
+    "title": "Choose a valid fluid-response assessment",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Review-wide scope: all 11 new executable nodes were reviewed using candidate presentations, updates, exhibits, tasks, option labels and explanations, including preceding visible explanations. No rewritten, kept-unchanged or retired executable records were present. The one unkeyed individualized-pressure-target hold and eight remaining research gaps were noted but not scored. Review-only keys and author self-assessments were not evidence of quality.",
+      "Review-wide limitation: this is an offline editorial and clinical-plausibility review, with no network or independent current-guideline verification. PASS does not establish source validity or clinical approval; every draft remains needs_clinician_review pending Melissa Rowland's exact-version approval. Difficulty and high-yield judgments are qualitative, not measured performance or verified exam-frequency claims.",
+      "Passive leg raising with direct stroke-volume measurement is the best offered assessment. The resident must reject the apparently actionable pulse-pressure variation because of acquisition conditions, then choose a measurement strategy compatible with those conditions. The respiratory diameter surrogate is a credible neighboring error but less dependable here.",
+      "The options have parallel verbs and comparable specificity. Neither the diagnosis label atrial fibrillation nor the displayed 22% supplies the answer without knowing the measurement assumptions. Repetition of variation does not uniquely identify the key.",
+      "The complete task, named 56-year-old patient and short complaint are present. The finite presentation repeats the same clinical context. This first node requires no preceding answer. The consultation wording is understandable as review of ICU care rather than a new clinic treatment encounter."
+    ],
+    "suggestions": [
+      "Retain both the rhythm and spontaneous-effort observations; do not remove necessary acquisition information in an attempt to make the item harder.",
+      "If acquisition detail is expanded, ensure the direct flow measurement is reliable despite beat-to-beat variability; do not imply that any isolated stroke-volume reading is sufficient in atrial fibrillation.",
+      "Across the five cases, optional presentation polish is to state explicitly that the named patient remains in the ICU and that the clinic consultation reviews the record. Preserve age, sex and short visit reason. Runtime wait displays and randomization were not demonstrated by this text-only review."
+    ]
+  },
+  {
+    "id": "question.critical-shock-resuscitation.response-versus-fluid-risk.v1",
+    "nodeId": "node.critical-shock-resuscitation.response-versus-fluid-risk.v1",
+    "title": "Separate fluid responsiveness from fluid tolerance",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Increasing norepinephrine is the best offered next adjustment: marked hypotension persists despite substantial measured output, while the respiratory course deteriorated after fluid. The reversible stroke-volume rise is a genuine competing reason to consider fluid, so the learner must distinguish responsiveness from whether pursuing it is beneficial.",
+      "A positive passive-leg-raise response does not compel a bolus. Conversely, B-lines alone would not prove fluid-induced hydrostatic edema; the recommendation is supported by the combined oxygen trajectory, examination, flow and pressure findings. The explanation appropriately avoids claiming a proved edema mechanism.",
+      "Dobutamine is less compelling with vigorous contraction and substantial output. It is the weaker distractor, but the fluid-versus-pressor decision remains a consequential, credible comparison.",
+      "The preceding explanation teaches how to assess responsiveness, not whether this patient should receive fluid. The new respiratory and flow findings change the decision. The current update supplies norepinephrine use, and the current exhibit and shared presentation are sufficient without remembering the prior answer.",
+      "The task names the relevant decision dimensions without supplying their interpretation. Option labels are short and parallel; no nonmedical wording shortcut was identified."
+    ],
+    "suggestions": [
+      "Retain the positive reversible flow response and post-fluid respiratory deterioration together; their tension is the useful learning objective.",
+      "Keep the conclusion patient-specific. Do not generalize this example into a rule that B-lines always prohibit fluid or that positive fluid responsiveness always requires fluid. Exact clinical ranking remains for clinician sign-off."
+    ]
+  },
+  {
+    "id": "question.critical-shock-resuscitation.peripheral-norepinephrine.v1",
+    "nodeId": "node.critical-shock-resuscitation.peripheral-norepinephrine.v1",
+    "title": "Start norepinephrine without waiting for central access",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Place a central line before starting norepinephrine / Start norepinephrine through the monitored upper-arm IV / Start epinephrine through the monitored upper-arm IV",
+        "why": "Component convergence selects the key without physiology: norepinephrine appears twice, the monitored upper-arm route appears twice, and only the key combines both repeated components. The three choices are an incomplete agent-by-route matrix."
+      },
+      {
+        "phrase": "An upper-arm peripheral IV flushes freely and has a normal insertion site. Central-line preparation is under way.",
+        "why": "These are legitimate access observations, but in this option set they nearly narrate the route decision. Once combined with the convergence pattern, the perfusion and flow data add little discrimination."
+      }
+    ],
+    "fairness": [
+      "Starting norepinephrine through the monitored proximal peripheral IV is the defensible best offered plan during severe ongoing hypoperfusion. No confident clinical inaccuracy was identified in the stated explanation.",
+      "The current task already asks for an initial vasopressor delivery plan. The resident need not independently infer the need for pressure support, and the passive-leg-raise result does not distinguish the offered delivery plans. Choosing the familiar first-line drug and recalling that central access is not a prerequisite does not produce two consequential case-dependent steps here.",
+      "The initial node is self-contained, with age, sex, named patient and a complete task. The access information should not be withheld merely to obscure the key."
+    ],
+    "suggestions": [
+      "Remove the incomplete component matrix. Prefer one narrow delivery decision with three clinically credible access plans, or use a balanced matrix only if all four combinations are genuinely plausible competitors; do not add a filler option just to complete the matrix.",
+      "For a resident application item, make actual access observations distinguish credible delivery plans while the perfusion findings determine the consequence of delay. Keep the access and monitoring requirements explicit and clinician-supported.",
+      "If retained as a basic safety item, seek explicit acceptance of that role and label it easy rather than claiming two-step resident difficulty."
+    ]
+  },
+  {
+    "id": "question.critical-shock-resuscitation.vasopressin-escalation.v1",
+    "nodeId": "node.critical-shock-resuscitation.vasopressin-escalation.v1",
+    "title": "Select an adjunct for persistent low pressure",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The update says 'Antimicrobial treatment and source control have been completed' during ongoing resuscitation. Completed antimicrobial treatment can mean the whole course has ended, rather than that initial antibiotics were administered. That creates avoidable uncertainty about elapsed time and current therapy."
+    ],
+    "cues": [],
+    "fairness": [
+      "Vasopressin is the defensible best offered adjunct for the described persistent low pressure and rising norepinephrine requirement. Epinephrine can be a legitimate vasoactive drug, but it is not equally preferred at the represented escalation stage; the explanation should not portray it as categorically contraindicated.",
+      "The options are parallel and no independent lexical giveaway was found. The weakness is the decision structure: the task asks for the additional drug after norepinephrine, while the exhibit supplies vigorous contraction, substantial output and a negative preload test. The key can be selected by a familiar escalation rule even if the flow and preload rows are removed.",
+      "The current norepinephrine dose and treatment interval are unspecified. I am not calling that alone a fatal fairness defect or inventing a threshold; however, 'successive ... increases' is a weak substitute for a concrete treatment trajectory if dose-dependent escalation is intended to be tested.",
+      "The node follows the peripheral-start node logically and repeats the current drug and pressure state. Apart from the ambiguous 'completed' wording, it stands alone with its shared presentation. Earlier feedback does not name vasopressin."
+    ],
+    "suggestions": [
+      "Clarify whether the first antibiotic administration has finished and whether antibiotics continue; describe completed source control separately.",
+      "Make interpretation of a changing pressure/flow pattern alter the adjunct choice, rather than making the exhibit merely confirm a drug-sequence recall answer. Compare credible drugs at the same escalation stage.",
+      "If a dose or timing boundary is needed for the revised decision, obtain support for that exact boundary before adding it. Otherwise retain qualitative trajectory wording without pretending it creates a second inference."
+    ]
+  },
+  {
+    "id": "question.critical-shock-resuscitation.inotrope-after-pressure-restored.v1",
+    "nodeId": "node.critical-shock-resuscitation.inotrope-after-pressure-restored.v1",
+    "title": "Treat low flow despite restored arterial pressure",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Dobutamine is the best offered adjustment. The learner must recognize that an acceptable arterial pressure has not restored perfusion, then select flow support in the presence of low cardiac index and newly weak contraction rather than simply escalating pressure or giving more fluid.",
+      "The current perfusion findings, cardiac index, echocardiographic change and absent preload response provide a coherent basis for ranking the options. The explanation appropriately says dobutamine is a supported option and calls for reassessment; it does not claim that all alternative inotropic strategies are prohibited.",
+      "The prior explanation supplies some scaffolding by distinguishing inadequate pressure from substantial output and by discussing absent fluid response. It does not state the present dobutamine answer. The new low-output phenotype reverses the earlier treatment rationale, so the sequence still requires application rather than literal recall of prior feedback.",
+      "All current pressures, drugs, perfusion findings and flow observations are present in this node. It can be answered with the shared presentation without remembering previous numbers. 'Later' makes the new cardiac findings temporally possible rather than contradicting the earlier vigorous contraction.",
+      "No label-length, wording-overlap or convergence shortcut was identified. The correct choice requires knowing what the observations mean and what the drugs do."
+    ],
+    "suggestions": [
+      "Preserve the contrast between restored pressure and deteriorating perfusion, with measured low flow and a technically adequate preload assessment.",
+      "Repair the preceding node's ambiguous antimicrobial-course wording without adding a statement there that directly teaches when to choose dobutamine. Recheck this full sequence after any preceding-feedback revision."
+    ]
+  },
+  {
+    "id": "question.critical-shock-resuscitation.lactate-perfusion-discordance.v1",
+    "nodeId": "node.critical-shock-resuscitation.lactate-perfusion-discordance.v1",
+    "title": "Integrate persistent lactate elevation with improving perfusion",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Maintaining the current MAP target is the best offered order. The learner must reconcile a still-elevated but falling lactate with improving bedside perfusion, then decide whether a further pressure or fluid intervention is justified.",
+      "The negative preload response weakens reflex volume loading; the improving examination and adequate current pressure weaken reflex target escalation. The explanation correctly leaves reassessment necessary rather than declaring the residual lactate harmless or proving a nonhypoperfusion cause.",
+      "The repeated 65 mm Hg value is necessary to compare maintaining versus changing the existing goal. It is not an unfair numeric match by itself: the main competing choice explicitly changes that goal, and the record must be interpreted to choose between them. The numerical labels do not create a convergent answer pattern.",
+      "The first node is self-contained with named age/sex, a short visit reason, a complete task and a coherent record. No confident clinical inaccuracy or equally strong offered alternative was identified. This does not establish 65 mm Hg as the universal goal for all patients."
+    ],
+    "suggestions": [
+      "Optional wording polish: replace 'on an unchanged norepinephrine target of 65 mm Hg' with a statement that the MAP goal is 65 mm Hg during norepinephrine treatment; the target is pressure, not drug dose.",
+      "Keep the falling trend and the actual bedside observations. Do not replace them with an authored conclusion that perfusion has normalized or teach that lactate can be disregarded."
+    ]
+  },
+  {
+    "id": "question.critical-shock-resuscitation.validate-pressure-measurement.v1",
+    "nodeId": "node.critical-shock-resuscitation.validate-pressure-measurement.v1",
+    "title": "Validate discordant arterial pressure before titration",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'The arterial pressure system has no fluid-filled zero line' is specialized setup language without an explanation of the system being described. A resident may confuse the zero-reference arrangement with the fluid-filled arterial pressure tubing itself.",
+      "The task asks 'Which assessment', but the key is an equipment correction, while the other two choices obtain new physiological measurements. A neutral next-action task or a same-stage troubleshooting option set would be clearer."
+    ],
+    "cues": [
+      {
+        "phrase": "Its transducer is now above the level of the right atrium / Relevel the arterial-pressure transducer to the right atrium",
+        "why": "The exhibit names the misplaced object and reference point; only the key repeats both and reverses the stated setup problem. A reader can match problem to correction without interpreting the pressure discrepancy."
+      },
+      {
+        "phrase": "after the bed and monitoring equipment were repositioned",
+        "why": "This primes equipment trouble before the table; combined with the explicit transducer position, it makes the unrelated echo and venous-saturation measurements weak competitors. The chronology is legitimate, but the current choices do not test its interpretation."
+      }
+    ],
+    "fairness": [
+      "For the described conventional hydrostatic arrangement, a transducer above the right atrial reference can read falsely low. Releveling and reassessment are the best offered action. No confident reversal of the physiological rule was found.",
+      "The cuff/arterial discrepancy and unchanged examination support checking measurement validity, but the stem then supplies the exact hardware error. Recognizing the already-described error and choosing its literal correction is not two independent consequential steps.",
+      "The follow-up coherently tests a different problem after the earlier target decision. Its current cuff readings and equipment findings suffice without the preceding answer. The exact capillary-refill value and alert mental status are only in the earlier node; if strict isolated display is intended, repeat those observations concisely rather than saying merely 'remain unchanged'."
+    ],
+    "suggestions": [
+      "Describe the pressure setup in ordinary, unambiguous terms, retaining the physical facts required for the hydrostatic interpretation.",
+      "Compare plausible troubleshooting or immediate management actions at the same decision stage, with waveform, reference-level and repeat-pressure observations that actually distinguish them. Do not simply hide the needed transducer position.",
+      "Alternatively, retain this as an explicitly accepted basic measurement-safety item. Do not describe the present matching task as hard clinical reasoning."
+    ]
+  },
+  {
+    "id": "question.critical-shock-resuscitation.antibiotics-despite-low-pct.v1",
+    "nodeId": "node.critical-shock-resuscitation.antibiotics-despite-low-pct.v1",
+    "title": "Do not defer empirical antibiotics for a low biomarker",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'After a focused diagnostic reassessment' does not specify what is reassessed or whether it introduces any meaningful delay. A rapid reassessment can occur during the current resuscitation, so the temporal alternatives are not clearly exclusive."
+    ],
+    "cues": [
+      {
+        "phrase": "begin the planned empirical broad-spectrum IV antibiotic treatment",
+        "why": "'Planned' preannounces that the treatment decision has already been made. 'Empirical' also makes waiting for organism identification sound internally inconsistent before the learner interprets infection evidence or procalcitonin."
+      },
+      {
+        "phrase": "After the initial culture identification / During the current shock resuscitation",
+        "why": "The option set contrasts waiting for a stated pending result with the sole immediate option in an explicitly urgent shock frame. The low biomarker can be ignored and the familiar urgency rule still selects the key."
+      }
+    ],
+    "fairness": [
+      "Starting empirical antibiotics during current resuscitation is clinically defensible given the infection findings, hypotension and already obtained samples. A procalcitonin result within the reference interval does not reliably exclude the need for treatment in this setting.",
+      "The vague reassessment option is the fairness problem: it can overlap with prompt treatment, rather than represent a clearly different management decision. This is repairable wording and option design, not evidence that delayed antibiotics are equally appropriate.",
+      "The presentation is short, patient-specific and self-contained. The explanation communicates the useful principle, but the current item tests one timing rule, not two consequential inferences. No confident clinical inaccuracy was identified."
+    ],
+    "suggestions": [
+      "Remove 'planned' and ask a neutral, complete management task. State the actual reassessment action if it remains an option and make its relationship to starting treatment unambiguous without inventing a fixed delay.",
+      "Use a credible competing interpretation of the supplied evidence if a resident application item is desired; do not simply make infection less certain while leaving an unsupported key.",
+      "If the objective is the basic safety rule that a low procalcitonin must not delay treatment of likely infection with shock, seek explicit basic-item acceptance and keep the item short."
+    ]
+  },
+  {
+    "id": "question.critical-shock-resuscitation.source-control-during-resuscitation.v1",
+    "nodeId": "node.critical-shock-resuscitation.source-control-during-resuscitation.v1",
+    "title": "Time source control during ongoing resuscitation",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "The surgical and interventional-radiology teams have agreed on drainage / the agreed drainage procedure",
+        "why": "The indication and procedure are settled twice. In this option set, the learner is left choosing the plainly indicated intervention against two complete-recovery delays, rather than resolving a remaining procedural decision."
+      },
+      {
+        "phrase": "Schedule drainage after vasopressors have been discontinued / Schedule drainage after lactate reaches the reference interval / Proceed with drainage during the ongoing resuscitation",
+        "why": "Two options demand complete resolution of a current abnormality, while the key is the only concurrent action and repeats the task's resuscitation language. This wait/wait/proceed structure provides an urgency shortcut."
+      }
+    ],
+    "fairness": [
+      "Proceeding with drainage during ongoing resuscitation is the best offered plan. The explanation appropriately includes procedural safety assessment and does not require complete lactate normalization or vasopressor discontinuation.",
+      "The physiological observations do not distinguish close competing plans: either complete-recovery delay remains inferior over a broad range of the supplied values. Removing the lactate number and exact MAP does not change the answer. This is one source-control timing rule, not a two-step decision.",
+      "The sequence is coherent: antibiotics have begun, CT localizes a collection, and a drainage approach is agreed. The update supplies enough current information to answer independently. Earlier feedback's instruction to treat infection during resuscitation further rehearses the concurrent-treatment pattern, though it does not literally name drainage.",
+      "No confident clinical inaccuracy was identified. The procedure's exact technical approach need not be invented because this task explicitly concerns timing."
+    ],
+    "suggestions": [
+      "Replace the two unsupported complete-recovery prerequisites with credible plans addressing an actual, explicitly described remaining safety or sequencing issue. Keep source control urgent and obtain evidence for any proposed procedural constraint.",
+      "Do not add an arbitrary waiting interval, drug threshold or organ-specific procedure comparison simply to create difficulty. If no genuine competing decision fits this objective, retain it only through explicit acceptance as a basic safety item.",
+      "Remove duplicate statements that the drainage decision is agreed while retaining enough context to keep the task about timing rather than indication."
+    ]
+  },
+  {
+    "id": "question.critical-shock-resuscitation.echo-for-persistent-shock.v1",
+    "nodeId": "node.critical-shock-resuscitation.echo-for-persistent-shock.v1",
+    "title": "Choose the initial reassessment of persistent shock",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Obtain bedside transthoracic echocardiography",
+        "why": "Only this investigation is explicitly described as bedside, giving it a portability advantage in an unstable-patient vignette. This is a partial wording cue, not proof by itself: a pulmonary artery catheter can also be placed at the bedside."
+      }
+    ],
+    "fairness": [
+      "Bedside echocardiography is the best offered first investigation. Persistent severe hypotension with elevated filling pressure and absent response to a monitored bolus warrants reassessment for cardiac or obstructive contributions. Immediate transport for targeted CT is less attractive, and an invasive catheter does not substitute for structural assessment.",
+      "The main weakness is the deletion test. The same first-echo answer follows from undifferentiated persistent severe shock even without the neck-vein, narrow-pulse-pressure and filling-pressure details. Those findings suggest a mechanism, but interpreting that mechanism is not necessary to select among the current options.",
+      "The postoperative context makes embolism a credible possibility, but the options primarily distinguish a familiar first-line test from a targeted transfer investigation and an invasive later investigation. This remains easy for the intended resident audience.",
+      "The first node is self-contained, its task is complete and the explanation does not overstate a definite obstructive diagnosis. No confident clinical inaccuracy was identified."
+    ],
+    "suggestions": [
+      "To require two consequential steps, supply an actual limitation or result of the initial assessment and ask for the next investigation that resolves the remaining physiological question. Give enough acquisition information to distinguish repeat or alternative imaging from advanced hemodynamic measurement or CT.",
+      "Keep option descriptions comparable in setting and specificity; do not use 'bedside' only to advertise the preferred test's feasibility.",
+      "If this remains an initial-echo recognition item, label and obtain acceptance of that basic role. Do not raise apparent difficulty by adding more classic shock findings that do not affect the choice."
+    ]
+  },
+  {
+    "id": "question.critical-shock-resuscitation.pericardial-compression-intervention.v1",
+    "nodeId": "node.critical-shock-resuscitation.pericardial-compression-intervention.v1",
+    "title": "Respond to pericardial compression during persistent shock",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The option commits to 'Arrange urgent pericardial drainage', whereas the explanation repeatedly softens this to 'drainage assessment'. In the stated shock context, distinguish prompt mobilization for drainage and selection of its approach from merely requesting another assessment."
+    ],
+    "cues": [
+      {
+        "phrase": "Pericardial fluid / Arrange urgent pericardial drainage",
+        "why": "The key is the only choice repeating the exhibit's anatomical term and the only procedure beside two general infusion adjustments. Anatomy-to-action matching can select it without interpreting chamber motion or comparing yesterday with today."
+      },
+      {
+        "phrase": "Which immediate intervention / Arrange urgent pericardial drainage",
+        "why": "Only the key includes an urgency adjective that mirrors 'immediate'. The other actions could also be initiated immediately, so this label adds a preferential wording signal rather than clinical information."
+      }
+    ],
+    "fairness": [
+      "Urgent drainage is the best offered priority given persistent shock, pericardial fluid and right-sided chamber collapse. Escalating norepinephrine may be temporizing support but does not address the represented filling impediment; the task's priority wording makes it less appropriate than drainage. Dobutamine lacks support from the preserved-contraction findings.",
+      "The explanation is clinically plausible when read together with the shock context. Chamber collapse should not be taught as an isolated universal indication for drainage regardless of clinical findings. I am not asserting that the stated patient lacks a drainage indication.",
+      "The similar-size comparison is intended to challenge reliance on collection size, but removing the entire Yesterday column leaves the same obvious drainage answer. Neither distractor actually requires interpreting the unchanged size. A classic collapse-to-drainage association, with one clearly weaker inotrope distractor, does not establish two consequential steps.",
+      "The sequence follows logically from the prior echo choice, and the current MAP, treatment and echo findings permit a standalone answer with the shared presentation. The earlier feedback points toward cardiac or obstructive causes but does not explicitly teach drainage. The newly revealed prior study is not a contradiction, although its timing would be clearer if introduced as a comparison report."
+    ],
+    "suggestions": [
+      "Align the explanation with urgent mobilization for drainage while leaving the exact approach dependent on the collection and clinical setting.",
+      "Remove key-only urgency wording and reconsider the two generic infusion foils. Any stronger procedural or temporizing alternatives need patient-specific findings that establish one best priority; do not invent anatomy, thresholds or contraindications.",
+      "Make the report comparison alter a real remaining decision or remove the decorative historical column. If the intended objective is immediate recognition of tamponade physiology, seek explicit acceptance as an easy safety item instead of presenting it as difficult two-step reasoning."
+    ]
+  }
+]

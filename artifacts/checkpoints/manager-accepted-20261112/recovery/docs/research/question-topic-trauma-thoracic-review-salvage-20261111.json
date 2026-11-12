@@ -1,0 +1,43 @@
+[
+  {
+    "id": "case.trauma-thoracic.aortic-repair-sequence-salvage.20261111.v1",
+    "nodeId": "node.trauma-thoracic.aortic-repair-sequence.20261111.v1",
+    "title": "Collision records review — aortic repair sequencing",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The task, 'Which aortic-management strategy best fits {patientName}'s updated hospital record?', identifies the management domain but leaves the time horizon implicit. 'Use medical therapy with aortic surveillance' does not say whether this is temporary management during treatment of the intracranial injury or the definitive aortic strategy. The explanation rejects the latter interpretation, but the option does not specify it.",
+      "The presentation places Hannah Kim in follow-up clinic after her admission, whereas the update uses present-tense hospital events. The retrospective record-review frame is understandable and not a substantive standalone failure; a short 'During that admission' transition would make the decision time unambiguous."
+    ],
+    "cues": [
+      {
+        "phrase": "requiring urgent evacuation",
+        "why": "In this option set, an untrained reader can prioritize the explicitly urgent problem and choose 'Treat the cranial hematoma, then perform TEVAR'. The competing sequence postpones the only intervention explicitly called urgent. This is clinically relevant information, but the options allow its ordinary-language meaning to substitute for the intended aortic risk assessment. Do not simply delete necessary urgency information."
+      },
+      {
+        "phrase": "grade 3 traumatic descending-aortic pseudoaneurysm with anatomy suitable for TEVAR",
+        "why": "A known diagnosis is permissible for a management question. Here, however, both the classification and procedural suitability are already interpreted. Repetition of 'TEVAR' narrows the choices to the two procedural sequences, and the explicitly urgent cranial indication selects their order. This combination weakens the claimed independent two-step reasoning; the diagnosis label is not intrinsically an error."
+      },
+      {
+        "phrase": "Use medical therapy with aortic surveillance",
+        "why": "This is the only option without the repeated cranial-treatment and TEVAR components. It differs in scope from the two complete intervention sequences, allowing a reader to dismiss it as the incomplete plan. The two sequence options are otherwise well balanced in length and grammar; there is no unique-long-key, absolute, or key-only wording match in the task."
+      }
+    ],
+    "fairness": [
+      "The clinically intended best answer is cranial hematoma treatment followed by TEVAR: the supplied record describes a repair-relevant traumatic aortic pseudoaneurysm, stable perfusion without active extravasation, suitable endovascular anatomy, and a competing urgent intracranial operation. I identify no confident clinical contradiction in that intended ordering. Immediate aortic repair is a meaningful competing error if the learner overprioritizes the aortic diagnosis.",
+      "Exactly one best answer is not fully secure at the wording level. Temporary medical management and aortic surveillance can be read as compatible with the keyed staged strategy. The task and third option must distinguish interim care from a definitive nonoperative plan before the latter can be rejected on the explanation's terms.",
+      "The single node is self-contained: presentation supplies a named 41-year-old woman in retrospective clinic review; the update supplies the aortic diagnosis, suitability, perfusion status, absence of active extravasation, and competing intracranial indication. No missing result or former companion answer is needed. There is no exhibit and no later part to assess; removal of the former acquisition question leaves no substantive clinical dependency.",
+      "Predicted difficulty is easy for a resident because the supplied interpretations and urgency cue permit selection without two consequential inferences. Knowing the repair category and knowing that a stable lesion can be sequenced after an urgent competing operation could form two judgments, but this wording and these distractors do not require both. This is a qualitative judgment, not measured performance.",
+      "Traumatic aortic injury management and prioritization of competing injuries are high-yield general-surgery trauma concepts. This is a scope judgment, not a claim about observed ABSITE frequency. The statistics single-skill exception does not apply.",
+      "Review is limited to the candidate presentation, update, task, option labels, and explanation. Prior PASS labels and author gates were not treated as evidence. No network or independent source verification was performed; the explanation's specific claim about current SVS guidance remains unverified here. This editorial review does not establish clinical approval, and the draft remains needs_clinician_review. Non-salvage accepted/kept, retired, parked, and held material was excluded from adjudication."
+    ],
+    "suggestions": [
+      "Ask explicitly for the sequence of definitive treatment during the index admission. Keep the intracranial treatment common across all proposed strategies and make the third strategy explicitly definitive aortic nonoperative management, rather than an unspecified interval of medical therapy and surveillance. Compare plans at the same scope without explanatory qualifiers in the labels.",
+      "For a revised resident-level version, use supported observations from the aortic study and perfusion trajectory that require the learner to determine repair need and urgency, then integrate the competing intracranial indication. Retain sufficient neurologic urgency information for fairness. Do not invent numerical thresholds, treatment intervals, or blood-pressure targets, and do not make a missing critical finding the source of difficulty.",
+      "Reattack the revised options with no medical knowledge: the words 'urgent' and 'suitable for TEVAR' should not together resolve the complete answer. Document the closest credible competing sequence and the actual clinical observation that makes it inferior. If the same cue remains, treat this as a basic prioritization item requiring explicit acceptance rather than claiming moderate/hard two-step reasoning.",
+      "Clarify the admission-time frame, and replace the explanation's trailing sentence fragment with a concise explanation of why the closest competing sequence is inferior in this particular record. Preserve the frozen prior version; any wording repair should be a new draft version reviewed by Melissa Rowland before clinical approval."
+    ]
+  }
+]

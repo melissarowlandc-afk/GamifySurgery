@@ -1,0 +1,288 @@
+[
+  {
+    "id": "question.topic.breast-cancer.current-recurrence-receptor-specimen.v2",
+    "nodeId": "node.topic.breast-cancer.current-recurrence-receptor-specimen.v2",
+    "title": "Receptor reassessment: selecting a current metastatic specimen",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "the assay-validation record does not cover that process",
+        "why": "Explicitly identifies the reported bone result as technically questionable. Combined with a nondecalcified current liver metastasis and an 'original breast block', this permits a nonmedical current-plus-valid-record shortcut to the only suitable specimen. The validation fact is legitimate safety information, but the option set lets it do almost all the work."
+      }
+    ],
+    "fairness": [
+      "Testing the available nondecalcified current metastasis is the defensible best offered plan. The text does not justify accepting receptor loss as established or using the original primary to settle current metastatic biology.",
+      "No confident clinical inaccuracy identified. The explanation appropriately permits genuine biological change and a processing problem rather than asserting that acid decalcification necessarily caused a false negative.",
+      "Standalone presentation supplies the required specimen chronology. Recurrent receptor reassessment is high yield; the actual task is an easy source-selection exercise, not two consequential clinical inferences."
+    ],
+    "suggestions": [
+      "Retain the processing/validation information needed for fairness. Redesign the competitors rather than merely deleting that necessary limitation: compare current specimens with sourced, clinically meaningful differences in tumor representation and processing, so the resident must interpret those differences.",
+      "Alternatively, retain this as an explicitly accepted easy specimen-quality exercise, or develop a separately reviewed treatment decision after reliable current receptor results are available. Do not claim the present wording is a difficult two-step item."
+    ]
+  },
+  {
+    "id": "question.topic.breast-cancer.mastectomy-rni-omit-alnd.v2",
+    "nodeId": "node.topic.breast-cancer.mastectomy-rni-omit-alnd.v2",
+    "title": "Axillary dissection omission after mastectomy with regional irradiation",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Postmastectomy chest-wall and regional nodal irradiation is planned.",
+        "why": "Announces the full keyed plan before asking which locoregional plan to recommend. Coupled with minimizing arm morbidity, a reader can simply keep the announced radiation and avoid adding an operation."
+      },
+      {
+        "phrase": "Chest-wall and regional nodal irradiation",
+        "why": "Component convergence: two choices include regional nodal irradiation and two omit axillary dissection. Combining those majority components produces this key without using tumor size or nodal burden. All choices already share chest-wall irradiation."
+      }
+    ],
+    "fairness": [
+      "The intended omission strategy is defensible in the supplied selected upfront-mastectomy setting: clinically nonpalpable axilla, limited positive sentinel nodes, and planned regional nodal treatment. The morbidity preference helps rank omission against additional dissection; it is not itself illegitimate information.",
+      "No confident clinical inaccuracy identified. This offline review does not independently verify the current guideline eligibility boundaries. The explanation should remain specific to the represented selection criteria, not all node-positive mastectomy patients.",
+      "The task is complete and standalone. Mastectomy versus conservation boundaries for axillary de-escalation are high yield, but the actual options and advance plan disclosure bypass that reasoning."
+    ],
+    "suggestions": [
+      "Make the locoregional decision genuinely pending instead of stating the entire keyed plan as already planned. Preserve the observations and patient goals needed to rank the alternatives.",
+      "Rebuild the option set so majority components do not uniquely assemble the key. If testing completion dissection, fix genuinely shared radiation care in the context and test the remaining surgical decision with credible alternatives; do not manufacture a fourth implausible plan solely to balance frequencies."
+    ]
+  },
+  {
+    "id": "question.topic.breast-cancer.initial-fixed-nodes-alnd.v1",
+    "nodeId": "node.topic.breast-cancer.initial-fixed-nodes-alnd.v1",
+    "title": "Pretreatment fixed axillary disease despite apparent response",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The consequential steps are to interpret the pretreatment fixed cluster as a higher initial nodal burden, then determine why current clinical improvement does not establish eligibility for the usual lower-burden targeted-staging pathway. The clipped node and response make dual-tracer mapping with clipped-node retrieval a credible competing decision.",
+      "The key is not selected by wording overlap, an option-length outlier, or a majority-component pattern. Single-tracer staging is the weaker distractor but represents a recognizable staging-quality error.",
+      "No confident clinical inaccuracy identified. The exact contemporary recommendation for initially fixed/high-burden nodes is guideline-sensitive and was not source-verified under the no-network restriction; this is editorial PASS, not independent confirmation of the cited current guidance.",
+      "The standalone presentation contains both baseline and post-treatment observations. Axillary staging after neoadjuvant therapy is high yield."
+    ],
+    "suggestions": [
+      "Retain the explicit pretreatment fixed-cluster documentation and the apparent current response; both are needed to defeat the strongest alternative. Preserve clinician review of the current high-burden axillary pathway."
+    ]
+  },
+  {
+    "id": "question.topic.breast-cancer.inflammatory-initial-sequence.v1",
+    "nodeId": "node.topic.breast-cancer.inflammatory-initial-sequence.v1",
+    "title": "Initial treatment sequence for inflammatory breast cancer",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Interpret rapid extensive erythema/pitting with confirmed invasive carcinoma as a clinical inflammatory presentation despite a nondiagnostic skin punch; then choose systemic treatment before surgery and radiation. The update supplies invasive tissue confirmation, nodal involvement, absence of distant metastasis, and treatment-naive status.",
+      "The same three treatment modalities occur in every option, avoiding a unique treatment-name or component-frequency cue. Upfront surgery is the main credible error; initial radiation is a weaker alternative.",
+      "No confident clinical inaccuracy identified. The biopsy wording does not falsely make dermal lymphatic tumor identification mandatory. Receptor values are unnecessary for the broad sequence asked, since no option specifies a subtype-dependent regimen.",
+      "This is now standalone: the current update explicitly supplies the core result and staging, so it does not require a removed earlier biopsy question. The historical presentation and update remain chronologically intelligible. The sequence is a high-yield resident concept."
+    ],
+    "suggestions": [
+      "No required revision. Preserve the clinical skin findings, invasive confirmation, and nonmetastatic status; do not replace them with the diagnosis label before the decision."
+    ]
+  },
+  {
+    "id": "question.topic.breast-cancer.marker-target-reconciliation.v1",
+    "nodeId": "node.topic.breast-cancer.marker-target-reconciliation.v1",
+    "title": "Missing biopsy marker with documented calcification-target removal",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "Minor presentation friction: 'reviews outside operating-room records in clinic' alongside 'undergoing' surgery and a request 'before closure' leaves the live-versus-retrospective consultation frame implicit. The operative decision itself is clear."
+    ],
+    "cues": [],
+    "fairness": [
+      "First reconcile the marker's pre-existing displacement from the calcification target; then determine whether the absent marker warrants more excision when the mapped target has been removed. Chasing the marker is a credible error, and the permanent-margin qualification prevents radiographic clearance from being equated with histologic clearance.",
+      "The exhibit's complete target retrieval and absence of residual target calcifications are decision-critical observations, not a diagnosis label or a uniquely repeated answer phrase. Additional specimen views are less compelling once the stated views answer the target question.",
+      "No confident clinical inaccuracy identified. Closure is the best offered plan for the constructed record; the explanation appropriately leaves microscopic margins to histology.",
+      "This is a standalone operative consultation with an interpretable constructed text exhibit. Specimen-target reconciliation is a high-yield practical breast-surgery concept."
+    ],
+    "suggestions": [
+      "Optional presentation improvement: explicitly call this a real-time outside-surgeon consultation before closure, or frame the entire question consistently as retrospective operative-record review. No clinical or option revision is required."
+    ]
+  },
+  {
+    "id": "question.topic.breast-cancer.benign-sample-discordance.v1",
+    "nodeId": "node.topic.breast-cancer.benign-sample-discordance.v1",
+    "title": "Benign biopsy that missed an additional MRI focus",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Interpret the sampling notch/marker in posterior fat plus the adipose specimen as failure to represent the persistent irregular focus; then choose repeat representative sampling before dismissing the site or escalating to mastectomy. The observations support that inference without a pre-answer 'discordant' label.",
+      "The alternatives reflect actual competing errors: accepting a benign report for surveillance versus treating imaging suspicion as proven multicentric malignancy. The key is not identifiable through a unique location phrase because the task and competing plans address the same additional finding.",
+      "No confident clinical inaccuracy identified. Repeat sampling is best among the choices; the presentation establishes that the focus is targetable, so this is not a demand to repeat an inherently inaccessible biopsy.",
+      "The standalone update explicitly records the intervening biopsy and its acquisition details. It requires no prior task or explanation and preserves the 10-o'clock primary/4-o'clock additional-site relationship. Imaging-pathology concordance is high yield."
+    ],
+    "suggestions": [
+      "No required revision. Keep the acquisition evidence and persistent target; a benign pathology label without those observations would make the ranking less secure."
+    ]
+  },
+  {
+    "id": "question.topic.breast-cancer.diffuse-malignant-residual.v2",
+    "nodeId": "node.topic.breast-cancer.diffuse-malignant-residual.v2",
+    "title": "Breast operation after treatment with diffuse biopsy-proven DCIS",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The first inference is that the small enhancing invasive remnant does not define the full malignant field: mapped tissue establishes DCIS across the continuous calcification distribution. The second is choosing an operation that addresses that field rather than applying focal or oncoplastic conservation to it.",
+      "The extensive distribution makes the eventual surgical choice straightforward once interpreted; this is moderate, not a hard item. Both conservation alternatives are concrete operations rather than explanatory caricatures. No reliable nonmedical wording-overlap, convergence, or absolute-word shortcut identified.",
+      "No confident clinical inaccuracy identified. The item does not assume that every post-treatment calcification is malignant: it supplies multiple mapped positive samples. Diffuse continuous central and all-quadrant involvement reaching the periphery supports mastectomy among the offered operations without an invented numerical size cutoff.",
+      "The case is standalone and tests high-yield conservation eligibility and response-assessment limits."
+    ],
+    "suggestions": [
+      "No required revision. Preserve the mapped pathology and continuous distribution; do not generalize the explanation to unsampled residual calcifications or all multifocal disease."
+    ]
+  },
+  {
+    "id": "question.topic.breast-cancer.dcis-positive-shave.v1",
+    "nodeId": "node.topic.breast-cancer.dcis-positive-shave.v1",
+    "title": "Positive external cavity-shave margin despite clear main specimen",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Resolve which specimen surface defines the final lateral boundary, then choose directed re-excision before radiation. Clear main-specimen margins compete meaningfully with the involved external surface of the separately oriented shave.",
+      "The external-surface marking, remaining radial parenchyma, and non-diffuse extent are needed to distinguish a true residual breast margin from an inner surface or an anatomic boundary without remaining breast tissue. The conservation preference is relevant to the mastectomy alternative and does not remove the radiation-versus-re-excision decision.",
+      "No confident clinical inaccuracy identified. Radiation is not an equivalent substitute for clearing the represented involved margin; the supplied record does not require completion mastectomy.",
+      "This first node stands alone. Its explanation teaches specimen orientation and involved-edge management but does not disclose the next node's changed invasive-with-DCIS margin framework. Margin management is high yield."
+    ],
+    "suggestions": [
+      "No required revision. Retain the external-surface orientation and residual parenchyma, which make the positive-margin inference fair."
+    ]
+  },
+  {
+    "id": "question.topic.breast-cancer.invasive-with-dcis-margin.v1",
+    "nodeId": "node.topic.breast-cancer.invasive-with-dcis-margin.v1",
+    "title": "Final close DCIS margin when invasive carcinoma is identified",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Recognize that the combined definitive specimens now establish invasive carcinoma with associated DCIS, then apply the invasive-conservation margin framework to the close but ink-negative edge. The closest error is carrying the pure-DCIS margin rule forward from the initial diagnosis.",
+      "No confident clinical inaccuracy identified. The update supplies no tumor on ink, clear other edges, no residual suspicious calcifications, and planned whole-breast irradiation, making no additional breast excision the best offered margin-directed action. The task is limited to the lateral breast margin; it does not imply that newly identified invasion needs no other staging or treatment assessment.",
+      "The sequence is coherent: the initial specimen report was pure DCIS, re-excision occurred, and combined review newly identifies invasion. The update contains the decision-critical facts even when encountered without the first question. Prior feedback explains positive shave margins but does not give this changed-framework answer.",
+      "The absence of tumor on ink is necessary clinical evidence rather than a prohibited teaching cue. Changing definitive pathology before deciding on another operation is high yield."
+    ],
+    "suggestions": [
+      "No required revision. Preserve the explicit combined-specimen chronology and the task's limitation to additional breast surgery for the margin."
+    ]
+  },
+  {
+    "id": "question.topic.breast-cancer.her2-neoadjuvant-sequence.v2",
+    "nodeId": "node.topic.breast-cancer.her2-neoadjuvant-sequence.v2",
+    "title": "Sequencing systemic therapy and surgery for node-positive HER2 disease",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Interpret the size and biopsy-proven mobile nodal disease in the nonmetastatic setting, then select combined chemotherapy/HER2-directed treatment before surgery rather than surgery first or incomplete preoperative systemic treatment. The HER2 result identifies the treatment family, but that family is present in every option.",
+      "No unique drug-name overlap or component-majority cue selects the key: all options contain chemotherapy, trastuzumab/pertuzumab, and surgery. The third sequence tests separating HER2 blockade from the chemotherapy component; it is the weaker competitor but is a recognizable de-escalation/sequencing error.",
+      "No confident clinical inaccuracy identified. The broad sequence is fair for the supplied substantial node-positive disease; the item is not asking for a regimen dose, chemotherapy backbone, or cardiac-safety decision for which additional details would be necessary.",
+      "This standalone initial-planning case is complete and does not borrow later response data. Stage/biology-dependent neoadjuvant sequencing is high yield. Difficulty is moderate rather than hard."
+    ],
+    "suggestions": [
+      "No required revision. The explanation could more explicitly connect preoperative treatment to assessing response and subsequent treatment planning, using verified claims, rather than chiefly restating the sequence."
+    ]
+  },
+  {
+    "id": "question.topic.breast-cancer.residual-her2-adjuvant.v1",
+    "nodeId": "node.topic.breast-cancer.residual-her2-adjuvant.v1",
+    "title": "Adjuvant systemic escalation after residual invasive HER2 disease",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Distinguish residual invasive carcinoma from DCIS-only residual disease or a complete invasive response, then use the stated taxane/trastuzumab exposure to choose postoperative escalation. Clear nodes and margins do not erase the residual invasive focus. Continuation of trastuzumab is the closest credible error.",
+      "No confident clinical inaccuracy identified in the offered ranking: ado-trastuzumab emtansine is the established response-adapted choice among these alternatives. Extended neratinib is a weaker distractor at this immediate postoperative decision stage and with the supplied hormone-receptor-negative tumor.",
+      "Current systemic-therapy standards are time-sensitive. This offline review cannot establish whether newer evidence changes the best contemporary regimen outside this option set; preserve clinician verification rather than interpreting PASS as a current-guideline audit.",
+      "The split standalone case supplies the original biology, preoperative exposure, operation, and residual pathology in its own presentation/update. It does not depend on answering the separate initial-sequence item. Response-adapted HER2 treatment is high yield."
+    ],
+    "suggestions": [
+      "No required editorial revision. Preserve the explicit residual invasive component and preoperative taxane/trastuzumab history; obtain exact-version clinician confirmation of the contemporary systemic-treatment ranking."
+    ]
+  },
+  {
+    "id": "question.topic.breast-cancer.upfront-one-positive-no-alnd.v2",
+    "nodeId": "node.topic.breast-cancer.upfront-one-positive-no-alnd.v2",
+    "title": "Whole-breast irradiation and axillary omission after upfront conservation",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Whole-breast irradiation with no completion axillary operation",
+        "why": "The key is the unique intersection of majority components: 'Whole-breast irradiation' occurs in two choices, and 'no completion axillary operation' occurs in two choices. A test-wise reader can combine those repetitions without interpreting the sentinel-node finding, treatment chronology, or eligibility."
+      }
+    ],
+    "fairness": [
+      "The intended clinical ranking is defensible: the supplied upfront-conservation, clinically nonpalpable-axilla, limited-sentinel-disease setting supports omission of completion dissection with appropriate whole-breast treatment. The positive-node partial-breast alternative represents a relevant boundary error.",
+      "No confident clinical inaccuracy identified. The explanation properly leaves regional field details to radiation-oncology assessment rather than claiming whole-breast irradiation automatically specifies every nodal field.",
+      "The morbidity preference is legitimate and does not by itself decide between the two no-dissection plans. The independent problem is structural convergence, which bypasses the intended two decisions and makes the presented item easy.",
+      "The standalone task and observations are complete. Axillary de-escalation and the radiation context are high yield."
+    ],
+    "suggestions": [
+      "If the intended construct is axillary omission, fix whole-breast treatment in shared context and ask the remaining axillary decision using credible same-stage alternatives.",
+      "If retaining the combined surgery/radiation construct, rebuild the complete strategies so component repetition cannot assemble the key. Check each competitor clinically; do not add a knowingly inappropriate fourth plan merely to complete a two-by-two matrix."
+    ]
+  },
+  {
+    "id": "question.topic.breast-cancer.post-nst-micrometastasis-alnd.v2",
+    "nodeId": "node.topic.breast-cancer.post-nst-micrometastasis-alnd.v2",
+    "title": "Residual nodal micrometastasis after neoadjuvant therapy",
+    "verdict": "REVISE",
+    "difficulty": "hard",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Which additional axillary treatment should be recommended' does not state whether the choices are replacements for one another, the next operative step, or components of the complete regional plan."
+    ],
+    "cues": [],
+    "fairness": [
+      "The central ambiguity is 'Completion level I-II axillary dissection' versus 'Axillary and regional nodal irradiation'. These can be components of the same postoperative regional plan. The radiation option does not say that it substitutes for completion dissection, although the explanation evaluates it as if it did. A resident should not have to infer that unstated omission.",
+      "Under the intended reading of radiation as a replacement for dissection, the known conventional post-neoadjuvant residual-positive-node pathway favors completion dissection. I am not asserting that the key is clinically incorrect. The specific February 2026 ASBrS recommendation and evolving management of residual micrometastases were not independently verified in this offline review.",
+      "The intended two steps are consequential: interpret the measured residual deposit despite adequate retrieval and clinical response, then distinguish post-neoadjuvant residual disease from upfront-surgery omission populations. This is a hard, high-yield boundary problem when the choices are made explicit; the ambiguity itself does not justify the hard rating.",
+      "The standalone chronology, clipped-node retrieval, residual finding, and planned breast irradiation are supplied. No reliable wording-overlap, option-length, convergence, or diagnosis-label shortcut identified."
+    ],
+    "suggestions": [
+      "State explicitly that the decision is whether to perform completion dissection or replace it with a nonoperative axillary policy. Make the radiation choice explicitly omit completion dissection; make the observation choice explicitly omit both dissection and directed axillary treatment.",
+      "Separate any common downstream regional-radiation planning from that mutually exclusive decision. Do not imply that recommending completion dissection rules out indicated radiation.",
+      "Have Melissa verify the exact contemporary residual-micrometastasis recommendation before clinical sign-off. Retain the measured deposit and treatment chronology rather than labelling the axilla simply positive or negative."
+    ]
+  }
+]

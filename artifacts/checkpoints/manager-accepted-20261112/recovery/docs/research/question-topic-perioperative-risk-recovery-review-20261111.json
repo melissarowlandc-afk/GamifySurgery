@@ -1,0 +1,757 @@
+[
+  {
+    "id": "question.topic.perioperative-risk-recovery.beta-new-exposure.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.beta-new-exposure.v1",
+    "title": "Actual beta-blocker exposure before surgery",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The visit-to-operation interval is unstated; the task could mean an immediate operative-day instruction or a longer preparation plan."
+    ],
+    "cues": [
+      {
+        "phrase": "first replacement dose for cardiac risk reduction",
+        "why": "The presentation classifies the order as new initiation and supplies its purpose, doing the decisive reconciliation inference."
+      }
+    ],
+    "fairness": [
+      "Omitting new operative-day beta blockade is the best offered plan. No confident clinical error identified in that narrow rule. Absence of current symptoms does not establish absence of a chronic cardiac indication, so the rationale for not reassessing earlier needs clearer indication history.",
+      "Standalone. As written, explicit cessation months ago followed by a familiar initiation rule is easy rather than two consequential inferences."
+    ],
+    "suggestions": [
+      "Specify the decision time and relevant established indication history. Show neutral administration/dispensing observations rather than calling the order a first replacement dose.",
+      "Compare credible plans requiring actual exposure and indication to be interpreted; do not invent a dose or titration interval."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.warfarin-interruption.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.warfarin-interruption.v1",
+    "title": "Warfarin interruption for colectomy",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Temporary interruption without routine therapeutic bridging is the best offered plan for the represented AF history and major bowel resection. The operation and anticoagulant indication both matter.",
+      "The bridge is a credible perioperative error; continuing therapeutic warfarin misapplies a minor-procedure strategy. No competing best answer identified in this scope.",
+      "Standalone. The explanation appropriately separates therapeutic bridging from surgical VTE prophylaxis. Exact timing and high-risk exceptions are not tested."
+    ],
+    "suggestions": [
+      "Retain the indication, relevant embolic history and procedure. Delete the sentence merely announcing that the surgeon is comparing instructions."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.vte-active-bleeding.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.vte-active-bleeding.v1",
+    "title": "VTE prevention during postoperative bleeding",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "during active bleeding assessment",
+        "why": "The presentation interprets the raw blood-loss findings."
+      },
+      {
+        "phrase": "during the active bleeding assessment",
+        "why": "The task repeats the interpretation that determines the answer."
+      },
+      {
+        "phrase": "No VTE had been diagnosed.",
+        "why": "Necessary prevention context, but it makes the prophylactic IVC-filter competitor weak for residents."
+      }
+    ],
+    "fairness": [
+      "Mechanical prevention with reassessment is the clear best plan during ongoing bleeding. No confident inaccurate clinical rule identified; the problem is insufficient discrimination.",
+      "First of three coherent historical time points. Its explanation foreshadows reassessment after bleeding, reducing the independence of the next node."
+    ],
+    "suggestions": [
+      "Keep the raw bloody drainage and hemoglobin trajectory but remove repeated interpretive phrasing from the task.",
+      "Compare plausible prevention decisions with a genuine competing-risk inference, or seek explicit basic-safety acceptance. Do not conceal necessary bleeding findings."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.vte-after-hemostasis.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.vte-after-hemostasis.v1",
+    "title": "Reassessing prophylaxis after hemostasis",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Specify VTE prevention in the task rather than only 'Which prevention change'.",
+      "Renal function 'unchanged from baseline' does not establish whether baseline renal function supports the proposed LMWH approach."
+    ],
+    "cues": [
+      {
+        "phrase": "the treating team recorded satisfactory hemostasis",
+        "why": "This conclusion follows several redundant reassuring observations and supplies the principal inference."
+      },
+      {
+        "phrase": "Replace pneumatic compression with therapeutic heparin",
+        "why": "Treatment intensity without diagnosed VTE is a weak alternative, leaving add prophylaxis versus preserve an obsolete hold."
+      }
+    ],
+    "fairness": [
+      "Adding prophylaxis is the likely best plan after the described recovery, but relevant baseline renal status and drug contraindications should be clear.",
+      "Chronology is coherent. Earlier feedback already teaches conditional mechanical prevention and reassessment, and this update announces that the condition has resolved. This is strongly scaffolded rather than independent two-step reasoning."
+    ],
+    "suggestions": [
+      "Use concise observed recovery findings instead of duplicating them with an eligibility conclusion. Clarify relevant renal status without inventing a dosing threshold.",
+      "Use a credible same-stage prevention competitor and a later decision that earlier feedback does not already supply."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.extended-cancer-course.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.extended-cancer-course.v1",
+    "title": "Duration of cancer-surgery prophylaxis",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "well before four weeks after the operation",
+        "why": "The update supplies the exact duration appearing only in the key, permitting a numerical match without knowing the recommendation."
+      }
+    ],
+    "fairness": [
+      "About four weeks is a plausible best total course for this major cancer operation with persistent mobility limitation. No confident clinical contradiction identified offline.",
+      "The prevention-versus-treatment distinction and total-course framing are appropriate. The discharge progression follows the prior bleeding and prophylaxis decisions coherently.",
+      "Earlier feedback does not teach the duration, but the current update does; the duration recall does not earn two consequential steps."
+    ],
+    "suggestions": [
+      "Replace the answer-bearing four-week reference with a neutral postoperative time point.",
+      "Require application of the risk and recovery findings to a supported discharge course; keep precise durations tied to verified evidence."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.sglt2-drug-switch.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.sglt2-drug-switch.v1",
+    "title": "Drug-specific SGLT2 interruption",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'He has kept both sheets' follows mention of only one old instruction sheet; the second sheet is not introduced."
+    ],
+    "cues": [
+      {
+        "phrase": "which drug-specific minimum belongs on the replacement calendar",
+        "why": "This announces the switch as the discriminator and reduces the task to drug-to-number recall."
+      }
+    ],
+    "fairness": [
+      "The stated three-day versus four-day distinction is consistent with familiar U.S. labeling; it was not newly source-verified.",
+      "The bottle is explicitly identified as ertugliflozin. Retrieving its interval is one skill, not two consequential inferences. The medication-safety concept is high-yield, but the exact exception remains recall.",
+      "Standalone and otherwise clear."
+    ],
+    "suggestions": [
+      "Fix the unexplained second sheet. Seek acceptance for focused medication-calendar recall or redesign around an actual exposure/timing decision.",
+      "Do not invent a competing urgency or unsupported interval merely to raise difficulty."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.sglt2-acid-ketone-pattern.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.sglt2-acid-ketone-pattern.v1",
+    "title": "Postoperative ketone-associated acidosis",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The task requests a medication-associated complication, but hyperosmolar hyperglycemic state is not phrased as medication-associated like the other choices."
+    ],
+    "cues": [
+      {
+        "phrase": "Lactate",
+        "why": "The normal value directly eliminates 'lactic acidosis'."
+      },
+      {
+        "phrase": "Blood beta-hydroxybutyrate",
+        "why": "Marked ketones cue ketoacidosis while normal lactate and modest glucose separately remove the alternatives."
+      }
+    ],
+    "fairness": [
+      "The acidemia, low bicarbonate, ketones and SGLT2 exposure support the intended answer among these options. The explanation appropriately avoids proving a unique cause.",
+      "The task is classic pattern recognition with one-line exclusions, not interpretation followed by a consequential decision.",
+      "Historical admission framing is coherent; later recovery data were not used to judge this first node."
+    ],
+    "suggestions": [
+      "Use a neutral metabolic-complication task and same-category options.",
+      "Test a consequential action after interpreting the pattern, or compare genuinely plausible causes with adequate differentiating observations. Preserve the euglycemic safety lesson."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.sglt2-recovery-restart.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.sglt2-recovery-restart.v1",
+    "title": "Empagliflozin during incomplete oral recovery",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Resume ... with the next retained meal' is conditional future advice, whereas the key describes what to do now. Readers may interpret it as waiting for recovery rather than restarting immediately."
+    ],
+    "cues": [
+      {
+        "phrase": "Continue withholding empagliflozin during meal intolerance",
+        "why": "Only the key repeats the salient problem as an explanation."
+      },
+      {
+        "phrase": "after the next fasting glucose check",
+        "why": "This competitor specifies neither a result nor a recovery criterion; it is an incomplete plan."
+      }
+    ],
+    "fairness": [
+      "Continuing the hold during repeated vomiting is the best current action. The explanation appropriately leaves eventual restart to the treating team.",
+      "After ketoacidosis associated with SGLT2 therapy, re-exposure requires assessment of the episode and contributors. This review does not approve automatic restart once meals resume.",
+      "Chronology is coherent and the first explanation does not give the restart rule, but the later item is an easy intolerance-to-hold match."
+    ],
+    "suggestions": [
+      "Make every option address the same present decision in parallel concise wording.",
+      "Separate current withholding from a future restart decision and obtain clinician review of any proposed post-ketoacidosis restart rule."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.awake-ventilation-assessment.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.awake-ventilation-assessment.v1",
+    "title": "Awake gas exchange versus sleep testing",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Below the clinic reference band', 'above the laboratory interval' and 'marked obesity' conceal the degree of abnormality and do not establish severity or stability.",
+      "'Clarify these preoperative findings' is broad enough to include sleep-disordered breathing, for which polysomnography is also indicated."
+    ],
+    "cues": [
+      {
+        "phrase": "Repeated awake room-air oxygen readings",
+        "why": "Necessary awake physiology is contrasted with two overnight options; that contrast can narrow the answer independently of the chemistry interpretation."
+      }
+    ],
+    "fairness": [
+      "ABG is a defensible priority with high suspicion for awake hypoventilation, while sleep testing addresses a related question. Both may be needed; the task does not sharply define the immediate unresolved problem.",
+      "The qualitative findings leave uncertainty about the intended pretest suspicion. This is a fairness concern, not a claim that ABG is wrong.",
+      "Potentially two consequential steps: integrate awake oxygenation/chemistry with sleep history, then select the investigation addressing the unresolved physiology. Standalone."
+    ],
+    "suggestions": [
+      "Provide clinically reviewed constructed observations, ranges and relevant stability/context without inventing a cutoff.",
+      "Clarify the immediate abnormality to investigate while keeping the diagnosis and confirmatory test out of the lead-in. Ensure the competing sleep test is less appropriate for that specific question."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.suspected-osa-plan.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.suspected-osa-plan.v1",
+    "title": "Planning around suspected OSA",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The 'validated preoperative apnoea-risk report' is unnamed and merely 'flagged'; identify the instrument and reported result/limits."
+    ],
+    "cues": [
+      {
+        "phrase": "Defer all perioperative planning",
+        "why": "The absolute 'all' advertises an implausible blanket delay."
+      },
+      {
+        "phrase": "Plan anaesthesia and postoperative observation using suspected OSA risk",
+        "why": "Only the key offers a comprehensive actionable plan; the others advertise delay or reliance on one report."
+      }
+    ],
+    "fairness": [
+      "Planning around suspected OSA without claiming diagnosis is the defensible approach. No confident clinical error found.",
+      "The risk interpretation is already supplied by 'flagged'; selecting the only sensible plan does not require two consequential steps.",
+      "Standalone. Normal sleepiness is a useful misconception, but the alternatives are too weak to test it at resident difficulty."
+    ],
+    "suggestions": [
+      "Name the instrument/result without reproducing proprietary material.",
+      "Compare concrete anesthesia/recovery plans at the same stage. Remove the absolute delay and rationale-bearing wrong option."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.unmonitored-discharge-risk.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.unmonitored-discharge-risk.v1",
+    "title": "Respiratory events during recovery",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "despite his usual positive-airway-pressure treatment",
+        "why": "The stem directly defeats the home-PAP option while ongoing staff intervention points to the sole monitored plan."
+      }
+    ],
+    "fairness": [
+      "Continued monitored care is the clear best disposition during persistent respiratory events. The warning signs and key are clinically coherent.",
+      "Both discharge plans are premature. This is valuable safety recognition, but an easy one-step decision as written.",
+      "Standalone historical review; the explanation correctly distinguishes stimulated appearance from unstimulated recovery."
+    ],
+    "suggestions": [
+      "Seek explicit basic-safety acceptance or test a genuine remaining recovery decision with supported observations.",
+      "Do not remove ongoing apnea or rescue requirements to make unsafe discharge more tempting."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.frailty-domains.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.frailty-domains.v1",
+    "title": "Functional decline before colectomy",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "help is needed even on days when the knee is comfortable",
+        "why": "This explicitly neutralizes the orthopedic explanation."
+      },
+      {
+        "phrase": "Validated frailty assessment across function and other domains",
+        "why": "The key is broad and comprehensive; both competitors advertise a narrow focus that cannot cover the supplied decline."
+      }
+    ],
+    "fairness": [
+      "Frailty assessment is appropriate, and the explanation correctly avoids diagnosing it from age alone. No confident clinical error identified.",
+      "Matching multidomain decline to a multidomain assessment is essentially one classification, not two consequential steps.",
+      "First of two coherent stages; its feedback does not reveal the later support plan."
+    ],
+    "suggestions": [
+      "Use a specific validated assessment or concrete plan with competitors of comparable scope.",
+      "Require a consequential application of an observed functional discrepancy, rather than making every competitor narrower than the key."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.recovery-support.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.recovery-support.v1",
+    "title": "Support after limited functional recovery",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Supervised rehabilitation with reassessment best covers the stated assistance needed for transfers and inability to negotiate home steps. Evening assistance and intermittent visits leave daytime needs uncovered.",
+      "Two useful inferences remain: supported corridor walking does not establish independent home function, and available home support does not bridge the deficits. These are necessary observations, not gratuitous cues.",
+      "The later record follows preoperative decline coherently and can be solved from its update and shared context without the earlier answer. No particular facility eligibility or insurance entitlement is claimed."
+    ],
+    "suggestions": [
+      "Retain the distinction between corridor walking, transfers and entrance steps. Keep the support recommendation functional rather than mandating a specific facility."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.delirium-anticholinergic-order.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.delirium-anticholinergic-order.v1",
+    "title": "Medication review for delirium prevention",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Orders are for the night before surgery, but acetaminophen is for 'incisional pain' and senna accompanies opioids. Clarify whether these are advance postoperative orders.",
+      "The separated task says only 'this prevention plan'; name delirium prevention."
+    ],
+    "cues": [
+      {
+        "phrase": "Scheduled at bedtime for sleep; no allergy symptoms",
+        "why": "Only this medication receives an explicit absent-indication qualifier; the others have unambiguously beneficial indications."
+      },
+      {
+        "phrase": "Remove the bedtime diphenhydramine",
+        "why": "The familiar anticholinergic sedative is an obvious outlier against acetaminophen and senna."
+      }
+    ],
+    "fairness": [
+      "Removing unnecessary diphenhydramine is appropriate. No confident clinical error identified in that recommendation.",
+      "The order chronology is a genuine story problem, not difficulty. This tests single-drug recognition rather than two consequential inferences.",
+      "The next postoperative delirium node is plausible, but the initial order timing needs repair."
+    ],
+    "suggestions": [
+      "Specify an advance postoperative order set or move the decision to a coherent postoperative point.",
+      "Use balanced indication detail and credible medication competitors. Remove the key-specific absent-allergy qualifier unless necessary to distinguish a real competing indication."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.delirium-quiet-cause.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.delirium-quiet-cause.v1",
+    "title": "New inattention with postvoid fullness",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Bedside postvoid bladder assessment is the best immediate investigation given small voids, postvoid fullness and recent catheter removal. Neurologic testing is less immediately explanatory without focal findings or a more specific seizure pattern.",
+      "The resident must recognize acute fluctuating cognition and interpret apparent urine passage as compatible with retention, then prioritize a reversible contributor. The explanation appropriately avoids claiming a unique cause.",
+      "The later part is coherent and independently answerable from its update and shared context; earlier medication feedback does not reveal bladder testing. No confident clinical error identified."
+    ],
+    "suggestions": [
+      "Retain postvoid timing and small-volume voiding; they make apparently reassuring urine output consequential. Keep the explanation open to other delirium contributors."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.art-unavoidable-interruption.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.art-unavoidable-interruption.v1",
+    "title": "ART when enteral delivery is impossible",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": false,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Coordinated temporary interruption of the complete regimen is the best offered approach during documented route failure after specialist/formulation review. Partial therapy is a credible error, and repeated dosing into returning drainage is unreliable.",
+      "The unavailable complete alternative is necessary to establish an unavoidable interval, not dispensable cueing. Interpreting delivery failure and applying a complete-regimen interruption principle provide two consequential steps.",
+      "No drug-specific substitution, restart rule or coinfection management is tested. No confident wrong key identified within this narrow scope.",
+      "Standalone and useful, but this specialized ART comparison is lower priority than commonly tested cardiac, VTE and delirium decisions. highYield=false reflects qualitative general-surgery scope judgment, not a verified exam-frequency claim."
+    ],
+    "suggestions": [
+      "Retain specialist involvement and route-failure evidence. Give this lower coverage priority unless broader perioperative medication safety is an explicit owner objective."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.postoperative-targeted-ultrasound.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.postoperative-targeted-ultrasound.v1",
+    "title": "Imaging fullness after breast excision",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The interval between excision and new fullness is unspecified, which matters for early postoperative collection versus a later new palpable lesion.",
+      "The broad next-investigation task permits a general palpable-breast-mass workup rather than solely collection characterization."
+    ],
+    "cues": [
+      {
+        "phrase": "Palpation cannot distinguish fluid from soft tissue.",
+        "why": "This closely supplies the targeted-ultrasound rationale while MRI lacks an unresolved imaging indication."
+      },
+      {
+        "phrase": "was obtained before the excision",
+        "why": "The text dismisses an old acquisition, but no option proposes relying on that old mammogram."
+      }
+    ],
+    "fairness": [
+      "Targeted ultrasound is reasonable and likely best for a localized postoperative collection. Diagnostic mammography may also be appropriate for a genuinely new palpable mass in a 53-year-old; chronology should resolve the intended pathway.",
+      "This is uncertainty about the supplied discriminator, not a claim that mammography is the better answer. The present options mainly test simple modality selection.",
+      "First of two coherent nodes; its explanation does not disclose observation versus aspiration."
+    ],
+    "suggestions": [
+      "State meaningful postoperative chronology and whether this is an early localized wound-site change.",
+      "Create a real target/acquisition decision or seek basic modality-selection acceptance. Do not use MRI as filler."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.postoperative-seroma-observe.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.postoperative-seroma-observe.v1",
+    "title": "Persistent fluid pocket after symptom resolution",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Replace the vague task anchor 'after the later review' with management of the postoperative incision-site collection."
+    ],
+    "cues": [
+      {
+        "phrase": "incisional discomfort had resolved, shoulder movement was unrestricted and the overlying wound was not stretched",
+        "why": "The update lists reasons not to aspirate; absent erythema/systemic illness then removes antibiotics."
+      }
+    ],
+    "fairness": [
+      "Observation is best for the represented small, uncomplicated, asymptomatic pocket; persistence alone does not require intervention. No confident clinical error found.",
+      "The later progression is coherent and earlier feedback does not disclose this rule. Current findings matter, but they make the alternatives plainly unnecessary rather than creating a difficult tradeoff.",
+      "The update plus shared operative context supports standalone solving once the task is made concrete."
+    ],
+    "suggestions": [
+      "Keep necessary wound and infection observations without redundantly listing every nonintervention rationale.",
+      "Compare credible management plans where current symptoms or function change the decision, or seek basic-practice acceptance."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.contrast-event-provenance.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.contrast-event-provenance.v1",
+    "title": "Classification of recorded contrast events",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Itchy raised wheals across chest and arms",
+        "why": "Familiar allergic symptoms directly match the wheal option."
+      },
+      {
+        "phrase": "as contrast leaked locally",
+        "why": "The exhibit already explains the local mechanism rather than leaving it to be interpreted."
+      }
+    ],
+    "fairness": [
+      "The wheal event is the clear best classification. Isolated warmth and extravasation are different phenomena; the explanation correctly avoids proving IgE causation or selecting premedication.",
+      "Three records do not establish two consequential steps when the task is identifying one familiar allergic-like symptom. This is foundational classification.",
+      "Standalone. The copied-header story adds framing without changing the inference."
+    ],
+    "suggestions": [
+      "Seek explicit focused-recognition acceptance or test a consequential documentation/imaging decision supported by event-specific findings.",
+      "Keep allergic-like classification separate from IgE proof and unverified premedication protocols."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.extravasation-progressive-injury.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.extravasation-progressive-injury.v1",
+    "title": "Progressive hand injury after extravasation",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Urgent hand-surgical assessment is best for tense progressive swelling, sensory change and marked pain on passive extension after initial care. Continuing elevation without escalation is the meaningful wrong-stage competitor.",
+      "The resident distinguishes the progressive local injury from separate prior hives, then uses the trajectory to escalate beyond conservative measures. The warning signs are necessary safety data.",
+      "Antihistamine is weaker than serial local assessment as a distractor, but the latter remains credible. The key appropriately requests assessment rather than claiming a proven syndrome or mandatory operation.",
+      "Standalone historical decision; no confident clinical error identified."
+    ],
+    "suggestions": [
+      "Retain progression after elevation and sensory/passive-movement findings. Do not replace them with an invented volume threshold or automatic operative rule."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.penicillin-delayed-boundary.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.penicillin-delayed-boundary.v1",
+    "title": "Severe delayed reaction and allergy evaluation",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Retaining the documented reaction and seeking drug-allergy expertise is best. Delayed blistering, mucosal involvement and organ injury make routine immediate-allergy testing/challenge pathways inappropriate.",
+      "Two consequential steps remain: recover the severe delayed phenotype from a misleading short label, then recognize changed eligibility for common delabeling approaches. Skin testing followed by challenge is a credible resident trap.",
+      "The history need not be forced into a single named severe reaction to answer this safety question. The key does not select an antibiotic or challenge protocol.",
+      "Standalone; no confident clinical error identified in the narrow referral recommendation."
+    ],
+    "suggestions": [
+      "Keep timing, mucosal findings and organ involvement. Do not extrapolate universal beta-lactam permissions or exclusions beyond the specialist-evaluation decision."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.low-risk-cardiac-testing.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.low-risk-cardiac-testing.v1",
+    "title": "Exercise limitation before low-risk surgery",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Clinical assessment without additional ischemia testing is best for the stated superficial local procedure without an independent cardiac indication.",
+      "The key's 'without' specifies the testing decision rather than ridiculing an alternative. The competitors are concrete tests; no decisive wording-only shortcut found.",
+      "The resident must distinguish orthopedic limitation from cardiac symptoms and apply the low operative risk despite uncertain exercise capacity. Reflex pharmacologic testing is a credible error.",
+      "Standalone; the explanation appropriately confines the conclusion to the represented absence of an independent testing indication."
+    ],
+    "suggestions": [
+      "Retain procedure/anesthetic context and orthopedic limitation. Do not generalize no testing to new cardiac symptoms or a different operation."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.new-dyspnea-lv-assessment.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.new-dyspnea-lv-assessment.v1",
+    "title": "Changed cardiac findings after a normal echo",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "An echocardiogram obtained last year was normal.",
+        "why": "Naming the old test primes the matching echocardiography option."
+      },
+      {
+        "phrase": "sleeps propped on several pillows",
+        "why": "The extensive classic congestion cluster makes ventricular assessment obvious against rhythm monitoring and ischemia imaging."
+      }
+    ],
+    "fairness": [
+      "Transthoracic echocardiography is best for the new congestive findings despite the previous normal study. No confident clinical error identified.",
+      "This is a familiar syndrome-to-test association with weak competitors. The old normal study does not create a substantial conflict in overt new disease.",
+      "The first node coherently precedes hospital evaluation and rescheduling; its explanation does not reveal the later lisinopril plan."
+    ],
+    "suggestions": [
+      "Build a credible diagnostic-priority comparison around actual unresolved findings rather than multiple textbook signs and a named old test.",
+      "Preserve the active symptoms and urgency. Seek basic-recognition acceptance if retaining this straightforward association."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.raas-hf-indication.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.raas-hf-indication.v1",
+    "title": "Lisinopril before rescheduled surgery in HFrEF",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'For the preoperative interval' does not distinguish a short omission from prolonged withdrawal; these are materially different plans."
+    ],
+    "cues": [
+      {
+        "phrase": "A generic hypertension instruction sheet",
+        "why": "Calling the competing instruction generic prelabels it as less applicable."
+      },
+      {
+        "phrase": "with the perioperative team",
+        "why": "Only the key explicitly includes team coordination, giving it a cautious/comprehensive advantage."
+      },
+      {
+        "phrase": "Increase lisinopril for the preoperative interval",
+        "why": "No supplied reason supports escalation in a stable patient; this is a weak third choice."
+      }
+    ],
+    "fairness": [
+      "The explanation calls continuation 'reasonable', which does not establish that a brief preoperative omission is always wrong. Hypotension considerations and the actual interval could leave omission defensible.",
+      "This is a clinical fairness uncertainty, not a confident claim that continuation is inaccurate. The exact exclusive ranking requires clinician adjudication.",
+      "Two potentially meaningful steps are present: infer compensation from response and distinguish HFrEF therapy from hypertension-only instructions. The later node follows coherently and supplies its new diagnosis and recovery data independently."
+    ],
+    "suggestions": [
+      "Define the omission interval and decision context, then have Melissa adjudicate whether continuation is uniquely best.",
+      "Use parallel coordination language, remove the editorial 'generic' cue, and replace unjustified escalation.",
+      "If both continuation and short omission remain acceptable, change the tested objective rather than making a permissive recommendation mandatory."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.symptomatic-aortic-valve.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.symptomatic-aortic-valve.v1",
+    "title": "Valve assessment before major elective surgery",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Concordant valve measurements with exertional presyncope support symptomatic severe aortic stenosis. Valve-team assessment before the nonurgent major operation is best.",
+      "Preserved EF does not resolve valve risk. Dobutamine testing is a plausible misapplication of another stenosis-evaluation pathway; surveillance overlooks the symptomatic context.",
+      "The learner interprets severity/symptoms rather than EF alone, then applies that interpretation to operative timing. No diagnosis label or decisive wording-only shortcut precedes the choice.",
+      "Standalone and high-yield. No confident clinical error identified; assessment is appropriately keyed instead of a mandatory valve procedure."
+    ],
+    "suggestions": [
+      "Retain concordant measurements, exertional symptom and nonurgent context. Avoid an automatic procedure recommendation."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.des-acs-elective-timing.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.des-acs-elective-timing.v1",
+    "title": "Elective repair after recent ACS stenting",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "the current hernia symptoms can be managed while scheduling is reviewed",
+        "why": "This supplies deferral permission after the case already says reducible, not obstructed and elective."
+      },
+      {
+        "phrase": "Proceed with elective repair after substituting therapeutic heparin",
+        "why": "The substitute is weak for a recent stent's antiplatelet requirement, leaving a simple defer-versus-interrupt comparison."
+      }
+    ],
+    "fairness": [
+      "Deferring elective repair while retaining the cardiology antiplatelet plan is best at the represented early time after ACS DES placement.",
+      "The exact twelve-month interval in the explanation was not independently source-verified in this network-free review. No confident contradiction identified; this is not fresh validation of that duration.",
+      "The case is so early and explicitly deferrable that nuanced timing/indication interpretation is unnecessary. High-yield safety recognition, but not two consequential steps.",
+      "Standalone with a complete scheduling/antiplatelet task."
+    ],
+    "suggestions": [
+      "Remove redundant permission language while retaining necessary elective context.",
+      "Use a supported decision where PCI indication, timing or procedure requirements materially change the action. Do not invent a timing exception or obscure dangerous interruption to increase difficulty."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.mins-followup-plan.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.mins-followup-plan.v1",
+    "title": "Follow-up after postoperative myocardial injury",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "attributed the episode to ischemic myocardial injury after evaluating alternative causes",
+        "why": "The diagnosis and completed exclusion process are supplied."
+      },
+      {
+        "phrase": "expected after surgery",
+        "why": "The copied-summary wording is framed as a dismissive error against the completed assessment."
+      },
+      {
+        "phrase": "Arrange immediate invasive coronary angiography from clinic",
+        "why": "An immediate invasive intervention in this asymptomatic follow-up phase is a weak competitor to the sole proportionate review plan."
+      }
+    ],
+    "fairness": [
+      "Cardiovascular review and risk-factor optimization are defensible. No confident clinical error identified.",
+      "The options compare no review, reasonable review and extreme immediate intervention. A supplied diagnosis followed by this management choice is one-step recognition.",
+      "Standalone and coherent. The explanation correctly avoids inferring plaque rupture or prescribing an unsupported antithrombotic regimen."
+    ],
+    "suggestions": [
+      "Retain the diagnosis and ask a genuine remaining follow-up decision among credible plans, or supply raw findings sufficient for an interpretation that changes action.",
+      "Do not remove necessary attribution while retaining a management task that depends on it. Avoid a comprehensive-review key against neglect and overtreatment."
+    ]
+  },
+  {
+    "id": "question.topic.perioperative-risk-recovery.glp1-significant-symptoms.v1",
+    "nodeId": "node.topic.perioperative-risk-recovery.glp1-significant-symptoms.v1",
+    "title": "Elective preparation during semaglutide-associated vomiting",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "An old instruction sheet",
+        "why": "The competing calendar instruction is labeled stale before the choice."
+      },
+      {
+        "phrase": "Her surgical condition has no current urgent complication.",
+        "why": "This duplicates 'nonurgent elective surgery' as permission to defer."
+      },
+      {
+        "phrase": "Proceed after premedication with ondansetron",
+        "why": "Symptom suppression is an obviously incomplete alternative to addressing ongoing meal intolerance; the key is the only cautious reassessment."
+      }
+    ],
+    "fairness": [
+      "Deferral for prescriber/anesthesia reassessment is best with repeated vomiting and inability to retain meals before nonurgent general anesthesia.",
+      "The explanation appropriately avoids a universal hold duration. Current policy differences were not verified offline, and no exact competing hold or fasting rule is endorsed.",
+      "Symptom severity supplies the safety decision, so medication history does not add a second consequential inference. This is high-yield but easy.",
+      "Standalone; necessary present symptoms are visible and the task is complete."
+    ],
+    "suggestions": [
+      "Retain significant symptoms but remove redundant nonurgency and the editorial 'old' cue.",
+      "Compare credible preparation plans in a supported scenario where interpretation changes action, or seek basic-safety acceptance. Do not use antiemetic-only management to manufacture difficulty."
+    ]
+  }
+]

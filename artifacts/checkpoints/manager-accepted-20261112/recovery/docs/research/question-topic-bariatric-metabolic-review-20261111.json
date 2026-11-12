@@ -1,0 +1,479 @@
+[
+  {
+    "id": "question.topic.bariatric-metabolic.ulcer-medication-indications.v1",
+    "nodeId": "node.topic.bariatric-metabolic.ulcer-medication-indications.v1",
+    "title": "Marginal ulcer: distinguish analgesic NSAID from indicated aspirin",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "her cardiology record documents an ongoing aspirin indication",
+        "why": "This repeats the already stated secondary-prevention indication in language that practically instructs continuation. The underlying coronary indication is necessary; this second endorsement is not."
+      },
+      {
+        "phrase": "Withdraw aspirin and continue naproxen",
+        "why": "The option discards the explicitly endorsed medicine while preserving the knee-pain medicine. Even a nonmedical reader can reject it from the asymmetric importance assigned to the two indications. It is much weaker than the withdraw-both competitor."
+      }
+    ],
+    "fairness": [
+      "Independent answer: withdraw naproxen and continue indicated low-dose aspirin with the shared PPI plan. The clean-based, nonbleeding context and secondary-prevention purpose support this distinction; no confident clinical error identified. Exact aspirin management still requires clinician review and is not a universal bleeding protocol.",
+      "There are two useful decisions here: identify avoidable ulcer-promoting exposure, then preserve treatment with a competing cardiovascular benefit. The option set currently weakens that tradeoff.",
+      "The opening node is understandable independently and its explanation does not disclose the later dilation or thiamine answers.",
+      "Review scope for this entire array: all 18 new/rewritten candidate nodes were assessed from their visible presentation, update, exhibit, task, option labels and explanation; key markers were not treated as cues. Difficulty and highYield are qualitative editorial judgments, not measured performance or verified exam-frequency claims. No network or independent source-currency verification was performed. PASS is editorial and does not confer clinical approval. The one kept exact v3 variant with two recorded holds, and the 11 retire-and-replace historical records, were noted but not re-reviewed; no parked/unkeyed candidate was present."
+    ],
+    "suggestions": [
+      "Keep the concrete secondary coronary-prevention purpose, but delete the redundant sentence endorsing an ongoing aspirin indication.",
+      "Replace the stop-aspirin/continue-naproxen foil with a clinically plausible continue-both-with-the-shared-PPI error, subject to clinician review. Keep all three labels at the same medication-change scope."
+    ]
+  },
+  {
+    "id": "question.topic.bariatric-metabolic.healed-surface-fixed-outlet.v1",
+    "nodeId": "node.topic.bariatric-metabolic.healed-surface-fixed-outlet.v1",
+    "title": "Healed ulcer with a persistent gastrojejunal outlet problem",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The exhibit calls the site 'the junction' without naming it. Within the full sequence this is clearly gastrojejunal; an independently displayed later node should name that junction in the current report."
+    ],
+    "cues": [
+      {
+        "phrase": "Which initial outlet intervention",
+        "why": "The task supplies both the mechanical interpretation and the initial-treatment stage. With only dilation, stenting and surgical revision offered, the learner can recall the first intervention without using the longitudinal healing contrast."
+      }
+    ],
+    "fairness": [
+      "Independent answer: initial endoscopic balloon dilation. The epithelialized prior ulcer, retained solids, fixed narrowing and absence of prior outlet treatment support it over stenting or revision. No confident clinical inaccuracy identified.",
+      "The chronology is coherent with the preceding ulcer node, and earlier feedback does not give the dilation answer. Necessary treatment-history information should remain.",
+      "The anatomical observations are useful, but the scored options all accept the same mechanical diagnosis. Recognizing that diagnosis and naming its usual first treatment are largely collapsed by the lead-in; this does not meet the strict two-consequential-step requirement as written."
+    ],
+    "suggestions": [
+      "Use a neutral task such as 'Which next treatment best fits Teresa's current symptoms and endoscopy?'",
+      "Make persistent ulcer-directed treatment a credible competing plan alongside initial dilation and a justified escalation alternative, so the surface-versus-lumen findings determine the treatment category as well as its stage.",
+      "Name the gastrojejunal anastomosis in the current exhibit; retain the actual prior-treatment history without announcing 'initial outlet intervention' in the task."
+    ]
+  },
+  {
+    "id": "question.topic.bariatric-metabolic.vomiting-neurological-replacement.v1",
+    "nodeId": "node.topic.bariatric-metabolic.vomiting-neurological-replacement.v1",
+    "title": "Neurological deterioration during prolonged post-bypass vomiting",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'The next outside record predates her outlet procedure' moves backward after a later clinic visit and a proposed intervention. It is not clear where this hospitalization falls relative to the just-reviewed endoscopy. The chronology can be followed, but unnecessarily interrupts the clinical course.",
+      "'During that admission' introduces an admission without first clearly placing it in the sequence."
+    ],
+    "cues": [],
+    "fairness": [
+      "Independent answer: prompt parenteral thiamine. The cognitive, gait and ocular findings after prolonged failed intake strongly support it. Do not remove these safety findings merely to make the item harder.",
+      "The full classic pattern is a legitimate medical clue, not a nonmedical wording cue. However, it makes this a straightforward recognition-to-vitamin association. Every option is parenteral, so the claimed oral-versus-parenteral decision is not actually assessed.",
+      "The task gives the historical decision explicitly and the common presentation supplies age, sex and bypass history. Prior feedback does not teach thiamine; the weakness is chronology and depth, not answer leakage."
+    ],
+    "suggestions": [
+      "Place the hospitalization chronologically before definitive outlet treatment, using a clear relative sequence rather than 'the next outside record'.",
+      "If retaining this as safety recognition, obtain explicit acceptance of that easy purpose instead of calling it a difficult two-step item.",
+      "For a resident application version, compare clinically credible immediate replacement/timing plans in which failed oral intake or waiting for confirmation genuinely changes the action. Preserve the urgent neurological observations and avoid invented doses or delays."
+    ]
+  },
+  {
+    "id": "question.topic.bariatric-metabolic.spontaneous-sample-before-label.v1",
+    "nodeId": "node.topic.bariatric-metabolic.spontaneous-sample-before-label.v1",
+    "title": "Establishing the symptom-glucose relationship after bypass",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Establishes the basis for ... treatment plan' is less precise than asking which investigation should evaluate the symptomatic episodes. A single low value alone is not the complete diagnostic evaluation."
+    ],
+    "cues": [
+      {
+        "phrase": "glucose has not been sampled with a spell",
+        "why": "This names the missing action immediately before the option 'Obtain venous glucose during spontaneous symptoms'. The learner can fill the stated omission without interpreting the discordant sensor record."
+      },
+      {
+        "phrase": "Repeat ambulatory continuous glucose monitoring",
+        "why": "One foil repeats the method the update has just discredited with two discordant alerts; no changed acquisition or unresolved question is offered to make repeating it competitive."
+      }
+    ],
+    "fairness": [
+      "Independent answer: obtain an appropriately measured glucose during spontaneous symptoms. That is a defensible next investigation, not proof by itself of PBH. No confident clinical inaccuracy identified in that bounded decision.",
+      "The normal finger-stick results are for asymptomatic overnight alerts; they do not disprove the separate postmeal spells. The explanation appropriately avoids treating sensor lows alone as confirmation.",
+      "The first node is independently understandable. Its explanation teaches diagnostic confirmation, not the next node's diet answer. Interpretation of the discordance could be useful, but the named omission reduces the actual scored task to one step."
+    ],
+    "suggestions": [
+      "Present the actual timing of the existing measurements and symptoms, preferably in a short record, without announcing which sample was omitted.",
+      "Ask directly for the next investigation of the episodes and use credible strategies at the same diagnostic stage. If retaining repeat monitoring, supply a real reason a resident might choose it rather than merely repeating an already unhelpful test.",
+      "Keep the distinction between documenting a spontaneous episode and completing all criteria for a PBH diagnosis explicit in feedback."
+    ]
+  },
+  {
+    "id": "question.topic.bariatric-metabolic.initial-meal-pattern.v1",
+    "nodeId": "node.topic.bariatric-metabolic.initial-meal-pattern.v1",
+    "title": "Initial dietary treatment of post-bariatric hypoglycemia",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Evaluation identifies no alternative cause' is an author-supplied conclusion. The current update also omits the spell's relationship to eating, relying on the common presentation and preceding node."
+    ],
+    "cues": [
+      {
+        "phrase": "one large evening meal and frequent sweetened drinks",
+        "why": "Both distractors reproduce the very patterns presented as the problem. The key is the only option that changes both of them, so ordinary dietary intuition can select it."
+      },
+      {
+        "phrase": "Schedule small mixed meals with lower-glycemic carbohydrates",
+        "why": "This is the sole balanced-sounding food plan against replacing food with sweetened liquids or consolidating all intake. It is also the only new approach; both foils preserve the existing problematic exposures."
+      }
+    ],
+    "fairness": [
+      "Independent answer: smaller mixed meals with lower-glycemic carbohydrate portions under dietitian guidance. The measured symptomatic low and response to glucose make treatment of hypoglycemia reasonable.",
+      "The sequence supplies confirmation before diet, and the prior explanation does not reveal this diet. However, the food choices do not force a meaningful clinical distinction; the diagnostic confirmation is background rather than a consequential scored inference.",
+      "No confident incorrect dietary claim identified. The broad exclusion statement and unspecified postmeal interval limit independent assessment of the PBH attribution; do not invent a timing threshold to repair it."
+    ],
+    "suggestions": [
+      "Compare plausible eating plans that differ in one consequential component, such as carbohydrate distribution or liquid carbohydrate exposure, instead of offering two conspicuously poor diets.",
+      "Use a compact actual food/symptom record and require interpretation of it; repeat the relevant meal association in this node if it may be entered independently.",
+      "Either state PBH as an established diagnosis for a genuinely harder management decision or supply the few relevant observations that support the diagnosis; avoid 'no alternative cause' as a substitute for data."
+    ]
+  },
+  {
+    "id": "question.topic.bariatric-metabolic.diet-response-drug-stage.v1",
+    "nodeId": "node.topic.bariatric-metabolic.diet-response-drug-stage.v1",
+    "title": "First medication after an incomplete dietary response",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "PBH is expanded earlier in the case but is used as an abbreviation in the current update. If this node appears independently, spell out the established diagnosis once."
+    ],
+    "cues": [],
+    "fairness": [
+      "Independent answer: acarbose. The described persistent confirmed episodes after dietary treatment support moving to medication; octreotide and diazoxide are recognizable competing drugs rather than absurd foils.",
+      "The partial response and work interruption are coherent follow-up data, and previous explanations do not name acarbose. No confident clinical error identified, although the currency of the pharmacological hierarchy was not independently verified offline.",
+      "This is moderately demanding drug-order recall, not two consequential steps. The diagnosis, dietary adequacy and treatment stage are supplied, and the only scored distinction is which medication is first in the hierarchy. Oral versus injectable labeling alone cannot uniquely select the answer because two options are oral."
+    ],
+    "suggestions": [
+      "Retain the clear treatment chronology and parallel drug labels.",
+      "To meet the requested difficulty, add a supported patient-specific response, intolerance or competing treatment consideration that changes the medication choice, then compare realistic choices at that exact stage. Do not simply add more diet history or unrelated laboratory values.",
+      "If first-drug recall is deliberately retained, record that narrower educational purpose rather than asserting two-step reasoning."
+    ]
+  },
+  {
+    "id": "question.topic.bariatric-metabolic.rescue-while-on-acarbose.v1",
+    "nodeId": "node.topic.bariatric-metabolic.rescue-while-on-acarbose.v1",
+    "title": "Oral hypoglycemia rescue while taking acarbose",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "symptoms subsided after oral glucose",
+        "why": "The history rehearses the successful rescue agent immediately before asking for a rescue supply. A reader who knows the glucose/dextrose synonym can answer without applying acarbose's effect."
+      }
+    ],
+    "fairness": [
+      "Independent answer: dextrose tablets. The acarbose context makes sucrose a meaningful medication-related error. Starch crackers are a weak competitor for immediate rescue.",
+      "Awake and able to swallow is necessary safety information, not an inappropriate permission cue. Preserve it.",
+      "This separate follow-up includes age, sex, surgery and current medication and stands alone well. The previous acarbose explanation does not disclose rescue supplies. The weakness is a single drug-substrate association reinforced by a successful prior treatment, not a confident clinical inaccuracy."
+    ],
+    "suggestions": [
+      "Delete the prior successful oral-glucose rescue sentence while retaining the conscious/swallowing context and current medication.",
+      "Strengthen the competing rescue plans so the medication's effect changes their ranking; avoid a slow food as a disposable acute-rescue foil.",
+      "If the learning objective remains simply acarbose-to-dextrose recall, seek explicit acceptance as focused safety teaching rather than call it a difficult two-step question."
+    ]
+  },
+  {
+    "id": "question.topic.bariatric-metabolic.initial-acute-imaging.v1",
+    "nodeId": "node.topic.bariatric-metabolic.initial-acute-imaging.v1",
+    "title": "Initial investigation of acute pain after Roux-en-Y bypass",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Independent answer: CT with oral and intravenous contrast. The transition from intermittent cramps to persistent pain and retching after bypass raises a bowel/extraluminal concern; the resident then selects an investigation that covers reconstructed anatomy rather than just the accessible lumen.",
+      "Endoscopy and an upper-GI contrast study are relevant post-bypass investigations but are less comprehensive for this acute pattern. The stable circulation and absence of guarding make an investigation-stage question coherent. No confident clinical inaccuracy or equally good offered alternative identified.",
+      "Renal function and contrast-reaction history address suitability and do not uniquely reveal the key by word matching, since another offered study also uses contrast. Options are comparably concrete investigations without teaching qualifiers.",
+      "The historical-admission frame is explicit and does not suggest a patient with acute symptoms is being kept in routine clinic. This node stands alone and its explanation does not preteach the next node's exploration decision. Difficulty is moderate at most, not a stretch item."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.bariatric-metabolic.negative-ct-persistent-course.v1",
+    "nodeId": "node.topic.bariatric-metabolic.negative-ct-persistent-course.v1",
+    "title": "Persistent post-bypass pain despite a negative CT",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Independent answer: diagnostic surgical laparoscopy. The learner must recognize that the technically described negative CT and normal lactate do not eliminate a dangerous post-bypass internal hernia, then use persistent pain and increasing tenderness to choose exploration over more observation/imaging or a luminal test.",
+      "The repeat-CT option is a genuine management error to consider here, not simply a repeated-test wording cue: apparent reassuring imaging competes with worsening clinical findings. Endoscopy addresses a plausible luminal explanation but does not resolve the concerning trajectory.",
+      "No confident clinical error or equally defensible offered answer identified in this continued inpatient course. The explanation appropriately does not turn a negative CT into a guarantee or normal lactate into a rule-out.",
+      "The prior node explains initial CT selection without disclosing exploration. The current update restates acquisition, results and symptom trajectory, and the shared presentation supplies bypass anatomy and timing; the later decision is coherent and independently solvable within that presentation."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.bariatric-metabolic.biliopancreatic-pathway.v1",
+    "nodeId": "node.topic.bariatric-metabolic.biliopancreatic-pathway.v1",
+    "title": "Localizing an excluded-limb obstruction",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'The following report' is a redundant exhibit introduction; it adds no decision information."
+    ],
+    "cues": [],
+    "fairness": [
+      "Independent answer: inspect the biliopancreatic limb at the jejunojejunostomy. Selective distension of the excluded stomach, duodenum and connected proximal jejunum, with a nondistended alimentary route and decompressed distal bowel, supports that localization.",
+      "The exhibit supplies observations for all offered routes. The term 'distal' appears in a distractor, not uniquely in the answer; repeated jejunojejunostomy wording does not assemble a unique key by convergence. No nonmedical shortcut or confident anatomical error identified.",
+      "This is a worthwhile anatomy interpretation question, but the planned urgent exploration is already supplied. Naming the affected pathway and prioritizing inspection of that same pathway are one localization objective, not two consequential decisions.",
+      "The standalone historical-case frame is clear. Do not claim the CT pattern proves a particular obstructing lesion or mechanism beyond the pathway described."
+    ],
+    "suggestions": [
+      "Retain the useful raw anatomical exhibit and parallel pathway labels.",
+      "Either accept this explicitly as focused anatomy interpretation or redesign the task so localization changes the next supported investigation, decompression or operative plan. Do not supply that next action in the update.",
+      "Remove the empty 'following report' sentence. Any new action-level alternatives need clinical review rather than an invented rule about this anatomy."
+    ]
+  },
+  {
+    "id": "question.topic.bariatric-metabolic.symptoms-after-negative-swallow.v1",
+    "nodeId": "node.topic.bariatric-metabolic.symptoms-after-negative-swallow.v1",
+    "title": "Persistent postoperative symptoms after a negative sleeve contrast study",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Water-soluble contrast examination of the upper gastrointestinal tract",
+        "why": "This repeats the just-completed investigation without a new protocol, inadequate acquisition or changed interval. The task also emphasizes 'after the completed contrast study', allowing its rejection on repetition alone."
+      }
+    ],
+    "fairness": [
+      "Independent answer: CT with oral and intravenous contrast. Persistent pain, fever and tachycardia after sleeve despite no visible luminal escape require interpretation of what the swallow did not exclude, followed by investigation of extraluminal pathology.",
+      "No confident clinical inaccuracy identified. Endoscopy is a relevant competing modality, but repeating the same adequate swallow is a weak third choice as written. A negative study is not itself a reason never to repeat it; the supplied record simply provides no reason to do so here.",
+      "The admission frame is clear and the first node stands alone. Its explanation establishes a possible occult leak but does not disclose the later unstable patient's source-control route."
+    ],
+    "suggestions": [
+      "Replace the unchanged-repeat swallow foil with a distinct, clinically credible investigation strategy at this stage, or provide actual acquisition/interval facts that make repeating the study a reasonable competing error.",
+      "Keep the negative luminal study and persistent syndrome; those are necessary to the reasoning. Remove the lead-in's redundant emphasis on the 'completed' study once the history already establishes it."
+    ]
+  },
+  {
+    "id": "question.topic.bariatric-metabolic.deterioration-source-control.v1",
+    "nodeId": "node.topic.bariatric-metabolic.deterioration-source-control.v1",
+    "title": "Source control after a sleeve leak with shock and peritonitis",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Independent answer: urgent operative exploration with washout and drainage. The learner must integrate the distribution of fluid with new hypotension, tachycardia and diffuse guarding, then change from a potentially localized/endoscopic leak strategy to operative source control.",
+      "Percutaneous drainage and endoscopic treatment are credible approaches in other leak states; the current deterioration makes them inferior here. The shared resuscitation and antimicrobials prevent the key from winning merely by being the only complete treatment bundle.",
+      "The word 'Urgent' is appropriate to the actual operative option and is supported by necessary findings, not a gratuitous rhetorical cue. No confident clinical error or competing best answer identified. Preserve the instability findings rather than hide them for difficulty.",
+      "The progression from persistent symptoms to CT findings and deterioration is coherent. The preceding explanation does not select this route. The current update supplies sleeve anatomy, CT results and the decisive condition, so it remains solvable with the shared presentation even if the earlier answer is not recalled."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.bariatric-metabolic.diabetes-below-old-cutoff.v1",
+    "nodeId": "node.topic.bariatric-metabolic.diabetes-below-old-cutoff.v1",
+    "title": "Metabolic-surgery referral below historical BMI cutoffs",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "must wait until he gains more weight",
+        "why": "This caricatures both delay options as requiring deterioration before help. A reader can choose referral by ordinary reasoning about care, without knowing the guideline threshold."
+      },
+      {
+        "phrase": "Continue medical care and refer for multidisciplinary metabolic-surgery assessment",
+        "why": "The key is the only assessment option against two unsupported delays. Both foils differ only in the higher BMI cutoff, leaving a conspicuous action-versus-delay split."
+      }
+    ],
+    "fairness": [
+      "Independent answer: refer for multidisciplinary assessment while continuing medical care. This is consistent with the stated ASMBS/IFSO indication in the explanation; no confident clinical inaccuracy identified in that referral decision. Guideline currency was not independently checked offline.",
+      "The explanation correctly separates referral from guaranteed surgery or insurance coverage. The named society limits the policy frame and avoids pretending all payers use identical criteria.",
+      "The patient, BMI and diabetes are supplied clearly and the standalone task is complete. However, this remains threshold recall with a strong wording shortcut; documenting unsuccessful nonsurgical care does not create an independent second consequential step."
+    ],
+    "suggestions": [
+      "Delete the 'gains more weight' framing and ask neutrally about the next plan.",
+      "Replace the two nearly identical defer-until-BMI choices with clinically credible plans that differ in a meaningful assessment or treatment requirement under the specified guidance.",
+      "If the objective remains simply recognizing the updated indication, classify it as focused guideline application rather than a difficult two-step decision; do not invent extra eligibility thresholds."
+    ]
+  },
+  {
+    "id": "question.topic.bariatric-metabolic.patent-sleeve-medical-stage.v1",
+    "nodeId": "node.topic.bariatric-metabolic.patent-sleeve-medical-stage.v1",
+    "title": "Initial reflux treatment after sleeve gastrectomy",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "without a focal hold-up",
+        "why": "Together with 'no fixed sleeve narrowing', this twice excludes the offered sleeve-dilation plan. Keep necessary anatomy, but the duplicated exclusion makes that option disposable."
+      },
+      {
+        "phrase": "Which initial treatment",
+        "why": "With occasional antacids as the entire treatment history, the only medication option is contrasted with two procedures. The initial-stage wording reinforces an obvious conservative-versus-invasive shortcut."
+      }
+    ],
+    "fairness": [
+      "Independent answer: PPI therapy. Symptoms and esophageal mucosal breaks support reflux, and there is no represented fixed passage problem or prior directed medical trial. No confident clinical error identified.",
+      "All labels are treatments, but balloon dilation is explicitly undermined and bypass conversion is plainly premature. Correctness is more convincing than resident-level difficulty; the anatomy interpretation has little remaining competition.",
+      "The first reflux node stands alone. Its feedback discusses medical treatment before revision, so the later node inherits a taught escalation sequence even though the exact choice between operations remains unstated."
+    ],
+    "suggestions": [
+      "Keep one clear anatomical assessment rather than repeating the absence of narrowing.",
+      "Compare credible initial care plans at the same stage, or provide a supported conflicting observation that makes structural versus reflux management a real decision. Do not withhold anatomy needed for fairness.",
+      "If retaining this uncomplicated initial-PPI objective, acknowledge the easy foundational purpose instead of claiming two consequential steps."
+    ]
+  },
+  {
+    "id": "question.topic.bariatric-metabolic.refractory-reflux-revision.v1",
+    "nodeId": "node.topic.bariatric-metabolic.refractory-reflux-revision.v1",
+    "title": "Treatment selection for refractory reflux after sleeve",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Appropriately administered optimized PPI course' supplies an adequacy conclusion without showing the medication or administration history. The explanation depends on accepting that conclusion.",
+      "'Represented post-sleeve reflux course' is authoring language; 'current reflux findings and treatment history' would be clearer."
+    ],
+    "cues": [
+      {
+        "phrase": "despite an appropriately administered optimized PPI course",
+        "why": "This closely repeats 'Continue optimized proton-pump inhibitor treatment' while declaring that strategy unsuccessful. The treatment-response fact is needed, but the current phrasing pre-eliminates one of only three choices without asking the learner to assess adequacy."
+      }
+    ],
+    "fairness": [
+      "Independent answer under the explicitly named guidance: conversion to Roux-en-Y bypass. Persistent objective reflux, BMI 38 and the supplied medical-treatment failure support that preference. Magnetic sphincter augmentation is a real alternative to consider, not an anatomically absurd distractor.",
+      "The explanation appropriately identifies the recommendation's low certainty and avoids a universal ranking at lower BMI. I cannot independently verify the exact current recommendation offline; this is not a finding that the guideline claim is wrong.",
+      "The prior node already teaches medical treatment before revision. With diagnosis, acid exposure and treatment adequacy all summarized, the remaining scored inference is principally recall of the guideline's BMI-dependent preference, not two independently consequential interpretations.",
+      "The chronology is coherent, and the update repeats enough anatomy, BMI and treatment context to work with the shared presentation without remembering the prior answer."
+    ],
+    "suggestions": [
+      "Show the decision-critical treatment/administration observations, using supported details, so the resident must determine whether medical therapy truly failed; do not invent a mandatory course length or dose.",
+      "Compare credible next treatments after that determination, keeping the conditional nature of the surgical preference in feedback.",
+      "Recheck difficulty in the full sequence: prior initial-treatment feedback should not be credited as a new inference in this node."
+    ]
+  },
+  {
+    "id": "question.topic.bariatric-metabolic.bowel-reserve-procedure.v1",
+    "nodeId": "node.topic.bariatric-metabolic.bowel-reserve-procedure.v1",
+    "title": "Bariatric procedure selection with Crohn's disease and prior bowel loss",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Represented IBD and bowel history' is unnecessarily abstract. Name the patient's Crohn's disease and prior resections in a plain task.",
+      "The record does not describe current disease activity or nutritional status. That omission is not proof the named guideline preference is wrong, but it limits interpretation as an actual operation recommendation."
+    ],
+    "cues": [],
+    "fairness": [
+      "Independent answer to the expressly guideline-framed question: sleeve gastrectomy. Crohn's disease, prior ileal loss and ongoing immunosuppression all point away from additional intestinal bypass; the lack of reflux removes a common countervailing reason for RYGB.",
+      "No confident clinical inaccuracy identified. The explanation appropriately states that the recommendation is conditional and very low certainty. Exact current wording was not independently verified offline, and this record should not be used to imply surgery is presently suitable regardless of disease activity or nutritional status.",
+      "Options are parallel operations with no reliable nonmedical label shortcut. The problem is that all clinical considerations point in the same direction and the task directly asks for a society preference. Recognizing the bowel-preserving procedure is one selection rule, not a resolved two-step tradeoff.",
+      "The patient and history are self-contained. The broad concept is relevant to surgical training; the precise conditional society ranking is less robust as a difficult exam-style discriminator than the underlying anatomical/nutritional reasoning."
+    ],
+    "suggestions": [
+      "If testing a real patient decision, establish whether active disease or nutritional compromise changes the immediate plan before asking which operation to perform.",
+      "Use a supported competing consideration that actually changes the ranking or timing; do not add reflux or other facts merely as decoration, and do not force a unique operation if evidence leaves a real choice.",
+      "Alternatively retain the current bounded guideline question but identify it as single-rule application with conditional evidence, not two-step reasoning."
+    ]
+  },
+  {
+    "id": "question.topic.bariatric-metabolic.cytopenias-neuropathy-zinc.v1",
+    "nodeId": "node.topic.bariatric-metabolic.cytopenias-neuropathy-zinc.v1",
+    "title": "Micronutrient evaluation of myeloneuropathy and cytopenias",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "B12 and methylmalonic acid results are within their laboratory intervals",
+        "why": "One of only three choices is 'Serum vitamin B12', a test already reported as normal with a corroborating marker. No new sampling issue or interval change supports repeating it; the learner can discard it without understanding copper deficiency."
+      },
+      {
+        "phrase": "Which additional micronutrient test",
+        "why": "'Additional' further excludes the already completed B12 test on task wording alone."
+      }
+    ],
+    "fairness": [
+      "Independent answer: serum copper. The combination of posterior-column-type findings, anemia/neutropenia, bypass and extra zinc supports investigating copper deficiency. The explanation correctly says the pattern is not proof of deficiency.",
+      "Excess zinc is a legitimate medically meaningful clue, not a nonmedical giveaway. However, the whole classic association is supplied and the scored action merely names the corresponding assay; there is no separate consequential management inference.",
+      "No confident clinical error identified. Vitamin E is a conceivable neuropathy-related alternative, but the repeated B12 option substantially reduces competition. The case is otherwise clear and self-contained."
+    ],
+    "suggestions": [
+      "Retain the necessary B12 workup but replace the repeated B12 assay with a credible not-yet-completed investigation at the same stage.",
+      "If the objective is a difficult application, make the supplement history or combined hematologic/neurological findings determine a subsequent evaluation or treatment decision beyond simply naming copper.",
+      "Avoid hiding the zinc exposure merely to make the item obscure; the repair is stronger alternatives and a consequential decision."
+    ]
+  },
+  {
+    "id": "question.topic.bariatric-metabolic.fat-malabsorption-vision.v1",
+    "nodeId": "node.topic.bariatric-metabolic.fat-malabsorption-vision.v1",
+    "title": "Persistent vitamin A deficiency after oral replacement",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": false,
+    "clarityIssues": [
+      "'Prescribed an oral replacement course' and 'completed it' establish reported adherence, but do not identify whether the preparation, intensity and reassessment interval were appropriate for this malabsorptive patient.",
+      "'Represented response' is authoring terminology; ask about the actual persistent symptoms and repeat result."
+    ],
+    "cues": [
+      {
+        "phrase": "Change to oral vitamin E replacement",
+        "why": "The diagnosis and repeat assay both explicitly name vitamin A. Changing to an entirely different vitamin is an obvious mismatch that can be rejected without understanding malabsorption or replacement routes."
+      },
+      {
+        "phrase": "Arrange specialist parenteral vitamin A replacement",
+        "why": "The key is uniquely qualified by specialist involvement, while its rivals either repeat the declared unsuccessful route or switch the named deficient nutrient. That styling reinforces the only apparently careful plan."
+      }
+    ],
+    "fairness": [
+      "Likely intended answer: specialist assessment for parenteral vitamin A replacement. Failed biochemical and symptomatic response in a malabsorptive setting can support changing delivery route; those are two potentially consequential steps.",
+      "The visible record does not establish that the oral trial was adequate. Continuing or modifying oral vitamin A can remain arguable if the original preparation, replacement intensity or reassessment interval was unsuitable. This is missing decision-critical information, not a confident assertion that parenteral therapy is clinically wrong.",
+      "The explanation risks overstating 'another oral course' as ineffective from completion alone. Specialist consideration of parenteral treatment is a more defensible conclusion than an automatic route rule for every persistent low level.",
+      "This standalone case is coherent and includes patient demographics and relevant anatomy. Vitamin A deficiency after duodenal switch is high-yield; the exact specialist route-escalation decision presented here is a narrower, less clearly common board target, hence highYield=false for this node rather than for the deficiency topic."
+    ],
+    "suggestions": [
+      "Supply the supported observations needed to establish an adequate oral replacement attempt and a meaningful response assessment, or explicitly ask for specialist reassessment of persistent deficiency rather than declare parenteral replacement mandatory. Do not invent doses or intervals.",
+      "Replace the vitamin E foil with a credible vitamin A management strategy, and give all plans comparable referral/specialist scope.",
+      "Have the clinician resolve the oral-optimization versus parenteral-treatment boundary before accepting one best answer. Keep the useful adherence-plus-response reasoning once that boundary is fair."
+    ]
+  }
+]

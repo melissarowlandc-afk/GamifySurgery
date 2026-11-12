@@ -1,0 +1,317 @@
+[
+  {
+    "id": "question.topic.hernia-ventral-abdominal-wall.epigastric-referral.v1",
+    "nodeId": "node.topic.hernia-ventral-abdominal-wall.epigastric-referral.v1",
+    "title": "Persistent focal pain after improvement with rehabilitation",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The best offered answer is elective epigastric hernia assessment. The learner must distinguish the improved broad functional complaint from the persistent focal mechanical pain, then choose a different treatment pathway. This is moderate at the lower end, not a hard item.",
+      "The reduction response and painless broad ridge are necessary symptom-localization observations, not pre-answer diagnostic labels. Rehabilitation and observation represent attribution and symptom-significance errors; no option-length, grammatical, absolute or convergence shortcut independently selects the key.",
+      "The explanation appropriately recommends assessment rather than promising that an operation will relieve every symptom. No confident clinical inaccuracy identified from the supplied content.",
+      "The standalone presentation supplies the earlier rehabilitation and response; no missing preceding node is needed. Name, age, sex, short complaint and complete task are present. This is an offline editorial PASS, not source verification or clinical approval."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.hernia-ventral-abdominal-wall.mesh-failed-salvage.v1",
+    "nodeId": "node.topic.hernia-ventral-abdominal-wall.mesh-failed-salvage.v1",
+    "title": "Recurrent deep mesh infection after drainage and directed therapy",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The best offered answer is mesh excision with debridement. Collapsed cavity volume must be distinguished from eradication of a prosthetic infection; recurrent purulence, a tract to retained mesh and the same deep organism then justify changing source-control strategy despite stability.",
+      "The favorable mesh material/location and stable physiology make continued salvage a recognizable temptation. The update supplies the important counterevidence. Excision is not selected merely by being the longest or most cautious option, and the repeated retain-mesh component does not converge on the key.",
+      "The exact removal extent and reconstruction are appropriately left to the treating team. No confident clinical inaccuracy identified; the wording does not make a particular antibiotic duration or universal explantation threshold a rule.",
+      "The presentation and current update together establish the completed drainage and culture-directed course. The isolated node remains coherent without its former initial-salvage companion or that companion's feedback."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.hernia-ventral-abdominal-wall.planned-pregnancy-deferral.v1",
+    "nodeId": "node.topic.hernia-ventral-abdominal-wall.planned-pregnancy-deferral.v1",
+    "title": "Repair timing before another planned pregnancy",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The task asks for timing, but two alternatives have identical timing and differ only in material. That adds an unrequested dimension rather than a third distinct timing decision."
+    ],
+    "cues": [
+      {
+        "phrase": "Complete elective mesh repair before the next pregnancy",
+        "why": "Together with the suture-repair alternative, this duplicates the before-pregnancy timing. A reader can identify the two equivalent answers to the stated timing task and favor the sole different timing without knowing the clinical rule."
+      },
+      {
+        "phrase": "Complete elective suture repair before the next pregnancy",
+        "why": "Changing material cannot distinguish this from the other immediate-repair option on the task's requested timing dimension. The two near-duplicates make deferral the structural outlier."
+      }
+    ],
+    "fairness": [
+      "Deferral is clinically defensible for the freely reducible, minimally symptomatic hernia with another pregnancy planned. No confident clinical inaccuracy identified, and the explanation appropriately allows reassessment if symptoms change.",
+      "The diagnosis and tolerability are supplied, leaving one familiar timing rule. There are not two consequential inferences or three credible competing timing plans.",
+      "The case is self-contained and has the required named patient, demographics, short complaint and complete task. A previous PASS designation was not used as evidence for this verdict."
+    ],
+    "suggestions": [
+      "Keep this exact previously reviewed version intact pending manager handling; if revised, create a new version with three genuinely different timing pathways and supported patient-specific information that distinguishes them.",
+      "If a meaningful second decision cannot be added without forcing complexity, seek an explicit basic counseling role rather than describing this as a difficult resident item. Do not invent a mandatory post-pregnancy interval or a universal mesh-versus-suture rule."
+    ]
+  },
+  {
+    "id": "question.topic.hernia-ventral-abdominal-wall.primary-observation.v2",
+    "nodeId": "node.topic.hernia-ventral-abdominal-wall.primary-observation.v2",
+    "title": "Broad functional symptoms with a separate reducible navel defect",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Initial rehabilitation with observation of the focal defect is the best offered sequence. The resident must distinguish intact broad midline separation from the real focal hernia, attribute the complaint using the different symptom responses, and choose an initial treatment rather than operate on the most visible defect.",
+      "The absence of prior rehabilitation establishes treatment stage. All three options contain rehabilitation, so that word does not uniquely identify the key. The symptom responses are necessary localization evidence; removing them would make focal repair more defensible.",
+      "Immediate focal repair targets the wrong demonstrated symptom source; immediate plication escalates before a conservative trial. The explanation says rehabilitation can be considered and does not promise efficacy or turn examination support into a validated diagnostic test. No confident clinical inaccuracy identified.",
+      "The node stands alone with no dependence on a later symptomatic-hernia case. Patient identity, demographics, complaint and task are complete."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.hernia-ventral-abdominal-wall.mesh-septic-source-control.v2",
+    "nodeId": "node.topic.hernia-ventral-abdominal-wall.mesh-septic-source-control.v2",
+    "title": "Deep prosthetic infection with systemic deterioration",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "Operative wound debridement with mesh retention does not specify superficial debridement. A resident could reasonably read it as opening and debriding the infected prosthetic plane while attempting salvage, whereas its explanation rejects only removal of the accessible skin focus.",
+      "The record does not clearly establish whether confusion and hypotension developed despite a functioning drain or before drainage and initial treatment. A drain tip lying in the cavity does not by itself establish effective drainage or failure of that treatment."
+    ],
+    "cues": [],
+    "fairness": [
+      "Matching deep and blood cultures plus systemic deterioration support urgent hospital source control involving the prosthesis. Interpreting compartment and physiological course could provide two meaningful steps.",
+      "The key is plausible, but the explanation narrows the operative-retention alternative beyond its actual wording. That prevents a clean single-best-answer comparison of excision against a genuine deep salvage procedure.",
+      "I am not asserting that retention is the correct treatment in this septic presentation. Its exact inferiority, and the scope of the claimed low-certainty recommendation, require clinician adjudication; no confident categorical clinical error is established offline.",
+      "The retrospective clinic frame separates current recovery from the hospital decision, and the node does not require a preceding case. The post-answer explanation should not substitute an unreported response to initial treatment."
+    ],
+    "suggestions": [
+      "Define the compartment and actual procedure in every option. If the intended distractor is superficial debridement, say so; then reassess whether it is a credible resident-level competitor rather than an obviously incomplete plan.",
+      "If deep debridement with retention is the intended close alternative, have the clinician establish the patient-specific observations that make excision preferable and include those observations in the record.",
+      "Clarify the sequence and observed response to drainage and resuscitation without inventing a mandatory antibiotic duration, physiological cutoff or waiting interval."
+    ]
+  },
+  {
+    "id": "question.topic.hernia-ventral-abdominal-wall.lateral-strangulation-plan.v2",
+    "nodeId": "node.topic.hernia-ventral-abdominal-wall.lateral-strangulation-plan.v2",
+    "title": "Compromised bowel in a persistently trapped lateral hernia",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Emergency exploration is the clear best answer for the combined persistent painful irreducibility, guarding and reduced bowel-wall enhancement. Recent stool passage does not negate concern for compromised bowel. No confident clinical inaccuracy identified.",
+      "This remains emergency recognition followed by its immediate standard action. Manual reduction and continued observation are readily excluded by several concordant warning signs; the stool detail does not create a substantial competing interpretation for the intended resident audience.",
+      "The warning signs are legitimate clinical evidence, not wording-only cues, and should not be concealed to manufacture difficulty. The failure is the claimed reasoning level, not excessive clarity or an unsafe key.",
+      "The recorded hospital setting, shared initial resuscitation and subsequent task are coherent and self-contained."
+    ],
+    "suggestions": [
+      "Seek explicit acceptance as a high-yield safety/recognition exception and label the difficulty honestly.",
+      "If a moderate or hard item is required, use a separately supported decision after recognition of the emergency, with realistic competing actions. Preserve the urgency findings and do not make delay or manual reduction appear acceptable merely to strengthen distractors."
+    ]
+  },
+  {
+    "id": "question.topic.hernia-ventral-abdominal-wall.incisional-planning-ct.v2",
+    "nodeId": "node.topic.hernia-ventral-abdominal-wall.incisional-planning-ct.v2",
+    "title": "Retrieval of an acquired CT rather than duplicate imaging",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": false,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "the archive confirms that the full original series can be transferred",
+        "why": "This supplies the retrieval permission and nearly restates the keyed action. The other options acquire a new study, so ordinary document-handling logic can select the existing series without hernia knowledge."
+      },
+      {
+        "phrase": "The surgeon has not yet reviewed that series.",
+        "why": "The named omission points directly to the only retrieve-and-review option. Combined with a complete, transferable acquisition and no clinical change, it resolves the task before clinical image interpretation is needed."
+      }
+    ],
+    "fairness": [
+      "Retrieval is a sensible next action and the explanation correctly distinguishes a limited export from a limited acquisition. No confident clinical inaccuracy identified.",
+      "There is no image or anatomical finding to interpret and no remaining patient-specific modality tradeoff. Both new-study choices are premature duplicates under the supplied facts. The task tests a single records-workflow distinction.",
+      "Cross-sectional planning of recurrent hernia is high-yield, but this exact retrieve-versus-reorder objective is chiefly generic imaging stewardship rather than a commonly tested abdominal-wall decision. That is a qualitative scope judgment, not a measured exam-frequency claim.",
+      "The node is standalone and its task is complete. No missing exhibit is promised; the absence of clinical imaging interpretation is an objective limitation, not a rendering defect."
+    ],
+    "suggestions": [
+      "Rebuild around a clinically consequential finding or documented acquisition limitation that changes the next planning action, using similarly credible alternatives at the same stage.",
+      "Do not merely delete the acquisition or archive facts: that would recreate unfair ambiguity between retrieval and repeat imaging. If the workflow distinction remains the objective, classify it as a basic stewardship item rather than a difficult hernia question."
+    ]
+  },
+  {
+    "id": "question.topic.hernia-ventral-abdominal-wall.weight-loss-delay-balance.v2",
+    "nodeId": "node.topic.hernia-ventral-abdominal-wall.weight-loss-delay-balance.v2",
+    "title": "Planning after unsuccessful weight management and increasing symptoms",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Hernia-team risk and repair planning is an indistinct action, especially when a hernia surgeon has already assessed technical feasibility. The record does not define what concrete new decision or assessment begins now."
+    ],
+    "cues": [
+      {
+        "phrase": "Begin hernia-team risk and repair planning at her current weight",
+        "why": "This is the only broadly cautious assessment option. Both competitors impose prerequisites before the same planning; choosing to discuss risk now costs no clinical commitment and is answerable without resolving the operative tradeoff."
+      },
+      {
+        "phrase": "She completed the agreed supervised weight-management programme",
+        "why": "The competing answer explicitly repeats another supervised course. Paired with an already unchanged weight, it is a visibly repeated unsuccessful step, while the key is the only forward planning action. The history itself is necessary; the weak comparison is the problem."
+      }
+    ],
+    "fairness": [
+      "It is reasonable to discuss repair despite residual obesity after an unsuccessful optimization effort and increasing functional burden. No universal BMI cutoff is asserted, and no confident clinical inaccuracy identified.",
+      "The alternatives do not compare actual repair strategies or genuine remaining risk-management decisions. They compare opening a discussion with withholding that discussion pending additional work; the explanation itself says neither a favorable operative balance nor scheduling is decided.",
+      "Obesity, optimization and the harm of prolonged delay are high-yield. As phrased, however, two reported trajectories do not produce two consequential tested inferences because the key is an unrestricted assessment rather than a resolved clinical plan.",
+      "The standalone chronology is coherent and the patient's lack of a final operative choice is appropriately respected."
+    ],
+    "suggestions": [
+      "Make risk discussion common to all options and ask one concrete remaining decision, with clinician-supported information that distinguishes the competing sequences.",
+      "Specify what the hernia team would actually do next. Preserve the completed weight-management effort, true work interruption and patient choice; do not repair the generic key by mandating surgery or inventing a target BMI."
+    ]
+  },
+  {
+    "id": "question.topic.hernia-ventral-abdominal-wall.stable-emergency-deferred-reconstruction.v2",
+    "nodeId": "node.topic.hernia-ventral-abdominal-wall.stable-emergency-deferred-reconstruction.v2",
+    "title": "Cavity coverage versus definitive reconstruction after emergency source control",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": false,
+    "clarityIssues": [
+      "Apply temporary abdominal coverage does not name a particular open-abdomen technique. Because sac/skin closure also leaves definitive fascial repair for later, temporary coverage is less precise than the operative distinction being tested."
+    ],
+    "cues": [
+      {
+        "phrase": "no remaining resuscitation requirement or planned bowel reassessment",
+        "why": "The planned-reassessment conclusion directly opposes the option to plan re-exploration. Bowel and physiology observations are necessary, but telling the learner the team's reassessment plan partially supplies the decision the learner is being asked to make."
+      }
+    ],
+    "fairness": [
+      "Distinguishing a fascial closure problem from unresolved source control or physiology, then selecting a staged wall strategy, is a meaningful two-step objective. The standalone record now gives bowel continuity, recovery and tension-free cavity coverage; it does not require an unseen prior node.",
+      "Sac/skin closure with deferred reconstruction is plausible in this record. I cannot independently establish the claimed 2026 guideline ranking over immediate expert myofascial release from this offline, learner-content-only review. This is uncertainty about a narrow comparative recommendation, not a finding that the key is clinically wrong.",
+      "The explanation itself calls this a narrow, conditional, very-low-certainty recommendation rather than a universal board rule. General open-abdomen and source-control principles are high-yield; this exact newer technique ranking is not established here as a commonly tested concept.",
+      "The ability of sac and skin to meet without physiological compromise is necessary eligibility information and should remain. It should not be deleted simply because those tissue names appear in the key."
+    ],
+    "suggestions": [
+      "Name the proposed open-abdomen approach clearly so the options distinguish cavity closure from an open abdomen rather than two vaguely temporary plans.",
+      "Use observed bowel and physiology findings rather than the preselected no-reassessment plan. Preserve enough information to exclude an actual second-look or compartment concern.",
+      "Obtain clinician confirmation of the exact conditional recommendation and competing reconstruction option. If retained, position it explicitly as a narrow advanced guideline application; otherwise test the broader source-control/open-abdomen decision with supported alternatives. Do not present uncertainty or novelty as board-level difficulty."
+    ]
+  },
+  {
+    "id": "question.topic.hernia-ventral-abdominal-wall.controlled-emergency-material.v2",
+    "nodeId": "node.topic.hernia-ventral-abdominal-wall.controlled-emergency-material.v2",
+    "title": "Reinforcement after a recognized and controlled enterotomy",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Permanent macroporous synthetic reinforcement is a defensible best offered answer within the stated selected repair scope. The learner must distinguish a controlled bowel event with feasible closure from an unresolved emergency-abdomen problem, then resist automatically choosing a biologic implant because an enterotomy occurred.",
+      "The temporary-coverage alternative represents overreacting to the bowel event; biologic reinforcement is the closer material-selection error. The anatomical and physiological observations make these distinctions possible without a diagnosis label that names the implant.",
+      "Source control does not erase the occurrence of contamination. The explanation appropriately restricts its conclusion to the selected single-stage scope and does not recommend a universal emergency mesh plane. No confident clinical inaccuracy identified.",
+      "The exact newer guideline recommendation has not been independently verified in this offline review; this editorial PASS does not endorse its evidence mapping or confer clinical approval. Clinician sign-off should retain the conditional scope rather than turn this into a universal synthetic-mesh rule after any enterotomy.",
+      "The retrospective operative record is complete enough to stand alone and supplies the mechanism of the bowel injury, current bowel status, closure feasibility and decision stage."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.hernia-ventral-abdominal-wall.asymptomatic-seroma-observation.v2",
+    "nodeId": "node.topic.hernia-ventral-abdominal-wall.asymptomatic-seroma-observation.v2",
+    "title": "Improving postoperative fluid pocket with an earlier positive surface swab",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Observation with reassessment is the best offered plan. The resident must determine what compartment the positive culture actually sampled, then integrate the improving asymptomatic pocket and healed wound rather than treat the organism name in isolation.",
+      "Aspiration for a purported deep infection and cephalexin for a presumed current skin infection are credible errors. The sample location, absent communication and current wound findings resolve them. The statement that the pocket was not sampled is necessary specimen-provenance information, not a reason to remove a safety-critical distinction.",
+      "The explanation does not declare every surface swab meaningless, prove sterility or exclude future infection. No confident clinical inaccuracy identified and no unsupported aspiration deadline is taught.",
+      "The earlier swab and current improvement have clear chronology. This node stands alone, and its content does not require the separate later symptomatic-seroma case."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.hernia-ventral-abdominal-wall.symptomatic-seroma-drainage.v2",
+    "nodeId": "node.topic.hernia-ventral-abdominal-wall.symptomatic-seroma-drainage.v2",
+    "title": "Persistent postoperative fluid pocket with sustained work interruption",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "She wants relief after discussing the infection risk of puncture.",
+        "why": "This previews a needle procedure and its characteristic counseling before the resident selects treatment. Aspiration is the only offered puncture procedure, so the detail can steer a nonmedical reader toward the key. The preference for relief is relevant; the puncture-specific counseling is the avoidable part."
+      }
+    ],
+    "fairness": [
+      "Sterile image-guided aspiration is a defensible best offered next step after actual observation with persistent, now work-limiting symptoms. The intact repair and simple fluid must be interpreted separately from failure of conservative symptom management; aspiration versus operative capsule treatment then tests escalation stage.",
+      "Continued observation is less attractive given sustained interruption and the patient's desire for treatment, while operative capsule excision is premature before a less invasive attempt. No confident clinical inaccuracy identified.",
+      "The absence of prior aspiration is necessary treatment-stage information and should remain. The explanation appropriately treats three months as case chronology rather than a universal intervention threshold.",
+      "The standalone case supplies both prior observation and the subsequent symptom change. It uses the same patient as another candidate but does not depend on that case having been seen, or require its earlier surface culture to be assumed."
+    ],
+    "suggestions": [
+      "Retain the patient's preference for symptom relief but remove the pre-answer puncture-specific counseling. Put aspiration's infection risk in post-answer counseling and retain the actual observation history, functional burden and prior-treatment status.",
+      "Recheck the exact revised version after that focused cue repair; no invented size or duration threshold is needed."
+    ]
+  },
+  {
+    "id": "question.topic.hernia-ventral-abdominal-wall.small-bites-closure-repair.v2",
+    "nodeId": "node.topic.hernia-ventral-abdominal-wall.small-bites-closure-repair.v2",
+    "title": "Suture-consumption accounting and the response to a closure warning",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The patient is in clinic after a completed closure, but the choices include replacing the line or adding an onlay mesh. The task does not clearly say that these are retrospective actions at the intraoperative closure checkpoint rather than proposed current reoperation.",
+      "Retain the primary suture line without corrective resuturing does not exclude retaining it with onlay mesh augmentation. Both options can leave the existing primary line untouched, so their meanings overlap."
+    ],
+    "cues": [
+      {
+        "phrase": "A transfer worksheet had placed 18 cm in the box labelled suture consumed",
+        "why": "The immediately preceding sentence already labels 18 cm as unused remnants, making the accounting error visible without surgical knowledge. Interpreting the corrected ratio can still be useful, but the question must require that interpretation rather than reward merely noticing the transcription error."
+      }
+    ],
+    "fairness": [
+      "The arithmetic is correct: consumed length is 72 minus 18, or 54 cm; 54 divided by 12 is 4.5. The explanation's at-least-4:1 comparison and the described bite/tension observations support retaining the primary line. No confident clinical inaccuracy identified in that calculation or technique interpretation.",
+      "Correcting consumed-versus-unused length and applying the resulting ratio to a closure decision can provide two consequential steps. This is a surgical technique application, not a statistics item covered by the single-skill statistics exception.",
+      "The onlay distractor introduces a separate prophylactic-mesh decision with no supplied patient-specific risk assessment. It is not disproved by an adequate primary suture line, and its wording is compatible with the keyed action. The explanation acknowledges the separate indication but cannot cure the option overlap.",
+      "The task is otherwise self-contained and the patient identity is consistent. No preceding node supplies the missing time-of-action clarification or prophylactic-augmentation indication."
+    ],
+    "suggestions": [
+      "Specify that the learner is choosing the action at the recorded intraoperative closure checkpoint, or compare current record-review responses instead of operative interventions in a clinic follow-up.",
+      "Keep all options on the adequacy and correction of the primary suture line. Replace the separate mesh-augmentation choice with a mutually exclusive, credible error arising from the same accounting or technique record.",
+      "Make the corrected consumption and technique assessment necessary to the answer; do not rely on the worksheet's plainly mismatched label as the sole discriminator. Preserve the correct calculation and avoid adding an unrelated mesh indication merely to manufacture difficulty."
+    ]
+  }
+]

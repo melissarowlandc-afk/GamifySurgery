@@ -1,0 +1,81 @@
+[
+  {
+    "id": "G03",
+    "title": "Separate a prior benign breast diagnosis from the current palpable finding",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "a discrete hard focus with an irregular edge and little mobility",
+        "why": "The stacked textbook warning features make tissue sampling the immediate resident response. A testwise reader with ordinary familiarity with cancer warning language can also favor the only tissue option. This is primarily a difficulty shortcut, not a claim that suspicious examination findings should be withheld: these observations are necessary to justify the key despite negative imaging. They currently do almost all the discriminating work."
+      },
+      {
+        "phrase": "The mobile nodule at the earlier biopsy site can be felt separately.",
+        "why": "The prose performs the lesion-separation inference. Together with 'the earlier biopsied nodule is separately visible and unchanged', it explicitly detaches the reassuring biopsy from the current concern twice. Ordinary reading is enough to discard the old benign result as an explanation of the current focus; the learner need not reconcile a genuine target or sampling discrepancy. This is partial scaffolding, not an independent nonmedical proof that biopsy outranks MRI."
+      },
+      {
+        "phrase": "Images document sweeps through the entire current marked area",
+        "why": "The emphatic coverage statement weakens a repeat-ultrasound choice through a completed-work heuristic. The interval qualifier means the surveillance option is not literally a duplicate study, so the cue does not eliminate it by logic alone. Site-correct acquisition is legitimate decision-critical information and should remain; the problem is the overall easy comparison, not the presence of an adequate negative study."
+      },
+      {
+        "phrase": "Breast-team tissue sampling",
+        "why": "The key is a broad specialist-endorsed action beside a named imaging technique and a defined follow-up plan. 'Breast-team' supplies a weak authority cue and 'tissue sampling' allows more latitude than the competitors. It is not a uniquely long key, a grammatical giveaway or a generic shared-decision answer, but naming the sampled target would make the comparison more concrete."
+      }
+    ],
+    "fairness": [
+      "Scope: independently judged question.palpable-breast.negative-mammogram-targeted-us.v1.r4 using only its after Presentation, Current update, Exhibit, Task and Options. The review marker and option position were ignored. Earlier reviews and local source metadata were consulted for history and holds, not as additional learner-visible facts or proof of quality.",
+      "One best answer: tissue assessment of the current clinically concerning palpable focus is the defensible best offered action. The negative mammogram and documented site-correct ultrasound do not account for the suspicious examination, and the prior concordant fibroadenoma is a different lesion. The locally recorded claim.gs028c.palpable.biopsy directly supports this boundary. I found no confident second best answer or clinical inaccuracy in this scoped comparison.",
+      "MRI is a credible temptation when conventional imaging has no correlate, but no observation here makes MRI the required intermediate step before tissue diagnosis. Interval examination/ultrasound is a real management strategy in other contexts; the strongly concerning current examination makes it weak here. This is not a claim that MRI or surveillance is universally inappropriate for palpable findings.",
+      "The intended sampling target can be inferred from the task, but the answer should explicitly identify the current palpable focus. A missing biopsy-device choice is not itself a fairness defect: the evidence supports tissue diagnosis without establishing one universally best technique when no imaging target exists. Do not invent an ultrasound-guided target, mandate excision, or rank devices from this record.",
+      "Difficulty: easy for a typical PGY-2/3 and too easy for the requested routine resident challenge. The dominant operation is applying the familiar suspicious-palpable-mass rule. Recognizing suspicious findings and recalling biopsy is not two consequential steps under this standard. Deleting the earlier fibroadenoma history leaves essentially the same question and answer. The negative imaging supplies a useful clinical discordance, but the emphatic examination and explicit separation largely settle it.",
+      "Importance and realism: high-yield, practically important breast-surgery reasoning and broadly suitable for ABSITE preparation; no current exam blueprint was checked. Persistent clinical concern despite negative imaging is a useful outpatient breast-clinic scenario. Coexisting fibroadenoma is plausible, but this particular unrelated stable lesion mostly adds reading rather than difficulty. The exhibit is a report table, not an image-interpretation task.",
+      "Owner flag: FULLY RESOLVED for the original complaint that an explicitly unassessed ultrasound site gives away a keyed ultrasound request. Current imaging actually covers the current site and ultrasound is no longer the key. This is a changed decision, not validation of the old ultrasound item. The separate resident-difficulty concern remains, so original-flag resolution does not justify PASS.",
+      "Source hold touches key: NO declared active key hold in the round-three packet or sources-question-flags2-round3-20261105.json, and the recorded biopsy claim supports the key at its stated scope. The tissue-diagnosis decision has one recorded ACR guideline; ASBrS/SBI guidance supports the separate fibroadenoma's management, not independent corroboration of that biopsy rule. No source was re-accessed. New wording and claims remain needs_clinician_review.",
+      "No unique task-to-key lexical match, majority-component convergence, rhetorical absolute, patient-preference giveaway or overt teaching sentence was found. Runtime ordering, wait previews, preceding feedback, complaint fields and actual rendering are outside the supplied after fields and were not audited."
+    ],
+    "suggestions": [
+      "Replace the keyed label with 'Biopsy the current palpable left-breast focus'. This specifies an action and target without inventing a device or a nonexistent imaging correlate. Keep the alternatives concrete and at the same next-assessment stage.",
+      "Retain the concerning examination and site-correct negative imaging. Remove the redundant second statement that the earlier lesion is separate, and do not count the stable fibroadenoma as an additional inference when its irrelevance is already announced. Wording cleanup alone will not make the item sufficiently challenging.",
+      "For a substantive resident-level revision, build a supported clinical-pathology concordance decision in which a prior benign sample plausibly pertains to the current concern, but actual acquisition and specimen observations determine whether it is representative. Compare concrete next plans such as sampling the current concern, additional imaging, and surveillance only when each has a credible role. Require the learner to establish what the prior evidence covers before choosing the next action; do not simply state that the biopsy missed the target. Verify the necessary facts and exact ranking before authoring that replacement.",
+      "If retaining this exact clinical decision as foundational breast safety teaching is preferable, request explicit manager acceptance of that educational role. Do not call it hard, invent contraindications to MRI, or remove essential examination findings to manufacture difficulty. Any materially changed scored construct needs the repository's concept-version treatment."
+    ]
+  },
+  {
+    "id": "G05",
+    "title": "Decide whether an operative criterion applies after the calcium disorder is clarified",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [
+      {
+        "phrase": "Calcium has remained in the same mildly elevated band in earlier adult records.",
+        "why": "Longstanding mild stability nudges a lay testwise reader toward the only noninterventional choice. It is a partial conservative-care cue, not a sufficient route to the answer: stable mild disease can still merit an operation under a disease-specific criterion. The trajectory is necessary to the scoped uncomplicated inherited presentation and should not be deleted to create ambiguity."
+      },
+      {
+        "phrase": "There are no kidney stones or fragility fractures.",
+        "why": "Together with 'within age-appropriate reference ranges', the cluster of reassuring findings favors the sole surveillance option by a no-complication/no-treatment heuristic. This does not independently settle the question for a resident who knows that age can be an operative criterion in confirmed PHPT. The negatives characterize the management context rather than explicitly excluding a named option; their cue effect is limited and acceptable here."
+      },
+      {
+        "phrase": "Sestamibi study obtained before the genetic report returned",
+        "why": "The chronology invites a newer-result-supersedes-older-result heuristic and slightly telegraphs that the scan should not drive surgery. It still does not tell a reader without medical knowledge whether the genetic result favors surgery, medication or observation. The timing also makes the already-obtained study clinically intelligible. This is minor scaffolding, not a standalone giveaway."
+      }
+    ],
+    "fairness": [
+      "Scope: independently judged question.asymptomatic-phpt.age-based-surgery.v1.r3 using only its after Presentation, Current update, Exhibit, Task and Options. The key marker, author inference and self-checks were not treated as evidence of difficulty or correctness. Source records were used only to assess support and holds.",
+      "One best answer: biochemical surveillance is the defensible best of the three offered plans for the supplied stable mild familial hypercalcemia pattern, low clearance ratio and pathogenic CASR result segregating with hypercalcemia. The local PARAT/Fifth Workshop mappings support observation for confirmed uncomplicated FHH. A nonsuppressed PTH within the laboratory range does not negate that pattern. The ratio alone would not establish the diagnosis, but this item supplies genetic and family evidence as well.",
+      "The retained sestamibi focus creates a credible competing interpretation; it does not independently establish PHPT or an operative indication. The supplied stable trajectory does not establish a superimposed progressive disorder. Coexisting PHPT is a clinical possibility in principle, not a demonstrated second key in this vignette. Do not claim the focus is proven false-positive or specify its tissue of origin from these observations.",
+      "Cinacalcet is a plausible named treatment temptation, but the record provides no positive reason to initiate calcium-lowering therapy now rather than observe this mild stable presentation. The local ledger does not verify a particular cinacalcet indication, threshold, regimen or comparative efficacy in FHH. Acceptance relies on the positively supported observation recommendation; it must not be expanded into a teaching claim that cinacalcet is never appropriate. No decision-critical omission was identified that makes either active-treatment option equally best here.",
+      "Difficulty: moderate, toward the easier end for a well-prepared PGY-2/3; not a stretch item. Two consequential operations are present: integrate biochemical, familial and genetic evidence to establish the applicable disease framework, then decide whether age and a positive localization study actually justify intervention in that framework. The positive scan gives the operative error a concrete basis, unlike a bare FHH-name-to-observation recall item. A resident who anchors on localization or automatically applies the under-50 rule can make a clinically meaningful error. The categorical genetic finding lowers difficulty, but it also makes the management comparison fair.",
+      "Importance and realism: high-yield and practically important endocrine-surgery learning, broadly appropriate for ABSITE preparation without claiming a verified blueprint mapping. Avoiding an inappropriate parathyroid operation and distinguishing localization from diagnosis are valuable skills. An endocrine-surgery return visit with inherited-disease testing arriving after a localization study is plausible. The earlier scan should be understood as workup history, not an endorsed routine sequence. Normal baseline DXA is clinically coherent context but is not an additional scored inference.",
+      "Owner flag: FULLY RESOLVED within the visible revision. Referral and baseline skeletal assessment were requested together; DXA is completed context and is not a prerequisite for an operative opinion. The new reason to withhold parathyroidectomy is the calcium-disorder diagnosis, not a normal DXA. This replaces the original confirmed-PHPT age-criterion decision rather than merely making that old question harder. The historical variant ID/title must not cause the new construct to inherit an unrelated learning objective; metadata and runtime composition were not audited here.",
+      "Source hold touches key: NO active declared hold touches the current surveillance key in the round-three packet or ledger. Recorded claim.fhh.reassurance-observation-avoid-parathyroid-surgery supplies direct support, mapped to PARAT and the Fifth Workshop. Duplicate Fifth Workshop IDs are one publication. The historical DXA hardware/radius hold belongs to the parked staging item; the earlier cinacalcet mapping limitation does not establish a hold on this independently supported observation key. This is offline support assessment, not fresh verification or clearance of historical holds. This exact rewritten question remains needs_clinician_review.",
+      "Options are parallel concise management labels with comparable specificity; surveillance is a concrete management strategy rather than an undefined individualized-plan answer. No unique wording overlap, grammatical fit, long-key outlier, component convergence, absolute or patient-preference cue selects the answer. The pathogenic genetic classification is a legitimate laboratory result for a management question, not an author-written instruction to observe. PASS is editorial acceptance of these after fields only, not clinical approval or validation of runtime waits, earlier feedback, rendering or concept identity."
+    ],
+    "suggestions": [
+      "No mandatory learner-text revision is needed for this editorial PASS. Preserve the genetic/family evidence, stable trajectory and scan finding together; removing the genetic confirmation would create a different and less settled management question.",
+      "In later clinical review, confirm the exact management ranking and ensure feedback explains the limited role of localization without asserting that focal uptake proves an adenoma, proves a false-positive result, or rules out every possible coexisting process. Do not add an unsupported categorical statement against cinacalcet.",
+      "Before integration, check that the scored concept/version represents inherited-disease management rather than the prior PHPT age criterion, and that no inherited DXA result gate or earlier feedback restores the original sequencing problem. Those checks are outside this after-fields-only review and must not be implied by this PASS."
+    ]
+  }
+]

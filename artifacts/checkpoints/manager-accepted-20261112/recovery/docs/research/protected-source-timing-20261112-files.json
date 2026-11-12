@@ -1,0 +1,500 @@
+{
+  "checkedOn": "2026-11-12",
+  "task": "manager-authorized test timing source pins",
+  "existingFiles": [
+    {
+      "path": "packages/clinical-content/src/question-program-batch6-acceptance-test-support.ts",
+      "beforeSha256": "8d0fd8fbada36c06ae5bd529777cb9f70fee75a2794e30897567fce493003fc2",
+      "afterSha256": "2409e152a6e5f29ec3b91b2a563b5e0db13c1a83cca40f832909a5d910eeb042",
+      "changes": [
+        {
+          "before": "import {expect} from \"vitest\";",
+          "after": "import {expect} from \"vitest\";\nimport {beforeAuthorizedTestTimingSource} from \"./question-authorized-test-timing-source-20261112\";"
+        },
+        {
+          "before": "export function beforeProgramBatch6AcceptanceSource(path: string, current: string): string {",
+          "after": "export function beforeProgramBatch6AcceptanceSource(path: string, current: string): string {\n  current = beforeAuthorizedTestTimingSource(path, current);"
+        }
+      ]
+    }
+  ],
+  "newFiles": [
+    {
+      "path": "packages/clinical-content/src/question-authorized-test-timing-source-20261112.ts",
+      "bytes": 1440,
+      "sha256": "afb754177920726946eca13350f073152cab80207870733a52344cbf57059ed6"
+    },
+    {
+      "path": "packages/clinical-content/src/question-authorized-test-timing-source-20261112.test.ts",
+      "bytes": 2308,
+      "sha256": "2f2aa8b9bd01c78182e41aff74f88b111669ebe5cbd013bf0e688deb2f76cb9b"
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-authorized-test-timing-source-migration-20261112.json",
+      "bytes": 84523,
+      "sha256": "0bdf3668d7cd47364cb21e708d5b93b8eabf356495cde3240d4c6e09006d018d"
+    },
+    {
+      "path": "docs/execplans/protected-source-timing-20261112.md",
+      "bytes": 4500,
+      "sha256": "bc26547090c0aa343c1f4fd51d09ec6e034f8681352a3c2113ab43c75791b80e"
+    },
+    {
+      "path": "docs/research/protected-source-timing-20261112.md",
+      "bytes": 21938,
+      "sha256": "9cd549da3a4a2aa8cfe796cd8febc2e84205ae41802d551ffcca07e2e8468e74"
+    },
+    {
+      "path": "docs/research/protected-source-timing-20261112-validation.json",
+      "bytes": 255339,
+      "sha256": "45cd8c271faa74d13366dbfc41c5facbf280d65d0358ef93d35185f1a445bd83"
+    }
+  ],
+  "hashedFileCount": 7,
+  "self": "docs/research/protected-source-timing-20261112-files.json",
+  "selfHashOmitted": true,
+  "protectedManagerFiles": [
+    {
+      "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+      "sha256": "731639dde746461929a9ad0b58af102d4fe1e2e4f558a1df0416630b2d2a48a1"
+    },
+    {
+      "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+      "sha256": "65e47a749ca545ea166250bf3299d5ac5d2f9dac3f305717257c7d541c439790"
+    },
+    {
+      "path": "apps/player/src/App.cloudLifecycle.test.tsx",
+      "sha256": "1e9c701b6dbdd5834809218f08760feffd2d5980ee1f7d077a7f9b09715c7b0c"
+    }
+  ],
+  "immutableCaptures": [
+    {
+      "path": "tools/question-quality/fixtures/batch2b-acceptance-before-20261105.json",
+      "sha256": "de3536908494941dc50ad5b81c5aadc108fa7cb0466342638337ed83545e9c0f",
+      "pins": [
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-bank-batch2a-before-20261104.json",
+      "sha256": "afcfb4cdb331467023c9717c08b348baa15b1c43f6fcd74ae596cd294ba4e046",
+      "pins": [
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/App.cloudLifecycle.test.tsx",
+          "sha256": "a2502292ba11b7eebf2a83e17a17f5374a3d33200fb79289719a925accf2ec2e"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-bank-batch2a-round2-before-20261104.json",
+      "sha256": "7c55d7bce5b87869a509d6a8c775498d7cfa0362343657c16df291779afd3d8d",
+      "pins": [
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/App.cloudLifecycle.test.tsx",
+          "sha256": "a2502292ba11b7eebf2a83e17a17f5374a3d33200fb79289719a925accf2ec2e"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-bank-batch2a-round3-before-20261104.json",
+      "sha256": "3438c017a169bd686cfa060b04bd5dbd3dc62a005cae018112a4f6c893e750d8",
+      "pins": [
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/App.cloudLifecycle.test.tsx",
+          "sha256": "a2502292ba11b7eebf2a83e17a17f5374a3d33200fb79289719a925accf2ec2e"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-bank-batch2b-before-20261104.json",
+      "sha256": "9c26ed58ea01ef718aeadbec783b5c837a32da41fa65698c074231ad42fddbc4",
+      "pins": [
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/App.cloudLifecycle.test.tsx",
+          "sha256": "a2502292ba11b7eebf2a83e17a17f5374a3d33200fb79289719a925accf2ec2e"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-bank-batch2b-round2-before-20261104.json",
+      "sha256": "e9d78b010325a62b8bd9a44d796d32c56d415af906a082ae1ce063d919245e35",
+      "pins": [
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/App.cloudLifecycle.test.tsx",
+          "sha256": "a2502292ba11b7eebf2a83e17a17f5374a3d33200fb79289719a925accf2ec2e"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-flags-before-20261104.json",
+      "sha256": "c8a500d1df1f61952385e6a11f29581bec65b055955875e91f0e36b51f4e2087",
+      "pins": [
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-flags-round2-before-20261104.json",
+      "sha256": "bcb43b76c0864b5f88fb5e55d1846c3eabe794939472354361deb07c7a7c8851",
+      "pins": [
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-flags-round3-before-20261104.json",
+      "sha256": "251b5f3f1e02580eb7a66ebd3e9b57cb09d8efbef3ae55b019ae816b32bb1114",
+      "pins": [
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/App.cloudLifecycle.test.tsx",
+          "sha256": "a2502292ba11b7eebf2a83e17a17f5374a3d33200fb79289719a925accf2ec2e"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-flags2-before-20261105.json",
+      "sha256": "4a1ea1155c8404d35ac87fe4e3fda74c5451bd2602fe234e7328efd3987e45b1",
+      "pins": [
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-flags3-acceptance-before-20261107.json",
+      "sha256": "d94aedc367f17ee764e97cc39ae8e46e0e67af72aefe26740fea7e8c6079437a",
+      "pins": [
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-flags3-before-20261107.json",
+      "sha256": "a08f2af30a7ae0722a3e6b67a115a29a6cceadb9122689199dc48606782e4204",
+      "pins": [
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-n4-acceptance-before-20261110.json",
+      "sha256": "b9b01bc55840513f8643dab473c535fd913e6a376cbb534a696899ea90cd11ad",
+      "pins": [
+        {
+          "field": "runtimeFiles",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "runtimeFiles",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-new-n3-acceptance-before-20261105.json",
+      "sha256": "d8a4fe75c5f5a36f36f0bad90b8562fe7d9e6c57abc6b1fea7ca9ac74e716c39",
+      "pins": [
+        {
+          "field": "protectedFiles",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "protectedFiles",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-ship-case-replacements-before-20261105.json",
+      "sha256": "b7f6e877ecd9b88248974c0499a90e44be721c007cd65df54c354f3204cd383e",
+      "pins": [
+        {
+          "field": "protectedFiles",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "protectedFiles",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-stats1-acceptance-before-20261108.json",
+      "sha256": "72f97da27e828ad7af89c6b4ef317dc7a110da888810b11100f4f31a592d906b",
+      "pins": [
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-stats1-before-20261108.json",
+      "sha256": "db08238329644147f84d7061327bf959ea679da7cd4b685e85ca5d53bcca2914",
+      "pins": [
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-topic-acceptance-batch1-before-20261111.json",
+      "sha256": "37913f386e5b8fabf2281a5a0160367cb563299def7ac705bafc6d8f6d5532bd",
+      "pins": [
+        {
+          "field": "runtimeFiles",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "runtimeFiles",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-topic-acceptance-batch2-before-20261111.json",
+      "sha256": "90982b4521171f7e9dda30c1ff0e8d375fb77358c01279ef8123fb169276222b",
+      "pins": [
+        {
+          "field": "observed",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "observed",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-topic-acceptance-batch3-before-20261111.json",
+      "sha256": "225c1f37c7032713c147ceb97ad87c7c9c02b8f90c3c47bbbf8f7672668f981b",
+      "pins": [
+        {
+          "field": "observed",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "observed",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-topic-acceptance-batch4-before-20261111.json",
+      "sha256": "3c1ac57759cc658cb3e700f17977a14a84600ec3e962de8e77f7f9f3ead33d85",
+      "pins": [
+        {
+          "field": "observed",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "observed",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-topic-acceptance-batch5-before-20261111.json",
+      "sha256": "7819b9208de299972dea6ccb7bd25efba0b3b30c8e210857406b35b4246fbb38",
+      "pins": [
+        {
+          "field": "observed",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "observed",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "09726190a2b74f2c10864ea2b97bb1d3ac5d451365beddd5d66864b850ef482a"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-topic-acceptance-batch6-before-20261112.json",
+      "sha256": "e6dbd6bf5997bb82c8c4cf7b0d41ae0c02022df659106aaf5a1e23431d76488e",
+      "pins": [
+        {
+          "field": "observed",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "observed",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "09726190a2b74f2c10864ea2b97bb1d3ac5d451365beddd5d66864b850ef482a"
+        }
+      ]
+    }
+  ],
+  "sharedHandoff": {
+    "path": "docs/handoffs/CURRENT_THREAD_HANDOFF.md",
+    "intakeBytes": 985845,
+    "intakeSha256": "26f2befa446aa3d24e2df417bb99649e474f30358fc2554b6e303eb5407c9253",
+    "originalPrefixPreserved": true,
+    "preAppendBytes": 985845,
+    "preAppendSha256": "26f2befa446aa3d24e2df417bb99649e474f30358fc2554b6e303eb5407c9253",
+    "ownAppendBytes": 2757,
+    "ownAppendSha256": "27fce5999a9c6f3479e56ed18ebe59b5040f9568cc97f76cfc7255c0fd66c96e",
+    "marker": "<!-- BEGIN AUTHORIZED TEST TIMING SOURCE PINS 20261112 -->"
+  },
+  "scopeSummary": {
+    "existing": 1,
+    "newIncludingReceipt": 7,
+    "sharedAppend": 1,
+    "uniqueChangedPaths": 9,
+    "managerEditedFilesTouched": 0,
+    "originalCapturesTouched": 0
+  },
+  "levelFiveRuntimeInputsChanged": [],
+  "constraints": {
+    "gitUsed": false,
+    "networkUsed": false,
+    "agentsUsed": false,
+    "installs": false,
+    "deployed": false,
+    "releaseTreeEdited": false,
+    "clinicalDataEdited": false,
+    "shipManifestEdited": false
+  }
+}

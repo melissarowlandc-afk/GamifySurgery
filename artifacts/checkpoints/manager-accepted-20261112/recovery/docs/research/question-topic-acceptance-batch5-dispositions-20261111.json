@@ -1,0 +1,1868 @@
+{
+  "checkedOn": "2026-11-11",
+  "requested": 29,
+  "accepted": 22,
+  "cases": 21,
+  "skipped": 7,
+  "stageAdjustments": [
+    {
+      "caseId": "case.vascular-venous-lymphatic-access.postop-leg-coverage.20261111.v2",
+      "before": 0,
+      "after": 3,
+      "reason": "Preserve the existing registered meaning's facility-stage floor."
+    },
+    {
+      "caseId": "case.vascular-venous-lymphatic-access.postop-finite-course-r2.20261111.v2",
+      "before": 0,
+      "after": 1,
+      "reason": "Preserve the existing registered meaning's facility-stage floor."
+    },
+    {
+      "caseId": "case.vascular-venous-lymphatic-access.postop-negative-summary.20261111.v2",
+      "before": 0,
+      "after": 1,
+      "reason": "Preserve the existing registered meaning's facility-stage floor."
+    },
+    {
+      "caseId": "case.vascular-venous-lymphatic-access.lymphatic-acute-change-r2.20261111.v2",
+      "before": 0,
+      "after": 4,
+      "reason": "Preserve the existing registered meaning's facility-stage floor."
+    }
+  ],
+  "eligibilityAdjustments": [],
+  "items": [
+    {
+      "nodeId": "node.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2",
+      "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-pediatric-neck-thoracic-gu-review2-20261111.json",
+        "record": {
+          "id": "question.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2",
+          "nodeId": "node.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2",
+          "title": "Sequence diaphragmatic repair with physiology",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The learner must interpret perfusion/oxygenation over time and pulmonary pressure relative to simultaneous systemic pressure, then decide whether ongoing intubation requires further delay. The pulmonary pressure trend alone and persistent radiographic hernia alone are insufficient.",
+            "Planning repair while continuing ICU support is the best listed plan for the sustained favorable observations. Continued stabilization is a plausible error if intubation or any residual pulmonary hypertension is mistaken for an absolute barrier; ECMO escalation is not supported by the described trajectory.",
+            "No confident clinical inaccuracy identified. This review does not independently verify the current CAHS guideline or establish universal numerical thresholds. The explanation appropriately presents multidisciplinary consideration, not automatic operative clearance.",
+            "The record supplies a coherent 24-hour course and pressure comparison without invented staging labels. A local full readiness protocol may include additional assessments, so the wording must remain about supported planning rather than guaranteed safety.",
+            "Standalone presentation clearly locates the infant in the referring ICU while the mother discusses records in clinic. The separated task identifies the patient and repair-sequencing decision."
+          ],
+          "suggestions": [
+            "Preserve the simultaneous systemic-pressure comparator, sustained perfusion data and distinction between planning repair and automatic clearance.",
+            "Confirm the named guideline's current applicability and exact readiness claims during clinical sign-off. Do not turn these fictional values into universal cutoffs or require extubation simply to create a distractor."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2",
+          "sha256": "55d048d3cc056abe8d87f740a34c751cd149887b6374952a08b9ac960227d627",
+          "unlistedSiblingIds": []
+        },
+        {
+          "caseId": "case.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2",
+          "sha256": "55d048d3cc056abe8d87f740a34c751cd149887b6374952a08b9ac960227d627",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "pediatric-neck-thoracic-gu",
+      "status": "skipped",
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2",
+      "reason": "This patient needs compatible, explicit pediatric demographics and child art.",
+      "runtimeAdmissionIssue": "This patient needs compatible, explicit pediatric demographics and child art.",
+      "unlistedSiblingIds": []
+    },
+    {
+      "nodeId": "node.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+      "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-pediatric-neck-thoracic-gu-review2-20261111.json",
+        "record": {
+          "id": "question.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+          "nodeId": "node.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+          "title": "Recognize the need for chromosomal assessment",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "46,XX with the described genital phenotype and bilateral nonpalpable gonads should prevent assuming uncomplicated undescended testes. The next inference is an adrenal virilization workup, followed by initial screening versus a confirmatory stimulated profile.",
+            "With no prior steroid measurements and a stable child beyond infancy, baseline 17-hydroxyprogesterone is the most defensible initial choice among these three. A stimulated profile is a credible later-stage competitor; anti-Mullerian hormone addresses a different part of gonadal assessment.",
+            "The absence of prior steroid testing supplies the decision stage. It does not uniquely select the key by wording, since another baseline study is offered.",
+            "No confident clinical inaccuracy identified. Exact applicability of the named Endocrine Society screening recommendation to this DSD presentation was not independently source-verified offline; this PASS concerns editorial structure and plausible ranking, not approval of the exact clinical protocol.",
+            "The presentation uses the child's stated boy identity; the chromosome result does not create a contradiction in that identity. The task is complete, standalone and limited to one prioritized biochemical step rather than a full operative recommendation."
+          ],
+          "suggestions": [
+            "Retain the stable clinical observations, known chromosome result and lack of a prior steroid result; each distinguishes the decision stage.",
+            "Clinical sign-off should verify the screening-versus-confirmation ranking in this exact presentation and retain the early-morning assay details in feedback. Do not imply that this single test completes evaluation or authorizes genital surgery."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+          "sha256": "a34d69f9a54260c9403355d878bce9049c8029cb1b4db772ac7df008942fc67c",
+          "unlistedSiblingIds": []
+        },
+        {
+          "caseId": "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+          "sha256": "a34d69f9a54260c9403355d878bce9049c8029cb1b4db772ac7df008942fc67c",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "pediatric-neck-thoracic-gu",
+      "status": "skipped",
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+      "reason": "This pediatric variant needs supported outpatient choices and its exact child/parent context.",
+      "runtimeAdmissionIssue": "This pediatric variant needs supported outpatient choices and its exact child/parent context.",
+      "unlistedSiblingIds": []
+    },
+    {
+      "nodeId": "node.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy",
+      "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-pediatric-neck-thoracic-gu-review2-20261111.json",
+        "record": {
+          "id": "question.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.v1",
+          "nodeId": "node.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy",
+          "title": "Choose a safer tissue route with mediastinal compression",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The learner must connect positional breathlessness and tracheal compression with sedation/anesthesia risk, then use the accessible peripheral target and observed cooperation to select a tissue route. These are consequential linked decisions.",
+            "Local-anesthetic cervical-node excision is the best listed plan; both mediastinal alternatives add deep sedation or general anesthesia in a child with symptomatic compression.",
+            "Cooperation during an awake needle procedure supports, but does not guarantee, tolerance of awake excision. The specialist-team framing is therefore important; the item does not establish that every such child can undergo the operation under local anesthesia.",
+            "The subsequent hospital-record review is temporally distinguished from the original clinic presentation. The current update and exhibit supply everything needed after the former sequence was split; no missing earlier biopsy answer is required.",
+            "No confident clinical error or wording-only answer identified. Airway risk and the accessible target are necessary discriminators, not gratuitous exclusions."
+          ],
+          "suggestions": [
+            "Retain the separate observations for anesthesia risk, target accessibility and cooperation. Preserve specialist confirmation of feasibility rather than turning local anesthesia into a universal mandate.",
+            "Do not attach preceding feedback that explicitly teaches this same biopsy route without reassessing the resulting difficulty."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.pediatric-neck-thoracic-gu.20261111.neck-to-mediastinum",
+          "sha256": "c1473130e1b445584dd3f64bdb179fcf03d95f12886bf7b8bec2b772e4ac8e47",
+          "unlistedSiblingIds": []
+        },
+        {
+          "caseId": "case.pediatric-neck-thoracic-gu.20261111.neck-to-mediastinum",
+          "sha256": "2799239af4a46c32321c692a1e310960b6d9298f276f8da17ac2a2e34f291e89",
+          "unlistedSiblingIds": [
+            "node.pediatric-neck-thoracic-gu.20261111.neck-target"
+          ]
+        }
+      ],
+      "topic": "pediatric-neck-thoracic-gu",
+      "status": "skipped",
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.neck-to-mediastinum",
+      "reason": "This pediatric variant needs supported outpatient choices and its exact child/parent context.",
+      "runtimeAdmissionIssue": "This pediatric variant needs supported outpatient choices and its exact child/parent context.",
+      "unlistedSiblingIds": [
+        "node.pediatric-neck-thoracic-gu.20261111.neck-target"
+      ]
+    },
+    {
+      "nodeId": "node.pediatric-neck-thoracic-gu.20261111.negative-exploration",
+      "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.negative-exploration.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-pediatric-neck-thoracic-gu-review2-20261111.json",
+        "record": {
+          "id": "question.pediatric-neck-thoracic-gu.20261111.negative-exploration.v1",
+          "nodeId": "node.pediatric-neck-thoracic-gu.20261111.negative-exploration",
+          "title": "Tailor fixation to operative findings",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The learner must distinguish the indication for exploration from the diagnosis actually found, then apply the absence of testicular torsion/bell-clapper anatomy to the fixation decision. Routine bilateral fixation does not follow merely because exploration occurred.",
+            "Untwisted cord, absence of ischemic change, normal attachments and a torted appendage support closing without testicular fixation among these choices. No confident clinical inaccuracy identified; the exact consensus recommendation remains subject to clinical sign-off.",
+            "The torted appendage is a legitimate operative diagnosis for a different management question, not an illicit pre-answer diagnosis label. The normal attachment finding is decision-critical.",
+            "Part 2 follows a justified urgent exploration and introduces a different operative decision. It states that exploration has already occurred and supplies its findings, so it stands alone without recalling the prior answer. Part 1 feedback does not teach fixation.",
+            "The initial high/horizontal lie and subsequent alternative operative diagnosis deserve clinician plausibility review as a complete case, but are not sufficient evidence of a definite contradiction or clinical error."
+          ],
+          "suggestions": [
+            "Retain the distinction between torted appendage and torted testis, plus the attachment findings; without these the fixation comparison loses fairness.",
+            "For clearer post-answer attribution, identify the referenced consensus by name instead of saying only \"this consensus\". This is a feedback clarification, not a blocker to the scored decision."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.pediatric-neck-thoracic-gu.20261111.acute-scrotum-records",
+          "sha256": "e79781f60b92bce556469ae572d4984b8f13446e618a33d2e23812afbcae8e96",
+          "unlistedSiblingIds": [
+            "node.pediatric-neck-thoracic-gu.20261111.scrotum-doppler"
+          ]
+        }
+      ],
+      "topic": "pediatric-neck-thoracic-gu",
+      "status": "skipped",
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.acute-scrotum-records",
+      "reason": "Reviewed case includes scored nodes outside the manager PASS list.",
+      "runtimeAdmissionIssue": null,
+      "unlistedSiblingIds": [
+        "node.pediatric-neck-thoracic-gu.20261111.scrotum-doppler"
+      ]
+    },
+    {
+      "nodeId": "node.pediatric-neck-thoracic-gu.20261111.node-sample",
+      "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.node-sample.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-pediatric-neck-thoracic-gu-review2-20261111.json",
+        "record": {
+          "id": "question.pediatric-neck-thoracic-gu.20261111.node-sample.v1",
+          "nodeId": "node.pediatric-neck-thoracic-gu.20261111.node-sample",
+          "title": "Act on nonrepresentative node sampling",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Excisional biopsy is the best of the listed plans for a progressively enlarging fixed cervical node after a sample containing no lymphoid tissue. The learner must reject the family-level reassurance as nonrepresentative sampling and integrate the continuing concerning examination.",
+            "Repeat FNA is a credible tempting response to a missed target, but does not offer the same definitive representative tissue/architecture as excision in this pediatric presentation. Surveillance is not supported by the progressive findings.",
+            "The necessary negative, \"no lymphoid tissue is represented\", is an actual adequacy finding rather than an unfair giveaway; removing it would change the inference.",
+            "No confident clinical inaccuracy or nonmedical wording shortcut identified. The standalone presentation, current update and complete task cohere."
+          ],
+          "suggestions": [
+            "Retain the distinction between a nondiagnostic specimen and a benign node. Keep the progressive examination findings and avoid adding a diagnosis label before answering.",
+            "Clinical sign-off should retain the pediatric context when confirming the ranking of excision versus repeat needle sampling; do not generalize this exact ranking to every neck mass."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.pediatric-neck-thoracic-gu.20261111.node-sample",
+          "sha256": "4106529963d78bd9f2f76c51ce582034e3fa7ddfe98bcba65d4c88c5f53e44f9",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "pediatric-neck-thoracic-gu",
+      "status": "skipped",
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.node-sample",
+      "reason": "This pediatric variant needs supported outpatient choices and its exact child/parent context.",
+      "runtimeAdmissionIssue": "This pediatric variant needs supported outpatient choices and its exact child/parent context.",
+      "unlistedSiblingIds": []
+    },
+    {
+      "nodeId": "node.pediatric-neck-thoracic-gu.20261111.pyogenic-drainage",
+      "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.pyogenic-drainage.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-pediatric-neck-thoracic-gu-review2-20261111.json",
+        "record": {
+          "id": "question.pediatric-neck-thoracic-gu.20261111.pyogenic-drainage.v1",
+          "nodeId": "node.pediatric-neck-thoracic-gu.20261111.pyogenic-drainage",
+          "title": "Escalate persistent suppuration after medical treatment",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The learner must separate systemic improvement from local treatment failure, then recognize that a progressing fluctuant fluid/debris collection needs drainage assessment. Continuing IV treatment can tempt a learner who overweights defervescence.",
+            "Surgical incision-and-drainage assessment is the best listed plan. Elective whole-node excision after recovery does not address the active suppurative problem. No confident clinical inaccuracy identified.",
+            "The description of fluid/debris is sufficient for this management decision and does not promise an absent image. The repeated systemic/local response in update and exhibit is mildly redundant but does not make the question ambiguous.",
+            "The hospital decision time is explicit and the node stands alone. The explanation contrasts an indolent process after answering without depending on the separate Mina case."
+          ],
+          "suggestions": [
+            "Retain both the improving systemic observations and worsening focal observations; the discordance supplies the consequential inference.",
+            "Optional tightening: remove the duplicate response sentence from either update or exhibit. Keep specialist assessment language from implying a procedure is automatically performed in the clinic."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.pediatric-neck-thoracic-gu.20261111.pyogenic-node-records",
+          "sha256": "9e4b60789d3a95930159ea750384fd99b6200fd96e293adcb18050435b2131de",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "pediatric-neck-thoracic-gu",
+      "status": "skipped",
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.pyogenic-node-records",
+      "reason": "This patient needs compatible, explicit pediatric demographics and child art.",
+      "runtimeAdmissionIssue": "This patient needs compatible, explicit pediatric demographics and child art.",
+      "unlistedSiblingIds": []
+    },
+    {
+      "nodeId": "node.vascular-venous-lymphatic-access.access-hand-physiology.20261111.v2",
+      "questionVariantId": "question.vascular-venous-lymphatic-access.access-hand-physiology.20261111.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-venous-lymphatic-access-review2-20261111.json",
+        "record": {
+          "id": "question.vascular-venous-lymphatic-access.access-hand-physiology.20261111.v2",
+          "nodeId": "node.vascular-venous-lymphatic-access.access-hand-physiology.20261111.v2",
+          "title": "New hand symptoms despite prior median neuropathy",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Digital pressures/waveforms with access compression are the best offered first investigation. New coolness, exertional/dialysis association and little-finger symptoms are not explained by the prior isolated median finding.",
+            "The learner separates a true old diagnosis from a changed pattern, then prioritizes dynamic perfusion assessment despite preserved dialysis performance. This is meaningful high-yield two-step reasoning; repeat wrist testing is a credible anchoring error.",
+            "Cervical MRI does not best address these perfusion-linked episodes. No confident clinical inaccuracy identified. The self-contained task does not announce a steal diagnosis."
+          ],
+          "suggestions": [
+            "Retain the actual prior median result and changed symptom distribution; do not say the old diagnosis was wrong.",
+            "Keep urgency appropriate to resolving episodes; do not extrapolate this investigation-first plan to fixed new motor deficit or a threatened hand."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-venous-lymphatic-access.access-hand-physiology-r2.20261111.v2",
+          "sha256": "7dcd936d412271aa99269252a99f924810129cfe75e9b95840f6b5c1955031f8",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "vascular-venous-lymphatic-access",
+      "status": "accepted",
+      "caseId": "case.vascular-venous-lymphatic-access.access-hand-physiology-r2.20261111.v2",
+      "reason": "Complete PASS-only case admitted through its existing clinic participant route.",
+      "runtimeAdmissionIssue": null,
+      "unlistedSiblingIds": []
+    },
+    {
+      "nodeId": "node.vascular-venous-lymphatic-access.access-multinerve-neuropathy.20261111.v1",
+      "questionVariantId": "question.vascular-venous-lymphatic-access.access-multinerve-neuropathy.20261111.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-venous-lymphatic-access-review2-20261111.json",
+        "record": {
+          "id": "question.vascular-venous-lymphatic-access.access-multinerve-neuropathy.20261111.v1",
+          "nodeId": "node.vascular-venous-lymphatic-access.access-multinerve-neuropathy.20261111.v1",
+          "title": "Acute multinerve deficit after fistula creation",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Immediate vascular assessment for access ligation is the best offered response to severe acute pain with multinerve motor/sensory deficits despite a warm hand and pulse. The resolved regional block and soft forearm address important competitors.",
+            "Two consequential steps: localize beyond a single median entrapment, then recognize that preserved gross perfusion does not exclude urgent access-related neurologic injury. High-yield and moderate rather than hard because the competitors become weak once the pattern is recognized.",
+            "The retrospective admission frame and decision point are clear and self-contained. No confident clinical inaccuracy identified; the plan correctly requests urgent assessment rather than claiming a procedure has occurred."
+          ],
+          "suggestions": [
+            "Keep the warm-hand/pulse findings as the meaningful counterweight.",
+            "Do not present waiting for formal electrodiagnostic confirmation as an equivalent safe pathway for this acute deficit."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-venous-lymphatic-access.postaccess-neurologic-record.20261111.v1",
+          "sha256": "134cac805fd2bb9190a2b5fd8c8aebf08736aafe5a26fc9c0f3e098cfc6696fc",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "vascular-venous-lymphatic-access",
+      "status": "accepted",
+      "caseId": "case.vascular-venous-lymphatic-access.postaccess-neurologic-record.20261111.v1",
+      "reason": "Complete PASS-only case admitted through its existing clinic participant route.",
+      "runtimeAdmissionIssue": null,
+      "unlistedSiblingIds": []
+    },
+    {
+      "nodeId": "node.vascular-venous-lymphatic-access.access-unresolved-maturation.20261111.v2",
+      "questionVariantId": "question.vascular-venous-lymphatic-access.access-unresolved-maturation.20261111.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-venous-lymphatic-access-review2-20261111.json",
+        "record": {
+          "id": "question.vascular-venous-lymphatic-access.access-unresolved-maturation.20261111.v2",
+          "nodeId": "node.vascular-venous-lymphatic-access.access-unresolved-maturation.20261111.v2",
+          "title": "Persistently abnormal fistula maturation examination",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Duplex characterization before use is the best offered plan. Visible enlargement does not establish usability when serial thrill, pulsatility and elevation findings remain abnormal.",
+            "Two consequential steps: interpret apparent size against flow/outflow dysfunction, then investigate instead of attempting cannulation or another observation cycle. These are credible errors in a high-yield access problem.",
+            "The presentation gives actual examination findings and chronology rather than an immature-fistula label. Complete standalone context; no confident clinical inaccuracy identified."
+          ],
+          "suggestions": [
+            "Retain the discordance between size and dynamic examination.",
+            "Do not add an outflow-stenosis diagnosis before mapping establishes anatomy."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-venous-lymphatic-access.access-unresolved-maturation-r2.20261111.v2",
+          "sha256": "b8c1bdc08dc3b66bcafe3cfc61792be7cc5f51f7984521398cbe49889a776a2c",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "vascular-venous-lymphatic-access",
+      "status": "accepted",
+      "caseId": "case.vascular-venous-lymphatic-access.access-unresolved-maturation-r2.20261111.v2",
+      "reason": "Complete PASS-only case admitted through its existing clinic participant route.",
+      "runtimeAdmissionIssue": null,
+      "unlistedSiblingIds": []
+    },
+    {
+      "nodeId": "node.vascular-venous-lymphatic-access.catheter-intraluminal-dysfunction.20261111.v1",
+      "questionVariantId": "question.vascular-venous-lymphatic-access.catheter-intraluminal-dysfunction.20261111.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-venous-lymphatic-access-review2-20261111.json",
+        "record": {
+          "id": "question.vascular-venous-lymphatic-access.catheter-intraluminal-dysfunction.20261111.v1",
+          "nodeId": "node.vascular-venous-lymphatic-access.catheter-intraluminal-dysfunction.20261111.v1",
+          "title": "Initial treatment of established low-flow dialysis catheter",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "A lumen alteplase lock is the best offered initial treatment after persistent low flow despite repositioning, unchanged tip position and no kink, with no represented infection. Flushing/heparin locking is not failed intraluminal thrombolysis.",
+            "Two consequential steps: distinguish likely nonpositional/intraluminal dysfunction from a mechanical problem, then choose local thrombolysis before exchange or systemic anticoagulation. Exchange is a credible later-stage alternative. High-yield, moderate access management.",
+            "The later update supplies the established catheter and relevant checks without requiring the removed site-selection item. No confident clinical inaccuracy identified; protocol implementation appropriately remains with trained staff."
+          ],
+          "suggestions": [
+            "Optional cleanup: omit obsolete bilateral-jugular site-selection details from this standalone low-flow problem.",
+            "Preserve the difference between heparin locking and a thrombolytic trial; this review verifies no exact alteplase dose or dwell time."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-venous-lymphatic-access.dialysis-catheter-course.20261111.v2",
+          "sha256": "df7ff00b88d4ae58d6f678418e2eb94c594703c195e7c562017a347373b8c777",
+          "unlistedSiblingIds": []
+        },
+        {
+          "caseId": "case.vascular-venous-lymphatic-access.dialysis-catheter-course.20261111.v1",
+          "sha256": "bd4f93f6e3b8f70868a0f44787faa65256059cb5a5dda5db6479f2fcb278882d",
+          "unlistedSiblingIds": [
+            "node.vascular-venous-lymphatic-access.catheter-site-preservation.20261111.v1",
+            "node.vascular-venous-lymphatic-access.catheter-s-aureus-source-control.20261111.v1"
+          ]
+        }
+      ],
+      "topic": "vascular-venous-lymphatic-access",
+      "status": "accepted",
+      "caseId": "case.vascular-venous-lymphatic-access.dialysis-catheter-course.20261111.v2",
+      "reason": "Complete PASS-only case admitted through its existing clinic participant route.",
+      "runtimeAdmissionIssue": null,
+      "unlistedSiblingIds": [
+        "node.vascular-venous-lymphatic-access.catheter-site-preservation.20261111.v1",
+        "node.vascular-venous-lymphatic-access.catheter-s-aureus-source-control.20261111.v1"
+      ]
+    },
+    {
+      "nodeId": "node.vascular-venous-lymphatic-access.dvt-serial-negative-proximal.20261111.v2",
+      "questionVariantId": "question.vascular-venous-lymphatic-access.dvt-serial-negative-proximal.20261111.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-venous-lymphatic-access-review2-20261111.json",
+        "record": {
+          "id": "question.vascular-venous-lymphatic-access.dvt-serial-negative-proximal.20261111.v2",
+          "nodeId": "node.vascular-venous-lymphatic-access.dvt-serial-negative-proximal.20261111.v2",
+          "title": "Follow-up after a negative proximal-only DVT study",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Serial proximal compression ultrasound is the best offered plan with persistent postoperative concern after a proximal-only study. Normal sampled segments do not resolve distal disease or its possible progression.",
+            "The learner interprets the scope of the negative study, then chooses follow-up rather than stopping or redirecting to an unsupported iliocaval problem. Calf-limited symptoms and bilateral phasicity help rank territory choices. High-yield, moderate two-step task.",
+            "The explanation correctly acknowledges adequate whole-leg ultrasound as another valid strategy; that alternative is not offered as a competing key. Complete standalone context and no confident clinical inaccuracy identified."
+          ],
+          "suggestions": [
+            "Retain acquisition scope and ongoing concern instead of labeling the entire workup negative.",
+            "If a serial interval is added, use a directly verified source rather than inventing a timing threshold."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-venous-lymphatic-access.dvt-serial-negative-proximal-r2.20261111.v2",
+          "sha256": "e965dfc7a9024f181dd3e049e2f77239c77e8d95ff32eea792a7ef772d5f8988",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "vascular-venous-lymphatic-access",
+      "status": "accepted",
+      "caseId": "case.vascular-venous-lymphatic-access.dvt-serial-negative-proximal-r2.20261111.v2",
+      "reason": "Complete PASS-only case admitted through its existing clinic participant route.",
+      "runtimeAdmissionIssue": null,
+      "unlistedSiblingIds": []
+    },
+    {
+      "nodeId": "node.vascular-venous-lymphatic-access.lymphatic-acute-change.20261111.v2",
+      "questionVariantId": "question.vascular-venous-lymphatic-access.lymphatic-acute-change.20261111.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-venous-lymphatic-access-review2-20261111.json",
+        "record": {
+          "id": "question.vascular-venous-lymphatic-access.lymphatic-acute-change.20261111.v2",
+          "nodeId": "node.vascular-venous-lymphatic-access.lymphatic-acute-change.20261111.v2",
+          "title": "New painful swelling superimposed on chronic arm enlargement",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Left-arm deep-venous duplex is the best offered first investigation. Chronic post-nodal-treatment swelling does not explain away new painful postoperative enlargement; lymphoscintigraphy addresses the old problem and chest CT is not the best initial venous study here.",
+            "The learner separates a changed syndrome from baseline, then selects the first appropriate venous investigation. These are consequential, high-yield steps at the lower end of moderate difficulty.",
+            "A peripheral line is context, not proof of DVT. The explanation appropriately supports evaluation rather than declaring a clot. Standalone facts are sufficient; no confident clinical inaccuracy identified."
+          ],
+          "suggestions": [
+            "Retain the baseline-versus-new chronology.",
+            "If central imaging is later tested, supply the actual duplex limitations or central-outflow findings at that later decision point."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-venous-lymphatic-access.lymphatic-acute-change-r2.20261111.v2",
+          "sha256": "087024998160e38b574f4a7668066a433f4b4f56a84c98f4800ffeb606af3718",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "vascular-venous-lymphatic-access",
+      "status": "accepted",
+      "caseId": "case.vascular-venous-lymphatic-access.lymphatic-acute-change-r2.20261111.v2",
+      "reason": "Complete PASS-only case admitted through its existing clinic participant route.",
+      "runtimeAdmissionIssue": null,
+      "unlistedSiblingIds": []
+    },
+    {
+      "nodeId": "node.vascular-venous-lymphatic-access.pe-imaging-contrast-reaction.20261111.v1",
+      "questionVariantId": "question.vascular-venous-lymphatic-access.pe-imaging-contrast-reaction.20261111.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-venous-lymphatic-access-review2-20261111.json",
+        "record": {
+          "id": "question.vascular-venous-lymphatic-access.pe-imaging-contrast-reaction.20261111.v1",
+          "nodeId": "node.vascular-venous-lymphatic-access.pe-imaging-contrast-reaction.20261111.v1",
+          "title": "PE imaging after severe iodinated-contrast reaction",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "V/Q is the best offered study at the stable diagnostic point with a clear chest radiograph and severe previous contrast reaction. Proximal-leg duplex can establish VTE when positive but is not an equivalent pulmonary investigation or a way to exclude PE when negative.",
+            "Two consequential interpretations remain: establish the severity of the prior reaction, then choose a suitable alternative pulmonary test using the radiograph. High-yield and moderate, though familiar to prepared residents.",
+            "The historical admission frame avoids implying outpatient care of current acute dyspnea. No later imaging or RV result is exposed in this first part. No confident clinical inaccuracy identified."
+          ],
+          "suggestions": [
+            "Preserve the observed reaction rather than a vague contrast-allergy label.",
+            "Maintain the distinct diagnostic and later confirmed-PE care time points."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-venous-lymphatic-access.pe-record-contrast.20261111.v1",
+          "sha256": "2f49a15c78728aea3612be2187379361adeeaf1fb73435ff6b8f10126b7fe89d",
+          "unlistedSiblingIds": [
+            "node.vascular-venous-lymphatic-access.pe-rv-positive-care.20261111.v1"
+          ]
+        }
+      ],
+      "topic": "vascular-venous-lymphatic-access",
+      "status": "skipped",
+      "caseId": "case.vascular-venous-lymphatic-access.pe-record-contrast.20261111.v1",
+      "reason": "Reviewed case includes scored nodes outside the manager PASS list.",
+      "runtimeAdmissionIssue": null,
+      "unlistedSiblingIds": [
+        "node.vascular-venous-lymphatic-access.pe-rv-positive-care.20261111.v1"
+      ]
+    },
+    {
+      "nodeId": "node.vascular-venous-lymphatic-access.postop-finite-course.20261111.v2",
+      "questionVariantId": "question.vascular-venous-lymphatic-access.postop-finite-course.20261111.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-venous-lymphatic-access-review2-20261111.json",
+        "record": {
+          "id": "question.vascular-venous-lymphatic-access.postop-finite-course.20261111.v2",
+          "nodeId": "node.vascular-venous-lymphatic-access.postop-finite-course.20261111.v2",
+          "title": "Provoked DVT duration with heterozygous factor V Leiden",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Stopping at the completed three-month course is the best offered plan for the first DVT after major benign surgery with recovery. Isolated heterozygous factor V Leiden does not automatically require indefinite therapy.",
+            "Two consequential steps: establish that the provoking exposure has resolved, then decide whether the genetic result changes management. Indefinite treatment is a credible overreaction; arbitrary six-month extension is weaker. High-yield and moderate.",
+            "The explicit three-month update supplies the later clinical state without a preceding node. No confident clinical inaccuracy identified; exact guideline duration and thrombophilia recommendations were not freshly verified offline."
+          ],
+          "suggestions": [
+            "Optional presentation cleanup: frame this as a three-month follow-up and put the acute swelling history in past tense.",
+            "Preserve the benign surgical indication, recovered mobility, first-event status and exact heterozygous result; do not generalize to all thrombophilias."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-venous-lymphatic-access.postop-finite-course-r2.20261111.v2",
+          "sha256": "3f029b0b24eee1854d08092d941bf554a2e983734ba4f0e12c0fc78b692886b3",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "vascular-venous-lymphatic-access",
+      "status": "accepted",
+      "caseId": "case.vascular-venous-lymphatic-access.postop-finite-course-r2.20261111.v2",
+      "reason": "Complete PASS-only case admitted through its existing clinic participant route.",
+      "runtimeAdmissionIssue": null,
+      "unlistedSiblingIds": []
+    },
+    {
+      "nodeId": "node.vascular-venous-lymphatic-access.postop-prevention-not-failure.20261111.v1",
+      "questionVariantId": "question.vascular-venous-lymphatic-access.postop-prevention-not-failure.20261111.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-venous-lymphatic-access-review2-20261111.json",
+        "record": {
+          "id": "question.vascular-venous-lymphatic-access.postop-prevention-not-failure.20261111.v1",
+          "nodeId": "node.vascular-venous-lymphatic-access.postop-prevention-not-failure.20261111.v1",
+          "title": "Treating postoperative DVT during prophylaxis",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Therapeutic enoxaparin is the best offered plan: interpret the noncompressible femoral vein as proximal DVT, then distinguish prophylaxis and minor stable wound spotting from therapeutic failure or a major bleeding contraindication. Continuing prevention undertreats the event; the represented bleeding does not justify withholding treatment for a filter.",
+            "High-yield two-step treatment decision, although the minor-spotting alternative limits difficulty. The standalone update supplies the returned study and medication/bleeding record. No confident clinical inaccuracy identified.",
+            "Report scope: all 29 active candidate nodes were independently reviewed, including active original drafts preserved after review one. Five original Keep records, retired/superseded histories, 17 parked drafts, five historical hold/drop records and three unkeyed planning slots were noted but not scored. Only candidate visible text determines findings; author assertions and prior PASS labels do not. This offline editorial review does not freshly verify sources or exact guideline thresholds and is not clinical approval."
+          ],
+          "suggestions": [
+            "Retain the prophylaxis indication and actual bleeding trend; these are necessary clinical data.",
+            "Optional cleanup: shorten the obsolete outside-scan history now that the task begins with a complete hospital duplex."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-venous-lymphatic-access.postop-leg-coverage.20261111.v2",
+          "sha256": "854d6951df25008675af5987d4a86e8fe57d855c4f2a53b76b8d71e4dbb5450b",
+          "unlistedSiblingIds": []
+        },
+        {
+          "caseId": "case.vascular-venous-lymphatic-access.postop-leg-coverage.20261111.v1",
+          "sha256": "3fe7302594320edc4550798f1568d05af9e11b085e3bd7fa72a9b590bec099ec",
+          "unlistedSiblingIds": [
+            "node.vascular-venous-lymphatic-access.postop-proximal-coverage.20261111.v1",
+            "node.vascular-venous-lymphatic-access.postop-finite-course.20261111.v1"
+          ]
+        }
+      ],
+      "topic": "vascular-venous-lymphatic-access",
+      "status": "accepted",
+      "caseId": "case.vascular-venous-lymphatic-access.postop-leg-coverage.20261111.v2",
+      "reason": "Complete PASS-only case admitted through its existing clinic participant route.",
+      "runtimeAdmissionIssue": null,
+      "unlistedSiblingIds": [
+        "node.vascular-venous-lymphatic-access.postop-proximal-coverage.20261111.v1",
+        "node.vascular-venous-lymphatic-access.postop-finite-course.20261111.v1"
+      ]
+    },
+    {
+      "nodeId": "node.vascular-venous-lymphatic-access.postop-residual-duration.20261111.v1",
+      "questionVariantId": "question.vascular-venous-lymphatic-access.postop-residual-duration.20261111.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-venous-lymphatic-access-review2-20261111.json",
+        "record": {
+          "id": "question.vascular-venous-lymphatic-access.postop-residual-duration.20261111.v1",
+          "nodeId": "node.vascular-venous-lymphatic-access.postop-residual-duration.20261111.v1",
+          "title": "Residual ultrasound findings after a provoked DVT course",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Ending the completed course is the best offered plan: this is a first surgery-provoked event with resolved exposure, improving symptoms and no newly involved segment. Residual abnormality does not itself establish recurrence or require normal imaging before stopping.",
+            "Two consequential steps: distinguish residual findings from a new event, then apply duration reasoning. Both treat-until-normal and restart-course choices represent recognizable errors. High-yield, moderate difficulty.",
+            "The update supplies the eventual right-leg diagnosis and course, so the historical wrong-leg scan creates no missing dependency. No confident clinical inaccuracy identified."
+          ],
+          "suggestions": [
+            "Optional edit: remove the now-irrelevant wrong-leg acquisition story from this standalone duration item.",
+            "Keep the index/current comparison and symptom trajectory; do not imply every persistent abnormality is benign."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-venous-lymphatic-access.postop-negative-summary.20261111.v2",
+          "sha256": "d1693c7d41622bd3bd21fc07d372f618da37006877360a4e3e2e4584fdbed605",
+          "unlistedSiblingIds": []
+        },
+        {
+          "caseId": "case.vascular-venous-lymphatic-access.postop-negative-summary.20261111.v1",
+          "sha256": "97022e932c2d2b4ee313fe3add35e66d3f3a19a7ad6b9cfd6c601ddd656f9712",
+          "unlistedSiblingIds": [
+            "node.vascular-venous-lymphatic-access.postop-correct-limb.20261111.v1"
+          ]
+        }
+      ],
+      "topic": "vascular-venous-lymphatic-access",
+      "status": "accepted",
+      "caseId": "case.vascular-venous-lymphatic-access.postop-negative-summary.20261111.v2",
+      "reason": "Complete PASS-only case admitted through its existing clinic participant route.",
+      "runtimeAdmissionIssue": null,
+      "unlistedSiblingIds": [
+        "node.vascular-venous-lymphatic-access.postop-correct-limb.20261111.v1"
+      ]
+    },
+    {
+      "nodeId": "node.vascular-venous-lymphatic-access.ulcer-mixed-compression.20261111.v1",
+      "questionVariantId": "question.vascular-venous-lymphatic-access.ulcer-mixed-compression.20261111.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-venous-lymphatic-access-review2-20261111.json",
+        "record": {
+          "id": "question.vascular-venous-lymphatic-access.ulcer-mixed-compression.20261111.v1",
+          "nodeId": "node.vascular-venous-lymphatic-access.ulcer-mixed-compression.20261111.v1",
+          "title": "Supervised compression in mixed arterial and venous disease",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The supplied ankle/brachial values give an ABI of 0.72. Together with ankle/toe pressures and absence of rest pain, they support the offered cautious modified-compression pathway over automatic full-intensity treatment or complete deferral.",
+            "Two consequential steps: identify mixed rather than purely venous disease, then distinguish sufficient residual perfusion for supervised modification from severe ischemia. High-yield use of several relevant observations.",
+            "The task asks what to consider and the explanation preserves conditionality. No confident clinical inaccuracy identified; exact pressure/material recommendations were not freshly verified offline. Standalone measurements and supervision context are sufficient."
+          ],
+          "suggestions": [
+            "Preserve the conditional supervised framing. Named clinician review should confirm the exact intended compression material/pressure strategy against the mapped guideline.",
+            "Do not add an unsupported universal target or replace the measurements with an eligibility conclusion."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-venous-lymphatic-access.mixed-ulcer-physiology.20261111.v1",
+          "sha256": "17efb5547367e701fb2796dffee8a1e1072feb0aec84efc0ef4c032bc3123d71",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "vascular-venous-lymphatic-access",
+      "status": "accepted",
+      "caseId": "case.vascular-venous-lymphatic-access.mixed-ulcer-physiology.20261111.v1",
+      "reason": "Complete PASS-only case admitted through its existing clinic participant route.",
+      "runtimeAdmissionIssue": null,
+      "unlistedSiblingIds": []
+    },
+    {
+      "nodeId": "node.vascular-venous-lymphatic-access.ulcer-severe-perfusion.20261111.v1",
+      "questionVariantId": "question.vascular-venous-lymphatic-access.ulcer-severe-perfusion.20261111.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-venous-lymphatic-access-review2-20261111.json",
+        "record": {
+          "id": "question.vascular-venous-lymphatic-access.ulcer-severe-perfusion.20261111.v1",
+          "nodeId": "node.vascular-venous-lymphatic-access.ulcer-severe-perfusion.20261111.v1",
+          "title": "Severe arterial compromise in an ulcer with venous reflux",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Withholding sustained compression and obtaining arterial assessment is the best offered plan for the very low toe pressure, damped waveform and dependency-relieved nocturnal pain. Neither superficial reflux nor the nonocclusive ankle result establishes compression safety.",
+            "The learner integrates apparently conflicting venous/arterial evidence, then makes a consequential care decision. Modified compression is a credible error. High-yield, moderate two-step reasoning.",
+            "The later part follows the ordered test coherently. Its update supplies the new physiology and symptoms; the shared presentation supplies the ulcer and invalid ankle acquisition. No prior answer must be recalled, and prior feedback does not give this plan.",
+            "No confident clinical error identified. Exact ESVS boundaries and pressure protocols were not freshly verified offline; editorial PASS does not clinically approve them."
+          ],
+          "suggestions": [
+            "Retain the symptoms and waveform with the pressure rather than reducing this to a cutoff-recall item.",
+            "Keep feedback specific to sustained compression and the represented severe perfusion problem; do not generalize to every wound-care modality."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-venous-lymphatic-access.ulcer-noncompressible.20261111.v1",
+          "sha256": "e9fff28946a7107c1e2b9fb27983c2714943cefe64f65954e7821d386c06b5e2",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "vascular-venous-lymphatic-access",
+      "status": "accepted",
+      "caseId": "case.vascular-venous-lymphatic-access.ulcer-noncompressible.20261111.v1",
+      "reason": "Complete PASS-only case admitted through its existing clinic participant route.",
+      "runtimeAdmissionIssue": null,
+      "unlistedSiblingIds": []
+    },
+    {
+      "nodeId": "node.vascular-venous-lymphatic-access.ulcer-unoccluded-ankle.20261111.v1",
+      "questionVariantId": "question.vascular-venous-lymphatic-access.ulcer-unoccluded-ankle.20261111.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-venous-lymphatic-access-review2-20261111.json",
+        "record": {
+          "id": "question.vascular-venous-lymphatic-access.ulcer-unoccluded-ankle.20261111.v1",
+          "nodeId": "node.vascular-venous-lymphatic-access.ulcer-unoccluded-ankle.20261111.v1",
+          "title": "Uninterpretable ankle pressure before compression",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Toe pressure and digital waveforms are the best offered investigation. Persistent pedal signals at maximum cuff inflation mean the printed ankle ratio cannot establish adequate perfusion; exercise ankle testing does not repair that acquisition limitation.",
+            "Two consequential steps: recognize why the apparently high ankle result is unusable, then choose alternative physiology to guide compression instead of anatomical imaging or ankle stress testing. High-yield, moderate application.",
+            "This first part exposes no future toe result. Its explanation teaches why to obtain digital physiology without prescribing the next part's compression decision. No confident clinical inaccuracy identified."
+          ],
+          "suggestions": [
+            "Retain the cuff/Doppler observations rather than substituting a diagnosis label.",
+            "Keep the severe toe result and new rest symptoms confined to the later update."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-venous-lymphatic-access.ulcer-noncompressible.20261111.v1",
+          "sha256": "e9fff28946a7107c1e2b9fb27983c2714943cefe64f65954e7821d386c06b5e2",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "vascular-venous-lymphatic-access",
+      "status": "accepted",
+      "caseId": "case.vascular-venous-lymphatic-access.ulcer-noncompressible.20261111.v1",
+      "reason": "Complete PASS-only case admitted through its existing clinic participant route.",
+      "runtimeAdmissionIssue": null,
+      "unlistedSiblingIds": []
+    },
+    {
+      "nodeId": "node.vascular-venous-lymphatic-access.varicose-proximal-territory.20261111.v1",
+      "questionVariantId": "question.vascular-venous-lymphatic-access.varicose-proximal-territory.20261111.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-vascular-venous-lymphatic-access-review2-20261111.json",
+        "record": {
+          "id": "question.vascular-venous-lymphatic-access.varicose-proximal-territory.20261111.v1",
+          "nodeId": "node.vascular-venous-lymphatic-access.varicose-proximal-territory.20261111.v1",
+          "title": "Proximal venous outflow disease despite compressible leg veins",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Iliac/pelvic CT venography is the best offered study. Whole-limb symptoms, abdominal collaterals and unilateral loss of common-femoral respiratory variation point above the compressible femoropopliteal territory.",
+            "Two consequential steps: localize a proximal outflow problem despite the negative leg study, then image the unresolved territory. Repeat compression and lymphoscintigraphy are less appropriate. High-yield, moderate difficulty.",
+            "Standalone task is complete. No confident clinical error or independent wording-only shortcut identified; anatomical terms are necessary findings, not unfair diagnosis labels."
+          ],
+          "suggestions": [
+            "Keep the contralateral waveform comparison and collateral/symptom distribution.",
+            "Describe an indication for proximal evaluation, not proof of a particular compression syndrome or a mandate for stenting."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.vascular-venous-lymphatic-access.whole-leg-venous-change.20261111.v2",
+          "sha256": "7624db576d5714612d00d91de288b232a45ab86584472b84469da9cbee96e072",
+          "unlistedSiblingIds": []
+        },
+        {
+          "caseId": "case.vascular-venous-lymphatic-access.whole-leg-venous-change.20261111.v1",
+          "sha256": "c3d90b165e81ee53ea28bd57a673bce44eff3a1468b0821335dfb1302a77204a",
+          "unlistedSiblingIds": [
+            "node.vascular-venous-lymphatic-access.varicose-outflow-sequence.20261111.v1"
+          ]
+        }
+      ],
+      "topic": "vascular-venous-lymphatic-access",
+      "status": "accepted",
+      "caseId": "case.vascular-venous-lymphatic-access.whole-leg-venous-change.20261111.v2",
+      "reason": "Complete PASS-only case admitted through its existing clinic participant route.",
+      "runtimeAdmissionIssue": null,
+      "unlistedSiblingIds": [
+        "node.vascular-venous-lymphatic-access.varicose-outflow-sequence.20261111.v1"
+      ]
+    },
+    {
+      "nodeId": "node.topic.esophagus-motility-achalasia.recurrent-clearance-test.v3",
+      "questionVariantId": "question.topic.esophagus-motility-achalasia.recurrent-clearance-test.v3",
+      "evidence": {
+        "path": "docs/research/question-topic-esophagus-motility-achalasia-review-salvage-20261111.json",
+        "record": {
+          "id": "case.topic.esophagus-motility-achalasia.recurrent-clearance-standalone.v2",
+          "nodeId": "node.topic.esophagus-motility-achalasia.recurrent-clearance-test.v3",
+          "title": "Recurrent symptoms after achalasia treatment: next investigation",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Timed barium esophagography with tablet passage is the best offered next investigation for recurrent obstructive symptoms after treatment of established achalasia. The indication for POEM is explicit in the candidate itself; no earlier node or inferred diagnosis is needed. The complete task asks for the next investigation and all three options answer that task.",
+            "The two consequential steps are to recognize that technically adequate, reassuring pressure measurements do not establish adequate bolus emptying, then prioritize an objective clearance study despite the competing possibility of post-POEM reflux. Upper endoscopy remains a credible complementary investigation for mucosal disease or narrowing; the explanation appropriately does not claim maintained weight and hydration exclude those conditions. Reflux monitoring does not resolve the immediate clearance question. No confident clinical inaccuracy identified in these supplied fields; the guideline ranking was assessed offline and was not independently reverified against a current source.",
+            "Cover-the-key attack: 'achalasia treated with POEM' is legitimate established history for this management question, not disclosure of a requested diagnosis. 'relaxation within the laboratory interval' supplies the potentially misleading observation the resident must interpret, rather than announcing that emptying is normal. 'food again pauses and fluid returns at night' keeps retention and reflux in competition. None of those phrases lexically selects one option without clinical knowledge. The investigation labels have comparable specificity and no unique qualifier, rhetorical absolute, conspicuously long key, convergence pattern or pre-answer teaching sentence.",
+            "This is a high-yield assessment of recurrent symptoms after definitive achalasia treatment. Predicted difficulty is moderate, not hard: a resident who recalls the post-treatment investigation recommendation may answer directly, but the normal manometry and reflux-like symptom create credible competing errors. Difficulty is a qualitative editorial judgment, not a measured performance claim.",
+            "This is a single-node standalone case. The presentation supplies a named 45-year-old woman and clinic context; the current update supplies the original diagnosis, treatment, interval improvement and present recurrence. No prior scored answer, prior feedback or later result is needed to solve it. No exhibit is supplied or promised. No multi-part continuity defect applies.",
+            "Scope: this report evaluates the latest candidate for each of the two salvage case lines requested by the user, replacing the historical recurrent-clearance v2 node with current v3 for review. The older salvage candidate, kept-unchanged records, retired proposals, parked attempts and held records receive no new verdict. Decisions use candidate Presentation, Current update, Task, Options and Explanation; author self-assessments and earlier PASS claims are not evidence. This is an offline text review, not runtime rendering, wait-preview, source-provenance validation or clinical approval. Draft status remains needs_clinician_review pending Melissa Rowland's exact-version sign-off."
+          ],
+          "suggestions": [
+            "Optional readability polish: simplify 'adequate junction-crossing positional acquisition' while retaining the fact that the repeat manometry was technically adequate. Do not substitute a conclusion about esophageal emptying.",
+            "Retain the explanation's distinction between first-line clearance reassessment and complementary endoscopy; do not turn the latter into an excluded or inappropriate investigation."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.topic.esophagus-motility-achalasia.recurrent-clearance-standalone.v2",
+          "sha256": "4290fc22faeacb5c675b2626213802ef033a166b06d034ba2f069736b3069af2",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "esophagus-motility-achalasia",
+      "status": "accepted",
+      "caseId": "case.topic.esophagus-motility-achalasia.recurrent-clearance-standalone.v2",
+      "reason": "Complete PASS-only case admitted through its existing clinic participant route.",
+      "runtimeAdmissionIssue": null,
+      "unlistedSiblingIds": []
+    },
+    {
+      "nodeId": "node.topic.bariatric-metabolic.diet-response-drug-stage.v2",
+      "questionVariantId": "question.topic.bariatric-metabolic.diet-response-drug-stage.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-bariatric-metabolic-review-salvage-20261111.json",
+        "record": {
+          "id": "question.topic.bariatric-metabolic.diet-response-drug-stage.v2",
+          "nodeId": "node.topic.bariatric-metabolic.diet-response-drug-stage.v2",
+          "title": "Choose medication after reproducible acarbose intolerance",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [
+            {
+              "phrase": "Change to short-acting subcutaneous octreotide",
+              "why": "Minor specificity asymmetry: this option specifies formulation and route, whereas the others use 'acarbose-based medication plan' and 'oral diazoxide-based plan'. It is not the longest choice, and the qualifiers distinguish an actual treatment formulation rather than explain why it wins. This does not provide a reliable knowledge-free key; parallel wording could nevertheless be cleaner."
+            }
+          ],
+          "fairness": [
+            "The standalone presentation identifies Maya Benton, age 45, female, and her Roux-en-Y history. The current update supplies established post-bariatric hypoglycemia, ongoing measured symptomatic lows and dietary treatment; the exhibit supplies the entire medication course. 'At a later follow-up' has sufficient local context and requires no missing prior answer or feedback. There is only one scored node in this salvage case.",
+            "Short-acting subcutaneous octreotide is the best offered next medication: the record supports clinically consequential acarbose intolerance despite efficacy. Continued acarbose mistakes fewer lows for an acceptable overall response; diazoxide is the credible competing replacement but occupies a later treatment position in the guideline sequence reflected here. No stated patient constraint makes it preferable to the somatostatin-analogue option.",
+            "Two consequential steps survive: interpret improvement in hypoglycemia alongside withdrawal/reintroduction evidence of adverse effects, then select the next medication stage. The diagnosis supplied in the update is legitimate background for this management task. The visible record does not label the patient acarbose-intolerant before the choice.",
+            "A nonmedical reader can reasonably reject continuation after 'prevent usual activities' and 'The same activity-limiting gastrointestinal symptoms return', but cannot thereby choose between octreotide and diazoxide. Those findings are necessary treatment-tolerability evidence, not gratuitous distractor exclusions. No component-convergence, rhetorical absolute or key-only task-word cue selects the replacement drug.",
+            "This is high-yield postoperative metabolic management, with moderate rather than hard difficulty: the dechallenge/rechallenge relationship is explicit and the remaining discrimination is drug sequencing. Changing the adverse-effect course to tolerable symptoms would make continuation more credible; intolerance or unsuitability of the intervening treatment stage would strengthen diazoxide.",
+            "No confident clinical inaccuracy identified. This offline review did not independently verify current guideline wording, comparative evidence or drug sequencing. PASS is an editorial judgment, not clinical approval; the exact version remains needs_clinician_review. The explanation appropriately avoids inventing a dose or universal adverse-effect cutoff."
+          ],
+          "suggestions": [
+            "No blocking standalone-context repair. Retain both the efficacy and tolerability observations; deleting either would weaken the intended competing interpretation.",
+            "Optional wording polish: use direct drug-plan labels for all choices, such as 'Continue acarbose with meals', 'Change to oral diazoxide', and the existing octreotide formulation. Do not add unsupported dosing detail merely to equalize length.",
+            "Remove the author-facing final explanation sentence beginning 'No dose, maximum trial count' if revising feedback; it discusses construction of the item rather than teaching the clinical decision. Confirm exact drug sequencing during Melissa Rowland's clinical sign-off."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.topic.bariatric-metabolic.acarbose-intolerance-salvage.v1",
+          "sha256": "3a3e175b12560a5ad69e0839f807fc7ef05348b84f9f9fd441fccfe56e692c71",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "bariatric-metabolic",
+      "status": "accepted",
+      "caseId": "case.topic.bariatric-metabolic.acarbose-intolerance-salvage.v1",
+      "reason": "Complete PASS-only case admitted through its existing clinic participant route.",
+      "runtimeAdmissionIssue": null,
+      "unlistedSiblingIds": []
+    },
+    {
+      "nodeId": "node.topic.bariatric-metabolic.refractory-reflux-revision.v2",
+      "questionVariantId": "question.topic.bariatric-metabolic.refractory-reflux-revision.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-bariatric-metabolic-review-salvage-20261111.json",
+        "record": {
+          "id": "question.topic.bariatric-metabolic.refractory-reflux-revision.v2",
+          "nodeId": "node.topic.bariatric-metabolic.refractory-reflux-revision.v2",
+          "title": "Select reflux-monitoring modality and medication state",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Nora Ellis, age 43, female, is presented in clinic after sleeve gastrectomy. The update supplies the prior grade C esophagitis, actual current PPI use, continuing symptoms and current endoscopic anatomy. These establish the local chronology without requiring the former medication-timing companion. This salvage case has one scored node, with no later-part dependency.",
+            "Ambulatory impedance-pH monitoring during PPI treatment is the defensible best offered protocol. Historical grade C esophagitis establishes GERD, while the cause of current symptoms during acid suppression remains unresolved. The resident must infer established disease rather than an unproven diagnosis, then select a protocol capable of relating ongoing symptoms to reflux during treatment.",
+            "Off-treatment pH or impedance-pH testing addresses a different diagnostic state. On-treatment pH-only monitoring is a plausible near-miss but lacks impedance's ability to assess reflux events beyond acid exposure. The alternatives are distinct, clinically recognizable monitoring protocols rather than unrelated or deliberately absurd investigations.",
+            "The four labels form a balanced matrix: each modality and each medication state occurs twice. 'Ambulatory impedance-pH monitoring during PPI treatment' cannot be uniquely assembled by majority-component convergence. 'pH-only' is a technical modality distinction appearing in two choices, not a rhetorical absolute. The task does not supply 'nonacid', 'impedance' or the required medication state.",
+            "The statement 'The team is evaluating whether the present symptoms remain reflux-related' defines the investigation's purpose but does not resolve either protocol component. Grade C esophagitis is decision-critical evidence, not a diagnosis-label giveaway in this test-selection task. Prior PPI use is likewise necessary context rather than an unfair wording match.",
+            "High-yield foregut workup with two consequential protocol decisions and moderate difficulty. A patient with unproven GERD would change the on/off-treatment decision; simply remembering that reflux warrants pH testing is insufficient to choose the complete key here.",
+            "The duration of optimized PPI use and current mucosal healing are not fully specified. This limits conclusions about definitive medical failure or readiness for an operation, but does not create an equally good offered monitoring protocol for the represented persistent on-treatment symptom question. Do not infer an operative indication from this node.",
+            "No confident clinical inaccuracy identified. The exact ACG attribution and current recommendations were not freshly verified because this review is offline. Editorial PASS does not confer clinical approval; the exact version remains needs_clinician_review."
+          ],
+          "suggestions": [
+            "No blocking repair. Preserve the objective prior esophagitis finding, actual dosing/adherence observations and balanced four-protocol option set.",
+            "Optional brevity improvement: omit 'Her BMI is 38 kg/m²' from a future authorized revision of this isolated monitoring question; it does not determine the monitoring protocol. Retain it only if it serves another visible decision.",
+            "Replace the author-facing explanation ending 'this item does not force an operation from an adequacy label' with a brief clinical statement that monitoring informs subsequent treatment. If a later question asks whether to escalate or operate, supply its own supported treatment-course and operative criteria."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.topic.bariatric-metabolic.reflux-monitoring-salvage.v1",
+          "sha256": "4761117de66bfe1221a8dfb26e4f6ecd68c8e85dcb270b43a931a8fa3d19db5f",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "bariatric-metabolic",
+      "status": "accepted",
+      "caseId": "case.topic.bariatric-metabolic.reflux-monitoring-salvage.v1",
+      "reason": "Complete PASS-only case admitted through its existing clinic participant route.",
+      "runtimeAdmissionIssue": null,
+      "unlistedSiblingIds": []
+    },
+    {
+      "nodeId": "node.topic.bariatric-metabolic.spontaneous-sample-before-label.v2",
+      "questionVariantId": "question.topic.bariatric-metabolic.spontaneous-sample-before-label.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-bariatric-metabolic-review-salvage-20261111.json",
+        "record": {
+          "id": "question.topic.bariatric-metabolic.spontaneous-sample-before-label.v2",
+          "nodeId": "node.topic.bariatric-metabolic.spontaneous-sample-before-label.v2",
+          "title": "Choose sampling that characterizes the actual symptomatic spells",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [
+            {
+              "phrase": "the separately timed glucose records",
+              "why": "Mild pre-answer scaffolding: it directs attention to the timing mismatch that the resident should notice in the table. It does not itself establish whether the overnight readings are valid or distinguish spontaneous-event sampling from glucose provocation. The item retains a medical decision, but deleting 'separately timed' would leave the observations to do more of the work."
+            }
+          ],
+          "fairness": [
+            "Maya Benton, age 45, female, has a complete standalone presentation, bypass history and symptom chronology. The update excludes insulin and secretagogue use, and the exhibit contains all measurements needed for this investigation choice. No previous diagnostic confirmation, answer or treatment response is required. This is a single-node salvage case.",
+            "Venous biochemical sampling during a typical spontaneous spell is the best offered investigation. The postmeal symptoms have not been sampled; the low overnight sensor readings occurred without symptoms and conflict with simultaneous finger-stick values. A normal asymptomatic clinic glucose does not characterize the daytime episodes.",
+            "The first inference is that these records do not establish a fasting hypoglycemic syndrome or document the symptomatic postmeal event. The consequential next choice is how to obtain relevant biochemical evidence: spontaneous-event sampling rather than a fasting workup driven by sensor lows or a glucose-load challenge. The latter remains a plausible resident error even after recognizing the timing mismatch.",
+            "The repeated asymptomatic nighttime readings and normal simultaneous finger-stick values weaken the fasting distractor through medically relevant evidence. Their presence is fair: removing the corroborating measurements would leave a different unresolved concern. The additional normal clinic measurement is less essential but reinforces the distinction between sampling while well and sampling during the actual spell.",
+            "All three options are investigations with venous biochemical sampling and comparable length. 'during a typical spontaneous spell' has an intuitive advantage, but the labels alone do not establish why a standardized oral challenge is inferior. There is no uniquely long explanatory key, rhetorical absolute, diagnosis disclosure, component convergence or key-only technical term copied from the task.",
+            "This is high-yield evaluation of suspected post-bariatric hypoglycemia and interpretation of discordant glucose evidence. Difficulty is at the lower end of moderate, not hard: the timestamps and paired measurements make the first inference relatively accessible, while avoiding inappropriate provocative testing still requires knowledge. Difficulty is a qualitative prediction, not measured performance.",
+            "The explanation correctly avoids claiming that one low glucose proves the cause of the spells. 'Venous biochemical sampling' leaves the panel unspecified, but this is equally true across the options and does not make the sampling-strategy decision ambiguous. This node does not test the composition of a critical sample or immediate treatment of an active emergency.",
+            "No confident clinical inaccuracy identified. Current PBH diagnostic guidance was not freshly verified offline, and this review does not establish a specific glucose threshold or a universal sampling protocol. Editorial PASS leaves the exact draft needs_clinician_review."
+          ],
+          "suggestions": [
+            "No blocking context repair. Optional cue reduction: change the update's second sentence to 'Her meal/symptom diary and glucose records are shown below', or remove that table-announcement sentence entirely. Keep the actual timestamps and simultaneous measurement comparisons.",
+            "Preserve the explanation's separation of documenting hypoglycemia from establishing its etiology. If feedback is expanded, describe the missing symptom-glucose relationship and confirmation through symptom resolution without inventing a diagnostic threshold or implying that treatment should wait for sampling.",
+            "Confirm the exact diagnostic-test recommendation during clinical sign-off. The requested scope contains three salvage nodes; kept, retired, parked, held and other non-salvage records were excluded from verdicts. Runtime wait displays and implementation were not assessed from these six permitted content fields."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.topic.bariatric-metabolic.spontaneous-sample-salvage.v1",
+          "sha256": "941b9a064163ba04a10feb364a1e4eec408006b3ae152b0c4ae04f143a33f9eb",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "bariatric-metabolic",
+      "status": "accepted",
+      "caseId": "case.topic.bariatric-metabolic.spontaneous-sample-salvage.v1",
+      "reason": "Complete PASS-only case admitted through its existing clinic participant route.",
+      "runtimeAdmissionIssue": null,
+      "unlistedSiblingIds": []
+    },
+    {
+      "nodeId": "node.pediatric-gi-abdominal-wall.intussusception-partial-progress.v2",
+      "questionVariantId": "question.pediatric-gi-abdominal-wall.intussusception-partial-progress.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-pediatric-gi-abdominal-wall-review-salvage-20261111.json",
+        "record": {
+          "id": "case.pediatric-gi-abdominal-wall.intussusception-partial-progress-salvage.v2",
+          "nodeId": "node.pediatric-gi-abdominal-wall.intussusception-partial-progress.v2",
+          "title": "Hospital course review",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The current clinic visit and recorded admission at age 8 are explicitly separated. The update, residual disease, response to the first attempt and contemporaneous examination are supplied locally; no removed companion or prior answer is needed.",
+            "Two consequential steps remain: distinguish incomplete but progressing reduction from complete reduction or failed treatment, then use perfusion, examination and absence of perforation to choose another supervised attempt rather than immediate operation. Trapped fluid and the older child's age make the operative alternative credible without independently mandating it.",
+            "Among the offered plans, delayed repeat image-guided enema is defensible as the best answer. Observation for spontaneous completion does not adequately address documented residual ileocolic intussusception. The age raises concern for a lead point, but does not itself establish one or require immediate surgery.",
+            "The diagnosis label is legitimate background for a subsequent management decision. No key-only wording match, explanatory option, absolute, marked length outlier or unique convergence shortcut was found. The repeat-versus-operation comparison requires clinical interpretation.",
+            "Repeat reduction eligibility is a high-yield pediatric surgical decision. Difficulty and high-yield labels are reviewer judgments, not measured performance or a verified exam-frequency claim. This offline review identifies no confident clinical inaccuracy and confers no clinical approval."
+          ],
+          "suggestions": [
+            "No required revision. Preserve the explicit retrospective chronology and current examination.",
+            "The spontaneous-completion distractor is the weakest choice for residents who distinguish ileocolic from transient small-bowel intussusception; retain the meaningful repeat-versus-operation comparison as the source of difficulty.",
+            "Keep named-clinician review of the exact older-child scenario; the explanation should not be read as dismissing subsequent assessment for a pathological lead point."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.pediatric-gi-abdominal-wall.intussusception-partial-progress-salvage.v2",
+          "sha256": "757bb86454ef203d560d43a729cad4551cae87853bc5ad0de3a38caa6368902e",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "pediatric-gi-abdominal-wall",
+      "status": "accepted",
+      "caseId": "case.pediatric-gi-abdominal-wall.intussusception-partial-progress-salvage.v2",
+      "reason": "Complete PASS-only case admitted through its existing clinic participant route.",
+      "runtimeAdmissionIssue": null,
+      "unlistedSiblingIds": []
+    },
+    {
+      "nodeId": "node.pediatric-gi-abdominal-wall.meconium-resuscitated-boundary.v2",
+      "questionVariantId": "question.pediatric-gi-abdominal-wall.meconium-resuscitated-boundary.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-pediatric-gi-abdominal-wall-review-salvage-20261111.json",
+        "record": {
+          "id": "case.pediatric-gi-abdominal-wall.meconium-resuscitated-boundary-salvage.v1",
+          "nodeId": "node.pediatric-gi-abdominal-wall.meconium-resuscitated-boundary.v2",
+          "title": "Obstruction record review",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The presentation explicitly separates the 6-year-old clinic attendee from the recorded 2-day-old infant. The initial therapeutic intervention, its anatomical response, residual obstruction and present physiological state are supplied. This is a complete standalone node.",
+            "The learner must first recognize partial clearance rather than complete resolution or an entirely ineffective attempt, then combine that response with preserved perfusion and absence of operative complications to choose continued directed nonoperative decompression.",
+            "Repeat therapeutic contrast decompression is the best-supported offered plan. Operative decompression is a credible escalation after unsuccessful nonoperative treatment, but the supplied first-attempt progress argues against declaring failure here. Gastric drainage with observation remains tempting after stool passage, but does not resolve the documented residual distal obstruction.",
+            "The terms 'pellet burden decreased' and 'further ileal pellets remained' are necessary response observations, not an authored treatment rule. 'No free gas, volvulus or obstructing pseudocyst' supplies relevant safety information; it does not by itself establish that obstruction has resolved. Options are parallel and similarly specific, without a unique wording or convergence shortcut.",
+            "Meconium ileus recognition and nonoperative-versus-operative management are high-yield. Exact repeat-enema practices can vary; the text supplies no universal attempt count or interval. No confident clinical inaccuracy is identified offline, but the exact preference and procedural suitability still require Melissa's clinical approval."
+          ],
+          "suggestions": [
+            "No required revision. Preserve both the residual-obstruction findings and the first attempt's objective progress; deleting either would weaken the decision.",
+            "Do not generalize the explanation into a mandatory repeat-enema rule for every partially responsive infant. Retain individualized reassessment and the current limitation against universal attempt counts or intervals."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.pediatric-gi-abdominal-wall.meconium-resuscitated-boundary-salvage.v1",
+          "sha256": "6ed04de62c0f5154efec5f64d0e6c8d5fb653a4aa04618b1cf08dd21f428f35f",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "pediatric-gi-abdominal-wall",
+      "status": "accepted",
+      "caseId": "case.pediatric-gi-abdominal-wall.meconium-resuscitated-boundary-salvage.v1",
+      "reason": "Complete PASS-only case admitted through its existing clinic participant route.",
+      "runtimeAdmissionIssue": null,
+      "unlistedSiblingIds": []
+    },
+    {
+      "nodeId": "node.pediatric-gi-abdominal-wall.nec-fixed-loop-context.v1",
+      "questionVariantId": "question.pediatric-gi-abdominal-wall.nec-fixed-loop-context.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-pediatric-gi-abdominal-wall-review-salvage-20261111.json",
+        "record": {
+          "id": "case.pediatric-gi-abdominal-wall.nec-fixed-loop-context-salvage.v1",
+          "nodeId": "node.pediatric-gi-abdominal-wall.nec-fixed-loop-context.v1",
+          "title": "Neonatal course review",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The present 5-year-old and the recorded 3-week-old infant are clearly distinguished. Prematurity, ongoing NEC treatment, serial imaging and simultaneous clinical trends are supplied without dependence on a former companion.",
+            "Two consequential steps are supported: interpret a persistently positioned dilated loop as concerning but not independently conclusive, then weigh it against improving abdominal findings and decreasing organ support to decide whether operative escalation is justified.",
+            "Continued nonoperative treatment with close reassessment is the best offered plan. A fixed loop can tempt laparotomy, but the concurrent improvement and absence of reported free gas do not establish the need for an operation or peritoneal drainage. Absence of free gas alone would not exclude severe NEC; the explanation appropriately relies on the entire course.",
+            "'Pneumatosis has decreased' and 'lactate is falling' legitimately contribute to the trajectory rather than name the answer. The imaging remains discordant, so this is more than a simple reassuring-findings match. All choices are concrete management actions, without absolutes, explanatory distractors or a uniquely qualified key.",
+            "Indications for escalation in NEC are high-yield. The peritoneal-drain distractor is weaker than laparotomy in this record, making moderate more defensible than hard. No confident clinical inaccuracy is identified; this offline editorial PASS is not clinical approval."
+          ],
+          "suggestions": [
+            "No required revision. Retain the fixed-loop finding and the simultaneous clinical/support trends together.",
+            "Keep close reassessment explicit in feedback. Do not convert this case into a rule that improving laboratory values or absence of pneumoperitoneum invariably exclude the need for surgery."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.pediatric-gi-abdominal-wall.nec-fixed-loop-context-salvage.v1",
+          "sha256": "33a8b304173a07ac40d9de34431a369ce69849319b5ac97d7659618e2970b88c",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "pediatric-gi-abdominal-wall",
+      "status": "accepted",
+      "caseId": "case.pediatric-gi-abdominal-wall.nec-fixed-loop-context-salvage.v1",
+      "reason": "Complete PASS-only case admitted through its existing clinic participant route.",
+      "runtimeAdmissionIssue": null,
+      "unlistedSiblingIds": []
+    },
+    {
+      "nodeId": "node.pediatric-gi-abdominal-wall.preterm-hernia-timing.v1",
+      "questionVariantId": "question.pediatric-gi-abdominal-wall.preterm-hernia-timing.v1",
+      "evidence": {
+        "path": "docs/research/question-topic-pediatric-gi-abdominal-wall-review-salvage-20261111.json",
+        "record": {
+          "id": "case.pediatric-gi-abdominal-wall.preterm-hernia-timing-salvage.v1",
+          "nodeId": "node.pediatric-gi-abdominal-wall.preterm-hernia-timing.v1",
+          "title": "Groin timing review",
+          "verdict": "PASS",
+          "difficulty": "moderate",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The clinic attendee's current age and sex are explicit, and the presentation identifies the recorded infant's chronological age. Birth at 26 weeks and the neonatal-unit context are supplied locally. The task is understandable without any removed companion.",
+            "The learner must identify a repeatedly reducible inguinal hernia without current incarceration, then balance the respiratory risk of repair during this hospitalization against incarceration risk while awaiting planned repair. Oxygen-dependent bronchopulmonary dysplasia and reliable follow-up make the timing comparison consequential.",
+            "Planned repair after the neonatal hospitalization is a defensible best answer in the offered comparison. Pre-discharge repair is a real competing strategy, not inherently inappropriate in every infant; the supplied respiratory disease and safe follow-up distinguish this case. Surveillance for spontaneous resolution is not an equivalent planned-repair strategy.",
+            "'His family can attend surgical follow-up and has been taught the warning signs requiring urgent reassessment' favors feasibility of delay, but is decision-critical safety context rather than a gratuitous permission cue. Without that information the timing comparison would be less fair. No key-only word match, absolute or convergence pattern selects the answer.",
+            "Prematurity, anesthetic respiratory risk and inguinal-hernia timing are high-yield. The spontaneous-resolution alternative is relatively weak, so the item is moderate rather than hard. Timing remains individualized; no universal age cutoff is established by this offline review, and exact clinical approval remains pending."
+          ],
+          "suggestions": [
+            "No required revision. Preserve the respiratory-risk and follow-up information alongside reducibility.",
+            "Keep the distinction between a scheduled delayed repair and indefinite surveillance clear. Do not strengthen the explanation into a universal prohibition on repair before neonatal discharge."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.pediatric-gi-abdominal-wall.preterm-hernia-timing-salvage.v1",
+          "sha256": "472b44951a7be43233384f5fd1cfa061d9b695cd769f827ae22a36b0819b800e",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "pediatric-gi-abdominal-wall",
+      "status": "accepted",
+      "caseId": "case.pediatric-gi-abdominal-wall.preterm-hernia-timing-salvage.v1",
+      "reason": "Complete PASS-only case admitted through its existing clinic participant route.",
+      "runtimeAdmissionIssue": null,
+      "unlistedSiblingIds": []
+    },
+    {
+      "nodeId": "node.pediatric-gi-abdominal-wall.wilms-cog-initial-plan.v2",
+      "questionVariantId": "question.pediatric-gi-abdominal-wall.wilms-cog-initial-plan.v2",
+      "evidence": {
+        "path": "docs/research/question-topic-pediatric-gi-abdominal-wall-review-salvage-20261111.json",
+        "record": {
+          "id": "case.pediatric-gi-abdominal-wall.wilms-cog-initial-plan-salvage.v1",
+          "nodeId": "node.pediatric-gi-abdominal-wall.wilms-cog-initial-plan.v2",
+          "title": "Renal mass review",
+          "verdict": "PASS",
+          "difficulty": "hard",
+          "twoStep": true,
+          "highYield": true,
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The named-patient token, age, sex, renal origin, contralateral kidney, cranial extent of venous involvement, staging and treatment framework are supplied locally. There is no dependency on a prior diagnostic or management node.",
+            "Two consequential steps are required: translate the hepatic-vein-confluence extent into a departure from the usual initial unilateral-Wilms operation, then select the histology/preoperative-treatment sequence under the specified COG framework. The typical appearance and lack of distant lesions make the routine upfront-nephrectomy path tempting.",
+            "The stated key is consistent with the COG exception as understood in this offline review. No confident clinical inaccuracy is identified. Exact protocol interpretation at the hepatic-vein confluence and the biopsy requirement should receive named-clinician confirmation; no current protocol or source was independently retrieved.",
+            "The competing upfront-nephrectomy/thrombectomy and chemotherapy-before-resection-histology sequences are substantive alternatives. The explicit treatment framework is necessary to distinguish them rather than leave regional pathways competing as equally correct answers.",
+            "'Typical of Wilms tumor' is appropriate for a treatment-sequence question, not a diagnosis giveaway. 'COG/North American Wilms pathway' supplies necessary framework, not the rule itself. The options have comparable scope and length; shared chemotherapy/resection components do not uniquely assemble the key.",
+            "Wilms treatment sequence and major venous extension are high-yield surgical oncology concepts. The exact exception is more demanding than the other four nodes, supporting a qualitative hard rating. Editorial PASS does not approve the clinical version."
+          ],
+          "suggestions": [
+            "No required editorial revision. Preserve the precise superior venous extent and explicit treatment framework; vague 'caval extension' would make the first-treatment choice unfair.",
+            "Have Melissa confirm the exact confluence-level exception and biopsy sequence before clinical sign-off; do not infer that imaging typicality permits omission of tissue diagnosis within the stated pathway."
+          ]
+        }
+      },
+      "contexts": [
+        {
+          "caseId": "case.pediatric-gi-abdominal-wall.wilms-cog-initial-plan-salvage.v1",
+          "sha256": "d1c0148f6a06a3245b72ca6ee7835bc132f0c31be0e4de7f59396d49ebc02e6f",
+          "unlistedSiblingIds": []
+        }
+      ],
+      "topic": "pediatric-gi-abdominal-wall",
+      "status": "accepted",
+      "caseId": "case.pediatric-gi-abdominal-wall.wilms-cog-initial-plan-salvage.v1",
+      "reason": "Complete PASS-only case admitted through its existing clinic participant route.",
+      "runtimeAdmissionIssue": null,
+      "unlistedSiblingIds": []
+    }
+  ],
+  "replacements": [
+    {
+      "replaces": "case.gs028.varicose-veins.a-asymmetric-branches",
+      "with": "question.vascular-venous-lymphatic-access.varicose-proximal-territory.20261111.v1"
+    }
+  ],
+  "consolidations": [
+    {
+      "id": "topic-program.batch5.case.vascular-venous-lymphatic-access.postop-negative-summary.20261111.v2",
+      "program": "topic-program",
+      "replaces": [
+        "case.postoperative-dvt.bowel-surgery",
+        "case.postoperative-dvt.hernia-repair",
+        "case.postoperative-dvt.postop-visit"
+      ],
+      "with": "question.vascular-venous-lymphatic-access.postop-residual-duration.20261111.v1",
+      "decision": "docs/research/question-topic-acceptance-batch5-20261111.md"
+    },
+    {
+      "id": "topic-program.batch5.case.vascular-venous-lymphatic-access.ulcer-noncompressible.20261111.v1",
+      "program": "topic-program",
+      "replaces": [
+        "case.venous-leg-ulcer.healed-edge",
+        "case.venous-leg-ulcer.recurrent-ulcer",
+        "case.venous-leg-ulcer.varicose-changes"
+      ],
+      "with": "question.vascular-venous-lymphatic-access.ulcer-unoccluded-ankle.20261111.v1",
+      "decision": "docs/research/question-topic-acceptance-batch5-20261111.md"
+    },
+    {
+      "id": "topic-program.batch5.case.topic.bariatric-metabolic.spontaneous-sample-salvage.v1",
+      "program": "topic-program",
+      "replaces": [
+        "case.post-bariatric-hypoglycemia.postmeal-confusion",
+        "case.post-bariatric-hypoglycemia.postmeal-dizziness",
+        "case.post-bariatric-hypoglycemia.postmeal-shaking",
+        "case.post-bariatric-hypoglycemia.postmeal-weakness"
+      ],
+      "with": "question.topic.bariatric-metabolic.spontaneous-sample-before-label.v2",
+      "decision": "docs/research/question-topic-acceptance-batch5-20261111.md"
+    },
+    {
+      "id": "topic-program.batch5.case.pediatric-gi-abdominal-wall.preterm-hernia-timing-salvage.v1",
+      "program": "topic-program",
+      "replaces": [
+        "case.pediatric-clinic.groin-bulge-after-play",
+        "case.pediatric-clinic.intermittent-groin-swelling"
+      ],
+      "with": "question.pediatric-gi-abdominal-wall.preterm-hernia-timing.v1",
+      "decision": "docs/research/question-topic-acceptance-batch5-20261111.md"
+    }
+  ],
+  "frozen": [
+    {
+      "topic": "vascular-venous-lymphatic-access",
+      "caseId": "case.vascular-venous-lymphatic-access.postop-leg-coverage.20261111.v2",
+      "rawCaseSha256": "854d6951df25008675af5987d4a86e8fe57d855c4f2a53b76b8d71e4dbb5450b",
+      "retainedCaseSha256": "cc890c009da774858ad2dafbd36bd91235a265db7b386c1564ac235f2d6e0c3b",
+      "nodes": [
+        {
+          "nodeId": "node.vascular-venous-lymphatic-access.postop-prevention-not-failure.20261111.v1",
+          "questionVariantId": "question.vascular-venous-lymphatic-access.postop-prevention-not-failure.20261111.v1",
+          "conceptId": "concept.n2.vte-prophylaxis-to-treatment",
+          "nodeSha256": "d6ce2e4f28d882057f1cbdb29fcb1ea18210078e26f37c9757105051f577d9fb",
+          "questionSha256": "aed332ee074e9db439fa212962c4362fc708a6e4e65f2dd754b3bbcecd57e2ba",
+          "reviewPath": "docs/research/question-topic-vascular-venous-lymphatic-access-review2-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "vascular-venous-lymphatic-access",
+      "caseId": "case.vascular-venous-lymphatic-access.postop-finite-course-r2.20261111.v2",
+      "rawCaseSha256": "3f029b0b24eee1854d08092d941bf554a2e983734ba4f0e12c0fc78b692886b3",
+      "retainedCaseSha256": "f990ab830cf86f3a387f4acd3a5f4a05627a0f3bb42fabf46041b87475703ab8",
+      "nodes": [
+        {
+          "nodeId": "node.vascular-venous-lymphatic-access.postop-finite-course.20261111.v2",
+          "questionVariantId": "question.vascular-venous-lymphatic-access.postop-finite-course.20261111.v2",
+          "conceptId": "concept.postoperative-dvt.three-month-anticoagulation",
+          "nodeSha256": "1f6d05cc05c98f0192c8d7f4ad0dd8b3a6fa87a463f36d540578f1e4537d711b",
+          "questionSha256": "f07641daec07cdc3ce36aafa9e6e87825d8866586fb7ffdf1d559dc1d2115bea",
+          "reviewPath": "docs/research/question-topic-vascular-venous-lymphatic-access-review2-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "vascular-venous-lymphatic-access",
+      "caseId": "case.vascular-venous-lymphatic-access.postop-negative-summary.20261111.v2",
+      "rawCaseSha256": "d1693c7d41622bd3bd21fc07d372f618da37006877360a4e3e2e4584fdbed605",
+      "retainedCaseSha256": "4b7c5d9db13359812730d7ed058442c7bb4d9c05fc2f2d1ba710ddddf582ef0c",
+      "nodes": [
+        {
+          "nodeId": "node.vascular-venous-lymphatic-access.postop-residual-duration.20261111.v1",
+          "questionVariantId": "question.vascular-venous-lymphatic-access.postop-residual-duration.20261111.v1",
+          "conceptId": "concept.postoperative-dvt.three-month-anticoagulation",
+          "nodeSha256": "e4627807eb1161ad7e6bf8ecdb0ae76e7ac9f7a8fac8307cf934ea5f377491c3",
+          "questionSha256": "dc62cbf2839a9e22ca2b2bc17845a38822ce41d8bb8a88896dbe960c7358dce2",
+          "reviewPath": "docs/research/question-topic-vascular-venous-lymphatic-access-review2-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "vascular-venous-lymphatic-access",
+      "caseId": "case.vascular-venous-lymphatic-access.lymphatic-acute-change-r2.20261111.v2",
+      "rawCaseSha256": "087024998160e38b574f4a7668066a433f4b4f56a84c98f4800ffeb606af3718",
+      "retainedCaseSha256": "8cd09b7890156a9de527ef037a67d3660e0b1ba0f9562e4d26a2a9b60b7e3a85",
+      "nodes": [
+        {
+          "nodeId": "node.vascular-venous-lymphatic-access.lymphatic-acute-change.20261111.v2",
+          "questionVariantId": "question.vascular-venous-lymphatic-access.lymphatic-acute-change.20261111.v2",
+          "conceptId": "concept.n1.lymphedema-new-tempo-venous-assessment",
+          "nodeSha256": "0158c5c126a2a6b7d48f698a7ccfe088149fb6c90e0ac0fc3d92bfac0f07eab2",
+          "questionSha256": "e7c653638256c5b3714931d241f4aa15e1915060dcb230f1b8e081470b60a9e9",
+          "reviewPath": "docs/research/question-topic-vascular-venous-lymphatic-access-review2-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "vascular-venous-lymphatic-access",
+      "caseId": "case.vascular-venous-lymphatic-access.whole-leg-venous-change.20261111.v2",
+      "rawCaseSha256": "7624db576d5714612d00d91de288b232a45ab86584472b84469da9cbee96e072",
+      "retainedCaseSha256": "1ec2e0ddda5794e5c34786b2e6334515585c2dff20c5976a87294d180ee5515a",
+      "nodes": [
+        {
+          "nodeId": "node.vascular-venous-lymphatic-access.varicose-proximal-territory.20261111.v1",
+          "questionVariantId": "question.vascular-venous-lymphatic-access.varicose-proximal-territory.20261111.v1",
+          "conceptId": "concept.vascular-venous-lymphatic-access.varicose-proximal-outflow-workup.v1",
+          "nodeSha256": "aa392af4da70a24e0cb5a7aefbf9402432656c752cf845ec244c323c53773798",
+          "questionSha256": "b7ffc2e9c81319a88599495389345000636ad5efac27103a7341d295b9cf41e9",
+          "reviewPath": "docs/research/question-topic-vascular-venous-lymphatic-access-review2-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "vascular-venous-lymphatic-access",
+      "caseId": "case.vascular-venous-lymphatic-access.access-unresolved-maturation-r2.20261111.v2",
+      "rawCaseSha256": "b8c1bdc08dc3b66bcafe3cfc61792be7cc5f51f7984521398cbe49889a776a2c",
+      "retainedCaseSha256": "dfb49e3db6066d42728153cd1187c9393f035bd3c521b21ae16438006fcf9ca2",
+      "nodes": [
+        {
+          "nodeId": "node.vascular-venous-lymphatic-access.access-unresolved-maturation.20261111.v2",
+          "questionVariantId": "question.vascular-venous-lymphatic-access.access-unresolved-maturation.20261111.v2",
+          "conceptId": "concept.dialysis-access.maturation-physical-assessment",
+          "nodeSha256": "14faa8f2bdb970b1c4bfad527fbce218bd3c0833b671f9163e9cbfc752469e02",
+          "questionSha256": "56c781a79466ec32d639cce4c3eb47cac17917a880bb6601fefd899b971fff1f",
+          "reviewPath": "docs/research/question-topic-vascular-venous-lymphatic-access-review2-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "vascular-venous-lymphatic-access",
+      "caseId": "case.vascular-venous-lymphatic-access.ulcer-noncompressible.20261111.v1",
+      "rawCaseSha256": "e9fff28946a7107c1e2b9fb27983c2714943cefe64f65954e7821d386c06b5e2",
+      "retainedCaseSha256": "ae1fceec2c3c4bef160a74b7fce9c6ff18277d5827618b2fc374d3d694f44631",
+      "nodes": [
+        {
+          "nodeId": "node.vascular-venous-lymphatic-access.ulcer-unoccluded-ankle.20261111.v1",
+          "questionVariantId": "question.vascular-venous-lymphatic-access.ulcer-unoccluded-ankle.20261111.v1",
+          "conceptId": "concept.venous-leg-ulcer.arterial-assessment-before-compression",
+          "nodeSha256": "23b2408d9bfc738fc8cb33e0eb4e599420b03b6be33b5b932f0e7eab0eca7311",
+          "questionSha256": "706487c97cf275cd6c3009bd5449528e88f5e484c7d8d4ac6c5f0afb670a30f6",
+          "reviewPath": "docs/research/question-topic-vascular-venous-lymphatic-access-review2-20261111.json"
+        },
+        {
+          "nodeId": "node.vascular-venous-lymphatic-access.ulcer-severe-perfusion.20261111.v1",
+          "questionVariantId": "question.vascular-venous-lymphatic-access.ulcer-severe-perfusion.20261111.v1",
+          "conceptId": "concept.vascular-venous-lymphatic-access.compression-with-severe-perfusion-deficit.v1",
+          "nodeSha256": "eefb477cf57d33fc89df2b921fe9d5f9ce8091ff5675473455396fbb6ca04ed2",
+          "questionSha256": "ae507fc09f5fd9a1af3984f1e9f4355b474bd3f44a6a866eaa06e1384593dc49",
+          "reviewPath": "docs/research/question-topic-vascular-venous-lymphatic-access-review2-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "vascular-venous-lymphatic-access",
+      "caseId": "case.vascular-venous-lymphatic-access.mixed-ulcer-physiology.20261111.v1",
+      "rawCaseSha256": "17efb5547367e701fb2796dffee8a1e1072feb0aec84efc0ef4c032bc3123d71",
+      "retainedCaseSha256": "9c94c8f826bb94ea2a83fcffbde20cb458dc4e3f68f2b979cf289b3856e8b07c",
+      "nodes": [
+        {
+          "nodeId": "node.vascular-venous-lymphatic-access.ulcer-mixed-compression.20261111.v1",
+          "questionVariantId": "question.vascular-venous-lymphatic-access.ulcer-mixed-compression.20261111.v1",
+          "conceptId": "concept.vascular-venous-lymphatic-access.modified-compression-for-mixed-ulcer.v1",
+          "nodeSha256": "448b33247eca04fe0d21f7b64d8c728f4301e6fa081e280d539d3304356a7dee",
+          "questionSha256": "121d7a483dc02ed8544c21815589a4f155a1e268cb63dfc08eb4e850eea5d67b",
+          "reviewPath": "docs/research/question-topic-vascular-venous-lymphatic-access-review2-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "vascular-venous-lymphatic-access",
+      "caseId": "case.vascular-venous-lymphatic-access.dvt-serial-negative-proximal-r2.20261111.v2",
+      "rawCaseSha256": "e965dfc7a9024f181dd3e049e2f77239c77e8d95ff32eea792a7ef772d5f8988",
+      "retainedCaseSha256": "641fd53cc0515f186a4cace95e7a44bceeb5996bbb67b3446330a49a1e350938",
+      "nodes": [
+        {
+          "nodeId": "node.vascular-venous-lymphatic-access.dvt-serial-negative-proximal.20261111.v2",
+          "questionVariantId": "question.vascular-venous-lymphatic-access.dvt-serial-negative-proximal.20261111.v2",
+          "conceptId": "concept.vascular-venous-lymphatic-access.negative-proximal-study-followup.v1",
+          "nodeSha256": "d196917e0d19af9a7b0888ed64d157ba42fbb47d94ff53f75ce99f3bb4d07b66",
+          "questionSha256": "f97bdd3387689ee290b61720d2bb10ec88d434241c1487b6923195d231ba234d",
+          "reviewPath": "docs/research/question-topic-vascular-venous-lymphatic-access-review2-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "vascular-venous-lymphatic-access",
+      "caseId": "case.vascular-venous-lymphatic-access.access-hand-physiology-r2.20261111.v2",
+      "rawCaseSha256": "7dcd936d412271aa99269252a99f924810129cfe75e9b95840f6b5c1955031f8",
+      "retainedCaseSha256": "a1a135ccf1341cfc68596571be76405b62d316cfd76371f2738c1000e57bc73a",
+      "nodes": [
+        {
+          "nodeId": "node.vascular-venous-lymphatic-access.access-hand-physiology.20261111.v2",
+          "questionVariantId": "question.vascular-venous-lymphatic-access.access-hand-physiology.20261111.v2",
+          "conceptId": "concept.vascular-venous-lymphatic-access.access-hand-perfusion-workup.v1",
+          "nodeSha256": "44c8ecd9f2a311c6174300ec3c36a3dfae1a86cfc47fe41c6b34fa0290dfadff",
+          "questionSha256": "1b0e5e27fb8f57d93ab933620f756c987eb7bb8b11327ef76cce7484cc8ea688",
+          "reviewPath": "docs/research/question-topic-vascular-venous-lymphatic-access-review2-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "vascular-venous-lymphatic-access",
+      "caseId": "case.vascular-venous-lymphatic-access.postaccess-neurologic-record.20261111.v1",
+      "rawCaseSha256": "134cac805fd2bb9190a2b5fd8c8aebf08736aafe5a26fc9c0f3e098cfc6696fc",
+      "retainedCaseSha256": "b6909d215ecd3451eb5ffeb4bb04ebea7c1da8cc3b9c9672ec3a9746e385d3e1",
+      "nodes": [
+        {
+          "nodeId": "node.vascular-venous-lymphatic-access.access-multinerve-neuropathy.20261111.v1",
+          "questionVariantId": "question.vascular-venous-lymphatic-access.access-multinerve-neuropathy.20261111.v1",
+          "conceptId": "concept.vascular-venous-lymphatic-access.postaccess-ischemic-neuropathy-action.v1",
+          "nodeSha256": "b18b3bd6151a306d5cbd20ec4005f284be0ff06b47e1ddf3000f327c55f8c730",
+          "questionSha256": "f7f8bf933201d18a7e85a1db3dd0615f30aedee763f68f828f0cfa227fd42330",
+          "reviewPath": "docs/research/question-topic-vascular-venous-lymphatic-access-review2-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "vascular-venous-lymphatic-access",
+      "caseId": "case.vascular-venous-lymphatic-access.dialysis-catheter-course.20261111.v2",
+      "rawCaseSha256": "df7ff00b88d4ae58d6f678418e2eb94c594703c195e7c562017a347373b8c777",
+      "retainedCaseSha256": "f0463f8bf32247e42ab67194ff8f8c242f56b831f613f0ce4a724a0359fee7ba",
+      "nodes": [
+        {
+          "nodeId": "node.vascular-venous-lymphatic-access.catheter-intraluminal-dysfunction.20261111.v1",
+          "questionVariantId": "question.vascular-venous-lymphatic-access.catheter-intraluminal-dysfunction.20261111.v1",
+          "conceptId": "concept.vascular-venous-lymphatic-access.dialysis-catheter-first-lock-treatment.v1",
+          "nodeSha256": "97a71be72c0bc39c0382a3871a82d43ddede8d8ba1e0b769e49e9e2531ce3325",
+          "questionSha256": "ba163840211a008c65c94701c587f136ac19cf1a0dc11bde66125895fcb09b7c",
+          "reviewPath": "docs/research/question-topic-vascular-venous-lymphatic-access-review2-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "esophagus-motility-achalasia",
+      "caseId": "case.topic.esophagus-motility-achalasia.recurrent-clearance-standalone.v2",
+      "rawCaseSha256": "4290fc22faeacb5c675b2626213802ef033a166b06d034ba2f069736b3069af2",
+      "retainedCaseSha256": "4290fc22faeacb5c675b2626213802ef033a166b06d034ba2f069736b3069af2",
+      "nodes": [
+        {
+          "nodeId": "node.topic.esophagus-motility-achalasia.recurrent-clearance-test.v3",
+          "questionVariantId": "question.topic.esophagus-motility-achalasia.recurrent-clearance-test.v3",
+          "conceptId": "concept.esophagus-motility-achalasia.postmyotomy-objective-clearance.v1",
+          "nodeSha256": "e3e02ec84626a8f7c696875f20a19f37a6dda533ddfd1195085886c95ecce69d",
+          "questionSha256": "08bee77d8963aaccf1364ce28a771441aa7f0ac7046a4d37ae4bab34adb29c88",
+          "reviewPath": "docs/research/question-topic-esophagus-motility-achalasia-review-salvage-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "bariatric-metabolic",
+      "caseId": "case.topic.bariatric-metabolic.spontaneous-sample-salvage.v1",
+      "rawCaseSha256": "941b9a064163ba04a10feb364a1e4eec408006b3ae152b0c4ae04f143a33f9eb",
+      "retainedCaseSha256": "941b9a064163ba04a10feb364a1e4eec408006b3ae152b0c4ae04f143a33f9eb",
+      "nodes": [
+        {
+          "nodeId": "node.topic.bariatric-metabolic.spontaneous-sample-before-label.v2",
+          "questionVariantId": "question.topic.bariatric-metabolic.spontaneous-sample-before-label.v2",
+          "conceptId": "concept.pbh.spontaneous-evidence-before-treatment.v2",
+          "nodeSha256": "3f3f28c8d17190933ba517cd5f7358663e7893b82fb8d886691c85f5c23a520b",
+          "questionSha256": "1aa1304e91239ba6aa164e4c2d5c91a02921eb2d91d10bf3d929b8b0450226ce",
+          "reviewPath": "docs/research/question-topic-bariatric-metabolic-review-salvage-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "bariatric-metabolic",
+      "caseId": "case.topic.bariatric-metabolic.acarbose-intolerance-salvage.v1",
+      "rawCaseSha256": "3a3e175b12560a5ad69e0839f807fc7ef05348b84f9f9fd441fccfe56e692c71",
+      "retainedCaseSha256": "3a3e175b12560a5ad69e0839f807fc7ef05348b84f9f9fd441fccfe56e692c71",
+      "nodes": [
+        {
+          "nodeId": "node.topic.bariatric-metabolic.diet-response-drug-stage.v2",
+          "questionVariantId": "question.topic.bariatric-metabolic.diet-response-drug-stage.v2",
+          "conceptId": "concept.bariatric-metabolic.pbh-acarbose-intolerance-next-drug.v2",
+          "nodeSha256": "cfc3501af8fb9ce9f51202e99f7017e3e898077dc7feb4af9fbd49e9ecb108d6",
+          "questionSha256": "520db675a6726721cb5c1061c7f641740ebfb4f35bd257e1e3bc79027c8fdfec",
+          "reviewPath": "docs/research/question-topic-bariatric-metabolic-review-salvage-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "bariatric-metabolic",
+      "caseId": "case.topic.bariatric-metabolic.reflux-monitoring-salvage.v1",
+      "rawCaseSha256": "4761117de66bfe1221a8dfb26e4f6ecd68c8e85dcb270b43a931a8fa3d19db5f",
+      "retainedCaseSha256": "4761117de66bfe1221a8dfb26e4f6ecd68c8e85dcb270b43a931a8fa3d19db5f",
+      "nodes": [
+        {
+          "nodeId": "node.topic.bariatric-metabolic.refractory-reflux-revision.v2",
+          "questionVariantId": "question.topic.bariatric-metabolic.refractory-reflux-revision.v2",
+          "conceptId": "concept.bariatric-metabolic.post-sleeve-on-therapy-reflux-testing.v2",
+          "nodeSha256": "084cbd2bcd3eb1d1923a5776fea287985ebcf4845f5e7341a717d2416f889321",
+          "questionSha256": "a8f2c6f93c8f2404d3a3af070abd6748a93c756e6b7b5d38d4e110e4fcb3b69e",
+          "reviewPath": "docs/research/question-topic-bariatric-metabolic-review-salvage-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "pediatric-gi-abdominal-wall",
+      "caseId": "case.pediatric-gi-abdominal-wall.intussusception-partial-progress-salvage.v2",
+      "rawCaseSha256": "757bb86454ef203d560d43a729cad4551cae87853bc5ad0de3a38caa6368902e",
+      "retainedCaseSha256": "757bb86454ef203d560d43a729cad4551cae87853bc5ad0de3a38caa6368902e",
+      "nodes": [
+        {
+          "nodeId": "node.pediatric-gi-abdominal-wall.intussusception-partial-progress.v2",
+          "questionVariantId": "question.pediatric-gi-abdominal-wall.intussusception-partial-progress.v2",
+          "conceptId": "concept.pediatric-gi-abdominal-wall.intussusception-partial-progress.v1",
+          "nodeSha256": "4ef3c990b8100f093465fa7007f7c95690746f998a39777bd879cc3bd1f6ddb6",
+          "questionSha256": "bee952ebf5deb89f538a995750406a4d13556dd6af74e2db75dd079c0a568d12",
+          "reviewPath": "docs/research/question-topic-pediatric-gi-abdominal-wall-review-salvage-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "pediatric-gi-abdominal-wall",
+      "caseId": "case.pediatric-gi-abdominal-wall.nec-fixed-loop-context-salvage.v1",
+      "rawCaseSha256": "33a8b304173a07ac40d9de34431a369ce69849319b5ac97d7659618e2970b88c",
+      "retainedCaseSha256": "33a8b304173a07ac40d9de34431a369ce69849319b5ac97d7659618e2970b88c",
+      "nodes": [
+        {
+          "nodeId": "node.pediatric-gi-abdominal-wall.nec-fixed-loop-context.v1",
+          "questionVariantId": "question.pediatric-gi-abdominal-wall.nec-fixed-loop-context.v1",
+          "conceptId": "concept.pediatric-gi-abdominal-wall.nec-fixed-loop-context.v1",
+          "nodeSha256": "b213ae8af6bcf5ff5e18361e51f8166981a0a1727dc6e5aa9c03c8250d259085",
+          "questionSha256": "591060294b042395e1b3d1e4ba58c173fcad4fd31a0164bb00ec9cec7895860a",
+          "reviewPath": "docs/research/question-topic-pediatric-gi-abdominal-wall-review-salvage-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "pediatric-gi-abdominal-wall",
+      "caseId": "case.pediatric-gi-abdominal-wall.meconium-resuscitated-boundary-salvage.v1",
+      "rawCaseSha256": "6ed04de62c0f5154efec5f64d0e6c8d5fb653a4aa04618b1cf08dd21f428f35f",
+      "retainedCaseSha256": "6ed04de62c0f5154efec5f64d0e6c8d5fb653a4aa04618b1cf08dd21f428f35f",
+      "nodes": [
+        {
+          "nodeId": "node.pediatric-gi-abdominal-wall.meconium-resuscitated-boundary.v2",
+          "questionVariantId": "question.pediatric-gi-abdominal-wall.meconium-resuscitated-boundary.v2",
+          "conceptId": "concept.pediatric-gi-abdominal-wall.meconium-resuscitated-boundary.v1",
+          "nodeSha256": "58bab61235bd6da190dec3e27925e86c787cf7a2e71bd8c3f14a7f1f18a5de18",
+          "questionSha256": "f0a196c1be8166afcb583741decca5950ea206981d345ae744e6dea1e190e492",
+          "reviewPath": "docs/research/question-topic-pediatric-gi-abdominal-wall-review-salvage-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "pediatric-gi-abdominal-wall",
+      "caseId": "case.pediatric-gi-abdominal-wall.wilms-cog-initial-plan-salvage.v1",
+      "rawCaseSha256": "d1c0148f6a06a3245b72ca6ee7835bc132f0c31be0e4de7f59396d49ebc02e6f",
+      "retainedCaseSha256": "d1c0148f6a06a3245b72ca6ee7835bc132f0c31be0e4de7f59396d49ebc02e6f",
+      "nodes": [
+        {
+          "nodeId": "node.pediatric-gi-abdominal-wall.wilms-cog-initial-plan.v2",
+          "questionVariantId": "question.pediatric-gi-abdominal-wall.wilms-cog-initial-plan.v2",
+          "conceptId": "concept.pediatric-gi-abdominal-wall.wilms-caval-extension-initial-plan.v1",
+          "nodeSha256": "e1cd051092d60bdb3ad143b047ff0bfed398e0e6c091c3b86595dd30641bc796",
+          "questionSha256": "80bee6ef43cb7be685280ddc9199a76eca8d3c3284f3c85a5c07b6daf75f768e",
+          "reviewPath": "docs/research/question-topic-pediatric-gi-abdominal-wall-review-salvage-20261111.json"
+        }
+      ]
+    },
+    {
+      "topic": "pediatric-gi-abdominal-wall",
+      "caseId": "case.pediatric-gi-abdominal-wall.preterm-hernia-timing-salvage.v1",
+      "rawCaseSha256": "472b44951a7be43233384f5fd1cfa061d9b695cd769f827ae22a36b0819b800e",
+      "retainedCaseSha256": "472b44951a7be43233384f5fd1cfa061d9b695cd769f827ae22a36b0819b800e",
+      "nodes": [
+        {
+          "nodeId": "node.pediatric-gi-abdominal-wall.preterm-hernia-timing.v1",
+          "questionVariantId": "question.pediatric-gi-abdominal-wall.preterm-hernia-timing.v1",
+          "conceptId": "concept.pediatric-gi-abdominal-wall.preterm-hernia-timing.v1",
+          "nodeSha256": "259b87413e186edd3468fa1c490cde8296b1b887e52644aeae8bd62c40a90527",
+          "questionSha256": "0f70110765b732d0def1de259d034e4640f55116ab0988e8abc2898e2afa7fe0",
+          "reviewPath": "docs/research/question-topic-pediatric-gi-abdominal-wall-review-salvage-20261111.json"
+        }
+      ]
+    }
+  ],
+  "retirementCoverage": [
+    {
+      "legacyCaseId": "case.postoperative-dvt.bowel-surgery",
+      "primaryTargetCaseId": "case.vascular-venous-lymphatic-access.postop-negative-summary.20261111.v2",
+      "allTargetCaseIds": [
+        "case.vascular-venous-lymphatic-access.postop-negative-summary.20261111.v2"
+      ],
+      "reason": "Declared source-audit replacement."
+    },
+    {
+      "legacyCaseId": "case.postoperative-dvt.hernia-repair",
+      "primaryTargetCaseId": "case.vascular-venous-lymphatic-access.postop-negative-summary.20261111.v2",
+      "allTargetCaseIds": [
+        "case.vascular-venous-lymphatic-access.postop-negative-summary.20261111.v2"
+      ],
+      "reason": "Declared source-audit replacement."
+    },
+    {
+      "legacyCaseId": "case.postoperative-dvt.postop-visit",
+      "primaryTargetCaseId": "case.vascular-venous-lymphatic-access.postop-negative-summary.20261111.v2",
+      "allTargetCaseIds": [
+        "case.vascular-venous-lymphatic-access.postop-negative-summary.20261111.v2"
+      ],
+      "reason": "Declared source-audit replacement."
+    },
+    {
+      "legacyCaseId": "case.gs028.varicose-veins.a-asymmetric-branches",
+      "primaryTargetCaseId": "case.vascular-venous-lymphatic-access.whole-leg-venous-change.20261111.v2",
+      "allTargetCaseIds": [
+        "case.vascular-venous-lymphatic-access.whole-leg-venous-change.20261111.v2"
+      ],
+      "reason": "Declared source-audit replacement."
+    },
+    {
+      "legacyCaseId": "case.venous-leg-ulcer.healed-edge",
+      "primaryTargetCaseId": "case.vascular-venous-lymphatic-access.ulcer-noncompressible.20261111.v1",
+      "allTargetCaseIds": [
+        "case.vascular-venous-lymphatic-access.ulcer-noncompressible.20261111.v1"
+      ],
+      "reason": "Declared source-audit replacement."
+    },
+    {
+      "legacyCaseId": "case.venous-leg-ulcer.recurrent-ulcer",
+      "primaryTargetCaseId": "case.vascular-venous-lymphatic-access.ulcer-noncompressible.20261111.v1",
+      "allTargetCaseIds": [
+        "case.vascular-venous-lymphatic-access.ulcer-noncompressible.20261111.v1"
+      ],
+      "reason": "Declared source-audit replacement."
+    },
+    {
+      "legacyCaseId": "case.venous-leg-ulcer.varicose-changes",
+      "primaryTargetCaseId": "case.vascular-venous-lymphatic-access.ulcer-noncompressible.20261111.v1",
+      "allTargetCaseIds": [
+        "case.vascular-venous-lymphatic-access.ulcer-noncompressible.20261111.v1",
+        "case.vascular-venous-lymphatic-access.mixed-ulcer-physiology.20261111.v1"
+      ],
+      "reason": "The old paired case is decomposed into these separately accepted complete cases; retire its fresh identity once at the first declared target. Every target has exact acceptance rows."
+    },
+    {
+      "legacyCaseId": "case.post-bariatric-hypoglycemia.postmeal-confusion",
+      "primaryTargetCaseId": "case.topic.bariatric-metabolic.spontaneous-sample-salvage.v1",
+      "allTargetCaseIds": [
+        "case.topic.bariatric-metabolic.spontaneous-sample-salvage.v1"
+      ],
+      "reason": "Declared source-audit replacement."
+    },
+    {
+      "legacyCaseId": "case.post-bariatric-hypoglycemia.postmeal-dizziness",
+      "primaryTargetCaseId": "case.topic.bariatric-metabolic.spontaneous-sample-salvage.v1",
+      "allTargetCaseIds": [
+        "case.topic.bariatric-metabolic.spontaneous-sample-salvage.v1"
+      ],
+      "reason": "Declared source-audit replacement."
+    },
+    {
+      "legacyCaseId": "case.post-bariatric-hypoglycemia.postmeal-shaking",
+      "primaryTargetCaseId": "case.topic.bariatric-metabolic.spontaneous-sample-salvage.v1",
+      "allTargetCaseIds": [
+        "case.topic.bariatric-metabolic.spontaneous-sample-salvage.v1"
+      ],
+      "reason": "Declared source-audit replacement."
+    },
+    {
+      "legacyCaseId": "case.post-bariatric-hypoglycemia.postmeal-weakness",
+      "primaryTargetCaseId": "case.topic.bariatric-metabolic.spontaneous-sample-salvage.v1",
+      "allTargetCaseIds": [
+        "case.topic.bariatric-metabolic.spontaneous-sample-salvage.v1"
+      ],
+      "reason": "Declared source-audit replacement."
+    },
+    {
+      "legacyCaseId": "case.pediatric-clinic.groin-bulge-after-play",
+      "primaryTargetCaseId": "case.pediatric-gi-abdominal-wall.preterm-hernia-timing-salvage.v1",
+      "allTargetCaseIds": [
+        "case.pediatric-gi-abdominal-wall.preterm-hernia-timing-salvage.v1"
+      ],
+      "reason": "Declared source-audit replacement."
+    },
+    {
+      "legacyCaseId": "case.pediatric-clinic.intermittent-groin-swelling",
+      "primaryTargetCaseId": "case.pediatric-gi-abdominal-wall.preterm-hernia-timing-salvage.v1",
+      "allTargetCaseIds": [
+        "case.pediatric-gi-abdominal-wall.preterm-hernia-timing-salvage.v1"
+      ],
+      "reason": "Declared source-audit replacement."
+    }
+  ],
+  "duplicateContexts": [],
+  "sourceViews": [
+    {
+      "name": "topic-batch5-vascular-venous-lymphatic-access",
+      "cases": 12,
+      "nodes": 13,
+      "sha256": "e9c9cc2d44da710e5b2a3c9ff110aa5bba8fcfac73f2ef87c20a53b21a82afeb"
+    },
+    {
+      "name": "topic-batch5-esophagus-motility-achalasia",
+      "cases": 1,
+      "nodes": 1,
+      "sha256": "e485d219e2194de3f96ea132a080be753ef3f2d55a2eb37ecf729b92ed018e46"
+    },
+    {
+      "name": "topic-batch5-bariatric-metabolic",
+      "cases": 3,
+      "nodes": 3,
+      "sha256": "91b2ea9aa11c08086d7461f8efe75c303a6849190c82d9c7a6759419cba794e9"
+    },
+    {
+      "name": "topic-batch5-pediatric-gi-abdominal-wall",
+      "cases": 5,
+      "nodes": 5,
+      "sha256": "6629d8ac7dac29ea836d829f5a2b50a28450a234ea323bf9682e98e3912668fa"
+    }
+  ],
+  "presentationCorrections": {
+    "path": "tools/question-quality/fixtures/question-topic-acceptance-batch5-literal-name-corrections-20261111.json",
+    "sha256": "0a9708892aed966cad1f236d9094191c9b79ac6211a6ed004f4fe5258f62b829",
+    "caseIds": [
+      "case.vascular-venous-lymphatic-access.postop-leg-coverage.20261111.v2",
+      "case.vascular-venous-lymphatic-access.postop-finite-course-r2.20261111.v2",
+      "case.vascular-venous-lymphatic-access.postop-negative-summary.20261111.v2",
+      "case.vascular-venous-lymphatic-access.lymphatic-acute-change-r2.20261111.v2",
+      "case.vascular-venous-lymphatic-access.whole-leg-venous-change.20261111.v2",
+      "case.vascular-venous-lymphatic-access.access-unresolved-maturation-r2.20261111.v2",
+      "case.vascular-venous-lymphatic-access.ulcer-noncompressible.20261111.v1",
+      "case.vascular-venous-lymphatic-access.mixed-ulcer-physiology.20261111.v1",
+      "case.vascular-venous-lymphatic-access.dvt-serial-negative-proximal-r2.20261111.v2",
+      "case.vascular-venous-lymphatic-access.access-hand-physiology-r2.20261111.v2",
+      "case.vascular-venous-lymphatic-access.postaccess-neurologic-record.20261111.v1",
+      "case.vascular-venous-lymphatic-access.dialysis-catheter-course.20261111.v2"
+    ],
+    "fields": 65
+  },
+  "timingOrderAdjustments": [],
+  "noTestClassificationAdjustments": []
+}

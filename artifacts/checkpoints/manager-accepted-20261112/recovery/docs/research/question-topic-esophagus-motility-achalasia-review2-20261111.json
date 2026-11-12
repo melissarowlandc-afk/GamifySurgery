@@ -1,0 +1,156 @@
+[
+  {
+    "id": "question.topic.esophagus-motility-achalasia.recurrent-clearance-test.v2",
+    "nodeId": "node.topic.esophagus-motility-achalasia.recurrent-clearance-test.v2",
+    "title": "Recurrent dysphagia after POEM: next investigation",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Timed barium esophagography with tablet passage is the best offered next investigation. The resident must distinguish reassuring pressure relaxation from demonstrated esophageal emptying, then prioritize clearance assessment over reflux testing or mucosal inspection. Endoscopy remains a credible complementary investigation, not an inherently incorrect test.",
+      "The stable weight and hydration establish a nonemergent reassessment. No decision-critical instability or food impaction is represented. No confident clinical inaccuracy identified in the supplied explanation; its first-test ranking was assessed offline, not independently reverified against a current guideline.",
+      "The active two-node case begins here. The presentation, update and task provide sufficient post-POEM context without the parked initial procedure-selection node. The later endoscopy and clearance results must remain hidden until this answer; they were not used to solve this node.",
+      "This is a high-yield postoperative diagnostic distinction. Difficulty comes from competing mechanisms and the limitation of the completed pressure study, not from unusual terminology. Parallel investigation labels offer no material wording-only key.",
+      "Review scope: all six active executable nodes were assessed from candidate-visible fields, including both preserved new v1 nodes. The ten kept inventory records, 44 retirement/replacement proposals, three parked attempts, composition-held salvage node and unkeyed holds receive no new verdict. No clinical approval or runtime rendering/timing validation is conferred by this offline text review."
+    ],
+    "suggestions": [
+      "Retain the distinction between the preferred next test and complementary endoscopy in feedback; do not teach that endoscopy is excluded from the complete workup.",
+      "Preserve the active sequence's result visibility: neither prompt clearance nor mucosal breaks should appear before this decision."
+    ]
+  },
+  {
+    "id": "question.topic.esophagus-motility-achalasia.postpoem-reflux-response.v2",
+    "nodeId": "node.topic.esophagus-motility-achalasia.postpoem-reflux-response.v2",
+    "title": "Post-POEM symptoms: optimize PPI administration",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The task and drug schedules are understandable. The problem is the claimed reasoning depth: all three choices already treat reflux, so interpreting the passage and mucosal findings does not distinguish them. Removing those results leaves the same timing-correction answer from the medication-use sentence.",
+      "As a later node, the new results follow coherently from the prior assessment and the task identifies the post-POEM setting. Prior feedback already directs attention to injury or narrowing after clearance testing; it does not disclose PPI timing, but further reduces the independence of the supposed diagnostic first step."
+    ],
+    "cues": [
+      {
+        "phrase": "taken every day at bedtime, several hours after dinner",
+        "why": "This is necessary medication-use information, not a sentence to hide. In this option set it becomes the sole consequential discriminator: a familiar meal-timing rule solves the item without the motility or endoscopy results."
+      },
+      {
+        "phrase": "Use omeprazole daily before breakfast / Use omeprazole before breakfast and before dinner / Use daily prebreakfast omeprazole with as-needed bedtime famotidine",
+        "why": "All choices contain the breakfast PPI component; only distractors add another intervention. The key is the shortest common-base regimen, creating a modest common-component/minimal-plan guessing cue. This is not proof of an unfair key by itself, but compounds the single-rule construction."
+      }
+    ],
+    "fairness": [
+      "Correcting conventional delayed-release PPI administration before calling daily therapy inadequate is a defensible intended answer. No confident clinical inaccuracy identified in that principle.",
+      "The mucosal breaks are not characterized by extent, and the prior treatment course is not described beyond daily bedtime use. I cannot establish from these fields that immediate twice-daily treatment or a nocturnal adjunct is categorically inappropriate in every plausible clinical interpretation. That is a limitation needing clinician adjudication, not a claim that either alternative is equally best here.",
+      "Administration optimization is high-yield, but the current node tests one practical rule. Recognition of reflux is not a second consequential step when every offered plan presupposes it. The statistics exception does not apply.",
+      "The explanation's contrast with another junction procedure does not justify difficulty because no junction procedure is offered. Editorial review remains separate from Melissa Rowland's exact-version clinical approval."
+    ],
+    "suggestions": [
+      "Rebuild the decision so a supported finding about injury, response or the actual medication course changes which of the three specific plans is best. Apply the deletion test again: changing that finding must change the preferred regimen, not merely reconfirm reflux.",
+      "Have the clinician establish the decision-critical severity and treatment-history details needed to rank optimization against escalation. Do not invent a dose, duration or severity threshold to force a key.",
+      "If this remains a focused medication-timing lesson, shorten the setup and seek explicit acceptance of an easy foundational role; do not label it a difficult two-step resident item.",
+      "Retain actual medication-use observations. Repair the objective and alternatives rather than removing information needed for a fair answer."
+    ]
+  },
+  {
+    "id": "question.topic.esophagus-motility-achalasia.botulinum-rescue-risk.v1",
+    "nodeId": "node.topic.esophagus-motility-achalasia.botulinum-rescue-risk.v1",
+    "title": "Achalasia treatment when operative rescue is prohibitive",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "a brief sedated endoscopy acceptable but describes prolonged general anesthesia and a major rescue operation as prohibitive",
+        "why": "The assessment strongly directs risk-based selection, but it is a necessary constraint rather than a gratuitous permission sentence. All labels are endoscopic. Choosing injection over dilation still requires knowing the latter's perforation/rescue implications; a wording-only match does not settle that close comparison."
+      }
+    ],
+    "fairness": [
+      "The failed contractions, impaired relaxation and retained contrast support the motor/outflow disorder. The resident must then apply both anesthesia and rescue constraints: an endoscopic approach is not automatically suitable merely because it avoids a planned operation.",
+      "Botulinum toxin is the defensible best offered initial procedure for the represented risk assessment. Pneumatic dilation is the meaningful near-miss because the patient cannot tolerate major rescue if perforation occurs. The myotomy alternative requires a different anesthesia burden. Age alone is not the discriminator.",
+      "The named patient, age, sex, symptoms and complete task agree. This standalone node has no missing predecessor. No confident clinical inaccuracy identified; the constructed perioperative assessment still requires exact clinical sign-off.",
+      "This is high-yield treatment-selection reasoning. The combination of a motor diagnosis and procedure-specific rescue risk earns two consequential steps, although the explicit anesthesia assessment keeps it moderate rather than hard."
+    ],
+    "suggestions": [
+      "Preserve the decision-critical rescue restriction. Do not remove it in an effort to make the item harder or replace it with age-based eligibility.",
+      "For future feedback refinement, explicitly explain why dilation remains a poor choice despite being endoscopic: its perforation risk can require rescue the patient cannot tolerate. Any wording change would be a new exact version requiring review."
+    ]
+  },
+  {
+    "id": "question.topic.esophagus-motility-achalasia.egjoo-supportive-study.v2",
+    "nodeId": "node.topic.esophagus-motility-achalasia.egjoo-supportive-study.v2",
+    "title": "Preserved propagation with elevated junction pressure",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must interpret preserved propagation alongside elevated positional relaxation and intrabolus pressures, then recognize that symptom reproduction during manometry does not itself establish clinically relevant obstruction. Timed barium with a tablet is the best offered complementary assessment.",
+      "Solid-meal manometry is a real competing physiologic investigation, not simply a repeat of the completed liquid-swallow series. The adequate symptom-reproducing pressure study makes independent passage assessment more informative for the present unresolved issue. Meal provocation can provide supportive information; the explanation should not be read as claiming it is never useful in this pattern.",
+      "The absence of an explanatory endoscopic lesion, opioid use and prior foregut surgery addresses important confounders without supplying the diagnosis. No invented numerical cutoff is needed to solve this represented pattern. No confident clinical inaccuracy identified offline.",
+      "The standalone presentation and task are complete. Distinguishing an outflow-obstruction pattern from conclusive achalasia and selecting confirmatory testing is relevant general-surgery motility content; this high-yield judgment is qualitative, not a verified exam-frequency claim.",
+      "The options use comparable investigation labels. No unique phrase match, diagnosis label, teaching sentence, absolute or common-component pattern selects the key without clinical knowledge."
+    ],
+    "suggestions": [
+      "Retain the distinction between supportive symptom/pressure observations and complementary evidence of obstruction.",
+      "Keep the meal-provocation explanation qualified: its lower priority here does not make it generally useless in evaluating outflow-obstruction patterns."
+    ]
+  },
+  {
+    "id": "question.topic.esophagus-motility-achalasia.flip-after-failed-assistance.v2",
+    "nodeId": "node.topic.esophagus-motility-achalasia.flip-after-failed-assistance.v2",
+    "title": "Physiologic assessment after unusable assisted manometry",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": false,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "no mass or focal wall abnormality / Endoscopic ultrasound of the cardia and junction wall",
+        "why": "The negative wall finding lexically weakens the wall-imaging option. This is a residual elimination cue, but structural observations and the gradual stable-weight course are needed to rank further structural evaluation fairly. They do not exclude occult infiltration with certainty, and the final choice still requires understanding which physiologic assessment is feasible after failed manometry."
+      }
+    ],
+    "fairness": [
+      "The acquisition history makes clear that crossing the junction was achieved but did not yield usable swallow recordings. The resident must avoid treating attempted placement as a completed physiologic test, then select FLIP to assess junction opening and motor response in the setting of demonstrated retention.",
+      "FLIP is the best offered next test. EUS remains plausible when occult secondary obstruction is suspected, but the gradual course, stable weight and described structural assessment lower that priority here. They do not prove that every infiltrative process has been excluded. Reflux monitoring does not resolve the demonstrated retention and missing motor assessment.",
+      "The explanation appropriately limits FLIP: it does not supply a complete pressure-based subtype or independently authorize irreversible treatment. No confident clinical inaccuracy identified. Exact test-priority verification was not performed because network and source review are outside this task.",
+      "The standalone node gives sufficient chronology and a complete task. No prior answer is needed. The present diagnostic competitors are different investigations, and the key is not merely the only untried test.",
+      "This is a useful advanced niche within a high-yield disease area. The precise FLIP-after-failed-assisted-manometry decision is narrower than commonly tested achalasia diagnosis and treatment; unfamiliarity with FLIP should not be mistaken for hard reasoning."
+    ],
+    "suggestions": [
+      "Retain as optional advanced coverage rather than use it to satisfy core high-yield or hard-item targets.",
+      "Preserve the distinction between lower suspicion for a wall lesion and exclusion of secondary disease. Keep the failed acquisition observations and FLIP limitations explicit."
+    ]
+  },
+  {
+    "id": "question.topic.esophagus-motility-achalasia.borderline-aperistalsis-study.v1",
+    "nodeId": "node.topic.esophagus-motility-achalasia.borderline-aperistalsis-study.v1",
+    "title": "Absent contractions with upper-normal relaxation pressure",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must interpret universal failed contractions with relaxation measurements at the laboratory's upper normal boundary rather than accept the normal flag as exclusion of obstruction, then select an independent supportive emptying assessment. Timed barium with tablet passage is the best offered study.",
+      "Further manometric provocation is a credible near-miss but does not offer the same independent demonstration of passage. Reflux monitoring can address reflux physiology but does not resolve whether these swallowing findings represent an outflow problem. The explanation appropriately withholds a definitive diagnosis.",
+      "The laboratory-relative description avoids an unsupported device-independent threshold. The complete acquisition and alternate-position findings are relevant to uncertainty; the word 'every' reports the observed series rather than functioning as a rhetorical absolute. No confident clinical inaccuracy identified offline.",
+      "This standalone node supplies a consistent patient, complete task and necessary workup context. No prior feedback supplies the answer. The study labels are parallel and the correct option has no material length or wording advantage.",
+      "Recognizing that an apparently normal relaxation metric does not settle profound dysmotility is relevant board-level interpretation. The boundary-case application makes this moderate, with two consequential steps, rather than simple recall of a numeric cutoff."
+    ],
+    "suggestions": [
+      "Preserve the inconclusive interpretation and laboratory-relative measurements; do not rewrite the explanation to diagnose achalasia definitively from these fields.",
+      "Keep this distinct from the preserved-peristalsis item: the learning point here is all-failed contractions despite an upper-normal relaxation measurement, not simply another repetition of the same keyed test."
+    ]
+  }
+]

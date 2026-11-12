@@ -1,0 +1,566 @@
+[
+  {
+    "id": "R01",
+    "nodeId": "node.topic.thyroid-nodules-cancer.r01.v1",
+    "title": "Biopsy selection for a suspicious euthyroid nodule",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Among the supplied choices, FNA is the defensible best answer; the suspicious morphology and size support sampling, while normal TSH does not indicate scintigraphy. No confident clinical inaccuracy identified.",
+      "The item is a familiar biopsy-rule application with two readily dismissed alternatives, rather than two consequential resident decisions.",
+      "Review scope for this entire array: all 26 active proposed nodes, using candidate presentation, update, exhibit, task, option labels and explanation. Three kept records, 54 retire-and-replace audit records, one withdrawn attempt, the historical F14 hold and three new withheld teaching points were noted but not adjudicated. Review-only key ordering was not counted as a cue. Offline editorial review supplies neither fresh source verification nor clinical approval; every draft remains needs_clinician_review. Difficulty and highYield are qualitative judgments. Runtime rendering, waits and identity bindings were outside this visible-text review."
+    ],
+    "suggestions": [
+      "Retain the measured findings and the normal TSH. Add a clinically supported competing consideration that changes which target or diagnostic step is appropriate, rather than adding more suspicious features. Distinguish its objective from R02 and N01/N02; otherwise seek explicit acceptance as foundational practice."
+    ]
+  },
+  {
+    "id": "R02",
+    "nodeId": "node.topic.thyroid-nodules-cancer.r02.v1",
+    "title": "Selecting the biopsy target in a multinodular thyroid",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The learner must rank morphology against size, then select the target. The larger spongiform lesion is a credible size-driven error; observation of both misses the smaller suspicious lesion.",
+      "Left-nodule FNA is the best offered plan. A large spongiform nodule can sometimes also be sampled, so the explanation appropriately says it can be observed rather than asserting that sampling it is forbidden. The right-only option leaves the higher-priority lesion unsampled.",
+      "No material nonmedical wording shortcut or confident clinical inaccuracy identified; the named patient, age/sex and complete task are coherent."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "R03",
+    "nodeId": "node.topic.thyroid-nodules-cancer.r03.v2",
+    "title": "Obtaining a definitive diagnosis after follicular-neoplasm cytology",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Diagnostic right thyroid lobectomy",
+        "why": "Only the keyed option repeats the task's explicit diagnostic modifier; the two needle procedures receive no equivalent framing."
+      }
+    ],
+    "fairness": [
+      "Lobectomy is the best offered route to evaluate invasion after adequate follicular-neoplasm cytology. Repeat FNA and limited core sampling do not reliably settle whole-lesion capsular or vascular invasion.",
+      "The cytologic category is already supplied, making this essentially one familiar specimen-requirement rule. The normal opposite lobe, negative nodes and history add little discrimination among these particular choices.",
+      "Molecular assessment may be an alternative in selected patients but is not offered; its absence alone does not make the current key false. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": [
+      "Use parallel procedure labels without a key-only diagnostic adjective. Create a real specimen or management tradeoff with enough visible context to resolve it, or obtain explicit foundational-role acceptance. Do not imply that surgery is obligatory for every follicular-neoplasm result."
+    ]
+  },
+  {
+    "id": "R04",
+    "nodeId": "node.topic.thyroid-nodules-cancer.r04.v1",
+    "title": "Initial assessment of voice and swallowing symptoms after lobectomy",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Flexible laryngoscopy is the best first examination among these choices. The mixed voice/aspiration complaints appropriately prevent confidently assigning a specific nerve injury from symptoms alone.",
+      "The swallow study is a plausible competitor, but obtaining vocal-fold visualization after postoperative dysphonia is still a direct first-assessment rule. Upper-range loss and teaching fatigue do not yet change the actual decision.",
+      "No confident clinical inaccuracy or major language-only cue identified. The elapsed postoperative interval would help clinical realism, although it is not needed to choose visualization here."
+    ],
+    "suggestions": [
+      "To achieve resident application, provide supported examination findings or a prior laryngeal assessment whose adequacy changes the next investigation, and compare credible next steps. Otherwise explicitly retain this as foundational postoperative assessment; do not call the symptom list two consequential steps."
+    ]
+  },
+  {
+    "id": "R06",
+    "nodeId": "node.topic.thyroid-nodules-cancer.r06.v1",
+    "title": "Initial regional mapping before papillary thyroid cancer surgery",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "The transferred study consists of needle-placement images focused on the thyroid nodule.",
+        "why": "This announces that the regional survey is missing. Together with the regional-imaging task and the explicitly compartment-wide ultrasound option, it largely supplies the mapping rationale rather than requiring interpretation of a report."
+      }
+    ],
+    "fairness": [
+      "Cervical compartment ultrasound is the best initial mapping study in the supplied record. CT is a useful adjunct in selected advanced or inadequately visualized disease, not a clearly necessary replacement here.",
+      "The first-test choice is straightforward; scintigraphy is a weak cancer-staging competitor. The mobile node alone does not establish advanced invasive disease.",
+      "The later N16 update coherently supplies ultrasound and FNA results; this explanation does not disclose the later extent-of-dissection answer."
+    ],
+    "suggestions": [
+      "Supply a concise account of actual imaged compartments and findings, and make a supported coverage or disease-extent issue determine ultrasound versus cross-sectional assessment. Preserve necessary acquisition information rather than simply deleting the fact that mapping is incomplete."
+    ]
+  },
+  {
+    "id": "R08",
+    "nodeId": "node.topic.thyroid-nodules-cancer.r08.v2",
+    "title": "Methimazole adjustment with low free hormones and persistent TSH suppression",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The table creates a genuine conflict: the learner must interpret low free hormones despite suppressed TSH, then reduce synthesis inhibition rather than maintain or increase it. The numerical choices are parallel and do not reveal the key without interpreting the data.",
+      "Reducing to 10 mg is the best of the three offered prescriptions. These observations establish dose reduction more securely than they uniquely establish an exact optimal dose; offline review does not independently verify that exact dosing choice. Melissa's exact-version dose review remains necessary.",
+      "The later fever/sore-throat event in N11 is a distinct, coherent complication rather than a restatement of this dose-adjustment lesson."
+    ],
+    "suggestions": [
+      "Consider trimming the already-managed propranolol narrative. Keep the free-hormone/TSH discordance and explicit dose history, and have the named clinician verify the exact prescription."
+    ]
+  },
+  {
+    "id": "N01",
+    "nodeId": "node.topic.thyroid-nodules-cancer.n01.v1",
+    "title": "Functional assessment before selecting a thyroid biopsy target",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The left nodule's suspicious morphology creates a credible competing impulse to biopsy immediately. The learner must interpret the suppressed TSH and elevated free T4, then sequence functional mapping before sampling.",
+      "Scintigraphy is the best offered next study. The history removes major uptake-confounding exposures without explicitly announcing the diagnosis. No confident clinical inaccuracy identified.",
+      "The explanation prepares the functional question in N02 but does not give its exact sampling plan or the subsequent scan result; N01 remains self-contained."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "N02",
+    "nodeId": "node.topic.thyroid-nodules-cancer.n02.v1",
+    "title": "Biopsy targeting after a scan identifies unilateral autonomy",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The learner must correlate functional and structural findings, then spare the scan-concordant functioning target while sampling the distinct suspicious nonfunctioning lesion. Right-only and both-nodule sampling represent credible errors.",
+      "Left-nodule FNA is the best offered plan. The explanation correctly uses 'usually' rather than treating functioning nodules as an absolute no-biopsy rule.",
+      "The update follows N01 coherently and supplies the scan findings needed even if this node is encountered directly with its shared presentation. Earlier feedback teaches why mapping matters but does not dictate the returned target. No material nonmedical cue identified."
+    ],
+    "suggestions": [
+      "Tighten the final explanation: sampling both does assess the left lesion; the error is unnecessary sampling of the right target, not failure to assess or prioritize the left."
+    ]
+  },
+  {
+    "id": "N03",
+    "nodeId": "node.topic.thyroid-nodules-cancer.n03.v1",
+    "title": "Next sampling step after a first inadequate thyroid aspirate",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Repeat ultrasound-guided FNA is a defensible usual next step after this first inadequate aspirate. Core biopsy is used selectively, so its rejection should remain qualified as in the explanation.",
+      "The words 'first aspiration' and the insufficient-cell description feed directly into the repeat-sampling rule. The suspicious ultrasound does not alter the keyed procedure in this option set; this is not two consequential steps.",
+      "N04 can coherently follow with an adequate benign repeat result. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": [
+      "Either obtain acceptance for basic sampling-adequacy practice or make an actual acquisition/clinical feature change the choice among repeat aspiration, core biopsy and surgery. Do not manufacture difficulty by withholding adequacy or introducing an unsupported biopsy threshold."
+    ]
+  },
+  {
+    "id": "N04",
+    "nodeId": "node.topic.thyroid-nodules-cancer.n04.v1",
+    "title": "Reconciling benign cytology with suspicious thyroid imaging",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Retains irregular margins and punctate foci' implies punctate foci were previously documented, but the earlier presentation mentions only irregular margins. Clarify whether the reread newly identifies the foci.",
+      "'Continue routine ultrasound surveillance' does not specify what reassessment it includes, making the distinction from a planned image review and repeat sampling less precise."
+    ],
+    "cues": [
+      {
+        "phrase": "Repeat targeted FNA after image–cytology review",
+        "why": "This is the only explicitly reconciliatory, combined plan, immediately after the stem describes a radiologist independently rechecking target images. It reads as the uniquely careful response."
+      }
+    ],
+    "fairness": [
+      "The key is clinically plausible after one adequate benign aspirate with persistent suspicious morphology; a benign result does not automatically resolve this discordance.",
+      "Clarify follow-up stage and intended sampling interval without inventing a fixed deadline. The present wording should not imply that every such result requires an immediate third needle procedure.",
+      "The sequence usefully changes the problem from inadequate sampling in N03 to discordance despite adequate targeting. Scintigraphy with normal TSH is a weak competing plan."
+    ],
+    "suggestions": [
+      "Make the imaging chronology exact. Compare plans at the same scope and follow-up stage, with the same shared review context rather than adding a special review step only to the key. Replace the easy functional-study foil with a credible discordance-management alternative supported for this case."
+    ]
+  },
+  {
+    "id": "N05",
+    "nodeId": "node.topic.thyroid-nodules-cancer.n05.v1",
+    "title": "Definitive treatment of a compressive autonomous nodule",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The update supplies the benign left FNA but does not repeat the right-sided functional scan finding. The shared presentation plus this update is insufficient to establish right-sided autonomy if the earlier N02 update is absent during direct entry.",
+      "The persistent left ultrasound concern is not reconciled before declaring the treated disease unilateral."
+    ],
+    "cues": [
+      {
+        "phrase": "CT shows the right nodule compressing the esophagus",
+        "why": "The exact right-sided target is repeated only by 'Right thyroid lobectomy.' This is legitimate localization information, but it gives a superficial side-matching advantage unless the competing plans also require interpreting the contralateral findings."
+      }
+    ],
+    "fairness": [
+      "Progressive documented compression after hormone control makes surgery a plausible best modality; the right lobectomy versus radioiodine distinction is educationally useful.",
+      "A single benign left FNA does not by itself erase the previously irregular hypoechoic left lesion. This is especially conspicuous beside N04's discordance lesson. Right lobectomy may still be appropriate, but the explanation's categorical claim that bilateral removal adds unnecessary extent is stronger than the supplied contralateral assessment supports.",
+      "No confident assertion that total thyroidectomy is required is made. The unresolved left-lesion assessment and visibility of prior scan results need clinician/editorial repair before accepting one exact plan."
+    ],
+    "suggestions": [
+      "Restate the essential functional result in the current context. Explicitly resolve or carry forward the left lesion's imaging–cytology discrepancy and planned management; then have the clinician adjudicate the extent alternatives. Preserve the genuine compression-versus-hormone-control tradeoff."
+    ]
+  },
+  {
+    "id": "N06",
+    "nodeId": "node.topic.thyroid-nodules-cancer.n06.v1",
+    "title": "Symptom treatment when thyrotoxicosis reflects hormone release",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must interpret low uptake with the painless course and relevant exposure history as destructive hormone release, then choose symptom relief rather than synthesis blockade or anti-inflammatory treatment.",
+      "Propranolol is the best offered initial medication for this stable symptomatic presentation. Methimazole and prednisone represent plausible mechanism and painful-thyroiditis confusions.",
+      "No diagnosis is supplied before the decision, and the short medication labels are parallel. No confident clinical inaccuracy identified; no unsupported numerical threshold is needed."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "N07",
+    "nodeId": "node.topic.thyroid-nodules-cancer.n07.v1",
+    "title": "Imaging a compressive thyroid with substernal extension",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The task refers to 'current thyroid-related surgical question' without stating the actual question. A complete lead-in should specify what operative information is needed without naming the correct modality."
+    ],
+    "cues": [
+      {
+        "phrase": "beyond the sonographic field",
+        "why": "This explicitly explains why the offered repeat ultrasound will not work; the explanation then repeats that rationale. The normal TSH separately weakens scintigraphy, leaving the only cross-sectional option."
+      }
+    ],
+    "fairness": [
+      "CT of the neck and upper mediastinum is the defensible best offered study. No confident clinical inaccuracy identified.",
+      "The concept is high-yield, but the current item mainly matches an explicitly stated imaging limitation to CT. More observations do not create a second consequential inference."
+    ],
+    "suggestions": [
+      "Ask a concrete preoperative anatomic-assessment question. Retain the necessary extent information, but make a real unresolved imaging or planning issue distinguish credible studies instead of repeating the same limited ultrasound as a disposable foil."
+    ]
+  },
+  {
+    "id": "N08",
+    "nodeId": "node.topic.thyroid-nodules-cancer.n08.v1",
+    "title": "Definitive treatment of recurrent Graves disease with compression",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Total thyroidectomy is the best offered plan after preparation. Progressive mechanical dysphagia strongly favors surgery; active moderate-to-severe orbitopathy further weighs against radioiodine. No confident clinical inaccuracy identified.",
+      "Relapse, compression and substantial orbitopathy all push in the same direction. Their accumulation does not create two consequential steps or a close resident-level alternative; removing the eye finding or relapse history still leaves surgery as the clear answer.",
+      "The sequence into N12 is coherent. The phrase 'after appropriate medical preparation' does not disclose N12's specific biochemical discriminator."
+    ],
+    "suggestions": [
+      "Keep essential safety findings. To make this an application item, use a supported competing treatment consideration that the learner must resolve, rather than three independent reasons for the same choice. Alternatively seek explicit acceptance of a straightforward indication-for-surgery item."
+    ]
+  },
+  {
+    "id": "N09",
+    "nodeId": "node.topic.thyroid-nodules-cancer.n09.v1",
+    "title": "Antithyroid treatment during lactation",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Methimazole is a defensible preferred choice among these options for a breastfeeding patient who needs synthesis inhibition; PTU remains a clinically usable alternative in selected circumstances, as the explanation acknowledges.",
+      "The diagnosis and ongoing biochemical excess are already supplied. Because all choices are thyroid-directed treatments, the propranolol response does not create a separate consequential treatment decision. The actual scored task is a single lactation drug-selection rule.",
+      "No confident clinical inaccuracy identified. This offline review does not independently establish the precise current guideline wording ranking the two thionamides."
+    ],
+    "suggestions": [
+      "Either retain an explicitly accepted basic medication-selection role or add a supported patient-specific factor that makes choosing between credible thionamide plans consequential. Avoid presenting PTU as categorically incompatible with breastfeeding."
+    ]
+  },
+  {
+    "id": "N10",
+    "nodeId": "node.topic.thyroid-nodules-cancer.n10.v1",
+    "title": "Initial antithyroid treatment in early pregnancy",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "PTU is a defensible initial choice for overt recurrent Graves hyperthyroidism at nine weeks; radioiodine is not a credible treatment in this pregnancy. No confident clinical inaccuracy identified.",
+      "The positive antibodies, prior Graves diagnosis and clearly elevated pregnancy-adjusted free T4 remove a meaningful diagnostic contest. The key follows the familiar early-pregnancy drug rule; symptom recognition followed by that rule does not create two consequential decisions here.",
+      "Current pregnancy-guideline nuances were not verified because network access was prohibited. This is not a finding that the key is outdated or clinically approved."
+    ],
+    "suggestions": [
+      "For a harder resident item, introduce a supported treatment-history or disease-status consideration that actually changes the plan while preserving pregnancy-specific laboratory context. Otherwise seek explicit acceptance as basic high-yield pregnancy pharmacology; do not add a later-switch rule without verification."
+    ]
+  },
+  {
+    "id": "N11",
+    "nodeId": "node.topic.thyroid-nodules-cancer.n11.v1",
+    "title": "Fever and sore throat during methimazole treatment",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The shared presentation says 'The thyroid tests below' but this node has no exhibit. If selected directly without R08's table, that is a dangling reference; if the old table remains visible, label it as the earlier visit's results."
+    ],
+    "cues": [],
+    "fairness": [
+      "Withholding methimazole and urgently obtaining a differential count is the defensible best offered plan. A previously normal count does not resolve current symptoms, and empiric substitution with PTU is not a safe workaround for a possible serious thionamide reaction.",
+      "Every option obtains the same CBC, so the scored decision is only the classic stop-versus-continue/switch response. Recognizing the warning pattern is high-yield but not two consequential steps.",
+      "The later visit follows R08 coherently and is not taught by its explanation. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": [
+      "Explicitly classify and obtain acceptance for a safety-recognition exception rather than claiming hard two-step reasoning; retain the red flags. Fix the stale table reference for direct-entry display and make urgency clear in the plan/feedback without supplying a new exact timing threshold."
+    ]
+  },
+  {
+    "id": "N12",
+    "nodeId": "node.topic.thyroid-nodules-cancer.n12.v1",
+    "title": "Preoperative preparation when T3 remains elevated",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Proceed with the current thyroidectomy preparation' is ambiguous: continuing preparation could include exactly the methimazole titration and reassessment in the key. It does not unambiguously mean proceeding to the operation."
+    ],
+    "cues": [
+      {
+        "phrase": "Titrate methimazole and reassess thyroid hormones",
+        "why": "This is the only option that explicitly responds to a laboratory abnormality and includes reassessment; the vague preparation alternative makes it the uniquely complete plan."
+      }
+    ],
+    "fairness": [
+      "Persistent T3 elevation despite normalized free T4 and pulse is a genuine interpret-then-act conflict. Suppressed TSH alone is not the deciding finding.",
+      "The keyed further medical optimization is plausible for a nonurgent elective operation, but the overlapping wording prevents a clean single-best-answer comparison.",
+      "The preceding N08 diagnosis and operative choice are coherent, and N12 restates the elective surgery context. Do not turn this into an absolute claim that any T3 elevation prohibits every possible thyroidectomy pathway."
+    ],
+    "suggestions": [
+      "Compare explicit mutually exclusive plans, such as continued biochemical optimization versus proceeding to the planned operation on the current regimen. State the actual intended action in every option and preserve the nonurgent context. Have the clinician verify the preparation assumptions rather than inventing a T3 cutoff."
+    ]
+  },
+  {
+    "id": "N13",
+    "nodeId": "node.topic.thyroid-nodules-cancer.n13.v1",
+    "title": "Central-neck management for small bilateral node-negative papillary cancers",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must separate the bilateral intrathyroidal primary burden from the indication for nodal surgery. Bilateral cancers can tempt bilateral clearance, but the small noninvasive cN0 profile supports avoiding routine prophylactic central dissection.",
+      "Observation is the best offered central-neck plan. The explanation properly qualifies the recommendation as not routinely requiring prophylactic dissection, rather than claiming that normal imaging excludes microscopic metastases.",
+      "The three choices concern the same nodal decision. The later postoperative surveillance event in N14 follows coherently, and this explanation does not give its marker-interpretation answer."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "N14",
+    "nodeId": "node.topic.thyroid-nodules-cancer.n14.v1",
+    "title": "Surveillance with rising antibodies and unquantifiable thyroglobulin",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The dates or elapsed postoperative intervals for the three visits are absent. Antibody trajectories soon after surgery and persistent later rises are not interchangeable; the interpretation needs chronology."
+    ],
+    "cues": [
+      {
+        "phrase": "His cervical images on file are the preoperative compartment survey",
+        "why": "This flags that postoperative cervical imaging has not been done. Ultrasound becomes the obvious initial surveillance answer even if the antibody table is removed."
+      }
+    ],
+    "fairness": [
+      "Cervical ultrasound is a defensible next study in this record, and rising anti-thyroglobulin antibodies limit reassurance from low immunometric thyroglobulin. No confident clinical inaccuracy identified.",
+      "The exhibit does not earn its intended inference: the same initial-surveillance choice follows from no postoperative ultrasound even without rising antibodies. Thus twoStep is false for the actual scored choice despite a potentially useful biochemical concept.",
+      "The pathology and lack of radioiodine coherently follow N13. The prior explanation does not leak this answer; the current missing-test scaffold does."
+    ],
+    "suggestions": [
+      "Supply clinically meaningful follow-up chronology and redesign the decision so antibody/thyroglobulin interpretation changes the plan. If retaining an initial ultrasound objective, remove the unnecessary marker exercise and seek foundational acceptance. Do not force PET or radioiodine testing merely to manufacture difficulty."
+    ]
+  },
+  {
+    "id": "N15",
+    "nodeId": "node.topic.thyroid-nodules-cancer.n15.v1",
+    "title": "Timing completion treatment after postoperative unilateral vocal-fold immobility",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'At clinic follow-up' gives no interval since the operation or information about the course of vocal-fold immobility. Clarify that this is the initial assessment of new postoperative dysfunction if that is the intended boundary."
+    ],
+    "cues": [
+      {
+        "phrase": "Defer right-lobe surgery while left-fold recovery is assessed",
+        "why": "The key alone contains a cautious reassessment plan and its rationale; both alternatives end in 'now.' This permits a testwise preference for the only conditional, protective option without evaluating cancer or nerve risk."
+      }
+    ],
+    "fairness": [
+      "The underlying decision is strong: a large primary supports considering completion treatment, while new ipsilateral vocal-fold dysfunction changes the timing and risk of contralateral surgery.",
+      "Deferral for reassessment is the defensible best offered plan for the described nonurgent setting; immediate radioiodine ablation is not automatically required. No confident clinical inaccuracy identified.",
+      "Although N15 has no active earlier question, its presentation and update contain the essential preoperative and postoperative history. Chronology rather than prior answer recall drives the decision. Its wording cue lowers the current difficulty below hard."
+    ],
+    "suggestions": [
+      "Give the relevant postoperative chronology without inventing a mandatory recovery deadline. Use equally scoped treatment/timing labels, moving the key-only rationale into feedback. Preserve the genuine oncologic-benefit versus bilateral-airway-risk decision."
+    ]
+  },
+  {
+    "id": "N16",
+    "nodeId": "node.topic.thyroid-nodules-cancer.n16.v1",
+    "title": "Extent of lateral neck surgery for confirmed papillary metastasis",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "The contralateral lateral compartments show no abnormal nodes.",
+        "why": "In a three-choice right/bilateral/node-excision set, this directly weakens the bilateral option. It is necessary extent information, so retain it; improve the remaining decision rather than deleting this negative."
+      }
+    ],
+    "fairness": [
+      "Right lateral compartment dissection is the best offered operation for initial proven ipsilateral lateral nodal metastasis. Isolated node excision is the classic inadequate-extent error. No confident clinical inaccuracy identified.",
+      "The diagnosis and involved side are supplied; the remaining decision mainly recalls the compartmental-surgery rule. The normal opposite map removes the other competitor, so this is not two consequential steps.",
+      "The update follows R06 coherently and contains the nodal result required for direct entry with the shared presentation. Earlier ultrasound feedback does not disclose the dissection answer."
+    ],
+    "suggestions": [
+      "Retain the useful high-yield rule as explicitly accepted foundational material, or create a supported mapping/extent problem with genuinely competing operative plans. Avoid padding the choices with prophylactic surgery on an uninvolved side just to reach three options."
+    ]
+  },
+  {
+    "id": "N17",
+    "nodeId": "node.topic.thyroid-nodules-cancer.n17.v1",
+    "title": "Confirmatory lineage staining for a suspected medullary thyroid lesion",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Calcitonin and chromogranin are the defensible best offered panel for the described plasmacytoid cells and Congo-red-positive extracellular material. No confident clinical inaccuracy identified.",
+      "This is a classic morphology-to-medullary-to-marker association. As the standard specifies, two linked diagnostic labels do not establish two consequential clinical steps. The reassuring nodal survey does not affect the stain choice.",
+      "The options are parallel panels without an obvious language-only key cue. The explanation legitimately identifies medullary lineage after answering; N18 then explicitly confirms the diagnosis."
+    ],
+    "suggestions": [
+      "Keep this as explicitly accepted foundational pathology if desired. For resident application, make a supported unresolved specimen/lineage issue change the next diagnostic or operative action, rather than asking for a second familiar label after the classic histology."
+    ]
+  },
+  {
+    "id": "N18",
+    "nodeId": "node.topic.thyroid-nodules-cancer.n18.v1",
+    "title": "Initial thyroid and central-neck surgery for localized medullary carcinoma",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Completed the required hereditary and associated endocrine evaluation' reports completion, not results. It does not establish whether an associated pheochromocytoma was excluded or, if present, treated before thyroid surgery."
+    ],
+    "cues": [
+      {
+        "phrase": "The endocrine team has completed the required hereditary and associated endocrine evaluation before operative planning.",
+        "why": "This is an authored clearance/permission summary in place of the safety-relevant observations. It tells the reader to ignore a potentially consequential sequencing decision without supplying the evidence."
+      },
+      {
+        "phrase": "Total thyroidectomy with central-compartment dissection",
+        "why": "The key combines the total-thyroidectomy component shared with option 2 and the central-dissection component shared with option 3; the three-option component pattern creates a convergence cue."
+      }
+    ],
+    "fairness": [
+      "For appropriately evaluated localized medullary carcinoma, total thyroidectomy with central compartment dissection is a defensible operation despite a negative nodal ultrasound.",
+      "The current wording does not safely settle whether thyroid surgery should be the initial operation at all. This is missing decision-critical context, not a claim that this particular patient has an associated tumor.",
+      "N17 to N18 is diagnostically coherent and the update stands alone for the thyroid diagnosis. Once MTC is explicitly supplied, the current surgical-extent choice is largely disease-specific recall rather than two consequential steps."
+    ],
+    "suggestions": [
+      "Give concise relevant endocrine results and any treatment already completed; do not use a blanket clearance phrase. Neutralize component convergence with credible equally scoped operations, without adding filler. If the intended objective remains the standard MTC operation, seek explicit foundational-role acceptance."
+    ]
+  },
+  {
+    "id": "N19",
+    "nodeId": "node.topic.thyroid-nodules-cancer.n19.v1",
+    "title": "Obtaining representative tissue from a rapidly enlarging thyroid mass",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must recognize an aggressive unresolved lineage problem, then choose tissue acquisition that can support architecture and ancillary studies before committing to resection. This contrasts meaningfully with the routine first-inadequate-nodule pathway in N03.",
+      "Image-guided core biopsy is the best offered plan in this context. An optimized repeat aspirate with appropriate ancillary testing can be useful in selected cases, so the explanation correctly avoids claiming that FNA can never diagnose lymphoma.",
+      "The stable airway findings permit diagnostic workup and are decision-critical rather than disposable reassurance. Autoimmune hypothyroidism is a legitimate clinical clue, not a language-only label giveaway. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": [
+      "Consider specifying representative viable tissue and appropriate ancillary specimen handling in post-answer feedback after clinician/source verification. Do not imply that any core containing only necrosis will settle the diagnosis."
+    ]
+  },
+  {
+    "id": "N20",
+    "nodeId": "node.topic.thyroid-nodules-cancer.n20.v1",
+    "title": "Immediate rescue of a postoperative compressive neck hematoma",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'The founder reviews the hospital record' introduces an unexplained game-role label with no clinical purpose. The retrospective timing is otherwise clear."
+    ],
+    "cues": [
+      {
+        "phrase": "Open the neck wound while summoning airway support",
+        "why": "Only the key includes concurrent expert help; both alternatives offer a single action explicitly before opening the wound. This makes the key the uniquely comprehensive rescue plan and the others visibly delay-based."
+      }
+    ],
+    "fairness": [
+      "Urgent wound decompression with airway support is the defensible priority for evolving compressive postoperative neck swelling with inspiratory noise. A relatively unchanged oxygen saturation does not resolve the threat. No confident clinical inaccuracy identified.",
+      "This is essential safety recognition. The warning constellation leads directly to the rescue rule; it should not be relabeled hard two-step reasoning merely because oxygen saturation is also mentioned.",
+      "The clinic visit is explicitly a retrospective hospital-record review, so there is no contradiction between outpatient location and the emergency rescue task."
+    ],
+    "suggestions": [
+      "Seek explicit acceptance as a safety-recognition exception, retaining the warning signs. Put activation of expert airway help in shared context and compare immediate rescue sequences at equivalent scope, with clinician verification. Remove the unnecessary founder wording; do not conceal the emergency to make the question harder."
+    ]
+  }
+]

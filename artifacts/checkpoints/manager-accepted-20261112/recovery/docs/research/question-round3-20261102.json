@@ -1,0 +1,3384 @@
+[
+  {
+    "id": "A02",
+    "title": "HIDA after equivocal gallbladder ultrasound",
+    "reviewStatus": "needs_clinician_review",
+    "ownerStatus": "awaiting_owner_review",
+    "pipelineStatus": "independent_review_passed_awaiting_manager_acceptance",
+    "keyOrderNotice": "key shown first for review only; runtime options are randomized",
+    "reviewDisplayNote": "Synthetic canonical patient; placeholders rendered as Jamie Taylor for review only. Runtime finite profiles remain bound.",
+    "caseId": "case.gs028c.acute-cholecystitis.a-stones-without-secondary-signs",
+    "conceptId": "concept.cholecystitis.hida-after-equivocal-ultrasound",
+    "before": {
+      "variantId": "question.cholecystitis.hida-after-equivocal-ultrasound.v2.r6",
+      "Presentation": "Jamie Taylor, a 37-year-old woman, visits the clinic with right-upper-quadrant pain that persists between meals, nausea and a neutrophil count above the laboratory reference range. Deep inspiration stops when the right upper quadrant is palpated. Ultrasound shows gallstones, a wall that is not thickened and no pericholecystic fluid. The common duct is not dilated; bilirubin is within the laboratory reference range.",
+      "Current update": null,
+      "Exhibit": null,
+      "Task": "Which examination protocol should be ordered next for Jamie Taylor?",
+      "Options": [
+        "**KEY:** Hepatobiliary scintigraphy assessing gallbladder filling",
+        "Hepatobiliary scintigraphy measuring stimulated ejection fraction",
+        "MR cholangiopancreatography assessing the extrahepatic ducts"
+      ]
+    },
+    "after": {
+      "variantId": "question.cholecystitis.hida-after-equivocal-ultrasound.v2.r6",
+      "Presentation": "Jamie Taylor, a 37-year-old woman, visits the clinic with right-upper-quadrant pain that persists between meals, nausea and a neutrophil count above the laboratory reference range. Deep inspiration stops when the right upper quadrant is palpated. Ultrasound shows gallstones, a wall that is not thickened and no pericholecystic fluid. The common duct is not dilated; bilirubin is within the laboratory reference range.",
+      "Current update": null,
+      "Exhibit": null,
+      "Task": "Which examination protocol should be ordered next for Jamie Taylor?",
+      "Options": [
+        "**KEY:** Hepatobiliary scintigraphy assessing gallbladder filling",
+        "Hepatobiliary scintigraphy measuring stimulated ejection fraction",
+        "MR cholangiopancreatography assessing the extrahepatic ducts"
+      ]
+    },
+    "originalAuthoringBefore": {
+      "variantId": "question.cholecystitis.hida-after-equivocal-ultrasound.v2.r4",
+      "Presentation": "Jamie Taylor, a 37-year-old woman, comes to the clinic with sustained right-upper-quadrant pain, nausea and inflammatory laboratory findings. Ultrasound shows gallstones, but the gallbladder inflammatory findings are inconclusive.",
+      "Current update": null,
+      "Exhibit": null,
+      "Task": "Which investigation should be arranged next for Jamie Taylor's suspected acute cholecystitis?",
+      "Options": [
+        "**KEY:** Hepatobiliary scintigraphy",
+        "Contrast-enhanced abdominal CT",
+        "Biliary magnetic resonance imaging"
+      ]
+    },
+    "comparisonBasis": "Exact independently passed version retained from review six; both sides show the same clinical fields.",
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Hepatobiliary scintigraphy assessing gallbladder filling",
+          "Persistent local inflammatory findings call for assessment of gallbladder filling/cystic-duct obstruction despite the ultrasound components."
+        ],
+        [
+          "Hepatobiliary scintigraphy measuring stimulated ejection fraction",
+          "Confuses evaluation of chronic gallbladder emptying with evaluation of the acute inflammatory presentation."
+        ],
+        [
+          "MR cholangiopancreatography assessing the extrahepatic ducts",
+          "Prioritizes a duct-stone question over the gallbladder question suggested by persistent local signs; it is not a claim that MRI is never appropriate after ultrasound."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Hepatobiliary scintigraphy assessing gallbladder filling",
+          "Persistent local inflammatory findings call for assessment of gallbladder filling/cystic-duct obstruction despite the ultrasound components."
+        ],
+        [
+          "Hepatobiliary scintigraphy measuring stimulated ejection fraction",
+          "Confuses evaluation of chronic gallbladder emptying with evaluation of the acute inflammatory presentation."
+        ],
+        [
+          "MR cholangiopancreatography assessing the extrahepatic ducts",
+          "Prioritizes a duct-stone question over the gallbladder question suggested by persistent local signs; it is not a claim that MRI is never appropriate after ultrasound."
+        ]
+      ]
+    },
+    "inference": "Integrate persistent focal inflammatory findings with ultrasound components rather than treating a normal wall as exclusion. Then Distinguish gallbladder filling, stimulated emptying and extrahepatic-duct protocols.",
+    "focus": "Melissa must confirm the exact protocol ranking. This does not claim a universal HIDA-over-all-CT/MRI algorithm; the former broad competing modalities have been replaced.",
+    "whatChanged": "No clinical fields changed from the exact independently passed version.",
+    "caseDetailChanges": {
+      "chiefComplaint": {
+        "before": "Right upper quadrant pain",
+        "after": "Right upper quadrant pain"
+      },
+      "profilePresentations": {
+        "before": [
+          {
+            "id": "profile.gs028c.acute-cholecystitis.a-stones-without-secondary-signs.female.37",
+            "presentation": "{patientName}, a 37-year-old woman, visits the clinic with right-upper-quadrant pain that persists between meals, nausea and a neutrophil count above the laboratory reference range. Deep inspiration stops when the right upper quadrant is palpated. Ultrasound shows gallstones, a wall that is not thickened and no pericholecystic fluid. The common duct is not dilated; bilirubin is within the laboratory reference range."
+          },
+          {
+            "id": "profile.gs028c.acute-cholecystitis.a-stones-without-secondary-signs.male.37",
+            "presentation": "{patientName}, a 37-year-old man, visits the clinic with right-upper-quadrant pain that persists between meals, nausea and a neutrophil count above the laboratory reference range. Deep inspiration stops when the right upper quadrant is palpated. Ultrasound shows gallstones, a wall that is not thickened and no pericholecystic fluid. The common duct is not dilated; bilirubin is within the laboratory reference range."
+          },
+          {
+            "id": "profile.gs028c.acute-cholecystitis.a-stones-without-secondary-signs.female.64",
+            "presentation": "{patientName}, a 64-year-old woman, visits the clinic with right-upper-quadrant pain that persists between meals, nausea and a neutrophil count above the laboratory reference range. Deep inspiration stops when the right upper quadrant is palpated. Ultrasound shows gallstones, a wall that is not thickened and no pericholecystic fluid. The common duct is not dilated; bilirubin is within the laboratory reference range."
+          },
+          {
+            "id": "profile.gs028c.acute-cholecystitis.a-stones-without-secondary-signs.male.64",
+            "presentation": "{patientName}, a 64-year-old man, visits the clinic with right-upper-quadrant pain that persists between meals, nausea and a neutrophil count above the laboratory reference range. Deep inspiration stops when the right upper quadrant is palpated. Ultrasound shows gallstones, a wall that is not thickened and no pericholecystic fluid. The common duct is not dilated; bilirubin is within the laboratory reference range."
+          }
+        ],
+        "after": [
+          {
+            "id": "profile.gs028c.acute-cholecystitis.a-stones-without-secondary-signs.female.37",
+            "presentation": "{patientName}, a 37-year-old woman, visits the clinic with right-upper-quadrant pain that persists between meals, nausea and a neutrophil count above the laboratory reference range. Deep inspiration stops when the right upper quadrant is palpated. Ultrasound shows gallstones, a wall that is not thickened and no pericholecystic fluid. The common duct is not dilated; bilirubin is within the laboratory reference range."
+          },
+          {
+            "id": "profile.gs028c.acute-cholecystitis.a-stones-without-secondary-signs.male.37",
+            "presentation": "{patientName}, a 37-year-old man, visits the clinic with right-upper-quadrant pain that persists between meals, nausea and a neutrophil count above the laboratory reference range. Deep inspiration stops when the right upper quadrant is palpated. Ultrasound shows gallstones, a wall that is not thickened and no pericholecystic fluid. The common duct is not dilated; bilirubin is within the laboratory reference range."
+          },
+          {
+            "id": "profile.gs028c.acute-cholecystitis.a-stones-without-secondary-signs.female.64",
+            "presentation": "{patientName}, a 64-year-old woman, visits the clinic with right-upper-quadrant pain that persists between meals, nausea and a neutrophil count above the laboratory reference range. Deep inspiration stops when the right upper quadrant is palpated. Ultrasound shows gallstones, a wall that is not thickened and no pericholecystic fluid. The common duct is not dilated; bilirubin is within the laboratory reference range."
+          },
+          {
+            "id": "profile.gs028c.acute-cholecystitis.a-stones-without-secondary-signs.male.64",
+            "presentation": "{patientName}, a 64-year-old man, visits the clinic with right-upper-quadrant pain that persists between meals, nausea and a neutrophil count above the laboratory reference range. Deep inspiration stops when the right upper quadrant is palpated. Ultrasound shows gallstones, a wall that is not thickened and no pericholecystic fluid. The common duct is not dilated; bilirubin is within the laboratory reference range."
+          }
+        ]
+      }
+    },
+    "reviewResponse": {
+      "sourceReviewId": "docs/research/question-batch1-adversarial-review6-20261102.json#A02",
+      "originalVerdict": "PASS",
+      "noteResponses": {
+        "cues": [],
+        "fairness": [
+          "fairness 1: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 2: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 3: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 4: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 5: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 6: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 7: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 8: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 9: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 10: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 11: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 12: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 13: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 14: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 15: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 16: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 17: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 18: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 19: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval."
+        ],
+        "suggestions": []
+      },
+      "selfCheck": {
+        "cueAttack": "No change to the exact independently passed version or its visible fields.",
+        "difficulty": "moderate",
+        "reasoningSteps": [
+          "Retain the exact independently passed version."
+        ],
+        "oneBestAnswer": "Retain the independent editorial finding and clinical limitations.",
+        "closestDistractor": "Unchanged option set.",
+        "remainingReview": "Manager acceptance and clinical approval remain separate."
+      }
+    },
+    "educationalIntent": "resident_two_step_reviewer_prediction_pending",
+    "supportingEvidenceClaimIds": [
+      "claim.gs028c.cholecystitis.hida-after-equivocal-us",
+      "claim.qq20261028.cholecystitis.comparative-imaging",
+      "claim.qq20261102.ultrasound-component-limits",
+      "claim.qq20261102a.gallbladder-filling-versus-emptying"
+    ],
+    "visibleHistory": {
+      "before": [],
+      "after": []
+    },
+    "lint": {
+      "before": [
+        {
+          "id": "0de7c803940c2667",
+          "rule": "convergence",
+          "severity": "advisory",
+          "message": "The key combines components reused across options; inspect whether the combinations cue a shortlist.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "Hepatobiliary",
+              "start": 0,
+              "end": 13,
+              "choiceId": "correct_2"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "scintigraphy",
+              "start": 14,
+              "end": 26,
+              "choiceId": "correct_2"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "assessing",
+              "start": 27,
+              "end": 36,
+              "choiceId": "correct_2"
+            }
+          ],
+          "metrics": {
+            "components": [
+              "hepatobiliary",
+              "scintigraphy",
+              "assessing"
+            ],
+            "optionCoverage": [
+              {
+                "choiceId": "correct_2",
+                "components": [
+                  "hepatobiliary",
+                  "scintigraphy",
+                  "assessing"
+                ]
+              },
+              {
+                "choiceId": "choice.qq20261102a.a02.d1",
+                "components": [
+                  "hepatobiliary",
+                  "scintigraphy"
+                ]
+              },
+              {
+                "choiceId": "choice.qq20261102a.a02.d2",
+                "components": [
+                  "assessing"
+                ]
+              }
+            ]
+          },
+          "occurrences": [
+            {
+              "caseId": "case.gs028c.acute-cholecystitis.a-stones-without-secondary-signs",
+              "profileIds": [
+                "canonical",
+                "profile.gs028c.acute-cholecystitis.a-stones-without-secondary-signs.female.37"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "start": 14,
+                  "end": 26
+                },
+                {
+                  "start": 27,
+                  "end": 36
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028c.acute-cholecystitis.a-stones-without-secondary-signs",
+              "profileIds": [
+                "profile.gs028c.acute-cholecystitis.a-stones-without-secondary-signs.male.37"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "start": 14,
+                  "end": 26
+                },
+                {
+                  "start": 27,
+                  "end": 36
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028c.acute-cholecystitis.a-stones-without-secondary-signs",
+              "profileIds": [
+                "profile.gs028c.acute-cholecystitis.a-stones-without-secondary-signs.female.64"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "start": 14,
+                  "end": 26
+                },
+                {
+                  "start": 27,
+                  "end": 36
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028c.acute-cholecystitis.a-stones-without-secondary-signs",
+              "profileIds": [
+                "profile.gs028c.acute-cholecystitis.a-stones-without-secondary-signs.male.64"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "start": 14,
+                  "end": 26
+                },
+                {
+                  "start": 27,
+                  "end": 36
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "after": [
+        {
+          "id": "0de7c803940c2667",
+          "rule": "convergence",
+          "severity": "advisory",
+          "message": "The key combines components reused across options; inspect whether the combinations cue a shortlist.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "Hepatobiliary",
+              "start": 0,
+              "end": 13,
+              "choiceId": "correct_2"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "scintigraphy",
+              "start": 14,
+              "end": 26,
+              "choiceId": "correct_2"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "assessing",
+              "start": 27,
+              "end": 36,
+              "choiceId": "correct_2"
+            }
+          ],
+          "metrics": {
+            "components": [
+              "hepatobiliary",
+              "scintigraphy",
+              "assessing"
+            ],
+            "optionCoverage": [
+              {
+                "choiceId": "correct_2",
+                "components": [
+                  "hepatobiliary",
+                  "scintigraphy",
+                  "assessing"
+                ]
+              },
+              {
+                "choiceId": "choice.qq20261102a.a02.d1",
+                "components": [
+                  "hepatobiliary",
+                  "scintigraphy"
+                ]
+              },
+              {
+                "choiceId": "choice.qq20261102a.a02.d2",
+                "components": [
+                  "assessing"
+                ]
+              }
+            ]
+          },
+          "occurrences": [
+            {
+              "caseId": "case.gs028c.acute-cholecystitis.a-stones-without-secondary-signs",
+              "profileIds": [
+                "canonical",
+                "profile.gs028c.acute-cholecystitis.a-stones-without-secondary-signs.female.37"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "start": 14,
+                  "end": 26
+                },
+                {
+                  "start": 27,
+                  "end": 36
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028c.acute-cholecystitis.a-stones-without-secondary-signs",
+              "profileIds": [
+                "profile.gs028c.acute-cholecystitis.a-stones-without-secondary-signs.male.37"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "start": 14,
+                  "end": 26
+                },
+                {
+                  "start": 27,
+                  "end": 36
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028c.acute-cholecystitis.a-stones-without-secondary-signs",
+              "profileIds": [
+                "profile.gs028c.acute-cholecystitis.a-stones-without-secondary-signs.female.64"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "start": 14,
+                  "end": 26
+                },
+                {
+                  "start": 27,
+                  "end": 36
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028c.acute-cholecystitis.a-stones-without-secondary-signs",
+              "profileIds": [
+                "profile.gs028c.acute-cholecystitis.a-stones-without-secondary-signs.male.64"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 13
+                },
+                {
+                  "start": 14,
+                  "end": 26
+                },
+                {
+                  "start": 27,
+                  "end": 36
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "clinicalMeaning": "Stable concept objective and ID retained. Clinical observations/application have changed; Melissa must confirm construct equivalence and the single key. No concept metadata version was promoted or silently rewritten.",
+    "lintReview": [
+      {
+        "findingId": "0de7c803940c2667",
+        "rule": "convergence",
+        "status": "retained_for_independent_review",
+        "reason": "Shared procedure/plan components do not establish the complete key. Independently test whether combining common components still shortcuts this particular set. Exact independent PASS/accepted-basic content is retained."
+      }
+    ],
+    "companionVariants": [],
+    "previousAuthoringComparison": {
+      "before": {
+        "variantId": "question.cholecystitis.hida-after-equivocal-ultrasound.v2.r6",
+        "Presentation": "Jamie Taylor, a 37-year-old woman, visits the clinic with right-upper-quadrant pain that persists between meals, nausea and a neutrophil count above the laboratory reference range. Deep inspiration stops when the right upper quadrant is palpated. Ultrasound shows gallstones, a wall that is not thickened and no pericholecystic fluid. The common duct is not dilated; bilirubin is within the laboratory reference range.",
+        "Current update": null,
+        "Exhibit": null,
+        "Task": "Which examination protocol should be ordered next for Jamie Taylor?",
+        "Options": [
+          "**KEY:** Hepatobiliary scintigraphy assessing gallbladder filling",
+          "Hepatobiliary scintigraphy measuring stimulated ejection fraction",
+          "MR cholangiopancreatography assessing the extrahepatic ducts"
+        ]
+      },
+      "after": {
+        "variantId": "question.cholecystitis.hida-after-equivocal-ultrasound.v2.r6",
+        "Presentation": "Jamie Taylor, a 37-year-old woman, visits the clinic with right-upper-quadrant pain that persists between meals, nausea and a neutrophil count above the laboratory reference range. Deep inspiration stops when the right upper quadrant is palpated. Ultrasound shows gallstones, a wall that is not thickened and no pericholecystic fluid. The common duct is not dilated; bilirubin is within the laboratory reference range.",
+        "Current update": null,
+        "Exhibit": null,
+        "Task": "Which examination protocol should be ordered next for Jamie Taylor?",
+        "Options": [
+          "**KEY:** Hepatobiliary scintigraphy assessing gallbladder filling",
+          "Hepatobiliary scintigraphy measuring stimulated ejection fraction",
+          "MR cholangiopancreatography assessing the extrahepatic ducts"
+        ]
+      },
+      "caseDetailChanges": {
+        "chiefComplaint": {
+          "before": "Right upper quadrant pain",
+          "after": "Right upper quadrant pain"
+        },
+        "profilePresentations": {
+          "before": [
+            {
+              "id": "profile.gs028c.acute-cholecystitis.a-stones-without-secondary-signs.female.37",
+              "presentation": "{patientName}, a 37-year-old woman, visits the clinic with right-upper-quadrant pain that persists between meals, nausea and a neutrophil count above the laboratory reference range. Deep inspiration stops when the right upper quadrant is palpated. Ultrasound shows gallstones, a wall that is not thickened and no pericholecystic fluid. The common duct is not dilated; bilirubin is within the laboratory reference range."
+            },
+            {
+              "id": "profile.gs028c.acute-cholecystitis.a-stones-without-secondary-signs.male.37",
+              "presentation": "{patientName}, a 37-year-old man, visits the clinic with right-upper-quadrant pain that persists between meals, nausea and a neutrophil count above the laboratory reference range. Deep inspiration stops when the right upper quadrant is palpated. Ultrasound shows gallstones, a wall that is not thickened and no pericholecystic fluid. The common duct is not dilated; bilirubin is within the laboratory reference range."
+            },
+            {
+              "id": "profile.gs028c.acute-cholecystitis.a-stones-without-secondary-signs.female.64",
+              "presentation": "{patientName}, a 64-year-old woman, visits the clinic with right-upper-quadrant pain that persists between meals, nausea and a neutrophil count above the laboratory reference range. Deep inspiration stops when the right upper quadrant is palpated. Ultrasound shows gallstones, a wall that is not thickened and no pericholecystic fluid. The common duct is not dilated; bilirubin is within the laboratory reference range."
+            },
+            {
+              "id": "profile.gs028c.acute-cholecystitis.a-stones-without-secondary-signs.male.64",
+              "presentation": "{patientName}, a 64-year-old man, visits the clinic with right-upper-quadrant pain that persists between meals, nausea and a neutrophil count above the laboratory reference range. Deep inspiration stops when the right upper quadrant is palpated. Ultrasound shows gallstones, a wall that is not thickened and no pericholecystic fluid. The common duct is not dilated; bilirubin is within the laboratory reference range."
+            }
+          ],
+          "after": [
+            {
+              "id": "profile.gs028c.acute-cholecystitis.a-stones-without-secondary-signs.female.37",
+              "presentation": "{patientName}, a 37-year-old woman, visits the clinic with right-upper-quadrant pain that persists between meals, nausea and a neutrophil count above the laboratory reference range. Deep inspiration stops when the right upper quadrant is palpated. Ultrasound shows gallstones, a wall that is not thickened and no pericholecystic fluid. The common duct is not dilated; bilirubin is within the laboratory reference range."
+            },
+            {
+              "id": "profile.gs028c.acute-cholecystitis.a-stones-without-secondary-signs.male.37",
+              "presentation": "{patientName}, a 37-year-old man, visits the clinic with right-upper-quadrant pain that persists between meals, nausea and a neutrophil count above the laboratory reference range. Deep inspiration stops when the right upper quadrant is palpated. Ultrasound shows gallstones, a wall that is not thickened and no pericholecystic fluid. The common duct is not dilated; bilirubin is within the laboratory reference range."
+            },
+            {
+              "id": "profile.gs028c.acute-cholecystitis.a-stones-without-secondary-signs.female.64",
+              "presentation": "{patientName}, a 64-year-old woman, visits the clinic with right-upper-quadrant pain that persists between meals, nausea and a neutrophil count above the laboratory reference range. Deep inspiration stops when the right upper quadrant is palpated. Ultrasound shows gallstones, a wall that is not thickened and no pericholecystic fluid. The common duct is not dilated; bilirubin is within the laboratory reference range."
+            },
+            {
+              "id": "profile.gs028c.acute-cholecystitis.a-stones-without-secondary-signs.male.64",
+              "presentation": "{patientName}, a 64-year-old man, visits the clinic with right-upper-quadrant pain that persists between meals, nausea and a neutrophil count above the laboratory reference range. Deep inspiration stops when the right upper quadrant is palpated. Ultrasound shows gallstones, a wall that is not thickened and no pericholecystic fluid. The common duct is not dilated; bilirubin is within the laboratory reference range."
+            }
+          ]
+        }
+      }
+    },
+    "pipelinePassed": true,
+    "independentReview": {
+      "source": "question-batch1-adversarial-review6-20261102.json",
+      "verdict": "PASS",
+      "basicVerdict": null,
+      "reviewedVariantId": "question.cholecystitis.hida-after-equivocal-ultrasound.v2.r6",
+      "difficultyPrediction": "moderate",
+      "clinicalApprovalConferred": false
+    },
+    "previousReviewResponse": {
+      "sourceReviewId": "docs/research/question-batch1-adversarial-review5-20261102.json#A02",
+      "originalVerdict": "PASS",
+      "noteResponses": {
+        "cues": [],
+        "fairness": [
+          "fairness 1: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 2: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 3: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 4: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 5: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 6: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 7: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 8: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 9: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 10: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 11: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 12: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 13: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 14: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 15: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 16: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval.",
+          "fairness 17: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval."
+        ],
+        "suggestions": []
+      },
+      "selfCheck": {
+        "cueAttack": "No change to the exact independently passed version or its visible fields.",
+        "difficulty": "moderate",
+        "reasoningSteps": [
+          "Retain the exact independently passed version."
+        ],
+        "oneBestAnswer": "Retain the independent editorial finding and clinical limitations.",
+        "closestDistractor": "Unchanged option set.",
+        "remainingReview": "Manager acceptance and clinical approval remain separate."
+      }
+    },
+    "basicAccepted": false,
+    "basicAcceptanceScope": null,
+    "contextRevisions": []
+  },
+  {
+    "id": "A06",
+    "title": "Classify nipple discharge patterns",
+    "reviewStatus": "needs_clinician_review",
+    "ownerStatus": "awaiting_owner_review",
+    "pipelineStatus": "independent_review_passed_awaiting_manager_acceptance",
+    "keyOrderNotice": "key shown first for review only; runtime options are randomized",
+    "reviewDisplayNote": "Synthetic canonical patient; placeholders rendered as Jamie Taylor for review only. Runtime finite profiles remain bound.",
+    "caseId": "case.gs028b.nipple-discharge.paired-bloody-single-duct",
+    "conceptId": "concept.pathologic-nipple-discharge.pathologic-vs-physiologic-recognition",
+    "before": {
+      "variantId": "question.pathologic-nipple-discharge.pathologic-vs-physiologic-recognition.v1.r6",
+      "Presentation": "Jamie Taylor, a 42-year-old woman, visits the clinic after noticing spots inside the left side of the bra between examinations. Compression in the clinic produces pale fluid from several openings on both nipples; a red-brown drop appears at one left nipple opening. Metoclopramide was started for nausea, and prolactin is above the laboratory reference range.",
+      "Current update": null,
+      "Exhibit": null,
+      "Task": "Which evaluation plan should guide Jamie Taylor's next visit?",
+      "Options": [
+        "**KEY:** Continue breast evaluation; review metoclopramide and reassess prolactin",
+        "Continue breast evaluation; obtain pituitary MRI before medication review",
+        "Defer breast evaluation; review metoclopramide and reassess prolactin",
+        "Defer breast evaluation; obtain pituitary MRI before medication review"
+      ]
+    },
+    "after": {
+      "variantId": "question.pathologic-nipple-discharge.pathologic-vs-physiologic-recognition.v1.r6",
+      "Presentation": "Jamie Taylor, a 42-year-old woman, visits the clinic after noticing spots inside the left side of the bra between examinations. Compression in the clinic produces pale fluid from several openings on both nipples; a red-brown drop appears at one left nipple opening. Metoclopramide was started for nausea, and prolactin is above the laboratory reference range.",
+      "Current update": null,
+      "Exhibit": null,
+      "Task": "Which evaluation plan should guide Jamie Taylor's next visit?",
+      "Options": [
+        "**KEY:** Continue breast evaluation; review metoclopramide and reassess prolactin",
+        "Continue breast evaluation; obtain pituitary MRI before medication review",
+        "Defer breast evaluation; review metoclopramide and reassess prolactin",
+        "Defer breast evaluation; obtain pituitary MRI before medication review"
+      ]
+    },
+    "originalAuthoringBefore": {
+      "variantId": "question.pathologic-nipple-discharge.pathologic-vs-physiologic-recognition.v1.r3",
+      "Presentation": "Jamie Taylor, a 42-year-old woman, visits the clinic after finding rust-coloured spots inside the left side of the bra between examinations. During the visit, compression produces pale fluid from several openings on each nipple; a reddish drop is also seen at one left-sided opening.",
+      "Current update": null,
+      "Exhibit": null,
+      "Task": "Which interpretation best accounts for Jamie Taylor's nipple-discharge history?",
+      "Options": [
+        "**KEY:** Pathologic left-sided episodes; physiologic expressed secretion",
+        "Physiologic left-sided episodes; physiologic expressed secretion",
+        "Endocrine-mediated left-sided episodes; endocrine-mediated expressed secretion"
+      ]
+    },
+    "comparisonBasis": "Exact independently passed version retained from review six; both sides show the same clinical fields.",
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Continue breast evaluation; review metoclopramide and reassess prolactin",
+          "Separates the focal spontaneous discharge from the expressed bilateral component and addresses a plausible medication effect in parallel."
+        ],
+        [
+          "Continue breast evaluation; obtain pituitary MRI before medication review",
+          "Addresses the breast but treats a potentially medication-related prolactin rise as an established reason to prioritize pituitary imaging."
+        ],
+        [
+          "Defer breast evaluation; review metoclopramide and reassess prolactin",
+          "Makes evaluation of the spontaneous focal discharge contingent on resolution of a separate systemic finding."
+        ],
+        [
+          "Defer breast evaluation; obtain pituitary MRI before medication review",
+          "Combines drug-first delay of the focal workup with premature central imaging before assessment of the medication contribution."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Continue breast evaluation; review metoclopramide and reassess prolactin",
+          "Separates the focal spontaneous discharge from the expressed bilateral component and addresses a plausible medication effect in parallel."
+        ],
+        [
+          "Continue breast evaluation; obtain pituitary MRI before medication review",
+          "Addresses the breast but treats a potentially medication-related prolactin rise as an established reason to prioritize pituitary imaging."
+        ],
+        [
+          "Defer breast evaluation; review metoclopramide and reassess prolactin",
+          "Makes evaluation of the spontaneous focal discharge contingent on resolution of a separate systemic finding."
+        ],
+        [
+          "Defer breast evaluation; obtain pituitary MRI before medication review",
+          "Combines drug-first delay of the focal workup with premature central imaging before assessment of the medication contribution."
+        ]
+      ]
+    },
+    "inference": "Separate the spontaneous left-duct episodes from the bilateral expressed secretion and the medication-associated laboratory finding. Then Select parallel breast and medication evaluation rather than delaying the local workup or prematurely escalating the endocrine workup.",
+    "focus": "Moderate application prediction only. The guideline-supported medication step is coordinated review, not an unsupervised drug stop or a diagnosis of a prolactinoma.",
+    "whatChanged": "No clinical fields changed from the exact independently passed version.",
+    "caseDetailChanges": {
+      "chiefComplaint": {
+        "before": "Nipple discharge",
+        "after": "Nipple discharge"
+      },
+      "profilePresentations": {
+        "before": [
+          {
+            "id": "profile.gs028b.nipple-discharge.paired-bloody-single-duct.female.42",
+            "presentation": "{patientName}, a 42-year-old woman, visits the clinic after noticing spots inside the left side of the bra between examinations. Compression in the clinic produces pale fluid from several openings on both nipples; a red-brown drop appears at one left nipple opening. Metoclopramide was started for nausea, and prolactin is above the laboratory reference range."
+          },
+          {
+            "id": "profile.gs028b.nipple-discharge.paired-bloody-single-duct.female.58",
+            "presentation": "{patientName}, a 58-year-old woman, visits the clinic after noticing spots inside the left side of the bra between examinations. Compression in the clinic produces pale fluid from several openings on both nipples; a red-brown drop appears at one left nipple opening. Metoclopramide was started for nausea, and prolactin is above the laboratory reference range."
+          }
+        ],
+        "after": [
+          {
+            "id": "profile.gs028b.nipple-discharge.paired-bloody-single-duct.female.42",
+            "presentation": "{patientName}, a 42-year-old woman, visits the clinic after noticing spots inside the left side of the bra between examinations. Compression in the clinic produces pale fluid from several openings on both nipples; a red-brown drop appears at one left nipple opening. Metoclopramide was started for nausea, and prolactin is above the laboratory reference range."
+          },
+          {
+            "id": "profile.gs028b.nipple-discharge.paired-bloody-single-duct.female.58",
+            "presentation": "{patientName}, a 58-year-old woman, visits the clinic after noticing spots inside the left side of the bra between examinations. Compression in the clinic produces pale fluid from several openings on both nipples; a red-brown drop appears at one left nipple opening. Metoclopramide was started for nausea, and prolactin is above the laboratory reference range."
+          }
+        ]
+      }
+    },
+    "reviewResponse": {
+      "sourceReviewId": "docs/research/question-batch1-adversarial-review6-20261102.json#A06",
+      "originalVerdict": "PASS",
+      "noteResponses": {
+        "cues": [],
+        "fairness": [
+          "fairness 1: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval."
+        ],
+        "suggestions": []
+      },
+      "selfCheck": {
+        "cueAttack": "No change to the exact independently passed version or its visible fields.",
+        "difficulty": "moderate",
+        "reasoningSteps": [
+          "Retain the exact independently passed version."
+        ],
+        "oneBestAnswer": "Retain the independent editorial finding and clinical limitations.",
+        "closestDistractor": "Unchanged option set.",
+        "remainingReview": "Manager acceptance and clinical approval remain separate."
+      }
+    },
+    "educationalIntent": "resident_application_reviewer_prediction_pending",
+    "supportingEvidenceClaimIds": [
+      "claim.discharge.pathologic-pattern",
+      "claim.qq20261029.discharge.mixed-pattern",
+      "claim.qq20261029.discharge.endocrine-alternative",
+      "claim.qq20261102.galactorrhea-pattern",
+      "claim.qq20261102a.mixed-discharge-medication",
+      "claim.qq20261102a.mixed-discharge-local-assessment",
+      "claim.qq20261102b.mixed-discharge-parallel-evaluation"
+    ],
+    "visibleHistory": {
+      "before": [],
+      "after": []
+    },
+    "lint": {
+      "before": [
+        {
+          "id": "89f91bbce99a9451",
+          "rule": "convergence",
+          "severity": "advisory",
+          "message": "The key combines components reused across options; inspect whether the combinations cue a shortlist.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "Continue",
+              "start": 0,
+              "end": 8,
+              "choiceId": "correct_1"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "metoclopramide",
+              "start": 35,
+              "end": 49,
+              "choiceId": "correct_1"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "reassess",
+              "start": 54,
+              "end": 62,
+              "choiceId": "correct_1"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "prolactin",
+              "start": 63,
+              "end": 72,
+              "choiceId": "correct_1"
+            }
+          ],
+          "metrics": {
+            "components": [
+              "continue",
+              "metoclopramide",
+              "reassess",
+              "prolactin"
+            ],
+            "optionCoverage": [
+              {
+                "choiceId": "correct_1",
+                "components": [
+                  "continue",
+                  "metoclopramide",
+                  "reassess",
+                  "prolactin"
+                ]
+              },
+              {
+                "choiceId": "choice.qq20261102b.a06.d1",
+                "components": [
+                  "continue"
+                ]
+              },
+              {
+                "choiceId": "choice.qq20261102b.a06.d2",
+                "components": [
+                  "metoclopramide",
+                  "reassess",
+                  "prolactin"
+                ]
+              },
+              {
+                "choiceId": "choice.qq20261102b.a06.d3",
+                "components": []
+              }
+            ]
+          },
+          "occurrences": [
+            {
+              "caseId": "case.gs028b.nipple-discharge.paired-bloody-single-duct",
+              "profileIds": [
+                "canonical",
+                "profile.gs028b.nipple-discharge.paired-bloody-single-duct.female.42"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 8
+                },
+                {
+                  "start": 35,
+                  "end": 49
+                },
+                {
+                  "start": 54,
+                  "end": 62
+                },
+                {
+                  "start": 63,
+                  "end": 72
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.nipple-discharge.paired-bloody-single-duct",
+              "profileIds": [
+                "profile.gs028b.nipple-discharge.paired-bloody-single-duct.female.58"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 8
+                },
+                {
+                  "start": 35,
+                  "end": 49
+                },
+                {
+                  "start": 54,
+                  "end": 62
+                },
+                {
+                  "start": 63,
+                  "end": 72
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "1098abc5160de6ca",
+          "rule": "near-duplicate-options",
+          "severity": "advisory",
+          "message": "Labels overlap substantially; small differences can be meaningful and need review.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "Continue breast evaluation; obtain pituitary MRI before medication review",
+              "start": 0,
+              "end": 73,
+              "choiceId": "choice.qq20261102b.a06.d1"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Defer breast evaluation; obtain pituitary MRI before medication review",
+              "start": 0,
+              "end": 70,
+              "choiceId": "choice.qq20261102b.a06.d3"
+            }
+          ],
+          "metrics": {
+            "jaccard": 0.8,
+            "differingTerms": [
+              "continue",
+              "defer"
+            ]
+          },
+          "occurrences": [
+            {
+              "caseId": "case.gs028b.nipple-discharge.paired-bloody-single-duct",
+              "profileIds": [
+                "canonical",
+                "profile.gs028b.nipple-discharge.paired-bloody-single-duct.female.42"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 73
+                },
+                {
+                  "start": 0,
+                  "end": 70
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.nipple-discharge.paired-bloody-single-duct",
+              "profileIds": [
+                "profile.gs028b.nipple-discharge.paired-bloody-single-duct.female.58"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 73
+                },
+                {
+                  "start": 0,
+                  "end": 70
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "after": [
+        {
+          "id": "89f91bbce99a9451",
+          "rule": "convergence",
+          "severity": "advisory",
+          "message": "The key combines components reused across options; inspect whether the combinations cue a shortlist.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "Continue",
+              "start": 0,
+              "end": 8,
+              "choiceId": "correct_1"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "metoclopramide",
+              "start": 35,
+              "end": 49,
+              "choiceId": "correct_1"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "reassess",
+              "start": 54,
+              "end": 62,
+              "choiceId": "correct_1"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "prolactin",
+              "start": 63,
+              "end": 72,
+              "choiceId": "correct_1"
+            }
+          ],
+          "metrics": {
+            "components": [
+              "continue",
+              "metoclopramide",
+              "reassess",
+              "prolactin"
+            ],
+            "optionCoverage": [
+              {
+                "choiceId": "correct_1",
+                "components": [
+                  "continue",
+                  "metoclopramide",
+                  "reassess",
+                  "prolactin"
+                ]
+              },
+              {
+                "choiceId": "choice.qq20261102b.a06.d1",
+                "components": [
+                  "continue"
+                ]
+              },
+              {
+                "choiceId": "choice.qq20261102b.a06.d2",
+                "components": [
+                  "metoclopramide",
+                  "reassess",
+                  "prolactin"
+                ]
+              },
+              {
+                "choiceId": "choice.qq20261102b.a06.d3",
+                "components": []
+              }
+            ]
+          },
+          "occurrences": [
+            {
+              "caseId": "case.gs028b.nipple-discharge.paired-bloody-single-duct",
+              "profileIds": [
+                "canonical",
+                "profile.gs028b.nipple-discharge.paired-bloody-single-duct.female.42"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 8
+                },
+                {
+                  "start": 35,
+                  "end": 49
+                },
+                {
+                  "start": 54,
+                  "end": 62
+                },
+                {
+                  "start": 63,
+                  "end": 72
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.nipple-discharge.paired-bloody-single-duct",
+              "profileIds": [
+                "profile.gs028b.nipple-discharge.paired-bloody-single-duct.female.58"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 8
+                },
+                {
+                  "start": 35,
+                  "end": 49
+                },
+                {
+                  "start": 54,
+                  "end": 62
+                },
+                {
+                  "start": 63,
+                  "end": 72
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "1098abc5160de6ca",
+          "rule": "near-duplicate-options",
+          "severity": "advisory",
+          "message": "Labels overlap substantially; small differences can be meaningful and need review.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "Continue breast evaluation; obtain pituitary MRI before medication review",
+              "start": 0,
+              "end": 73,
+              "choiceId": "choice.qq20261102b.a06.d1"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Defer breast evaluation; obtain pituitary MRI before medication review",
+              "start": 0,
+              "end": 70,
+              "choiceId": "choice.qq20261102b.a06.d3"
+            }
+          ],
+          "metrics": {
+            "jaccard": 0.8,
+            "differingTerms": [
+              "continue",
+              "defer"
+            ]
+          },
+          "occurrences": [
+            {
+              "caseId": "case.gs028b.nipple-discharge.paired-bloody-single-duct",
+              "profileIds": [
+                "canonical",
+                "profile.gs028b.nipple-discharge.paired-bloody-single-duct.female.42"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 73
+                },
+                {
+                  "start": 0,
+                  "end": 70
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028b.nipple-discharge.paired-bloody-single-duct",
+              "profileIds": [
+                "profile.gs028b.nipple-discharge.paired-bloody-single-duct.female.58"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 73
+                },
+                {
+                  "start": 0,
+                  "end": 70
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "clinicalMeaning": "Stable concept ID/objective retained as applied or explicitly basic; no concept metadata version or clinical approval is silently changed. Melissa must confirm construct equivalence and the single best answer.",
+    "lintReview": [
+      {
+        "findingId": "89f91bbce99a9451",
+        "rule": "convergence",
+        "status": "retained_for_independent_review",
+        "reason": "Shared procedure/plan components do not establish the complete key. Independently test whether combining common components still shortcuts this particular set. Exact independent PASS/accepted-basic content is retained."
+      },
+      {
+        "findingId": "1098abc5160de6ca",
+        "rule": "near-duplicate-options",
+        "status": "retained_for_independent_review",
+        "reason": "Shared components are deliberate. Check the differing clinical/protocol component; no choices have identical meaning. Exact independent PASS/accepted-basic content is retained."
+      }
+    ],
+    "companionVariants": [
+      {
+        "id": "A06-context",
+        "before": "question.pathologic-nipple-discharge.diagnostic-imaging.v1.r7",
+        "after": "question.pathologic-nipple-discharge.diagnostic-imaging.v1.r7",
+        "whatChanged": "Exact independent PASS or accepted-basic wording retained."
+      }
+    ],
+    "previousAuthoringComparison": {
+      "before": {
+        "variantId": "question.pathologic-nipple-discharge.pathologic-vs-physiologic-recognition.v1.r6",
+        "Presentation": "Jamie Taylor, a 42-year-old woman, visits the clinic after noticing spots inside the left side of the bra between examinations. Compression in the clinic produces pale fluid from several openings on both nipples; a red-brown drop appears at one left nipple opening. Metoclopramide was started for nausea, and prolactin is above the laboratory reference range.",
+        "Current update": null,
+        "Exhibit": null,
+        "Task": "Which evaluation plan should guide Jamie Taylor's next visit?",
+        "Options": [
+          "**KEY:** Continue breast evaluation; review metoclopramide and reassess prolactin",
+          "Continue breast evaluation; obtain pituitary MRI before medication review",
+          "Defer breast evaluation; review metoclopramide and reassess prolactin",
+          "Defer breast evaluation; obtain pituitary MRI before medication review"
+        ]
+      },
+      "after": {
+        "variantId": "question.pathologic-nipple-discharge.pathologic-vs-physiologic-recognition.v1.r6",
+        "Presentation": "Jamie Taylor, a 42-year-old woman, visits the clinic after noticing spots inside the left side of the bra between examinations. Compression in the clinic produces pale fluid from several openings on both nipples; a red-brown drop appears at one left nipple opening. Metoclopramide was started for nausea, and prolactin is above the laboratory reference range.",
+        "Current update": null,
+        "Exhibit": null,
+        "Task": "Which evaluation plan should guide Jamie Taylor's next visit?",
+        "Options": [
+          "**KEY:** Continue breast evaluation; review metoclopramide and reassess prolactin",
+          "Continue breast evaluation; obtain pituitary MRI before medication review",
+          "Defer breast evaluation; review metoclopramide and reassess prolactin",
+          "Defer breast evaluation; obtain pituitary MRI before medication review"
+        ]
+      },
+      "caseDetailChanges": {
+        "chiefComplaint": {
+          "before": "Nipple discharge",
+          "after": "Nipple discharge"
+        },
+        "profilePresentations": {
+          "before": [
+            {
+              "id": "profile.gs028b.nipple-discharge.paired-bloody-single-duct.female.42",
+              "presentation": "{patientName}, a 42-year-old woman, visits the clinic after noticing spots inside the left side of the bra between examinations. Compression in the clinic produces pale fluid from several openings on both nipples; a red-brown drop appears at one left nipple opening. Metoclopramide was started for nausea, and prolactin is above the laboratory reference range."
+            },
+            {
+              "id": "profile.gs028b.nipple-discharge.paired-bloody-single-duct.female.58",
+              "presentation": "{patientName}, a 58-year-old woman, visits the clinic after noticing spots inside the left side of the bra between examinations. Compression in the clinic produces pale fluid from several openings on both nipples; a red-brown drop appears at one left nipple opening. Metoclopramide was started for nausea, and prolactin is above the laboratory reference range."
+            }
+          ],
+          "after": [
+            {
+              "id": "profile.gs028b.nipple-discharge.paired-bloody-single-duct.female.42",
+              "presentation": "{patientName}, a 42-year-old woman, visits the clinic after noticing spots inside the left side of the bra between examinations. Compression in the clinic produces pale fluid from several openings on both nipples; a red-brown drop appears at one left nipple opening. Metoclopramide was started for nausea, and prolactin is above the laboratory reference range."
+            },
+            {
+              "id": "profile.gs028b.nipple-discharge.paired-bloody-single-duct.female.58",
+              "presentation": "{patientName}, a 58-year-old woman, visits the clinic after noticing spots inside the left side of the bra between examinations. Compression in the clinic produces pale fluid from several openings on both nipples; a red-brown drop appears at one left nipple opening. Metoclopramide was started for nausea, and prolactin is above the laboratory reference range."
+            }
+          ]
+        }
+      }
+    },
+    "pipelinePassed": true,
+    "independentReview": {
+      "source": "question-batch1-adversarial-review6-20261102.json",
+      "verdict": "PASS",
+      "basicVerdict": null,
+      "reviewedVariantId": "question.pathologic-nipple-discharge.pathologic-vs-physiologic-recognition.v1.r6",
+      "difficultyPrediction": "moderate",
+      "clinicalApprovalConferred": false
+    },
+    "basicRecallIntentional": false,
+    "previousReviewResponse": {
+      "sourceReviewId": "docs/research/question-batch1-adversarial-review5-20261102.json#A06",
+      "originalVerdict": "PASS",
+      "noteResponses": {
+        "cues": [],
+        "fairness": [
+          "fairness 1: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval."
+        ],
+        "suggestions": []
+      },
+      "selfCheck": {
+        "cueAttack": "No change to the exact independently passed version or its visible fields.",
+        "difficulty": "moderate",
+        "reasoningSteps": [
+          "Retain the exact independently passed version."
+        ],
+        "oneBestAnswer": "Retain the independent editorial finding and clinical limitations.",
+        "closestDistractor": "Unchanged option set.",
+        "remainingReview": "Manager acceptance and clinical approval remain separate."
+      }
+    },
+    "reviewActions": [
+      "All four options now address breast evaluation and the systemic finding, removing the organ-only-in-key shortcut and balancing component frequency.",
+      "Retain the focal red-brown and bilateral expressed observations; do not delete needed evidence merely to hide risk.",
+      "Use immediate parallel workup versus endocrine-first deferral/premature MRI as the actual decision, with medication review rather than a new drug order."
+    ],
+    "basicAccepted": false,
+    "basicAcceptanceScope": null,
+    "contextRevisions": [
+      {
+        "id": "A06-context",
+        "title": "Select diagnostic imaging for pathologic discharge",
+        "reviewStatus": "needs_clinician_review",
+        "ownerStatus": "awaiting_owner_review",
+        "pipelineStatus": "independent_review_passed_awaiting_manager_acceptance",
+        "keyOrderNotice": "key shown first for review only; runtime options are randomized",
+        "reviewDisplayNote": "Synthetic canonical patient; placeholders rendered as Jamie Taylor for review only. Runtime finite profiles remain bound.",
+        "caseId": "case.gs028b.nipple-discharge.paired-bloody-single-duct",
+        "conceptId": "concept.pathologic-nipple-discharge.diagnostic-imaging",
+        "before": {
+          "variantId": "question.pathologic-nipple-discharge.diagnostic-imaging.v1.r7",
+          "Presentation": "Jamie Taylor, a 42-year-old woman, visits the clinic after noticing spots inside the left side of the bra between examinations. Compression in the clinic produces pale fluid from several openings on both nipples; a red-brown drop appears at one left nipple opening. Metoclopramide was started for nausea, and prolactin is above the laboratory reference range.",
+          "Current update": "Jamie Taylor brings an outside breast MRI report obtained for silicone implants. It lists silicone-sensitive sequences without intravenous gadolinium and reports intact implant shells.",
+          "Exhibit": null,
+          "Task": "Which imaging pathway should now be arranged for Jamie Taylor's nipple discharge?",
+          "Options": [
+            "**KEY:** Diagnostic mammography and targeted retroareolar ultrasound",
+            "Contrast-enhanced breast MRI and targeted retroareolar ultrasound",
+            "Contrast ductography and targeted retroareolar ultrasound"
+          ]
+        },
+        "after": {
+          "variantId": "question.pathologic-nipple-discharge.diagnostic-imaging.v1.r7",
+          "Presentation": "Jamie Taylor, a 42-year-old woman, visits the clinic after noticing spots inside the left side of the bra between examinations. Compression in the clinic produces pale fluid from several openings on both nipples; a red-brown drop appears at one left nipple opening. Metoclopramide was started for nausea, and prolactin is above the laboratory reference range.",
+          "Current update": "Jamie Taylor brings an outside breast MRI report obtained for silicone implants. It lists silicone-sensitive sequences without intravenous gadolinium and reports intact implant shells.",
+          "Exhibit": null,
+          "Task": "Which imaging pathway should now be arranged for Jamie Taylor's nipple discharge?",
+          "Options": [
+            "**KEY:** Diagnostic mammography and targeted retroareolar ultrasound",
+            "Contrast-enhanced breast MRI and targeted retroareolar ultrasound",
+            "Contrast ductography and targeted retroareolar ultrasound"
+          ]
+        },
+        "originalAuthoringBefore": {
+          "variantId": "question.pathologic-nipple-discharge.diagnostic-imaging.v1.r4",
+          "Presentation": "Jamie Taylor, a 42-year-old woman, visits the clinic after finding rust-coloured spots inside the left side of the bra between examinations. During the visit, compression produces pale fluid from several openings on each nipple; a reddish drop is also seen at one left-sided opening.",
+          "Current update": "The left-sided staining has continued between visits.",
+          "Exhibit": null,
+          "Task": "Which evaluation plan is most appropriate for Jamie Taylor's nipple discharge?",
+          "Options": [
+            "**KEY:** Diagnostic mammography and ultrasound",
+            "Screening breast mammography",
+            "Breast magnetic resonance imaging",
+            "Interval clinical breast reassessment"
+          ]
+        },
+        "comparisonBasis": "Exact independently passed version retained from review six; both sides show the same clinical fields.",
+        "rationalePairs": {
+          "before": [
+            [
+              "**KEY:** Diagnostic mammography and targeted retroareolar ultrasound",
+              "The outside implant-integrity study is not a contrast-enhanced discharge assessment; obtain the conventional diagnostic pathway at this age."
+            ],
+            [
+              "Contrast-enhanced breast MRI and targeted retroareolar ultrasound",
+              "Correctly notices the implant study's protocol but advances problem-solving MRI ahead of the conventional diagnostic mammographic assessment."
+            ],
+            [
+              "Contrast ductography and targeted retroareolar ultrasound",
+              "Investigates the ducts but substitutes an invasive localization procedure for the initial age-appropriate mammographic assessment."
+            ]
+          ],
+          "after": [
+            [
+              "**KEY:** Diagnostic mammography and targeted retroareolar ultrasound",
+              "The outside implant-integrity study is not a contrast-enhanced discharge assessment; obtain the conventional diagnostic pathway at this age."
+            ],
+            [
+              "Contrast-enhanced breast MRI and targeted retroareolar ultrasound",
+              "Correctly notices the implant study's protocol but advances problem-solving MRI ahead of the conventional diagnostic mammographic assessment."
+            ],
+            [
+              "Contrast ductography and targeted retroareolar ultrasound",
+              "Investigates the ducts but substitutes an invasive localization procedure for the initial age-appropriate mammographic assessment."
+            ]
+          ]
+        },
+        "inference": "Read the outside protocol rather than treating the word MRI and an intact implant report as a completed cancer/discharge evaluation. Then Choose the still-needed diagnostic pathway rather than repeating an advanced modality or moving directly to duct localization.",
+        "focus": "Melissa/radiology must confirm the implant-protocol scenario and ranking. Ductography is a localization option, not declared useless. No contrast dose or interval is authored.",
+        "whatChanged": "No clinical fields changed from the exact independently passed version.",
+        "caseDetailChanges": {
+          "chiefComplaint": {
+            "before": "Nipple discharge",
+            "after": "Nipple discharge"
+          },
+          "profilePresentations": {
+            "before": [
+              {
+                "id": "profile.gs028b.nipple-discharge.paired-bloody-single-duct.female.42",
+                "presentation": "{patientName}, a 42-year-old woman, visits the clinic after noticing spots inside the left side of the bra between examinations. Compression in the clinic produces pale fluid from several openings on both nipples; a red-brown drop appears at one left nipple opening. Metoclopramide was started for nausea, and prolactin is above the laboratory reference range."
+              },
+              {
+                "id": "profile.gs028b.nipple-discharge.paired-bloody-single-duct.female.58",
+                "presentation": "{patientName}, a 58-year-old woman, visits the clinic after noticing spots inside the left side of the bra between examinations. Compression in the clinic produces pale fluid from several openings on both nipples; a red-brown drop appears at one left nipple opening. Metoclopramide was started for nausea, and prolactin is above the laboratory reference range."
+              }
+            ],
+            "after": [
+              {
+                "id": "profile.gs028b.nipple-discharge.paired-bloody-single-duct.female.42",
+                "presentation": "{patientName}, a 42-year-old woman, visits the clinic after noticing spots inside the left side of the bra between examinations. Compression in the clinic produces pale fluid from several openings on both nipples; a red-brown drop appears at one left nipple opening. Metoclopramide was started for nausea, and prolactin is above the laboratory reference range."
+              },
+              {
+                "id": "profile.gs028b.nipple-discharge.paired-bloody-single-duct.female.58",
+                "presentation": "{patientName}, a 58-year-old woman, visits the clinic after noticing spots inside the left side of the bra between examinations. Compression in the clinic produces pale fluid from several openings on both nipples; a red-brown drop appears at one left nipple opening. Metoclopramide was started for nausea, and prolactin is above the laboratory reference range."
+              }
+            ]
+          }
+        },
+        "reviewResponse": {
+          "sourceReviewId": "docs/research/question-batch1-adversarial-review6-20261102.json#A06-context",
+          "originalVerdict": "PASS",
+          "noteResponses": {
+            "cues": [],
+            "fairness": [
+              "fairness 1: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval."
+            ],
+            "suggestions": []
+          },
+          "selfCheck": {
+            "cueAttack": "No change to the exact independently passed version or its visible fields.",
+            "difficulty": "moderate",
+            "reasoningSteps": [
+              "Retain the exact independently passed version."
+            ],
+            "oneBestAnswer": "Retain the independent editorial finding and clinical limitations.",
+            "closestDistractor": "Unchanged option set.",
+            "remainingReview": "Manager acceptance and clinical approval remain separate."
+          }
+        },
+        "educationalIntent": "resident_application_reviewer_prediction_pending",
+        "supportingEvidenceClaimIds": [
+          "claim.discharge.imaging",
+          "claim.qq20261102a.initial-breast-pathway",
+          "claim.qq20261102a.mixed-discharge-local-assessment",
+          "claim.qq20261102b.implant-mri-not-discharge-assessment"
+        ],
+        "visibleHistory": {
+          "before": [
+            {
+              "variantId": "question.pathologic-nipple-discharge.pathologic-vs-physiologic-recognition.v1.r6",
+              "result": null,
+              "feedback": "A drug-associated bilateral secretory component does not explain away spontaneous focal duct discharge. Continue breast-local evaluation while reviewing metoclopramide and reassessing the prolactin finding; a pituitary study is not the automatic first response to a plausible drug-related elevation.",
+              "teachingPoint": "A drug-associated bilateral secretory component does not explain away spontaneous focal duct discharge. Continue breast-local evaluation while reviewing metoclopramide and reassessing the prolactin finding; a pituitary study is not the automatic first response to a plausible drug-related elevation."
+            }
+          ],
+          "after": [
+            {
+              "variantId": "question.pathologic-nipple-discharge.pathologic-vs-physiologic-recognition.v1.r6",
+              "result": null,
+              "feedback": "A drug-associated bilateral secretory component does not explain away spontaneous focal duct discharge. Continue breast-local evaluation while reviewing metoclopramide and reassessing the prolactin finding; a pituitary study is not the automatic first response to a plausible drug-related elevation.",
+              "teachingPoint": "A drug-associated bilateral secretory component does not explain away spontaneous focal duct discharge. Continue breast-local evaluation while reviewing metoclopramide and reassessing the prolactin finding; a pituitary study is not the automatic first response to a plausible drug-related elevation."
+            }
+          ]
+        },
+        "lint": {
+          "before": [],
+          "after": []
+        },
+        "clinicalMeaning": "Stable concept ID/objective retained as applied or explicitly basic; no concept metadata version or clinical approval is silently changed. Melissa must confirm construct equivalence and the single best answer.",
+        "lintReview": [],
+        "companionVariants": [],
+        "previousAuthoringComparison": {
+          "before": {
+            "variantId": "question.pathologic-nipple-discharge.diagnostic-imaging.v1.r7",
+            "Presentation": "Jamie Taylor, a 42-year-old woman, visits the clinic after noticing spots inside the left side of the bra between examinations. Compression in the clinic produces pale fluid from several openings on both nipples; a red-brown drop appears at one left nipple opening. Metoclopramide was started for nausea, and prolactin is above the laboratory reference range.",
+            "Current update": "Jamie Taylor brings an outside breast MRI report obtained for silicone implants. It lists silicone-sensitive sequences without intravenous gadolinium and reports intact implant shells.",
+            "Exhibit": null,
+            "Task": "Which imaging pathway should now be arranged for Jamie Taylor's nipple discharge?",
+            "Options": [
+              "**KEY:** Diagnostic mammography and targeted retroareolar ultrasound",
+              "Contrast-enhanced breast MRI and targeted retroareolar ultrasound",
+              "Contrast ductography and targeted retroareolar ultrasound"
+            ]
+          },
+          "after": {
+            "variantId": "question.pathologic-nipple-discharge.diagnostic-imaging.v1.r7",
+            "Presentation": "Jamie Taylor, a 42-year-old woman, visits the clinic after noticing spots inside the left side of the bra between examinations. Compression in the clinic produces pale fluid from several openings on both nipples; a red-brown drop appears at one left nipple opening. Metoclopramide was started for nausea, and prolactin is above the laboratory reference range.",
+            "Current update": "Jamie Taylor brings an outside breast MRI report obtained for silicone implants. It lists silicone-sensitive sequences without intravenous gadolinium and reports intact implant shells.",
+            "Exhibit": null,
+            "Task": "Which imaging pathway should now be arranged for Jamie Taylor's nipple discharge?",
+            "Options": [
+              "**KEY:** Diagnostic mammography and targeted retroareolar ultrasound",
+              "Contrast-enhanced breast MRI and targeted retroareolar ultrasound",
+              "Contrast ductography and targeted retroareolar ultrasound"
+            ]
+          },
+          "caseDetailChanges": {
+            "chiefComplaint": {
+              "before": "Nipple discharge",
+              "after": "Nipple discharge"
+            },
+            "profilePresentations": {
+              "before": [
+                {
+                  "id": "profile.gs028b.nipple-discharge.paired-bloody-single-duct.female.42",
+                  "presentation": "{patientName}, a 42-year-old woman, visits the clinic after noticing spots inside the left side of the bra between examinations. Compression in the clinic produces pale fluid from several openings on both nipples; a red-brown drop appears at one left nipple opening. Metoclopramide was started for nausea, and prolactin is above the laboratory reference range."
+                },
+                {
+                  "id": "profile.gs028b.nipple-discharge.paired-bloody-single-duct.female.58",
+                  "presentation": "{patientName}, a 58-year-old woman, visits the clinic after noticing spots inside the left side of the bra between examinations. Compression in the clinic produces pale fluid from several openings on both nipples; a red-brown drop appears at one left nipple opening. Metoclopramide was started for nausea, and prolactin is above the laboratory reference range."
+                }
+              ],
+              "after": [
+                {
+                  "id": "profile.gs028b.nipple-discharge.paired-bloody-single-duct.female.42",
+                  "presentation": "{patientName}, a 42-year-old woman, visits the clinic after noticing spots inside the left side of the bra between examinations. Compression in the clinic produces pale fluid from several openings on both nipples; a red-brown drop appears at one left nipple opening. Metoclopramide was started for nausea, and prolactin is above the laboratory reference range."
+                },
+                {
+                  "id": "profile.gs028b.nipple-discharge.paired-bloody-single-duct.female.58",
+                  "presentation": "{patientName}, a 58-year-old woman, visits the clinic after noticing spots inside the left side of the bra between examinations. Compression in the clinic produces pale fluid from several openings on both nipples; a red-brown drop appears at one left nipple opening. Metoclopramide was started for nausea, and prolactin is above the laboratory reference range."
+                }
+              ]
+            }
+          }
+        },
+        "pipelinePassed": true,
+        "independentReview": {
+          "source": "question-batch1-adversarial-review6-20261102.json",
+          "verdict": "PASS",
+          "basicVerdict": null,
+          "reviewedVariantId": "question.pathologic-nipple-discharge.diagnostic-imaging.v1.r7",
+          "difficultyPrediction": "moderate",
+          "clinicalApprovalConferred": false
+        },
+        "basicRecallIntentional": false,
+        "previousReviewResponse": {
+          "sourceReviewId": "docs/research/question-batch1-adversarial-review5-20261102.json#A06-context",
+          "originalVerdict": "PASS",
+          "noteResponses": {
+            "cues": [],
+            "fairness": [
+              "fairness 1: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval."
+            ],
+            "suggestions": []
+          },
+          "selfCheck": {
+            "cueAttack": "No change to the exact independently passed version or its visible fields.",
+            "difficulty": "moderate",
+            "reasoningSteps": [
+              "Retain the exact independently passed version."
+            ],
+            "oneBestAnswer": "Retain the independent editorial finding and clinical limitations.",
+            "closestDistractor": "Unchanged option set.",
+            "remainingReview": "Manager acceptance and clinical approval remain separate."
+          }
+        },
+        "reviewActions": [
+          "Make the prior protocol consequential: silicone-sensitive noncontrast imaging addresses implant integrity rather than the discharge problem.",
+          "Replace two equivalent premature-MRI errors with contrast-MRI substitution and ductography substitution.",
+          "Keep the age, mixed discharge and stage information, and retain the keyed diagnostic-imaging service without executing a different procedure."
+        ],
+        "basicAccepted": false,
+        "basicAcceptanceScope": null
+      }
+    ]
+  },
+  {
+    "id": "A25",
+    "title": "Perioperative ART continuity",
+    "reviewStatus": "needs_clinician_review",
+    "ownerStatus": "awaiting_owner_review",
+    "pipelineStatus": "independent_review_passed_awaiting_manager_acceptance",
+    "keyOrderNotice": "key shown first for review only; runtime options are randomized",
+    "reviewDisplayNote": "Synthetic canonical patient; placeholders rendered as Jamie Taylor for review only. Runtime finite profiles remain bound.",
+    "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+    "conceptId": "concept.gs028g.hiv-perioperative.art-continuity",
+    "before": {
+      "variantId": "question.gs028g.hiv-perioperative.art-continuity.v1.r7",
+      "Presentation": "Jamie Taylor, a 43-year-old woman, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication.",
+      "Current update": null,
+      "Exhibit": null,
+      "Task": "Which combined medication plan should be agreed with Jamie Taylor's surgical team?",
+      "Options": [
+        "**KEY:** Continue ART; plan individually titrated intravenous midazolam with respiratory monitoring",
+        "Continue ART; plan individually titrated oral midazolam with respiratory monitoring",
+        "Interrupt ART; plan individually titrated intravenous midazolam with respiratory monitoring",
+        "Interrupt ART; plan individually titrated oral midazolam with respiratory monitoring"
+      ]
+    },
+    "after": {
+      "variantId": "question.gs028g.hiv-perioperative.art-continuity.v1.r7",
+      "Presentation": "Jamie Taylor, a 43-year-old woman, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication.",
+      "Current update": null,
+      "Exhibit": null,
+      "Task": "Which combined medication plan should be agreed with Jamie Taylor's surgical team?",
+      "Options": [
+        "**KEY:** Continue ART; plan individually titrated intravenous midazolam with respiratory monitoring",
+        "Continue ART; plan individually titrated oral midazolam with respiratory monitoring",
+        "Interrupt ART; plan individually titrated intravenous midazolam with respiratory monitoring",
+        "Interrupt ART; plan individually titrated oral midazolam with respiratory monitoring"
+      ]
+    },
+    "originalAuthoringBefore": {
+      "variantId": "question.gs028g.hiv-perioperative.art-continuity.v1.r4",
+      "Presentation": "Jamie Taylor, a 43-year-old woman, visits the clinic before elective hernia repair at an outside surgical service. The clinic medication list records a ritonavir-boosted antiretroviral regimen being taken as prescribed. A generic preoperative instruction sheet includes these medicines among those to pause for the operation.",
+      "Current update": null,
+      "Exhibit": null,
+      "Task": "Which perioperative antiretroviral plan should be sent to Jamie Taylor's surgical team?",
+      "Options": [
+        "**KEY:** Continue the complete prescribed regimen",
+        "Interrupt the complete prescribed regimen",
+        "Withhold ritonavir and maintain the other agents"
+      ]
+    },
+    "comparisonBasis": "Exact independently passed version retained from review six; both sides show the same clinical fields.",
+    "rationalePairs": {
+      "before": [
+        [
+          "**KEY:** Continue ART; plan individually titrated intravenous midazolam with respiratory monitoring",
+          "Preserves ART while coordinating parenteral midazolam, monitoring and individualized dose reduction when appropriate."
+        ],
+        [
+          "Continue ART; plan individually titrated oral midazolam with respiratory monitoring",
+          "Treats monitoring/titration as sufficient to overcome the contraindicated oral boosted-PI combination."
+        ],
+        [
+          "Interrupt ART; plan individually titrated intravenous midazolam with respiratory monitoring",
+          "Unnecessarily interrupts a complete regimen instead of coordinating the procedural medicine."
+        ],
+        [
+          "Interrupt ART; plan individually titrated oral midazolam with respiratory monitoring",
+          "Adds ART interruption and assumes this permits an oral combination without an established interaction-management plan."
+        ]
+      ],
+      "after": [
+        [
+          "**KEY:** Continue ART; plan individually titrated intravenous midazolam with respiratory monitoring",
+          "Preserves ART while coordinating parenteral midazolam, monitoring and individualized dose reduction when appropriate."
+        ],
+        [
+          "Continue ART; plan individually titrated oral midazolam with respiratory monitoring",
+          "Treats monitoring/titration as sufficient to overcome the contraindicated oral boosted-PI combination."
+        ],
+        [
+          "Interrupt ART; plan individually titrated intravenous midazolam with respiratory monitoring",
+          "Unnecessarily interrupts a complete regimen instead of coordinating the procedural medicine."
+        ],
+        [
+          "Interrupt ART; plan individually titrated oral midazolam with respiratory monitoring",
+          "Adds ART interruption and assumes this permits an oral combination without an established interaction-management plan."
+        ]
+      ]
+    },
+    "inference": "Identify ritonavir within the named regimen and retain coordinated ART continuity. Then Distinguish the oral contraindication from monitored, individualized parenteral use.",
+    "focus": "Melissa/anesthesia must verify exact administration and dose adjustment; no dose, washout or independent ART interruption is prescribed.",
+    "whatChanged": "No clinical fields changed from the exact independently passed version.",
+    "caseDetailChanges": {
+      "chiefComplaint": {
+        "before": "Medication planning",
+        "after": "Medication planning"
+      },
+      "profilePresentations": {
+        "before": [
+          {
+            "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.female.43",
+            "presentation": "{patientName}, a 43-year-old woman, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+          },
+          {
+            "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.male.43",
+            "presentation": "{patientName}, a 43-year-old man, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+          },
+          {
+            "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.female.68",
+            "presentation": "{patientName}, a 68-year-old woman, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+          },
+          {
+            "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.male.68",
+            "presentation": "{patientName}, a 68-year-old man, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+          }
+        ],
+        "after": [
+          {
+            "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.female.43",
+            "presentation": "{patientName}, a 43-year-old woman, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+          },
+          {
+            "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.male.43",
+            "presentation": "{patientName}, a 43-year-old man, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+          },
+          {
+            "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.female.68",
+            "presentation": "{patientName}, a 68-year-old woman, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+          },
+          {
+            "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.male.68",
+            "presentation": "{patientName}, a 68-year-old man, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+          }
+        ]
+      }
+    },
+    "reviewResponse": {
+      "sourceReviewId": "docs/research/question-batch1-adversarial-review6-20261102.json#A25",
+      "originalVerdict": "PASS",
+      "noteResponses": {
+        "cues": [],
+        "fairness": [
+          "fairness 1: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval."
+        ],
+        "suggestions": []
+      },
+      "selfCheck": {
+        "cueAttack": "No change to the exact independently passed version or its visible fields.",
+        "difficulty": "moderate",
+        "reasoningSteps": [
+          "Retain the exact independently passed version."
+        ],
+        "oneBestAnswer": "Retain the independent editorial finding and clinical limitations.",
+        "closestDistractor": "Unchanged option set.",
+        "remainingReview": "Manager acceptance and clinical approval remain separate."
+      }
+    },
+    "educationalIntent": "resident_application_reviewer_prediction_pending",
+    "supportingEvidenceClaimIds": [
+      "claim.gs028g.hiv-perioperative.art-continuity",
+      "claim.gs028g.hiv-perioperative.art-continuity.fact2",
+      "claim.gs028g.hiv-perioperative.art-continuity.fact3",
+      "claim.gs028g.hiv-perioperative.art-continuity.fact4",
+      "claim.qq20261102.named-art-regimen",
+      "claim.qq20261102a.boosted-midazolam-routes",
+      "claim.qq20261102a.boosted-parenteral-titration",
+      "claim.qq20261102a.art-continuity",
+      "claim.qq20261102b.route-specific-midazolam-plan"
+    ],
+    "visibleHistory": {
+      "before": [],
+      "after": []
+    },
+    "lint": {
+      "before": [
+        {
+          "id": "f78785cd44a84429",
+          "rule": "convergence",
+          "severity": "advisory",
+          "message": "The key combines components reused across options; inspect whether the combinations cue a shortlist.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "Continue",
+              "start": 0,
+              "end": 8,
+              "choiceId": "correct_1"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "intravenous",
+              "start": 41,
+              "end": 52,
+              "choiceId": "correct_1"
+            }
+          ],
+          "metrics": {
+            "components": [
+              "continue",
+              "intravenous"
+            ],
+            "optionCoverage": [
+              {
+                "choiceId": "correct_1",
+                "components": [
+                  "continue",
+                  "intravenous"
+                ]
+              },
+              {
+                "choiceId": "choice.qq20261102b.a25.d1",
+                "components": [
+                  "continue"
+                ]
+              },
+              {
+                "choiceId": "choice.qq20261102b.a25.d2",
+                "components": [
+                  "intravenous"
+                ]
+              },
+              {
+                "choiceId": "choice.qq20261102b.a25.d3",
+                "components": []
+              }
+            ]
+          },
+          "occurrences": [
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "canonical",
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.female.43"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 8
+                },
+                {
+                  "start": 41,
+                  "end": 52
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.male.43"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 8
+                },
+                {
+                  "start": 41,
+                  "end": 52
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.female.68"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 8
+                },
+                {
+                  "start": 41,
+                  "end": 52
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.male.68"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 8
+                },
+                {
+                  "start": 41,
+                  "end": 52
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "00a5b3aca364d537",
+          "rule": "near-duplicate-options",
+          "severity": "advisory",
+          "message": "Labels overlap substantially; small differences can be meaningful and need review.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "Continue ART; plan individually titrated oral midazolam with respiratory monitoring",
+              "start": 0,
+              "end": 83,
+              "choiceId": "choice.qq20261102b.a25.d1"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Interrupt ART; plan individually titrated oral midazolam with respiratory monitoring",
+              "start": 0,
+              "end": 84,
+              "choiceId": "choice.qq20261102b.a25.d3"
+            }
+          ],
+          "metrics": {
+            "jaccard": 0.8181818181818182,
+            "differingTerms": [
+              "continue",
+              "interrupt"
+            ]
+          },
+          "occurrences": [
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "canonical",
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.female.43"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 83
+                },
+                {
+                  "start": 0,
+                  "end": 84
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.male.43"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 83
+                },
+                {
+                  "start": 0,
+                  "end": 84
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.female.68"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 83
+                },
+                {
+                  "start": 0,
+                  "end": 84
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.male.68"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 83
+                },
+                {
+                  "start": 0,
+                  "end": 84
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "48ec669936d3b9b1",
+          "rule": "near-duplicate-options",
+          "severity": "advisory",
+          "message": "Labels overlap substantially; small differences can be meaningful and need review.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "Interrupt ART; plan individually titrated intravenous midazolam with respiratory monitoring",
+              "start": 0,
+              "end": 91,
+              "choiceId": "choice.qq20261102b.a25.d2"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Interrupt ART; plan individually titrated oral midazolam with respiratory monitoring",
+              "start": 0,
+              "end": 84,
+              "choiceId": "choice.qq20261102b.a25.d3"
+            }
+          ],
+          "metrics": {
+            "jaccard": 0.8181818181818182,
+            "differingTerms": [
+              "intravenous",
+              "oral"
+            ]
+          },
+          "occurrences": [
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "canonical",
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.female.43"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 91
+                },
+                {
+                  "start": 0,
+                  "end": 84
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.male.43"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 91
+                },
+                {
+                  "start": 0,
+                  "end": 84
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.female.68"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 91
+                },
+                {
+                  "start": 0,
+                  "end": 84
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.male.68"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 91
+                },
+                {
+                  "start": 0,
+                  "end": 84
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "559a75e6a75c39e1",
+          "rule": "near-duplicate-options",
+          "severity": "advisory",
+          "message": "Labels overlap substantially; small differences can be meaningful and need review.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "Continue ART; plan individually titrated intravenous midazolam with respiratory monitoring",
+              "start": 0,
+              "end": 90,
+              "choiceId": "correct_1"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Interrupt ART; plan individually titrated intravenous midazolam with respiratory monitoring",
+              "start": 0,
+              "end": 91,
+              "choiceId": "choice.qq20261102b.a25.d2"
+            }
+          ],
+          "metrics": {
+            "jaccard": 0.8181818181818182,
+            "differingTerms": [
+              "continue",
+              "interrupt"
+            ]
+          },
+          "occurrences": [
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "canonical",
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.female.43"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 90
+                },
+                {
+                  "start": 0,
+                  "end": 91
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.male.43"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 90
+                },
+                {
+                  "start": 0,
+                  "end": 91
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.female.68"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 90
+                },
+                {
+                  "start": 0,
+                  "end": 91
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.male.68"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 90
+                },
+                {
+                  "start": 0,
+                  "end": 91
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "d0ae163236ed5c73",
+          "rule": "near-duplicate-options",
+          "severity": "advisory",
+          "message": "Labels overlap substantially; small differences can be meaningful and need review.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "Continue ART; plan individually titrated intravenous midazolam with respiratory monitoring",
+              "start": 0,
+              "end": 90,
+              "choiceId": "correct_1"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Continue ART; plan individually titrated oral midazolam with respiratory monitoring",
+              "start": 0,
+              "end": 83,
+              "choiceId": "choice.qq20261102b.a25.d1"
+            }
+          ],
+          "metrics": {
+            "jaccard": 0.8181818181818182,
+            "differingTerms": [
+              "intravenous",
+              "oral"
+            ]
+          },
+          "occurrences": [
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "canonical",
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.female.43"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 90
+                },
+                {
+                  "start": 0,
+                  "end": 83
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.male.43"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 90
+                },
+                {
+                  "start": 0,
+                  "end": 83
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.female.68"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 90
+                },
+                {
+                  "start": 0,
+                  "end": 83
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.male.68"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 90
+                },
+                {
+                  "start": 0,
+                  "end": 83
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "after": [
+        {
+          "id": "f78785cd44a84429",
+          "rule": "convergence",
+          "severity": "advisory",
+          "message": "The key combines components reused across options; inspect whether the combinations cue a shortlist.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "Continue",
+              "start": 0,
+              "end": 8,
+              "choiceId": "correct_1"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "intravenous",
+              "start": 41,
+              "end": 52,
+              "choiceId": "correct_1"
+            }
+          ],
+          "metrics": {
+            "components": [
+              "continue",
+              "intravenous"
+            ],
+            "optionCoverage": [
+              {
+                "choiceId": "correct_1",
+                "components": [
+                  "continue",
+                  "intravenous"
+                ]
+              },
+              {
+                "choiceId": "choice.qq20261102b.a25.d1",
+                "components": [
+                  "continue"
+                ]
+              },
+              {
+                "choiceId": "choice.qq20261102b.a25.d2",
+                "components": [
+                  "intravenous"
+                ]
+              },
+              {
+                "choiceId": "choice.qq20261102b.a25.d3",
+                "components": []
+              }
+            ]
+          },
+          "occurrences": [
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "canonical",
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.female.43"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 8
+                },
+                {
+                  "start": 41,
+                  "end": 52
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.male.43"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 8
+                },
+                {
+                  "start": 41,
+                  "end": 52
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.female.68"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 8
+                },
+                {
+                  "start": 41,
+                  "end": 52
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.male.68"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 8
+                },
+                {
+                  "start": 41,
+                  "end": 52
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "00a5b3aca364d537",
+          "rule": "near-duplicate-options",
+          "severity": "advisory",
+          "message": "Labels overlap substantially; small differences can be meaningful and need review.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "Continue ART; plan individually titrated oral midazolam with respiratory monitoring",
+              "start": 0,
+              "end": 83,
+              "choiceId": "choice.qq20261102b.a25.d1"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Interrupt ART; plan individually titrated oral midazolam with respiratory monitoring",
+              "start": 0,
+              "end": 84,
+              "choiceId": "choice.qq20261102b.a25.d3"
+            }
+          ],
+          "metrics": {
+            "jaccard": 0.8181818181818182,
+            "differingTerms": [
+              "continue",
+              "interrupt"
+            ]
+          },
+          "occurrences": [
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "canonical",
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.female.43"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 83
+                },
+                {
+                  "start": 0,
+                  "end": 84
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.male.43"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 83
+                },
+                {
+                  "start": 0,
+                  "end": 84
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.female.68"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 83
+                },
+                {
+                  "start": 0,
+                  "end": 84
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.male.68"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 83
+                },
+                {
+                  "start": 0,
+                  "end": 84
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "48ec669936d3b9b1",
+          "rule": "near-duplicate-options",
+          "severity": "advisory",
+          "message": "Labels overlap substantially; small differences can be meaningful and need review.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "Interrupt ART; plan individually titrated intravenous midazolam with respiratory monitoring",
+              "start": 0,
+              "end": 91,
+              "choiceId": "choice.qq20261102b.a25.d2"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Interrupt ART; plan individually titrated oral midazolam with respiratory monitoring",
+              "start": 0,
+              "end": 84,
+              "choiceId": "choice.qq20261102b.a25.d3"
+            }
+          ],
+          "metrics": {
+            "jaccard": 0.8181818181818182,
+            "differingTerms": [
+              "intravenous",
+              "oral"
+            ]
+          },
+          "occurrences": [
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "canonical",
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.female.43"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 91
+                },
+                {
+                  "start": 0,
+                  "end": 84
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.male.43"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 91
+                },
+                {
+                  "start": 0,
+                  "end": 84
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.female.68"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 91
+                },
+                {
+                  "start": 0,
+                  "end": 84
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.male.68"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 91
+                },
+                {
+                  "start": 0,
+                  "end": 84
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "559a75e6a75c39e1",
+          "rule": "near-duplicate-options",
+          "severity": "advisory",
+          "message": "Labels overlap substantially; small differences can be meaningful and need review.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "Continue ART; plan individually titrated intravenous midazolam with respiratory monitoring",
+              "start": 0,
+              "end": 90,
+              "choiceId": "correct_1"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Interrupt ART; plan individually titrated intravenous midazolam with respiratory monitoring",
+              "start": 0,
+              "end": 91,
+              "choiceId": "choice.qq20261102b.a25.d2"
+            }
+          ],
+          "metrics": {
+            "jaccard": 0.8181818181818182,
+            "differingTerms": [
+              "continue",
+              "interrupt"
+            ]
+          },
+          "occurrences": [
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "canonical",
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.female.43"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 90
+                },
+                {
+                  "start": 0,
+                  "end": 91
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.male.43"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 90
+                },
+                {
+                  "start": 0,
+                  "end": 91
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.female.68"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 90
+                },
+                {
+                  "start": 0,
+                  "end": 91
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.male.68"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 90
+                },
+                {
+                  "start": 0,
+                  "end": 91
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "d0ae163236ed5c73",
+          "rule": "near-duplicate-options",
+          "severity": "advisory",
+          "message": "Labels overlap substantially; small differences can be meaningful and need review.",
+          "evidence": [
+            {
+              "field": "answerChoices.label",
+              "text": "Continue ART; plan individually titrated intravenous midazolam with respiratory monitoring",
+              "start": 0,
+              "end": 90,
+              "choiceId": "correct_1"
+            },
+            {
+              "field": "answerChoices.label",
+              "text": "Continue ART; plan individually titrated oral midazolam with respiratory monitoring",
+              "start": 0,
+              "end": 83,
+              "choiceId": "choice.qq20261102b.a25.d1"
+            }
+          ],
+          "metrics": {
+            "jaccard": 0.8181818181818182,
+            "differingTerms": [
+              "intravenous",
+              "oral"
+            ]
+          },
+          "occurrences": [
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "canonical",
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.female.43"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 90
+                },
+                {
+                  "start": 0,
+                  "end": 83
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.male.43"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 90
+                },
+                {
+                  "start": 0,
+                  "end": 83
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.female.68"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 90
+                },
+                {
+                  "start": 0,
+                  "end": 83
+                }
+              ]
+            },
+            {
+              "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+              "profileIds": [
+                "profile.gs028g.hiv-perioperative.paired-routine-elective.male.68"
+              ],
+              "ranges": [
+                {
+                  "start": 0,
+                  "end": 90
+                },
+                {
+                  "start": 0,
+                  "end": 83
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "clinicalMeaning": "Stable concept ID/objective retained as applied or explicitly basic; no concept metadata version or clinical approval is silently changed. Melissa must confirm construct equivalence and the single best answer.",
+    "lintReview": [
+      {
+        "findingId": "f78785cd44a84429",
+        "rule": "convergence",
+        "status": "retained_for_independent_review",
+        "reason": "Shared procedure/plan components do not establish the complete key. Independently test whether combining common components still shortcuts this particular set. Exact independent PASS/accepted-basic content is retained."
+      },
+      {
+        "findingId": "00a5b3aca364d537",
+        "rule": "near-duplicate-options",
+        "status": "retained_for_independent_review",
+        "reason": "Shared components are deliberate. Check the differing clinical/protocol component; no choices have identical meaning. Exact independent PASS/accepted-basic content is retained."
+      },
+      {
+        "findingId": "48ec669936d3b9b1",
+        "rule": "near-duplicate-options",
+        "status": "retained_for_independent_review",
+        "reason": "Shared components are deliberate. Check the differing clinical/protocol component; no choices have identical meaning. Exact independent PASS/accepted-basic content is retained."
+      },
+      {
+        "findingId": "559a75e6a75c39e1",
+        "rule": "near-duplicate-options",
+        "status": "retained_for_independent_review",
+        "reason": "Shared components are deliberate. Check the differing clinical/protocol component; no choices have identical meaning. Exact independent PASS/accepted-basic content is retained."
+      },
+      {
+        "findingId": "d0ae163236ed5c73",
+        "rule": "near-duplicate-options",
+        "status": "retained_for_independent_review",
+        "reason": "Shared components are deliberate. Check the differing clinical/protocol component; no choices have identical meaning. Exact independent PASS/accepted-basic content is retained."
+      }
+    ],
+    "companionVariants": [
+      {
+        "id": "A25-context",
+        "before": "question.gs028g.hiv-perioperative.booster-midazolam-interaction.v1.r8",
+        "after": "question.gs028g.hiv-perioperative.booster-midazolam-interaction.v1.r8",
+        "whatChanged": "Exact independent PASS or accepted-basic wording retained."
+      }
+    ],
+    "previousAuthoringComparison": {
+      "before": {
+        "variantId": "question.gs028g.hiv-perioperative.art-continuity.v1.r7",
+        "Presentation": "Jamie Taylor, a 43-year-old woman, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication.",
+        "Current update": null,
+        "Exhibit": null,
+        "Task": "Which combined medication plan should be agreed with Jamie Taylor's surgical team?",
+        "Options": [
+          "**KEY:** Continue ART; plan individually titrated intravenous midazolam with respiratory monitoring",
+          "Continue ART; plan individually titrated oral midazolam with respiratory monitoring",
+          "Interrupt ART; plan individually titrated intravenous midazolam with respiratory monitoring",
+          "Interrupt ART; plan individually titrated oral midazolam with respiratory monitoring"
+        ]
+      },
+      "after": {
+        "variantId": "question.gs028g.hiv-perioperative.art-continuity.v1.r7",
+        "Presentation": "Jamie Taylor, a 43-year-old woman, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication.",
+        "Current update": null,
+        "Exhibit": null,
+        "Task": "Which combined medication plan should be agreed with Jamie Taylor's surgical team?",
+        "Options": [
+          "**KEY:** Continue ART; plan individually titrated intravenous midazolam with respiratory monitoring",
+          "Continue ART; plan individually titrated oral midazolam with respiratory monitoring",
+          "Interrupt ART; plan individually titrated intravenous midazolam with respiratory monitoring",
+          "Interrupt ART; plan individually titrated oral midazolam with respiratory monitoring"
+        ]
+      },
+      "caseDetailChanges": {
+        "chiefComplaint": {
+          "before": "Medication planning",
+          "after": "Medication planning"
+        },
+        "profilePresentations": {
+          "before": [
+            {
+              "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.female.43",
+              "presentation": "{patientName}, a 43-year-old woman, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+            },
+            {
+              "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.male.43",
+              "presentation": "{patientName}, a 43-year-old man, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+            },
+            {
+              "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.female.68",
+              "presentation": "{patientName}, a 68-year-old woman, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+            },
+            {
+              "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.male.68",
+              "presentation": "{patientName}, a 68-year-old man, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+            }
+          ],
+          "after": [
+            {
+              "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.female.43",
+              "presentation": "{patientName}, a 43-year-old woman, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+            },
+            {
+              "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.male.43",
+              "presentation": "{patientName}, a 43-year-old man, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+            },
+            {
+              "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.female.68",
+              "presentation": "{patientName}, a 68-year-old woman, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+            },
+            {
+              "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.male.68",
+              "presentation": "{patientName}, a 68-year-old man, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+            }
+          ]
+        }
+      }
+    },
+    "pipelinePassed": true,
+    "independentReview": {
+      "source": "question-batch1-adversarial-review6-20261102.json",
+      "verdict": "PASS",
+      "basicVerdict": null,
+      "reviewedVariantId": "question.gs028g.hiv-perioperative.art-continuity.v1.r7",
+      "difficultyPrediction": "moderate",
+      "clinicalApprovalConferred": false
+    },
+    "basicRecallIntentional": false,
+    "previousReviewResponse": {
+      "sourceReviewId": "docs/research/question-batch1-adversarial-review5-20261102.json#A25",
+      "originalVerdict": "PASS",
+      "noteResponses": {
+        "cues": [],
+        "fairness": [
+          "fairness 1: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval."
+        ],
+        "suggestions": []
+      },
+      "selfCheck": {
+        "cueAttack": "No change to the exact independently passed version or its visible fields.",
+        "difficulty": "moderate",
+        "reasoningSteps": [
+          "Retain the exact independently passed version."
+        ],
+        "oneBestAnswer": "Retain the independent editorial finding and clinical limitations.",
+        "closestDistractor": "Unchanged option set.",
+        "remainingReview": "Manager acceptance and clinical approval remain separate."
+      }
+    },
+    "reviewActions": [
+      "Delete the complete service-availability sentence; procedural context is sufficient for all options.",
+      "Preserve the balanced continuity/route set judged moderate by the reviewer.",
+      "Clarify individualized dosing and retain a clinician/anesthesia verification boundary rather than inventing a dose or interruption interval."
+    ],
+    "basicAccepted": false,
+    "basicAcceptanceScope": null,
+    "contextRevisions": [
+      {
+        "id": "A25-context",
+        "title": "Apply benzodiazepine-antagonist contraindication after seizure control",
+        "reviewStatus": "needs_clinician_review",
+        "ownerStatus": "awaiting_owner_review",
+        "pipelineStatus": "independent_review_passed_awaiting_manager_acceptance",
+        "keyOrderNotice": "key shown first for review only; runtime options are randomized",
+        "reviewDisplayNote": "Synthetic canonical patient; placeholders rendered as Jamie Taylor for review only. Runtime finite profiles remain bound.",
+        "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+        "conceptId": "concept.gs028g.hiv-perioperative.booster-midazolam-interaction.v2",
+        "before": {
+          "variantId": "question.gs028g.hiv-perioperative.booster-midazolam-interaction.v1.r8",
+          "Presentation": "Jamie Taylor, a 43-year-old woman, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication.",
+          "Current update": "During induction, the patient develops repeated generalized convulsions without regaining awareness between them. Intravenous midazolam stops the convulsions and the procedure is abandoned. Assisted ventilation is now maintaining oxygenation while the capnography trace remains infrequent and spontaneous chest movements are shallow.",
+          "Exhibit": null,
+          "Task": "Which reversal instruction should guide Jamie Taylor's care while assisted ventilation continues?",
+          "Options": [
+            "**KEY:** Withhold flumazenil",
+            "Administer flumazenil now",
+            "Administer flumazenil after another antiseizure drug"
+          ]
+        },
+        "after": {
+          "variantId": "question.gs028g.hiv-perioperative.booster-midazolam-interaction.v1.r8",
+          "Presentation": "Jamie Taylor, a 43-year-old woman, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication.",
+          "Current update": "During induction, the patient develops repeated generalized convulsions without regaining awareness between them. Intravenous midazolam stops the convulsions and the procedure is abandoned. Assisted ventilation is now maintaining oxygenation while the capnography trace remains infrequent and spontaneous chest movements are shallow.",
+          "Exhibit": null,
+          "Task": "Which reversal instruction should guide Jamie Taylor's care while assisted ventilation continues?",
+          "Options": [
+            "**KEY:** Withhold flumazenil",
+            "Administer flumazenil now",
+            "Administer flumazenil after another antiseizure drug"
+          ]
+        },
+        "originalAuthoringBefore": {
+          "variantId": "question.gs028g.hiv-perioperative.booster-midazolam-interaction.v1.r4",
+          "Presentation": "Jamie Taylor, a 43-year-old woman, visits the clinic before elective hernia repair at an outside surgical service. The clinic medication list records a ritonavir-boosted antiretroviral regimen being taken as prescribed. A generic preoperative instruction sheet includes these medicines among those to pause for the operation.",
+          "Current update": "The outside surgical service proposes oral midazolam for sedation.",
+          "Exhibit": null,
+          "Task": "Which plan is most appropriate for Jamie Taylor's proposed oral midazolam?",
+          "Options": [
+            "**KEY:** Revise the planned sedation",
+            "Retain the planned sedation",
+            "Increase the midazolam dose",
+            "Withhold the antiretroviral regimen"
+          ]
+        },
+        "comparisonBasis": "Exact independently passed version retained from review six; both sides show the same clinical fields.",
+        "rationalePairs": {
+          "before": [
+            [
+              "**KEY:** Withhold flumazenil",
+              "Midazolam was used to control a potentially life-threatening seizure state; antagonizing it is contraindicated even though respiratory support is needed."
+            ],
+            [
+              "Administer flumazenil now",
+              "Respiratory depression does not remove the contraindication when the benzodiazepine was required for seizure control."
+            ],
+            [
+              "Administer flumazenil after another antiseizure drug",
+              "An additional antiseizure drug does not make the stated benzodiazepine-antagonist contraindication disappear."
+            ]
+          ],
+          "after": [
+            [
+              "**KEY:** Withhold flumazenil",
+              "Midazolam was used to control a potentially life-threatening seizure state; antagonizing it is contraindicated even though respiratory support is needed."
+            ],
+            [
+              "Administer flumazenil now",
+              "Respiratory depression does not remove the contraindication when the benzodiazepine was required for seizure control."
+            ],
+            [
+              "Administer flumazenil after another antiseizure drug",
+              "An additional antiseizure drug does not make the stated benzodiazepine-antagonist contraindication disappear."
+            ]
+          ]
+        },
+        "inference": "Recognize that the benzodiazepine was treating ongoing seizure activity, rather than merely producing procedural sedation. Then Apply the antagonist contraindication despite the competing need to manage prolonged respiratory depression.",
+        "focus": "Melissa/anesthesia must confirm the seizure-course interpretation and antidote boundary. No seizure-duration threshold, antidote dose, prophylactic antiseizure regimen or monitoring duration is invented.",
+        "whatChanged": "No clinical fields changed from the exact independently passed version.",
+        "caseDetailChanges": {
+          "chiefComplaint": {
+            "before": "Medication planning",
+            "after": "Medication planning"
+          },
+          "profilePresentations": {
+            "before": [
+              {
+                "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.female.43",
+                "presentation": "{patientName}, a 43-year-old woman, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+              },
+              {
+                "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.male.43",
+                "presentation": "{patientName}, a 43-year-old man, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+              },
+              {
+                "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.female.68",
+                "presentation": "{patientName}, a 68-year-old woman, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+              },
+              {
+                "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.male.68",
+                "presentation": "{patientName}, a 68-year-old man, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+              }
+            ],
+            "after": [
+              {
+                "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.female.43",
+                "presentation": "{patientName}, a 43-year-old woman, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+              },
+              {
+                "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.male.43",
+                "presentation": "{patientName}, a 43-year-old man, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+              },
+              {
+                "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.female.68",
+                "presentation": "{patientName}, a 68-year-old woman, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+              },
+              {
+                "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.male.68",
+                "presentation": "{patientName}, a 68-year-old man, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+              }
+            ]
+          }
+        },
+        "reviewResponse": {
+          "sourceReviewId": "docs/research/question-batch1-adversarial-review6-20261102.json#A25-context",
+          "originalVerdict": "PASS",
+          "noteResponses": {
+            "cues": [],
+            "fairness": [
+              "fairness 1: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval."
+            ],
+            "suggestions": []
+          },
+          "selfCheck": {
+            "cueAttack": "No change to the exact independently passed version or its visible fields.",
+            "difficulty": "moderate",
+            "reasoningSteps": [
+              "Retain the exact independently passed version."
+            ],
+            "oneBestAnswer": "Retain the independent editorial finding and clinical limitations.",
+            "closestDistractor": "Unchanged option set.",
+            "remainingReview": "Manager acceptance and clinical approval remain separate."
+          }
+        },
+        "educationalIntent": "resident_application_reviewer_prediction_pending",
+        "supportingEvidenceClaimIds": [
+          "claim.gs028g.hiv-perioperative.booster-midazolam-interaction",
+          "claim.gs028g.hiv-perioperative.booster-midazolam-interaction.fact2",
+          "claim.gs028g.hiv-perioperative.booster-midazolam-interaction.fact3",
+          "claim.qq20261102.named-art-regimen",
+          "claim.qq20261102a.boosted-midazolam-routes",
+          "claim.qq20261102a.boosted-parenteral-titration",
+          "claim.qq20261102a.art-continuity",
+          "claim.qq20261102b.oxygenation-not-ventilation",
+          "claim.qq20261102b.route-specific-midazolam-plan",
+          "claim.qq20261102b.sedation-ventilation-response",
+          "claim.qq20261102c.flumazenil-seizure-control-contraindication",
+          "claim.qq20261102c.midazolam-route-and-monitoring"
+        ],
+        "visibleHistory": {
+          "before": [
+            {
+              "variantId": "question.gs028g.hiv-perioperative.art-continuity.v1.r7",
+              "result": null,
+              "feedback": "Coordinate the interacting procedural medicine while maintaining ART when feasible. Oral midazolam is contraindicated with boosted protease inhibitors. Parenteral use requires an appropriately monitored setting and individualized dosing, including consideration of dose reduction, particularly with repeated doses.",
+              "teachingPoint": "Coordinate the interacting procedural medicine while maintaining ART when feasible. Oral midazolam is contraindicated with boosted protease inhibitors. Parenteral use requires an appropriately monitored setting and individualized dosing, including consideration of dose reduction, particularly with repeated doses."
+            }
+          ],
+          "after": [
+            {
+              "variantId": "question.gs028g.hiv-perioperative.art-continuity.v1.r7",
+              "result": null,
+              "feedback": "Coordinate the interacting procedural medicine while maintaining ART when feasible. Oral midazolam is contraindicated with boosted protease inhibitors. Parenteral use requires an appropriately monitored setting and individualized dosing, including consideration of dose reduction, particularly with repeated doses.",
+              "teachingPoint": "Coordinate the interacting procedural medicine while maintaining ART when feasible. Oral midazolam is contraindicated with boosted protease inhibitors. Parenteral use requires an appropriately monitored setting and individualized dosing, including consideration of dose reduction, particularly with repeated doses."
+            }
+          ]
+        },
+        "lint": {
+          "before": [
+            {
+              "id": "992aa57d36696cca",
+              "rule": "option-length-disparity",
+              "severity": "advisory",
+              "message": "Option lengths differ; check necessary specificity and abbreviation effects.",
+              "evidence": [
+                {
+                  "field": "answerChoices.label",
+                  "text": "Administer flumazenil after another antiseizure drug",
+                  "start": 0,
+                  "end": 52,
+                  "choiceId": "choice.qq20261102c.a25-context.d2"
+                },
+                {
+                  "field": "answerChoices.label",
+                  "text": "Withhold flumazenil",
+                  "start": 0,
+                  "end": 19,
+                  "choiceId": "correct_1"
+                }
+              ],
+              "metrics": {
+                "wordCounts": {
+                  "correct_1": 2,
+                  "choice.qq20261102c.a25-context.d1": 3,
+                  "choice.qq20261102c.a25-context.d2": 6
+                },
+                "ratio": 3
+              },
+              "occurrences": [
+                {
+                  "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+                  "profileIds": [
+                    "canonical",
+                    "profile.gs028g.hiv-perioperative.paired-routine-elective.female.43"
+                  ],
+                  "ranges": [
+                    {
+                      "start": 0,
+                      "end": 52
+                    },
+                    {
+                      "start": 0,
+                      "end": 19
+                    }
+                  ]
+                },
+                {
+                  "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+                  "profileIds": [
+                    "profile.gs028g.hiv-perioperative.paired-routine-elective.male.43"
+                  ],
+                  "ranges": [
+                    {
+                      "start": 0,
+                      "end": 52
+                    },
+                    {
+                      "start": 0,
+                      "end": 19
+                    }
+                  ]
+                },
+                {
+                  "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+                  "profileIds": [
+                    "profile.gs028g.hiv-perioperative.paired-routine-elective.female.68"
+                  ],
+                  "ranges": [
+                    {
+                      "start": 0,
+                      "end": 52
+                    },
+                    {
+                      "start": 0,
+                      "end": 19
+                    }
+                  ]
+                },
+                {
+                  "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+                  "profileIds": [
+                    "profile.gs028g.hiv-perioperative.paired-routine-elective.male.68"
+                  ],
+                  "ranges": [
+                    {
+                      "start": 0,
+                      "end": 52
+                    },
+                    {
+                      "start": 0,
+                      "end": 19
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "after": [
+            {
+              "id": "992aa57d36696cca",
+              "rule": "option-length-disparity",
+              "severity": "advisory",
+              "message": "Option lengths differ; check necessary specificity and abbreviation effects.",
+              "evidence": [
+                {
+                  "field": "answerChoices.label",
+                  "text": "Administer flumazenil after another antiseizure drug",
+                  "start": 0,
+                  "end": 52,
+                  "choiceId": "choice.qq20261102c.a25-context.d2"
+                },
+                {
+                  "field": "answerChoices.label",
+                  "text": "Withhold flumazenil",
+                  "start": 0,
+                  "end": 19,
+                  "choiceId": "correct_1"
+                }
+              ],
+              "metrics": {
+                "wordCounts": {
+                  "correct_1": 2,
+                  "choice.qq20261102c.a25-context.d1": 3,
+                  "choice.qq20261102c.a25-context.d2": 6
+                },
+                "ratio": 3
+              },
+              "occurrences": [
+                {
+                  "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+                  "profileIds": [
+                    "canonical",
+                    "profile.gs028g.hiv-perioperative.paired-routine-elective.female.43"
+                  ],
+                  "ranges": [
+                    {
+                      "start": 0,
+                      "end": 52
+                    },
+                    {
+                      "start": 0,
+                      "end": 19
+                    }
+                  ]
+                },
+                {
+                  "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+                  "profileIds": [
+                    "profile.gs028g.hiv-perioperative.paired-routine-elective.male.43"
+                  ],
+                  "ranges": [
+                    {
+                      "start": 0,
+                      "end": 52
+                    },
+                    {
+                      "start": 0,
+                      "end": 19
+                    }
+                  ]
+                },
+                {
+                  "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+                  "profileIds": [
+                    "profile.gs028g.hiv-perioperative.paired-routine-elective.female.68"
+                  ],
+                  "ranges": [
+                    {
+                      "start": 0,
+                      "end": 52
+                    },
+                    {
+                      "start": 0,
+                      "end": 19
+                    }
+                  ]
+                },
+                {
+                  "caseId": "case.gs028g.hiv-perioperative.paired-routine-elective",
+                  "profileIds": [
+                    "profile.gs028g.hiv-perioperative.paired-routine-elective.male.68"
+                  ],
+                  "ranges": [
+                    {
+                      "start": 0,
+                      "end": 52
+                    },
+                    {
+                      "start": 0,
+                      "end": 19
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "clinicalMeaning": {
+          "previousConceptId": "concept.gs028g.hiv-perioperative.booster-midazolam-interaction",
+          "nextConceptId": "concept.gs028g.hiv-perioperative.booster-midazolam-interaction.v2",
+          "previousKeyServiceId": null,
+          "nextKeyServiceId": null,
+          "previousResultGate": null,
+          "nextResultGate": null,
+          "reason": "This deliberately changes the scored objective from booster/route recognition to an antagonist contraindication application; the original interaction concept and all prior variants remain available for frozen learning histories."
+        },
+        "lintReview": [
+          {
+            "findingId": "992aa57d36696cca",
+            "rule": "option-length-disparity",
+            "status": "retained_for_independent_review",
+            "reason": "Natural diagnostic/procedure names differ in length. No filler is added to equalize them; the actual observations and option scope require review. Exact independent PASS/accepted-basic content is retained."
+          }
+        ],
+        "companionVariants": [],
+        "previousAuthoringComparison": {
+          "before": {
+            "variantId": "question.gs028g.hiv-perioperative.booster-midazolam-interaction.v1.r8",
+            "Presentation": "Jamie Taylor, a 43-year-old woman, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication.",
+            "Current update": "During induction, the patient develops repeated generalized convulsions without regaining awareness between them. Intravenous midazolam stops the convulsions and the procedure is abandoned. Assisted ventilation is now maintaining oxygenation while the capnography trace remains infrequent and spontaneous chest movements are shallow.",
+            "Exhibit": null,
+            "Task": "Which reversal instruction should guide Jamie Taylor's care while assisted ventilation continues?",
+            "Options": [
+              "**KEY:** Withhold flumazenil",
+              "Administer flumazenil now",
+              "Administer flumazenil after another antiseizure drug"
+            ]
+          },
+          "after": {
+            "variantId": "question.gs028g.hiv-perioperative.booster-midazolam-interaction.v1.r8",
+            "Presentation": "Jamie Taylor, a 43-year-old woman, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication.",
+            "Current update": "During induction, the patient develops repeated generalized convulsions without regaining awareness between them. Intravenous midazolam stops the convulsions and the procedure is abandoned. Assisted ventilation is now maintaining oxygenation while the capnography trace remains infrequent and spontaneous chest movements are shallow.",
+            "Exhibit": null,
+            "Task": "Which reversal instruction should guide Jamie Taylor's care while assisted ventilation continues?",
+            "Options": [
+              "**KEY:** Withhold flumazenil",
+              "Administer flumazenil now",
+              "Administer flumazenil after another antiseizure drug"
+            ]
+          },
+          "caseDetailChanges": {
+            "chiefComplaint": {
+              "before": "Medication planning",
+              "after": "Medication planning"
+            },
+            "profilePresentations": {
+              "before": [
+                {
+                  "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.female.43",
+                  "presentation": "{patientName}, a 43-year-old woman, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+                },
+                {
+                  "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.male.43",
+                  "presentation": "{patientName}, a 43-year-old man, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+                },
+                {
+                  "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.female.68",
+                  "presentation": "{patientName}, a 68-year-old woman, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+                },
+                {
+                  "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.male.68",
+                  "presentation": "{patientName}, a 68-year-old man, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+                }
+              ],
+              "after": [
+                {
+                  "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.female.43",
+                  "presentation": "{patientName}, a 43-year-old woman, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+                },
+                {
+                  "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.male.43",
+                  "presentation": "{patientName}, a 43-year-old man, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+                },
+                {
+                  "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.female.68",
+                  "presentation": "{patientName}, a 68-year-old woman, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+                },
+                {
+                  "id": "profile.gs028g.hiv-perioperative.paired-routine-elective.male.68",
+                  "presentation": "{patientName}, a 68-year-old man, visits the clinic before elective hernia repair. The medication list includes darunavir, ritonavir, tenofovir disoproxil fumarate and emtricitabine. Oral midazolam is proposed as premedication."
+                }
+              ]
+            }
+          }
+        },
+        "pipelinePassed": true,
+        "independentReview": {
+          "source": "question-batch1-adversarial-review6-20261102.json",
+          "verdict": "PASS",
+          "basicVerdict": null,
+          "reviewedVariantId": "question.gs028g.hiv-perioperative.booster-midazolam-interaction.v1.r8",
+          "difficultyPrediction": "moderate",
+          "clinicalApprovalConferred": false
+        },
+        "previousReviewResponse": {
+          "sourceReviewId": "docs/research/question-batch1-adversarial-review5-20261102.json#A25-context",
+          "originalVerdict": "PASS",
+          "noteResponses": {
+            "cues": [],
+            "fairness": [
+              "fairness 1: Exact PASS version and visible fields retained. The positive finding/necessary observation and any stated clinical limitation remain; no author replacement or new clinical approval."
+            ],
+            "suggestions": []
+          },
+          "selfCheck": {
+            "cueAttack": "No change to the exact independently passed version or its visible fields.",
+            "difficulty": "moderate",
+            "reasoningSteps": [
+              "Retain the exact independently passed version."
+            ],
+            "oneBestAnswer": "Retain the independent editorial finding and clinical limitations.",
+            "closestDistractor": "Unchanged option set.",
+            "remainingReview": "Manager acceptance and clinical approval remain separate."
+          }
+        },
+        "reviewActions": [
+          "Keep the overt respiratory-depression signs; every option continues assisted ventilation.",
+          "The original same-route prevention draft was discarded because the preceding passed item already supplies that answer.",
+          "Use the reviewer's supportive-care/next-action alternative with raw seizure-course data, an explicit new concept version and the FDA contraindication claim.",
+          "Use concise parallel decision labels; remove explanatory or dismissive qualifiers from the options."
+        ],
+        "previousTitle": "Boosted ART and midazolam",
+        "basicAccepted": false,
+        "basicRecallIntentional": false,
+        "conceptVersion": {
+          "id": "concept.gs028g.hiv-perioperative.booster-midazolam-interaction.v2",
+          "displayName": "Apply benzodiazepine-antagonist contraindication after seizure control",
+          "learningObjective": "Use the actual indication for perioperative midazolam to choose a reversal plan when supported respiratory depression competes with preservation of treatment for a potentially life-threatening seizure state.",
+          "earliestFacilityStage": 3,
+          "conceptType": "management",
+          "contentVersion": "concept.question-quality.2026-11-02.v2",
+          "reviewStatus": "needs_clinician_review",
+          "aiAssistedDrafting": true,
+          "lastClinicianReview": null,
+          "previousConceptId": "concept.gs028g.hiv-perioperative.booster-midazolam-interaction",
+          "versioningReason": "This deliberately changes the scored objective from booster/route recognition to an antagonist contraindication application; the original interaction concept and all prior variants remain available for frozen learning histories.",
+          "educationalTier": 1,
+          "revisedItemIds": [
+            "A25-context"
+          ],
+          "evidenceClaimIds": [
+            "claim.qq20261102c.flumazenil-seizure-control-contraindication",
+            "claim.qq20261102c.midazolam-route-and-monitoring",
+            "claim.gs028g.hiv-perioperative.booster-midazolam-interaction",
+            "claim.gs028g.hiv-perioperative.booster-midazolam-interaction.fact2",
+            "claim.gs028g.hiv-perioperative.booster-midazolam-interaction.fact3",
+            "claim.qq20261102.named-art-regimen",
+            "claim.qq20261102a.boosted-midazolam-routes",
+            "claim.qq20261102a.boosted-parenteral-titration",
+            "claim.qq20261102a.art-continuity",
+            "claim.qq20261102b.oxygenation-not-ventilation",
+            "claim.qq20261102b.route-specific-midazolam-plan",
+            "claim.qq20261102b.sedation-ventilation-response"
+          ]
+        },
+        "basicAcceptanceScope": null
+      }
+    ]
+  }
+]

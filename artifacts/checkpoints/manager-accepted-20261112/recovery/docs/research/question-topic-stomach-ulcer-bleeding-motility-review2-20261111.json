@@ -1,0 +1,399 @@
+[
+  {
+    "id": "question.topic.stomach-ulcer-bleeding-motility.gastrin-safe-assessment.v2",
+    "nodeId": "node.topic.stomach-ulcer-bleeding-motility.gastrin-safe-assessment.v2",
+    "title": "Interpreting gastrin during acid suppression",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The Billroth II indication is repeated in the presentation and update without adding information. The diagnostic task itself is complete."
+    ],
+    "cues": [
+      {
+        "phrase": "specialist-managed PPI adjustment",
+        "why": "Only the keyed plan receives an explicit specialist/safety endorsement and changes the drug conditions. A cautious test-taker can favor this qualifier before interpreting gastrin or pH."
+      },
+      {
+        "phrase": "during unchanged omeprazole treatment",
+        "why": "Both distractors share this conspicuous condition, while the key changes it. The option structure announces which variable the author wants corrected."
+      }
+    ],
+    "fairness": [
+      "Report scope: all 17 current authored candidate nodes in round2.currentProposals, including nine preserved v1 candidates whose earlier PASS labels were not used as evidence. The five original Keep records, retired original definitions, five parked attempts and held/unkeyed comparisons are noted but not graded. Only current candidate presentation, update, exhibit, task, options and explanation inform these judgments. No network or fresh source verification was performed; PASS is editorial review, not clinical approval.",
+      "The paired gastrin/pH result during PPI exposure does not establish inappropriate hypergastrinemia. Specialist-managed reassessment is the best offered plan; immediate localization and secretin testing under the stated conditions do not resolve that initial interpretive problem. No confident clinical error identified.",
+      "There are two clinically consequential operations in the intended task: interpret acid-dependent hormone elevation, then choose safely prepared biochemical reassessment before further tumor testing. This is a high-yield diagnostic principle, but the safety-qualifier pattern reduces discrimination.",
+      "Standalone: recurrent ulceration, operative anatomy, current drug exposure, pH and active ulcer are supplied locally. No previous node is needed."
+    ],
+    "suggestions": [
+      "Retain the active ulcer and paired observations. Make safety management common to all testing strategies, then compare specific diagnostic stages with parallel wording and equally explicit preparation conditions.",
+      "Remove the duplicate operative-history sentence. Do not turn the repair into an instruction for abrupt PPI withdrawal or invent a withdrawal protocol."
+    ]
+  },
+  {
+    "id": "question.topic.stomach-ulcer-bleeding-motility.active-infection-recheck.v2",
+    "nodeId": "node.topic.stomach-ulcer-bleeding-motility.active-infection-recheck.v2",
+    "title": "Reassessment after discordant H. pylori tests",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The natural reading uses one antibiotic course: a sample taken six weeks after antibiotics that ended eight weeks ago was collected two weeks ago. Yet omeprazole reportedly stopped three weeks ago, so that sample cannot also have been collected while taking omeprazole. A different later antibiotic course could reconcile this, but none is described.",
+      "Repeat urea breath testing implies an earlier breath test; the record supplies an earlier stool antigen test and serum IgG, not a breath test."
+    ],
+    "cues": [],
+    "fairness": [
+      "A noninvasive active-infection assay after appropriate preparation is the best offered investigation; persistent antibody positivity is not proof of persistence. Biopsy can detect infection, but the represented uncomplicated follow-up provides no reason to prefer repeat endoscopy.",
+      "The conflicted chronology undermines the stated reason for rejecting the earlier negative result. Resolve it before accepting the exact version; do not assume an unreported course or PPI restart.",
+      "The options all demand another test. Thus deciding whether the earlier result was usable does not determine whether to test at all; a resident can select the familiar test-of-cure modality without resolving the discordant history. The current item is chiefly single-rule test selection, despite its length.",
+      "Standalone: no prior explanation is required, but the internal timeline needs repair. H. pylori test validity and confirmation of eradication are high-yield."
+    ],
+    "suggestions": [
+      "Use an internally consistent dated exposure/specimen timeline, with each actual antibiotic course and PPI interval identified. Do not add an otherwise unnecessary antibiotic course merely to rescue the dates.",
+      "Change the breath-test label to obtaining a urea breath test unless an actual earlier breath test is supplied.",
+      "Make the validity judgment consequential to the available plans, such as whether another active-infection assessment is needed now. Recheck the resulting choices for parallel scope and a single best answer."
+    ]
+  },
+  {
+    "id": "question.topic.stomach-ulcer-bleeding-motility.salvage-eradication.v2",
+    "nodeId": "node.topic.stomach-ulcer-bleeding-motility.salvage-eradication.v2",
+    "title": "Empiric salvage after completed H. pylori regimens",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The record supplies actual prior drugs, completion, a prepared positive active-infection test, unavailable susceptibility results and absence of penicillin allergy. Rifabutin triple therapy is the best offered empiric combination. Levofloxacin is a credible competing salvage choice; absent susceptibility support separates it from the key. No confident clinical inaccuracy identified in this offline review.",
+      "The learner must recognize adequately documented persistent infection after the recorded treatments, then choose an empiric salvage regimen rather than reuse or select an antibiotic requiring susceptibility support. These are consequential treatment-selection steps and a high-yield subject.",
+      "All three options are parallel drug combinations; no distinctive safety adjective, length outlier or convergence gives away the key. The clarithromycin repetition represents relevant treatment history, not an arbitrary lexical hint.",
+      "Standalone: all treatment and testing history needed for the decision is present. No assumption that another Nora Chen node was completed is necessary."
+    ],
+    "suggestions": [
+      "No required wording repair. Preserve the regimen and specimen-preparation details that distinguish true treatment failure. Exact regimen claims remain for clinician sign-off; this review does not certify current guideline currency."
+    ]
+  },
+  {
+    "id": "question.topic.stomach-ulcer-bleeding-motility.cure-calendar.v1",
+    "nodeId": "node.topic.stomach-ulcer-bleeding-motility.cure-calendar.v1",
+    "title": "Scheduling an eradication-confirmation specimen",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The recent dental antibiotic course, rather than the older eradication course, controls the antibiotic-free preparation interval. Four elapsed days plus 24 additional days equals four weeks; the stated three-week PPI interruption is already sufficient under the rule used in the explanation. The alternatives correspond to testing immediately or using the wrong preparation interval.",
+      "The consequential first step is identifying which exposure resets preparation; the second is scheduling collection after the remaining interval. This is clinical test preparation, not a statistics exercise. The reasoning is modest but real, and the concept is high-yield.",
+      "Standalone: treatment dates, later antibiotic exposure and continued cessation are all supplied. No prior node or unshown calendar is needed. No confident clinical error or nonmedical key cue identified."
+    ],
+    "suggestions": [
+      "No required revision. Keep specimen-preparation intervals explicitly separate from laboratory turnaround/wait estimates."
+    ]
+  },
+  {
+    "id": "question.topic.stomach-ulcer-bleeding-motility.valid-cure-antibody.v1",
+    "nodeId": "node.topic.stomach-ulcer-bleeding-motility.valid-cure-antibody.v1",
+    "title": "Positive antibody after a valid negative active test",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The negative active-infection test has documented preparation and the symptoms resolved. Persistent IgG does not overturn that result; another eradication course is not indicated from the supplied evidence. Both antibiotic distractors represent unnecessary retreatment rather than equally supported care.",
+      "The resident must validate the active-test result against its preparation, then decide which conflicting evidence should control treatment. The task is high-yield and the negative treatment option is a legitimate decision, not a grammatical shortcut.",
+      "Standalone: current symptoms, antibiotic/PPI/bismuth timing and both test types are locally available. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": [
+      "No required revision. Preserve the collection conditions; deleting them would weaken the conflict-resolution step."
+    ]
+  },
+  {
+    "id": "question.topic.stomach-ulcer-bleeding-motility.complete-emptying-acquisition.v2",
+    "nodeId": "node.topic.stomach-ulcer-bleeding-motility.complete-emptying-acquisition.v2",
+    "title": "Recovering acquired gastric-emptying images",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": false,
+    "clarityIssues": [
+      "The acquisition-versus-export distinction is understandable, but the long prose log makes this chiefly a records-transfer exercise. No actual retention result is available to interpret."
+    ],
+    "cues": [
+      {
+        "phrase": "the export log lists files through 120 minutes",
+        "why": "Together with the explicitly listed 240-minute acquisition, this supplies a nonmedical missing-file problem. Retrieving existing data beats repeating the whole study without knowing gastric physiology."
+      },
+      {
+        "phrase": "Calculate four-hour retention from the available two-hour measurements",
+        "why": "This is an obviously less direct way to obtain a measurement that the stem already says exists. It does little to challenge retrieval as the common-sense answer."
+      }
+    ],
+    "fairness": [
+      "Requesting the documented late images before repeating the entire study is reasonable. The explanation should be conditional on the recovered images being usable; an acquisition index proves acquisition, not diagnostic adequacy or successful recovery. This is a limitation, not a demonstrated wrong key.",
+      "Retrieving records and quantifying them are two actions, but the learner does not interpret a physiologic finding and apply it to a clinical decision. The acquisition/export discrepancy alone solves the offered task.",
+      "Four-hour gastric-emptying assessment is relevant to boards; this particular camera/export-log problem is not itself a high-yield commonly tested surgical decision. No unsupported claim about exam frequency is intended.",
+      "Standalone: the transfer history and preparation are supplied. No absent earlier result is needed to choose retrieval."
+    ],
+    "suggestions": [
+      "Retain this as unscored workflow context or replace the scored objective with a consequential interpretation of an actual recovered study, using supported acquisition/adequacy criteria and credible next plans.",
+      "If retrieval remains scored, compare genuinely competing adequacy/recovery situations rather than retrieval versus projection of data already known to exist. Do not invent a retention cutoff.",
+      "Qualify the explanation: obtain and assess the images before quantifying usable data; repeat testing may be needed if recovery or adequacy fails."
+    ]
+  },
+  {
+    "id": "question.topic.stomach-ulcer-bleeding-motility.confounded-scan.v1",
+    "nodeId": "node.topic.stomach-ulcer-bleeding-motility.confounded-scan.v1",
+    "title": "Reassessing an emptying study before pyloric treatment",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The complete acquisition duration does not eliminate opioid and glucose confounding. Improvement after those factors changed makes reassessment under controlled conditions the best offered investigation before an invasive treatment decision. A pyloric measurement does not establish that the original delayed-emptying result represents persistent disease.",
+      "The learner must interpret protocol validity and the interval response, then choose the appropriate diagnostic stage. This is a high-yield test-validity and treatment-escalation decision. The prior report label is legitimate history for this task, not disclosure of the answer.",
+      "The laboratory-relative glucose description avoids an invented universal threshold. No confident clinical error identified; repeat testing is being selected among offered investigations, not asserted necessary for every patient whose symptoms improve.",
+      "Standalone: prior anatomic assessment, study conditions and subsequent course are present. No earlier question is needed."
+    ],
+    "suggestions": [
+      "No required revision. Retain the actual exposure and response trajectory; do not replace them with a conclusion such as invalid study."
+    ]
+  },
+  {
+    "id": "question.topic.stomach-ulcer-bleeding-motility.prokinetic-reaction.v1",
+    "nodeId": "node.topic.stomach-ulcer-bleeding-motility.prokinetic-reaction.v1",
+    "title": "Choosing a prokinetic after a prior movement reaction",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The documented neck and eye movements temporally associated with metoclopramide support a prior acute dystonic reaction. Avoiding re-exposure and considering erythromycin is the best offered prokinetic plan. Ondansetron treats nausea but does not serve the requested gastric-emptying target.",
+      "Interpret the adverse reaction, then distinguish a usable alternative prokinetic from an antiemetic. This is a high-yield mechanism and medication-safety decision rather than recognition of a supplied reaction label.",
+      "The ECG and interacting-drug review provide safety context. They do not uniquely select erythromycin by wording alone. The explanation appropriately avoids promising a durable long-term erythromycin regimen.",
+      "Standalone: objective diagnosis, persistent symptoms, prior drug reaction and current safety observations are supplied. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": [
+      "No required revision. If expanding the feedback, distinguish short-term prokinetic use from durable treatment without inventing a duration or dosing rule."
+    ]
+  },
+  {
+    "id": "question.topic.stomach-ulcer-bleeding-motility.current-low-risk-course.v2",
+    "nodeId": "node.topic.stomach-ulcer-bleeding-motility.current-low-risk-course.v2",
+    "title": "Acid suppression for a flat ulcer stigma",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The clinic presentation calls the admission recent, while the task calls it current. Use one explicit retrospective time frame.",
+      "No projection or blood stream remained is an awkward endoscopic description: remained can suggest that an earlier active stigma was eliminated. Clearly identify the observation as the index assessment after irrigation, rather than a successfully treated high-risk lesion."
+    ],
+    "cues": [],
+    "fairness": [
+      "If this is the untreated index flat pigmented spot with stable subsequent course, oral PPI therapy is the best offered plan. A remote clipped ulcer does not by itself justify intensive post-hemostasis therapy now. No confident clinical error in that intended ranking is identified.",
+      "The item mainly maps a recognizable flat stigma to routine PPI treatment. Last year's clipping is not a strong competing current indication, and deleting that history leaves the same decision. Naming a stigma and recalling its associated treatment does not establish two consequential steps here.",
+      "The underlying low-risk/high-risk distinction is high-yield, but the current alternatives and remote history make this easy for residents.",
+      "Standalone: the historical episodes can be distinguished, but the task and index-endoscopy wording should not leave the learner guessing which episode or pre/post-treatment state is being assessed."
+    ],
+    "suggestions": [
+      "Anchor the task to the recent admission and describe the index endoscopic findings without the ambiguous word remained. Explicitly distinguish baseline findings from findings after any hemostatic treatment if relevant.",
+      "Use a genuine competing current phase, route or treatment consideration that changes the plan, with supported clinical facts; do not add more remote-history padding.",
+      "If this narrow recognition objective is retained, seek explicit acceptance as a foundational item rather than labeling it a difficult two-step resident question."
+    ]
+  },
+  {
+    "id": "question.topic.stomach-ulcer-bleeding-motility.initial-ppi-course.v2",
+    "nodeId": "node.topic.stomach-ulcer-bleeding-motility.initial-ppi-course.v2",
+    "title": "Maintaining the early post-hemostasis PPI phase",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "Scheduled-dose famotidine is imprecise terminology; scheduled describes administration frequency, not a comparable dose-intensity category. The high-versus-standard PPI distinction is otherwise clear."
+    ],
+    "cues": [
+      {
+        "phrase": "high-dose pantoprazole",
+        "why": "The update names the exact drug and intensity reproduced by the key, and immediately describes clinical improvement. A continue-the-apparently-successful-regimen shortcut can bypass interpretation of the initial stigma and elapsed treatment phase."
+      }
+    ],
+    "fairness": [
+      "The original spurting lesion and only one elapsed day after hemostasis support remaining in the early high-dose PPI phase despite improvement. Neither standard-dose healing therapy nor an H2 regimen is an equivalent offered replacement at this point. No confident clinical inaccuracy identified.",
+      "The intended two steps are real: interpret risk using the index lesion rather than current absence of bleeding, then use elapsed time to choose the treatment phase. This is high-yield and potentially moderate, but the exact regimen echo weakens the assessment.",
+      "The explanation correctly does not require continuous infusion as the sole delivery method. This review does not independently verify doses or confer clinical approval.",
+      "Standalone: the retrospective task is explicit and the timestamps, initial treatment and response are supplied. No prior feedback is needed."
+    ],
+    "suggestions": [
+      "Retain the treatment chronology and index endoscopic observation, but remove the uniquely matching named regimen from the update when it adds no decision information.",
+      "Use parallel regimen labels, preferably controlling drug identity while varying the clinically meaningful regimen or phase. Keep any necessary dose or schedule supported rather than adding arbitrary numbers.",
+      "Replace scheduled-dose with a concrete, parallel description. Re-attack the repaired set for a default continue-current-treatment shortcut."
+    ]
+  },
+  {
+    "id": "question.topic.stomach-ulcer-bleeding-motility.recurrent-bleeding-repeat.v1",
+    "nodeId": "node.topic.stomach-ulcer-bleeding-motility.recurrent-bleeding-repeat.v1",
+    "title": "First recurrent bleeding after successful endoscopic control",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "The first EGD had reached the focal ulcer directly.",
+        "why": "Minor redundant emphasis on endoscopic feasibility: the earlier successful injection and clipping already imply access. It nudges toward repeat endoscopy but does not by itself distinguish first recurrence from failed repeat therapy."
+      }
+    ],
+    "fairness": [
+      "Fresh hematemesis with a new hemoglobin fall differs from an isolated dark stool with stable hemoglobin. With successful initial hemostasis and a represented response to resuscitation, repeat therapeutic endoscopy is the best offered next procedure. Embolization and surgery are credible escalation distractors.",
+      "The resident must distinguish actual recurrence from residual melena, then select the appropriate rescue stage using treatment history and current circulation. This is a high-yield moderate decision, not merely a bleeding diagnosis.",
+      "Standalone: the current candidate supplies the initial treatment, recurrence and resuscitation findings without requiring a companion node. No confident clinical error identified."
+    ],
+    "suggestions": [
+      "Optional tightening: delete the final sentence about reaching the ulcer; successful focal therapy already establishes that fact. Retain the contrasting stool and hematemesis observations."
+    ]
+  },
+  {
+    "id": "question.topic.stomach-ulcer-bleeding-motility.failed-endoscopy-embolization.v2",
+    "nodeId": "node.topic.stomach-ulcer-bleeding-motility.failed-endoscopy-embolization.v2",
+    "title": "Rescue after failed repeat endoscopic hemostasis",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The recurrent jet and fresh accumulation through the powder after attempted repeat modalities establish ongoing bleeding, rather than successful control hidden by powder. Maintained serial circulation during resuscitation supports arterial embolization as the best offered next rescue after repeat endoscopy failed.",
+      "Surgery remains a real rescue alternative; nothing in the visible record supplies a specific reason to bypass the usual angiographic stage. This is a best-next-procedure ranking, not a claim that surgery is never appropriate. No confident clinical error identified.",
+      "The learner interprets actual treatment failure and the contemporaneous resuscitation response, then selects the next rescue stage. Both interpretations affect a high-yield clinical decision; option labels are parallel procedures without explanatory giveaways.",
+      "Standalone: the first successful treatment, recurrence, failed repeat attempts and current observations are all restated locally. The earlier recurrence node or its feedback is not required."
+    ],
+    "suggestions": [
+      "No required revision. Optional precision: use maintained circulation rather than restored circulation in the explanation, because this standalone update does not actually document the earlier low blood pressure."
+    ]
+  },
+  {
+    "id": "question.topic.stomach-ulcer-bleeding-motility.secondary-prevention-aspirin.v1",
+    "nodeId": "node.topic.stomach-ulcer-bleeding-motility.secondary-prevention-aspirin.v1",
+    "title": "Aspirin after controlled ulcer bleeding",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Prior myocardial infarction establishes secondary prevention; achieved hemostasis and recovery support resuming indicated aspirin with PPI protection. Waiting for complete ulcer healing or automatically substituting clopidogrel is not the best offered response.",
+      "The learner must interpret the aspirin indication and combine it with the bleeding course to choose a medication plan. This is a high-yield balance of thrombotic and bleeding considerations, with plausible competing errors.",
+      "PPI gastroprotection appears in both continuation and substitution options, so it does not uniquely reveal the key. Stent and second-antiplatelet history appropriately narrow a decision that otherwise could involve a different regimen.",
+      "Standalone: the relevant cardiovascular history, hemostasis and interruption are supplied. The explanation makes no unsupported exact restart-day claim. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": [
+      "No required revision. Preserve the explicit secondary-prevention history and the distinction between achieved hemostasis and complete ulcer healing."
+    ]
+  },
+  {
+    "id": "question.topic.stomach-ulcer-bleeding-motility.perforation-imaging.v1",
+    "nodeId": "node.topic.stomach-ulcer-bleeding-motility.perforation-imaging.v1",
+    "title": "Persistent perforation concern after a negative radiograph",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "A chest radiograph without free air does not resolve abrupt pain and guarding. For this patient with maintained pressure and a remaining acute diagnostic question, CT is the best offered investigation. Endoscopy is not the appropriate next diagnostic test for the represented suspected perforation; a luminal contrast study is a plausible but less comprehensive alternative.",
+      "The resident must interpret the limited reassurance from the negative radiograph against the examination, then select the next investigation. The contrast-study distractor tests a real neighboring imaging decision. This is high-yield.",
+      "Standalone: acute onset, examination, initial imaging and circulation are supplied. The item does not depend on an absent CT or a prior decision node. No confident clinical error identified."
+    ],
+    "suggestions": [
+      "No required revision. Keep the stable represented circulation; do not generalize the feedback into a rule to delay source control for imaging in every unstable patient with peritonitis."
+    ]
+  },
+  {
+    "id": "question.topic.stomach-ulcer-bleeding-motility.unstable-perforation-access.v1",
+    "nodeId": "node.topic.stomach-ulcer-bleeding-motility.unstable-perforation-access.v1",
+    "title": "Operative access with escalating support needs",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Free leakage, widespread fluid, diffuse guarding and escalating support despite resuscitation favor open source control over the offered laparoscopic or endoscopic approaches. The key is defensible in the represented unstable course; the explanation should not be read as ranking open repair for all perforated ulcers.",
+      "The diagnosis is appropriately known because the decision is access. Interpreting failure to stabilize and applying it to access selection are consequential steps; the laparoscopic option is a credible competitor in a different physiologic course. This is high-yield.",
+      "Standalone: anatomy, contamination, peritoneal findings and direction of support requirements are supplied. The task clearly concerns the preoperative decision, not the patient's later clinic stability. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": [
+      "No required revision. Preserve the changing support requirement; a generic label of unstable would remove the observation the resident must interpret."
+    ]
+  },
+  {
+    "id": "question.topic.stomach-ulcer-bleeding-motility.early-meal-diet.v2",
+    "nodeId": "node.topic.stomach-ulcer-bleeding-motility.early-meal-diet.v2",
+    "title": "Residual early post-gastrectomy symptoms after treatment",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The presentation phrase during later dietary and medication treatment is vague. The update is more concrete, but should make clear that the early symptom pattern preceded acarbose and persisted at the tolerated dose, rather than being newly drug-induced."
+    ],
+    "cues": [
+      {
+        "phrase": "Which additional medicine",
+        "why": "This wording pre-filters Higher-dose acarbose with meals, which changes the dose of an existing drug rather than adding a medicine. The options therefore do not all answer the same task."
+      },
+      {
+        "phrase": "Increasing acarbose caused marked bloating and diarrhea, so the earlier tolerated dose was resumed.",
+        "why": "This explicitly reports failure/intolerance of the exact dose-increase distractor. The reader can discard it without interpreting early versus late symptoms."
+      }
+    ],
+    "fairness": [
+      "The intended early post-meal vasomotor/GI pattern with normal measured glucose, persisting after dietary measures, supports considering octreotide. Metoclopramide addresses a different motility problem. No confident clinical error identified in that intended ranking.",
+      "There is residual uncertainty because acarbose can itself produce GI symptoms and the actual symptom chronology relative to starting it is not fully spelled out. The word persists suggests pre-existing symptoms, but the exact version should make that relationship explicit before attributing all remaining symptoms to the postoperative syndrome.",
+      "The intended two steps are to distinguish the residual early syndrome from controlled late hypoglycemia, then choose treatment after the documented response. These are high-yield and potentially moderate; the task wording and pre-eliminated comparator undermine the contest.",
+      "Standalone: the treatment response is restated, so the later-meal acarbose node is not required. If the two were ever recombined, their chronology would need to be reordered explicitly rather than inferred from file order."
+    ],
+    "suggestions": [
+      "Ask a neutral next-treatment-plan question and make every option a comparable treatment plan.",
+      "Do not offer an unmodified dose increase already documented as intolerable. Use a credible remaining alternative at this stage, with supported findings to distinguish it.",
+      "State the symptom timeline relative to acarbose initiation and dose reduction using observations. Do not announce that the drug is not the cause or invent a therapeutic trial result."
+    ]
+  },
+  {
+    "id": "question.topic.stomach-ulcer-bleeding-motility.late-meal-acarbose.v1",
+    "nodeId": "node.topic.stomach-ulcer-bleeding-motility.late-meal-acarbose.v1",
+    "title": "Preventing late post-gastrectomy hypoglycemic episodes",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Post-meal timing, measured low glucose and symptom resolution after carbohydrate support the late hypoglycemic syndrome. After dietary measures and before a medication trial, acarbose is the best offered preventive medicine. Octreotide is a credible later escalation; metoclopramide addresses the wrong physiologic target.",
+      "The resident must distinguish the later hypoglycemic episodes from the improved early GI symptoms, then use treatment stage to choose preventive therapy. The task correctly separates prevention from acute glucose correction. This is high-yield.",
+      "The no-medication history is decision-critical for ranking acarbose against octreotide rather than an irrelevant availability cue. No confident clinical inaccuracy identified.",
+      "Standalone: operative anatomy, dietary response, episode timing, measured glucose, correction and prior treatment status are present. No earlier early-meal node or feedback is needed."
+    ],
+    "suggestions": [
+      "No required revision. Preserve the explicit preventive task and the medication-naive stage."
+    ]
+  }
+]

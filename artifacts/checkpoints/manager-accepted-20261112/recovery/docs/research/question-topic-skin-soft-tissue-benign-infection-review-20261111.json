@@ -1,0 +1,767 @@
+[
+  {
+    "id": "question.skin-soft-tissue-benign-infection.abscess-workup.20261111.v1",
+    "nodeId": "node.skin-soft-tissue-benign-infection.abscess-workup.20261111.v1",
+    "title": "Forearm swelling - investigation",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The examination does not explicitly locate the firm swelling relative to subcutis, fascia or tendon; pain limiting wrist movement makes that distinction relevant."
+    ],
+    "cues": [],
+    "fairness": [
+      "Ultrasonography is a reasonable first investigation, but the visible findings establish superficial localization less clearly than the explanation assumes. No confident clinical error is established.",
+      "The response discrepancy can require two steps: identify a persistent focal problem despite improving skin inflammation, then select its initial anatomical assessment.",
+      "The subsequent ultrasound update is coherent and must remain hidden until this choice is answered."
+    ],
+    "suggestions": [
+      "Add a concise observed examination finding establishing the superficial location; do not announce an abscess diagnosis.",
+      "Keep the explanation conditional until imaging establishes a collection. Strengthen the competing investigations using actual patient-specific reasons.",
+      "Report-wide scope: all 26 after-version nodes reviewed offline, including preceding visible feedback. Five kept records, 34 proposed retirement records, seven unkeyed candidates and the existing withheld teaching point were noted, not re-reviewed. Verdicts are editorial judgments, not fresh source verification or clinical sign-off."
+    ]
+  },
+  {
+    "id": "question.skin-soft-tissue-benign-infection.abscess-drainage.20261111.v1",
+    "nodeId": "node.skin-soft-tissue-benign-infection.abscess-drainage.20261111.v1",
+    "title": "Forearm swelling - drainage",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Incision and drainage is the defensible best offered treatment for the symptomatic superficial collection. Aspiration and complete excision are weak competitors here.",
+      "Classic cavity recognition followed by routine drainage is one familiar management rule. Improving redness does not materially distinguish the offered procedures.",
+      "The update follows the investigation coherently and stands alone. Prior feedback has already emphasized the unresolved collection."
+    ],
+    "suggestions": [
+      "Use a supported source-control boundary where an observed finding changes procedure or setting, with credible alternatives.",
+      "If this remains basic abscess treatment, obtain explicit acceptance of a foundational role rather than describing it as difficult."
+    ]
+  },
+  {
+    "id": "question.skin-soft-tissue-benign-infection.recurrence-workup.20261111.v1",
+    "nodeId": "node.skin-soft-tissue-benign-infection.recurrence-workup.20261111.v1",
+    "title": "Recurrent back swelling - investigation",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Thoracic spine radiographs",
+        "why": "The stem describes a skin/subcutaneous focus; the spine-targeted option advertises a target mismatch."
+      },
+      {
+        "phrase": "firm subcutaneous focus",
+        "why": "With only chest/spine alternatives, the regional soft-tissue investigation can be selected by tissue-category matching without reasoning about recurrence."
+      }
+    ],
+    "fairness": [
+      "Ultrasonography is a reasonable best offered test for a recurrent superficial lesion after a splinter injury. No confident clinical inaccuracy is identified.",
+      "The test can be selected simply because the lesion is superficial; the splinter and recurrence do not earn an independent consequential step.",
+      "The later foreign-body finding is coherent and not required here."
+    ],
+    "suggestions": [
+      "Compare investigations that plausibly evaluate the same target.",
+      "Make the penetrating injury or a documented initial-assessment limitation change the investigation, rather than using unrelated chest/spine workup as padding."
+    ]
+  },
+  {
+    "id": "question.skin-soft-tissue-benign-infection.foreignbody-source-control.20261111.v1",
+    "nodeId": "node.skin-soft-tissue-benign-infection.foreignbody-source-control.20261111.v1",
+    "title": "Recurrent back swelling - source control",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Excision of overlying skin and subcutis does not define its boundaries or whether it removes the imaged structure; it can overlap the key."
+    ],
+    "cues": [
+      {
+        "phrase": "splinter injury",
+        "why": "Foreign-material removal is a straightforward lay match, reinforced by the preceding explanation."
+      },
+      {
+        "phrase": "a local anatomical assessment for fluid and retained material",
+        "why": "The preceding explanation rehearses the object sought; the next task largely asks the learner to remove that object."
+      }
+    ],
+    "fairness": [
+      "Removal of a retained nidus with appropriate cavity management is sound. The alternative excision is not clearly distinct enough to exclude accomplishing the same goal.",
+      "The ultrasound update is coherent and independently interpretable, but this sequence reduces to recognition followed by removal."
+    ],
+    "suggestions": [
+      "Specify each procedure target and extent so alternatives do not implicitly include the same source control.",
+      "Compare credible approaches whose ranking depends on supported anatomical findings, rather than broad excessive excision."
+    ]
+  },
+  {
+    "id": "question.skin-soft-tissue-benign-infection.cellulitis-plan.20261111.v1",
+    "nodeId": "node.skin-soft-tissue-benign-infection.cellulitis-plan.20261111.v1",
+    "title": "Thigh redness - initial treatment",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "A nonpurulent-cellulitis antimicrobial course names a pathway rather than an actual medicine or sufficiently specific regimen."
+    ],
+    "cues": [
+      {
+        "phrase": "no separate cavity",
+        "why": "Directly eliminates the drainage choice in this otherwise uncomplicated presentation."
+      },
+      {
+        "phrase": "Tenderness and redness remain superficial",
+        "why": "Directly opposes the fascial-exploration alternative; the two explicit exclusions leave the only medication option."
+      },
+      {
+        "phrase": "Begin a nonpurulent-cellulitis antimicrobial course",
+        "why": "The key supplies a diagnostic category while the alternatives name concrete procedures, creating category and specificity asymmetry."
+      }
+    ],
+    "fairness": [
+      "The intended nonpurulent infection pathway is reasonable. No confidently wrong clinical key is identified.",
+      "The alternative operations have no credible supporting findings; the choices do not test a consequential second inference.",
+      "A later cavity is a coherent interval change, not a contradiction of the original scan."
+    ],
+    "suggestions": [
+      "Name an actual treatment in every option and provide the necessary facts to distinguish credible current-stage plans.",
+      "Keep necessary collection exclusion, but change the comparison so it does not eliminate every alternative."
+    ]
+  },
+  {
+    "id": "question.skin-soft-tissue-benign-infection.residual-collection.20261111.v1",
+    "nodeId": "node.skin-soft-tissue-benign-infection.residual-collection.20261111.v1",
+    "title": "Thigh redness - new collection",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The new symptomatic superficial collection supports incision and drainage despite the earlier negative scan. Chronology is clear and the update stands alone.",
+      "The new cavity already supplies the routine drainage indication. The earlier negative study does not distinguish any offered procedure.",
+      "Aspiration and broad skin/subcutis excision are weak alternatives; no confident clinical error in the key is identified."
+    ],
+    "suggestions": [
+      "Make the earlier/current discrepancy change a plausible management decision instead of repeating the forearm drainage question.",
+      "Retain current observations and chronology; replace weak competitors or propose merging the redundant objective."
+    ]
+  },
+  {
+    "id": "question.skin-soft-tissue-benign-infection.foot-deep-setting.20261111.v1",
+    "nodeId": "node.skin-soft-tissue-benign-infection.foot-deep-setting.20261111.v1",
+    "title": "Foot admission review - setting and source control",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The deep plantar cavity between tendons and worsening function support hospital-capable drainage/debridement with systemic treatment. Improving redness, no fever and a susceptible surface isolate do not establish source control.",
+      "The balanced four-option matrix requires source-control selection and setting selection. Each component appears twice, so component-frequency convergence does not identify the key.",
+      "The historical hospital frame identifies whose decision is reviewed but does not itself establish that admission was appropriate; anatomy must justify the plan.",
+      "The operative-specimen follow-up is coherent. This offline editorial PASS is not clinical approval."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.skin-soft-tissue-benign-infection.foot-tissue-specimen.20261111.v1",
+    "nodeId": "node.skin-soft-tissue-benign-infection.foot-tissue-specimen.20261111.v1",
+    "title": "Foot admission review - operative specimen",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The cavity was drained, but the task asks what to collect at the operation. Clarify that the decision occurs during the procedure before completion."
+    ],
+    "cues": [
+      {
+        "phrase": "The present decision is the specimen for soft-tissue pathogen identification; bone involvement has not been demonstrated.",
+        "why": "This authorial instruction names the target and suppresses bone sampling, repeating the preceding observation."
+      },
+      {
+        "phrase": "A prior swab was taken from fluid on the external dressing.",
+        "why": "An obviously remote sample steers toward operative-site tissue when alternatives are surface swab and bone."
+      }
+    ],
+    "fairness": [
+      "Aseptic sampling of infected soft tissue is best among the choices. Absence of visible bone involvement does not itself exclude osteomyelitis; keep the task about the drained soft-tissue infection.",
+      "The operative findings follow coherently, but this is target-to-specimen matching, not two consequential steps."
+    ],
+    "suggestions": [
+      "Replace the meta-instruction with a concise operative observation and clear sampling time.",
+      "Compare relevant specimens with a meaningful collection/provenance difference instead of a bone option excluded by the task."
+    ]
+  },
+  {
+    "id": "question.skin-soft-tissue-benign-infection.foot-mri.20261111.v1",
+    "nodeId": "node.skin-soft-tissue-benign-infection.foot-mri.20261111.v1",
+    "title": "Persistent toe ulcer - further imaging",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Radiographs show no definite cortical destruction",
+        "why": "Radiography is offered again without an interval or protocol difference; it reads as a disposable completed-test foil."
+      },
+      {
+        "phrase": "assess bone involvement",
+        "why": "This makes surface swab a target mismatch, leaving MRI after discounting the completed radiographs."
+      }
+    ],
+    "fairness": [
+      "MRI is a reasonable best next test when initial clinical, radiographic and laboratory assessment leaves bone involvement uncertain.",
+      "This is a standard next-test rule with two weak alternatives; imperfect probing and mildly elevated markers do not create a competing pathway.",
+      "The later MRI update is coherent and remains unavailable here."
+    ],
+    "suggestions": [
+      "Replace the swab and unexplained repeat radiograph with credible same-stage investigations or plans.",
+      "If repeat radiography remains, supply an actual reason it might help and sufficient chronology/protocol detail to rank it; invent no interval."
+    ]
+  },
+  {
+    "id": "question.skin-soft-tissue-benign-infection.foot-bone-specimen.20261111.v1",
+    "nodeId": "node.skin-soft-tissue-benign-infection.foot-bone-specimen.20261111.v1",
+    "title": "Persistent toe ulcer - bone sampling",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The task does not explicitly distinguish microbiology, histology or both; the explanation discusses compartment and contamination without clarifying the specimen purpose."
+    ],
+    "cues": [
+      {
+        "phrase": "Bone obtained aseptically through intact skin",
+        "why": "Only the key advertises asepsis and avoidance of the ulcer; both alternatives visibly sample the ulcer, giving the key a procedural-quality advantage."
+      }
+    ],
+    "fairness": [
+      "Aseptic bone sampling is a defensible best offered specimen when osteomyelitis is the treatment target. Abnormal marrow is not microbiological proof.",
+      "The update supplies the suspected compartment; selecting that compartment is one familiar rule rather than two consequential decisions.",
+      "The MRI follows the workup coherently and the update supplies the relevant new findings independently."
+    ],
+    "suggestions": [
+      "State the specimen purpose and give collection methods in comparably neutral detail.",
+      "Create a genuine sampling-provenance or diagnostic-discordance problem with credible competitors rather than aseptic bone versus surface material."
+    ]
+  },
+  {
+    "id": "question.skin-soft-tissue-benign-infection.foot-infection-pad.20261111.v1",
+    "nodeId": "node.skin-soft-tissue-benign-infection.foot-infection-pad.20261111.v1",
+    "title": "Foot salvage review - coordinated consultation",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Urgent surgical and vascular assessment",
+        "why": "The key is the only urgent, comprehensive response; both alternatives advertise delay despite deep infection and poor perfusion."
+      },
+      {
+        "phrase": "after wound closure",
+        "why": "Delayed vascular assessment is self-discrediting in the described poorly perfused wound."
+      },
+      {
+        "phrase": "after oral treatment",
+        "why": "Another postponement cue substitutes for a credible coordinated care plan."
+      }
+    ],
+    "fairness": [
+      "Urgent surgical and vascular assessment is defensible for concurrent infection and severe perfusion impairment; maintained blood pressure does not remove limb urgency.",
+      "Combining two stated problems into the only combined response does not establish two consequential inferences. This is important but easy safety content.",
+      "The retrospective task and presentation are coherent and self-contained."
+    ],
+    "suggestions": [
+      "Compare credible coordinated plans, retaining urgent findings, instead of urgent assessment against unsupported delay.",
+      "For a sequencing question, provide facts that distinguish the plans and obtain clinician review; do not invent a universal drainage/revascularization order.",
+      "Alternatively seek explicit acceptance of a foundational safety-recognition role."
+    ]
+  },
+  {
+    "id": "question.skin-soft-tissue-benign-infection.foot-charcot-uncertainty.20261111.v1",
+    "nodeId": "node.skin-soft-tissue-benign-infection.foot-charcot-uncertainty.20261111.v1",
+    "title": "Foot scan review - neuropathic change and infection",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Resolve the diagnosis should distinguish histological assessment from pathogen identification; the requested analyses are unspecified."
+    ],
+    "cues": [
+      {
+        "phrase": "states that superimposed infection cannot be resolved",
+        "why": "The report supplies the diagnostic limitation the learner would otherwise interpret, leaving a direct sampling question."
+      },
+      {
+        "phrase": "prolonged bone-directed treatment",
+        "why": "The named treatment compartment matches only the bone specimen."
+      },
+      {
+        "phrase": "Aseptic bone specimen from the involved midfoot",
+        "why": "Only this option advertises asepsis and explicitly targets the involved compartment."
+      }
+    ],
+    "fairness": [
+      "A representative bone specimen is defensible for consequential uncertainty about osteomyelitis with neuropathic change. Surface culture does not resolve that distinction.",
+      "The explanation reasonably notes MRI specificity limits, but the stem gives that interpretation. Diagnostic certainty should not be promised from unspecified specimen analysis.",
+      "The standalone case is coherent; no hidden prior findings are needed."
+    ],
+    "suggestions": [
+      "Clarify whether histology and culture are sought and phrase collection quality consistently.",
+      "Use a consequential interpretation of discordant findings or sampling without hiding genuine radiologist uncertainty.",
+      "Avoid duplicating the preceding bone-sampling item with an explicitly supplied MRI limitation."
+    ]
+  },
+  {
+    "id": "question.skin-soft-tissue-benign-infection.necrotizing-exploration.20261111.v1",
+    "nodeId": "node.skin-soft-tissue-benign-infection.necrotizing-exploration.20261111.v1",
+    "title": "Hospital infection review - initial exploration",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Progression during treatment, deep symptoms beyond erythema and fascial fluid support urgent exploration despite absent gas, a low laboratory score and maintained blood pressure.",
+      "The learner weighs conflicting evidence, then selects action over imaging or observation. MRI and monitored treatment are credible errors from overreliance on reassuring findings.",
+      "The explanation appropriately says negative findings do not reliably exclude necrotizing infection; it does not claim every fascial-fluid finding proves necrosis.",
+      "Subsequent operative and wound updates are coherent. This offline editorial PASS is not clinical approval or fresh guideline verification."
+    ],
+    "suggestions": [
+      "For precision in a future version, name the laboratory instrument instead of laboratory risk score; no invented numeric cutoff is needed."
+    ]
+  },
+  {
+    "id": "question.skin-soft-tissue-benign-infection.necrotizing-return.20261111.v1",
+    "nodeId": "node.skin-soft-tissue-benign-infection.necrotizing-return.20261111.v1",
+    "title": "Hospital infection review - return to theatre",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Continue bedside dressings before the next operation leaves timing unspecified and could describe interim care while urgent return is arranged."
+    ],
+    "cues": [
+      {
+        "phrase": "definitive primary wound closure",
+        "why": "Closure of a newly discolored, increasingly tender wound is an obviously premature endpoint."
+      },
+      {
+        "phrase": "new discoloration and tenderness extending past the previously viable edge",
+        "why": "Directly signals progression, while alternatives offer closure or vague delay rather than competing responses."
+      }
+    ],
+    "fairness": [
+      "Prompt operative reassessment/debridement is defensible for new local progression; systemic improvement does not establish local control.",
+      "The sequence is coherent and the update supplies the earlier operation. Prior feedback already taught progression despite reassuring findings, so this largely repeats the rule.",
+      "Bedside dressing care is not mutually exclusive with operative return unless the intended delay is specified."
+    ],
+    "suggestions": [
+      "State the actual decision timing without inventing a fixed interval.",
+      "Use plausible same-stage responses instead of closure and ambiguous interim care, or seek a basic reassessment exception."
+    ]
+  },
+  {
+    "id": "question.skin-soft-tissue-benign-infection.necrotizing-skin.20261111.v1",
+    "nodeId": "node.skin-soft-tissue-benign-infection.necrotizing-skin.20261111.v1",
+    "title": "Hospital infection review - tissue preservation",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Resect the diseased fascia is less explicit than removal of all involved nonviable tissue. Preservation must remain conditional on adequate debridement and demonstrable viability."
+    ],
+    "cues": [
+      {
+        "phrase": "could expose the involved fascia while retaining perfused overlying skin",
+        "why": "This feasibility permission directly supplies the reason for skin preservation."
+      },
+      {
+        "phrase": "Neighboring muscle contracted and bled when assessed.",
+        "why": "Together with the skin-preservation permission, this protects both extra tissues named only in the radical-resection distractor; the remaining option drains rather than resects."
+      }
+    ],
+    "fairness": [
+      "Preserving demonstrably viable tissue while adequately removing involved nonviable tissue is defensible; no confident clinical error in that principle is identified.",
+      "The wording could overteach fascia-only resection as a fixed operation. Exact extent and skin preservation need clinician review of the operative findings.",
+      "The update follows re-exploration coherently and stands alone, but the author supplies both tissue eligibility and access."
+    ],
+    "suggestions": [
+      "Remove feasibility permission and retain necessary operative observations.",
+      "Express complete removal of involved nonviable tissue with reassessment of retained tissue, rather than an unconditional layer-only rule.",
+      "Compare credible extents of debridement and have a clinician confirm that the observations uniquely rank them."
+    ]
+  },
+  {
+    "id": "question.skin-soft-tissue-benign-infection.hs-local-planning.20261111.v1",
+    "nodeId": "node.skin-soft-tissue-benign-infection.hs-local-planning.20261111.v1",
+    "title": "Persistent axillary drainage - residual-disease planning",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Tunnel-procedure assessment does not name a concrete procedure or receiving specialty."
+    ],
+    "cues": [
+      {
+        "phrase": "one superficial channel without a separate tense cavity",
+        "why": "Channel maps to the tunnel choice, while the negative directly eliminates abscess drainage."
+      },
+      {
+        "phrase": "New tender nodules have become uncommon",
+        "why": "With the structural-channel wording this downranks medical escalation, leaving the tunnel-specific referral."
+      }
+    ],
+    "fairness": [
+      "A persistent localized draining tunnel after inflammatory improvement reasonably supports procedural assessment, alongside ongoing medical care.",
+      "Broad category choices and supplied discriminators make this one decision, not two consequential steps.",
+      "The later deroofing node repeats the same anatomy and response; the pair rehearses the same discriminator."
+    ],
+    "suggestions": [
+      "Name a concrete assessment/referral plan and specify the genuine remaining medical-versus-procedural decision.",
+      "Combine this with deroofing or give the later node a genuinely different consequential finding."
+    ]
+  },
+  {
+    "id": "question.skin-soft-tissue-benign-infection.hs-deroof.20261111.v1",
+    "nodeId": "node.skin-soft-tissue-benign-infection.hs-deroof.20261111.v1",
+    "title": "Persistent axillary drainage - localized procedure",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Which procedure may be offered is permissive rather than clearly asking for the best next procedure."
+    ],
+    "cues": [
+      {
+        "phrase": "same short superficial channel",
+        "why": "Matches the limited option after the prior node establishes a tunnel-directed procedure."
+      },
+      {
+        "phrase": "There is no confluent scarred field or separate tense abscess.",
+        "why": "The two negatives correspond directly to regional excision and incision/drainage."
+      },
+      {
+        "phrase": "that residual problem merits procedural assessment within ongoing HS care",
+        "why": "Prior feedback has resolved the structural-versus-inflammatory distinction; the update adds no substantial new discriminator."
+      }
+    ],
+    "fairness": [
+      "Deroofing is a reasonable best offered procedure for a recurrent superficial tunnel. Regional excision is not necessarily impossible to offer, making the permissive task insufficiently precise.",
+      "The chronology and current anatomy are clear, but deleting the update leaves essentially the same choice from the initial presentation.",
+      "This is one-rule matching, especially after the referral feedback."
+    ],
+    "suggestions": [
+      "Ask for the best next procedure and verify the ranking against a genuinely close alternative.",
+      "Replace repeated extent/absence facts with a new planning consequence, or merge the nodes.",
+      "Retain necessary abscess exclusion without listing a verbatim disqualification of every competitor."
+    ]
+  },
+  {
+    "id": "question.skin-soft-tissue-benign-infection.hs-extensive-excision.20261111.v1",
+    "nodeId": "node.skin-soft-tissue-benign-infection.hs-extensive-excision.20261111.v1",
+    "title": "Axillary movement pain - extensive disease",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Expand HS as hidradenitis suppurativa on first use for a self-contained case."
+    ],
+    "cues": [
+      {
+        "phrase": "throughout that field rather than one isolated channel",
+        "why": "Explicitly contrasts broad-field treatment with limited deroofing and announces the extent decision."
+      },
+      {
+        "phrase": "Regional axillary excision",
+        "why": "The only broad definitive procedure matches the broad scarred field; acute drainage has no supporting collection."
+      }
+    ],
+    "fairness": [
+      "Regional excision is a reasonable discussion for extensive chronic tunnels and functional impairment; this does not prove every other tunnel procedure is impossible.",
+      "This high-yield indication is currently a single extent-matching rule, with distribution interpreted for the learner.",
+      "New-site disease in the later update is coherent and does not change this local decision."
+    ],
+    "suggestions": [
+      "Show the observed map and functional restriction without the explicit rather-than comparison.",
+      "Compare credible procedures for this extent, with a patient-specific discriminator; avoid acute drainage as filler.",
+      "Expand the diagnosis abbreviation once."
+    ]
+  },
+  {
+    "id": "question.skin-soft-tissue-benign-infection.hs-remote-lesions.20261111.v1",
+    "nodeId": "node.skin-soft-tissue-benign-infection.hs-remote-lesions.20261111.v1",
+    "title": "Axillary movement pain - new sites after surgery",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "New tender nodules lack recurrence, extent, treatment and examination details needed for a meaningful medical-versus-procedural decision."
+    ],
+    "cues": [
+      {
+        "phrase": "The operated field remains quiet.",
+        "why": "Repeats the already stated absence of drainage and improvement, eliminating re-exploration."
+      },
+      {
+        "phrase": "Surgical re-exploration of the healed axilla",
+        "why": "Explicitly targets the healed site instead of the symptomatic sites."
+      },
+      {
+        "phrase": "Dermatology consultation for the newly active regions",
+        "why": "The only assessment before treatment competes with immediate regional excision of unspecified new nodules."
+      }
+    ],
+    "fairness": [
+      "Dermatology assessment is reasonable, but wins through wrong-site and premature-treatment errors rather than a close resident decision.",
+      "The postoperative chronology is coherent and the update stands alone. Recognizing disease at other sites is not two consequential steps.",
+      "Feedback should not imply all new-site lesions require exclusively medical treatment; assessment determines subsequent care."
+    ],
+    "suggestions": [
+      "Replace the wrong-site alternative with plans for the actual lesions at the same decision stage.",
+      "Supply pattern and treatment facts that distinguish medical escalation, local procedure and assessment.",
+      "Do not manufacture complexity merely to teach that local surgery does not cure disease elsewhere."
+    ]
+  },
+  {
+    "id": "question.skin-soft-tissue-benign-infection.hs-acute.20261111.v1",
+    "nodeId": "node.skin-soft-tissue-benign-infection.hs-acute.20261111.v1",
+    "title": "Axillary care review - acute collection",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Expand HS in the standalone visible case."
+    ],
+    "cues": [
+      {
+        "phrase": "single painful collection",
+        "why": "Supplies the immediate target; drainage competes only with broad chronic excision or deferral."
+      },
+      {
+        "phrase": "chronic-disease procedural appointment was already planned for later",
+        "why": "Overtly divides acute drainage now from chronic planning later, giving the sequencing rule before the choice."
+      }
+    ],
+    "fairness": [
+      "Incision and drainage can provide acute relief of a tense painful HS abscess; it is not definitive treatment of chronic tunnels.",
+      "Acute versus chronic care is high yield, but the alternatives make this one-step source-control recognition.",
+      "The outside-record frame is coherent and specifies the time point."
+    ],
+    "suggestions": [
+      "Expand the diagnosis and retain the pain/function findings.",
+      "Compare plausible immediate procedures or a supported consequential treatment-stage boundary; otherwise seek a basic acute-relief exception.",
+      "Keep longitudinal limitations in feedback instead of presenting the complete acute/chronic rule beforehand."
+    ]
+  },
+  {
+    "id": "question.skin-soft-tissue-benign-infection.pilonidal-acute.20261111.v1",
+    "nodeId": "node.skin-soft-tissue-benign-infection.pilonidal-acute.20261111.v1",
+    "title": "Painful cleft swelling - acute drainage",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "acute collection",
+        "why": "The key echoes the tense/fluctuant swelling, while the pit procedure labels itself elective."
+      },
+      {
+        "phrase": "Perform limited elective pit excision",
+        "why": "Elective is a self-disqualifying stage qualifier in a task about current acute swelling."
+      }
+    ],
+    "fairness": [
+      "Incision and drainage is the defensible best offered treatment for acute pilonidal abscess. Above-anus location is legitimate diagnostic context.",
+      "The chronic history adds no second consequential decision against plainly elective definitive procedures.",
+      "Later resolution and persistent drainage are coherent; the feedback previews a chronic decision but does not name its exact procedure."
+    ],
+    "suggestions": [
+      "Use neutral parallel procedure labels without elective only in a distractor.",
+      "Make a real competing procedural/anatomical issue determine immediate care, or obtain explicit foundational-role acceptance."
+    ]
+  },
+  {
+    "id": "question.skin-soft-tissue-benign-infection.pilonidal-chronic.20261111.v1",
+    "nodeId": "node.skin-soft-tissue-benign-infection.pilonidal-chronic.20261111.v1",
+    "title": "Painful cleft swelling - persistent chronic disease",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Which referral plan does not match Continue cleft hygiene and dressing care, which is not a referral.",
+      "The old midline scar and prior pit-directed treatment first appear in the update; identify these clearly as prior treatment history."
+    ],
+    "cues": [
+      {
+        "phrase": "Which referral plan",
+        "why": "Grammatically filters out conservative care before clinical reasoning."
+      },
+      {
+        "phrase": "No acute cavity is found at reassessment.",
+        "why": "Directly eliminates repeat abscess drainage, the only alternative procedure."
+      },
+      {
+        "phrase": "continues to interrupt work",
+        "why": "With failed prior treatment, this leaves the sole escalation/referral choice against unchanged care."
+      }
+    ],
+    "fairness": [
+      "Excisional assessment is reasonable for symptomatic recurrent interconnected disease after a limited procedure; it does not establish one mandatory operation.",
+      "The update clearly separates resolved acute swelling from chronic drainage and stands alone, but the choices create a simple escalation rule.",
+      "Previous feedback already announces a separate chronic decision; the follow-up needs a real remaining comparison."
+    ],
+    "suggestions": [
+      "Use a neutral management task or make every option a referral.",
+      "Compare credible elective strategies instead of drainage without an abscess and unchanged conservative care.",
+      "Clarify treatment chronology without adding unnecessary history."
+    ]
+  },
+  {
+    "id": "question.skin-soft-tissue-benign-infection.pilonidal-closure.20261111.v1",
+    "nodeId": "node.skin-soft-tissue-benign-infection.pilonidal-closure.20261111.v1",
+    "title": "Painful cleft swelling - closure strategy",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The initial presentation still describes a tense abscess. State its resolution in this later update so closure remains unambiguous without the preceding node.",
+      "The reconstructive discussion compares wound strategies rather than requiring one named flap is author-facing instruction, not a clinical observation."
+    ],
+    "cues": [
+      {
+        "phrase": "failed midline scar",
+        "why": "Failed beside a midline-closure option encourages avoidance by wording; the actual procedure and recurrence should establish the history."
+      }
+    ],
+    "fairness": [
+      "Off-midline closure is defensible when excision/closure are appropriate. Avoiding prolonged open-wound care is a legitimate patient constraint, not a fact to remove merely because it affects the answer.",
+      "Two consequential selections are possible: use care constraints to choose closure over open healing, then select the closure strategy for recurrent disease.",
+      "The full sequence resolves the acute episode, but the latest update alone does not say so. Closed wounds must not be portrayed as guaranteeing no wound-care burden."
+    ],
+    "suggestions": [
+      "State that the acute collection has resolved and describe prior treatment rather than only calling the scar failed.",
+      "Remove the meta-instruction about named flaps.",
+      "Keep the care constraint and parallel strategies, distinguishing planned closure from guaranteed uncomplicated healing."
+    ]
+  },
+  {
+    "id": "question.skin-soft-tissue-benign-infection.pilonidal-source-exam.20261111.v1",
+    "nodeId": "node.skin-soft-tissue-benign-infection.pilonidal-source-exam.20261111.v1",
+    "title": "Low cleft drainage - establish the source",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "close to the anal verge",
+        "why": "Only the anorectal examination addresses the named location; imaging deliberately targets the other site."
+      },
+      {
+        "phrase": "Ultrasound confined to the upper pits",
+        "why": "Confined advertises that the choice does not assess the draining opening."
+      }
+    ],
+    "fairness": [
+      "Anorectal examination including anoscopy is a reasonable initial assessment for a potentially anorectal source; upper pits do not prove the source.",
+      "The differential is important, but the options reduce it to symptomatic-site matching rather than two consequential steps.",
+      "The standalone presentation and task are coherent. Anoscopy must not be presented as guaranteed to delineate every fistula."
+    ],
+    "suggestions": [
+      "Compare assessments that plausibly evaluate the actual opening and source, with facts distinguishing their sequence.",
+      "Keep uncertainty about the upper-pit connection and remove the deliberately wrong-site restriction.",
+      "Explain why anorectal assessment is needed without promising definitive fistula mapping."
+    ]
+  },
+  {
+    "id": "question.skin-soft-tissue-benign-infection.cyst-acute.20261111.v1",
+    "nodeId": "node.skin-soft-tissue-benign-infection.cyst-acute.20261111.v1",
+    "title": "Painful back lump - acute procedure",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "New tension and pain are stated, but not erythema, warmth or another explicit inflammatory examination change. The later node says redness resolved although redness was never described."
+    ],
+    "cues": [],
+    "fairness": [
+      "Recognizing an epidermoid-type lesion and distinguishing its acute inflammatory/collection phase from elective capsule removal can be consequential steps.",
+      "A debris-containing cavity also describes cyst contents. Pain/tension support inflammation, but the examination is less decisive for drainage over immediate excision than the explanation implies. This is clinical sufficiency uncertainty, not a confident assertion that the key is wrong.",
+      "Return to a quiet symptomatic nodule is plausible, but unexplained redness and pre-announced removal weaken chronology and later independent difficulty."
+    ],
+    "suggestions": [
+      "Add a concise supported observation establishing the acute inflammatory/drainable phase; do not equate ultrasound debris with infection.",
+      "Explain why immediate excision is less appropriate for this exact presentation after the answer.",
+      "Remove the next elective-removal answer from preceding feedback if a separate follow-up decision is retained."
+    ]
+  },
+  {
+    "id": "question.skin-soft-tissue-benign-infection.cyst-definitive.20261111.v1",
+    "nodeId": "node.skin-soft-tissue-benign-infection.cyst-definitive.20261111.v1",
+    "title": "Painful back lump - definitive procedure",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Redness and tenderness have resolved introduces antecedent redness absent from the original presentation."
+    ],
+    "cues": [
+      {
+        "phrase": "elective removal can be reconsidered after the inflammation settles",
+        "why": "Prior feedback announces the next answer; the update then states its condition has occurred."
+      },
+      {
+        "phrase": "no fluid cavity",
+        "why": "Explicitly removes the rationale for both drainage and aspiration, leaving excision."
+      },
+      {
+        "phrase": "Which elective procedural plan",
+        "why": "Repeats the elective-removal framing already taught by preceding feedback."
+      }
+    ],
+    "fairness": [
+      "Elective excision is reasonable for a persistently symptomatic epidermoid-type lesion after acute inflammation resolves.",
+      "The update otherwise stands alone and follows a plausible course. Harness irritation gives a treatment indication, but neither alternative addresses the nonfluid nodule.",
+      "This is a rehearsed one-rule follow-up, not an independent two-step resident decision."
+    ],
+    "suggestions": [
+      "Remove the next answer from prior feedback and correct the inflammation chronology.",
+      "Compare plausible elective choices using a supported patient-specific discriminator.",
+      "If routine excision versus aspiration/drainage is retained, seek foundational-role acceptance rather than claiming moderate/hard reasoning."
+    ]
+  }
+]

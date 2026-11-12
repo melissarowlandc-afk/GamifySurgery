@@ -1,0 +1,1219 @@
+[
+  {
+    "id": "review.n2.sglt2-postoperative-restart.v1",
+    "title": "Postoperative SGLT2 restart after a fasting course",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "should replace",
+        "why": "The task presupposes that the calendar instruction is wrong, eliminating the calendar option before clinical reasoning."
+      },
+      {
+        "phrase": "the team has not reviewed that instruction since the vomiting began",
+        "why": "Flags an omitted review and explicitly connects the new symptom to the need to change the order."
+      },
+      {
+        "phrase": "She still vomits after meals",
+        "why": "Paired with the sole option mentioning return of oral intake, ordinary symptom matching identifies the key; the alternatives do not compete on safe restart criteria."
+      },
+      {
+        "phrase": "clinical stability and oral intake return",
+        "why": "The key is the only multi-criterion clinical recovery plan, against a date or single laboratory result."
+      }
+    ],
+    "fairness": [
+      "Among the offered options, delayed resumption until recovery is the defensible answer; the stem does not supply a second substantive inference.",
+      "Importance: high; perioperative SGLT2 medication reconciliation is practical surgical care. Too easy for the requested PGY-2/3 challenge.",
+      "Realism: ongoing postoperative vomiting with hospital-team nutrition support needs a clearer care-transition setting. A medication-calendar question must not imply that reassessing the vomiting or possible metabolic illness is unnecessary.",
+      "Scope for this entire report: the supplied JSON has 39 variants, not 40, and no literal after blocks. Only equivalent visible clinical-case presentation, node exhibit/task and choice labels were scored; author rationales, metadata and titles were not used as answer cues. No current-update field was present. This offline editorial review neither verifies guideline currency nor grants clinical approval; all drafts remain needs_clinician_review."
+    ],
+    "suggestions": [
+      "Ask neutrally which medication instruction is appropriate now; remove the sentence announcing an unreviewed instruction.",
+      "Show the relevant intake, clinical trajectory and available metabolic observations, then compare three concrete restart/withhold plans with credible differing recovery criteria. Preserve necessary safety findings and have the clinician verify the restart conditions.",
+      "Clarify whether this is a current discharge review or a later clinic review of a past episode."
+    ]
+  },
+  {
+    "id": "review.n2.naloxone-response-recurrence.v1",
+    "title": "Respiratory recurrence after naloxone",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "became difficult to awaken again with slow breaths",
+        "why": "Directly selects the only option continuing respiratory care; a lay reader can reject ending observation."
+      },
+      {
+        "phrase": "after the first alert interval",
+        "why": "Advertises that discharge would ignore the subsequent deterioration already given."
+      },
+      {
+        "phrase": "Use normal limb strength to end recovery observation",
+        "why": "Limb strength is an obvious category mismatch for recurrent slow breathing and supplies no credible competing recovery plan."
+      }
+    ],
+    "fairness": [
+      "The key is best, but 'respiratory support' is broad and the alternatives do not test a close management decision. Repeat reversal and cause-specific reassessment are not evaluated.",
+      "Importance: high; recurrent respiratory depression after reversal matters. This is basic safety recognition, too easy for a routine resident challenge.",
+      "Realism: review of a past recovery event is plausible, but the task does not say whether it asks what should have happened then or what to arrange now."
+    ],
+    "suggestions": [
+      "Make the historical decision time explicit, or use a current monitored-recovery vignette.",
+      "Keep the red flags. Either seek acceptance as an easy safety item or compare concrete monitored airway/reversal plans after an initial response, with the medication and response chronology needed to distinguish them.",
+      "Remove discharge-at-an-earlier-time and limb-strength foils."
+    ]
+  },
+  {
+    "id": "review.n2.oxygenation-versus-ventilation-monitoring.v1",
+    "title": "Ventilation despite a reassuring saturation display",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "the pulse-oximeter signal remained good and its saturation stayed in the reference range",
+        "why": "Against 'Repeat finger pulse oximetry', this makes the repeat option redundant rather than a plausible acquisition problem."
+      },
+      {
+        "phrase": "Which additional measurement",
+        "why": "Helps reject a repeat of the already satisfactory measurement."
+      },
+      {
+        "phrase": "Continuous waveform capnography",
+        "why": "The sole continuous new respiratory monitoring modality stands out against two 'Repeat' spot measurements; hemoglobin is particularly remote from the stated acute breathing problem."
+      }
+    ],
+    "fairness": [
+      "Capnography is the best offered additional monitor. No credible competing ventilation assessment is supplied.",
+      "Importance: high for procedural sedation, but this is one familiar oxygenation-versus-ventilation distinction and too easy for PGY-2/3 residents.",
+      "Realism: a past-event clinic discussion can support counseling; a current deteriorating sedated patient requires clinical response as well as a monitor. The task should not imply measurement precedes support."
+    ],
+    "suggestions": [
+      "Use a labelled constructed capnogram or serial ventilation observations and ask for a consequential interpretation or action.",
+      "Offer similarly scoped respiratory monitoring/response plans and retain supplemental oxygen as clinically necessary context.",
+      "Specify that immediate supportive measures are underway if asking about monitoring during active deterioration."
+    ]
+  },
+  {
+    "id": "review.n2.sugammadex-recovery-endpoints.v1",
+    "title": "Motor reversal versus full anesthetic recovery",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "quantitative testing documented recovery from neuromuscular blockade",
+        "why": "Supplies the exclusion needed to reject more sugammadex; interpretation of the test is not required."
+      },
+      {
+        "phrase": "drowsy with shallow spontaneous breathing",
+        "why": "Paraphrases 'consciousness and respiratory effort' in the key."
+      },
+      {
+        "phrase": "Which further recovery assessment",
+        "why": "Only the key is a further assessment; the alternatives are a drug intervention and discharge clearance."
+      },
+      {
+        "phrase": "based on persistent drowsiness",
+        "why": "The distractor explains its own erroneous indication instead of naming a credible competing assessment."
+      }
+    ],
+    "fairness": [
+      "The keyed assessment is warranted, but the stem already documents the findings being 'assessed'; it leaves the consequential response untested.",
+      "Importance: high anesthetic safety; too easy and not two-step.",
+      "Realism: a clinic review of an old anesthetic is possible, but 'further' recovery assessment has no current decision time."
+    ],
+    "suggestions": [
+      "Compare three actual recovery decisions at the same stage, using raw quantitative neuromuscular data and the relevant respiratory/alertness trajectory.",
+      "Do not remove persistent hypoventilation to create difficulty; test how it changes a concrete extubation or monitored-care decision.",
+      "If retained as simple reversal-scope recognition, obtain explicit basic/safety acceptance."
+    ]
+  },
+  {
+    "id": "review.n2.ventilator-elastic-versus-resistive-load.v1",
+    "title": "Interpreting matched ventilator pressure changes",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "unchanged tidal volume, inspiratory flow and PEEP",
+        "why": "Directly excludes 'Increased imposed inspiratory flow', leaving a binary elastic-versus-resistive choice."
+      }
+    ],
+    "fairness": [
+      "The pressure changes support increased elastic load under the stated controlled passive conditions; the peak-minus-plateau difference is unchanged.",
+      "Importance: high ICU/ABSITE mechanics, but this is a single familiar classification without a subsequent decision. Too easy for the requested challenge.",
+      "Realism: a patient bringing paired ventilator mechanics to clinic solely for interpretation feels artificial. An explicitly retrospective ICU case conference would fit better.",
+      "The table is a usable numerical exhibit. No key length, grammar or convergence cue identified beyond the explicitly excluded flow distractor."
+    ],
+    "suggestions": [
+      "Keep the acquisition controls because they make the comparison fair; replace the contradicted flow option with a credible mechanical alternative.",
+      "Add clinically relevant ventilator/patient observations that require distinguishing causes of increased elastic load and choosing a concrete next check.",
+      "Use a clinical review setting that makes the interpretation useful to a current plan."
+    ]
+  },
+  {
+    "id": "review.n2.refeeding-baseline-phosphate-attribution.v1",
+    "title": "Phosphate chronology before nutrition restart",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "before any nutrition was administered",
+        "why": "Chronology alone disproves feeding causation; no medical knowledge is required."
+      },
+      {
+        "phrase": "Before first nutrition",
+        "why": "Repeats the decisive chronology already supplied in the presentation."
+      },
+      {
+        "phrase": "Nutrition delivered before sampling",
+        "why": "The 'None' entry repeats the same elimination a third time."
+      },
+      {
+        "phrase": "restart monitoring can be omitted",
+        "why": "The otherwise matching baseline-depletion distractor appends an obviously incautious conclusion."
+      },
+      {
+        "phrase": "a feeding-related change is unproven",
+        "why": "Only the key is calibrated to uncertainty; the other options claim proof or permission to omit monitoring."
+      }
+    ],
+    "fairness": [
+      "The result precedes feeding, so attribution to that restart is unsupported. Low serum phosphate does not by itself prove the mechanism or extent of total-body depletion; prolonged poor intake makes depletion plausible, not established.",
+      "Importance: high for refeeding safety, but this item tests temporal logic and a label, with no nutrition decision. Too easy.",
+      "Realism: consultation before restarting nutrition is plausible; three repetitions of the timing and an obviously erroneous referral label are not needed."
+    ],
+    "suggestions": [
+      "Use 'pre-existing hypophosphatemia' rather than asserting proven depletion from this result alone.",
+      "Replace the erroneous referral summary and redundant exhibit with a concise pre/post nutrition trajectory, then ask for a concrete monitoring or feeding-management decision.",
+      "Compare credible plans that all retain necessary monitoring; verify any added criteria with the clinician."
+    ]
+  },
+  {
+    "id": "review.n2.burn-feeding-perfusion-prerequisite.v1",
+    "title": "Perfusion before an early burn-feeding pathway",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "worsening perfusion, escalating circulatory support and an unresolved concern for intestinal ischemia",
+        "why": "Gives interpreted contraindications rather than observations to interpret, strongly selecting stabilization."
+      },
+      {
+        "phrase": "Replace circulatory resuscitation with parenteral feeding",
+        "why": "A manifestly unsafe substitution even to a nonexpert; nutrition is framed as replacing resuscitation."
+      },
+      {
+        "phrase": "A checklist cited early nutrition after extensive burns",
+        "why": "Sets up an obvious stale-checklist-versus-deteriorating-patient contrast."
+      }
+    ],
+    "fairness": [
+      "Resuscitation before initiating feeding is the best offered priority in the described deterioration. The item should not teach that any circulatory support automatically precludes enteral nutrition.",
+      "Importance: high critical-care nutrition safety; too easy as written.",
+      "Realism: retrospective burn-center review can be educational but is not an actionable clinic nutrition decision. 'At that point' does correctly locate the historical choice."
+    ],
+    "suggestions": [
+      "Show a concrete perfusion/support trajectory rather than 'worsening perfusion' and a preinterpreted ischemia concern.",
+      "Compare plausible timing/rate strategies in the same resuscitation context, retaining the clinical facts needed to distinguish active deterioration from stabilization.",
+      "Remove the parenteral-nutrition-as-resuscitation foil. Alternatively retain as an explicitly accepted safety-recognition item."
+    ]
+  },
+  {
+    "id": "review.n2.parenteral-response-versus-bowel-recovery.v1",
+    "title": "Nutrition delivery versus recovery of intestinal function",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "oral trials still caused vomiting and the abdominal distension persisted",
+        "why": "Plainly contradicts the two options claiming established gastrointestinal recovery."
+      },
+      {
+        "phrase": "proof that the ileus had resolved",
+        "why": "Overstated prior-note claim invites rejection without a close clinical alternative."
+      },
+      {
+        "phrase": "gastrointestinal recovery unresolved",
+        "why": "Only the key acknowledges uncertainty; both distractors repeat the same overconfident recovery conclusion."
+      }
+    ],
+    "fairness": [
+      "The key is the best supported conclusion, but stabilized weight is not a complete nutritional response assessment, and 'obstruction had been assessed' does not say what that assessment found.",
+      "Importance: nutrition versus bowel function is practical, but this narrow label distinction adds little beyond basic recognition. Too easy.",
+      "Realism: outpatient review after prolonged ileus is plausible; the historical/current status should be clearer if the result is meant to change care."
+    ],
+    "suggestions": [
+      "Replace the erroneous note with an actual chronology of oral tolerance, output and relevant examination/imaging findings.",
+      "Ask for a specific next nutrition or diagnostic step, comparing credible alternatives rather than two copies of 'recovery established'.",
+      "State the relevant obstruction-assessment result if it affects the plan; do not equate assessment with exclusion."
+    ]
+  },
+  {
+    "id": "review.n2.dialysis-isocaloric-protein-adjustment.v1",
+    "title": "Protein adequacy without calorie overfeeding",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "without changing the energy assessment",
+        "why": "Explicitly selects the two 1,960-kcal options."
+      },
+      {
+        "phrase": "His current 56 g/day protein provision was being revised",
+        "why": "Signals that the 56-g options are wrong; choosing the only changed protein amount with unchanged calories requires no dialysis knowledge."
+      },
+      {
+        "phrase": "without overfeeding",
+        "why": "Reiterates the calorie selection rule, so the task supplies both dimensions of the answer."
+      }
+    ],
+    "fairness": [
+      "The key is plausible for the specified stable conventional dialysis context, but the task refers to a 'recorded dialysis protein target' that is not shown in any visible field. Do not imply a patient-specific target was supplied.",
+      "Importance: nutrition prescription review is relevant; exact stable-dialysis protein targets are less broadly central than postoperative nutrition decisions. Too easy by cueing despite the missing stated target.",
+      "Realism: dietitian co-management is plausible, but an outside prescription calculation has no stated surgical indication. The care purpose should be concrete.",
+      "No numerical guideline range was verified in this offline review; clinician verification of the prescribed target is required."
+    ],
+    "suggestions": [
+      "Provide the actual selected protein target if the task is implementation of a prescription, or explicitly ask the learner to select a target rather than claiming it is recorded.",
+      "Remove 'was being revised' and compare isocaloric formulations with credible protein amounts so the desired change is not announced.",
+      "Make the choice alter a real postoperative nutrition prescription while preserving the patient's noncritical dialysis status."
+    ]
+  },
+  {
+    "id": "review.n2.vitamin-c-indication-boundary.v1",
+    "title": "A collagen cofactor is not universal postoperative therapy",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "uncomplicated healing incision and a varied diet",
+        "why": "Stacks reassuring observations against the high-dose supplementation options."
+      },
+      {
+        "phrase": "found no deficiency",
+        "why": "Adds a categorical negative that does most of the work of rejecting the proposed supplement."
+      },
+      {
+        "phrase": "because collagen synthesis requires ascorbate",
+        "why": "States the simplistic rationale the learner is expected to reject rather than creating a substantive indication decision."
+      },
+      {
+        "phrase": "Replace the nutrition assessment with a high-dose course",
+        "why": "An obviously incomplete alternative to assessment; also temporally odd because the assessment is already completed."
+      }
+    ],
+    "fairness": [
+      "Maintaining adequate intake is the best offered plan; the item correctly does not establish a need for high-dose therapy from a cofactor role alone.",
+      "Importance: useful counseling and stewardship, but relatively low incremental ABSITE value in this form. Too easy for residents.",
+      "Realism: the supplement question fits clinic well; 'after nutrition assessment' is redundant after an assessment has already occurred."
+    ],
+    "suggestions": [
+      "Remove the retrospective replace-assessment foil and make every option a concrete recommendation for this visit.",
+      "If the purpose remains simple supplement counseling, propose an explicitly accepted basic item or consolidation; do not manufacture difficulty with obscure vitamin details.",
+      "For a resident application item, add a clinically meaningful intake/healing differential and ask for a specific assessment or intervention based on it."
+    ]
+  },
+  {
+    "id": "review.n2.vte-prophylaxis-to-treatment.v1",
+    "title": "A new DVT changes anticoagulation purpose",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "new proximal DVT",
+        "why": "The task supplies the diagnosis that the ultrasound observation could otherwise require the learner to infer."
+      },
+      {
+        "phrase": "Continue prophylactic anticoagulation",
+        "why": "Nearly duplicates 'Extend prophylactic anticoagulation'; both retain prevention after a diagnosed event, leaving the sole therapeutic option conspicuous."
+      },
+      {
+        "phrase": "no active cancer, active bleeding or other documented anticoagulation contraindication",
+        "why": "The bleeding/contraindication exclusion removes the main reason to consider a different immediate path. Cancer and first-event negatives add no discrimination for this treatment-versus-prophylaxis task."
+      }
+    ],
+    "fairness": [
+      "Therapeutic anticoagulation is the single best offered category for a new proximal DVT without a stated contraindication. Necessary safety exclusions should be preserved, not removed merely to make it harder.",
+      "Importance: very high, but this is basic diagnosis-to-treatment recognition, too easy for PGY-2/3 residents.",
+      "Realism: a postoperative clinic duplex leading to treatment is credible. The task does not ask for an actual drug or regimen, despite the owner preference for specific plans."
+    ],
+    "suggestions": [
+      "Use the duplex observations without repeating the diagnosis in the task.",
+      "Compare concrete anticoagulation plans with clinically meaningful timing, bleeding-risk or medication constraints; name the proposed drugs and verify the relevant criteria.",
+      "Replace the continue/extend prophylaxis near-duplicates. Remove first-event/cancer details unless a duration or agent decision makes them consequential."
+    ]
+  },
+  {
+    "id": "review.n2.af-bridging-versus-surgical-prophylaxis.v1",
+    "title": "Heparin bridging and VTE prophylaxis are separate",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "high VTE risk and acceptable bleeding risk for low-molecular-weight-heparin prophylaxis",
+        "why": "The stem explicitly supplies the prophylaxis decision, eliminating half the matrix without inference."
+      },
+      {
+        "phrase": "conflates that plan with therapeutic bridging",
+        "why": "Labels the prior instruction as an error and teaches the separation requested in the task."
+      },
+      {
+        "phrase": "separately",
+        "why": "Preannounces that the two heparin decisions are independent."
+      }
+    ],
+    "fairness": [
+      "The intended omission of routine therapeutic bridging while providing indicated surgical prophylaxis is plausible. The absent mechanical valve/recent stroke information is clinically useful, not something to remove automatically.",
+      "The matrix does not specify when bridging and prophylactic LMWH would be given. 'Add bridge and give prophylactic LMWH' could be read as concurrent duplicate anticoagulation or as separate phases, reducing distractor clarity.",
+      "Importance: high perioperative practice. Moderate for a PGY-2/3 learner unfamiliar with AF bridging guidance, but the second purported reasoning step is supplied.",
+      "Realism: preoperative clinic planning fits well. No patient-specific schedule, renal function or dose is given; this review does not claim an exact regimen is established."
+    ],
+    "suggestions": [
+      "Replace the summarized prophylaxis eligibility with the concrete operation, mobility and relevant bleeding observations.",
+      "Remove 'conflates' and ask neutrally for the perioperative anticoagulation plan.",
+      "Make the phases explicit and use parallel plans at the same timepoints, so no choice implies giving therapeutic and prophylactic doses simultaneously.",
+      "Retain the clinically necessary thromboembolic-risk history; verify any additional bridging-selection criteria."
+    ]
+  },
+  {
+    "id": "review.n2.factor-assays-without-mixing-gate.v1",
+    "title": "Factor assays need not wait for a mixing-screen gate",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "factor-specific assessment",
+        "why": "The task directs the learner toward named factor assays, helping reject a mixing study presented as the final assessment."
+      },
+      {
+        "phrase": "a draft order would release factor testing only after the screen is interpreted",
+        "why": "Highlights a gate as the apparent defect before asking which ordering sequence to use."
+      },
+      {
+        "phrase": "as the final factor-deficiency assessment",
+        "why": "Overclaims the role of a screening test and makes the third option a caricature rather than a credible sequence."
+      }
+    ],
+    "fairness": [
+      "New bleeding with isolated prolonged aPTT makes prompt factor/inhibitor investigation plausible. However, the stem does not establish a clinically material delay from the mixing screen, local assay access, or an explicit acquired-inhibitor suspicion; a rapid sequential laboratory workflow may also be defensible.",
+      "'The laboratory has assessed specimen and anticoagulant interference' does not report the result of that assessment. It must not silently mean interference was excluded.",
+      "Importance: recognizing a possible acquired bleeding disorder is high yield; the exact hematology laboratory release sequence is more specialized and less directly actionable for a general-surgery clinic resident.",
+      "Difficulty is moderate from specialized workflow knowledge, not a supported two-step decision. No definite clinical inaccuracy is asserted; local workflow and guideline ranking need clinician verification."
+    ],
+    "suggestions": [
+      "State the actual interference findings and availability/turnaround constraints if they determine whether waiting changes care.",
+      "Ask for the surgeon's concrete initial diagnostic/referral plan rather than what hematology 'should' do in an unspecified laboratory.",
+      "Compare plausible concurrently ordered or staged investigations and specify why delay matters; do not use a mixing test as a purported definitive factor diagnosis."
+    ]
+  },
+  {
+    "id": "review.n2.prophylaxis-versus-ssi-source-control.v1",
+    "title": "Purulence changes the purpose of wound care",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "contains pus beneath retained staples",
+        "why": "Mechanically matches 'Open the incision and release trapped pus'; the two alternatives both keep the infected compartment shut."
+      },
+      {
+        "phrase": "Seal the incision and retain the staples",
+        "why": "An implausible active sealing action makes the key obvious without a close source-control alternative."
+      },
+      {
+        "phrase": "no deep collection or systemic illness is identified",
+        "why": "Removes escalation concerns while the options offer no credible local-care competitor. These findings remain useful for safety but do not create difficulty."
+      }
+    ],
+    "fairness": [
+      "Opening the affected superficial segment for drainage is the best offered action. 'Open the incision' should specify the affected segment rather than implying the entire incision must be opened.",
+      "Importance: very high and clinically practical, but basic source control is too easy in this option set.",
+      "Realism: this is a convincing postoperative clinic problem. The family's prophylaxis question adds little once the options caricature closure versus drainage."
+    ],
+    "suggestions": [
+      "Ask for a concrete drainage and antibiotic plan using the wound extent, surrounding inflammatory findings and host/systemic status to distinguish credible alternatives.",
+      "Keep fascia/deep-infection and systemic observations; make their interpretation change an actual plan.",
+      "Replace the sealing option and specify opening the involved segment."
+    ]
+  },
+  {
+    "id": "review.n2.serial-gcs-verbal-interference.v1",
+    "title": "Comparing GCS observations with changed testability",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "Cannot phonate through the tracheal tube",
+        "why": "Directly translates into 'verbal response is untestable' without knowledge of GCS scoring."
+      },
+      {
+        "phrase": "Eye and motor responses have declined",
+        "why": "The table repeats identical eye and motor findings, so this option is directly contradicted by ordinary reading."
+      },
+      {
+        "phrase": "a lower GCS total after tracheal intubation",
+        "why": "Preframes the familiar testability-versus-total-score trap instead of requiring interpretation of a clinically meaningful neurologic change."
+      }
+    ],
+    "fairness": [
+      "The key appropriately distinguishes unchanged observed responses from an untestable verbal component. It should not be extrapolated to proof that all neurologic function is unchanged.",
+      "Importance: high for documentation and handoff; as written, too easy for residents and not a two-step decision.",
+      "Realism: historical review is possible, but no present treatment or handoff consequence follows. The constructed table is usable, although its data largely restate the key."
+    ],
+    "suggestions": [
+      "Compare serial component observations with a genuine change in a testable component, while retaining explicit interference information.",
+      "Ask which concrete assessment/escalation or handoff action follows, rather than restating the table.",
+      "Avoid a distractor that claims identical cells declined; do not obscure intubation-related untestability to force difficulty."
+    ]
+  },
+  {
+    "id": "review.n2.dnr-versus-active-source-control.v1",
+    "title": "A DNR order and treatment before arrest",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "requests incision and drainage under local anesthesia",
+        "why": "States the first component of the key explicitly."
+      },
+      {
+        "phrase": "reviewed and retained that limitation for the planned procedure",
+        "why": "States the second component, so the matrix is solved by copying two decisions."
+      },
+      {
+        "phrase": "concerns attempted resuscitation after arrest",
+        "why": "Teaches the scope distinction rather than requiring the learner to apply it to an unresolved procedural plan."
+      }
+    ],
+    "fairness": [
+      "Drainage with the reviewed DNR limitation retained is uniquely defensible on the stated informed choice. Consent and goals must not be removed merely to create ambiguity.",
+      "Importance: high ethics and perioperative communication, but this item supplies the full decision and is too easy.",
+      "Realism: local-anesthetic abscess drainage with an existing directive is credible. The surgical and directive review is already complete, leaving no remaining substantive decision."
+    ],
+    "suggestions": [
+      "Keep the patient's preferences, but place the question before a genuinely unresolved required-reconsideration discussion, with concrete procedure-related interventions and parallel consent plans.",
+      "Alternatively seek explicit acceptance as basic directive-scope education.",
+      "Do not substitute an unspecified 'shared decision' key for concrete options or imply automatic suspension."
+    ]
+  },
+  {
+    "id": "review.n2.pancreatic-cyst-predates-pancreatitis.v1",
+    "title": "A pancreatic cyst that predates pancreatitis",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "before she had ever developed pancreatitis",
+        "why": "Temporal ordering rejects the proposed post-pancreatitis attribution without requiring medical knowledge."
+      },
+      {
+        "phrase": "there is no documented diagnosis explaining its origin",
+        "why": "Names a missing diagnostic step that selects the only evaluation/referral option."
+      },
+      {
+        "phrase": "for cancer",
+        "why": "The resection distractor assumes an unprovided diagnosis, making the only cautious option stand out."
+      },
+      {
+        "phrase": "Refer to the pancreatic cyst clinic",
+        "why": "A broad assessment competes against definitive drainage or cancer surgery at a later decision stage."
+      }
+    ],
+    "fairness": [
+      "Specialist characterization before drainage is the best offered plan; the prior cyst does not by itself prove a neoplasm or prove a specific operation is indicated.",
+      "Importance: high; inappropriate drainage of an uncharacterized cyst is consequential. The actual option set makes it too easy.",
+      "Realism: symptomatic cyst referral is appropriate clinic work. The table merely repeats chronology and duct observations already stated, so it adds no inference."
+    ],
+    "suggestions": [
+      "Compare specific diagnostic or multidisciplinary evaluation plans at the same stage, using clinically meaningful cyst morphology, prior workup and symptoms.",
+      "Remove the redundant table or replace it with a useful longitudinal imaging exhibit.",
+      "Remove 'for cancer' as an unsupported premise; do not force selection of a resection solely from timing and absent demonstrated duct communication."
+    ]
+  },
+  {
+    "id": "review.n2.marginal-ulcer-obstructive-escalation.v1",
+    "title": "A changed course during marginal-ulcer treatment",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "progressively less tolerance of food and recurrent post-meal vomiting",
+        "why": "Directly conflicts with the option promising an unchanged plan until routine follow-up."
+      },
+      {
+        "phrase": "retained food above a narrowed gastrojejunal opening that the scope could not traverse",
+        "why": "Makes specialist escalation evident while no credible obstructive-treatment competitor is offered."
+      },
+      {
+        "phrase": "Continue the unchanged PPI plan until routine follow-up",
+        "why": "Advertises failure to respond to a changed obstructive course."
+      },
+      {
+        "phrase": "Repeat an empiric H. pylori eradication course",
+        "why": "'Repeat' presupposes an earlier course absent from the visible history; empiric retreatment is a weak foil beside documented anastomotic narrowing."
+      }
+    ],
+    "fairness": [
+      "Escalated bariatric review is reasonable, but the key is nonspecific about urgency and action. Hemodynamic stability does not establish safe outpatient delay when intake is failing.",
+      "Importance: high and directly relevant to postoperative surgery. Too easy because the competing plans are passive delay or unsupported retreatment.",
+      "Realism: the clinic setting is credible. Oral-fluid tolerance, hydration and the immediate referral/admission timeline are missing if disposition is the decision."
+    ],
+    "suggestions": [
+      "Specify current hydration, fluid tolerance and symptom trajectory, then compare concrete urgent assessment, endoscopic intervention or surgical pathways as appropriate.",
+      "Name the specific proposed investigation/treatment and timing rather than a broad combined review.",
+      "Clarify ulcer/narrowing status needed to distinguish interventions; remove unsupported 'repeat' eradication history."
+    ]
+  },
+  {
+    "id": "review.n2.ulcer-posthemostasis-acid-suppression.v1",
+    "title": "Acid suppression after ulcer hemostasis",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "The packet omits the acid-suppressive drug",
+        "why": "States the omission the task asks the learner to fill; the case is reduced to selecting the familiar ulcer drug class."
+      },
+      {
+        "phrase": "Antacid symptom-relief therapy",
+        "why": "The option labels its limited purpose while the task asks for ulcer-directed post-hemostasis care, making it self-excluding."
+      },
+      {
+        "phrase": "because he has no heartburn",
+        "why": "The patient supplies the simplistic symptom-based misconception rather than a close therapeutic alternative."
+      }
+    ],
+    "fairness": [
+      "PPI therapy is the best offered drug class after the described hemostasis. No dose, route or duration is established by these fields, and this review does not invent one.",
+      "Importance: very high upper-GI bleeding care, but a straightforward PPI-versus-H2-antagonist recognition item is too easy.",
+      "Realism: discharge reconciliation is plausible. The visible-vessel detail does not alter the drug-class choice, so it is not an earned extra inference."
+    ],
+    "suggestions": [
+      "Ask a concrete treatment-transition question at a specified post-hemostasis stage, with source-supported regimens and actual administered therapy.",
+      "Use lesion findings and treatment course to distinguish credible plans rather than the general choice of PPI.",
+      "If retaining basic reconciliation, label and seek acceptance of the deliberately easy purpose."
+    ]
+  },
+  {
+    "id": "review.n2.bile-leak-duct-continuity-boundary.v1",
+    "title": "Duct continuity before a minor-leak stent pathway",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "no continuous common-duct channel across the injury, and a separated downstream segment",
+        "why": "Directly paraphrases the key, 'Interruption of the main bile-duct lumen'."
+      },
+      {
+        "phrase": "a minor leak with preserved continuity",
+        "why": "States the eligibility rule against which the interruption is compared, supplying the intended inference."
+      },
+      {
+        "phrase": "requires HPB reassessment",
+        "why": "The task gives the downstream action rather than asking the learner to choose it."
+      }
+    ],
+    "fairness": [
+      "Loss of main-duct continuity is the relevant reason to reassess a simple minor-leak stent pathway; the other two findings can occur with leaks of differing severity.",
+      "Importance: high bile-duct injury management, but this is a label match and too easy.",
+      "Realism: specialist referral after a drained collection fits clinic review. An imaging-dependent objective currently uses a prose conclusion rather than an interpretable exhibit; exact diagnostic certainty of the reported MRCP description needs clinician review."
+    ],
+    "suggestions": [
+      "Use a verified, labelled constructed duct-continuity schematic or a usable permitted imaging exhibit with accessibility observations.",
+      "Ask for a concrete next management/referral plan without first naming HPB reassessment or the preserved-continuity rule.",
+      "Compare plans at the same stage and retain the anatomical and clinical information needed to distinguish them."
+    ]
+  },
+  {
+    "id": "review.n2.gastric-wall-mass-specimen-provenance.v1",
+    "title": "A mucosal specimen does not classify an unsampled wall mass",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "mutation-guided preoperative treatment pathway",
+        "why": "The task names the molecular requirement that only the key supplies."
+      },
+      {
+        "phrase": "forceps sample from the surface; the imaged lesion occupies a deeper wall layer",
+        "why": "A plain surface-versus-depth mismatch makes representative sampling obvious; neither distractor offers a credible alternative sampling plan."
+      },
+      {
+        "phrase": "close the tumor workup",
+        "why": "Advertises premature closure despite the explicitly unsampled lesion."
+      },
+      {
+        "phrase": "Start imatinib from the mass location and planned resection",
+        "why": "The option itself exposes its unsupported rationale and competes at a later stage than evidence acquisition."
+      },
+      {
+        "phrase": "whose resection would remove substantial normal stomach",
+        "why": "Previews the rationale for preoperative tumor reduction, although it is not needed to answer the tissue-evidence question."
+      }
+    ],
+    "fairness": [
+      "Representative tissue and appropriate molecular assessment are the best offered evidence plan before mutation-guided therapy. A gastric wall mass is not itself a confirmed GIST or proof of imatinib eligibility.",
+      "Importance: high surgical-oncology principle. Too easy because sampling adequacy and molecular requirements are supplied and the alternatives knowingly skip them.",
+      "Realism: preoperative multidisciplinary review fits clinic; the key should identify an appropriate sampling route and diagnostic pathology scope rather than generic core biopsy if procedural selection is being assessed."
+    ],
+    "suggestions": [
+      "Ask neutrally which diagnostic step is next, without saying 'mutation-guided' in the lead-in.",
+      "Compare credible tissue acquisition/assessment plans at the same stage, supplying imaging and prior sample findings needed to choose among them.",
+      "If the target is interpretation of a specimen, use an actual specimen-to-lesion map and ask what it establishes, avoiding premature-treatment foils."
+    ]
+  },
+  {
+    "id": "review.n2.ercp-versus-gallbladder-source.v1",
+    "title": "Duct clearance does not remove the gallbladder source",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "remaining source",
+        "why": "The task prompts source elimination immediately after 'Gallbladder stones remained', helping exclude ERCP."
+      },
+      {
+        "phrase": "no local pancreatic complication and was considered fit for laparoscopy",
+        "why": "Supplies summarized eligibility for early surgery rather than making the learner interpret the relevant course."
+      },
+      {
+        "phrase": "successful duct clearance as a reason to cancel the planned gallbladder operation",
+        "why": "Sets up an obviously questionable cancellation that cues correction."
+      }
+    ],
+    "fairness": [
+      "Index-admission cholecystectomy is the intended best plan for the represented mild, recovered, operable admission; the interval option is a clinically relevant timing competitor.",
+      "There is a temporal mismatch: the admission is explicitly completed, so index-admission surgery cannot be arranged now. 'Represented admission' partially signals a hypothetical retrospective question but should be explicit.",
+      "Importance: very high. The mild-pancreatitis timing rule is familiar and this uncomplicated presentation is too easy for the intended resident challenge.",
+      "Realism: reviewing why surgery was missed is plausible; counseling on a past admission must be distinguished from a current operative plan."
+    ],
+    "suggestions": [
+      "Ask 'Which plan should have been completed before discharge?' or move the decision to the actual admission.",
+      "Replace 'considered fit' with the few relevant observations and compare credible timing plans resolved by the illness trajectory.",
+      "Remove the erroneous cancellation note and source-language prompt."
+    ]
+  },
+  {
+    "id": "review.n2.hpylori-antibody-after-valid-cure-test.v1",
+    "title": "Antibody results after a valid eradication test",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "Retain the valid active-infection test-of-cure conclusion",
+        "why": "'Valid' certifies the key from inside the option, while no competing option addresses a plausible limitation of the active test."
+      },
+      {
+        "phrase": "He has no recurrent ulcer symptoms",
+        "why": "Additional reassurance makes retreatment still less tempting; it is not needed to establish the different meaning of serology."
+      }
+    ],
+    "fairness": [
+      "The correctly timed negative active test is not overturned solely by a subsequent positive antibody result; the key is defensible. The washout and timing facts are necessary for fairness, not flaws to delete.",
+      "Importance: high practical follow-up. Too easy for residents familiar with the single principle that antibody persistence does not establish treatment failure; no second consequential inference is required.",
+      "Realism: discordant outside testing is a plausible clinic issue. The task asks about an eradication decision, but the key is an abstract evidentiary statement rather than an explicit treatment/testing plan."
+    ],
+    "suggestions": [
+      "Remove the option's self-certifying 'valid' and name the actual action, such as whether to retreat or obtain a specific repeat active test.",
+      "Use competing testing plans with a real acquisition/timing issue if a harder item is desired, preserving the details needed to distinguish them.",
+      "Do not create ambiguity by deleting washout information while retaining the same key."
+    ]
+  },
+  {
+    "id": "review.n2.malignant-polyp-local-versus-regional-risk.v1",
+    "title": "A clear polypectomy site and regional oncologic risk",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "clearly negative margin",
+        "why": "Directly supplies half of the two-component answer matrix and eliminates both 'Involved local margin' options."
+      },
+      {
+        "phrase": "the colorectal surgeon's proposed oncologic segmental resection",
+        "why": "The proposed specialist plan previews regional oncologic management before the learner evaluates lymphovascular invasion."
+      },
+      {
+        "phrase": "next oncologic purpose",
+        "why": "The task and 'regional oncologic assessment' key share the distinctive oncologic framing."
+      }
+    ],
+    "fairness": [
+      "The local-versus-regional distinction is appropriate: a clear local margin does not resolve the regional risk associated with adverse pathology. The key is broadly defensible.",
+      "Importance: very high colorectal oncology. Too easy because one matrix component is stated and the other is previewed by the proposed surgery.",
+      "Realism: counseling after malignant-polyp removal is plausible. 'Regional oncologic assessment' is too vague to tell whether the answer means imaging, consultation or oncologic resection."
+    ],
+    "suggestions": [
+      "Remove the already-proposed surgeon plan and ask for the specific next management action.",
+      "Compare named local surveillance/re-excision/oncologic resection plans, with sufficient specimen and patient information to rank them.",
+      "Use pathology findings to drive a real action; do not spend half the answer on repeating the known margin status."
+    ]
+  },
+  {
+    "id": "review.n2.fissure-sphincterotomy-continence-boundary.v1",
+    "title": "Continence history before irreversible sphincter division",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "these were absent from the referral",
+        "why": "Highlights an overlooked risk and tells the learner that the existing surgical plan needs correction."
+      },
+      {
+        "phrase": "Which change should be made",
+        "why": "Presupposes changing the referral, directly weakening the 'Proceed' option."
+      },
+      {
+        "phrase": "from topical-treatment failure",
+        "why": "The proceed option advertises reliance on only the older indication despite the new history."
+      },
+      {
+        "phrase": "unassessed anal dilation",
+        "why": "'Unassessed' is a rhetorical warning label that makes this competitor visibly careless."
+      }
+    ],
+    "fairness": [
+      "Deferring irreversible sphincter division for continence-focused assessment is the best offered action. Baseline seepage and prior sphincter injury are necessary, consequential history and should remain.",
+      "Importance: high; avoiding worsened continence is important colorectal practice. Too easy because the task and distractors label the intended error.",
+      "Realism: this is a useful clinic referral-review scenario. 'Appropriate topical calcium-channel-blocker course' summarizes regimen adequacy without observations; if treatment failure drives the revised decision, name the actual regimen and course."
+    ],
+    "suggestions": [
+      "Ask neutrally which plan is appropriate and remove 'absent from the referral' and 'unassessed'.",
+      "Compare concrete sphincter-preserving and sphincter-dividing strategies or specific assessment plans at the same stage.",
+      "Supply the treatment course and continence/examination findings needed to distinguish the closest options; obtain clinician confirmation of any procedural ranking."
+    ]
+  },
+  {
+    "id": "review.n2.solid-meal-manometry-provocation.v1",
+    "title": "Matching esophageal provocation to unexplained food symptoms",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "during solid meals",
+        "why": "Matches the only solid-meal option directly, allowing a nonexpert to answer by matching the stimulus."
+      },
+      {
+        "phrase": "remaining meal-associated question",
+        "why": "Repeats the match in the task itself."
+      },
+      {
+        "phrase": "Rapid-swallow contractile-reserve sequence",
+        "why": "The distractor includes its different testing purpose, whereas the key repeats the presenting stimulus."
+      },
+      {
+        "phrase": "separated water-swallow manometry series did not reproduce his symptoms or explain them",
+        "why": "The unsuccessful liquid study makes the sole food-labelled alternative look like the obvious novel comparison."
+      }
+    ],
+    "fairness": [
+      "Solid-meal provocation is plausible, but rapid-drink challenge can also investigate obstructive physiology. The visible fields lack detailed standard-series metrics or a specific residual hypothesis to establish that competing maneuvers are clinically excluded; 'most directly' narrows the question mainly through stimulus wording.",
+      "Importance: esophageal physiologic evaluation is relevant, but selecting a specialist maneuver by food-word matching has modest practical value. Too easy despite technical labels.",
+      "Realism: a specialist choosing an added maneuver is plausible; raw manometry findings or an interpretable exhibit are absent."
+    ],
+    "suggestions": [
+      "Replace the broad unexplained-series summary with usable, verified manometry observations and the actual residual diagnostic uncertainty.",
+      "Compare credible next evaluations whose relative value depends on the findings, without a task that repeats the key's food stimulus.",
+      "If no meaningful resident decision remains beyond matching symptoms to the meal, propose consolidation rather than harder terminology."
+    ]
+  },
+  {
+    "id": "review.n2.coverage-recipient-bed-versus-flap-supply.v1",
+    "title": "Coverage when the recipient bed cannot support a graft",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "will not supply the initial vascular support a skin graft needs",
+        "why": "Explicitly declares both skin-graft alternatives unsuitable and teaches their dependence on the bed."
+      },
+      {
+        "phrase": "a tissue transfer that retains its feeding vessels",
+        "why": "Defines the keyed flap mechanism before the options are shown."
+      },
+      {
+        "phrase": "Pedicled tissue-flap coverage",
+        "why": "The sole flap is a category outlier against two graft variants after the stem has excluded grafts."
+      }
+    ],
+    "fairness": [
+      "A vascularized flap is the best offered category. The generic recipient-bed description does not identify defect site, size, exposed structures or available pedicle, so the feasibility of this specific coverage plan is not established.",
+      "Importance: high reconstructive principle; too easy and not application in its current form.",
+      "Realism: a reconstructive consultation fits clinic, but a surface declared unable to support grafts is an author conclusion rather than an operative observation."
+    ],
+    "suggestions": [
+      "Describe the actual defect, exposed structures, surrounding tissue and vascular assessment instead of supplying the graft-versus-flap rule.",
+      "Compare anatomically feasible coverage options with a real discriminator; verify the proposed pedicled flap is suitable for the stated site.",
+      "Use a labelled constructed wound exhibit if visual assessment is the intended objective."
+    ]
+  },
+  {
+    "id": "review.n2.free-transfer-vascular-reconnection.v1",
+    "title": "Perfusion after a completely detached tissue transfer",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "will be detached completely",
+        "why": "Contradicts preservation of the original donor vascular bridge directly."
+      },
+      {
+        "phrase": "does not leave a connecting tissue bridge",
+        "why": "Repeats that exclusion in an option-specific negative."
+      },
+      {
+        "phrase": "establishes the transferred tissue's circulation",
+        "why": "Only the microvascular-anastomosis option supplies a new vascular connection; the other vascular option has already been excluded."
+      }
+    ],
+    "fairness": [
+      "Microvascular reconnection is the best offered step for the described free tissue transfer. No close procedural alternative is presented.",
+      "Importance: a foundational surgery/ABSITE distinction, but low incremental value as a new advanced item. Too easy and one-step.",
+      "Realism: discussing a proposed outside reconstruction is plausible; the question tests an operative definition rather than a clinic decision."
+    ],
+    "suggestions": [
+      "Seek explicit foundational acceptance or consolidate with the graft/flap item.",
+      "For resident application, specify a defect and donor/recipient vascular constraints and ask for a concrete feasible reconstructive plan.",
+      "Remove the duplicated bridge negative; do not manufacture difficulty with obscure anastomotic trivia."
+    ]
+  },
+  {
+    "id": "review.n2.operative-wound-class-versus-later-ssi.v1",
+    "title": "Operative contamination and a later wound infection",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "preserves the timing",
+        "why": "The task explicitly tells the learner the conceptual rule that separates the original wound class from later infection."
+      },
+      {
+        "phrase": "No inflammation or infection; no respiratory, alimentary, genital or urinary tract entry; asepsis maintained; primary closure",
+        "why": "The exhibit is nearly a definition of a clean operative wound rather than observations from a specific operation."
+      },
+      {
+        "phrase": "subsequent superficial SSI",
+        "why": "Identical in every option, so the second purported classification requires no decision and the later-wound exhibit is unnecessary to choosing the key."
+      }
+    ],
+    "fairness": [
+      "The clean operative class followed by superficial SSI is supported by the stated findings. A subsequent infection does not retrospectively determine the operative contamination class.",
+      "Importance: wound classification and SSI documentation are useful, but this is too easy and duplicative of a basic clean-wound definition.",
+      "Realism: auditing a wrongly revised record is possible; a named operation and operative findings would be more credible than a checklist of classification criteria."
+    ],
+    "suggestions": [
+      "Use a concrete operation and raw contamination findings with a credible adjacent class, rather than a verbatim-style definition.",
+      "Ask what specific documentation or prophylaxis-related decision follows at the appropriate time; do not make later SSI identical across all choices if it is meant to be scored.",
+      "Remove the preannounced timing rule, while retaining clear chronology."
+    ]
+  },
+  {
+    "id": "review.n2.contrast-local-extravasation-pattern.v1",
+    "title": "A local contrast event despite an allergy label",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "no hives, wheeze, throat symptoms or circulatory change",
+        "why": "A stacked exclusion list removes the allergic/systemic alternatives without requiring a close differential."
+      },
+      {
+        "phrase": "the current narrative describes a different distribution",
+        "why": "An interpretive sentence tells the learner to reject the historical generalized-reaction label."
+      },
+      {
+        "phrase": "current injection-site findings",
+        "why": "The task repeats the local distribution; only the key is local, while both distractors explicitly say 'Generalized' or 'systemic'."
+      }
+    ],
+    "fairness": [
+      "Extravasation is the best offered explanation for pain and swelling during injection. The stem does not establish extravasation severity or the appropriate disposition.",
+      "Importance: high recognition and complication assessment; too easy because the differential is resolved by local-versus-systemic wording.",
+      "Realism: reviewing a contrast event and correcting history is plausible. The prior urticarial reaction should remain separately documented; this local event does not negate it."
+    ],
+    "suggestions": [
+      "Use actual local progression, skin and neurovascular findings to ask for a concrete management/escalation decision.",
+      "Keep necessary systemic observations, but remove the author's 'different distribution' interpretation and compare credible local-complication plans.",
+      "Explicitly preserve the separate prior allergic-like history when revising documentation."
+    ]
+  },
+  {
+    "id": "review.n2.tacrolimus-antibody-pathway-boundary.v1",
+    "title": "T-cell suppression does not establish antibody-pathway control",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "recipient donor-reactive antibodies in a preimplantation sample",
+        "why": "Directly supplies 'preformed antibody' rather than requiring inference from timing and findings."
+      },
+      {
+        "phrase": "endothelial binding with complement-associated microvascular thrombosis",
+        "why": "Almost restates the key's antibody-binding-to-endothelium mechanism."
+      },
+      {
+        "phrase": "Tacrolimus had suppressed T-cell activation",
+        "why": "Announces that the T-cell pathway was controlled, strongly discouraging the T-cell option."
+      },
+      {
+        "phrase": "despite that tacrolimus effect",
+        "why": "The task explicitly directs attention away from the mechanism attributed to tacrolimus."
+      }
+    ],
+    "fairness": [
+      "Preformed antibody-mediated injury is most supported by the described record. Suppressing T-cell activation does not prove all T-cell injury impossible, so the broad wording 'remains compatible' is weaker than asking which mechanism best explains the observed injury.",
+      "Importance: transplant immunology is relevant to ABSITE; this is too easy because the mechanism is narrated and then repeated.",
+      "Realism: a patient may discuss prior graft injury, but organ, timing and current reason for review are absent. A clinic conversation about a detached mechanism is artificial."
+    ],
+    "suggestions": [
+      "Ask which mechanism best explains a concrete graft-injury episode rather than which remains theoretically compatible.",
+      "Supply relevant raw timing, immunologic and specimen findings without narrating antibody-endothelium binding as the conclusion.",
+      "If testing tacrolimus limitations, link interpretation to a concrete transplant-team assessment decision; do not imply that a reported drug effect excludes all cellular injury."
+    ]
+  },
+  {
+    "id": "review.n2.ventral-hernia-priority-change.v1",
+    "title": "Urgent findings override an elective optimization plan",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "acutely painful and cannot be reduced",
+        "why": "Together with vomiting and guarding, makes the sole emergency-care option obvious; both alternatives remain elective."
+      },
+      {
+        "phrase": "Complete the planned pulmonary optimization course",
+        "why": "The option openly delays acute assessment for an unrelated prior optimization objective."
+      },
+      {
+        "phrase": "Move the routine elective repair visit forward",
+        "why": "The 'routine elective' label makes even the nominally accelerated alternative easy to dismiss."
+      }
+    ],
+    "fairness": [
+      "Emergency surgical evaluation is uniquely appropriate among the offered plans. These red flags are decision-critical and must remain.",
+      "Importance: very high safety recognition; clinically important does not mean difficult. Too easy for the requested PGY-2/3 challenge, with no second meaningful step.",
+      "Realism: an acute change presenting to clinic is credible. The correct action is transfer/escalation, not clinic management of the obstruction."
+    ],
+    "suggestions": [
+      "Retain the red flags and seek explicit acceptance as an easy safety-recognition exception.",
+      "If an advanced objective is required, move to a subsequent hospital decision with concrete comparable resuscitation/investigation/operative plans and all necessary observations.",
+      "Do not make the initial triage harder by suppressing warning signs or offering unsafe elective delays."
+    ]
+  },
+  {
+    "id": "review.n2.irreversible-ischemia-revascularization-boundary.v1",
+    "title": "Irreversible limb findings and the proposed intervention",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "The combination of complete anesthesia/paralysis and absent arterial and venous Doppler signals supports a nonviable-limb interpretation and then a primary-amputation pathway rather than attempted salvage. This is a substantive interpretation-to-action chain.",
+      "No reliable nonmedical wording shortcut identified. Although the key says 'assessment' and the others name interventions, amputation is itself a major competing pathway rather than an obviously harmless catch-all.",
+      "Importance: very high vascular-surgery/ABSITE decision with a consequential reperfusion-versus-amputation distinction.",
+      "Realism: the task explicitly refers to the completed hospital assessment, avoiding an implication that definitive limb treatment occurs in clinic. The retrospective wrapper is somewhat artificial but does not obscure the decision.",
+      "Single best offered pathway is defensible on the stated complete findings. Duration alone is not supplied or used as an invented viability threshold. PASS is editorial, not clinical approval."
+    ],
+    "suggestions": [
+      "Optional polish: make all three choices parallel hospital pathways, e.g. assessment for primary amputation versus assessment for open or catheter-based revascularization.",
+      "Preserve the full sensory, motor and both Doppler findings; reducing them to a generic 'cold pulseless limb' would make the answer unfair.",
+      "For future variants, use a supported borderline viability scenario only if the clinician can establish one best action."
+    ]
+  },
+  {
+    "id": "review.n2.negative-predictive-value-denominator.v1",
+    "title": "Reassurance after a negative test",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "the cohort's negative-test results",
+        "why": "Preselects the column before the task repeats the same instruction."
+      },
+      {
+        "phrase": "What proportion of negative tests",
+        "why": "Supplies the denominator-selection rule explicitly, so the item is table reading rather than interpreting what a negative test means."
+      },
+      {
+        "phrase": "were reference-negative",
+        "why": "Identifies the numerator directly; the learner needs no diagnostic-test knowledge to select 120/(120+12)."
+      }
+    ],
+    "fairness": [
+      "The arithmetic key is correct: 120 of 132 negative tests are reference-negative. The reference assessment and complete-cohort condition make the computation well-defined.",
+      "Importance: predictive values are high-yield evidence literacy, but this exact item is too easy and tests one conditional proportion without clinical application.",
+      "Realism: a clinician explaining evidence to a patient is plausible; an unnamed investigational postoperative test with no condition is a generic arithmetic exercise. The disclaimer correctly prevents presenting the constructed cohort as evidence about her care."
+    ],
+    "suggestions": [
+      "Keep constructed-data labeling and denominators, but ask for an interpretation or next decision requiring the learner to distinguish cohort NPV from patient-specific reassurance.",
+      "Supply a meaningful test/condition context and relevant pretest-risk limitation without inventing clinical thresholds.",
+      "If retained as denominator practice, seek explicit basic-item acceptance and remove redundant column-selection prose."
+    ]
+  },
+  {
+    "id": "review.n2.positive-likelihood-ratio.v1",
+    "title": "Comparing positive-result frequency across reference groups",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "how much more often a positive result occurs in those with the condition than in those without it",
+        "why": "Defines the likelihood-ratio operation in the presentation, reducing the task to dividing the displayed frequencies."
+      }
+    ],
+    "fairness": [
+      "LR+ is correctly 0.8/0.2 = 4.0. The options are parallel numerical answers, with no key-length or convergence cue.",
+      "Equal reference-group totals make dividing the positive counts alone yield the right number; the dataset therefore cannot distinguish correct conditional-rate reasoning from an erroneous raw-count shortcut.",
+      "Importance: high-yield diagnostic evidence literacy. Too easy with the definition supplied and symmetric data; two arithmetic operations would not establish two-step clinical reasoning.",
+      "Realism: the surgical test and condition are unnamed, so the patient consultation adds no decision relevance."
+    ],
+    "suggestions": [
+      "Remove the explanatory definition from the presentation.",
+      "Use unequal reference-group sizes so the denominator matters, and use plausible error-derived numerical distractors.",
+      "To reach resident application, provide an explicit clinical question and ask how the result changes odds or a subsequent evidence-based action, without treating constructed data as validated clinical evidence."
+    ]
+  },
+  {
+    "id": "review.n2.number-needed-to-harm.v1",
+    "title": "Absolute adverse-event increase and number needed to harm",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [],
+    "fairness": [
+      "The key is mathematically correct: the 30-day excess risk is 0.10 minus 0.05 = 0.05, whose reciprocal is 20. Follow-up period and endpoint are clear.",
+      "No exploitable wording, length, grammar, convergence or category cue identified. The difficulty problem is simplicity, not unfair cueing.",
+      "Importance: NNH is useful general-surgery/ABSITE evidence literacy, but this is straightforward formula application. Too easy for the requested challenge. Subtracting and taking a reciprocal are arithmetic steps, not two independent clinical inferences.",
+      "Realism: dressing counseling fits clinic. A decision about choosing the dressing would also require benefits and relevant patient context, which this narrowly numerical task does not claim to assess."
+    ],
+    "suggestions": [
+      "Keep the current exact arithmetic as an explicitly accepted foundational item, or add meaningful benefit/harm data and ask for a justified counseling or choice decision.",
+      "For an advanced revision, make the learner compare absolute effects over compatible time horizons rather than merely recall the reciprocal formula.",
+      "Do not label the present calculation two-step solely because it uses subtraction followed by inversion."
+    ]
+  },
+  {
+    "id": "review.n2.mcnemar-paired-binary-outcomes.v1",
+    "title": "A paired binary change needs a paired analysis",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "Patient identities link the two binary observations",
+        "why": "Supplies the paired-binary classification in nearly the same words as the key."
+      },
+      {
+        "phrase": "paired change",
+        "why": "The task narrows the answer to paired tests before data interpretation."
+      },
+      {
+        "phrase": "McNemar paired-binary test",
+        "why": "Only this label matches both adjectives from the presentation; a reader can choose without knowing McNemar's test."
+      },
+      {
+        "phrase": "Fisher independent-group exact test",
+        "why": "An added explanatory qualifier contradicts 'there is no separate control group' and exposes the distractor's error."
+      }
+    ],
+    "fairness": [
+      "McNemar is the appropriate offered family for testing paired binary marginal change. The discordant cells make the pairing substantive, though the current task can be answered without reading any table values.",
+      "Importance: useful study-design/ABSITE literacy, less frequent in direct clinical care. Too easy because the labels teach the selection rule.",
+      "Realism: a wound-care education study is relevant; a patient named solely to host a statistical test-selection exercise is unnecessary clinic framing."
+    ],
+    "suggestions": [
+      "Use conventional unannotated test names with comparable specificity, and remove 'paired change' from the lead-in.",
+      "Retain the actual repeated-patient design because it is necessary, but let the learner infer binary pairing rather than labeling it.",
+      "Make discordant pairs matter to an interpretation or analysis decision, or remove the decorative table if the objective remains study-design recognition."
+    ]
+  },
+  {
+    "id": "review.n2.equivalence-margin-versus-null-test.v1",
+    "title": "Equivalence requires the prespecified margin comparison",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": false,
+    "cues": [
+      {
+        "phrase": "defines equivalence in mean recovery time as a difference inside -2 to +2 days",
+        "why": "States the comparison the key repeats; the supplied interval makes that part a simple bounds check."
+      },
+      {
+        "phrase": "within the prespecified two-day bounds",
+        "why": "Only the key uses the protocol criterion supplied by the stem; both distractors substitute a differently named test."
+      },
+      {
+        "phrase": "requires a significant zero-difference test first",
+        "why": "Adds an unsupported prerequisite; the other distractor merely restates the nonsignificant-null-test misconception."
+      }
+    ],
+    "fairness": [
+      "The 90% interval lies inside the stated equivalence margins under the specified TOST protocol, so the keyed conclusion is supported. A nonsignificant superiority/null-difference test is not by itself evidence of equivalence.",
+      "The first two options both assert equivalence but offer different reasons. This is closer to selecting an explanation than choosing distinct study conclusions, contrary to the owner's preference for keeping rationale out of options.",
+      "Importance: useful evidence interpretation with a real common misconception. Moderate for PGY-2/3 residents less familiar with equivalence methods, but the item requires one supplied-criterion comparison rather than a two-step decision.",
+      "Realism: comparing postoperative pathways is relevant; a clinic patient discussing test methodology feels artificial. The teaching-protocol label appropriately avoids claiming that two days is a validated clinical threshold."
+    ],
+    "suggestions": [
+      "Present the protocol and interval in a compact constructed exhibit, retaining the prespecified margins and confidence level for fairness.",
+      "Offer distinct, parallel conclusions or concrete implementation/research decisions rather than three explanations for equivalence.",
+      "Add a genuinely unresolved clinical applicability or endpoint issue if a two-step decision is desired; do not withhold the protocol to make the statistical rule harder."
+    ]
+  },
+  {
+    "id": "review.n2.case-mix-standardized-risk.v1",
+    "title": "Comparing outcomes at a common surgical case mix",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "cues": [],
+    "fairness": [
+      "The key is mathematically supported: each pathway has 10% risk in the straightforward stratum and 40% in the complex stratum; equal standard weights give 25% for each. Crude risks are 13% and 37%, a credible competing calculation.",
+      "The learner must distinguish within-stratum risks from the different patient mix, then apply the specified common mix. This supplies a meaningful confounding/standardization problem rather than a second synonymous label.",
+      "No exploitable nonmedical option cue identified. Equal weights alone do not imply equal pathway risks; equality follows from interpreting the observed stratum-specific rates. All options use parallel paired percentages.",
+      "Importance: moderate-to-high evidence/QI relevance for surgery and ABSITE; avoiding unadjusted comparisons of unlike case mixes is practical.",
+      "Realism: an outcomes report fits surgical quality review better than a generic individual clinic conversation, but that wrapper does not alter the calculation. The result is descriptive standardization, not proof of causal equivalence, and the task does not claim otherwise.",
+      "Difficulty is an uncalibrated moderate estimate; learners comfortable with weighted averages may find it easy. PASS is editorial and does not establish measured resident performance or clinical approval."
+    ],
+    "suggestions": [
+      "Optional improvement: place the same comparison in a surgical outcomes/QI discussion with a concrete proposed interpretation of the crude difference.",
+      "Keep the stratum denominators and specified reference weights. Do not replace them with an author conclusion that case mix explains the difference.",
+      "If extending to an implementation decision, explicitly distinguish standardized observed risks from causal evidence and retain relevant confounding limitations."
+    ]
+  }
+]

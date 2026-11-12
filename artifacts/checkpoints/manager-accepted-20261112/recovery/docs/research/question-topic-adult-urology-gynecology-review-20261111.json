@@ -1,0 +1,818 @@
+[
+  {
+    "id": "question.postoperative-retention.bladder-scan.v1.topic20261111.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.retention-hernia-scan.v1",
+    "title": "Residual assessment after a substantial void",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The interval from the 540-mL void to the current discomfort is unspecified."
+    ],
+    "cues": [
+      {
+        "phrase": "bladder measurement",
+        "why": "Only the keyed investigation directly repeats bladder. This is a weak lexical aid rather than an independently decisive flaw."
+      }
+    ],
+    "fairness": [
+      "Bedside residual measurement is the best offered investigation; the earlier prevoid volume cannot establish the current residual. No confident clinical inaccuracy identified.",
+      "The volume chronology does not earn a second consequential inference: deleting both numbers still leaves an obvious bladder scan against renal imaging and culture. First node; its explanation does not explicitly give the subsequent drainage answer.",
+      "Review-wide scope: all 35 candidate nodes were reviewed using only their presentation, update, exhibit, task, options and explanation. Key order and author self-assessments were not evidence of quality. Two kept/held and five retire-and-replace source records were noted but not graded. This offline editorial review does not verify sources or confer clinical approval; Melissa Rowland must approve exact clinical versions. Difficulty and high-yield judgments are qualitative, not measured exam frequencies."
+    ],
+    "suggestions": [
+      "Make prevoid/postvoid timing change a credible competing plan, rather than offer three tests whose ranking is unchanged by that history. Do not invent a residual threshold."
+    ]
+  },
+  {
+    "id": "question.postoperative-retention.catheter-decompression.v1.topic20261111.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.retention-hernia-drain.v1",
+    "title": "Symptomatic residual after hernia repair",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Oral hydration before another voiding trial",
+        "why": "Offering more fluid to a full, increasingly painful bladder is a weak foil even without detailed medical knowledge."
+      }
+    ],
+    "fairness": [
+      "Catheter drainage is the clear best plan. The symptomatic postvoid residual and absence of traumatic contraindications suffice; the explanation correctly avoids a universal cutoff.",
+      "The follow-up is coherent and independently answerable. Earlier feedback focuses attention on retention; the new result triggers an elementary treatment rule, not two difficult decisions."
+    ],
+    "suggestions": [
+      "Replace hydration with a credible competing bladder-management strategy and supply the finding that separates it from drainage. Alternatively obtain explicit acceptance of an easy safety-recognition role."
+    ]
+  },
+  {
+    "id": "question.postoperative-retention.bladder-scan.v2.topic20261111.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.retention-anorectal-scan.v1",
+    "title": "Postoperative voiding symptoms with pyuria",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "culture is pending",
+        "why": "The culture choice is already underway, enabling nonmedical elimination."
+      },
+      {
+        "phrase": "Urine microscopy and culture",
+        "why": "Repeats an already described investigation without a new reason."
+      }
+    ],
+    "fairness": [
+      "Postvoid bladder assessment is the best listed next test. Leukocytes do not establish that infection explains poor emptying.",
+      "The infection competition collapses because culture is pending; formal renal ultrasound has little supporting context. First node; no prior feedback."
+    ],
+    "suggestions": [
+      "Keep the pyuria distraction but replace the already-pending investigation with a real competing decision. Make infection-associated symptoms versus impaired emptying consequential.",
+      "Use a clear stable state if stability matters, rather than unspecified unchanged recovery values."
+    ]
+  },
+  {
+    "id": "question.postoperative-retention.catheter-decompression.v2.topic20261111.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.retention-anorectal-drain.v1",
+    "title": "Large painful residual after anorectal surgery",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Drainage is the single best immediate plan. Tamsulosin may have a later adjunctive role but does not empty this acutely painful bladder.",
+      "The update stands alone and follows the scan coherently. A large painful residual directly triggers a familiar rule; observation and delayed medication do not create two consequential steps."
+    ],
+    "suggestions": [
+      "Compare credible complete management sequences, with a supported patient-specific discriminator. Preserve urgent symptoms; otherwise request explicit acceptance as easy safety recognition."
+    ]
+  },
+  {
+    "id": "question.postoperative-retention.bladder-scan.v3.topic20261111.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.retention-recovery-scan.v1",
+    "title": "Low output with suprapubic fullness",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Bladder ultrasonography is the best listed test. Baseline creatinine does not settle the cause of low output.",
+      "Fullness, pressure and small voids form a classic recognition pattern. Deleting the creatinine sentence leaves the same answer; renal imaging and culture are weak competitors. First node."
+    ],
+    "suggestions": [
+      "Make an actual discrepancy in output, examination or measurement timing change the next plan. A normal creatinine alongside classic retention symptoms is not two-step reasoning."
+    ]
+  },
+  {
+    "id": "question.postoperative-retention.catheter-decompression.v3.topic20261111.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.retention-recovery-drain.v1",
+    "title": "Painful residual after same-day surgery",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Oral hydration before another voiding trial",
+        "why": "The full painful bladder makes this a readily dismissed foil."
+      }
+    ],
+    "fairness": [
+      "Drainage is the clear best answer; the observed volume is not a universal threshold.",
+      "The update is coherent and stands alone. It repeats the same elementary retention-to-drainage rule as the other drainage siblings."
+    ],
+    "suggestions": [
+      "Replace the hydration foil and introduce a consequential supported management distinction, rather than a numerical variant. Alternatively seek an explicit basic-purpose exception."
+    ]
+  },
+  {
+    "id": "question.postoperative-retention.bladder-scan.v4.topic20261111.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.retention-discomfort-scan.v1",
+    "title": "Failure to void after catheter removal",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Postvoid bladder ultrasonography is awkward after the patient has stopped passing urine; a bladder-volume scan after the failed attempt is intended."
+    ],
+    "cues": [],
+    "fairness": [
+      "Bedside bladder assessment is the best offered investigation. Prior weak stream reinforces retention without adding a separate decision.",
+      "First node. Culture and formal renal imaging have little support in the afebrile lower-tract presentation."
+    ],
+    "suggestions": [
+      "Use a test label that fits an unsuccessful voiding attempt. Make the catheter/voiding chronology change a credible next-plan comparison rather than merely reinforce retention recognition."
+    ]
+  },
+  {
+    "id": "question.postoperative-retention.catheter-decompression.v4.topic20261111.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.retention-discomfort-drain.v1",
+    "title": "Painful distension after an unsuccessful void",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Catheter drainage is the best immediate treatment. Tamsulosin before relief of acute painful distension is not a close competitor.",
+      "The follow-up is coherent and stands alone. It supplies a direct trigger for drainage rather than an independent two-step decision."
+    ],
+    "suggestions": [
+      "Compare credible complete management sequences using a consequential patient-specific discriminator. Preserve the warning signs, or seek an explicit easy safety-recognition exception."
+    ]
+  },
+  {
+    "id": "question.nephrolithiasis.noncontrast-ct-evaluation.v1.topic20261111.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.stone-recurrent-image.v1",
+    "title": "Imaging colic after limited ultrasound",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "ureteral-stone evaluation",
+        "why": "The presentation supplies the disease pathway before investigation of the current pain, reducing the diagnostic inference."
+      },
+      {
+        "phrase": "Repeat renal and bladder ultrasonography",
+        "why": "Repeating the just-limited modality without a changed acquisition circumstance is a weak competitor."
+      }
+    ],
+    "fairness": [
+      "Low-dose noncontrast CT is a defensible best option in this symptomatic nonpregnant adult. No confident clinical inaccuracy identified.",
+      "The same familiar colic-to-CT rule answers the item even without the ultrasound history. First node; it does not teach the later metabolic answer."
+    ],
+    "suggestions": [
+      "Use a neutral header if stone inference is part of the objective. Make a supported patient-specific protocol or adequacy distinction change the plan; replace unchanged repeat ultrasound with a credible alternative."
+    ]
+  },
+  {
+    "id": "question.nephrolithiasis.recurrent-metabolic-evaluation.v1.topic20261111.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.stone-recurrent-metabolic.v1",
+    "title": "Prevention assessment after recurrent calcium stones",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "A 24-hour urine assessment is the best listed recurrence-oriented test. Normal serum calcium does not exclude every parathyroid disorder, but the supplied facts do not make PTH the priority.",
+      "Clearance and recurrence establish a coherent later prevention stage; the node stands alone. It remains recall of recurrent stones prompting metabolic urine evaluation."
+    ],
+    "suggestions": [
+      "Test a supported collection-adequacy or metabolic-interpretation problem that changes prevention workup. Normal serum findings against weak culture/PTH alternatives do not create a second consequential step."
+    ]
+  },
+  {
+    "id": "question.nephrolithiasis.noncontrast-ct-evaluation.v2.topic20261111.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.stone-uncertain-image.v1",
+    "title": "Colic with dilation and a negative plain film",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "ureteral-stone evaluation",
+        "why": "The header preselects the stone pathway."
+      },
+      {
+        "phrase": "Repeat renal and bladder ultrasonography",
+        "why": "The unmodified repeat of the unresolved test is easily rejected."
+      }
+    ],
+    "fairness": [
+      "Noncontrast CT is the best listed investigation; a negative plain film does not exclude a calculus.",
+      "The explanation calls the ultrasound incomplete, but the update says only that no cause was visible. Nondiagnostic for the cause is more precise than assuming technical incompleteness.",
+      "First node. The extra findings do not change familiar stone-imaging recall into two consequential steps."
+    ],
+    "suggestions": [
+      "Correct the explanation's acquisition claim. Make the negative film or ultrasound finding discriminate genuinely plausible next protocols rather than add results that leave the usual answer unchanged."
+    ]
+  },
+  {
+    "id": "question.nephrolithiasis.recurrent-metabolic-evaluation.v2.topic20261111.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.stone-uncertain-metabolic.v1",
+    "title": "Recurrent stones with normal serum studies",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The later prevention stage is less explicit than in the clearance variants; whether the acute episode has resolved and whether this is a planned later collection are unclear."
+    ],
+    "cues": [
+      {
+        "phrase": "urine culture is negative",
+        "why": "Pre-eliminates the option repeating culture without a new reason."
+      }
+    ],
+    "fairness": [
+      "A 24-hour urine assessment is the best listed prevention test. No confident error in that priority identified.",
+      "The transition from imaging is plausible, but retrieved stone material alone does not establish recovery or full clearance. Recurrence directly selects the workup; completed culture and normal blood tests weaken the alternatives."
+    ],
+    "suggestions": [
+      "Clarify planning versus performing the collection and the recovered prevention stage. Replace the already-completed culture foil and test a specific consequential interpretation."
+    ]
+  },
+  {
+    "id": "question.nephrolithiasis.noncontrast-ct-evaluation.v3.topic20261111.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.stone-prior-image.v1",
+    "title": "New colic after a prior stone episode",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "ureteral-stone evaluation",
+        "why": "Labels the diagnostic pathway before the new episode is assessed."
+      },
+      {
+        "phrase": "Repeat renal and bladder ultrasonography",
+        "why": "No changed circumstance is supplied to overcome the nonvisualized distal ureter."
+      }
+    ],
+    "fairness": [
+      "Low-dose noncontrast CT is the best listed option. The symptom-free interval supports treating this as a new episode.",
+      "The same answer follows from classic new colic without the chronology. First node; no earlier answer leakage."
+    ],
+    "suggestions": [
+      "Make the old-result/new-episode distinction change a credible competing plan. Keep necessary acquisition facts but do not count their addition as proof of two-step difficulty."
+    ]
+  },
+  {
+    "id": "question.nephrolithiasis.recurrent-metabolic-evaluation.v3.topic20261111.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.stone-prior-metabolic.v1",
+    "title": "Metabolic assessment after cleared stone episodes",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Spot urine microscopy is unremarkable",
+        "why": "One competitor repeats the named normal assessment; the novel recurrence-oriented test becomes prominent."
+      }
+    ],
+    "fairness": [
+      "Daily urine volume and solutes are not established by spot microscopy or the serum studies; the 24-hour assessment is defensible.",
+      "The later node explicitly establishes recurrence and clearance and stands alone. It remains a straightforward workup rule with weak culture/PTH competition."
+    ],
+    "suggestions": [
+      "Replace mostly completed or unsupported alternatives with credible investigations at the same prevention stage. Use a supported discrepancy requiring interpretation rather than normal findings funneling to the only new test."
+    ]
+  },
+  {
+    "id": "question.nephrolithiasis.noncontrast-ct-evaluation.v4.topic20261111.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.stone-colic-image.v1",
+    "title": "Colic without hydronephrosis on ultrasound",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "ureteral-stone evaluation",
+        "why": "The header supplies the likely disease pathway."
+      },
+      {
+        "phrase": "Repeat renal and bladder ultrasonography",
+        "why": "An unchanged repeat of a limited evaluation is a weak foil."
+      }
+    ],
+    "fairness": [
+      "Absence of hydronephrosis does not exclude a ureteral stone; noncontrast CT is a reasonable best offered test.",
+      "The task forces another imaging choice and offers no credible reassurance/observation plan, so the negative ultrasound does not actually test whether the learner improperly uses it to exclude disease. First node."
+    ],
+    "suggestions": [
+      "Make the apparent negative study compete with a plausible next plan, supplying the facts that rank it. Do not count limited ultrasound followed by familiar modality recall as two consequential steps."
+    ]
+  },
+  {
+    "id": "question.nephrolithiasis.recurrent-metabolic-evaluation.v4.topic20261111.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.stone-colic-metabolic.v1",
+    "title": "Prevention workup after documented recurrent stone clearance",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The 24-hour urine option is the best listed prevention test. Recurrence and clearance support the stage; no confident clinical inaccuracy identified.",
+      "The sequence is coherent and the update stands alone. Normal serum findings do not add a consequential inference against culture and PTH distractors."
+    ],
+    "suggestions": [
+      "Vary a clinically meaningful prevention error or collection interpretation instead of names and normal analytes. Make the actual data change a credible competing plan."
+    ]
+  },
+  {
+    "id": "question.gs028f.gynecology.suspected-ectopic-urgent-evaluation.v1.topic20261111.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.pregnancy-urgency-1.v1",
+    "title": "Persistent pain with unlocalized early pregnancy",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Unchanged pulse and blood pressure do not establish stability without initial values; stability matters when choosing an early-pregnancy unit versus emergency care."
+    ],
+    "cues": [
+      {
+        "phrase": "Routine antenatal clinic reassessment",
+        "why": "Routine care is a disposable competitor beside a symptomatic unlocalized pregnancy."
+      }
+    ],
+    "fairness": [
+      "Prompt in-person pregnancy-capable assessment is the best listed plan; an empty transabdominal uterine view does not locate pregnancy.",
+      "The explanation asserts initial circulatory stability that the visible observations do not establish. The symptoms directly select urgent reassessment with little competing interpretation. Standalone case."
+    ],
+    "suggestions": [
+      "Supply current stability/severity observations. Compare credible in-person and serial-follow-up pathways based on trajectory and imaging adequacy; replace routine antenatal follow-up."
+    ]
+  },
+  {
+    "id": "question.gs028f.gynecology.suspected-ectopic-urgent-evaluation.v2.topic20261111.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.pregnancy-urgency-2.v1",
+    "title": "Tissue passage without prior pregnancy localization",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "Current hemodynamic observations are absent, although the explanation claims initial circulatory stability."
+    ],
+    "cues": [
+      {
+        "phrase": "Routine antenatal clinic reassessment",
+        "why": "Not a credible competitor after apparent loss and ongoing focal pain; the meaningful comparison is reassessment versus declaring miscarriage complete."
+      }
+    ],
+    "fairness": [
+      "Tissue passage and an empty uterus do not establish completed intrauterine pregnancy loss without prior documented localization. Persistent unilateral pain supports reassessment.",
+      "Two meaningful steps exist: reject unsupported confirmation of miscarriage, then choose a safe disposition. Current stability must be specified to make the destination fair. Standalone case."
+    ],
+    "suggestions": [
+      "Add current stability/severity findings. Replace the antenatal foil with a credible pregnancy-loss follow-up plan while preserving the prior-localization distinction."
+    ]
+  },
+  {
+    "id": "question.gs028f.gynecology.suspected-ectopic-urgent-evaluation.v3.topic20261111.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.pregnancy-urgency-3.v1",
+    "title": "Falling hCG with new focal pain",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Routine antenatal clinic reassessment",
+        "why": "Routine antenatal care is poorly supported by unlocalized pregnancy, falling hCG and new pain; it is a disposable third choice."
+      }
+    ],
+    "fairness": [
+      "Stable circulation is explicitly supplied. Falling but detectable hCG does not establish location or dismiss new persistent focal pain; same-day reassessment is the best offered plan.",
+      "Two meaningful steps remain: interpret the limited reassurance of the trend, then override scheduled follow-up because symptoms changed. Standalone and coherent.",
+      "This high-yield decision is substantially duplicated by the new falling-hCG-reassess node."
+    ],
+    "suggestions": [
+      "Preserve the biochemical-versus-clinical conflict but replace routine antenatal care with a credible same-stage alternative. Differentiate this variant from Tessa Morgan by a distinct consequential error or consolidate the duplicate."
+    ]
+  },
+  {
+    "id": "question.gs028f.gynecology.suspected-ectopic-urgent-evaluation.v4.topic20261111.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.pregnancy-urgency-4.v1",
+    "title": "Pain without bleeding in an unlocalized pregnancy",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Pulse and blood pressure still at their initial values do not establish current stability; those values are unspecified."
+    ],
+    "cues": [
+      {
+        "phrase": "Routine antenatal clinic reassessment",
+        "why": "Routine antenatal care is weak beside ongoing unilateral pain and an unlocated pregnancy."
+      }
+    ],
+    "fairness": [
+      "Prompt reassessment is the best listed plan; lack of vaginal bleeding does not settle risk.",
+      "The explanation assumes stability absent from the supplied observations. No bleeding does not change the obvious persistent-pain referral decision. Standalone case."
+    ],
+    "suggestions": [
+      "Establish current stability and replace the routine-care foil. Make trajectory or a real competing follow-up interpretation consequential rather than use absence of bleeding as decorative difficulty."
+    ]
+  },
+  {
+    "id": "question.topic.adult-urology-gynecology.pregnancy-localization-test.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.pregnancy-localization-test.v1",
+    "title": "Anatomical assessment after limited pregnancy ultrasound",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Unchanged pulse and blood pressure do not establish current stability without a baseline."
+    ],
+    "cues": [],
+    "fairness": [
+      "Transvaginal ultrasound is the best listed anatomical next test. Repeat hCG cannot establish location, although serum testing and imaging can coexist.",
+      "The unresolved adnexa prompt the familiar next imaging modality; MRI is a weak competitor before transvaginal assessment. First node; feedback does not disclose later hemorrhage management."
+    ],
+    "suggestions": [
+      "State stability and frame the priority precisely without implying that concurrent serum testing is inappropriate. Use a supported imaging-adequacy or serial-assessment dilemma whose interpretation changes the next plan."
+    ]
+  },
+  {
+    "id": "question.topic.adult-urology-gynecology.pregnancy-hemorrhage.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.pregnancy-hemorrhage.v1",
+    "title": "Hemodynamic deterioration in early pregnancy",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "definitive pathway",
+        "why": "The task itself favors operative control over serial testing, pre-filtering a distractor."
+      }
+    ],
+    "fairness": [
+      "Urgent operative assessment and hemorrhage control with concurrent resuscitation is the clear best pathway. Methotrexate and surveillance are not close competitors in this hypotensive deteriorating patient.",
+      "The sequence is coherent. For full standalone clarity, restate the documented positive pregnancy test; the update itself omits it and the header says only early-pregnancy admission.",
+      "Shock with free fluid is an important safety objective, but the options do not create two consequential decisions."
+    ],
+    "suggestions": [
+      "Use a neutral management task and retain the shock findings. Obtain an explicit easy safety-recognition exception, or test a different supported perioperative decision after stabilization. Restate pregnancy positivity for independent display."
+    ]
+  },
+  {
+    "id": "question.topic.adult-urology-gynecology.falling-hcg-reassess.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.falling-hcg-reassess.v1",
+    "title": "Reassessment despite a declining pregnancy marker",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "Unchanged pulse and blood pressure lack a baseline; explicit current stability is needed for destination selection."
+    ],
+    "cues": [
+      {
+        "phrase": "Routine antenatal ultrasound and clinic review",
+        "why": "Not a credible response to falling hCG and an unlocalized painful pregnancy."
+      }
+    ],
+    "fairness": [
+      "Same-day ultrasound/gynecology assessment is the best offered response to new persistent focal pain despite declining hCG.",
+      "The two-step biochemical-versus-symptom conflict is meaningful, but duplicates Priya Bennett pregnancy-urgency-3.",
+      "First node in Tessa's case; its explanation does not disclose the later liver-disease treatment decision."
+    ],
+    "suggestions": [
+      "State stability, replace routine antenatal care and differentiate this node from pregnancy-urgency-3 with a different consequential error. Do not turn a declining marker into proof of resolved risk."
+    ]
+  },
+  {
+    "id": "question.topic.adult-urology-gynecology.ectopic-active-liver.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.ectopic-active-liver.v1",
+    "title": "Symptomatic tubal ectopic pregnancy with active hepatitis",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Laparoscopic treatment is the single best offered pathway: imaging establishes a tubal pregnancy, persistent pain and a plateau undermine expectant management, and active hepatitis argues against systemic methotrexate.",
+      "Two consequential steps remain: interpret the current trajectory rather than the previously falling hCG, then apply the separate treatment contraindication. Active hepatitis is necessary clinical information, not an unfair wording cue.",
+      "The follow-up is coherent and stands alone. Prior feedback explains reassessment without disclosing the operative answer. No confident clinical inaccuracy or substantial nonmedical cue identified."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.adult-urology-gynecology.heterotopic-assess.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.heterotopic-assess.v1",
+    "title": "Persistent pain after assisted conception",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Unchanged blood pressure lacks a baseline. The record does not say how the previous inability to tolerate examination will be addressed."
+    ],
+    "cues": [
+      {
+        "phrase": "the adnexa were not examined",
+        "why": "The named omission directly matches Targeted adnexal ultrasound; missing-region logic can select the key without understanding heterotopic pregnancy."
+      },
+      {
+        "phrase": "uterine still images",
+        "why": "Together with the acquisition worksheet, this makes retrieval of completed images an explicitly futile foil."
+      }
+    ],
+    "fairness": [
+      "An intrauterine gestation after assisted conception does not resolve symptomatic adnexal pathology; targeted assessment is the best listed plan.",
+      "The worksheet correctly distinguishes unperformed acquisition from missing exports. Keep that truth, but change the options so generic omission matching cannot replace clinical reasoning. Standalone case; no confident clinical inaccuracy identified."
+    ],
+    "suggestions": [
+      "Replace retrieval of known absent images with a feasible competing assessment. Establish stability and a workable reassessment route without key-specific permission language. Require the intrauterine finding and focal symptoms to matter jointly."
+    ]
+  },
+  {
+    "id": "question.topic.adult-urology-gynecology.infected-stone-drain.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.infected-stone-drain.v1",
+    "title": "Infected obstructed collecting system",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Urgent drainage is the single best offered strategy. The obstruction and systemic/urinary infection findings must be combined, then drainage distinguished from immediate fragmentation.",
+      "Antibiotics and resuscitation have started, so necessary concurrent actions do not compete unfairly with source control. Stent versus nephrostomy is appropriately not ranked without supporting anatomy.",
+      "First node in a coherent staged case. Its explanation does not explicitly give the later definitive-treatment answer. No substantial lexical cue or confident clinical inaccuracy identified."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.adult-urology-gynecology.infected-stone-definitive.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.infected-stone-definitive.v1",
+    "title": "Residual stone after successful drainage",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Retain the ureteral stent and defer stone treatment specifies neither interval nor follow-up; it can mean reasonable temporary planning or indefinite neglect.",
+      "Stone size, location, elapsed course and intended timing of definitive intervention are absent."
+    ],
+    "cues": [
+      {
+        "phrase": "still shows the ureteral calculus",
+        "why": "Against discharge or unspecified deferral, the only option explicitly clearing the remaining problem is apparent without subtle reasoning."
+      },
+      {
+        "phrase": "discharge from stone follow-up",
+        "why": "Makes removal a caricature rather than a credible monitored strategy."
+      }
+    ],
+    "fairness": [
+      "Definitive stone management after infection control is reasonable, but the record does not establish ureteroscopy now over planned later intervention. This is ranking uncertainty, not a claim that ureteroscopy is wrong.",
+      "The explanation's disclaimer about other definitive techniques does not resolve the offered deferral ambiguity.",
+      "The sequence is coherent and independently understandable. Symptom relief versus persistence is high yield, but these alternatives trivialize the comparison."
+    ],
+    "suggestions": [
+      "Specify the decision stage and concrete follow-up plans. Supply clinically supported stone factors if ranking removal against passage or delay. Compare credible strategies with explicit stent management rather than indefinite deferral/discharge."
+    ]
+  },
+  {
+    "id": "question.topic.adult-urology-gynecology.stone-passage-confirm.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.stone-passage-confirm.v1",
+    "title": "Confirming passage after symptom relief",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "No later image has assessed the stone or collecting system.",
+        "why": "Names the missing action and selects the only imaging option without understanding silent obstruction."
+      },
+      {
+        "phrase": "the stone was visible on abdominal radiography",
+        "why": "Repeats a component of the key. This fact is necessary to justify radiography but adds matching help in the weak option set."
+      }
+    ],
+    "fairness": [
+      "Ultrasound plus radiography is a defensible follow-up approach for the previously radiograph-visible stone. Pain relief and baseline creatinine do not prove passage.",
+      "The task asks which investigations and offers one anatomical reassessment, largely deciding the intended need-for-confirmation question for the learner. Standalone case."
+    ],
+    "suggestions": [
+      "Compare credible follow-up plans whose ranking depends on symptom relief, recovered-fragment evidence and prior imaging. Retain radiopacity; replace the named missing-image prompt with neutral chronology."
+    ]
+  },
+  {
+    "id": "question.topic.adult-urology-gynecology.ureter-leak-protocol.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.ureter-leak-protocol.v1",
+    "title": "CT evaluation of a postoperative urinary leak",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "no excretory-phase images were obtained",
+        "why": "The key uniquely repeats excretory phases. A reader can fill the named gap without interpreting drain chemistry or injury site."
+      }
+    ],
+    "fairness": [
+      "Drain versus serum creatinine supports urinary leakage; flank and retroperitoneal findings make ureteral assessment reasonable. CT urography is the best listed protocol; no ratio threshold is needed.",
+      "CT cystography is a credible localization competitor after pelvic surgery. The underlying chemistry-to-site-to-protocol reasoning can be two-step if the literal acquisition cue is repaired.",
+      "First node; its explanation localizes the problem without prescribing later reconstruction."
+    ],
+    "suggestions": [
+      "Retain truthful acquisition information but describe acquired phases neutrally instead of naming the missing keyed phase. Make leak location discriminate urography from cystography."
+    ]
+  },
+  {
+    "id": "question.topic.adult-urology-gynecology.distal-ureter-repair.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.distal-ureter-repair.v1",
+    "title": "Reconstruction of a distal ureteral injury",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "Time from original surgery to re-exploration and local inflammatory/contamination conditions are unspecified, despite deferred reconstruction being an option.",
+      "The explanation calls the distal stump devascularized; the update describes a devascularized segment and a remaining distal stump that cannot be reached without tension. These are different findings."
+    ],
+    "cues": [
+      {
+        "phrase": "cannot reach the remaining distal stump without tension",
+        "why": "Directly states why the end-to-end competitor fails."
+      },
+      {
+        "phrase": "The bladder is healthy and mobile",
+        "why": "Combined with the explicit failure of end-to-end repair, closely rehearses bladder mobilization. Keep necessary anatomy but improve the competing decision."
+      }
+    ],
+    "fairness": [
+      "Reimplantation with appropriate mobilization is reasonable for this distal defect; the tension problem argues against ureteroureterostomy.",
+      "After postoperative leak detection, immediate reconstruction versus diversion depends partly on timing and local conditions. Stable circulation alone does not settle this; clinician review is needed rather than an invented timing cutoff.",
+      "The sequence follows localization and failed stenting coherently. A standalone update should also identify the postoperative sigmoid-resection context rather than imply a newly recognized intraoperative injury."
+    ],
+    "suggestions": [
+      "State timing/local tissue findings supporting repair now versus diversion. Correct the explanation's viability claim. Retain operative anatomy while comparing genuinely plausible reconstructive plans."
+    ]
+  },
+  {
+    "id": "question.topic.adult-urology-gynecology.mid-ureter-repair.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.mid-ureter-repair.v1",
+    "title": "Short mid-ureteral division recognized during surgery",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "two well-perfused ends that meet without tension",
+        "why": "Supplies the standard end-to-end repair eligibility conclusion nearly verbatim."
+      },
+      {
+        "phrase": "The bladder is distant from the defect",
+        "why": "Explicitly disadvantages the bladder-flap foil, leaving anatomy-to-label matching."
+      }
+    ],
+    "fairness": [
+      "Stented ureteroureterostomy is the defensible best repair for this short viable mid-ureteral defect; no confident clinical inaccuracy identified.",
+      "The update stands alone and clearly establishes intraoperative recognition. All prerequisites for the key are supplied, leaving little alternative plausibility and no second consequential step."
+    ],
+    "suggestions": [
+      "Preserve viability and tension findings but introduce a supported real reconstructive tradeoff. Do not hide necessary anatomy to manufacture difficulty; request a basic-purpose exception if that is the intended role."
+    ]
+  },
+  {
+    "id": "question.topic.adult-urology-gynecology.bladder-leak-protocol.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.bladder-leak-protocol.v1",
+    "title": "Bladder leak assessment after passive opacification",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "without retrograde filling",
+        "why": "Only the key uses retrograde; the missing technique is named immediately before selection."
+      }
+    ],
+    "fairness": [
+      "Retrograde CT cystography is the best listed dedicated bladder-leak study. Passive contrast in a nearly empty bladder does not establish an adequate filling cystogram.",
+      "Anatomical localization plus acquisition adequacy can be two consequential steps, but exact missing-technique wording enables a shortcut.",
+      "First node; feedback describes study adequacy without disclosing later operative treatment."
+    ],
+    "suggestions": [
+      "Describe the actual intravenous acquisition, excreted contrast and nearly empty bladder neutrally. Remove the explicit without-retrograde prompt while retaining observations needed to distinguish excretory imaging from a distended bladder study."
+    ]
+  },
+  {
+    "id": "question.topic.adult-urology-gynecology.bladder-intraperitoneal-repair.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.bladder-intraperitoneal-repair.v1",
+    "title": "Intraperitoneal bladder leak with peritoneal signs",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Contrast around bowel loops indicates intraperitoneal leakage; persistent accumulation with rebound and ileus despite free catheter drainage makes operative repair best.",
+      "Two consequential steps remain: localize the leak, then distinguish this complicated course from selected conservative pathways. Observation and percutaneous drainage are real alternatives made less appropriate by the supplied course.",
+      "The follow-up is coherent and stands alone. Earlier feedback addresses study adequacy, not treatment. No substantial nonmedical cue or confident clinical inaccuracy identified."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.adult-urology-gynecology.torsion-preserved-flow.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.torsion-preserved-flow.v1",
+    "title": "Torsion concern despite preserved arterial flow",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Sudden episodic pain, vomiting and ovarian morphology remain concerning despite arterial waveforms. Urgent gynecologic assessment for laparoscopy is best; interval Doppler is a credible false-reassurance error.",
+      "Two consequential steps remain: interpret morphology/symptoms against the limited exclusion value of arterial flow, then choose urgent assessment instead of delayed imaging.",
+      "The constructed report is sufficient for the report-interpretation task and does not name torsion. Standalone and coherent; no confident clinical inaccuracy or substantial nonmedical cue identified."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.adult-urology-gynecology.pelvic-abscess-admit.v1",
+    "nodeId": "node.topic.adult-urology-gynecology.pelvic-abscess-admit.v1",
+    "title": "Inflammatory adnexal collection requiring admission",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The infectious history, examination and tube-ovary collection support tubo-ovarian abscess rather than uncomplicated PID or isolated torsion. Inpatient treatment is best despite stable blood pressure.",
+      "Two consequential steps remain: classify the collection, then apply its implication for inpatient versus outpatient treatment. The shared drug list isolates disposition and does not uniquely identify the key by convergence.",
+      "The regimen names fit the intended pathway; parenteral treatment is clarified only in the explanation. No dose, duration or drainage cutoff is invented. Standalone and coherent; no confident clinical inaccuracy identified."
+    ],
+    "suggestions": [
+      "Optional clarity refinement: specify parenteral treatment in the inpatient option, with parallel route specificity in the outpatient comparator. This does not change the current best answer."
+    ]
+  }
+]

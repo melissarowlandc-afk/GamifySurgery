@@ -1,0 +1,358 @@
+[
+  {
+    "id": "question.topic.appendix-appendicitis.persistent-pain-exploration.v1",
+    "nodeId": "node.topic.appendix-appendicitis.persistent-pain-exploration.v1",
+    "title": "Progressive focal findings after negative CT",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Diagnostic laparoscopy is the defensible best offered action: the resident must reconcile a reassuring initial scan with subsequent involuntary guarding and change the management plan. Repeat imaging and continued observation represent credible overreliance on the earlier result.",
+      "The progression and guarding are necessary clinical discriminators, not a wording shortcut. Options have comparable specificity; no key-only overlap, convergence, rhetorical absolute or teaching sentence identifies the answer without clinical interpretation.",
+      "The first node is self-contained. Its explanation does not disclose the later tumor or oncologic operation.",
+      "Review scope: all 13 proposed executable nodes were reviewed, comprising one rewritten and 12 new items. Retired/replacement proposals and held/withheld records were noted but not graded. Judgments use the candidate visible fields and their sequence, not author self-assessments. This is an offline editorial review with no new source verification or clinical approval; PASS does not change needs_clinician_review. Difficulty and high-yield judgments are qualitative, not measured exam frequencies. Runtime rendering and wait previews are outside this text-only review."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.appendix-appendicitis.invasive-adenocarcinoma-resection.v1",
+    "nodeId": "node.topic.appendix-appendicitis.invasive-adenocarcinoma-resection.v1",
+    "title": "Resection after invasive appendiceal adenocarcinoma",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The task asks for a 'further surgical plan', but 'Complete surgical treatment with the appendectomy' means no further surgery. The intended meaning is recoverable, but the wording makes the no-operation option an awkward fit."
+    ],
+    "cues": [
+      {
+        "phrase": "adenocarcinoma with infiltrative glands extending into mesoappendiceal fat",
+        "why": "The named cancer plus the uniquely 'Oncologic' option supplies a broad cancer-to-cancer-treatment match. The diagnostic interpretation is already supplied; the added microscopic description does not create another consequential step."
+      },
+      {
+        "phrase": "The appendiceal base margin is clear",
+        "why": "Against 'Limited cecal re-excision around the staple line', this repeats the local-clearance distinction so explicitly that the cuff option has little competitive value. Preserve the necessary margin finding, but improve the option set."
+      }
+    ],
+    "fairness": [
+      "Right hemicolectomy with regional nodal assessment is the defensible offered answer for this fit patient with localized invasive disease. No confident clinical inaccuracy identified offline.",
+      "The case follows coherently from exploration to appendectomy and permanent pathology, and the update supplies enough context for standalone entry. Earlier feedback does not give away this answer.",
+      "The tested concept is important, but the displayed task mainly recalls the operation for an explicitly named invasive cancer. Staging, margin and fitness are already interpreted rather than competing evidence the resident must resolve."
+    ],
+    "suggestions": [
+      "Use a neutral next-management task that accommodates both further resection and surveillance.",
+      "Build the decision around a supported specimen or staging distinction that changes the operation. Require interpretation of that distinction and then selection of extent; do not merely remove the diagnosis label while keeping an otherwise identical recall item.",
+      "Replace the already-addressed local-clearance distractor with a credible competing plan resolved by the displayed findings."
+    ]
+  },
+  {
+    "id": "question.topic.appendix-appendicitis.post-abscess-colonic-evaluation.v1",
+    "nodeId": "node.topic.appendix-appendicitis.post-abscess-colonic-evaluation.v1",
+    "title": "Colonic evaluation after appendiceal abscess",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The initial CT leaves the organ of origin unresolved, yet the biopsy option calls the target an 'appendiceal nodule'. That option assumes a localization the presentation explicitly withholds.",
+      "The repeat CT option specifies neither a later interval nor a different acquisition. Its role is unclear when inflammatory thickening is the stated limitation."
+    ],
+    "cues": [
+      {
+        "phrase": "He has never undergone colonoscopy",
+        "why": "The final sentence names the omitted test and exactly matches the keyed procedure. A nonmedical test-taker can choose the conspicuously missing investigation."
+      },
+      {
+        "phrase": "Interval abdominal and pelvic CT shows",
+        "why": "An apparently identical CT is offered as a distractor after the stem announces it has already been completed. The key becomes the routine unperformed test rather than the product of two consequential inferences."
+      }
+    ],
+    "fairness": [
+      "Colonoscopy is a defensible next investigation for this older patient with a persistent junctional lesion. No confident clinical inaccuracy in that selection identified offline.",
+      "The explanation emphasizes synchronous disease but does not fully address the more immediate uncertainty about a cecal primary at the junction.",
+      "The explanation should not suggest that CT has exhausted its role: the record still has an obscured base, and the next case part appropriately uses later CT after inflammatory resolution. Those stages can coexist, but their timing should be explicit.",
+      "This first node stands alone and does not disclose which resection the later findings will justify."
+    ],
+    "suggestions": [
+      "Give prior colonic evaluation history neutrally only as needed; avoid ending with a named missing action.",
+      "Compare credible investigations at the same current stage, including precise timing if interval imaging remains an option. Do not use an unchanged completed study as a disposable foil.",
+      "Keep the lesion's origin uncertain consistently and explain what luminal evaluation can and cannot establish before the later appendiceal assessment."
+    ]
+  },
+  {
+    "id": "question.topic.appendix-appendicitis.post-abscess-interval-appendectomy.v1",
+    "nodeId": "node.topic.appendix-appendicitis.post-abscess-interval-appendectomy.v1",
+    "title": "Persistent appendiceal lesion despite normal colonoscopy",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must interpret normal luminal findings as insufficient to dismiss a persistent appendiceal mural lesion, then choose limited intact excision rather than surveillance or an unproven oncologic extension. Both distinctions affect the proposed care.",
+      "The later CT adds consequential localization and base-clearance information that the initial presentation lacked. This supports the extent decision rather than simply repeating an earlier conclusion.",
+      "The record supports interval appendectomy as the best offered plan in this fit older patient with persistent suspicious imaging. This is not a blanket recommendation for every patient after an abscess; the explanation appropriately limits the application.",
+      "The sequence is coherent, and the update independently supplies the colonoscopy and repeat-imaging results. Earlier feedback establishes a neoplasm workup but does not name the keyed operation. No decisive nonmedical wording shortcut identified."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.appendix-appendicitis.incidental-lesion-intact-resection.v1",
+    "nodeId": "node.topic.appendix-appendicitis.incidental-lesion-intact-resection.v1",
+    "title": "Initial resection of a distended intact appendix",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The patient is reviewing a proposed operation after diagnostic laparoscopy, yet 'Definitive pathology is pending' appears before any tissue acquisition is described. It is unclear whether the appendix remains in situ, a biopsy was obtained, or the question retrospectively asks what should have been done.",
+      "The task tests resection extent, while much of the explanation teaches intact retrieval and rupture avoidance, which none of the option labels distinguishes."
+    ],
+    "cues": [
+      {
+        "phrase": "a narrow segment of normal-appearing tissue, and the appendix separates from the cecum",
+        "why": "The two adjacent descriptions strongly signal a limited appendix-only field against partial cecectomy and hemicolectomy. They are relevant anatomy, but the offered choices turn them into a simple smallest-resection match with little competing reasoning."
+      }
+    ],
+    "fairness": [
+      "Appendectomy with intact removal is a defensible initial extent for the described separable lesion with a normal base and no evident peritoneal disease. No confident clinical inaccuracy identified offline.",
+      "This is mainly one extent-of-resection rule. The lesion's exact biology remains unknown, but that uncertainty does not create a strong alternative among the displayed operations.",
+      "The subsequent whole-specimen LAMN result is a plausible continuation once appendectomy is explicitly established. The initial chronology should be repaired before the pair is used."
+    ],
+    "suggestions": [
+      "State whether this is a retrospective decision at the index laparoscopy or a prospective plan for an unresected lesion; do not describe pathology as pending without specifying the sampled tissue.",
+      "Choose whether the objective is operative extent or safe specimen retrieval and align every option with that objective.",
+      "Introduce a supported, genuinely consequential anatomic or specimen-assessment distinction that makes a close competing operation plausible, rather than adding more statements that the base is free."
+    ]
+  },
+  {
+    "id": "question.topic.appendix-appendicitis.lamn-microscopic-margin.v1",
+    "nodeId": "node.topic.appendix-appendicitis.lamn-microscopic-margin.v1",
+    "title": "Microscopic LAMN margin after grossly complete resection",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": false,
+    "clarityIssues": [
+      "'additional-resection plan' is awkward when the intended answer is observation. Ask for the next management plan.",
+      "'Observe' leaves follow-up intensity unspecified, although the explanation properly says surveillance planning is a separate decision. Clarify that the tested choice is whether to reoperate, not whether to provide follow-up."
+    ],
+    "cues": [],
+    "fairness": [
+      "There is a worthwhile two-step distinction: interpret microscopic margin involvement in a noninfiltrative, nonperforated lesion with gross clearance, then decide whether further surgery is justified. The positive-margin finding provides real tension with observation.",
+      "Observation is plausible, and formal right hemicolectomy appears disproportionate to the supplied findings. However, the displayed explanation cites limited supporting data without establishing why limited cecal re-excision is not also a defensible choice for viable mucinous epithelium at the margin. Evidence against routine right colectomy does not by itself settle observation versus local re-excision.",
+      "This is an unresolved single-best-answer concern, not a confident declaration that observation is clinically incorrect. Offline review cannot independently establish the current strength or scope of the claimed guidance. Obtain Melissa's explicit judgment on the exact observation-versus-cuff comparison before acceptance.",
+      "Broad LAMN management is relevant to residents; this precise limited-evidence margin exception is a less secure commonly tested target, hence highYield=false for this exact node rather than for the disease generally.",
+      "The update is self-contained and coherently advances to permanent pathology. Earlier feedback about a cuff when the base is involved could make a learner consider re-excision; that is legitimate tension requiring a clear explanation, not answer leakage."
+    ],
+    "suggestions": [
+      "Resolve the exact margin-management comparison with the named clinician and supporting evidence; keep this version needs_clinician_review and do not treat author confidence as consensus.",
+      "If local re-excision remains a reasonable alternative under the represented facts, change the scored decision or remove the item from single-best-answer use rather than inventing additional exclusions.",
+      "If retained, explicitly explain why the microscopic epithelial margin in this complete nonperforated specimen does or does not justify local re-excision, while preserving the evidence limitation."
+    ]
+  },
+  {
+    "id": "question.topic.appendix-appendicitis.peritoneal-mucin-referral.v1",
+    "nodeId": "node.topic.appendix-appendicitis.peritoneal-mucin-referral.v1",
+    "title": "Referral for cellular mucinous peritoneal disease",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "A peritoneal implant biopsy",
+        "why": "The named involved compartment directly matches 'Peritoneal surgery'. Together with disease spanning pelvis and upper abdomen, this lets a nonmedical reader favor the only option explicitly naming the full affected compartment."
+      },
+      {
+        "phrase": "cytoreduction and HIPEC review",
+        "why": "The key offers assessment before committing to treatment; competitors commit to 'initial systemic chemotherapy' or 'completion right hemicolectomy'. The only cautious review option is structurally advantaged."
+      }
+    ],
+    "fairness": [
+      "Specialist peritoneal-surface assessment is the defensible offered referral. The explanation appropriately makes cytoreduction/HIPEC contingent on specialist assessment rather than promising that every patient is a candidate.",
+      "The low-grade neoplasm, cellular implant and broad distribution already establish the relevant disease category. Selecting the named specialty is mainly recognition and referral matching, not two consequential inferences.",
+      "This standalone item supplies sufficient patient and disease context. No confident clinical inaccuracy identified offline."
+    ],
+    "suggestions": [
+      "Compare plans at the same level of commitment: equally specific assessments or equally specific treatments, rather than one review against two immediate treatments.",
+      "Build a real management fork using supported distribution, resectability or histologic findings whose interpretation changes the plan. Do not make the intended specialty the only option that addresses the named disease compartment.",
+      "If retained as basic referral recognition, obtain explicit acceptance of that educational purpose instead of calling it difficult resident reasoning."
+    ]
+  },
+  {
+    "id": "question.topic.appendix-appendicitis.goblet-cell-oncologic-resection.v1",
+    "nodeId": "node.topic.appendix-appendicitis.goblet-cell-oncologic-resection.v1",
+    "title": "Goblet cell tumor despite historical carcinoid terminology",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must reconcile the historical carcinoid label and focal neuroendocrine staining with infiltrative mucin-filled goblet-cell morphology, then choose the adenocarcinoma surgical pathway rather than applying a small-NET treatment rule. The 1.4-cm size creates a credible competing interpretation rather than arbitrary extra data.",
+      "Right hemicolectomy is a defensible offered plan for localized goblet cell adenocarcinoma under the guideline-based approach described. No confident clinical inaccuracy identified offline; exact-version clinical approval remains separate.",
+      "The cecal-cuff option is weaker because the base is clear, but appendectomy completion remains a meaningful near-miss under the historical terminology. No decisive nonmedical cue, convergence or option-length shortcut identified.",
+      "The complete pathology review, staging, colonoscopy and surgical fitness make this standalone node understandable without another case part."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.appendix-appendicitis.net-receptor-staging.v1",
+    "nodeId": "node.topic.appendix-appendicitis.net-receptor-staging.v1",
+    "title": "Functional staging of a well-differentiated appendiceal NET",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'should next complete' suggests that the chosen functional study will necessarily resolve two small indeterminate liver lesions. The explanation more appropriately says it 'can clarify' staging."
+    ],
+    "cues": [],
+    "fairness": [
+      "68Ga-DOTATATE PET/CT is a defensible best choice among these functional studies for the stated well-differentiated NET. The tracer labels are parallel and do not reveal the answer through ordinary word matching.",
+      "The stem supplies the diagnosis and grade, while the task preselects functional imaging. The remaining decision is primarily recall of the appropriate tracer. Removing the liver findings would still leave the same preferred tracer among these options; the lesions do not earn a second consequential inference.",
+      "A neutral next-investigation task would need to account for dedicated anatomic liver characterization as a credible alternative. This review does not assert that such imaging must precede receptor imaging in this patient.",
+      "The following update says 'completed liver characterization shows simple cysts' without identifying which study did that work. It is plausible that additional imaging occurred, but the sequence should not imply that a negative receptor study by itself proves simple cysts."
+    ],
+    "suggestions": [
+      "Use 'add to staging' rather than a promise to complete it, unless the returned studies genuinely establish the necessary findings.",
+      "For a difficult item, compare clinically credible next investigations using actual acquisition limitations and a supported purpose for the next study; reverify the ranking rather than simply deleting 'functional'.",
+      "Alternatively, explicitly seek acceptance as a focused tracer-selection item. In the later update identify the study or studies that established benign liver morphology."
+    ]
+  },
+  {
+    "id": "question.topic.appendix-appendicitis.net-regional-resection.v1",
+    "nodeId": "node.topic.appendix-appendicitis.net-regional-resection.v1",
+    "title": "Regional resection for a 2.6-cm appendiceal NET",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The follow-up does not identify how the indeterminate liver findings became simple cysts. It is otherwise self-contained and explicitly states the completed staging conclusion.",
+      "'further surgical plan' is an awkward lead-in for the option that means no further operation."
+    ],
+    "cues": [
+      {
+        "phrase": "localized 2.6-cm appendiceal NET",
+        "why": "The task repeats exactly the diagnosis, staging conclusion and measurement needed for the size-rule answer. It highlights the discriminator rather than asking the learner to interpret the acquired findings."
+      },
+      {
+        "phrase": "with a clear base margin",
+        "why": "This explicitly weakens 'Re-excise the appendiceal base with a cecal cuff'. The key is then distinguished from stopping largely by recalling the size boundary. Retain margin status but choose a stronger competitor."
+      }
+    ],
+    "fairness": [
+      "Right hemicolectomy with regional nodes is the defensible offered guideline-based answer for the represented fit patient with a localized 2.6-cm tumor. No confident clinical inaccuracy identified offline.",
+      "The acquired exclusion of metastases is clinically useful, but it is handed to the learner as a conclusion. Neither interpreting raw liver findings nor resolving a management tradeoff is required. This is a high-yield threshold-recall item rather than two-step reasoning.",
+      "Prior receptor-imaging feedback does not give away the resection threshold. The chronology is plausible, subject to specifying the liver characterization rather than implying receptor imaging alone established cysts."
+    ],
+    "suggestions": [
+      "Use a neutral next-management task without repeating the keyed size and localized diagnosis.",
+      "Require a supported interpretation of specimen or staging evidence that changes what operation is appropriate, with a credible alternative at that same decision stage.",
+      "Do not manufacture difficulty by moving into a disputed intermediate-size category without resolving its evidence and clinician-review requirements."
+    ]
+  },
+  {
+    "id": "question.topic.appendix-appendicitis.postoperative-infection-imaging.v1",
+    "nodeId": "node.topic.appendix-appendicitis.postoperative-infection-imaging.v1",
+    "title": "Imaging renewed symptoms after perforated appendicitis",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "deep pelvic pain",
+        "why": "This contrasts directly with the narrow superficial target in 'Targeted ultrasound of the abdominal port sites'. A reader can reject that option on location alone."
+      },
+      {
+        "phrase": "The port incisions are dry",
+        "why": "The stem adds an option-specific reassuring finding at the very site named in the weak ultrasound distractor, further removing its plausibility."
+      },
+      {
+        "phrase": "renal function is within its reporting interval and no prior iodinated-contrast reaction is recorded",
+        "why": "Only the keyed choice requests contrast. These eligibility details are legitimate safety context, but alongside two weak competitors they prominently rehearse permission for the key instead of supporting a difficult choice."
+      }
+    ],
+    "fairness": [
+      "Contrast-enhanced abdominal and pelvic CT is the defensible best offered investigation for renewed fever and deep pain after initial recovery from perforated appendicitis. No confident clinical inaccuracy identified offline.",
+      "Inferring a postoperative intra-abdominal complication and choosing CT is conceptually sequential, but neither step competes meaningfully with these distractors for the target resident audience. The nominal diagnosis-then-test chain does not establish two consequential steps.",
+      "The first node is self-contained. Its explanation prepares the general source-localization context without specifying the later drainage route."
+    ],
+    "suggestions": [
+      "Replace the anatomically mismatched superficial ultrasound option with an investigation a resident could reasonably consider for the actual postoperative problem.",
+      "Make acquisition adequacy, a real competing postoperative mechanism or a supported sequencing issue consequential to the test choice. Do not merely add more clinical details to a generic CT-recognition task.",
+      "Retain necessary contrast safety information while avoiding a sequence of negatives written solely to eliminate alternatives."
+    ]
+  },
+  {
+    "id": "question.topic.appendix-appendicitis.postoperative-abscess-drainage.v1",
+    "nodeId": "node.topic.appendix-appendicitis.postoperative-abscess-drainage.v1",
+    "title": "Source control for a localized postoperative pelvic collection",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'No enteric contrast leak' is reported without saying that enteric contrast was administered or reached the relevant bowel. The earlier imaging task names intravenous contrast only. The reader cannot tell what this negative observation establishes."
+    ],
+    "cues": [
+      {
+        "phrase": "Which source-control plan",
+        "why": "The task already announces the treatment objective that the resident should infer. 'Continue intravenous antibiotics with serial examination' is then a conspicuous nonprocedural outlier rather than a full competitor for a neutral next-treatment decision."
+      },
+      {
+        "phrase": "a posterior catheter path clear of bowel",
+        "why": "This prelabels the anatomic finding as a catheter route and overlaps with the keyed 'pelvic catheter drainage'. Access information is necessary; the concern is its preinterpretation and the lack of a remaining credible route tradeoff, not the presence of anatomy itself."
+      }
+    ],
+    "fairness": [
+      "The resident can make two useful inferences: the persistent illness and organized gas-containing collection require evacuation, and the localized accessible collection with stable physiology favors image-guided drainage over operative exploration. The clinical construct is worthwhile.",
+      "Image-guided drainage with ongoing antimicrobial care is a defensible best offered plan. No confident clinical inaccuracy in that choice identified offline.",
+      "Absence of demonstrated contrast extravasation is not equivalent to proof that no bowel leak exists. The explanation should preserve that limitation; the current localized findings can still favor drainage without claiming an exhaustive leak exclusion.",
+      "The update coherently follows postoperative imaging and is sufficiently detailed for standalone entry. Prior feedback does not disclose the drainage route."
+    ],
+    "suggestions": [
+      "Ask for the next treatment plan without naming source control in the task.",
+      "Specify the actual acquisition and relevant contrast opacification if using absence of extravasation as a discriminator, or use only the demonstrated findings without overstating leak exclusion.",
+      "Keep necessary access anatomy in neutral observed terms, identify who assessed it, and preserve meaningful competition between treatment strategies. Do not remove safety information merely to make the item harder."
+    ]
+  },
+  {
+    "id": "question.topic.appendix-appendicitis.post-source-control-antibiotics.v1",
+    "nodeId": "node.topic.appendix-appendicitis.post-source-control-antibiotics.v1",
+    "title": "Antibiotic endpoint despite residual mild leukocytosis",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "after this completed course and source control",
+        "why": "The task calls the course completed before asking whether to continue it, and the key repeats 'after the completed course'. A nonmedical reader can match completion to ending treatment without weighing the leukocyte count or clinical recovery."
+      }
+    ],
+    "fairness": [
+      "Ending therapy is a defensible offered plan given documented source control, four days of active treatment and clinical recovery. The isolated improving mild leukocytosis creates a real competing reason someone might unnecessarily extend therapy.",
+      "The clinical reasoning has two consequential components: assess whether the residual laboratory abnormality indicates ongoing illness in this recovered patient, then apply an appropriate antibiotic endpoint after source control. The current wording supplies a shortcut around those components.",
+      "No confident clinical inaccuracy identified offline. This review does not newly verify the exact duration claim; its supporting evidence and exact-version clinical approval remain required.",
+      "The later-review framing clearly supersedes the initial febrile presentation. The update is self-contained, and earlier drainage feedback does not disclose the antibiotic duration or stopping rule."
+    ],
+    "suggestions": [
+      "State neutrally that the patient has received four days of active antibiotics after drainage; do not call the course completed before the decision.",
+      "Use 'Which antibiotic plan should be recommended now?' and a plain stopping option without repeating a completion conclusion.",
+      "Preserve the recovery trajectory, source-control facts and residual leukocytosis; these are the useful competing evidence. Recheck the exact text for cue removal without expanding the vignette."
+    ]
+  }
+]

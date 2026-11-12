@@ -1,0 +1,737 @@
+[
+  {
+    "id": "question.topic.hematology-transfusion-coagulation.anemia-iron-panel.v1",
+    "nodeId": "node.topic.hematology-transfusion-coagulation.anemia-iron-panel.v1",
+    "title": "Initial characterization of microcytic anemia",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The literal range '80?100' is malformed. Use an unambiguous range separator and preserve the unit.",
+      "'Transferrin measures' is less specific than the other named tests; identify the intended measurement or saturation calculation."
+    ],
+    "cues": [],
+    "fairness": [
+      "Iron studies are the defensible best panel among these choices. The alternatives investigate destruction or predominantly macrocytic deficiency patterns; neither is a close competing first characterization of this presentation.",
+      "The small-cell trend and MCV lead directly to iron studies. Recognizing microcytosis and recalling its initial panel are not two consequential decisions; the naproxen history reinforces the same association.",
+      "Review-wide scope: 24 candidate nodes (7 replacements, 17 new) were reviewed from candidate presentation/update/exhibit/task/options/explanation, independently of author self-ratings and key order. Kept, retired, parked and held records were excluded from node scoring. This is an offline editorial review, not fresh source verification or clinical approval; every draft remains needs_clinician_review."
+    ],
+    "suggestions": [
+      "Repair the range and name the iron tests precisely.",
+      "For resident application, supply a clinically supported competing interpretation of the anemia and a finding that changes the next investigation; do not merely add more microcytosis clues.",
+      "Keep this simpler item only if its foundational role is separately accepted. After-answer feedback should explain the closest credible competing mechanism."
+    ]
+  },
+  {
+    "id": "question.topic.hematology-transfusion-coagulation.anemia-gi-evaluation.v1",
+    "nodeId": "node.topic.hematology-transfusion-coagulation.anemia-gi-evaluation.v1",
+    "title": "GI investigation despite improvement of iron-deficiency anemia",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The low ferritin/saturation establish iron deficiency; symptom improvement after stopping naproxen and hemoglobin response to iron do not establish its source. Upper endoscopy and colonoscopy are the defensible initial plan for this adult man among the offered choices.",
+      "Upper endoscopy with gastric biopsies is a credible anchoring error given the epigastric symptoms and naproxen exposure. Capsule examination is a credible sequencing error before initial upper/lower evaluation.",
+      "The explicit history that upper and lower endoscopy have not been performed is relevant to sequencing, rather than an unfair reason to delete a necessary finding. No decisive wording-only, length, absolute or convergence shortcut was identified.",
+      "The second part follows the first coherently and includes its necessary iron results. The preceding explanation previews source evaluation without naming the two-scope answer. The node also works with its presentation/update/exhibit independently."
+    ],
+    "suggestions": [
+      "Optional brevity edit: remove 'At the return clinic visit, the ordered iron results and interval observations are available.' The exhibit already supplies these facts.",
+      "Retain the competing symptomatic upper-GI explanation and the treatment-response observations; they make the second inference consequential.",
+      "Editorial PASS does not approve clinical content or assert measured difficulty."
+    ]
+  },
+  {
+    "id": "question.topic.hematology-transfusion-coagulation.factor-initial.v1",
+    "nodeId": "node.topic.hematology-transfusion-coagulation.factor-initial.v1",
+    "title": "Initial investigation of newly acquired bleeding with isolated aPTT prolongation",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The aPTT reference range is literally '25?35'; repair the corrupted separator.",
+      "'FVIII', 'FIX' and 'FXI' should be defined consistently if these abbreviations are not already established in the visible interface."
+    ],
+    "cues": [
+      {
+        "phrase": "FIX and FXI activity with inherited-disorder testing",
+        "why": "The option supplies an inherited interpretation, while the stem emphasizes new bleeding and earlier operations without unusual bleeding. This adds an avoidable chronology cue beyond the actual factor-testing decision."
+      }
+    ],
+    "fairness": [
+      "Acquired FVIII deficiency/inhibition is the most compelling investigation among the options given new skin/muscle bleeding, repeatedly isolated aPTT prolongation and assessed anticoagulant interference. Prior uneventful surgery argues against, but does not absolutely exclude, inherited disease.",
+      "There are two meaningful clinical operations: distinguish a newly acquired bleeding phenotype from other prolonged-aPTT causes, then prioritize the factor/inhibitor investigation. No confident clinical error in the favored investigation was identified offline.",
+      "The explanation's instruction not to wait for a serial mixing gate addresses an unoffered alternative. It should not imply that mixing studies have no diagnostic role or that urgent hemostatic care waits for laboratory confirmation.",
+      "This first part supplies useful context for the subsequent assay problem without directly naming its chromogenic answer."
+    ],
+    "suggestions": [
+      "Repair the range and use parallel factor/inhibitor investigation labels without appending 'inherited-disorder testing' only to a distractor.",
+      "Explain why the bleeding phenotype changes the ranking relative to lupus-anticoagulant testing; qualify the role of mixing studies in the after-answer explanation.",
+      "Preserve the new-onset history and interference assessment because they support a fair clinical inference."
+    ]
+  },
+  {
+    "id": "question.topic.hematology-transfusion-coagulation.factor-assay-discordance.v1",
+    "nodeId": "node.topic.hematology-transfusion-coagulation.factor-assay-discordance.v1",
+    "title": "Clarifying possible interference in FVIII testing",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": false,
+    "highYield": false,
+    "clarityIssues": [
+      "'Discordant factor results' overstates what is shown: there is one FVIII method, a weak-positive inhibitor assay and a phospholipid-dependent pattern. These raise an interference/coexistence question rather than demonstrating discordance between factor results.",
+      "'Specialist care' does not identify therapy or its timing relative to sampling, which can matter when interpreting a subsequent FVIII assay."
+    ],
+    "cues": [
+      {
+        "phrase": "One-stage clot-based activity",
+        "why": "The reported method is repeated in a distractor; with 'Clot-based inhibitor assay' and 'Expanded clot-based intrinsic-factor panel', the only differently named method is the chromogenic option."
+      },
+      {
+        "phrase": "Repeat one-stage FVIII activity assay",
+        "why": "Both distractors continue already represented clot-based testing while only the key introduces a new method. A novelty/outlier strategy can bypass interpretation of the patient."
+      }
+    ],
+    "fairness": [
+      "A chromogenic FVIII assay is a reasonable way to investigate possible lupus-anticoagulant interference; a positive phospholipid-dependent test does not itself exclude a coexisting true FVIII inhibitor.",
+      "The explanation should preserve that coexistence limitation rather than suggest a single chromogenic result necessarily resolves the entire inhibitor diagnosis.",
+      "The preceding node prioritizes FVIII studies but does not directly reveal this assay choice. This node supplies its own bleeding context and test results, yet the method-label pattern reduces it to a specialized association.",
+      "This precise assay-method distinction is a lower-priority subspecialty laboratory objective than the high-yield acquired-bleeding recognition and urgent management concepts. That is an editorial scope judgment, not a newly verified exam-blueprint claim."
+    ],
+    "suggestions": [
+      "Ask neutrally about clarifying the FVIII/inhibitor findings rather than announcing 'discordant' results.",
+      "Specify relevant prior therapy/sample timing if it affects the proposed assay; do not invent a treatment detail to force the key.",
+      "Offer equally novel, clinically credible next investigations and explain the distinguishing method limitation after answering.",
+      "Consider retaining this as an advanced adjunct rather than using technical vocabulary to meet the routine resident difficulty target."
+    ]
+  },
+  {
+    "id": "question.topic.hematology-transfusion-coagulation.vka-factor-replacement.v1",
+    "nodeId": "node.topic.hematology-transfusion-coagulation.vka-factor-replacement.v1",
+    "title": "Rapid warfarin reversal during major bleeding",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Further thawed plasma factor replacement",
+        "why": "'Further' emphasizes continuation of the product immediately associated with new respiratory deterioration. Only this distractor is framed as repeating a problematic prior intervention."
+      }
+    ],
+    "fairness": [
+      "Four-factor PCC is the defensible rapid factor-replacement choice for warfarin-associated major bleeding among these options. Restricting the task to a product means it need not list every simultaneous resuscitation measure.",
+      "The volume findings strengthen the ranking but do not create a consequential second step: PCC is already favored for the described major VKA-associated bleeding without them.",
+      "Recombinant activated factor VII is not a close substitute for comprehensive VKA reversal; the set is mainly familiar product recall rather than difficult discrimination.",
+      "The later medication node follows the same episode coherently. The explanation does not pre-answer its route decision."
+    ],
+    "suggestions": [
+      "Either obtain explicit acceptance as a foundational reversal item or redesign around a supported patient-specific decision that actually changes with the added observation.",
+      "Use equally framed product names and credible competitors; avoid making one distractor the only option explicitly described as 'further' exposure after a complication.",
+      "Keep active bleeding and definitive hemorrhage control clear; do not manufacture difficulty by omitting those safety facts."
+    ]
+  },
+  {
+    "id": "question.topic.hematology-transfusion-coagulation.vka-co-treatment.v1",
+    "nodeId": "node.topic.hematology-transfusion-coagulation.vka-co-treatment.v1",
+    "title": "Vitamin K co-treatment after PCC",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The record says an oral order 'was entered' and 'observed emesis followed'; it does not clearly say whether a dose was administered or whether vomiting followed administration. Ordering and delivery are different events."
+    ],
+    "cues": [
+      {
+        "phrase": "The accompanying vitamin-K order was entered by the oral route",
+        "why": "The update already names the drug class being requested. The learner only matches vitamin K to phytonadione and replaces a route discredited by vomiting/suction."
+      },
+      {
+        "phrase": "observed emesis followed and gastric suction continued",
+        "why": "This directly eliminates the oral option; protamine is the lone different reversal drug. The resulting route-by-elimination task does not require the PCC-duration inference."
+      }
+    ],
+    "fairness": [
+      "IV phytonadione is the defensible answer in ongoing major warfarin bleeding after PCC. The emesis detail is not needed to make IV vitamin K appropriate in this care phase.",
+      "The explanation is clinically coherent, but the option set does not require the resident to reason about durable reversal. The intended second step is supplied by the medication record.",
+      "The later node stands alone reasonably well: the presentation identifies warfarin and the exhibit identifies PCC and the ongoing major-bleeding episode. No chronology contradiction was found."
+    ],
+    "suggestions": [
+      "Clarify actual medication administration if route failure remains relevant.",
+      "To test two consequential steps, make the unresolved decision about sustained reversal depend on actual treatment and response data, with comparable specific medication plans. Do not announce the missing vitamin-K component beforehand.",
+      "If retained as route recognition, label that simpler purpose explicitly and seek acceptance rather than calling it a hard resident item."
+    ]
+  },
+  {
+    "id": "question.topic.hematology-transfusion-coagulation.hemorrhage-activation.v1",
+    "nodeId": "node.topic.hematology-transfusion-coagulation.hemorrhage-activation.v1",
+    "title": "Major hemorrhage despite an initially preserved hemoglobin",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "major-hemorrhage transfusion protocol",
+        "why": "It is the only emergency-scale option for a record already describing hemorrhage control, profound hypotension and rapidly accumulating fresh blood."
+      },
+      {
+        "phrase": "scheduled single-unit anemia transfusion",
+        "why": "'Scheduled' advertises a nonurgent response beside overt shock, making the distractor a caricature rather than a plausible competing resuscitation plan."
+      }
+    ],
+    "fairness": [
+      "Activating the hemorrhage protocol while controlling the source is the defensible answer. The early normal-range hemoglobin does not rule out acute severe blood loss.",
+      "The preserved hemoglobin is a worthwhile misconception, but the extreme shock findings plus an openly nonurgent distractor make this a basic safety-recognition item, not two difficult consequential steps.",
+      "It is coherent as the first snapshot; the calcium and warming updates concern later resuscitation problems and are not disclosed here."
+    ],
+    "suggestions": [
+      "Keep the shock warning signs. Either obtain acceptance as an intentionally easy emergency-recognition item or compare clinically credible resuscitation actions at the same urgent stage.",
+      "Replace the 'scheduled' foil with a realistic common error; do not soften dangerous findings merely to increase difficulty.",
+      "Explain why the early hemoglobin is misleading after the answer rather than making emergency versus scheduled care the main discriminator."
+    ]
+  },
+  {
+    "id": "question.topic.hematology-transfusion-coagulation.transfusion-calcium.v1",
+    "nodeId": "node.topic.hematology-transfusion-coagulation.transfusion-calcium.v1",
+    "title": "Electrolyte replacement during component resuscitation",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The calcium reference range is literally '1.10?1.30'; repair it."
+    ],
+    "cues": [
+      {
+        "phrase": "potassium and magnesium are within local ranges",
+        "why": "This explicitly supplies normal results for the two distractor targets, leaving calcium as the only abnormal electrolyte."
+      },
+      {
+        "phrase": "Ionized calcium 0.69 mmol/L",
+        "why": "The abnormal analyte repeats in the only corresponding replacement option. Combined with the normal alternatives, the item can be solved by label matching."
+      }
+    ],
+    "fairness": [
+      "IV calcium replacement is well supported by the marked ionized hypocalcemia during large-volume component exposure. No conflicting best electrolyte treatment is supported by the stated record.",
+      "A prolonged QT is an additional compatible finding but is unnecessary after the option-by-option exclusions; it does not create a second decision.",
+      "Calcium chloride administration requires appropriate access and monitoring. The absence of access information is an implementation detail to clarify, not proof that the selected drug is clinically wrong.",
+      "The later node is coherent and independently supplies the transfusion exposure, deficit and ECG observation; the earlier explanation does not give away calcium."
+    ],
+    "suggestions": [
+      "Repair the range and state suitable access if the salt-specific choice is intentional.",
+      "Redesign the task so interpreting transfusion physiology changes the treatment ranking; do not make both distractors correspond to explicitly normal analytes.",
+      "Alternatively retain as accepted foundational electrolyte recognition, with honest difficulty labeling."
+    ]
+  },
+  {
+    "id": "question.topic.hematology-transfusion-coagulation.transfusion-warming.v1",
+    "nodeId": "node.topic.hematology-transfusion-coagulation.transfusion-warming.v1",
+    "title": "Hypothermia and persistent oozing during transfusion",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'33.4?C' has a corrupted temperature unit. Use an unambiguous degrees-Celsius label.",
+      "'Within the local targets used by the hospital protocol' supplies a conclusion rather than the measured component results if those results are intended to be interpreted."
+    ],
+    "cues": [
+      {
+        "phrase": "platelet count and Clauss fibrinogen are within the local targets",
+        "why": "Both component distractors are explicitly ruled out by a preinterpreted target statement."
+      },
+      {
+        "phrase": "Core temperature has fallen to 33.4?C during repeated room-temperature fluid and component administration",
+        "why": "It identifies the sole remaining abnormal domain and its cause; only the warming option addresses it."
+      }
+    ],
+    "fairness": [
+      "Warming is the defensible adjunct for marked hypothermia in this record. The explanation should not imply that normal component counts eliminate every other possible cause of oozing.",
+      "The task is a direct abnormal-temperature-to-warming match. Prior correction of calcium and achieved platelet/fibrinogen targets exhaust the offered alternatives before any consequential inference.",
+      "The sequence is coherent, including the earlier electrolyte correction; the node also contains sufficient current information to answer independently."
+    ],
+    "suggestions": [
+      "Repair the unit and replace target conclusions with supported measurements only if interpreting them will actually affect the decision.",
+      "Use a clinically credible competing adjunct and a meaningful response or timing distinction; do not create difficulty through vague local protocol targets.",
+      "Preserve source-control context and the hypothermia observation."
+    ]
+  },
+  {
+    "id": "question.topic.hematology-transfusion-coagulation.stable-rbc-decision.v1",
+    "nodeId": "node.topic.hematology-transfusion-coagulation.stable-rbc-decision.v1",
+    "title": "RBC use after hemorrhage control",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'The final snapshot' suggests membership in a sequence, but this candidate has a separate standalone case. Prefer a direct time-relative description such as the recovery assessment."
+    ],
+    "cues": [
+      {
+        "phrase": "The bleeding source has been controlled",
+        "why": "Together with scant stable drain output and stable vital signs, this explicitly defeats 'Resume the major-hemorrhage component protocol', which is the only emergency-plan distractor."
+      }
+    ],
+    "fairness": [
+      "Withholding RBCs with reassessment is the defensible choice for this stable, asymptomatic, noncardiac adult at the stated hemoglobin. A one-unit transfusion is the closest real alternative.",
+      "The relevant cardiovascular/surgical context is legitimate information and should not be deleted just to hide a threshold exception.",
+      "The item largely asks for application of one familiar restrictive-transfusion rule. The prior hemorrhage adds an anchor, but the fully resolved record and implausible protocol-restart option do not yield two substantive steps.",
+      "This is independently answerable; it does not need the separate Daniel Price hemorrhage case to establish current stability."
+    ],
+    "suggestions": [
+      "Replace the obsolete emergency-protocol option with a credible competing current plan.",
+      "If a routine resident application item is intended, use a supported clinical consideration whose interpretation changes the transfusion decision rather than simply enumerating the absence of exceptions.",
+      "Keep the stable course and symptom assessment, and describe the conservative plan as active reassessment."
+    ]
+  },
+  {
+    "id": "question.topic.hematology-transfusion-coagulation.fibrinogen-product.v1",
+    "nodeId": "node.topic.hematology-transfusion-coagulation.fibrinogen-product.v1",
+    "title": "Targeted replacement for low fibrinogen during bleeding",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The platelet value is rendered '138 ? 10^9/L'; repair the multiplication symbol or use plain-text units."
+    ],
+    "cues": [
+      {
+        "phrase": "No VKA or direct anticoagulant exposure is recorded.",
+        "why": "This is an extra option-specific exclusion aimed at PCC after the INR has already supplied relevant coagulation context."
+      }
+    ],
+    "fairness": [
+      "Cryoprecipitate is the defensible offered source for the markedly low fibrinogen during ongoing bleeding. The normal-range platelet count and near-normal INR do not support the offered alternative components.",
+      "The decision is component-content recall after identifying one abnormal laboratory value, not two consequential steps. The other components are weak competitors here.",
+      "PCC can have indications outside VKA reversal; the feedback should not teach lack of anticoagulant exposure as a universal reason against it. The present measured pattern, rather than that absolute rule, supports this ranking.",
+      "The next part corrects fibrinogen and introduces a new platelet deficit coherently; this explanation does not directly state the later answer."
+    ],
+    "suggestions": [
+      "Repair the platelet units.",
+      "Ask a more consequential targeted-replacement question using a supported response or product-selection constraint, or seek acceptance as a foundational component item.",
+      "Explain the product's relevant contents and the closest real alternative in feedback, without an overbroad anticoagulant-only rule."
+    ]
+  },
+  {
+    "id": "question.topic.hematology-transfusion-coagulation.platelet-product.v1",
+    "nodeId": "node.topic.hematology-transfusion-coagulation.platelet-product.v1",
+    "title": "Changing component requirements after fibrinogen replacement",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The platelet value is rendered '32 ? 10^9/L'; repair the multiplication symbol."
+    ],
+    "cues": [
+      {
+        "phrase": "After fibrinogen replacement, Clauss fibrinogen is 2.3 g/L.",
+        "why": "The explicitly corrected prior target directly defeats 'Further cryoprecipitate transfusion'."
+      },
+      {
+        "phrase": "Platelets have fallen to 32 ? 10^9/L",
+        "why": "This repeats the only remaining deficient component in the key while INR, calcium and temperature are reassuring. The pattern is laboratory-to-product matching."
+      }
+    ],
+    "fairness": [
+      "Platelet transfusion is the defensible answer during ongoing bleeding at the stated platelet count; neither more cryoprecipitate nor PCC is supported by the displayed current abnormalities.",
+      "The context 'there is no head injury' does not change the offered answer at this very low count and adds little to the discrimination.",
+      "The two-part case is coherent and the node stands alone because it includes the fibrinogen response, current count and continuing bleeding. However, it repeats the first node's same identify-low-component strategy with a different analyte rather than testing a new difficult decision."
+    ],
+    "suggestions": [
+      "Repair the units and remove negatives that do not change the answer set.",
+      "Replace at least one implausible component competitor with a clinically credible action distinguished by the actual post-treatment course.",
+      "If the educational goal is basic targeted component selection, state that honestly rather than counting the serial snapshots as two-step reasoning."
+    ]
+  },
+  {
+    "id": "question.topic.hematology-transfusion-coagulation.taco-treatment.v1",
+    "nodeId": "node.topic.hematology-transfusion-coagulation.taco-treatment.v1",
+    "title": "Treatment of a hydrostatic transfusion respiratory event",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Fluid balance is strongly positive",
+        "why": "Combined with 'elevated left-sided filling pressure', this gives multiple aligned volume-excess clues while one distractor explicitly adds crystalloid."
+      }
+    ],
+    "fairness": [
+      "IV furosemide is the defensible additional treatment given hypertension, raised JVP, positive balance, LV dysfunction and elevated filling pressure after transfusion has already been stopped.",
+      "The epinephrine option has no described allergic phenotype and the crystalloid option opposes the entire supplied volume pattern. These are not close resident-level competitors.",
+      "Recognizing classic overload and selecting a loop diuretic is essentially one rehearsed syndrome-treatment association in this overdetermined set. No confident clinical inaccuracy in that treatment was identified offline.",
+      "The first node is self-contained and its explanation establishes hydrostatic overload. The next node must therefore test a genuinely different decision rather than diagnose overload again."
+    ],
+    "suggestions": [
+      "Retain the already-completed transfusion-stop, oxygen and notification steps; they make the requested additional action clear.",
+      "Reduce redundant clues and use a clinically credible competing immediate treatment or management priority, keeping sufficient observations for a unique answer.",
+      "Expand feedback to distinguish the nearest credible alternative rather than relying on unsupported allergy or volume-depletion foils."
+    ]
+  },
+  {
+    "id": "question.topic.hematology-transfusion-coagulation.taco-next-transfusion.v1",
+    "nodeId": "node.topic.hematology-transfusion-coagulation.taco-next-transfusion.v1",
+    "title": "Subsequent transfusion after an overload event",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Reduced rate' and 'standard rate' lack a stated comparison context; no fixed duration is needed, but make clear this refers to the earlier administration strategy.",
+      "As a standalone node, the current fields do not restate the earlier hydrostatic findings or LV dysfunction; they mainly offer improvement after diuresis. Retain a compact clinically relevant event summary if prior-node content is not visible."
+    ],
+    "cues": [
+      {
+        "phrase": "One RBC unit at a reduced rate, then reassess",
+        "why": "The key is the only rate modification; both distractors share 'at the standard rate' and instead introduce special product processing. The option structure advertises the tested dimension."
+      },
+      {
+        "phrase": "Reaction investigation finds no hemolysis or severe allergic reaction.",
+        "why": "The severe-allergy negative helps eliminate the washed-product foil without requiring interpretation of the preceding pressure/volume findings."
+      }
+    ],
+    "fairness": [
+      "A slower, limited-volume, reassessed transfusion is a defensible plan for recurrent need after an overload event. The current anemia and symptoms make a new transfusion reasonable.",
+      "The irradiation distractor is not a plausible solution to the displayed reaction. Washing addresses a different reaction mechanism; it is not an equally plausible competing rate/volume plan.",
+      "Prior feedback already identifies hydrostatic overload and the exhibit says diuresis restored baseline. The later task becomes recall of a preventive administration adjustment rather than two independent steps.",
+      "The later episode is temporally coherent with the earlier reaction, but standalone context should be strengthened as noted."
+    ],
+    "suggestions": [
+      "Compare administration plans on the same dimensions, with a credible clinical tradeoff and comparable specificity rather than one rate change versus two processing changes.",
+      "Include the essential prior event observations if this node can be selected independently.",
+      "Keep runtime administration estimates separate from clinical prose; do not invent a transfusion rate to make the comparison work."
+    ]
+  },
+  {
+    "id": "question.topic.hematology-transfusion-coagulation.trali-support.v1",
+    "nodeId": "node.topic.hematology-transfusion-coagulation.trali-support.v1",
+    "title": "Fluid strategy after a nonhydrostatic transfusion lung event",
+    "verdict": "FAIL",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Maintenance-volume IV fluid support' is not an operationally defined strategy: it might mean routine calculated maintenance, replacing measured losses, or maintaining neutral balance. Those are not equivalent in pulmonary edema.",
+      "The record gives no oral/enteral intake, ongoing fluid requirement or intended net balance that establishes a need for additional IV maintenance fluid.",
+      "'Filling assessment does not support left-atrial hypertension' is an interpretive summary; the underlying assessment is not shown."
+    ],
+    "cues": [
+      {
+        "phrase": "Filling assessment does not support left-atrial hypertension",
+        "why": "This preinterprets the mechanism in a way that dismisses the diuretic option."
+      },
+      {
+        "phrase": "Extremities are warm and urine output is maintained.",
+        "why": "Together with an approximately even fluid balance, this defeats the bolus option, leaving the undefined middle choice by elimination."
+      }
+    ],
+    "fairness": [
+      "The record reasonably favors a nonhydrostatic transfusion-associated lung event and does not support routine volume-expansion boluses. It does not establish the proposed maintenance-fluid prescription as a uniquely appropriate treatment.",
+      "Absence of raised filling pressure does not, by itself, settle every subsequent conservative-fluid versus diuresis decision in lung injury. The appropriateness of fluid removal depends on the broader volume/perfusion course; I am not asserting that furosemide is invariably correct here.",
+      "This is a fairness failure, not a claim that all maintenance IV fluid is contraindicated in TRALI. The essential fluid need and meaning of the selected strategy are missing, so the item cannot support an unqualified single best answer.",
+      "The task nominally asks for a fluid strategy after respiratory support has already been provided. It should not use the true need for supportive care to justify an unspecified additional fluid regimen. No fresh source verification was performed."
+    ],
+    "suggestions": [
+      "Rebuild this node before use: state the actual intake, losses, volume/perfusion trajectory and clinical objective, then compare concrete fluid plans with a supported ranking.",
+      "Alternatively test a supported, consequential respiratory or hemodynamic management decision that follows from the raw findings, while keeping initial transfusion-reaction actions common.",
+      "Have Melissa verify the exact fluid-management claim and alternative ranking against permitted evidence. Do not repair it by asserting a universal 'never diurese' rule or inventing a maintenance rate."
+    ]
+  },
+  {
+    "id": "question.topic.hematology-transfusion-coagulation.delayed-antibody-workup.v1",
+    "nodeId": "node.topic.hematology-transfusion-coagulation.delayed-antibody-workup.v1",
+    "title": "Investigation of delayed hemolysis after transfusion",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "DAT with repeat antibody investigation is the defensible priority given recent transfusion, a falling hemoglobin, reticulocytosis, indirect hyperbilirubinemia, increased LDH and low haptoglobin.",
+      "The iron and coagulation panels do not compete closely with an immune hemolysis investigation in this fully developed pattern. There is no strong purely lexical shortcut, but several redundant hemolysis clues plus weak alternatives make the answer easy.",
+      "The decision is classic delayed-reaction recognition followed by its associated test; the supplied case does not require a further consequential distinction among credible hemolysis workups.",
+      "The explanation appropriately leaves the later antigen-specific selection answer unstated; the next node's antibody report follows coherently."
+    ],
+    "suggestions": [
+      "Retain the recent-transfusion chronology and enough destruction findings to establish hemolysis.",
+      "Use a credible alternative investigation of a competing cause or mechanism of hemolysis, separated by a necessary observation, rather than unrelated iron-deficiency and coagulation panels.",
+      "Add concise after-answer teaching about what DAT and antibody investigation do and do not establish; do not imply the pattern alone proves a particular alloantibody."
+    ]
+  },
+  {
+    "id": "question.topic.hematology-transfusion-coagulation.antigen-compatible-rbc.v1",
+    "nodeId": "node.topic.hematology-transfusion-coagulation.antigen-compatible-rbc.v1",
+    "title": "RBC selection after anti-Jka is identified",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The change from clinic follow-up to a 'next hospital selection decision' is understandable as a record review, but a short statement of the intervening hospital reassessment would make the chronology cleaner."
+    ],
+    "cues": [
+      {
+        "phrase": "serologic compatibility testing is required",
+        "why": "This states part of the correct action before the learner chooses and directly eliminates electronic crossmatching."
+      },
+      {
+        "phrase": "anti-Jka",
+        "why": "The only antigen-named option is 'Jka-negative RBCs with serologic crossmatching'. Exact antibody/antigen wording supplies a strong label-match shortcut when the other options address unrelated product modifications."
+      }
+    ],
+    "fairness": [
+      "Selecting Jka-negative, serologically compatible RBCs is the defensible explicit plan in this nonemergency setting. The transfusion indication is sufficiently supplied by severe anemia with symptoms.",
+      "'Washed RBCs with routine serologic crossmatching' is not intrinsically incompatible: such units could also be antigen-negative and compatible. The problem is that the plan fails to explicitly ensure the relevant antigen selection, not that washing necessarily produces incompatible units.",
+      "The previous explanation identifies possible immune hemolysis without revealing anti-Jka, so the sequence is coherent. The current report and anemia findings make this node independently answerable.",
+      "The visible wording teaches compatibility testing and leaves direct matching rather than two consequential decisions."
+    ],
+    "suggestions": [
+      "Remove 'serologic compatibility testing is required' from pre-answer content; keep the antibody report as legitimate data.",
+      "Compare equally specified donor-selection/compatibility plans, ensuring that no distractor can silently include the required antigen-negative compatible units.",
+      "Keep the nonemergency boundary; emergency-release considerations should not be imported as unannounced competitors."
+    ]
+  },
+  {
+    "id": "question.topic.hematology-transfusion-coagulation.hit-initial-action.v1",
+    "nodeId": "node.topic.hematology-transfusion-coagulation.hit-initial-action.v1",
+    "title": "Anticoagulation during evaluation of a delayed postoperative platelet fall",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The platelet units use a literal '?' in '258 ? 10^9/L'; repair the multiplication sign and make the shared units clear for all time points.",
+      "'No ... new drug-associated bleeding is recorded' addresses bleeding, not competing drug-associated thrombocytopenia. It is unclear whether an alternative-cause assessment was intended."
+    ],
+    "cues": [],
+    "fairness": [
+      "The recovery followed by a substantial delayed fall during heparin exposure supports at least a concerning clinical probability of HIT. Stopping heparin and using a nonheparin anticoagulant pending tests is the defensible offered action in the absence of active bleeding and with the stated organ function.",
+      "This has two consequential steps: distinguish the delayed second decline from the immediate postoperative fall, then anticoagulate despite no detected thrombosis rather than merely wait or substitute another heparin.",
+      "The enoxaparin and wait-for-testing options represent credible resident errors. No decisive wording-only or convergence cue was found.",
+      "The imperfect alternative-cause wording does not itself make waiting or enoxaparin better. The node mainly needs a precise editorial repair, not a new clinical key.",
+      "As the first node it is self-contained and does not reveal the functional-assay answer in the later part."
+    ],
+    "suggestions": [
+      "Repair units and replace the drug-associated-bleeding phrase with the actual relevant medication/alternative-cause observations, if available; do not fabricate a completed exclusion workup.",
+      "Preserve the serial counts, timing, lack of active bleeding and relevant organ function.",
+      "Retain the core question and competing actions; they provide stronger resident reasoning than most of this batch."
+    ]
+  },
+  {
+    "id": "question.topic.hematology-transfusion-coagulation.hit-functional-confirmation.v1",
+    "nodeId": "node.topic.hematology-transfusion-coagulation.hit-functional-confirmation.v1",
+    "title": "Confirmation after a weak-positive PF4/heparin assay",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'The original delayed platelet fall' does not supply the magnitude or timing in this node. The presentation alone says only unexpected decline; include the key trajectory if this node must stand independently.",
+      "The interim-treatment row contains author commentary about what the question is testing rather than just patient observations."
+    ],
+    "cues": [
+      {
+        "phrase": "the question is diagnostic confirmation, not whether to delay protective treatment",
+        "why": "This is a pre-answer teaching instruction. It adds no patient fact beyond the already stated treatment."
+      },
+      {
+        "phrase": "Repeat PF4/heparin IgG immunoassay",
+        "why": "Both distractors repeat antibody-binding assessment, one verbatim and one on another platform; the platelet-activation assay is the sole novel functional category."
+      }
+    ],
+    "fairness": [
+      "Functional platelet-activation testing is the defensible next assessment of a weak-positive immunoassay in this clinically concerning context. No confident contrary clinical claim was identified offline.",
+      "The prior node's explanation gives intermediate/high suspicion and treatment logic but does not explicitly give the functional assay. Nevertheless, the later node requires mainly the binding-versus-functional confirmation rule.",
+      "A weak-positive binding assay should not be treated as proof of pathogenic HIT antibodies; the explanation captures that distinction.",
+      "Sequence is coherent, but standalone context is thinner than the previous node and should retain the essential pretest-probability findings."
+    ],
+    "suggestions": [
+      "Delete the commentary sentence and keep the actual heparin discontinuation/nonheparin treatment facts.",
+      "Restore the short platelet trajectory for independent display.",
+      "For two-step resident reasoning, make interpretation of clinical probability and assay findings change a consequential next diagnostic action among comparably credible alternatives, rather than choosing the only new test category."
+    ]
+  },
+  {
+    "id": "question.topic.hematology-transfusion-coagulation.vwd-major-plan.v1",
+    "nodeId": "node.topic.hematology-transfusion-coagulation.vwd-major-plan.v1",
+    "title": "Hemostatic support for major surgery in VWD",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Later trial sampling' does not indicate whether the response lasted through a clinically relevant interval; if that response is meant to decide the plan, provide its supported timing and relevant measurements.",
+      "'Desmopressin-based hemostatic support' is broader than a named exclusive strategy and could include additional concentrate support."
+    ],
+    "cues": [
+      {
+        "phrase": "activity returned below the local hemostatic target",
+        "why": "This supplies an interpreted failure conclusion for the desmopressin alternative."
+      },
+      {
+        "phrase": "VWF-containing concentrate support",
+        "why": "The key repeats the named disease factor, while the desmopressin trial is already labeled inadequate and FVIII-specific replacement does not explicitly address VWF."
+      }
+    ],
+    "fairness": [
+      "VWF-containing concentrate support is the defensible primary strategy for the described major operation. A transient desmopressin response reinforces this, but does not create an independent decision when major surgery already drives the primary strategy.",
+      "The normal platelet-count/no-platelet-disorder row does not distinguish any offered option and can be deleted.",
+      "The 'desmopressin-based' label should not be rejected on an assumption that it excludes all adjunctive VWF replacement unless that is actually specified.",
+      "The known VWD diagnosis is legitimate in a management task; the problem is the preinterpreted trial result and weakly bounded alternatives, not disclosure of the diagnosis itself."
+    ],
+    "suggestions": [
+      "Specify comparable primary agents or concrete perioperative plans without ambiguous 'based' wording.",
+      "If trial interpretation is the objective, show supported serial activity findings and a care context where that interpretation changes management; do not add timing trivia to a decision already determined by major surgery.",
+      "Remove the irrelevant platelet row and teach monitoring of the relevant factor activities after answering."
+    ]
+  },
+  {
+    "id": "question.topic.hematology-transfusion-coagulation.vwd-response-monitoring.v1",
+    "nodeId": "node.topic.hematology-transfusion-coagulation.vwd-response-monitoring.v1",
+    "title": "Replacement adjustment for postoperative oozing in VWD",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The prior replacement product and sample timing relative to it are unspecified. These matter to a useful adjustment decision and its explanation.",
+      "'Adjust the VWF-containing replacement' names the target but not the direction or concrete change; it is less actionable than 'Increase FVIII-specific replacement'.",
+      "No reference range or relevant treatment target is shown for the factor activities, although the explanation calls FVIII normal. Use a supported comparator if numerical interpretation is intended."
+    ],
+    "cues": [
+      {
+        "phrase": "platelet count and fibrinogen are within local ranges",
+        "why": "The platelet finding explicitly removes the platelet distractor; the factor values then make the VWF option the obvious low-analyte match."
+      },
+      {
+        "phrase": "Hematology is monitoring both factor activities and reassessing the surgical wound.",
+        "why": "This generic shared-plan sentence supplies no additional observation that separates the three replacement choices."
+      }
+    ],
+    "fairness": [
+      "The low VWF activity despite a preserved FVIII level supports reassessing VWF-directed support, and the explanation correctly distinguishes the two factors. No confident clinical inaccuracy in that principle was identified offline.",
+      "The choice is a target-recognition task, not yet a specific two-step treatment adjustment. The missing product/response timing prevents assessing what concrete adjustment is appropriate.",
+      "A normal platelet count does not universally exclude a role for platelet-based therapy in every refractory VWD scenario; the feedback should not teach that absolute rule. No refractory course warranting that alternative is actually described here.",
+      "This is a separate standalone Claire Hughes case, not a continuation of Alicia Grant's desmopressin trial; its required treatment history must be supplied here."
+    ],
+    "suggestions": [
+      "State the actual hemostatic product and relevant sample timing, supported by existing evidence, then compare concrete adjustments at the same decision stage.",
+      "Make the response pattern affect the plan beyond selecting the only deficient analyte.",
+      "Remove the generic shared-plan sentence or replace it with a decision-critical observed response; have Melissa verify the exact product/monitoring interpretation."
+    ]
+  },
+  {
+    "id": "question.topic.hematology-transfusion-coagulation.marrow-reassessment.v1",
+    "nodeId": "node.topic.hematology-transfusion-coagulation.marrow-reassessment.v1",
+    "title": "Reassessment after an isolated platelet problem becomes multilineage",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Another empiric treatment' does not identify the earlier platelet-directed therapy or its timing, although treatment effects can matter when new cytopenias develop.",
+      "'Hematology has assessed ... other reversible causes without an explanation' is a broad exclusion conclusion rather than the findings needed to judge competing causes."
+    ],
+    "cues": [
+      {
+        "phrase": "Nonmarrow assessment",
+        "why": "This exhibit heading labels the already exhausted category opposite the uniquely marrow-directed option."
+      },
+      {
+        "phrase": "Peripheral-blood flow cytometry with blood-film review",
+        "why": "Both distractors repeat 'Peripheral-blood' and 'blood-film review' after an abnormal smear has already been supplied, while the key is the only new tissue investigation."
+      }
+    ],
+    "fairness": [
+      "Multilineage cytopenias with low reticulocytes and dysplastic-appearing neutrophils make marrow aspirate/core assessment the defensible comprehensive investigation among these choices. Flow cytometry and myeloid sequencing can contribute but do not replace tissue/morphologic evaluation.",
+      "The underlying task has two worthwhile steps: recognize that the old isolated-platelet model no longer fits, then choose an investigation that can assess the changed production/morphology problem.",
+      "The broad reversible-cause exclusion and option novelty pattern weaken that reasoning by prepackaging the answer. B12/folate results alone should not be taught as excluding every reversible mimic.",
+      "No confident clinical error in favoring marrow evaluation was identified offline; it is an editorial and specificity repair rather than a proposed reversal of the key."
+    ],
+    "suggestions": [
+      "Remove the 'Nonmarrow' heading and replace broad completed-workup conclusions with the few actual decision-critical observations, including relevant treatment history if known.",
+      "Use equally novel, clinically credible investigations and avoid adding completed smear review to both distractors as filler.",
+      "Preserve the changed lineages and morphology, which make this a consequential reassessment rather than routine biopsy of isolated thrombocytopenia."
+    ]
+  },
+  {
+    "id": "question.topic.hematology-transfusion-coagulation.cholestasis-correction.v1",
+    "nodeId": "node.topic.hematology-transfusion-coagulation.cholestasis-correction.v1",
+    "title": "Correction of a vitamin-K-dependent pattern before a biliary procedure",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The phytonadione route is unspecified even though impaired enteral absorption in cholestasis is relevant to a useful correction plan.",
+      "The planned biliary procedure is unnamed; if procedure-specific coagulation requirements are intended to matter, the current text cannot support them."
+    ],
+    "cues": [
+      {
+        "phrase": "platelets and fibrinogen are within local ranges",
+        "why": "The platelet result directly defeats the platelet-replacement option, leaving a weak third competitor."
+      }
+    ],
+    "fairness": [
+      "The cholestatic setting, reduced factor VII and preserved factor V support vitamin-K-dependent deficiency as the leading explanation. In the stated nonemergency care phase, vitamin K with reassessment is the defensible offered strategy.",
+      "There are two meaningful inferences available: interpret the factor pattern in context, then choose correction/reassessment rather than immediate component replacement. Preserved factor V is supportive, not proof that all hepatic synthetic dysfunction is excluded.",
+      "The lack of major bleeding and ability to plan reassessment are legitimate timing information, not facts to remove simply to hide the answer.",
+      "The option set is weakened by an explicitly unsupported platelet transfusion and by failure to specify the route of the intended therapy. No exact dose, response interval or procedural INR cutoff is established by the visible record."
+    ],
+    "suggestions": [
+      "Specify a clinically supported phytonadione route appropriate to the stated obstruction and retain response assessment; do not invent a dose or interval.",
+      "Replace the platelet foil with a credible same-stage correction plan and identify the finding that separates it from the key.",
+      "Name the procedure only if its requirements are part of the scored decision. Keep the factor-V distinction and avoid explaining it as an absolute diagnostic test."
+    ]
+  },
+  {
+    "id": "question.topic.hematology-transfusion-coagulation.platelet-preoperative-response.v1",
+    "nodeId": "node.topic.hematology-transfusion-coagulation.platelet-preoperative-response.v1",
+    "title": "Using a recovered platelet count for a preoperative plan",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Both platelet values contain a literal '?' in their units; repair them.",
+      "'Use the current count' is vague as a care action. State the intended operative/transfusion plan directly.",
+      "The explanation refers to 'the 2025 ... threshold' without teaching the actual rule or its supported limits. A date is not an explanation of how to apply the decision."
+    ],
+    "cues": [
+      {
+        "phrase": "Current verified sample",
+        "why": "The exhibit labels the newer result as authoritative while the other value is explicitly 'Earlier count'; this makes rejecting the old-count anchor almost automatic."
+      },
+      {
+        "phrase": "continuing to rise",
+        "why": "Along with 'Immediately before surgery', this makes the option to defer solely for another count an obviously redundant step rather than a credible clinical alternative."
+      }
+    ],
+    "fairness": [
+      "For the stated major nonneuraxial operation with no bleeding or platelet-function concern, the current count supports avoiding routine prophylactic platelet transfusion among these choices. This review has not independently verified the referenced 2025 source.",
+      "Using a current verified result instead of an older low one is sensible but does not by itself constitute two consequential clinical steps. The remaining decision is familiar threshold application.",
+      "The historical count does not change the selected action once the reassuring current count and trajectory are supplied. No close patient-specific consideration competes with that rule.",
+      "This is a self-contained historical review. The procedure category is useful; the nonspecific absence of an immune-destruction syndrome adds little after recovering marrow suppression is already stated."
+    ],
+    "suggestions": [
+      "Repair units and state the actual plan, such as proceeding with the planned operation without routine prophylactic platelets, if that is the intended and supported action.",
+      "Teach the already sourced threshold and its boundaries in feedback; do not add an unverified number in a rewrite.",
+      "For resident-level reasoning, use a supported competing clinical consideration that changes the plan; otherwise seek explicit acceptance as a foundational threshold item."
+    ]
+  }
+]

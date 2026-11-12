@@ -1,0 +1,283 @@
+[
+  {
+    "id": "question.topic.esophagus-motility-achalasia.opioid-response-decision.v1",
+    "nodeId": "node.topic.esophagus-motility-achalasia.opioid-response-decision.v1",
+    "title": "Swallowing follow-up — procedure after opioid reassessment",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The exhibit labels its first column 'Junction relaxation' but describes it as above or within a reference interval. Name the measured relaxation pressure; more relaxation and a higher residual relaxation pressure do not mean the same thing.",
+      "The presentation names a junction-myotomy referral, whereas the first option specifies a planned POEM. Identify the proposed procedure consistently if that distinction is retained."
+    ],
+    "cues": [
+      {
+        "phrase": "He now eats his usual meals without hold-up or regurgitation.",
+        "why": "Complete symptomatic recovery makes the only defer-and-follow-up option readily selectable without interpreting the pressure table. Preserve the outcome for fairness, but recognize that the table currently adds little discrimination."
+      },
+      {
+        "phrase": "Defer junction myotomy and arrange clinical follow-up",
+        "why": "This is the sole nonprocedural, cautious plan; both competitors disrupt the junction despite the explicitly resolved problem. The two active-treatment alternatives do not create two consequential reasoning steps."
+      }
+    ],
+    "fairness": [
+      "Deferral is the defensible offered answer after symptom resolution and normalized adequate repeat physiology. The explanation appropriately limits the inference to this patient's response rather than promising universal opioid reversibility.",
+      "No confident clinical inaccuracy identified. This is an offline editorial assessment of candidate text, not refreshed source verification or Melissa Rowland's clinical approval.",
+      "The standalone task is complete, and the named patient's age, sex and short complaint are consistent. The important reversible-cause concept is high yield, but the current options reduce it to recovery followed by observation."
+    ],
+    "suggestions": [
+      "Relabel the exhibit column as the actual pressure measure and align the planned procedure across presentation and options.",
+      "Rebuild the options around credible competing follow-up or treatment decisions after reassessment. If a more demanding case requires discordant symptom and physiologic findings, author and clinically review that new scenario rather than hiding the present recovery or inventing a threshold.",
+      "If the exact uncomplicated recovery scenario is retained, seek explicit acceptance as a basic medication-reassessment item instead of claiming two-step resident difficulty."
+    ]
+  },
+  {
+    "id": "question.topic.esophagus-motility-achalasia.spastic-procedure.v1",
+    "nodeId": "node.topic.esophagus-motility-achalasia.spastic-procedure.v1",
+    "title": "Painful swallowing — initial procedure for a spastic pattern",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Premature activity extends well above the distal junction' conveys the intended extent but leaves the comparison with the offered Heller operation underspecified. The options do not describe comparable intended myotomy coverage.",
+      "The broad presentation about initial and subsequent records is understandable, but the initial consultation and later outside treatment should remain visibly separated."
+    ],
+    "cues": [
+      {
+        "phrase": "Tailored peroral endoscopic myotomy",
+        "why": "Only POEM receives the favorable qualifier 'Tailored'; Heller is presented without an equivalent scope description. This signals a patient-specific advantage before the learner has compared procedures."
+      }
+    ],
+    "fairness": [
+      "The supplied pressure and propagation findings support recognizing a spastic achalasia pattern and then selecting a procedure capable of addressing its extent. These are two meaningful, high-yield steps.",
+      "POEM is a plausible preferred answer. However, the candidate explanation itself acknowledges tailored Heller as legitimate, while the stem permits both approaches and does not specify their planned coverage. A legitimate alternative is not automatically an equal best answer, but the exact superiority claim requires clinician confirmation; no confident clinical error is asserted here.",
+      "Do not turn an expert-opinion preference into an assertion that Heller is contraindicated or ineffective. The offline review cannot establish the current strength or exact scope of the cited preference.",
+      "The initial node stands alone. Its explanation does not disclose the subsequent timed-barium answer or acid-suppression answer."
+    ],
+    "suggestions": [
+      "Use parallel procedure labels without giving only POEM a 'Tailored' qualifier.",
+      "Have the clinician confirm that the precise offered Heller and POEM plans have a defensible ranking for the represented body involvement. Clarify clinically supported coverage if needed, without inventing a length cutoff or merely adding a permission sentence that announces the answer.",
+      "Retain the explanation's uncertainty about alternative myotomy approaches, and explain the actual deciding advantage rather than relying on a society-name appeal."
+    ]
+  },
+  {
+    "id": "question.topic.esophagus-motility-achalasia.recurrent-clearance-test.v1",
+    "nodeId": "node.topic.esophagus-motility-achalasia.recurrent-clearance-test.v1",
+    "title": "Painful swallowing — recurrent symptoms after POEM",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Repeat manometry shows junction relaxation within the laboratory interval and no residual premature contractions.",
+        "why": "This makes 'Repeat positional high-resolution esophageal manometry' a disposable repeat-test foil: no acquisition defect or interval change is supplied to justify repeating the just-completed investigation. Even a nonmedical reader can eliminate the duplicate."
+      }
+    ],
+    "fairness": [
+      "Timed barium is the defensible offered next study for recurrent obstructive symptoms after treatment; a normal relaxation-pressure result does not establish adequate emptying. Reflux monitoring is a plausible competing mechanism, but the food hold-up supports assessing clearance first.",
+      "No confident clinical inaccuracy identified. The moderate difficulty comes from interpreting symptoms despite reassuring pressure findings and choosing a complementary assessment; one of the three choices currently fails to contribute a credible error.",
+      "This follows the initial POEM decision coherently, explicitly restates the actual outside POEM and subsequent course, and can stand alone with its own presentation/update/task. Prior feedback does not name this investigation. Later barium findings must remain later, as they are in the candidate sequence."
+    ],
+    "suggestions": [
+      "Replace the immediate repeat-manometry distractor with a distinct, clinically plausible investigation at this same stage, and ensure the revised case still ranks timed barium uniquely. Do not simply substitute another equally acceptable complementary test.",
+      "Explain why reflux monitoring is less useful as the first offered step for this symptom pattern, rather than discussing only the limitation of pressure measurement.",
+      "Keep the later clearance result out of this node's visible update. Runtime waits for every investigation require a separate integration check; they cannot be verified from the reviewed prose."
+    ]
+  },
+  {
+    "id": "question.topic.esophagus-motility-achalasia.postpoem-reflux-response.v1",
+    "nodeId": "node.topic.esophagus-motility-achalasia.postpoem-reflux-response.v1",
+    "title": "Painful swallowing — treatment after the clearance reassessment",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "distal erosive esophagitis",
+        "why": "The endoscopic interpretation supplies the treatment target. That can be appropriate for management, but this option set then asks only for its familiar initial medicine rather than a second consequential decision."
+      },
+      {
+        "phrase": "is taking no acid-suppressive medicine",
+        "why": "This explicit treatment omission points directly toward the sole medication option. Combined with the diagnosis and prompt clearance, it leaves little inference."
+      },
+      {
+        "phrase": "Start oral omeprazole and reassess symptoms",
+        "why": "It is the only medical/reassessment plan against two junction-disrupting procedures whose target the update has already excluded. The category and caution asymmetry favors it without a substantive comparison."
+      }
+    ],
+    "fairness": [
+      "Omeprazole is the defensible offered initial treatment for the represented reflux injury. There is no demonstrated obstructive target for dilation or repeat myotomy. No confident clinical inaccuracy identified.",
+      "The serial change from recurrent hold-up to documented clearance and reflux injury is coherent. The task explicitly says post-POEM and the update contains the decisive findings, so it can stand alone. The preceding explanation discusses emptying without disclosing omeprazole.",
+      "The high-yield distinction between post-treatment obstruction and reflux is present, but the interpreted diagnosis and excluded procedural competitors make this exact node easy rather than two-step."
+    ],
+    "suggestions": [
+      "Retain the necessary clearance and treatment-history data, but compare genuinely plausible reflux-management actions at the same stage, with a supported patient-specific discriminator.",
+      "If testing obstruction versus reflux is the intended objective, use sufficiently specific observed findings and credible alternative mechanisms rather than supplying the conclusion and two procedures with no remaining target.",
+      "Do not manufacture difficulty by withholding initial acid-suppression status or adding unsupported dose, duration or severity thresholds."
+    ]
+  },
+  {
+    "id": "question.topic.esophagus-motility-achalasia.botulinum-rescue-risk.v1",
+    "nodeId": "node.topic.esophagus-motility-achalasia.botulinum-rescue-risk.v1",
+    "title": "Meals sticking — procedure selection with prohibitive rescue risk",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Botulinum toxin injection is the defensible offered answer. The resident must recognize a junction-relaxation disorder and then distinguish a brief endoscopic treatment from pneumatic dilation's potential need for operative rescue and POEM's anesthesia burden.",
+      "The anesthesia assessment is necessary decision-critical information, not an unfair feasibility cue: all three options are phrased as endoscopic procedures, and choosing among them requires knowing their different risks. Age alone cannot select the key.",
+      "Pneumatic dilation is a credible near-miss because it can appear to satisfy the brief-endoscopy constraint. The explicit rescue limitation resolves that alternative. No confident clinical inaccuracy identified.",
+      "The standalone node has a named patient, consistent age/sex, short complaint and complete task. This is a high-yield treatment-selection principle; difficulty is a qualitative prediction, not measured performance. PASS is editorial and does not confer clinical approval."
+    ],
+    "suggestions": [
+      "Optional feedback improvement: explicitly explain why possible perforation requiring operative rescue makes pneumatic dilation less appropriate here, and why POEM does not meet the anesthesia constraint. The current explanation identifies the categories of risk without teaching the closest error fully."
+    ]
+  },
+  {
+    "id": "question.topic.esophagus-motility-achalasia.egjoo-supportive-study.v1",
+    "nodeId": "node.topic.esophagus-motility-achalasia.egjoo-supportive-study.v1",
+    "title": "Food sticking — supportive testing with preserved peristalsis",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Junction-treatment assessment' is less concrete than naming the current clinical decision: which investigation should determine whether the pressure finding represents clinically relevant obstruction before treatment. Avoid wording that itself supplies the required inference."
+    ],
+    "cues": [
+      {
+        "phrase": "Repeat the routine positional water-swallow manometry study",
+        "why": "The update already describes an adequate positional study. 'Repeat the routine' advertises a redundant action with no represented defect, reducing the choice set without medical interpretation."
+      }
+    ],
+    "fairness": [
+      "Timed barium with a tablet is the defensible offered supportive investigation. Interpreting elevated relaxation pressure with preserved propagation, then seeking evidence of clinically relevant obstruction before intervention, constitutes two meaningful steps.",
+      "The explanation's statement that retained peristalsis does not establish achalasia is true but incomplete teaching for this pattern: the clinically relevant outflow-obstruction question should be distinguished from merely ruling out achalasia.",
+      "No confident clinical inaccuracy identified. Reflux monitoring is less appropriate for the represented obstructive symptoms and pressure findings, while repeating the same adequate acquisition is a weak distractor.",
+      "The standalone node is internally consistent and has the required patient context. The treatment-before-confirmation principle is high yield, although the technical classification detail is more specialized."
+    ],
+    "suggestions": [
+      "Replace the routine-repeat foil with a genuinely plausible next investigation or plan and recheck that no second accepted supportive modality becomes an equally correct answer.",
+      "Use a direct neutral task such as which investigation should next inform care for this patient's persistent dysphagia; let the observations establish the relevance of obstruction.",
+      "In feedback, explain why this manometric outflow pattern requires supportive clinical evidence and why the preserved peristalsis changes interpretation. Do not imply that any elevated pressure result is achalasia."
+    ]
+  },
+  {
+    "id": "question.topic.esophagus-motility-achalasia.flip-after-failed-assistance.v1",
+    "nodeId": "node.topic.esophagus-motility-achalasia.flip-after-failed-assistance.v1",
+    "title": "Swallowing evaluation — assessment after failed assisted manometry",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": false,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Repeat endoscopically assisted high-resolution manometry",
+        "why": "The stem has just narrated failure of exactly this approach after successful placement, with no change that would make another attempt useful. It is a repeated unsuccessful action beside a novel test."
+      },
+      {
+        "phrase": "Repeat timed barium esophagography with tablet passage",
+        "why": "The other distractor also begins 'Repeat' and repeats an already informative study. FLIP is the only new investigation; a reader can choose novelty without understanding its measurements."
+      }
+    ],
+    "fairness": [
+      "FLIP is a defensible complementary assessment when adequate manometry cannot be obtained despite assistance. The explanation appropriately avoids claiming that it reproduces a complete manometric subtype or automatically authorizes irreversible treatment.",
+      "The prior timed examination does not specify tablet use, so a repeat with a tablet is not literally identical in every respect. Nevertheless, the option set and explanation treat it as a completed, uninformative comparison rather than identifying a meaningful residual question.",
+      "No confident clinical inaccuracy identified. Clinical relevance is real, but this exact repeated-acquisition rescue scenario is narrower than a clearly common general-surgery board objective; highYield=false is a qualitative scope judgment, not a claim about exam frequency.",
+      "The standalone timeline and task are clear. The nominal adequacy assessment and test selection collapse to choosing the only untried test, so two consequential steps are not demonstrated."
+    ],
+    "suggestions": [
+      "Keep the actual failed acquisition history, but compare equally new and clinically credible next approaches with a supported discriminator. Do not disguise repeats with synonyms.",
+      "Clarify the completed contrast protocol only if the presence or absence of tablet testing truly changes the next decision.",
+      "Consider merging this narrow technical fallback into a broader, more testable dysphagia assessment objective unless the owner explicitly wants advanced motility acquisition coverage."
+    ]
+  },
+  {
+    "id": "question.topic.esophagus-motility-achalasia.borderline-aperistalsis-study.v1",
+    "nodeId": "node.topic.esophagus-motility-achalasia.borderline-aperistalsis-study.v1",
+    "title": "Meals taking longer — absent propagation with borderline relaxation pressure",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Timed barium with a tablet is the defensible offered next study. The learner must resist treating the normal-range flag as exclusion of an outflow disorder, interpret universal failed contractions with borderline relaxation pressure, and select complementary emptying assessment.",
+      "Solid-meal manometry is a credible competing extension rather than a caricature or an identical completed test. Supportive obstruction assessment is preferable for the represented inconclusive pattern; the explanation does not claim meal provocation is universally useless.",
+      "The laboratory-relative description supplies the boundary without inventing a device-independent numerical cutoff. No confident clinical inaccuracy identified; exact classification and ranking remain subject to clinician review.",
+      "No diagnosis label, unique favorable qualifier, convergence pattern or nonmedical wording shortcut identifies the key. The standalone task and patient context are complete. The principle of further assessment despite a borderline normal result is high yield. PASS is editorial, not clinical approval."
+    ],
+    "suggestions": [
+      "Optional feedback improvement: explain specifically why a solid-meal extension is less decisive than a complementary emptying study in this all-failed, borderline-pressure pattern, and why reflux monitoring does not resolve the present question.",
+      "Preserve the distinction between a supportive test and a final diagnosis; do not add an unsupported numerical boundary."
+    ]
+  },
+  {
+    "id": "question.topic.esophagus-motility-achalasia.salvage-before-resection.v1",
+    "nodeId": "node.topic.esophagus-motility-achalasia.salvage-before-resection.v1",
+    "title": "Foregut record review — salvage before resection",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Heller myotomy with partial fundoplication is a defensible offered salvage referral. The combination of relatively favorable esophageal geometry, residual junction restriction and incomplete prior muscle division supports addressing a remaining outlet target before organ resection.",
+      "Esophagectomy is a credible near-miss after both dilation and POEM have failed. The resident must distinguish a correctable treatment deficit from irreversible reservoir failure; fitness for major surgery does not by itself select the most radical operation.",
+      "The description that division stopped short of the gastric extension is decisive clinical evidence rather than an unfair lexical match: none of the options simply repeats that phrase. No confident clinical inaccuracy identified.",
+      "Other salvage approaches may also warrant specialist consideration, but they are not offered; this does not invalidate the relative ranking here. The explanation properly frames Heller as a consideration rather than a universally mandatory rescue.",
+      "The historical referral is explicitly identified in both update and task, so it is not confused with the present post-aspiration visit. The node stands alone and sets up a distinct later reassessment. This is a high-yield salvage-versus-resection principle. PASS is editorial, not clinical approval."
+    ],
+    "suggestions": [
+      "Optional presentation cleanup: replace the game-role phrase 'The founder reviews' with a direct description of reviewing the earlier and current records.",
+      "Keep the exact historical timepoint visible and preserve the explanation's conditional specialist framing. Do not generalize this answer to all patients with prior failed POEM."
+    ]
+  },
+  {
+    "id": "question.topic.esophagus-motility-achalasia.end-stage-center-referral.v1",
+    "nodeId": "node.topic.esophagus-motility-achalasia.end-stage-center-referral.v1",
+    "title": "Foregut record review — later referral with a patent junction",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'At her current admission' conflicts with the presentation's clinic visit after discharge. Use the most recent admission and distinguish that admission from the current outpatient review.",
+      "For standalone display, the current update states prior Heller but does not itself summarize the earlier dilation and POEM failures. Those matter to the exhaustion-of-treatment argument and should be concisely available without relying on a previous node."
+    ],
+    "cues": [
+      {
+        "phrase": "Refer to a high-volume center for esophagectomy assessment",
+        "why": "Only the intended answer includes a specialist-center qualifier and a cautious assessment rather than referral for a specific repeat intervention. The added qualification and specificity distinguish it from both competitors."
+      },
+      {
+        "phrase": "a widely opening junction with no fixed stricture",
+        "why": "Both distractors propose another intervention at that same junction. The necessary finding directly disposes of both alternatives, so the final choice has no credible residual competitor. Keep the observation but improve the comparison."
+      }
+    ],
+    "fairness": [
+      "Assessment for esophagectomy at an experienced center is the defensible offered answer given distorted esophageal geometry, persistent retention, aspiration, completed outlet treatment and potential surgical fitness after optimization. No confident clinical inaccuracy identified.",
+      "The correct referral is for assessment after optimization, not automatic immediate resection, and the explanation appropriately says diameter or intervention count alone is insufficient.",
+      "The sequence coherently changes from incomplete myotomy to failure despite a patent junction. However, the preceding explanation already contrasts favorable anatomy/incomplete myotomy with an 'exhausted organ' and resection. That scaffolds the later reversal and lowers its independent difficulty.",
+      "Even viewed alone, the two repeat-junction procedures are weak competitors once the update establishes a widely patent junction. The high-yield concept is present, but the current comparison does not sustain two consequential steps."
+    ],
+    "suggestions": [
+      "Repair the admission-versus-clinic chronology and include a compact prior-treatment summary for standalone use.",
+      "Make referral labels parallel in specificity and stage; specialist-center assessment should not be a uniquely favorable qualifier on the key.",
+      "Compare credible remaining management/referral strategies for the actual reservoir-failure problem, using supported findings to separate them. Do not retain two already-excluded outlet procedures merely to make a three-option set.",
+      "Re-review the entire two-node sequence after revision. If prior feedback still teaches the later discriminator, describe the later item as scaffolded application rather than claiming independent hard reasoning."
+    ]
+  }
+]

@@ -1,0 +1,349 @@
+[
+  {
+    "id": "question.topic.anorectal-benign-pelvic-floor.supralevator-external.v1",
+    "nodeId": "node.topic.anorectal-benign-pelvic-floor.supralevator-external.v1",
+    "title": "Drainage of an externally originating supralevator abscess",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "There is no abdominal visceral source.",
+        "why": "The word abdominal permits lexical elimination of Transabdominal drainage through the pelvic cavity. This is a partial cue, not a way to distinguish the remaining two routes without anatomical knowledge; absence of a visceral source also supplies relevant origin information."
+      }
+    ],
+    "fairness": [
+      "The positive continuity from lateral ischioanal fat into the high collection supports transperineal drainage; supralevator location by itself does not select internal drainage. The source-plane inference and its effect on drainage route are both consequential. Moderate difficulty is at the lower end because the other-plane negatives narrow the comparison.",
+      "The retrospective clinic presentation and MRI update form a coherent standalone record. No previous scored answer is needed. Named patient, age and sex are supplied by the case wrapper; the complaint is short and appropriate.",
+      "Review scope for this report: all 16 current executable candidate nodes were assessed from Presentation, Current update, Exhibit, Task, Options and Explanation, including six previously passed candidates. The two Keep inventory rows, 65 retirement proposals, six parked attempts and held/unkeyed records were noted but not rescored. Historical multipart cases were not treated as current cases. Author verdicts and key-position markers were not evidence of quality.",
+      "This is an offline editorial assessment, not new source verification or clinical approval. Difficulty and high-yield judgments are qualitative, not measured performance or verified examination frequencies. Runtime rendering, randomization and wait previews are outside the visible-text assessment. These limitations apply to every row."
+    ],
+    "suggestions": [
+      "No blocking revision. Preserve the positive lower-to-upper continuity; do not make the upper location alone determine the route.",
+      "If a future wording version is authorized, replace the interpretive Other planes wording with concise actual imaging observations while retaining the information needed to exclude a visceral source. Do not silently alter the preserved exact version."
+    ]
+  },
+  {
+    "id": "question.topic.anorectal-benign-pelvic-floor.simple-fistulotomy.v1",
+    "nodeId": "node.topic.anorectal-benign-pelvic-floor.simple-fistulotomy.v1",
+    "title": "Fistulotomy with limited muscle crossing and intact continence",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Lay-open fistulotomy is the best offered procedure for the represented very low, unbranched posterior tract with intact muscle and gas/liquid/solid continence. LIFT and advancement flap are real alternatives for a different muscle-division risk, not nonsensical procedures.",
+      "The resident must combine tract extent with functional reserve, then judge whether the extra sphincter-preserving procedure is justified. This is a lower-moderate core surgical decision; changing baseline continence would materially change its interpretation.",
+      "The options have parallel procedure labels and comparable specificity. No nonmedical wording, absolute, unique rationale or convergence selects the key. The standalone clinic history supplies the relevant prior abscess and operative findings."
+    ],
+    "suggestions": [
+      "No blocking revision. Retain both the limited crossing and explicit baseline function; neither a tract label nor persistent drainage alone establishes suitability for fistulotomy."
+    ]
+  },
+  {
+    "id": "question.topic.anorectal-benign-pelvic-floor.internal-hemorrhoid-banding.v1",
+    "nodeId": "node.topic.anorectal-benign-pelvic-floor.internal-hemorrhoid-banding.v1",
+    "title": "Office treatment of persistent spontaneously reducing internal hemorrhoids",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The spontaneous reduction and absent important external component establish the relevant disease pattern; persistent symptoms after conservative care then support rubber-band ligation. Excision and artery ligation are possible hemorrhoid procedures, but neither is the best initial procedural escalation for this record.",
+      "The task is specifically procedure selection at the treatment visit, not a claim that all rectal bleeding requires no further evaluation. No diagnostic-workup omission is needed to answer the stated task.",
+      "Office is an accurate setting descriptor, not a unique feasibility permission in the stem. No option contains its rationale. The standalone wrapper and update establish a coherent retrospective treatment visit without needing the formerly associated diagnostic node. This is lower-moderate, high-yield stage-based management."
+    ],
+    "suggestions": [
+      "No blocking revision. Keep the failed conservative care, spontaneous reduction and external-component information together in the standalone context."
+    ]
+  },
+  {
+    "id": "question.topic.anorectal-benign-pelvic-floor.combined-hemorrhoid-excision.v1",
+    "nodeId": "node.topic.anorectal-benign-pelvic-floor.combined-hemorrhoid-excision.v1",
+    "title": "Persistent combined internal and external hemorrhoidal disease",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The presentation's phrase her later bleeding evaluation refers to an event not used or described in this standalone node. The update nevertheless identifies the treatment visit clearly, so this is residual framing clutter rather than a key-changing ambiguity."
+    ],
+    "cues": [],
+    "fairness": [
+      "Manual reduction establishes more advanced internal prolapse, while the symptomatic external disease and prior failed banding make excisional hemorrhoidectomy the strongest offered choice. Stapling or arterial ligation does not address the same external symptom source.",
+      "The two steps are to distinguish combined hemorrhoidal disease from rectal prolapse, then choose a procedure that treats the clinically important components after prior office treatment. External-component symptoms are decision data, not a supplied operation label.",
+      "The choices are parallel named procedures without explanatory qualifiers. All decision-critical information is present in this node; the later bleeding companion is not needed."
+    ],
+    "suggestions": [
+      "No blocking clinical or reasoning revision. If a new wrapper version is authorized, remove the unused later bleeding evaluation reference and retain the explicit retrospective treatment visit."
+    ]
+  },
+  {
+    "id": "question.topic.anorectal-benign-pelvic-floor.long-prolapse-perineal-operation.v1",
+    "nodeId": "node.topic.anorectal-benign-pelvic-floor.long-prolapse-perineal-operation.v1",
+    "title": "Operation for a long rectal prolapse with substantial anesthetic risk",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Anesthesia advised against general anesthesia and pneumoperitoneum but considered regional anesthesia acceptable.",
+        "why": "This substantially narrows access selection. It is a legitimate patient-specific constraint rather than an invented convenience: it still does not distinguish Delorme from perineal rectosigmoidectomy without interpreting the long full-thickness segment."
+      }
+    ],
+    "fairness": [
+      "The long full-thickness prolapse favors perineal rectosigmoidectomy over a mucosal sleeve procedure, while the anesthetic assessment disfavors the offered laparoscopic abdominal operation. These are two independent, consequential selections. Viability and reducibility make this an elective planning question rather than an untreated ischemic emergency.",
+      "The stated 12 cm is a fictional observation, not an asserted universal procedural cutoff. I find no confident clinical inaccuracy in the intended best answer, but exact procedure suitability remains a clinician judgment; this editorial PASS does not resolve the packet's separate clinical-sign-off question.",
+      "The standalone context fully supplies the prolapse and anesthetic findings. No prior diagnostic answer is required, and no prior explanation is now rehearsing the operation."
+    ],
+    "suggestions": [
+      "No blocking editorial revision. Retain the length and anesthetic constraint, and do not generalize the explanation into an absolute length threshold or a rule that all older patients require a perineal operation."
+    ]
+  },
+  {
+    "id": "question.topic.anorectal-benign-pelvic-floor.outlet-biofeedback.v1",
+    "nodeId": "node.topic.anorectal-benign-pelvic-floor.outlet-biofeedback.v1",
+    "title": "Evacuation retraining despite a coexisting rectal pouch",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The concordant abnormal expulsion and anal pressure rise during attempted evacuation support a coordination problem. The resident must then prioritize biofeedback over treating an anatomically visible pouch or using botulinum toxin before first-line retraining.",
+      "The resting MRI does not establish that the pouch causes the evacuation failure; splinting makes repair tempting without proving that it should precede functional treatment. This is a meaningful, high-yield functional-versus-structural sequencing comparison.",
+      "For evacuation coordination modestly expands the biofeedback label but does not repeat a diagnosis supplied in the stem or independently disclose the answer. No blocking length, grammar or convergence cue was found. The standalone context provides the stool-care history and both physiological observations."
+    ],
+    "suggestions": [
+      "No blocking revision. Preserve the two concordant functional findings and avoid converting the resting MRI description into proof of a mechanically obstructing rectocele."
+    ]
+  },
+  {
+    "id": "question.topic.anorectal-benign-pelvic-floor.supralevator-internal.v2",
+    "nodeId": "node.topic.anorectal-benign-pelvic-floor.supralevator-internal.v2",
+    "title": "Drainage of an intersphincteric-origin supralevator abscess",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The update repeats that the founder reviews outside records after the presentation has already established that setting. This is removable framing, not a clinical ambiguity."
+    ],
+    "cues": [],
+    "fairness": [
+      "The uninterrupted lower-to-upper fluid column supplies the origin inference rather than simply labelling the abscess. Recognizing an intersphincteric origin then determines internal drainage, despite the distracting high location.",
+      "Internal and external occur together in the anatomical description; neither is a unique word match to a keyed option. All options name comparable access routes without a teaching rationale. Transabdominal access represents a high-location error, not an equally supported source-control route here.",
+      "The retrospective clinic context and MRI observations stand alone. No confident clinical inaccuracy was identified in the explanation. The text describes observations rather than promising an unavailable diagnostic image."
+    ],
+    "suggestions": [
+      "No blocking revision. A future prose cleanup can shorten the duplicate record-review sentence while retaining the positive anatomical continuity."
+    ]
+  },
+  {
+    "id": "question.topic.anorectal-benign-pelvic-floor.horseshoe-source-control.v2",
+    "nodeId": "node.topic.anorectal-benign-pelvic-floor.horseshoe-source-control.v2",
+    "title": "Posterior source control and sphincter preservation in a horseshoe abscess",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Modified Hanley drainage with loose seton",
+        "why": "The key is the only eponym and the only label not repeating with lateral drainage. This is a modest style outlier, not a reliable nonmedical solution: lateral drainage is explicitly shared in the update, and selecting the seton still requires anatomical knowledge."
+      }
+    ],
+    "fairness": [
+      "The posterior cavity below the levator with bilateral lateral communication supports a horseshoe source-control approach. The high external-sphincter crossing independently argues against complete fistulotomy. Modified Hanley drainage with a loose seton best combines these requirements among the offered choices.",
+      "The existing catheter is not treated as proof that the whole collection is drained. The update explicitly supplies continued left drainage and new right access, so the scored question concerns the remaining central access and tract decision. This resolves a potential incompleteness in the abbreviated keyed label.",
+      "This is hard because central cavity access and muscle-crossing consequences must both be interpreted; either isolated rule can lead to a different offered operation. The standalone outside-record review is coherent. The exact operative variant still requires clinician approval, but no confident error is apparent in the described principle."
+    ],
+    "suggestions": [
+      "No blocking revision. In a future label revision, state central access and tract treatment in the same format for every choice, leaving the already agreed lateral drainage in shared context. Keep the high crossing and below-levator posterior source explicit."
+    ]
+  },
+  {
+    "id": "question.topic.anorectal-benign-pelvic-floor.recurrent-fistula-mri.v2",
+    "nodeId": "node.topic.anorectal-benign-pelvic-floor.recurrent-fistula-mri.v2",
+    "title": "Mapping recurrent fistula extensions despite a known sphincter defect",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The current distribution cannot be reduced to the old short tract or its known muscle defect. The resident must infer possible secondary or higher extension, then select a study for that operative problem rather than focus solely on the continence injury. MRI is the strongest offered answer for that objective.",
+      "Expert three-dimensional endoanal ultrasound is a credible competitor and can map fistulas, not just sphincter defects. The explanation correctly retains that capability. I do not identify a confident factual error or an equally strong key from the represented higher-extension concern, although this is a comparative clinical judgment rather than an absolute exclusion of ultrasound.",
+      "The parallel modality labels contain no key-specific rationale, lexical shortcut or convergence pattern. The old ultrasound and new examination are temporally distinguishable, and the case is independently answerable without an earlier test-selection node."
+    ],
+    "suggestions": [
+      "No blocking revision. Preserve the new higher distribution and the genuine ultrasound alternative; do not simplify feedback into MRI is always required or ultrasound only evaluates continence. Exact comparative ranking remains for named clinical sign-off."
+    ]
+  },
+  {
+    "id": "question.topic.anorectal-benign-pelvic-floor.lis-after-treatment.v2",
+    "nodeId": "node.topic.anorectal-benign-pelvic-floor.lis-after-treatment.v2",
+    "title": "Sphincterotomy after unsuccessful fissure treatment with preserved continence",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Persistent chronic fissure after diltiazem and botulinum treatment establishes a reason to escalate. Elevated resting pressure plus intact continence and no previous sphincter injury then favor LIS over the offered non-sphincter-dividing procedures. Failure of treatment alone would not establish that selection.",
+      "The diagnosis in the task is appropriate because the scored objective is operation selection, not recognition of a fissure. The request for an operative discussion does not pick LIS from the other operative options.",
+      "The later visit is fully described in this standalone node; no earlier medication-choice answer is required. The explanation appropriately retains continence risk and does not promise universal suitability. No confident inaccuracy was identified in its tailored-division teaching point during this offline review."
+    ],
+    "suggestions": [
+      "No blocking revision. Retain pressure, functional reserve and prior treatment as separate selection facts; do not turn failed medical therapy into an unconditional indication for sphincter division."
+    ]
+  },
+  {
+    "id": "question.topic.anorectal-benign-pelvic-floor.snm-after-failed-repair.v2",
+    "nodeId": "node.topic.anorectal-benign-pelvic-floor.snm-after-failed-repair.v2",
+    "title": "Procedural escalation after late deterioration of sphincter repair",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The long initial improvement followed by gradual deterioration without a new injury makes an old anatomical gap an insufficient reason to repeat reconstruction. Persistent formed-stool leakage despite conservative care then supports an SNM trial rather than immediate permanent implantation or routine bulking injection.",
+      "The old defect gives repeat sphincteroplasty a credible attraction; the temporal course is consequential rather than decorative. The task asks for a procedural pathway, so test stimulation appropriately competes with reconstructive and injection pathways at the escalation decision.",
+      "No nonmedical wording attack selects SNM. Repeat overlapping sphincteroplasty overlaps the history but cues a distractor, not the key. The standalone case carries the necessary prior repair, response and recurrence sequence."
+    ],
+    "suggestions": [
+      "No blocking revision. For clearer clinical specificity in a future version, name the actual conservative measures already tried rather than only conservative care, without inventing doses or durations. Preserve the distinction between test stimulation and permanent implantation."
+    ]
+  },
+  {
+    "id": "question.topic.anorectal-benign-pelvic-floor.postbanding-sepsis.v2",
+    "nodeId": "node.topic.anorectal-benign-pelvic-floor.postbanding-sepsis.v2",
+    "title": "Deteriorating infection after hemorrhoid banding",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Which source-assessment step asks for diagnosis or assessment, whereas the explanation is about immediate therapeutic source control. Anorectal exploration under anesthesia does not explicitly say drainage and debridement of the involved perineal tissues.",
+      "Bleeding with defecation is a leftover complaint from the former banding case; this standalone encounter reviews hospitalization for a severe infection, not current defecation-related bleeding."
+    ],
+    "cues": [],
+    "fairness": [
+      "Persistent hypotension, confusion, spreading pain, dusky skin and crepitus strongly favor urgent operative source control with ongoing resuscitation. CT before exploration and bedside band removal are clearly inferior for this represented course. The intended direction is clinically sound; I am not alleging that CT is never useful in postbanding infection.",
+      "The shock and tissue findings make this a high-yield danger-recognition item. They do not create two challenging consequential steps against these alternatives: recognizing the emergency effectively selects the only operative route. Difficulty should not be inflated by counting diagnosis and action as separate reasoning burdens.",
+      "The hospital events are coherently framed as a clinic record review. The limitation is the precision and cognitive purpose of the scored task, not an inappropriate clinic-versus-hospital chronology. No independent wording-only route to the key was found."
+    ],
+    "suggestions": [
+      "Align task and choices around the immediate source-control action and explicitly include operative assessment with drainage/debridement as indicated; do not leave definitive treatment implicit in a source-assessment label.",
+      "Use a short complaint appropriate to the postoperative infection follow-up.",
+      "Retain the warning signs. Seek explicit acceptance as an easy safety-recognition exception, or construct a separately supported subsequent decision with genuinely competing actions. Do not manufacture difficulty by withholding shock or necrotizing-infection findings."
+    ]
+  },
+  {
+    "id": "question.topic.anorectal-benign-pelvic-floor.persistent-bleeding-colonoscopy.v2",
+    "nodeId": "node.topic.anorectal-benign-pelvic-floor.persistent-bleeding-colonoscopy.v2",
+    "title": "New intermittent bleeding and iron deficiency after a resolved episode",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "After a symptom-free interval never establishes when the prior adequate colonoscopy occurred. If the intended challenge is whether to repeat it, its recency is relevant to that judgment.",
+      "The complaint Prolapse and bleeding carries over prolapse even though the standalone presentation describes a resolved prior hemorrhoid episode and a new bleeding pattern. Current prolapse is not otherwise represented."
+    ],
+    "cues": [],
+    "fairness": [
+      "Prepared colonoscopy is the strongest of the offered tests for a stable patient with intermittent mixed-stool bleeding and new iron deficiency. No confident clinical inaccuracy is asserted in that intended selection.",
+      "CTA and tagged-red-cell scintigraphy are both bleeding-localization alternatives; neither is a close next step for this elective, currently nonbleeding assessment. The item can be answered from that phase alone. Deleting the detailed earlier colonoscopy and symptom-resolution history leaves the same choice, so the claimed repeat-evaluation challenge does not materially drive the option ranking.",
+      "The absent interval limits the broad next-investigation task, especially if this is meant to adjudicate repeat endoscopy after a recent high-quality examination. New symptoms warrant reassessment, but a different episode does not by itself establish the timing or full scope of an endoscopic plan. That is an uncertainty to resolve, not grounds to invent a repeat-colonoscopy cutoff.",
+      "The chronology is otherwise understandable as a standalone follow-up. There is no reliable nonmedical cue: the repeated word colonoscopy refers to the previous negative study and is not a pre-answer instruction to repeat it."
+    ],
+    "suggestions": [
+      "Choose one scored decision. For repeat evaluation, supply a concrete chronology and compare clinically credible next investigations or endoscopic strategies at that stage, with a supported discriminator that makes the previous examination consequential.",
+      "If the intended objective remains test selection in stable intermittent bleeding, shorten the obsolete-history detail and obtain explicit acceptance of its easy foundational role, or replace one localization foil with a genuinely close supported competitor.",
+      "Use a complaint that reflects the current bleeding episode and clarify the scope of the investigation task; do not imply that colonoscopy exhausts every evaluation of iron-deficiency anemia."
+    ]
+  },
+  {
+    "id": "question.topic.anorectal-benign-pelvic-floor.stool-directed-continence-care.v2",
+    "nodeId": "node.topic.anorectal-benign-pelvic-floor.stool-directed-continence-care.v2",
+    "title": "Treating the residual stool-consistency contributor to leakage",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "Continence-focused rehabilitation does not specify whether the completed course included instrumented biofeedback or only exercises. This leaves the precise relationship to the biofeedback distractor less clear than it could be, although stool-directed treatment remains best supported by the represented residual pattern."
+    ],
+    "cues": [],
+    "fairness": [
+      "The resident must compare retained formed-stool function and improved squeeze against persistent loose-stool urgency, then target the remaining contributor instead of treating the old ultrasound defect as sufficient reason for surgery. Fiber intolerance and the stated assessment of the loose stool support a monitored loperamide trial.",
+      "The chosen plan is not merely the only novel option: recognizing why stool consistency matters despite an anatomical defect requires clinical interpretation. Biofeedback is a real continence intervention, and the explanation correctly avoids conflating it with evacuation retraining.",
+      "The explanation does not promise cure or prescribe an invented dose. The prior defect, rehabilitation response, diary and current symptom pattern are all supplied in the standalone node. No confident clinical inaccuracy or nonmedical keying shortcut was found."
+    ],
+    "suggestions": [
+      "No blocking revision. In a future clarification, state the actual completed rehabilitation modality so a resident need not guess whether continence biofeedback has already been tried. Preserve the formed-versus-loose-stool contrast and avoid implying that an old structural defect is irrelevant to long-term management."
+    ]
+  },
+  {
+    "id": "question.topic.anorectal-benign-pelvic-floor.rectocele-dynamic-reassessment.v2",
+    "nodeId": "node.topic.anorectal-benign-pelvic-floor.rectocele-dynamic-reassessment.v2",
+    "title": "Dynamic assessment after improved evacuation coordination",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "During straining on a commode the posterior vaginal wall descends; the same finding is not reproduced on the examination couch.",
+        "why": "The posture contrast maps directly onto the only Seated versus Supine option labels. A reader can favor the position where the finding appeared without understanding the prior coordination tests, MRI acquisition or clinical role of either modality. It supplies the acquisition-selection inference that was supposed to make this a second consequential step."
+      }
+    ],
+    "fairness": [
+      "Persistent splint-dependent symptoms after improved functional testing justify dynamic evacuation assessment; the resting T2 study did not perform that assessment. Seated fluoroscopic defecography is a defensible preferred test for the represented concern.",
+      "However, the previous resting MRI is not a failed supine MR defecography. A normal couch examination does not prove that a properly performed dynamic MR study cannot demonstrate the problem. Both defecographic modalities can be clinically useful; exact superiority in this constructed case remains a clinician-review question, not a confident clinical error established by this offline review.",
+      "The transit-study option addresses a different problem and does little to preserve difficulty once the explicit position pairing is seen. Removing the coordination and prior-acquisition details still leaves the same linguistic route to Seated, so the full two-step construct is not achieved.",
+      "The standalone node supplies prior treatment, current physiological improvement and the imaging acquisition log. Continuity is adequate; the objection concerns the answer cue and narrow comparative ranking, not missing earlier scored results."
+    ],
+    "suggestions": [
+      "Keep the fact that the old study was resting-only, but do not use it as evidence that dynamic MR defecography failed.",
+      "Build the comparison around actual acquisition adequacy and the unresolved evacuation question, with clinically credible next steps that cannot be selected solely by matching commode to Seated. If failure to reproduce evacuation in a prior dynamic study is the intended discriminator, that must be an explicitly represented, supported observation rather than inferred from the couch examination.",
+      "Have the clinician adjudicate the closest dynamic-MR alternative in the exact revised scenario. Do not make a blanket claim that seated fluoroscopy is universally required or that supine MR cannot evaluate a rectocele."
+    ]
+  },
+  {
+    "id": "question.topic.anorectal-benign-pelvic-floor.rectocele-repair-after-coordination.v2",
+    "nodeId": "node.topic.anorectal-benign-pelvic-floor.rectocele-repair-after-coordination.v2",
+    "title": "Symptomatic rectocele after successful coordination treatment",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Current relaxation and adequate balloon expulsion reduce the case for further treatment directed at nonrelaxation. Retained contrast that is released by vaginal support then connects the pouch to the persisting disability, supporting discussion of native-tissue rectocele repair.",
+      "The item requires both functional reassessment and attribution of residual mechanical obstruction; merely identifying a pouch is insufficient. Botulinum treatment is the wrong physiological target here. STARR is a recognizable procedural competitor, and its adverse-complication teaching point is consistent with the intended comparison; no confident inaccuracy was identified offline.",
+      "Native-tissue rectocele repair leaves route selection open, but that is appropriate to the stated repair-versus-other-procedure task; no unsupported choice between vaginal and transanal routes is imposed. None of the options includes a rationale or uniquely cautious wording.",
+      "Although the update calls the study returned, it supplies all relevant observations and does not require the previous test-choice node. The case is coherent and answerable on its own. The explanation correctly describes a reasonable procedural discussion rather than guaranteed symptom resolution."
+    ],
+    "suggestions": [
+      "No blocking revision. Preserve the contrast-retention/release finding and current coordination results; do not turn a rectocele on static imaging alone into an indication for repair."
+    ]
+  }
+]

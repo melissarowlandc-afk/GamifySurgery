@@ -1,0 +1,256 @@
+[
+  {
+    "id": "question.topic.liver-malignancy.hcc-acquisition.v1",
+    "nodeId": "node.topic.liver-malignancy.hcc-acquisition.v1",
+    "title": "Nora Patel: diagnostic imaging after incomplete CT acquisition",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Multiphasic contrast-enhanced liver MRI is the single best offered next study. The reader must recognize that the acquired CT cannot characterize the vascular pattern, then apply the cirrhotic setting and lesion size to choose diagnostic characterization over surveillance or immediate tissue sampling.",
+      "The explicit unperformed phases establish acquisition inadequacy rather than mere missing exported images. This is necessary evidence, not a gratuitous named omission; removing it would undermine the distinction being tested. No equally good offered alternative or confident clinical inaccuracy was identified.",
+      "The named patient, age, sex, short complaint and complete task are coherent. This first node stands alone. Its explanation gives a general subsequent biopsy principle but does not identify which lesion in the next node requires tissue.",
+      "Review-wide scope: all nine current proposedNodes were reviewed using their candidate presentation, current update, exhibit, task, option labels and explanation, including preceding visible explanations for the two paired cases. Historical author verdicts, keys and self-checks were not evidence for acceptance. Kept historical inventory, the existing retire-and-replace target, four parked drafts and six withheld teaching points were noted but not re-reviewed or included in verdict counts.",
+      "Review-wide limitation: offline editorial and clinical-reasoning review only, with no network, fresh source verification, runtime inspection or clinical sign-off. Difficulty and high-yield judgments are qualitative estimates, not measured resident performance or verified exam frequency. All nine drafts remain needs_clinician_review; PASS does not confer Melissa Rowland's approval. Runtime randomization, wait estimates and rendering cannot be certified from these visible fields."
+    ],
+    "suggestions": [
+      "Preserve the acquisition record and the distinction between completing characterization and obtaining tissue. Do not add another equally appropriate dynamic cross-sectional study as a distractor without a supported reason to prefer one modality.",
+      "Keep subsequent diagnostic criteria out of this node's feedback so that the follow-up still requires independent lesion interpretation."
+    ]
+  },
+  {
+    "id": "question.topic.liver-malignancy.hcc-imaging-diagnosis.v2",
+    "nodeId": "node.topic.liver-malignancy.hcc-imaging-diagnosis.v2",
+    "title": "Nora Patel: assign tissue sampling to two different enhancement patterns",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The best offered minimum plan is biopsy of segment VI with imaging classification of segment II. The cirrhotic setting, lesion sizes, adequate phases and distinct enhancement patterns support different diagnostic evidence requirements for the two lesions.",
+      "Two consequential steps remain: interpret each lesion independently, then assign sampling rather than treating both masses as the same tumor or requiring tissue from both. Neither lesion is named HCC in the pre-answer text. The options are comparable sampling assignments; their component frequencies do not uniquely identify the key.",
+      "Minimum required sampling and the absence of a separate trial or molecular indication bound the question appropriately. Biopsying both lesions could be reasonable for another purpose, but it is not the minimum required plan under the stated pathway. Equal accessibility of both lesions prevents access from selecting the answer.",
+      "The later MRI identifying a second lesion is a coherent interval event. The current presentation and report stand alone. Prior feedback about biopsy after adequate characterization offers some general scaffolding, but it does not supply the two enhancement-pattern interpretations or the segment-specific assignment. No confident clinical inaccuracy was identified."
+    ],
+    "suggestions": [
+      "Retain the minimum-required scope and lesion-specific observations; avoid changing the task to an unrestricted best-biopsy-plan question, which could make sampling both defensible.",
+      "Do not add LI-RADS conclusions or histologic labels to the exhibit. Keep the distinction between diagnostic necessity and optional additional tissue acquisition in the explanation."
+    ]
+  },
+  {
+    "id": "question.topic.liver-malignancy.hcc-raw-reserve.v2",
+    "nodeId": "node.topic.liver-malignancy.hcc-raw-reserve.v2",
+    "title": "Elaine Brooks: prioritize HCC treatment using reserve and operative anatomy",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "HPB assessment for resection is the best offered priority. The learner must interpret synthetic function and portal-hypertension observations, then combine them with a solitary peripheral tumor and a limited-resection map. Favorable tumor burden alone does not determine that transplantation should be prioritized.",
+      "Transplant assessment is a plausible competing thought for a cirrhotic patient with a solitary tumor, while tumor size makes thermal ablation less compelling. These are concrete treatments compared at the same assessment stage rather than a vague planning answer against definitive procedures.",
+      "The resection map is necessary feasibility information, but cannot by itself establish the key: adverse reserve or portal-hypertension findings could change the choice. The explanation correctly limits its conclusion to assessment priority, not operative clearance or a prohibition of all alternatives.",
+      "The standalone presentation is coherent and complete. No confident clinical inaccuracy or equally strong offered first priority was identified. This judgment does not establish a new numerical reserve or ablation threshold."
+    ],
+    "suggestions": [
+      "Preserve the raw laboratory and endoscopic findings and the assessment-level task. Do not replace them with an author-supplied resection-eligible label.",
+      "Retain the explanation's distinction between transplant eligibility and preferred initial assessment."
+    ]
+  },
+  {
+    "id": "question.topic.liver-malignancy.hcc-portal-flow.v1",
+    "nodeId": "node.topic.liver-malignancy.hcc-portal-flow.v1",
+    "title": "Omar Bennett: prioritize therapy after main portal-vein tumor occlusion",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Systemic HCC therapy assessment is the best offered pathway. The resident must interpret macrovascular tumor extension despite a relatively small primary mass, then integrate portal perfusion and preserved clinical function to rank systemic treatment against chemoembolization and standard transplantation.",
+      "Patent arteries do not eliminate the concern created by main portal occlusion. Explicit tumor extension, rather than an unspecified portal thrombus, supplies the staging information needed for a fair comparison. The established HCC diagnosis is appropriate for this management task.",
+      "Standard HCC transplantation is a clinically useful scope restriction, not an unfair rhetorical absolute. The explanation avoids claiming that all specialist locoregional approaches are prohibited. No confident clinical inaccuracy was identified; selected-center exceptions and current drug choices were not verified offline.",
+      "The standalone presentation, short complaint and separated task are coherent. The three options name specific treatment pathways at comparable scope."
+    ],
+    "suggestions": [
+      "Keep tumor invasion explicit and maintain the distinction between routine chemoembolization and selected specialist alternatives.",
+      "Do not expand this item's explanation into unverified regimen selection or universal exclusion of every locoregional or investigational transplant approach."
+    ]
+  },
+  {
+    "id": "question.topic.liver-malignancy.crlm-remnant-outflow.v2",
+    "nodeId": "node.topic.liver-malignancy.crlm-remnant-outflow.v2",
+    "title": "Lena Ortiz: whether measured remnant volume has usable venous drainage",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Reassess hepatic venous drainage is less specific than the unresolved decision: the supplied map already establishes that segment IV loses its described outlet. The task should distinguish identifying that problem from deciding how the remnant estimate may be used."
+    ],
+    "cues": [
+      {
+        "phrase": "patent and remain outside the resection plane",
+        "why": "This identical reassurance appears for both portal/arterial and biliary maps, directly disposing of both competing assessments. The venous map is the only category with a problem. A reader can select the un-reassured category without using the volume measurements."
+      },
+      {
+        "phrase": "no alternative segment IV connection is identified",
+        "why": "Combined with removal of the middle hepatic vein and two explicitly intact competing systems, this makes the answer a named-defect-to-reassessment match. The finding is medically necessary; the problem is the low-discrimination option set, not the mere presence of this negative."
+      }
+    ],
+    "fairness": [
+      "Hepatic venous drainage is the single best offered assessment. The concern about counting segment IV as usable remnant after loss of its only described outlet is sound. No confident clinical inaccuracy was identified.",
+      "The 45%, 18% and 27% measurements do not earn a second scored inference: deleting the numerical split leaves the same category-selection answer. Recognizing a drainage defect and selecting reassessment of that same drainage is not two consequential decisions in the current form.",
+      "The explanation appropriately avoids choosing a reconstruction or declaring II-III sufficient. Do not convert the volumetric measurements directly into a claim about measured regional function.",
+      "The case now stands alone: the operative plan, remaining targets and staging are provided without relying on a parked predecessor. Usable future remnant is a high-yield concept; this version under-tests it."
+    ],
+    "suggestions": [
+      "Keep the actual venous, inflow and biliary observations. Replace the three organ-system reassessment labels with comparable concrete remnant-planning decisions whose ranking depends on which measured territory remains adequately drained.",
+      "Require a consequence for the 45% claim, such as whether it can support the proposed resection pending an outflow solution and reassessment, rather than asking which already-described defect to revisit. Do not assert a particular reconstruction is possible without supporting anatomy.",
+      "Reapply the deletion test: changing the segment IV drainage relationship or its contribution should change the proposed planning decision, not merely the name of the system to inspect."
+    ]
+  },
+  {
+    "id": "question.topic.liver-malignancy.crlm-portal-target.v2",
+    "nodeId": "node.topic.liver-malignancy.crlm-portal-target.v2",
+    "title": "Marcus Lee: portal embolization with variant segment IV supply",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The task requires replacement of the common-trunk target, but one answer explicitly retains that target. That option cannot answer the stated task even before the anatomy is read."
+    ],
+    "cues": [
+      {
+        "phrase": "Which embolization plan should replace the proposed common-trunk target",
+        "why": "This announces that the existing plan is wrong and logically eliminates 'Use the proposed proximal right-trunk target' without medical knowledge."
+      },
+      {
+        "phrase": "Use the distal anterior target without posterior treatment",
+        "why": "The negative wording advertises incomplete coverage beside the only remaining plan covering both named right-sided branches. After the task eliminates the proximal target, a comprehensiveness heuristic can identify the key without tracing the segment IV takeoff."
+      }
+    ],
+    "fairness": [
+      "Separate distal anterior and posterior embolization targets fit the supplied map: the proposed common right-trunk occlusion would also interrupt the segment IV branch supplying intended remnant. No confident clinical inaccuracy was identified in that conceptual target assignment.",
+      "The underlying objective could require two steps: derive retained territories from the operation, then trace the variant supply to choose targets that preserve them. The current task and distractor wording bypass that reasoning, so twoStep is false for this exact displayed version.",
+      "The separate-catheterization observations support feasibility and are necessary to the offered selective plan. They should not be removed simply to make the item harder. The final procedure remains specialist-dependent, as the explanation states.",
+      "The standalone chart supplies the planned operation and indication for portal embolization. Remnant protection is high yield; detailed catheter technique should remain subordinate to that general surgical principle."
+    ],
+    "suggestions": [
+      "Use a neutral complete task, for example asking which embolization target plan is appropriate before the right hepatectomy, without directing replacement.",
+      "Make each option a positive, comparably specific target prescription. Replace the explicitly incomplete anterior-only foil with a credible competing target error that requires interpretation of the segment IV origin; do not add a new unsafe or implausible plan solely to fill a slot.",
+      "Re-attack the revised choices with the segment IV row hidden. A lay reader should not be able to eliminate the proximal plan from the task or choose the only comprehensive remaining label."
+    ]
+  },
+  {
+    "id": "question.topic.liver-malignancy.crlm-disappearing-map.v3",
+    "nodeId": "node.topic.liver-malignancy.crlm-disappearing-map.v3",
+    "title": "Gabriel Reed: preoperative mapping of a CT-occult treated metastasis",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Omit the original site and follow with contrast CT' is unclear about what the site is omitted from while it is supposedly being followed. If the intended misconception is treating nonvisibility as eradication, express the actual surveillance or treatment plan rather than an ambiguous omission."
+    ],
+    "cues": [
+      {
+        "phrase": "No post-treatment hepatobiliary-contrast liver MRI has been obtained",
+        "why": "The exhibit names the exact missing test that uniquely matches the preferred option. This is the named-omission shortcut identified in the authoring standard; the available CT report and planning chronology can establish the current evidence without rehearsing the desired next test."
+      },
+      {
+        "phrase": "there is no MRI contraindication",
+        "why": "This adds key-specific permission immediately after naming the missing MRI. Combined with the omission cue, the resident can choose MRI without resolving the value of the original site or comparing modalities."
+      },
+      {
+        "phrase": "Retain the original site and map",
+        "why": "Both active-mapping choices repeat this component, while the third uniquely says 'Omit' and switches to follow-up. This does not uniquely select MRI by itself, but it supplies a majority-component and caution shortcut; the exact missing-MRI phrase then completes the attack."
+      }
+    ],
+    "fairness": [
+      "Hepatobiliary MRI with baseline correlation is a defensible preferred preoperative mapping choice. CT nonvisibility does not establish eradication. Contrast ultrasound is a clinically useful competitor, and its usefulness should not be dismissed merely because it is not MRI.",
+      "No confident clinical inaccuracy was identified. The strength of the general MRI-versus-preoperative-contrast-ultrasound preference was not freshly verified; if the author intends a case-specific superiority claim, the observation and supporting evidence must actually establish it.",
+      "The two intended steps are preservation of a known metastatic site in planning and selection of the mapping method. The visible cues let the reader bypass both, leaving an easy completion-of-missing-test item rather than two demonstrated inferences.",
+      "This is coherent as a standalone case before any liver operation. The explanation properly stops before the disputed management of a site still occult after specialist mapping. The core disappearing-metastasis concept is high yield."
+    ],
+    "suggestions": [
+      "Describe the actual acquired post-treatment workup and its observations; delete the redundant sentence naming the exact desired missing MRI and the key-specific permission sentence unless a genuine contraindication comparison is tested.",
+      "Compare concrete plans at the same preoperative decision stage and clarify the third plan's consequence. Avoid making one option a rhetorically incomplete omission beside two plans that both preserve the site.",
+      "Require the resident to use a supported mapping limitation or meaningful competing finding to rank MRI and contrast ultrasound. If only a single modality-selection rule remains, do not claim hard or two-step difficulty.",
+      "Continue withholding a universal blind-resection-versus-surveillance recommendation for a persistently occult site."
+    ]
+  },
+  {
+    "id": "question.topic.liver-malignancy.icca-tissue.v4",
+    "nodeId": "node.topic.liver-malignancy.icca-tissue.v4",
+    "title": "Amelia Stone: tissue classification after noncharacteristic HCC imaging",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Image-guided core sampling is feasible",
+        "why": "This is an explicit permission for the keyed action, placed after two completed adequate studies and an opening statement that there is no tissue diagnosis. It makes the only specifically endorsed next procedure easier to select without interpreting the enhancement pattern."
+      },
+      {
+        "phrase": "selection of tumor-specific treatment",
+        "why": "The task is closely echoed only by 'Obtain core biopsy before selecting tumor-specific treatment'; the alternatives use narrower HCC treatment or defer the tissue decision. This overlap is a secondary cue, particularly when combined with the key-specific feasibility sentence, rather than a clinical error by itself."
+      }
+    ],
+    "fairness": [
+      "Core biopsy is the best offered diagnostic plan for this cirrhotic patient with an adequately imaged malignant-appearing but noncharacteristic HCC pattern. The resident can make two consequential inferences: distinguish the pattern from an imaging-established HCC diagnosis, then choose tissue classification instead of HCC-directed treatment or another imaging discriminator.",
+      "The contrast-ultrasound alternative is not intrinsically absurd, but the completed adequate CT/MRI and need to establish tumor type favor tissue in this stated scenario. No confident clinical inaccuracy or equally strong offered next step was identified. The concern is answer scaffolding, not a claim that biopsy is wrong.",
+      "The explanation usefully avoids asserting that every potentially resectable cholangiocarcinoma requires preoperative biopsy. The key depends on the cirrhotic-liver diagnostic pathway and the nonspecific malignant pattern, not on a definitive pre-answer iCCA diagnosis.",
+      "The first node stands alone and the later biopsy-confirmed iCCA is a coherent interval result. Its explanation does not disclose the next node's operative extent or remnant-preparation answer. This diagnostic boundary is high yield."
+    ],
+    "suggestions": [
+      "Remove the generic feasibility endorsement unless it resolves an actual decision-critical sampling constraint. If that constraint is necessary to distinguish contrast ultrasound, use supported concrete access or safety observations and avoid naming the intended procedure as the permitted action.",
+      "Use a neutral complete next-diagnostic-step task and parallel action labels, keeping treatment consequences in the explanation. Preserve adequate acquisition and the raw enhancement pattern.",
+      "Retest the item with the enhancement-pattern row hidden: the remaining prose should not nearly assemble the biopsy answer through no-tissue-yet plus completed imaging plus explicit biopsy permission."
+    ]
+  },
+  {
+    "id": "question.topic.liver-malignancy.icca-resection-pathway.v3",
+    "nodeId": "node.topic.liver-malignancy.icca-resection-pathway.v3",
+    "title": "Amelia Stone: match oncologic clearance to future-remnant preparation",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The report says the mass is 'involving the left and right-anterior pedicles' without specifying whether this means invasion requiring sacrifice or proximity potentially permitting preservation. The intended operation is inferable, but the irreversible difference between left hepatectomy and left trisectionectomy deserves a precise operative-map observation. This is an ambiguity to resolve, not a confident claim that the proposed operation is incorrect."
+    ],
+    "cues": [
+      {
+        "phrase": "no augmentation has been performed",
+        "why": "This names the missing intervention that appears only in the key. The interval biopsy and current volume findings already establish the relevant planning state; the extra omission points toward augmentation before the learner interprets the sector map."
+      },
+      {
+        "phrase": "No regional remnant-function study has been completed",
+        "why": "Together with the unique 'after remnant augmentation and reassessment' label, this creates an only-cautious-plan shortcut. It is legitimate to distinguish volume from function, but the incomplete-study announcement should not substitute for interpreting which territory remains."
+      }
+    ],
+    "fairness": [
+      "The best offered pathway is extended-resection planning contingent on augmentation and reassessment, assuming the described pedicle involvement requires removal of the left and right-anterior territories. Preserving an involved right-anterior sector compromises the intended clearance; undertaking the extended resection on the current small posterior remnant is not supported by reassuring whole-liver tests.",
+      "The intended two steps are substantive: derive VI-VII as the remnant from the clearance map, then interpret its 14% measured volume in a cirrhotic liver and choose preparation rather than immediate resection. This is a moderate application problem, not hard merely because several percentages are supplied.",
+      "No new exact adequacy threshold is asserted in this review. The stated posterior volume is a serious concern, but the wording does not establish that augmentation will succeed or that surgery will ultimately be appropriate. The explanation correctly preserves those limits; the answer label should remain equally conditional.",
+      "The later confirmed iCCA, persistent 4.4-cm mass and completed staging follow coherently from the first node. The current update and exhibit also stand alone. Prior biopsy feedback does not rehearse the remnant-management answer. Extent of resection and future-remnant sufficiency are high-yield surgical concepts. No confident clinical inaccuracy was identified."
+    ],
+    "suggestions": [
+      "Clarify the specific pedicle relationship that makes a left-only resection unable to clear the tumor, using a supported constructed operative observation rather than an author-supplied statement that trisectionectomy is required.",
+      "Delete the redundant no-augmentation sentence. State the measurement type neutrally, retaining that these are volume estimates rather than measured regional function without announcing an omitted study as a prompt for reassessment.",
+      "Make all options comparably specific planning pathways with the same degree of contingency. The key should propose augmentation and reassessment for possible extended resection, not sound like a guaranteed operation after augmentation.",
+      "After repair, verify that selecting the key requires both the clearance anatomy and the remnant distribution, rather than simply choosing the only answer that promises additional preparation."
+    ]
+  }
+]

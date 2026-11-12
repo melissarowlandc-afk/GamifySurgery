@@ -1,0 +1,1767 @@
+{
+  "checkedOn": "2026-11-08",
+  "status": "proposal_only_not_acceptance",
+  "sourceView": "stats1-round1",
+  "exportName": "QUESTION_STATS1_SOURCE_RELEASE",
+  "modulePath": "packages/clinical-content/src/question-stats1-20261108.ts",
+  "sourceViewSha256": "70163dd78bd9a0aa31bc8ade3714722a951d61ce5def1a86daccbbd0a4ca0b7f",
+  "instructions": [
+    "Run independent review; accept only exact directed versions, leaving the current live fallback for other items.",
+    "For accepted rows, supply the real manager-decision document. This proposal is neither an acceptance nor a placeholder clinical citation.",
+    "Add the explicit source view to the existing default projector, pin each accepted header, and replace any superseded acceptance for that case/node rather than duplicate it.",
+    "Append exact accepted no_test timing rows; these are statistical analyses, not patient test orders.",
+    "All cases remain single-node; no whole-case relation, new concept, selector or history migration is required. Keep all historical bindings/cases/questions."
+  ],
+  "rows": [
+    {
+      "acceptanceId": "S01",
+      "caseId": "case.gs028se.independent-t-paired-t.a-two-teams",
+      "nodeId": "node.gs028se.independent-t-paired-t.a-two-teams.1",
+      "questionVariantId": "question.statistics-ethics.independent-t.v1.r1",
+      "conceptId": "concept.statistics-ethics.independent-t",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "53b4be46ebe0b1f2772e2e1e64b01d5808d8f7e8ca0c4b9c026bbc4d6425b87f",
+        "candidateQuestionSha256": "b060067008d3a56880a3611c9196da61aa10467bf5fbbed22db1692bf78806c1",
+        "candidateCaseSha256": "9447c4fc3b3c55c9a840eb2f0bf338d449a763a0dd17d8ec5ef5ff35a3a376b2"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S02",
+      "caseId": "case.gs028se.independent-t-paired-t.a-two-cohorts",
+      "nodeId": "node.gs028se.independent-t-paired-t.a-two-cohorts.1",
+      "questionVariantId": "question.statistics-ethics.independent-t.v2.r1",
+      "conceptId": "concept.statistics-ethics.independent-t",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "4b80e0b0f5845d4db1de7faa1936941247fe7ea63f220a7ebe5f5f707d619ba1",
+        "candidateQuestionSha256": "ed22ebda68614744f370abae769acfaef2904b9a743f7b9e3284f5a5ca571359",
+        "candidateCaseSha256": "e9c12a43f1a131ecd3843ef11f9a35dd5afa2a6341407e803442de0b6ee01c5c"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S03",
+      "caseId": "case.gs028se.independent-t-paired-t.a-two-shifts",
+      "nodeId": "node.gs028se.independent-t-paired-t.a-two-shifts.1",
+      "questionVariantId": "question.statistics-ethics.independent-t.v3.r1",
+      "conceptId": "concept.statistics-ethics.independent-t",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "6164cd0db342255e5801cc3642d3285a1ee8ff305c9208bb6e2a77d4b53cd684",
+        "candidateQuestionSha256": "6e2df383c90618f050361457ef8a95eaea77b8253a4383aa25a2870e569ac949",
+        "candidateCaseSha256": "77e48e0e715c6db3be4149c35c02300da0ff34adc21d729eb8141a1693289838"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S04",
+      "caseId": "case.gs028se.independent-t-paired-t.a-two-scripts",
+      "nodeId": "node.gs028se.independent-t-paired-t.a-two-scripts.1",
+      "questionVariantId": "question.statistics-ethics.independent-t.v4.r1",
+      "conceptId": "concept.statistics-ethics.independent-t",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "7d535f3081ece47ae5cbcba48d490c14a9847a724d0bde38df27a5615d0e3fbc",
+        "candidateQuestionSha256": "920b6de78f9e149828e70ef0b46dc8bc2c372605a83ed4b00ff6e8a141ffff5e",
+        "candidateCaseSha256": "cea0136e18bfb36127f7ae1b450089ae72caa5f3c113c4c96cef37d24f4d6b4b"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S05",
+      "caseId": "case.gs028se.independent-t-paired-t.b-same-rooms",
+      "nodeId": "node.gs028se.independent-t-paired-t.b-same-rooms.1",
+      "questionVariantId": "question.statistics-ethics.paired-t.v1.r1",
+      "conceptId": "concept.statistics-ethics.paired-t",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "05bf86f068ca300e04e37ff02fe0f24d1e855fb0037e80eec8d644aa7e79b06a",
+        "candidateQuestionSha256": "6646f66111995b45873422e7ef05d5f8369afbf9329c9dbe3186dd53de458048",
+        "candidateCaseSha256": "c7e38bb12bf3028fc157d19414ab40abcbd3be6bcd9b3525f83c0807a7dcf3b7"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S06",
+      "caseId": "case.gs028se.independent-t-paired-t.b-same-trainees",
+      "nodeId": "node.gs028se.independent-t-paired-t.b-same-trainees.1",
+      "questionVariantId": "question.statistics-ethics.paired-t.v2.r1",
+      "conceptId": "concept.statistics-ethics.paired-t",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "f5b26ee673fa7226031a45a164a12ba0ee074403b46a3511b260e4895ce7e31f",
+        "candidateQuestionSha256": "b1934b80a0fd250028f32d8671aa6a7d604455f89f6fccd11b27a390896d5f0f",
+        "candidateCaseSha256": "ed38b247a9545c4a63273c80623270cc5fe453bff6b3e8d4911957286f86413c"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S07",
+      "caseId": "case.gs028se.independent-t-paired-t.b-matched-sites",
+      "nodeId": "node.gs028se.independent-t-paired-t.b-matched-sites.1",
+      "questionVariantId": "question.statistics-ethics.paired-t.v3.r1",
+      "conceptId": "concept.statistics-ethics.paired-t",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "419ce8956600db45244ebbb93f4efa1edf17a417af2b7fe09ec03b894c2d728e",
+        "candidateQuestionSha256": "1cc69a110639ae8d0afb770c57573065ea9ddd6762025d50425d5f1bd0b55e0c",
+        "candidateCaseSha256": "fdc4116c2d254c9951c4ff996dda6226976fa48f189bcc720d1640921cab4e54"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S08",
+      "caseId": "case.gs028se.independent-t-paired-t.b-same-workers",
+      "nodeId": "node.gs028se.independent-t-paired-t.b-same-workers.1",
+      "questionVariantId": "question.statistics-ethics.paired-t.v4.r1",
+      "conceptId": "concept.statistics-ethics.paired-t",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "57646e05b8a6aed6c321fd318c3988c4eb5b0d398d60d0a9ee9b3a657c5fa00b",
+        "candidateQuestionSha256": "e1aab0bc276b535365a8c1481b085d6a7128d79dae617512f618f4d6ad51a8e0",
+        "candidateCaseSha256": "e20e108a7b042a281c75e91fcc71cb8213dc1d35b67045ac08167e9628846933"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S09",
+      "caseId": "case.gs028se.one-way-anova-rank-sum.a-three-teams",
+      "nodeId": "node.gs028se.one-way-anova-rank-sum.a-three-teams.1",
+      "questionVariantId": "question.statistics-ethics.one-way-anova.v1.r1",
+      "conceptId": "concept.statistics-ethics.one-way-anova",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "7cdedd093e4825e61cf1d1488af15cae569a4026040c6f8aa3602753ef624e16",
+        "candidateQuestionSha256": "dd07c47fa579a9636300c70ed192d209d9131b51a3fa1da5415b94caa7eeb6ea",
+        "candidateCaseSha256": "e1917a3e0db37b85f280e2f6c5ab3fc200364dfb55c4502f7ffe684e76e8e579"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S10",
+      "caseId": "case.gs028se.one-way-anova-rank-sum.a-four-formats",
+      "nodeId": "node.gs028se.one-way-anova-rank-sum.a-four-formats.1",
+      "questionVariantId": "question.statistics-ethics.one-way-anova.v2.r1",
+      "conceptId": "concept.statistics-ethics.one-way-anova",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "d7f28bb22f68a3ca2987dc4355a1e886e19b17b0228da9991454f647ae8d4045",
+        "candidateQuestionSha256": "738a7c02be8064bbb0a86d5048b91e9da4d28fbdedb7a2fda4bd79aea4169022",
+        "candidateCaseSha256": "98de53563cad8631eab054c07c444df79d6992c9eb51f37ba21d4f335fc40207"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S11",
+      "caseId": "case.gs028se.one-way-anova-rank-sum.a-three-sites",
+      "nodeId": "node.gs028se.one-way-anova-rank-sum.a-three-sites.1",
+      "questionVariantId": "question.statistics-ethics.one-way-anova.v3.r1",
+      "conceptId": "concept.statistics-ethics.one-way-anova",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "2b2f14786037ee185f131a2cf95f8e53c69881a16030556c7b6dd9179bb18a31",
+        "candidateQuestionSha256": "64b30fb09e93239e21879d98711463c5c681d1fc645b656d2fc397dc51ab3063",
+        "candidateCaseSha256": "2ed8f8a307ecc95fd57e4eba05db1a687ba0eac5ea9e6cef1ea8fbd886a972b4"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S12",
+      "caseId": "case.gs028se.one-way-anova-rank-sum.a-five-signs",
+      "nodeId": "node.gs028se.one-way-anova-rank-sum.a-five-signs.1",
+      "questionVariantId": "question.statistics-ethics.one-way-anova.v4.r1",
+      "conceptId": "concept.statistics-ethics.one-way-anova",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "78037b19c08568299bb5e073dcf047672a0b531fe6954660e0682b5829290f94",
+        "candidateQuestionSha256": "9b76ecd3da226e77855b5456d49551e73823354c1f0c543ca81d638a1ee7bcc5",
+        "candidateCaseSha256": "8baf9f698e8cf99dda85d9b398253fcd1b03f93031696af9af42f5908002adcc"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S13",
+      "caseId": "case.gs028se.one-way-anova-rank-sum.b-ordinal-teams",
+      "nodeId": "node.gs028se.one-way-anova-rank-sum.b-ordinal-teams.1",
+      "questionVariantId": "question.statistics-ethics.rank-sum.v1.r1",
+      "conceptId": "concept.statistics-ethics.rank-sum",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "fe14a60d270db2ed47113930a85811449ed288940ac780e6a41befda0effc0bb",
+        "candidateQuestionSha256": "09bd6ee0275ca07cb413971a1529818d56f09fb2940c7a4b66ba85f73854b095",
+        "candidateCaseSha256": "6f221d0ee7eedbb8b6a8e02366fc83d58bf2c3b481fdb2b942908f4d1873459a"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S14",
+      "caseId": "case.gs028se.one-way-anova-rank-sum.b-skewed-delays",
+      "nodeId": "node.gs028se.one-way-anova-rank-sum.b-skewed-delays.1",
+      "questionVariantId": "question.statistics-ethics.rank-sum.v2.r1",
+      "conceptId": "concept.statistics-ethics.rank-sum",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "5429d4c6b52135a2f09fde9f20ec51a9ddd3aad0f56206747098445e3640c256",
+        "candidateQuestionSha256": "105f6d11d6fd329223454b922f024fa157a172a3e11beb9086379462f87fb1c1",
+        "candidateCaseSha256": "311f7a95141a3bf00ac5fe9a68628ffcb357e4fcbccf9642cb99b7b23402084e"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S15",
+      "caseId": "case.gs028se.one-way-anova-rank-sum.b-independent-likert",
+      "nodeId": "node.gs028se.one-way-anova-rank-sum.b-independent-likert.1",
+      "questionVariantId": "question.statistics-ethics.rank-sum.v3.r1",
+      "conceptId": "concept.statistics-ethics.rank-sum",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "43f936122bd7c36e749520473057bed843c590f10f6145bc68847316d3a9950e",
+        "candidateQuestionSha256": "80d76f91a6a2baa7fbc4d236a726ae9767ce79bfbacfffd0beb99f03d5cb7101",
+        "candidateCaseSha256": "d65b3db85f62e521b62a8d778c1aac7ef5b7db7b223d1dbd0a7d1a2c6eb88ed6"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S16",
+      "caseId": "case.gs028se.one-way-anova-rank-sum.b-two-queues",
+      "nodeId": "node.gs028se.one-way-anova-rank-sum.b-two-queues.1",
+      "questionVariantId": "question.statistics-ethics.rank-sum.v4.r1",
+      "conceptId": "concept.statistics-ethics.rank-sum",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "4de36e03fae827faca7a20f386caddad0b72865138e20dc837c7470b9ae9ecbe",
+        "candidateQuestionSha256": "0d6220afdebc1d8f549c4bfc5679a4bbdc77c090439320431d24f129418b531c",
+        "candidateCaseSha256": "fc00e76c89eee36ace91f2fe6f86efcf6311c57f275c310fe5f8d5502ddea285"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S17",
+      "caseId": "case.gs028se.signed-rank-chi-square.a-paired-workload",
+      "nodeId": "node.gs028se.signed-rank-chi-square.a-paired-workload.1",
+      "questionVariantId": "question.statistics-ethics.signed-rank.v1.r1",
+      "conceptId": "concept.statistics-ethics.signed-rank",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "8a8c1d581cd58cb639c65d1e037c90af9a181fa00a6c2b7e3d5eea65f297621f",
+        "candidateQuestionSha256": "0a38ce1c495dd05968bbc03b2a579afcd97f59d992f181b694b4e5830b064d23",
+        "candidateCaseSha256": "0f4c6ec3f6a7afb33013ec22dac7a12ddd227d801de852ea434ffa29186e9919"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S18",
+      "caseId": "case.gs028se.signed-rank-chi-square.a-same-rooms-skewed",
+      "nodeId": "node.gs028se.signed-rank-chi-square.a-same-rooms-skewed.1",
+      "questionVariantId": "question.statistics-ethics.signed-rank.v2.r1",
+      "conceptId": "concept.statistics-ethics.signed-rank",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "b3da4cface31bf813d682b62a829a30c33f21f926792d9a7fa59a70b7971bf4a",
+        "candidateQuestionSha256": "53d412e9a7362a48ac286b1841efcaa3a3b1a459bc4c90682bd172ea92139e72",
+        "candidateCaseSha256": "4c062e0c9a8aa08789c0935e468780670d265f6a140ccd03717a259e1ac2888d"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S19",
+      "caseId": "case.gs028se.signed-rank-chi-square.a-matched-dyads",
+      "nodeId": "node.gs028se.signed-rank-chi-square.a-matched-dyads.1",
+      "questionVariantId": "question.statistics-ethics.signed-rank.v3.r1",
+      "conceptId": "concept.statistics-ethics.signed-rank",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "212fd31ef6a776cc7750aa3f9a497b7616f804095ee83f91a5cd137e48fab387",
+        "candidateQuestionSha256": "00f39d622e0d141db52d446316bf869c99c3217dd2bacbc8c72606b17485e34d",
+        "candidateCaseSha256": "8f706aef8a2c18edf4c2994afb8780d2ac5ca9813f548a7d4ce883bc63abeb1a"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S20",
+      "caseId": "case.gs028se.signed-rank-chi-square.a-pre-post-counts",
+      "nodeId": "node.gs028se.signed-rank-chi-square.a-pre-post-counts.1",
+      "questionVariantId": "question.statistics-ethics.signed-rank.v4.r1",
+      "conceptId": "concept.statistics-ethics.signed-rank",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "25cd51406d905856d9bd40c5ced9a87e49564ec9dbc15538a541440be2af6f03",
+        "candidateQuestionSha256": "95092b725d31bcdda0ab57b1d805251fda238ca5ab10ba7b9b5abdc97eea6ff8",
+        "candidateCaseSha256": "cbaa733262038df32ae737140d16d5e850f950fb84e1a2d3186ee8c750c81bff"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S21",
+      "caseId": "case.gs028se.signed-rank-chi-square.b-role-by-choice",
+      "nodeId": "node.gs028se.signed-rank-chi-square.b-role-by-choice.1",
+      "questionVariantId": "question.statistics-ethics.chi-square.v1.r1",
+      "conceptId": "concept.statistics-ethics.chi-square",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "9eb7e6b8f1e88942b89985e379b857de81f0bce932e0b90e2a7a7d3120abd292",
+        "candidateQuestionSha256": "cdafaf6102a98465900cf3b56b5e2670d70ef3fa235b73959184bc8ffa0a28bc",
+        "candidateCaseSha256": "cd6f7828607db4a411efce90a7da785639b45c93a39afef4fcb980a202e2a5af"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S22",
+      "caseId": "case.gs028se.signed-rank-chi-square.b-shift-by-response",
+      "nodeId": "node.gs028se.signed-rank-chi-square.b-shift-by-response.1",
+      "questionVariantId": "question.statistics-ethics.chi-square.v2.r1",
+      "conceptId": "concept.statistics-ethics.chi-square",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "c6c3e2b3004613066779f3f779c7b18d0c204f85d5b4c2a95643e75611614c25",
+        "candidateQuestionSha256": "f8f98ce1edec731d187656f9176301af0ab2ade0e00a1cfb00a818f720a0f21f",
+        "candidateCaseSha256": "057a11cd954f04fc81fb7864cd2e542fbe8d094af33c7b57868baf8886ae72b0"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S23",
+      "caseId": "case.gs028se.signed-rank-chi-square.b-badge-by-completion",
+      "nodeId": "node.gs028se.signed-rank-chi-square.b-badge-by-completion.1",
+      "questionVariantId": "question.statistics-ethics.chi-square.v3.r1",
+      "conceptId": "concept.statistics-ethics.chi-square",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "a4281b32f9eb417eb939c620e4af3d27fb738c9217d073b1c7f672298d71c2aa",
+        "candidateQuestionSha256": "3f8fd897a0ec5ebb7ac585c1ac0b1b52ffdb6c17d7ca2583b3c55de859475227",
+        "candidateCaseSha256": "ae0e60868bb3859c8bdafefda0d411ce7f2b68539cff47b20def9c2681d8ebd2"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S24",
+      "caseId": "case.gs028se.signed-rank-chi-square.b-site-by-category",
+      "nodeId": "node.gs028se.signed-rank-chi-square.b-site-by-category.1",
+      "questionVariantId": "question.statistics-ethics.chi-square.v4.r1",
+      "conceptId": "concept.statistics-ethics.chi-square",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "8250ddd1cf8182887b0cdc317567e034dbef8badca50cad1ea2a1a2f154521d2",
+        "candidateQuestionSha256": "69afe09977e88c9ba2a558be11f4be266e897ac43cab609c3983013f45f836fa",
+        "candidateCaseSha256": "80d6e8dbc9ab15d3fbf145aff4afea113647eb11b4c55e28ec31bf4e271558a6"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S25",
+      "caseId": "case.gs028se.fisher-exact-study-design.a-rare-event",
+      "nodeId": "node.gs028se.fisher-exact-study-design.a-rare-event.1",
+      "questionVariantId": "question.statistics-ethics.fisher-exact.v1.r1",
+      "conceptId": "concept.statistics-ethics.fisher-exact",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "cb3f2553865b095a53ce00f6e0e36f43ba4ee8cb5b9398558c226bac99692556",
+        "candidateQuestionSha256": "82bab425610fed72676d2e22e41656bd61e1abb1e7cb44a102e6507beea28781",
+        "candidateCaseSha256": "623e667be581f69e0bd19f08c14ab30156b52903ed5dccd88ec6b8ab12dd1e65"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S26",
+      "caseId": "case.gs028se.fisher-exact-study-design.a-tiny-pilot",
+      "nodeId": "node.gs028se.fisher-exact-study-design.a-tiny-pilot.1",
+      "questionVariantId": "question.statistics-ethics.fisher-exact.v2.r4",
+      "conceptId": "concept.statistics-ethics.fisher-exact",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "41bb6f57dc484708b81c24f9583b4a22941470e4908f32388af82f66a4889882",
+        "candidateQuestionSha256": "372eeb726b850149530c60102a46af0a0d90aa244603e4f2ed3d4421a840a5cd",
+        "candidateCaseSha256": "f29d4c9020ecd762c237301561c5f192d08ec724ee3aac7b65794781d101d43e"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S27",
+      "caseId": "case.gs028se.fisher-exact-study-design.a-sparse-exposure",
+      "nodeId": "node.gs028se.fisher-exact-study-design.a-sparse-exposure.1",
+      "questionVariantId": "question.statistics-ethics.fisher-exact.v3.r1",
+      "conceptId": "concept.statistics-ethics.fisher-exact",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "9cb23b7b61ff62a1a479ed94dc5c74253fb1623d829d756c0a4f79929024d461",
+        "candidateQuestionSha256": "4081688ef71701416f332fdba2211be00dde968cd1b9f8d996ea35910a0ccb2e",
+        "candidateCaseSha256": "70c817f27707b5a11ff44a9c3466fa583baf925e383f138009d13e70e234dfd1"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S28",
+      "caseId": "case.gs028se.fisher-exact-study-design.a-small-response",
+      "nodeId": "node.gs028se.fisher-exact-study-design.a-small-response.1",
+      "questionVariantId": "question.statistics-ethics.fisher-exact.v4.r1",
+      "conceptId": "concept.statistics-ethics.fisher-exact",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "b8ff79c2cbb1c9ef1efe74b97d27d72fda54db3950916f963fe61c26a9d0f404",
+        "candidateQuestionSha256": "2ff4cb93ca08b9aa9605e90394f5ac65859387e3add591697494fd527ecc8daa",
+        "candidateCaseSha256": "ffc97487873064ff67934be5c6183bf24ad0245ab8aa8d167b442bafe77a83fb"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S29",
+      "caseId": "case.gs028se.fisher-exact-study-design.b-cohort-followup",
+      "nodeId": "node.gs028se.fisher-exact-study-design.b-cohort-followup.1",
+      "questionVariantId": "question.statistics-ethics.study-design.v1.r1",
+      "conceptId": "concept.statistics-ethics.study-design",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "96ccac948069af942288d67cd061edc3f036ed752cfe074b6a52a37e92ccd1f4",
+        "candidateQuestionSha256": "0e595e3bb2151d163283beb133e6bd67c4d1f44fb0a053e5f77b47c39a691404",
+        "candidateCaseSha256": "31bb4ed5550fe6ae34a7f0d08119d033e47179e57b0d0b73f753bb4ecc7ed862"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S30",
+      "caseId": "case.gs028se.fisher-exact-study-design.b-random-scripts",
+      "nodeId": "node.gs028se.fisher-exact-study-design.b-random-scripts.1",
+      "questionVariantId": "question.statistics-ethics.study-design.v2.r1",
+      "conceptId": "concept.statistics-ethics.study-design",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "0f419b4797bf09492d76c3bcb08d815480c9a7e0ddec3b53ef75ea2bb167c478",
+        "candidateQuestionSha256": "90a41e81864de085102a1f215ed8864b82596fd18708d348b86a893775129a24",
+        "candidateCaseSha256": "a353d852054f745bb3d3eb995c0a9df29927f8465e9832ebcf453a32b1bee58e"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S31",
+      "caseId": "case.gs028se.fisher-exact-study-design.b-case-control",
+      "nodeId": "node.gs028se.fisher-exact-study-design.b-case-control.1",
+      "questionVariantId": "question.statistics-ethics.study-design.v3.r1",
+      "conceptId": "concept.statistics-ethics.study-design",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "12c1caef73bc4d32e966c0cf4a6c29aa40a447cc60247ff204cfa20b5376045e",
+        "candidateQuestionSha256": "ebbf435b5e3dec54225e5446b1b4855eefb923548ab193a50710c02a681adc25",
+        "candidateCaseSha256": "5f88f6d40ed46c661a76d4755629d9cfc03eaa612123ff6c2fc35662789c4963"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S32",
+      "caseId": "case.gs028se.fisher-exact-study-design.b-cross-sectional",
+      "nodeId": "node.gs028se.fisher-exact-study-design.b-cross-sectional.1",
+      "questionVariantId": "question.statistics-ethics.study-design.v4.r1",
+      "conceptId": "concept.statistics-ethics.study-design",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "c5eeae1f338df624ae3059f192df18ec7007358ebcb51e0b7df249be60f94a45",
+        "candidateQuestionSha256": "4cc3b43835511ebbc8dbf45343546e137e991d9dbb3a7e70259f9ce77d1659c3",
+        "candidateCaseSha256": "1270e3d50898b78baf600354bfaded65bb1c61832daabd0c56a6bf0877597d47"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S33",
+      "caseId": "case.gs028se.bias-confounding-sensitivity-specificity.a-baseline-shift",
+      "nodeId": "node.gs028se.bias-confounding-sensitivity-specificity.a-baseline-shift.1",
+      "questionVariantId": "question.statistics-ethics.bias-confounding.v1.r1",
+      "conceptId": "concept.statistics-ethics.bias-confounding",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "40884a14d1154e151b43a549d9efc51b288da0bc08804272e14c69e3320a5d70",
+        "candidateQuestionSha256": "b90cc3e6e6be3b0f853ffdbe31893fbe90c9f0d3eb5dd9460dabcd43f7d5e543",
+        "candidateCaseSha256": "b76734d2f2bd26556f87496bccf5b578342cb45e644f7f1f4fe2b2e3d10d20da"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S34",
+      "caseId": "case.gs028se.bias-confounding-sensitivity-specificity.a-night-excluded",
+      "nodeId": "node.gs028se.bias-confounding-sensitivity-specificity.a-night-excluded.1",
+      "questionVariantId": "question.statistics-ethics.bias-confounding.v2.r1",
+      "conceptId": "concept.statistics-ethics.bias-confounding",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "dc7d864b7017c9cba1da87d3287e5b9bf7bb71975c77b1613ac4dc21a4006622",
+        "candidateQuestionSha256": "633702fe8a7d334108835312cec18e8493619f98d219b8571732b7887f376278",
+        "candidateCaseSha256": "49baab9dceaf65f5c98cd8c65aeea852f5976faa3280616dc982e764ab584eb2"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S35",
+      "caseId": "case.gs028se.bias-confounding-sensitivity-specificity.a-recall-timing",
+      "nodeId": "node.gs028se.bias-confounding-sensitivity-specificity.a-recall-timing.1",
+      "questionVariantId": "question.statistics-ethics.bias-confounding.v3.r1",
+      "conceptId": "concept.statistics-ethics.bias-confounding",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "c2181d8f21b629f9b1c046e17063c801426cb54e71d764a66f95327061bc86fb",
+        "candidateQuestionSha256": "10f0034ee5b0aac31f518107e89a2edf079da1188030673e58c6875840a4ffef",
+        "candidateCaseSha256": "3bd91fa8d5cd347e2ef6e6a10e2f58524d823f63e774eff631bcaf3e13bf398c"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S36",
+      "caseId": "case.gs028se.bias-confounding-sensitivity-specificity.a-adjusted-model",
+      "nodeId": "node.gs028se.bias-confounding-sensitivity-specificity.a-adjusted-model.1",
+      "questionVariantId": "question.statistics-ethics.bias-confounding.v4.r1",
+      "conceptId": "concept.statistics-ethics.bias-confounding",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "4047eeceddc3d15022dab0c5e436c5886d66423a673c6ce880ef79735888f2fe",
+        "candidateQuestionSha256": "afda3f3f7ab1069bb7713374354ebcd76e888d69ed0b9e31710d414c5f278654",
+        "candidateCaseSha256": "1ea1bd291f0eb1fbb2cf2fef633341c7ebfd74768d14207c18feb3dd34ed88e2"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S37",
+      "caseId": "case.gs028se.bias-confounding-sensitivity-specificity.b-sensitivity-90",
+      "nodeId": "node.gs028se.bias-confounding-sensitivity-specificity.b-sensitivity-90.1",
+      "questionVariantId": "question.statistics-ethics.sensitivity-specificity.v1.r1",
+      "conceptId": "concept.statistics-ethics.sensitivity-specificity",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "71893824d3cb29364e85fa01d573480a3becf7f7c0326f578fc6d41c1c88aced",
+        "candidateQuestionSha256": "26a1bc2c54c674c041f23f4fbb71cba8930319b146f6ca2ac50875952131fa8a",
+        "candidateCaseSha256": "c517661534556efc76e54c7763e7cae3bdd9f5dc765552834d9997d5ffdc20c3"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S38",
+      "caseId": "case.gs028se.bias-confounding-sensitivity-specificity.b-specificity-95",
+      "nodeId": "node.gs028se.bias-confounding-sensitivity-specificity.b-specificity-95.1",
+      "questionVariantId": "question.statistics-ethics.sensitivity-specificity.v2.r1",
+      "conceptId": "concept.statistics-ethics.sensitivity-specificity",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "55779849b10426eb169f362b578b791fd47dffd9ea06c15139452f96a6c380e7",
+        "candidateQuestionSha256": "e3cca29dd79cbbc9906a887fc6ad6da1495abeefe0fa4632b804608655103457",
+        "candidateCaseSha256": "ff9b38856bdded2e1d3731d50822411d8b2b369166cfd151d46174ae03757b06"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S39",
+      "caseId": "case.gs028se.bias-confounding-sensitivity-specificity.b-sensitivity-80",
+      "nodeId": "node.gs028se.bias-confounding-sensitivity-specificity.b-sensitivity-80.1",
+      "questionVariantId": "question.statistics-ethics.sensitivity-specificity.v3.r1",
+      "conceptId": "concept.statistics-ethics.sensitivity-specificity",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "29128481a101285a8fd4d47c245126b3dd9d4bdce16390b9bc82cfb25d1c119f",
+        "candidateQuestionSha256": "81fc0238d276f33a598790425401ef725771de775829db77b306fba2cc242f33",
+        "candidateCaseSha256": "e01ee81301193667ff22813a768ed269cbf0754e24989a44328a877857bfa865"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S40",
+      "caseId": "case.gs028se.bias-confounding-sensitivity-specificity.b-specificity-70",
+      "nodeId": "node.gs028se.bias-confounding-sensitivity-specificity.b-specificity-70.1",
+      "questionVariantId": "question.statistics-ethics.sensitivity-specificity.v4.r1",
+      "conceptId": "concept.statistics-ethics.sensitivity-specificity",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "9f5bab36a71c2880611ecc5f2053019ad45367af7c57af2f90b7e0e0c374bd53",
+        "candidateQuestionSha256": "04aa729379041ec44ecf5154aacc3222c88776bcfbecf4b20e54c84449b082b3",
+        "candidateCaseSha256": "9ebd463432a010f73daaf6e2cd5e0586fad7af81933af5a6f6233c4f2927f5c7"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S41",
+      "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-higher-prevalence",
+      "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-higher-prevalence.1",
+      "questionVariantId": "question.statistics-ethics.predictive-value-prevalence.v1.r1",
+      "conceptId": "concept.statistics-ethics.predictive-value-prevalence",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "59fa9bd1f2c3c195b8d8f9d26b7633d35c190af936e713c69aa2845a84ce0164",
+        "candidateQuestionSha256": "7f1b5151b365ae340521e72e9a0b6885f127a6ff8506f4e3050dbbf93a8dfd89",
+        "candidateCaseSha256": "5b203c4e9a7549e6c32ff1df4de1ba0f121c2eebceda06a29336dba380109f1e"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S42",
+      "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-lower-prevalence",
+      "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-lower-prevalence.1",
+      "questionVariantId": "question.statistics-ethics.predictive-value-prevalence.v2.r2",
+      "conceptId": "concept.predictive-value.collection-population-denominator.v1",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [
+        "G06"
+      ],
+      "frozenPreservation": {
+        "candidateNodeSha256": "3222f093b832f809e3bd08a7cf0fda0f4d98a5dd15d28d56122d7ff0a205b258",
+        "candidateQuestionSha256": "eca8b2a09eb8d8c35e71a91c2519aa6dd782360e504cda3d6cd7741755af6649",
+        "candidateCaseSha256": "1fc97e549efea5306aad6f0dc51363bf29d133efa0a8b9b41a1f31d0916ab7e4"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S43",
+      "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-ppv-table",
+      "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-ppv-table.1",
+      "questionVariantId": "question.statistics-ethics.predictive-value-prevalence.v3.r1",
+      "conceptId": "concept.statistics-ethics.predictive-value-prevalence",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "ba96522cd2b97f18337d2b535a3ca2c4451afd2db49f3ef42c25a0b2440ced8e",
+        "candidateQuestionSha256": "f19408dd31403054fb46ec4d3e5c55a99442af1be3337218562ba4a718759f7e",
+        "candidateCaseSha256": "ad4b43db7e553b5521a11857a8b86a46bdd89c17b0686f638ad198505da9da96"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S44",
+      "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-characteristics-fixed",
+      "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-characteristics-fixed.1",
+      "questionVariantId": "question.statistics-ethics.predictive-value-prevalence.v4.r2",
+      "conceptId": "concept.statistics-ethics.predictive-value-prevalence",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [
+        "F3-01"
+      ],
+      "frozenPreservation": {
+        "candidateNodeSha256": "ff0519745481d8517c9f16454771b911278657b700320c18a252e31e7cb12aee",
+        "candidateQuestionSha256": "b58e481adc9b65aad6c6087e85da55a590a8326ceb15606d8c6c4fbf8c6033ed",
+        "candidateCaseSha256": "25f2d7edcd72652cd4e89d7e87f89e21d63cd20c77c99ce59ebe547996bd6e0e"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S45",
+      "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-cohort-risk",
+      "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-cohort-risk.1",
+      "questionVariantId": "question.statistics-ethics.risk-ratio-odds-ratio.v1.r1",
+      "conceptId": "concept.statistics-ethics.risk-ratio-odds-ratio",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "5b503a37af98b442203110d43c1b74ceebafc9e71367ec86689d7c473c01b6c2",
+        "candidateQuestionSha256": "18920bec0c9764f3df793c7dab668f23c38a36d5224a800c5d70c2671b841321",
+        "candidateCaseSha256": "de5d779a7db7613b360e0b629a628748d87b7fb6445781aa5c1ada98cf01c54a"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S46",
+      "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-case-control-or",
+      "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-case-control-or.1",
+      "questionVariantId": "question.statistics-ethics.risk-ratio-odds-ratio.v2.r1",
+      "conceptId": "concept.statistics-ethics.risk-ratio-odds-ratio",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "25cc36413863b84bbb411a746d7098eaea28e1a691a245d2417dbe46f5628483",
+        "candidateQuestionSha256": "da01c44eee43313d67e754ecbb76673d934aac0c604e81dc6462a6ef792737bc",
+        "candidateCaseSha256": "f0e075cd11018c43ed02084816c7b5a8127a2d8a56623fa0564fe98e9d85fa1e"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S47",
+      "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-adjusted-odds",
+      "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-adjusted-odds.1",
+      "questionVariantId": "question.statistics-ethics.risk-ratio-odds-ratio.v3.r4",
+      "conceptId": "concept.statistics-ethics.risk-ratio-odds-ratio",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "1ca982b15e76b09c02a631d818943e3978a81efd4fd6bec0dbcb55fb3536bf68",
+        "candidateQuestionSha256": "b5a499527fcde09a4a0f48c27a2fe65bb03d462a54a0c50db7224c2dd07d98de",
+        "candidateCaseSha256": "97cca51e0c54a3cb753777b65d99e3b2dbe4e8bd12486065411eda23c3cd5da2"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S48",
+      "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-rare-not-identical",
+      "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-rare-not-identical.1",
+      "questionVariantId": "question.statistics-ethics.risk-ratio-odds-ratio.v4.r4",
+      "conceptId": "concept.statistics-ethics.risk-ratio-odds-ratio",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "8e7dce837c9a8934e1c0607eeda78e82f6e0dcc00c142cfd13fc562fb521454f",
+        "candidateQuestionSha256": "dac81f552c8d78f0d50862baa988c4dc641798a96141848557a5456cc9eff953",
+        "candidateCaseSha256": "8435cf1e96080029f3212c7f409d1af01b99c2108cc5d6acc72ff37bbffe893b"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S49",
+      "caseId": "case.gs028se.arr-nnt-p-value.a-arr-ten",
+      "nodeId": "node.gs028se.arr-nnt-p-value.a-arr-ten.1",
+      "questionVariantId": "question.statistics-ethics.arr-nnt.v1.r1",
+      "conceptId": "concept.statistics-ethics.arr-nnt",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "9aaff60f3dbbe772c5c0d8e72b161ea6d2c6eb79cda53e26f05c6c09271656ea",
+        "candidateQuestionSha256": "bc19de4ad6f9da9dca06968e3ab38ecb6aec86f0b12a968fa0dac405f328f0ca",
+        "candidateCaseSha256": "ac47c3e456f8dcc9b161ab4e97ca6fc1c4171a38772b912fee78f19b591e8fb2"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S50",
+      "caseId": "case.gs028se.arr-nnt-p-value.a-arr-five",
+      "nodeId": "node.gs028se.arr-nnt-p-value.a-arr-five.1",
+      "questionVariantId": "question.statistics-ethics.arr-nnt.v2.r1",
+      "conceptId": "concept.statistics-ethics.arr-nnt",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "1c6330cf7a02ac6000d02315afaaabfbdd76c778dbcc9680d3359cf4d1e3847f",
+        "candidateQuestionSha256": "4a15650bc8c344d99e25a5dc9bd010753a58da3ce32262bb4b59d6381ceee0c8",
+        "candidateCaseSha256": "69ac01efd51093188a7daf9e3790fefdaeaec1d7e6c42a12f9b8ca6b73625746"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S51",
+      "caseId": "case.gs028se.arr-nnt-p-value.a-arr-twenty",
+      "nodeId": "node.gs028se.arr-nnt-p-value.a-arr-twenty.1",
+      "questionVariantId": "question.statistics-ethics.arr-nnt.v3.r1",
+      "conceptId": "concept.statistics-ethics.arr-nnt",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "c0b10b835dac7e4ae60c091e38fcaa3dc5cc7ce67f250ee2b03127f917107bb6",
+        "candidateQuestionSha256": "2d527177652af60c46444c9c9be29e770c64531b9e34cd6c4f4c9f7d409d4f93",
+        "candidateCaseSha256": "6fc40288f0cf9580ef36511ec9a56d6f15dea5f46de6decacb97ef1e23503d05"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S52",
+      "caseId": "case.gs028se.arr-nnt-p-value.a-arr-six",
+      "nodeId": "node.gs028se.arr-nnt-p-value.a-arr-six.1",
+      "questionVariantId": "question.statistics-ethics.arr-nnt.v4.r1",
+      "conceptId": "concept.statistics-ethics.arr-nnt",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "a7826a5aa495992a8035244831a4708bc5ffe8a842606b368994b4ac7271d4f0",
+        "candidateQuestionSha256": "e51ed4c6610cfe6eae0d8b3ef24c93dfc0b9a6956fbb460ec7713dbfd8fc1d6c",
+        "candidateCaseSha256": "c51602d056791cc2c7df92e7a1fd28a93cd6b712a91844a84ca1ba9e0fe86af9"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S53",
+      "caseId": "case.gs028se.arr-nnt-p-value.b-p-003",
+      "nodeId": "node.gs028se.arr-nnt-p-value.b-p-003.1",
+      "questionVariantId": "question.statistics-ethics.p-value.v1.r5",
+      "conceptId": "concept.statistics-ethics.p-value",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "d632ac479ffc7836555ccfb871dadefeafafcef3e84314ab7ef37287989d72d7",
+        "candidateQuestionSha256": "a3890620db681dc0c131508827bfcff849db36a6817bed6883ea7480233bcc0e",
+        "candidateCaseSha256": "b1953882915959ee113cce23415a921b4e5d554fc9b465c462fa91f96a61ed1d"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S54",
+      "caseId": "case.gs028se.arr-nnt-p-value.b-p-040",
+      "nodeId": "node.gs028se.arr-nnt-p-value.b-p-040.1",
+      "questionVariantId": "question.statistics-ethics.p-value.v2.r7",
+      "conceptId": "concept.statistics-ethics.p-value.v2",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "73589b1f4c993058e4f8df4134c276b301e3c1e38ec258de1d8c0dc8df13cda2",
+        "candidateQuestionSha256": "9f19e7084fae130ebe34d2f5da57bb8135db58004dfd1b8a31f151e773a5a134",
+        "candidateCaseSha256": "f8191cf19ed96fd80a39d0eaeae03082ecb5f52b87d9bf7845eba0dc8cd88e50"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S55",
+      "caseId": "case.gs028se.arr-nnt-p-value.b-p-0001",
+      "nodeId": "node.gs028se.arr-nnt-p-value.b-p-0001.1",
+      "questionVariantId": "question.statistics-ethics.p-value.v3.r5",
+      "conceptId": "concept.statistics-ethics.p-value",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "af5dc603cc848d6e3e535faf1ded1b6d32c822afad2ec03671f15f2f60fbf671",
+        "candidateQuestionSha256": "9e9f4e5659173e42b27dea60110673b8128b4f62ccb73c556dc8f5e4140ab3ad",
+        "candidateCaseSha256": "c06f117053a3a98261ff2944e05d226a0a4d967f4fb5d052be3c98d3ab4263a4"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S56",
+      "caseId": "case.gs028se.arr-nnt-p-value.b-p-008",
+      "nodeId": "node.gs028se.arr-nnt-p-value.b-p-008.1",
+      "questionVariantId": "question.statistics-ethics.p-value.v4.r4",
+      "conceptId": "concept.statistics-ethics.p-value",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "b14fb4c9213fcc82ea71871f1e95c4166bfaff66e82af6ad0ae2190b6290781c",
+        "candidateQuestionSha256": "6c2c4b3f52fe89f13946fdde6a20860291c2154b64e5519bc1aebf6a5767fb02",
+        "candidateCaseSha256": "9f4b4cac5139b2007895d1ed27ee2d6590cb8d124c69c80823e8381ec81df89e"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S57",
+      "caseId": "case.gs028se.confidence-interval-errors-power.a-ratio-crosses",
+      "nodeId": "node.gs028se.confidence-interval-errors-power.a-ratio-crosses.1",
+      "questionVariantId": "question.statistics-ethics.confidence-interval.v1.r4",
+      "conceptId": "concept.statistics-ethics.confidence-interval",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "235bb51105e77ebb0a4f54bef122dd678d494172b4e84a7e5890e396a7fbf10e",
+        "candidateQuestionSha256": "388f814266459c267af2f98e80dcaddc3bd5ee610efe50c03bdb9195106ed7c3",
+        "candidateCaseSha256": "2c0a1f53065565ece9444de52f60953b3977c08b4b1075e51b6278125e3e087f"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S58",
+      "caseId": "case.gs028se.confidence-interval-errors-power.a-difference-excludes",
+      "nodeId": "node.gs028se.confidence-interval-errors-power.a-difference-excludes.1",
+      "questionVariantId": "question.statistics-ethics.confidence-interval.v2.r1",
+      "conceptId": "concept.statistics-ethics.confidence-interval",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "54cefcf80fc5a2b1ba4358556c4c0ba153219d308d6bd33afcb439168bf29127",
+        "candidateQuestionSha256": "9b5b785cb5cf690bd30987c81401235807b90aee99239f1ac7eae3ae8b509540",
+        "candidateCaseSha256": "d3b0f96019d613277f66ea461c91cfbd7bc6370ddfe5b5f99aceeb120e80392f"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S59",
+      "caseId": "case.gs028se.confidence-interval-errors-power.a-precision-width",
+      "nodeId": "node.gs028se.confidence-interval-errors-power.a-precision-width.1",
+      "questionVariantId": "question.statistics-ethics.confidence-interval.v3.r1",
+      "conceptId": "concept.statistics-ethics.confidence-interval",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "2b881432f472e17782d3848abb0ebe2a1908a2e3459a2b3a7a5090b14f2d7c7f",
+        "candidateQuestionSha256": "7abb43c6433bfd6e7e77e2fe5ae9a8fdd75e0ade35f440435a845d9c36c5d9db",
+        "candidateCaseSha256": "204565766abed7e4901f96069e977a4dcaa458e3845f5135489b7f3471cd1e75"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S60",
+      "caseId": "case.gs028se.confidence-interval-errors-power.a-repeated-sampling",
+      "nodeId": "node.gs028se.confidence-interval-errors-power.a-repeated-sampling.1",
+      "questionVariantId": "question.statistics-ethics.confidence-interval.v4.r1",
+      "conceptId": "concept.statistics-ethics.confidence-interval",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "0439e8361d7124fe4d1789332854f50883feb65f31d908204782a736f45c30aa",
+        "candidateQuestionSha256": "31771184195c0d5aae2fee3cf05dc6b64b9764f3e7f85a08cd679fbc82b32b32",
+        "candidateCaseSha256": "e2074091053d6dab82e344af43eed15abd5db3ddccf83234453752586b6eba2f"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S61",
+      "caseId": "case.gs028se.confidence-interval-errors-power.b-type-one",
+      "nodeId": "node.gs028se.confidence-interval-errors-power.b-type-one.1",
+      "questionVariantId": "question.statistics-ethics.errors-power.v1.r1",
+      "conceptId": "concept.statistics-ethics.errors-power",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "63741b1e507227ecc9fd922883cb2d4fcb6d373daacc6019e3f8d9cba0f1f5fe",
+        "candidateQuestionSha256": "e0883d8a153fedb3dfea48c640c4c30ea71cc3e16067849f87b11a85b61b9d9c",
+        "candidateCaseSha256": "ce9a34a831c58995fc1cde782a34840b1e688d92dc02d76961b05f4f874596b6"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S62",
+      "caseId": "case.gs028se.confidence-interval-errors-power.b-type-two",
+      "nodeId": "node.gs028se.confidence-interval-errors-power.b-type-two.1",
+      "questionVariantId": "question.statistics-ethics.errors-power.v2.r1",
+      "conceptId": "concept.statistics-ethics.errors-power",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "8788e6c2aaf64f99ec93e0ec7b4e1df18cce899efe9c904c95f91020ba75565e",
+        "candidateQuestionSha256": "524562b37061d632c0267ef0414a9b5f04694f10fd52bd4d8425c9920acbce2f",
+        "candidateCaseSha256": "3d6e1ddbaf506175cde4a80d4544f53de9759938b99c5862e827984163149539"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S63",
+      "caseId": "case.gs028se.confidence-interval-errors-power.b-power",
+      "nodeId": "node.gs028se.confidence-interval-errors-power.b-power.1",
+      "questionVariantId": "question.statistics-ethics.errors-power.v3.r1",
+      "conceptId": "concept.statistics-ethics.errors-power",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "366743470ae1a875f92f1deaa42199763fc4356adf24e7688d0ba54a7a9601c5",
+        "candidateQuestionSha256": "4480eff4a57bff2aaf9aab0ccfcdcd326749180835c099f16eadb2fdf94b9c52",
+        "candidateCaseSha256": "509fa030def3204f5aa7f7a95cf38ba7aa345437d1927676ec0764498ab1107f"
+      },
+      "reviewStatus": "needs_clinician_review"
+    },
+    {
+      "acceptanceId": "S64",
+      "caseId": "case.gs028se.confidence-interval-errors-power.b-post-hoc",
+      "nodeId": "node.gs028se.confidence-interval-errors-power.b-post-hoc.1",
+      "questionVariantId": "question.statistics-ethics.errors-power.v4.r1",
+      "conceptId": "concept.statistics-ethics.errors-power",
+      "sourceView": "stats1-round1",
+      "acceptanceWritten": false,
+      "requiredHeaderSource": "stats1-round1",
+      "wholeCaseReplacementRequired": false,
+      "decisionDocument": "Manager decision after independent review; no acceptance row has been written.",
+      "supersedesAcceptanceIds": [],
+      "frozenPreservation": {
+        "candidateNodeSha256": "f39a4575e6c466ced38473aef95651cb38046cff0858eb46487f424239478b66",
+        "candidateQuestionSha256": "7c7a5753ec6cfd01fd5a37ee3a15d4e1168223918fc794e311eb619299156a29",
+        "candidateCaseSha256": "c95a0661cc32bc00bef708419dd8d1ea8d8e0528f1297aaca1356f97fdbf11c9"
+      },
+      "reviewStatus": "needs_clinician_review"
+    }
+  ],
+  "timing": [
+    {
+      "caseId": "case.gs028se.independent-t-paired-t.a-two-teams",
+      "nodeId": "node.gs028se.independent-t-paired-t.a-two-teams.1",
+      "questionVariantId": "question.statistics-ethics.independent-t.v1.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.independent-t-paired-t.a-two-cohorts",
+      "nodeId": "node.gs028se.independent-t-paired-t.a-two-cohorts.1",
+      "questionVariantId": "question.statistics-ethics.independent-t.v2.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.independent-t-paired-t.a-two-shifts",
+      "nodeId": "node.gs028se.independent-t-paired-t.a-two-shifts.1",
+      "questionVariantId": "question.statistics-ethics.independent-t.v3.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.independent-t-paired-t.a-two-scripts",
+      "nodeId": "node.gs028se.independent-t-paired-t.a-two-scripts.1",
+      "questionVariantId": "question.statistics-ethics.independent-t.v4.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.independent-t-paired-t.b-same-rooms",
+      "nodeId": "node.gs028se.independent-t-paired-t.b-same-rooms.1",
+      "questionVariantId": "question.statistics-ethics.paired-t.v1.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.independent-t-paired-t.b-same-trainees",
+      "nodeId": "node.gs028se.independent-t-paired-t.b-same-trainees.1",
+      "questionVariantId": "question.statistics-ethics.paired-t.v2.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.independent-t-paired-t.b-matched-sites",
+      "nodeId": "node.gs028se.independent-t-paired-t.b-matched-sites.1",
+      "questionVariantId": "question.statistics-ethics.paired-t.v3.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.independent-t-paired-t.b-same-workers",
+      "nodeId": "node.gs028se.independent-t-paired-t.b-same-workers.1",
+      "questionVariantId": "question.statistics-ethics.paired-t.v4.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.one-way-anova-rank-sum.a-three-teams",
+      "nodeId": "node.gs028se.one-way-anova-rank-sum.a-three-teams.1",
+      "questionVariantId": "question.statistics-ethics.one-way-anova.v1.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.one-way-anova-rank-sum.a-four-formats",
+      "nodeId": "node.gs028se.one-way-anova-rank-sum.a-four-formats.1",
+      "questionVariantId": "question.statistics-ethics.one-way-anova.v2.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.one-way-anova-rank-sum.a-three-sites",
+      "nodeId": "node.gs028se.one-way-anova-rank-sum.a-three-sites.1",
+      "questionVariantId": "question.statistics-ethics.one-way-anova.v3.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.one-way-anova-rank-sum.a-five-signs",
+      "nodeId": "node.gs028se.one-way-anova-rank-sum.a-five-signs.1",
+      "questionVariantId": "question.statistics-ethics.one-way-anova.v4.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.one-way-anova-rank-sum.b-ordinal-teams",
+      "nodeId": "node.gs028se.one-way-anova-rank-sum.b-ordinal-teams.1",
+      "questionVariantId": "question.statistics-ethics.rank-sum.v1.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.one-way-anova-rank-sum.b-skewed-delays",
+      "nodeId": "node.gs028se.one-way-anova-rank-sum.b-skewed-delays.1",
+      "questionVariantId": "question.statistics-ethics.rank-sum.v2.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.one-way-anova-rank-sum.b-independent-likert",
+      "nodeId": "node.gs028se.one-way-anova-rank-sum.b-independent-likert.1",
+      "questionVariantId": "question.statistics-ethics.rank-sum.v3.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.one-way-anova-rank-sum.b-two-queues",
+      "nodeId": "node.gs028se.one-way-anova-rank-sum.b-two-queues.1",
+      "questionVariantId": "question.statistics-ethics.rank-sum.v4.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.signed-rank-chi-square.a-paired-workload",
+      "nodeId": "node.gs028se.signed-rank-chi-square.a-paired-workload.1",
+      "questionVariantId": "question.statistics-ethics.signed-rank.v1.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.signed-rank-chi-square.a-same-rooms-skewed",
+      "nodeId": "node.gs028se.signed-rank-chi-square.a-same-rooms-skewed.1",
+      "questionVariantId": "question.statistics-ethics.signed-rank.v2.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.signed-rank-chi-square.a-matched-dyads",
+      "nodeId": "node.gs028se.signed-rank-chi-square.a-matched-dyads.1",
+      "questionVariantId": "question.statistics-ethics.signed-rank.v3.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.signed-rank-chi-square.a-pre-post-counts",
+      "nodeId": "node.gs028se.signed-rank-chi-square.a-pre-post-counts.1",
+      "questionVariantId": "question.statistics-ethics.signed-rank.v4.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.signed-rank-chi-square.b-role-by-choice",
+      "nodeId": "node.gs028se.signed-rank-chi-square.b-role-by-choice.1",
+      "questionVariantId": "question.statistics-ethics.chi-square.v1.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.signed-rank-chi-square.b-shift-by-response",
+      "nodeId": "node.gs028se.signed-rank-chi-square.b-shift-by-response.1",
+      "questionVariantId": "question.statistics-ethics.chi-square.v2.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.signed-rank-chi-square.b-badge-by-completion",
+      "nodeId": "node.gs028se.signed-rank-chi-square.b-badge-by-completion.1",
+      "questionVariantId": "question.statistics-ethics.chi-square.v3.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.signed-rank-chi-square.b-site-by-category",
+      "nodeId": "node.gs028se.signed-rank-chi-square.b-site-by-category.1",
+      "questionVariantId": "question.statistics-ethics.chi-square.v4.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.fisher-exact-study-design.a-rare-event",
+      "nodeId": "node.gs028se.fisher-exact-study-design.a-rare-event.1",
+      "questionVariantId": "question.statistics-ethics.fisher-exact.v1.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.fisher-exact-study-design.a-tiny-pilot",
+      "nodeId": "node.gs028se.fisher-exact-study-design.a-tiny-pilot.1",
+      "questionVariantId": "question.statistics-ethics.fisher-exact.v2.r4",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.fisher-exact-study-design.a-sparse-exposure",
+      "nodeId": "node.gs028se.fisher-exact-study-design.a-sparse-exposure.1",
+      "questionVariantId": "question.statistics-ethics.fisher-exact.v3.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.fisher-exact-study-design.a-small-response",
+      "nodeId": "node.gs028se.fisher-exact-study-design.a-small-response.1",
+      "questionVariantId": "question.statistics-ethics.fisher-exact.v4.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.fisher-exact-study-design.b-cohort-followup",
+      "nodeId": "node.gs028se.fisher-exact-study-design.b-cohort-followup.1",
+      "questionVariantId": "question.statistics-ethics.study-design.v1.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.fisher-exact-study-design.b-random-scripts",
+      "nodeId": "node.gs028se.fisher-exact-study-design.b-random-scripts.1",
+      "questionVariantId": "question.statistics-ethics.study-design.v2.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.fisher-exact-study-design.b-case-control",
+      "nodeId": "node.gs028se.fisher-exact-study-design.b-case-control.1",
+      "questionVariantId": "question.statistics-ethics.study-design.v3.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.fisher-exact-study-design.b-cross-sectional",
+      "nodeId": "node.gs028se.fisher-exact-study-design.b-cross-sectional.1",
+      "questionVariantId": "question.statistics-ethics.study-design.v4.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.bias-confounding-sensitivity-specificity.a-baseline-shift",
+      "nodeId": "node.gs028se.bias-confounding-sensitivity-specificity.a-baseline-shift.1",
+      "questionVariantId": "question.statistics-ethics.bias-confounding.v1.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.bias-confounding-sensitivity-specificity.a-night-excluded",
+      "nodeId": "node.gs028se.bias-confounding-sensitivity-specificity.a-night-excluded.1",
+      "questionVariantId": "question.statistics-ethics.bias-confounding.v2.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.bias-confounding-sensitivity-specificity.a-recall-timing",
+      "nodeId": "node.gs028se.bias-confounding-sensitivity-specificity.a-recall-timing.1",
+      "questionVariantId": "question.statistics-ethics.bias-confounding.v3.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.bias-confounding-sensitivity-specificity.a-adjusted-model",
+      "nodeId": "node.gs028se.bias-confounding-sensitivity-specificity.a-adjusted-model.1",
+      "questionVariantId": "question.statistics-ethics.bias-confounding.v4.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.bias-confounding-sensitivity-specificity.b-sensitivity-90",
+      "nodeId": "node.gs028se.bias-confounding-sensitivity-specificity.b-sensitivity-90.1",
+      "questionVariantId": "question.statistics-ethics.sensitivity-specificity.v1.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.bias-confounding-sensitivity-specificity.b-specificity-95",
+      "nodeId": "node.gs028se.bias-confounding-sensitivity-specificity.b-specificity-95.1",
+      "questionVariantId": "question.statistics-ethics.sensitivity-specificity.v2.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.bias-confounding-sensitivity-specificity.b-sensitivity-80",
+      "nodeId": "node.gs028se.bias-confounding-sensitivity-specificity.b-sensitivity-80.1",
+      "questionVariantId": "question.statistics-ethics.sensitivity-specificity.v3.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.bias-confounding-sensitivity-specificity.b-specificity-70",
+      "nodeId": "node.gs028se.bias-confounding-sensitivity-specificity.b-specificity-70.1",
+      "questionVariantId": "question.statistics-ethics.sensitivity-specificity.v4.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-higher-prevalence",
+      "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-higher-prevalence.1",
+      "questionVariantId": "question.statistics-ethics.predictive-value-prevalence.v1.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-lower-prevalence",
+      "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-lower-prevalence.1",
+      "questionVariantId": "question.statistics-ethics.predictive-value-prevalence.v2.r2",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-ppv-table",
+      "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-ppv-table.1",
+      "questionVariantId": "question.statistics-ethics.predictive-value-prevalence.v3.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-characteristics-fixed",
+      "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.a-characteristics-fixed.1",
+      "questionVariantId": "question.statistics-ethics.predictive-value-prevalence.v4.r2",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-cohort-risk",
+      "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-cohort-risk.1",
+      "questionVariantId": "question.statistics-ethics.risk-ratio-odds-ratio.v1.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-case-control-or",
+      "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-case-control-or.1",
+      "questionVariantId": "question.statistics-ethics.risk-ratio-odds-ratio.v2.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-adjusted-odds",
+      "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-adjusted-odds.1",
+      "questionVariantId": "question.statistics-ethics.risk-ratio-odds-ratio.v3.r4",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-rare-not-identical",
+      "nodeId": "node.gs028se.predictive-value-prevalence-risk-ratio-odds-ratio.b-rare-not-identical.1",
+      "questionVariantId": "question.statistics-ethics.risk-ratio-odds-ratio.v4.r4",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.arr-nnt-p-value.a-arr-ten",
+      "nodeId": "node.gs028se.arr-nnt-p-value.a-arr-ten.1",
+      "questionVariantId": "question.statistics-ethics.arr-nnt.v1.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.arr-nnt-p-value.a-arr-five",
+      "nodeId": "node.gs028se.arr-nnt-p-value.a-arr-five.1",
+      "questionVariantId": "question.statistics-ethics.arr-nnt.v2.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.arr-nnt-p-value.a-arr-twenty",
+      "nodeId": "node.gs028se.arr-nnt-p-value.a-arr-twenty.1",
+      "questionVariantId": "question.statistics-ethics.arr-nnt.v3.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.arr-nnt-p-value.a-arr-six",
+      "nodeId": "node.gs028se.arr-nnt-p-value.a-arr-six.1",
+      "questionVariantId": "question.statistics-ethics.arr-nnt.v4.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.arr-nnt-p-value.b-p-003",
+      "nodeId": "node.gs028se.arr-nnt-p-value.b-p-003.1",
+      "questionVariantId": "question.statistics-ethics.p-value.v1.r5",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.arr-nnt-p-value.b-p-040",
+      "nodeId": "node.gs028se.arr-nnt-p-value.b-p-040.1",
+      "questionVariantId": "question.statistics-ethics.p-value.v2.r7",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.arr-nnt-p-value.b-p-0001",
+      "nodeId": "node.gs028se.arr-nnt-p-value.b-p-0001.1",
+      "questionVariantId": "question.statistics-ethics.p-value.v3.r5",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.arr-nnt-p-value.b-p-008",
+      "nodeId": "node.gs028se.arr-nnt-p-value.b-p-008.1",
+      "questionVariantId": "question.statistics-ethics.p-value.v4.r4",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.confidence-interval-errors-power.a-ratio-crosses",
+      "nodeId": "node.gs028se.confidence-interval-errors-power.a-ratio-crosses.1",
+      "questionVariantId": "question.statistics-ethics.confidence-interval.v1.r4",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.confidence-interval-errors-power.a-difference-excludes",
+      "nodeId": "node.gs028se.confidence-interval-errors-power.a-difference-excludes.1",
+      "questionVariantId": "question.statistics-ethics.confidence-interval.v2.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.confidence-interval-errors-power.a-precision-width",
+      "nodeId": "node.gs028se.confidence-interval-errors-power.a-precision-width.1",
+      "questionVariantId": "question.statistics-ethics.confidence-interval.v3.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.confidence-interval-errors-power.a-repeated-sampling",
+      "nodeId": "node.gs028se.confidence-interval-errors-power.a-repeated-sampling.1",
+      "questionVariantId": "question.statistics-ethics.confidence-interval.v4.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.confidence-interval-errors-power.b-type-one",
+      "nodeId": "node.gs028se.confidence-interval-errors-power.b-type-one.1",
+      "questionVariantId": "question.statistics-ethics.errors-power.v1.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.confidence-interval-errors-power.b-type-two",
+      "nodeId": "node.gs028se.confidence-interval-errors-power.b-type-two.1",
+      "questionVariantId": "question.statistics-ethics.errors-power.v2.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.confidence-interval-errors-power.b-power",
+      "nodeId": "node.gs028se.confidence-interval-errors-power.b-power.1",
+      "questionVariantId": "question.statistics-ethics.errors-power.v3.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    },
+    {
+      "caseId": "case.gs028se.confidence-interval-errors-power.b-post-hoc",
+      "nodeId": "node.gs028se.confidence-interval-errors-power.b-post-hoc.1",
+      "questionVariantId": "question.statistics-ethics.errors-power.v4.r1",
+      "classification": {
+        "kind": "no_test"
+      }
+    }
+  ],
+  "concepts": {
+    "stable": 18,
+    "newIds": [],
+    "meaningNotes": [
+      {
+        "id": "S42",
+        "conceptId": "concept.predictive-value.collection-population-denominator.v1",
+        "reason": "Same collection-population and positive-result denominator objective. Retain the collection-before-transfer discriminator; remove the clinical backstory and extra calculations."
+      },
+      {
+        "id": "S54",
+        "conceptId": "concept.statistics-ethics.p-value.v2",
+        "reason": "Same target-benefit interval classification objective. Retain the effect interval and stated target; remove the redundant null-test report and downstream study-plan choice. The card is not reassigned to generic p-value recall."
+      }
+    ]
+  }
+}

@@ -1,0 +1,600 @@
+[
+  {
+    "id": "question.topic.breast-benign-high-risk.solid-target-core.v1",
+    "nodeId": "node.topic.breast-benign-high-risk.solid-target-core.v1",
+    "title": "Representative sampling of an irregular solid breast mass",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Ultrasound-guided core biopsy is the best offered next acquisition; the fat-only aspirate does not resolve the irregular solid target. Open excision is a possible later diagnostic route, but no reason to bypass core is supplied.",
+      "Deleting the needle/cytology exhibit still leaves the standard solid-mass core-biopsy answer. The intended sampling-adequacy inference does not materially change the offered decision.",
+      "Review-wide limitation: this is an offline editorial assessment of candidate visible fields, not fresh source verification or clinical approval. All candidates remain needs_clinician_review. Scope is 11 rewritten and 12 new executable nodes; 66 kept and 75 proposed retirement/replacement inventory records, including four retained held variants under three holds, were not independently re-reviewed."
+    ],
+    "suggestions": [
+      "Make the adequacy finding change a real next-step choice: compare credible, equally specific acquisitions or disposition plans whose ranking depends on what the earlier specimen actually represented. Do not add decorative sampling details to an otherwise unchanged core-versus-FNA rule.",
+      "Retain the complete patient/task fields. The subsequent growth node follows coherently; this explanation does not give its excision answer."
+    ]
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.fibroadenoma-growth.v1",
+    "nodeId": "node.topic.breast-benign-high-risk.fibroadenoma-growth.v1",
+    "title": "Enlargement after a concordant fibroadenoma core",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must reconcile earlier concordant benign tissue with substantial interval enlargement and contour change, then choose whole-lesion excision over repeating a limited sample or continuing surveillance. Excision is the best offered plan.",
+      "The measurements describe this fictional lesion; they are not stated as a universal size or growth threshold.",
+      "The update follows the preceding core request and supplies its result, growth and symptom consequence. With the shared presentation it stands alone; prior feedback did not disclose this new decision."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.acquisition-site.v1",
+    "nodeId": "node.topic.breast-benign-high-risk.acquisition-site.v1",
+    "title": "Ultrasound coverage of a different palpable site",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Radial and antiradial sweeps at 2 o-clock; axillary survey.",
+        "why": "Against the repeatedly named 8-o'clock task, this makes the missing location apparent by simple text matching; only the targeted-site option supplies anything new."
+      },
+      {
+        "phrase": "Targeted ultrasound of the palpable site",
+        "why": "The other choices retrieve the already described wrong-site study or repeat mammography already described as covering the marker. The unique new-site action can be selected without interpreting breast findings."
+      }
+    ],
+    "fairness": [
+      "A complete log restricted to another site supports acquiring targeted ultrasound rather than assuming missing exported images exist. No confident clinical error in the intended key.",
+      "This establishes one acquisition-coverage rule, rather than two consequential resident-level inferences. The complete-log fact is necessary and should not simply be hidden."
+    ],
+    "suggestions": [
+      "Give competing acquisition plans whose ranking requires both the current clinical finding and the actual scope/adequacy of prior imaging. Remove a disposable repeat-mammography foil if it cannot represent a credible error.",
+      "Keep the current-site identifier and complete acquisition record; the next node coherently supplies the newly obtained ultrasound."
+    ]
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.negative-imaging-tissue.v1",
+    "nodeId": "node.topic.breast-benign-high-risk.negative-imaging-tissue.v1",
+    "title": "Suspicious palpable finding despite adequate negative imaging",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The update establishes actual ultrasound coverage, then supplies a hard irregular palpable focus and dynamic skin dimpling. The resident must distinguish adequate imaging from resolution of clinical suspicion and select tissue sampling.",
+      "Palpation-guided core is the best offered next diagnostic plan; negative imaging does not justify observation of this examination finding, and MRI need not precede tissue assessment.",
+      "The current update states the new examination and repeat-ultrasound result; the shared presentation supplies the earlier mammogram. This is coherent and independently answerable with those visible fields. The preceding explanation teaches coverage, not the new clinical-imaging discordance decision."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.discharge-imaging.v1",
+    "nodeId": "node.topic.breast-benign-high-risk.discharge-imaging.v1",
+    "title": "Diagnostic evaluation of spontaneous male nipple discharge",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The prior study is distinguished primarily by its screening accession label; the actual obtained views and adequacy for the symptomatic retroareolar area are unspecified."
+    ],
+    "cues": [
+      {
+        "phrase": "Screening mammography: bilateral retroareolar tissue, no suspicious finding; accession classified as screening.",
+        "why": "Repeating screening twice spotlights a billing/classification contrast. Together with symptoms and a screening-repeat foil, it largely advertises the diagnostic-labeled answer."
+      }
+    ],
+    "fairness": [
+      "Spontaneous unilateral single-opening blood-colored discharge warrants diagnostic evaluation despite bilateral expressed fluid. That clinical distinction is sound.",
+      "Uncertainty: the screening label alone does not establish which additional mammographic acquisition is needed. Existing adequate images may be reviewed with targeted ultrasound rather than automatically duplicated; the visible record does not settle that distinction.",
+      "The diagnostic mammography/ultrasound option is the intended conventional workup, but the record should justify its exact scope instead of making accession terminology decisive."
+    ],
+    "suggestions": [
+      "Describe relevant prior coverage and acquisition limitations in neutral terms, and distinguish image review from new acquisition if that distinction is being scored.",
+      "Keep the spontaneous-versus-expressed observations, but replace the repeated-screening foil with a credible competing diagnostic plan. The later biopsy result is coherent and is not pre-taught by this explanation."
+    ]
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.papilloma-atypia.v1",
+    "nodeId": "node.topic.breast-benign-high-risk.papilloma-atypia.v1",
+    "title": "Residual papilloma with atypia on core biopsy",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "papilloma with atypical epithelial proliferation",
+        "why": "This diagnosis label appropriately belongs in a management case, but here it directly triggers the excision rule; the additional residual-target and no-invasion details do not create another consequential inference."
+      },
+      {
+        "phrase": "Repeat fine-needle aspiration",
+        "why": "After diagnostic cores have already established atypia, stepping back to FNA is a weak competitor. It leaves routine surveillance versus the familiar excision rule."
+      }
+    ],
+    "fairness": [
+      "Diagnostic excision is the best offered option for an atypical papillary lesion with a remaining target; absence of invasion in a limited core does not clear the whole lesion.",
+      "No confident clinical error identified. Male-specific applicability of detailed contemporary recommendations has not been independently verified offline.",
+      "The update states the imaging target and core result and follows the earlier workup coherently; previous feedback does not supply the excision key."
+    ],
+    "suggestions": [
+      "Use a consequential lesion/sampling distinction that changes the management choice, with credible same-stage alternatives. Do not count the named atypical-papilloma-to-excision association as two steps.",
+      "Have the clinician verify the exact male-case application; retain the patient sex rather than silently importing a female-only evidence assumption."
+    ]
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.adh-residual.v1",
+    "nodeId": "node.topic.breast-benign-high-risk.adh-residual.v1",
+    "title": "Multifocal ADH with a remaining calcification field",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Repeat breast MRI assessment",
+        "why": "This is a repeat of a test never described as performed and is a weak substitute for resolving already sampled atypia. It reduces the decision to excision versus surveillance."
+      }
+    ],
+    "fairness": [
+      "Diagnostic excision is well supported by multiple ADH foci and substantial residual calcifications; no confident clinical inaccuracy is identified.",
+      "The exhibit contains clinically relevant observations, but ordinary ADH-on-core knowledge already selects excision from this option set. Retrieval and residual-field interpretation do not independently determine the answer.",
+      "The next node's cancer-negative excision result follows coherently. This explanation previews risk counseling but does not identify the later medication."
+    ],
+    "suggestions": [
+      "Replace the unsupported 'repeat' MRI wording and compare credible local diagnostic strategies at the same stage.",
+      "Make the sampling/extent findings necessary to choose between real competing approaches, using verified criteria rather than invented low-risk cutoffs. Otherwise classify this as single-rule teaching and seek explicit basic-item acceptance."
+    ]
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.premenopausal-prevention.v1",
+    "nodeId": "node.topic.breast-benign-high-risk.premenopausal-prevention.v1",
+    "title": "Risk-reduction medication after ADH excision",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Tamoxifen is the best offered prevention discussion for the stated premenopausal patient; raloxifene and anastrozole are not equivalent routine prevention choices in this setting.",
+      "The prior ADH excision and current eligibility information are sufficient for an offer to discuss benefits and harms, rather than an unconditional prescription. No dose or duration is invented.",
+      "The task already requests a prevention medication, and the preceding explanation has announced future-risk counseling. Among three drugs, menstrual-status matching is the only scored discriminator.",
+      "The update is coherent and contains the excision result and relevant current reproductive history, so it stands alone with the shared presentation."
+    ],
+    "suggestions": [
+      "Create a genuine remaining clinical decision about whether or which preventive strategy fits a competing patient-specific consideration, with explicit supported eligibility facts. Avoid adding a second unrelated objective merely to increase length.",
+      "If retaining this valuable drug-eligibility rule unchanged in substance, seek an explicit basic-teaching exception rather than calling it a difficult two-step item."
+    ]
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.classic-lobular-observation.v1",
+    "nodeId": "node.topic.breast-benign-high-risk.classic-lobular-observation.v1",
+    "title": "Incidental classic LCIS with a separately explained target",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must identify sclerosing adenosis as the sampled calcification correlate, distinguish incidental classic LCIS from a nonclassic or unexplained target lesion, and choose local follow-up rather than automatic excision.",
+      "Imaging follow-up is the best offered local diagnostic plan for this represented, explained site. The explanation correctly separates local diagnostic clearance from future-risk assessment.",
+      "The negatives about florid expansion and pleomorphism are decision-critical subtype information, not gratuitous distractor exclusions. Named LCIS is legitimate data in this management task.",
+      "The case is self-contained. Its explanation does establish the concordance principle that the later discordance node reuses; that later node needs independent difficulty repair."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.lobular-discordance.v1",
+    "nodeId": "node.topic.breast-benign-high-risk.lobular-discordance.v1",
+    "title": "Classic LCIS on core of a new architectural distortion",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "no sclerosing lesion or other process corresponding to the distortion is identified",
+        "why": "The wording largely supplies the discordance interpretation that the learner is supposed to make."
+      },
+      {
+        "phrase": "The sampled benign process accounts for the calcifications.",
+        "why": "The preceding node's explanation teaches the target-explanation discriminator immediately before the new node explicitly states that it is absent."
+      }
+    ],
+    "fairness": [
+      "Excision is the best offered way to resolve an increasingly distorted target not explained by the core result. Surveillance or MRI does not substitute for adequate tissue resolution here.",
+      "The new site and later time are explicit, and needle images establish target sampling. It stands alone with the visible update, but the sequence makes the intended reasoning more rehearsed than the author suggests."
+    ],
+    "suggestions": [
+      "Use neutral pathology observations and require the resident to infer the imaging-pathology relationship rather than state that nothing corresponds.",
+      "Ensure the later part adds a distinct consequential decision instead of testing the immediate inverse of the rule just explained. Preserve enough target information to keep one defensible key."
+    ]
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.radial-scar-surveillance.v1",
+    "nodeId": "node.topic.breast-benign-high-risk.radial-scar-surveillance.v1",
+    "title": "Radial scar without atypia after vacuum sampling",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Small' and cores spanning the center/radiating portion do not fully communicate the sampling extent or residual target relevant to selecting observation over excision."
+    ],
+    "cues": [],
+    "fairness": [
+      "There is a real two-step opportunity: assess tissue-target concordance and sampling, then select follow-up versus additional tissue.",
+      "Uncertainty: surveillance can be reasonable for a selected concordant radial scar without atypia, but the explanation only establishes that excision is not mandatory. That does not by itself make excision an indefensible best choice for this particular incompletely characterized case.",
+      "No confident claim that surveillance is clinically wrong is made. The uncertainty is the exact ranking of surveillance against the offered excision under current local guidance."
+    ],
+    "suggestions": [
+      "Use verified selection criteria and patient-specific sampling/target facts that establish when follow-up is preferred, including relevant residual lesion information; do not invent a size or needle-count threshold.",
+      "Have the clinician adjudicate the closest excision alternative. If both remain reasonable, change the task to an evidence-interpretation decision or another genuine discriminator rather than use an unsupported forced ranking."
+    ]
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.pure-fea.v1",
+    "nodeId": "node.topic.breast-benign-high-risk.pure-fea.v1",
+    "title": "Pure FEA after retrieval of the calcification target",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The resident must reconcile calcifications in the specimen and lesion with the absence of a residual group, then distinguish pure FEA from associated higher-risk atypia before choosing follow-up.",
+      "For the specifically described pure, explained and retrieved target, mammographic follow-up is the best offered plan; repeat vacuum sampling lacks a residual target and automatic excision is not compelled by FEA alone.",
+      "The explanation limits the inference to this sampled target and does not extend follow-up to associated atypia or an unsampled field. Contemporary local-policy applicability still requires named clinical sign-off; this editorial PASS is not that approval.",
+      "The case is self-contained and has no preceding-answer scaffold."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.fel-complete-excision.v1",
+    "nodeId": "node.topic.breast-benign-high-risk.fel-complete-excision.v1",
+    "title": "Growing indeterminate fibroepithelial lesion",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "Enlargement is repeated in the presentation, exhibit and task without adding a distinct course observation."
+    ],
+    "cues": [
+      {
+        "phrase": "fibroadenoma and phyllodes cannot be separated on this specimen",
+        "why": "The report supplies the unresolved whole-lesion diagnosis, while repeat core and simple surveillance offer little challenge to the familiar complete-excision rule."
+      }
+    ],
+    "fairness": [
+      "Complete excision is the best offered diagnostic plan for this enlarging indeterminate fibroepithelial lesion. The explanation appropriately avoids a universal wide margin.",
+      "The report's genuine diagnostic uncertainty should not be suppressed, but uncertainty plus growth does not automatically create two scored inferences: either clue already favors excision in this set.",
+      "The first explanation does not give the later benign-phyllodes follow-up answer, and the eventual whole-lesion result is a coherent continuation."
+    ],
+    "suggestions": [
+      "Remove duplicated growth prose. Compare clinically credible plans whose scope or sequence depends on a second consequential finding, rather than repeat core versus observation versus excision for a named unresolved fibroepithelial lesion.",
+      "Keep any uncertain pathology statement as legitimate data; increase decision quality through the competing actions rather than awkwardly hiding the pathology conclusion."
+    ]
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.benign-followup.v1",
+    "nodeId": "node.topic.breast-benign-high-risk.benign-followup.v1",
+    "title": "Follow-up after intact benign phyllodes excision",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Scheduled chest CT surveillance",
+        "why": "Systemic chest surveillance is a weak competitor for an explicitly benign lesion and makes the real comparison cavity ultrasound versus routine screening."
+      },
+      {
+        "phrase": "benign phyllodes",
+        "why": "A legitimate known diagnosis, but it nearly selects the follow-up rule by itself. The ink-versus-retained-tumor distinction is not actually offered as a competing local-management action."
+      }
+    ],
+    "fairness": [
+      "No confident clinical inaccuracy is asserted: returning to age-appropriate screening after a completely removed benign phyllodes lesion is a defensible contemporary approach.",
+      "Uncertainty remains about exact follow-up policy; the text supplies no policy while scheduled cavity surveillance is a plausible practice-dependent competitor. The intact capsule and absent mass do not themselves specify an imaging schedule.",
+      "The margin nuance mainly answers whether further local surgery is needed, yet the task restricts the decision to imaging. It therefore does not fully test the claimed margin-versus-residual distinction.",
+      "The update supplies the whole-lesion diagnosis and completeness observations and follows excision coherently. The later new cavity lump can occur despite a reasonable earlier screening plan."
+    ],
+    "suggestions": [
+      "If testing ink versus residual tumor, compare concrete local-management plans at that stage, with verified criteria and appropriate surgical alternatives.",
+      "If testing surveillance policy, state the applicable evidence-supported policy context and avoid implying a universal schedule. Replace the benign-lesion chest CT foil with a credible competing plan."
+    ]
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.cavity-solid-core.v1",
+    "nodeId": "node.topic.breast-benign-high-risk.cavity-solid-core.v1",
+    "title": "Solid cavity-wall target after bloody fluid aspiration",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "eccentric solid wall nodule with internal Doppler flow",
+        "why": "Only 'Core sampling of the wall nodule' targets the newly named unresolved structure; both distractors explicitly revisit the collapsed fluid compartment."
+      },
+      {
+        "phrase": "Repeat aspiration of the cavity fluid",
+        "why": "Together with 'Repeat cytology of the cavity fluid', this is a redundant fluid-focused pair. The unique solid-target option can win through target matching without interpreting the prior pathology."
+      }
+    ],
+    "fairness": [
+      "Core tissue from the persistent solid nodule is the best offered acquisition. Macrophages and collapse do not clear solid tissue; no confident clinical error is identified.",
+      "The prior benign-phyllodes history adds clinical context but does not change the answer. The node remains a simple fluid-versus-solid targeting rule.",
+      "The later cavity event follows coherently and is independently described in the update. It substantially duplicates the separate residual-solid candidate."
+    ],
+    "suggestions": [
+      "Give credible acquisitions of the unresolved target, or a genuine specimen-adequacy distinction, with supported facts to rank them. Do not make both wrong choices repeat the same already-resolved compartment.",
+      "Merge or differentiate this objective from residual-solid; different backstories do not create different reasoning."
+    ]
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.borderline-final-faces.v1",
+    "nodeId": "node.topic.breast-benign-high-risk.borderline-final-faces.v1",
+    "title": "Reconciled borderline-phyllodes cavity margins",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": false,
+    "highYield": false,
+    "clarityIssues": [
+      "UK ABS 2025 is named but the operative margin criteria are not supplied. A US board-preparation resident cannot resolve the exact policy from the visible fields alone.",
+      "The exhibit already labels 6 mm and 2 mm as the 'Final reported distance', so it supplies the specimen reconciliation that the learner is ostensibly supposed to perform."
+    ],
+    "cues": [
+      {
+        "phrase": "Full superior-face shave, no tumor",
+        "why": "Contrasted with 'No lateral shave', this makes lateral the conspicuously unfinished side even without policy knowledge."
+      },
+      {
+        "phrase": "Final reported distance",
+        "why": "The interpreted final distances remove the reconciliation step; the resident need only apply an unsupplied threshold to the provided summary."
+      }
+    ],
+    "fairness": [
+      "Uncertainty: the named policy's exact thresholds have not been freshly verified in this offline review. If its criteria distinguish these distances, lateral-only re-excision is internally consistent; this is not a claim that the intended key is medically wrong.",
+      "A guideline name is insufficient decision-critical policy information for a policy-specific threshold question under the authoring standard.",
+      "All three choices presume some re-excision, allowing elimination of the better-cleared face without knowing whether any margin actually requires surgery.",
+      "Phyllodes margin management is relevant; memorizing this exact foreign consensus band is not established here as a commonly tested ABSITE objective. This should not be labeled hard merely because the policy is unstated."
+    ],
+    "suggestions": [
+      "Supply a concise, verified policy criterion and its uncertainty, or test a broader established margin principle. Do not invent thresholds.",
+      "Make the learner reconcile oriented specimens from raw supported data before applying the policy; avoid giving a final-distance column if that is the intended first inference.",
+      "Include credible same-stage alternatives, including observation if it represents a genuine competing interpretation. The subsequent node is temporally coherent but tests a separate diagnostic problem."
+    ]
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.phyllodes-node-needle.v1",
+    "nodeId": "node.topic.breast-benign-high-risk.phyllodes-node-needle.v1",
+    "title": "Unsampled abnormal axillary node",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "The clip lies in fat beside the node",
+        "why": "This directly disqualifies 'Excision centered on the existing clip' by location matching, before the resident applies a clinical biopsy principle."
+      },
+      {
+        "phrase": "Ultrasound-guided core of the nodal cortex",
+        "why": "Only this choice samples the persistently abnormal structure. The other actions observe it or remove the explicitly misplaced clip."
+      }
+    ],
+    "fairness": [
+      "Repeat image-guided core directed into the abnormal node is the best offered plan after a fat-only miss. No confident clinical error is identified.",
+      "This is a targeting failure, not evidence that every suspicious phyllodes-associated node needs a specific needle method over all legitimate alternatives.",
+      "The clip-centered excision foil is not equivalent to properly localized node excision. Its obvious wrong target avoids testing the harder clinical distinction.",
+      "The update states the new node, failed sample and clip position, so it follows the margin case coherently and stands alone with the shared presentation."
+    ],
+    "suggestions": [
+      "Compare credible acquisitions directed at the actual node, with verified patient-specific adequacy/anatomic facts to rank them. Do not resolve the question by deliberately placing the surgical option at a known wrong site.",
+      "Keep this new-core-miss scenario distinct from the retained held FNA/exhausted-material question; this review does not close that older source hold."
+    ]
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.malignant-close.v1",
+    "nodeId": "node.topic.breast-benign-high-risk.malignant-close.v1",
+    "title": "Local management of a close malignant-phyllodes margin",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": false,
+    "clarityIssues": [
+      "The exact UK ABS 2025 criterion needed to choose re-excision versus surveillance at 4 mm is absent.",
+      "Posterior re-excision is requested without describing what remains at that boundary. The text avoids ranking fascia versus muscle, but feasibility of additional posterior clearance is less specific than breast-volume feasibility."
+    ],
+    "cues": [
+      {
+        "phrase": "The remaining breast can accommodate further local excision.",
+        "why": "This is pre-answer feasibility permission that previews re-excision rather than adding an independent inference."
+      },
+      {
+        "phrase": "posterior margin 4 mm, all other oriented faces at least 12 mm",
+        "why": "With 'posterior' in both surveillance and the key, it does not uniquely identify the key, but it makes circumferential re-excision a weak foil. The remaining decision is a single unsupplied threshold rule."
+      }
+    ],
+    "fairness": [
+      "Uncertainty: the intended focused re-excision may match the named guidance, but exact contemporary policy verification is outside this offline review. No conflicting threshold is asserted.",
+      "A final margin map already provides the interpreted result; there is no separate specimen reconciliation. Knowing the policy would reduce this to one local-treatment rule.",
+      "Malignant-phyllodes local control is relevant, but the exact named 4-mm policy application is not established as a commonly tested ABSITE fact.",
+      "The later recurrence is a coherent subsequent event. Its existence should not retroactively imply that the initial answer was wrong."
+    ],
+    "suggestions": [
+      "Provide the verified decision-critical policy or replace the policy-specific cutoff objective with an established clinically meaningful comparison.",
+      "If posterior clearance is the tested action, describe enough anatomy to establish feasibility without asserting an unsupported fascia-versus-muscle ranking. Keep the older held extent-of-resection question separate.",
+      "Replace blanket feasibility permission and an obviously overbroad operation with clinically credible competitors."
+    ]
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.phyllodes-recurrence-restage.v1",
+    "nodeId": "node.topic.breast-benign-high-risk.phyllodes-recurrence-restage.v1",
+    "title": "Thoracic staging after an incompletely covered CT accession",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Scan begins at the hepatic dome and ends at the pubic symphysis; basal lung sections included.",
+        "why": "Against the title 'CT chest, abdomen and pelvis', this largely states which named region is missing; dedicated chest CT is the only offered action that acquires it."
+      },
+      {
+        "phrase": "Which imaging request best completes",
+        "why": "The completion wording reinforces acquisition of the missing region rather than requiring an independent choice about staging needs."
+      }
+    ],
+    "fairness": [
+      "The complete acquisition log supports that most of the chest was never scanned; retrieving the same accession cannot supply it. Dedicated chest CT is the best offered completion request.",
+      "Recurrent malignant-phyllodes systemic assessment is relevant, but this option set is solved mainly by anatomic coverage matching. The named recurrence and stated staging goal supply much of the purported first step.",
+      "The update clearly supplies recurrence, current workup and purpose; it stands alone with the shared patient presentation and is not directly answered by the preceding margin explanation."
+    ],
+    "suggestions": [
+      "Keep the complete-log versus missing-export distinction, but use clinically credible competing staging plans whose ranking also depends on the patient's actual disease/workup status.",
+      "If the clinical inference remains unnecessary after deleting the recurrence context, label this as basic acquisition literacy or redesign it rather than claim difficult two-step reasoning."
+    ]
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.lactation-ultrasound.v1",
+    "nodeId": "node.topic.breast-benign-high-risk.lactation-ultrasound.v1",
+    "title": "Persistent focal lump during improvement of breast inflammation",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'During treatment' does not identify the regimen or interval. Those details need not be invented, but the item cannot use treatment adequacy as a reasoning step without supplying them."
+    ],
+    "cues": [],
+    "fairness": [
+      "Targeted ultrasound is a defensible best next investigation for a persistent focal lump in this suspected inflammatory/collection setting. It can distinguish fluid from a solid target before tissue sampling.",
+      "The focal-versus-general response matters clinically, but the persistent tender lump would already prompt ultrasound without the improvement sentence. The second inference is not strongly tested.",
+      "Diagnostic mammography is not inherently contraindicated during lactation; the explanation should not imply that it is. No confident clinical inaccuracy in the intended key is identified.",
+      "The subsequent ultrasound collection and aspiration are a coherent continuation; this feedback suggests a collection but does not explicitly teach the later recurrent-source-control answer."
+    ],
+    "suggestions": [
+      "Use an actual response/workup distinction that changes a real next diagnostic decision rather than adding improvement around an unchanged ultrasound-first rule.",
+      "Retain age, lactation and focal examination facts. If a regimen or timing genuinely distinguishes the plans, add only source-supported details and no invented treatment cutoff."
+    ]
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.abscess-source-control.v1",
+    "nodeId": "node.topic.breast-benign-high-risk.abscess-source-control.v1",
+    "title": "Recurrent fluid collection despite improving erythema",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "The recurrent space contains fluid without a separate solid nodule.",
+        "why": "This explicitly removes the only tissue-biopsy competitor and names the material addressed by the drainage choice."
+      },
+      {
+        "phrase": "Culture guides medication.",
+        "why": "With improvement on that medication and a recurrent collection, the option set sharply telegraphs drainage; it offers no close competing source-control strategy."
+      }
+    ],
+    "fairness": [
+      "Repeat image-guided drainage with culture is the best offered plan for the described recurrent collection. Improvement of surrounding inflammation does not establish resolution of the collection.",
+      "Not ranking aspiration versus catheter technique is appropriately cautious, but the remaining alternatives make this basic source-control recognition rather than a difficult two-step decision.",
+      "Drainage should be understood as an added source-control action, not a direction to discontinue otherwise indicated culture-directed antibiotics. The task could make that shared background clearer.",
+      "The update supplies prior aspiration, culture-directed medication and current imaging; it follows coherently and can be answered without remembering the first choice."
+    ],
+    "suggestions": [
+      "Keep necessary fluid-versus-solid findings; do not hide them merely to reduce cueing. Instead compare genuinely credible next strategies resolved by current clinical and acquisition findings.",
+      "Keep ongoing background antimicrobial care common to the options and score the additional action. Seek basic-item acceptance if retaining this recognition-level objective."
+    ]
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.milk-contact.v1",
+    "nodeId": "node.topic.breast-benign-high-risk.milk-contact.v1",
+    "title": "MRSA feeding and expressed-milk contact precautions",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": false,
+    "clarityIssues": [
+      "'The upper flange aperture includes the draining opening' and milk passing through 'the same aperture' are difficult to visualize. Sharing an opening does not unambiguously establish actual milk or pump contact with infected tissue or purulent drainage.",
+      "'Discard pumped milk' does not explicitly limit the instruction to milk collected through the observed contaminated arrangement; it could be read as a blanket affected-side instruction."
+    ],
+    "cues": [
+      {
+        "phrase": "under an adherent dressing; the mouth stays below that dressing throughout feeding",
+        "why": "These are necessary contact observations, not a removable giveaway. The four options balance direct-feeding and pumped-milk components, so there is no majority-component convergence shortcut."
+      }
+    ],
+    "fairness": [
+      "There is a real two-step decision: assess direct-latch exposure separately from expression exposure, then select the combined route-specific plan. The balanced four-way matrix supports this objective.",
+      "Direct breastfeeding with the infection safely covered is defensible for the stated healthy term infant. Discarding exposed expressed milk is defensible if the milk or relevant pump parts actually contact infected tissue or drainage.",
+      "Uncertainty: the described geometry alone does not clearly establish that contact. The clear appearance of milk does not prove safety, but proximity alone also does not prove contamination. Clarify the observed exposure before claiming a unique key.",
+      "The sequence is coherent: drainage supplies the MRSA culture and the new task supplies feeding observations. No earlier explanation teaches the answer.",
+      "The broader breastfeeding/MRSA principle has practical value; this intricate flange-contact scenario is not established here as a commonly tested ABSITE concept."
+    ],
+    "suggestions": [
+      "Replace the ambiguous aperture geometry with a short direct observation of whether milk or milk-contact pump parts touch infected tissue or drainage; retain the separate covered direct-latch observation.",
+      "Limit disposal to milk from the described exposure and identify reassessment/clean repositioning as subsequent care in feedback, without inventing a universal withholding interval.",
+      "Keep the balanced option matrix. A simple original schematic could aid clarity only if its actual visible observations are independently reviewed."
+    ]
+  },
+  {
+    "id": "question.topic.breast-benign-high-risk.residual-solid.v1",
+    "nodeId": "node.topic.breast-benign-high-risk.residual-solid.v1",
+    "title": "Persistent vascular solid tissue after cyst-fluid aspiration",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The presentation already describes outside aspiration and a remaining firm focus; the sole node then opens 'At a later outside visit' with another aspiration. The two visits are possible but add chronology without a different scored decision."
+    ],
+    "cues": [
+      {
+        "phrase": "solid tissue with internal Doppler flow",
+        "why": "Only 'Core sampling of the solid focus' addresses this explicitly remaining target; the two distractors repeat fluid assessment."
+      },
+      {
+        "phrase": "Which acquisition best addresses {patientName}'s remaining palpable focus?",
+        "why": "The task repeats the key's 'focus' and steers toward the sole focus-directed choice rather than requiring a discriminating acquisition decision."
+      }
+    ],
+    "fairness": [
+      "Core sampling of the residual solid focus is the best offered action. Nonmalignant fluid cytology and symptom relief do not diagnose solid tissue; no confident clinical error is identified.",
+      "The two wrong answers are near-duplicate fluid-compartment choices, making this easy target matching rather than two consequential inferences.",
+      "The single-node case contains all needed observations, but it substantially duplicates cavity-solid-core and gains no independent difficulty from a second aspiration chronology."
+    ],
+    "suggestions": [
+      "Collapse redundant chronology to one clearly timed current assessment, keeping the actual residual target and its imaging description.",
+      "Differentiate or merge this candidate with cavity-solid-core. If retained as a separate objective, compare credible same-target acquisitions or another supported consequential decision, rather than two fluid-only foils."
+    ]
+  }
+]

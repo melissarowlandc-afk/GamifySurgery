@@ -1,0 +1,393 @@
+[
+  {
+    "id": "question.topic.stomach-neoplasia.occult-peritoneal-staging.v1",
+    "nodeId": "node.topic.stomach-neoplasia.occult-peritoneal-staging.v1",
+    "title": "Additional staging of diffuse gastric adenocarcinoma",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Laparoscopy with washings is the single best offered procedure for this diffuse, locally advanced pattern despite CT without visible metastases. EUS addresses locoregional detail, and PET/CT does not settle occult peritoneal involvement. The necessary negative CT is data, not an unfair exclusion.",
+      "Two consequential steps remain: interpret the diffuse poorly cohesive cancer and extramural findings, then choose the staging method that can change the proposed treatment sequence. This is a high-yield gastric-cancer staging decision.",
+      "The first node is self-contained. Its explanation prepares the importance of peritoneal staging without giving the later positive-cytology treatment answer.",
+      "Review scope for this entire report: all 16 candidate nodes, comprising four rewrites and twelve new items. The 17 kept records, 28 retirement proposals, recorded holds and parked alternatives were noted but not adjudicated. Clinical judgments are offline assessments of the supplied visible fields, not fresh source verification or clinical sign-off. Difficulty and highYield are qualitative judgments, not measured performance or verified exam frequencies. Runtime rendering, waits and source-ledger accuracy were not tested."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.stomach-neoplasia.preinitial-positive-washings.v1",
+    "nodeId": "node.topic.stomach-neoplasia.preinitial-positive-washings.v1",
+    "title": "Treatment sequence after positive peritoneal cytology",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Concordant malignant cells establish peritoneal involvement despite a negative visual survey. No treatment has begun and no bleeding or obstructive indication for palliation is supplied; systemic treatment followed by reassessment is the best offered sequence.",
+      "The real competing error is proceeding with gastrectomy because no macroscopic deposits were seen. Interpreting the discordant staging observations and changing treatment intent/sequence are two consequential steps.",
+      "Chronology follows the first node coherently. The shared presentation, current update and cytology exhibit supply the facts needed without remembering the earlier CT. Prior feedback does not specify this answer.",
+      "The explanation appropriately leaves later surgery conditional; it does not promise conversion to resectability or prescribe an unsupported regimen. No confident clinical inaccuracy identified in this offline review."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.stomach-neoplasia.endoscopic-lymphatic-risk.v1",
+    "nodeId": "node.topic.stomach-neoplasia.endoscopic-lymphatic-risk.v1",
+    "title": "Lymphatic invasion after apparently complete endoscopic resection",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Lymphatic tumor involvement overrides the otherwise reassuring mucosal depth, small size and clear margins. In the stated fit patient, gastrectomy with lymphadenectomy is the single best offered plan. Repeating local excision does not address the relevant risk.",
+      "The microscopic description requires interpretation followed by distinguishing local clearance from potential nodal disease. Surveillance remains a meaningful temptation because the other reported features favor endoscopic curability.",
+      "Lymphatic spaces and lymphadenectomy share a word root, but that relationship alone cannot distinguish appropriate nodal treatment from management of a fully excised primary; this is necessary clinical evidence rather than a decisive nonmedical cue.",
+      "Self-contained presentation and complete task; no preceding answer is needed. High-yield gastric endoscopic-curability boundary. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.stomach-neoplasia.upfront-d2-adjuvant.v1",
+    "nodeId": "node.topic.stomach-neoplasia.upfront-d2-adjuvant.v1",
+    "title": "Adjuvant treatment after upfront R0 D2 gastrectomy",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Among the offered choices, CAPOX is defensible after upfront clear-margin D2 resection of stage III disease in this recovered patient. The extent of dissection and absence of preoperative treatment make the radiation and perioperative-treatment extrapolation errors consequential.",
+      "Retained mismatch-repair proteins, renal function and neuropathy assessment address relevant treatment modifiers. The question supplies final stage rather than asking the learner to reconstruct it from an unspecified positive-node count; that is fair for this management objective.",
+      "The repeated CAPOX component does not uniquely identify the key: deciding whether to add nivolumab still requires knowledge. All options are comparably specific postoperative regimens.",
+      "Self-contained and high yield. No confident inaccuracy identified, but the time-sensitive immunotherapy/adjuvant boundary has not been freshly verified under the no-network constraint; editorial PASS is not clinical approval."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.stomach-neoplasia.organ-specific-resection.v1",
+    "nodeId": "node.topic.stomach-neoplasia.organ-specific-resection.v1",
+    "title": "Adjacent-organ extent of gastric resection",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The explanation exposes internal editorial history: \"This draft retains the organ-specific objective and does not answer the held question about peeling a treated, inseparable interface.\" A learner cannot identify the held question, and it adds confusion unrelated to this patient."
+    ],
+    "cues": [
+      {
+        "phrase": "Tumor extended through the gastrosplenic tissues into splenic parenchyma.",
+        "why": "Together with the explicitly intact pancreatic plane, the exhibit maps directly onto the only option removing the named involved organ and preserving the named uninvolved organ. Little interpretation remains beyond matching organs to operation names."
+      },
+      {
+        "phrase": "a continuous soft-tissue plane with an intact pancreatic surface",
+        "why": "Completes an option-by-option elimination template. These are legitimate operative findings, but the present three choices turn them into direct answer assembly rather than two consequential inferences."
+      }
+    ],
+    "fairness": [
+      "Gastrectomy with splenectomy is the defensible key for the stated direct splenic invasion and separate intact pancreas. I am not alleging an inaccurate key or recommending removal of necessary invasion/plane findings.",
+      "Two organ decisions are applications of the same supplied involvement rule, not two reasoning steps. The underlying distinction between indicated en-bloc resection and prophylactic adjacent-organ removal is high yield.",
+      "The clinic review frame is coherent and stands alone; the explanation, not the patient chronology, is the clarity problem."
+    ],
+    "suggestions": [
+      "Remove the held-question/draft commentary from learner feedback and teach only the relevant oncologic principle.",
+      "Either obtain explicit acceptance as a basic operative-principle item or redesign the competing operations around one real, supported uncertainty that changes extent. Do not manufacture difficulty by hiding actual invasion or borrowing the unresolved treated-interface scenario."
+    ]
+  },
+  {
+    "id": "question.topic.stomach-neoplasia.gastric-wall-tissue-route.v1",
+    "nodeId": "node.topic.stomach-neoplasia.gastric-wall-tissue-route.v1",
+    "title": "Representative tissue acquisition for a deep gastric-wall mass",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "can be reached from the gastric lumen",
+        "why": "This feasibility permission, under \"EUS record\", directly favors the EUS route. The superficial route has already been explicitly excluded, leaving little more than matching the stated access route to the key."
+      },
+      {
+        "phrase": "Repeat endoscopic forceps mucosal biopsy",
+        "why": "The stem says the intact overlying mucosa was sampled without the mass. An unchanged repeat is a conspicuously weak competitor unless a different target or technique is actually proposed."
+      }
+    ],
+    "fairness": [
+      "EUS-guided core biopsy is the best offered route in this selected deep-wall, accessible lesion requiring pretreatment classification. The superficial specimen does not establish benignity of the mass.",
+      "CT-guided core biopsy is not universally inappropriate; feedback should explain why the offered EUS approach is preferred here rather than imply that transabdominal sampling is always invalid. No confident clinical inaccuracy in the key is identified.",
+      "Representative tissue acquisition is high yield, but the case supplies the inadequacy conclusion and EUS access permission. The present item does not sustain two consequential steps.",
+      "First node of a coherent sequence. Its treatment-before-resection framing and explanation also scaffold the later neoadjuvant node; see that node for the sequence difficulty limitation."
+    ],
+    "suggestions": [
+      "Keep specimen contents and lesion depth, but replace the explicit access permission with neutral anatomical observations if they suffice for a fair route comparison.",
+      "Use credible sampling alternatives that differ in how they obtain representative tissue, with the findings needed to choose among them. Do not simply repeat the failed identical superficial sampling as filler.",
+      "Explain the closest route competitor after answering. If the only intended objective is basic EUS-core recognition, seek an explicit basic-item exception rather than label it two-step."
+    ]
+  },
+  {
+    "id": "question.topic.stomach-neoplasia.kit-exon11-neoadjuvant.v1",
+    "nodeId": "node.topic.stomach-neoplasia.kit-exon11-neoadjuvant.v1",
+    "title": "Genotype and operative burden in preoperative GIST treatment",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "reducing the interface could allow a more limited gastric resection",
+        "why": "States the organ-preservation rationale for neoadjuvant therapy before the choice. The learner need only select the drug after the operation-versus-treatment sequencing inference has been supplied."
+      }
+    ],
+    "fairness": [
+      "The KIT exon 11 result and current total-gastrectomy burden support preoperative imatinib with reassessment among these choices. Avapritinib is not interchangeable merely because it is a kinase inhibitor, and immediate surgery is a real competing pathway.",
+      "The two intended decisions are clinically consequential: interpret the genotype and weigh immediate operative cost against a response-directed approach. Their current difficulty is reduced by the quoted teaching sentence and the previous node explicitly considering drug treatment before resection.",
+      "The follow-up is coherent and its current pathology, anatomy and absence of metastatic disease/urgent complications allow an independent answer. It need not repeat the original size to distinguish the offered plans. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": [
+      "Retain cardia encirclement and the actual proposed total gastrectomy; remove the pre-answer prediction that reduction will permit limited surgery. Make the resident infer why response could matter.",
+      "Assess the revised item with the preceding node and explanation visible. Keep genotype interpretation as a distinct decision rather than count the already-announced preoperative-treatment plan as an independent inference."
+    ]
+  },
+  {
+    "id": "question.topic.stomach-neoplasia.attenuation-versus-diameter.v1",
+    "nodeId": "node.topic.stomach-neoplasia.attenuation-versus-diameter.v1",
+    "title": "Interpreting GIST response beyond diameter",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Adherence is documented and treatment is well tolerated.",
+        "why": "Combined with improved symptoms and no new lesion, this steers a general reader toward continuing therapy; neither toxicity nor a credible progression signal supports the alternatives."
+      },
+      {
+        "phrase": "Early satiety has improved and oral intake has increased.",
+        "why": "Provides an ordinary-language success cue that can select continuation without interpreting attenuation. It is legitimate response evidence, but the offered alternatives make it a shortcut."
+      }
+    ],
+    "fairness": [
+      "Continuing imatinib is the defensible answer. Lower attenuation with loss of enhancing tissue on a matched protocol is compatible with response rather than failure; no confident clinical inaccuracy identified.",
+      "Diameter changes from 8.0 to 8.6 cm, a 7.5% increase. That minor change does not by itself establish progression. Even hiding the attenuation values and qualitative density description leaves improvement, no new lesion and no compelling indication to escalate or switch. The intended attenuation interpretation therefore fails the consequential-data deletion test.",
+      "The sequence is coherent. The current update names imatinib and the task names GIST, so the item stands alone. Earlier feedback does not reveal the attenuation rule.",
+      "Response assessment is high yield, but the current choices principally ask whether to change a successful, tolerated treatment."
+    ],
+    "suggestions": [
+      "Rework the response pattern or the competing plans so interpreting enhancement/attenuation actually changes the next action. Use only verified response criteria; do not invent a progression cutoff or arbitrary scan interval.",
+      "Retain acquisition comparability and clinically necessary observations. Reapply the deletion test with the attenuation row hidden and avoid making all non-imaging observations independently select the key."
+    ]
+  },
+  {
+    "id": "question.topic.stomach-neoplasia.banked-tissue-provenance.v1",
+    "nodeId": "node.topic.stomach-neoplasia.banked-tissue-provenance.v1",
+    "title": "Choosing an archived specimen for molecular testing",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": false,
+    "clarityIssues": [
+      "The attachment and archive appear to document different specimens rather than truly conflicting reports. \"The referral attachment and archived accession records differ\" can imply a diagnostic discrepancy that the exhibit never demonstrates."
+    ],
+    "cues": [
+      {
+        "phrase": "The molecular laboratory confirms sufficient material for its validated KIT/PDGFRA assay.",
+        "why": "Directly certifies the keyed block for the exact requested assay. A reader needs no medical knowledge to choose the confirmed usable specimen over a specimen without the mass or another invasive collection."
+      },
+      {
+        "phrase": "Representative tumor remains in block B.",
+        "why": "The option names block B, so the positive adequacy label and block-letter overlap assemble the answer directly."
+      }
+    ],
+    "fairness": [
+      "Testing the correctly mapped, adequate archived tumor is defensible. Block A lacks the target, and no reason to repeat sampling is supplied. The key is not clinically inaccurate; the alternatives are defeated explicitly before the task.",
+      "The core operational lesson is sensible, but this particular administrative reconciliation has less ABSITE/boards yield than genotype-dependent GIST management or representative tissue acquisition. highYield=false refers to this scored task, not to the importance of specimen identity.",
+      "There is no second consequential inference after the laboratory has confirmed identity, representation and assay adequacy. The item stands alone and has no later part."
+    ],
+    "suggestions": [
+      "Describe an incomplete referral attachment rather than imply two contradictory diagnoses.",
+      "Consider merging this into post-answer teaching for the tissue-acquisition item. If retained as a scored item, supply a real specimen-target or adequacy distinction that the resident must interpret, while preserving enough information for one fair answer.",
+      "Do not withhold a laboratory fact and require residents to guess a local molecular-test adequacy threshold."
+    ]
+  },
+  {
+    "id": "question.topic.stomach-neoplasia.localized-gist-operation.v1",
+    "nodeId": "node.topic.stomach-neoplasia.localized-gist-operation.v1",
+    "title": "Operation for a localized peripheral gastric GIST",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The immunophenotype supports GIST, and the peripheral 3.2-cm fundic anatomy supports full-thickness wedge resection rather than total gastrectomy/D2 or submucosal shelling out. Histology and anatomy must both inform the operative choice.",
+      "The distractors represent confusing GIST with gastric adenocarcinoma and confusing local resection with enucleation. They are easier than the closest specialist alternatives, but remain recognizable resident errors for a high-yield surgical principle.",
+      "The presentation explicitly frames retrospective review of a tumor and its later resection, so the initial operation question and subsequent margin review are coherent. The first item supplies its own pathology and anatomy.",
+      "No decisive wording-only cue or confident clinical inaccuracy identified. Negative nodes do not alone establish that lymphadenectomy is unnecessary; the learner still needs the tumor-type distinction."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.stomach-neoplasia.r1-without-rupture.v1",
+    "nodeId": "node.topic.stomach-neoplasia.r1-without-rupture.v1",
+    "title": "Microscopic GIST margin versus rupture and recurrence risk",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The supplied gastric site, 3.2-cm size, low mitotic count, intact removal and absence of gross residual disease distinguish a microscopic positive edge from rupture or a high-risk residual-disease situation. With completion total gastrectomy required, surveillance is the best offered plan.",
+      "Both major completion surgery and automatic adjuvant imatinib are credible responses to a positive margin that the learner must reconsider using tumor risk and re-excision burden. These are genuinely consequential linked interpretations.",
+      "The postoperative narrowing is a new operative consequence, not a contradiction of the earlier tumor not encircling the cardia. The second node repeats the tumor type, size, mitoses and margin/rupture findings and can be answered independently.",
+      "Earlier advice to obtain complete removal does not tell the learner how to manage a microscopic edge afterward. The explanation appropriately avoids claiming every R1 GIST needs neither re-excision nor treatment. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.stomach-neoplasia.metastatic-d842v.v1",
+    "nodeId": "node.topic.stomach-neoplasia.metastatic-d842v.v1",
+    "title": "Initial drug for metastatic PDGFRA D842V GIST",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Avapritinib is the defensible offered initial drug for metastatic GIST with the specified D842V alteration. Imatinib and sunitinib are plausible general-GIST defaults but do not resolve this predictive genotype. No confident clinical inaccuracy identified; current drug indications were not freshly verified offline.",
+      "The metastatic tissue match establishes the treatment setting, but the task already requests an initial systemic drug and all options are drugs. The scored choice collapses to D842V-to-avapritinib recall; recognizing the tumor first does not add a separate consequential decision.",
+      "Options are parallel, similarly specific and free of a decisive wording-only shortcut. Moderate difficulty reflects knowing a targeted-therapy exception, not two-step reasoning.",
+      "Self-contained and high-yield molecular-treatment exception; the easy-to-identify weakness is cognitive structure, not fairness of the key."
+    ],
+    "suggestions": [
+      "Integrate the mutation with a competing disease-setting or treatment-history decision that actually changes eligibility for the offered plan, using verified facts.",
+      "Consider consolidating with the resected-D842V item, which already makes metastatic versus adjuvant applicability consequential. Alternatively request explicit acceptance as focused recall; do not describe a diagnosis-plus-drug association as two-step reasoning."
+    ]
+  },
+  {
+    "id": "question.topic.stomach-neoplasia.resected-d842v.v1",
+    "nodeId": "node.topic.stomach-neoplasia.resected-d842v.v1",
+    "title": "Adjuvant boundary after resection of high-risk D842V GIST",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Size and mitotic activity create a real temptation to recommend adjuvant treatment, but D842V makes routine imatinib inappropriate and metastatic-drug efficacy does not establish an adjuvant avapritinib standard. Surveillance is the defensible offered plan after intact complete resection.",
+      "The learner must first interpret recurrence risk, then apply mutation-specific sensitivity and the difference between metastatic and adjuvant evidence. Removing either risk or genotype changes the meaningful comparison.",
+      "The repeated phrase \"after complete resection\" is shared across all choices and does not uniquely cue the key. Surveillance is a named plan rather than a vague individualized-management answer.",
+      "Self-contained and high yield. No confident clinical inaccuracy identified, but the absence of an established adjuvant targeted-drug indication is time-sensitive and not freshly source-verified under the no-network restriction. This PASS remains an editorial assessment requiring clinician sign-off."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.stomach-neoplasia.metastatic-remission-continuation.v1",
+    "nodeId": "node.topic.stomach-neoplasia.metastatic-remission-continuation.v1",
+    "title": "Continuing systemic treatment after metastatic GIST resection",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Which imatinib plan should be discussed",
+        "why": "Names the current drug while one choice switches to sunitinib, making that option a category outlier before the original metastatic state is interpreted."
+      },
+      {
+        "phrase": "good tolerance and no progression",
+        "why": "Directly deprives the sunitinib-switch option of a reason. Those observations are needed for fairness, but this particular distractor becomes disposable."
+      }
+    ],
+    "fairness": [
+      "Continuing effective, tolerated imatinib is defensible despite a clear current scan after resection of previously metastatic disease. Stopping because all visible disease was removed is the important competing error.",
+      "Interpreting original disease status despite current no-evidence-of-disease findings, then distinguishing ongoing metastatic therapy from a finite adjuvant course, are two consequential steps and a high-yield concept.",
+      "Switching to sunitinib is much weaker than the continuation-versus-stopping decision because there is no failure or intolerance. The item needs stronger competition, not omitted safety/tolerance facts.",
+      "The chronology is self-contained and coherent. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": [
+      "Use a neutral task such as which ongoing systemic-treatment plan fits the records.",
+      "Replace the unsupported line switch with a credible finite-adjuvant versus metastatic-continuation error. Supply any prior duration only if needed and adequately supported; do not invent a stopping interval.",
+      "Preserve the original biopsy-proven metastasis, current clear scan and tolerability so the resulting distinction remains fair."
+    ]
+  },
+  {
+    "id": "question.topic.stomach-neoplasia.large-cell-distribution.v1",
+    "nodeId": "node.topic.stomach-neoplasia.large-cell-distribution.v1",
+    "title": "Staging a newly established gastric large-B-cell process",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "\"Under documented testing conditions\" does not identify what made the H. pylori test reliable. The result is not needed to select PET/CT for the already established aggressive lymphoma; the vague phrase adds no decision information here.",
+      "The explanation includes an internal reference: \"This case deliberately differs from the frozen inadequate-biopsy N3 version.\" That version is not part of the clinical story and should not appear in learner feedback."
+    ],
+    "cues": [
+      {
+        "phrase": "Multiple intact biopsies",
+        "why": "Together with expert confirmation of the large-B-cell component, this eliminates the repeat-biopsy alternative by an explicit adequacy signal rather than a disputed specimen finding."
+      },
+      {
+        "phrase": "Expert hematopathology review confirms an aggressive large-B-cell component.",
+        "why": "Supplies the diagnosis and removes the principal interpretive step. A known diagnosis is legitimate for management, but the remaining task is direct recall of systemic staging versus local staging."
+      }
+    ],
+    "fairness": [
+      "PET/CT is the defensible staging investigation for the established aggressive large-B-cell process. Repeat mapping and local EUS do not provide equivalent systemic distribution assessment. No confident clinical inaccuracy identified.",
+      "Normal blood counts, absence of palpable nodes and H. pylori status do not make systemic staging unnecessary. These data do not create a second consequential inference in this option set.",
+      "The prior MALT history is coherent, and the first node stands alone. The later explanation should not refer to unrelated frozen versions. High-yield staging principle, but the current item is one-step recognition after an explicitly confirmed diagnosis."
+    ],
+    "suggestions": [
+      "Remove the frozen-N3 editorial sentence and unnecessary infection-testing detail from this staging node.",
+      "If retaining a two-step objective, use a genuine unresolved distribution or specimen-interpretation issue whose supported findings change the next staging action. Do not simply remove diagnostic adequacy and make the question ambiguous.",
+      "Otherwise seek explicit acceptance as a basic staging item rather than inflate difficulty by retaining the old MALT backstory."
+    ]
+  },
+  {
+    "id": "question.topic.stomach-neoplasia.gastric-large-cell-treatment.v1",
+    "nodeId": "node.topic.stomach-neoplasia.gastric-large-cell-treatment.v1",
+    "title": "Treatment of localized gastric large-B-cell lymphoma",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "gastric large-B-cell lymphoma",
+        "why": "The task names the diagnostic category after the preceding node and explanation have established the aggressive process. It is legitimate management context, but the two alternatives are treatments associated with different gastric tumor paradigms, leaving a straightforward disease-to-regimen match."
+      },
+      {
+        "phrase": "There is no perforation, ongoing hemorrhage or obstruction.",
+        "why": "Appropriately excludes a surgical emergency, but also strips the gastrectomy distractor of its only plausible immediate role. Keeping this necessary information requires a better competing plan, not deleting safety facts."
+      }
+    ],
+    "fairness": [
+      "R-CHOP-based systemic treatment is defensible among these choices for the fit patient with an established large-B-cell component and no surgical complication. Radiation as the entire offered initial treatment and gastrectomy/D2 are not equivalent alternatives. Exact regimen selection remains for hematology; no confident clinical inaccuracy identified.",
+      "The stage and cardiac assessment are relevant clinically, but most of the decision follows simply from the supplied diagnosis. Even without the PET distribution, systemic lymphoma therapy remains the clear answer against these two alternatives. The staging return does not earn a distinct scored inference.",
+      "The follow-up is coherent and repeats sufficient diagnosis and fitness information to stand alone. The preceding explanation reinforces the aggressive-versus-MALT distinction, further reducing independent difficulty.",
+      "The disease-treatment distinction is high yield, but the current item does not meet the requested two-step resident challenge."
+    ],
+    "suggestions": [
+      "Compare credible plans within treatment of established aggressive gastric lymphoma, using stage or fitness data that actually determine the best choice and verified criteria for any finer regimen distinction.",
+      "Alternatively keep this as explicitly accepted foundational treatment recognition. Do not add unrelated complexity or remove the urgent-complication screen just to make surgery seem plausible.",
+      "Recheck the full paired sequence after revision so the earlier feedback does not rehearse the newly scored discriminator."
+    ]
+  }
+]

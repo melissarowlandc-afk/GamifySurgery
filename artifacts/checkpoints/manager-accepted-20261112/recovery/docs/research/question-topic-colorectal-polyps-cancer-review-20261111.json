@@ -1,0 +1,833 @@
+[
+  {
+    "id": "question.topic.colorectal-polyps-cancer.positive-fit-negative-repeat.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.positive-fit-negative-repeat.v1",
+    "title": "Complete abnormal stool screening",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "colonoscopy is clinically appropriate",
+        "why": "The update explicitly endorses the investigation that is the sole keyed option; no clinical knowledge is needed to match it to 'Diagnostic colonoscopy'."
+      },
+      {
+        "phrase": "No colon examination has followed",
+        "why": "Together with the explicit endorsement, this announces the missing action rather than leaving an inference."
+      }
+    ],
+    "fairness": [
+      "Diagnostic colonoscopy is the defensible best offered answer after the unresolved positive FIT; the subsequent negative FIT does not establish diagnostic completion.",
+      "The chronology is clear. Its feedback does not disclose the paired node's specimen-location decision. This is high-yield screening follow-up, but the current version reduces it to an endorsed-test match."
+    ],
+    "suggestions": [
+      "Remove the affirmative colonoscopy recommendation; retain only neutral patient-specific constraints needed to rank colonoscopy against CT colonography.",
+      "Rebuild the competing plans around a consequential discordance in the actual evaluation, or obtain explicit acceptance as a basic screening item. Merely retaining two FIT dates does not create two consequential steps."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.biopsy-site-discordance.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.biopsy-site-discordance.v1",
+    "title": "Resolve unrepresentative colon sampling",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Repeat endoscopy at a surveillance visit' does not specify when or whether the lesion would be sampled, making its distinction from repeat targeted endoscopy imprecise."
+    ],
+    "cues": [
+      {
+        "phrase": "Lesion-directed endoscopic sampling is feasible.",
+        "why": "Repeats and authorizes the keyed action nearly verbatim."
+      },
+      {
+        "phrase": "maps the submitted bites to adjacent mucosa",
+        "why": "The location is necessary evidence, but with the feasibility sentence and a vague delay option, elementary target matching suffices."
+      }
+    ],
+    "fairness": [
+      "A benign specimen taken outside the persistent lesion cannot establish the lesion's diagnosis; additional levels cannot fix off-target acquisition.",
+      "The later visit follows the positive-FIT case coherently and supplies its own lesion and specimen findings; the earlier explanation does not supply this answer."
+    ],
+    "suggestions": [
+      "Remove the action-specific feasibility endorsement; give neutral anatomic or procedural facts only if they matter.",
+      "Replace the unspecified surveillance plan with a concrete, credible same-stage tissue-assessment alternative.",
+      "Make the specimen-location interpretation change a meaningful choice between plausible acquisition or processing strategies."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.cecum-versus-adequacy.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.cecum-versus-adequacy.v1",
+    "title": "Complete an inadequately prepared examination",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "the report nevertheless assigned a routine screening interval",
+        "why": "'Nevertheless' editorializes that the report is wrong before the learner interprets adequacy."
+      },
+      {
+        "phrase": "The left colon was well seen",
+        "why": "Combined with the only distal-examination alternative, it makes that distractor a repeat of already completed work."
+      }
+    ],
+    "fairness": [
+      "Repeat colonoscopy with improved preparation is the best offered completion plan; cecal intubation does not establish adequate inspection.",
+      "No unsupported exact repeat deadline is taught. The explanation prepares the notion of a valid baseline but does not reveal the next node's interval."
+    ],
+    "suggestions": [
+      "Report the outside recommendation neutrally without 'nevertheless'.",
+      "Replace distal-only and repeat-screen foils with credible completion strategies under explicitly supplied constraints; otherwise classify this as basic adequacy recognition rather than resident two-step reasoning."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.advanced-adenoma-surveillance.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.advanced-adenoma-surveillance.v1",
+    "title": "Surveillance after an advanced adenoma",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The three-year answer is consistent with the stated USMSTF scenario: a completely excised adenoma at least 10 mm after an adequate examination. No confident clinical error identified offline.",
+      "The adequate repeat is clearly the baseline; the second node is coherent and stands alone.",
+      "The size-to-interval rule resolves the item. Completeness and exclusion of other risk factors establish assumptions but do not create another consequential inference; six months and ten years are weak competitors for this straightforward record."
+    ],
+    "suggestions": [
+      "Preserve the necessary adequacy and complete-excision facts.",
+      "If this must be a resident application item, introduce a genuine baseline-versus-follow-up or lesion-level record interpretation that changes the interval; do not merely add more normal findings.",
+      "Otherwise seek an explicitly accepted basic surveillance role."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.large-polyp-expert-resection.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.large-polyp-expert-resection.v1",
+    "title": "Advanced resection before colectomy",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Advanced endoscopist for resection assessment",
+        "why": "The key offers cautious assessment while the alternatives commit to colectomy or deliberately partial treatment; this gives a general test-taking advantage."
+      },
+      {
+        "phrase": "Referring endoscopist for serial partial resections",
+        "why": "'Serial partial' advertises an incomplete plan and is a weak alternative to expert assessment."
+      }
+    ],
+    "fairness": [
+      "Expert endoscopic assessment before colectomy is reasonable for the described large lesion without reported overt deep-invasion features; the superficial adenoma sample alone does not exclude invasion.",
+      "The current options do not establish difficult reasoning: technical size-related referral dominates two poorly matched plans.",
+      "The subsequent EMR scenario follows coherently; this explanation does not give its surveillance interval."
+    ],
+    "suggestions": [
+      "Compare referrals or treatment assessments at equal levels of commitment and specificity.",
+      "Replace serial partial resections with a clinically credible alternative; provide the actual lesion feature that separates expert endoscopic treatment from surgery without predeclaring either eligibility."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.piecemeal-scar-surveillance.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.piecemeal-scar-surveillance.v1",
+    "title": "Early surveillance after piecemeal EMR",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "About six months is the defensible offered USMSTF first-surveillance interval after piecemeal resection of the 28-mm adenoma; no confident clinical inaccuracy identified offline.",
+      "The later update repeats the necessary size and removal method, so it stands alone. Earlier referral feedback does not teach this interval.",
+      "This is a direct size/removal-method-to-interval rule. The statement that a continuous lateral margin cannot be established further supplies the rationale; ten years is not a close resident alternative."
+    ],
+    "suggestions": [
+      "Replace the remote routine-screening distractor with a genuinely plausible surveillance error.",
+      "Require interpretation of a meaningful procedure/pathology discrepancy if two consequential steps remain the goal; otherwise request a basic-purpose exception. Keep the guideline attribution and necessary removal facts."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.intact-low-risk-specimen.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.intact-low-risk-specimen.v1",
+    "title": "Complete favorable invasive-polyp excision",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "Only the deep margin is described. 'No lesion remained endoscopically' does not establish histologic lateral-margin clearance."
+    ],
+    "cues": [],
+    "fairness": [
+      "The intended inference is appropriate: distinguish shallow favorable submucosal invasion from features warranting further local or regional treatment.",
+      "An intact oriented specimen and a 2-mm deep clearance do not explicitly establish all relevant margins. Surveillance versus further local assessment is less secure if the lateral margin is involved or unevaluable.",
+      "This is an omission, not a claim that surveillance is clinically wrong when full favorable pathology and complete excision are confirmed."
+    ],
+    "suggestions": [
+      "State the histologic lateral-margin status and complete-excision assessment explicitly; do not substitute visual clearance for histologic clearance.",
+      "Have Melissa verify that the complete pathology establishes the intended favorable malignant-polyp category, including the applicable lesion morphology. Retain the conflicting local-versus-regional treatment choices."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.stalk-local-clearance.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.stalk-local-clearance.v1",
+    "title": "Complete favorable invasive-polyp excision",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The intact pedunculated specimen, differentiated gland morphology, shallow stalk invasion, clear transection and absence of adverse features support surveillance as the best offered plan.",
+      "The resident must interpret invasion relative to the stalk and cut edge, then distinguish adequate local treatment from additional scar or regional resection. This is core malignant-polyp management.",
+      "No wording-only unique key, option convergence or obvious clinical inaccuracy identified; the task is complete and the case stands alone."
+    ],
+    "suggestions": [
+      "In feedback, make clear that the overall favorable pathology and clearance support surveillance; do not imply that shallow stalk depth alone establishes curative treatment."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.vascular-channel-regional-resection.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.vascular-channel-regional-resection.v1",
+    "title": "Regional risk despite local clearance",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Tumor within endothelial-lined channels supplies the adverse histologic finding. Clear edges and negative CT do not remove concern for microscopic regional disease; colectomy with lymphadenectomy is the best offered answer.",
+      "Two consequential steps are present: identify vascular involvement from the description, then recognize why scar-directed treatment does not address its risk.",
+      "Operative fitness and negative distant staging are relevant constraints rather than gratuitous permissions. No key-only phrase match or unsupported numerical risk is needed."
+    ],
+    "suggestions": [
+      "Feedback could explicitly distinguish microscopic regional risk from CT-visible enlarged nodes; preserve the current separation of local clearance and regional treatment."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.transected-front-regional-resection.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.transected-front-regional-resection.v1",
+    "title": "Regional risk despite local clearance",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The invasive front reaches a cauterized fragment edge and depth cannot be reconstructed. A clear-looking scar and negative represented vascular sections cannot establish a fully characterized favorable malignant polyp.",
+      "Oncologic resection is the best offered plan for the stated fit patient; local scar excision is a credible error but does not resolve the incompletely characterized regional-risk problem.",
+      "This requires interpretation of specimen adequacy and margins followed by a treatment-scope decision. No confident clinical error or nonmedical wording shortcut identified."
+    ],
+    "suggestions": [
+      "Explain explicitly why scar re-excision does not restore the lost invasive-depth assessment or address possible regional disease. Avoid generalizing this case into a rule for every narrowly clear margin."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.nonlifting-after-tattoo.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.nonlifting-after-tattoo.v1",
+    "title": "Advanced resection before colectomy",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Advanced endoscopist for scarred-lesion assessment",
+        "why": "The key is an assessment, while the distractors commit to operations or repeat snaring. A cautious-answer shortcut survives the otherwise useful clinical problem."
+      },
+      {
+        "phrase": "repeat standard snaring",
+        "why": "The record has already described failure to lift; this generic repeat is a weak competitor without a materially different technique or target."
+      }
+    ],
+    "fairness": [
+      "Prior cautery and sublesional tattoo can confound interpretation of nonlifting; they do not prove benignity. Expert assessment is a reasonable best answer.",
+      "The intended two-step problem is high-yield: interpret nonlifting in its procedural context, then choose the appropriate treatment pathway. The option asymmetry weakens the realized difficulty."
+    ],
+    "suggestions": [
+      "Compare equally concrete assessment/referral pathways, or equally concrete treatments once sufficient anatomy and expertise are specified.",
+      "Replace routine repeat snaring with a credible alternative that a resident could choose after misinterpreting this particular nonlifting finding."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.intramucosal-versus-t1.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.intramucosal-versus-t1.v1",
+    "title": "Mucosal carcinoma versus T1 invasion",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "An intact specimen with carcinoma confined above an intact muscularis mucosae, represented uninvolved submucosa and clear edges supports surveillance after local excision rather than nodal surgery.",
+      "The terminology 'carcinoma' creates a plausible over-treatment error; the learner must interpret the actual depth and adequacy before choosing treatment.",
+      "The necessary negative submucosal finding is not an unfair cue: removing it would weaken the single best answer. No extra scar resection is justified by the supplied record."
+    ],
+    "suggestions": [
+      "Preserve explicit submucosal representation and clear margins. Feedback may name the intramucosal-versus-submucosal distinction to make the reusable rule clearer."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.fap-diffuse-rectal-burden.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.fap-diffuse-rectal-burden.v1",
+    "title": "Rectal removal for uncontrolled FAP burden",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Persistent extensive rectal disease with high-grade dysplasia despite attempted clearance supports rectal removal; normal continence and the informed continuity goal favor IPAA over an end ileostomy.",
+      "Two separate findings determine operative extent and reconstruction. The preference is decision-critical, not a gratuitous answer endorsement, because both proctocolectomy reconstructions are clinically possible.",
+      "FAP is an appropriate prerequisite diagnosis for this management task. No independent nonmedical cue or confident clinical error identified."
+    ],
+    "suggestions": [
+      "Retain both disease-control and functional information; do not shorten this into the diagnosis label followed by an operation."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.fap-rectal-sparing-ira.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.fap-rectal-sparing-ira.v1",
+    "title": "Rectal-sparing FAP operation",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The adequately examined rectum has a small completely removed burden. That distribution, willingness for surveillance and the stated pelvic-dissection preference make IRA the best offered fit; IPAA remains a legitimate alternative in broader counseling.",
+      "The preference is necessary to rank two defensible procedures rather than an instruction that IRA is universally preferred. The learner still must establish whether rectal preservation fits the observed burden.",
+      "The paired progression case is coherent, and this explanation does not give a specific later operation; it appropriately explains why retained-rectum surveillance remains necessary."
+    ],
+    "suggestions": [
+      "Clinical sign-off should confirm the exact rectal pathology and counseling assumptions; preserve the conditional wording rather than claiming that a count of three automatically mandates IRA."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.fap-retained-rectum-progression.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.fap-retained-rectum-progression.v1",
+    "title": "Rectal removal for uncontrolled FAP burden",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Pelvic staging shows no invasive cancer' overstates what imaging/staging can establish about microscopic invasion in a dysplastic field.",
+      "'He wants restoration' is imprecise in someone who already has an IRA and intestinal continuity; specify his current preference regarding future continuity versus an end stoma."
+    ],
+    "cues": [],
+    "fairness": [
+      "Failure to control the retained rectal field supports completion proctectomy; preserved continence and a continuity preference can favor IPAA.",
+      "The progression after IRA is coherent and the update contains enough prior-operative context to stand alone. The earlier explanation supplies surveillance rationale, not the answer.",
+      "The concern is imprecise exclusion of invasion and reconstruction counseling, not a confident claim that the intended IPAA plan is wrong."
+    ],
+    "suggestions": [
+      "Distinguish what endoscopic pathology found from what pelvic imaging did or did not show; use the actual represented findings without claiming imaging excludes all invasion.",
+      "Clarify the patient's reconstruction goal. Keep the two separate decisions about rectal removal and reconstruction."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.fap-poor-sphincter-end-stoma.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.fap-poor-sphincter-end-stoma.v1",
+    "title": "Reconstruction when continence is poor",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The uncontrolled dysplastic rectal field argues against retaining the rectum, while daily formed-stool leakage and a disrupted weak sphincter argue against a pouch reconstruction. Proctocolectomy with end ileostomy is the best offered plan.",
+      "The stoma acceptance is legitimate informed-preference information. Even without that phrase, the disease and sphincter findings drive the two consequential decisions; it is not the sole basis for selecting the answer.",
+      "This is a high-yield interaction of oncologic extent and function; the options are parallel operations."
+    ],
+    "suggestions": [
+      "Retain the observed continence impairment rather than replacing it with an authored label such as 'not a pouch candidate'."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.rectal-local-mri.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.rectal-local-mri.v1",
+    "title": "Local rectal staging before treatment",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "do not resolve the tumor edge against the mesorectal fascia",
+        "why": "Names the specific standard MRI staging target; the remaining task is chiefly a modality-to-purpose match."
+      },
+      {
+        "phrase": "Whole-body FDG PET-CT",
+        "why": "Against a task explicitly requesting local assessment, this is an obvious scope outlier."
+      }
+    ],
+    "fairness": [
+      "Rectal-protocol MRI is the best offered local assessment; EUS does not provide the same mesorectal-fascia assessment. No confident clinical inaccuracy identified.",
+      "The node is high-yield but single-step test selection. Its explanation coherently introduces MRI for the paired treatment node without giving the later sequence."
+    ],
+    "suggestions": [
+      "If retaining the routine staging objective, seek an explicit basic-purpose exception.",
+      "For a resident application version, use a real local-staging discrepancy or technically limited examination with credible alternatives, rather than simply stating the structure MRI must assess."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.rectal-high-risk-tnt.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.rectal-high-risk-tnt.v1",
+    "title": "Neoadjuvant sequence for locally advanced rectal cancer",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Extramural extension, fascia contact and suspicious mesorectal nodes in a fit pMMR patient without distant disease favor a neoadjuvant pathway; transanal excision does not address the represented disease.",
+      "The learner interprets the local extent and threatened plane, then sequences treatment before definitive surgery. Upfront TME is the relevant competing error.",
+      "The update restates the diagnosis, stage-relevant findings, MMR status and fitness, so it stands alone. Prior MRI feedback teaches what MRI evaluates but not the TNT answer."
+    ],
+    "suggestions": [
+      "Feedback should spell out what total neoadjuvant therapy comprises and why the threatened plane changes sequencing, without asserting a universally mandatory regimen or response interval."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.early-rectal-eus.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.early-rectal-eus.v1",
+    "title": "Clarify early rectal wall invasion",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'A small outside rectal-cancer workup' grammatically makes the workup small rather than the lesion."
+    ],
+    "cues": [
+      {
+        "phrase": "Repeat pelvic MRI with the same protocol",
+        "why": "The same study has just failed to distinguish the required layers; no change in acquisition or interpretation makes this a credible repeat."
+      },
+      {
+        "phrase": "Whole-body FDG PET-CT",
+        "why": "The task names a local-treatment eligibility question and distant staging is already negative, allowing scope-based elimination."
+      }
+    ],
+    "fairness": [
+      "EUS is a defensible complementary examination for the stated T1-versus-T2 uncertainty; the record appropriately avoids treating negative biopsy features as whole-lesion proof.",
+      "With the two current distractors, the learner can select the only new local-depth test without understanding its limits. This is high-yield but not two consequential steps.",
+      "The later excision finding is compatible with this pathway, although a short transition explaining that local excision subsequently occurred after outside assessment would improve continuity."
+    ],
+    "suggestions": [
+      "Repair the presentation grammar.",
+      "Replace unchanged MRI and whole-body staging foils with clinically credible ways of resolving the specific early-wall-depth uncertainty; state the acquisition or interpretation facts that distinguish them.",
+      "Do not imply that EUS perfectly excludes T2 disease."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.t2-after-local-excision.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.t2-after-local-excision.v1",
+    "title": "Completion treatment after unexpected T2 disease",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Muscularis-propria invasion establishes the depth problem despite clear local edges. In a fit patient, completion oncologic rectal resection addresses regional risk that repeated scar excision or surveillance does not.",
+      "The two consequential steps are interpretation of unexpected depth and escalation from local clearance to mesorectal treatment.",
+      "The later pathology can differ from preoperative assessment without contradiction. The update states what was excised and the critical new findings, so it stands alone; prior EUS feedback does not disclose the completion operation."
+    ],
+    "suggestions": [
+      "For smoother chronology, briefly state that outside assessment was followed by local excision. Feedback could name pT2 and explain why normal-sized nodes do not exclude microscopic disease."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.response-stale-mri.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.response-stale-mri.v1",
+    "title": "Current multimodal rectal response assessment",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "The attached rectal MRI is dated March and depicts the original tumor",
+        "why": "With July treatment and September assessments, the only old component is explicit."
+      },
+      {
+        "phrase": "Current rectal-protocol pelvic MRI",
+        "why": "'Current' uniquely repairs the date problem stated in the update, so general record-reading selects the key."
+      }
+    ],
+    "fairness": [
+      "A pretreatment MRI does not complete post-treatment local response assessment; a current appropriate MRI is the best offered answer.",
+      "The chronology is clear and the case stands alone. Multimodal assessment is high-yield, but matching the stale component to its current replacement is mainly an administrative one-step task."
+    ],
+    "suggestions": [
+      "Keep truthful acquisition dates but compare credible plans that depend on interpretation of current multimodal response evidence, not just replacing the only old record.",
+      "If the goal is document-date recognition, request a basic-purpose exception rather than calling this difficult clinical reasoning."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.response-acquired-not-exported.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.response-acquired-not-exported.v1",
+    "title": "Current multimodal rectal response assessment",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": false,
+    "clarityIssues": [
+      "The later MRI is called post-treatment but its date relative to the examination and endoscopy is not supplied. 'Current' is not enough to judge whether the discordance reflects different assessment times."
+    ],
+    "cues": [
+      {
+        "phrase": "its images remain in the original hospital archive",
+        "why": "Explicitly identifies the missing action's location."
+      },
+      {
+        "phrase": "Retrieve and review the completed post-treatment MRI",
+        "why": "The uniquely conservative retrieve-before-repeat option can be chosen from the administrative narrative without interpreting any response finding."
+      }
+    ],
+    "fairness": [
+      "Retrieval and review are sensible if the documented examination is timely and adequate; the item does not show enough of the reported wall finding to test that interpretation.",
+      "The other choices are new examinations, while the key is record retrieval. This is useful clinical workflow but low yield as a standalone ABSITE/boards decision in its present form.",
+      "No claim is made that retrieval is clinically wrong; the problem is low discriminatory value and unprovided temporal comparability."
+    ],
+    "suggestions": [
+      "Give the relevant study and assessment dates if discordance is the scored problem.",
+      "Merge the retrieval lesson into a genuine response-assessment decision or replace it with a higher-yield clinical inference. Do not manufacture difficulty by hiding whether an acquisition exists."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v1",
+    "title": "Select a rectal organ-preservation pathway",
+    "verdict": "PASS",
+    "difficulty": "hard",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Serial enlargement of a palpable mural nodule with corresponding suspicious MRI findings conflicts with a complete-response interpretation despite benign superficial biopsies.",
+      "Previously node-positive low rectal disease, progression and operative fitness favor oncologic resection over transanal local excision or watch-and-wait. The negative biopsy cannot establish absence of deeper residual disease.",
+      "The resident must assess specimen scope and serial multimodal evidence, then weigh an organ-preservation preference against oncologic adequacy. These are consequential and plausibly difficult competing considerations.",
+      "This is an offline editorial judgment, not verification of a universal response interval or clinical approval; the exact organ-preservation boundary still requires Melissa's review."
+    ],
+    "suggestions": [
+      "Keep the interval progression and superficial specimen description. Feedback should explain both the watch-and-wait error and why local excision does not address the represented regional-risk setting."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.regrowth-salvage-resection.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.regrowth-salvage-resection.v1",
+    "title": "Salvage assessment after rectal regrowth",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Biopsy-proven regrowth extending through muscularis propria, without distant disease and with an achievable surgical plane, favors salvage oncologic resection in this fit patient.",
+      "The learner must reassess current depth and resectability rather than preserve the prior complete-response plan; superficial local excision does not match the represented extent.",
+      "The historical watch-and-wait diagnosis is appropriate management context. The case stands alone and supplies the relevant current evidence; no nonmedical wording shortcut or confident clinical inaccuracy identified."
+    ],
+    "suggestions": [
+      "In feedback, explain why the through-muscle extent makes transanal excision inadequate rather than relying only on the word 'salvage'."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.above-reflection-sequence.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.above-reflection-sequence.v1",
+    "title": "Upper-rectal treatment sequence",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "'Extends slightly beyond muscle' is imprecise if the intended treatment branch depends on the degree of extramural extension.",
+      "'A clear surrounding surgical plane' is an interpretive summary rather than a sufficiently specific MRI description for a close sequencing question."
+    ],
+    "cues": [],
+    "fairness": [
+      "Initial resection is a plausible supported pathway for favorable upper-rectal disease, but rectal sequencing varies with anatomic definitions, risk assessment and guideline framework.",
+      "The current wording does not establish why TNT must be an inferior answer under the intended framework. This is an unresolved fairness question, not a confident declaration that the proposed initial-resection plan is clinically wrong.",
+      "Above-reflection anatomy is meaningful data, not itself an unfair diagnosis cue; the problem is making a conditional recommendation into a single best sequence without precise selection assumptions."
+    ],
+    "suggestions": [
+      "State the intended guideline/MDT framework and the decision-critical MRI observations, using only clinician-verified criteria.",
+      "Have Melissa adjudicate initial resection versus neoadjuvant treatment for this exact version before accepting the key. Do not invent a numeric extension or margin threshold to force uniqueness.",
+      "Replace the implausible transanal option for this extramural lesion with a credible competing sequence once the framework is settled."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.adherent-bladder-en-bloc.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.adherent-bladder-en-bloc.v1",
+    "title": "En-bloc planning for an adherent colon tumor",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "after separating the bladder attachment",
+        "why": "Shares the same interface-disruption error as the other distractor."
+      },
+      {
+        "phrase": "after sampling and dividing the attachment",
+        "why": "Near-duplicates the separation option, leaving en-bloc preservation as the conspicuous opposite category."
+      }
+    ],
+    "fairness": [
+      "En-bloc resection of a potentially involved adjacent-organ interface is the best offered curative strategy; adherence alone need not prove histologic invasion.",
+      "The precise bladder extent is appropriately left conditional. No confident clinical inaccuracy identified.",
+      "The item is essentially recall of the en-bloc principle, with two versions of the same wrong maneuver; it does not create two consequential steps."
+    ],
+    "suggestions": [
+      "Keep the oncologic principle but replace the redundant interface-division distractors with distinct credible operative plans.",
+      "If adding a second inference, provide anatomic information that actually changes operative extent and preserves a single best plan; otherwise request acceptance as a basic surgical-principle item."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.few-nodes-specimen-reassessment.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.few-nodes-specimen-reassessment.v1",
+    "title": "Reassess a low node yield",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'Pelvic MRI of the remaining mesentery' is an awkward and poorly targeted investigation for improving microscopic staging of the resected specimen."
+    ],
+    "cues": [
+      {
+        "phrase": "The remaining mesenteric specimen is retained by pathology.",
+        "why": "Names the available object used only by the keyed retrieval plan."
+      },
+      {
+        "phrase": "Additional node retrieval from the retained specimen",
+        "why": "Only this option examines tissue; both distractors image the patient, creating a category shortcut."
+      }
+    ],
+    "fairness": [
+      "Further pathologic node retrieval is appropriate for a low-yield specimen when material remains; negative imaging cannot supply the missing microscopic assessment.",
+      "The high-yield adequacy issue is clinically sound, but an explicit tissue-availability sentence plus two imaging foils makes it easy.",
+      "The following updated pathology is coherent. This explanation does not reveal how a tumor deposit changes the later adjuvant decision."
+    ],
+    "suggestions": [
+      "Use credible same-stage pathology/staging or adjuvant-assessment plans instead of two imaging fillers.",
+      "Make an actual specimen or staging interpretation necessary before the next action; preserve availability information if it is genuinely needed to distinguish retrieval from an unavailable option."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.deposit-with-negative-nodes.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.deposit-with-negative-nodes.v1",
+    "title": "Postoperative planning with a tumor deposit",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "A confirmed pericolic tumor deposit without positive regional nodes carries regional staging significance despite the adequate negative-node count. Adjuvant systemic-therapy planning is the best offered plan.",
+      "The resident must translate the deposit finding into regional-stage significance and then choose an adjuvant rather than node-negative surveillance pathway. Pelvic chemoradiation is less plausible for the stated sigmoid primary, but the surveillance error remains consequential.",
+      "The second node stands alone: it identifies sigmoid colectomy, the deposit definition, node count, margin status and absence of distant disease. Earlier feedback explains retrieval but does not give the deposit-stage or chemotherapy answer.",
+      "FOLFOX is presented as oncology planning, not mandatory immediate administration; individual regimen suitability is not falsely established."
+    ],
+    "suggestions": [
+      "Teach the N1c distinction explicitly in feedback and contrast tumor deposits with lymph-node, vascular and neural involvement. Preserve the exact pathological confirmation and clinician review of adjuvant planning."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.asymptomatic-incurable-primary.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.asymptomatic-incurable-primary.v1",
+    "title": "Initial treatment of an asymptomatic metastatic primary",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "not amenable to curative local treatment",
+        "why": "Supplies the disease-level treatment interpretation instead of asking the resident to establish it; this can be legitimate background, but then the remaining decision is only the routine uncomplicated-primary rule."
+      },
+      {
+        "phrase": "The sigmoid lumen remains patent",
+        "why": "Directly neutralizes the stent distractor, which has no competing obstructive indication."
+      },
+      {
+        "phrase": "is fit for systemic treatment",
+        "why": "Adds an endorsement of the keyed treatment category."
+      }
+    ],
+    "fairness": [
+      "Systemic-treatment planning is the best offered strategy for the represented uncomplicated primary with incurable metastatic disease; prophylactic stenting is not indicated by this record.",
+      "The underlying management concept is high-yield. The current draft mostly maps an explicitly uncomplicated, incurable and treatment-fit summary to systemic treatment rather than requiring two consequential inferences.",
+      "The subsequent perforation is a coherent change in clinical state, but this explanation already states the uncomplicated-primary boundary that the follow-up illustrates."
+    ],
+    "suggestions": [
+      "Retain necessary metastatic and symptom information without the affirmative treatment permission.",
+      "Use a real competing primary-tumor concern and credible strategy alternatives whose ranking turns on the supplied observations; avoid a stent option when the narrative simply excludes obstruction.",
+      "If retaining this simple teaching pair, seek basic-purpose acceptance instead of claiming independent hard reasoning."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.perforation-overrides-systemic-first.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.perforation-overrides-systemic-first.v1",
+    "title": "Source control for a perforated primary",
+    "verdict": "FAIL",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The vignette describes an 'intervening outside admission' in past tense, then says the team 'has begun' treatment and 'is arranging' control. Clarify whether the learner is recommending an acute plan or reviewing a completed event.",
+      "'A staged reconstruction plan' is not a concrete procedure or adequately defined strategy."
+    ],
+    "cues": [
+      {
+        "phrase": "is arranging definitive source control",
+        "why": "Announces the required action category before asking for a 'definitive local plan'."
+      },
+      {
+        "phrase": "Endoluminal stenting across the sigmoid tumor",
+        "why": "Against free gas, free fluid and diffuse peritoneal findings, this is a conspicuously inappropriate foil."
+      },
+      {
+        "phrase": "Systemic treatment after the initial antibiotic course",
+        "why": "Offers delay instead of a credible alternative source-control plan; the only operative option wins without evaluating its details."
+      }
+    ],
+    "fairness": [
+      "Free perforation with diffuse peritoneal findings supports urgent source control. The defect is not that resection is inherently wrong.",
+      "The question forces an oncologic resection plus an undefined staged reconstruction without supplying hemodynamic status, response to resuscitation, contamination/operative findings or current goals needed to justify that specific operative scope. Earlier fitness for systemic therapy cannot establish fitness during sepsis.",
+      "There is no competing viable source-control option, so the offered answer set cannot test the missing operative judgment fairly.",
+      "The earlier uncomplicated-primary explanation scaffolds the broad change of objective. The update also omits the unresectable metastatic context if shown independently. As written this fails the requested fair, concrete resident-level decision."
+    ],
+    "suggestions": [
+      "Rebuild this node around one explicit acute decision time, retaining the metastatic context and supplying the observations required for the chosen operative decision.",
+      "Compare specific, credible source-control operations or strategies at the same stage; remove options that merely postpone source control or offer stenting for free perforation.",
+      "If testing only emergency recognition, use an explicitly accepted basic/safety role and avoid asserting a particular reconstruction strategy unsupported by the vignette."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.serrated-dysplasia-surveillance.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.serrated-dysplasia-surveillance.v1",
+    "title": "Surveillance after serrated dysplasia",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Three years is the defensible offered USMSTF interval after complete removal of a sessile serrated lesion with dysplasia in the stated adequate baseline examination. No confident clinical inaccuracy identified offline.",
+      "The separate small hyperplastic polyp is not needed to choose the answer: removing container A leaves the same decision. Thus the claimed specimen-mapping complexity does not add an inference.",
+      "The case stands alone, but it tests a single surveillance rule rather than two consequential steps; the six-month option is weakened by explicit intact complete removal."
+    ],
+    "suggestions": [
+      "Remove the decorative container unless a real provenance discrepancy makes mapping consequential.",
+      "Either create a genuine lesion/procedure interpretation that changes the surveillance plan or request a basic single-rule role. Preserve dysplasia and adequate complete excision as decision-critical facts."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.advanced-baseline-normal-surveillance.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.advanced-baseline-normal-surveillance.v1",
+    "title": "Integrate baseline and first surveillance",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [
+      "The time between the advanced-adenoma baseline and the normal 'first surveillance' examination is missing. An early clearing examination and a scheduled surveillance examination need not justify the same next interval."
+    ],
+    "cues": [],
+    "fairness": [
+      "Five years is the intended USMSTF second-surveillance answer after an appropriately timed normal first surveillance examination following an advanced baseline adenoma.",
+      "Integrating baseline risk with the normal later examination is a useful two-step high-yield task, and three versus ten years represent credible history-erasure or history-freezing errors.",
+      "The concern is the unprovided timing assumption, not a confident assertion that the five-year key is wrong under its intended conditions."
+    ],
+    "suggestions": [
+      "State that the normal first surveillance occurred at the guideline-recommended interval after the baseline, or provide verified dates that establish it.",
+      "Retain the two examinations and the balanced interval alternatives; no other complexity is needed."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.lesions-not-fragments.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.lesions-not-fragments.v1",
+    "title": "Count adenomas by lesions rather than fragments",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The procedure documents two small completely removed lesions; four laboratory fragments do not establish four adenomas. Seven to ten years is the defensible offered USMSTF interval for the supplied low-risk baseline.",
+      "Two consequential steps are required: reconcile the unit of counting, then apply the interval to the actual lesion burden. Three to five years is a credible fragment-count error.",
+      "Putting both lesions in one container does not obscure the procedure's documented count or sizes, and both are tubular adenoma without advanced features. No wording-only unique key, major ambiguity or confident clinical error identified."
+    ],
+    "suggestions": [
+      "Keep complete removal and lesion-level procedural counts explicit. The explanation already teaches the relevant distinction without inventing a probability or threshold."
+    ]
+  },
+  {
+    "id": "question.topic.colorectal-polyps-cancer.response-nondiagnostic-diffusion.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.response-nondiagnostic-diffusion.v1",
+    "title": "Current multimodal rectal response assessment",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "No diagnostic diffusion series exists in the archive",
+        "why": "Explicitly eliminates retrieval and directs the learner toward reacquisition."
+      },
+      {
+        "phrase": "Repeat rectal MRI with diagnostic T2 and diffusion acquisition",
+        "why": "The key is the only option that promises to repair the exact 'nondiagnostic' series named in the update."
+      },
+      {
+        "phrase": "Obtain whole-body FDG PET-CT for response assessment",
+        "why": "A broad systemic modality is a weak alternative for the explicitly local acquisition-quality problem."
+      }
+    ],
+    "fairness": [
+      "An artifact-limited diffusion series cannot support a confident complete-response assessment merely because the summary says complete. Further appropriate local imaging assessment is reasonable.",
+      "The present options reduce the item to replacement of a known unusable acquisition; they do not test interpretation of response findings.",
+      "The need to repeat an entire T2-plus-diffusion protocol rather than obtain an optimized targeted repeat or expert protocol assessment is not established. This is a scope uncertainty, not a claim that repeat MRI is clinically wrong.",
+      "The case stands alone and its high-yield underlying topic is multimodal response assessment; current difficulty is easy."
+    ],
+    "suggestions": [
+      "Preserve the truthful quality and archive observations, but remove the retrieve-a-nonexistent-diagnostic-study foil.",
+      "Compare credible imaging-resolution plans with sufficient technical context to rank them, and describe the keyed repeat's scope precisely.",
+      "If the goal is simply recognizing an inadequate study, obtain basic-purpose acceptance rather than calling it two-step resident reasoning."
+    ]
+  }
+]

@@ -1,0 +1,374 @@
+[
+  {
+    "id": "question.topic.nutrition-support-metabolism.oral-escalation.v1",
+    "nodeId": "node.topic.nutrition-support-metabolism.oral-escalation.v1",
+    "title": "Escalating beyond an unsuccessful oral nutrition trial",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Nasogastric nutrition is the best offered answer: actual oral consumption continues to fail despite treatment, while the supplied swallowing and transit observations support trying gastric delivery. Another oral prescription does not correct the demonstrated delivery problem; PN is not established as necessary.",
+      "The consequential distinction is inadequate oral delivery versus inability to use the gastrointestinal tract. The observations require clinical interpretation; no key-only lexical match, option outlier or convergence reliably supplies the answer. This is a common perioperative nutrition decision, although toward the easier end of moderate.",
+      "The presentation and update form a coherent standalone record with a named patient, age/sex and complete task. No previous explanation is needed. No confident clinical inaccuracy identified from the permitted text.",
+      "Report scope: independently reviewed all 17 current executable after nodes, including six pass-preserved versions, using their presentation, update, exhibit, task, options and explanation. Six parked records (risk-assessment, baseline-attribution, chyle-composition, refractory-chyle-route, ileus-support, pn-response-versus-function), kept-unchanged and retired inventory records, and inherited holds were noted but not scored. All 17 current cases contain one node; historical multipart sequences were not treated as current. No statistics items were present. This offline editorial review neither verifies current sources nor clinically approves any version; Melissa Rowland remains clinical sign-off. Runtime wait rendering and other implementation behavior are outside the permitted visible-text review."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.nutrition-support-metabolism.preop-nutrition-timing.v1",
+    "nodeId": "node.topic.nutrition-support-metabolism.preop-nutrition-timing.v1",
+    "title": "Preoperative nutrition timing and route",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Deferring the nonurgent operation for supervised oral or enteral nutrition is the best offered plan. The learner must recognize substantial nutritional risk from the weight/BMI observations, then apply surgical urgency and route tolerance. Poor intake does not establish the need for exclusive PN.",
+      "The urgency information legitimately determines whether preoperative treatment can take priority; it should not be removed as a cue. Two alternatives defer surgery, so that wording does not uniquely identify the key. The option set compares preparation plans at the same stage without prescribing an unsupported exact treatment interval.",
+      "This tests a high-yield perioperative decision. The named age/sex presentation and task are self-contained; there is no current multipart dependency. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.nutrition-support-metabolism.supplement-delivered.v2",
+    "nodeId": "node.topic.nutrition-support-metabolism.supplement-delivered.v2",
+    "title": "Reconciling delivered enteral nutrition with PN",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The update describes a return to the preceding tolerated rate, but the exhibit still calls 1,400 kcal the jejunal prescription and 600 kcal the administration. It is unclear whether the prescription is the abandoned higher order or a current order with an unexplained delivery shortfall."
+    ],
+    "cues": [
+      {
+        "phrase": "The pump-on record below represents delivery at that tolerated rate; higher-rate prescriptions were not sustained.",
+        "why": "This interprets which row to use before the learner makes the choice. The clinical discrimination between an achievable order and actual tolerated delivery is supplied."
+      },
+      {
+        "phrase": "while retaining the current tolerated jejunal feed",
+        "why": "The task fixes the route and feed contribution. Subtracting the labeled administration from the labeled requirement selects the answer without interpreting the clinical history."
+      }
+    ],
+    "fairness": [
+      "Under the stipulated delivery, the calculation is correct: 1,900 - 600 = 1,300 kcal and 90 - 30 = 60 g protein. The alternative 500/25 uses prescribed rather than administered intake; 1,900/90 ignores the enteral contribution. There is one numerical key and no confident clinical inaccuracy.",
+      "Two subtractions do not create two consequential clinical steps. The current text supplies the interpretation that was supposed to precede reconciliation. Delivered-versus-ordered intake is high yield, but this version functions as an easy arithmetic exercise rather than a difficult resident item.",
+      "This is standalone and does not need a prior answer. The retrospective hospital frame is coherent apart from the order/delivery chronology noted above."
+    ],
+    "suggestions": [
+      "Label the orders and administrations by their actual sequence so an abandoned higher order cannot be mistaken for the current tolerated prescription.",
+      "Show the raw rate, interruption and symptom course, then ask for a concrete combined nutrition plan that makes the learner distinguish correctable underdelivery from genuine intolerance before adjusting PN. Keep the arithmetic simple and use the closest credible delivery error; do not merely add more numbers."
+    ]
+  },
+  {
+    "id": "question.topic.nutrition-support-metabolism.pn-withdrawal.v2",
+    "nodeId": "node.topic.nutrition-support-metabolism.pn-withdrawal.v2",
+    "title": "Stopping PN while preserving necessary oral supplements",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The presentation calls PN the current prescription, whereas the update describes an interval without PN. Clarify whether it is held pending review or has resumed; the intended discontinuation decision is understandable but the active order status is imprecise."
+    ],
+    "cues": [
+      {
+        "phrase": "Current assessed daily requirement",
+        "why": "The 1,850/80 target exactly equals the two consumed rows. Only the key retains precisely those rows. The answer can be selected by arithmetic without using the weight, functional or inflammatory observations."
+      }
+    ],
+    "fairness": [
+      "Meals plus supplements provide 1,850 kcal and 80 g protein. Meals plus PN provide only 1,700 kcal and 75 g, meals alone are lower still, and all three exceed the stated assessment. The key is best under the supplied conditions; low albumin with inflammation does not by itself justify continued PN.",
+      "The PN-free course is clinically relevant corroboration, but none of the offered alternatives forces the learner to interpret it: the answer is already unique from the totals. The explanation's claimed second step is therefore optional rather than consequential. This is a high-yield transition concept presented at easy difficulty.",
+      "The three weights and unchanged chair-rise performance should not be taught as an independent proof of sustained nutritional adequacy over a universal interval. The explanation appropriately disclaims a stopping threshold. No confident clinical inaccuracy identified; the node otherwise stands alone."
+    ],
+    "suggestions": [
+      "Make the active PN order status explicit.",
+      "Make observed delivery or tolerance distinguish clinically credible continuation and withdrawal plans, rather than making every distractor miss an explicit arithmetic target. Preserve the supplements requirement and inflammatory-albumin teaching in feedback. Do not invent a minimum trial duration."
+    ]
+  },
+  {
+    "id": "question.topic.nutrition-support-metabolism.restart-thiamine.v2",
+    "nodeId": "node.topic.nutrition-support-metabolism.restart-thiamine.v2",
+    "title": "Thiamine timing and route at nutrition reintroduction",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'At this review' is less precise than the consequential timing relative to the first nutrition infusion. The learner can infer the intended timing, but the answer and explanation should state that relationship explicitly."
+    ],
+    "cues": [
+      {
+        "phrase": "Which thiamine plan",
+        "why": "The task supplies the preventive intervention instead of requiring the learner to derive it from the intake history."
+      },
+      {
+        "phrase": "Repeated oral medication trials had been vomited back.",
+        "why": "This necessary route constraint directly eliminates both oral options even for a reader with little medical knowledge. The remaining comparison is immediate prevention versus waiting for deterioration; the balanced four-option matrix overstates the number of credible competitors."
+      }
+    ],
+    "fairness": [
+      "Intravenous thiamine before nutrition is the best offered plan given prolonged poor intake and inability to retain oral medication. Initial electrolyte correction does not remove the preventive indication. No confident clinical inaccuracy identified and no dose is invented.",
+      "The clinical concept is high yield, but the named intervention plus explicit oral failure leaves a simple timing rule. Route selection is an immediate reading of the constraint, not a substantial second resident inference. This does not meet the requested moderate/hard two-step construction.",
+      "The hospital record review is standalone with consistent demographics. There is no prior-node scaffold to assess."
+    ],
+    "suggestions": [
+      "Use a neutral pre-infusion management task and credible plans at the same decision stage so the nutritional history must identify the preventive action. Keep the vomiting information if route remains part of the decision; do not hide a necessary safety constraint.",
+      "State the keyed timing relative to carbohydrate/nutrition administration in the option or feedback. If retained as basic refeeding safety recognition, seek explicit acceptance of that educational role instead of labeling it difficult."
+    ]
+  },
+  {
+    "id": "question.topic.nutrition-support-metabolism.renal-protein-reference.v1",
+    "nodeId": "node.topic.nutrition-support-metabolism.renal-protein-reference.v1",
+    "title": "Protein reference weight in hospitalized chronic dialysis",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The learner must distinguish fluid-associated weight from the prior postdialysis reference and apply the specified hospitalized conventional-dialysis recommendation. The alternatives represent use of the edematous weight and a lower protein allowance; neither is excluded by option wording alone.",
+      "The stated calculation is internally correct: 70 x 1.2 = 84 g/day; 88 x 1.2 approximately produces the 106-g alternative. The task names ESPEN and a minimum, avoiding a claim that 84 g is a universal optimum or maximum. No confident clinical inaccuracy identified, but the exact guideline population and numerical recommendation require clinician/source confirmation outside this offline review.",
+      "Renal protein needs and edema-adjusted weight interpretation are high-yield nutrition concepts; recall of this particular guideline minimum adds specificity rather than an additional clinical objective. The node is coherent and standalone."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.nutrition-support-metabolism.renal-energy-revision.v2",
+    "nodeId": "node.topic.nutrition-support-metabolism.renal-energy-revision.v2",
+    "title": "Counting intravenous calories without reducing required protein",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Current assessed total requirement",
+        "why": "The table directly supplies both desired outputs: subtract 400 from 1,900 and copy 84. No interpretation of the glucose or nitrogen-balance observations is needed."
+      },
+      {
+        "phrase": "All proposed formula orders retain the existing intravenous treatment.",
+        "why": "This fixes the only treatment component that could otherwise require judgment. Combined with the supplied total target, it reduces the task to bookkeeping. It is a valid constraint, but does not itself create clinical difficulty."
+      }
+    ],
+    "fairness": [
+      "The keyed prescription is internally correct: 1,500 + 400 = 1,900 kcal with the separately assessed 84 g protein preserved. The 66-g alternatives undersupply the stipulated protein need and 1,900-kcal formula alternatives exceed the total energy assessment.",
+      "No confident clinical inaccuracy identified. The glucose rise does not prove overfeeding on its own, and negative nitrogen balance is not independently resolved by these numbers; the explanation appropriately anchors the prescription to the supplied assessment.",
+      "Hidden energy and independent protein needs are high yield, but every clinical observation can be removed without changing the unique answer. Arithmetic plus copying a target is not two consequential clinical steps. The node is otherwise clear and standalone."
+    ],
+    "suggestions": [
+      "Require the learner to infer a clinically meaningful prescription change from actual substrate delivery and a competing explanation, then choose comparable complete prescriptions. Avoid explicitly supplying every scored output.",
+      "If the purpose remains simple calorie reconciliation, shorten the clinical narrative and seek explicit acceptance as basic practice; the statistics single-skill exception does not apply to nutrition arithmetic."
+    ]
+  },
+  {
+    "id": "question.topic.nutrition-support-metabolism.aki-protein-restriction.v2",
+    "nodeId": "node.topic.nutrition-support-metabolism.aki-protein-restriction.v2",
+    "title": "Initial protein provision during septic AKI without KRT",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'First specialist nutrition assessment' and 'begin with' do not establish the phase of critical illness, prior duration of feeding or the guideline being implemented. The patient already receives protein during ongoing sepsis, so an initial specialist review need not be the initial nutritional treatment phase."
+    ],
+    "cues": [],
+    "fairness": [
+      "The arithmetic for the intended 1-g/kg starting rule is correct: 60 kg gives 60 g/day. Restricting protein merely to defer KRT is not a sound lesson, and urea alone does not establish protein intolerance.",
+      "The uniqueness of 60 versus 90 g is not adequately established by the visible text. Critical-care protein recommendations and their timing can differ, and a higher prescription may be defensible in some septic non-KRT patients. I cannot confirm the exact ranking without source verification; this is a guideline-framing uncertainty, not a claim that 60 g is clinically incorrect.",
+      "Most of the apparent difficulty is recalling the author's unstated starting recommendation. Illness and KRT classifications are already provided; multiplying a recalled target by weight is not a separate consequential inference. The underlying avoidance of inappropriate protein restriction is high yield.",
+      "The node stands alone and the retrospective chronology is readable, but the nutrition-treatment chronology needs clarification to support its exact key."
+    ],
+    "suggestions": [
+      "Specify the applicable verified guideline and genuine nutrition-initiation phase if an exact starting amount is the objective, without treating the first specialist consult as evidence of that phase.",
+      "Alternatively test the clinically meaningful decision about restriction, maintenance or progression using documented prior delivery and tolerance, with source-supported information that separates the closest alternatives. Resolve the 90-g alternative with Melissa before acceptance."
+    ]
+  },
+  {
+    "id": "question.topic.nutrition-support-metabolism.renal-calorie-sources.v2",
+    "nodeId": "node.topic.nutrition-support-metabolism.renal-calorie-sources.v2",
+    "title": "Accounting for KRT-derived energy and protein needs",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "net substrate energy metabolized by this patient, after circuit removal",
+        "why": "The important distinction between delivered circuit substrate and energy actually available to the patient is already interpreted for the learner."
+      },
+      {
+        "phrase": "Current assessed total need",
+        "why": "The table supplies the 100-g protein answer directly; subtracting its net-energy row from 2,200 supplies the other component. The four-option matrix requires no additional clinical inference."
+      }
+    ],
+    "fairness": [
+      "With the stipulated net metabolized contribution, 2,200 - 600 = 1,600 kcal of formula and the assessed 100 g protein is the unique matching order. The explanation appropriately avoids a universal citrate/glucose yield. No confident clinical inaccuracy identified.",
+      "Counting nonformula calories and protecting protein during KRT are relevant nutrition principles, but this version tests a subtraction and transcription of a prescribed target. It does not test how KRT changes assessment or how to distinguish gross from net substrate delivery.",
+      "The phrase 'later hospital nutrition record' is supported by enough local context to stand alone; it does not require the previous AKI question. Current protein need is explicitly supplied, so the earlier weight is not missing information."
+    ],
+    "suggestions": [
+      "Choose one clinically consequential accounting error and require interpretation of a supported record before selecting a formula. Do not add unsourced circuit conversion factors to make the item difficult.",
+      "Differentiate this objective from the intravenous-carbohydrate reconciliation item; changing the energy source and numbers does not create a distinct reasoning task. If retained as a basic calculation, label and obtain acceptance for that role."
+    ]
+  },
+  {
+    "id": "question.topic.nutrition-support-metabolism.swallow-versus-gut.v2",
+    "nodeId": "node.topic.nutrition-support-metabolism.swallow-versus-gut.v2",
+    "title": "Separating safe oral texture from adequate nutrition delivery",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Gastric support with supervised puree intake is the best offered plan. The learner must distinguish aspiration of tested liquids from the observed safe small puree trial, then distinguish safe texture from sufficient intake. Fatigue limits actual consumption despite puree safety.",
+      "The table confirms the combined administered nutrition meets the assessment. Texture-modified oral supplementation does not establish that she can consume the missing amount, and aspiration during oral swallowing does not make a demonstrated functioning gastric route unusable. The explanation properly limits the puree inference to the represented supervised trial.",
+      "The key is not the only combined plan: PN also retains supervised puree. The gastric terminology is necessary route information rather than an independent lexical giveaway. The observed success of gastric feeding legitimately supports continuation. This is high-yield applied route selection, toward the easier end of moderate.",
+      "The standalone discharge review supplies the required context and consistent patient demographics. No confident clinical inaccuracy identified."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.nutrition-support-metabolism.gastric-aspiration-route.v1",
+    "nodeId": "node.topic.nutrition-support-metabolism.gastric-aspiration-route.v1",
+    "title": "Changing route after failure of gastric feeding measures",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Nasojejunal feeding is the best next trial among these options: repeated regurgitation with respiratory deterioration despite gastric measures identifies a gastric-delivery problem, while distal passage supports an attempt to retain enteral nutrition. A gastrostomy changes access but does not bypass the problematic stomach; PN bypasses a potentially usable distal route.",
+      "The task asks for a trial rather than guaranteed aspiration prevention. The explanation correctly preserves the risk of aspiration from secretions. No confident clinical inaccuracy identified; the exact clinical version still requires sign-off.",
+      "This is a high-yield distinction between route failure and access choice. Options have parallel route specificity, and the raw retention/passage observations need anatomical interpretation rather than unique word matching.",
+      "The earlier successful feeding and later deterioration are both supplied locally. The standalone chronology is coherent and does not depend on the separate swallowing question."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.nutrition-support-metabolism.vitc-directed-support.v2",
+    "nodeId": "node.topic.nutrition-support-metabolism.vitc-directed-support.v2",
+    "title": "Symptomatic vitamin C deficiency with oral treatment failure",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "repeated trials of oral food, fluids and vitamin preparations were followed by vomiting",
+        "why": "Even without medical knowledge, this directly removes both oral options and leaves a two-choice nutrient recognition question. It is necessary route information, but the four-option matrix does not create four credible alternatives."
+      }
+    ],
+    "fairness": [
+      "Vitamin C replacement is strongly supported by the diet, gum findings and perifollicular hemorrhage; normal prothrombin time weighs against the offered vitamin K alternative. Intravenous delivery is reasonable when oral treatment cannot be retained. No confident clinical inaccuracy identified; the explanation appropriately limits IV use to this symptomatic context.",
+      "There are two genuine decisions, nutrient and route, but both are elementary here. The classic scurvy findings identify the nutrient, and explicit oral failure fixes the route. The combination is easy for the intended resident audience despite the twoStep label.",
+      "Vitamin C deficiency and wound healing are high-yield concepts; this does not establish that the exact injectable-product indication is commonly tested. The node and retrospective chronology stand alone with a complete task."
+    ],
+    "suggestions": [
+      "Retain necessary oral-tolerance facts but replace the weak nutrient comparison with a genuinely plausible, source-supported competing explanation or treatment-stage decision. Do not manufacture difficulty by deleting classic safety information or inventing dosing rules.",
+      "If the intended objective is simply recognizing and treating scurvy, seek explicit basic-item acceptance rather than presenting this as difficult resident reasoning."
+    ]
+  },
+  {
+    "id": "question.topic.nutrition-support-metabolism.zinc-copper-assessment.v2",
+    "nodeId": "node.topic.nutrition-support-metabolism.zinc-copper-assessment.v2",
+    "title": "Copper evaluation despite a potentially misleading MMA result",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Copper and ceruloplasmin are the best next addition among these options. The prolonged excessive zinc exposure plus cytopenias and sensory findings supports copper evaluation. Renal impairment limits the specificity of the raised MMA and prevents treating that result as proof of B12 deficiency.",
+      "Intrinsic-factor antibodies investigate a specific cause of B12 deficiency rather than establishing that B12 deficiency explains this presentation; bone-marrow examination may become appropriate but is a less appropriate first addition than evaluating this reversible exposure-associated problem. Coexisting disease remains possible, as the explanation acknowledges.",
+      "The MMA/eGFR pair creates a credible competing interpretation requiring more than the zinc association. Serum copper and ceruloplasmin are assessments, not guaranteed diagnostic proof. No confident clinical inaccuracy identified; exact ranking remains subject to clinical sign-off.",
+      "The tested deficiency interaction and B12 mimic are relevant resident nutrition concepts, though less central than EN/PN decisions. There is no wording-only path to the key, and the standalone case is coherent."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.nutrition-support-metabolism.durable-enteral-access.v1",
+    "nodeId": "node.topic.nutrition-support-metabolism.durable-enteral-access.v1",
+    "title": "Durable access when gastric nutrition works but nasal access fails",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "PEG is the best offered access plan. The learner distinguishes mechanical interruption from gastric intolerance, then applies the anticipated duration of feeding to select durable gastric access. Jejunostomy does not address an established gastric physiological problem; replacing the nasal tube leaves the repeated access failure in a months-long course.",
+      "'No barrier to percutaneous access' is a legitimate eligibility condition and applies to both percutaneous alternatives; it is not unique permission for the key. The options are parallel named access procedures and do not disclose a rationale in their labels.",
+      "This is a common surgical nutrition-access decision, at the easier end of moderate. No confident clinical inaccuracy identified. The named age/sex case and task are complete and standalone."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.nutrition-support-metabolism.enteral-medication-review.v2",
+    "nodeId": "node.topic.nutrition-support-metabolism.enteral-medication-review.v2",
+    "title": "Interpreting feed and medication changes in tube-feeding diarrhea",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "A pharmacist-reviewed change to tube-compatible medicine preparations is the best next offered intervention. The initial simultaneous changes are confounded; persistence after restoration of the original feed and the subsequent withdrawal/rechallenge pattern favor reviewing the liquid medicines before altering a previously tolerated formula or schedule.",
+      "Interpreting a temporal record is the tested skill, not an unfair lexical cue. The key's tube-compatibility language is clinically necessary for safe substitution, and shared context establishes continued medication indications. It does not authorize crushing arbitrary tablets or discontinuing required treatment.",
+      "The record does not identify the offending ingredient or prove the formulation rather than an active drug is causal. The explanation appropriately states that limitation and keeps reassessment open. No confident clinical inaccuracy identified; an ingredient-specific treatment claim would require additional data.",
+      "This is a high-yield cause-and-management distinction in enteral intolerance. Both interpretation of the sequential observations and selection of an appropriate initial management change are consequential. The case is standalone and internally coherent."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.nutrition-support-metabolism.postoperative-route-after-swallow.v2",
+    "nodeId": "node.topic.nutrition-support-metabolism.postoperative-route-after-swallow.v2",
+    "title": "Early postoperative enteral nutrition despite limited swallowing intake",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Nasogastric nutrition is the best offered route: permitted textures have actually supplied very little intake, while absent recorded flatus without progressive distension or vomiting does not establish that the postoperative gut cannot be used. The preadmission intake/weight trajectory makes simply relying on the limited oral trial less appropriate.",
+      "The learner must separate swallowing safety from adequacy and distinguish the absence of flatus from an enteral contraindication. These are clinically meaningful, commonly tested misconceptions, rather than a requirement to infer that all oral textures are unsafe.",
+      "The oral-only and central-PN alternatives represent different plausible errors. The raw swallowing description and abdominal observations support the ranking without directly naming the keyed route. No confident clinical inaccuracy identified.",
+      "The clinic retrospective frame, early postoperative update and task are coherent and standalone. There is no dependency on the separate swallowing-discharge case, although the concepts partly overlap."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.nutrition-support-metabolism.renal-formula-reference-budget.v1",
+    "nodeId": "node.topic.nutrition-support-metabolism.renal-formula-reference-budget.v1",
+    "title": "Meeting dialysis protein needs within the residual fluid allowance",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Order A is the unique matching order under the stated recommendation: the 70-kg reference at 1.2 g/kg gives 84 g protein, and 1,400 - 400 leaves 1,000 mL of formula allowance. Order B misses the protein minimum; C exceeds the residual fluid allowance; D does both.",
+      "The four-option matrix balances volume and protein components, preventing convergence from assembling the key. Suitability of energy and electrolytes is shared across orders and legitimately prevents unspecified product differences from making multiple choices defensible.",
+      "Applying a population-specific protein requirement and accounting for nonformula fluid are consequential steps. However, there is no edema-weight protein alternative, so the item does not independently demonstrate that the learner selected the correct weight; do not claim that extra discriminator.",
+      "Renal nutrition within a fluid budget is high yield. No confident clinical inaccuracy identified, but the exact ESPEN minimum and population require clinician/source confirmation outside this offline review. The task asks for a minimum, not a maximum or universally optimal prescription. The standalone case supplies all locally needed context."
+    ],
+    "suggestions": []
+  }
+]

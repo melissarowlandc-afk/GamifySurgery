@@ -1,0 +1,369 @@
+[
+  {
+    "id": "question.topic.melanoma-cutaneous-cancer.positive-sln-observation.v1",
+    "nodeId": "node.topic.melanoma-cutaneous-cancer.positive-sln-observation.v1",
+    "title": "Regional management after a microscopic positive melanoma sentinel node",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The small sentinel-node deposit, absence of palpable regional disease and feasible follow-up support nodal ultrasound surveillance over routine completion dissection. Completion dissection is a credible historical/common-error competitor; regional irradiation is less competitive but does not create another best answer in this presentation.",
+      "The follow-up-availability sentence is a relevant surveillance constraint, not sufficient by itself to select ultrasound without knowing how microscopic sentinel-node disease differs from clinically apparent nodal disease. No decisive nonmedical wording, length, absolute or convergence shortcut identified.",
+      "Two consequential steps remain: interpret the regional disease burden, then apply the surveillance-versus-completion-dissection decision with follow-up feasibility. This is a high-yield melanoma management principle.",
+      "Standalone and internally coherent; no earlier node or feedback is required. Across the packet, all 13 active authored cases contain one decision node, so there are no later-part transitions to assess.",
+      "Review scope: all 13 current authoredItems after snapshots, including the three previously marked pass-preserved, were assessed independently. Historical before/round1 snapshots, the 10 Keep inventory rows, retired/replacement-proposal originals, five newly parked nodes, inherited N3 hold, inherited N4 park and withheld teaching points were noted but not scored. Only visible candidate content informed item judgments. This is an offline editorial review, not current-source verification or clinical approval; all drafts remain needs_clinician_review. Runtime wait rendering was not verifiable from the permitted visible fields.",
+      "Difficulty and high-yield labels throughout this report are qualitative judgments for general-surgery residents, not measured performance or verified exam-frequency claims."
+    ],
+    "suggestions": [
+      "Optional feedback improvement: explain why observation is preferred over routine completion dissection in this setting, rather than stopping at 'an accepted alternative'; distinguish regional-control benefit from survival and morbidity considerations using already verified claims. Preserve the exact passed version unless a new version is authorized."
+    ]
+  },
+  {
+    "id": "question.topic.melanoma-cutaneous-cancer.stage-ii-adjuvant.v1",
+    "nodeId": "node.topic.melanoma-cutaneous-cancer.stage-ii-adjuvant.v1",
+    "title": "Stage-specific adjuvant therapy despite a BRAF alteration",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The thickness, ulceration, negative sentinel-node biopsy and absence of distant disease support stage IIB rather than stage III. Nivolumab is the defensible listed adjuvant discussion option; the BRAF result makes dabrafenib plus trametinib a meaningful stage-indication trap.",
+      "The task asks about discussion, not mandatory treatment initiation. Lack of a complete immunotherapy screening history therefore does not defeat the key. No confident clinical inaccuracy identified from the supplied content; current regulatory wording was not independently verified offline.",
+      "Options are specific systemic treatments with parallel labels. BRAF wording tempts a distractor rather than disclosing the key. The diagnosis is appropriately supplied for a stage-dependent management task, and no key-selecting nonmedical cue was identified.",
+      "Two consequential steps: derive the stage from the pathology and nodal findings, then distinguish stage-appropriate adjuvant therapy from mutation-driven extrapolation. Stage-dependent melanoma systemic-treatment principles are high yield.",
+      "Standalone, with coherent postoperative chronology and a complete task."
+    ],
+    "suggestions": []
+  },
+  {
+    "id": "question.topic.melanoma-cutaneous-cancer.bcc-after-hedgehog-progression.v1",
+    "nodeId": "node.topic.melanoma-cutaneous-cancer.bcc-after-hedgehog-progression.v1",
+    "title": "Systemic treatment after BCC progression on vismodegib",
+    "verdict": "REVISE",
+    "difficulty": "moderate",
+    "twoStep": false,
+    "highYield": false,
+    "clarityIssues": [
+      "The explanation ends with author-facing assurances ('No exact dose, response probability or automatic interchangeability of Hedgehog inhibitors is asserted') instead of explaining the closest competing treatment choice. This is not useful learner feedback."
+    ],
+    "cues": [
+      {
+        "phrase": "Which next systemic treatment should be evaluated for {patientName}'s progressing BCC?",
+        "why": "The task supplies the response interpretation the explanation claims the learner must make. It also makes 'Continue vismodegib' easy to reject before independently interpreting the serial findings. This narrows rather than uniquely solves the item."
+      },
+      {
+        "phrase": "Continue vismodegib / Change to sonidegib / Change to cemiplimab",
+        "why": "The two '-degib' drug names form a visible family, while cemiplimab is the sole conspicuously different name. In a vignette already announcing progression, 'choose a different kind of drug' is a plausible test-taking shortcut. Drug names should not be disguised, but the alternative set should not depend on this pattern."
+      }
+    ],
+    "fairness": [
+      "Cemiplimab after progression on a Hedgehog inhibitor is a defensible listed pathway. No confident clinical error identified. I cannot independently establish the current indication or precise strength of the sonidegib competitor without source verification; this is not a claim that switching Hedgehog inhibitors is universally impossible.",
+      "As written, the decisive response interpretation is supplied and the remaining demand is recall of a specialist drug sequence. Moderate difficulty reflects drug knowledge, not two consequential reasoning steps.",
+      "Advanced BCC treatment is relevant, but this exact second-line agent distinction is narrower than the core biopsy, risk, margin and nodal principles commonly emphasized for general-surgery residents. highYield=false is a relative editorial prioritization, not a claim that it cannot be tested.",
+      "Standalone and coherent: the update explicitly establishes subsequent metastatic progression despite the earlier response."
+    ],
+    "suggestions": [
+      "Use a neutral treatment-review task that does not name progression; retain the actual initial response, subsequent enlargement, biopsy result and ongoing exposure so the resident must decide what the course means.",
+      "Have the clinician select genuinely competitive, specific next-treatment pathways whose ranking turns on the prior exposure and response trajectory; do not introduce another unsupported drug merely to make three choices.",
+      "Replace the authoring disclaimer with a short clinical explanation of why the current findings outweigh the initial response and why the closest alternative is less appropriate. If a fair second inference cannot be supported, retain only under an explicitly accepted focused-recall role."
+    ]
+  },
+  {
+    "id": "question.topic.melanoma-cutaneous-cancer.representative-excision.v2",
+    "nodeId": "node.topic.melanoma-cutaneous-cancer.representative-excision.v2",
+    "title": "Diagnostic sampling of a heterogeneous pigmented lesion after a partial benign biopsy",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "Its removal with a narrow rim of skin would permit primary closure without a flap.",
+        "why": "This pre-describes the keyed procedure and supplies its feasibility rationale. The key uniquely repeats 'with a narrow rim'; a nonmedical reader can match the endorsed operation in the presentation to the option."
+      }
+    ],
+    "fairness": [
+      "Complete narrow diagnostic excision is a defensible preference for this small accessible suspicious lesion. The full-thickness wedge and targeted punch are real diagnostic techniques, but the presentation explicitly removes the main reason to prefer partial sampling.",
+      "The clear deep edge of a lateral partial specimen does not establish the diagnosis of the unsampled residual lesion. However, deleting the entire outside-biopsy update still leaves the changing heterogeneous small lesion and the explicitly feasible complete excision; the same key follows. The intended specimen-interpretation step is therefore not consequential in this option set.",
+      "The explanation should distinguish representativeness from margin involvement: a benign nevus at a side edge is not by itself a malignant finding or a universal mandate for excision. The changing unsampled component supplies the concern here. No definite clinical error in the selected action identified.",
+      "Representative melanoma biopsy is high yield, but current difficulty is simple preferred-technique recall aided by wording. Standalone; no prior case is needed."
+    ],
+    "suggestions": [
+      "Remove the preconstructed 'narrow rim' operation from the presentation; describe size and relevant anatomy neutrally while retaining necessary feasibility information.",
+      "Make the prior sampling map change which next diagnostic action is best. Re-solve with the update deleted: if complete excision still wins for the same reason, simplify to an explicitly accepted foundational biopsy item or redesign the specimen-adequacy objective.",
+      "Retain credible full-depth sampling competitors and explain when each would become preferable; do not manufacture a reconstruction constraint merely to force a key."
+    ]
+  },
+  {
+    "id": "question.topic.melanoma-cutaneous-cancer.thick-primary-margin.v2",
+    "nodeId": "node.topic.melanoma-cutaneous-cancer.thick-primary-margin.v2",
+    "title": "Integrating sequential melanoma specimens before selecting an excision margin",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "The first reliable 2.6-mm invasive measurement remains relevant despite a thinner residual focus in the completion specimen. A 2-cm clinical radial margin is the defensible listed answer for the supplied unconstrained extremity site.",
+      "Two consequential steps remain: reconcile the two samples of one primary rather than substitute the latest residual depth, then select the definitive margin. The 1-cm alternative represents using the residual 0.6-mm depth; the 0.5-cm alternative represents focusing on the surrounding in-situ component. These are recognizable clinical interpretation errors, not wording giveaways.",
+      "The explanation's warning against adding measurements does not distinguish any listed answer here: adding these particular depths still leads to the same margin category. That sentence should not be counted as an additional tested inference.",
+      "The options are parallel numeric margins with no uniquely qualified key or component-convergence shortcut. The complete separated task identifies a total radial margin and the original site. No confident clinical inaccuracy identified.",
+      "High-yield melanoma microstaging and definitive-margin planning. Standalone and coherent; diagnostic sampling is clearly distinguished from definitive wide excision."
+    ],
+    "suggestions": [
+      "Optional feedback tightening: focus on the consequential latest-specimen-versus-greatest-reliable-depth error; the addition warning is extra teaching rather than an error the present answers discriminate."
+    ]
+  },
+  {
+    "id": "question.topic.melanoma-cutaneous-cancer.thin-ulceration-slnb.v2",
+    "nodeId": "node.topic.melanoma-cutaneous-cancer.thin-ulceration-slnb.v2",
+    "title": "Sentinel-node counseling for a thin ulcerated melanoma",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "has not yet discussed its benefits and harms",
+        "why": "This names the omission repaired by the keyed 'Offer discussion' option before the learner interprets thickness or ulceration."
+      },
+      {
+        "phrase": "without offering sentinel-node biopsy / Offer discussion of sentinel-node biopsy / in place of offering sentinel-node biopsy",
+        "why": "The key is the sole option offering a discussion; both distractors explicitly advertise withholding it. All three labels focus attention on offering rather than on the clinical staging distinction, creating a counseling-versus-denial shortcut."
+      }
+    ],
+    "fairness": [
+      "The ulcerated thin-melanoma scenario supports discussing sentinel-node biopsy, rather than treating it as automatically mandatory or excluding it solely because the thickness is below 0.8 mm. No confident clinical error identified.",
+      "Tumor-associated ulceration away from the biopsy wound is necessary distinguishing information and should remain. The problem is the cue-bearing counseling frame, not the presence of that finding.",
+      "Theoretically this can test staging interpretation followed by counseling, but the options let the resident bypass that interpretation. Current effective difficulty is easy and twoStep=false.",
+      "High-yield sentinel-node selection boundary. Standalone, with adequate surgical chronology and a complete task."
+    ],
+    "suggestions": [
+      "Remove the announcement that counseling has not happened and rewrite every option as a specific regional-staging recommendation in the same tone.",
+      "Preserve the distinction between offering informed SLNB discussion and requiring SLNB. Do not fix the cue by turning an optional procedure into a mandatory one.",
+      "Require the ulceration finding to change the recommendation relative to the closest credible thin-melanoma alternative; leave each plan's counseling rationale to feedback."
+    ]
+  },
+  {
+    "id": "question.topic.melanoma-cutaneous-cancer.scc-representative-biopsy.v2",
+    "nodeId": "node.topic.melanoma-cutaneous-cancer.scc-representative-biopsy.v2",
+    "title": "Resolving a persistent nodule beneath a superficial keratinocytic biopsy",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "the report contains no assessment of the deeper nodule",
+        "why": "This supplies the exact missing assessment. The key is the only option explicitly reaching deeper tissue ('into subcutis'), so a reader can repair the named omission without interpreting pathology."
+      },
+      {
+        "phrase": "a thin layer of papillary dermis / Saucerize the plaque and nodule to the papillary dermis",
+        "why": "The distractor repeats the stated limit of the already performed sample, while the other distractor offers fragments. The only visibly new deeper intact sample is the key."
+      }
+    ],
+    "fairness": [
+      "The superficial actinic-keratosis finding does not settle the deeper persistent nodule, and a representative intact deeper biopsy is reasonable. No confident clinical inaccuracy identified.",
+      "A saucerization can have differing depths in practice; the actual option deliberately limits this one to papillary dermis. The rejection must apply to that specified shallow sample, not imply that every saucerization is inadequate.",
+      "The raw specimen extent and clinical persistence are necessary. Nevertheless, the report then interprets the inadequacy for the learner, and the choices compare another shallow sample, fragments and the sole deeper intact sample. The depth contrast dominates the item.",
+      "Biopsy adequacy is high yield, but this is easy recognition of an explicitly stated sampling gap rather than two consequential steps. Standalone and coherent."
+    ],
+    "suggestions": [
+      "Keep the observed specimen layers and persistent nodule; remove the author-written 'no assessment of the deeper nodule' interpretation.",
+      "Compare credible sampling plans at a similar level of specificity, using an actual target/adequacy distinction that requires interpreting the prior specimen. Do not offer an already documented inadequate depth as the principal competitor.",
+      "Explain the nearest credible alternative in feedback and avoid a blanket claim against saucerization. If no supported consequential distinction remains, use a foundational role rather than claiming resident-level two-step difficulty."
+    ]
+  },
+  {
+    "id": "question.topic.melanoma-cutaneous-cancer.scc-small-adverse-surgery.v2",
+    "nodeId": "node.topic.melanoma-cutaneous-cancer.scc-small-adverse-surgery.v2",
+    "title": "Margin assessment before flap repair of a small high-risk cheek cSCC",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "The central-deep-bed option does not describe assessment of the peripheral surgical boundary, although the update describes all workflows as differing in how that boundary is examined. The intended limitation is understandable, but the setup presents unequally complete workflows as parallel alternatives."
+    ],
+    "cues": [
+      {
+        "phrase": "mapped en-face sections of peripheral and deep margins",
+        "why": "The key is the only option framed as mapped assessment of both boundaries; the competitors explicitly offer 'selected cross-sections' or only the 'central deep wound bed'. The most complete-sounding workflow wins without interpreting the adverse histology."
+      },
+      {
+        "phrase": "routine permanent sections from conventional excision would return after repair",
+        "why": "The update specifically disadvantages both conventional-excision answers by announcing their remaining information after repair, while the Mohs answer has no analogous caveat. It supplies the sequencing rationale rather than requiring the resident to infer it."
+      }
+    ],
+    "fairness": [
+      "Poor differentiation and perineural involvement support high-risk management despite small surface size. Among the three explicitly limited immediate-flap workflows, Mohs is a defensible best answer. No confident clinical inaccuracy identified.",
+      "This comparison does not establish universal superiority of Mohs over properly staged conventional excision with delayed repair and adequate margin assessment. The inherited held comparison remains unresolved and outside this review.",
+      "The key is recoverable from workflow completeness even if the lesion's size and adverse histology are removed. Therefore the intended risk-interpretation step is not needed to beat these distractors; current difficulty is easy and twoStep=false.",
+      "The risk-and-clearance principle is high yield. This is a standalone case, but its option structure is nearly duplicated in bcc-recurrent-mohs.v2, allowing recognition of the same keyed wording across encounters."
+    ],
+    "suggestions": [
+      "Give equally complete, clinically credible operative pathways and make a patient-specific, supported observation distinguish them; do not reinstate the held Mohs-versus-properly-staged-excision ranking without resolving it.",
+      "If the intended objective is interpreting adequacy of sampled margins, use an actual specimen map or report with a consequential residual clearance decision, rather than advertising selected versus comprehensive assessment in the labels.",
+      "Remove the uniquely disadvantageous pre-answer commentary about conventional workflows, while preserving any facts genuinely needed to establish when clearance is known."
+    ]
+  },
+  {
+    "id": "question.topic.melanoma-cutaneous-cancer.scc-in-situ-depth-boundary.v2",
+    "nodeId": "node.topic.melanoma-cutaneous-cancer.scc-in-situ-depth-boundary.v2",
+    "title": "Further diagnosis when an epidermal SCC sample does not assess a persistent nodule",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "The entire remaining abnormality is small enough for a diagnostic ellipse with primary closure.",
+        "why": "The presentation names and endorses the feasibility of the keyed diagnostic excision. The reader need not interpret the epidermis-only specimen to match that plan."
+      },
+      {
+        "phrase": "Diagnostic excision of the remaining chest patch and nodule",
+        "why": "This is the sole explicitly diagnostic plan beside two treatment modalities. In a case highlighting missing tissue, choosing the only diagnostic answer becomes a category shortcut."
+      }
+    ],
+    "fairness": [
+      "An epidermis-only specimen cannot assess underlying invasion, and a persistent firm component warrants reconciliation before proceeding with treatment intended for superficial disease. The keyed intact diagnostic excision is defensible in the described feasible setting.",
+      "The explanation appropriately says firmness does not prove invasion. Describing SCC in situ 'in the epidermal fragment' must remain a description of the submitted tissue, not a whole-lesion exclusion of invasion. No confident clinical error identified.",
+      "Photodynamic therapy and curettage/electrodesiccation are recognizable skin-treatment modalities, but here both bypass the prominently announced diagnostic gap. They do not create two consequential reasoning steps against the pre-described diagnostic ellipse.",
+      "The tissue-depth boundary is high yield. Standalone and internally coherent; no actual earlier node is needed."
+    ],
+    "suggestions": [
+      "Replace the named 'diagnostic ellipse' with neutral observed size/site information sufficient to judge feasible sampling.",
+      "Keep the absent dermis and persistent nodule; they are necessary facts, not facts to hide to manufacture difficulty.",
+      "Choose a genuine remaining diagnostic or treatment-stage decision with comparably credible options. If comparing diagnosis with treatment, make the resident interpret evidence that meaningfully determines whether diagnosis is complete rather than supplying the requested procedure in the presentation."
+    ]
+  },
+  {
+    "id": "question.topic.melanoma-cutaneous-cancer.scc-low-risk-definitive.v2",
+    "nodeId": "node.topic.melanoma-cutaneous-cancer.scc-low-risk-definitive.v2",
+    "title": "Definitive excision margin after an incompletely cleared low-risk chest cSCC",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [
+      "'A narrow diagnostic rim of skin' is not a defined margin, unlike the two numeric alternatives. Its extent is ambiguous and the resident cannot compare all three on the same basis."
+    ],
+    "cues": [
+      {
+        "phrase": "definitive excision-margin plan / a narrow diagnostic rim of skin",
+        "why": "The task asks for definitive treatment while one option labels itself diagnostic. That alternative can be rejected on the wording alone."
+      },
+      {
+        "phrase": "a 4- to 6-mm clinical radial margin",
+        "why": "The key is the only interval beside one exact number and one unquantified description. It reads like a quoted standard range, making its format conspicuous. This is a weaker cue than the diagnostic/definitive mismatch but reinforces the recall structure."
+      }
+    ],
+    "fairness": [
+      "The supplied small primary trunk lesion, immunocompetent host and favorable histology support a low-risk excision approach; a 4- to 6-mm clinical margin with histologic assessment is a defensible listed plan. No confident clinical inaccuracy identified.",
+      "A positive peripheral edge establishes that gross removal has not achieved microscopic clearance, but every option already re-excises the scar. That observation does not create a separate consequential decision among these choices.",
+      "A wider margin is not inherently ineffective; the explanation should rank its unnecessary extent against the appropriate low-risk standard, rather than imply that wider tissue removal cannot clear disease.",
+      "This currently tests a familiar low-risk margin rule with weak alternatives. Risk labeling followed by retrieval of that single rule does not, in this version, establish two consequential steps. The margin concept is high yield, but difficulty is easy.",
+      "Standalone with coherent diagnostic-versus-definitive chronology."
+    ],
+    "suggestions": [
+      "Make all alternatives equally precise margin plans. Replace the undefined 'diagnostic rim' with a supported, explicitly specified competing plan; do not invent an exact value for this repair.",
+      "Make the specimen or risk interpretation change the actual management decision compared with a credible competing plan. If all choices remain re-excision at different widths, do not count recognizing margin involvement as an independently tested step.",
+      "Alternatively, seek explicit acceptance as a focused foundational margin item rather than adding decorative complexity."
+    ]
+  },
+  {
+    "id": "question.topic.melanoma-cutaneous-cancer.scc-repair-sequence.v2",
+    "nodeId": "node.topic.melanoma-cutaneous-cancer.scc-repair-sequence.v2",
+    "title": "Reconciling peripheral and deep specimens before cSCC flap repair",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "tumor reaches the inked peripheral edge / Re-excise the mapped peripheral sector",
+        "why": "The positive anatomic label directly matches the key, while the competing deep site is explicitly negative in both reports. Word matching can identify the operative target without interpreting a genuinely conflicting specimen map."
+      },
+      {
+        "phrase": "No additional peripheral margin was submitted.",
+        "why": "This names the missing margin action after the report has already stated peripheral involvement. It further rehearses the key rather than leaving a meaningful reconciliation problem."
+      },
+      {
+        "phrase": "Complete the flap; follow the scar and biopsy a recurrent peripheral nodule",
+        "why": "The option advertises waiting for recurrence at the same peripheral site already described as involved. It is an overtly incomplete plan, not a close alternative to obtaining clearance."
+      }
+    ],
+    "fairness": [
+      "A negative central deep-bed specimen does not clear a positive peripheral margin. Targeting the mapped involved peripheral sector and confirming clearance before rotation-flap repair is the defensible listed plan. No confident clinical inaccuracy identified.",
+      "Deleting the separate deep-bed report leaves exactly the same positive peripheral edge and best action. Re-excising the already clear deep bed is not a convincing competitor, so the two-report appearance does not deliver two consequential steps.",
+      "Margin identity and reconstruction sequencing are high-yield principles, but this version reduces them to positive-site matching plus obvious clearance-before-flap recall.",
+      "Standalone and coherent; the labels refer to distinct tissue boundaries and the chronology is understandable."
+    ],
+    "suggestions": [
+      "Use a clinically plausible report/orientation relationship in which the additional specimen can change what is known about the involved boundary; retain explicit specimen identity and orientation so the item stays fair.",
+      "Compare credible target-and-repair plans at the same stage instead of deep-bed re-excision versus deliberate observation of a known involved margin.",
+      "Keep decision-critical negatives. Remove the named omission only if the actual specimen descriptions still establish the boundary; do not make the report ambiguous to increase difficulty."
+    ]
+  },
+  {
+    "id": "question.topic.melanoma-cutaneous-cancer.bcc-recurrent-mohs.v2",
+    "nodeId": "node.topic.melanoma-cutaneous-cancer.bcc-recurrent-mohs.v2",
+    "title": "Margin control before reconstruction of recurrent infiltrative nasal BCC",
+    "verdict": "REVISE",
+    "difficulty": "easy",
+    "twoStep": false,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [
+      {
+        "phrase": "mapped en-face sections of peripheral and deep margins",
+        "why": "The key is the only comprehensively mapped boundary assessment, contrasted with 'selected cross-sections' or 'the central deep bed'. The broadest, most complete-sounding plan can be chosen without interpreting recurrence, infiltrative growth or scar boundaries."
+      },
+      {
+        "phrase": "In the conventional workflows, the rest of the specimen would undergo routine permanent sections after repair.",
+        "why": "This pre-answer statement specifically handicaps the two conventional choices by saying information will arrive after repair. The keyed workflow is singled out by omission as the complete one."
+      }
+    ],
+    "fairness": [
+      "Recurrent infiltrative nasal BCC with an indistinct scar-associated border supports Mohs. Among the explicitly described limited-assessment immediate-flap options, it is a defensible best answer. No confident clinical inaccuracy identified.",
+      "The stated comparison should not be generalized to all conventional excision or all frozen-section techniques; the limitations belong to these selected-sampling workflows.",
+      "The high-risk findings are meaningful clinical information, but the full-versus-limited sampling contrast can determine the answer without them. Thus the intended risk inference does not have to be performed; current difficulty is easy and twoStep=false.",
+      "Mohs selection for recurrent high-risk facial BCC is high yield. The case stands alone, but it repeats almost the same option template and keyed wording as scc-small-adverse-surgery.v2; repeated exposure further weakens independent reasoning."
+    ],
+    "suggestions": [
+      "Test a distinct patient-specific decision or margin-interpretation problem with equally complete credible pathways; do not recycle the same mapped-versus-selected wording used in the cSCC item.",
+      "Keep recurrence, histology, site and border findings when they discriminate treatment. Remove the answer-specific commentary about delayed information from conventional workflows unless interpreting that timing is itself the supported objective.",
+      "Do not replace the weak distractors with an equally defensible operation and then assert Mohs is uniquely mandatory. Obtain a supported discriminator or retain a separately accepted foundational procedure-selection role."
+    ]
+  },
+  {
+    "id": "question.topic.melanoma-cutaneous-cancer.mcc-negative-imaging-slnb.v2",
+    "nodeId": "node.topic.melanoma-cutaneous-cancer.mcc-negative-imaging-slnb.v2",
+    "title": "Merkel carcinoma nodal staging and sequencing despite negative PET/CT",
+    "verdict": "PASS",
+    "difficulty": "moderate",
+    "twoStep": true,
+    "highYield": true,
+    "clarityIssues": [],
+    "cues": [],
+    "fairness": [
+      "Negative examination and PET/CT do not exclude microscopic regional involvement. Coordinating sentinel-node mapping/biopsy before definitive wide excision and flap disruption is the defensible listed plan for this fit clinically node-negative patient.",
+      "Two consequential steps survive the options: decide whether negative macroscopic staging can replace sentinel staging, then decide when mapping must occur relative to the planned wide excision and reconstruction. Ultrasound substitution and delayed sentinel biopsy represent different credible errors.",
+      "The proposed schedule is a relevant operative constraint. The word 'before' in the task does not uniquely choose the key because an ultrasound-first strategy also fits a preoperative planning task; knowledge of microscopic staging and lymphatic disruption is still needed.",
+      "The prior narrow diagnostic excision is clearly separated from the unperformed definitive operation. No confident clinical inaccuracy identified. The explanation does not claim that baseline PET/CT is mandatory for every MCC patient.",
+      "MCC is less common than melanoma or keratinocyte cancers, but sentinel staging despite negative imaging is a core testable surgical principle for this disease. Standalone and coherent, with no earlier node or feedback dependency."
+    ],
+    "suggestions": []
+  }
+]
